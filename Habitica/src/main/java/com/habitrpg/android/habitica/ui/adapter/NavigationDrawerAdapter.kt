@@ -94,8 +94,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 notifyItemRemoved(x)
             }
             for ((index, team) in teams.withIndex()) {
-                val item = HabiticaDrawerItem(R.id.teamBoardFragment, team.id, team.summary)
-                item.bundle = bundleOf(Pair("teamID", team.id))
+                val item = HabiticaDrawerItem(R.id.tasksFragment, team.id, team.summary)
+                item.bundle = bundleOf(Pair("ownerID", team.id))
                 val newIndex = teamHeaderIndex + index + 1
                 items.add(newIndex, item)
                 notifyItemInserted(newIndex)

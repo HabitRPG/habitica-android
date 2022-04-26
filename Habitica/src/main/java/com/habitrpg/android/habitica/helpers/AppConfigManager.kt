@@ -136,6 +136,9 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     }
 
     fun enableTeamBoards(): Boolean {
+        if (BuildConfig.DEBUG) {
+            return true
+        }
         return remoteConfig.getBoolean("enableTeamBoards")
     }
 

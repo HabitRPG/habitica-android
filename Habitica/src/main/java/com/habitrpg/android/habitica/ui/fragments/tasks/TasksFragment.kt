@@ -16,7 +16,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -28,12 +30,15 @@ import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import io.reactivex.rxjava3.disposables.Disposable
@@ -50,6 +55,16 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
+    internal val viewModel: TasksViewModel by viewModels()
+
+    var owners: List<Pair<String, CharSequence>> = listOf()
+    var ownerID: String? = null
+
+    val isPersonalBoard: Boolean
+    get() {
+        return ownerID == userViewModel.userID
+    }
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userID: String
     @Inject
@@ -60,6 +75,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     lateinit var appConfigManager: AppConfigManager
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     private var refreshItem: MenuItem? = null
     internal var viewFragmentsDictionary: MutableMap<Int, TaskRecyclerViewFragment>? = WeakHashMap()
@@ -92,6 +109,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         loadTaskLists()
         arguments?.let {
             val args = TasksFragmentArgs.fromBundle(it)
+            ownerID = args.ownerID ?: userID
             val taskTypeValue = args.taskType
             if (taskTypeValue?.isNotBlank() == true) {
                 val taskType = TaskType.from(taskTypeValue)
@@ -105,6 +123,12 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 }
             }
         }
+
+        compositeSubscription.add(userRepository.getTeamPlans()
+            .subscribe({
+                owners = listOf(Pair(userViewModel.userID ?: "", userViewModel.displayName))  + it.map { Pair(it.id, it.summary) }
+        }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
     override fun onResume() {
@@ -118,7 +142,11 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
         binding?.viewPager?.currentItem = binding?.viewPager?.currentItem ?: 0
         bottomNavigation?.listener = this
-        bottomNavigation?.canAddTasks = true
+        bottomNavigation?.canAddTasks = isPersonalBoard
+
+        activity?.binding?.toolbarTitle?.setOnClickListener {
+            cycleOwnerIDs()
+        }
     }
 
     override fun onPause() {
@@ -138,7 +166,11 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main_activity, menu)
+        if (isPersonalBoard) {
+            inflater.inflate(R.menu.menu_main_activity, menu)
+        } else {
+            inflater.inflate(R.menu.menu_team_board, menu)
+        }
 
         filterMenuItem = menu.findItem(R.id.action_filter)
         updateFilterIcon()
@@ -181,6 +213,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             R.id.action_reload -> {
                 refreshItem = item
                 refresh()
+                true
+            }
+            R.id.action_team_info -> {
+                MainNavigationController.navigate(R.id.guildFragment, bundleOf(Pair("groupID", ownerID)))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -230,6 +266,26 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         activeFragment?.onRefresh()
     }
 
+    private fun refreshData(onComplete: () -> Unit) {
+        if (isPersonalBoard) {
+            compositeSubscription.add(
+                userRepository.retrieveUser(
+                    withTasks = true,
+                    forced = true
+                ).doOnTerminate {
+                    onComplete()
+                }.subscribe({ }, RxErrorHandler.handleEmptyError())
+            )
+        } else {
+            compositeSubscription.add(
+                userRepository.retrieveTeamPlan(ownerID ?: "")
+                    .doOnTerminate {
+                        onComplete()
+                    }.subscribe({ }, RxErrorHandler.handleEmptyError())
+            )
+        }
+    }
+
     private fun loadTaskLists() {
         val fragmentManager = childFragmentManager
 
@@ -237,20 +293,15 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
             override fun createFragment(position: Int): Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
-                    0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT)
-                    1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY)
+                    0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT, ownerID)
+                    1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY, ownerID)
                     3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true)
-                    else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO)
+                    else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO, ownerID)
                 }
+                fragment.canEditTasks = isPersonalBoard
+                fragment.canScoreTaks = isPersonalBoard
                 fragment.refreshAction = {
-                    compositeSubscription.add(
-                        userRepository.retrieveUser(
-                            withTasks = true,
-                            forced = true
-                        ).doOnTerminate {
-                            it()
-                        }.subscribe({ }, RxErrorHandler.handleEmptyError())
-                    )
+                    refreshData(it)
                 }
                 viewFragmentsDictionary?.put(position, fragment)
 
@@ -447,5 +498,26 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     override fun onAdd(taskType: TaskType) {
         openNewTaskActivity(taskType)
+    }
+
+    fun cycleOwnerIDs() {
+        val nextIndex = owners.indexOfFirst { it.first == ownerID } + 1
+        if (nextIndex < owners.size) {
+            ownerID = owners[nextIndex].first
+            activity?.title = owners[nextIndex].second
+        } else {
+            ownerID = owners[0].first
+            activity?.title = owners[0].second
+        }
+        updateBoardDisplay()
+    }
+
+    private fun updateBoardDisplay() {
+        bottomNavigation?.canAddTasks = isPersonalBoard
+        viewFragmentsDictionary?.values?.forEach {
+            it.ownerID = ownerID
+            it.canEditTasks = isPersonalBoard
+            it.canScoreTaks = isPersonalBoard
+        }
     }
 }

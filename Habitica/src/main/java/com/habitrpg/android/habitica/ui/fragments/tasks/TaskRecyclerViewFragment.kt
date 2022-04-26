@@ -52,11 +52,20 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    private var taskSubscription: Disposable? = null
+    var ownerID: String? = null
+    set(value) {
+        field = value
+        if (recyclerAdapter != null) {
+            updateTaskSubscription()
+        }
+    }
     internal var canEditTasks: Boolean = true
     internal var canScoreTaks: Boolean = true
     override var binding: FragmentRefreshRecyclerviewBinding? = null
@@ -136,14 +145,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler { MainNavigationController.navigate(R.id.adventureGuideActivity) }?.let { recyclerSubscription.add(it) }
 
-        recyclerSubscription.add(
-            taskRepository.getTasks(this.taskType).subscribe(
-                {
-                    this.recyclerAdapter?.updateUnfilteredData(it)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        updateTaskSubscription()
     }
 
     private fun handleTaskResult(result: TaskScoringResult, value: Int) {
@@ -315,6 +317,16 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
                 .takeUntil { it.hasCompletedOnboarding }
                 .subscribe({ recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError())
+        )
+    }
+
+
+    private fun updateTaskSubscription() {
+        taskSubscription = taskRepository.getTasks(this.taskType, ownerID).subscribe(
+                {
+                    this.recyclerAdapter?.updateUnfilteredData(it)
+                },
+                RxErrorHandler.handleEmptyError()
         )
     }
 
@@ -512,9 +524,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     companion object {
         private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
 
-        fun newInstance(context: Context?, classType: TaskType): TaskRecyclerViewFragment {
+        fun newInstance(context: Context?, classType: TaskType, ownerID: String?): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
             fragment.taskType = classType
+            fragment.ownerID = ownerID
             var tutorialTexts: List<String>? = null
             if (context != null) {
                 when (fragment.taskType) {

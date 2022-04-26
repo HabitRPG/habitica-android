@@ -35,6 +35,11 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue=""/>
+        <argument
+            android:name="ownerID"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=""/>
         <deepLink app:uri="habitica.com/user/tasks/{taskType}" />
         <deepLink app:uri="habitica.com/tasks" />
         <deepLink app:uri="habitica.com" />
@@ -482,13 +487,5 @@
             android:name="url"
             app:argType="string" />
         <deepLink app:uri="habitica.com/promo/web?url={url}" />
-    </fragment>
-    <fragment
-        android:id="@+id/teamBoardFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment"
-        android:label="TeamBoardFragment" >
-        <argument
-            android:name="teamID"
-            app:argType="string" />
     </fragment>
 </navigation>
