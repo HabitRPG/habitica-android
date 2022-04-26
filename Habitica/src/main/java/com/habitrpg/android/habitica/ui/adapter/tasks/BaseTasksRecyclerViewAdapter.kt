@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
     var taskType: TaskType,
-    private val taskFilterHelper: TaskFilterHelper?,
+    private val viewModel: TasksViewModel,
     private val layoutResource: Int,
     newContext: Context,
     private val userID: String?
@@ -73,12 +73,12 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
     }
 
     fun filter() {
-        if (this.taskFilterHelper == null || this.taskFilterHelper.howMany(taskType) == 0) {
+        if (this.viewModel.howMany(taskType) == 0) {
             filteredContent = content
         } else {
             filteredContent = ArrayList()
             content?.let {
-                filteredContent?.addAll(this.taskFilterHelper.filter(it))
+                filteredContent?.addAll(this.viewModel.filter(it))
             }
         }
 

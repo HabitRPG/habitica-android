@@ -1,0 +1,232 @@
+package com.habitrpg.android.habitica.ui.viewmodels
+
+import android.content.SharedPreferences
+import android.text.format.DateUtils
+import androidx.core.content.edit
+import androidx.lifecycle.MutableLiveData
+import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.TaskFilterHelper
+import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.models.responses.TaskScoringResult
+import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.android.habitica.modules.AppModule
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.realm.Case
+import io.realm.OrderedRealmCollection
+import io.realm.RealmQuery
+import io.realm.Sort
+import java.util.Date
+import javax.inject.Inject
+import javax.inject.Named
+
+class TasksViewModel: BaseViewModel() {
+    private var compositeSubscription: CompositeDisposable = CompositeDisposable()
+
+    override fun inject(component: UserComponent) {
+        component.inject(this)
+    }
+
+    @field:[Inject Named(AppModule.NAMED_USER_ID)]
+    lateinit var userID: String
+    @Inject
+    lateinit var taskRepository: TaskRepository
+    @Inject
+    lateinit var taskFilterHelper: TaskFilterHelper
+    @Inject
+    lateinit var tagRepository: TagRepository
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
+    private var owners: List<Pair<String, CharSequence>> = listOf()
+
+    val ownerID: MutableLiveData<String?> by lazy {
+        MutableLiveData()
+    }
+
+    val isPersonalBoard: Boolean
+        get() {
+            return ownerID.value == userID
+        }
+    val ownerTitle: CharSequence
+    get() {
+        return owners.firstOrNull { it.first == ownerID.value }?.second ?: ""
+    }
+
+    init {
+        compositeSubscription.add(userRepository.getTeamPlans()
+            .subscribe({
+                owners = listOf(Pair(userID ?: "", userViewModel.displayName))  + it.map { Pair(it.id, it.summary) }
+            }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError()))
+    }
+
+    internal fun refreshData(onComplete: () -> Unit) {
+        if (isPersonalBoard) {
+            compositeSubscription.add(
+                userRepository.retrieveUser(
+                    withTasks = true,
+                    forced = true
+                ).doOnTerminate {
+                    onComplete()
+                }.subscribe({ }, RxErrorHandler.handleEmptyError())
+            )
+        } else {
+            compositeSubscription.add(
+                userRepository.retrieveTeamPlan(ownerID.value ?: "")
+                    .doOnTerminate {
+                        onComplete()
+                    }.subscribe({ }, RxErrorHandler.handleEmptyError())
+            )
+        }
+    }
+
+    fun cycleOwnerIDs() {
+        val nextIndex = owners.indexOfFirst { it.first == ownerID.value } + 1
+        if (nextIndex < owners.size) {
+            ownerID.value = owners[nextIndex].first
+        } else {
+            ownerID.value = owners[0].first
+        }
+    }
+
+    fun scoreTask(task: Task, direction: TaskDirection, onResult: (TaskScoringResult, Int) -> Unit) {
+        compositeSubscription.add(
+            taskRepository.taskChecked(null, task.id ?: "", direction == TaskDirection.UP, false) { result ->
+                onResult(result, task.value.toInt())
+                if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
+                    AmplitudeManager.sendEvent(
+                        "task scored",
+                        AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
+                        AmplitudeManager.EVENT_HITTYPE_EVENT
+                    )
+                    sharedPreferences.edit {
+                        putLong("last_task_reporting", Date().time)
+                    }
+                }
+            }.subscribe({}, RxErrorHandler.handleEmptyError())
+        )
+    }
+
+    var searchQuery: String? = null
+    private val activeFilters = HashMap<TaskType, String>()
+
+    var tags: MutableList<String> = mutableListOf()
+
+    fun howMany(type: TaskType?): Int {
+        return this.tags.size + if (isTaskFilterActive(type)) 1 else 0
+    }
+
+    private fun isTaskFilterActive(type: TaskType?): Boolean {
+        if (activeFilters[type] == null) {
+            return false
+        }
+        return if (TaskType.TODO == type) {
+            Task.FILTER_ACTIVE != activeFilters[type]
+        } else {
+            Task.FILTER_ALL != activeFilters[type]
+        }
+    }
+
+    fun filter(tasks: List<Task>): List<Task> {
+        if (tasks.isEmpty()) {
+            return tasks
+        }
+        val filtered = ArrayList<Task>()
+        var activeFilter: String? = null
+        if (activeFilters.size > 0) {
+            activeFilter = activeFilters[tasks[0].type]
+        }
+        for (task in tasks) {
+            if (isFiltered(task, activeFilter)) {
+                filtered.add(task)
+            }
+        }
+
+        return filtered
+    }
+
+    private fun isFiltered(task: Task, activeFilter: String?): Boolean {
+        if (!task.containsAllTagIds(tags)) {
+            return false
+        }
+        return if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
+            when (activeFilter) {
+                Task.FILTER_ACTIVE -> if (task.type == TaskType.DAILY) {
+                    task.isDisplayedActive
+                } else {
+                    !task.completed
+                }
+                Task.FILTER_GRAY -> task.completed || !task.isDisplayedActive
+                Task.FILTER_WEAK -> task.value < 1
+                Task.FILTER_STRONG -> task.value >= 1
+                Task.FILTER_DATED -> task.dueDate != null
+                Task.FILTER_COMPLETED -> task.completed
+                else -> true
+            }
+        } else {
+            true
+        }
+    }
+
+    fun setActiveFilter(type: TaskType, activeFilter: String) {
+        activeFilters[type] = activeFilter
+    }
+
+    fun getActiveFilter(type: TaskType?): String? {
+        return if (activeFilters.containsKey(type)) {
+            activeFilters[type]
+        } else {
+            null
+        }
+    }
+
+    fun createQuery(unfilteredData: OrderedRealmCollection<Task>): RealmQuery<Task>? {
+        if (!unfilteredData.isValid) {
+            return null
+        }
+        var query = unfilteredData.where()
+
+        if (unfilteredData.size != 0) {
+            val taskType = unfilteredData[0].type
+            val activeFilter = getActiveFilter(taskType)
+
+            if (tags.size > 0) {
+                query = query.`in`("tags.id", tags.toTypedArray())
+            }
+            if (searchQuery?.isNotEmpty() == true) {
+                query = query
+                    .beginGroup()
+                    .contains("text", searchQuery ?: "", Case.INSENSITIVE)
+                    .or()
+                    .contains("notes", searchQuery ?: "", Case.INSENSITIVE)
+                    .endGroup()
+            }
+            if (activeFilter != null && activeFilter != Task.FILTER_ALL) {
+                when (activeFilter) {
+                    Task.FILTER_ACTIVE -> query = if (TaskType.DAILY == taskType) {
+                        query.equalTo("completed", false).equalTo("isDue", true)
+                    } else {
+                        query.equalTo("completed", false)
+                    }
+                    Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
+                    Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
+                    Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
+                    Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false).sort("dueDate")
+                    Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
+                }
+            }
+            if (activeFilter != Task.FILTER_DATED) {
+                query = query.sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
+            }
+        }
+        return query
+    }
+}
