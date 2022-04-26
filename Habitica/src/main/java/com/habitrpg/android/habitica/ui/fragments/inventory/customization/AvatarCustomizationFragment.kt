@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
@@ -16,6 +18,8 @@ import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
@@ -37,6 +41,7 @@ class AvatarCustomizationFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
+    private var filterMenuItem: MenuItem? = null
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
@@ -141,6 +146,26 @@ class AvatarCustomizationFragment :
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_list_customizations, menu)
+
+        filterMenuItem = menu.findItem(R.id.action_filter)
+        updateFilterIcon()
+    }
+
+    private fun updateFilterIcon() {
+        if (currentFilter.value?.isFiltering != true) {
+            filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
+            context?.let {
+                val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)
+                filterIcon?.setTintWith(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
+                filterMenuItem?.setIcon(filterIcon)
+            }
+        } else {
+            context?.let {
+                val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_filters_active)
+                filterIcon?.setTintWith(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
+                filterMenuItem?.setIcon(filterIcon)
+            }
+        }
     }
 
     @Suppress("ReturnCount")
