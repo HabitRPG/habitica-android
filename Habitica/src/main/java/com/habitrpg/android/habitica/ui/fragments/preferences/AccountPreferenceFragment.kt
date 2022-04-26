@@ -7,10 +7,8 @@ import android.content.ClipboardManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.InputType
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -28,6 +26,7 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
+import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.ExtraLabelPreference
@@ -40,13 +39,15 @@ import javax.inject.Inject
 
 class AccountPreferenceFragment :
     BasePreferencesFragment(),
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener,
+        AccountUpdateConfirmed {
     @Inject
     lateinit var hostConfig: HostConfig
     @Inject
     lateinit var apiClient: ApiClient
 
     private lateinit var viewModel: AuthenticationViewModel
+    private lateinit var accountDialog: HabiticaAccountDialog
 
     override var user: User? = null
         set(value) {
@@ -410,28 +411,11 @@ class AccountPreferenceFragment :
     }
 
     private fun showAccountDeleteConfirmation() {
-        val view = context?.layoutInflater?.inflate(R.layout.dialog_edittext, null)
-        var deleteMessage = getString(R.string.delete_account_description)
-        val editText = view?.findViewById<EditText>(R.id.editText)
-        if (user?.authentication?.localAuthentication?.email != null) {
-            editText?.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        } else {
-            deleteMessage = getString(R.string.delete_oauth_account_description)
-            editText?.inputType = InputType.TYPE_CLASS_TEXT
-        }
-        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.confirm_deletion)
-        context?.let { context ->
-            val dialog = HabiticaAlertDialog(context)
-            dialog.setTitle(R.string.delete_account)
-            dialog.setMessage(deleteMessage)
-            dialog.addCancelButton()
-            dialog.addButton(R.string.delete, isPrimary = true, isDestructive = true) { _, _ ->
-                deleteAccount(editText?.text?.toString() ?: "")
-            }
-            dialog.setAdditionalContentView(view)
-            dialog.setAdditionalContentSidePadding(12.dpToPx(context))
-            dialog.buttonAxis = LinearLayout.HORIZONTAL
-            dialog.show()
+        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "delete_account", this) }
+        habiticaAccountDialog?.show(parentFragmentManager, "account")
+
+        if (habiticaAccountDialog != null) {
+            accountDialog = habiticaAccountDialog
         }
     }
 
@@ -440,6 +424,7 @@ class AccountPreferenceFragment :
         compositeSubscription.add(
             userRepository.deleteAccount(password).subscribe({ _ ->
                 dialog?.dismiss()
+                accountDialog.dismiss()
                 context?.let { HabiticaBaseApplication.logout(it) }
                 activity?.finish()
             }) { throwable ->
@@ -450,17 +435,13 @@ class AccountPreferenceFragment :
     }
 
     private fun showAccountResetConfirmation() {
-        val context = context ?: return
+        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "reset_account", this) }
+        habiticaAccountDialog?.show(parentFragmentManager, "account")
 
-        val dialog = HabiticaAlertDialog(context)
-        dialog.setTitle(R.string.reset_account)
-        dialog.setMessage(R.string.reset_account_description)
-        dialog.addButton(R.string.reset_account_confirmation, true, true) { _, _ ->
-            resetAccount()
+        if (habiticaAccountDialog != null) {
+            accountDialog = habiticaAccountDialog
         }
-        dialog.addCancelButton()
-        dialog.setAdditionalContentSidePadding(12.dpToPx(context))
-        dialog.show()
+
     }
 
     private fun showConfirmUsernameDialog() {
@@ -479,7 +460,10 @@ class AccountPreferenceFragment :
     private fun resetAccount() {
         val dialog = HabiticaProgressDialog.show(context, R.string.resetting_account)
         compositeSubscription.add(
-            userRepository.resetAccount().subscribe({ dialog?.dismiss() }) { throwable ->
+            userRepository.resetAccount().subscribe({
+                dialog?.dismiss()
+                accountDialog.dismiss()
+            }) { throwable ->
                 dialog?.dismiss()
                 RxErrorHandler.reportError(throwable)
             }
@@ -497,4 +481,13 @@ class AccountPreferenceFragment :
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
     }
+
+    override fun resetConfirmedClicked() {
+        resetAccount()
+    }
+
+    override fun deletionConfirmClicked(confirmationString: String) {
+        deleteAccount(confirmationString)
+    }
+
 }
