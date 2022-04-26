@@ -18,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -66,10 +67,13 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
@@ -546,22 +550,33 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return snackbarContainer
     }
 
+    private var errorJob: Job? = null
+
     override fun showConnectionProblem(title: String?, message: String) {
         if (title != null) {
             super.showConnectionProblem(title, message)
         } else {
-            binding.connectionIssueTextview.visibility = View.VISIBLE
+            if (errorJob?.isCancelled == false) {
+                // a new error resets the timer to hide the error message
+                errorJob?.cancel()
+            }
+            binding.connectionIssueView.visibility = View.VISIBLE
             binding.connectionIssueTextview.text = message
-            compositeSubscription.add(
-                Observable.just("")
-                    .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .subscribe(
-                        {
-                            binding.connectionIssueTextview.visibility = View.GONE
-                        },
-                        {}
-                    )
-            )
+            errorJob = lifecycleScope.launch(Dispatchers.Main) {
+                delay(1.toDuration(DurationUnit.MINUTES))
+                binding.connectionIssueView.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun hideConnectionProblem() {
+        if (errorJob?.isCancelled == false) {
+            errorJob?.cancel()
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
+            if (binding.connectionIssueView.visibility == View.VISIBLE) {
+                binding.connectionIssueView.visibility = View.GONE
+            }
         }
     }
 }

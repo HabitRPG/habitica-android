@@ -435,7 +435,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                         putLong("last_task_reporting", Date().time)
                     }
                 }
-            }.subscribe()
+            }.subscribe({}, RxErrorHandler.handleEmptyError())
         )
     }
 
