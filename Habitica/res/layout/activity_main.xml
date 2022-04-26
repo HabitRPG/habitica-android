@@ -110,6 +110,8 @@
                     android:paddingVertical="2dp"
                     android:paddingHorizontal="@dimen/spacing_medium"
                     android:background="@color/error_banner_background"
+                    tools:visibility="visible"
+                    android:visibility="gone"
                     >
                 <TextView
                     android:id="@+id/connection_issue_textview"
@@ -122,9 +124,7 @@
                     android:text="@string/internal_error_api"
                     app:drawableStartCompat="@drawable/ic_warning_black"
                     app:drawableTint="@color/maroon_500"
-                    android:drawablePadding="4dp"
-                    tools:visibility="visible"
-                    android:visibility="gone"/>
+                    android:drawablePadding="4dp"/>
                 </FrameLayout>
             </com.google.android.material.appbar.AppBarLayout>
 

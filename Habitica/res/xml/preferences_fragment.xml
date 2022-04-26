@@ -183,7 +183,7 @@
             android:summary="@string/pref_first_day_of_the_week_summary"
             android:title="@string/pref_first_day_of_the_week_title" />
 
-        <ListPreference
+        <com.habitrpg.android.habitica.ui.views.HabiticaListPreference
             android:key="cds_time"
             android:entries="@array/cds_labels"
             android:entryValues="@array/cds_values"
