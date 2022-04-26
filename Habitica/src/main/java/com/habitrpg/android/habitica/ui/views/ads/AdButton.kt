@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.ads
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -26,17 +25,24 @@ class AdButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
+    var state: State = State.EMPTY
+        set(value) {
+            field = value
+            updateViews()
+        }
+
+    enum class State {
+        EMPTY,
+        READY,
+        LOADING,
+        UNAVAILABLE
+    }
+
     private var updateJob: Job? = null
     private var nextAdDate: Date? = null
     private val binding = AdButtonBinding.inflate(context.layoutInflater, this)
 
     var text: String = ""
-    set(value) {
-        field = value
-        updateViews()
-    }
-
-    var isAvailable: Boolean = true
     set(value) {
         field = value
         updateViews()
@@ -55,21 +61,39 @@ class AdButton @JvmOverloads constructor(
         binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
         binding.currencyView.value = 0.0
         gravity = Gravity.CENTER
+        state = State.EMPTY
     }
 
     private fun updateViews() {
-        if (isAvailable) {
-            binding.textView.text = text
-            binding.textView.alpha = 1.0f
-            binding.currencyView.visibility = View.VISIBLE
-            setBackgroundResource(R.drawable.ad_button_background)
-        } else {
-            binding.textView.text = context.getString(R.string.available_in, nextAdDate?.getShortRemainingString() ?: "")
-            binding.textView.alpha = 0.75f
-            binding.currencyView.visibility = View.GONE
-            setBackgroundResource(R.drawable.ad_button_background_disabled)
+        when (state) {
+            State.READY -> {
+                binding.loadingIndicator.visibility = GONE
+                binding.textView.text = text
+                binding.textView.alpha = 1.0f
+                binding.textView.visibility = VISIBLE
+                binding.currencyView.visibility = VISIBLE
+                setBackgroundResource(R.drawable.ad_button_background)
+            }
+            State.UNAVAILABLE -> {
+                binding.loadingIndicator.visibility = GONE
+                binding.textView.text = context.getString(R.string.available_in, nextAdDate?.getShortRemainingString() ?: "")
+                binding.textView.alpha = 0.75f
+                binding.textView.visibility = VISIBLE
+                binding.currencyView.visibility = GONE
+                setBackgroundResource(R.drawable.ad_button_background_disabled)
+            }
+            State.EMPTY -> {
+                binding.loadingIndicator.visibility = GONE
+                binding.textView.visibility = GONE
+                binding.currencyView.visibility = GONE
+            }
+            State.LOADING -> {
+                binding.loadingIndicator.visibility = VISIBLE
+                binding.textView.visibility = GONE
+                binding.currencyView.visibility = GONE
+            }
         }
-        isEnabled = isAvailable
+        isEnabled = state == State.READY
     }
 
     fun updateForAdType(type: AdType, lifecycleScope: LifecycleCoroutineScope) {
@@ -81,11 +105,11 @@ class AdButton @JvmOverloads constructor(
             updateJob = lifecycleScope.launch(Dispatchers.Main) {
                 while (nextAdDate?.after(Date()) == true) {
                     val remaining = ((nextAdDate?.time ?: 0L) - Date().time).toDuration(DurationUnit.MILLISECONDS)
-                    isAvailable = remaining.isNegative()
+                    state = if (remaining.isNegative()) State.READY else State.UNAVAILABLE
                     updateViews()
                     delay(1.toDuration(remaining.getMinuteOrSeconds()))
                 }
-                isAvailable = true
+                state = State.READY
             }
         }
     }

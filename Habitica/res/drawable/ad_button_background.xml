@@ -15,9 +15,13 @@
         android:left="3dp"
         android:right="3dp"
         android:top="3dp">
-        <shape android:shape="rectangle" >
+        <shape
+            android:shape="rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <solid android:color="@color/brand_400" />
             <corners android:radius="6dp" />
         </shape>
+        <ripple android:color="@color/white" />
     </item>
 </layer-list>

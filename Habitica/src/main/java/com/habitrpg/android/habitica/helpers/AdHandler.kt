@@ -17,6 +17,7 @@ import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import java.io.UnsupportedEncodingException
@@ -32,11 +33,11 @@ enum class AdType {
 
     val adUnitID: String
     get() {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.TESTING_LEVEL == "alpha") {
             return "ca-app-pub-3940256099942544/5224354917"
         }
         return when (this) {
-            ARMOIRE -> "ca-app-pub-5911973472413421/9392092486\n"
+            ARMOIRE -> "ca-app-pub-5911973472413421/9392092486"
             SPELL -> "ca-app-pub-5911973472413421/1738504765"
             FAINT -> "ca-app-pub-5911973472413421/1738504765"
         }
@@ -107,6 +108,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             MobileAds.initialize(context) {
                 currentAdStatus = AdStatus.READY
                 onComplete()
+                FirebaseCrashlytics.getInstance().recordException(Throwable("Ads Initialized"))
             }
         }
 
@@ -142,7 +144,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
         }
     }
 
-    fun prepare() {
+    fun prepare(onComplete: ((Boolean) -> Unit)? = null) {
         whenAdsInitialized(activity) {
             val adRequest = AdRequest.Builder()
                 .build()
@@ -150,19 +152,22 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             if (BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.TESTING_LEVEL == "alpha") {
                 if (!adRequest.isTestDevice(activity)) {
                     // users in this group need to be configured as Test device. better to fail if they aren't
-                    currentAdStatus = AdStatus.DISABLED
-                    return@whenAdsInitialized
+                    // currentAdStatus = AdStatus.DISABLED
+                    FirebaseCrashlytics.getInstance().recordException(Throwable("Device not test device"))
                 }
             }
 
             RewardedAd.load(activity, type.adUnitID, adRequest, object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
+                    FirebaseCrashlytics.getInstance().recordException(Throwable(adError.message))
                     rewardAction(false)
+                    onComplete?.invoke(false)
                 }
 
                 override fun onAdLoaded(rewardedAd: RewardedAd) {
                     this@AdHandler.rewardedAd = rewardedAd
                     configureReward()
+                    onComplete?.invoke(true)
                 }
             })
         }

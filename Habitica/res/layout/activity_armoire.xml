@@ -20,7 +20,7 @@
         android:id="@+id/gold_view"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:background="@drawable/pill_bg_yellow_500"
+        android:background="@drawable/armoire_gold_background"
         android:gravity="center"
         android:paddingStart="6dp"
         android:paddingEnd="8dp"
@@ -36,8 +36,8 @@
         android:layout_marginBottom="23dp">
         <ImageView
             android:id="@+id/icon_view"
-            android:layout_width="@dimen/shopitem_image_size"
-            android:layout_height="@dimen/shopitem_image_size"
+            android:layout_width="136dp"
+            android:layout_height="136dp"
             android:layout_gravity="center"/>
     </FrameLayout>
 
@@ -70,7 +70,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:paddingHorizontal="12dp"
-        android:paddingTop="24dp">
+        android:paddingTop="28dp">
         <TextView
             android:id="@+id/equipment_count_view"
             android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:text="@string/armoire_drop_rates"
             android:textColor="@color/brand_500"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="22dp"
             style="@style/Body2"/>
     </LinearLayout>
 </LinearLayout>
