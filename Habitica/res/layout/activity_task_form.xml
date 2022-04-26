@@ -45,8 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TaskFormTextInputLayoutAppearance"
-                    app:boxStrokeWidth="3dp"
-                    app:boxStrokeWidthFocused="1dp"
+                    app:boxStrokeColor="?attr/colorPrimary"
                     app:hintTextColor="?colorPrimaryText"
                     android:backgroundTint="?attr/colorPrimaryText"
                     android:hint="@string/task_title"
@@ -60,11 +59,10 @@
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/notes_input_layout"
+                    style="@style/TaskFormTextInputLayoutAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/TaskFormTextInputLayoutAppearance"
-                    app:boxStrokeWidth="3dp"
-                    app:boxStrokeWidthFocused="2dp"
+                    app:boxStrokeColor="?attr/colorPrimary"
                     android:backgroundTint="?attr/colorPrimaryText"
                     app:hintTextColor="?colorPrimaryText"
                     android:hint="@string/notes"
