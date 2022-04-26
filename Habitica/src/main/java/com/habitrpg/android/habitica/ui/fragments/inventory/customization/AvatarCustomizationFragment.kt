@@ -336,6 +336,7 @@ class AvatarCustomizationFragment :
     private fun configureMonthFilterButton(button: CheckBox, value: Int, filter: CustomizationFilter) {
         val identifier = value.toString().padStart(2, '0')
         button.isChecked = filter.months.contains(identifier)
+        button.text
         button.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked && filter.months.contains(identifier)) {
                 filter.months.remove(identifier)

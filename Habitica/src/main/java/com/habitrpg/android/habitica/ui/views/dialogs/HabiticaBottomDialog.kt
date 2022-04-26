@@ -9,6 +9,10 @@ import com.habitrpg.android.habitica.databinding.BottomSheetWrapperBinding
 open class HabiticaBottomSheetDialog(context: Context) : BottomSheetDialog(context, R.style.SheetDialog) {
     private val wrapperBinding = BottomSheetWrapperBinding.inflate(layoutInflater)
 
+    init {
+        behavior.peekHeight = context.resources.displayMetrics.heightPixels / 2
+    }
+
     var grabberVisibility: Int
     get() = wrapperBinding.grabber.visibility
     set(value) {
