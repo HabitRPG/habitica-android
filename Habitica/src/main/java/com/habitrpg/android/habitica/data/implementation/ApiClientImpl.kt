@@ -58,13 +58,6 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.io.IOException
-import java.net.SocketException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-import java.util.GregorianCalendar
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLException
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -73,6 +66,13 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
+import java.net.SocketException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import java.util.GregorianCalendar
+import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLException
 
 class ApiClientImpl(
     private val gsonConverter: GsonConverterFactory,
@@ -94,6 +94,9 @@ class ApiClientImpl(
                 habitResponse.notifications?.let {
                     notificationsManager.setNotifications(it)
                 }
+                if (hadError) {
+                    hideConnectionProblemDialog()
+                }
                 habitResponse.data
             }
             .subscribeOn(Schedulers.io())
@@ -102,6 +105,7 @@ class ApiClientImpl(
     }
     private var languageCode: String? = null
     private var lastAPICallURL: String? = null
+    private var hadError = false
 
     init {
         HabiticaBaseApplication.userComponent?.inject(this)
@@ -306,10 +310,19 @@ class ApiClientImpl(
         resourceTitleString: String?,
         resourceMessageString: String
     ) {
+        hadError = true
         val application = (context as? HabiticaBaseApplication)
             ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
             ?.showConnectionProblem(resourceTitleString, resourceMessageString)
+    }
+
+    private fun hideConnectionProblemDialog() {
+        hadError = false
+        val application = (context as? HabiticaBaseApplication)
+            ?: (context.applicationContext as? HabiticaBaseApplication)
+        application?.currentActivity?.get()
+            ?.hideConnectionProblem()
     }
 
     /*

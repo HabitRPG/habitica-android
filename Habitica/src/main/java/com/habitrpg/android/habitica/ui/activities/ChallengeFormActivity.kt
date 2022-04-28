@@ -36,16 +36,17 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.core.Flowable
-import java.util.UUID
-import javax.inject.Inject
-import javax.inject.Named
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.UUID
+import javax.inject.Inject
+import javax.inject.Named
 
 class ChallengeFormActivity : BaseActivity() {
 
@@ -223,7 +224,7 @@ class ChallengeFormActivity : BaseActivity() {
         val bundle = intent.extras
 
         ChallengeTasksRecyclerViewAdapter(
-            null, 0, this, "",
+            TasksViewModel(), 0, this, "",
             openTaskDisabled = false,
             taskActionsDisabled = true
         ).also { challengeTasks = it }

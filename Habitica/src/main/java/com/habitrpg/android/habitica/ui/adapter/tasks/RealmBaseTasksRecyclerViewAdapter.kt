@@ -11,13 +11,13 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AdventureGuideMenuBannerBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -27,7 +27,7 @@ import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter(
     private val layoutResource: Int,
-    private val taskFilterHelper: TaskFilterHelper?
+    private val viewModel: TasksViewModel
 ) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     override var canScoreTasks = true
     private var unfilteredData: List<Task>? = null
@@ -120,8 +120,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     final override fun filter() {
         val unfilteredData = this.unfilteredData ?: return
 
-        if (taskFilterHelper != null && unfilteredData is OrderedRealmCollection) {
-            val query = taskFilterHelper.createQuery(unfilteredData)
+        if (unfilteredData is OrderedRealmCollection) {
+            val query = viewModel.createQuery(unfilteredData)
             if (query != null) {
                 data = query.findAll()
             }

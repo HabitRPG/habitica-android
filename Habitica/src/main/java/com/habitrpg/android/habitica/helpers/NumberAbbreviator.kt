@@ -7,10 +7,10 @@ import java.text.DecimalFormat
 
 object NumberAbbreviator {
 
-    fun abbreviate(context: Context, number: Double, numberOfDecimals: Int = 2): String {
+    fun abbreviate(context: Context, number: Double, numberOfDecimals: Int = 2, minForAbbrevation: Int = 0): String {
         var usedNumber = number
         var counter = 0
-        while (usedNumber >= 1000) {
+        while (usedNumber >= 1000 && number >= minForAbbrevation) {
             counter++
             usedNumber /= 1000
         }

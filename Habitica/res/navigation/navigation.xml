@@ -35,6 +35,11 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue=""/>
+        <argument
+            android:name="ownerID"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue=""/>
         <deepLink app:uri="habitica.com/user/tasks/{taskType}" />
         <deepLink app:uri="habitica.com/tasks" />
         <deepLink app:uri="habitica.com" />
@@ -142,6 +147,20 @@
             android:id="@+id/openMountDetail"
             app:destination="@id/mountDetailRecyclerFragment" />
     </fragment>
+    <activity
+        android:id="@+id/armoireActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.ArmoireActivity"
+        android:label="@string/armoire" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="text"
+            app:argType="string" />
+        <argument
+            android:name="key"
+            app:argType="string" />
+    </activity>
     <activity
         android:id="@+id/subscriptionPurchaseActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity"
@@ -399,6 +418,9 @@
     <action
         android:id="@+id/openProfileActivity"
         app:destination="@id/fullProfileActivity" />
+    <action
+        android:id="@+id/openArmoireActivity"
+        app:destination="@id/armoireActivity" />
     <fragment
         android:id="@+id/achievementsFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.AchievementsFragment"
@@ -465,13 +487,5 @@
             android:name="url"
             app:argType="string" />
         <deepLink app:uri="habitica.com/promo/web?url={url}" />
-    </fragment>
-    <fragment
-        android:id="@+id/teamBoardFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment"
-        android:label="TeamBoardFragment" >
-        <argument
-            android:name="teamID"
-            app:argType="string" />
     </fragment>
 </navigation>

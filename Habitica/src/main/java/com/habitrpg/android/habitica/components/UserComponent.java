@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity;
+import com.habitrpg.android.habitica.ui.activities.ArmoireActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
@@ -98,13 +99,13 @@ import com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TaskRecyclerViewFragment;
 import com.habitrpg.android.habitica.ui.fragments.tasks.TasksFragment;
-import com.habitrpg.android.habitica.ui.fragments.tasks.TeamBoardFragment;
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel;
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog;
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog;
@@ -337,8 +338,6 @@ public interface UserComponent {
 
     void inject(PromoInfoFragment promoInfoFragment);
 
-    void inject(@NotNull TeamBoardFragment teamBoardFragment);
-
     void inject(@NotNull GuildOverviewFragment guildOverviewFragment);
 
     void inject(@NotNull PromoWebFragment promoWebFragment);
@@ -358,4 +357,8 @@ public interface UserComponent {
     void inject(@NotNull MainUserViewModel mainUserViewModel);
 
     void inject(@NotNull PetSuggestHatchDialog petSuggestHatchDialog);
+
+    void inject(@NotNull ArmoireActivity armoireActivity);
+
+    void inject(@NotNull TasksViewModel tasksViewModel);
 }

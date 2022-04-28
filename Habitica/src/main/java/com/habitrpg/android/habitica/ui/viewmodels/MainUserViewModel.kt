@@ -20,6 +20,8 @@ class MainUserViewModel(val userRepository: UserRepository) {
         get() = user.value?.id
     val username: CharSequence
         get() = user.value?.username ?: ""
+    val displayName: CharSequence
+        get() = user.value?.profile?.name ?: ""
     val partyID: String?
         get() = user.value?.party?.id
     val isUserFainted: Boolean

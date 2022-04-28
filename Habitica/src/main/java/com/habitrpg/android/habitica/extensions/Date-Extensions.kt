@@ -4,16 +4,12 @@ import android.content.res.Resources
 import com.habitrpg.android.habitica.R
 import java.util.Calendar
 import java.util.Date
-import kotlin.math.round
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
-import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
+import kotlin.time.toDuration
 
 class DateUtils {
-
     companion object {
-
         fun createDate(year: Int, month: Int, day: Int): Date {
             val cal = Calendar.getInstance()
             cal.set(Calendar.YEAR, year)
@@ -33,11 +29,11 @@ fun Date.getAgoString(res: Resources): String {
 }
 
 fun Long.getAgoString(res: Resources): String {
-    val diff = Date().time - this
+    val diff = (Date().time - this).toDuration(DurationUnit.MILLISECONDS)
 
-    val diffMinutes = diff / (60 * 1000) % 60
-    val diffHours = diff / (60 * 60 * 1000) % 24
-    val diffDays = diff / (24 * 60 * 60 * 1000)
+    val diffMinutes = diff.inWholeMinutes
+    val diffHours = diff.inWholeHours
+    val diffDays = diff.inWholeDays
     val diffWeeks = diffDays / 7
     val diffMonths = diffDays / 30
 
@@ -63,30 +59,29 @@ fun Date.getRemainingString(res: Resources): String {
     return this.time.getRemainingString(res)
 }
 
-@OptIn(ExperimentalTime::class)
 fun Long.getRemainingString(res: Resources): String {
-    val diff = (this - Date().time).milliseconds
+    val diff = (this - Date().time).toDuration(DurationUnit.MILLISECONDS)
 
-    val diffMinutes = diff.inMinutes
-    val diffHours = diff.inHours
-    val diffDays = diff.inDays
-    val diffWeeks = diffDays / 7f
-    val diffMonths = diffDays / 30f
+    val diffMinutes = diff.inWholeMinutes
+    val diffHours = diff.inWholeHours
+    val diffDays = diff.inWholeDays
+    val diffWeeks = diffDays / 7
+    val diffMonths = diffDays / 30
 
     return when {
-        diffMonths != 0.0 -> if (round(diffMonths) == 1.0) {
+        diffMonths != 0L -> if (diffMonths == 1L) {
             res.getString(R.string.remaining_1month)
-        } else res.getString(R.string.remaining_months, round(diffMonths).toInt())
-        diffWeeks != 0.0 -> if (round(diffWeeks) == 1.0) {
+        } else res.getString(R.string.remaining_months, diffMonths)
+        diffWeeks != 0L -> if (diffWeeks == 1L) {
             res.getString(R.string.remaining_1week)
-        } else res.getString(R.string.remaining_weeks, round(diffWeeks).toInt())
-        diffDays != 0.0 -> if (diffDays == 1.0) {
+        } else res.getString(R.string.remaining_weeks, diffWeeks)
+        diffDays != 0L -> if (diffDays == 1L) {
             res.getString(R.string.remaining_1day)
         } else res.getString(R.string.remaining_days, diffDays)
-        diffHours != 0.0 -> if (diffHours == 1.0) {
+        diffHours != 0L -> if (diffHours == 1L) {
             res.getString(R.string.remaining_1hour)
         } else res.getString(R.string.remaining_hours, diffHours)
-        diffMinutes == 1.0 -> res.getString(R.string.remaining_1Minute)
+        diffMinutes == 1L -> res.getString(R.string.remaining_1Minute)
         else -> res.getString(R.string.remaining_minutes, diffMinutes)
     }
 }
@@ -95,16 +90,15 @@ fun Date.getShortRemainingString(): String {
     return time.getShortRemainingString()
 }
 
-@OptIn(ExperimentalTime::class)
 fun Long.getShortRemainingString(): String {
-    var diff = Duration.milliseconds((this - Date().time))
+    var diff = (this - Date().time).toDuration(DurationUnit.MILLISECONDS)
 
     val diffDays = diff.toInt(DurationUnit.DAYS)
-    diff -= Duration.days(diffDays)
+    diff -= diffDays.toDuration(DurationUnit.DAYS)
     val diffHours = diff.toInt(DurationUnit.HOURS)
-    diff -= Duration.hours(diffHours)
+    diff -= diffDays.toDuration(DurationUnit.HOURS)
     val diffMinutes = diff.toInt(DurationUnit.MINUTES)
-    diff -= Duration.minutes(diffMinutes)
+    diff -= diffMinutes.toDuration(DurationUnit.MINUTES)
     val diffSeconds = diff.toInt(DurationUnit.SECONDS)
 
     var str = "${diffMinutes}m"
@@ -118,4 +112,8 @@ fun Long.getShortRemainingString(): String {
         str = "$str ${diffSeconds}s"
     }
     return str
+}
+
+fun Duration.getMinuteOrSeconds(): DurationUnit {
+    return if (this.inWholeHours < 1) DurationUnit.SECONDS else DurationUnit.MINUTES
 }

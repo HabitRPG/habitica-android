@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogChallengeFilterBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.android.habitica.utils.Action1
 
 internal class ChallengeFilterDialogHolder private constructor(
@@ -28,13 +29,10 @@ internal class ChallengeFilterDialogHolder private constructor(
     }
 
     fun bind(
-        builder: AlertDialog.Builder,
         filterGroups: List<Group>,
         currentFilter: ChallengeFilterOptions?,
         selectedGroupsCallback: Action1<ChallengeFilterOptions>
     ) {
-        builder.setPositiveButton(context.getString(R.string.done)) { _, _ -> doneClicked() }
-            .show()
         this.filterGroups = filterGroups
         this.currentFilter = currentFilter
         this.selectedGroupsCallback = selectedGroupsCallback
@@ -86,11 +84,11 @@ internal class ChallengeFilterDialogHolder private constructor(
 
             val challengeFilterDialogHolder = ChallengeFilterDialogHolder(dialogLayout, activity)
 
-            val builder = AlertDialog.Builder(activity)
-                .setTitle(R.string.filter)
-                .setView(dialogLayout)
+            val sheet = HabiticaBottomSheetDialog(activity)
+            sheet.setContentView(dialogLayout)
 
-            challengeFilterDialogHolder.bind(builder, filterGroups, currentFilter, selectedGroupsCallback)
+            challengeFilterDialogHolder.bind(filterGroups, currentFilter, selectedGroupsCallback)
+            sheet.show()
         }
     }
 }

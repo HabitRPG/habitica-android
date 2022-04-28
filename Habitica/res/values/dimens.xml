@@ -118,4 +118,6 @@
     <dimen name="widget_rounding">5dp</dimen>
     <dimen name="task_spacing_vertical">4dp</dimen>
     <dimen name="task_spacing_horizontal">10dp</dimen>
+    <dimen name="bottom_sheet_radius">20dp</dimen>
+    <dimen name="bottom_sheet_inset">16dp</dimen>
 </resources>

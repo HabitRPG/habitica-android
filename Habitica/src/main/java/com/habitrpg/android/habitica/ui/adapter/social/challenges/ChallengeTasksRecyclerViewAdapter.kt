@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter
@@ -17,18 +16,19 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
 class ChallengeTasksRecyclerViewAdapter(
-    taskFilterHelper: TaskFilterHelper?,
+    viewModel: TasksViewModel,
     layoutResource: Int,
     newContext: Context,
     userID: String,
     private val openTaskDisabled: Boolean,
     private val taskActionsDisabled: Boolean
-) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>(TaskType.HABIT, taskFilterHelper, layoutResource, newContext, userID) {
+) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>(TaskType.HABIT, viewModel, layoutResource, newContext, userID) {
 
     private val addItemSubject = PublishSubject.create<Task>()
 

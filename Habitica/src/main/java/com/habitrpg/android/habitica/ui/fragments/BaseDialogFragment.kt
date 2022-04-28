@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.functions.Consumer
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
+abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment() {
 
     var isModal: Boolean = false
     abstract var binding: VB?

@@ -15,7 +15,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:7.1.3'
         classpath 'net.sourceforge.pmd:pmd-java:5.5.3'
     }
 }
@@ -121,6 +121,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
+    implementation 'com.google.android.gms:play-services-ads:20.6.0'
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'com.nex3z:flow-layout:1.2.2'
 
@@ -128,8 +129,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.4.1"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
@@ -144,7 +145,7 @@ dependencies {
             attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
         }
     }
-    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:1.6.10"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:1.6.20"
 }
 
 android {
@@ -165,8 +166,8 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs 'en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'zh', 'zh-rTW'
 
-        versionCode 3274
-        versionName "3.5.1.3"
+        versionCode 3320
+        versionName "3.6"
 
         targetSdkVersion 32
 
@@ -177,7 +178,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-
 
     signingConfigs {
         release
@@ -385,14 +385,6 @@ apply plugin: 'com.google.gms.google-services'
 jacoco {
     toolVersion = "0.8.7"
 }
-
-// packages to exclude for example generated classes, R class and models package, add all packages that you wish to exclude from test coverage
-def fileFilter = [
-        '**/*$ViewInjector*.*','**/*$ViewBinder*.*', '**/HabiticaIcons*.*', '**/DeviceName.*', '**/databinding/*Binding.*',
-        '**/R.class', '**/R.styleable', '**/R$*.class', '**/BuildConfig.*', '**/EmojiMap.*',
-        '**/Manifest*.*', 'android/**/*.*', '**/*RealmProxy*.*', '**/io/realm/*']
-def debugTree = fileTree(dir: "${buildDir}/intermediates/asm_instrumented_project_classes/prodDebug", excludes: fileFilter)
-def mainSrc = "${project.projectDir}/src/main/java"
 
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
