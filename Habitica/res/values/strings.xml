@@ -590,8 +590,9 @@
     <string name="reset_account_title">Are you sure you want to reset?</string>
     <string name="confirm_reset">Confirm reset</string>
     <string name="reset_account_description">You will lose all your levels, Gold, and Experience. All your tasks and their historical data will be deleted (Challenge tasks will stay). You will lose all equipment, including limited edition or subscriber equipment, but you will be able to buy it back (you will need to be the correct class to re-buy class-specific gear). You will keep your current class and your Pets and Mounts. To confirm reset, type RESET below.</string>
+    <string name="delete_caps">DELETE</string>
     <string name="delete_account">Delete Account</string>
-    <string name="delete_account_description">This will delete your account forever and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type your password into the text box below.</string>
+    <string name="delete_account_description">This will delete your account forever and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type DELETE into the text box below.</string>
     <string name="delete_oauth_account_description">Deleted accounts are permanent and cannot be restored. Gems cannot be refunded. If you still want to delete, type DELETE below.</string>
     <string name="reset_account_confirmation">Reset my Account</string>
     <string name="delete_account_confirmation">Delete my Account</string>

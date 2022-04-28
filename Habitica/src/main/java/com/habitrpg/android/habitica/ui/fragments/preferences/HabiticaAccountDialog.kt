@@ -88,14 +88,12 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (confirmationText?.length() != null) {
-                    if (confirmationText?.length()!! > 7) {
-                        confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
-                        confirmationAction?.alpha = 1.0f
-                    } else {
-                        confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_10))
-                        confirmationAction?.alpha = .4f
-                    }
+                if (confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) {
+                    confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
+                    confirmationAction?.alpha = 1.0f
+                } else {
+                    confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_10))
+                    confirmationAction?.alpha = .4f
                 }
             }
 
@@ -103,10 +101,8 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
             }
         })
         confirmationAction?.setOnClickListener {
-            if (confirmationText?.length() != null) {
-                if (confirmationText?.length()!! > 7) {
-                    accountUpdateConfirmed.deletionConfirmClicked(confirmationText?.text.toString())
-                }
+            if (confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) {
+                accountUpdateConfirmed.resetConfirmedClicked()
             }
         }
     }
@@ -127,7 +123,6 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
 
 
     interface AccountUpdateConfirmed {
-        //API currently does not take password to reset account
         fun resetConfirmedClicked()
         fun deletionConfirmClicked(confirmationString: String)
     }
