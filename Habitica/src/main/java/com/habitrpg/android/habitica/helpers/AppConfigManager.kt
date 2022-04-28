@@ -136,6 +136,29 @@ class AppConfigManager(contentRepository: ContentRepository?) {
     }
 
     fun enableTeamBoards(): Boolean {
+        if (BuildConfig.DEBUG) {
+            return true
+        }
         return remoteConfig.getBoolean("enableTeamBoards")
+    }
+
+    fun enableArmoireAds(): Boolean {
+        return remoteConfig.getBoolean("enableArmoireAds")
+    }
+
+    fun enableFaintAds(): Boolean {
+        return remoteConfig.getBoolean("enableFaintAds")
+    }
+
+    fun enableSpellAds(): Boolean {
+        return remoteConfig.getBoolean("enableSpellAds")
+    }
+
+    fun enableNewArmoire(): Boolean {
+        return remoteConfig.getBoolean("enableNewArmoire")
+    }
+
+    fun hideFacebook(): Boolean {
+        return remoteConfig.getBoolean("hideFacebook")
     }
 }

@@ -5,18 +5,15 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -24,13 +21,11 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -47,16 +42,21 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    var viewModel: TasksViewModel? = null
+
+    private var taskSubscription: Disposable? = null
     internal var canEditTasks: Boolean = true
     internal var canScoreTaks: Boolean = true
     override var binding: FragmentRefreshRecyclerviewBinding? = null
@@ -68,10 +68,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     private var recyclerSubscription: CompositeDisposable = CompositeDisposable()
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
-    @Inject
-    lateinit var apiClient: ApiClient
-    @Inject
-    lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
@@ -90,8 +86,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     internal var taskType: TaskType = TaskType.HABIT
     private var itemTouchCallback: ItemTouchHelper.Callback? = null
 
-    var refreshAction: ((() -> Unit) -> Unit)? = null
-
     internal val className: TaskType
         get() = this.taskType
 
@@ -103,18 +97,19 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             recyclerSubscription.dispose()
         }
         recyclerSubscription = CompositeDisposable()
-        val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
-            TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, taskFilterHelper)
-            TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, taskFilterHelper)
-            TaskType.TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, taskFilterHelper)
-            TaskType.REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
-            else -> null
+        viewModel?.let { viewModel ->
+            val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
+                TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
+                TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, viewModel)
+                TaskType.TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, viewModel)
+                TaskType.REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
+                else -> null
+            }
+
+            recyclerAdapter = adapter as? TaskRecyclerViewAdapter
+            recyclerAdapter?.canScoreTasks = canScoreTaks
+            binding?.recyclerView?.adapter = adapter
         }
-
-        recyclerAdapter = adapter as? TaskRecyclerViewAdapter
-        recyclerAdapter?.canScoreTasks = canScoreTaks
-        binding?.recyclerView?.adapter = adapter
-
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
 
         recyclerAdapter?.errorButtonEvents?.subscribe(
@@ -136,14 +131,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler { MainNavigationController.navigate(R.id.adventureGuideActivity) }?.let { recyclerSubscription.add(it) }
 
-        recyclerSubscription.add(
-            taskRepository.getTasks(this.taskType).subscribe(
-                {
-                    this.recyclerAdapter?.updateUnfilteredData(it)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        viewModel?.ownerID?.observe(viewLifecycleOwner) {
+            canEditTasks = viewModel?.isPersonalBoard ?: true
+            canScoreTaks = viewModel?.isPersonalBoard ?: true
+            updateTaskSubscription(it)
+        }
     }
 
     private fun handleTaskResult(result: TaskScoringResult, value: Int) {
@@ -190,7 +182,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onDestroy() {
         userRepository.close()
-        inventoryRepository.close()
         super.onDestroy()
     }
 
@@ -265,7 +256,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             ) {
                 if (validTaskId != null) {
                     var newPosition = viewHolder.absoluteAdapterPosition
-                    if (taskFilterHelper.howMany(taskType) > 0) {
+                    if ((viewModel?.howMany(taskType) ?: 0) > 0) {
                         newPosition = if ((newPosition + 1) == recyclerAdapter?.data?.size) {
                             recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
                         } else {
@@ -318,6 +309,16 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         )
     }
 
+
+    private fun updateTaskSubscription(ownerID: String?) {
+        taskSubscription = taskRepository.getTasks(this.taskType, ownerID).subscribe(
+                {
+                    this.recyclerAdapter?.updateUnfilteredData(it)
+                },
+                RxErrorHandler.handleEmptyError()
+        )
+    }
+
     protected fun showBrokenChallengeDialog(task: Task) {
         context?.let {
             if (!task.isValid) {
@@ -354,7 +355,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun setEmptyLabels() {
-        binding?.recyclerView?.emptyItem = if (taskFilterHelper.howMany(taskType) > 0) {
+        binding?.recyclerView?.emptyItem = if ((viewModel?.howMany(taskType) ?: 0) > 0) {
             when (this.taskType) {
                 TaskType.HABIT -> {
                     EmptyItem(
@@ -422,21 +423,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun scoreTask(task: Task, direction: TaskDirection) {
-        compositeSubscription.add(
-            taskRepository.taskChecked(null, task.id ?: "", direction == TaskDirection.UP, false) { result ->
-                handleTaskResult(result, task.value.toInt())
-                if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
-                    AmplitudeManager.sendEvent(
-                        "task scored",
-                        AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                        AmplitudeManager.EVENT_HITTYPE_EVENT
-                    )
-                    sharedPreferences.edit {
-                        putLong("last_task_reporting", Date().time)
-                    }
-                }
-            }.subscribe()
-        )
+        viewModel?.scoreTask(task, direction) { result, value ->
+            handleTaskResult(result, value)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -449,7 +438,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        refreshAction?.invoke {
+        viewModel?.refreshData {
             binding?.refreshLayout?.isRefreshing = false
         }
     }
@@ -459,13 +448,13 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
             if (it != null) {
                 when (taskType) {
-                    TaskType.TODO -> taskFilterHelper.setActiveFilter(
+                    TaskType.TODO -> viewModel?.setActiveFilter(
                         TaskType.TODO,
                         Task.FILTER_ACTIVE
                     )
                     TaskType.DAILY -> {
                         if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
-                            taskFilterHelper.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
+                            viewModel?.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
                         }
                     }
                 }
@@ -481,7 +470,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     fun setActiveFilter(activeFilter: String) {
-        taskFilterHelper.setActiveFilter(taskType, activeFilter)
+        viewModel?.setActiveFilter(taskType, activeFilter)
         recyclerAdapter?.filter()
 
         setEmptyLabels()
@@ -512,9 +501,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     companion object {
         private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
 
-        fun newInstance(context: Context?, classType: TaskType): TaskRecyclerViewFragment {
+        fun newInstance(context: Context?, classType: TaskType, viewModel: TasksViewModel): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
             fragment.taskType = classType
+            fragment.viewModel = viewModel
             var tutorialTexts: List<String>? = null
             if (context != null) {
                 when (fragment.taskType) {

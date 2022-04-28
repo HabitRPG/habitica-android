@@ -182,6 +182,13 @@
             android:layout="@layout/preference_child_summary"
             android:summary="@string/pref_first_day_of_the_week_summary"
             android:title="@string/pref_first_day_of_the_week_title" />
+
+        <com.habitrpg.android.habitica.ui.views.HabiticaListPreference
+            android:key="cds_time"
+            android:entries="@array/cds_labels"
+            android:entryValues="@array/cds_values"
+            android:layout="@layout/preference_child_summary"
+            android:title="@string/day_start_adjustment"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -198,17 +205,6 @@
             android:key="reminder_time"
             android:defaultValue="19:30"
             android:title="@string/pref_reminder_picker"
-            android:layout="@layout/preference_child_summary" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_cds_header"
-        android:layout="@layout/preference_category">
-
-        <com.habitrpg.android.habitica.prefs.TimePreference
-            android:key="cds_time"
-            android:defaultValue="00:00"
             android:layout="@layout/preference_child_summary" />
 
     </PreferenceCategory>

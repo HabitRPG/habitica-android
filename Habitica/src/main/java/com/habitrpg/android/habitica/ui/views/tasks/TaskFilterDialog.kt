@@ -12,9 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
@@ -22,31 +20,23 @@ import androidx.core.widget.CompoundButtonCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
+import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import io.reactivex.rxjava3.core.Observable
 import java.util.UUID
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAlertDialog(context), RadioGroup.OnCheckedChangeListener {
-
-    private var clearButton: Button
+class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
+    private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
 
     @Inject
     lateinit var repository: TagRepository
-
-    private var taskTypeTitle: TextView
-    private var taskFilters: RadioGroup
-    private var allTaskFilter: RadioButton
-    private var secondTaskFilter: RadioButton
-    private var thirdTaskFilter: RadioButton
-    private var tagsEditButton: Button
-    private var tagsList: LinearLayout
 
     private var taskType: TaskType? = null
     private var listener: OnFilterCompletedListener? = null
@@ -65,22 +55,12 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         component?.inject(this)
         addIcon = ContextCompat.getDrawable(context, R.drawable.ic_add_purple_300_36dp)
 
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.dialog_task_filter, null)
         setTitle(R.string.filters)
-        this.setAdditionalContentView(view)
+        this.setContentView(binding.root)
 
-        taskTypeTitle = view.findViewById(R.id.task_type_title)
-        taskFilters = view.findViewById(R.id.task_filter_wrapper)
-        allTaskFilter = view.findViewById(R.id.all_task_filter)
-        secondTaskFilter = view.findViewById(R.id.second_task_filter)
-        thirdTaskFilter = view.findViewById(R.id.third_task_filter)
-        tagsEditButton = view.findViewById(R.id.tag_edit_button)
-        tagsList = view.findViewById(R.id.tags_list)
+        binding.taskFilterWrapper.setOnCheckedChangeListener(this)
 
-        taskFilters.setOnCheckedChangeListener(this)
-
-        clearButton = addButton(R.string.clear, false, false, false) { _, _ ->
+        binding.clearButton.setOnClickListener {
             if (isEditing) {
                 stopEditing()
             }
@@ -88,16 +68,12 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
             setActiveTags(null)
         }
 
-        addButton(R.string.done, false) { _, _ ->
-            if (isEditing) {
-                stopEditing()
-            }
-            listener?.onFilterCompleted(filterType, activeTags)
-            this.dismiss()
-        }
-        buttonAxis = LinearLayout.HORIZONTAL
+        binding.tagEditButton.setOnClickListener { editButtonClicked() }
+    }
 
-        tagsEditButton.setOnClickListener { editButtonClicked() }
+    override fun dismiss() {
+        listener?.onFilterCompleted(filterType, activeTags)
+        super.dismiss()
     }
 
     override fun show() {
@@ -111,7 +87,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
     }
 
     private fun createTagViews() {
-        tagsList.removeAllViews()
+        binding.tagsList.removeAllViews()
         val colorStateList = ColorStateList(
             arrayOf(
                 intArrayOf(-android.R.attr.state_checked), // disabled
@@ -149,7 +125,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
                 }
                 filtersChanged()
             }
-            tagsList.addView(tagCheckbox)
+            binding.tagsList.addView(tagCheckbox)
         }
         createAddTagButton()
     }
@@ -164,7 +140,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         }
         button.setBackgroundResource(R.drawable.layout_rounded_bg_lighter_gray)
         button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-        tagsList.addView(button)
+        binding.tagsList.addView(button)
     }
 
     private fun createTag() {
@@ -177,17 +153,17 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
 
     private fun startEditing() {
         isEditing = true
-        tagsList.removeAllViews()
+        binding.tagsList.removeAllViews()
         createTagEditViews()
-        tagsEditButton.setText(R.string.done)
+        binding.tagEditButton.setText(R.string.done)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
     private fun stopEditing() {
         isEditing = false
-        tagsList.removeAllViews()
+        binding.tagsList.removeAllViews()
         createTagViews()
-        tagsEditButton.setText(R.string.edit_tag_btn_edit)
+        binding.tagEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
         repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> createdTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
@@ -204,7 +180,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
     }
 
     private fun createTagEditView(inflater: LayoutInflater, index: Int, tag: Tag) {
-        val wrapper = inflater.inflate(R.layout.edit_tag_item, tagsList, false) as? LinearLayout
+        val wrapper = inflater.inflate(R.layout.edit_tag_item, binding.tagsList, false) as? LinearLayout
         val tagEditText = wrapper?.findViewById<View>(R.id.edit_text) as? EditText
         tagEditText?.setText(tag.name)
         tagEditText?.addTextChangedListener(
@@ -233,9 +209,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
             }
             activeTags.remove(tag.id)
             tags.remove(tag)
-            tagsList.removeView(wrapper)
+            binding.tagsList.removeView(wrapper)
         }
-        tagsList.addView(wrapper)
+        binding.tagsList.addView(wrapper)
     }
 
     fun setActiveTags(tagIds: MutableList<String>?) {
@@ -244,13 +220,13 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         } else {
             this.activeTags = tagIds
         }
-        for (index in 0 until tagsList.childCount - 1) {
-            (tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = false
+        for (index in 0 until binding.tagsList.childCount - 1) {
+            (binding.tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = false
         }
         for (tagId in this.activeTags) {
             val index = indexForId(tagId)
             if (index >= 0) {
-                (tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = true
+                (binding.tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = true
             }
         }
         filtersChanged()
@@ -269,22 +245,22 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
         this.taskType = taskType
         when (taskType) {
             TaskType.HABIT -> {
-                taskTypeTitle.setText(R.string.habits)
-                allTaskFilter.setText(R.string.all)
-                secondTaskFilter.setText(R.string.weak)
-                thirdTaskFilter.setText(R.string.strong)
+                binding.taskTypeTitle.setText(R.string.habits)
+                binding.allTaskFilter.setText(R.string.all)
+                binding.secondTaskFilter.setText(R.string.weak)
+                binding.thirdTaskFilter.setText(R.string.strong)
             }
             TaskType.DAILY -> {
-                taskTypeTitle.setText(R.string.dailies)
-                allTaskFilter.setText(R.string.all)
-                secondTaskFilter.setText(R.string.due)
-                thirdTaskFilter.setText(R.string.gray)
+                binding.taskTypeTitle.setText(R.string.dailies)
+                binding.allTaskFilter.setText(R.string.all)
+                binding.secondTaskFilter.setText(R.string.due)
+                binding.thirdTaskFilter.setText(R.string.gray)
             }
             TaskType.TODO -> {
-                taskTypeTitle.setText(R.string.todos)
-                allTaskFilter.setText(R.string.active)
-                secondTaskFilter.setText(R.string.dated)
-                thirdTaskFilter.setText(R.string.completed)
+                binding.taskTypeTitle.setText(R.string.todos)
+                binding.allTaskFilter.setText(R.string.active)
+                binding.secondTaskFilter.setText(R.string.dated)
+                binding.thirdTaskFilter.setText(R.string.completed)
             }
         }
         setActiveFilter(activeFilter)
@@ -307,7 +283,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
                 }
             }
         }
-        taskFilters.check(checkedId)
+        binding.taskFilterWrapper.check(checkedId)
         filtersChanged()
     }
 
@@ -345,9 +321,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
     }
 
     private fun filtersChanged() {
-        clearButton.isEnabled = hasActiveFilters()
-        clearButton.setTextColor(
-            if (clearButton.isEnabled) {
+        binding.clearButton.isEnabled = hasActiveFilters()
+        binding.clearButton.setTextColor(
+            if (binding.clearButton.isEnabled) {
                 context.getThemeColor(R.attr.colorAccent)
             } else {
                 ContextCompat.getColor(context, R.color.text_dimmed)
@@ -356,7 +332,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaAl
     }
 
     private fun hasActiveFilters(): Boolean {
-        return taskFilters.checkedRadioButtonId != R.id.all_task_filter || activeTags.size > 0
+        return binding.taskFilterWrapper.checkedRadioButtonId != R.id.all_task_filter || activeTags.size > 0
     }
 
     fun setListener(listener: OnFilterCompletedListener) {

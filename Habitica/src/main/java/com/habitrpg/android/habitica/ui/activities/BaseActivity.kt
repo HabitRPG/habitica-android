@@ -236,6 +236,10 @@ abstract class BaseActivity : AppCompatActivity() {
         alert.enqueue()
     }
 
+    open fun hideConnectionProblem() {
+
+    }
+
     fun shareContent(identifier: String, message: String, image: Bitmap? = null) {
         analyticsManager.logEvent("shared", bundleOf(Pair("identifier", identifier)))
         val sharingIntent = Intent(Intent.ACTION_SEND)

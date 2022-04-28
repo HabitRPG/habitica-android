@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DrawerMainBinding
+import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.extensions.getThemeColor
@@ -49,16 +50,18 @@ import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.time.Duration
+import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlin.time.toDuration
 
 class NavigationDrawerFragment : DialogFragment() {
 
@@ -227,11 +230,9 @@ class NavigationDrawerFragment : DialogFragment() {
 
         subscriptions?.add(
             Flowable.combineLatest(
-                contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems(),
-                { state, items ->
-                    return@combineLatest Pair(state, items)
-                }
-            ).subscribe(
+                contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems()) { state, items ->
+                return@combineLatest Pair(state, items)
+            }.subscribe(
                 { pair ->
                     val gearEvent = pair.first.events.firstOrNull { it.gear }
                     createUpdatingJob("seasonal", {
@@ -332,6 +333,10 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun updateUser(user: User) {
+        binding?.avatarView?.setOnClickListener {
+            MainNavigationController.navigate(R.id.openProfileActivity, bundleOf(Pair("userID", user.id)))
+        }
+
         setMessagesCount(user.inbox)
         setSettingsCount(if (user.flags?.verifiedUsername != true) 1 else 0)
         setDisplayName(user.profile?.name)
@@ -675,8 +680,8 @@ class NavigationDrawerFragment : DialogFragment() {
             createUpdatingJob(activePromo.promoType.name, {
                 activePromo.isActive
             }, {
-                val diff = activePromo.endDate.time - Date().time
-                if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
+                val diff = (activePromo.endDate.time - Date().time).toDuration(DurationUnit.SECONDS)
+                1.toDuration(diff.getMinuteOrSeconds())
             }) {
                 if (activePromo.isActive) {
                     promotedItem.subtitle = context?.getString(R.string.sale_ends_in, activePromo.endDate.getShortRemainingString())

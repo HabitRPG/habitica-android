@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/BottomMenu"
-    android:clickable="false"
-    android:background="@drawable/rounded_avatar_bg">
+    android:clickable="false">
     <TextView
         android:id="@+id/title_view"
         android:layout_width="match_parent"

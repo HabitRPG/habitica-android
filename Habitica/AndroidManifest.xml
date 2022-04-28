@@ -30,6 +30,9 @@
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
@@ -66,6 +69,13 @@
                     android:host="habitica.com"
                     android:pathPattern="/settings/.*"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.ArmoireActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:label="@string/armoire"
+            android:screenOrientation="unspecified"
+            tools:ignore="UnusedAttribute">
         </activity>
         <activity
             android:name=".ui.activities.NotificationsActivity"

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -17,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -35,6 +37,8 @@ import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
+import com.habitrpg.android.habitica.helpers.AdHandler
+import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -63,10 +67,13 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
@@ -445,6 +452,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         if (this.faintDialog == null && !this.isFinishing) {
+
             val binding = DialogFaintBinding.inflate(this.layoutInflater)
             binding.hpBar.setLightBackground(true)
             binding.hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
@@ -456,6 +464,20 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
                 faintDialog = null
                 userRepository.revive().subscribe({ }, RxErrorHandler.handleEmptyError())
+            }
+            if (AdHandler.isAllowed(AdType.FAINT)) {
+                val handler = AdHandler(this, AdType.FAINT) {
+                    Log.d("AdHandler", "Reviving user")
+                    compositeSubscription.add(
+                        userRepository.updateUser("stats.hp", 50)
+                            .subscribe({}, RxErrorHandler.handleEmptyError())
+                    )
+                }
+                handler.prepare()
+                faintDialog?.addButton(R.string.watch_ad_to_revive, true) { _, _ ->
+                    faintDialog = null
+                    handler.show()
+                }
             }
             soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
             this.faintDialog?.enqueue()
@@ -528,22 +550,33 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return snackbarContainer
     }
 
+    private var errorJob: Job? = null
+
     override fun showConnectionProblem(title: String?, message: String) {
         if (title != null) {
             super.showConnectionProblem(title, message)
         } else {
-            binding.connectionIssueTextview.visibility = View.VISIBLE
+            if (errorJob?.isCancelled == false) {
+                // a new error resets the timer to hide the error message
+                errorJob?.cancel()
+            }
+            binding.connectionIssueView.visibility = View.VISIBLE
             binding.connectionIssueTextview.text = message
-            compositeSubscription.add(
-                Observable.just("")
-                    .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .subscribe(
-                        {
-                            binding.connectionIssueTextview.visibility = View.GONE
-                        },
-                        {}
-                    )
-            )
+            errorJob = lifecycleScope.launch(Dispatchers.Main) {
+                delay(1.toDuration(DurationUnit.MINUTES))
+                binding.connectionIssueView.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun hideConnectionProblem() {
+        if (errorJob?.isCancelled == false) {
+            errorJob?.cancel()
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
+            if (binding.connectionIssueView.visibility == View.VISIBLE) {
+                binding.connectionIssueView.visibility = View.GONE
+            }
         }
     }
 }

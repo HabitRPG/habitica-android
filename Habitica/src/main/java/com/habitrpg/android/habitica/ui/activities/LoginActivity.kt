@@ -224,7 +224,7 @@ class LoginActivity : BaseActivity() {
             }
             binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
             binding.fbLoginButton.setText(R.string.login_btn_fb)
-            binding.fbLoginButton.visibility = View.VISIBLE
+            binding.fbLoginButton.visibility = if (configManager.hideFacebook()) View.GONE else View.VISIBLE
             binding.googleLoginButton.setText(R.string.login_btn_google)
         }
         this.resetLayout()

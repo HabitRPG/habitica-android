@@ -28,6 +28,39 @@
         <item>1</item>
     </string-array>
 
+    <string-array name="cds_labels">
+        <item>Default (12:00 AM)</item>
+        <item>+1 Hour (01:00 AM)</item>
+        <item>+2 Hours (02:00 AM)</item>
+        <item>+3 Hours (03:00 AM)</item>
+        <item>+4 Hours (04:00 AM)</item>
+        <item>+5 Hours (05:00 AM)</item>
+        <item>+6 Hours (06:00 AM)</item>
+        <item>+7 Hours (07:00 AM)</item>
+        <item>+8 Hours (08:00 AM)</item>
+        <item>+9 Hours (09:00 AM)</item>
+        <item>+10 Hours (10:00 AM)</item>
+        <item>+11 Hours (11:00 AM)</item>
+        <item>+12 Hours (12:00 PM)</item>
+
+    </string-array>
+
+    <string-array name="cds_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
     <string-array name="avatar_sizes">
         <item>@string/avatar_size_slim</item>
         <item>@string/avatar_size_broad</item>
