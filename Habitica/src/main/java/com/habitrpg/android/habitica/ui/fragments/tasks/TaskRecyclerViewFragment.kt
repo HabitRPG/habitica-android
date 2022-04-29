@@ -21,11 +21,7 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -80,6 +76,8 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     lateinit var configManager: AppConfigManager
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var notificationsManager: NotificationsManager
 
     internal var layoutManager: RecyclerView.LayoutManager? = null
 
@@ -122,8 +120,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             openTaskForm(it.first, it.second)
         }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskScoreEvents
-            ?.doOnNext { playSound(it.second) }
-            ?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { recyclerSubscription.add(it) }
+            ?.doOnNext {
+                playSound(it.second)
+                context?.let { it1 -> notificationsManager.dismissTaskNotification(it1, it.first) }
+            }?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.checklistItemScoreEvents
             ?.flatMap {
                 taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
