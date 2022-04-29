@@ -199,10 +199,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         itemTouchCallback = object : ItemTouchHelper.Callback() {
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
-                if (viewHolder == null || viewHolder.absoluteAdapterPosition == NO_POSITION) return
+                if (viewHolder == null || viewHolder.bindingAdapterPosition == NO_POSITION) return
                 val taskViewHolder = viewHolder as? BaseTaskViewHolder
                 if (taskViewHolder != null) {
-                    taskViewHolder.movingFromPosition = viewHolder.absoluteAdapterPosition
+                    taskViewHolder.movingFromPosition = viewHolder.bindingAdapterPosition
                 }
                 binding?.refreshLayout?.isEnabled = false
             }
@@ -212,7 +212,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                recyclerAdapter?.notifyItemMoved(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition)
+                recyclerAdapter?.notifyItemMoved(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition)
                 return true
             }
 
@@ -223,7 +223,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
             ): Int {
-                return if (recyclerAdapter?.getItemViewType(viewHolder.absoluteAdapterPosition) ?: 0 != 0) {
+                return if (recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition) ?: 0 != 0) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
                     makeFlag(
@@ -241,10 +241,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 super.clearView(recyclerView, viewHolder)
                 binding?.refreshLayout?.isEnabled = true
 
-                if (viewHolder.absoluteAdapterPosition == NO_POSITION) return
+                if (viewHolder.bindingAdapterPosition == NO_POSITION) return
                 val taskViewHolder = viewHolder as? BaseTaskViewHolder
                 val validTaskId = taskViewHolder?.task?.takeIf { it.isValid }?.id
-                if (viewHolder.absoluteAdapterPosition != taskViewHolder?.movingFromPosition) {
+                if (viewHolder.bindingAdapterPosition != taskViewHolder?.movingFromPosition) {
                     taskViewHolder?.movingFromPosition = null
                     updateTaskInRepository(validTaskId, viewHolder)
                 }
@@ -255,7 +255,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 viewHolder: RecyclerView.ViewHolder
             ) {
                 if (validTaskId != null) {
-                    var newPosition = viewHolder.absoluteAdapterPosition
+                    var newPosition = viewHolder.bindingAdapterPosition
                     if ((viewModel?.howMany(taskType) ?: 0) > 0) {
                         newPosition = if ((newPosition + 1) == recyclerAdapter?.data?.size) {
                             recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
