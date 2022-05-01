@@ -236,7 +236,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 val fragment: TaskRecyclerViewFragment = when (position) {
                     0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT, viewModel)
                     1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY, viewModel)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true)
+                    3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true, viewModel)
                     else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO, viewModel)
                 }
                 viewFragmentsDictionary?.put(position, fragment)
