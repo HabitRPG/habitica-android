@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.text.format.DateUtils
+import android.text.format.DateUtils.getRelativeTimeSpanString
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -13,7 +15,10 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.text.DateFormat
-import java.util.Date
+import java.time.Instant
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class SubscriptionDetailsView : LinearLayout {
 
@@ -96,8 +101,15 @@ class SubscriptionDetailsView : LinearLayout {
         } else {
             binding.monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
         }
+
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
-        binding.currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
+
+        if (plan.consecutive != null) {
+            val monthsTillNextHourglass = 3 - (plan.consecutive!!.offset % 3)
+            val nextHourglassMonth = LocalDate.now().plusMonths(monthsTillNextHourglass.toLong())
+            val nextHourGlassMonthString = nextHourglassMonth.format(DateTimeFormatter.ofPattern("MMM"));
+            binding.nextHourglassTextView.text = nextHourGlassMonthString
+        }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE
         if (plan.paymentMethod != null) {

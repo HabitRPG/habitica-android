@@ -183,13 +183,13 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="@string/current_hourclasses"
+                android:text="@string/next_hourglass"
                 style="@style/subscriptionBoxText.Subtitle" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Pill"
-                android:id="@+id/currentHourglassesTextView"
+                android:id="@+id/nextHourglassTextView"
                 tools:text="4" />
         </LinearLayout>
     </LinearLayout>
