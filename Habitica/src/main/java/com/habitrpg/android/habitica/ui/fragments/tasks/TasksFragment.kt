@@ -79,8 +79,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             val args = TasksFragmentArgs.fromBundle(it)
             val taskTypeValue = args.taskType
             if (args.ownerID?.isNotBlank() == true) {
+                viewModel.canSwitchOwners.value = false
                 viewModel.ownerID.value = args.ownerID ?: viewModel.userID
             } else {
+                viewModel.canSwitchOwners.value = viewModel.appConfigManager.enableTeamBoards()
                 viewModel.ownerID.value = viewModel.userID
             }
             if (taskTypeValue?.isNotBlank() == true) {
@@ -98,6 +100,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
         viewModel.ownerID.observe(viewLifecycleOwner) {
             updateBoardDisplay()
+        }
+        viewModel.canSwitchOwners.observe(viewLifecycleOwner) {
+            isTitleInteractive = it ?: false
+            updateToolbarInteractivity()
         }
     }
 
@@ -131,6 +137,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         if (viewModel.isPersonalBoard) {
             inflater.inflate(R.menu.menu_main_activity, menu)
         } else {

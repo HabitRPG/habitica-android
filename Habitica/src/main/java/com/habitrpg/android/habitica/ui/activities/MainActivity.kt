@@ -219,7 +219,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     }
 
     private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
-        viewModel.getToolbarTitle(destination.id, destination.label, arguments?.getString("type")) { title = it }
+        viewModel.getToolbarTitle(destination.id, destination.label, arguments?.getString("type")) {
+            title = it
+        }
         drawerFragment?.setSelection(destination.id, null, false)
     }
 

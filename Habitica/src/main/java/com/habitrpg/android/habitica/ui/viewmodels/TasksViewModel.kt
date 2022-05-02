@@ -46,7 +46,7 @@ class TasksViewModel: BaseViewModel() {
     lateinit var sharedPreferences: SharedPreferences
 
     private var owners: List<Pair<String, CharSequence>> = listOf()
-
+    var canSwitchOwners = MutableLiveData<Boolean?>()
     val ownerID: MutableLiveData<String?> by lazy {
         MutableLiveData()
     }
@@ -63,7 +63,15 @@ class TasksViewModel: BaseViewModel() {
     init {
         compositeSubscription.add(userRepository.getTeamPlans()
             .subscribe({
-                owners = listOf(Pair(userID ?: "", userViewModel.displayName))  + it.map { Pair(it.id, it.summary) }
+                owners = listOf(Pair(userID ?: "", userViewModel.displayName)) + it.map {
+                    Pair(
+                        it.id,
+                        it.summary
+                    )
+                }
+                if (owners.size > 1 && canSwitchOwners.value != false) {
+                    canSwitchOwners.value = owners.size > 1
+                }
             }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError()))
     }

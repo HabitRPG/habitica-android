@@ -37,8 +37,8 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import javax.inject.Inject
 import retrofit2.HttpException
+import javax.inject.Inject
 
 class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
 
@@ -168,6 +168,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
         editMenuItem?.isVisible = isCreator

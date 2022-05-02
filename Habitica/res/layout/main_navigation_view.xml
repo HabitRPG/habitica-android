@@ -32,6 +32,7 @@
                 android:src="@drawable/bottom_navigation_inset"
                 android:layout_gravity="top"/>
             <View
+                android:id="@+id/cutout_fill"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?barColor" />

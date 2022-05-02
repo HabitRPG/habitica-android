@@ -64,16 +64,37 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
 
     var canAddTasks = true
         set(value) {
+            if (field == value) return
             field = value
+            val animator = ObjectAnimator.ofFloat(0f, 1.0f)
             if (field) {
-                binding.cutoutWrapper.visibility = View.VISIBLE
+                val params = binding.cutoutFill.layoutParams
+                params.height = binding.cutoutBackground.height
+                binding.cutoutFill.layoutParams = params
+                animator.addUpdateListener {
+                    val reversed = 1.0f - it.animatedFraction
+                    binding.cutoutFill.translationY = -(reversed) * binding.cutoutBackground.height
+                }
                 binding.cutoutSpace.visibility = View.VISIBLE
-                binding.addButtonBackground.visibility = View.VISIBLE
+                binding.addButtonBackground.animate()
+                    .translationY(0f)
+                    .alpha(1f)
+                    .setDuration(200)
             } else {
-                binding.cutoutWrapper.visibility = View.GONE
-                binding.cutoutSpace.visibility = View.GONE
-                binding.addButtonBackground.visibility = View.GONE
+                val params = binding.cutoutFill.layoutParams
+                params.height = binding.cutoutBackground.height
+                binding.cutoutFill.layoutParams = params
+                animator.addUpdateListener {
+                    binding.cutoutFill.translationY = -it.animatedFraction * (binding.cutoutBackground.height)
+                }
+                binding.cutoutSpace.visibility = View.INVISIBLE
+                binding.addButtonBackground.animate()
+                    .translationY(-binding.addButtonBackground.height.toFloat()/2)
+                    .alpha(0.0f)
+                    .setDuration(200)
             }
+            animator.duration = 200
+            animator.start()
         }
 
     val barHeight: Int

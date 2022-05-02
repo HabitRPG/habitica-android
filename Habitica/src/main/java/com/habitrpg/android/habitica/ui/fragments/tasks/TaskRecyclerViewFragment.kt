@@ -138,6 +138,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         viewModel?.ownerID?.observe(viewLifecycleOwner) {
             canEditTasks = viewModel?.isPersonalBoard ?: true
             canScoreTaks = viewModel?.isPersonalBoard ?: true
+            recyclerAdapter?.canScoreTasks = canScoreTaks
             updateTaskSubscription(it)
         }
     }

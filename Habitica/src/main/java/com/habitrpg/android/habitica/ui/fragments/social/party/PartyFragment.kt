@@ -99,6 +99,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         val group = viewModel.getGroupData().value
         if (viewModel.isLeader) {
             inflater.inflate(R.menu.menu_party_admin, menu)

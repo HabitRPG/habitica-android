@@ -71,6 +71,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_challenges, menu)
 
         @Suppress("Deprecation")

@@ -59,6 +59,7 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_public_guild, menu)
 
         val searchItem = menu.findItem(R.id.action_search)
