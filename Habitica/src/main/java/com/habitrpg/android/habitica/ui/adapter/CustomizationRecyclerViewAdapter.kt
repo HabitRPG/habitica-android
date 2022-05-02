@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter
 
 import android.content.Context
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.core.os.bundleOf
 import coil.load
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
+import com.habitrpg.android.habitica.databinding.CustomizationSectionFooterBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
@@ -61,6 +61,10 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.customization_section_header, parent, false)
             SectionViewHolder(view)
+        } else if (viewType == 1) {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.customization_section_footer, parent, false)
+            SectionFooterViewHolder(view)
         } else {
             val viewID: Int = if (customizationType == "background") {
                 R.layout.customization_grid_background_item
@@ -78,8 +82,10 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         position: Int
     ) {
         val obj = customizationList[position]
-        if (obj.javaClass == CustomizationSet::class.java) {
+        if (getItemViewType(position) == 0) {
             (holder as SectionViewHolder).bind(obj as CustomizationSet)
+        } else if (getItemViewType(position) == 1) {
+            (holder as SectionFooterViewHolder).bind(obj as CustomizationSet)
         } else {
             (holder as CustomizationViewHolder).bind(customizationList[position] as Customization)
         }
@@ -91,10 +97,13 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
 
     override fun getItemViewType(position: Int): Int {
         if (customizationList.size <= position) return 0
-        return if (this.customizationList[position].javaClass == CustomizationSet::class.java) {
+        return if (this.customizationList[position] is CustomizationSet &&
+            (position < customizationList.size && customizationList[position+1] is CustomizationSet)) {
+            1
+        } else if (this.customizationList[position] is CustomizationSet) {
             0
         } else {
-            1
+            2
         }
     }
 
@@ -110,17 +119,20 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 }
             }
             if (customization.customizationSet != null && customization.customizationSet != lastSet.identifier) {
+                if (lastSet.hasPurchasable) {
+                    customizationList.add(lastSet)
+                }
                 val set = CustomizationSet()
                 set.identifier = customization.customizationSet
                 set.text = customization.customizationSetName
                 set.price = customization.setPrice ?: 0
-                set.hasPurchasable = !customization.isUsable(ownedCustomizations.contains(customization.id))
+                set.hasPurchasable = true
                 lastSet = set
                 customizationList.add(set)
             }
             customizationList.add(customization)
-            if (!customization.isUsable(ownedCustomizations.contains(customization.id)) && !lastSet.hasPurchasable) {
-                lastSet.hasPurchasable = true
+            if (customization.isUsable(ownedCustomizations.contains(customization.id)) && lastSet.hasPurchasable) {
+                lastSet.hasPurchasable = false
             }
         }
         this.notifyDataSetChanged()
@@ -154,13 +166,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 binding.imageView.load(R.drawable.no_background)
             } else {
                 DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
-            }
-
-            if (customization.type == "background") {
-                val params = (binding.imageView.layoutParams as? LinearLayout.LayoutParams)?.apply {
-                    gravity = Gravity.CENTER
-                }
-                binding.imageView.layoutParams = params
             }
 
             if (customization.isUsable(ownedCustomizations.contains(customization.id))) {
@@ -232,9 +237,18 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         }
     }
 
-    internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         private val binding = CustomizationSectionHeaderBinding.bind(itemView)
+
+        fun bind(set: CustomizationSet) {
+            binding.label.text = set.text
+        }
+    }
+
+    internal inner class SectionFooterViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+        private val binding = CustomizationSectionFooterBinding.bind(itemView)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
 
@@ -244,7 +258,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
 
         fun bind(set: CustomizationSet) {
             this.set = set
-            binding.label.text = set.text
             if (set.hasPurchasable && set.identifier?.contains("timeTravel") != true) {
                 binding.purchaseSetButton.visibility = View.VISIBLE
                 binding.setPriceLabel.value = set.price.toDouble()

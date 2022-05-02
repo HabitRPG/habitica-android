@@ -8,12 +8,16 @@
     android:background="@drawable/layout_rounded_bg_window"
     android:orientation="vertical"
     android:layout_gravity="center">
-        <ImageView
-            android:id="@+id/imageView"
+        <FrameLayout
             android:layout_width="76dp"
-            android:layout_height="76dp"
-            android:layout_gravity="start"
-            android:scaleType="fitEnd" />
+            android:layout_height="76dp">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
         <FrameLayout
             android:id="@+id/buy_button"
             android:layout_width="match_parent"
@@ -26,7 +30,6 @@
                 android:textColor="@color/text_quad"
                 tools:text="150"
                 style="@style/Body1"
-                android:textSize="15sp"
                 android:layout_gravity="center" />
         </FrameLayout>
 </LinearLayout>

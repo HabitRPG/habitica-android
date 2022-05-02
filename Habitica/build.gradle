@@ -122,8 +122,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
     implementation 'com.google.android.gms:play-services-ads:20.6.0'
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
     implementation 'com.nex3z:flow-layout:1.2.2'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"

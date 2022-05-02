@@ -8,12 +8,16 @@
     android:background="@drawable/layout_rounded_bg_window"
     android:orientation="vertical"
     android:layout_gravity="center">
+    <FrameLayout
+        android:layout_width="76dp"
+        android:layout_height="76dp">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="60dp"
-            android:layout_height="76dp"
+            android:layout_height="68dp"
             android:layout_gravity="start"
-            android:scaleType="fitEnd" />
+            android:scaleType="fitCenter" />
+    </FrameLayout>
         <FrameLayout
             android:id="@+id/buy_button"
             android:layout_width="match_parent"

@@ -29,7 +29,6 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     constructor(parent: ViewGroup) : this(parent.inflate(R.layout.customization_section_header))
 
     init {
-        itemView.findViewById<View?>(R.id.purchaseSetButton)?.visibility = View.GONE
         selectionSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 spinnerSelectionChanged?.invoke()

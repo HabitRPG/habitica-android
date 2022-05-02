@@ -13,7 +13,8 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     tools:text="Test header"
-    style="@style/Overline"
+    style="@style/Caption2"
+    android:gravity="center"
     android:textColor="@color/text_ternary"/>
 <TextView
     android:id="@+id/count_pill"
@@ -21,33 +22,9 @@
     android:layout_height="24dp"
     android:visibility="gone"
     style="@style/Pill.Window"
-    android:textSize="10sp"
+    android:textSize="11sp"
     android:textAllCaps="true"
     android:letterSpacing="0.15"
     android:gravity="center"
     />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:id="@+id/purchaseSetButton"
-        android:visibility="gone"
-        android:orientation="horizontal"
-        android:gravity="center"
-        tools:visibility="visible"
-        android:paddingStart="@dimen/spacing_medium"
-        android:paddingEnd="@dimen/spacing_medium"
-        android:background="@drawable/layout_rounded_bg_window">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/buy_all"
-            android:textAllCaps="true"
-            android:textColor="@color/text_brand_neon"
-            style="@style/Body1"
-            android:layout_marginEnd="@dimen/spacing_medium"/>
-        <com.habitrpg.android.habitica.ui.views.CurrencyView
-            android:id="@+id/set_price_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
 </LinearLayout>

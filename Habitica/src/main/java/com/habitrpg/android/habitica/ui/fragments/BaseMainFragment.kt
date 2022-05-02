@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.setPadding
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
@@ -17,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
@@ -85,6 +87,18 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         activity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, activity, null) }
+        updateToolbarInteractivity()
+    }
+
+    var isTitleInteractive = false
+
+    open fun updateToolbarInteractivity() {
+        activity?.binding?.toolbarTitle?.background?.alpha = if (isTitleInteractive) 255 else 0
+        if (isTitleInteractive) {
+            activity?.binding?.toolbarTitle?.setScaledPadding(context, 16, 1, 16, 1)
+        } else {
+            activity?.binding?.toolbarTitle?.setPadding(0)
+        }
     }
 
     private fun updateTabLayoutVisibility() {

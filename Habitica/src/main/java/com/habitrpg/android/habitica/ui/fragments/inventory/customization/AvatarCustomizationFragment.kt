@@ -10,8 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection.ROW
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
@@ -60,7 +63,7 @@ class AvatarCustomizationFragment :
     private var activeCustomization: String? = null
 
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
-    internal var layoutManager: GridLayoutManager = GridLayoutManager(activity, 2)
+    internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(activity, ROW)
 
     private val currentFilter = BehaviorSubject.create<CustomizationFilter>()
     private val ownedCustomizations = PublishSubject.create<List<OwnedCustomization>>()
@@ -116,16 +119,8 @@ class AvatarCustomizationFragment :
         }
         adapter.customizationType = type
         binding?.refreshLayout?.setOnRefreshListener(this)
-        val layoutManager = GridLayoutManager(activity, 4)
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter.getItemViewType(position) == 0) {
-                    layoutManager.spanCount
-                } else {
-                    1
-                }
-            }
-        }
+        layoutManager.justifyContent = JustifyContent.CENTER
+        layoutManager.alignItems = AlignItems.FLEX_START
         setGridSpanCount(view.width)
         binding?.recyclerView?.layoutManager = layoutManager
 
@@ -145,6 +140,7 @@ class AvatarCustomizationFragment :
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_customizations, menu)
 
         filterMenuItem = menu.findItem(R.id.action_filter)
@@ -192,6 +188,7 @@ class AvatarCustomizationFragment :
                 ownedCustomizations.toFlowable(BackpressureStrategy.DROP))
                 .subscribe(
                     { (customizations, filter, ownedCustomizations) ->
+                        adapter.ownedCustomizations = ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
                         if (filter.isFiltering) {
                             val displayedCustomizations = mutableListOf<Customization>()
                             for (customization in customizations) {
@@ -223,7 +220,6 @@ class AvatarCustomizationFragment :
                                 }
                             )
                         }
-                        adapter.ownedCustomizations = ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
                     },
                 RxErrorHandler.handleEmptyError()
             )
@@ -239,8 +235,9 @@ class AvatarCustomizationFragment :
         var spanCount = (width / itemWidth).toInt()
         if (spanCount == 0) {
             spanCount = 1
+        } else if (type == "backgrounds") {
+            spanCount = 3
         }
-        layoutManager.spanCount = spanCount
     }
 
     fun updateUser(user: User?) {
