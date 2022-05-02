@@ -96,15 +96,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return data.size + if (showAdventureGuide) 1 else 0
-    }
-
-    override fun getItem(position: Int): Task? {
-        return if (showAdventureGuide) {
-            super.getItem(position - 1)
-        } else {
-            super.getItem(position)
-        }
+        return data.size
     }
 
     override fun getItemViewType(position: Int): Int {
