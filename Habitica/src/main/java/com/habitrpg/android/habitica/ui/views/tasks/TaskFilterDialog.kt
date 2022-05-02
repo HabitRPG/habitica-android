@@ -27,23 +27,49 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 import java.util.UUID
 import javax.inject.Inject
 
 class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
+    lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
+
+    var tagDisposale: Disposable? = null
 
     @Inject
     lateinit var repository: TagRepository
 
-    private var taskType: TaskType? = null
-    private var listener: OnFilterCompletedListener? = null
+    var taskType: TaskType = TaskType.HABIT
+    set(value) {
+        field = value
+        when (value) {
+            TaskType.HABIT -> {
+                binding.taskTypeTitle.setText(R.string.habits)
+                binding.allTaskFilter.setText(R.string.all)
+                binding.secondTaskFilter.setText(R.string.weak)
+                binding.thirdTaskFilter.setText(R.string.strong)
+            }
+            TaskType.DAILY -> {
+                binding.taskTypeTitle.setText(R.string.dailies)
+                binding.allTaskFilter.setText(R.string.all)
+                binding.secondTaskFilter.setText(R.string.due)
+                binding.thirdTaskFilter.setText(R.string.gray)
+            }
+            TaskType.TODO -> {
+                binding.taskTypeTitle.setText(R.string.todos)
+                binding.allTaskFilter.setText(R.string.active)
+                binding.secondTaskFilter.setText(R.string.dated)
+                binding.thirdTaskFilter.setText(R.string.completed)
+            }
+        }
+        setActiveFilter(viewModel.getActiveFilter(value))
+    }
 
-    private var filterType: String? = null
     private var tags = mutableListOf<Tag>()
-    private var activeTags = mutableListOf<String>()
     private val editedTags = HashMap<String, Tag>()
     private val createdTags = HashMap<String, Tag>()
     private val deletedTags = ArrayList<String>()
@@ -72,11 +98,14 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
     }
 
     override fun dismiss() {
-        listener?.onFilterCompleted(filterType, activeTags)
+        tagDisposale?.dispose()
         super.dismiss()
     }
 
     override fun show() {
+        tagDisposale = viewModel.tagRepository.getTags().subscribe( {
+            setTags(it)
+        }, RxErrorHandler.handleEmptyError())
         super.show()
         this.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
@@ -104,7 +133,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
             val tagCheckbox = AppCompatCheckBox(context)
             tagCheckbox.text = tag.name
             tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            tagCheckbox.isChecked = activeTags.contains(tag.id)
+            tagCheckbox.isChecked = viewModel.tags.contains(tag.id)
             tagCheckbox.setPadding(
                 tagCheckbox.paddingLeft + leftPadding,
                 verticalPadding,
@@ -115,13 +144,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
             CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
             tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    if (!activeTags.contains(tag.id)) {
-                        activeTags.add(tag.id)
-                    }
+                    viewModel.addActiveTag(tag.id)
                 } else {
-                    if (activeTags.contains(tag.id)) {
-                        activeTags.remove(tag.id)
-                    }
+                    viewModel.removeActiveTag(tag.id)
                 }
                 filtersChanged()
             }
@@ -207,7 +232,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
             if (editedTags.containsKey(tag.id)) {
                 editedTags.remove(tag.id)
             }
-            activeTags.remove(tag.id)
+            viewModel.tags.remove(tag.id)
             tags.remove(tag)
             binding.tagsList.removeView(wrapper)
         }
@@ -216,14 +241,14 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
 
     fun setActiveTags(tagIds: MutableList<String>?) {
         if (tagIds == null) {
-            this.activeTags.clear()
+            this.viewModel.tags.clear()
         } else {
-            this.activeTags = tagIds
+            this.viewModel.tags = tagIds
         }
         for (index in 0 until binding.tagsList.childCount - 1) {
             (binding.tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = false
         }
-        for (tagId in this.activeTags) {
+        for (tagId in this.viewModel.tags) {
             val index = indexForId(tagId)
             if (index >= 0) {
                 (binding.tagsList.getChildAt(index) as? AppCompatCheckBox)?.isChecked = true
@@ -241,33 +266,8 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
         return -1
     }
 
-    fun setTaskType(taskType: TaskType, activeFilter: String?) {
-        this.taskType = taskType
-        when (taskType) {
-            TaskType.HABIT -> {
-                binding.taskTypeTitle.setText(R.string.habits)
-                binding.allTaskFilter.setText(R.string.all)
-                binding.secondTaskFilter.setText(R.string.weak)
-                binding.thirdTaskFilter.setText(R.string.strong)
-            }
-            TaskType.DAILY -> {
-                binding.taskTypeTitle.setText(R.string.dailies)
-                binding.allTaskFilter.setText(R.string.all)
-                binding.secondTaskFilter.setText(R.string.due)
-                binding.thirdTaskFilter.setText(R.string.gray)
-            }
-            TaskType.TODO -> {
-                binding.taskTypeTitle.setText(R.string.todos)
-                binding.allTaskFilter.setText(R.string.active)
-                binding.secondTaskFilter.setText(R.string.dated)
-                binding.thirdTaskFilter.setText(R.string.completed)
-            }
-        }
-        setActiveFilter(activeFilter)
-    }
-
     private fun setActiveFilter(activeFilter: String?) {
-        filterType = activeFilter
+        viewModel.setActiveFilter(taskType, activeFilter ?: Task.FILTER_ALL)
         var checkedId = -1
         if (activeFilter == null) {
             checkedId = R.id.all_task_filter
@@ -288,26 +288,26 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
     }
 
     override fun onCheckedChanged(group: RadioGroup, @IdRes checkedId: Int) {
-        if (taskType == null) {
-            return
-        }
-        when (checkedId) {
-            R.id.all_task_filter -> filterType = if (taskType != TaskType.TODO) {
+        val newFilter = when (checkedId) {
+            R.id.second_task_filter -> when (taskType) {
+                TaskType.HABIT -> Task.FILTER_WEAK
+                TaskType.DAILY -> Task.FILTER_ACTIVE
+                TaskType.TODO ->  Task.FILTER_DATED
+                else -> Task.FILTER_ALL
+            }
+            R.id.third_task_filter -> when (taskType) {
+                TaskType.HABIT -> Task.FILTER_STRONG
+                TaskType.DAILY -> Task.FILTER_GRAY
+                TaskType.TODO -> Task.FILTER_COMPLETED
+                else -> Task.FILTER_ALL
+            }
+            else -> if (taskType != TaskType.TODO) {
                 Task.FILTER_ALL
             } else {
                 Task.FILTER_ACTIVE
             }
-            R.id.second_task_filter -> when (taskType) {
-                TaskType.HABIT -> filterType = Task.FILTER_WEAK
-                TaskType.DAILY -> filterType = Task.FILTER_ACTIVE
-                TaskType.TODO -> filterType = Task.FILTER_DATED
-            }
-            R.id.third_task_filter -> when (taskType) {
-                TaskType.HABIT -> filterType = Task.FILTER_STRONG
-                TaskType.DAILY -> filterType = Task.FILTER_GRAY
-                TaskType.TODO -> filterType = Task.FILTER_COMPLETED
-            }
         }
+        viewModel.setActiveFilter(taskType, newFilter)
         filtersChanged()
     }
 
@@ -321,7 +321,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
     }
 
     private fun filtersChanged() {
-        binding.clearButton.isEnabled = hasActiveFilters()
+        binding.clearButton.isEnabled = viewModel.isFiltering(taskType)
         binding.clearButton.setTextColor(
             if (binding.clearButton.isEnabled) {
                 context.getThemeColor(R.attr.colorAccent)
@@ -329,17 +329,5 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
                 ContextCompat.getColor(context, R.color.text_dimmed)
             }
         )
-    }
-
-    private fun hasActiveFilters(): Boolean {
-        return binding.taskFilterWrapper.checkedRadioButtonId != R.id.all_task_filter || activeTags.size > 0
-    }
-
-    fun setListener(listener: OnFilterCompletedListener) {
-        this.listener = listener
-    }
-
-    interface OnFilterCompletedListener {
-        fun onFilterCompleted(activeTaskFilter: String?, activeTags: MutableList<String>)
     }
 }

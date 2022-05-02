@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
-import io.reactivex.rxjava3.disposables.Disposable
 import java.util.Date
 import java.util.WeakHashMap
 
@@ -166,7 +165,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     override fun onQueryTextChange(newText: String?): Boolean {
         viewModel.searchQuery = newText
-        viewFragmentsDictionary?.values?.forEach { values -> values.recyclerAdapter?.filter() }
         return true
     }
 
@@ -191,38 +189,17 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     private fun showFilterDialog() {
         context?.let {
-            val disposable: Disposable
             val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
-            disposable = viewModel.tagRepository.getTags().subscribe({ tagsList -> dialog.setTags(tagsList) }, RxErrorHandler.handleEmptyError())
-            dialog.setActiveTags(viewModel.tags)
+            dialog.viewModel = viewModel
 
             // There are some cases where these things might not be correctly set after the app resumes. This is just to catch that as best as possible
             val navigation = bottomNavigation ?: activity?.binding?.bottomNavigation
             val taskType = navigation?.activeTaskType ?: activeFragment?.taskType
 
+            dialog.setOnDismissListener { updateFilterIcon() }
+
             if (taskType != null) {
-                dialog.setTaskType(taskType, viewModel.getActiveFilter(taskType))
-            }
-            dialog.setListener(object : TaskFilterDialog.OnFilterCompletedListener {
-                override fun onFilterCompleted(
-                    activeTaskFilter: String?,
-                    activeTags: MutableList<String>
-                ) {
-                    if (viewFragmentsDictionary == null) {
-                        return
-                    }
-                    viewModel.tags = activeTags
-                    if (activeTaskFilter != null) {
-                        activeFragment?.setActiveFilter(activeTaskFilter)
-                    }
-                    viewFragmentsDictionary?.values?.forEach { values -> values.recyclerAdapter?.filter() }
-                    updateFilterIcon()
-                }
-            })
-            dialog.setOnDismissListener {
-                if (!disposable.isDisposed) {
-                    disposable.dispose()
-                }
+                dialog.taskType = taskType
             }
             dialog.show()
         }
@@ -257,7 +234,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     }
 
     private fun updateFilterIcon() {
-        val filterCount = viewModel.howMany(activeFragment?.taskType)
+        val filterCount = viewModel.filterCount(activeFragment?.taskType)
 
         filterMenuItem?.isVisible = activeFragment?.taskType != TaskType.REWARD
         if (filterCount == 0) {

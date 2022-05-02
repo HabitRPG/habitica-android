@@ -115,13 +115,61 @@ class TasksViewModel: BaseViewModel() {
         )
     }
 
+    private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> = hashMapOf(
+        Pair(TaskType.HABIT, MutableLiveData()),
+        Pair(TaskType.DAILY, MutableLiveData()),
+        Pair(TaskType.TODO, MutableLiveData())
+    )
+
+    fun getFilterSet(type: TaskType): MutableLiveData<Triple<String?, String?, List<String>>>? {
+        return filterSets[type]
+    }
+
     var searchQuery: String? = null
+    set(value) {
+        field = value
+        filterSets.forEach {
+            val old = it.value.value
+            it.value.value = Triple(value, old?.second, old?.third ?: listOf())
+        }
+    }
     private val activeFilters = HashMap<TaskType, String>()
 
     var tags: MutableList<String> = mutableListOf()
+    set(value) {
+        field = value
+        filterSets.forEach {
+            val old = it.value.value
+            it.value.value = Triple(old?.first, old?.second, field)
+        }
+    }
 
-    fun howMany(type: TaskType?): Int {
+    fun addActiveTag(tagID: String) {
+        if (!tags.contains(tagID)) {
+            tags.add(tagID)
+        }
+        filterSets.forEach {
+            val old = it.value.value
+            it.value.value = Triple(old?.first, old?.second, tags)
+        }
+    }
+
+    fun removeActiveTag(tagID: String) {
+        if (tags.contains(tagID)) {
+            tags.remove(tagID)
+        }
+        filterSets.forEach {
+            val old = it.value.value
+            it.value.value = Triple(old?.first, old?.second, tags)
+        }
+    }
+
+    fun filterCount(type: TaskType?): Int {
         return this.tags.size + if (isTaskFilterActive(type)) 1 else 0
+    }
+
+    fun isFiltering(type: TaskType?): Boolean {
+        return filterCount(type) > 0
     }
 
     private fun isTaskFilterActive(type: TaskType?): Boolean {
@@ -178,6 +226,7 @@ class TasksViewModel: BaseViewModel() {
 
     fun setActiveFilter(type: TaskType, activeFilter: String) {
         activeFilters[type] = activeFilter
+        filterSets[type]?.value = Triple(searchQuery, activeFilter, tags)
     }
 
     fun getActiveFilter(type: TaskType?): String? {

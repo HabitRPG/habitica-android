@@ -73,7 +73,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
     }
 
     fun filter() {
-        if (this.viewModel.howMany(taskType) == 0) {
+        if (this.viewModel.filterCount(taskType) == 0) {
             filteredContent = content
         } else {
             filteredContent = ArrayList()

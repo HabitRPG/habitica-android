@@ -107,6 +107,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             recyclerAdapter = adapter as? TaskRecyclerViewAdapter
             recyclerAdapter?.canScoreTasks = canScoreTaks
             binding?.recyclerView?.adapter = adapter
+
+            viewModel.getFilterSet(taskType)?.observe(viewLifecycleOwner) {
+                recyclerAdapter?.filter()
+            }
         }
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
 
@@ -256,7 +260,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             ) {
                 if (validTaskId != null) {
                     var newPosition = viewHolder.bindingAdapterPosition
-                    if ((viewModel?.howMany(taskType) ?: 0) > 0) {
+                    if ((viewModel?.filterCount(taskType) ?: 0) > 0) {
                         newPosition = if ((newPosition + 1) == recyclerAdapter?.data?.size) {
                             recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
                         } else {
@@ -355,7 +359,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun setEmptyLabels() {
-        binding?.recyclerView?.emptyItem = if ((viewModel?.howMany(taskType) ?: 0) > 0) {
+        binding?.recyclerView?.emptyItem = if ((viewModel?.filterCount(taskType) ?: 0) > 0) {
             when (this.taskType) {
                 TaskType.HABIT -> {
                     EmptyItem(
