@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.auth
 
+import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
@@ -8,4 +9,6 @@ import io.realm.annotations.RealmClass
 open class LocalAuthentication : RealmObject(), BaseObject {
     var username: String? = null
     var email: String? = null
+    @SerializedName("local")
+    var hasPassword: Boolean? = false
 }

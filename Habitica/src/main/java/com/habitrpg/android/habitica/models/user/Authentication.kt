@@ -19,7 +19,7 @@ open class Authentication : RealmObject(), BaseObject {
     }
 
     val hasPassword: Boolean
-        get() = localAuthentication?.email != null
+        get() = localAuthentication?.hasPassword == true
     @SerializedName("local")
     var localAuthentication: LocalAuthentication? = null
     @SerializedName("google")
