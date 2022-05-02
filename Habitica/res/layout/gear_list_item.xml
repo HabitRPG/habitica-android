@@ -52,9 +52,10 @@
             android:textColor="?colorAccent"
             android:drawablePadding="@dimen/spacing_small"
             android:layout_marginBottom="@dimen/spacing_small"/>
-        <com.nex3z.flowlayout.FlowLayout
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:flexWrap="wrap">
             <TextView
                 android:id="@+id/str_label"
                 android:layout_width="wrap_content"
@@ -115,7 +116,7 @@
                 tools:text="+1"
                 android:layout_marginEnd="10dp"
                 android:textColor="@color/green_50"/>
-        </com.nex3z.flowlayout.FlowLayout>
+        </com.google.android.flexbox.FlexboxLayout>
     </LinearLayout>
 
 </LinearLayout>

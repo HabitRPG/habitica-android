@@ -94,10 +94,11 @@
                 android:lineSpacingMultiplier="1.0"
                 tools:text="This is the chat message"
                 android:textColor="@color/text_primary" />
-            <com.nex3z.flowlayout.FlowLayout
+            <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/buttons_wrapper"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:flexWrap="wrap">
                 <Button
                     android:id="@+id/reply_button"
                     android:layout_width="wrap_content"
@@ -138,6 +139,6 @@
                     android:text="@string/delete"
                     android:gravity="center_vertical"
                     android:drawablePadding="@dimen/spacing_small"/>
-            </com.nex3z.flowlayout.FlowLayout>
+            </com.google.android.flexbox.FlexboxLayout>
         </LinearLayout>
 </LinearLayout>
