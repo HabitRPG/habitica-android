@@ -8,8 +8,11 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.NumberAbbreviator
@@ -44,6 +47,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         }
         currency = attributes?.getString(R.styleable.CurrencyView_currency)
         visibility = GONE
+        setSingleLine()
     }
 
     constructor(context: Context, currency: String, lightbackground: Boolean) : super(context) {
@@ -51,6 +55,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         this.currency = currency
         setCurrencyContentDescriptionFromCurrency(currency)
         visibility = GONE
+        setSingleLine()
     }
 
     private fun setCurrencyContentDescriptionFromCurrency(currency: String?) {
@@ -120,6 +125,9 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     private fun endUpdate() {
         contentDescription = "$text $currencyContentDescription"
         updateVisibility()
+        updateLayoutParams {
+            width = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
     }
 
     var value = 0.0
@@ -131,6 +139,9 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 val animator = ValueAnimator.ofFloat(field.toFloat(), value.toFloat())
                 animator.duration = animationDuration
                 animator.startDelay = animationDelay
+                animator.doOnStart {
+                    layoutParams.width = width
+                }
                 animator.addUpdateListener {
                     update((it.animatedValue as Float).toDouble())
                 }

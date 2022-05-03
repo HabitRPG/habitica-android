@@ -97,6 +97,7 @@ class TasksViewModel: BaseViewModel() {
     }
 
     fun cycleOwnerIDs() {
+        if (owners.size <= 1) return
         val nextIndex = owners.indexOfFirst { it.first == ownerID.value } + 1
         if (nextIndex < owners.size) {
             ownerID.value = owners[nextIndex].first

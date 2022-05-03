@@ -82,7 +82,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 viewModel.canSwitchOwners.value = false
                 viewModel.ownerID.value = args.ownerID ?: viewModel.userID
             } else {
-                viewModel.canSwitchOwners.value = viewModel.appConfigManager.enableTeamBoards()
                 viewModel.ownerID.value = viewModel.userID
             }
             if (taskTypeValue?.isNotBlank() == true) {
