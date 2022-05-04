@@ -5,6 +5,7 @@ import android.content.res.Resources
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
 import io.realm.RealmObject
@@ -148,6 +149,19 @@ open class ShopItem : RealmObject(), BaseObject {
             item.pinType = "fortify"
             item.path = "special.fortify"
             item.purchaseType = "fortify"
+            return item
+        }
+
+        fun fromCustomization(customization: Customization, userSize: String?, hairColor: String?): ShopItem {
+            val item = ShopItem()
+            item.key = customization.identifier ?: ""
+            item.text = customization.text
+            item.currency = "gems"
+            item.notes = customization.notes
+            item.value = customization.price ?: 0
+            item.path = customization.path
+            item.purchaseType = if (customization.type == "background") "background" else "customization"
+            item.imageName = customization.getImageName(userSize, hairColor)
             return item
         }
     }

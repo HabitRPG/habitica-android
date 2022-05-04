@@ -1,44 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="android.widget.LinearLayout">
 
     <ImageView
-        android:layout_width="@dimen/avatar_width"
-        android:layout_height="@dimen/avatar_height"
+        android:layout_width="@dimen/customization_width"
+        android:layout_height="@dimen/customization_width"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/layout_rounded_bg_window"
+        android:layout_marginTop="24dp"
         android:scaleType="center"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/priceLabel"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="2dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/gem_icon"
-            android:layout_gravity="center"/>
-    </LinearLayout>
     <TextView
-        android:id="@+id/amount_error_label"
-        android:layout_height="wrap_content"
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
-        android:text="@string/purchase_amount_error"
-        android:textSize="12sp"
-        android:textColor="@color/text_ternary"
-        android:layout_marginTop="@dimen/spacing_medium"
-        android:visibility="gone"
-        android:gravity="center_horizontal"/>
-
-</LinearLayout>
+        android:layout_height="wrap_content"
+        style="@style/Headline"
+        android:textColor="@color/text_primary"
+        tools:text="This is the Title"
+        android:gravity="center"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="4dp"/>
+</merge>

@@ -162,9 +162,9 @@ class UserRepositoryImpl(
     override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
         .flatMap { retrieveUser(false) }
 
-    override fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse> {
-        var path = customization.path
-        if (path.last() == '.' && customization.type == "background") {
+    override fun unlockPath(user: User?, unlockPath: String?, type: String?, price: Int): Flowable<UnlockResponse> {
+        var path = unlockPath ?: return Flowable.empty()
+        if (path.last() == '.' && type == "background") {
             path += user?.preferences?.background
         }
         return zipWithLiveUser(apiClient.unlockPath(path)) { unlockResponse, copiedUser ->
@@ -172,10 +172,14 @@ class UserRepositoryImpl(
             user.preferences = unlockResponse.preferences
             user.purchased = unlockResponse.purchased
             user.items = unlockResponse.items
-            user.balance = copiedUser.balance - (customization.price ?: 0) / 4.0
+            user.balance = copiedUser.balance - (price / 4.0)
             localRepository.saveUser(copiedUser, false)
             unlockResponse
         }
+    }
+
+    override fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse> {
+        return unlockPath(user, customization.path, customization.type, customization.price ?: 0)
     }
 
     override fun unlockPath(set: CustomizationSet): Flowable<UnlockResponse> {

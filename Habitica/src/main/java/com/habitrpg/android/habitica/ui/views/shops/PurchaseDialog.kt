@@ -27,7 +27,6 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.activities.ArmoireActivityArgs
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
@@ -42,16 +41,16 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import java.util.*
-import javax.inject.Inject
-import kotlin.math.max
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Date
+import javax.inject.Inject
+import kotlin.math.max
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -106,6 +105,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     checkGearClass()
                 }
                 "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
+                "background" == shopItem.purchaseType -> contentView = PurchaseDialogBackgroundContent(context)
+                "customization" == shopItem.purchaseType -> contentView = PurchaseDialogCustomizationContent(context)
                 else -> contentView = PurchaseDialogBaseContent(context)
             }
 
@@ -168,7 +169,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
     private var limitedTextViewJob: Job? = null
 
-    @OptIn(ExperimentalTime::class)
     private fun setLimitedTextView() {
         if (user == null) return
         if (shopItem.habitClass != null && shopItem.habitClass != "special" && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
@@ -182,7 +182,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 while (shopItem.event?.end?.after(Date()) == true) {
                     limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
                     val diff = (shopItem.event?.end?.time ?: 0) - Date().time
-                    delay(if (diff < (60 * 60 * 1000)) Duration.seconds(1) else Duration.minutes(1))
+                    delay(1.toDuration(if (diff < (60 * 60 * 1000)) DurationUnit.SECONDS else DurationUnit.MINUTES))
                 }
                 if (shopItem.event?.end?.before(Date()) == true) {
                     limitedTextView.text = context.getString(R.string.no_longer_available)
@@ -239,10 +239,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         pinTextView = customHeader.findViewById(R.id.pin_text)
 
         addCloseButton()
-        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null), autoDismiss = false) { _, _ ->
+        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, buttonsWrapper, false), autoDismiss = false) { _, _ ->
             onBuyButtonClicked()
         }
         priceLabel = buyButton.findViewById(R.id.priceLabel)
+        priceLabel.animationDuration = 0L
         buyLabel = buyButton.findViewById(R.id.buy_label)
         pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe({ isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
 
@@ -351,6 +352,12 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             observable = userRepository.reroll().cast(Any::class.java)
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
+        } else if (shopItem.purchaseType == "debuffPotion") {
+            observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
+        } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background") {
+            observable = userRepository.unlockPath(user, item.path, item.purchaseType,
+                item.value
+            ).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
         } else if (shopItem.purchaseType == "card") {

@@ -47,7 +47,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     internal var contentView: FrameLayout
     private var scrollingSeparator: View
     internal var scrollView: LockableScrollView
-    private var buttonsWrapper: LinearLayout
+    protected var buttonsWrapper: LinearLayout
     private var noticeTextView: TextView
     private var closeButton: Button
 

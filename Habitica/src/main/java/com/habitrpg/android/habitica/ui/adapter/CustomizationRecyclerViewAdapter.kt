@@ -4,12 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import coil.load
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionFooterBinding
@@ -17,9 +17,10 @@ import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBindi
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
+import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -198,31 +199,10 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                     dialog.addButton(R.string.reward_dialog_dismiss, false)
                     dialog.show()
                 } else {
-                    val dialogContent = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_purchase_customization, null) as LinearLayout
-
-                    val imageView = dialogContent.findViewById<ImageView>(R.id.imageView)
-                    DataBindingUtils.loadImage(imageView, customization?.getImageName(userSize, hairColor))
-
-                    val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
-                    priceLabel.text = customization?.price.toString()
-
-                    (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
-
-                    val dialog = HabiticaAlertDialog(itemView.context)
-                    dialog.addButton(R.string.purchase_button, true) { _, _ ->
-                        if (customization?.price ?: 0 > gemBalance) {
-                            MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                            return@addButton
-                        }
-
-                        customization?.let {
-                            unlockCustomizationEvents.onNext(it)
-                        }
+                    customization?.let {
+                        val dialog = PurchaseDialog(itemView.context, HabiticaBaseApplication.userComponent, ShopItem.fromCustomization(it, userSize, hairColor))
+                        dialog.show()
                     }
-                    dialog.setTitle(R.string.purchase_customization)
-                    dialog.setAdditionalContentView(dialogContent)
-                    dialog.addButton(R.string.reward_dialog_dismiss, false)
-                    dialog.show()
                 }
                 return
             }

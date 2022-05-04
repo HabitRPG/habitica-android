@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/shopitem_dialog_content_inset"
+    android:paddingEnd="@dimen/shopitem_dialog_content_inset"
+    tools:parentTag="LinearLayout"
+    tools:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
+        android:layout_marginTop="24dp"/>
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Headline"
+        android:textColor="@color/text_primary"
+        tools:text="This is the Title"
+        android:gravity="center"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="4dp"/>
+    <TextView
+        android:id="@+id/notesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Body2"
+        android:textColor="@color/text_ternary"
+        tools:text="These are the notes"
+        android:gravity="center"/>
+</merge>

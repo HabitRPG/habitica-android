@@ -51,6 +51,7 @@ interface UserRepository : BaseRepository {
 
     fun changeClass(selectedClass: String): Flowable<User>
 
+    fun unlockPath(user: User?, unlockPath: String?, type: String?, price: Int): Flowable<UnlockResponse>
     fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse>
     fun unlockPath(set: CustomizationSet): Flowable<UnlockResponse>
 
