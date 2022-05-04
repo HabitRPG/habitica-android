@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -23,6 +24,7 @@ import com.habitrpg.android.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
@@ -35,7 +37,8 @@ class UserRepositoryImpl(
     apiClient: ApiClient,
     userID: String,
     private val taskRepository: TaskRepository,
-    var appConfigManager: AppConfigManager
+    private val appConfigManager: AppConfigManager,
+    private val analyticsManager: AnalyticsManager
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
     private var lastSync: Date? = null
@@ -47,9 +50,8 @@ class UserRepositoryImpl(
     private fun updateUser(userID: String, updateData: Map<String, Any>): Flowable<User> {
         return Flowable.zip(
             apiClient.updateUser(updateData),
-            localRepository.getUser(userID).firstElement().toFlowable(),
-            { newUser, user -> mergeUser(user, newUser) }
-        )
+            localRepository.getUser(userID).firstElement().toFlowable()
+        ) { newUser, user -> mergeUser(user, newUser) }
     }
 
     private fun updateUser(userID: String, key: String, value: Any): Flowable<User> {
@@ -333,7 +335,10 @@ class UserRepositoryImpl(
         }
         observable.flatMap { apiClient.runCron().firstElement() }
             .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
-            .subscribe({ }, RxErrorHandler.handleEmptyError())
+            .subscribe({ }, {
+                analyticsManager.logEvent("cron failed", bundleOf(Pair("error", it.localizedMessage)))
+                RxErrorHandler.reportError(it)
+            })
     }
 
     override fun useCustomization(type: String, category: String?, identifier: String): Flowable<User> {
