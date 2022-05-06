@@ -33,9 +33,6 @@ enum class AdType {
 
     val adUnitID: String
     get() {
-        if (BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.TESTING_LEVEL == "alpha") {
-            return "ca-app-pub-3940256099942544/5224354917"
-        }
         return when (this) {
             ARMOIRE -> "ca-app-pub-5911973472413421/9392092486"
             SPELL -> "ca-app-pub-5911973472413421/1738504765"
