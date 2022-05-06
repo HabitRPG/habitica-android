@@ -65,13 +65,6 @@ class AvatarEquipmentFragment :
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
         )
-        compositeSubscription.add(
-            adapter.getUnlockSetEvents()
-                .flatMap { set ->
-                    userRepository.unlockPath(set)
-                }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
-        )
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

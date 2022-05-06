@@ -6,8 +6,10 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.ItemEvent
 import com.habitrpg.android.habitica.models.user.User
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -47,6 +49,8 @@ open class ShopItem : RealmObject(), BaseObject {
     @SerializedName("lvl")
     var level: Int? = null
     var event: ItemEvent? = null
+
+    var setImageNames = RealmList<String>()
 
     val isTypeItem: Boolean
         get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "armoire" == purchaseType || "potion" == purchaseType || "debuffPotion" == purchaseType || "fortify" == purchaseType
@@ -162,6 +166,28 @@ open class ShopItem : RealmObject(), BaseObject {
             item.path = customization.path
             item.purchaseType = if (customization.type == "background") "background" else "customization"
             item.imageName = customization.getImageName(userSize, hairColor)
+            return item
+        }
+
+        fun fromCustomizationSet(set: CustomizationSet, userSize: String?, hairColor: String?): ShopItem {
+            val item = ShopItem()
+            var path = ""
+            for (customization in set.customizations) {
+                path = path + "," + customization.path
+            }
+            if (path.isEmpty()) {
+                item.path = path
+            } else {
+                item.path = path.substring(1)
+            }
+            item.text = set.text
+            item.key = set.identifier ?: ""
+            item.currency = "gems"
+            item.value = set.price
+            item.purchaseType = "customizationSet"
+            set.customizations.forEach {
+                item.setImageNames.add(it.getIconName(userSize, hairColor))
+            }
             return item
         }
     }

@@ -105,8 +105,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     checkGearClass()
                 }
                 "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
-                "background" == shopItem.purchaseType -> contentView = PurchaseDialogBackgroundContent(context)
+                "background" == shopItem.purchaseType -> {
+                    contentView = PurchaseDialogBackgroundContent(context)
+                }
                 "customization" == shopItem.purchaseType -> contentView = PurchaseDialogCustomizationContent(context)
+                "customizationSet" == shopItem.purchaseType -> contentView = PurchaseDialogCustomizationSetContent(context)
                 else -> contentView = PurchaseDialogBaseContent(context)
             }
 
@@ -283,6 +286,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             checkGearClass()
         }
         setLimitedTextView()
+
+        if (additionalContentView is PurchaseDialogBackgroundContent) {
+            (additionalContentView as PurchaseDialogBackgroundContent).setAvatar(userRepository.getUnmanagedCopy(user))
+        }
     }
 
     override fun dismiss() {
@@ -354,10 +361,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
-        } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background") {
-            observable = userRepository.unlockPath(user, item.path, item.purchaseType,
-                item.value
-            ).cast(Any::class.java)
+        } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background" || shopItem.purchaseType == "customizationSet") {
+            observable = userRepository.unlockPath(user, item.path ?: "", item.value).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
         } else if (shopItem.purchaseType == "card") {

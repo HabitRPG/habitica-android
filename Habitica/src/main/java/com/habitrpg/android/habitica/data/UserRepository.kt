@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
@@ -51,9 +50,8 @@ interface UserRepository : BaseRepository {
 
     fun changeClass(selectedClass: String): Flowable<User>
 
-    fun unlockPath(user: User?, unlockPath: String?, type: String?, price: Int): Flowable<UnlockResponse>
+    fun unlockPath(user: User?, path: String, price: Int): Flowable<UnlockResponse>
     fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse>
-    fun unlockPath(set: CustomizationSet): Flowable<UnlockResponse>
 
     fun runCron(tasks: MutableList<Task>)
     fun runCron()

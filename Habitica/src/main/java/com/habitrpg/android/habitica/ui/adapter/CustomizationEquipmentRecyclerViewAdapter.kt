@@ -37,7 +37,6 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
     private val selectCustomizationEvents = PublishSubject.create<Equipment>()
     private val unlockCustomizationEvents = PublishSubject.create<Equipment>()
-    private val unlockSetEvents = PublishSubject.create<CustomizationSet>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         val viewID: Int = R.layout.customization_grid_item
@@ -79,10 +78,6 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
     fun getUnlockCustomizationEvents(): Flowable<Equipment> {
         return unlockCustomizationEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getUnlockSetEvents(): Flowable<CustomizationSet> {
-        return unlockSetEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     internal inner class EquipmentViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {

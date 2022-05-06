@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
@@ -162,11 +161,7 @@ class UserRepositoryImpl(
     override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
         .flatMap { retrieveUser(false) }
 
-    override fun unlockPath(user: User?, unlockPath: String?, type: String?, price: Int): Flowable<UnlockResponse> {
-        var path = unlockPath ?: return Flowable.empty()
-        if (path.last() == '.' && type == "background") {
-            path += user?.preferences?.background
-        }
+    override fun unlockPath(user: User?, path: String, price: Int): Flowable<UnlockResponse> {
         return zipWithLiveUser(apiClient.unlockPath(path)) { unlockResponse, copiedUser ->
             val user = localRepository.getUnmanagedCopy(copiedUser)
             user.preferences = unlockResponse.preferences
@@ -179,32 +174,11 @@ class UserRepositoryImpl(
     }
 
     override fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse> {
-        return unlockPath(user, customization.path, customization.type, customization.price ?: 0)
-    }
-
-    override fun unlockPath(set: CustomizationSet): Flowable<UnlockResponse> {
-        var path = ""
-        for (customization in set.customizations) {
-            path = path + "," + customization.path
+        var path = customization.path
+        if (path.last() == '.' && customization.type == "background") {
+            path += user?.preferences?.background
         }
-        if (path.isEmpty()) {
-            return Flowable.just(null)
-        }
-        path = path.substring(1)
-        return Flowable.zip(
-            apiClient.unlockPath(path),
-            localRepository.getUser(userID).firstElement().toFlowable()
-                .map { localRepository.getUnmanagedCopy(it) }
-                .skipNull(),
-            { unlockResponse, copiedUser ->
-                copiedUser.preferences = unlockResponse.preferences
-                copiedUser.purchased = unlockResponse.purchased
-                copiedUser.items = unlockResponse.items
-                copiedUser.balance = copiedUser.balance - set.price / 4.0
-                localRepository.saveUser(copiedUser, false)
-                unlockResponse
-            }
-        )
+        return unlockPath(user, path, customization.price ?: 0)
     }
 
     override fun runCron() {

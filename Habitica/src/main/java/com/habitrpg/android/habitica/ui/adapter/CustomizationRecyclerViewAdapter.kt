@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import coil.load
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -48,14 +45,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     var ownedCustomizations: List<String> = listOf()
 
     private val selectCustomizationEvents = PublishSubject.create<Customization>()
-    private val unlockCustomizationEvents = PublishSubject.create<Customization>()
-    private val unlockSetEvents = PublishSubject.create<CustomizationSet>()
-
-    fun updateOwnership(ownedCustomizations: List<String>) {
-        this.ownedCustomizations = ownedCustomizations
-        setCustomizations(unsortedCustomizations)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return if (viewType == 0) {
@@ -132,6 +121,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 customizationList.add(set)
             }
             customizationList.add(customization)
+            lastSet.customizations.add(customization)
             if (customization.isUsable(ownedCustomizations.contains(customization.id)) && lastSet.hasPurchasable) {
                 lastSet.hasPurchasable = false
             }
@@ -141,14 +131,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
 
     fun getSelectCustomizationEvents(): Flowable<Customization> {
         return selectCustomizationEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getUnlockCustomizationEvents(): Flowable<Customization> {
-        return unlockCustomizationEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getUnlockSetEvents(): Flowable<CustomizationSet> {
-        return unlockSetEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     internal inner class CustomizationViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -248,36 +230,10 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         }
 
         override fun onClick(v: View) {
-            val dialogContent = LayoutInflater.from(context).inflate(R.layout.dialog_purchase_customization, null) as LinearLayout
-
-            val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
-            priceLabel.text = set?.price.toString()
-
-            val dialog = HabiticaAlertDialog(context)
-            dialog.addButton(R.string.purchase_button, true) { _, _ ->
-                if (set?.price ?: 0 > gemBalance) {
-                    MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                    return@addButton
-                }
-                set?.customizations = ArrayList()
-                customizationList
-                    .filter { Customization::class.java.isAssignableFrom(it.javaClass) }
-                    .map { it as Customization }
-                    .filter { it.customizationSet != null && it.customizationSet == set?.identifier }
-                    .forEach { set?.customizations?.add(it) }
-                if (additionalSetItems.isNotEmpty()) {
-                    additionalSetItems
-                        .filter { !it.isUsable(ownedCustomizations.contains(it.id)) && it.customizationSet == set?.identifier }
-                        .forEach { set?.customizations?.add(it) }
-                }
-                set?.let {
-                    unlockSetEvents.onNext(it)
-                }
+            set?.let {
+                val dialog = PurchaseDialog(itemView.context, HabiticaBaseApplication.userComponent, ShopItem.fromCustomizationSet(it, userSize, hairColor))
+                dialog.show()
             }
-            dialog.setTitle(context.getString(R.string.purchase_set_title, set?.text))
-            dialog.setAdditionalContentView(dialogContent)
-            dialog.addButton(R.string.reward_dialog_dismiss, false)
-            dialog.show()
         }
     }
 }

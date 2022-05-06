@@ -86,24 +86,6 @@ class AvatarCustomizationFragment :
                 }
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
         )
-        compositeSubscription.add(
-            adapter.getUnlockCustomizationEvents()
-                .flatMap { customization ->
-                    userRepository.unlockPath(userViewModel.user.value, customization)
-                }
-                .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
-                .flatMap { inventoryRepository.retrieveInAppRewards() }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
-        )
-        compositeSubscription.add(
-            adapter.getUnlockSetEvents()
-                .flatMap { set ->
-                    userRepository.unlockPath(set)
-                }
-                .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
-                .flatMap { inventoryRepository.retrieveInAppRewards() }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
-        )
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }

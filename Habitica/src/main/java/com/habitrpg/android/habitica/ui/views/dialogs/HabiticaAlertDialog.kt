@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.AccelerateInterpolator
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -26,10 +25,10 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.plattysoft.leonids.ParticleSystem
-import java.lang.ref.WeakReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
 
@@ -44,7 +43,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     private val dialogContainer: LinearLayout
     private var titleTextView: TextView
     private var messageTextView: TextView
-    internal var contentView: FrameLayout
+    internal var contentView: ViewGroup
     private var scrollingSeparator: View
     internal var scrollView: LockableScrollView
     protected var buttonsWrapper: LinearLayout
