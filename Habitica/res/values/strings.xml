@@ -278,7 +278,7 @@
     <string name="quest_items_found">You\'ve found %d quest items</string>
     <string name="armoireEquipment_new">You find a piece of rare Equipment in the Armoire!</string>
     <string name="armoireFood_new">You rummage in the Armoire and find food. What\'s that doing in here?</string>
-    <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
+    <string name="armoireExp_new">You wrestle with the Armoire and gain %s Experience. Take that!</string>
     <string name="sell">Sell (%d Gold)</string>
     <string name="hatch_with_potion">Hatch with potion</string>
     <string name="hatch_egg">Hatch with egg</string>

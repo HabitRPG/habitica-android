@@ -374,7 +374,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 if (shopItem.key == "armoire" && configManager.enableNewArmoire()) {
                     MainNavigationController.navigate(R.id.armoireActivity, ArmoireActivityDirections.openArmoireActivity(buyResponse.armoire["type"] ?: "",
                         buyResponse.armoire["dropText"] ?: "",
-                        buyResponse.armoire["dropKey"] ?: "").arguments)
+                        buyResponse.armoire["dropKey"] ?: "",
+                        buyResponse.armoire["value"] ?: "").arguments)
                 }
                 buyResponse
             }

@@ -78,7 +78,8 @@ class ArmoireActivity: BaseActivity() {
                     .subscribe({
                                configure(it.armoire["type"] ?: "",
                                    it.armoire["dropKey"] ?: "",
-                                   it.armoire["dropText"] ?: "")
+                                   it.armoire["dropText"] ?: "",
+                                   it.armoire["value"] ?: "")
                         binding.adButton.updateForAdType(AdType.ARMOIRE, lifecycleScope)
                         hasAnimatedChanges = false
                         gold = null
@@ -113,7 +114,7 @@ class ArmoireActivity: BaseActivity() {
         intent.extras?.let {
             val args = ArmoireActivityArgs.fromBundle(it)
             equipmentKey = args.key
-            configure(args.type, args.key, args.text)
+            configure(args.type, args.key, args.text, args.value)
         }
     }
 
@@ -157,7 +158,7 @@ class ArmoireActivity: BaseActivity() {
             .emitWithGravity(binding.confettiAnchor, Gravity.TOP, 15, 2000)
     }
 
-    fun configure(type: String, key: String, text: String) {
+    fun configure(type: String, key: String, text: String, value: String? = "") {
         binding.titleView.text = text
         binding.equipButton.visibility = if (type == "gear") View.VISIBLE else View.GONE
         when (type) {
@@ -170,7 +171,7 @@ class ArmoireActivity: BaseActivity() {
                 binding.iconView.loadImage("Pet_Food_$key")
             }
             else -> {
-                binding.subtitleView.text = getString(R.string.armoireExp)
+                binding.subtitleView.text = getString(R.string.armoireExp, value)
                 binding.iconView.setImageResource(R.drawable.armoire_experience)
             }
         }

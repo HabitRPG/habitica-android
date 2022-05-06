@@ -160,6 +160,9 @@
         <argument
             android:name="key"
             app:argType="string" />
+        <argument
+            android:name="value"
+            app:argType="string" />
     </activity>
     <activity
         android:id="@+id/subscriptionPurchaseActivity"
