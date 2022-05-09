@@ -104,8 +104,8 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                 val remindersObject = reminderElement.asJsonObject
                 val reminder = RemindersItem()
                 reminder.id = remindersObject.getAsString("id")
-                reminder.startDate = context.deserialize(remindersObject.get("startDate"), Date::class.java)
-                reminder.time = context.deserialize(remindersObject.get("time"), Date::class.java)
+                reminder.startDate = remindersObject.getAsString("startDate")
+                reminder.time = remindersObject.getAsString("time")
                 task.reminders?.add(reminder)
             }
         }
@@ -207,9 +207,9 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             val jsonObject = JsonObject()
             jsonObject.addProperty("id", item.id)
             if (item.startDate != null) {
-                jsonObject.addProperty("startDate", item.startDate?.time)
+                jsonObject.addProperty("startDate", item.startDate)
             }
-            jsonObject.addProperty("time", item.time?.time ?: Date().time)
+            jsonObject.addProperty("time", item.time)
             jsonArray.add(jsonObject)
         }
         return jsonArray

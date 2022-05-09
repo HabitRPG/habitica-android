@@ -55,6 +55,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation "androidx.preference:preference-ktx:1.2.0"
 
+    //Desugaring
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 
     // Markdown
     implementation "io.noties.markwon:core:4.6.2"
@@ -267,6 +269,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
