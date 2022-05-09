@@ -110,7 +110,7 @@ class SubscriptionDetailsView : LinearLayout {
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
         if (plan.consecutive?.count != null) {
-            var monthsTillNextHourglass = subscriptionRenewalDuration - (plan.consecutive?.count!! % subscriptionRenewalDuration)
+            val monthsTillNextHourglass = subscriptionRenewalDuration - (plan.consecutive?.count!! % subscriptionRenewalDuration)
             val nextHourglassMonth = LocalDate.now().plusMonths(monthsTillNextHourglass.toLong())
             val nextHourGlassMonthString = nextHourglassMonth.format(DateTimeFormatter.ofPattern("MMM"));
             binding.nextHourglassTextView.text = nextHourGlassMonthString
