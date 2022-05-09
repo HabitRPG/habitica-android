@@ -51,6 +51,7 @@
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="toolbarContentColor">@color/text_primary</item>
         <item name="colorPrimaryText">@color/brand_50</item>
+        <item name="colorBoxStroke">@color/brand_50</item>
         <item name="headerBackgroundColor">@color/content_background</item>
         <item name="headerOffsetColor">@color/window_background</item>
         <item name="headerTextColor">@color/text_primary</item>
@@ -62,6 +63,7 @@
     <style name="MainAppTheme.Dark">
         <item name="colorPrimary">@color/gray_500</item>
         <item name="barColor">@color/gray_1</item>
+        <item name="colorBoxStroke">@color/gray_10</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
     </style>
@@ -79,6 +81,7 @@
         <item name="android:colorPrimary">@color/red_5</item>
         <item name="android:colorPrimaryDark">@color/red_1</item>
         <item name="android:colorAccent">@color/red_100</item>
+        <item name="colorBoxStroke">@color/red_10</item>
         <item name="colorPrimaryOffset">@color/red_10</item>
         <item name="colorPrimaryDistinct">@color/red_500</item>
         <item name="colorBadgeBackground">@color/red_100</item>
@@ -94,6 +97,7 @@
     <style name="MainAppTheme.Red.Dark">
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorBoxStroke">@color/red_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/red_100</item>
     </style>
@@ -105,6 +109,7 @@
         <item name="android:colorPrimary">@color/red_1</item>
         <item name="android:colorPrimaryDark">@color/maroon_1</item>
         <item name="android:colorAccent">@color/maroon_100</item>
+        <item name="colorBoxStroke">@color/maroon_10</item>
         <item name="colorPrimaryOffset">@color/red_1</item>
         <item name="colorPrimaryDistinct">@color/red_500</item>
         <item name="colorBadgeBackground">@color/red_10</item>
@@ -130,6 +135,7 @@
         <item name="android:colorPrimary">@color/orange_10</item>
         <item name="android:colorPrimaryDark">@color/orange_5</item>
         <item name="android:colorAccent">@color/orange_100</item>
+        <item name="colorBoxStroke">@color/orange_10</item>
         <item name="colorPrimaryOffset">@color/orange_50</item>
         <item name="colorPrimaryDistinct">@color/orange_500</item>
         <item name="colorBadgeBackground">@color/orange_100</item>
@@ -145,6 +151,7 @@
     <style name="MainAppTheme.Orange.Dark">
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorBoxStroke">@color/orange_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/orange_100</item>
     </style>
@@ -156,6 +163,7 @@
         <item name="android:colorPrimary">@color/yellow_10</item>
         <item name="android:colorPrimaryDark">@color/yellow_5</item>
         <item name="android:colorAccent">@color/yellow_100</item>
+        <item name="colorBoxStroke">@color/yellow_5</item>
         <item name="colorPrimaryOffset">@color/yellow_50</item>
         <item name="colorPrimaryDistinct">@color/yellow_500</item>
         <item name="colorBadgeBackground">@color/yellow_100</item>
@@ -171,6 +179,7 @@
     <style name="MainAppTheme.Yellow.Dark">
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorBoxStroke">@color/yellow_5</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/yellow_100</item>
     </style>
@@ -182,6 +191,7 @@
         <item name="android:colorPrimary">@color/green_10</item>
         <item name="android:colorPrimaryDark">@color/green_5</item>
         <item name="android:colorAccent">@color/green_100</item>
+        <item name="colorBoxStroke">@color/green_10</item>
         <item name="colorPrimaryOffset">@color/green_50</item>
         <item name="colorPrimaryDistinct">@color/green_500</item>
         <item name="colorBadgeBackground">@color/green_100</item>
@@ -197,6 +207,7 @@
     <style name="MainAppTheme.Green.Dark">
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorBoxStroke">@color/green_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/green_100</item>
     </style>
@@ -208,6 +219,7 @@
         <item name="android:colorPrimary">@color/teal_10</item>
         <item name="android:colorPrimaryDark">@color/teal_5</item>
         <item name="android:colorAccent">@color/teal_100</item>
+        <item name="colorBoxStroke">@color/teal_10</item>
         <item name="colorPrimaryOffset">@color/teal_50</item>
         <item name="colorPrimaryDistinct">@color/teal_500</item>
         <item name="colorBadgeBackground">@color/teal_100</item>
@@ -223,6 +235,7 @@
     <style name="MainAppTheme.Teal.Dark">
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
+        <item name="colorBoxStroke">@color/teal_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/teal_100</item>
     </style>
@@ -234,6 +247,7 @@
         <item name="android:colorPrimary">@color/blue_10</item>
         <item name="android:colorPrimaryDark">@color/blue_5</item>
         <item name="android:colorAccent">@color/blue_100</item>
+        <item name="colorBoxStroke">@color/blue_10</item>
         <item name="colorPrimaryOffset">@color/blue_50</item>
         <item name="colorPrimaryDistinct">@color/blue_500</item>
         <item name="colorBadgeBackground">@color/blue_100</item>
@@ -250,6 +264,7 @@
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
+        <item name="colorBoxStroke">@color/blue_10</item>
         <item name="toolbarContentColor">@color/blue_100</item>
     </style>
 
@@ -739,7 +754,9 @@
     <style name="TaskFormTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <!-- reference our hint & error styles -->
         <item name="boxBackgroundColor">@color/white</item>
-        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="boxStrokeColor">@color/color_box_stroke</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
         <item name="android:textColor">?attr/colorPrimaryText</item>
         <item name="android:textColorHint">?colorPrimaryText</item>
         <item name="colorControlNormal">?attr/colorPrimary</item>
