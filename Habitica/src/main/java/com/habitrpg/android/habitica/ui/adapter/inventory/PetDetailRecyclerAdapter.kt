@@ -1,6 +1,11 @@
 package com.habitrpg.android.habitica.ui.adapter.inventory
 
+import android.view.View
 import android.view.ViewGroup
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.CanHatchItemBinding
+import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.Animations
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -11,8 +16,10 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
+import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -66,6 +73,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
+            2 -> CanHatchViewHolder(parent, animalIngredientsRetriever)
             else -> PetViewHolder(parent, equipEvents, feedEvents, animalIngredientsRetriever)
         }
 
@@ -78,23 +86,50 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                 (holder as? SectionViewHolder)?.bind(obj)
             }
             is Pet -> {
-                (holder as? PetViewHolder)?.bind(
-                    obj,
-                    ownedPets?.get(obj.key ?: "")?.trained ?: 0,
-                    eggCount(obj),
-                    potionCount(obj),
-                    canRaiseToMount(obj),
-                    ownsSaddles,
-                    ownedItems?.get(obj.animal + "-eggs") != null,
-                    ownedItems?.get(obj.color + "-hatchingPotions") != null,
-                    ownedMounts?.containsKey(obj.key) == true,
-                    currentPet
-                )
+                val trained = ownedPets?.get(obj.key ?: "")?.trained ?: 0
+                val eggCount = eggCount(obj)
+                val potionCount = potionCount(obj)
+                if (trained <= 0 && eggCount > 0 && potionCount > 0) {
+                    (holder as? CanHatchViewHolder)?.bind(
+                        obj,
+                        eggCount,
+                        potionCount,
+                        ownedItems?.get(obj.animal + "-eggs") != null,
+                        ownedItems?.get(obj.color + "-hatchingPotions") != null,
+                        ownedMounts?.containsKey(obj.key) == true,
+                    )
+                } else {
+                    (holder as? PetViewHolder)?.bind(
+                        obj,
+                        trained,
+                        eggCount,
+                        potionCount,
+                        canRaiseToMount(obj),
+                        ownsSaddles,
+                        ownedItems?.get(obj.animal + "-eggs") != null,
+                        ownedItems?.get(obj.color + "-hatchingPotions") != null,
+                        ownedMounts?.containsKey(obj.key) == true,
+                        currentPet
+                    )
+                }
+
             }
         }
     }
 
-    override fun getItemViewType(position: Int): Int = if (itemList.size > position && itemList[position] is StableSection) 1 else 2
+    override fun getItemViewType(position: Int): Int {
+        if (itemList.size <= position) return 3
+        return if (itemList[position] is StableSection) {
+            1
+        } else {
+            val pet = itemList[position] as Pet
+            if (ownedPets?.get(pet.key ?: "")?.trained ?: 0 <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0) {
+                2
+            } else {
+                3
+            }
+        }
+    }
 
     override fun getItemCount(): Int = itemList.size
 
@@ -117,5 +152,69 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         this.ownedItems = ownedItems
         ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0) > 0 else false
         notifyDataSetChanged()
+    }
+
+    class CanHatchViewHolder(
+        parent: ViewGroup,
+        private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
+    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.can_hatch_item)),
+        View.OnClickListener {
+        private var binding = CanHatchItemBinding.bind(itemView)
+
+        private var hasMount: Boolean = false
+        private var hasUnlockedPotion: Boolean = false
+        private var hasUnlockedEgg: Boolean = false
+        private var eggCount: Int = 0
+        private var potionCount: Int = 0
+        private var animal: Pet? = null
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        fun bind(
+            item: Pet,
+            eggCount: Int,
+            potionCount: Int,
+            hasUnlockedEgg: Boolean,
+            hasUnlockedPotion: Boolean,
+            hasMount: Boolean,
+        ) {
+            this.animal = item
+            this.eggCount = eggCount
+            this.potionCount = potionCount
+            this.hasUnlockedEgg = hasUnlockedEgg
+            this.hasUnlockedPotion = hasUnlockedPotion
+            this.hasMount = hasMount
+
+            DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${item.animal}")
+            DataBindingUtils.loadImage(
+                binding.hatchingPotionView,
+                "Pet_HatchingPotion_${item.color}"
+            )
+
+            binding.eggView.startAnimation(Animations.bobbingAnimation(4f))
+            binding.hatchingPotionView.startAnimation(Animations.bobbingAnimation(-4f))
+        }
+
+        override fun onClick(p0: View?) {
+            val context = itemView.context
+            val dialog = PetSuggestHatchDialog(context)
+            animal?.let {
+                ingredientsReceiver?.invoke(it) { ingredients ->
+                    dialog.configure(
+                        it,
+                        ingredients.first,
+                        ingredients.second,
+                        eggCount,
+                        potionCount,
+                        hasUnlockedEgg,
+                        hasUnlockedPotion,
+                        hasMount
+                    )
+                    dialog.show()
+                }
+            }
+        }
     }
 }

@@ -89,17 +89,6 @@ class PetViewHolder(
         } else {
             binding.trainedProgressBar.visibility = View.GONE
             binding.imageView.alpha = 0.2f
-            if (canHatch) {
-                binding.imageView.visibility = View.GONE
-                binding.itemWrapper.visibility = View.VISIBLE
-                binding.checkmarkView.visibility = View.VISIBLE
-                itemView.setBackgroundResource(R.drawable.layout_rounded_bg_window_tint_border)
-                DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${item.animal}")
-                DataBindingUtils.loadImage(
-                    binding.hatchingPotionView,
-                    "Pet_HatchingPotion_${item.color}"
-                )
-            }
         }
 
         if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {

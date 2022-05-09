@@ -45,8 +45,20 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
             }
         }
 
-    private var currentValue: Double = 0.0
-    private var maxValue: Double = 0.0
+    var currentValue: Double = 0.0
+    set(value) {
+        if (field != value) {
+            field = value
+            updateBar()
+        }
+    }
+    var maxValue: Double = 0.0
+    set(value) {
+        if (field != value) {
+            field = value
+            updateBar()
+        }
+    }
 
     var pendingValue: Double = 0.0
         set(value) {
@@ -94,16 +106,6 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
     fun set(value: Double, valueMax: Double) {
         currentValue = value
         maxValue = valueMax
-        updateBar()
-    }
-
-    fun setCurrentValue(value: Double) {
-        currentValue = value
-        updateBar()
-    }
-
-    fun setMaxValue(value: Double) {
-        maxValue = value
         updateBar()
     }
 

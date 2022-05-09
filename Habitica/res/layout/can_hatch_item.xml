@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
+    <LinearLayout
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:id="@+id/card_view"
+        android:layout_height="88dp"
+        android:layout_width="76dp"
+        android:background="@drawable/layout_rounded_bg_window_tint_border"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+        <RelativeLayout
+            android:id="@+id/item_wrapper"
+            android:layout_width="86dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/hatchingPotion_view"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+            <ImageView
+                android:id="@+id/egg_view"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/checkmark_view"
+            android:layout_width="12dp"
+            android:layout_height="10dp"
+            android:src="@drawable/pet_checkmark"
+            android:layout_gravity="center" />
+    </LinearLayout>
+</FrameLayout>

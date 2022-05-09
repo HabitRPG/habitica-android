@@ -13,52 +13,85 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:paddingTop="19dp">
-
-    <com.habitrpg.android.habitica.ui.views.CurrencyView
-        android:id="@+id/gold_view"
+    android:gravity="center_horizontal">
+    <Space
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:background="@drawable/armoire_gold_background"
-        android:gravity="center"
-        android:paddingStart="6dp"
-        android:paddingEnd="8dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        tools:text="118"/>
-
-    <FrameLayout
-        android:layout_width="165dp"
-        android:layout_height="158dp"
-        android:background="@drawable/armoire_circle"
-        android:layout_marginTop="23dp"
-        android:layout_marginBottom="23dp">
-        <ImageView
-            android:id="@+id/icon_view"
-            android:layout_width="136dp"
-            android:layout_height="136dp"
-            android:layout_gravity="center"/>
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/title_view"
-        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="+21 Experience"
-        android:textStyle="bold"
-        android:textSize="28sp"
-        android:textColor="@color/text_primary"/>
-    <TextView
-        android:id="@+id/subtitle_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="You wrestle with the Armoire and gain Experience. Take that!"
-        android:layout_marginHorizontal="50dp"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <com.habitrpg.android.habitica.ui.views.CurrencyView
+            android:id="@+id/gold_view"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@drawable/armoire_gold_background"
+            android:gravity="center"
+            android:paddingStart="6dp"
+            android:paddingEnd="8dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            tools:text="118"/>
+
+        <RelativeLayout
+            android:id="@+id/icon_wrapper"
+            android:layout_width="165dp"
+            android:layout_height="158dp"
+            android:background="@drawable/circle_gray_700"
+            android:layout_marginTop="23dp"
+            android:layout_marginBottom="23dp"
+            android:visibility="invisible">
+            <ImageView
+                android:id="@+id/icon_view"
+                android:layout_width="136dp"
+                android:layout_height="136dp"
+                android:layout_centerInParent="true"/>
+            <com.habitrpg.android.habitica.ui.views.SparkView
+                android:id="@+id/left_spark_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                app:color="@color/brand_500"
+                app:thickness="6dp"
+                app:maxSpacing="8dp"
+                app:length="12dp"
+                app:duration="3500"
+                android:layout_marginTop="12dp"/>
+            <com.habitrpg.android.habitica.ui.views.SparkView
+                android:id="@+id/right_spark_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                app:color="@color/brand_500"
+                app:thickness="6dp"
+                app:maxSpacing="10dp"
+                app:duration="4000"
+                app:length="12dp"
+                android:layout_marginEnd="4dp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/title_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="+21 Experience"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:textColor="@color/text_primary"/>
+        <TextView
+            android:id="@+id/subtitle_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="You wrestle with the Armoire and gain Experience. Take that!"
+            android:layout_marginHorizontal="50dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"
+            />
+    </LinearLayout>
     <Space
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -69,7 +102,7 @@
         android:background="@drawable/armoire_background"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingHorizontal="12dp"
+        android:paddingHorizontal="24dp"
         android:paddingTop="28dp">
         <TextView
             android:id="@+id/equipment_count_view"
@@ -121,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/armoire_drop_rates"
-            android:textColor="@color/brand_500"
+            android:textColor="@color/brand_600"
             android:layout_marginTop="22dp"
             style="@style/Body2"/>
     </LinearLayout>

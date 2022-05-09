@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
+import com.habitrpg.android.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.Avatar
@@ -95,6 +96,9 @@ class AvatarWithBarsViewModel(
     private fun setHpBarData(value: Float, valueMax: Int) {
         if (valueMax != 0) {
             cachedMaxHealth = valueMax
+        }
+        if (binding.hpBar.currentValue > value) {
+            binding.hpBar.progressBar.startAnimation(Animations.negativeShakeAnimation())
         }
         binding.hpBar.set(HealthFormatter.format(value.toDouble()), cachedMaxHealth.toDouble())
     }

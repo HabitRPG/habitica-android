@@ -28,8 +28,19 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     private var binding: ValueBarBinding = ValueBarBinding.inflate(context.layoutInflater, this, true)
     private val formatter = NumberFormat.getInstance()
 
-    private var currentValue: Double = 0.0
-    private var maxValue: Double = 0.0
+    val progressBar: HabiticaProgressBar
+    get() = binding.progressBar
+
+    var currentValue: Double
+    get() = binding.progressBar.currentValue
+    set(value) {
+        binding.progressBar.currentValue = value
+    }
+    var maxValue: Double
+        get() = binding.progressBar.maxValue
+        set(value) {
+            binding.progressBar.maxValue = value
+        }
 
     var barForegroundColor: Int
         get() = binding.progressBar.barForegroundColor
@@ -169,7 +180,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     var animationDelay = 0L
 
     fun set(value: Double, valueMax: Double) {
-        if (currentValue != value || maxValue != valueMax) {
+        if (binding.progressBar.currentValue != value || maxValue != valueMax) {
             if (animationDuration == 0L || binding.valueTextView.text.isEmpty()) {
                 currentValue = value
             } else {

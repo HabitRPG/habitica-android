@@ -29,6 +29,7 @@
     <attr name="headerTextColor" format="color" />
     <attr name="widgetBackgroundRadius" format="dimension" />
     <attr name="currency" format="string" />
+    <attr name="color" format="color" />
 
     <declare-styleable name="AvatarView">
         <attr name="showBackground" format="boolean" />
@@ -101,7 +102,7 @@
     </declare-styleable>
     <declare-styleable name="CollapsibleSectionView">
         <attr name="title" />
-        <attr name="color" format="color" />
+        <attr name="color" />
         <attr name="identifier" />
         <attr name="hasAdditionalInfo" format="boolean" />
         <attr name="titleSize" format="dimension" />
@@ -159,5 +160,12 @@
     <declare-styleable name="AdButton">
         <attr name="text" />
         <attr name="currency" />
+    </declare-styleable>
+    <declare-styleable name="SparkView">
+        <attr name="color" />
+        <attr name="thickness" format="dimension" />
+        <attr name="length" format="dimension" />
+        <attr name="maxSpacing" format="dimension" />
+        <attr name="duration" format="integer" />
     </declare-styleable>
 </resources>

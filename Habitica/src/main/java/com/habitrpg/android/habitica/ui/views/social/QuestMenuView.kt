@@ -36,30 +36,22 @@ class QuestMenuView : LinearLayout {
         binding.rageIconView.setImageBitmap(HabiticaIconsHelper.imageOfRage())
 
         binding.pendingDamageIconView.setImageBitmap(HabiticaIconsHelper.imageOfDamage())
-
-        /*binding.closeButton.setOnClickListener {
-            hideBossArt()
-            val preferences = context.getSharedPreferences("collapsible_sections", 0)
-            preferences?.edit {
-                putBoolean("boss_art_collapsed", true)
-            }
-        }*/
     }
 
     fun configure(quest: Quest) {
-        binding.healthBarView.setCurrentValue(quest.progress?.hp ?: 0.0)
-        binding.rageBarView.setCurrentValue(quest.progress?.rage ?: 0.0)
+        binding.healthBarView.currentValue = quest.progress?.hp ?: 0.0
+        binding.rageBarView.currentValue = quest.progress?.rage ?: 0.0
     }
 
     fun configure(questContent: QuestContent) {
         this.questContent = questContent
-        binding.healthBarView.setMaxValue(questContent.boss?.hp?.toDouble() ?: 0.0)
+        binding.healthBarView.maxValue = questContent.boss?.hp?.toDouble() ?: 0.0
         binding.bossNameView.text = questContent.boss?.name
         binding.typeTextView.text = context.getString(R.string.boss_quest)
 
         if (questContent.boss?.hasRage == true) {
             binding.rageView.visibility = View.VISIBLE
-            binding.rageBarView.setMaxValue(questContent.boss?.rage?.value ?: 0.0)
+            binding.rageBarView.maxValue = questContent.boss?.rage?.value ?: 0.0
         } else {
             binding.rageView.visibility = View.GONE
         }
@@ -74,9 +66,7 @@ class QuestMenuView : LinearLayout {
         binding.topView.setBackgroundColor(questContent?.colors?.mediumColor ?: 0)
         binding.bossNameView.gravity = Gravity.START
         binding.bossNameView.layoutParams = LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1F)
-        // binding.bossArtView.visibility = View.GONE
         binding.typeTextView.setTextColor(questContent?.colors?.extraLightColor ?: 0)
-        // binding.closeButton.visibility = View.GONE
     }
 
     fun showBossArt() {
@@ -84,8 +74,6 @@ class QuestMenuView : LinearLayout {
         binding.topView.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
         binding.bossNameView.gravity = Gravity.END
         binding.bossNameView.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        // binding.bossArtView.visibility = View.VISIBLE
         binding.typeTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
-        // binding.closeButton.visibility = View.VISIBLE
     }
 }

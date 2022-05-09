@@ -6,22 +6,26 @@ import android.view.Gravity
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
+import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
+import com.habitrpg.android.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.plattysoft.leonids.ParticleSystem
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ArmoireActivity: BaseActivity() {
@@ -86,7 +90,7 @@ class ArmoireActivity: BaseActivity() {
                     }, RxErrorHandler.handleEmptyError()))
             }
             handler.prepare {
-                if (it && binding.adButton.state == AdButton.State.EMPTY) {
+                if (it && binding.adButton.state == AdButton.State.LOADING) {
                     binding.adButton.state = AdButton.State.READY
                 } else if (!it) {
                     binding.adButton.visibility = View.INVISIBLE
@@ -141,6 +145,34 @@ class ArmoireActivity: BaseActivity() {
             },
             500
         )
+
+
+        binding.iconView.startAnimation(Animations.bobbingAnimation())
+        binding.titleView.alpha = 0f
+        binding.subtitleView.alpha = 0f
+
+        lifecycleScope.launch {
+            delay(100)
+            if (binding.iconWrapper.isAttachedToWindow) {
+                Animations.circularReveal(binding.iconWrapper, 400)
+            }
+            binding.leftSparkView.startAnimating()
+            binding.rightSparkView.startAnimating()
+        }
+
+        binding.titleView.animate().apply {
+            alpha(1f)
+            duration = 400
+            startDelay = 600
+            start()
+        }
+        binding.subtitleView.animate().apply {
+            alpha(1f)
+            duration = 400
+            startDelay = 900
+            start()
+        }
+
         hasAnimatedChanges = true
     }
 
@@ -171,8 +203,9 @@ class ArmoireActivity: BaseActivity() {
                 binding.iconView.loadImage("Pet_Food_$key")
             }
             else -> {
-                binding.subtitleView.text = getString(R.string.armoireExp, value)
+                binding.subtitleView.text = getString(R.string.armoireExp_new, value)
                 binding.iconView.setImageResource(R.drawable.armoire_experience)
+                binding.iconView.layoutParams = RelativeLayout.LayoutParams(108.dpToPx(this), 122.dpToPx(this))
             }
         }
     }
