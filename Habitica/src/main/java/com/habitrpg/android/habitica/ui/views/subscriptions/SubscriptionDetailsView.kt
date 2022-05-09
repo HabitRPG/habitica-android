@@ -50,16 +50,21 @@ class SubscriptionDetailsView : LinearLayout {
         updateSubscriptionStatusPill(plan)
 
         var duration: String? = null
+        var subscriptionRenewalDuration = 3
 
         if (plan.planId != null && plan.dateTerminated == null) {
             if (plan.planId == SubscriptionPlan.PLANID_BASIC || plan.planId == SubscriptionPlan.PLANID_BASICEARNED) {
                 duration = resources.getString(R.string.month)
+                subscriptionRenewalDuration = 3;
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC3MONTH) {
                 duration = resources.getString(R.string.three_months)
+                subscriptionRenewalDuration = 3;
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC6MONTH || plan.planId == SubscriptionPlan.PLANID_GOOGLE6MONTH) {
                 duration = resources.getString(R.string.six_months)
+                subscriptionRenewalDuration = 6;
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC12MONTH) {
                 duration = resources.getString(R.string.twelve_months)
+                subscriptionRenewalDuration = 12;
             }
         }
 
@@ -104,8 +109,8 @@ class SubscriptionDetailsView : LinearLayout {
 
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
-        if (plan.consecutive != null) {
-            val monthsTillNextHourglass = 3 - (plan.consecutive!!.offset % 3)
+        if (plan.consecutive?.count != null) {
+            var monthsTillNextHourglass = subscriptionRenewalDuration - (plan.consecutive?.count!! % subscriptionRenewalDuration)
             val nextHourglassMonth = LocalDate.now().plusMonths(monthsTillNextHourglass.toLong())
             val nextHourGlassMonthString = nextHourglassMonth.format(DateTimeFormatter.ofPattern("MMM"));
             binding.nextHourglassTextView.text = nextHourGlassMonthString
