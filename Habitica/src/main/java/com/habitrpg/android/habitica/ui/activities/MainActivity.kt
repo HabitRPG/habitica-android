@@ -287,9 +287,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         MainNavigationController.setup(navigationController)
         navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
 
+
         if (launchScreen == "/party") {
-            if (viewModel.userViewModel.isUserInParty) {
-                MainNavigationController.navigate(R.id.partyFragment)
+            viewModel.user.observeOnce(this) {
+                if (viewModel.userViewModel.isUserInParty) {
+                    MainNavigationController.navigate(R.id.partyFragment)
+                }
             }
         }
         launchScreen = null
