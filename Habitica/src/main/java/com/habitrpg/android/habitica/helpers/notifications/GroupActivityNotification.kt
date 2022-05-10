@@ -50,7 +50,7 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
     private fun makeMessageFromData(data: Map<String, String>): NotificationCompat.MessagingStyle.Message {
         val sender = Person.Builder().setName(data["senderName"]).build()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
-        val timestamp = dateFormat.parse(data["timestamp"]) ?: Date()
+        val timestamp = data["timestamp"]?.let { dateFormat.parse(it) } ?: Date()
         val messageText = EmojiParser.parseEmojis(data["message"]?.trim { it <= ' ' })
         return NotificationCompat.MessagingStyle.Message(
             messageText,

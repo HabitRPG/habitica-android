@@ -124,7 +124,7 @@ abstract class ChecklistedViewHolder(
                     textView?.text = item.text
                     textView?.setTextColor(ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary))
                     if (item.text != null) {
-                        Observable.just(item.text)
+                        Observable.just(item.text ?: "")
                             .map { MarkdownParser.parseMarkdown(it) }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -188,11 +188,11 @@ abstract class ChecklistedViewHolder(
     }
 
     private fun onChecklistIndicatorClicked() {
-        expandedChecklistRow = if (this.shouldDisplayExpandedChecklist()) null else adapterPosition
+        expandedChecklistRow = if (this.shouldDisplayExpandedChecklist()) null else bindingAdapterPosition
         if (this.shouldDisplayExpandedChecklist()) {
             val recyclerView = this.checklistView.parent.parent as? RecyclerView
             val layoutManager = recyclerView?.layoutManager as? LinearLayoutManager
-            layoutManager?.scrollToPositionWithOffset(this.adapterPosition, 15)
+            layoutManager?.scrollToPositionWithOffset(this.bindingAdapterPosition, 15)
         }
         updateChecklistDisplay()
     }
@@ -210,7 +210,7 @@ abstract class ChecklistedViewHolder(
     }
 
     private fun shouldDisplayExpandedChecklist(): Boolean {
-        return expandedChecklistRow != null && adapterPosition == expandedChecklistRow
+        return expandedChecklistRow != null && bindingAdapterPosition == expandedChecklistRow
     }
 
     private fun onCheckedChanged(isChecked: Boolean) {

@@ -43,7 +43,7 @@ class AvatarView : FrameLayout {
     private var avatarRectF: RectF? = null
     private val avatarMatrix = Matrix()
     private val numberLayersInProcess = AtomicInteger(0)
-    private var avatarImageConsumer: Consumer<Bitmap?>? = null
+    private var avatarImageConsumer: ((Bitmap?) -> Unit)? = null
     private var avatarBitmap: Bitmap? = null
     private var avatarCanvas: Canvas? = null
     private var currentLayers: Map<LayerType, String>? = null
@@ -405,14 +405,14 @@ class AvatarView : FrameLayout {
 
     private fun onLayerComplete() {
         if (numberLayersInProcess.decrementAndGet() == 0) {
-            avatarImageConsumer?.accept(avatarImage)
+            avatarImageConsumer?.invoke(avatarImage)
         }
     }
 
-    fun onAvatarImageReady(consumer: Consumer<Bitmap?>) {
+    fun onAvatarImageReady(consumer: ((Bitmap?) -> Unit)) {
         avatarImageConsumer = consumer
         if (imageViewHolder.size > 0 && numberLayersInProcess.get() == 0) {
-            avatarImageConsumer?.accept(avatarImage)
+            avatarImageConsumer?.invoke(avatarImage)
         } else {
             initAvatarRectMatrix()
             showLayers(layerMap)

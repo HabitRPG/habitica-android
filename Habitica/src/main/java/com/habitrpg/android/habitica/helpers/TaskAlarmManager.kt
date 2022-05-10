@@ -167,7 +167,7 @@ class TaskAlarmManager(
                 notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1)
                 notificationIntent.putExtra(NotificationPublisher.CHECK_DAILIES, false)
 
-                val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+                val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
                 val previousSender = PendingIntent.getBroadcast(
                     context,
                     0,
@@ -186,9 +186,7 @@ class TaskAlarmManager(
                     withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
                 )
 
-                if (context != null) {
-                    setAlarm(context, triggerTime, pendingIntent)
-                }
+                setAlarm(context, triggerTime, pendingIntent)
             }
         }
 

@@ -63,7 +63,7 @@ class TasksViewModel: BaseViewModel() {
     init {
         compositeSubscription.add(userRepository.getTeamPlans()
             .subscribe({
-                owners = listOf(Pair(userID ?: "", userViewModel.displayName)) + it.map {
+                owners = listOf(Pair(userID, userViewModel.displayName)) + it.map {
                     Pair(
                         it.id,
                         it.summary

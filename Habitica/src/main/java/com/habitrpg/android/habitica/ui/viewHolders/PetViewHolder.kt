@@ -125,7 +125,7 @@ class PetViewHolder(
             }
         }
         menu.setSelectionRunnable { index ->
-            val pet = animal as? Pet ?: return@setSelectionRunnable
+            val pet = animal ?: return@setSelectionRunnable
             when (index) {
                 0 -> {
                     animal?.let {

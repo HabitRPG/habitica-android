@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.login
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
@@ -39,8 +40,13 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     init {
         val metrics = DisplayMetrics()
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        windowManager.defaultDisplay.getMetrics(metrics)
-        viewHeight = (metrics.heightPixels * SIZE_FACTOR).toInt()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            viewHeight = windowManager.currentWindowMetrics.bounds.height()
+        } else {
+            @Suppress("DEPRECATION")
+            windowManager.defaultDisplay.getMetrics(metrics)
+            viewHeight = (metrics.heightPixels * SIZE_FACTOR).toInt()
+        }
     }
 
     override fun onFinishInflate() {

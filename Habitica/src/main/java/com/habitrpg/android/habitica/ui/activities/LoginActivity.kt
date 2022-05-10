@@ -115,10 +115,6 @@ class LoginActivity : BaseActivity() {
         // Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false)
 
-        viewModel.setupFacebookLogin {
-            handleAuthResponse(it)
-        }
-
         binding.loginBtn.setOnClickListener(loginClick)
 
         val content = SpannableString(binding.forgotPassword.text)
@@ -141,7 +137,6 @@ class LoginActivity : BaseActivity() {
         binding.showLoginButton.setOnClickListener { showLoginButtonClicked() }
         binding.backButton.setOnClickListener { backButtonClicked() }
         binding.forgotPassword.setOnClickListener { onForgotPasswordClicked() }
-        binding.fbLoginButton.setOnClickListener { viewModel.handleFacebookLogin(this) }
         binding.googleLoginButton.setOnClickListener { viewModel.handleGoogleLogin(this, pickAccountResult) }
         binding.appleLoginButton.setOnClickListener {
             viewModel.connectApple(supportFragmentManager) {
@@ -213,7 +208,6 @@ class LoginActivity : BaseActivity() {
                 binding.password.setAutofillHints("newPassword")
             }
             binding.password.imeOptions = EditorInfo.IME_ACTION_NEXT
-            binding.fbLoginButton.visibility = View.GONE
             binding.googleLoginButton.setText(R.string.register_btn_google)
         } else {
             binding.loginBtn.text = getString(R.string.login_btn)
@@ -223,8 +217,6 @@ class LoginActivity : BaseActivity() {
                 binding.password.setAutofillHints("password")
             }
             binding.password.imeOptions = EditorInfo.IME_ACTION_DONE
-            binding.fbLoginButton.setText(R.string.login_btn_fb)
-            binding.fbLoginButton.visibility = if (configManager.hideFacebook()) View.GONE else View.VISIBLE
             binding.googleLoginButton.setText(R.string.login_btn_google)
         }
         this.resetLayout()
@@ -261,13 +253,6 @@ class LoginActivity : BaseActivity() {
                     RxErrorHandler.handleEmptyError()
                 )
         )
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        viewModel.onActivityResult(requestCode, resultCode, data) {
-            handleAuthResponse(it)
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

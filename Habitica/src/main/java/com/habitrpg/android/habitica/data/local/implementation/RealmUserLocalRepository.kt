@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
+import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
@@ -27,12 +28,11 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                         .findAll()
                         .asFlowable()
                         .filter { groups -> groups.size > 0 }
-                        .map { groups -> groups.first() }
-                )
+                ).filterMap { it.first() }
             }
             .map {
                 when {
-                    it?.quest?.members?.find { questMember -> questMember.key == userID } === null -> UserQuestStatus.NO_QUEST
+                    it.quest?.members?.find { questMember -> questMember.key == userID } === null -> UserQuestStatus.NO_QUEST
                     it.quest?.progress?.collect?.isNotEmpty() ?: false -> UserQuestStatus.QUEST_COLLECT
                     it.quest?.progress?.hp ?: 0.0 > 0.0 -> UserQuestStatus.QUEST_BOSS
                     else -> UserQuestStatus.QUEST_UNKNOWN

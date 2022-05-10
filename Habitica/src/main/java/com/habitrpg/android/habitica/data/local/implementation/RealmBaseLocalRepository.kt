@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository
+import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
@@ -93,6 +94,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         if (isClosed) return null
         if (obj !is RealmObject || !obj.isManaged) return obj
         val baseObject = obj as? BaseMainObject ?: return null
+        @Suppress("UNCHECKED_CAST")
         return realm.where(baseObject.realmClass).equalTo(baseObject.primaryIdentifierName, baseObject.primaryIdentifier).findFirst() as? T
     }
 
@@ -104,6 +106,6 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
                 .asFlowable()
         )
             .filter { it.isLoaded && it.isValid && !it.isEmpty() }
-            .map { it.first() }
+            .filterMap { it.first() }
     }
 }

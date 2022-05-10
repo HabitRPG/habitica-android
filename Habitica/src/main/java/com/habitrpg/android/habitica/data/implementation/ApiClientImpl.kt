@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
 import com.amplitude.api.Amplitude
-import com.facebook.FacebookSdk.getCacheDir
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -12,6 +11,7 @@ import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
@@ -66,6 +66,7 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.io.IOException
 import java.net.SocketException
 import java.net.SocketTimeoutException
@@ -89,8 +90,7 @@ class ApiClientImpl(
 
     private val apiCallTransformer = FlowableTransformer<HabitResponse<Any>, Any> { observable ->
         observable
-            .filter { it.data != null }
-            .map { habitResponse ->
+            .filterMap { habitResponse ->
                 habitResponse.notifications?.let {
                     notificationsManager.setNotifications(it)
                 }
@@ -127,7 +127,7 @@ class ApiClientImpl(
 
         val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
 
-        val cache = getCacheDir()?.let { Cache(it, cacheSize) }
+        val cache = Cache(File(context.cacheDir, "http_cache"), cacheSize)
 
         val client = OkHttpClient.Builder()
             .cache(cache)
@@ -276,12 +276,11 @@ class ApiClientImpl(
             val tasksObservable = this.tasks
 
             userObservable = Flowable.zip(
-                userObservable, tasksObservable,
-                { habitRPGUser, tasks ->
-                    habitRPGUser.tasks = tasks
-                    habitRPGUser
-                }
-            )
+                userObservable, tasksObservable
+            ) { habitRPGUser, tasks ->
+                habitRPGUser.tasks = tasks
+                habitRPGUser
+            }
         }
         return userObservable
     }
@@ -330,7 +329,8 @@ class ApiClientImpl(
      See here for more info: http://blog.danlew.net/2015/03/02/dont-break-the-chain/
      */
 
-    override fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T> {
+    override fun <T : Any> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T> {
+        @Suppress("UNCHECKED_CAST")
         return apiCallTransformer as FlowableTransformer<HabitResponse<T>, T>
     }
 

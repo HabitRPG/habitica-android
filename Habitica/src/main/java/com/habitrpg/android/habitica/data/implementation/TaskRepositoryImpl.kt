@@ -191,7 +191,7 @@ class TaskRepositoryImpl(
         up: Boolean,
         force: Boolean,
         notifyFunc: ((TaskScoringResult) -> Unit)?
-    ): Maybe<TaskScoringResult?> {
+    ): Maybe<TaskScoringResult> {
         return localRepository.getTask(taskId).firstElement()
             .flatMap { task -> taskChecked(user, task, up, force, notifyFunc).singleElement() }
     }

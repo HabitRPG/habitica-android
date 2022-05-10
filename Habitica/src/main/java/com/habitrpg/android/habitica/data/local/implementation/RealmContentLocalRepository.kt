@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.ContentLocalRepository
-import com.habitrpg.android.habitica.extensions.skipNull
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.Quest
@@ -43,7 +42,6 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
                 .filter { it.isLoaded && it.size > 0 }
                 .map { it.first() }
         )
-            .skipNull()
     }
 
     override fun saveWorldState(worldState: WorldState) {

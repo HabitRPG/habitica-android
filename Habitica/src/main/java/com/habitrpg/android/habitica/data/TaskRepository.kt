@@ -33,7 +33,7 @@ interface TaskRepository : BaseRepository {
         up: Boolean,
         force: Boolean,
         notifyFunc: ((TaskScoringResult) -> Unit)?
-    ): Maybe<TaskScoringResult?>
+    ): Maybe<TaskScoringResult>
     fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
 
     fun getTask(taskId: String): Flowable<Task>

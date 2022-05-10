@@ -50,7 +50,7 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
             this.updateAvatar()
         }
 
-        binding?.heartIcon?.setImageDrawable(BitmapDrawable(HabiticaIconsHelper.imageOfHeartLightBg()))
+        binding?.heartIcon?.setImageDrawable(BitmapDrawable(resources, HabiticaIconsHelper.imageOfHeartLightBg()))
     }
 
     override fun onResume() {

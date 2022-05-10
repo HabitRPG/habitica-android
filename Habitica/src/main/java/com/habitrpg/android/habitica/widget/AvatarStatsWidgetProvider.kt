@@ -59,7 +59,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         this.context = context
 
         if (user == null) {
-            userRepository.getUser().firstElement()?.subscribe({
+            userRepository.getUser().firstElement().subscribe({
                 user = it
                 updateData(appWidgetIds)
             }, RxErrorHandler.handleEmptyError())

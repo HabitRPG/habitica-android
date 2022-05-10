@@ -21,7 +21,12 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.NotificationsManager
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -121,7 +126,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             RxErrorHandler.handleEmptyError()
         )?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
-            openTaskForm(it.first, it.second)
+            openTaskForm(it.first)
         }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskScoreEvents
             ?.doOnNext {
@@ -485,7 +490,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
     }
 
-    private fun openTaskForm(task: Task, containerView: View) {
+    private fun openTaskForm(task: Task) {
         if (Date().time - (TasksFragment.lastTaskFormOpen?.time ?: 0) < 2000 || !task.isValid || !canEditTasks) {
             return
         }

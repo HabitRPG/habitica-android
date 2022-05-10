@@ -349,9 +349,8 @@ class ChallengeFormActivity : BaseActivity() {
                             return@flatMap Flowable.empty<Group>()
                         }
                         socialRepository.retrieveGroup(it)
-                    },
-                { user, groups -> Pair(user, groups) }
-            )
+                    }
+            ) { user, groups -> Pair(user, groups) }
                 .subscribe(
                     { groups ->
                         val mutableGroups = groups.first.toMutableList()

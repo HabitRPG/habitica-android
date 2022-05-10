@@ -264,7 +264,7 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     }
 
     private fun displayProgressDialog(progressText: String) {
-        val dialog = HabiticaProgressDialog.show(this, progressText)
+        HabiticaProgressDialog.show(this, progressText)
     }
 
     override fun accept(user: User) {

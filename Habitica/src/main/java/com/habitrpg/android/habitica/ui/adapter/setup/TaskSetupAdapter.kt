@@ -74,7 +74,7 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
         }
 
         override fun onClick(v: View) {
-            val position = this.adapterPosition
+            val position = this.bindingAdapterPosition
             checkedList[position] = !checkedList[position]
             notifyItemChanged(position)
         }

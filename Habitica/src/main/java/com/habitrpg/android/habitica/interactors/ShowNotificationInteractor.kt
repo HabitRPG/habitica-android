@@ -85,13 +85,13 @@ class ShowNotificationInteractor(
             val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
             val imageView = view.findViewById(R.id.imageView) as? ImageView
-            var imageKey = notificationData?.rewardKey?.get(0)
+            var imageKey = notificationData.rewardKey?.get(0)
             if (imageKey?.contains("armor") == true) {
                 imageKey = "slim_$imageKey"
             }
             DataBindingUtils.loadImage(imageView, imageKey)
 
-            val youEarnedMessage = activity.getString(R.string.checkInRewardEarned, notificationData?.rewardText)
+            val youEarnedMessage = activity.getString(R.string.checkInRewardEarned, notificationData.rewardText)
             val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView
             youEarnedTexView?.text = youEarnedMessage
 

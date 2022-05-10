@@ -73,9 +73,9 @@ class UserRepositoryModule {
         return TaskRepositoryImpl(
             localRepository,
             apiClient,
-            userId!!,
-            appConfigManager!!,
-            analyticsManager!!
+            userId,
+            appConfigManager,
+            analyticsManager
         )
     }
 

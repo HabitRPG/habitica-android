@@ -9,13 +9,6 @@ import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentManager
-import com.facebook.AccessToken
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.FacebookSdk
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
 import com.google.android.gms.auth.GoogleAuthException
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
@@ -33,7 +26,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.KeyHelper
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse
@@ -65,9 +57,7 @@ class AuthenticationViewModel() {
 
     private var compositeSubscription = CompositeDisposable()
 
-    private var callbackManager = CallbackManager.Factory.create()
     var googleEmail: String? = null
-    private var loginManager = LoginManager.getInstance()
 
     init {
         HabiticaBaseApplication.userComponent?.inject(this)
@@ -94,56 +84,6 @@ class AuthenticationViewModel() {
                 }
             }
         }.show()
-    }
-
-    fun setupFacebookLogin(onSuccess: (UserAuthResponse) -> Unit) {
-        callbackManager = CallbackManager.Factory.create()
-        loginManager.registerCallback(
-            callbackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult) {
-                    val accessToken = AccessToken.getCurrentAccessToken()
-                    compositeSubscription.add(
-                        apiClient.connectSocial("facebook", accessToken?.userId ?: "", accessToken?.token ?: "")
-                            .subscribe({
-                                onSuccess(it)
-                            }, RxErrorHandler.handleEmptyError())
-                    )
-                }
-
-                override fun onCancel() { /* no-on */ }
-
-                override fun onError(error: FacebookException) {
-                    RxErrorHandler.reportError(error)
-                }
-            }
-        )
-    }
-
-    fun handleFacebookLogin(activity: Activity) {
-        loginManager.logInWithReadPermissions(activity, listOf("user_friends"))
-    }
-
-    fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?,
-        onSuccess: (UserAuthResponse) -> Unit
-    ) {
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == FacebookSdk.getCallbackRequestCodeOffset()) {
-            // This is necessary because the regular login callback is not called for some reason
-            val accessToken = AccessToken.getCurrentAccessToken()
-            if (accessToken?.token != null) {
-                compositeSubscription.add(
-                    apiClient.connectSocial("facebook", accessToken.userId, accessToken.token)
-                        .subscribe({
-                            onSuccess(it)
-                        }, { })
-                )
-            }
-        }
     }
 
     fun handleGoogleLogin(

@@ -78,7 +78,7 @@ class AvatarCustomizationFragment :
             adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
                     if (customization.type == "background") {
-                        userRepository.unlockPath(userViewModel.user.value, customization)
+                        userRepository.unlockPath(customization)
                             .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
                         userRepository.useCustomization(customization.type ?: "", customization.category, customization.identifier ?: "")
@@ -103,7 +103,6 @@ class AvatarCustomizationFragment :
         binding?.refreshLayout?.setOnRefreshListener(this)
         layoutManager.justifyContent = JustifyContent.CENTER
         layoutManager.alignItems = AlignItems.FLEX_START
-        setGridSpanCount(view.width)
         binding?.recyclerView?.layoutManager = layoutManager
 
         binding?.recyclerView?.addItemDecoration(MarginDecoration(context))
@@ -209,16 +208,6 @@ class AvatarCustomizationFragment :
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"
             compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe({ adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
-        }
-    }
-
-    private fun setGridSpanCount(width: Int) {
-        val itemWidth = context?.resources?.getDimension(R.dimen.customization_width) ?: 0F
-        var spanCount = (width / itemWidth).toInt()
-        if (spanCount == 0) {
-            spanCount = 1
-        } else if (type == "backgrounds") {
-            spanCount = 3
         }
     }
 

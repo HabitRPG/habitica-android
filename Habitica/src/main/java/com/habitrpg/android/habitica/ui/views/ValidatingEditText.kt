@@ -47,7 +47,7 @@ class ValidatingEditText @JvmOverloads constructor(
             if (isEditing) return@setOnFocusChangeListener
             showErrorIfNecessary()
         }
-        binding.editText.doOnTextChanged { text, start, before, count ->
+        binding.editText.doOnTextChanged { text, _, _, _ ->
             if (binding.errorText.visibility == View.VISIBLE) {
                 showErrorIfNecessary(text.toString())
             }

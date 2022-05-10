@@ -11,15 +11,15 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import androidx.annotation.WorkerThread
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Locale
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 
 /*
 * Copyright (C) 2017 Jared Rummler
@@ -120,32 +120,18 @@ object DeviceName {
      * @see .getDeviceName
      */
     val deviceName: String?
-        get() = getDeviceName(Build.DEVICE, Build.MODEL, Build.MODEL.capitalize(Locale.getDefault()))
+        get() = getDeviceName(Build.MODEL.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
 
     /**
      * Get the consumer friendly name of a device.
      *
-     * @param codename the value of the system property "ro.product.device" ([Build.DEVICE])
-     * *or*
-     * the value of the system property "ro.product.model" ([Build.MODEL])
      * @param fallback the fallback name if the device is unknown. Usually the value of the system property
      * "ro.product.model" ([Build.MODEL])
      * @return the market name of a device or `fallback` if the device is unknown.
      */
-    fun getDeviceName(codename: String?, fallback: String?): String? {
-        return getDeviceName(codename, codename, fallback)
-    }
-
-    /**
-     * Get the consumer friendly name of a device.
-     *
-     * @param codename the value of the system property "ro.product.device" ([Build.DEVICE]).
-     * @param model the value of the system property "ro.product.model" ([Build.MODEL]).
-     * @param fallback the fallback name if the device is unknown. Usually the value of the system property
-     * "ro.product.model" ([Build.MODEL])
-     * @return the market name of a device or `fallback` if the device is unknown.
-     */
-    fun getDeviceName(codename: String?, model: String?, fallback: String?): String? {
+    private fun getDeviceName(fallback: String?): String? {
+        val codename = Build.DEVICE
+        val model = Build.MODEL
         // ----------------------------------------------------------------------------
         // Google
         if (codename != null && codename == "walleye") {
@@ -378,20 +364,6 @@ object DeviceName {
      *
      * @param context the application context.
      * @param codename the codename of the device
-     * @return [DeviceInfo] for the current device.
-     */
-    @WorkerThread
-    fun getDeviceInfo(context: Context, codename: String?): DeviceInfo {
-        return getDeviceInfo(context, codename, null)
-    }
-
-    /**
-     * Get the [DeviceInfo] for the current device. Do not run on the UI thread, as this may
-     * download JSON to retrieve the [DeviceInfo]. JSON is only downloaded once and then
-     * stored to [SharedPreferences].
-     *
-     * @param context the application context.
-     * @param codename the codename of the device
      * @param model the model of the device
      * @return [DeviceInfo] for the current device.
      */
@@ -503,18 +475,6 @@ object DeviceName {
         }
 
         /**
-         * Set the device model to query. You should also set the codename.
-         *
-         * @param model the value of the system property "ro.product.model"
-         * @return This Request object to allow for chaining of calls to set methods.
-         * @see Build.MODEL
-         */
-        fun setModel(model: String?): Request {
-            this.model = model
-            return this
-        }
-
-        /**
          * Download information about the device. This saves the results in shared-preferences so
          * future requests will not need a network connection.
          *
@@ -601,6 +561,6 @@ object DeviceName {
         val name: String?
             get() = if (!TextUtils.isEmpty(marketName)) {
                 marketName
-            } else model?.capitalize(Locale.getDefault())
+            } else model?.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
     }
 }

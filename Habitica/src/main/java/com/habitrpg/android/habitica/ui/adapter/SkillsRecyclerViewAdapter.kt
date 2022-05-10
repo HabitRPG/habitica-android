@@ -35,7 +35,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
             field = value
             notifyDataSetChanged()
         }
-    var specialItems: RealmList<OwnedItem>?? = null
+    var specialItems: RealmList<OwnedItem>? = null
         set(value) {
             field = value
             notifyDataSetChanged()

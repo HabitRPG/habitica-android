@@ -5,7 +5,7 @@ import java.util.Date
 class AprilFoolsHandler {
 
     companion object {
-        var eventEnd = Date(2020, 3, 1)
+        private var eventEnd: Date? = null
 
         fun handle(name: String?, endDate: Date?) {
             if (endDate != null) {

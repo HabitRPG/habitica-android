@@ -14,6 +14,7 @@ import androidx.core.util.Pair
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
+import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.extensions.round
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -48,7 +49,7 @@ constructor(
             if (requestValues.hasLeveledUp == true) {
                 return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context, requestValues.snackbarTargetView))
                     .flatMap { userRepository.retrieveUser(true) }
-                    .map { it.stats }
+                    .filterMap { it.stats }
             } else {
                 return@defer Flowable.just(stats)
             }

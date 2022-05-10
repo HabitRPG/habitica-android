@@ -22,14 +22,14 @@ class QuestMenuView : LinearLayout {
     private var questContent: QuestContent? = null
 
     constructor(context: Context) : super(context) {
-        setupView(context)
+        setupView()
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setupView(context)
+        setupView()
     }
 
-    private fun setupView(context: Context) {
+    private fun setupView() {
         orientation = VERTICAL
 
         binding.heartIconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartDarkBg())

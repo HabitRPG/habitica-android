@@ -6,7 +6,8 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
-import com.habitrpg.android.habitica.extensions.skipNull
+import com.habitrpg.android.habitica.extensions.Optional
+import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Achievement
@@ -161,7 +162,7 @@ class UserRepositoryImpl(
     override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
         .flatMap { retrieveUser(false) }
 
-    override fun unlockPath(user: User?, path: String, price: Int): Flowable<UnlockResponse> {
+    override fun unlockPath(path: String, price: Int): Flowable<UnlockResponse> {
         return zipWithLiveUser(apiClient.unlockPath(path)) { unlockResponse, copiedUser ->
             val user = localRepository.getUnmanagedCopy(copiedUser)
             user.preferences = unlockResponse.preferences
@@ -173,12 +174,8 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun unlockPath(user: User?, customization: Customization): Flowable<UnlockResponse> {
-        var path = customization.path
-        if (path.last() == '.' && customization.type == "background") {
-            path += user?.preferences?.background
-        }
-        return unlockPath(user, path, customization.price ?: 0)
+    override fun unlockPath(customization: Customization): Flowable<UnlockResponse> {
+        return unlockPath(customization.path, customization.price ?: 0)
     }
 
     override fun runCron() {
@@ -323,22 +320,22 @@ class UserRepositoryImpl(
         if (appConfigManager.enableLocalChanges()) {
             localRepository.getUser(userID).firstElement().subscribe(
                 { liveUser ->
-                    localRepository.modify(liveUser) { liveUser ->
+                    localRepository.modify(liveUser) { user ->
                         when (type) {
-                            "skin" -> liveUser.preferences?.skin = identifier
-                            "shirt" -> liveUser.preferences?.shirt = identifier
+                            "skin" -> user.preferences?.skin = identifier
+                            "shirt" -> user.preferences?.shirt = identifier
                             "hair" -> {
                                 when (category) {
-                                    "color" -> liveUser.preferences?.hair?.color = identifier
-                                    "flower" -> liveUser.preferences?.hair?.flower = identifier.toInt()
-                                    "mustache" -> liveUser.preferences?.hair?.mustache = identifier.toInt()
-                                    "beard" -> liveUser.preferences?.hair?.beard = identifier.toInt()
-                                    "bangs" -> liveUser.preferences?.hair?.bangs = identifier.toInt()
-                                    "base" -> liveUser.preferences?.hair?.base = identifier.toInt()
+                                    "color" -> user.preferences?.hair?.color = identifier
+                                    "flower" -> user.preferences?.hair?.flower = identifier.toInt()
+                                    "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
+                                    "beard" -> user.preferences?.hair?.beard = identifier.toInt()
+                                    "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
+                                    "base" -> user.preferences?.hair?.base = identifier.toInt()
                                 }
                             }
-                            "background" -> liveUser.preferences?.background = identifier
-                            "chair" -> liveUser.preferences?.chair = identifier
+                            "background" -> user.preferences?.background = identifier
+                            "chair" -> user.preferences?.chair = identifier
                         }
                     }
                 },
@@ -401,11 +398,11 @@ class UserRepositoryImpl(
 
     private fun getLiveUser(): Flowable<User> {
         return localRepository.getUser(userID)
-            .map { localRepository.getLiveObject(it) }
-            .skipNull()
+            .map { Optional(localRepository.getLiveObject(it)) }
+            .filterMapEmpty()
     }
 
-    private fun <T> zipWithLiveUser(flowable: Flowable<T>, mergeFunc: BiFunction<T, User, T>): Flowable<T> {
+    private fun <T : Any> zipWithLiveUser(flowable: Flowable<T>, mergeFunc: BiFunction<T, User, T>): Flowable<T> {
         return Flowable.zip(flowable, getLiveUser().firstElement().toFlowable(), mergeFunc)
     }
 

@@ -342,7 +342,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
         compositeSubscription.add(
             observable.subscribe(
-                { skillResponse -> this.displaySpecialItemResult(specialItem) },
+                { this.displaySpecialItemResult(specialItem) },
                 RxErrorHandler.handleEmptyError()
             )
         )

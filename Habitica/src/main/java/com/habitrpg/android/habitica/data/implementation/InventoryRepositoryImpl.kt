@@ -171,16 +171,16 @@ class InventoryRepositoryImpl(
         val liveUser = localRepository.getLiveUser(userID)
 
         if (liveUser != null) {
-            localRepository.modify(liveUser) { liveUser ->
+            localRepository.modify(liveUser) { user ->
                 if (type == "mount") {
-                    liveUser.items?.currentMount = key
+                    user.items?.currentMount = key
                 } else if (type == "pet") {
-                    liveUser.items?.currentPet = key
+                    user.items?.currentPet = key
                 }
                 val outfit = if (type == "costume") {
-                    liveUser.items?.gear?.costume
+                    user.items?.gear?.costume
                 } else {
-                    liveUser.items?.gear?.equipped
+                    user.items?.gear?.equipped
                 }
                 when (key.split("_").firstOrNull()) {
                     "weapon" -> outfit?.weapon = key

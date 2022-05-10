@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
+import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -28,7 +29,7 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
             .findAll()
             .asFlowable()
             .filter { it.isLoaded }
-    ).map { it.first() }
+    ).filterMap { it.first() }
 
     override fun getChallengeMemberships(userId: String): Flowable<out List<ChallengeMembership>> = RxJavaBridge.toV3Flowable(
         realm.where(ChallengeMembership::class.java)

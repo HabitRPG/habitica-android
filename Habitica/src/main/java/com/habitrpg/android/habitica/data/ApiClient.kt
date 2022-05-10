@@ -248,7 +248,7 @@ interface ApiClient {
     fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
     fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
 
-    fun <T> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
+    fun <T : Any> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
 
     fun openMysteryItem(): Flowable<Equipment>
 

@@ -27,6 +27,7 @@ import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 
 class ArmoireActivity: BaseActivity() {
 

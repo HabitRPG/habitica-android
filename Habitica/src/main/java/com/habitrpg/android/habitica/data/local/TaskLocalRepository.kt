@@ -13,7 +13,7 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun getTasks(taskType: TaskType, userID: String): Flowable<out List<Task>>
     fun getTasks(userId: String): Flowable<out List<Task>>
 
-    fun saveTasks(userId: String, tasksOrder: TasksOrder, tasks: TaskList)
+    fun saveTasks(ownerID: String, tasksOrder: TasksOrder, tasks: TaskList)
 
     fun deleteTask(taskID: String)
 

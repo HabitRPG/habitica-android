@@ -193,7 +193,7 @@ open class NotificationsViewModel : BaseViewModel() {
         if (isCustomNotification(notification)) {
             if (isCustomNewStuffNotification(notification)) {
                 customNotifications.onNext(
-                    customNotifications.value?.filterNot { it.id == notification.id }
+                    customNotifications.value?.filterNot { it.id == notification.id } ?: listOf()
                 )
             }
             return

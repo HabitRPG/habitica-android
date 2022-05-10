@@ -71,7 +71,7 @@ class PushNotificationManager(
 
         val notificationFactory = HabiticaLocalNotificationFactory()
         val notification = notificationFactory.build(remoteMessageIdentifier, context)
-        if (userIsSubscribedToNotificationType(remoteMessageIdentifier) && notification != null) {
+        if (userIsSubscribedToNotificationType(remoteMessageIdentifier)) {
             if (remoteMessage.data.containsKey("sendAnalytics")) {
                 val additionalData = HashMap<String, Any>()
                 additionalData["identifier"] = remoteMessageIdentifier ?: ""

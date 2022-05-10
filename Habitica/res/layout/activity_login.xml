@@ -196,15 +196,6 @@
                         style="@style/LoginButton"/>
 
                     <Button
-                        android:id="@+id/fb_login_button"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/spacing_xlarge"
-                        android:layout_height="@dimen/diamond_button_height"
-                        android:text="@string/login_btn_fb"
-                        android:drawableStart="@drawable/facebook_icon"
-                        style="@style/LoginButton"/>
-
-                    <Button
                         android:id="@+id/google_login_button"
                         android:layout_width="match_parent"
                         android:layout_marginTop="@dimen/spacing_large"
