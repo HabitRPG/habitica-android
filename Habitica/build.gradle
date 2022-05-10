@@ -69,10 +69,6 @@ dependencies {
 
     // IAP Handling / Verification
     implementation "com.android.billingclient:billing-ktx:4.1.0"
-    //Facebook
-    implementation('com.facebook.android:facebook-android-sdk:13.2.0') {
-        transitive = true
-    }
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
     //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
