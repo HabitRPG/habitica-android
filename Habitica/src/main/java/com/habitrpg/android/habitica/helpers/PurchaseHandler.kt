@@ -16,6 +16,8 @@ import com.android.billingclient.api.PurchasesResponseListener
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryPurchasesAsync
 import com.android.billingclient.api.querySkuDetails
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -26,7 +28,6 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.models.IAPGift
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest
-import com.habitrpg.android.habitica.models.SubscriptionValidationRequest
 import com.habitrpg.android.habitica.models.Transaction
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
@@ -34,7 +35,6 @@ import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
-import java.util.Date
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -42,8 +42,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.util.Date
 
-open class PurchaseHandler(
+class PurchaseHandler(
     private val context: Context,
     private val analyticsManager: AnalyticsManager,
     private val apiClient: ApiClient,
@@ -72,10 +73,17 @@ open class PurchaseHandler(
                 }
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
-                // Handle an error caused by a user cancelling the purchase flow.
+                return
+            }
+            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
+                CoroutineScope(Dispatchers.IO).launch {
+                    for (purchase in purchases) {
+                        consume(purchase)
+                    }
+                }
             }
             else -> {
-                // Handle any other error codes.
+                FirebaseCrashlytics.getInstance().recordException(Throwable(result.debugMessage))
             }
         }
     }
@@ -84,17 +92,17 @@ open class PurchaseHandler(
         startListening()
     }
 
-    private var billingClientState: BillingClientState = BillingClientState.UNITITIALIZED
+    private var billingClientState: BillingClientState = BillingClientState.UNINITIALIZED
 
     private enum class BillingClientState {
-        UNITITIALIZED,
+        UNINITIALIZED,
         READY,
         UNAVAILABLE,
         DISCONNECTED;
 
         val canMaybePurchase: Boolean
             get() {
-                return this == UNITITIALIZED || this == READY
+                return this == UNINITIALIZED || this == READY
             }
     }
 
@@ -170,12 +178,15 @@ open class PurchaseHandler(
         billingClient.launchBillingFlow(activity, flowParams)
     }
 
-    private suspend fun consume(purchase: Purchase) {
+    private suspend fun consume(purchase: Purchase, retries: Int = 4) {
         retryUntil { billingClientState.canMaybePurchase && billingClient.isReady }
         val params = ConsumeParams.newBuilder()
             .setPurchaseToken(purchase.purchaseToken)
             .build()
-        billingClient.consumeAsync(params) { result, message ->
+        val result = billingClient.consumePurchase(params)
+        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            delay(500)
+            consume(purchase, retries - 1)
         }
     }
 
@@ -215,20 +226,18 @@ open class PurchaseHandler(
                 val plan = userViewModel.user.value?.purchased?.plan
                 if (plan?.isActive == true) {
                     if (plan.additionalData?.data?.orderId == purchase.orderId &&
-                        (plan.dateTerminated != null == purchase.isAutoRenewing)
+                        ((plan.dateTerminated != null) == purchase.isAutoRenewing)
                     ) {
                         return
                     }
                 }
-                val validationRequest = SubscriptionValidationRequest()
-                validationRequest.sku = sku
-                validationRequest.transaction = Transaction()
-                validationRequest.transaction?.receipt = purchase.originalJson
-                validationRequest.transaction?.signature = purchase.signature
+                val validationRequest = buildValidationRequest(purchase)
                 apiClient.validateSubscription(validationRequest).subscribe({
                     processedPurchase(purchase)
                     analyticsManager.logEvent("user_subscribed", bundleOf(Pair("sku", sku)))
-                    acknowledgePurchase(purchase)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        acknowledgePurchase(purchase)
+                    }
                     displayConfirmationDialog(purchase)
                 }) { throwable: Throwable ->
                     handleError(throwable, purchase)
@@ -237,11 +246,15 @@ open class PurchaseHandler(
         }
     }
 
-    private fun acknowledgePurchase(purchase: Purchase) {
+    private suspend fun acknowledgePurchase(purchase: Purchase, retries: Int = 4) {
         val params = AcknowledgePurchaseParams.newBuilder()
             .setPurchaseToken(purchase.purchaseToken)
             .build()
-        billingClient.acknowledgePurchase(params) {}
+        val response = billingClient.acknowledgePurchase(params)
+        if (response.responseCode != BillingClient.BillingResponseCode.OK) {
+            delay(500)
+            acknowledgePurchase(purchase, retries - 1)
+        }
     }
 
     private fun processedPurchase(purchase: Purchase) {
@@ -288,7 +301,17 @@ open class PurchaseHandler(
             billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS)
         }
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            return result.purchasesList.sortedByDescending { it.purchaseTime }.firstOrNull { it.isAcknowledged }
+            val purchases = result.purchasesList.filter { it.isAcknowledged }.sortedByDescending { it.purchaseTime }
+            var fallback: Purchase? = null
+            // If there is a subscription that is still active, prioritise that. Otherwise return the most recent one.
+            for (purchase in purchases) {
+                if (purchase.isAutoRenewing) {
+                    return purchase
+                } else if (!purchase.isAutoRenewing && fallback == null) {
+                    fallback = purchase
+                }
+            }
+            return fallback
         }
         return null
     }

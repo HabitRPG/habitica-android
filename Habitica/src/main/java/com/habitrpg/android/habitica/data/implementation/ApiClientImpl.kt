@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest
 import com.habitrpg.android.habitica.models.PurchaseValidationResult
-import com.habitrpg.android.habitica.models.SubscriptionValidationRequest
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.WorldState
@@ -391,7 +390,7 @@ class ApiClientImpl(
         return apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
     }
 
-    override fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any> {
+    override fun validateSubscription(request: PurchaseValidationRequest): Flowable<Any> {
         return apiService.validateSubscription(request).compose(configureApiCallObserver())
     }
 

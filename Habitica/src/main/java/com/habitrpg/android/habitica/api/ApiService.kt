@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest
 import com.habitrpg.android.habitica.models.PurchaseValidationResult
-import com.habitrpg.android.habitica.models.SubscriptionValidationRequest
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.WorldState
@@ -298,7 +297,7 @@ interface ApiService {
     fun validatePurchase(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<PurchaseValidationResult>>
 
     @POST("/iap/android/subscribe")
-    fun validateSubscription(@Body request: SubscriptionValidationRequest): Flowable<HabitResponse<Void>>
+    fun validateSubscription(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<Void>>
 
     @GET("/iap/android/subscribe/cancel")
     fun cancelSubscription(): Flowable<HabitResponse<Void>>

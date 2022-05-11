@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
 import com.habitrpg.android.habitica.models.PurchaseValidationRequest
 import com.habitrpg.android.habitica.models.PurchaseValidationResult
-import com.habitrpg.android.habitica.models.SubscriptionValidationRequest
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.WorldState
@@ -82,7 +81,7 @@ interface ApiClient {
 
     fun purchaseQuest(key: String): Flowable<Void>
     fun purchaseSpecialSpell(key: String): Flowable<Void>
-    fun validateSubscription(request: SubscriptionValidationRequest): Flowable<Any>
+    fun validateSubscription(request: PurchaseValidationRequest): Flowable<Any>
     fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
     fun cancelSubscription(): Flowable<Void>
 
