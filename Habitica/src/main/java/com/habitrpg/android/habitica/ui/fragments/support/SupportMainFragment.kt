@@ -11,18 +11,13 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.DeviceName
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
 class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
-    private var deviceInfo: DeviceName.DeviceInfo? = null
-
     override var binding: FragmentSupportMainBinding? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSupportMainBinding {
@@ -60,14 +55,6 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
                 startActivity(launchBrowser)
             }
         }
-
-        compositeSubscription.add(
-            Completable.fromAction {
-                deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
-            }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-        )
 
         binding?.resetTutorialButton?.setOnClickListener {
             userRepository.resetTutorial()

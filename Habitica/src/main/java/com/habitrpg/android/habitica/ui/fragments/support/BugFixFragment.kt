@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
@@ -16,19 +17,17 @@ import com.habitrpg.android.habitica.databinding.KnownIssueBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.AppTestingLevel
-import com.habitrpg.android.habitica.helpers.DeviceName
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.jaredrummler.android.device.DeviceName
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
 class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
-
     override var binding: FragmentSupportBugFixBinding? = null
 
     override fun createBinding(
@@ -63,13 +62,11 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        compositeSubscription.add(
-            Completable.fromAction {
-                deviceInfo = context?.let { DeviceName.getDeviceInfo(it) }
+        lifecycleScope.launch {
+            DeviceName.with(context).request { info, _ ->
+                deviceInfo = info
             }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-        )
+        }
 
         binding?.reportBugButton?.setOnClickListener {
             sendEmail("[Android] Bugreport")
@@ -109,7 +106,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     private fun sendEmail(subject: String) {
         val version = Build.VERSION.SDK_INT
-        val deviceName = deviceInfo?.name ?: DeviceName.deviceName
+        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         val newLine = "%0D%0A"
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +

@@ -3,12 +3,13 @@ package com.habitrpg.android.habitica.ui.activities
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -17,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
@@ -37,7 +37,6 @@ import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.userpicture.BitmapUtils
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.Date
 import java.util.Locale
@@ -245,21 +244,10 @@ abstract class BaseActivity : AppCompatActivity() {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
-        BitmapUtils.clearDirectoryContent("$filesDir/shared_images")
-        val f = image?.let {
-            BitmapUtils.saveToShareableFile(
-                "$filesDir/shared_images", "${Date()}.png",
-                it
-            )
-        }
-        val fileUri = f?.let { FileProvider.getUriForFile(this, getString(R.string.content_provider), it) }
-        if (fileUri != null) {
-            sharingIntent.putExtra(Intent.EXTRA_STREAM, fileUri)
-            val resInfoList = this.packageManager.queryIntentActivities(sharingIntent, PackageManager.MATCH_DEFAULT_ONLY)
-            for (resolveInfo in resInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                this.grantUriPermission(packageName, fileUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
+        if (image != null) {
+            val path = MediaStore.Images.Media.insertImage(this.contentResolver, image, "${(Date())}", null)
+            val uri = Uri.parse(path)
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
     }
