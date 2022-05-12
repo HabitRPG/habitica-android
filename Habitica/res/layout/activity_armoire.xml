@@ -39,10 +39,15 @@
             android:id="@+id/icon_wrapper"
             android:layout_width="165dp"
             android:layout_height="158dp"
-            android:background="@drawable/circle_gray_700"
             android:layout_marginTop="23dp"
             android:layout_marginBottom="23dp"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            tools:visibility="visible">
+            <ImageView
+                android:layout_width="158dp"
+                android:layout_height="158dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/circle_gray_700" />
             <ImageView
                 android:id="@+id/icon_view"
                 android:layout_width="136dp"
@@ -86,10 +91,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="You wrestle with the Armoire and gain Experience. Take that!"
-            android:layout_marginHorizontal="50dp"
+            android:textColor="@color/text_ternary"
+            android:layout_marginHorizontal="60dp"
             android:gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:textSize="20sp"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="2dp"
             />
     </LinearLayout>
     <Space
@@ -103,7 +111,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:paddingHorizontal="24dp"
-        android:paddingTop="28dp">
+        android:paddingTop="36dp">
         <TextView
             android:id="@+id/equipment_count_view"
             android:layout_width="wrap_content"

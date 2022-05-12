@@ -43,6 +43,8 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class PurchaseHandler(
     private val context: Context,
@@ -270,7 +272,7 @@ class PurchaseHandler(
         pendingGifts[validationRequest.sku]?.let { gift ->
             // If the gift and the purchase happened within 5 minutes, we consider them to match.
             // Otherwise the gift is probably an old one that wasn't cleared out correctly
-            if (kotlin.math.abs(gift.first.time - purchase.purchaseTime) < 300000) {
+            if (kotlin.math.abs(gift.first.time - purchase.purchaseTime) < 5.toDuration(DurationUnit.MINUTES).inWholeMilliseconds) {
                 validationRequest.gift = IAPGift(gift.second)
             } else {
                 removeGift(validationRequest.sku ?: "")

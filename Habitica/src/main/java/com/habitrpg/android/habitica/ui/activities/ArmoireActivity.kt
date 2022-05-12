@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
@@ -27,7 +28,6 @@ import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.habitrpg.android.habitica.ui.helpers.loadImage
 
 class ArmoireActivity: BaseActivity() {
 
@@ -155,7 +155,7 @@ class ArmoireActivity: BaseActivity() {
         lifecycleScope.launch {
             delay(100)
             if (binding.iconWrapper.isAttachedToWindow) {
-                Animations.circularReveal(binding.iconWrapper, 400)
+                Animations.circularReveal(binding.iconWrapper, 300)
             }
             binding.leftSparkView.startAnimating()
             binding.rightSparkView.startAnimating()
@@ -163,13 +163,13 @@ class ArmoireActivity: BaseActivity() {
 
         binding.titleView.animate().apply {
             alpha(1f)
-            duration = 400
+            duration = 300
             startDelay = 600
             start()
         }
         binding.subtitleView.animate().apply {
             alpha(1f)
-            duration = 400
+            duration = 300
             startDelay = 900
             start()
         }
@@ -206,7 +206,9 @@ class ArmoireActivity: BaseActivity() {
             else -> {
                 binding.subtitleView.text = getString(R.string.armoireExp_new, value)
                 binding.iconView.setImageResource(R.drawable.armoire_experience)
-                binding.iconView.layoutParams = RelativeLayout.LayoutParams(108.dpToPx(this), 122.dpToPx(this))
+                val layoutParams = RelativeLayout.LayoutParams(108.dpToPx(this), 122.dpToPx(this))
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
+                binding.iconView.layoutParams = layoutParams
             }
         }
     }

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.Animation.INFINITE
@@ -54,6 +55,7 @@ object Animations {
         val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0f, finalRadius)
         anim.duration = duration
+        anim.interpolator = AccelerateInterpolator()
         view.visibility = View.VISIBLE
         anim.start()
     }
