@@ -12,12 +12,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.QuestCollectBinding
 import com.habitrpg.android.habitica.databinding.QuestProgressBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -26,11 +26,11 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.NPCBannerView
-import com.habitrpg.android.habitica.ui.views.ValueBar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -148,8 +148,8 @@ class QuestProgressView : LinearLayout {
             }
         }
         binding.questDescription.setMarkdown(quest.notes)
-        DataBindingUtils.loadImage(binding.questImageView, "quest_" + quest.key, "gif")
-        DataBindingUtils.loadImage(binding.questFlourishesImageView, "quest_" + quest.key + "_flourishes")
+        binding.questImageView.loadImage("quest_" + quest.key, "gif")
+        binding.questFlourishesImageView.loadImage("quest_" + quest.key + "_flourishes")
         val lightColor = quest.colors?.lightColor
         if (lightColor != null) {
             binding.questDescriptionSection.separatorColor = lightColor
@@ -253,15 +253,10 @@ class QuestProgressView : LinearLayout {
         val inflater = LayoutInflater.from(context)
         for (collect in collection) {
             val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
-            val view = inflater.inflate(R.layout.quest_collect, binding.collectionContainer, false)
-            val iconView: ImageView = view.findViewById(R.id.icon_view)
-            val nameView: TextView = view.findViewById(R.id.name_view)
-            val valueView: ValueBar = view.findViewById(R.id.value_view)
-            DataBindingUtils.loadImage(iconView, "quest_" + quest.key + "_" + collect.key)
-            nameView.text = contentCollect.text
-            valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
-
-            binding.collectionContainer.addView(view)
+            val collectBinding = QuestCollectBinding.inflate(inflater, binding.collectionContainer, true)
+            collectBinding.iconView.loadImage("quest_" + quest.key + "_" + collect.key)
+            collectBinding.nameView.text = contentCollect.text
+            collectBinding.valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
         }
     }
 
@@ -289,7 +284,7 @@ class QuestProgressView : LinearLayout {
 
     private fun showQuestImage() {
         binding.questImageWrapper.visibility = View.VISIBLE
-        DataBindingUtils.loadImage(binding.questImageView, "quest_" + quest?.key)
+        binding.questImageView.loadImage("quest_" + quest?.key)
         preferences?.edit { putBoolean("boss_art_collapsed", false) }
         updateCaretImage()
     }

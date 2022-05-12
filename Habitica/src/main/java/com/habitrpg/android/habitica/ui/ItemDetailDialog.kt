@@ -9,15 +9,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 class ItemDetailDialog(context: Context) : AlertDialog(context) {
 
-    private val itemImageView: ImageView
-    private val contentTextView: TextView
-    private val priceTextView: TextView
-    private val currencyImageView: ImageView
+    private val itemImageView = PixelArtView(context)
+    private val contentTextView = TextView(context, null)
+    private val priceTextView = TextView(context, null)
+    private val currencyImageView = ImageView(context)
 
     init {
 
@@ -26,7 +27,6 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
         contentViewLayout.orientation = LinearLayout.VERTICAL
 
         // Gear Image
-        itemImageView = ImageView(context)
         val gearImageLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         )
@@ -39,7 +39,6 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
         itemImageView.visibility = View.GONE
 
         // Gear Description
-        contentTextView = TextView(context, null)
         contentTextView.setPadding(16, 0, 16, 0)
         contentTextView.visibility = View.GONE
 
@@ -57,10 +56,8 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
         goldPriceLayout.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
 
         // Price View
-        priceTextView = TextView(context)
         priceTextView.setPadding(10, 0, 0, 0)
 
-        currencyImageView = ImageView(context)
         currencyImageView.minimumHeight = 50
         currencyImageView.minimumWidth = 50
         currencyImageView.setPadding(0, 0, 5, 0)
@@ -104,7 +101,7 @@ class ItemDetailDialog(context: Context) : AlertDialog(context) {
 
     fun setImage(imageName: String) {
         itemImageView.visibility = View.VISIBLE
-        DataBindingUtils.loadImage(itemImageView, imageName)
+        itemImageView.loadImage(imageName)
     }
 
     fun setBuyListener(listener: DialogInterface.OnClickListener) {

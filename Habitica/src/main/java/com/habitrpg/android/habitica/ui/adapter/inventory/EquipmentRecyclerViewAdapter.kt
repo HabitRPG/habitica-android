@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.GearListItemBinding
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.subjects.PublishSubject
 
@@ -71,7 +71,7 @@ class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, Equipmen
                 binding.gearIconBackgroundView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
             }
             binding.twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
-            DataBindingUtils.loadImage(binding.gearImage, "shop_" + gear.key)
+            binding.gearImage.loadImage("shop_" + gear.key)
 
             set(binding.strLabel, binding.strValue, gear.str)
             set(binding.conLabel, binding.conValue, gear.con)

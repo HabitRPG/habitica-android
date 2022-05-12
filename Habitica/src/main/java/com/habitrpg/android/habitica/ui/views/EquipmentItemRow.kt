@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemImageRowBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 
 class EquipmentItemRow(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
@@ -16,14 +16,14 @@ class EquipmentItemRow(context: Context, attrs: AttributeSet?) : LinearLayout(co
         set(value) {
             field = value
             val imageName = if (equipmentIdentifier?.isNotEmpty() == true && equipmentIdentifier?.endsWith("base_0") == false) "shop_$equipmentIdentifier" else "head_0"
-            DataBindingUtils.loadImage(binding.imageView, imageName)
+            binding.imageView.loadImage(imageName)
         }
 
     var customizationIdentifier: String? = null
         set(value) {
             field = value
             val imageName = if (customizationIdentifier?.isNotEmpty() == true) customizationIdentifier else "head_0"
-            DataBindingUtils.loadImage(binding.imageView, imageName)
+            binding.imageView.loadImage(imageName)
         }
 
     init {

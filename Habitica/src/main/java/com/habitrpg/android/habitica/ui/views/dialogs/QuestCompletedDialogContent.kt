@@ -15,8 +15,9 @@ import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 class QuestCompletedDialogContent : LinearLayout {
 
@@ -40,7 +41,7 @@ class QuestCompletedDialogContent : LinearLayout {
     fun setQuestContent(questContent: QuestContent) {
         binding.titleTextView.setText(questContent.text.fromHtml(), TextView.BufferType.SPANNABLE)
         binding.notesTextView.setText(questContent.completion.fromHtml(), TextView.BufferType.SPANNABLE)
-        DataBindingUtils.loadImage(binding.imageView, "quest_" + questContent.key)
+        binding.imageView.loadImage("quest_" + questContent.key)
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
@@ -89,9 +90,9 @@ class QuestCompletedDialogContent : LinearLayout {
         containerView: ViewGroup?
     ) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
-        val imageView = view?.findViewById(R.id.imageView) as? ImageView
+        val imageView = view?.findViewById(R.id.imageView) as? PixelArtView
         val titleTextView = view?.findViewById(R.id.titleTextView) as? TextView
-        DataBindingUtils.loadImage(imageView, item.imageName)
+        imageView?.loadImage(item.imageName)
         if (item.count > 1) {
             titleTextView?.text = context.getString(R.string.quest_reward_count, item.text, item.count)
         } else {

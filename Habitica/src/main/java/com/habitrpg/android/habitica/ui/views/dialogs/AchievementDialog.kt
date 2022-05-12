@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.Notification
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 
 class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
     var isLastOnboardingAchievement: Boolean = false
@@ -51,7 +51,7 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
     private fun configure(title: String, description: String, iconName: String) {
         binding.titleView.text = title
         binding.descriptionView.setText(description.fromHtml(), TextView.BufferType.SPANNABLE)
-        DataBindingUtils.loadImage(binding.iconView, "achievement-${iconName}2x")
+        binding.iconView.loadImage("achievement-${iconName}2x")
         if (iconName == "onboardingComplete") {
             setTitle(R.string.onboardingComplete_achievement_title)
             binding.titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)

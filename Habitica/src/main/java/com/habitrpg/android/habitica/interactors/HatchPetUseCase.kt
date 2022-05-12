@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
@@ -14,7 +13,8 @@ import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
@@ -27,9 +27,9 @@ constructor(
     override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Items> {
         return inventoryRepository.hatchPet(requestValues.egg, requestValues.potion) {
             val petWrapper = View.inflate(requestValues.context, R.layout.pet_imageview, null) as? FrameLayout
-            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? ImageView
+            val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? PixelArtView
 
-            DataBindingUtils.loadImage(petImageView, "stable_Pet-" + requestValues.egg.key + "-" + requestValues.potion.key)
+            petImageView?.loadImage("stable_Pet-" + requestValues.egg.key + "-" + requestValues.potion.key)
             val potionName = requestValues.potion.text
             val eggName = requestValues.egg.text
             val dialog = HabiticaAlertDialog(requestValues.context)

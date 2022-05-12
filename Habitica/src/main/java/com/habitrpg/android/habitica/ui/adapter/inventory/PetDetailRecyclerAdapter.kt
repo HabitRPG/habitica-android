@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
@@ -187,11 +187,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             this.hasUnlockedPotion = hasUnlockedPotion
             this.hasMount = hasMount
 
-            DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${item.animal}")
-            DataBindingUtils.loadImage(
-                binding.hatchingPotionView,
-                "Pet_HatchingPotion_${item.color}"
-            )
+            binding.eggView.loadImage("Pet_Egg_${item.animal}")
+            binding.hatchingPotionView.loadImage("Pet_HatchingPotion_${item.color}")
 
             binding.eggView.startAnimation(Animations.bobbingAnimation(4f))
             binding.hatchingPotionView.startAnimation(Animations.bobbingAnimation(-4f))

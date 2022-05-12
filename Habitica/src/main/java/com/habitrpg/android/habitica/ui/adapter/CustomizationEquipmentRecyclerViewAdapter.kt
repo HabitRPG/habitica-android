@@ -13,8 +13,9 @@ import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -91,7 +92,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
         fun bind(equipment: Equipment) {
             this.equipment = equipment
-            DataBindingUtils.loadImage(binding.imageView, "shop_" + this.equipment?.key)
+            binding.imageView.loadImage("shop_" + this.equipment?.key)
             if (equipment.owned == true || equipment.value == 0.0) {
                 binding.buyButton.visibility = View.GONE
             } else {
@@ -115,8 +116,8 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
             if (equipment?.owned != true && (equipment?.value ?: 0.0) > 0.0) {
                 val dialogContent = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_purchase_customization, null) as LinearLayout
 
-                val imageView = dialogContent.findViewById<ImageView>(R.id.imageView)
-                DataBindingUtils.loadImage(imageView, "shop_" + this.equipment?.key)
+                val imageView = dialogContent.findViewById<PixelArtView>(R.id.imageView)
+                imageView.loadImage("shop_" + this.equipment?.key)
 
                 val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
                 priceLabel.text = if (equipment?.gearSet == "animal") {

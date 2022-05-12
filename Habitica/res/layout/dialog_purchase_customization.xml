@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:parentTag="android.widget.LinearLayout">
 
-    <ImageView
+    <com.habitrpg.android.habitica.ui.views.PixelArtView
         android:layout_width="@dimen/customization_width"
         android:layout_height="@dimen/customization_width"
         android:id="@+id/imageView"

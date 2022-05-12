@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -12,7 +11,8 @@ import com.habitrpg.android.habitica.databinding.AchievementSectionHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 
 class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -75,7 +75,7 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private var achievement: Achievement? = null
 
         private val achievementContainer: ViewGroup?
-        private val achievementIconView: ImageView
+        private val achievementIconView: PixelArtView
         private val achievementCountView: TextView
         private val achievementTitleView: TextView
         private val achievementDescriptionView: TextView?
@@ -96,7 +96,7 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             } else {
                 "achievement-unearned2x"
             }
-            DataBindingUtils.loadImage(achievementIconView, iconName)
+            achievementIconView.loadImage(iconName)
             achievementTitleView.text = achievement.title
             achievementDescriptionView?.text = achievement.text
             if (achievement.optionalCount ?: 0 > 0) {

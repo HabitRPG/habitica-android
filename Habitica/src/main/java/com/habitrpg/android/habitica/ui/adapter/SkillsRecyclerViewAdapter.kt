@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -125,7 +125,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                     binding.priceLabel.visibility = View.GONE
                 }
             }
-            DataBindingUtils.loadImage(binding.skillImage, "shop_" + skill.key)
+            binding.skillImage.loadImage("shop_" + skill.key)
         }
 
         override fun onClick(v: View) {

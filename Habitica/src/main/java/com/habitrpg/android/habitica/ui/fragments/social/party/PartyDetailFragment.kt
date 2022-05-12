@@ -35,16 +35,17 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import javax.inject.Inject
-import javax.inject.Named
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Named
 
 class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
@@ -218,9 +219,9 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             return
         }
         binding?.questTitleView?.text = questContent.text
-        DataBindingUtils.loadImage(binding?.questScrollImageView, "inventory_quest_scroll_" + questContent.key)
+        binding?.questScrollImageView?.loadImage("inventory_quest_scroll_" + questContent.key)
         if (questContent.hasGifImage()) {
-            DataBindingUtils.loadImage(binding?.questImageView, "quest_" + questContent.key, "gif")
+            binding?.questImageView?.loadImage("quest_" + questContent.key, "gif")
         } else {
             context?.let { context ->
                 DataBindingUtils.loadImage(context, "quest_" + questContent.key) {
@@ -230,7 +231,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     binding?.questImageView?.layoutParams = params
                 }
             }
-            DataBindingUtils.loadImage(binding?.questImageView, "quest_" + questContent.key)
+            binding?.questImageView?.loadImage("quest_" + questContent.key)
         }
         binding?.questImageWrapper?.alpha = 1.0f
         binding?.questProgressView?.alpha = 1.0f

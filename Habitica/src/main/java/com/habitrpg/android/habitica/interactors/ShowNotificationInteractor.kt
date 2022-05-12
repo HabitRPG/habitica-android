@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.interactors
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -14,8 +13,9 @@ import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
 import com.habitrpg.android.habitica.models.notifications.FirstDropData
 import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.FirstDropDialog
@@ -84,12 +84,12 @@ class ShowNotificationInteractor(
             val factory = LayoutInflater.from(activity)
             val view = factory.inflate(R.layout.dialog_login_incentive, null)
 
-            val imageView = view.findViewById(R.id.imageView) as? ImageView
+            val imageView = view.findViewById(R.id.imageView) as? PixelArtView
             var imageKey = notificationData.rewardKey?.get(0)
             if (imageKey?.contains("armor") == true) {
                 imageKey = "slim_$imageKey"
             }
-            DataBindingUtils.loadImage(imageView, imageKey)
+            imageView?.loadImage(imageKey)
 
             val youEarnedMessage = activity.getString(R.string.checkInRewardEarned, notificationData.rewardText)
             val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView

@@ -38,7 +38,9 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         }
 
     private fun setImage() {
-        DataBindingUtils.loadImage(binding.sceneView, identifier + "_scene" + shopSpriteSuffix)
+        DataBindingUtils.loadImage(context, identifier + "_scene" + shopSpriteSuffix) {
+            binding.sceneView.setImageDrawable(it)
+        }
 
         binding.backgroundView.scaleType = ImageView.ScaleType.FIT_START
 

@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 
@@ -39,7 +39,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         this.item = item
         binding.buyButton.visibility = View.VISIBLE
 
-        DataBindingUtils.loadImage(binding.imageView, item.imageName?.replace("_locked", ""))
+        binding.imageView.loadImage(item.imageName?.replace("_locked", ""))
 
         binding.itemDetailIndicator.text = null
         binding.itemDetailIndicator.visibility = View.GONE

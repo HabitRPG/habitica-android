@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.shops
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import coil.load
@@ -13,6 +12,7 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 abstract class PurchaseDialogContent @JvmOverloads constructor(
     context: Context,
@@ -20,7 +20,7 @@ abstract class PurchaseDialogContent @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    abstract val imageView: ImageView
+    abstract val imageView: PixelArtView
     abstract val titleTextView: TextView
 
     init {

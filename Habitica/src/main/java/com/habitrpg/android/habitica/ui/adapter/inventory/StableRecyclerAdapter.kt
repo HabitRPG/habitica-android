@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.adapter.inventory
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +24,7 @@ import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -192,7 +192,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     internal inner class StableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var animal: Animal? = null
 
-        private val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        private val imageView: PixelArtView = itemView.findViewById(R.id.imageView)
         private val titleView: TextView = itemView.findViewById(R.id.titleTextView)
         private val ownedTextView: TextView = itemView.findViewById(R.id.ownedTextView)
 

@@ -6,38 +6,35 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
-import coil.load
 import coil.request.ImageRequest
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import java.util.Collections
 import java.util.Date
 
-fun ImageView.loadImage(imageName: String?, imageFormat: String? = null) {
-    DataBindingUtils.loadImage(this, imageName, imageFormat)
+fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
+    if (imageName != null) {
+        val fullname = DataBindingUtils.getFullFilename(imageName, imageFormat)
+        if (tag == fullname) {
+            return
+        }
+        tag = fullname
+        bitmap = null
+        DataBindingUtils.loadImage(context, imageName, imageFormat) {
+            if (tag == fullname) {
+                bitmap = it.toBitmap()
+            }
+        }
+    }
 }
 
 object DataBindingUtils {
-
-    fun loadImage(view: ImageView?, imageName: String) {
-        loadImage(view, imageName, null)
-    }
-
-    fun loadImage(view: ImageView?, imageName: String?, imageFormat: String? = null) {
-        if (view != null && imageName != null && view.visibility == View.VISIBLE) {
-            val fullname = getFullFilename(imageName, imageFormat)
-            if (view.tag == fullname) {
-                return
-            }
-            view.tag = fullname
-            view.load(BASE_IMAGE_URL + fullname)
-        }
-    }
 
     fun loadImage(context: Context, imageName: String, imageResult: (Drawable) -> Unit) {
         loadImage(context, imageName, null, imageResult)

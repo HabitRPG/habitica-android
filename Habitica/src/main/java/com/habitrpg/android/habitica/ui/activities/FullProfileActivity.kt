@@ -39,6 +39,7 @@ import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
@@ -316,7 +317,7 @@ class FullProfileActivity : BaseActivity() {
     private fun addEquipmentRow(table: TableLayout, gearKey: String?, text: String?, stats: String?) {
         val gearRow = layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
 
-        val draweeView = gearRow?.findViewById<ImageView>(R.id.gear_drawee)
+        val draweeView = gearRow?.findViewById<PixelArtView>(R.id.gear_drawee)
 
         draweeView?.loadImage("shop_$gearKey")
 

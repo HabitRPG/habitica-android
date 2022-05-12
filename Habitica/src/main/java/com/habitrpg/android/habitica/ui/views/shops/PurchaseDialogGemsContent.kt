@@ -8,10 +8,11 @@ import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 internal class PurchaseDialogGemsContent(context: Context) : PurchaseDialogContent(context) {
     internal val binding = DialogPurchaseGemsBinding.inflate(context.layoutInflater, this)
-    override val imageView: ImageView
+    override val imageView: PixelArtView
         get() = binding.imageView
     override val titleTextView: TextView
         get() = binding.titleTextView

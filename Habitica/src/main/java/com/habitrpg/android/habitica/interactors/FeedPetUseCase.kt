@@ -14,6 +14,8 @@ import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
@@ -36,12 +38,9 @@ constructor(
                             null
                         ) as? FrameLayout
                     val mountImageView =
-                        mountWrapper?.findViewById(R.id.pet_imageview) as? ImageView
+                        mountWrapper?.findViewById(R.id.pet_imageview) as? PixelArtView
 
-                    DataBindingUtils.loadImage(
-                        mountImageView,
-                        "Mount_Icon_" + requestValues.pet.key
-                    )
+                    mountImageView?.loadImage("Mount_Icon_" + requestValues.pet.key)
                     val dialog = HabiticaAlertDialog(requestValues.context)
                     dialog.setTitle(
                         requestValues.context.getString(

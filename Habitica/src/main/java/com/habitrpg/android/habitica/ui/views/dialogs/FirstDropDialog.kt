@@ -2,15 +2,15 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.widget.ImageView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
 
-    private var eggView: ImageView?
-    private var hatchingPotionView: ImageView?
+    private var eggView: PixelArtView?
+    private var hatchingPotionView: PixelArtView?
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
@@ -26,7 +26,7 @@ class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
     }
 
     fun configure(egg: String, hatchingPotion: String) {
-        DataBindingUtils.loadImage(eggView, "Pet_Egg_$egg")
-        DataBindingUtils.loadImage(hatchingPotionView, "Pet_HatchingPotion_$hatchingPotion")
+        eggView?.loadImage("Pet_Egg_$egg")
+        hatchingPotionView?.loadImage("Pet_HatchingPotion_$hatchingPotion")
     }
 }

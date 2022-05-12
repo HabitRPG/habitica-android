@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
@@ -50,8 +51,8 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         hasUnlockedPotion: Boolean,
         hasMount: Boolean
     ) {
-        DataBindingUtils.loadImage(binding.eggView, "Pet_Egg_${pet.animal}")
-        DataBindingUtils.loadImage(binding.hatchingPotionView, "Pet_HatchingPotion_${pet.color}")
+        binding.eggView.loadImage("Pet_Egg_${pet.animal}")
+        binding.hatchingPotionView.loadImage("Pet_HatchingPotion_${pet.color}")
         binding.petTitleView.text = pet.text
 
         val hasEgg = eggCount > 0
@@ -170,7 +171,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        binding.petView.background = drawable
+                        binding.petView.bitmap = drawable.toBitmap()
                     },
                     RxErrorHandler.handleEmptyError()
                 )

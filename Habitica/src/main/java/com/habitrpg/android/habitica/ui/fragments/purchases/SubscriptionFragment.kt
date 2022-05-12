@@ -26,14 +26,14 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
@@ -90,7 +90,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         compositeSubscription.add(
             inventoryRepository.getLatestMysteryItem().subscribe(
                 {
-                    DataBindingUtils.loadImage(binding?.subBenefitsMysteryItemIcon, "shop_set_mystery_${it.key?.split("_")?.last()}")
+                    binding?.subBenefitsMysteryItemIcon?.loadImage("shop_set_mystery_${it.key?.split("_")?.last()}")
                     binding?.subBenefitsMysteryItemText?.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
                 },
                 RxErrorHandler.handleEmptyError()

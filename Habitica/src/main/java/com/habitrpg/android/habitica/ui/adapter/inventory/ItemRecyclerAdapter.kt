@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
@@ -143,7 +143,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                     disabled = !this.canHatch
                 }
             }
-            DataBindingUtils.loadImage(binding.imageView, imageName)
+            binding.imageView.loadImage(imageName)
 
             var alpha = 1.0f
             if (disabled) {

@@ -6,11 +6,10 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.QuestCollectBinding
 import com.habitrpg.android.habitica.databinding.QuestProgressOldBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setScaledPadding
@@ -18,10 +17,9 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.ValueBar
 
 class OldQuestProgressView : LinearLayout {
     private val binding = QuestProgressOldBinding.inflate(context.layoutInflater, this)
@@ -95,15 +93,10 @@ class OldQuestProgressView : LinearLayout {
                 val inflater = LayoutInflater.from(context)
                 for (collect in progress.collect ?: emptyList<QuestProgressCollect>()) {
                     val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
-                    val view = inflater.inflate(R.layout.quest_collect, binding.collectionContainer, false)
-                    val iconView = view.findViewById(R.id.icon_view) as? ImageView
-                    val nameView = view.findViewById(R.id.name_view) as? TextView
-                    val valueView = view.findViewById(R.id.value_view) as? ValueBar
-                    DataBindingUtils.loadImage(iconView, "quest_" + quest.key + "_" + collect.key)
-                    nameView?.text = contentCollect.text
-                    valueView?.set(collect.count.toDouble(), contentCollect.count.toDouble())
-
-                    binding.collectionContainer.addView(view)
+                    val collectBinding = QuestCollectBinding.inflate(inflater, binding.collectionContainer, true)
+                    collectBinding.iconView.loadImage("quest_" + quest.key + "_" + collect.key)
+                    collectBinding.nameView.text = contentCollect.text
+                    collectBinding.valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
                 }
             }
         }

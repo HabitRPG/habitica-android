@@ -101,7 +101,7 @@ class PetViewHolder(
             val resources = itemView.context.resources ?: return@loadImage
             val drawable =
                 if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
-            binding.imageView.background = drawable
+            binding.imageView.bitmap = drawable.toBitmap()
         }
     }
 

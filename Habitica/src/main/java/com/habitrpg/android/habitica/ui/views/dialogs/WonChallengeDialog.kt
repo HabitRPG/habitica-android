@@ -8,12 +8,13 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
     fun configure(data: ChallengeWonData?) {
-        val imageView = additionalContentView?.findViewById<ImageView>(R.id.achievement_view)
-        DataBindingUtils.loadImage(imageView, "achievement-karaoke-2x")
+        val imageView = additionalContentView?.findViewById<PixelArtView>(R.id.achievement_view)
+        imageView?.loadImage("achievement-karaoke-2x")
 
         if (data?.name != null) {
             additionalContentView?.findViewById<TextView>(R.id.description_view)?.text = context.getString(R.string.won_achievement_description, data.name).fromHtml()

@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 class ArmoireActivity: BaseActivity() {
@@ -192,7 +193,7 @@ class ArmoireActivity: BaseActivity() {
     }
 
     fun configure(type: String, key: String, text: String, value: String? = "") {
-        binding.titleView.text = text
+        binding.titleView.text = text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         binding.equipButton.visibility = if (type == "gear") View.VISIBLE else View.GONE
         when (type) {
             "gear" -> {

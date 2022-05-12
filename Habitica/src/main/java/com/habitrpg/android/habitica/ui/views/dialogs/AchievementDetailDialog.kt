@@ -3,17 +3,17 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.Achievement
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 class AchievementDetailDialog(val achievement: Achievement, context: Context) : HabiticaAlertDialog(context) {
 
-    private var iconView: ImageView?
+    private var iconView: PixelArtView?
     private var descriptionView: TextView?
 
     init {
@@ -30,7 +30,7 @@ class AchievementDetailDialog(val achievement: Achievement, context: Context) : 
         } else {
             "achievement-unearned2x"
         }
-        DataBindingUtils.loadImage(iconView, iconName)
+        iconView?.loadImage(iconName)
         addCloseButton(true)
     }
 }

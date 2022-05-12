@@ -9,10 +9,11 @@ import com.habitrpg.android.habitica.databinding.DialogPurchaseContentGearBindin
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseContentGearBinding.inflate(context.layoutInflater, this)
-    override val imageView: ImageView
+    override val imageView: PixelArtView
         get() = binding.imageView
     override val titleTextView: TextView
         get() = binding.titleTextView

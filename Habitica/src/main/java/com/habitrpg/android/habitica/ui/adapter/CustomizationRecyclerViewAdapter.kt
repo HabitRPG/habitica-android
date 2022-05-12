@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -148,7 +148,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             if (customization.type == "background" && customization.identifier == "") {
                 binding.imageView.load(R.drawable.no_background)
             } else {
-                DataBindingUtils.loadImage(binding.imageView, customization.getIconName(userSize, hairColor))
+                binding.imageView.loadImage(customization.getIconName(userSize, hairColor))
             }
 
             if (customization.isUsable(ownedCustomizations.contains(customization.id))) {

@@ -12,12 +12,13 @@ import com.habitrpg.android.habitica.databinding.DialogPurchaseContentQuestBindi
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(context) {
     private val binding = DialogPurchaseContentQuestBinding.inflate(context.layoutInflater, this)
-    override val imageView: ImageView
+    override val imageView: PixelArtView
         get() = binding.imageView
     override val titleTextView: TextView
         get() = binding.titleTextView
@@ -91,9 +92,9 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
         containerView: ViewGroup?
     ) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
-        val imageView = view?.findViewById(R.id.imageView) as? ImageView
+        val imageView = view?.findViewById(R.id.imageView) as? PixelArtView
         val titleTextView = view?.findViewById(R.id.titleTextView) as? TextView
-        DataBindingUtils.loadImage(imageView, item.imageName)
+        imageView?.loadImage(item.imageName)
         if (item.count > 1) {
             titleTextView?.text = context.getString(R.string.quest_reward_count, item.text, item.count)
         } else {

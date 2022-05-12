@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 
 class AdventureGuideActivity : BaseActivity() {
     private lateinit var binding: ActivityAdventureGuideBinding
@@ -107,7 +107,7 @@ class AdventureGuideActivity : BaseActivity() {
             } else {
                 "achievement-unearned2x"
             }
-            DataBindingUtils.loadImage(itemBinding.iconView, iconName)
+            itemBinding.iconView.loadImage(iconName)
             if (achievement.earned) {
                 itemBinding.titleView.paintFlags = itemBinding.titleView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 itemBinding.titleView.setTextColor(ContextCompat.getColor(this, R.color.text_ternary))

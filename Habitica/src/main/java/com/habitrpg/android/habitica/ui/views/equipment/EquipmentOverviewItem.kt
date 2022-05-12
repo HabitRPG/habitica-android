@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.EquipmentOverviewItemBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class EquipmentOverviewItem @JvmOverloads constructor(
@@ -35,7 +35,7 @@ class EquipmentOverviewItem @JvmOverloads constructor(
         identifier = key ?: ""
         binding.twoHandedIndicator.setImageDrawable(null)
         if (identifier.isNotEmpty() && !identifier.endsWith("base_0")) {
-            DataBindingUtils.loadImage(binding.iconView, "shop_$key")
+            binding.iconView.loadImage("shop_$key")
             binding.localIconView.visibility = View.GONE
             binding.iconView.visibility = View.VISIBLE
             binding.iconWrapper.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
