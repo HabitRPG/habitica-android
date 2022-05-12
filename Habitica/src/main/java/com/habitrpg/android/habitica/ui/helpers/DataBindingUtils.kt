@@ -48,6 +48,7 @@ object DataBindingUtils {
     ) {
         val request = ImageRequest.Builder(context)
             .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
+            .target()
             .target {
                 imageResult(it)
             }
