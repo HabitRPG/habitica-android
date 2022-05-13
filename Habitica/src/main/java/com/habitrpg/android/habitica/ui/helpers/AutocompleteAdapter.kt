@@ -56,17 +56,17 @@ class AutocompleteAdapter(
                         userResults = chatMessages
                             .filter { it.isValid }
                             .distinctBy {
-                            it.username
-                        }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map { message ->
-                            val result = FindUsernameResult()
-                            result.authentication = Authentication()
-                            result.authentication?.localAuthentication = LocalAuthentication()
-                            result.authentication?.localAuthentication?.username = message.username
-                            result.contributor = message.contributor
-                            result.profile = Profile()
-                            result.profile?.name = message.user
-                            result
-                        }
+                                it.username
+                            }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map { message ->
+                                val result = FindUsernameResult()
+                                result.authentication = Authentication()
+                                result.authentication?.localAuthentication = LocalAuthentication()
+                                result.authentication?.localAuthentication?.username = message.username
+                                result.contributor = message.contributor
+                                result.profile = Profile()
+                                result.profile?.name = message.user
+                                result
+                            }
                         filterResults.values = userResults
                         filterResults.count = userResults.size
                     } else if (constraint[0] == ':') {

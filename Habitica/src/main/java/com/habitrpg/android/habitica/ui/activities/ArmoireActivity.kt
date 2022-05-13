@@ -25,11 +25,11 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.plattysoft.leonids.ParticleSystem
-import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
-class ArmoireActivity: BaseActivity() {
+class ArmoireActivity : BaseActivity() {
 
     private var equipmentKey: String? = null
     private var gold: Double? = null
@@ -78,18 +78,22 @@ class ArmoireActivity: BaseActivity() {
                 Log.d("AdHandler", "Giving Armoire")
                 val user = userViewModel.user.value ?: return@AdHandler
                 val currentGold = user.stats?.gp ?: return@AdHandler
-                compositeSubscription.add(userRepository.updateUser("stats.gp", currentGold + 100)
-                    .flatMap { inventoryRepository.buyItem(user, "armoire", 100.0, 1) }
-                    .subscribe({
-                               configure(it.armoire["type"] ?: "",
-                                   it.armoire["dropKey"] ?: "",
-                                   it.armoire["dropText"] ?: "",
-                                   it.armoire["value"] ?: "")
-                        binding.adButton.state = AdButton.State.UNAVAILABLE
-                        binding.adButton.visibility = View.INVISIBLE
-                        hasAnimatedChanges = false
-                        gold = null
-                    }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(
+                    userRepository.updateUser("stats.gp", currentGold + 100)
+                        .flatMap { inventoryRepository.buyItem(user, "armoire", 100.0, 1) }
+                        .subscribe({
+                            configure(
+                                it.armoire["type"] ?: "",
+                                it.armoire["dropKey"] ?: "",
+                                it.armoire["dropText"] ?: "",
+                                it.armoire["value"] ?: ""
+                            )
+                            binding.adButton.state = AdButton.State.UNAVAILABLE
+                            binding.adButton.visibility = View.INVISIBLE
+                            hasAnimatedChanges = false
+                            gold = null
+                        }, RxErrorHandler.handleEmptyError())
+                )
             }
             handler.prepare {
                 if (it && binding.adButton.state == AdButton.State.LOADING) {

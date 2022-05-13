@@ -122,7 +122,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
         return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    private fun expandMessage(message:ChatMessage) {
+    private fun expandMessage(message: ChatMessage) {
         expandedMessageId = if (expandedMessageId == message.id) {
             null
         } else {

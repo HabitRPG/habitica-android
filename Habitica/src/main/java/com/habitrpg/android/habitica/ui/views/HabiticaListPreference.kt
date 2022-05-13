@@ -8,12 +8,12 @@ import androidx.preference.ListPreference
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 
-class HabiticaListPreference: ListPreference {
+class HabiticaListPreference : ListPreference {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) :
         super(context, attrs, defStyleAttr, defStyleRes)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
-        super(context,attrs,defStyleAttr)
+        super(context, attrs, defStyleAttr)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
@@ -22,8 +22,7 @@ class HabiticaListPreference: ListPreference {
     override fun onClick() {
         val subtitleText = TextView(context)
         subtitleText.setText(R.string.cds_subtitle)
-        val builder = AlertDialog.Builder(context).setSingleChoiceItems(entries,getValueIndex())
-        { dialog, index ->
+        val builder = AlertDialog.Builder(context).setSingleChoiceItems(entries, getValueIndex()) { dialog, index ->
             if (callChangeListener(entryValues[index].toString())) {
                 setValueIndex(index)
             }

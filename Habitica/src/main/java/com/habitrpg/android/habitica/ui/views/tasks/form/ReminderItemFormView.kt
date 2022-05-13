@@ -158,5 +158,4 @@ class ReminderItemFormView @JvmOverloads constructor(
             timePickerDialog.show()
         }
     }
-
 }

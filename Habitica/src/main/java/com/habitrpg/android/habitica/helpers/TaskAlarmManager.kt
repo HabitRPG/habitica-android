@@ -121,7 +121,6 @@ class TaskAlarmManager(
         )
 
         setAlarm(context, cal.timeInMillis, sender)
-
     }
 
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {

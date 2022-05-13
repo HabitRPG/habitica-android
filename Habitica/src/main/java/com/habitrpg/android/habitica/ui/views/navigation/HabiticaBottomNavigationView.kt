@@ -89,7 +89,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                 }
                 binding.cutoutSpace.visibility = View.INVISIBLE
                 binding.addButtonBackground.animate()
-                    .translationY(-binding.addButtonBackground.height.toFloat()/2)
+                    .translationY(-binding.addButtonBackground.height.toFloat() / 2)
                     .alpha(0.0f)
                     .setDuration(200)
             }

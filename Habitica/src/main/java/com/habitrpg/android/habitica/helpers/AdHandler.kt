@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.OnUserEarnedRewardListener
@@ -32,21 +31,21 @@ enum class AdType {
     FAINT;
 
     val adUnitID: String
-    get() {
-        return when (this) {
-            ARMOIRE -> "ca-app-pub-5911973472413421/9392092486"
-            SPELL -> "ca-app-pub-5911973472413421/1738504765"
-            FAINT -> "ca-app-pub-5911973472413421/1738504765"
+        get() {
+            return when (this) {
+                ARMOIRE -> "ca-app-pub-5911973472413421/9392092486"
+                SPELL -> "ca-app-pub-5911973472413421/1738504765"
+                FAINT -> "ca-app-pub-5911973472413421/1738504765"
+            }
         }
-    }
 
     val cooldownTime: Date?
-    get() {
-        return when (this) {
-            SPELL -> Date(Date().time + 1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)
-            else -> null
+        get() {
+            return when (this) {
+                SPELL -> Date(Date().time + 1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)
+                else -> null
+            }
         }
-    }
 }
 
 fun String.md5(): String? {
@@ -59,12 +58,13 @@ fun String.md5(): String? {
         }
         return sb.toString()
     } catch (e: java.security.NoSuchAlgorithmException) {
+        return null
     } catch (ex: UnsupportedEncodingException) {
+        return null
     }
-    return null
 }
 
-class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boolean) -> Unit): OnUserEarnedRewardListener {
+class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boolean) -> Unit) : OnUserEarnedRewardListener {
     private var rewardedAd: RewardedAd? = null
 
     companion object {
@@ -170,19 +170,22 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
                 }
             }
 
-            RewardedAd.load(activity, type.adUnitID, adRequest, object : RewardedAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    FirebaseCrashlytics.getInstance().recordException(Throwable(adError.message))
-                    rewardAction(false)
-                    onComplete?.invoke(false)
-                }
+            RewardedAd.load(
+                activity, type.adUnitID, adRequest,
+                object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        FirebaseCrashlytics.getInstance().recordException(Throwable(adError.message))
+                        rewardAction(false)
+                        onComplete?.invoke(false)
+                    }
 
-                override fun onAdLoaded(rewardedAd: RewardedAd) {
-                    this@AdHandler.rewardedAd = rewardedAd
-                    configureReward()
-                    onComplete?.invoke(true)
+                    override fun onAdLoaded(rewardedAd: RewardedAd) {
+                        this@AdHandler.rewardedAd = rewardedAd
+                        configureReward()
+                        onComplete?.invoke(true)
+                    }
                 }
-            })
+            )
         }
     }
 
@@ -207,10 +210,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
     }
 
     private fun configureReward() {
-        rewardedAd?.run {
-            fullScreenContentCallback = object : FullScreenContentCallback() {
-            }
-        }
+        rewardedAd?.run { }
     }
 
     private fun showRewardedAd() {
@@ -226,12 +226,18 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
     }
 
     override fun onUserEarnedReward(rewardItem: RewardItem) {
-        analyticsManager.logEvent("adRewardEarned", bundleOf(
-            Pair("type", type.name)
-        ))
-        FirebaseAnalytics.getInstance(activity).logEvent("adRewardEarned", bundleOf(
-            Pair("type", type.name)
-        ))
+        analyticsManager.logEvent(
+            "adRewardEarned",
+            bundleOf(
+                Pair("type", type.name)
+            )
+        )
+        FirebaseAnalytics.getInstance(activity).logEvent(
+            "adRewardEarned",
+            bundleOf(
+                Pair("type", type.name)
+            )
+        )
         rewardAction(true)
     }
 }

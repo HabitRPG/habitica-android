@@ -107,7 +107,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         userViewModel.user.observeOnce(this) {
-            if (it != null){
+            if (it != null) {
                 user = it
                 setAdapter()
             }
@@ -128,7 +128,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         this.loadItems()
     }
 
-    private fun setAdapter(){
+    private fun setAdapter() {
         val context = activity
 
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
@@ -179,7 +179,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 )
                 compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler { showHatchingDialog(it) })
                 compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
-                compositeSubscription.addAll(adapter.startNewPartyEvents.subscribeWithErrorHandler { createNewParty(it) })
+                compositeSubscription.addAll(adapter.startNewPartyEvents.subscribeWithErrorHandler { createNewParty() })
             }
         }
     }
@@ -227,7 +227,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
     }
 
-    private fun createNewParty(isCreateNewParty: Boolean) {
+    private fun createNewParty() {
         val alert = context?.let { HabiticaAlertDialog(it) }
         alert?.setTitle(R.string.quest_party_required_title)
         alert?.setMessage(R.string.quest_party_required_description)

@@ -41,9 +41,6 @@ class PetViewHolder(
 
     private var canRaiseToMount: Boolean = false
 
-    private val canHatch: Boolean
-        get() = eggCount > 0 && potionCount > 0
-
     init {
         itemView.setOnClickListener(this)
     }

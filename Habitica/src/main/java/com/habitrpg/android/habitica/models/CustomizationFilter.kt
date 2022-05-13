@@ -6,7 +6,7 @@ data class CustomizationFilter(
     var months: MutableList<String> = mutableListOf()
 ) {
     val isFiltering: Boolean
-    get() {
-        return onlyPurchased || months.isNotEmpty()
-    }
+        get() {
+            return onlyPurchased || months.isNotEmpty()
+        }
 }

@@ -112,7 +112,6 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                         currentPet
                     )
                 }
-
             }
         }
     }

@@ -8,17 +8,19 @@ import android.graphics.Rect
 import android.util.AttributeSet
 
 class PixelArtView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
 
     private var targetRect = Rect(0, 0, 0, 0)
 
     var bitmap: Bitmap? = null
-    set(value) {
-        field = value
-        updateTargetRect()
-        invalidate()
-    }
+        set(value) {
+            field = value
+            updateTargetRect()
+            invalidate()
+        }
 
     private val paint: Paint by lazy {
         val paint = Paint()
@@ -37,15 +39,15 @@ class PixelArtView @JvmOverloads constructor(
         var targetHeight = bitmap?.height ?: 0
 
         if (width > 0 && targetWidth > 0 && width != targetWidth) {
-            targetWidth = (targetWidth/3) * (width / (targetWidth/3))
+            targetWidth = (targetWidth / 3) * (width / (targetWidth / 3))
         }
         if (height > 0 && targetHeight > 0 && height != targetHeight) {
-            targetHeight = (targetHeight/3) * (height / (targetHeight/3))
+            targetHeight = (targetHeight / 3) * (height / (targetHeight / 3))
         }
 
-        val left = (width-targetWidth)/2
-        val top = (height-targetHeight)/2
-        targetRect = Rect(left, top, left+targetWidth, top+targetHeight)
+        val left = (width - targetWidth) / 2
+        val top = (height - targetHeight) / 2
+        targetRect = Rect(left, top, left + targetWidth, top + targetHeight)
     }
 
     override fun onDraw(canvas: Canvas?) {

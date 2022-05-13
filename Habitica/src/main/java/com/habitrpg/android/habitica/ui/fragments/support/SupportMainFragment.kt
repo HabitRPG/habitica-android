@@ -58,7 +58,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         }
 
         binding?.resetTutorialButton?.setOnClickListener {
-            userRepository.resetTutorial().subscribe( {
+            userRepository.resetTutorial().subscribe({
                 activity?.showSnackbar(null, getString(R.string.tutorial_reset_confirmation))
             }, RxErrorHandler.handleEmptyError())
         }

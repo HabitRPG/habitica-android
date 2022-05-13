@@ -41,16 +41,16 @@ import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
 
@@ -372,10 +372,15 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
             observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity).map { buyResponse ->
                 if (shopItem.key == "armoire" && configManager.enableNewArmoire()) {
-                    MainNavigationController.navigate(R.id.armoireActivity, ArmoireActivityDirections.openArmoireActivity(buyResponse.armoire["type"] ?: "",
-                        buyResponse.armoire["dropText"] ?: "",
-                        buyResponse.armoire["dropKey"] ?: "",
-                        buyResponse.armoire["value"] ?: "").arguments)
+                    MainNavigationController.navigate(
+                        R.id.armoireActivity,
+                        ArmoireActivityDirections.openArmoireActivity(
+                            buyResponse.armoire["type"] ?: "",
+                            buyResponse.armoire["dropText"] ?: "",
+                            buyResponse.armoire["dropKey"] ?: "",
+                            buyResponse.armoire["value"] ?: ""
+                        ).arguments
+                    )
                 }
                 buyResponse
             }

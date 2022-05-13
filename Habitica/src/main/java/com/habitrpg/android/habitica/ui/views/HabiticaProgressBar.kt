@@ -46,19 +46,19 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
         }
 
     var currentValue: Double = 0.0
-    set(value) {
-        if (field != value) {
-            field = value
-            updateBar()
+        set(value) {
+            if (field != value) {
+                field = value
+                updateBar()
+            }
         }
-    }
     var maxValue: Double = 0.0
-    set(value) {
-        if (field != value) {
-            field = value
-            updateBar()
+        set(value) {
+            if (field != value) {
+                field = value
+                updateBar()
+            }
         }
-    }
 
     var pendingValue: Double = 0.0
         set(value) {

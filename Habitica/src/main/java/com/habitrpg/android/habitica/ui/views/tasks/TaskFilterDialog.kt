@@ -44,30 +44,30 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
     lateinit var repository: TagRepository
 
     var taskType: TaskType = TaskType.HABIT
-    set(value) {
-        field = value
-        when (value) {
-            TaskType.HABIT -> {
-                binding.taskTypeTitle.setText(R.string.habits)
-                binding.allTaskFilter.setText(R.string.all)
-                binding.secondTaskFilter.setText(R.string.weak)
-                binding.thirdTaskFilter.setText(R.string.strong)
+        set(value) {
+            field = value
+            when (value) {
+                TaskType.HABIT -> {
+                    binding.taskTypeTitle.setText(R.string.habits)
+                    binding.allTaskFilter.setText(R.string.all)
+                    binding.secondTaskFilter.setText(R.string.weak)
+                    binding.thirdTaskFilter.setText(R.string.strong)
+                }
+                TaskType.DAILY -> {
+                    binding.taskTypeTitle.setText(R.string.dailies)
+                    binding.allTaskFilter.setText(R.string.all)
+                    binding.secondTaskFilter.setText(R.string.due)
+                    binding.thirdTaskFilter.setText(R.string.gray)
+                }
+                TaskType.TODO -> {
+                    binding.taskTypeTitle.setText(R.string.todos)
+                    binding.allTaskFilter.setText(R.string.active)
+                    binding.secondTaskFilter.setText(R.string.dated)
+                    binding.thirdTaskFilter.setText(R.string.completed)
+                }
             }
-            TaskType.DAILY -> {
-                binding.taskTypeTitle.setText(R.string.dailies)
-                binding.allTaskFilter.setText(R.string.all)
-                binding.secondTaskFilter.setText(R.string.due)
-                binding.thirdTaskFilter.setText(R.string.gray)
-            }
-            TaskType.TODO -> {
-                binding.taskTypeTitle.setText(R.string.todos)
-                binding.allTaskFilter.setText(R.string.active)
-                binding.secondTaskFilter.setText(R.string.dated)
-                binding.thirdTaskFilter.setText(R.string.completed)
-            }
+            setActiveFilter(viewModel.getActiveFilter(value))
         }
-        setActiveFilter(viewModel.getActiveFilter(value))
-    }
 
     private var tags = mutableListOf<Tag>()
     private val editedTags = HashMap<String, Tag>()
@@ -103,7 +103,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
     }
 
     override fun show() {
-        tagDisposale = viewModel.tagRepository.getTags().subscribe( {
+        tagDisposale = viewModel.tagRepository.getTags().subscribe({
             setTags(it)
         }, RxErrorHandler.handleEmptyError())
         super.show()
@@ -292,7 +292,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
             R.id.second_task_filter -> when (taskType) {
                 TaskType.HABIT -> Task.FILTER_WEAK
                 TaskType.DAILY -> Task.FILTER_ACTIVE
-                TaskType.TODO ->  Task.FILTER_DATED
+                TaskType.TODO -> Task.FILTER_DATED
                 else -> Task.FILTER_ALL
             }
             R.id.third_task_filter -> when (taskType) {

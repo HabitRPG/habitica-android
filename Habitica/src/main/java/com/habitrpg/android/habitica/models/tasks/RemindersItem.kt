@@ -57,11 +57,11 @@ open class RemindersItem : RealmObject, Parcelable {
 
     fun getZonedDateTime(): ZonedDateTime? {
         val formatter: DateTimeFormatter =
-        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-            .appendPattern("['T'][' ']")
-            .append(DateTimeFormatter.ISO_LOCAL_TIME)
-            .appendPattern("[XX]")
-            .toFormatter()
+            DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
+                .appendPattern("['T'][' ']")
+                .append(DateTimeFormatter.ISO_LOCAL_TIME)
+                .appendPattern("[XX]")
+                .toFormatter()
 
         val parsed: TemporalAccessor = formatter.parseBest(
             time,

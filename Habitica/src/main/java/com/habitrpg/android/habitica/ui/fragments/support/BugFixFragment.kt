@@ -22,9 +22,9 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.jaredrummler.android.device.DeviceName
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
+import kotlinx.coroutines.launch
 
 class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null

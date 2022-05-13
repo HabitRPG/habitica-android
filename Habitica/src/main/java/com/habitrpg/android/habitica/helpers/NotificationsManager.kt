@@ -1,20 +1,16 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.RealmList
 import java.lang.ref.WeakReference
 import java.util.*
-
 
 class NotificationsManager {
     private val displayNotificationSubject = PublishSubject.create<Notification>()

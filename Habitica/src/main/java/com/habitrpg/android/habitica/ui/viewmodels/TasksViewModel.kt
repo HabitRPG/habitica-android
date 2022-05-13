@@ -25,7 +25,7 @@ import java.util.Date
 import javax.inject.Inject
 import javax.inject.Named
 
-class TasksViewModel: BaseViewModel() {
+class TasksViewModel : BaseViewModel() {
     private var compositeSubscription: CompositeDisposable = CompositeDisposable()
 
     override fun inject(component: UserComponent) {
@@ -56,23 +56,25 @@ class TasksViewModel: BaseViewModel() {
             return ownerID.value == userID
         }
     val ownerTitle: CharSequence
-    get() {
-        return owners.firstOrNull { it.first == ownerID.value }?.second ?: ""
-    }
+        get() {
+            return owners.firstOrNull { it.first == ownerID.value }?.second ?: ""
+        }
 
     init {
-        compositeSubscription.add(userRepository.getTeamPlans()
-            .subscribe({
-                owners = listOf(Pair(userID, userViewModel.displayName)) + it.map {
-                    Pair(
-                        it.id,
-                        it.summary
-                    )
-                }
-                if (owners.size > 1 && canSwitchOwners.value != false) {
-                    canSwitchOwners.value = owners.size > 1
-                }
-            }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(
+            userRepository.getTeamPlans()
+                .subscribe({
+                    owners = listOf(Pair(userID, userViewModel.displayName)) + it.map {
+                        Pair(
+                            it.id,
+                            it.summary
+                        )
+                    }
+                    if (owners.size > 1 && canSwitchOwners.value != false) {
+                        canSwitchOwners.value = owners.size > 1
+                    }
+                }, RxErrorHandler.handleEmptyError())
+        )
         compositeSubscription.add(userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError()))
     }
 
@@ -135,23 +137,23 @@ class TasksViewModel: BaseViewModel() {
     }
 
     var searchQuery: String? = null
-    set(value) {
-        field = value
-        filterSets.forEach {
-            val old = it.value.value
-            it.value.value = Triple(value, old?.second, old?.third ?: listOf())
+        set(value) {
+            field = value
+            filterSets.forEach {
+                val old = it.value.value
+                it.value.value = Triple(value, old?.second, old?.third ?: listOf())
+            }
         }
-    }
     private val activeFilters = HashMap<TaskType, String>()
 
     var tags: MutableList<String> = mutableListOf()
-    set(value) {
-        field = value
-        filterSets.forEach {
-            val old = it.value.value
-            it.value.value = Triple(old?.first, old?.second, field)
+        set(value) {
+            field = value
+            filterSets.forEach {
+                val old = it.value.value
+                it.value.value = Triple(old?.first, old?.second, field)
+            }
         }
-    }
 
     fun addActiveTag(tagID: String) {
         if (!tags.contains(tagID)) {

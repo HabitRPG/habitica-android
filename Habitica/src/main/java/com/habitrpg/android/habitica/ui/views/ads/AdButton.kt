@@ -13,13 +13,13 @@ import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
+import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Date
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 class AdButton @JvmOverloads constructor(
     context: Context,
@@ -43,10 +43,10 @@ class AdButton @JvmOverloads constructor(
     private val binding = AdButtonBinding.inflate(context.layoutInflater, this)
 
     var text: String = ""
-    set(value) {
-        field = value
-        updateViews()
-    }
+        set(value) {
+            field = value
+            updateViews()
+        }
 
     init {
         context.theme?.obtainStyledAttributes(

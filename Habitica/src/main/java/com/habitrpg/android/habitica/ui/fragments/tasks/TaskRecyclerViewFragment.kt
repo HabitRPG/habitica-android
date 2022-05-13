@@ -319,13 +319,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         )
     }
 
-
     private fun updateTaskSubscription(ownerID: String?) {
         taskSubscription = taskRepository.getTasks(this.taskType, ownerID).subscribe(
-                {
-                    this.recyclerAdapter?.updateUnfilteredData(it)
-                },
-                RxErrorHandler.handleEmptyError()
+            {
+                this.recyclerAdapter?.updateUnfilteredData(it)
+            },
+            RxErrorHandler.handleEmptyError()
         )
     }
 

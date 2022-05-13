@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
 import android.content.Context
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R

@@ -236,7 +236,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     open fun hideConnectionProblem() {
-
     }
 
     fun shareContent(identifier: String, message: String, image: Bitmap? = null) {

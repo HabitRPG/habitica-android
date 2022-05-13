@@ -50,10 +50,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -62,6 +58,10 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class NavigationDrawerFragment : DialogFragment() {
 
@@ -230,7 +230,8 @@ class NavigationDrawerFragment : DialogFragment() {
 
         subscriptions?.add(
             Flowable.combineLatest(
-                contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems()) { state, items ->
+                contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems()
+            ) { state, items ->
                 return@combineLatest Pair(state, items)
             }.subscribe(
                 { pair ->

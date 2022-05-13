@@ -29,13 +29,13 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     private val formatter = NumberFormat.getInstance()
 
     val progressBar: HabiticaProgressBar
-    get() = binding.progressBar
+        get() = binding.progressBar
 
     var currentValue: Double
-    get() = binding.progressBar.currentValue
-    set(value) {
-        binding.progressBar.currentValue = value
-    }
+        get() = binding.progressBar.currentValue
+        set(value) {
+            binding.progressBar.currentValue = value
+        }
     var maxValue: Double
         get() = binding.progressBar.maxValue
         set(value) {

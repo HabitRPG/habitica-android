@@ -14,10 +14,10 @@ open class HabiticaBottomSheetDialog(context: Context) : BottomSheetDialog(conte
     }
 
     var grabberVisibility: Int
-    get() = wrapperBinding.grabber.visibility
-    set(value) {
-        wrapperBinding.grabber.visibility = value
-    }
+        get() = wrapperBinding.grabber.visibility
+        set(value) {
+            wrapperBinding.grabber.visibility = value
+        }
 
     override fun setContentView(view: View) {
         wrapperBinding.container.addView(view)

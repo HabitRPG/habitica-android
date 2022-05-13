@@ -182,7 +182,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             }
             R.id.action_reload -> {
                 refreshItem = item
-                viewModel.refreshData {  }
+                viewModel.refreshData { }
                 true
             }
             R.id.action_team_info -> {

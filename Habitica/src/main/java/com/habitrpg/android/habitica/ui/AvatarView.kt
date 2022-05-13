@@ -24,7 +24,6 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import io.reactivex.rxjava3.functions.Consumer
 import java.util.Date
 import java.util.EnumMap
 import java.util.concurrent.atomic.AtomicInteger

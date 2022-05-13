@@ -128,11 +128,13 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
             binding.tagWrapper.removeAllViews()
             guild.categories?.forEach { category ->
                 val textView = PillTextviewBinding.inflate(itemView.context.layoutInflater, binding.tagWrapper, true)
-                textView.root.text = category.name?.split("_")?.joinToString(" ") { it.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.getDefault()
-                    ) else it.toString()
-                } }
+                textView.root.text = category.name?.split("_")?.joinToString(" ") {
+                    it.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(
+                            Locale.getDefault()
+                        ) else it.toString()
+                    }
+                }
                 textView.root.background = if (category.slug == "habitica_official") {
                     textView.root.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
                     ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_purple_400)

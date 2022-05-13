@@ -68,13 +68,13 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
+import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
@@ -287,7 +287,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val navigationController = navHostFragment.navController
         MainNavigationController.setup(navigationController)
         navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
-
 
         if (launchScreen == "/party") {
             viewModel.user.observeOnce(this) {

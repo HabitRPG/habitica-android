@@ -54,16 +54,6 @@ internal class ChallengeFilterDialogHolder private constructor(
         binding.challengeFilterRecyclerView.adapter = adapter
     }
 
-    private fun doneClicked() {
-        val options = ChallengeFilterOptions()
-        options.showByGroups = this.adapter?.checkedEntries
-        options.showOwned = binding.challengeFilterOwned.isChecked
-        options.notOwned = binding.challengeFilterNotOwned.isChecked
-
-        selectedGroupsCallback?.call(options)
-        this.dialog?.hide()
-    }
-
     private fun allClicked() {
         this.adapter?.selectAll()
     }

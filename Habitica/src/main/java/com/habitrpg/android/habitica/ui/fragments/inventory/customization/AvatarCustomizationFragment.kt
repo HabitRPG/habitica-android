@@ -165,8 +165,10 @@ class AvatarCustomizationFragment :
         val type = this.type ?: return
         compositeSubscription.add(
             customizationRepository.getCustomizations(type, category, false)
-                .combineLatest(currentFilter.toFlowable(BackpressureStrategy.DROP),
-                ownedCustomizations.toFlowable(BackpressureStrategy.DROP))
+                .combineLatest(
+                    currentFilter.toFlowable(BackpressureStrategy.DROP),
+                    ownedCustomizations.toFlowable(BackpressureStrategy.DROP)
+                )
                 .subscribe(
                     { (customizations, filter, ownedCustomizations) ->
                         adapter.ownedCustomizations = ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
@@ -202,8 +204,8 @@ class AvatarCustomizationFragment :
                             )
                         }
                     },
-                RxErrorHandler.handleEmptyError()
-            )
+                    RxErrorHandler.handleEmptyError()
+                )
         )
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"

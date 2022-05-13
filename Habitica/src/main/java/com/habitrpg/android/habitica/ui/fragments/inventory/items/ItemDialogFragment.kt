@@ -118,7 +118,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         userViewModel.user.observeOnce(this) {
-            if (it != null){
+            if (it != null) {
                 user = it
                 setAdapter()
             }
@@ -158,7 +158,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
         this.loadItems()
     }
 
-    private fun setAdapter(){
+    private fun setAdapter() {
         val context = activity
 
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter

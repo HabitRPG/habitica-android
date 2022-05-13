@@ -15,13 +15,15 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import kotlin.math.min
 
 class SparkView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
     private var spacing: Float = 0f
-    set(value) {
-        field = value
-        invalidate()
-    }
+        set(value) {
+            field = value
+            invalidate()
+        }
     private var paint: Paint = Paint()
 
     var thickness = 3.dpToPx(context)
@@ -32,9 +34,9 @@ class SparkView @JvmOverloads constructor(
         get() {
             return paint.color
         }
-    set(value) {
-        paint.color = value
-    }
+        set(value) {
+            paint.color = value
+        }
 
     init {
         spacing = maxSpacing.toFloat()
@@ -86,7 +88,7 @@ class SparkView @JvmOverloads constructor(
         val thisCanvas = canvas ?: return
         val centerHorizontal = width / 2f
         val centerVertical = height / 2f
-        val offset = (maxSpacing - spacing)/2
+        val offset = (maxSpacing - spacing) / 2
         drawHorizontal(thisCanvas, offset, centerVertical)
         drawHorizontal(thisCanvas, width - length.toFloat() - offset, centerVertical)
 
@@ -95,10 +97,10 @@ class SparkView @JvmOverloads constructor(
     }
 
     private fun drawVertical(canvas: Canvas, x: Float, y: Float) {
-        canvas.drawRoundRect(x-(thickness/2), y, x+(thickness/2), y+length, thickness/2f, thickness/2f, paint)
+        canvas.drawRoundRect(x - (thickness / 2), y, x + (thickness / 2), y + length, thickness / 2f, thickness / 2f, paint)
     }
 
     private fun drawHorizontal(canvas: Canvas, x: Float, y: Float) {
-        canvas.drawRoundRect(x, y-(thickness/2), x+length, y+(thickness/2), thickness/2f, thickness/2f, paint)
+        canvas.drawRoundRect(x, y - (thickness / 2), x + length, y + (thickness / 2), thickness / 2f, thickness / 2f, paint)
     }
 }
