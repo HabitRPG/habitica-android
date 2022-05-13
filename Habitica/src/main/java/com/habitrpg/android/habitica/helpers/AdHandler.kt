@@ -39,6 +39,14 @@ enum class AdType {
             FAINT -> "ca-app-pub-5911973472413421/1738504765"
         }
     }
+
+    val cooldownTime: Date?
+    get() {
+        return when (this) {
+            SPELL -> Date(Date().time + 1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)
+            else -> null
+        }
+    }
 }
 
 fun String.md5(): String? {
@@ -83,10 +91,18 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             return nextAdAllowedDate(type)?.after(Date()) == true
         }
 
-        fun setNextAllowedDate(type: AdType, date: Date) {
-            nextAdAllowed[type] = date
-            sharedPreferences.edit {
-                putLong("nextAd${type.name}", date.time)
+        fun setNextAllowedDate(type: AdType) {
+            val date = type.cooldownTime
+            if (date != null) {
+                nextAdAllowed[type] = date
+                sharedPreferences.edit {
+                    putLong("nextAd${type.name}", date.time)
+                }
+            } else {
+                nextAdAllowed.remove(type)
+                sharedPreferences.edit {
+                    remove("nextAd${type.name}")
+                }
             }
         }
 
@@ -203,7 +219,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
         }
         if (rewardedAd != null) {
             rewardedAd?.show(activity, this)
-            setNextAllowedDate(type, Date(Date().time + 1.toDuration(DurationUnit.HOURS).inWholeMilliseconds))
+            setNextAllowedDate(type)
         } else {
             Log.d(TAG, "The rewarded ad wasn't ready yet.")
         }

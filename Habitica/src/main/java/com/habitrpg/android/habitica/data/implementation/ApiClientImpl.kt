@@ -222,7 +222,7 @@ class ApiClientImpl(
         @Suppress("DEPRECATION")
         if (SocketException::class.java.isAssignableFrom(throwableClass) || SSLException::class.java.isAssignableFrom(throwableClass)) {
             this.showConnectionProblemDialog(R.string.internal_error_api)
-        } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass) {
+        } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body)
         } else if (throwableClass == retrofit2.adapter.rxjava3.HttpException::class.java) {
             val error = throwable as HttpException

@@ -759,7 +759,7 @@
     <string name="special_items">Özel eşyalar</string>
     <string name="leave_keep_tasks">Ayrıl &amp; Görevleri Koru</string>
     <string name="create_task_title">Bir Görev Oluştur</string>
-    <string name="percent_completed">%%d% Tamamlandı</string>
+    <string name="percent_completed">%d%% Tamamlandı</string>
     <string name="lets_get_started">Haydi başlayalım</string>
     <string name="your_progress">Senin İlerlemen</string>
     <string name="delete_checklist_entry">Sil…</string>

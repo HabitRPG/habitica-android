@@ -70,7 +70,9 @@ class EquipmentOverviewFragment : BaseMainFragment<FragmentEquipmentOverviewBind
     private fun updateOutfit(view: EquipmentOverviewView?, outfit: Outfit?) {
         if (outfit?.weapon?.isNotEmpty() == true) {
             viewModel.getGear(outfit.weapon) {
-                view?.updateData(outfit, it.twoHanded)
+                if (it.isValid) {
+                    view?.updateData(outfit, it.twoHanded)
+                }
             }
         } else {
             view?.updateData(outfit)

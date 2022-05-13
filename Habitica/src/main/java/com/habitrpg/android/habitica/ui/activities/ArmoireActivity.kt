@@ -86,7 +86,8 @@ class ArmoireActivity: BaseActivity() {
                                    it.armoire["dropKey"] ?: "",
                                    it.armoire["dropText"] ?: "",
                                    it.armoire["value"] ?: "")
-                        binding.adButton.updateForAdType(AdType.ARMOIRE, lifecycleScope)
+                        binding.adButton.state = AdButton.State.UNAVAILABLE
+                        binding.adButton.visibility = View.INVISIBLE
                         hasAnimatedChanges = false
                         gold = null
                     }, RxErrorHandler.handleEmptyError()))
@@ -214,7 +215,7 @@ class ArmoireActivity: BaseActivity() {
         }
     }
 
-    fun showDropRateDialog() {
+    private fun showDropRateDialog() {
         val dialog = HabiticaBottomSheetDialog(this)
         dialog.setContentView(R.layout.armoire_drop_rate_dialog)
         dialog.show()

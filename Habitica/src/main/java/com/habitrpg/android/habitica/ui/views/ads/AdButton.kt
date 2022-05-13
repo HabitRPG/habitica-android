@@ -25,7 +25,7 @@ class AdButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
-    var state: State = State.LOADING
+    var state: State = State.READY
         set(value) {
             field = value
             updateViews()
@@ -61,7 +61,7 @@ class AdButton @JvmOverloads constructor(
         binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
         binding.currencyView.value = 0.0
         gravity = Gravity.CENTER
-        state = State.LOADING
+        state = State.READY
     }
 
     private fun updateViews() {
