@@ -108,8 +108,8 @@ class UserRepositoryImpl(
     }
         .flatMap { retrieveUser(false, true) }
 
-    override fun resetTutorial() {
-        localRepository.getTutorialSteps()
+    override fun resetTutorial(): Maybe<User> {
+        return localRepository.getTutorialSteps()
             .firstElement()
             .map<Map<String, Any>> { tutorialSteps ->
                 val updateData = HashMap<String, Any>()
@@ -119,7 +119,6 @@ class UserRepositoryImpl(
                 updateData
             }
             .flatMap { updateData -> updateUser(updateData).firstElement() }
-            .subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
     override fun sleep(user: User): Flowable<User> {

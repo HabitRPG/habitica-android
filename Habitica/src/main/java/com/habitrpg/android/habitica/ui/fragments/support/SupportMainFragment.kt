@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import javax.inject.Inject
@@ -57,7 +58,9 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         }
 
         binding?.resetTutorialButton?.setOnClickListener {
-            userRepository.resetTutorial()
+            userRepository.resetTutorial().subscribe( {
+                activity?.showSnackbar(null, getString(R.string.tutorial_reset_confirmation))
+            }, RxErrorHandler.handleEmptyError())
         }
     }
 

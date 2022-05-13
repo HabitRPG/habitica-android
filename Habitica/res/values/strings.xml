@@ -1261,4 +1261,5 @@
     <string name="december">December</string>
     <string name="cds_subtitle">Adjust when your day switches over past the default time of midnight.</string>
     <string name="buy_set">Buy Set</string>
+    <string name="tutorial_reset_confirmation">Your Tutorials were reset</string>
 </resources>

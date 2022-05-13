@@ -33,7 +33,7 @@ interface UserRepository : BaseRepository {
 
     fun revive(): Flowable<User>
 
-    fun resetTutorial()
+    fun resetTutorial(): Maybe<User>
 
     fun sleep(user: User): Flowable<User>
 
