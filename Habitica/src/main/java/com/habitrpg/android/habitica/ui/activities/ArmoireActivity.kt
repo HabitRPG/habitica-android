@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.plattysoft.leonids.ParticleSystem
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
@@ -145,23 +144,21 @@ class ArmoireActivity: BaseActivity() {
                 createParticles(container, R.drawable.confetti_red)
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
-            },
-            500
+            }, 500
         )
-
 
         binding.iconView.startAnimation(Animations.bobbingAnimation())
         binding.titleView.alpha = 0f
         binding.subtitleView.alpha = 0f
 
         lifecycleScope.launch {
-            delay(100)
             if (binding.iconWrapper.isAttachedToWindow) {
                 Animations.circularReveal(binding.iconWrapper, 300)
             }
-            binding.leftSparkView.startAnimating()
-            binding.rightSparkView.startAnimating()
         }
+
+        binding.leftSparkView.startAnimating()
+        binding.rightSparkView.startAnimating()
 
         binding.titleView.animate().apply {
             alpha(1f)
