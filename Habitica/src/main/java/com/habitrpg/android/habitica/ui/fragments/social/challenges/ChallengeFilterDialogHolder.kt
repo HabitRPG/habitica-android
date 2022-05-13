@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.social.challenges
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
@@ -17,7 +16,6 @@ internal class ChallengeFilterDialogHolder private constructor(
 ) {
     private val binding = DialogChallengeFilterBinding.bind(view)
 
-    private var dialog: AlertDialog? = null
     private var filterGroups: List<Group>? = null
     private var currentFilter: ChallengeFilterOptions? = null
     private var selectedGroupsCallback: Action1<ChallengeFilterOptions>? = null

@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.KeyHelper.Companion.getInstance
 import com.habitrpg.android.habitica.helpers.SoundFileLoader
 import com.habitrpg.android.habitica.helpers.SoundManager
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.shared.habitica.HLogger
 import dagger.Module
@@ -67,12 +66,6 @@ class AppModule(private val application: Application) {
         return if (keyStore == null) {
             null
         } else getInstance(context, sharedPreferences, keyStore)
-    }
-
-    @Provides
-    @Singleton
-    fun providesTagsHelper(): TaskFilterHelper {
-        return TaskFilterHelper()
     }
 
     @Provides

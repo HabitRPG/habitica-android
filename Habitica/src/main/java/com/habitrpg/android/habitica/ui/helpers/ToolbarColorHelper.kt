@@ -70,17 +70,7 @@ object ToolbarColorHelper {
 
                     // Step 2: Changing the color of any ActionMenuViews - icons that are not back button, nor text, nor overflow menu icon.
                     // Colorize the ActionViews -> all icons that are NOT: back button | overflow menu
-                    val innerView = v.getChildAt(j)
-                    if (innerView is ActionMenuItemView) {
-                        innerView.setTextColor(toolbarIconsColor)
-                        for (k in innerView.compoundDrawables.indices) {
-                            innerView.post {
-                                if (innerView.compoundDrawables[k] != null) {
-                                    innerView.compoundDrawables[k].colorFilter = colorFilter
-                                }
-                            }
-                        }
-                    }
+                    colorizeChild(v.getChildAt(j), toolbarIconsColor, colorFilter)
                 }
             } else if (v is TextView) {
                 v.setTextColor(toolbarIconsColor)
@@ -93,6 +83,23 @@ object ToolbarColorHelper {
 
         // Step 4: Changing the color of the Overflow Menu icon.
         setOverflowButtonColor(activity, toolbarIconsColor)
+    }
+
+    private fun colorizeChild(
+        innerView: View,
+        toolbarIconsColor: Int,
+        colorFilter: PorterDuffColorFilter
+    ) {
+        if (innerView is ActionMenuItemView) {
+            innerView.setTextColor(toolbarIconsColor)
+            for (k in innerView.compoundDrawables.indices) {
+                innerView.post {
+                    if (innerView.compoundDrawables[k] != null) {
+                        innerView.compoundDrawables[k].colorFilter = colorFilter
+                    }
+                }
+            }
+        }
     }
 
     /**

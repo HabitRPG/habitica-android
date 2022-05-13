@@ -175,16 +175,7 @@ class AvatarCustomizationFragment :
                         if (filter.isFiltering) {
                             val displayedCustomizations = mutableListOf<Customization>()
                             for (customization in customizations) {
-                                if (filter.onlyPurchased) {
-                                    if (ownedCustomizations.find { it.key == customization.identifier } == null) {
-                                        continue
-                                    }
-                                }
-                                if (filter.months.isNotEmpty()) {
-                                    if (!filter.months.contains(customization.customizationSetName?.substringAfter('.'))) {
-                                        continue
-                                    }
-                                }
+                                if (shouldSkip(filter, ownedCustomizations, customization)) continue
                                 displayedCustomizations.add(customization)
                             }
                             adapter.setCustomizations(
@@ -211,6 +202,16 @@ class AvatarCustomizationFragment :
             val otherCategory = if (category == "mustache") "beard" else "mustache"
             compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe({ adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
         }
+    }
+
+    private fun shouldSkip(
+        filter: CustomizationFilter,
+        ownedCustomizations: List<OwnedCustomization>,
+        customization: Customization
+    ): Boolean {
+        return if (filter.onlyPurchased && ownedCustomizations.find { it.key == customization.identifier } == null) {
+            true
+        } else filter.months.isNotEmpty() && !filter.months.contains(customization.customizationSetName?.substringAfter('.'))
     }
 
     fun updateUser(user: User?) {

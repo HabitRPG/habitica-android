@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.BaseObject
@@ -65,7 +64,6 @@ open class HabiticaTestCase : TestCase() {
     val hostConfig: HostConfig = mockk(relaxed = true)
     val analyticsManager: AnalyticsManager = mockk(relaxed = true)
     val maintenanceService: MaintenanceApiService = mockk(relaxed = true)
-    val taskFilterHelper: TaskFilterHelper = mockk(relaxed = true)
     val tagRepository: TagRepository = mockk(relaxed = true)
     val hatchPetUseCase: HatchPetUseCase = mockk(relaxed = true)
     val feedPetUseCase: FeedPetUseCase = mockk(relaxed = true)
@@ -132,7 +130,6 @@ open class HabiticaTestCase : TestCase() {
             if (it.returnType == HostConfig::class.starProjectedType) assign(it, obj, hostConfig)
             if (it.returnType == AnalyticsManager::class.starProjectedType) assign(it, obj, analyticsManager)
             if (it.returnType == MaintenanceApiService::class.starProjectedType) assign(it, obj, maintenanceService)
-            if (it.returnType == TaskFilterHelper::class.starProjectedType) assign(it, obj, taskFilterHelper)
             if (it.returnType == TagRepository::class.starProjectedType) assign(it, obj, tagRepository)
             if (it.returnType == FeedPetUseCase::class.starProjectedType) assign(it, obj, feedPetUseCase)
             if (it.returnType == HatchPetUseCase::class.starProjectedType) assign(it, obj, hatchPetUseCase)

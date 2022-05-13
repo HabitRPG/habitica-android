@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -36,8 +35,6 @@ class TasksViewModel : BaseViewModel() {
     lateinit var userID: String
     @Inject
     lateinit var taskRepository: TaskRepository
-    @Inject
-    lateinit var taskFilterHelper: TaskFilterHelper
     @Inject
     lateinit var tagRepository: TagRepository
     @Inject

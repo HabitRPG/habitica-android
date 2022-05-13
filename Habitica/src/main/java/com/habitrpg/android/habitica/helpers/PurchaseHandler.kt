@@ -302,9 +302,9 @@ class PurchaseHandler(
         val result = withContext(Dispatchers.IO) {
             billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS)
         }
+        var fallback: Purchase? = null
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             val purchases = result.purchasesList.filter { it.isAcknowledged }.sortedByDescending { it.purchaseTime }
-            var fallback: Purchase? = null
             // If there is a subscription that is still active, prioritise that. Otherwise return the most recent one.
             for (purchase in purchases) {
                 if (purchase.isAutoRenewing) {
@@ -313,9 +313,8 @@ class PurchaseHandler(
                     fallback = purchase
                 }
             }
-            return fallback
         }
-        return null
+        return fallback
     }
 
     fun cancelSubscription(): Flowable<User> {
