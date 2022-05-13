@@ -68,11 +68,12 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (data[position].isSystemMessage) {
             val sysChatHolder = holder as? SystemChatMessageViewHolder ?: return
+            val message = data[position]
             sysChatHolder.bind(
-                data[position],
+                message,
                 expandedMessageId == data[position].id
             )
-            sysChatHolder.onShouldExpand = { expandMessage(data[position].id, position) }
+            sysChatHolder.onShouldExpand = { expandMessage(message) }
         } else {
             val chatHolder = holder as? ChatRecyclerMessageViewHolder ?: return
             val message = data[position]
@@ -82,7 +83,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
                 user,
                 expandedMessageId == message.id
             )
-            chatHolder.onShouldExpand = { expandMessage(message.id, position) }
+            chatHolder.onShouldExpand = { expandMessage(message) }
             chatHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
             chatHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
             chatHolder.onReply = { replyMessageEvents.onNext(it) }
@@ -121,20 +122,20 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
         return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    private fun expandMessage(id: String, position: Int) {
-        expandedMessageId = if (expandedMessageId == id) {
+    private fun expandMessage(message:ChatMessage) {
+        expandedMessageId = if (expandedMessageId == message.id) {
             null
         } else {
-            id
+            message.id
         }
-        notifyItemChanged(position)
+        notifyItemChanged(data.indexOf(message))
     }
 }
 
 class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val textView: TextView = itemView.findViewById(R.id.text_view)
     private val timestamp: TextView = itemView.findViewById(R.id.system_message_timestamp)
-    private val dateTime = java.text.SimpleDateFormat("MMM dd, hh:mm aaa")
+    private val dateTime = java.text.SimpleDateFormat.getDateTimeInstance()
     val binding = SystemChatMessageBinding.bind(itemView)
 
     var onShouldExpand: (() -> Unit)? = null

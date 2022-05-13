@@ -53,7 +53,9 @@ class AutocompleteAdapter(
                     } else if (constraint[0] == '@') {
                         lastAutocomplete = Date().time
                         isAutocompletingUsers = true
-                        userResults = chatMessages.distinctBy {
+                        userResults = chatMessages
+                            .filter { it.isValid }
+                            .distinctBy {
                             it.username
                         }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map { message ->
                             val result = FindUsernameResult()
