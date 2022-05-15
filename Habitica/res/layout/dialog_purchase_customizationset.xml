@@ -26,4 +26,12 @@
         android:gravity="center"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="4dp"/>
+    <TextView
+        android:id="@+id/notesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Body2"
+        android:textColor="@color/text_ternary"
+        tools:text="These are the notes"
+        android:gravity="center"/>
 </merge>

@@ -28,5 +28,6 @@ class PurchaseDialogCustomizationSetContent(context: Context) : PurchaseDialogCo
             imageView.layoutParams = FlexboxLayout.LayoutParams(76.dpToPx(context), 76.dpToPx(context))
             binding.imageViewWrapper.addView(imageView)
         }
+        binding.notesTextView.text = item.notes
     }
 }
