@@ -93,7 +93,7 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (confirmationText?.text.toString().length >= 5) {
+                if (confirmationText?.text.toString().length > 5) {
                     if ((user?.authentication?.hasPassword != true && confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) ||
                             user?.authentication?.hasPassword == true) {
                         confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
@@ -109,9 +109,16 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
             }
         })
         confirmationAction?.setOnClickListener {
-            if (confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) {
-                accountUpdateConfirmed.deletionConfirmClicked(confirmationText?.text.toString())
+            if (user?.authentication?.hasPassword != true) {
+                if (confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) {
+                    accountUpdateConfirmed.deletionConfirmClicked(confirmationText?.text.toString())
+                }
+            } else {
+                if (confirmationText?.text.toString().length > 5) {
+                    accountUpdateConfirmed.deletionConfirmClicked(confirmationText?.text.toString())
+                }
             }
+
         }
     }
 
