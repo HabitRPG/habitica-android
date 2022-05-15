@@ -183,8 +183,8 @@ class AccountPreferenceFragment :
                     disconnect("facebook", "Facebook")
                 }
             }
-            "reset_account" -> showAccountResetConfirmation()
-            "delete_account" -> showAccountDeleteConfirmation()
+            "reset_account" -> showAccountResetConfirmation(user)
+            "delete_account" -> showAccountDeleteConfirmation(user)
             "fixCharacterValues" -> {
                 val intent = Intent(activity, FixCharacterValuesActivity::class.java)
                 activity?.startActivity(intent)
@@ -410,8 +410,8 @@ class AccountPreferenceFragment :
         }
     }
 
-    private fun showAccountDeleteConfirmation() {
-        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "delete_account", this) }
+    private fun showAccountDeleteConfirmation(user: User?) {
+        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "delete_account", this, user) }
         habiticaAccountDialog?.show(parentFragmentManager, "account")
 
         if (habiticaAccountDialog != null) {
@@ -434,8 +434,8 @@ class AccountPreferenceFragment :
         )
     }
 
-    private fun showAccountResetConfirmation() {
-        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "reset_account", this) }
+    private fun showAccountResetConfirmation(user: User?) {
+        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "reset_account", this, user) }
         habiticaAccountDialog?.show(parentFragmentManager, "account")
 
         if (habiticaAccountDialog != null) {

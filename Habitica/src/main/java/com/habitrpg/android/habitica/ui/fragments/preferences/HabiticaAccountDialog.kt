@@ -14,9 +14,10 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.user.User
 
 
-class HabiticaAccountDialog(private var thisContext: Context, private val accountAction: String, val accountUpdateConfirmed: AccountUpdateConfirmed) : DialogFragment() {
+class HabiticaAccountDialog(private var thisContext: Context, private val accountAction: String, val accountUpdateConfirmed: AccountUpdateConfirmed, val user: User?) : DialogFragment() {
 
     private lateinit var mainView: View
     private var backBtn: ImageButton? = null
@@ -77,9 +78,13 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
 
     private fun setDeleteAccountViews() {
         title?.setText(R.string.are_you_sure_you_want_to_delete)
-        warningDescription?.setText(R.string.delete_account_description)
         confirmationTextInputLayout?.setHint(R.string.password)
         confirmationAction?.setText(R.string.delete_account)
+        warningDescription?.text = context?.getString(R.string.delete_account_description)
+        if (user?.authentication?.hasPassword != true) {
+            warningDescription?.text = context?.getString(R.string.delete_oauth_account_description)
+            confirmationTextInputLayout?.setHint(R.string.confirm_deletion)
+        }
 
         confirmationText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -88,9 +93,12 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) {
-                    confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
-                    confirmationAction?.alpha = 1.0f
+                if (confirmationText?.text.toString().length >= 5) {
+                    if ((user?.authentication?.hasPassword != true && confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) ||
+                            user?.authentication?.hasPassword == true) {
+                        confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
+                        confirmationAction?.alpha = 1.0f
+                    }
                 } else {
                     confirmationAction?.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_10))
                     confirmationAction?.alpha = .4f
@@ -102,7 +110,7 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
         })
         confirmationAction?.setOnClickListener {
             if (confirmationText?.text.toString() == context?.getString(R.string.delete_caps)) {
-                accountUpdateConfirmed.resetConfirmedClicked()
+                accountUpdateConfirmed.deletionConfirmClicked(confirmationText?.text.toString())
             }
         }
     }
