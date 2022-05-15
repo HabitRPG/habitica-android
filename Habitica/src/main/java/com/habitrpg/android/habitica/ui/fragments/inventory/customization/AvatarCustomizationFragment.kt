@@ -221,6 +221,7 @@ class AvatarCustomizationFragment :
         this.adapter.userSize = user.preferences?.size
         this.adapter.hairColor = user.preferences?.hair?.color
         this.adapter.gemBalance = user.gemCount
+        this.adapter.avatar = user
         adapter.notifyDataSetChanged()
     }
 

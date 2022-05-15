@@ -21,6 +21,6 @@ class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(
     }
 
     fun setAvatarWithBackgroundForPurchase(avatar: Avatar, item: ShopItem) {
-        binding.avatarView.setAvatarWithBackgroundForPurchase(avatar, item.imageName)
+        binding.avatarView.setAvatarWithSelectedBackground(avatar, item.imageName)
     }
 }

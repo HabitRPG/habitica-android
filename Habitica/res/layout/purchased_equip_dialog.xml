@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorContentBackground">
+
+    <com.habitrpg.android.habitica.ui.AvatarView
+        android:id="@+id/avatar_view"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
+        android:layout_marginTop="24dp"/>
+
+</RelativeLayout>

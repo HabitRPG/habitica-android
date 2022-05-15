@@ -12,9 +12,11 @@ import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionFooterBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
@@ -27,6 +29,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
 
     var userSize: String? = null
     var hairColor: String? = null
+    var avatar: Avatar? = null
     var customizationType: String? = null
     var gemBalance: Int = 0
     var unsortedCustomizations: List<Customization> = ArrayList()
@@ -194,8 +197,25 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 return
             }
 
-            customization?.let {
-                selectCustomizationEvents.onNext(it)
+            if (customization?.type == "background" && avatar != null){
+                val alert = HabiticaAlertDialog(context = itemView.context)
+                val purchasedCustomizationView: View = LayoutInflater.from(itemView.context).inflate(R.layout.purchased_equip_dialog, null)
+                purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatarWithSelectedBackground(avatar!!, customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName })
+                alert.setAdditionalContentView(purchasedCustomizationView)
+                alert.addButton(R.string.equip, true) { _, _ ->
+                    customization?.let {
+                        selectCustomizationEvents.onNext(it)
+                    }
+                }
+                alert.addButton(R.string.close, false) { _, _ ->
+                    alert.dismiss()
+                }
+                alert.show()
+            } else {
+                customization?.let {
+                    selectCustomizationEvents.onNext(it)
+                }
+
             }
         }
     }

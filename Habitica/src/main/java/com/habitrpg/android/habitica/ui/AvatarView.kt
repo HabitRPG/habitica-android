@@ -437,7 +437,7 @@ class AvatarView : FrameLayout {
         }
     }
 
-    fun setAvatarWithBackgroundForPurchase(avatar: Avatar, backgroundForPurchase: String?) {
+    fun setAvatarWithSelectedBackground(avatar: Avatar, backgroundForPurchase: String?) {
         val oldUser = this.avatar
         this.avatar = avatar
         this.backgroundForPurchase = backgroundForPurchase
