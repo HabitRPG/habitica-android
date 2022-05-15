@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.text.format.DateUtils
-import android.text.format.DateUtils.getRelativeTimeSpanString
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -15,7 +13,6 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.text.DateFormat
-import java.time.Instant
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -50,21 +47,23 @@ class SubscriptionDetailsView : LinearLayout {
         updateSubscriptionStatusPill(plan)
 
         var duration: String? = null
-        var subscriptionRenewalDuration = 3
+        var renewalUntilNextHourglass = 3
 
         if (plan.planId != null && plan.dateTerminated == null) {
             if (plan.planId == SubscriptionPlan.PLANID_BASIC || plan.planId == SubscriptionPlan.PLANID_BASICEARNED) {
                 duration = resources.getString(R.string.month)
-                subscriptionRenewalDuration = 3;
+                renewalUntilNextHourglass = 3;
+                //If user has a initial basic monthly subscription, receive hourglasses on fourth month
+                plan.consecutive?.count.let { if (it!! < 3) { renewalUntilNextHourglass + 1 } }
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC3MONTH) {
                 duration = resources.getString(R.string.three_months)
-                subscriptionRenewalDuration = 3;
+                renewalUntilNextHourglass = 3;
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC6MONTH || plan.planId == SubscriptionPlan.PLANID_GOOGLE6MONTH) {
                 duration = resources.getString(R.string.six_months)
-                subscriptionRenewalDuration = 6;
+                renewalUntilNextHourglass = 6;
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC12MONTH) {
                 duration = resources.getString(R.string.twelve_months)
-                subscriptionRenewalDuration = 12;
+                renewalUntilNextHourglass = 12;
             }
         }
 
@@ -110,7 +109,7 @@ class SubscriptionDetailsView : LinearLayout {
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
         if (plan.consecutive?.count != null) {
-            val monthsTillNextHourglass = subscriptionRenewalDuration - (plan.consecutive?.count!! % subscriptionRenewalDuration)
+            val monthsTillNextHourglass = renewalUntilNextHourglass - (plan.consecutive?.count!! % renewalUntilNextHourglass)
             val nextHourglassMonth = LocalDate.now().plusMonths(monthsTillNextHourglass.toLong())
             val nextHourGlassMonthString = nextHourglassMonth.format(DateTimeFormatter.ofPattern("MMM"));
             binding.nextHourglassTextView.text = nextHourGlassMonthString
