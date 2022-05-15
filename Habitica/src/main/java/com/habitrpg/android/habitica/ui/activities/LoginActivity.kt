@@ -405,7 +405,9 @@ class LoginActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             input.setAutofillHints(EditText.AUTOFILL_HINT_EMAIL_ADDRESS)
         }
-        input.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        input.hint = getString(R.string.forgot_password_hint_example)
+        input.textSize = 16f
         val lp = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.MATCH_PARENT

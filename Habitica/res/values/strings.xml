@@ -613,8 +613,9 @@
     <string name="fix_character_values">Fix Character Values</string>
     <string name="saving">Saving</string>
     <string name="forgot_password_title">Email a Password Reset Link</string>
-    <string name="forgot_password_description">Enter the email address you used to register your Habitica account.</string>
+    <string name="forgot_password_description">Enter your username or the email address you used to register your Habitica account.</string>
     <string name="forgot_password_confirmation">If we have your email on file, instructions for setting a new password have been sent to your email.</string>
+    <string name="forgot_password_hint_example">e.g, habitrabbit or gryphon@example.com</string>
     <string name="ok">OK</string>
     <string name="profile">Profile</string>
     <string name="profile_summary">Edit your public profile.</string>
