@@ -20,7 +20,7 @@ class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(
         binding.notesTextView.text = item.notes
     }
 
-    fun setAvatar(avatar: Avatar) {
-        binding.avatarView.setAvatar(avatar)
+    fun setAvatarWithBackgroundForPurchase(avatar: Avatar, item: ShopItem) {
+        binding.avatarView.setAvatarWithBackgroundForPurchase(avatar, item.imageName)
     }
 }

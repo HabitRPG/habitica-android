@@ -288,7 +288,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         setLimitedTextView()
 
         if (additionalContentView is PurchaseDialogBackgroundContent) {
-            (additionalContentView as PurchaseDialogBackgroundContent).setAvatar(userRepository.getUnmanagedCopy(user))
+            (additionalContentView as PurchaseDialogBackgroundContent).setAvatarWithBackgroundForPurchase(userRepository.getUnmanagedCopy(user), shopItem)
         }
     }
 
