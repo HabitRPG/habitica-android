@@ -96,7 +96,7 @@ fun Long.getShortRemainingString(): String {
     val diffDays = diff.toInt(DurationUnit.DAYS)
     diff -= diffDays.toDuration(DurationUnit.DAYS)
     val diffHours = diff.toInt(DurationUnit.HOURS)
-    diff -= diffDays.toDuration(DurationUnit.HOURS)
+    diff -= diffHours.toDuration(DurationUnit.HOURS)
     val diffMinutes = diff.toInt(DurationUnit.MINUTES)
     diff -= diffMinutes.toDuration(DurationUnit.MINUTES)
     val diffSeconds = diff.toInt(DurationUnit.SECONDS)

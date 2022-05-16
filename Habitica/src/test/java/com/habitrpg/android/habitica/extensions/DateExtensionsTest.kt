@@ -8,16 +8,16 @@ class DateExtensionsTest : BaseAnnotationTestCase() {
 
     @Test
     fun testGetShortRemainingStringWithDay() {
-        "24d 1h 3m" shouldBe (Date().time + 2077400000L).getShortRemainingString()
+        (Date().time + 2077400000L).getShortRemainingString() shouldBe "24d 1h 3m"
     }
 
     @Test
     fun testGetShortRemainingStringWithHour() {
-        "5h 46m" shouldBe (Date().time + 20774000L).getShortRemainingString()
+        (Date().time + 20774000L).getShortRemainingString() shouldBe "5h 46m"
     }
 
     @Test
     fun testGetShortRemainingStringWithMinute() {
-        "34m 37s" shouldBe (Date().time + 2077400L).getShortRemainingString()
+        (Date().time + 2077400L).getShortRemainingString() shouldBe "34m 37s"
     }
 }
