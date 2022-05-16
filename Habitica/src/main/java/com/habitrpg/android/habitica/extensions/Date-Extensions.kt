@@ -101,17 +101,20 @@ fun Long.getShortRemainingString(): String {
     diff -= diffMinutes.toDuration(DurationUnit.MINUTES)
     val diffSeconds = diff.toInt(DurationUnit.SECONDS)
 
-    var str = "${diffMinutes}m"
+    val components = mutableListOf<String>()
+    if (diffMinutes > 0) {
+        components.add("${diffMinutes}m")
+    }
     if (diffHours > 0) {
-        str = "${diffHours}h $str"
+        components.add(0, "${diffHours}h")
     }
     if (diffDays > 0) {
-        str = "${diffDays}d $str"
+        components.add(0, "${diffDays}d")
     }
-    if (diffDays == 0 && diffHours == 0) {
-        str = "$str ${diffSeconds}s"
+    if (diffDays == 0 && diffHours == 0 && diffSeconds > 0) {
+        components.add("${diffSeconds}s")
     }
-    return str
+    return components.joinToString(" ")
 }
 
 fun Duration.getMinuteOrSeconds(): DurationUnit {
