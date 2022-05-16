@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.helpers.TaskFilterHelper
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TaskType
@@ -43,7 +42,6 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
         tasks = loadJsonFile<TaskList>("tasks", TaskList::class.java).tasks.values
         fragment = spyk()
         fragment.shouldInitializeComponent = false
-        fragment.taskFilterHelper = TaskFilterHelper()
     }
 
     override fun launchFragment(args: Bundle?) {
@@ -142,7 +140,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     @Test
     fun displaysEmptyFilteredHabitScreen() {
         fragment.taskType = TaskType.HABIT
-        fragment.taskFilterHelper.setActiveFilter(TaskType.HABIT, Task.FILTER_WEAK)
+        fragment.viewModel?.setActiveFilter(TaskType.HABIT, Task.FILTER_WEAK)
         launchFragment()
         screen {
             recycler {
@@ -155,7 +153,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     @Test
     fun displaysEmptyFilteredDailyScreen() {
         fragment.taskType = TaskType.DAILY
-        fragment.taskFilterHelper.setActiveFilter(TaskType.DAILY, Task.FILTER_GRAY)
+        fragment.viewModel?.setActiveFilter(TaskType.DAILY, Task.FILTER_GRAY)
         launchFragment()
         screen {
             recycler {
@@ -168,7 +166,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     @Test
     fun displaysEmptyFilteredTodoScreen() {
         fragment.taskType = TaskType.TODO
-        fragment.taskFilterHelper.tags = mutableListOf("test")
+        fragment.viewModel?.tags = mutableListOf("test")
         launchFragment()
         screen {
             recycler {
