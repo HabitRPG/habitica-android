@@ -57,6 +57,15 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
 import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.Cache
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
+import retrofit2.HttpException
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.io.IOException
 import java.net.SocketException
@@ -65,17 +74,9 @@ import java.net.UnknownHostException
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLException
-import okhttp3.Cache
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClientImpl(
-    private val gsonConverter: GsonConverterFactory,
+    private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
     private val analyticsManager: AnalyticsManager,
     private val notificationsManager: NotificationsManager,
@@ -161,7 +162,7 @@ class ApiClientImpl(
             .client(client)
             .baseUrl(server.toString())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .addConverterFactory(gsonConverter)
+            .addConverterFactory(converter)
             .build()
 
         this.apiService = retrofitAdapter.create(ApiService::class.java)
@@ -257,7 +258,7 @@ class ApiClientImpl(
 
     override fun getErrorResponse(throwable: HttpException): ErrorResponse {
         val errorResponse = throwable.response()?.errorBody() ?: return ErrorResponse()
-        val errorConverter = gsonConverter
+        val errorConverter = converter
             .responseBodyConverter(ErrorResponse::class.java, arrayOfNulls(0), retrofitAdapter)
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse

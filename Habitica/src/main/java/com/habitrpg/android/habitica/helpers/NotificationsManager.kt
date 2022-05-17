@@ -10,13 +10,20 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Date
 
-class NotificationsManager {
+interface NotificationsManager {
+    var apiClient: WeakReference<ApiClient>?
+
+    fun setNotifications(current: List<Notification>)
+    fun getNotifications(): Flowable<List<Notification>>
+}
+
+class MainNotificationsManager: NotificationsManager {
     private val displayNotificationSubject = PublishSubject.create<Notification>()
 
     private val seenNotifications: MutableMap<String, Boolean>
-    lateinit var apiClient: WeakReference<ApiClient>
+    override var apiClient: WeakReference<ApiClient>? = null
     private val notifications: BehaviorSubject<List<Notification>>
 
     private var lastNotificationHandling: Date? = null
@@ -31,13 +38,12 @@ class NotificationsManager {
         this.notifications = BehaviorSubject.create()
     }
 
-    fun setNotifications(current: List<Notification>) {
+    override fun setNotifications(current: List<Notification>) {
         this.notifications.onNext(current)
-
         this.handlePopupNotifications(current)
     }
 
-    fun getNotifications(): Flowable<List<Notification>> {
+    override fun getNotifications(): Flowable<List<Notification>> {
         return this.notifications.startWithArray(emptyList())
             .toFlowable(BackpressureStrategy.LATEST)
     }
@@ -110,7 +116,7 @@ class NotificationsManager {
     }
 
     private fun readNotification(notification: Notification) {
-        apiClient.get()?.readNotification(notification.id)
+        apiClient?.get()?.readNotification(notification.id)
             ?.subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 }
