@@ -2,26 +2,27 @@ package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.common.habitica.models.AvatarBuffs
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Buffs : RealmObject(), BaseObject {
-    var con: Float? = null
-    var str: Float? = null
-    var per: Float? = null
+open class Buffs : RealmObject(), AvatarBuffs, BaseObject {
+    override var con: Float? = null
+    override var str: Float? = null
+    override var per: Float? = null
 
     @SerializedName("int")
-    var _int: Float? = null
-    var seafoam: Boolean? = null
+    override var _int: Float? = null
+    override var seafoam: Boolean? = null
         get() { return field ?: false }
-    var spookySparkles: Boolean? = null
+    override var spookySparkles: Boolean? = null
         get() { return field ?: false }
-    var shinySeed: Boolean? = null
+    override var shinySeed: Boolean? = null
         get() { return field ?: false }
-    var snowball: Boolean? = null
+    override var snowball: Boolean? = null
         get() { return field ?: false }
-    var streaks: Boolean? = null
+    override var streaks: Boolean? = null
         get() { return field ?: false }
 
     fun merge(stats: Buffs?) {

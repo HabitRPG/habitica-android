@@ -31,13 +31,6 @@
     <attr name="currency" format="string" />
     <attr name="color" format="color" />
 
-    <declare-styleable name="AvatarView">
-        <attr name="showBackground" format="boolean" />
-        <attr name="showMount" format="boolean" />
-        <attr name="showPet" format="boolean" />
-        <attr name="showSleeping" format="boolean" />
-    </declare-styleable>
-
     <declare-styleable name="GemPurchaseOptionsView">
         <attr name="gemAmount" format="integer" />
         <attr name="priceText" format="string" />

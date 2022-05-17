@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.extensions
 
+import com.habitrpg.common.habitica.extensions.Optional
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable

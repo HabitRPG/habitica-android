@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.helpers
+package com.habitrpg.common.habitica.extensions
 
 import android.content.Context
 import android.graphics.PorterDuff
@@ -11,10 +11,10 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.R
+import com.habitrpg.common.habitica.helpers.AppConfigManager
+import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.Collections
 import java.util.Date
 
@@ -101,7 +101,7 @@ object DataBindingUtils {
     private var spriteSubstitutions: Map<String, String> = HashMap()
         get() {
             if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
-                field = AppConfigManager(null).spriteSubstitutions()["generic"] ?: HashMap()
+                field = AppConfigManager().spriteSubstitutions()["generic"] ?: HashMap()
                 lastSubstitutionCheck = Date()
             }
             return field

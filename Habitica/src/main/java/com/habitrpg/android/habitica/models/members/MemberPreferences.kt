@@ -1,12 +1,13 @@
 package com.habitrpg.android.habitica.models.members
 
-import com.habitrpg.android.habitica.models.AvatarPreferences
 import com.habitrpg.android.habitica.models.user.Hair
+import com.habitrpg.common.habitica.models.AvatarPreferences
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class MemberPreferences : RealmObject(), AvatarPreferences {
+open class MemberPreferences : RealmObject(),
+    AvatarPreferences {
 
     override var hair: Hair? = null
     override var costume: Boolean = false

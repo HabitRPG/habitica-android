@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.models.social
 
-import com.habitrpg.android.habitica.models.Avatar
-import com.habitrpg.android.habitica.models.AvatarFlags
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
@@ -10,7 +8,7 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class UserStyles : RealmObject(), Avatar {
+open class UserStyles : RealmObject(), com.habitrpg.common.habitica.models.Avatar {
     override val currentMount: String?
         get() = items?.currentMount
 
@@ -38,7 +36,7 @@ open class UserStyles : RealmObject(), Avatar {
 
     override var stats: Stats? = null
     override var preferences: Preferences? = null
-    override val flags: AvatarFlags?
+    override val flags: com.habitrpg.common.habitica.models.AvatarFlags?
         get() = null
     private var items: Items? = null
 }

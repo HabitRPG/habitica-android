@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/creator_purple_bg"
             android:layout_centerInParent="true" />
-        <com.habitrpg.android.habitica.ui.AvatarView
+        <com.habitrpg.common.habitica.views.AvatarView
             android:id="@+id/avatarView"
             android:layout_width="@dimen/avatar_small_width"
             android:layout_height="@dimen/avatar_small_height"

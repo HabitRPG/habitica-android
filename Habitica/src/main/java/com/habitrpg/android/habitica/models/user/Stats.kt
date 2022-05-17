@@ -4,11 +4,12 @@ import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.common.habitica.models.AvatarStats
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Stats : RealmObject(), BaseObject {
+open class Stats : RealmObject(), AvatarStats, BaseObject {
     @SerializedName("con")
     var constitution: Int? = null
     @SerializedName("str")
@@ -18,42 +19,35 @@ open class Stats : RealmObject(), BaseObject {
     @SerializedName("int")
     var intelligence: Int? = null
     var training: Training? = null
-    var buffs: Buffs? = null
-    var points: Int? = null
-    var lvl: Int? = null
+    override var buffs: Buffs? = null
+    override var points: Int? = null
+    override var lvl: Int? = null
     @SerializedName("class")
-    var habitClass: String? = null
-    var gp: Double? = null
-    var exp: Double? = null
-    var mp: Double? = null
-    var hp: Double? = null
-    var toNextLevel: Int? = null
+    override var habitClass: String? = null
+    override var gp: Double? = null
+    override var exp: Double? = null
+    override var mp: Double? = null
+    override var hp: Double? = null
+    override var toNextLevel: Int? = null
         get() = if (field != null) field else 0
         set(value) {
             if (value != 0) {
                 field = value
             }
         }
-    var maxHealth: Int? = null
+    override var maxHealth: Int? = null
         get() = if (field != null) field else 0
         set(value) {
             if (value != 0) {
                 field = value
             }
         }
-    var maxMP: Int? = null
+    override var maxMP: Int? = null
         get() = if (field != null) field else 0
         set(value) {
             if (value != 0) {
                 field = value
             }
-        }
-    val isBuffed: Boolean
-        get() {
-            return buffs?.str ?: 0f > 0 ||
-                buffs?.con ?: 0f > 0 ||
-                buffs?._int ?: 0f > 0 ||
-                buffs?.per ?: 0f > 0
         }
 
     fun getTranslatedClassName(context: Context): String {

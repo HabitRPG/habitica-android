@@ -13,7 +13,7 @@ import androidx.core.widget.ImageViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ProgressBarBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import kotlin.math.min
 
 class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {

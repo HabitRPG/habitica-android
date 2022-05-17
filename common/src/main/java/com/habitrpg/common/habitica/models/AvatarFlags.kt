@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.models
+package com.habitrpg.common.habitica.models
 
 interface AvatarFlags {
     var classSelected: Boolean

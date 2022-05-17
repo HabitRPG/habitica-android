@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.plattysoft.leonids.ParticleSystem
 import javax.inject.Inject
 import javax.inject.Named

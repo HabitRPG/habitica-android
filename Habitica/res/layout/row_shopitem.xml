@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:background="@drawable/layout_rounded_bg_shopitem"
         android:layout_centerInParent="true">
-        <com.habitrpg.android.habitica.ui.views.PixelArtView
+        <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/imageView"
             android:layout_width="@dimen/shopitem_image_size"
             android:layout_height="@dimen/shopitem_image_size"

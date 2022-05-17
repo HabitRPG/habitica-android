@@ -10,9 +10,9 @@ import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
-import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.views.PixelArtView
 
 abstract class PurchaseDialogContent @JvmOverloads constructor(
     context: Context,

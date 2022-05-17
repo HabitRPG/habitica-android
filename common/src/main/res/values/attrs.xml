@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AvatarView">
+        <attr name="showBackground" format="boolean" />
+        <attr name="showMount" format="boolean" />
+        <attr name="showPet" format="boolean" />
+        <attr name="showSleeping" format="boolean" />
+    </declare-styleable>
+</resources>

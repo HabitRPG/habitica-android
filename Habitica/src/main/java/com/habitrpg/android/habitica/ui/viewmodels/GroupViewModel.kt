@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.Optional
-import com.habitrpg.android.habitica.extensions.asOptional
+import com.habitrpg.common.habitica.extensions.Optional
+import com.habitrpg.common.habitica.extensions.asOptional
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager

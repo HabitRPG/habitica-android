@@ -1,17 +1,18 @@
 package com.habitrpg.android.habitica.models.user
 
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.common.habitica.models.AvatarHair
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Hair : RealmObject, BaseObject {
-    var mustache: Int = 0
-    var beard: Int = 0
-    var bangs: Int = 0
-    var base: Int = 0
-    var flower: Int = 0
-    var color: String? = null
+open class Hair : RealmObject, BaseObject, AvatarHair {
+    final override var mustache: Int = 0
+    final override var beard: Int = 0
+    final override var bangs: Int = 0
+    final override var base: Int = 0
+    final override var flower: Int = 0
+    final override var color: String? = null
 
     constructor()
 
@@ -22,9 +23,5 @@ open class Hair : RealmObject, BaseObject {
         this.base = base
         this.color = color
         this.flower = flower
-    }
-
-    fun isAvailable(hairId: Int): Boolean {
-        return hairId > 0
     }
 }

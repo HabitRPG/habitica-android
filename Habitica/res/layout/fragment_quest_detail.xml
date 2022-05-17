@@ -17,7 +17,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             >
-            <com.habitrpg.android.habitica.ui.views.PixelArtView
+            <com.habitrpg.common.habitica.views.PixelArtView
                 android:id="@+id/quest_scroll_image_view"
                 android:layout_width="63dp"
                 android:layout_height="63dp"

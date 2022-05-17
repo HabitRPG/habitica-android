@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.views.PixelArtView
 
 internal class PurchaseDialogGemsContent(context: Context) : PurchaseDialogContent(context) {
     internal val binding = DialogPurchaseGemsBinding.inflate(context.layoutInflater, this)

@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.databinding.DialogPurchaseContentGearBindin
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.views.PixelArtView
 
 internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseContentGearBinding.inflate(context.layoutInflater, this)

@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="76dp"
         android:layout_height="76dp">
-        <com.habitrpg.android.habitica.ui.views.PixelArtView
+        <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/imageView"
             android:layout_width="60dp"
             android:layout_height="68dp"

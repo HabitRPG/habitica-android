@@ -13,7 +13,7 @@
         app:barForegroundColor="@color/hpColor"
         app:description="@string/HP_default" />
 
-    <com.habitrpg.android.habitica.ui.AvatarView
+    <com.habitrpg.common.habitica.views.AvatarView
         android:layout_width="@dimen/avatar_small_width"
         android:layout_height="@dimen/avatar_small_height"
         android:id="@+id/avatarView"

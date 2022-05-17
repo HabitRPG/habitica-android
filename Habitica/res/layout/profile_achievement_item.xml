@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
-        <com.habitrpg.android.habitica.ui.views.PixelArtView
+        <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/achievement_drawee"
             android:layout_width="64dp"
             android:layout_height="56dp"

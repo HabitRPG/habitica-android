@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.PurchaseDialogBackgroundBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.PixelArtView

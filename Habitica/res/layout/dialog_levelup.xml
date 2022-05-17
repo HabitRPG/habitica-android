@@ -11,7 +11,7 @@
         android:gravity="center"
         android:background="@drawable/avatar_border"
         android:layout_marginTop="@dimen/spacing_large">
-        <com.habitrpg.android.habitica.ui.AvatarView
+        <com.habitrpg.common.habitica.views.AvatarView
             android:layout_width="94dp"
             android:layout_height="98dp"
             android:id="@+id/avatarView"

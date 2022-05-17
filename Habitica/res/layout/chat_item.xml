@@ -16,7 +16,7 @@
         android:clipChildren="true"
         android:layout_marginEnd="@dimen/spacing_medium"
         android:background="@drawable/rounded_avatar_bg">
-        <com.habitrpg.android.habitica.ui.AvatarView
+        <com.habitrpg.common.habitica.views.AvatarView
             android:id="@+id/avatar_view"
             android:layout_width="60dp"
             android:layout_height="60dp"

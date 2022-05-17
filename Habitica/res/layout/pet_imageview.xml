@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/pet_image_width" android:layout_height="@dimen/pet_image_height"
     android:layout_gravity="center">
-    <com.habitrpg.android.habitica.ui.views.PixelArtView
+    <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/pet_imageview"
         android:layout_width="68dp"
         android:layout_height="68dp"

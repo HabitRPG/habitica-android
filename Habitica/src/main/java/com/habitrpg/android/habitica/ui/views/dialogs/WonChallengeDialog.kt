@@ -8,8 +8,8 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
-import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.views.PixelArtView
 
 class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
     fun configure(data: ChallengeWonData?) {

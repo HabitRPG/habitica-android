@@ -18,13 +18,13 @@
             android:layout_width="86dp"
             android:layout_height="68dp"
             android:layout_gravity="center">
-            <com.habitrpg.android.habitica.ui.views.PixelArtView
+            <com.habitrpg.common.habitica.views.PixelArtView
                 android:id="@+id/hatchingPotion_view"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true" />
-            <com.habitrpg.android.habitica.ui.views.PixelArtView
+            <com.habitrpg.common.habitica.views.PixelArtView
                 android:id="@+id/egg_view"
                 android:layout_width="72dp"
                 android:layout_height="72dp"

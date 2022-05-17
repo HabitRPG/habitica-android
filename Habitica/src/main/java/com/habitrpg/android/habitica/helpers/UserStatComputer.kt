@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.user.Stats
 
@@ -25,7 +24,7 @@ class UserStatComputer {
         var stats: String? = null
     }
 
-    fun computeClassBonus(equipmentList: List<Equipment>, user: Avatar): List<StatsRow> {
+    fun computeClassBonus(equipmentList: List<Equipment>, user: com.habitrpg.common.habitica.models.Avatar): List<StatsRow> {
         val skillRows = ArrayList<StatsRow>()
 
         var strAttributes = 0f

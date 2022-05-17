@@ -10,8 +10,8 @@ import androidx.paging.PositionalDataSource
 import androidx.paging.toLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.Optional
-import com.habitrpg.android.habitica.extensions.asOptional
+import com.habitrpg.common.habitica.extensions.Optional
+import com.habitrpg.common.habitica.extensions.asOptional
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member

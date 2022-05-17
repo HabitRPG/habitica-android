@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.views.PixelArtView
 
 class FirstDropDialog(context: Context) : HabiticaAlertDialog(context) {
 

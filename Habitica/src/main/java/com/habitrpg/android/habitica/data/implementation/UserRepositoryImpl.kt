@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
-import com.habitrpg.android.habitica.extensions.Optional
+import com.habitrpg.common.habitica.extensions.Optional
 import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler

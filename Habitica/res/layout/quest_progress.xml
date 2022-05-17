@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="true">
-        <com.habitrpg.android.habitica.ui.views.PixelArtView
+        <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/questImageView"
             android:layout_width="219dp"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:paddingStart="@dimen/spacing_large"
             android:paddingEnd="@dimen/spacing_large"
             android:layout_gravity="center_horizontal" />
-        <com.habitrpg.android.habitica.ui.views.PixelArtView
+        <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/questFlourishesImageView"
             android:layout_width="310dp"
             android:layout_height="219dp"

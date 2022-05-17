@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.GearListItemBinding
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.subjects.PublishSubject
 

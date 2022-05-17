@@ -1,9 +1,7 @@
-package com.habitrpg.android.habitica.models
-
-import com.habitrpg.android.habitica.models.user.Hair
+package com.habitrpg.common.habitica.models
 
 interface AvatarPreferences {
-    val hair: Hair?
+    val hair: AvatarHair?
     val costume: Boolean
     val sleep: Boolean
     val shirt: String?

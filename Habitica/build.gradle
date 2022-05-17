@@ -142,6 +142,7 @@ dependencies {
     implementation 'com.willowtreeapps:signinwithapplebutton:0.3'
 
     implementation project(':shared')
+    implementation project(':common')
 
     ktlint('com.pinterest:ktlint:0.45.2') {
         attributes {

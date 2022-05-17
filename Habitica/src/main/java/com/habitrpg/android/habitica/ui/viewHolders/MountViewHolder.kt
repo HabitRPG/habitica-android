@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import io.reactivex.rxjava3.subjects.PublishSubject

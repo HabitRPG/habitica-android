@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.models.members
 
-import com.habitrpg.android.habitica.models.AvatarFlags
+import com.habitrpg.common.habitica.models.AvatarFlags
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 

@@ -1,8 +1,8 @@
 package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.models.AvatarPreferences
 import com.habitrpg.android.habitica.models.BaseObject
+import com.habitrpg.common.habitica.models.AvatarPreferences
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 

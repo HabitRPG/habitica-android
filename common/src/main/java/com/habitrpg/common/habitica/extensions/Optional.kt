@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.extensions
+package com.habitrpg.common.habitica.extensions
 
 data class Optional<T>(val value: T?) {
     val isEmpty = value == null

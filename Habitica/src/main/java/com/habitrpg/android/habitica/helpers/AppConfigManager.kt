@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 
-class AppConfigManager(contentRepository: ContentRepository?) {
+class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.common.habitica.helpers.AppConfigManager() {
 
     private var worldState: WorldState? = null
 
@@ -35,7 +35,7 @@ class AppConfigManager(contentRepository: ContentRepository?) {
         return remoteConfig.getLong("maxChatLength")
     }
 
-    fun spriteSubstitutions(): Map<String, Map<String, String>> {
+    override fun spriteSubstitutions(): Map<String, Map<String, String>> {
         val type = object : TypeToken<Map<String, Map<String, String>>>() {}.type
         return Gson().fromJson(remoteConfig.getString("spriteSubstitutions"), type)
     }

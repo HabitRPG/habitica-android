@@ -30,7 +30,7 @@
     </LinearLayout>
 
 
-    <com.habitrpg.android.habitica.ui.views.PixelArtView
+    <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/gear_drawee"
         android:layout_width="40dp"
         android:layout_height="40dp"

@@ -21,7 +21,7 @@
             android:layout_width="68dp"
             android:layout_height="66dp"
             android:layout_gravity="center">
-            <com.habitrpg.android.habitica.ui.views.PixelArtView
+            <com.habitrpg.common.habitica.views.PixelArtView
                 android:id="@+id/imageView"
                 android:layout_width="68dp"
                 android:layout_height="68dp"

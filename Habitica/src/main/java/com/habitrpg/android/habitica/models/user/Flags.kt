@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.models.user
 
-import com.habitrpg.android.habitica.models.AvatarFlags
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.TutorialStep
 import io.realm.RealmList
@@ -8,7 +7,7 @@ import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Flags : RealmObject(), BaseObject, AvatarFlags {
+open class Flags : RealmObject(), BaseObject, com.habitrpg.common.habitica.models.AvatarFlags {
     var tutorial: RealmList<TutorialStep>? = null
     var showTour = false
     var dropsEnabled = false

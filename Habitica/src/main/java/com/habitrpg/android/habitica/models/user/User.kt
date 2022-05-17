@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.models.user
 
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.PushDevice
 import com.habitrpg.android.habitica.models.QuestAchievement
@@ -13,6 +12,7 @@ import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.common.habitica.models.Avatar
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore

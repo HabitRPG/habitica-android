@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemImageRowBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.common.habitica.extensions.loadImage
 
 class EquipmentItemRow(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 

@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.habitrpg.android.habitica.ui.views.PixelArtView
+    <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/icon_view"
         android:layout_width="52dp"
         android:layout_height="56dp"

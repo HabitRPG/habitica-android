@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/spacing_large">
-        <com.habitrpg.android.habitica.ui.AvatarView
+        <com.habitrpg.common.habitica.views.AvatarView
             android:id="@+id/avatar_view"
             android:layout_width="88dp"
             android:layout_height="84dp"

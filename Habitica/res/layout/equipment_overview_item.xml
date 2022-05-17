@@ -11,7 +11,7 @@
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/layout_rounded_bg_content">
-        <com.habitrpg.android.habitica.ui.views.PixelArtView
+        <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/icon_view"
             android:layout_width="@dimen/gear_image_size"
             android:layout_height="@dimen/gear_image_size"

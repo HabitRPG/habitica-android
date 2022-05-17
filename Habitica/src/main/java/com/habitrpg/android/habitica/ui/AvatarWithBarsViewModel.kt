@@ -13,13 +13,14 @@ import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
 import com.habitrpg.android.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.mainActivityCreatedAt
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.util.Date
+import com.habitrpg.common.habitica.models.Avatar
+import io.reactivex.rxjava3.disposables.Disposable
 import java.util.Locale
 import kotlin.math.floor
 
@@ -59,7 +60,7 @@ class AvatarWithBarsViewModel(
 
         binding.avatarView.setAvatar(user)
 
-        if (stats.habitClass != null) {
+        if (stats.habitClass != null && stats is Stats) {
             userClass = stats.getTranslatedClassName(context)
         }
 
