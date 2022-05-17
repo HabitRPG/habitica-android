@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingEnd="24dip"
     android:paddingStart="24dip">
-    <com.habitrpg.android.habitica.ui.views.ValueBar
+    <com.habitrpg.common.habitica.views.ValueBar
         android:id="@+id/hpBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

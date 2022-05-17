@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.common.habitica.views
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -8,12 +8,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.ValueBarBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.R
+import com.habitrpg.common.habitica.databinding.ValueBarBinding
 import java.math.RoundingMode
 import java.text.NumberFormat
 
@@ -165,7 +165,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
 
     fun setLightBackground(lightBackground: Boolean) {
         val textColor: Int
-        if (lightBackground) {
+        /*if (lightBackground) {
             textColor = ContextCompat.getColor(context, R.color.text_ternary)
             binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
         } else {
@@ -173,7 +173,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
             binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_header_bar)
         }
         binding.valueTextView.setTextColor(textColor)
-        binding.descriptionTextView.setTextColor(textColor)
+        binding.descriptionTextView.setTextColor(textColor)*/
     }
 
     var animationDuration = 500L

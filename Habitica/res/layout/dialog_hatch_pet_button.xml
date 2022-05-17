@@ -15,7 +15,7 @@
         android:textColor="@color/white"
         android:layout_marginEnd="6dp"
         />
-    <com.habitrpg.android.habitica.ui.views.CurrencyView
+    <com.habitrpg.common.habitica.views.CurrencyView
         android:id="@+id/currencyView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

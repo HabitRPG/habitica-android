@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.helpers
+package com.habitrpg.common.habitica.helpers
 
 enum class AppTestingLevel(identifier: String) {
     STAFF("staff"),

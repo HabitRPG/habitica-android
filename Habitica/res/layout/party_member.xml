@@ -82,7 +82,7 @@
                 <Space />
             </TableRow>
             <TableRow>
-                <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+                <com.habitrpg.common.habitica.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/bar_size"
@@ -100,7 +100,7 @@
             </TableRow>
             <TableRow
                 android:gravity="center_vertical">
-                <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+                <com.habitrpg.common.habitica.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/bar_size"
@@ -118,7 +118,7 @@
             </TableRow>
             <TableRow
                 android:gravity="center_vertical">
-                <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+                <com.habitrpg.common.habitica.views.HabiticaProgressBar
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="@dimen/bar_size"

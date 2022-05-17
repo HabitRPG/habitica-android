@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.NumberAbbreviator.abbreviate
+import com.habitrpg.common.habitica.helpers.NumberAbbreviator.abbreviate
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.clearMocks

@@ -21,9 +21,6 @@
     <attr name="iconDrawable" format="integer" />
     <attr name="identifier" format="string" />
     <attr name="hasLightBackground" format="boolean" />
-    <attr name="barForegroundColor" format="color" />
-    <attr name="barPendingColor" format="color" />
-    <attr name="barBackgroundColor" format="color" />
     <attr name="headerBackgroundColor" format="color" />
     <attr name="headerOffsetColor" format="color" />
     <attr name="headerTextColor" format="color" />
@@ -55,27 +52,6 @@
     <declare-styleable name="AvatarCategoryView">
         <attr name="iconDrawable" />
         <attr name="categoryTitle" format="string" />
-    </declare-styleable>
-    <declare-styleable name="ValueBar">
-        <attr name="barForegroundColor" />
-        <attr name="barPendingColor" />
-        <attr name="barBackgroundColor" />
-        <attr name="valueTextColor" format="color" />
-        <attr name="descriptionTextColor" format="color" />
-        <attr name="barIconDrawable" format="integer" />
-        <attr name="barHeight" format="dimension" />
-        <attr name="lightBackground" format="boolean" />
-        <attr name="description" />
-        <attr name="labelSpacing" format="dimension" />
-    </declare-styleable>
-    <declare-styleable name="HabiticaProgressBar">
-        <attr name="barForegroundColor" />
-        <attr name="barPendingColor" />
-        <attr name="barBackgroundColor" />
-    </declare-styleable>
-    <declare-styleable name="CurrencyView">
-        <attr name="currency" />
-        <attr name="hasLightBackground" />
     </declare-styleable>
     <declare-styleable name="CurrencyViews">
         <attr name="hasLightBackground" />

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.common.habitica.views
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -15,7 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.android.habitica.helpers.NumberAbbreviator
+import com.habitrpg.common.habitica.R
+import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 
 class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     var hideWhenEmpty: Boolean = false
@@ -36,7 +37,7 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
-            R.styleable.CurrencyViews,
+            R.styleable.CurrencyView,
             0, 0
         )
         val fallBackLight = !context.isUsingNightModeResources()

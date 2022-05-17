@@ -93,7 +93,7 @@
             android:textSize="12sp"
             android:textColor="@color/red_100"/>
     </LinearLayout>
-    <com.habitrpg.android.habitica.ui.views.ValueBar
+    <com.habitrpg.common.habitica.views.ValueBar
         android:id="@+id/bossHealthView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:textColor="@color/white"/>
     </LinearLayout>
-    <com.habitrpg.android.habitica.ui.views.ValueBar
+    <com.habitrpg.common.habitica.views.ValueBar
         android:id="@+id/bossRageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

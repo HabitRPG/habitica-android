@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.databinding.PillTextviewBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.NumberAbbreviator
+import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.EmojiParser

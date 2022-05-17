@@ -1,7 +1,7 @@
-package com.habitrpg.android.habitica.helpers
+package com.habitrpg.common.habitica.helpers
 
 import android.content.Context
-import com.habitrpg.android.habitica.R
+import com.habitrpg.common.habitica.R
 import java.math.RoundingMode
 import java.text.DecimalFormat
 

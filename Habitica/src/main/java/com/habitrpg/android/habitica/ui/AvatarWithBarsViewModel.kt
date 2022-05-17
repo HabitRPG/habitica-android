@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
 import com.habitrpg.android.habitica.helpers.Animations
-import com.habitrpg.android.habitica.helpers.HealthFormatter
+import com.habitrpg.common.habitica.helpers.HealthFormatter
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User

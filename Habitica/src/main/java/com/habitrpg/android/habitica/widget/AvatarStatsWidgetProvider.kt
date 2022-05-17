@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.helpers.HealthFormatter
-import com.habitrpg.android.habitica.helpers.NumberAbbreviator
+import com.habitrpg.common.habitica.helpers.HealthFormatter
+import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.views.AvatarView

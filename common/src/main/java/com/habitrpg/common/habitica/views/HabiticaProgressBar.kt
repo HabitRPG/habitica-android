@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.common.habitica.views
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -10,9 +10,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.widget.ImageViewCompat
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.ProgressBarBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.R
+import com.habitrpg.common.habitica.databinding.ProgressBarBinding
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import kotlin.math.min
 
@@ -22,13 +22,7 @@ class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(
     var barForegroundColor: Int = 0
         set(value) {
             field = value
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                DataBindingUtils.setRoundedBackground(binding.bar, value)
-            } else {
-                val bar: ImageView = findViewById(R.id.bar)
-                ImageViewCompat.setImageTintList(bar, ColorStateList.valueOf(field))
-                ImageViewCompat.setImageTintMode(bar, PorterDuff.Mode.SRC_IN)
-            }
+            DataBindingUtils.setRoundedBackground(binding.bar, value)
         }
 
     var barPendingColor: Int = 0

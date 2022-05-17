@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:background="@drawable/layout_rounded_bg_shopitem_price">
-                    <com.habitrpg.android.habitica.ui.views.CurrencyView
+                    <com.habitrpg.common.habitica.views.CurrencyView
                         android:id="@+id/price_label"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"

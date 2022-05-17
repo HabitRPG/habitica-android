@@ -13,7 +13,7 @@
         tools:text="Quest Boss"
         style="@style/Body1"
         android:layout_marginBottom="@dimen/spacing_medium"/>
-    <com.habitrpg.android.habitica.ui.views.ValueBar
+    <com.habitrpg.common.habitica.views.ValueBar
         android:id="@+id/bossHealthView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:valueTextColor="@color/red_100"
         app:labelSpacing="@dimen/spacing_medium"
         app:descriptionTextColor="@color/yellow_5"/>
-    <com.habitrpg.android.habitica.ui.views.ValueBar
+    <com.habitrpg.common.habitica.views.ValueBar
         android:id="@+id/bossRageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

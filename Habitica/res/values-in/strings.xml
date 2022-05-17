@@ -441,9 +441,6 @@
     <string name="quest_leader_header">Dimulai oleh %s</string>
     <string name="quest_abort_message">Apakah kamu yakin ingin membatalkan misi ini? Ini akan membatalkannya untuk semua orang di Party dan semua progress akan hilang. Gulungan misi akan dikembalikan kepada pemilik misi tersebut.</string>
     <string name="reloading_content">Memuat Ulang Isi</string>
-    <string name="thousand_abbrev">rb</string>
-    <string name="million_abbrev">jt</string>
-    <string name="billion_abbrev">mil</string>
     <string name="available_until">Tersedia hingga %s</string>
     <string name="gems_left_max">Permata Bulanan: %1$d/%2$d Tersisa</string>
     <string name="gems_left_nomax">Permata Bulanan: %d Tersisa</string>

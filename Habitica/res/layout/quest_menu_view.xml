@@ -48,7 +48,7 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginEnd="@dimen/spacing_small"/>
-            <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+            <com.habitrpg.common.habitica.views.HabiticaProgressBar
                 android:id="@+id/healthBarView"
                 android:layout_width="0dp"
                 android:layout_height="8dp"
@@ -86,7 +86,7 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_marginEnd="@dimen/spacing_small"/>
-        <com.habitrpg.android.habitica.ui.views.HabiticaProgressBar
+        <com.habitrpg.common.habitica.views.HabiticaProgressBar
             android:id="@+id/rageBarView"
             android:layout_width="0dp"
             android:layout_height="8dp"

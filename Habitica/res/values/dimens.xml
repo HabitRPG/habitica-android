@@ -16,10 +16,6 @@
     <dimen name="party_invite_separator">4dp</dimen>
     <dimen name="party_invite_text_width">140dp</dimen>
 
-    <dimen name="bar_size">8dp</dimen>
-    <dimen name="bar_padding">5dp</dimen>
-    <dimen name="bar_padding_small">2dp</dimen>
-    <dimen name="bar_radius">5dp</dimen>
     <dimen name="avatar_width">140dp</dimen>
     <dimen name="avatar_height">147dp</dimen>
     <dimen name="avatar_header_width">94dp</dimen>
@@ -66,11 +62,6 @@
     <dimen name="header_bar_spacing">9dp</dimen>
     <dimen name="bar_size_slim">10dp</dimen>
 
-    <dimen name="spacing_small">4dp</dimen>
-    <dimen name="spacing_large">16dp</dimen>
-    <dimen name="spacing_medium">8dp</dimen>
-    <dimen name="spacing_xlarge">32dp</dimen>
-
     <dimen name="task_icon_space">12dp</dimen>
     <dimen name="task_icon_size">18dp</dimen>
     <dimen name="pill_horizontal_padding">10dp</dimen>
@@ -100,7 +91,6 @@
     <dimen name="drawer_padding">16dp</dimen>
     <dimen name="snackbar_image_size">46dp</dimen>
     <dimen name="bullet_size">6dp</dimen>
-    <dimen name="icon_size">18dp</dimen>
     <dimen name="chat_horizontal_inset">16dp</dimen>
     <dimen name="avatar_chat_size">36dp</dimen>
     <dimen name="setup_vertical_spacing">28dp</dimen>

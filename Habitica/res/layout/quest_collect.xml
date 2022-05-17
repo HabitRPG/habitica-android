@@ -25,7 +25,7 @@
         android:textStyle="bold"
         tools:text="item to collect"
         android:layout_marginBottom="@dimen/spacing_small"/>
-        <com.habitrpg.android.habitica.ui.views.ValueBar
+        <com.habitrpg.common.habitica.views.ValueBar
             android:id="@+id/value_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -15,7 +15,7 @@
         android:text="@string/reward_dialog_buy"
         android:textColor="@color/brand_300"
         style="@style/Subheader1" />
-    <com.habitrpg.android.habitica.ui.views.CurrencyView
+    <com.habitrpg.common.habitica.views.CurrencyView
         android:id="@+id/priceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
