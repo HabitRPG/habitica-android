@@ -139,7 +139,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
         compositeSubscription.add(
             observable.subscribe(
                 { challenges ->
-                    if (challenges.size == 0) {
+                    if (challenges.isEmpty()) {
                         retrieveChallengesPage()
                     }
                     this.challenges = challenges

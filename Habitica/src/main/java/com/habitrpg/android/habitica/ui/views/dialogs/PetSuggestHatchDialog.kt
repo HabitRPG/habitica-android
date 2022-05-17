@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.loadImage
-import com.habitrpg.android.habitica.ui.views.CurrencyView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
@@ -130,15 +129,11 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 hatchPrice += getItemPrice(pet, potion, hasUnlockedPotion)
             }
 
-            addButton(R.string.close, true)
-
             if (hatchPrice > 0) {
-                val linearLayout = layoutInflater.inflate(R.layout.dialog_hatch_pet_button, null) as? LinearLayout ?: return
-
-                val priceView = linearLayout.findViewById<CurrencyView>(R.id.currencyView)
-                priceView?.value = hatchPrice.toDouble()
-                priceView?.currency = "gems"
-                addButton(linearLayout, true) { _, _ ->
+                val binding = DialogHatchPetButtonBinding.inflate(layoutInflater)
+                binding.currencyView.value = hatchPrice.toDouble()
+                binding.currencyView.currency = "gems"
+                addButton(binding.root, true) { _, _ ->
                     val activity = (getActivity() as? MainActivity) ?: return@addButton
                     val thisPotion = potion ?: return@addButton
                     val thisEgg = egg ?: return@addButton
@@ -159,6 +154,8 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                         )
                 }
             }
+
+            addButton(R.string.close, false)
 
             setTitle(R.string.unhatched_pet)
         }

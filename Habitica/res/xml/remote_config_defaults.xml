@@ -104,10 +104,6 @@
         <key>enableTeamBoards</key>
         <value>false</value>
     </entry>
-    <entry>
-        <key>hideFacebook</key>
-        <value>false</value>
-    </entry>
 
     <entry>
         <key>enableNewArmoire</key>
@@ -115,7 +111,7 @@
     </entry>
     <entry>
         <key>enableArmoireAds</key>
-        <value>true</value>
+        <value>false</value>
     </entry>
     <entry>
         <key>enableFaintAds</key>

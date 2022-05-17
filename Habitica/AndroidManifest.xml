@@ -128,10 +128,6 @@
             android:label="@string/community_guidelines">
         </activity>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <meta-data
-                android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
-                android:value="false"/>
         <activity
             android:name=".ui.activities.TaskFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
@@ -189,9 +185,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.MainActivity" />
         </activity>
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
         <activity android:name=".ui.activities.MaintenanceActivity"
                   android:screenOrientation="unspecified"
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
