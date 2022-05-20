@@ -13,10 +13,13 @@ import java.lang.ref.WeakReference
 import java.util.Date
 
 interface NotificationsManager {
+    val displayNotificationEvents: Flowable<Notification>
     var apiClient: WeakReference<ApiClient>?
 
     fun setNotifications(current: List<Notification>)
     fun getNotifications(): Flowable<List<Notification>>
+    fun getNotification(id: String): Notification?
+    fun dismissTaskNotification(context: Context, task: Task)
 }
 
 class MainNotificationsManager: NotificationsManager {
@@ -28,7 +31,7 @@ class MainNotificationsManager: NotificationsManager {
 
     private var lastNotificationHandling: Date? = null
 
-    val displayNotificationEvents: Flowable<Notification>
+    override val displayNotificationEvents: Flowable<Notification>
         get() {
             return displayNotificationSubject.toFlowable(BackpressureStrategy.DROP)
         }
@@ -48,11 +51,11 @@ class MainNotificationsManager: NotificationsManager {
             .toFlowable(BackpressureStrategy.LATEST)
     }
 
-    fun getNotification(id: String): Notification? {
+    override fun getNotification(id: String): Notification? {
         return this.notifications.value?.find { it.id == id }
     }
 
-    fun dismissTaskNotification(context: Context, task: Task) {
+    override fun dismissTaskNotification(context: Context, task: Task) {
         NotificationManagerCompat.from(context).cancel(task.id.hashCode())
     }
 
