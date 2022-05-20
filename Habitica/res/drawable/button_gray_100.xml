@@ -7,7 +7,7 @@
             <solid
                 android:color="@color/inverted_background_offset"/>
             <corners
-                android:radius="3dp" />
+                android:radius="6dp" />
             <padding
                 android:left="10dp"
                 android:top="10dp"
@@ -22,7 +22,7 @@
                 android:color="@color/inverted_background_offset"
                 android:angle="270" />
             <corners
-                android:radius="3dp" />
+                android:radius="6dp" />
             <padding
                 android:left="10dp"
                 android:top="10dp"
@@ -37,7 +37,7 @@
                 android:color="@color/inverted_background"
                 android:angle="270" />
             <corners
-                android:radius="3dp" />
+                android:radius="6dp" />
             <padding
                 android:left="10dp"
                 android:top="10dp"

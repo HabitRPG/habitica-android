@@ -16,7 +16,8 @@
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="16dp"
             android:clipChildren="true"
-            android:clipToPadding="true">
+            android:clipToPadding="true"
+            android:clipToOutline="true">
             <ImageView
                 android:id="@+id/promo_banner_left_image"
                 android:layout_width="wrap_content"
