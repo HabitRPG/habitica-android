@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
+import java.lang.Integer.min
 
 class PixelArtView @JvmOverloads constructor(
     context: Context,
@@ -37,12 +38,13 @@ class PixelArtView @JvmOverloads constructor(
     private fun updateTargetRect() {
         var targetWidth = bitmap?.width ?: 0
         var targetHeight = bitmap?.height ?: 0
+        val smallestSide = min(width, height)
 
-        if (width > 0 && targetWidth > 0 && width != targetWidth) {
-            targetWidth = (targetWidth / 3) * (width / (targetWidth / 3))
+        if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
+            targetWidth = (targetWidth / 3) * (smallestSide / (targetWidth / 3))
         }
-        if (height > 0 && targetHeight > 0 && height != targetHeight) {
-            targetHeight = (targetHeight / 3) * (height / (targetHeight / 3))
+        if (smallestSide > 0 && targetHeight > 0 && smallestSide != targetHeight) {
+            targetHeight = (targetHeight / 3) * (smallestSide / (targetHeight / 3))
         }
 
         val left = (width - targetWidth) / 2
