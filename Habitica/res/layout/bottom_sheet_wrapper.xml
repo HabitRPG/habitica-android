@@ -5,10 +5,12 @@
     android:orientation="vertical">
     <View
         android:id="@+id/grabber"
-        android:layout_width="40dp"
-        android:layout_height="4dp"
-        android:background="@drawable/layout_rounded_bg_gray"
-        android:layout_margin="@dimen/spacing_large"
+        android:layout_width="24dp"
+        android:layout_height="3dp"
+        android:background="@drawable/layout_rounded_bg"
+        android:backgroundTint="@color/offset_background"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_large"
         android:layout_gravity="center_horizontal"
         />
 <FrameLayout

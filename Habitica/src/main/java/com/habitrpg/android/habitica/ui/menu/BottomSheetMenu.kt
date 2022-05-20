@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.menu
 import android.content.Context
 import android.view.View
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
+import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 
 class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), View.OnClickListener {
@@ -21,7 +22,12 @@ class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), Vi
     override fun setTitle(title: CharSequence?) {
         binding.titleView.text = title
         binding.titleView.visibility = View.VISIBLE
-        grabberVisibility = View.GONE
+        binding.titleView.background = null
+    }
+
+    fun setImage(url: String) {
+        binding.iconView.loadImage(url)
+        binding.iconView.visibility = View.VISIBLE
     }
 
     fun addMenuItem(menuItem: BottomSheetMenuItem) {

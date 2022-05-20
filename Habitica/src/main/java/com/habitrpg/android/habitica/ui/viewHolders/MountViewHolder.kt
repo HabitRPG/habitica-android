@@ -51,6 +51,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         }
         val menu = BottomSheetMenu(itemView.context)
         menu.setTitle(animal?.text)
+        menu.setImage("stable_Mount_Icon_" + animal?.animal + "-" + animal?.color)
 
         val hasCurrentMount = currentMount.equals(animal?.key)
         val labelId = if (hasCurrentMount) R.string.unequip else R.string.equip

@@ -118,31 +118,10 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
             binding.titleTextView.text = item?.text ?: ownedItem.key
             binding.ownedTextView.text = ownedItem.numberOwned.toString()
 
-            var disabled = false
-            val imageName: String?
-            if (item is QuestContent) {
-                imageName = "inventory_quest_scroll_" + ownedItem.key
-            } else if (item is SpecialItem) {
-                if (item.key == "inventory_present") {
-                    val sdf = SimpleDateFormat("MM", Locale.getDefault())
-                    val month = sdf.format(Date())
-                    imageName = "inventory_present_$month"
-                } else {
-                    imageName = "shop_" + ownedItem.key
-                }
-            } else {
-                val type = when (ownedItem.itemType) {
-                    "eggs" -> "Egg"
-                    "food" -> "Food"
-                    "hatchingPotions" -> "HatchingPotion"
-                    else -> ""
-                }
-                imageName = "Pet_" + type + "_" + ownedItem.key
-
-                if (isHatching) {
-                    disabled = !this.canHatch
-                }
-            }
+            val disabled = if (isHatching) {
+                    !this.canHatch
+                } else false
+            val imageName = getImageName(item)
             binding.imageView.loadImage(imageName)
 
             var alpha = 1.0f
@@ -154,10 +133,36 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
             binding.ownedTextView.alpha = alpha
         }
 
+        private fun getImageName(
+            item: Item?,
+        ): String {
+            return if (item is QuestContent) {
+                "inventory_quest_scroll_" + item.key
+            } else if (item is SpecialItem) {
+                if (item.key == "inventory_present") {
+                    val sdf = SimpleDateFormat("MM", Locale.getDefault())
+                    val month = sdf.format(Date())
+                    "inventory_present_$month"
+                } else {
+                    "shop_" + item.key
+                }
+            } else {
+                val type = when (item?.type) {
+                    "eggs" -> "Egg"
+                    "food" -> "Food"
+                    "hatchingPotions" -> "HatchingPotion"
+                    else -> ""
+                }
+                "Pet_" + type + "_" + item?.key
+            }
+        }
+
         override fun onClick(v: View) {
             val context = context
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
+                menu.setTitle(item?.text)
+                menu.setImage(getImageName(item))
                 if (item !is QuestContent && item !is SpecialItem) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.sell, item?.value), true))
                 }

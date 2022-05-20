@@ -110,6 +110,7 @@ class PetViewHolder(
         val context = itemView.context
         val menu = BottomSheetMenu(context)
         menu.setTitle(animal?.text)
+        menu.setImage("stable_Pet-${animal?.animal}-${animal?.color}")
 
         val hasCurrentPet = currentPet.equals(animal?.key)
         val labelId = if (hasCurrentPet) R.string.unequip else R.string.equip

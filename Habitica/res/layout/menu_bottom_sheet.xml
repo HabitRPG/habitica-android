@@ -15,9 +15,16 @@
         style="@style/Subheader1"
         android:background="@drawable/bottom_sheet_title"
         android:padding="8dp"/>
+    <com.habitrpg.android.habitica.ui.views.PixelArtView
+        android:id="@+id/icon_view"
+        android:layout_width="@dimen/shopitem_image_size"
+        android:layout_height="@dimen/shopitem_image_size"
+        android:layout_margin="@dimen/spacing_medium"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
     <LinearLayout
         android:id="@+id/menu_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 </LinearLayout>

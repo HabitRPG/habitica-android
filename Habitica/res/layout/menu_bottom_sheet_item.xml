@@ -4,7 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/BottomMenuItem"
+    style="@style/HabiticaButton.Purple.Small"
+    android:background="@drawable/layout_rounded_bg"
+    android:layout_marginVertical="6dp"
+    android:layout_marginHorizontal="@dimen/spacing_large"
     android:clickable="true"
     android:focusable="true">
     <TextView

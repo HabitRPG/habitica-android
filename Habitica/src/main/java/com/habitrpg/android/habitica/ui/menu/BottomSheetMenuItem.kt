@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.menu
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ class BottomSheetMenuItem {
         val textView = menuItemView?.findViewById<TextView>(R.id.textView)
         textView?.text = this.title
         if (this.isDestructive == true) {
-            textView?.setTextColor(ContextCompat.getColor(context, R.color.red_50))
+            menuItemView?.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red_10))
         }
         return menuItemView ?: View(context)
     }

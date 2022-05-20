@@ -419,7 +419,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     }
 
     private fun updateBoardDisplay() {
-        activity?.title = viewModel.ownerTitle
+        if (viewModel.ownerTitle.isNotBlank()) {
+            activity?.title = viewModel.ownerTitle
+        }
         val isPersonalBoard = viewModel.isPersonalBoard
         bottomNavigation?.canAddTasks = isPersonalBoard
     }
