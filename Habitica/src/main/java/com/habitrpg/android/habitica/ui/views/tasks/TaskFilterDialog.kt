@@ -127,8 +127,8 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
                 context.getThemeColor(R.attr.colorAccent) // enabled
             )
         )
-        val leftPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, context.resources.displayMetrics).toInt()
-        val verticalPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, context.resources.displayMetrics).toInt()
+        val leftPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, context.resources.displayMetrics).toInt()
+        val verticalPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, context.resources.displayMetrics).toInt()
         for (tag in tags) {
             val tagCheckbox = AppCompatCheckBox(context)
             tagCheckbox.text = tag.name

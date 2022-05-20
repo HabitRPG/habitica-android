@@ -6,18 +6,19 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="16dp"
     android:paddingStart="@dimen/bottom_sheet_inset"
-    android:paddingEnd="@dimen/bottom_sheet_inset">
+    android:paddingEnd="@dimen/bottom_sheet_inset"
+    android:paddingBottom="@dimen/spacing_large">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_large">
 
         <TextView
-            style="@style/Headline"
+            style="@style/Subheader1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/filters"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/text_ternary"
             android:layout_gravity="center_vertical"/>
         <Space
             android:layout_width="0dp"
@@ -38,9 +39,10 @@
     </LinearLayout>
     <TextView
         android:id="@+id/task_type_title"
-        style="@style/Caption3"
+        style="@style/Caption2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/text_quad"
         tools:text="@string/habits"
         android:textAllCaps="true"/>
     <RadioGroup
@@ -82,11 +84,12 @@
 
         <TextView
             android:id="@+id/tags_title"
-            style="@style/Caption3"
+            style="@style/Caption2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
+            android:textColor="@color/text_quad"
             android:text="@string/tags"
             android:textAllCaps="true"/>
 
@@ -103,17 +106,13 @@
             android:paddingEnd="0dp"
             android:paddingStart="0dp"/>
     </LinearLayout>
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/tags_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/tags_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:orientation="vertical"
-            android:showDividers="middle"
-            android:divider="@color/transparent"
-            android:dividerPadding="8dp"/>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="@color/transparent"
+        android:dividerPadding="8dp"/>
 </LinearLayout>
