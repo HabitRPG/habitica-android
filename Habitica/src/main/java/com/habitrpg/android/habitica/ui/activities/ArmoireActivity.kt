@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -25,9 +26,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.plattysoft.leonids.ParticleSystem
+import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 class ArmoireActivity : BaseActivity() {
 
@@ -207,7 +208,9 @@ class ArmoireActivity : BaseActivity() {
                 binding.iconView.loadImage("Pet_Food_$key")
             }
             else -> {
-                binding.subtitleView.text = getString(R.string.armoireExp_new, value)
+                @SuppressLint("SetTextI18n")
+                binding.titleView.text = "+${value} ${binding.titleView.text}"
+                binding.subtitleView.text = getString(R.string.armoireExp)
                 binding.iconView.setImageResource(R.drawable.armoire_experience)
                 val layoutParams = RelativeLayout.LayoutParams(108.dpToPx(this), 122.dpToPx(this))
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT)
