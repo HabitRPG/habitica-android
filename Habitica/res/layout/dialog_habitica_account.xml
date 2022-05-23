@@ -21,13 +21,14 @@
 
             <ImageButton
                 android:id="@+id/back_imagebutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/button_padding_small"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/arrow_back" />
+                android:src="@drawable/ic_arrow_back_white_36dp"
+                app:tint="@android:color/black" />
 
             <TextView
                 android:id="@+id/confirm_action_textview"
