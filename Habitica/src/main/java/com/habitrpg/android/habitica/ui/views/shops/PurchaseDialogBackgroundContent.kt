@@ -6,7 +6,9 @@ import com.habitrpg.android.habitica.databinding.PurchaseDialogBackgroundBinding
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.views.PixelArtView
+import java.util.*
 
 class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(context) {
     val binding = PurchaseDialogBackgroundBinding.inflate(context.layoutInflater, this)
@@ -20,7 +22,10 @@ class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(
         binding.notesTextView.text = item.notes
     }
 
-    fun setAvatarWithBackgroundForPurchase(avatar: Avatar, item: ShopItem) {
-        binding.avatarView.setAvatarWithSelectedBackground(avatar, item.imageName)
+    fun setAvatarWithBackgroundPreview(avatar: Avatar, item: ShopItem) {
+        val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
+        layerMap[AvatarView.LayerType.BACKGROUND] = item.imageName
+
+        binding.avatarView.setAvatar(avatar, layerMap)
     }
 }

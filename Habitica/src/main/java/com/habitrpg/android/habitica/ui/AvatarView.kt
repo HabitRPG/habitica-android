@@ -35,6 +35,7 @@ class AvatarView : FrameLayout {
     private var showPet = true
     private var showSleeping = true
     private var hasBackground: Boolean = false
+    private var preview: Map<LayerType, String>? = null
     private var backgroundForPurchase: String? = null
     private var hasMount: Boolean = false
     private var hasPet: Boolean = false
@@ -204,8 +205,9 @@ class AvatarView : FrameLayout {
         }
 
         var backgroundName = avatar.preferences?.background
-        if (backgroundForPurchase != null) {
-            layerMap[LayerType.BACKGROUND] = backgroundForPurchase
+//        if (backgroundForPurchase != null) {
+        if (preview != null) {
+            layerMap[preview?.keys?.first()] = preview?.values?.first()
             if (resetHasAttributes) hasBackground = true
         } else if (showBackground && backgroundName?.isNotEmpty() == true) {
             backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
@@ -422,9 +424,10 @@ class AvatarView : FrameLayout {
         }
     }
 
-    fun setAvatar(avatar: Avatar) {
+    fun setAvatar(avatar: Avatar, preview: Map<LayerType, String>? = null) {
         val oldUser = this.avatar
         this.avatar = avatar
+        preview?.let { this.preview = preview }
 
         var equals = false
         if (oldUser != null) {

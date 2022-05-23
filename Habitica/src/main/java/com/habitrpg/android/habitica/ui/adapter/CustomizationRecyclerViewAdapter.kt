@@ -23,7 +23,8 @@ import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.Date
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
@@ -200,7 +201,9 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             if (customization?.type == "background" && avatar != null){
                 val alert = HabiticaAlertDialog(context = itemView.context)
                 val purchasedCustomizationView: View = LayoutInflater.from(itemView.context).inflate(R.layout.purchased_equip_dialog, null)
-                purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatarWithSelectedBackground(avatar!!, customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName })
+                val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
+                layerMap[AvatarView.LayerType.BACKGROUND] = customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName }
+                purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatar(avatar!!, layerMap)
                 alert.setAdditionalContentView(purchasedCustomizationView)
                 alert.addButton(R.string.equip, true) { _, _ ->
                     customization?.let {
