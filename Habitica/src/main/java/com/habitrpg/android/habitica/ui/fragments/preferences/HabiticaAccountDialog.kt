@@ -7,12 +7,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
 import com.habitrpg.android.habitica.models.user.User
@@ -89,7 +85,7 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (binding.confirmationInputEdittext.text.toString().length > 5) {
-                    if ((user?.authentication?.hasPassword != true && binding.confirmationInputEdittext?.text.toString() == context?.getString(R.string.delete_caps)) ||
+                    if ((user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.delete_caps)) ||
                             user?.authentication?.hasPassword == true) {
                         binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
                         binding.confirmActionTextview.alpha = 1.0f
