@@ -231,7 +231,7 @@
         </activity>
         <activity
             android:name=".ui.activities.ReportMessageActivity"
-            android:theme="@style/BottomSheetTheme"
+            android:theme="@style/SheetDialog"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <service

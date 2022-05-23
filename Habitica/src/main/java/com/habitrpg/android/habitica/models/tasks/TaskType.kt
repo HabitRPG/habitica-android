@@ -4,8 +4,7 @@ enum class TaskType constructor(val value: String) {
     HABIT("habit"),
     DAILY("daily"),
     TODO("todo"),
-    REWARD("reward"),
-    ADD_ITEM("ADD_ITEM");
+    REWARD("reward");
 
     override fun toString(): String = value
 

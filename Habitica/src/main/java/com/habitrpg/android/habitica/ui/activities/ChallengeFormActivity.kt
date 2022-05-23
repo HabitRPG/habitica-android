@@ -41,12 +41,12 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.core.Flowable
-import java.util.UUID
-import javax.inject.Inject
-import javax.inject.Named
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.UUID
+import javax.inject.Inject
+import javax.inject.Named
 
 class ChallengeFormActivity : BaseActivity() {
 
@@ -565,8 +565,7 @@ class ChallengeFormActivity : BaseActivity() {
         private fun createTask(taskName: String): Task {
             val t = Task()
 
-            t.id = UUID.randomUUID().toString()
-            t.type = TaskType.ADD_ITEM
+            t.id = "addtask"
             t.text = taskName
 
             return t

@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical">
     <ImageButton
         android:id="@+id/delete_button"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:padding="0dp"
-        android:src="@drawable/ic_close_purple_300_36dp"
-        android:tint="@color/color_accent"
+        android:src="@drawable/ic_close_white_24dp"
+        app:tint="@color/color_accent"
         android:background="@color/transparent"/>
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="8dp"
-        android:drawableEnd="@drawable/ic_create_grey_400_18dp"
         tools:text="hello"
         style="@style/TagEditTextTheme"
         android:paddingBottom="14dp"

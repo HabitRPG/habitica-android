@@ -17,6 +17,7 @@ import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.core.widget.CompoundButtonCompat
+import androidx.core.widget.TextViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
@@ -161,9 +162,11 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
         button.setOnClickListener { createTag() }
         button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            button.compoundDrawableTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorPrimary))
+            TextViewCompat.setCompoundDrawableTintList(button, ColorStateList.valueOf(context.getThemeColor(R.attr.colorAccent)))
         }
-        button.setBackgroundResource(R.drawable.layout_rounded_bg_lighter_gray)
+        button.elevation = 0f
+        button.setBackgroundResource(R.drawable.button_background_gray_700)
+        button.setShadowLayer(0f, 0f, 0f, ContextCompat.getColor(context, R.color.content_background))
         button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
         binding.tagsList.addView(button)
     }

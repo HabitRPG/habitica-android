@@ -50,7 +50,7 @@ class ChallengeTasksRecyclerViewAdapter(
             TaskType.DAILY -> TYPE_DAILY
             TaskType.TODO -> TYPE_TODO
             TaskType.REWARD -> TYPE_REWARD
-            else -> if (addItemSubject.hasObservers() && task?.type == TaskType.ADD_ITEM) TYPE_ADD_ITEM else TYPE_HEADER
+            else -> if (addItemSubject.hasObservers() && task?.id == "addtask") TYPE_ADD_ITEM else TYPE_HEADER
         }
     }
 

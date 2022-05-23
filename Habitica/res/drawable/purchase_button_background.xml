@@ -8,7 +8,7 @@
                 android:color="@color/brand_700" >
             </solid>
             <corners
-                android:radius="8dp">
+                android:radius="@dimen/rounded_button_radius">
             </corners>
         </shape>
     </item>
@@ -19,7 +19,7 @@
                 android:color="@color/brand_500">
             </solid>
             <corners
-                android:radius="8dp">
+                android:radius="@dimen/rounded_button_radius">
             </corners>
         </shape>
     </item>
@@ -29,7 +29,7 @@
                 android:color="@color/gray_600">
             </solid>
             <corners
-                android:radius="8dp">
+                android:radius="@dimen/rounded_button_radius">
             </corners>
         </shape>
     </item>
@@ -39,7 +39,7 @@
                 android:color="@color/white">
             </solid>
             <corners
-                android:radius="8dp">
+                android:radius="@dimen/rounded_button_radius">
             </corners>
         </shape>
     </item>
