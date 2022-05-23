@@ -189,7 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Pill"
-                android:id="@+id/nextHourglassTextView"
+                android:id="@+id/next_hourglass_textview"
                 tools:text="4" />
         </LinearLayout>
     </LinearLayout>

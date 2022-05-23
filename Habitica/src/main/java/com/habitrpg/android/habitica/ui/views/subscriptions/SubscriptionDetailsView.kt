@@ -112,7 +112,7 @@ class SubscriptionDetailsView : LinearLayout {
             val monthsTillNextHourglass = renewalUntilNextHourglass - (plan.consecutive?.count!! % renewalUntilNextHourglass)
             val nextHourglassMonth = LocalDate.now().plusMonths(monthsTillNextHourglass.toLong())
             val nextHourGlassMonthString = nextHourglassMonth.format(DateTimeFormatter.ofPattern("MMM"));
-            binding.nextHourglassTextView.text = nextHourGlassMonthString
+            binding.nextHourglassTextview.text = nextHourGlassMonthString
         }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE
