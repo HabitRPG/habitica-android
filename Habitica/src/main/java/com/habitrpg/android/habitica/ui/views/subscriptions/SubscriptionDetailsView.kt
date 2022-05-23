@@ -47,23 +47,16 @@ class SubscriptionDetailsView : LinearLayout {
         updateSubscriptionStatusPill(plan)
 
         var duration: String? = null
-        var renewalUntilNextHourglass = 3
 
         if (plan.planId != null && plan.dateTerminated == null) {
             if (plan.planId == SubscriptionPlan.PLANID_BASIC || plan.planId == SubscriptionPlan.PLANID_BASICEARNED) {
                 duration = resources.getString(R.string.month)
-                renewalUntilNextHourglass = 3;
-                //If user has a initial basic monthly subscription, receive hourglasses on fourth month
-                plan.consecutive?.count.let { if (it!! < 3) { renewalUntilNextHourglass + 1 } }
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC3MONTH) {
                 duration = resources.getString(R.string.three_months)
-                renewalUntilNextHourglass = 3;
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC6MONTH || plan.planId == SubscriptionPlan.PLANID_GOOGLE6MONTH) {
                 duration = resources.getString(R.string.six_months)
-                renewalUntilNextHourglass = 6;
             } else if (plan.planId == SubscriptionPlan.PLANID_BASIC12MONTH) {
                 duration = resources.getString(R.string.twelve_months)
-                renewalUntilNextHourglass = 12;
             }
         }
 
@@ -108,11 +101,9 @@ class SubscriptionDetailsView : LinearLayout {
 
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
-        if (plan.consecutive?.count != null) {
-            val monthsTillNextHourglass = renewalUntilNextHourglass - (plan.consecutive?.count!! % renewalUntilNextHourglass)
-            val nextHourglassMonth = LocalDate.now().plusMonths(monthsTillNextHourglass.toLong())
-            val nextHourGlassMonthString = nextHourglassMonth.format(DateTimeFormatter.ofPattern("MMM"));
-            binding.nextHourglassTextview.text = nextHourGlassMonthString
+        if (plan.monthsUntilNextHourglass != null){
+            val nextHourglassMonth = LocalDate.now().plusMonths(plan.monthsUntilNextHourglass!!.toLong()).format(DateTimeFormatter.ofPattern("MMM"))
+            nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
         }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE
