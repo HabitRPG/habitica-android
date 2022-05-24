@@ -617,8 +617,8 @@
     </style>
 
     <style name="TagEditTextTheme">
-        <item name="colorAccent">@color/black_20_alpha</item>
-        <item name="colorControlNormal">@color/black_20_alpha</item>
+        <item name="colorAccent">@color/offset_background</item>
+        <item name="colorControlNormal">@color/offset_background</item>
         <item name="android:drawablePadding">@dimen/spacing_large</item>
     </style>
 

@@ -6,12 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.RadioGroup
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -22,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
+import com.habitrpg.android.habitica.databinding.EditTagItemBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -208,10 +205,10 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
     }
 
     private fun createTagEditView(inflater: LayoutInflater, index: Int, tag: Tag) {
-        val wrapper = inflater.inflate(R.layout.edit_tag_item, binding.tagsList, false) as? LinearLayout
-        val tagEditText = wrapper?.findViewById<View>(R.id.edit_text) as? EditText
-        tagEditText?.setText(tag.name)
-        tagEditText?.addTextChangedListener(
+        val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
+        editBinding.editText.setText(tag.name)
+        editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+        editBinding.editText.addTextChangedListener(
             OnChangeTextWatcher { s, _, _, _ ->
                 if (index >= tags.size) {
                     return@OnChangeTextWatcher
@@ -226,8 +223,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
                 tags[index] = changedTag
             }
         )
-        val deleteButton = wrapper?.findViewById<View>(R.id.delete_button) as? ImageButton
-        deleteButton?.setOnClickListener {
+        editBinding.deleteButton.setOnClickListener {
             deletedTags.add(tag.id)
             if (createdTags.containsKey(tag.id)) {
                 createdTags.remove(tag.id)
@@ -237,9 +233,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
             }
             viewModel.tags.remove(tag.id)
             tags.remove(tag)
-            binding.tagsList.removeView(wrapper)
+            binding.tagsList.removeView(editBinding.root)
         }
-        binding.tagsList.addView(wrapper)
+        binding.tagsList.addView(editBinding.root)
     }
 
     fun setActiveTags(tagIds: MutableList<String>?) {
