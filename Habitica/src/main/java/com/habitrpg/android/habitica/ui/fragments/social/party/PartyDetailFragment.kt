@@ -225,7 +225,9 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         } else {
             context?.let { context ->
                 DataBindingUtils.loadImage(context, "quest_" + questContent.key) {
-                    binding?.questImageView?.setImageDrawable(it)
+                    if (binding?.questImageView?.drawable?.constantState != it.constantState || binding?.questImageView?.drawable == null){
+                        binding?.questImageView?.setImageDrawable(it)
+                    }
                     val params = binding?.questImageView?.layoutParams ?: return@loadImage
                     params.height = it.intrinsicHeight.dpToPx(context)
                     binding?.questImageView?.layoutParams = params

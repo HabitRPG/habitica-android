@@ -585,11 +585,15 @@
     <string name="per_abbrv">Per</string>
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
+    <string name="reset_caps">RESET</string>
     <string name="reset_account">Reset Account</string>
-    <string name="reset_account_description">WARNING! This resets many parts of your account. This is highly discouraged, but some people find it useful in the beginning after playing with the site for a short time.\n\nYou will lose all your levels, gold, and experience points. All your tasks (except those from challenges) will be deleted permanently and you will lose all of their historical data. You will lose all your equipment but you will be able to buy it all back, including all limited edition equipment or subscriber Mystery items that you already own (you will need to be in the correct class to re-buy class-specific gear). You will keep your current class and your pets and mounts. You might prefer to use an Orb of Rebirth instead, which is a much safer option and which will preserve your tasks and equipment.</string>
+    <string name="reset_account_title">Are you sure you want to reset?</string>
+    <string name="confirm_reset">Confirm reset</string>
+    <string name="reset_account_description">You will lose all your levels, Gold, and Experience. All your tasks and their historical data will be deleted (Challenge tasks will stay). You will lose all equipment, including limited edition or subscriber equipment, but you will be able to buy it back (you will need to be the correct class to re-buy class-specific gear). You will keep your current class and your Pets and Mounts. To confirm reset, type RESET below.</string>
+    <string name="delete_caps">DELETE</string>
     <string name="delete_account">Delete Account</string>
-    <string name="delete_account_description">Deleted accounts are permanent and cannot be restored. Gems cannot be refunded. If you still want to delete, type your password below.</string>
-    <string name="delete_oauth_account_description">Deleted accounts are permanent and cannot be restored. Gems cannot be refunded. If you still want to delete, type DELETE below.</string>
+    <string name="delete_account_description">This will delete your account forever and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type your password into the text box below.</string>
+    <string name="delete_oauth_account_description">This will delete your account forever and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type DELETE into the text box below.</string>
     <string name="reset_account_confirmation">Reset my Account</string>
     <string name="delete_account_confirmation">Delete my Account</string>
     <string name="danger_zone">Danger Zone</string>
@@ -1226,6 +1230,7 @@
 
     <string name="compact">Compact</string>
     <string name="minimal">Minimal</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
     <string name="armoire_drop_rates">Armoire drop rates</string>
     <string name="armoire">Armoire</string>
     <string name="equipment_remaining">Equipment Remaining: %d</string>

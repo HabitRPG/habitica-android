@@ -102,6 +102,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun onResume() {
         super.onResume()
+        purchaseHandler.queryPurchases()
         refresh()
         loadInventory()
     }

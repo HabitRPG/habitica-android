@@ -396,6 +396,15 @@
         <item name="backgroundTint">@color/dialog_background</item>
     </style>
 
+    <style name="HabiticaAccountDialogTheme" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@color/gray_2_alpha</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:navigationBarColor">@color/white</item>
+    </style>
+
 
     <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/text_red</item>
@@ -749,6 +758,18 @@
     </style>
     <style name="PurpleTextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brand_300</item>
+    </style>
+
+    <style name="DialogHabiticaAccountInputLayout" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="boxStrokeColor">@color/text_input_account_stroke</item>
+    </style>
+
+    <style name="DialogHabiticaAccountHintLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="TaskFormTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">

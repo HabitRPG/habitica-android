@@ -113,14 +113,7 @@ class PurchaseHandler(
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     billingClientState = BillingClientState.READY
-                    billingClient.queryPurchasesAsync(
-                        BillingClient.SkuType.SUBS,
-                        this@PurchaseHandler
-                    )
-                    billingClient.queryPurchasesAsync(
-                        BillingClient.SkuType.INAPP,
-                        this@PurchaseHandler
-                    )
+                    queryPurchases()
                 } else {
                     billingClientState = BillingClientState.UNAVAILABLE
                 }
@@ -134,6 +127,19 @@ class PurchaseHandler(
 
     fun stopListening() {
         billingClient.endConnection()
+    }
+
+    fun queryPurchases(){
+        if (billingClientState == BillingClientState.READY){
+            billingClient.queryPurchasesAsync(
+                BillingClient.SkuType.SUBS,
+                this@PurchaseHandler
+            )
+            billingClient.queryPurchasesAsync(
+                BillingClient.SkuType.INAPP,
+                this@PurchaseHandler
+            )
+        }
     }
 
     suspend fun getAllGemSKUs(): List<SkuDetails> =
