@@ -164,7 +164,7 @@ class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerV
                 menu.setTitle(item?.text)
                 menu.setImage(getImageName(item))
                 if (item !is QuestContent && item !is SpecialItem) {
-                    menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.sell, item?.value), true))
+                    menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.sell_no_price), true, "gold", item?.value?.toDouble() ?: 0.0))
                 }
                 if (item is Egg) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_with_potion)))

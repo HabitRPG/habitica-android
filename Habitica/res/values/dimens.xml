@@ -110,7 +110,7 @@
     <dimen name="content_inset">21dp</dimen>
     <dimen name="header_border_spacing">16dp</dimen>
 
-    <dimen name="button_height">50dp</dimen>
+    <dimen name="button_height">54dp</dimen>
     <dimen name="button_height_small">24dp</dimen>
     <dimen name="alert_side_padding">26dp</dimen>
     <dimen name="downwards_drop_shadow_height">16dp</dimen>

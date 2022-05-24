@@ -140,8 +140,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="65dp"
                     android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
+                    android:paddingStart="@dimen/spacing_large"
+                    android:paddingEnd="@dimen/spacing_large"
                     android:baselineAligned="false">
                     <com.habitrpg.android.habitica.ui.RoundedFrameLayout
                         android:layout_width="40dp"
