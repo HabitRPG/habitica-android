@@ -47,21 +47,21 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
             return totalNumberOfGems - (gemsBought ?: 0)
         }
 
+    /*
+      If user has a initial basic monthly subscription, receive hourglasses on fourth month,
+      else receive on third month (subtract 1 from total consecutive count)
+     */
     val monthsUntilNextHourglass: Int?
         get() {
-            var renewalUntilNextHourglass = 0
-            if (planId != null && dateTerminated == null && consecutive?.count != null) {
-                when (planId) {
-                    // If user has a initial basic monthly subscription, receive hourglasses on fourth month, else receive on third month.
-                    PLANID_BASIC -> renewalUntilNextHourglass = if (consecutive?.count!! < 3) { 4 } else 3
-                    PLANID_BASICEARNED -> renewalUntilNextHourglass = if (consecutive?.count!! < 3) { 4 } else 3
-                    PLANID_BASIC3MONTH -> renewalUntilNextHourglass = 3
-                    PLANID_BASIC6MONTH -> renewalUntilNextHourglass = 6
-                    PLANID_BASIC12MONTH -> renewalUntilNextHourglass = 12
+            return if (consecutive?.offset == 0) {
+                if (consecutive?.count == 0) {
+                    4
+                } else {
+                    (3 - (((consecutive?.count ?: 0) - 1) % 3))
                 }
-                return renewalUntilNextHourglass - (consecutive?.count!! % renewalUntilNextHourglass)
+            } else {
+                consecutive?.offset
             }
-            return null
         }
 
     companion object {
