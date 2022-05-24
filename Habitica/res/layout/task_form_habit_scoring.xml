@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:foreground="?selectableItemBackground"
         android:layout_margin="@dimen/spacing_large">
         <ImageView
             android:id="@+id/positive_image_view"
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:foreground="?selectableItemBackground"
         android:layout_margin="@dimen/spacing_large">
         <ImageView
             android:id="@+id/negative_image_view"

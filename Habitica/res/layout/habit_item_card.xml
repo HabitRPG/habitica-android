@@ -19,7 +19,8 @@
         <FrameLayout
             android:id="@+id/btnPlusWrapper"
             android:layout_width="@dimen/button_width"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:foreground="?selectableItemBackground">
             <View
                 android:id="@+id/button_plus_circle_view"
                 android:layout_width="24dp"
@@ -38,7 +39,7 @@
                 style="@style/HabitButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/selection_highlight"
+                android:background="?selectableItemBackground"
                 android:contentDescription="@string/positive_habit_form" />
         </FrameLayout>
         <include layout="@layout/task_main_content" />
@@ -62,7 +63,8 @@
         <FrameLayout
             android:id="@+id/btnMinusWrapper"
             android:layout_width="@dimen/button_width"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:foreground="?selectableItemBackground">
             <View
                 android:id="@+id/button_minus_circle_view"
                 android:layout_width="24dp"
@@ -80,7 +82,6 @@
                 style="@style/HabitButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/selection_highlight"
                 android:contentDescription="@string/negative_habit_form" />
         </FrameLayout>
     </LinearLayout>

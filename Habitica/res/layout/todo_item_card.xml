@@ -28,6 +28,7 @@
                     android:layout_width="@dimen/button_width"
                     android:layout_height="match_parent"
                     tools:background="@color/red_10"
+                    android:foreground="?selectableItemBackground"
                     android:focusable="true"
                     android:contentDescription="@string/todo_item_checkbox">
                     <View

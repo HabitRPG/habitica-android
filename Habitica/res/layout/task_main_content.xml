@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:layout_gravity="center_vertical"
+    android:foreground="?selectableItemBackground"
     android:paddingTop="@dimen/task_top_bottom_padding"
     android:paddingBottom="@dimen/task_top_bottom_padding"
     android:layout_marginEnd="@dimen/task_text_padding"

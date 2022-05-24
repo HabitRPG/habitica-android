@@ -57,6 +57,7 @@
             app:title="@string/habits"
             app:iconDrawable="@drawable/icon_habits"
             app:selectedIconDrawable="@drawable/icon_habits_selected"
+            android:foreground="?selectableItemBackground"
             android:paddingTop="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_small"/>
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
@@ -67,6 +68,7 @@
             app:title="@string/dailies"
             app:iconDrawable="@drawable/icon_dailies"
             app:selectedIconDrawable="@drawable/icon_dailies_selected"
+            android:foreground="?selectableItemBackground"
             android:paddingTop="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_small"/>
         <androidx.legacy.widget.Space
@@ -81,6 +83,7 @@
             app:title="@string/todos"
             app:iconDrawable="@drawable/icon_todos"
             app:selectedIconDrawable="@drawable/icon_todos_selected"
+            android:foreground="?selectableItemBackground"
             android:paddingTop="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_small"/>
         <com.habitrpg.android.habitica.ui.views.navigation.BottomNavigationItem
@@ -91,6 +94,7 @@
             app:title="@string/rewards"
             app:iconDrawable="@drawable/icon_rewards"
             app:selectedIconDrawable="@drawable/icon_rewards_selected"
+            android:foreground="?selectableItemBackground"
             android:paddingTop="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_small"/>
     </LinearLayout>

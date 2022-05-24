@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:clickable="true"
+    android:foreground="?selectableItemBackground"
     android:orientation="horizontal"
     android:baselineAligned="false"
     android:paddingEnd="16dp">

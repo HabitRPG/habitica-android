@@ -305,7 +305,7 @@
 
     <style name="RowWrapper">
         <item name="android:padding">@dimen/row_padding</item>
-        <item name="android:background">@drawable/selection_highlight</item>
+        <item name="android:background">?selectableItemBackground</item>
     </style>
 
     <style name="RowText">
@@ -428,20 +428,6 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginStart">@dimen/spacing_large</item>
         <item name="android:letterSpacing">0.15</item>
-    </style>
-
-    <style name="BottomMenu">
-        <item name="android:divider">?android:listDivider</item>
-        <item name="android:showDividers">middle</item>
-        <item name="android:paddingBottom">@dimen/spacing_medium</item>
-    </style>
-    
-    <style name="BottomMenuItem">
-        <item name="android:paddingStart">@dimen/bottom_menu_padding</item>
-        <item name="android:paddingEnd">@dimen/bottom_menu_padding</item>
-        <item name="android:paddingTop">@dimen/spacing_large</item>
-        <item name="android:paddingBottom">@dimen/spacing_large</item>
-        <item name="android:background">@drawable/selection_highlight</item>
     </style>
 
     <style name="BottomMenuItemText">

@@ -28,6 +28,7 @@
                     android:layout_height="match_parent"
                     tools:background="@color/red_10"
                     android:focusable="true"
+                    android:foreground="?selectableItemBackground"
                     android:contentDescription="@string/daily_item_checkbox">
                     <View
                         android:id="@+id/checkBoxBackground"
