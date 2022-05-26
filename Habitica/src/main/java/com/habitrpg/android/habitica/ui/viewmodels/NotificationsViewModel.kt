@@ -27,7 +27,6 @@ import javax.inject.Inject
 open class NotificationsViewModel : BaseViewModel() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
-
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -57,25 +56,20 @@ open class NotificationsViewModel : BaseViewModel() {
     init {
         customNotifications.onNext(emptyList())
 
-        disposable.add(
-            userRepository.getUser()
-                .subscribe(
-                    {
-                        party = it.party
-                        var notifications = convertInvitationsToNotifications(it)
-                        if (it.flags?.newStuff == true) {
-                            val notification = Notification()
-                            notification.id = "custom-new-stuff-notification"
-                            notification.type = Notification.Type.NEW_STUFF.type
-                            val data = NewStuffData()
-                            notification.data = data
-                            notifications.add(notification)
-                        }
-                        customNotifications.onNext(notifications)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        userViewModel.user.observeForever {
+            if (it == null) return@observeForever
+            party = it.party
+            val notifications = convertInvitationsToNotifications(it)
+            if (it.flags?.newStuff == true) {
+                val notification = Notification()
+                notification.id = "custom-new-stuff-notification"
+                notification.type = Notification.Type.NEW_STUFF.type
+                val data = NewStuffData()
+                notification.data = data
+                notifications.add(notification)
+            }
+            customNotifications.onNext(notifications)
+        }
     }
 
     fun getNotifications(): Flowable<List<Notification>> {

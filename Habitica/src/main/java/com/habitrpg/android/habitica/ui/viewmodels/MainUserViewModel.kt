@@ -48,10 +48,12 @@ class MainUserViewModel(val userRepository: UserRepository) {
 
     internal val disposable = CompositeDisposable()
 
-    internal fun loadUserFromLocal() {
+    private fun loadUserFromLocal() {
         disposable.add(
             userRepository.getUser().observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ _user.value = it }, RxErrorHandler.handleEmptyError())
+                .subscribe({
+                    _user.value = it
+                           }, RxErrorHandler.handleEmptyError())
         )
     }
 

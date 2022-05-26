@@ -20,6 +20,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus> {
         return getUser(userID)
             .map { it.party?.id ?: "" }
+            .distinctUntilChanged()
             .filter { it.isNotBlank() }
             .flatMap {
                 RxJavaBridge.toV3Flowable(

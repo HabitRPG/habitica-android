@@ -28,28 +28,29 @@ import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
-import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.PromoType
-import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.Inbox
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.NotificationsActivity
 import com.habitrpg.android.habitica.ui.adapter.NavigationDrawerAdapter
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -58,10 +59,6 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class NavigationDrawerFragment : DialogFragment() {
 
@@ -79,6 +76,8 @@ class NavigationDrawerFragment : DialogFragment() {
     lateinit var contentRepository: ContentRepository
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     private var activePromo: HabiticaPromotion? = null
 
@@ -94,57 +93,6 @@ class NavigationDrawerFragment : DialogFragment() {
 
     val isDrawerOpen: Boolean
         get() = drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
-
-    private var questContent: QuestContent? = null
-        set(value) {
-            field = value
-            updateQuestDisplay()
-        }
-    private var quest: Quest? = null
-        set(value) {
-            field = value
-            updateQuestDisplay()
-        }
-
-    private fun updateQuestDisplay() {
-        val quest = this.quest
-        val questContent = this.questContent
-        return
-        if (quest == null || questContent == null || !quest.active) {
-            binding?.questMenuView?.visibility = View.GONE
-            context?.let {
-                adapter.tintColor = it.getThemeColor(R.attr.colorPrimary)
-                if (context?.isUsingNightModeResources() == true) {
-                    adapter.backgroundTintColor = ContextCompat.getColor(it, R.color.gray_50)
-                } else {
-                    adapter.backgroundTintColor = it.getThemeColor(R.attr.colorPrimary)
-                }
-            }
-            getItemWithIdentifier(SIDEBAR_TAVERN)?.let { tavern ->
-                tavern.subtitle = context?.getString(R.string.active_world_boss)
-                adapter.updateItem(tavern)
-            }
-            return
-        }
-        binding?.questMenuView?.visibility = View.VISIBLE
-
-        binding?.questMenuView?.configure(quest)
-        binding?.questMenuView?.configure(questContent)
-        questContent.colors?.let { colors ->
-            binding?.menuHeaderView?.setBackgroundColor(colors.darkColor)
-            adapter.tintColor = colors.extraLightColor
-            adapter.backgroundTintColor = colors.darkColor
-        }
-        binding?.questMenuView?.setBackgroundColor(context?.getThemeColor(R.attr.colorPrimaryDark) ?: 0)
-
-        binding?.questMenuView?.setOnClickListener {
-            setSelection(R.id.partyFragment)
-            /*val context = this.context
-            if (context != null) {
-                TavernDetailFragment.showWorldBossInfoDialog(context, questContent)
-            }*/
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val context = context
@@ -172,7 +120,6 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private var updatingJobs = mutableMapOf<String, Job>()
 
-    @OptIn(ExperimentalTime::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = DrawerMainBinding.bind(view)
@@ -203,32 +150,6 @@ class NavigationDrawerFragment : DialogFragment() {
         )
 
         subscriptions?.add(
-            socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext { quest = it.quest }
-                .filter { it.hasActiveQuest }
-                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe(
-                    {
-                        questContent = it
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
-
-        subscriptions?.add(
-            socialRepository.getGroup(Group.TAVERN_ID)
-                .doOnNext { quest = it.quest }
-                .filter { it.hasActiveQuest }
-                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe(
-                    {
-                        questContent = it
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
-
-        subscriptions?.add(
             Flowable.combineLatest(
                 contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems()
             ) { state, items ->
@@ -240,7 +161,7 @@ class NavigationDrawerFragment : DialogFragment() {
                         gearEvent?.isCurrentlyActive == true || pair.second.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
-                        if (diff < (Duration.hours(1).inWholeMilliseconds)) Duration.seconds(1) else Duration.minutes(1)
+                        if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) 1.toDuration(DurationUnit.SECONDS) else 1.toDuration(DurationUnit.MINUTES)
                     }) {
                         updateSeasonalMenuEntries(gearEvent, pair.second)
                     }
@@ -265,34 +186,17 @@ class NavigationDrawerFragment : DialogFragment() {
             getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = false
         }
 
-        subscriptions?.add(
-            userRepository.getUser()
-                .doOnNext {
-                    updateUser(it)
-                }
-                .filter { it.party?.quest?.key != null }
-                .flatMap { socialRepository.getGroup(it.party?.id ?: "") }
-                .filter { it.quest?.active == true }
-                .map {
-                    quest = it.quest
-                    it.quest?.key ?: ""
-                }
-                .flatMapMaybe { inventoryRepository.getQuestContent(it).firstElement() }
-                .filter { (it.boss?.hp ?: 0) > 0 }
-                .subscribe(
-                    {
-                        questContent = it
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        userViewModel.user.observe(viewLifecycleOwner) {
+            if (it != null) {
+                updateUser(it)
+            }
+        }
 
         binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment, null, true, preventReselection = false) }
         binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity, null, true, preventReselection = false) }
         binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
     }
 
-    @OptIn(ExperimentalTime::class)
     private fun createUpdatingJob(
         key: String,
         endingCondition: () -> Boolean,

@@ -3,11 +3,12 @@ package com.habitrpg.android.habitica.ui
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
 import com.habitrpg.android.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.HealthFormatter
@@ -15,23 +16,23 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.mainActivityCreatedAt
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.disposables.Disposable
+import java.util.Date
 import java.util.Locale
 import kotlin.math.floor
 
 class AvatarWithBarsViewModel(
     private val context: Context,
     private val binding: AvatarWithBarsBinding,
-    userRepository: UserRepository? = null
-) {
+    viewModel: MainUserViewModel? = null
+): ViewModel() {
     private var userObject: Avatar? = null
 
     private var cachedMaxHealth: Int = 0
     private var cachedMaxExp: Int = 0
     private var cachedMaxMana: Int = 0
-
-    private var disposable: Disposable? = null
 
     init {
         binding.hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
@@ -42,8 +43,10 @@ class AvatarWithBarsViewModel(
         setXpBarData(0f, 1)
         setMpBarData(0f, 1)
 
-        if (userRepository != null) {
-            disposable = userRepository.getUser().subscribe { updateData(it) }
+        viewModel?.user?.observeForever {
+            if (it != null) {
+                updateData(it)
+            }
         }
     }
 
@@ -90,6 +93,11 @@ class AvatarWithBarsViewModel(
         }
         binding.avatarView.setOnClickListener {
             MainNavigationController.navigate(R.id.avatarOverviewFragment)
+        }
+
+        mainActivityCreatedAt?.let {
+            Log.i("LAUNCH TIME", "${Date().time - it.time}")
+            mainActivityCreatedAt = null
         }
     }
 

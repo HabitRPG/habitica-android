@@ -71,6 +71,8 @@ import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
+var mainActivityCreatedAt: Date? = null
+
 open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
 
@@ -121,6 +123,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        mainActivityCreatedAt = Date()
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         } catch (e: IllegalStateException) {
@@ -138,7 +141,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         setupToolbar(binding.toolbar)
 
-        avatarInHeader = AvatarWithBarsViewModel(this, binding.avatarWithBars, userRepository)
+        avatarInHeader = AvatarWithBarsViewModel(this, binding.avatarWithBars, viewModel.userViewModel)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         viewModel.user.observe(this) {
