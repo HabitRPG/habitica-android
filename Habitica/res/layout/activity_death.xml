@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/content_background"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:paddingHorizontal="23dp">
+    android:background="@color/content_background">
+    <FrameLayout
+        android:id="@+id/confetti_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="23dp">
     <androidx.legacy.widget.Space
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -22,6 +29,7 @@
             android:src="@drawable/death_ghost"
             android:layout_centerHorizontal="true" />
         <ImageView
+            android:id="@+id/heart_view"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:src="@drawable/ic_broken_heart"
@@ -81,4 +89,5 @@
         android:textColor="@color/text_quad"
         android:text="@string/faint_broken_equipment"
         android:layout_margin="@dimen/spacing_large"/>
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>

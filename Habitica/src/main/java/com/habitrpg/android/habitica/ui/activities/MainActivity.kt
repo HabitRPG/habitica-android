@@ -66,6 +66,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -444,12 +445,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         )
     }
 
+    private var lastDeathDialogDisplay = 0L
+
     private fun displayDeathDialogIfNeeded() {
         if (!viewModel.userViewModel.isUserFainted) {
             return
         }
 
-        if (!this.isFinishing) {
+        val now = Date().time
+        if (!this.isFinishing && now - lastDeathDialogDisplay > 60000) {
+            lastDeathDialogDisplay = now
             MainNavigationController.navigate(R.id.deathActivity)
         }
     }
