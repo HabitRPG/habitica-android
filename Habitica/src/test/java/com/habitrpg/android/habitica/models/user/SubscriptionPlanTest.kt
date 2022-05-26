@@ -77,7 +77,7 @@ class SubscriptionPlanTest : WordSpec({
 
         "months until next hourglass with initial basic sub" {
             plan.planId = SubscriptionPlan.PLANID_BASIC
-            plan.monthsUntilNextHourglass shouldBe 4
+            plan.monthsUntilNextHourglass shouldBe 3
         }
 
         "months until receiving first hourglass with basic sub" {
