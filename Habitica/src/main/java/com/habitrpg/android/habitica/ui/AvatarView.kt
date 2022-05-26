@@ -440,22 +440,6 @@ class AvatarView : FrameLayout {
         }
     }
 
-    fun setAvatarWithSelectedBackground(avatar: Avatar, backgroundForPurchase: String?) {
-        val oldUser = this.avatar
-        this.avatar = avatar
-        this.backgroundForPurchase = backgroundForPurchase
-
-        var equals = false
-        if (oldUser != null) {
-            val newLayerMap = getLayerMap(avatar, false)
-
-            equals = currentLayers == newLayerMap
-        }
-        if (!equals) {
-            invalidate()
-        }
-    }
-
     private fun initAvatarRectMatrix() {
         if (avatarRectF == null) {
             val srcRect = originalRect
