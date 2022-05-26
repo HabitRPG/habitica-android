@@ -1256,7 +1256,7 @@
     <string name="oldest">Oldest</string>
     <string name="sort_by">Sort By</string>
     <string name="january">January</string>
-    <string name="febuary">Febuary</string>
+    <string name="febuary">February</string>
     <string name="march">March</string>
     <string name="april">April</string>
     <string name="may">May</string>
@@ -1270,4 +1270,8 @@
     <string name="cds_subtitle">Adjust when your day switches over past the default time of midnight.</string>
     <string name="buy_set">Buy Set</string>
     <string name="tutorial_reset_confirmation">Your Tutorials were reset</string>
+    <string name="you_ran_out_of_health">You ran out of Health!</string>
+    <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
+    <string name="faint_broken_equipment">Broken equipment can be repurchased from Rewards</string>
+    <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>…]]></string>
 </resources>

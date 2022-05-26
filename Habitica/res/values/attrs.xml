@@ -160,6 +160,8 @@
     <declare-styleable name="AdButton">
         <attr name="text" />
         <attr name="currency" />
+        <attr name="activeBackground" format="integer" />
+        <attr name="textColor" format="color" />
     </declare-styleable>
     <declare-styleable name="SparkView">
         <attr name="color" />

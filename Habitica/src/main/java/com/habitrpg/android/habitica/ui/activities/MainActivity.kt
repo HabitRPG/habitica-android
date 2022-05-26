@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -30,7 +29,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
-import com.habitrpg.android.habitica.databinding.DialogFaintBinding
 import com.habitrpg.android.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.hideKeyboard
@@ -38,8 +36,6 @@ import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.AdHandler
-import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -59,22 +55,20 @@ import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
-import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
@@ -104,7 +98,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var avatarInHeader: AvatarWithBarsViewModel? = null
     val notificationsViewModel: NotificationsViewModel by viewModels()
     val viewModel: MainActivityViewModel by viewModels()
-    private var faintDialog: HabiticaAlertDialog? = null
     private var sideAvatarView: AvatarView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
     var drawerToggle: ActionBarDrawerToggle? = null
@@ -456,36 +449,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             return
         }
 
-        if (this.faintDialog == null && !this.isFinishing) {
-
-            val binding = DialogFaintBinding.inflate(this.layoutInflater)
-            binding.hpBar.setLightBackground(true)
-            binding.hpBar.setIcon(HabiticaIconsHelper.imageOfHeartLightBg())
-            viewModel.user.value?.let { binding.avatarView.setAvatar(it) }
-
-            this.faintDialog = HabiticaAlertDialog(this)
-            faintDialog?.setTitle(R.string.faint_header)
-            faintDialog?.setAdditionalContentView(binding.root)
-            faintDialog?.addButton(R.string.faint_button, true) { _, _ ->
-                faintDialog = null
-                userRepository.revive().subscribe({ }, RxErrorHandler.handleEmptyError())
-            }
-            if (AdHandler.isAllowed(AdType.FAINT)) {
-                val handler = AdHandler(this, AdType.FAINT) {
-                    Log.d("AdHandler", "Reviving user")
-                    compositeSubscription.add(
-                        userRepository.updateUser("stats.hp", 50)
-                            .subscribe({}, RxErrorHandler.handleEmptyError())
-                    )
-                }
-                handler.prepare()
-                faintDialog?.addButton(R.string.watch_ad_to_revive, true) { _, _ ->
-                    faintDialog = null
-                    handler.show()
-                }
-            }
-            soundManager.loadAndPlayAudio(SoundManager.SoundDeath)
-            this.faintDialog?.enqueue()
+        if (!this.isFinishing) {
+            MainNavigationController.navigate(R.id.deathActivity)
         }
     }
 

@@ -692,6 +692,14 @@
         <item name="android:backgroundTint">@color/red_100</item>
     </style>
 
+    <style name="HabiticaButton.Maroon" parent="HabiticaButton">
+        <item name="android:backgroundTint">@color/maroon_100</item>
+    </style>
+
+    <style name="HabiticaButton.Maroon.Small" parent="HabiticaButton.Small">
+        <item name="android:backgroundTint">@color/maroon_100</item>
+    </style>
+
     <style name="SegmentTitle" parent="Headline">
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
     </style>

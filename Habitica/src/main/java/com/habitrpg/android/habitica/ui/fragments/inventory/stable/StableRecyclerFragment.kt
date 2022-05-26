@@ -1,39 +1,39 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
-import com.habitrpg.android.habitica.models.inventory.StableSection
-import com.habitrpg.android.habitica.models.user.OwnedMount
-import com.habitrpg.android.habitica.models.user.OwnedObject
-import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import io.reactivex.rxjava3.core.Flowable
+import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.StableViewModelFactory
 import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.kotlin.combineLatest
 import javax.inject.Inject
 
 class StableRecyclerFragment :
     BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
+
+    private val viewModel: StableViewModel by viewModels(factoryProducer = {
+        StableViewModelFactory(context?.applicationContext as? Application, itemType)
+    })
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -106,11 +106,10 @@ class StableRecyclerFragment :
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 Maybe.zip(
                     inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
-                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(),
-                    { eggs, potions ->
-                        Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
-                    }
-                ).subscribe(
+                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement()
+                ) { eggs, potions ->
+                    Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
+                }.subscribe(
                     {
                         callback(it)
                     },
@@ -159,118 +158,24 @@ class StableRecyclerFragment :
     }
 
     private fun loadItems() {
-        val observable: Maybe<out List<Animal>> = if ("pets" == itemType) {
-            inventoryRepository.getPets().firstElement()
-        } else {
-            inventoryRepository.getMounts().firstElement()
+        viewModel.items.observe(viewLifecycleOwner) {
+            adapter?.setItemList(it)
         }
-        val ownedObservable: Flowable<out Map<String, OwnedObject>> = if ("pets" == itemType) {
-            inventoryRepository.getOwnedPets()
-        } else {
-            inventoryRepository.getOwnedMounts()
-        }.map {
-            val animalMap = mutableMapOf<String, OwnedObject>()
-            it.forEach { animal ->
-                val castedAnimal = animal as? OwnedObject ?: return@forEach
-                animalMap[castedAnimal.key ?: ""] = castedAnimal
-            }
-            animalMap
+        viewModel.eggs.observe(viewLifecycleOwner) {
+            adapter?.setEggs(it)
         }
-
-        compositeSubscription.add(
-            inventoryRepository.getItems(Egg::class.java)
-                .map {
-                    val eggMap = mutableMapOf<String, Egg>()
-                    it.forEach { egg ->
-                        eggMap[egg.key] = egg as Egg
-                    }
-                    eggMap
-                }
-                .subscribe(
-                    {
-                        adapter?.setEggs(it)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
-        compositeSubscription.add(
-            ownedObservable.combineLatest(observable.toFlowable())
-                .map { (ownedAnimals, unsortedAnimals) ->
-                    mapAnimals(unsortedAnimals, ownedAnimals)
-                }
-                .subscribe({ items -> adapter?.setItemList(items) }, RxErrorHandler.handleEmptyError())
-        )
-        compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter?.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(inventoryRepository.getMounts().subscribe({ adapter?.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(
-            inventoryRepository.getOwnedMounts()
-                .map { ownedMounts ->
-                    val mountMap = mutableMapOf<String, OwnedMount>()
-                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                    return@map mountMap
-                }
-                .subscribe({ adapter?.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError())
-        )
+        viewModel.ownedItems.observe(viewLifecycleOwner) {
+            adapter?.setOwnedItems(it)
+        }
+        viewModel.mounts.observe(viewLifecycleOwner) {
+            adapter?.setExistingMounts(it)
+        }
+        viewModel.ownedMounts.observe(viewLifecycleOwner) {
+            adapter?.setOwnedMounts(it)
+        }
     }
 
-    private fun mapAnimals(unsortedAnimals: List<Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {
-        val items = ArrayList<Any>()
-        var lastAnimal: Animal = unsortedAnimals.firstOrNull() ?: return items
-        var lastSection: StableSection? = null
-        for (animal in unsortedAnimals) {
-            val identifier = if (animal.animal.isNotEmpty() && (animal.type != "special" && animal.type != "wacky")) animal.animal else animal.key
-            val lastIdentifier = if (lastAnimal.animal.isNotEmpty()) lastAnimal.animal else lastAnimal.key
-            if (animal.type == "premium") {
-                if (!items.contains(lastAnimal)) {
-                    items.add(lastAnimal)
-                }
-                lastAnimal = items.first { (it as? Animal)?.animal == animal.animal } as Animal
-            } else if (identifier != lastIdentifier || animal === unsortedAnimals[unsortedAnimals.size - 1]) {
-                if (!((lastAnimal.type == "special") && lastAnimal.numberOwned == 0) && !items.contains(lastAnimal)) {
-                    items.add(lastAnimal)
-                }
-                lastAnimal = animal
-            }
 
-            if (animal.type != lastSection?.key && animal.type != "premium") {
-                if (items.size > 0 && items[items.size - 1].javaClass == StableSection::class.java) {
-                    items.removeAt(items.size - 1)
-                }
-                val title = if (itemType == "pets") {
-                    context?.getString(R.string.pet_category, animal.getTranslatedType(context))
-                } else {
-                    context?.getString(R.string.mount_category, animal.getTranslatedType(context))
-                }
-                val section = StableSection(animal.type, title ?: "")
-                items.add(section)
-                lastSection = section
-            }
-            val isOwned = when (itemType) {
-                "pets" -> {
-                    val ownedPet = ownedAnimals[animal.key] as? OwnedPet
-                    ownedPet?.trained ?: 0 > 0
-                }
-                "mounts" -> {
-                    val ownedMount = ownedAnimals[animal.key] as? OwnedMount
-                    ownedMount?.owned == true
-                }
-                else -> false
-            }
-            lastAnimal.totalNumber += 1
-            lastSection?.totalCount = (lastSection?.totalCount ?: 0) + 1
-            if (isOwned) {
-                lastAnimal.numberOwned += 1
-                lastSection?.ownedCount = (lastSection?.ownedCount ?: 0) + 1
-            }
-        }
-        if (!((lastAnimal.type == "premium" || lastAnimal.type == "special") && lastAnimal.numberOwned == 0)) {
-            items.add(lastAnimal)
-        }
-
-        items.add(0, "header")
-        items.removeAll { it is StableSection && (it.key as? String) == "special" && it.ownedCount == 0 }
-        return items
-    }
 
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.ads
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -13,13 +14,13 @@ import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
-import java.util.Date
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class AdButton @JvmOverloads constructor(
     context: Context,
@@ -42,6 +43,8 @@ class AdButton @JvmOverloads constructor(
     private var nextAdDate: Date? = null
     private val binding = AdButtonBinding.inflate(context.layoutInflater, this)
 
+    private var activeBackgroundRes: Int = R.drawable.ad_button_background
+
     var text: String = ""
         set(value) {
             field = value
@@ -56,10 +59,14 @@ class AdButton @JvmOverloads constructor(
         )?.let { attributes ->
             text = attributes.getString(R.styleable.AdButton_text) ?: ""
             binding.currencyView.currency = attributes.getString(R.styleable.AdButton_currency)
+            activeBackgroundRes = attributes.getResourceId(R.styleable.AdButton_activeBackground, R.drawable.ad_button_background)
+            binding.textView.setTextColor(attributes.getColor(R.styleable.AdButton_textColor, ContextCompat.getColor(context, R.color.white)))
         }
-        binding.textView.setTextColor(ContextCompat.getColor(context, R.color.white))
         binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
         binding.currencyView.value = 0.0
+        if (binding.currencyView.currency?.isNotBlank() != true) {
+            binding.currencyView.visibility = View.GONE
+        }
         gravity = Gravity.CENTER
         state = State.READY
     }
@@ -72,7 +79,7 @@ class AdButton @JvmOverloads constructor(
                 binding.textView.alpha = 1.0f
                 binding.textView.visibility = VISIBLE
                 binding.currencyView.visibility = VISIBLE
-                setBackgroundResource(R.drawable.ad_button_background)
+                setBackgroundResource(activeBackgroundRes)
             }
             State.UNAVAILABLE -> {
                 binding.loadingIndicator.visibility = GONE

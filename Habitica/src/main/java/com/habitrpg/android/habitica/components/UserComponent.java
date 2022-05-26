@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity;
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
+import com.habitrpg.android.habitica.ui.activities.DeathActivity;
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity;
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity;
 import com.habitrpg.android.habitica.ui.activities.GemPurchaseActivity;
@@ -105,6 +106,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
+import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel;
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog;
@@ -361,4 +363,8 @@ public interface UserComponent {
     void inject(@NotNull ArmoireActivity armoireActivity);
 
     void inject(@NotNull TasksViewModel tasksViewModel);
+
+    void inject(@NotNull StableViewModel stableViewModel);
+
+    void inject(@NotNull DeathActivity deathActivity);
 }

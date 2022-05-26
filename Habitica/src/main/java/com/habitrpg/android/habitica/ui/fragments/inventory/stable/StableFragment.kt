@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel
 
 class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override var binding: FragmentViewpagerBinding? = null
+
+    private val viewModel: StableViewModel by viewModels()
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)

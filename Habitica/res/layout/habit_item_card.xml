@@ -82,6 +82,7 @@
                 style="@style/HabitButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/selection_highlight"
                 android:contentDescription="@string/negative_habit_form" />
         </FrameLayout>
     </LinearLayout>
