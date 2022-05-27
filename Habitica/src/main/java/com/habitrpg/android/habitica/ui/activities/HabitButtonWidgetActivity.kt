@@ -76,7 +76,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
             ?.let { compositeSubscription.add(it) }
         binding.recyclerView.adapter = adapter
 
-        compositeSubscription.add(taskRepository.getTasks(TaskType.HABIT, userId).subscribe({ adapter?.data = it }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(taskRepository.getTasksFlowable(TaskType.HABIT, userId).subscribe({ adapter?.data = it }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun taskSelected(taskId: String?) {

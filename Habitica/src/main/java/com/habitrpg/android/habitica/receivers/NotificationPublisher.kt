@@ -58,7 +58,7 @@ class NotificationPublisher : BroadcastReceiver() {
         }
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
-            taskRepository.getTasks(TaskType.DAILY).firstElement().zipWith(
+            taskRepository.getTasksFlowable(TaskType.DAILY).firstElement().zipWith(
                 userRepository.getUserFlowable().firstElement(),
                 BiFunction<List<Task>, User, Pair<List<Task>, User>> { tasks, user ->
                     return@BiFunction Pair(tasks, user)

@@ -11,48 +11,46 @@ import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.kotlin.toFlowable
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.Sort
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
-    suspend fun getTasks(taskType: TaskType, userID: String, t: String): Flow<List<Task>> {
+    override fun getTasks(taskType: TaskType, userID: String): Flow<List<Task>> {
+        if (realm.isClosed) return emptyFlow()
         return realm.where(Task::class.java)
             .equalTo("typeValue", taskType.value)
-            .equalTo(("userId"), userID)
+            .equalTo("userId", userID)
+            .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
             .toFlow()
+            .filter { it.isLoaded }
     }
 
-    override fun getTasks(taskType: TaskType, userID: String): Flowable<out List<Task>> {
-        if (realm.isClosed) {
-            return Flowable.empty()
-        }
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java)
-                .equalTo("typeValue", taskType.value)
-                .equalTo("userId", userID)
-                .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
-                .findAll()
-                .asFlowable()
-                .filter { it.isLoaded }
-        ).retry(1)
+    override fun getTasksFlowable(taskType: TaskType, userID: String): Flowable<out List<Task>> {
+        if (realm.isClosed) return Flowable.empty()
+        return RxJavaBridge.toV3Flowable(realm.where(Task::class.java)
+            .equalTo("typeValue", taskType.value)
+            .equalTo("userId", userID)
+            .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
+            .findAll()
+            .asFlowable()
+            .filter { it.isLoaded })
     }
 
-    override fun getTasks(userId: String): Flowable<out List<Task>> {
-        if (realm.isClosed) {
-            return Flowable.empty()
-        }
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java).equalTo("userId", userId)
+    override fun getTasks(userId: String): Flow<List<Task>> {
+        if (realm.isClosed) return emptyFlow()
+        return realm.where(Task::class.java).equalTo("userId", userId)
                 .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
     override fun saveTasks(ownerID: String, tasksOrder: TasksOrder, tasks: TaskList) {

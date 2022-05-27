@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -17,6 +18,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -62,23 +64,14 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
             )
         )
         binding?.recyclerView?.adapter = adapter
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         var tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT)
             .map { it.filter { it.challengeID == null && it.group == null } }
         if (taskType == TaskType.TODO) {
             tasks = tasks.map { it.filter { !it.completed } }
         }
-        compositeSubscription.add(
-            tasks.subscribe(
-                {
-                    adapter.data = it
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        tasks.asLiveData().observe(viewLifecycleOwner) {
+            adapter.data = it
+        }
     }
 }

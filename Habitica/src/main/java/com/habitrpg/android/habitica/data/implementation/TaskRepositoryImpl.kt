@@ -23,6 +23,8 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -37,8 +39,11 @@ class TaskRepositoryImpl(
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     private var lastTaskAction: Long = 0
 
-    override fun getTasks(taskType: TaskType, userID: String?): Flowable<out List<Task>> =
+    override fun getTasks(taskType: TaskType, userID: String?): Flow<List<Task>> =
         this.localRepository.getTasks(taskType, userID ?: this.userID)
+
+    override fun getTasksFlowable(taskType: TaskType, userID: String?): Flowable<out List<Task>> =
+        this.localRepository.getTasksFlowable(taskType, userID ?: this.userID)
 
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
         localRepository.saveTasks(userId, order, tasks)
@@ -311,7 +316,7 @@ class TaskRepositoryImpl(
         createTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
     }
 
-    override fun getTaskCopies(userId: String): Flowable<List<Task>> =
+    override fun getTaskCopies(userId: String): Flow<List<Task>> =
         localRepository.getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
 
     override fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>> =

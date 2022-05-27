@@ -16,11 +16,12 @@ import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.firstOrNull
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 class TaskAlarmManager(
     private var context: Context,
@@ -60,12 +61,9 @@ class TaskAlarmManager(
             .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
     }
 
-    fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {
-        taskRepository.getTaskCopies(userId)
-            .firstElement()
-            .toFlowable()
-            .flatMap { Flowable.fromIterable(it) }
-            .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+    suspend fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {
+        val tasks = taskRepository.getTaskCopies(userId).firstOrNull()
+        tasks?.forEach { this.setAlarmsForTask(it) }
 
         if (!preventDailyReminder) {
             scheduleDailyReminder(context)

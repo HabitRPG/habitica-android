@@ -7,11 +7,13 @@ import com.habitrpg.android.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
+import kotlinx.coroutines.flow.Flow
 
 interface TaskLocalRepository : BaseLocalRepository {
 
-    fun getTasks(taskType: TaskType, userID: String): Flowable<out List<Task>>
-    fun getTasks(userId: String): Flowable<out List<Task>>
+    fun getTasks(taskType: TaskType, userID: String): Flow<List<Task>>
+    fun getTasksFlowable(taskType: TaskType, userID: String): Flowable<out List<Task>>
+    fun getTasks(userId: String): Flow<List<Task>>
 
     fun saveTasks(ownerID: String, tasksOrder: TasksOrder, tasks: TaskList)
 

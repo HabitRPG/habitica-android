@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
@@ -49,15 +50,16 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+    private var taskFlowJob: Job? = null
     var viewModel: TasksViewModel? = null
 
-    private var taskSubscription: Disposable? = null
     internal var canEditTasks: Boolean = true
     internal var canScoreTaks: Boolean = true
     override var binding: FragmentRefreshRecyclerviewBinding? = null
@@ -321,12 +323,14 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun updateTaskSubscription(ownerID: String?) {
-        taskSubscription = taskRepository.getTasks(this.taskType, ownerID).subscribe(
-            {
-                this.recyclerAdapter?.updateUnfilteredData(it)
-            },
-            RxErrorHandler.handleEmptyError()
-        )
+        if (taskFlowJob?.isActive == true) {
+            taskFlowJob?.cancel()
+        }
+        taskFlowJob = lifecycleScope.launch {
+            taskRepository.getTasks(taskType, ownerID).collect {
+                recyclerAdapter?.updateUnfilteredData(it)
+            }
+        }
     }
 
     protected fun showBrokenChallengeDialog(task: Task) {

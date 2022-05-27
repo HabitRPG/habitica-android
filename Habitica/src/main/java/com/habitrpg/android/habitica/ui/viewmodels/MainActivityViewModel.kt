@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
@@ -21,6 +22,7 @@ import com.habitrpg.android.habitica.ui.TutorialView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
+import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
@@ -69,7 +71,9 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
 
     fun onCreate() {
         try {
-            taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
+            viewModelScope.launch {
+                taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
+            }
         } catch (e: Exception) {
             analyticsManager.logException(e)
         }

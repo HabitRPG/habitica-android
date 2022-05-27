@@ -226,7 +226,7 @@ class YesterdailyDialog private constructor(
                     }
                     .firstElement()
                     .zipWith(
-                        taskRepository.getTasks(TaskType.DAILY).firstElement()
+                        taskRepository.getTasksFlowable(TaskType.DAILY).firstElement()
                             .map {
                                 val taskMap = mutableMapOf<String, Int>()
                                 it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }

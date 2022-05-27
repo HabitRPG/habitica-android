@@ -11,10 +11,12 @@ import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 interface TaskRepository : BaseRepository {
-    fun getTasks(taskType: TaskType, userID: String? = null): Flowable<out List<Task>>
+    fun getTasks(taskType: TaskType, userID: String? = null): Flow<List<Task>>
+    fun getTasksFlowable(taskType: TaskType, userID: String? = null): Flowable<out List<Task>>
     fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
 
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList>
@@ -59,7 +61,7 @@ interface TaskRepository : BaseRepository {
 
     fun createTaskInBackground(task: Task)
 
-    fun getTaskCopies(userId: String): Flowable<List<Task>>
+    fun getTaskCopies(userId: String): Flow<List<Task>>
 
     fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>>
 
