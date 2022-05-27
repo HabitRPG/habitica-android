@@ -11,9 +11,11 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     var customerId: String? = null
     var dateCreated: Date? = null
     var dateUpdated: Date? = null
+
     @JvmField
     var dateTerminated: Date? = null
     var paymentMethod: String? = null
+
     @JvmField
     var planId: String? = null
     var gemsBought: Int? = null
@@ -45,6 +47,20 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     val numberOfGemsLeft: Int
         get() {
             return totalNumberOfGems - (gemsBought ?: 0)
+        }
+
+    /*
+      If user has a initial basic monthly subscription, receive hourglasses on fourth month,
+      else receive on third month (subtract 1 from total consecutive count)
+     */
+
+    val monthsUntilNextHourglass: Int?
+        get() {
+            return if (consecutive?.offset == 0) {
+                (3 - (((consecutive?.count ?: 0)) % 3))
+            } else {
+                consecutive?.offset
+            }
         }
 
     companion object {

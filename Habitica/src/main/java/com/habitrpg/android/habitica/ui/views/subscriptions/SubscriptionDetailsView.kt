@@ -13,7 +13,9 @@ import com.habitrpg.android.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.text.DateFormat
-import java.util.Date
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class SubscriptionDetailsView : LinearLayout {
 
@@ -96,8 +98,13 @@ class SubscriptionDetailsView : LinearLayout {
         } else {
             binding.monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
         }
+
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
-        binding.currentHourglassesTextView.text = plan.consecutive?.trinkets.toString()
+
+        if (plan.monthsUntilNextHourglass != null){
+            val nextHourglassMonth = LocalDate.now().plusMonths(plan.monthsUntilNextHourglass!!.toLong()).format(DateTimeFormatter.ofPattern("MMM"))
+            nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
+        }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE
         if (plan.paymentMethod != null) {

@@ -432,6 +432,7 @@
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months subscribed</string>
     <string name="current_hourclasses">Current Mystic Hourglasses</string>
+    <string name="next_hourglass">Next Hourglass</string>
     <string name="monthly_gem_cap">Monthly gem cap</string>
     <string name="inactive">Inactive</string>
     <string name="one_month">1 Month</string>

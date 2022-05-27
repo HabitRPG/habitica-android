@@ -67,4 +67,47 @@ class SubscriptionPlanTest : WordSpec({
             plan.numberOfGemsLeft shouldBe 25
         }
     }
+
+    "monthsUntilNextHourglass" should {
+        beforeEach {
+            plan.consecutive = SubscriptionPlanConsecutive()
+            plan.consecutive?.count = 0
+            plan.dateTerminated = null
+        }
+
+        "months until next hourglass with initial basic sub" {
+            plan.planId = SubscriptionPlan.PLANID_BASIC
+            plan.monthsUntilNextHourglass shouldBe 3
+        }
+
+        "months until receiving first hourglass with basic sub" {
+            plan.consecutive?.count = 2
+            plan.planId = SubscriptionPlan.PLANID_BASIC
+            plan.monthsUntilNextHourglass shouldBe 1
+        }
+
+        "months until next hourglass with basic sub after receiving initial hourglass" {
+            plan.consecutive?.count = 3
+            plan.planId = SubscriptionPlan.PLANID_BASIC
+            plan.monthsUntilNextHourglass shouldBe 3
+        }
+
+        "months until next hourglass with three month sub" {
+            plan.consecutive?.offset = 3
+            plan.planId = SubscriptionPlan.PLANID_BASIC3MONTH
+            plan.monthsUntilNextHourglass shouldBe 3
+        }
+
+        "months until next hourglass with six month sub" {
+            plan.consecutive?.offset = 6
+            plan.planId = SubscriptionPlan.PLANID_BASIC6MONTH
+            plan.monthsUntilNextHourglass shouldBe 6
+        }
+
+        "months until next hourglass with 12 month sub" {
+            plan.consecutive?.offset = 12
+            plan.planId = SubscriptionPlan.PLANID_BASIC12MONTH
+            plan.monthsUntilNextHourglass shouldBe 12
+        }
+    }
 })
