@@ -12,21 +12,25 @@ import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionFooterBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.models.Avatar
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.Date
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var userSize: String? = null
     var hairColor: String? = null
+    var avatar: Avatar? = null
     var customizationType: String? = null
     var gemBalance: Int = 0
     var unsortedCustomizations: List<Customization> = ArrayList()
@@ -194,8 +198,27 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 return
             }
 
-            customization?.let {
-                selectCustomizationEvents.onNext(it)
+            if (customization?.type == "background" && avatar != null){
+                val alert = HabiticaAlertDialog(context = itemView.context)
+                val purchasedCustomizationView: View = LayoutInflater.from(itemView.context).inflate(R.layout.purchased_equip_dialog, null)
+                val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
+                layerMap[AvatarView.LayerType.BACKGROUND] = customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName }
+                purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatar(avatar!!, layerMap)
+                alert.setAdditionalContentView(purchasedCustomizationView)
+                alert.addButton(R.string.equip, true) { _, _ ->
+                    customization?.let {
+                        selectCustomizationEvents.onNext(it)
+                    }
+                }
+                alert.addButton(R.string.close, false) { _, _ ->
+                    alert.dismiss()
+                }
+                alert.show()
+            } else {
+                customization?.let {
+                    selectCustomizationEvents.onNext(it)
+                }
+
             }
         }
     }
