@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -25,8 +26,10 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.kotlin.Flowables
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PetDetailRecyclerFragment :
@@ -35,12 +38,14 @@ class PetDetailRecyclerFragment :
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var feedPetUseCase: FeedPetUseCase
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    var adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
+    val adapter: PetDetailRecyclerAdapter = PetDetailRecyclerAdapter()
     private var animalType: String? = null
     private var animalGroup: String? = null
     private var animalColor: String? = null
@@ -48,7 +53,10 @@ class PetDetailRecyclerFragment :
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -88,29 +96,29 @@ class PetDetailRecyclerFragment :
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2)
-        layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(position) == 1) {
-                    layoutManager?.spanCount ?: 1
-                } else {
-                    1
+        layoutManager?.spanSizeLookup =
+            object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(
+                            position
+                        ) == 1
+                    ) {
+                        layoutManager?.spanCount ?: 1
+                    } else {
+                        1
+                    }
                 }
             }
-        }
         binding?.recyclerView?.layoutManager = layoutManager
         adapter.animalIngredientsRetriever = { animal, callback ->
-            Maybe.zip(
-                inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
-                inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement(),
-                { eggs, potions ->
-                    Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
-                }
-            ).subscribe(
-                {
-                    callback(it)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
+            lifecycleScope.launch {
+                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
+                    .firstOrNull()?.firstOrNull() as? Egg
+                val potion =
+                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color))
+                        .firstOrNull()?.firstOrNull() as? HatchingPotion
+                callback(Pair(egg, potion))
+            }
         }
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -127,7 +135,12 @@ class PetDetailRecyclerFragment :
                 )
         )
         userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }
-        compositeSubscription.add(adapter.feedFlowable.subscribe({ showFeedingDialog(it.first, it.second) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(adapter.feedFlowable.subscribe({
+            showFeedingDialog(
+                it.first,
+                it.second
+            )
+        }, RxErrorHandler.handleEmptyError()))
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -158,50 +171,60 @@ class PetDetailRecyclerFragment :
 
     private fun loadItems() {
         if (animalType?.isNotEmpty() == true || animalGroup?.isNotEmpty() == true) {
-            compositeSubscription.add(
+            lifecycleScope.launch {
                 inventoryRepository.getOwnedMounts()
                     .map { ownedMounts ->
                         val mountMap = mutableMapOf<String, OwnedMount>()
                         ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                         return@map mountMap
-                    }
-                    .subscribe({ adapter.setOwnedMounts(it) }, RxErrorHandler.handleEmptyError())
-            )
-            compositeSubscription.add(inventoryRepository.getOwnedItems(true).subscribe({ adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError()))
+                    }.collect { adapter.setOwnedMounts(it) }
+            }
             compositeSubscription.add(
-                Flowables.combineLatest(
-                    inventoryRepository.getPets(animalType, animalGroup, animalColor),
-                    inventoryRepository.getOwnedPets()
-                        .map { ownedPets ->
-                            val petMap = mutableMapOf<String, OwnedPet>()
-                            ownedPets.forEach { petMap[it.key ?: ""] = it }
-                            return@map petMap
-                        }.doOnNext {
-                            adapter.setOwnedPets(it)
-                        }
-                ).map {
-                    val items = mutableListOf<Any>()
-                    var lastPet: Pet? = null
-                    var currentSection: StableSection? = null
-                    for (pet in it.first) {
-                        if (pet.type == "wacky" || pet.type == "special") continue
-                        if (pet.type != lastPet?.type) {
-                            currentSection = StableSection(pet.type, pet.getTranslatedType(context) ?: "")
-                            items.add(currentSection)
-                        }
-                        currentSection?.let { section ->
-                            section.totalCount += 1
-                            if (it.second.containsKey(pet.key)) {
-                                section.ownedCount += 1
-                            }
-                        }
-                        items.add(pet)
-                        lastPet = pet
-                    }
-                    items
-                }.subscribe({ adapter.setItemList(it) }, RxErrorHandler.handleEmptyError())
+                inventoryRepository.getOwnedItems(true)
+                    .subscribe({ adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError())
             )
-            compositeSubscription.add(inventoryRepository.getMounts(animalType, animalGroup, animalColor).subscribe({ adapter.setExistingMounts(it) }, RxErrorHandler.handleEmptyError()))
+            lifecycleScope.launch {
+                val mounts = inventoryRepository.getMounts(
+                    animalType,
+                    animalGroup,
+                    animalColor
+                ).firstOrNull() ?: emptyList()
+                adapter.setExistingMounts(mounts)
+                val pets = inventoryRepository.getPets(animalType, animalGroup, animalColor)
+                    .firstOrNull() ?: emptyList()
+                inventoryRepository.getOwnedPets()
+                    .map { ownedPets ->
+                        val petMap = mutableMapOf<String, OwnedPet>()
+                        ownedPets.forEach { petMap[it.key ?: ""] = it }
+                        return@map petMap
+                    }.onEach { adapter.setOwnedPets(it) }
+                    .collect { ownedPets ->
+                        val items = mutableListOf<Any>()
+                        var lastPet: Pet? = null
+                        var currentSection: StableSection? = null
+                        for (pet in pets) {
+                            if (pet.type == "wacky" || pet.type == "special") continue
+                            if (pet.type != lastPet?.type) {
+                                currentSection =
+                                    StableSection(
+                                        pet.type,
+                                        pet.getTranslatedType(context) ?: ""
+                                    )
+                                items.add(currentSection)
+                            }
+                            currentSection?.let { section ->
+                                section.totalCount += 1
+                                if (ownedPets.containsKey(pet.key)) {
+                                    section.ownedCount += 1
+                                }
+                            }
+                            items.add(pet)
+                            lastPet = pet
+                        }
+                        adapter.setItemList(items)
+                    }
+
+            }
         }
     }
 

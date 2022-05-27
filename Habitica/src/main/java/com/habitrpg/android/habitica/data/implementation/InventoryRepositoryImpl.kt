@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 class InventoryRepositoryImpl(
     localRepository: InventoryLocalRepository,
@@ -66,7 +67,7 @@ class InventoryRepositoryImpl(
         return localRepository.getEquipmentType(type, set)
     }
 
-    override fun getOwnedItems(itemType: String, includeZero: Boolean): Flowable<out List<OwnedItem>> {
+    override fun getOwnedItems(itemType: String, includeZero: Boolean): Flow<List<OwnedItem>> {
         return localRepository.getOwnedItems(itemType, userID, includeZero)
     }
 
@@ -74,7 +75,7 @@ class InventoryRepositoryImpl(
         return localRepository.getOwnedItems(userID, includeZero)
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out List<Item>> {
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
         return localRepository.getItems(itemClass, keys)
     }
 
@@ -102,27 +103,27 @@ class InventoryRepositoryImpl(
         localRepository.save(equipment)
     }
 
-    override fun getMounts(): Flowable<out List<Mount>> {
+    override fun getMounts(): Flow<List<Mount>> {
         return localRepository.getMounts()
     }
 
-    override fun getMounts(type: String?, group: String?, color: String?): Flowable<out List<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flow<List<Mount>> {
         return localRepository.getMounts(type, group, color)
     }
 
-    override fun getOwnedMounts(): Flowable<out List<OwnedMount>> {
+    override fun getOwnedMounts(): Flow<List<OwnedMount>> {
         return localRepository.getOwnedMounts(userID)
     }
 
-    override fun getPets(): Flowable<out List<Pet>> {
+    override fun getPets(): Flow<List<Pet>> {
         return localRepository.getPets()
     }
 
-    override fun getPets(type: String?, group: String?, color: String?): Flowable<out List<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flow<List<Pet>> {
         return localRepository.getPets(type, group, color)
     }
 
-    override fun getOwnedPets(): Flowable<out List<OwnedPet>> {
+    override fun getOwnedPets(): Flow<List<OwnedPet>> {
         return localRepository.getOwnedPets(userID)
     }
 

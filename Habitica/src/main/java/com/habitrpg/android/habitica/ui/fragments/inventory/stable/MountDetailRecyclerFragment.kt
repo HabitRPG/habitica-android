@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -18,6 +19,10 @@ import com.habitrpg.android.habitica.ui.adapter.inventory.MountDetailRecyclerAda
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MountDetailRecyclerFragment :
@@ -131,41 +136,35 @@ class MountDetailRecyclerFragment :
 
     private fun loadItems() {
         if (animalType != null || animalGroup != null) {
-            compositeSubscription.add(
-                inventoryRepository.getMounts(animalType, animalGroup, animalColor)
-                    .zipWith(
-                        inventoryRepository.getOwnedMounts()
-                            .map { ownedMounts ->
-                                val mountMap = mutableMapOf<String, OwnedMount>()
-                                ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                                return@map mountMap
-                            }.doOnNext {
-                                adapter?.setOwnedMounts(it)
-                            },
-                        { unsortedAnimals, ownedAnimals ->
-                            val items = mutableListOf<Any>()
-                            var lastMount: Mount? = null
-                            var currentSection: StableSection? = null
-                            for (mount in unsortedAnimals) {
-                                if (mount.type == "wacky" || mount.type == "special") continue
-                                if (mount.type != lastMount?.type) {
-                                    currentSection = StableSection(mount.type, mount.getTranslatedType(context) ?: "")
-                                    items.add(currentSection)
-                                }
-                                currentSection?.let {
-                                    it.totalCount += 1
-                                    if (ownedAnimals.containsKey(mount.key)) {
-                                        it.ownedCount += 1
-                                    }
-                                }
-                                items.add(mount)
-                                lastMount = mount
+            lifecycleScope.launch {
+                val mounts = inventoryRepository.getMounts(animalType, animalGroup, animalColor).firstOrNull() ?: emptyList()
+                inventoryRepository.getOwnedMounts().map {  ownedMounts ->
+                    val mountMap = mutableMapOf<String, OwnedMount>()
+                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                    return@map mountMap
+                }.onEach { adapter?.setOwnedMounts(it) }
+                    .collect { ownedMounts ->
+                        val items = mutableListOf<Any>()
+                        var lastMount: Mount? = null
+                        var currentSection: StableSection? = null
+                        for (mount in mounts) {
+                            if (mount.type == "wacky" || mount.type == "special") continue
+                            if (mount.type != lastMount?.type) {
+                                currentSection = StableSection(mount.type, mount.getTranslatedType(context) ?: "")
+                                items.add(currentSection)
                             }
-                            items
+                            currentSection?.let {
+                                it.totalCount += 1
+                                if (ownedMounts.containsKey(mount.key)) {
+                                    it.ownedCount += 1
+                                }
+                            }
+                            items.add(mount)
+                            lastMount = mount
                         }
-                    )
-                    .subscribe({ adapter?.setItemList(it) }, RxErrorHandler.handleEmptyError())
-            )
+                        adapter?.setItemList(items)
+                    }
+            }
         }
     }
 

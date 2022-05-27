@@ -31,8 +31,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ItemRecyclerAdapter(val context: Context, val user: User?) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
-
+class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
+    var user: User? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
     var hatchingItem: Item? = null

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -18,9 +19,9 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedObject
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.kotlin.combineLatest
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class StableViewModel(private val application: Application?, private val itemType: String?): BaseViewModel() {
@@ -32,9 +33,6 @@ class StableViewModel(private val application: Application?, private val itemTyp
         component.inject(this)
     }
 
-    init {
-        loadItems()
-    }
 
     private val _items: MutableLiveData<List<Any>> = MutableLiveData()
     val items: LiveData<List<Any>> = _items
@@ -47,59 +45,62 @@ class StableViewModel(private val application: Application?, private val itemTyp
     private val _ownedMounts: MutableLiveData<Map<String, OwnedMount>> = MutableLiveData()
     val ownedMounts: LiveData<Map<String, OwnedMount>> = _ownedMounts
 
-    private fun loadItems() {
-        val observable: Maybe<out List<Animal>> = if ("pets" == itemType) {
-            inventoryRepository.getPets().firstElement()
-        } else {
-            inventoryRepository.getMounts().firstElement()
-        }
-        val ownedObservable: Flowable<out Map<String, OwnedObject>> = if ("pets" == itemType) {
-            inventoryRepository.getOwnedPets()
-        } else {
-            inventoryRepository.getOwnedMounts()
-        }.map {
-            val animalMap = mutableMapOf<String, OwnedObject>()
-            it.forEach { animal ->
-                val castedAnimal = animal as? OwnedObject ?: return@forEach
-                animalMap[castedAnimal.key ?: ""] = castedAnimal
-            }
-            animalMap
-        }
+    init {
+        loadItems()
+    }
 
-        disposable.add(
-            inventoryRepository.getItems(Egg::class.java)
-                .map {
-                    val eggMap = mutableMapOf<String, Egg>()
-                    it.forEach { egg ->
-                        eggMap[egg.key] = egg as Egg
+    private fun loadItems() {
+        viewModelScope.launch {
+            val animals = if ("pets" == itemType) {
+                inventoryRepository.getPets().firstOrNull()
+            } else {
+                inventoryRepository.getMounts().firstOrNull()
+            } ?: emptyList()
+            if ("pets" == itemType) {
+                inventoryRepository.getOwnedPets()
+            } else {
+                inventoryRepository.getOwnedMounts()
+            }.map {
+                val animalMap = mutableMapOf<String, OwnedObject>()
+                it.forEach { animal ->
+                    val castedAnimal = animal as? OwnedObject ?: return@forEach
+                    animalMap[castedAnimal.key ?: ""] = castedAnimal
+                }
+                animalMap
+            }.collect {
+                _items.value = mapAnimals(animals, it)
+            }
+
+            disposable.add(
+                inventoryRepository.getItems(Egg::class.java)
+                    .map {
+                        val eggMap = mutableMapOf<String, Egg>()
+                        it.forEach { egg ->
+                            eggMap[egg.key] = egg as Egg
+                        }
+                        eggMap
                     }
-                    eggMap
-                }
-                .subscribe(
-                    {
-                        _eggs.value = it
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
-        disposable.add(
-            ownedObservable.combineLatest(observable.toFlowable())
-                .map { (ownedAnimals, unsortedAnimals) ->
-                    mapAnimals(unsortedAnimals, ownedAnimals)
-                }
-                .subscribe({ _items.value = it }, RxErrorHandler.handleEmptyError())
-        )
-        disposable.add(inventoryRepository.getOwnedItems(true).subscribe({ _ownedItems.value = it }, RxErrorHandler.handleEmptyError()))
-        disposable.add(inventoryRepository.getMounts().subscribe({ _mounts.value = it }, RxErrorHandler.handleEmptyError()))
-        disposable.add(
-            inventoryRepository.getOwnedMounts()
-                .map { ownedMounts ->
-                    val mountMap = mutableMapOf<String, OwnedMount>()
-                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                    return@map mountMap
-                }
-                .subscribe({ _ownedMounts.value = it }, RxErrorHandler.handleEmptyError())
-        )
+                    .subscribe(
+                        {
+                            _eggs.value = it
+                        },
+                        RxErrorHandler.handleEmptyError()
+                    )
+            )
+            disposable.add(inventoryRepository.getOwnedItems(true).subscribe({ _ownedItems.value = it }, RxErrorHandler.handleEmptyError()))
+            _mounts.value = if ("pets" == itemType) {
+                inventoryRepository.getMounts().firstOrNull() ?: emptyList()
+            } else {
+                animals.map { it as Mount }
+            }
+            inventoryRepository.getOwnedMounts().map { ownedMounts ->
+                val mountMap = mutableMapOf<String, OwnedMount>()
+                ownedMounts.forEach { mountMap[it.key ?: ""] = it }
+                return@map mountMap
+            }.collect {
+                _ownedMounts.value = it
+            }
+        }
     }
 
     private fun mapAnimals(unsortedAnimals: List<Animal>, ownedAnimals: Map<String, OwnedObject>): ArrayList<Any> {

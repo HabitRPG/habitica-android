@@ -134,7 +134,6 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     fun setExistingMounts(existingMounts: List<Mount>) {
         this.existingMounts = existingMounts
-        notifyDataSetChanged()
     }
 
     fun setOwnedMounts(ownedMounts: Map<String, OwnedMount>) {

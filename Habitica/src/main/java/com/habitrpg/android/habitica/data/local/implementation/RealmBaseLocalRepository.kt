@@ -10,6 +10,10 @@ import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.kotlin.deleteFromRealm
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 abstract class RealmBaseLocalRepository internal constructor(override var realm: Realm) : BaseLocalRepository {
 
@@ -98,7 +102,16 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         return realm.where(baseObject.realmClass).equalTo(baseObject.primaryIdentifierName, baseObject.primaryIdentifier).findFirst() as? T
     }
 
-    fun queryUser(userID: String): Flowable<User> {
+    fun queryUser(userID: String): Flow<User?> {
+        return realm.where(User::class.java)
+                .equalTo("id", userID)
+                .findAll()
+                .toFlow()
+            .filter { it.isLoaded && it.isValid && !it.isEmpty() }
+            .map { it.firstOrNull() }
+    }
+
+    fun queryUserFlowable(userID: String): Flowable<User> {
         return RxJavaBridge.toV3Flowable(
             realm.where(User::class.java)
                 .equalTo("id", userID)

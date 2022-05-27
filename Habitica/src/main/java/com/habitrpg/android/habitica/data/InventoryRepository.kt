@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository : BaseRepository {
 
@@ -27,13 +28,13 @@ interface InventoryRepository : BaseRepository {
     fun getInAppRewards(): Flowable<out List<ShopItem>>
     fun getOwnedEquipment(): Flowable<out List<Equipment>>
 
-    fun getMounts(): Flowable<out List<Mount>>
+    fun getMounts(): Flow<List<Mount>>
 
-    fun getOwnedMounts(): Flowable<out List<OwnedMount>>
+    fun getOwnedMounts(): Flow<List<OwnedMount>>
 
-    fun getPets(): Flowable<out List<Pet>>
+    fun getPets(): Flow<List<Pet>>
 
-    fun getOwnedPets(): Flowable<out List<OwnedPet>>
+    fun getOwnedPets(): Flow<List<OwnedPet>>
     fun getQuestContent(key: String): Flowable<QuestContent>
     fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>>
 
@@ -43,7 +44,7 @@ interface InventoryRepository : BaseRepository {
     fun getOwnedEquipment(type: String): Flowable<out List<Equipment>>
     fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>>
 
-    fun getOwnedItems(itemType: String, includeZero: Boolean = false): Flowable<out List<OwnedItem>>
+    fun getOwnedItems(itemType: String, includeZero: Boolean = false): Flow<List<OwnedItem>>
     fun getOwnedItems(includeZero: Boolean = false): Flowable<Map<String, OwnedItem>>
 
     fun getEquipment(key: String): Flowable<Equipment>
@@ -51,8 +52,8 @@ interface InventoryRepository : BaseRepository {
     fun openMysteryItem(user: User?): Flowable<Equipment>
 
     fun saveEquipment(equipment: Equipment)
-    fun getMounts(type: String?, group: String?, color: String?): Flowable<out List<Mount>>
-    fun getPets(type: String?, group: String?, color: String?): Flowable<out List<Pet>>
+    fun getMounts(type: String?, group: String?, color: String?): Flow<List<Mount>>
+    fun getPets(type: String?, group: String?, color: String?): Flow<List<Pet>>
 
     fun updateOwnedEquipment(user: User)
 
@@ -85,7 +86,7 @@ interface InventoryRepository : BaseRepository {
     fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Void>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
-    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out List<Item>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
     fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>>
     fun getLatestMysteryItem(): Flowable<Equipment>
     fun getItem(type: String, key: String): Flowable<Item>

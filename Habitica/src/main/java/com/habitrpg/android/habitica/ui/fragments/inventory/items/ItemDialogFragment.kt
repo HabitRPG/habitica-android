@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -37,6 +38,10 @@ import com.habitrpg.android.habitica.ui.helpers.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {
@@ -117,10 +122,11 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
         }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
+        setAdapter()
         userViewModel.user.observeOnce(this) {
             if (it != null) {
                 user = it
-                setAdapter()
+                adapter?.user = it
             }
         }
 
@@ -164,7 +170,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             context?.let {
-                adapter = ItemRecyclerAdapter(context, user)
+                adapter = ItemRecyclerAdapter(context)
                 adapter?.isHatching = this.isHatching
                 adapter?.isFeeding = this.isFeeding
                 adapter?.fragment = this
@@ -288,44 +294,38 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             else -> Egg::class.java
         }
         itemType?.let { type ->
-            compositeSubscription.add(
-                inventoryRepository.getOwnedItems(type)
-                    .doOnNext { items ->
-                        val filteredItems = if (isFeeding) {
-                            items.filter { it.key != "Saddle" }
-                        } else {
-                            items
+                lifecycleScope.launch {
+                    inventoryRepository.getOwnedItems(type)
+                        .onEach { items ->
+                            val filteredItems = if (isFeeding) {
+                                items.filter { it.key != "Saddle" }
+                            } else {
+                                items
+                            }
+                            adapter?.data = filteredItems
                         }
-                        adapter?.data = filteredItems
-                    }
-                    .map { items -> items.mapNotNull { it.key } }
-                    .flatMap { inventoryRepository.getItems(itemClass, it.toTypedArray()) }
-                    .map {
-                        val itemMap = mutableMapOf<String, Item>()
-                        for (item in it) {
-                            itemMap[item.key] = item
+                        .map { items -> items.mapNotNull { it.key } }
+                        .map { inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull() }
+                        .collect {
+                            val itemMap = mutableMapOf<String, Item>()
+                            for (item in it ?: emptyList()) {
+                                itemMap[item.key] = item
+                            }
+                            adapter?.items = itemMap
                         }
-                        itemMap
-                    }
-                    .subscribe(
-                        { items ->
-                            adapter?.items = items
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
-        }
 
-        compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(
-            inventoryRepository.getOwnedPets()
-                .map { ownedMounts ->
-                    val mountMap = mutableMapOf<String, OwnedPet>()
-                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                    return@map mountMap
                 }
-                .subscribe({ adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError())
-        )
+                lifecycleScope.launch {
+                    inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
+                }
+                lifecycleScope.launch {
+                    inventoryRepository.getOwnedPets().map { ownedPets ->
+                        val petMap = mutableMapOf<String, OwnedPet>()
+                        ownedPets.forEach { petMap[it.key ?: ""] = it }
+                        return@map petMap
+                    }.collect { adapter?.setOwnedPets(it) }
+                }
+        }
     }
 
     private fun openMarket() {

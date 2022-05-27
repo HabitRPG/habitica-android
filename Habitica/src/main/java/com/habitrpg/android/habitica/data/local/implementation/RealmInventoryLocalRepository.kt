@@ -22,6 +22,10 @@ import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.Sort
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -100,14 +104,14 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         )
     }
 
-    override fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<out List<OwnedItem>> {
+    override fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flow<List<OwnedItem>> {
         return queryUser(userID).map {
             val items = when (itemType) {
-                "eggs" -> it.items?.eggs
-                "hatchingPotions" -> it.items?.hatchingPotions
-                "food" -> it.items?.food
-                "quests" -> it.items?.quests
-                "special" -> it.items?.special
+                "eggs" -> it?.items?.eggs
+                "hatchingPotions" -> it?.items?.hatchingPotions
+                "food" -> it?.items?.food
+                "quests" -> it?.items?.quests
+                "special" -> it?.items?.special
                 else -> emptyList()
             } ?: emptyList()
             if (includeZero) {
@@ -118,11 +122,9 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         }
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out List<Item>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(itemClass).`in`("key", keys).findAll().asFlowable()
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
+        return realm.where(itemClass).`in`("key", keys).findAll().toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
     override fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>> {
@@ -133,7 +135,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
     }
 
     override fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>> {
-        return queryUser(userID).map {
+        return queryUserFlowable(userID).map {
             val items = HashMap<String, OwnedItem>()
             it.items?.eggs?.forEach { items[it.key + "-" + it.itemType] = it }
             it.items?.food?.forEach { items[it.key + "-" + it.itemType] = it }
@@ -158,17 +160,15 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         )
     }
 
-    override fun getMounts(): Flowable<out List<Mount>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Mount::class.java)
+    override fun getMounts(): Flow<List<Mount>> {
+        return realm.where(Mount::class.java)
                 .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
-    override fun getMounts(type: String?, group: String?, color: String?): Flowable<out List<Mount>> {
+    override fun getMounts(type: String?, group: String?, color: String?): Flow<List<Mount>> {
         var query = realm.where(Mount::class.java)
             .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
         if (type != null) {
@@ -180,33 +180,29 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         if (color != null) {
             query = query.equalTo("color", color)
         }
-        return RxJavaBridge.toV3Flowable(
-            query.findAll()
-                .asFlowable()
+        return query.findAll()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
-    override fun getOwnedMounts(userID: String): Flowable<out List<OwnedMount>> {
+    override fun getOwnedMounts(userID: String): Flow<List<OwnedMount>> {
         return queryUser(userID)
             .map {
-                it.items?.mounts?.filter {
+                it?.items?.mounts?.filter {
                     it.owned == true
                 } ?: emptyList()
             }
     }
 
-    override fun getPets(): Flowable<out List<Pet>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Pet::class.java)
+    override fun getPets(): Flow<List<Pet>> {
+        return realm.where(Pet::class.java)
                 .sort("type", Sort.ASCENDING, "animal", Sort.ASCENDING)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
-    override fun getPets(type: String?, group: String?, color: String?): Flowable<out List<Pet>> {
+    override fun getPets(type: String?, group: String?, color: String?): Flow<List<Pet>> {
         var query = realm.where(Pet::class.java)
             .sort("type", Sort.ASCENDING, if (color == null) "color" else "animal", Sort.ASCENDING)
         if (type != null) {
@@ -218,20 +214,16 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         if (color != null) {
             query = query.equalTo("color", color)
         }
-        return RxJavaBridge.toV3Flowable(
-            query.findAll()
-                .asFlowable()
+        return query.findAll()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
-    override fun getOwnedPets(userID: String): Flowable<out List<OwnedPet>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(User::class.java)
+    override fun getOwnedPets(userID: String): Flow<List<OwnedPet>> {
+        return realm.where(User::class.java)
                 .equalTo("id", userID)
                 .findAll()
-                .asFlowable()
-        )
+                .toFlow()
             .filter { it.isLoaded && it.isValid && !it.isEmpty() }
             .map {
                 it.first()?.items?.pets?.filter {
@@ -255,7 +247,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
     }
 
     override fun getOwnedItem(userID: String, type: String, key: String, includeZero: Boolean): Flowable<OwnedItem> {
-        return queryUser(userID).map {
+        return queryUserFlowable(userID).map {
             var items = (
                 when (type) {
                     "eggs" -> it.items?.eggs

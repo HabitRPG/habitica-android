@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -24,7 +25,8 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.StableViewModelFactory
-import io.reactivex.rxjava3.core.Maybe
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class StableRecyclerFragment :
@@ -104,17 +106,11 @@ class StableRecyclerFragment :
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
             adapter?.animalIngredientsRetriever = { animal, callback ->
-                Maybe.zip(
-                    inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstElement(),
-                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstElement()
-                ) { eggs, potions ->
-                    Pair(eggs.first() as? Egg, potions.first() as? HatchingPotion)
-                }.subscribe(
-                    {
-                        callback(it)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+                lifecycleScope.launch {
+                    val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstOrNull()?.firstOrNull() as? Egg
+                    val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstOrNull()?.firstOrNull() as? HatchingPotion
+                    callback(Pair(egg, potion))
+                }
             }
             adapter?.itemType = this.itemType
             adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()

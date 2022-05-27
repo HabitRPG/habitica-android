@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -44,6 +45,10 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {
@@ -109,7 +114,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         userViewModel.user.observeOnce(this) {
             if (it != null) {
                 user = it
-                setAdapter()
+                adapter?.user = it
             }
         }
 
@@ -124,7 +129,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         binding?.openMarketButton?.setOnClickListener {
             openMarket()
         }
-
+        setAdapter()
         this.loadItems()
     }
 
@@ -134,7 +139,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         adapter = binding?.recyclerView?.adapter as? ItemRecyclerAdapter
         if (adapter == null) {
             context?.let {
-                adapter = ItemRecyclerAdapter(context, user)
+                adapter = ItemRecyclerAdapter(context)
             }
             binding?.recyclerView?.adapter = adapter
             adapter?.useSpecialEvents?.subscribeWithErrorHandler { onSpecialItemSelected(it) }?.let { compositeSubscription.add(it) }
@@ -277,42 +282,34 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             else -> Egg::class.java
         }
         itemType?.let { type ->
-            compositeSubscription.add(
+            lifecycleScope.launch {
                 inventoryRepository.getOwnedItems(type)
-                    .map { it.distinctBy { it.key } }
-                    .doOnNext { items ->
+                    .onEach { items ->
                         adapter?.data = items
                     }
                     .map { items -> items.mapNotNull { it.key } }
-                    .flatMap {
-                        inventoryRepository.getItems(itemClass, it.toTypedArray())
-                    }
                     .map {
+                        inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
+                    }
+                    .collect {
                         val itemMap = mutableMapOf<String, Item>()
-                        for (item in it) {
+                        for (item in it ?: emptyList()) {
                             itemMap[item.key] = item
                         }
-                        itemMap
+                        adapter?.items = itemMap
                     }
-                    .subscribe(
-                        { items ->
-                            adapter?.items = items
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+            }
+            lifecycleScope.launch {
+                inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
+            }
+            lifecycleScope.launch {
+                inventoryRepository.getOwnedPets().map { ownedPets ->
+                    val petMap = mutableMapOf<String, OwnedPet>()
+                    ownedPets.forEach { petMap[it.key ?: ""] = it }
+                    return@map petMap
+                }.collect { adapter?.setOwnedPets(it) }
+            }
         }
-
-        compositeSubscription.add(inventoryRepository.getPets().subscribe({ adapter?.setExistingPets(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(
-            inventoryRepository.getOwnedPets()
-                .map { ownedMounts ->
-                    val mountMap = mutableMapOf<String, OwnedPet>()
-                    ownedMounts.forEach { mountMap[it.key ?: ""] = it }
-                    return@map mountMap
-                }
-                .subscribe({ adapter?.setOwnedPets(it) }, RxErrorHandler.handleEmptyError())
-        )
     }
 
     private fun openMarket() {

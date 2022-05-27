@@ -12,19 +12,20 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getArmoireRemainingCount(): Long
     fun getOwnedEquipment(): Flowable<out List<Equipment>>
 
-    fun getMounts(): Flowable<out List<Mount>>
+    fun getMounts(): Flow<List<Mount>>
 
-    fun getOwnedMounts(userID: String): Flowable<out List<OwnedMount>>
+    fun getOwnedMounts(userID: String): Flow<List<OwnedMount>>
 
-    fun getPets(): Flowable<out List<Pet>>
+    fun getPets(): Flow<List<Pet>>
 
-    fun getOwnedPets(userID: String): Flowable<out List<OwnedPet>>
+    fun getOwnedPets(userID: String): Flow<List<OwnedPet>>
 
     fun getInAppRewards(): Flowable<out List<ShopItem>>
     fun getQuestContent(key: String): Flowable<QuestContent>
@@ -34,15 +35,15 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getOwnedEquipment(type: String): Flowable<out List<Equipment>>
 
-    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flowable<out List<Item>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
     fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>>
-    fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flowable<out List<OwnedItem>>
+    fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flow<List<OwnedItem>>
     fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>>
     fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>>
 
     fun getEquipment(key: String): Flowable<Equipment>
-    fun getMounts(type: String?, group: String?, color: String?): Flowable<out List<Mount>>
-    fun getPets(type: String?, group: String?, color: String?): Flowable<out List<Pet>>
+    fun getMounts(type: String?, group: String?, color: String?): Flow<List<Mount>>
+    fun getPets(type: String?, group: String?, color: String?): Flow<List<Pet>>
 
     fun updateOwnedEquipment(user: User)
 
