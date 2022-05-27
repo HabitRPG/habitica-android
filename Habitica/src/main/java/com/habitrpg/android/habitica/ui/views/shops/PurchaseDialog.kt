@@ -252,7 +252,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
 
         shopItem = item
 
-        compositeSubscription.add(userRepository.getUser().subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUserFlowable().subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
     }
 
     private fun setUser(user: User) {

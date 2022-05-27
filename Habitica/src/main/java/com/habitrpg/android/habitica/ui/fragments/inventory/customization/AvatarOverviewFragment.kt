@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import javax.inject.Inject
 
 class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>(), AdapterView.OnItemSelectedListener {
+
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentAvatarOverviewBinding? = null
 
@@ -40,11 +44,7 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
         binding?.avatarHairMustacheView?.setOnClickListener { displayCustomizationFragment("hair", "mustache") }
         binding?.avatarBackgroundView?.setOnClickListener { displayCustomizationFragment("background", null) }
 
-        compositeSubscription.add(
-            userRepository.getUser().subscribeWithErrorHandler {
-                updateUser(it)
-            }
-        )
+        userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -59,12 +59,13 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
         MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarEquipment(type, category ?: ""))
     }
 
-    fun updateUser(user: User) {
-        this.setSize(user.preferences?.size)
+    fun updateUser(user: User?) {
+        this.setSize(user?.preferences?.size)
         setCustomizations(user)
     }
 
-    private fun setCustomizations(user: User) {
+    private fun setCustomizations(user: User?) {
+        if (user == null) return
         binding?.avatarShirtView?.customizationIdentifier = user.preferences?.size + "_shirt_" + user.preferences?.shirt
         binding?.avatarSkinView?.customizationIdentifier = "skin_" + user.preferences?.skin
         val chair = user.preferences?.chair

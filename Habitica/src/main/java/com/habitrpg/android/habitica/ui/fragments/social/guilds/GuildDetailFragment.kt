@@ -30,11 +30,11 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import javax.inject.Inject
-import javax.inject.Named
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Named
 
 class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
@@ -138,7 +138,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     private fun getGroupChallenges(): List<Challenge> {
         val groupChallenges = mutableListOf<Challenge>()
-        userRepository.getUser(userId).forEach {
+        userRepository.getUserFlowable().forEach {
             it.challenges?.forEach {
                 challengeRepository.getChallenge(it.challengeID).forEach {
                     if (it.groupId.equals(viewModel?.groupID)) {

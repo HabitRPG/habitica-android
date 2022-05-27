@@ -73,7 +73,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
 
         compositeSubscription.add(
-            userRepository.getUser()
+            userRepository.getUserFlowable()
                 .map {
                     it.party?.id ?: ""
                 }

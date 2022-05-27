@@ -88,7 +88,7 @@ class GiftGemsActivity : PurchaseActivity() {
         )
 
         compositeSubscription.add(
-            userRepository.getUser().subscribe(
+            userRepository.getUserFlowable().subscribe(
                 {
                     currencyView.value = it.gemCount.toDouble()
                 },

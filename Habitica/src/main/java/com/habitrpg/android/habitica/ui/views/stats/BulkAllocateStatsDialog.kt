@@ -75,7 +75,7 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subscription = userRepository.getUser().subscribe(
+        subscription = userRepository.getUserFlowable().subscribe(
             {
                 pointsToAllocate = it.stats?.points ?: 0
                 binding.strengthSliderView.previousValue = it.stats?.strength ?: 0

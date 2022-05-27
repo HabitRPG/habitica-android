@@ -15,12 +15,16 @@ import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import javax.inject.Inject
 
 class AdventureGuideActivity : BaseActivity() {
     private lateinit var binding: ActivityAdventureGuideBinding
+
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     private lateinit var achievementTitles: Map<String, String>
     private lateinit var achievementDescriptions: Map<String, String>
@@ -62,6 +66,12 @@ class AdventureGuideActivity : BaseActivity() {
         binding.descriptionView.setText(descriptionText.fromHtml(), TextView.BufferType.SPANNABLE)
 
         AmplitudeManager.sendNavigationEvent("adventure guide screen")
+
+        userViewModel.user.observe(this) {
+            if (it != null) {
+                updateUser(it)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -69,18 +79,6 @@ class AdventureGuideActivity : BaseActivity() {
             NavUtils.navigateUpFromSameTask(this)
             true
         } else super.onOptionsItemSelected(item)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        compositeSubscription.add(
-            userRepository.getUser().subscribe(
-                {
-                    updateUser(it)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
     }
 
     private fun updateUser(user: User) {

@@ -41,11 +41,11 @@ import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import javax.inject.Inject
-import javax.inject.Named
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Named
 
 class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
@@ -374,7 +374,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun getGroupChallenges(): List<Challenge> {
         var groupChallenges = mutableListOf<Challenge>()
-        userRepository.getUser(userId).forEach {
+        userRepository.getUserFlowable().forEach {
             it.challenges?.forEach {
                 challengeRepository.getChallenge(it.challengeID).forEach {
                     if (it.groupId.equals(viewModel?.groupID)) {

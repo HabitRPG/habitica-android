@@ -312,7 +312,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         })
 
         compositeSubscription.add(
-            userRepository.getUser()
+            userRepository.getUserFlowable()
                 .distinct { it.hasCompletedOnboarding }
                 .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
                 .takeUntil { it.hasCompletedOnboarding }

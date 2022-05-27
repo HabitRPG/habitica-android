@@ -102,7 +102,7 @@ class VerifyUsernameActivity : BaseActivity() {
         )
 
         compositeSubscription.add(
-            userRepository.getUser().firstElement().subscribe {
+            userRepository.getUserFlowable().firstElement().subscribe {
                 binding.displayNameEditText.setText(it.profile?.name)
                 displayNameVerificationEvents.onNext(it.profile?.name ?: "")
                 binding.usernameEditText.setText(it.authentication?.localAuthentication?.username)

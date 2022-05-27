@@ -41,13 +41,13 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayTy
 import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.math.min
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class FullProfileActivity : BaseActivity() {
     private var blocks: List<String> = listOf()
@@ -98,7 +98,7 @@ class FullProfileActivity : BaseActivity() {
         binding.giftGemsButton.setOnClickListener { MainNavigationController.navigate(R.id.giftGemsActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
         binding.giftSubscriptionButton.setOnClickListener { MainNavigationController.navigate(R.id.giftSubscriptionActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
         compositeSubscription.add(
-            userRepository.getUser().subscribe(
+            userRepository.getUserFlowable().subscribe(
                 {
                     blocks = it.inbox?.blocks ?: listOf()
                     binding.blockedDisclaimerView.visibility = if (isUserBlocked()) View.VISIBLE else View.GONE

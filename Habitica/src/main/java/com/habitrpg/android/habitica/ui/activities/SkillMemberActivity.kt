@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivitySkillMembersBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import javax.inject.Inject
 
 class SkillMemberActivity : BaseActivity() {
@@ -19,6 +20,8 @@ class SkillMemberActivity : BaseActivity() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_skill_members
@@ -54,7 +57,7 @@ class SkillMemberActivity : BaseActivity() {
         binding.recyclerView.adapter = viewAdapter
 
         compositeSubscription.add(
-            userRepository.getUser()
+            userRepository.getUserFlowable()
                 .flatMap { user -> socialRepository.getGroupMembers(user.party?.id ?: "") }
                 .subscribe({ viewAdapter?.data = it }, RxErrorHandler.handleEmptyError())
         )

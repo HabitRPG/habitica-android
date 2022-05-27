@@ -32,10 +32,10 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -46,7 +46,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
-import javax.inject.Named
 
 class ChallengeFormActivity : BaseActivity() {
 
@@ -56,8 +55,8 @@ class ChallengeFormActivity : BaseActivity() {
     internal lateinit var challengeRepository: ChallengeRepository
     @Inject
     internal lateinit var socialRepository: SocialRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    internal lateinit var userId: String
+    @Inject
+    internal lateinit var userViewModel: MainUserViewModel
 
     private lateinit var challengeTasks: ChallengeTasksRecyclerViewAdapter
 
@@ -247,7 +246,7 @@ class ChallengeFormActivity : BaseActivity() {
             fillControlsByChallenge()
         }
 
-        compositeSubscription.add(userRepository.getUser(userId).subscribe({ this.user = it }, RxErrorHandler.handleEmptyError()))
+        userViewModel.user.observe(this) { user = it }
         binding.gemIconView.setImageBitmap(HabiticaIconsHelper.imageOfGem())
 
         binding.challengeAddGemBtn.setOnClickListener { onAddGem() }
@@ -341,7 +340,7 @@ class ChallengeFormActivity : BaseActivity() {
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         compositeSubscription.add(
             socialRepository.getUserGroups("guild").zipWith(
-                userRepository.getUser()
+                userRepository.getUserFlowable()
                     .map { it.party?.id ?: "" }
                     .distinctUntilChanged()
                     .flatMap {

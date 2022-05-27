@@ -18,10 +18,10 @@ import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -40,6 +40,8 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     private var totalStrength = 0
         set(value) {
@@ -102,21 +104,15 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             )
         }
 
-        compositeSubscription.add(
-            userRepository.getUser()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { user ->
-                        canAllocatePoints =
-                            user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0
-                        binding?.unlockAtLevel?.visibility =
-                            if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
-                        updateStats(user)
-                        updateAttributePoints(user)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        userViewModel.user.observe(viewLifecycleOwner) { user ->
+            if (user == null) return@observe
+            canAllocatePoints =
+                user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0
+            binding?.unlockAtLevel?.visibility =
+                if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
+            updateStats(user)
+            updateAttributePoints(user)
+        }
 
         binding?.distributeEvenlyButton?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {

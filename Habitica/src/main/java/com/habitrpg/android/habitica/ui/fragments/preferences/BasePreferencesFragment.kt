@@ -1,30 +1,35 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
-import javax.inject.Named
 
 abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     @Inject
     lateinit var userRepository: UserRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     internal open var user: User? = null
 
     internal val compositeSubscription = CompositeDisposable()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUser().subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        userViewModel.user.observe(viewLifecycleOwner) { user = it }
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onDestroy() {

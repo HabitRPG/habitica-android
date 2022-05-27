@@ -22,6 +22,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.perf.FirebasePerformance
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -123,7 +124,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchTrace: com.google.firebase.perf.metrics.Trace? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
-        mainActivityCreatedAt = Date()
+        if (BuildConfig.DEBUG) {
+            mainActivityCreatedAt = Date()
+        }
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
         } catch (e: IllegalStateException) {

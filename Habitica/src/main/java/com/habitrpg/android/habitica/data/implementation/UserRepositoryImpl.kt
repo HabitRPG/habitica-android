@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
+import kotlinx.coroutines.flow.Flow
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
@@ -43,14 +44,15 @@ class UserRepositoryImpl(
 
     private var lastSync: Date? = null
 
-    override fun getUser(): Flowable<User> = getUser(userID)
+    override fun getUser(): Flow<User?> = getUser(userID)
+    override fun getUserFlowable(): Flowable<User> = localRepository.getUserFlowable(userID)
 
-    override fun getUser(userID: String): Flowable<User> = localRepository.getUser(userID)
+    override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
 
     private fun updateUser(userID: String, updateData: Map<String, Any>): Flowable<User> {
         return Flowable.zip(
             apiClient.updateUser(updateData),
-            localRepository.getUser(userID).firstElement().toFlowable()
+            localRepository.getUserFlowable(userID).firstElement().toFlowable()
         ) { newUser, user -> mergeUser(user, newUser) }
     }
 
@@ -99,7 +101,7 @@ class UserRepositoryImpl(
                     }
                 }
         } else {
-            return getUser().take(1)
+            return localRepository.getUserFlowable(userID).take(1)
         }
     }
 
@@ -225,7 +227,7 @@ class UserRepositoryImpl(
             } else {
                 apiClient.updateUsername(newLoginName.trim())
             }
-            ).flatMapMaybe { localRepository.getUser(userID).firstElement() }
+            ).flatMapMaybe { localRepository.getUserFlowable(userID).firstElement() }
             .doOnNext { user ->
                 localRepository.modify(user) { liveUser ->
                     liveUser.authentication?.localAuthentication?.username = newLoginName
@@ -294,7 +296,7 @@ class UserRepositoryImpl(
         }
 
     override fun runCron(tasks: MutableList<Task>) {
-        var observable: Maybe<Any> = localRepository.getUser(userID).firstElement()
+        var observable: Maybe<Any> = localRepository.getUserFlowable(userID).firstElement()
             .filter { it.needsCron }
             .map { user ->
                 localRepository.modify(user) { liveUser ->
@@ -317,7 +319,7 @@ class UserRepositoryImpl(
 
     override fun useCustomization(type: String, category: String?, identifier: String): Flowable<User> {
         if (appConfigManager.enableLocalChanges()) {
-            localRepository.getUser(userID).firstElement().subscribe(
+            localRepository.getUserFlowable(userID).firstElement().subscribe(
                 { liveUser ->
                     localRepository.modify(liveUser) { user ->
                         when (type) {
@@ -396,7 +398,7 @@ class UserRepositoryImpl(
     }
 
     private fun getLiveUser(): Flowable<User> {
-        return localRepository.getUser(userID)
+        return localRepository.getUserFlowable(userID)
             .map { Optional(localRepository.getLiveObject(it)) }
             .filterMapEmpty()
     }

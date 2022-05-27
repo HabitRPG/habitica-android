@@ -15,10 +15,15 @@ import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), UserLocalRepository {
     override fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus> {
-        return getUser(userID)
+        return getUserFlowable(userID)
             .map { it.party?.id ?: "" }
             .distinctUntilChanged()
             .filter { it.isNotBlank() }
@@ -67,16 +72,25 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             .filter { it.isLoaded }.map { it }
     )
 
-    override fun getUser(userID: String): Flowable<User> {
+    override fun getUser(userID: String): Flow<User?> {
+        if (realm.isClosed) return emptyFlow()
+        return realm.where(User::class.java)
+            .equalTo("id", userID)
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+            .map { users -> users.first() }
+    }
+
+    override fun getUserFlowable(userID: String): Flowable<User> {
         if (realm.isClosed) return Flowable.empty()
         return RxJavaBridge.toV3Flowable(
             realm.where(User::class.java)
-                .equalTo("id", userID)
-                .findAll()
-                .asFlowable()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
-                .map { users -> users.first() }
-        )
+            .equalTo("id", userID)
+            .findAll()
+            .asFlowable()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+            .map { users -> users.first() })
     }
 
     override fun saveUser(user: User, overrideExisting: Boolean) {

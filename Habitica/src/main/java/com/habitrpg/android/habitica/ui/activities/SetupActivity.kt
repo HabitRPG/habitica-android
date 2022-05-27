@@ -69,7 +69,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUser().subscribe({ this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUserFlowable().subscribe({ this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
         compositeSubscription.add(userRepository.retrieveUser().subscribe({}, RxErrorHandler.handleEmptyError()))
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"

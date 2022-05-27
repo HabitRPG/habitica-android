@@ -200,7 +200,7 @@ class YesterdailyDialog private constructor(
                 Observable.just("")
                     .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .filter { !userRepository.isClosed }
-                    .flatMapMaybe { userRepository.getUser(userId).firstElement() }
+                    .flatMapMaybe { userRepository.getUserFlowable().firstElement() }
                     .filter { it.needsCron }
                     .flatMapMaybe {
                         val cal = Calendar.getInstance()

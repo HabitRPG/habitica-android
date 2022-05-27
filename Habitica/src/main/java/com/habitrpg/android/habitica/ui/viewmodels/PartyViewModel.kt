@@ -81,7 +81,7 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
 
     fun loadPartyID() {
         disposable.add(
-            userRepository.getUser()
+            userRepository.getUserFlowable()
                 .map { it.party?.id ?: "" }
                 .distinctUntilChanged()
                 .subscribe(

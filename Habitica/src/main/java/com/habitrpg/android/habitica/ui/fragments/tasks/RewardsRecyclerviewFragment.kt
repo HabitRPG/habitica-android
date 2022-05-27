@@ -78,14 +78,9 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         )?.let { compositeSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
 
-        compositeSubscription.add(
-            userRepository.getUser().subscribe(
-                {
-                    (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        viewModel?.user?.observe(viewLifecycleOwner) {
+            (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it
+        }
     }
 
     override fun onDestroy() {

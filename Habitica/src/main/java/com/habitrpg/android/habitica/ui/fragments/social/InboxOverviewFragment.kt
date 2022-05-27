@@ -20,23 +20,22 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.InboxConversation
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.AvatarView
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import javax.inject.Inject
-import javax.inject.Named
 
 class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentInboxBinding? = null
 
@@ -59,11 +58,9 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
 
         binding?.inboxRefreshLayout?.setOnRefreshListener(this)
 
-        compositeSubscription.add(
-            userRepository.getUser().map { it.inbox?.optOut ?: false }.distinctUntilChanged().subscribe {
-                binding?.optOutView?.visibility = if (it) View.VISIBLE else View.GONE
-            }
-        )
+        userViewModel.user.observe(viewLifecycleOwner) {
+            binding?.optOutView?.visibility = if (it?.inbox?.optOut == true) View.VISIBLE else View.GONE
+        }
 
         loadMessages()
         retrieveMessages()

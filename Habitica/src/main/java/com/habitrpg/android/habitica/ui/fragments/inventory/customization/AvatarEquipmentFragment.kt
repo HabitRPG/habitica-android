@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.user.User
@@ -97,11 +96,7 @@ class AvatarEquipmentFragment :
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadEquipment()
 
-        compositeSubscription.add(
-            userRepository.getUser().subscribeWithErrorHandler {
-                updateUser(it)
-            }
-        )
+        userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -129,14 +124,14 @@ class AvatarEquipmentFragment :
         layoutManager.spanCount = spanCount
     }
 
-    fun updateUser(user: User) {
+    fun updateUser(user: User?) {
         this.updateActiveCustomization(user)
-        this.adapter.gemBalance = user.gemCount
+        this.adapter.gemBalance = user?.gemCount ?: 0
         adapter.notifyDataSetChanged()
     }
 
-    private fun updateActiveCustomization(user: User) {
-        if (this.type == null || user.preferences == null) {
+    private fun updateActiveCustomization(user: User?) {
+        if (this.type == null || user?.preferences == null) {
             return
         }
         val outfit = if (user.preferences?.costume == true) user.items?.gear?.costume else user.items?.gear?.equipped

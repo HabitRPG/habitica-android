@@ -25,12 +25,11 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
 import javax.inject.Inject
-import javax.inject.Named
 
 class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
 
@@ -40,8 +39,8 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
     lateinit var socialRepository: SocialRepository
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -60,15 +59,10 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
 
         shopSpriteSuffix = configManager.shopSpriteSuffix()
 
-        compositeSubscription.add(
-            userRepository.getUser(userId).subscribe(
-                {
-                    this.user = it
-                    this.updatePausedState()
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        userViewModel.user.observe(viewLifecycleOwner) {
+            user = it
+            updatePausedState()
+        }
 
         binding?.shopHeader?.descriptionView?.setText(R.string.tavern_description)
         binding?.shopHeader?.namePlate?.setText(R.string.tavern_owner)

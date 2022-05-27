@@ -42,7 +42,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         this.setUp()
-        userRepository.getUser().subscribe({
+        userRepository.getUserFlowable().subscribe({
             user = it
             updateData()
         }, RxErrorHandler.handleEmptyError())
@@ -59,7 +59,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         this.context = context
 
         if (user == null) {
-            userRepository.getUser().firstElement().subscribe({
+            userRepository.getUserFlowable().firstElement().subscribe({
                 user = it
                 updateData(appWidgetIds)
             }, RxErrorHandler.handleEmptyError())

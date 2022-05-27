@@ -72,7 +72,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
             val ids = intArrayOf(appWidgetId)
 
             if (taskId != null) {
-                userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null) }
+                userRepository.getUserFlowable().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null) }
                     .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), { this.onUpdate(context, mgr, ids) })
             }
         }

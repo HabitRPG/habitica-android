@@ -16,11 +16,13 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository : BaseRepository {
-    fun getUser(): Flowable<User>
+    fun getUser(): Flow<User?>
+    fun getUserFlowable(): Flowable<User>
+    fun getUser(userID: String): Flow<User?>
 
-    fun getUser(userID: String): Flowable<User>
     fun updateUser(updateData: Map<String, Any>): Flowable<User>
     fun updateUser(key: String, value: Any): Flowable<User>
 

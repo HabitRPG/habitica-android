@@ -18,12 +18,17 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import io.reactivex.rxjava3.functions.Consumer
+import javax.inject.Inject
 
 class ClassSelectionActivity : BaseActivity(), Consumer<User> {
+
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     private lateinit var binding: ActivityClassSelectionBinding
     private var currentClass: String? = null
@@ -71,18 +76,13 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
 
         newClass = currentClass ?: "healer"
 
-        compositeSubscription.add(
-            userRepository.getUser().firstElement().subscribe(
-                {
-                    it.preferences?.let { preferences ->
-                        val unmanagedPrefs = userRepository.getUnmanagedCopy(preferences)
-                        unmanagedPrefs.costume = false
-                        setAvatarViews(unmanagedPrefs)
-                    }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        userViewModel.user.observe(this) {
+            it?.preferences?.let { preferences ->
+                val unmanagedPrefs = userRepository.getUnmanagedCopy(preferences)
+                unmanagedPrefs.costume = false
+                setAvatarViews(unmanagedPrefs)
+            }
+        }
 
         if (!isInitialSelection) {
             compositeSubscription.add(

@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 enum class UserQuestStatus {
     NO_QUEST,
@@ -21,7 +22,8 @@ interface UserLocalRepository : BaseLocalRepository {
 
     fun getTutorialSteps(): Flowable<List<TutorialStep>>
 
-    fun getUser(userID: String): Flowable<User>
+    fun getUser(userID: String): Flow<User?>
+    fun getUserFlowable(userID: String): Flowable<User>
 
     fun saveUser(user: User, overrideExisting: Boolean = true)
 

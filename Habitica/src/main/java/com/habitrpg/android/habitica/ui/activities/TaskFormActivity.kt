@@ -43,6 +43,7 @@ import com.habitrpg.android.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.realm.RealmList
 import java.util.Date
@@ -63,6 +64,8 @@ class TaskFormActivity : BaseActivity() {
     lateinit var challengeRepository: ChallengeRepository
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     private var challenge: Challenge? = null
 
@@ -161,15 +164,10 @@ class TaskFormActivity : BaseActivity() {
                     RxErrorHandler.handleEmptyError()
                 )
         )
-        compositeSubscription.add(
-            userRepository.getUser().subscribe(
-                {
-                    usesTaskAttributeStats = it.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
-                    configureForm()
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        userViewModel.user.observe(this) {
+            usesTaskAttributeStats = it?.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
+            configureForm()
+        }
 
         binding.textEditText.addTextChangedListener(
             OnChangeTextWatcher { _, _, _, _ ->

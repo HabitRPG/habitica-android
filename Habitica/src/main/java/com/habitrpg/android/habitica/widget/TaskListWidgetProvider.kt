@@ -44,7 +44,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             val taskId = intent.getStringExtra(TASK_ID_ITEM)
 
             if (taskId != null) {
-                userRepository.getUser().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null) }
+                userRepository.getUserFlowable().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null) }
                     .subscribe(
                         { taskDirectionData ->
                             showToastForTaskDirection(context, taskDirectionData)

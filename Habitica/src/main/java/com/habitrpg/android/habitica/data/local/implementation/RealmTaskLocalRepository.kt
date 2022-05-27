@@ -14,8 +14,18 @@ import io.reactivex.rxjava3.core.Maybe
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.Sort
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
+
+    suspend fun getTasks(taskType: TaskType, userID: String, t: String): Flow<List<Task>> {
+        return realm.where(Task::class.java)
+            .equalTo("typeValue", taskType.value)
+            .equalTo(("userId"), userID)
+            .findAll()
+            .toFlow()
+    }
 
     override fun getTasks(taskType: TaskType, userID: String): Flowable<out List<Task>> {
         if (realm.isClosed) {
