@@ -81,8 +81,8 @@ interface UserRepository : BaseRepository {
 
     fun useCustomization(type: String, category: String?, identifier: String): Flowable<User>
     fun retrieveAchievements(): Flowable<List<Achievement>>
-    fun getAchievements(): Flowable<out List<Achievement>>
-    fun getQuestAchievements(): Flowable<out List<QuestAchievement>>
+    fun getAchievements(): Flow<List<Achievement>>
+    fun getQuestAchievements(): Flow<List<QuestAchievement>>
 
     fun getUserQuestStatus(): Flowable<UserQuestStatus>
 

@@ -31,7 +31,7 @@ class InventoryRepositoryImpl(
     userID: String,
     var appConfigManager: AppConfigManager
 ) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
-    override fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>> {
+    override fun getQuestContent(keys: List<String>): Flow<List<QuestContent>> {
         return localRepository.getQuestContent(keys)
     }
 

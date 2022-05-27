@@ -356,11 +356,11 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun getAchievements(): Flowable<out List<Achievement>> {
+    override fun getAchievements(): Flow<List<Achievement>> {
         return localRepository.getAchievements()
     }
 
-    override fun getQuestAchievements(): Flowable<out List<QuestAchievement>> {
+    override fun getQuestAchievements(): Flow<List<QuestAchievement>> {
         return localRepository.getQuestAchievements(userID)
     }
 

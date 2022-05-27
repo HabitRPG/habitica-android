@@ -46,25 +46,21 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             }
     }
 
-    override fun getAchievements(): Flowable<out List<Achievement>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Achievement::class.java)
+    override fun getAchievements(): Flow<List<Achievement>> {
+        return realm.where(Achievement::class.java)
                 .sort("index")
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
-    override fun getQuestAchievements(userID: String): Flowable<out List<QuestAchievement>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(User::class.java)
+    override fun getQuestAchievements(userID: String): Flow<List<QuestAchievement>> {
+        return realm.where(User::class.java)
                 .equalTo("id", userID)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
                 .map { it.first()?.questAchievements ?: emptyList() }
-        )
     }
 
     override fun getTutorialSteps(): Flowable<List<TutorialStep>> = RxJavaBridge.toV3Flowable(

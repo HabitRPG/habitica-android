@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
@@ -20,8 +21,10 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import io.reactivex.rxjava3.kotlin.Flowables
-import io.reactivex.rxjava3.kotlin.combineLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
@@ -92,64 +95,52 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        compositeSubscription.add(
-            userRepository.getAchievements().map { achievements ->
-                achievements.sortedBy {
-                    if (it.category == "onboarding") {
-                        it.index
-                    } else {
-                        (it.category?.first()?.toInt() ?: 2) * it.index
+        lifecycleScope.launch {
+            userRepository.getAchievements().combine(userRepository.getQuestAchievements()) { achievements, questAchievements ->
+                return@combine Pair(achievements, questAchievements)
+            }.combine(userRepository.getQuestAchievements()
+                .map { it.mapNotNull { achievement -> achievement.questKey } }
+                .map { inventoryRepository.getQuestContent(it).firstOrNull() }) { achievements, content ->
+                Pair(achievements, content)
+            }.collect {
+                val achievements = it.first.first
+                val entries = mutableListOf<Any>()
+                var lastCategory = ""
+                achievements.forEach { achievement ->
+                    val categoryIdentifier = achievement.category ?: ""
+                    if (categoryIdentifier != lastCategory) {
+                        val category = Pair(
+                            categoryIdentifier,
+                            achievements.count { check ->
+                                check.category == categoryIdentifier && check.earned
+                            }
+                        )
+                        entries.add(category)
+                        lastCategory = categoryIdentifier
                     }
+                    entries.add(achievement)
                 }
-            }.combineLatest(
-                Flowables.combineLatest(
-                    userRepository.getQuestAchievements(),
-                    userRepository.getQuestAchievements()
-                        .map { it.mapNotNull { achievement -> achievement.questKey } }
-                        .flatMap { inventoryRepository.getQuestContent(it) }
+                val questAchievements = it.first.second
+                entries.add(Pair("Quests completed", questAchievements.size))
+                entries.addAll(
+                    questAchievements.map { achievement ->
+                        val questContent = it.second?.firstOrNull { achievement.questKey == it.key }
+                        achievement.title = questContent?.text
+                        achievement
+                    }
                 )
-            ).subscribe(
-                {
-                    val achievements = it.first
-                    val entries = mutableListOf<Any>()
-                    var lastCategory = ""
-                    achievements.forEach { achievement ->
-                        val categoryIdentifier = achievement.category ?: ""
-                        if (categoryIdentifier != lastCategory) {
-                            val category = Pair(
-                                categoryIdentifier,
-                                achievements.count { check ->
-                                    check.category == categoryIdentifier && check.earned
-                                }
-                            )
-                            entries.add(category)
-                            lastCategory = categoryIdentifier
-                        }
-                        entries.add(achievement)
-                    }
-                    val questAchievements = it.second
-                    entries.add(Pair("Quests completed", questAchievements.first.size))
-                    entries.addAll(
-                        questAchievements.first.map { achievement ->
-                            val questContent = questAchievements.second.firstOrNull { achievement.questKey == it.key }
-                            achievement.title = questContent?.text
-                            achievement
-                        }
-                    )
 
-                    val user = userViewModel.user.value
-                    val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
-                    if (challengeAchievementCount > 0) {
-                        entries.add(Pair("Challenges won", challengeAchievementCount))
-                        user?.challengeAchievements?.let { it1 -> entries.addAll(it1) }
-                    }
+                val user = userViewModel.user.value
+                val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
+                if (challengeAchievementCount > 0) {
+                    entries.add(Pair("Challenges won", challengeAchievementCount))
+                    user?.challengeAchievements?.let { it1 -> entries.addAll(it1) }
+                }
 
-                    adapter.entries = entries
-                    adapter.notifyDataSetChanged()
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+                adapter.entries = entries
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

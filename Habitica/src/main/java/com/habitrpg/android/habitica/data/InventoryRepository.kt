@@ -36,7 +36,7 @@ interface InventoryRepository : BaseRepository {
 
     fun getOwnedPets(): Flow<List<OwnedPet>>
     fun getQuestContent(key: String): Flowable<QuestContent>
-    fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>>
+    fun getQuestContent(keys: List<String>): Flow<List<QuestContent>>
 
     fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>>
     fun retrieveInAppRewards(): Flowable<List<ShopItem>>

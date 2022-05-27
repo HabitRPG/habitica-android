@@ -31,14 +31,12 @@ import java.util.Date
 import java.util.Locale
 
 class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), InventoryLocalRepository {
-    override fun getQuestContent(keys: List<String>): Flowable<out List<QuestContent>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(QuestContent::class.java)
+    override fun getQuestContent(keys: List<String>): Flow<List<QuestContent>> {
+        return realm.where(QuestContent::class.java)
                 .`in`("key", keys.toTypedArray())
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
     override fun getQuestContent(key: String): Flowable<QuestContent> {
