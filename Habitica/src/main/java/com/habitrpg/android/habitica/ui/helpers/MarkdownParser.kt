@@ -30,7 +30,7 @@ import io.reactivex.rxjava3.functions.Consumer
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 object MarkdownParser {
-
+    private val cache = sortedMapOf<Int, Spanned>()
     internal var markwon: Markwon? = null
 
     fun setup(context: Context) {
@@ -90,9 +90,19 @@ object MarkdownParser {
         if (input == null) {
             return SpannableString("")
         }
+        val hashCode = input.hashCode()
+        if (cache.containsKey(hashCode)) {
+            return cache[hashCode] ?: SpannableString(input)
+        }
         val text = EmojiParser.parseEmojis(input) ?: input
         // Adding this space here bc for some reason some markdown is not rendered correctly when the whole string is supposed to be formatted
-        return markwon?.toMarkdown("$text ") ?: SpannableString(text)
+        val result = markwon?.toMarkdown("$text ") ?: SpannableString(text)
+
+        cache[hashCode] = result
+        if (cache.size > 100) {
+            cache.remove(0)
+        }
+        return result
     }
 
     fun parseMarkdownAsync(input: String?, onSuccess: Consumer<Spanned>) {
@@ -101,6 +111,10 @@ object MarkdownParser {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(onSuccess, RxErrorHandler.handleEmptyError())
+    }
+
+    fun hasCached(input: String?): Boolean {
+        return cache.containsKey(input?.hashCode())
     }
 
     /**

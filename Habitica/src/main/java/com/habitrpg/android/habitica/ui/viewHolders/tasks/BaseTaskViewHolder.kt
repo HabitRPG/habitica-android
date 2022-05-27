@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.content.Context
-import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.view.MotionEvent
 import android.view.View
@@ -151,12 +150,13 @@ abstract class BaseTaskViewHolder constructor(
         if (canContainMarkdown()) {
             if (data.parsedText != null) {
                 titleTextView.setParsedMarkdown(data.parsedText)
+            } else if (MarkdownParser.hasCached(data.text)) {
+                titleTextView.setParsedMarkdown(MarkdownParser.parseMarkdown(data.text))
             } else {
                 titleTextView.text = data.text
                 titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance())
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
-                        .map { TextUtils.concat(it, "\u200B").toString() }
                         .map { MarkdownParser.parseMarkdown(it) }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -168,10 +168,16 @@ abstract class BaseTaskViewHolder constructor(
                             RxErrorHandler.handleEmptyError()
                         )
                 }
-                if (displayMode != "minimal") {
-                    if (data.parsedNotes != null) {
-                        notesTextView?.setParsedMarkdown(data.parsedText)
-                    } else {
+            }
+            if (displayMode != "minimal") {
+                when {
+                    data.parsedNotes != null -> {
+                        notesTextView?.setParsedMarkdown(data.parsedNotes)
+                    }
+                    MarkdownParser.hasCached(data.notes) -> {
+                        notesTextView?.setParsedMarkdown(MarkdownParser.parseMarkdown(data.notes))
+                    }
+                    else -> {
                         notesTextView?.text = data.notes
                         notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance())
                         data.notes?.let { notes ->
@@ -179,22 +185,21 @@ abstract class BaseTaskViewHolder constructor(
                                 return@let
                             }
                             Single.just(notes)
-                                .map { TextUtils.concat(it, "\u200B").toString() }
                                 .map { MarkdownParser.parseMarkdown(it) }
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(
                                     { parsedNotes ->
-                                        notesTextView?.text = parsedNotes
+                                        data.parsedNotes = parsedNotes
                                         notesTextView?.setParsedMarkdown(parsedNotes)
                                     },
                                     RxErrorHandler.handleEmptyError()
                                 )
                         }
                     }
-                } else {
-                    notesTextView?.visibility = View.GONE
                 }
+            } else {
+                notesTextView?.visibility = View.GONE
             }
         } else {
             titleTextView.text = data.text
