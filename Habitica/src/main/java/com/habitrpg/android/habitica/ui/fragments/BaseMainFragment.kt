@@ -58,7 +58,8 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         setHasOptionsMenu(true)
 
         updateTabLayoutVisibility()
-
+        updateToolbarInteractivity()
+        
         if (hidesToolbar) {
             hideToolbar()
             disableToolbarScrolling()
@@ -86,7 +87,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        activity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, activity, null) }
+        activity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, activity) }
         updateToolbarInteractivity()
     }
 

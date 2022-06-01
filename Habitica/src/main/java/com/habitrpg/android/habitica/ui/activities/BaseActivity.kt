@@ -199,12 +199,12 @@ abstract class BaseActivity : AppCompatActivity() {
                 actionBar.setHomeButtonEnabled(true)
             }
         }
-        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
+        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val ret = super.onCreateOptionsMenu(menu)
-        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
+        toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, this) }
         return ret
     }
 

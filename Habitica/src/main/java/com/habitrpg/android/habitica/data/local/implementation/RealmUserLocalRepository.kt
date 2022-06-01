@@ -125,14 +125,12 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getTeamPlans(userID: String): Flowable<out List<TeamPlan>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(TeamPlan::class.java)
+    override fun getTeamPlans(userID: String): Flow<List<TeamPlan>> {
+        return realm.where(TeamPlan::class.java)
                 .equalTo("userID", userID)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
     override fun getTeamPlan(teamID: String): Flowable<Group> {

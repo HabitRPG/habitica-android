@@ -24,6 +24,7 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -319,8 +320,7 @@ class TaskRepositoryImpl(
     override fun getTaskCopies(userId: String): Flow<List<Task>> =
         localRepository.getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
 
-    override fun getTaskCopies(tasks: List<Task>): Flowable<List<Task>> =
-        Flowable.just(localRepository.getUnmanagedCopy(tasks))
+    override fun getTaskCopies(tasks: List<Task>): List<Task> = localRepository.getUnmanagedCopy(tasks)
 
     override fun retrieveDailiesFromDate(date: Date): Flowable<TaskList> {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)

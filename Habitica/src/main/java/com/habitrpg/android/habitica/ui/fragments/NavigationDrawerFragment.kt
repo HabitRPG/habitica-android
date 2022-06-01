@@ -50,6 +50,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
@@ -171,17 +172,14 @@ class NavigationDrawerFragment : DialogFragment() {
         )
 
         if (configManager.enableTeamBoards()) {
-            subscriptions?.add(
+            lifecycleScope.launch {
                 userRepository.getTeamPlans()
-                    .distinctUntilChanged { firstTeams, secondTeams -> firstTeams == secondTeams }
-                    .subscribe(
-                        {
-                            getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.isNotEmpty()
-                            adapter.setTeams(it)
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+                    .distinctUntilChanged()
+                    .collect {
+                        getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.isNotEmpty()
+                        adapter.setTeams(it)
+                    }
+            }
         } else {
             getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = false
         }

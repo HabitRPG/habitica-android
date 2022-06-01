@@ -25,7 +25,6 @@ import android.widget.TextView
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
-import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.waitForLayout
@@ -43,45 +42,33 @@ object ToolbarColorHelper {
     fun colorizeToolbar(
         toolbar: Toolbar,
         activity: Activity?,
-        overrideModernHeader: Boolean? = null
     ) {
         if (activity == null) return
-        val modernHeaderStyle = overrideModernHeader ?: PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("modern_header_style", true)
-        val toolbarIconsColor = if (modernHeaderStyle) {
-            toolbar.setBackgroundColor(activity.getThemeColor(R.attr.headerBackgroundColor))
-            activity.getThemeColor(R.attr.headerTextColor)
-        } else {
-            toolbar.setBackgroundColor(activity.getThemeColor(R.attr.colorPrimary))
-            activity.getThemeColor(R.attr.toolbarContentColor)
-        }
+        toolbar.setBackgroundColor(activity.getThemeColor(R.attr.headerBackgroundColor))
+        val toolbarIconsColor = activity.getThemeColor(R.attr.headerTextColor)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             activity.window.statusBarColor = activity.getThemeColor(R.attr.colorPrimaryDark)
         }
         val colorFilter = PorterDuffColorFilter(toolbarIconsColor, PorterDuff.Mode.MULTIPLY)
         for (i in 0 until toolbar.childCount) {
-            val v = toolbar.getChildAt(i)
-
-            // Step 1 : Changing the color of back button (or open drawer button).
-            if (v is ImageButton) {
-                // Action Bar back button
-                v.drawable.colorFilter = colorFilter
-            } else if (v is ActionMenuView) {
-                for (j in 0 until v.childCount) {
-
-                    // Step 2: Changing the color of any ActionMenuViews - icons that are not back button, nor text, nor overflow menu icon.
-                    // Colorize the ActionViews -> all icons that are NOT: back button | overflow menu
-                    colorizeChild(v.getChildAt(j), toolbarIconsColor, colorFilter)
+            when (val v = toolbar.getChildAt(i)) {
+                is ImageButton -> {
+                    v.drawable.colorFilter = colorFilter
                 }
-            } else if (v is TextView) {
-                v.setTextColor(toolbarIconsColor)
+                is ActionMenuView -> {
+                    for (j in 0 until v.childCount) {
+                        colorizeChild(v.getChildAt(j), toolbarIconsColor, colorFilter)
+                    }
+                }
+                is TextView -> {
+                    v.setTextColor(toolbarIconsColor)
+                }
             }
         }
 
-        // Step 3: Changing the color of title and subtitle.
         toolbar.setTitleTextColor(toolbarIconsColor)
         toolbar.setSubtitleTextColor(toolbarIconsColor)
 
-        // Step 4: Changing the color of the Overflow Menu icon.
         setOverflowButtonColor(activity, toolbarIconsColor)
     }
 

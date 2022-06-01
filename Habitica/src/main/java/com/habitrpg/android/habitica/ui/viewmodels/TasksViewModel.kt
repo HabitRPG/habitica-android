@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.text.format.DateUtils
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -20,6 +21,7 @@ import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
+import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Named
@@ -58,21 +60,25 @@ class TasksViewModel : BaseViewModel() {
         }
 
     init {
-        compositeSubscription.add(
-            userRepository.getTeamPlans()
-                .subscribe({
-                    owners = listOf(Pair(userID, userViewModel.displayName)) + it.map {
-                        Pair(
-                            it.id,
-                            it.summary
-                        )
+        if (appConfigManager.enableTeamBoards()) {
+            viewModelScope.launch {
+                userRepository.getTeamPlans()
+                    .collect {
+                        owners = listOf(Pair(userID, userViewModel.displayName)) + it.map {
+                            Pair(
+                                it.id,
+                                it.summary
+                            )
+                        }
+                        if (owners.size > 1 && canSwitchOwners.value != false) {
+                            canSwitchOwners.value = owners.size > 1
+                        }
                     }
-                    if (owners.size > 1 && canSwitchOwners.value != false) {
-                        canSwitchOwners.value = owners.size > 1
-                    }
-                }, RxErrorHandler.handleEmptyError())
-        )
-        compositeSubscription.add(userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError()))
+            }
+            compositeSubscription.add(
+                userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError())
+            )
+        }
     }
 
     internal fun refreshData(onComplete: () -> Unit) {

@@ -371,7 +371,7 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun getTeamPlans(): Flowable<out List<TeamPlan>> {
+    override fun getTeamPlans(): Flow<List<TeamPlan>> {
         return localRepository.getTeamPlans(userID)
     }
 

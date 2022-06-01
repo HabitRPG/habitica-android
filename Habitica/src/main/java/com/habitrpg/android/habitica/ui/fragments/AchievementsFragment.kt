@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +18,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
-import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
@@ -156,9 +154,6 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
             menuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             menuItem?.setIcon(R.drawable.ic_round_view_module_24px)
             tintMenuIcon(menuItem)
-        }
-        activity?.findViewById<Toolbar>(R.id.toolbar)?.let {
-            ToolbarColorHelper.colorizeToolbar(it, activity, null)
         }
         super.onCreateOptionsMenu(menu, inflater)
     }

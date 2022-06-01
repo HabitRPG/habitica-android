@@ -88,7 +88,7 @@ interface UserRepository : BaseRepository {
 
     fun reroll(): Flowable<User>
     fun retrieveTeamPlans(): Flowable<List<TeamPlan>>
-    fun getTeamPlans(): Flowable<out List<TeamPlan>>
+    fun getTeamPlans(): Flow<List<TeamPlan>>
     fun retrieveTeamPlan(teamID: String): Flowable<Group>
     fun getTeamPlan(teamID: String): Flowable<Group>
 }

@@ -17,10 +17,16 @@ import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
 class HabitButtonWidgetActivity : BaseActivity() {
+    private val job = SupervisorJob()
 
     private lateinit var binding: WidgetConfigureHabitButtonBinding
 
@@ -72,11 +78,12 @@ class HabitButtonWidgetActivity : BaseActivity() {
         adapter?.getTaskSelectionEvents()?.subscribe(
             { task -> taskSelected(task.id) },
             RxErrorHandler.handleEmptyError()
-        )
-            ?.let { compositeSubscription.add(it) }
+        )?.let { compositeSubscription.add(it) }
         binding.recyclerView.adapter = adapter
 
-        compositeSubscription.add(taskRepository.getTasksFlowable(TaskType.HABIT, userId).subscribe({ adapter?.data = it }, RxErrorHandler.handleEmptyError()))
+        CoroutineScope(Dispatchers.Main + job).launch {
+            adapter?.data = taskRepository.getTasks(TaskType.HABIT, userId).firstOrNull() ?: listOf()
+        }
     }
 
     private fun taskSelected(taskId: String?) {

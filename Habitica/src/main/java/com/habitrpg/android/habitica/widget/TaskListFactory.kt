@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.widget
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.os.Handler
 import android.text.SpannableStringBuilder
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
@@ -11,12 +10,14 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 abstract class TaskListFactory internal constructor(
@@ -26,6 +27,8 @@ abstract class TaskListFactory internal constructor(
     private val listItemResId: Int,
     private val listItemTextResId: Int
 ) : RemoteViewsService.RemoteViewsFactory {
+    private val job = SupervisorJob()
+
     private val widgetId: Int = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0)
     @Inject
     lateinit var taskRepository: TaskRepository
@@ -42,25 +45,13 @@ abstract class TaskListFactory internal constructor(
         if (!this::taskRepository.isInitialized) {
             return
         }
-        val mainHandler = Handler(context.mainLooper)
-        mainHandler.post {
-            taskRepository.getTasksFlowable(taskType)
-                .firstElement()
-                .toObservable()
-                .flatMap { Observable.fromIterable(it) }
-                .filter { task -> task.type == TaskType.TODO && !task.completed || task.isDisplayedActive }
-                .toList()
-                .flatMapMaybe { tasks -> taskRepository.getTaskCopies(tasks).firstElement() }
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { tasks ->
-                        reloadData = false
-                        taskList = tasks
-                        AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+        CoroutineScope(Dispatchers.Main + job).launch {
+            val tasks = taskRepository.getTasks(taskType).firstOrNull()?.filter { task ->
+                task.type == TaskType.TODO && !task.completed || task.isDisplayedActive
+            } ?: return@launch
+            taskList = taskRepository.getTaskCopies(tasks)
+            reloadData = false
+            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)
         }
     }
 
@@ -94,7 +85,7 @@ abstract class TaskListFactory internal constructor(
             remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.lightTaskColor)
             val fillInIntent = Intent()
             fillInIntent.putExtra(TaskListWidgetProvider.TASK_ID_ITEM, task.id)
-            remoteView.setOnClickFillInIntent(R.id.checkbox_background, fillInIntent)
+            //remoteView.setOnClickFillInIntent(R.id.checkbox_background, fillInIntent)
         }
         return remoteView
     }

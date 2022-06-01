@@ -123,7 +123,6 @@ class ChallengeFormActivity : BaseActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_create_challenge, menu)
-        findViewById<Toolbar>(R.id.toolbar).let { ToolbarColorHelper.colorizeToolbar(it, this, overrideModernHeader) }
         return super.onCreateOptionsMenu(menu)
     }
 
