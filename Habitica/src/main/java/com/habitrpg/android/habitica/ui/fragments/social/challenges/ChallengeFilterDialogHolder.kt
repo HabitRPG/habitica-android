@@ -8,7 +8,6 @@ import com.habitrpg.android.habitica.databinding.DialogChallengeFilterBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengesFilterRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
-import com.habitrpg.android.habitica.utils.Action1
 
 internal class ChallengeFilterDialogHolder private constructor(
     view: View,
@@ -18,7 +17,7 @@ internal class ChallengeFilterDialogHolder private constructor(
 
     private var filterGroups: List<Group>? = null
     private var currentFilter: ChallengeFilterOptions? = null
-    private var selectedGroupsCallback: Action1<ChallengeFilterOptions>? = null
+    private var selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)? = null
     private var adapter: ChallengesFilterRecyclerViewAdapter? = null
 
     init {
@@ -29,7 +28,7 @@ internal class ChallengeFilterDialogHolder private constructor(
     fun bind(
         filterGroups: List<Group>,
         currentFilter: ChallengeFilterOptions?,
-        selectedGroupsCallback: Action1<ChallengeFilterOptions>
+        selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)?
     ) {
         this.filterGroups = filterGroups
         this.currentFilter = currentFilter
@@ -66,7 +65,7 @@ internal class ChallengeFilterDialogHolder private constructor(
             activity: Activity,
             filterGroups: List<Group>,
             currentFilter: ChallengeFilterOptions?,
-            selectedGroupsCallback: Action1<ChallengeFilterOptions>
+            selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)?
         ) {
             val dialogLayout = activity.layoutInflater.inflate(R.layout.dialog_challenge_filter, null)
 

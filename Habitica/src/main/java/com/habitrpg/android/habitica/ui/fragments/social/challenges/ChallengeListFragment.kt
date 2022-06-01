@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.utils.Action1
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.kotlin.Flowables
 import javax.inject.Inject
@@ -175,13 +174,9 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             ChallengeFilterDialogHolder.showDialog(
                 it,
                 filterGroups ?: emptyList(),
-                filterOptions,
-                object : Action1<ChallengeFilterOptions> {
-                    override fun call(t: ChallengeFilterOptions) {
-                        changeFilter(t)
-                    }
-                }
-            )
+                filterOptions) {
+                changeFilter(it)
+            }
         }
     }
 
