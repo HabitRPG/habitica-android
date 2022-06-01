@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/FragmentDialogTitle"
+        android:id="@+id/titleTextView"
+        android:background="@color/window_background"
+        android:textColor="@color/text_primary" />
+        <com.habitrpg.android.habitica.ui.helpers.RecyclerViewEmptySupport
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbarSize="3dp"
+            android:scrollbarThumbVertical="@color/scrollbarThumb"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:scrollbars="vertical" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/footerTextView"
+        tools:text="Need more items. Check the Market"
+        android:gravity="center"
+        android:padding="8dp"/>
+    <Button
+        android:id="@+id/openMarketButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/open_market"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"/>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.lifecycle.lifecycleScope
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
+import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
@@ -44,7 +43,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {
+class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     var parentSubscription: CompositeDisposable? = null
 
@@ -71,10 +70,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     var user: User? = null
     internal var layoutManager: androidx.recyclerview.widget.LinearLayoutManager? = null
 
-    override var binding: FragmentItemsBinding? = null
+    override var binding: FragmentItemsDialogBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentItemsBinding {
-        return FragmentItemsBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentItemsDialogBinding {
+        return FragmentItemsDialogBinding.inflate(inflater, container, false)
     }
 
     override fun onDestroy() {
@@ -101,13 +100,15 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
             else -> {
             }
         }
+
+        binding?.recyclerView?.isNestedScrollingEnabled = true
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.refreshLayout?.setOnRefreshListener(this)
         binding?.recyclerView?.emptyItem = EmptyItem(
             getString(R.string.empty_items, itemTypeText ?: itemType),
             getString(R.string.open_market)
@@ -259,16 +260,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsBinding>(), SwipeRefr
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(ITEM_TYPE_KEY, this.itemType)
-    }
-
-    override fun onRefresh() {
-        binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(
-            userRepository.retrieveUser(true, true)
-                .doOnTerminate {
-                    binding?.refreshLayout?.isRefreshing = false
-                }.subscribe({ }, RxErrorHandler.handleEmptyError())
-        )
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
