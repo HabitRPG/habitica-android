@@ -95,7 +95,7 @@ class PetDetailRecyclerFragment :
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        layoutManager = androidx.recyclerview.widget.GridLayoutManager(getActivity(), 2)
+        layoutManager = androidx.recyclerview.widget.GridLayoutManager(getActivity(), 4)
         layoutManager?.spanSizeLookup =
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {

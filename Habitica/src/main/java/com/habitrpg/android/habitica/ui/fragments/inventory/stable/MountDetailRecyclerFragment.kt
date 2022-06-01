@@ -78,7 +78,7 @@ class MountDetailRecyclerFragment :
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 2)
+        layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {

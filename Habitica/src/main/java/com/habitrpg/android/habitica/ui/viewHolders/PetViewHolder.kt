@@ -94,11 +94,14 @@ class PetViewHolder(
         binding.imageView.background = null
         binding.activeIndicator.visibility =
             if (currentPet.equals(animal?.key)) View.VISIBLE else View.GONE
+        binding.imageView.tag = imageName
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
             val drawable =
                 if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
-            binding.imageView.bitmap = drawable.toBitmap()
+            if (binding.imageView.tag == imageName) {
+                binding.imageView.bitmap = drawable.toBitmap()
+            }
         }
     }
 
