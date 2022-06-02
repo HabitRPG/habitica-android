@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorContentBackground">
 
-    <com.habitrpg.android.habitica.ui.AvatarView
+    <com.habitrpg.common.habitica.views.AvatarView
         android:id="@+id/avatar_view"
         android:layout_centerHorizontal="true"
         android:layout_width="@dimen/avatar_width"
