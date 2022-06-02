@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.Case

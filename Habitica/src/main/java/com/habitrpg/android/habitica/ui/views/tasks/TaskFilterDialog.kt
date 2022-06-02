@@ -20,13 +20,13 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
 import com.habitrpg.android.habitica.databinding.EditTagItemBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.UUID

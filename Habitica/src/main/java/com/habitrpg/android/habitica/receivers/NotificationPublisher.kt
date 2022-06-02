@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.functions.BiFunction

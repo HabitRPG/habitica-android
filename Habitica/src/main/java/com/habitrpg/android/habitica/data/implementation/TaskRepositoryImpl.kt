@@ -15,8 +15,8 @@ import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
@@ -24,7 +24,6 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date

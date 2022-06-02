@@ -162,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center_vertical">
-                        <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+                        <com.habitrpg.common.habitica.views.UsernameLabel
                             android:id="@+id/leader_profile_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />

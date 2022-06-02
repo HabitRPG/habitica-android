@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.models.tasks.HabitResetOption
+import com.habitrpg.common.habitica.models.tasks.HabitResetOption
 
 class HabitResetStreakButtons @JvmOverloads constructor(
     context: Context,

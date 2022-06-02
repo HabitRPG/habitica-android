@@ -37,11 +37,11 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.android.habitica.models.tasks.Attribute
-import com.habitrpg.android.habitica.models.tasks.Frequency
-import com.habitrpg.android.habitica.models.tasks.HabitResetOption
+import com.habitrpg.common.habitica.models.tasks.Attribute
+import com.habitrpg.common.habitica.models.tasks.Frequency
+import com.habitrpg.common.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog

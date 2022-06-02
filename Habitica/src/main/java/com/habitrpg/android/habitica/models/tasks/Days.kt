@@ -2,11 +2,9 @@ package com.habitrpg.android.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
-import io.realm.RealmObject
-import io.realm.annotations.RealmClass
 
-@RealmClass(embedded = true)
-open class Days() : RealmObject(), Parcelable {
+@io.realm.annotations.RealmClass(embedded = true)
+open class Days() : io.realm.RealmObject(), Parcelable {
     var m: Boolean = true
     var t: Boolean = true
     var w: Boolean = true

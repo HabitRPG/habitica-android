@@ -8,11 +8,16 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.common.habitica.helpers.MarkdownParser
+import com.habitrpg.common.habitica.models.tasks.Attribute
+import com.habitrpg.common.habitica.models.tasks.Frequency
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import org.json.JSONArray
+import org.json.JSONException
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -22,8 +27,6 @@ import java.time.temporal.TemporalAccessor
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
-import org.json.JSONArray
-import org.json.JSONException
 
 open class Task : RealmObject, BaseMainObject, Parcelable {
 

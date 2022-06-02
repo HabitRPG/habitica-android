@@ -13,16 +13,15 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.helpers.setParsedMarkdown
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
-import io.noties.markwon.utils.NoCopySpannableFactory
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.helpers.MarkdownParser
+import com.habitrpg.common.habitica.helpers.setParsedMarkdown
+import com.habitrpg.common.habitica.models.responses.TaskDirection
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.Action
@@ -154,7 +153,6 @@ abstract class BaseTaskViewHolder constructor(
                 titleTextView.setParsedMarkdown(MarkdownParser.parseMarkdown(data.text))
             } else {
                 titleTextView.text = data.text
-                titleTextView.setSpannableFactory(NoCopySpannableFactory.getInstance())
                 if (data.text.isNotEmpty()) {
                     Single.just(data.text)
                         .map { MarkdownParser.parseMarkdown(it) }
@@ -179,7 +177,6 @@ abstract class BaseTaskViewHolder constructor(
                     }
                     else -> {
                         notesTextView?.text = data.notes
-                        notesTextView?.setSpannableFactory(NoCopySpannableFactory.getInstance())
                         data.notes?.let { notes ->
                             if (notes.isEmpty()) {
                                 return@let

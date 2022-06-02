@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
+import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.TutorialView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

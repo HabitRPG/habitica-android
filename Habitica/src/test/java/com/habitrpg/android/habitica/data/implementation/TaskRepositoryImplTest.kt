@@ -8,8 +8,8 @@ import com.habitrpg.common.habitica.models.responses.TaskDirectionData
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.kotest.common.ExperimentalKotest

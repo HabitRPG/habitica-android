@@ -12,7 +12,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver
-import com.habitrpg.android.habitica.ui.helpers.EmojiParser
+import com.habitrpg.common.habitica.helpers.EmojiParser
 
 class ReceivedPrivateMessageLocalNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {

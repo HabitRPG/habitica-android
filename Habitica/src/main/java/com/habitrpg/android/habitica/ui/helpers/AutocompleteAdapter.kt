@@ -15,7 +15,9 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.FindUsernameResult
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.Profile
-import com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+import com.habitrpg.common.habitica.views.UsernameLabel
+import com.habitrpg.common.habitica.helpers.EmojiMap
+import com.habitrpg.common.habitica.helpers.EmojiParser
 import java.util.Date
 
 class AutocompleteAdapter(

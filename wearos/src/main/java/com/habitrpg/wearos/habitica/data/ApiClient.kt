@@ -4,7 +4,8 @@ import android.content.Context
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
-import com.habitrpg.wearos.habitica.models.User
+import com.habitrpg.common.habitica.models.auth.UserAuth
+import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -83,7 +84,16 @@ class ApiClient @Inject constructor(
         this.apiService = retrofitAdapter.create(ApiService::class.java)
     }
 
-    suspend fun getUser(): User? {
-        return apiService.getUser().data
-    }
+    suspend fun getUser() = apiService.getUser().data
+    suspend fun updateUser(data: Map<String, Any>) = apiService.updateUser(data).data
+    suspend fun sleep() = apiService.sleep().data
+    suspend fun revive() = apiService.revive().data
+
+    suspend fun loginLocal(auth: UserAuth) = apiService.connectLocal(auth).data
+    suspend fun loginSocial(auth: UserAuthSocial) = apiService.connectSocial(auth).data
+
+    suspend fun addPushDevice(data: Map<String, String>) = apiService.addPushDevice(data).data
+    suspend fun removePushDevice(id: String) = apiService.removePushDevice(id).data
+
+    suspend fun runCron() = apiService.runCron().data
 }

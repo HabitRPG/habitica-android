@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <com.habitrpg.android.habitica.ui.views.social.UsernameLabel
+        <com.habitrpg.common.habitica.views.UsernameLabel
             android:id="@+id/display_name_textview"
             android:layout_height="wrap_content"
             android:layout_width="0dp"

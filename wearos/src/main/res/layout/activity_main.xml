@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.activities.MainActivity"
     tools:deviceIds="wear">
 
     <FrameLayout
@@ -14,7 +14,7 @@
         app:layout_boxedEdges="all">
 
         <com.habitrpg.common.habitica.views.AvatarView
-            android:id="@+id/text"
+            android:id="@+id/avatar_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>

@@ -21,8 +21,8 @@ import com.habitrpg.android.habitica.databinding.TaskFormTaskSchedulingBinding
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.tasks.Days
-import com.habitrpg.android.habitica.models.tasks.Frequency
-import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.Frequency
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import java.text.DateFormat
 import java.text.DateFormatSymbols

@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
-import com.habitrpg.android.habitica.ui.helpers.EmojiParser
+import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable

@@ -5,13 +5,12 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.kotlin.toFlowable
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.Sort

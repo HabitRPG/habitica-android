@@ -75,10 +75,6 @@
     <string name="notes">Notes</string>
     <string name="difficulty">Difficulty</string>
     <string name="tags">Tags</string>
-    <string name="trivial">Trivial</string>
-    <string name="easy">Easy</string>
-    <string name="medium">Medium</string>
-    <string name="hard">Hard</string>
     <string name="start_date">Start Date</string>
     <string name="positive_habit_form">Positive</string>
     <string name="negative_habit_form">Negative</string>
@@ -807,8 +803,6 @@
     <string name="adjust_counter">Adjust Counter</string>
     <string name="password_changed">Password successfully changed</string>
     <string name="assigned_stat">Assigned Stat</string>
-    <string name="monthly">Monthly</string>
-    <string name="weekly">Weekly</string>
     <string name="repeats">Repeats</string>
     <string name="every">Every</string>
     <string name="scheduling">Scheduling</string>
@@ -912,7 +906,6 @@
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="complete">Complete</string>
-    <string name="repeat_daily">Daily</string>
     <string name="search">Search</string>
     <string name="search_hint">Search tasks</string>
     <string name="preference_push_party_activity">Party Activity</string>

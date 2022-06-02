@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.android.habitica.ui.helpers.EmojiParser
+import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import io.realm.Case
 import io.realm.OrderedRealmCollection

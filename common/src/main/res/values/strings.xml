@@ -8,4 +8,11 @@
     <string name="gold_plural">gold</string>
     <string name="gold_capitalized">Gold</string>
     <string name="mystic_hourglasses">Mystic Hourglasses</string>
+    <string name="repeat_daily">Daily</string>
+    <string name="monthly">Monthly</string>
+    <string name="weekly">Weekly</string>
+    <string name="trivial">Trivial</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
 </resources>

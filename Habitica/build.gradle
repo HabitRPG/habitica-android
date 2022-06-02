@@ -50,13 +50,6 @@ dependencies {
     //Desugaring
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    // Markdown
-    implementation "io.noties.markwon:core:4.6.2"
-    implementation "io.noties.markwon:ext-strikethrough:4.6.2"
-    implementation "io.noties.markwon:image:4.6.2"
-    implementation "io.noties.markwon:recycler:4.6.2"
-    implementation "io.noties.markwon:linkify:4.6.2"
-
     implementation('com.jaredrummler:android-device-names:2.1.0')
 
     // IAP Handling / Verification

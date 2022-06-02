@@ -47,7 +47,7 @@ import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
-import com.habitrpg.android.habitica.models.responses.MaintenanceResponse
+import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.views.AvatarView
@@ -56,7 +56,6 @@ import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog

@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
-import com.habitrpg.android.habitica.models.tasks.Attribute
+import com.habitrpg.common.habitica.models.tasks.Attribute
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.screen.Screen
 import io.github.kakaocup.kakao.text.KButton

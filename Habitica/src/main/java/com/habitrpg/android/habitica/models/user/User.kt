@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.tasks.TasksOrder
+import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.common.habitica.models.Avatar
 import io.realm.RealmList
 import io.realm.RealmObject

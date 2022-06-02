@@ -13,6 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Converter
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 import java.security.KeyStore
@@ -36,15 +37,20 @@ class AppModule {
     }
 
     @Provides
-    @Singleton
-    fun providesApiHelper(
-        hostConfig: HostConfig,
-        @ApplicationContext context: Context
-    ): ApiClient {
-        val converter = MoshiConverterFactory.create(
+    fun providesConverterFactory(): Converter.Factory {
+        return MoshiConverterFactory.create(
             Moshi.Builder()
                 .build()
         ).asLenient()
+    }
+
+    @Provides
+    @Singleton
+    fun providesApiHelper(
+        hostConfig: HostConfig,
+        @ApplicationContext context: Context,
+        converter: Converter.Factory
+    ): ApiClient {
         return ApiClient(
             converter,
             hostConfig,

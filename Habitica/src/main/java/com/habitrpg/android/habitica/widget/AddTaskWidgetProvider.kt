@@ -6,7 +6,7 @@ import android.content.Context
 import android.widget.RemoteViews
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TaskType
 
 class AddTaskWidgetProvider : BaseWidgetProvider() {
 

@@ -39,7 +39,14 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.android.material:material:1.6.1'
+
+    // Markdown
+    implementation "io.noties.markwon:core:4.6.2"
+    implementation "io.noties.markwon:ext-strikethrough:4.6.2"
+    implementation "io.noties.markwon:image:4.6.2"
+    implementation "io.noties.markwon:recycler:4.6.2"
+    implementation "io.noties.markwon:linkify:4.6.2"
 
     // Image Management Library
     implementation("io.coil-kt:coil:1.4.0")

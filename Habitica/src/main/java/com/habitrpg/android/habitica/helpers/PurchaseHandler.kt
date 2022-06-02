@@ -26,9 +26,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.models.IAPGift
-import com.habitrpg.android.habitica.models.PurchaseValidationRequest
-import com.habitrpg.android.habitica.models.Transaction
+import com.habitrpg.common.habitica.models.IAPGift
+import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import com.habitrpg.common.habitica.models.Transaction
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.PurchaseActivity

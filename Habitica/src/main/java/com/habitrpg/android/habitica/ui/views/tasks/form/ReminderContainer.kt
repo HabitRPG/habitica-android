@@ -9,7 +9,7 @@ import androidx.core.view.children
 import androidx.core.view.updateMargins
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
-import com.habitrpg.android.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TaskType
 
 class ReminderContainer @JvmOverloads constructor(
     context: Context,
