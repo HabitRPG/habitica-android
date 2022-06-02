@@ -38,6 +38,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         inflater?.let { binding = DialogPetSuggestHatchBinding.inflate(it) }
         setAdditionalContentView(binding.root)
         HabiticaBaseApplication.userComponent?.inject(this)
+        binding.shimmerView.startShimmer()
     }
 
     fun configure(
