@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.menu
 import android.content.Context
 import android.view.View
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
-import com.habitrpg.android.habitica.ui.helpers.loadImage
+import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 
 class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), View.OnClickListener {

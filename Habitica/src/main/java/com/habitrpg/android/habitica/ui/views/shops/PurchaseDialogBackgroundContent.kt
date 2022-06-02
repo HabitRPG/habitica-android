@@ -5,8 +5,9 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.PurchaseDialogBackgroundBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.android.habitica.ui.AvatarView
-import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.models.Avatar
+import com.habitrpg.common.habitica.views.AvatarView
+import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.*
 
 class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(context) {

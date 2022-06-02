@@ -10,6 +10,7 @@ import com.habitrpg.common.habitica.models.notifications.GuildInvitationData
 import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
+import com.habitrpg.common.habitica.models.notifications.NotificationData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
@@ -75,7 +76,7 @@ class Notification {
     var type: String? = null
     var seen: Boolean? = null
 
-    //var data: NotificationData? = null
+    var data: NotificationData? = null
 
     fun getDataType(): java.lang.reflect.Type? {
         return when (type) {

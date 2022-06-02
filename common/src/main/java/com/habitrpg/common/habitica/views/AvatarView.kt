@@ -18,9 +18,9 @@ import androidx.core.view.marginTop
 import coil.clear
 import coil.load
 import com.habitrpg.common.habitica.BuildConfig
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.models.Avatar
 import java.util.Date
@@ -34,6 +34,7 @@ class AvatarView : FrameLayout {
     private var showPet = true
     private var showSleeping = true
     private var hasBackground: Boolean = false
+    private var preview: Map<LayerType, String>? = null
     private var hasMount: Boolean = false
     private var hasPet: Boolean = false
     private val imageViewHolder = mutableListOf<ImageView>()
@@ -212,7 +213,10 @@ class AvatarView : FrameLayout {
         }
 
         var backgroundName = avatar.preferences?.background
-        if (showBackground && backgroundName?.isNotEmpty() == true) {
+        if (preview != null) {
+            layerMap[preview?.keys?.first()] = preview?.values?.first()
+            if (resetHasAttributes) hasBackground = true
+        } else if (showBackground && backgroundName?.isNotEmpty() == true) {
             backgroundName = substituteOrReturn(spriteSubstitutions["backgrounds"], backgroundName)
             layerMap[LayerType.BACKGROUND] = "background_$backgroundName"
             if (resetHasAttributes) hasBackground = true
@@ -429,9 +433,10 @@ class AvatarView : FrameLayout {
         }
     }
 
-    fun setAvatar(avatar: Avatar) {
+    fun setAvatar(avatar: Avatar, preview: Map<LayerType, String>? = null) {
         val oldUser = this.avatar
         this.avatar = avatar
+        preview?.let { this.preview = preview }
 
         var equals = false
         if (oldUser != null) {
