@@ -32,6 +32,7 @@ class HubViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bind(item: MenuItem) {
         binding.title.text = item.title
         binding.iconView.setImageDrawable(item.icon)
+        binding.iconView.setColorFilter(item.color)
         binding.root.setOnClickListener {
             item.onClick()
         }

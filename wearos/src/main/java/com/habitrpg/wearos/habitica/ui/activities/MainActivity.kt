@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.common.habitica.models.tasks.TaskType
@@ -21,6 +22,7 @@ data class MenuItem(
     val identifier: String,
     val title: String,
     val icon: Drawable?,
+    val color: Int,
     val onClick: () -> Unit
 )
 
@@ -52,42 +54,56 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             MenuItem(
                 "avatar",
                 "Avatar",
-                AppCompatResources.getDrawable(this, R.drawable.icon_rewards)
+                AppCompatResources.getDrawable(this, R.drawable.ic_avatar),
+                ContextCompat.getColor(this, R.color.brand_400)
             ) {
 
             },
             MenuItem(
                 "Stats",
                 getString(R.string.stats),
-                AppCompatResources.getDrawable(this, R.drawable.icon_rewards)
+                AppCompatResources.getDrawable(this, R.drawable.ic_stats),
+                ContextCompat.getColor(this, R.color.red_100)
             ) {
 
             },
             MenuItem(
                 "habits",
                 getString(R.string.habits),
-                AppCompatResources.getDrawable(this, R.drawable.icon_habits)
+                AppCompatResources.getDrawable(this, R.drawable.icon_habits),
+                ContextCompat.getColor(this, R.color.orange_100)
             ) {
               openTasklist(TaskType.HABIT)
             },
             MenuItem(
                 "dailies",
                 getString(R.string.dailies),
-                AppCompatResources.getDrawable(this, R.drawable.icon_dailies)
+                AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
+                ContextCompat.getColor(this, R.color.yellow_100)
             ) {
                 openTasklist(TaskType.DAILY)
             },
             MenuItem(
                 "todos",
                 getString(R.string.todos),
-                AppCompatResources.getDrawable(this, R.drawable.icon_todos)
+                AppCompatResources.getDrawable(this, R.drawable.icon_todos),
+                ContextCompat.getColor(this, R.color.green_100)
             ) {
                 openTasklist(TaskType.TODO)
             },
             MenuItem(
                 "rewards",
                 getString(R.string.rewards),
-                AppCompatResources.getDrawable(this, R.drawable.icon_rewards)
+                AppCompatResources.getDrawable(this, R.drawable.icon_rewards),
+                ContextCompat.getColor(this, R.color.teal_100)
+            ) {
+                openTasklist(TaskType.REWARD)
+            },
+            MenuItem(
+                "settings",
+                getString(R.string.settings),
+                AppCompatResources.getDrawable(this, R.drawable.ic_settings),
+                ContextCompat.getColor(this, R.color.blue_100)
             ) {
                 openTasklist(TaskType.REWARD)
             }
@@ -99,7 +115,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun openTasklist(type: TaskType) {
         val intent = Intent(this, TaskListActivity::class.java).apply {
-            putExtra("type", type.name)
+            putExtra("task_type", type.name)
         }
         startActivity(intent)
     }

@@ -20,5 +20,5 @@
     <string name="todos">To Do\'s</string>
     <string name="rewards">Rewards</string>
     <string name="stats">Stats</string>
-
+    <string name="settings">Settings</string>
 </resources>
