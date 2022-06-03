@@ -1,5 +1,6 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -17,12 +18,14 @@ class TaskListViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
     userRepository: UserRepository
 ) : BaseViewModel(userRepository) {
-    val tasks = MutableLiveData<List<Task>>()
+    val _tasks = MutableLiveData<List<Task>>()
+    val tasks: LiveData<List<Task>> = _tasks
+
     val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
 
     init {
         viewModelScope.launch {
-            tasks.value = taskRepository.retrieveTasks()?.tasks?.values?.filter {
+            _tasks.value = taskRepository.retrieveTasks()?.tasks?.values?.filter {
                 it.type == taskType
             }?.toList()
         }

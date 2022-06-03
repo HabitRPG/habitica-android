@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(userRepository: UserRepository) : BaseViewModel(userRepository) {
+class AvatarViewModel @Inject constructor(userRepository: UserRepository) : BaseViewModel(userRepository) {
     val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
 

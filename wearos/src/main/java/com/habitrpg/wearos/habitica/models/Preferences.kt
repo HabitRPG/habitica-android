@@ -5,13 +5,13 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class Preferences: AvatarPreferences {
-    override val hair: Hair? = null
-    override val costume: Boolean = false
-    override val sleep: Boolean = false
-    override val shirt: String? = null
-    override val skin: String? = null
-    override val size: String? = null
-    override val background: String? = null
-    override val chair: String? = null
-    override val disableClasses: Boolean = false
+    override var hair: Hair? = null
+    override var costume: Boolean = false
+    override var sleep: Boolean = false
+    override var shirt: String? = null
+    override var skin: String? = null
+    override var size: String? = null
+    override var background: String? = null
+    override var chair: String? = null
+    override var disableClasses: Boolean = false
 }

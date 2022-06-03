@@ -53,7 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 AppCompatResources.getDrawable(this, R.drawable.ic_avatar),
                 ContextCompat.getColor(this, R.color.brand_400)
             ) {
-
+              openAvatarActivity()
             },
             MenuItem(
                 "Stats",

@@ -12,6 +12,9 @@ open class Gear {
 @JsonClass(generateAdapter = true)
 class Items {
     var gear: Gear? = null
+
+    var currentMount: String? = null
+    var currentPet: String? = null
 }
 
 @JsonClass(generateAdapter = true)
@@ -21,8 +24,10 @@ class Profile {
 
 @JsonClass(generateAdapter = true)
 class User: Avatar {
-    override var currentMount: String? = null
-    override var currentPet: String? = null
+    override val currentMount: String?
+        get() = items?.currentMount
+    override val currentPet: String?
+        get() = items?.currentPet
     override var sleep: Boolean = false
     override var stats: Stats? = null
     override var preferences: Preferences? = null
