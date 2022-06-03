@@ -3,7 +3,6 @@ package com.habitrpg.wearos.habitica.ui.activities
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
@@ -40,16 +39,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 WearableLinearLayoutManager(this@MainActivity, HabiticaScrollingLayoutCallback())
             adapter = this@MainActivity.adapter
         }
+        binding.root.post {
+            binding.root.setPaddingRelative(0, (binding.root.height * 0.25).toInt(), 0, (binding.root.height * 0.25).toInt())
+        }
     }
-
-
 
     override fun onStart() {
         super.onStart()
-        binding.root.post {
-            binding.root.setPaddingRelative(0, (binding.root.height * 0.25).toInt(), 0, (binding.root.height * 0.25).toInt())
-            binding.root.scrollY = 0
-        }
         adapter.data = listOf(
             MenuItem(
                 "avatar",
@@ -105,17 +101,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 AppCompatResources.getDrawable(this, R.drawable.ic_settings),
                 ContextCompat.getColor(this, R.color.blue_100)
             ) {
-                openTasklist(TaskType.REWARD)
             }
         )
         viewModel.user.observe(this) {
-            Log.d("MainActivity", "onStart: ${it.currentPet}")
+            adapter.title = it.profile?.name ?: ""
+            adapter.notifyItemChanged(0)
         }
+    }
+
+    private fun openAvatarActivity() {
+        startActivity(Intent(this, AvatarActivity::class.java))
     }
 
     private fun openTasklist(type: TaskType) {
         val intent = Intent(this, TaskListActivity::class.java).apply {
-            putExtra("task_type", type.name)
+            putExtra("task_type", type.value)
         }
         startActivity(intent)
     }

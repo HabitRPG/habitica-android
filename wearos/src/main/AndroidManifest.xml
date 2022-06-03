@@ -36,6 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.TaskListActivity" />
+        <activity android:name=".ui.activities.AvatarActivity" />
     </application>
 
 </manifest>

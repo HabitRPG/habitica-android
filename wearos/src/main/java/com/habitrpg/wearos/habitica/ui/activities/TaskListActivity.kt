@@ -3,8 +3,9 @@ package com.habitrpg.wearos.habitica.ui.activities
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
+import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.wearos.habitica.R
 import com.habitrpg.wearos.habitica.databinding.ActivityTasklistBinding
-import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.adapters.TaskListAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,22 +19,24 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding>() {
         binding = ActivityTasklistBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         binding.root.apply {
-            isEdgeItemsCenteringEnabled = true
             layoutManager =
                 WearableLinearLayoutManager(this@TaskListActivity, HabiticaScrollingLayoutCallback())
             adapter = this@TaskListActivity.adapter
         }
-
-        adapter.data = listOf(
-            Task().apply { text = "Test 1" },
-            Task().apply { text = "Test 2" },
-            Task().apply { text = "Test 3" },
-            Task().apply { text = "Test 4" },
-            Task().apply { text = "Test 5" }
-        )
+        setAdapterTitle()
 
         viewModel.tasks.observe(this) {
             adapter.data = it
+        }
+    }
+
+    private fun setAdapterTitle() {
+        adapter.title = when (viewModel.taskType) {
+            TaskType.HABIT -> getString(R.string.habits)
+            TaskType.DAILY -> getString(R.string.dailies)
+            TaskType.TODO -> getString(R.string.todos)
+            TaskType.REWARD -> getString(R.string.rewards)
+            null -> ""
         }
     }
 }

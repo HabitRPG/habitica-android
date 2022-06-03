@@ -5,31 +5,49 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.databinding.RowHabitBinding
+import com.habitrpg.wearos.habitica.databinding.RowHeaderBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
+import com.habitrpg.wearos.habitica.ui.viewHolders.BindableViewHolder
+import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
 
-class TaskListAdapter: RecyclerView.Adapter<TaskViewHolder>() {
+class TaskListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var title: String = ""
     var data: List<Task> = listOf()
     set(value) {
         field = value
         notifyDataSetChanged()
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        return TaskViewHolder(RowHabitBinding.inflate(parent.context.layoutInflater, parent, false).root)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = parent.context.layoutInflater
+        return if (viewType == 0) {
+            HeaderViewHolder(RowHeaderBinding.inflate(inflater, parent, false).root)
+        } else {
+            TaskViewHolder(RowHabitBinding.inflate(inflater, parent, false).root)
+        }
     }
 
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(data[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is TaskViewHolder) {
+            val item = data[position - 1]
+            holder.bind(item)
+        } else if (holder is HeaderViewHolder){
+            holder.bind(title)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position == 0) 0 else 1
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return data.size + 1
     }
 }
 
-class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TaskViewHolder(itemView: View) : BindableViewHolder<Task>(itemView) {
     val binding = RowHabitBinding.bind(itemView)
 
-    fun bind(task: Task) {
+    override fun bind(task: Task) {
         binding.title.text = task.text
     }
 }
