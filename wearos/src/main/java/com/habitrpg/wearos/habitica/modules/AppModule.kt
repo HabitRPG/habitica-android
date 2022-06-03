@@ -39,8 +39,8 @@ class AppModule {
         keyHelper: KeyHelper?,
         @ApplicationContext context: Context
     ): HostConfig {
-        return HostConfig("xxxx",
-            "xxxx")
+        return HostConfig(BuildConfig.DEBUG_USER_ID,
+            BuildConfig.DEBUG_API_KEY)
     }
 
     @Provides
