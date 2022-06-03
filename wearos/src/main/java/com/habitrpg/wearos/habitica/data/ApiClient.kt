@@ -6,6 +6,7 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -84,18 +85,23 @@ class ApiClient @Inject constructor(
         this.apiService = retrofitAdapter.create(ApiService::class.java)
     }
 
-    suspend fun getUser() = apiService.getUser().data
-    suspend fun updateUser(data: Map<String, Any>) = apiService.updateUser(data).data
-    suspend fun sleep() = apiService.sleep().data
-    suspend fun revive() = apiService.revive().data
+    private fun <T> process(response: WearableHabitResponse<T>): T? {
+        return response.data
+    }
 
-    suspend fun loginLocal(auth: UserAuth) = apiService.connectLocal(auth).data
-    suspend fun loginSocial(auth: UserAuthSocial) = apiService.connectSocial(auth).data
+    suspend fun getUser() = process(apiService.getUser())
+    suspend fun updateUser(data: Map<String, Any>) = process(apiService.updateUser(data))
+    suspend fun sleep() = process(apiService.sleep())
+    suspend fun revive() = process(apiService.revive())
 
-    suspend fun addPushDevice(data: Map<String, String>) = apiService.addPushDevice(data).data
-    suspend fun removePushDevice(id: String) = apiService.removePushDevice(id).data
+    suspend fun loginLocal(auth: UserAuth) = process(apiService.connectLocal(auth))
+    suspend fun loginSocial(auth: UserAuthSocial) = process(apiService.connectSocial(auth))
 
-    suspend fun runCron() = apiService.runCron().data
+    suspend fun addPushDevice(data: Map<String, String>) = process(apiService.addPushDevice(data))
+    suspend fun removePushDevice(id: String) = process(apiService.removePushDevice(id))
 
-    suspend fun getTasks() = apiService.getTasks().data
+    suspend fun runCron() = process(apiService.runCron())
+
+    suspend fun getTasks() = process(apiService.getTasks())
+    suspend fun scoreTask(id: String, direction: String) = process(apiService.scoreTask(id, direction))
 }

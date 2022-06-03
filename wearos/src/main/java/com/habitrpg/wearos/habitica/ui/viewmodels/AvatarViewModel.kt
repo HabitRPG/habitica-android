@@ -1,13 +1,11 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.models.User
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,12 +16,9 @@ class AvatarViewModel @Inject constructor(
     userRepository,
     exceptionBuilder
 ) {
-    val _user = MutableLiveData<User>()
-    val user: LiveData<User> = _user
+    var user: LiveData<User>
 
     init {
-        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            _user.value = userRepository.retrieveUser()
-        }
+        user = userRepository.getUser().asLiveData()
     }
 }

@@ -1,16 +1,14 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,16 +18,10 @@ class TaskListViewModel @Inject constructor(
     userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder
 ) : BaseViewModel(userRepository, exceptionBuilder) {
-    val _tasks = MutableLiveData<List<Task>>()
-    val tasks: LiveData<List<Task>> = _tasks
-
+    var tasks: LiveData<List<Task>>
     val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
 
     init {
-        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            _tasks.value = taskRepository.retrieveTasks()?.tasks?.values?.filter {
-                it.type == taskType
-            }?.toList()
-        }
+        tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT).asLiveData()
     }
 }

@@ -1,8 +1,9 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.models.User
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
@@ -13,14 +14,16 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     userRepository: UserRepository,
+    val taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder
 ) : BaseViewModel(userRepository, exceptionBuilder) {
-    val _user = MutableLiveData<User>()
-    val user: LiveData<User> = _user
+    var user: LiveData<User>
 
     init {
-        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            _user.value = userRepository.retrieveUser()
+        user = userRepository.getUser().asLiveData()
+        viewModelScope.launch {
+            userRepository.retrieveUser()
+            taskRepository.retrieveTasks()
         }
     }
 }

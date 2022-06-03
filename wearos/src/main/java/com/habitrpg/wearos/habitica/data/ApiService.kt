@@ -41,7 +41,7 @@ interface ApiService {
     suspend fun getTask(@Path("id") id: String): WearableHabitResponse<Task>
 
     @POST("tasks/{id}/score/{direction}")
-    suspend fun postTaskDirection(@Path("id") id: String, @Path("direction") direction: String): WearableHabitResponse<TaskDirectionData>
+    suspend fun scoreTask(@Path("id") id: String, @Path("direction") direction: String): WearableHabitResponse<TaskDirectionData>
     @POST("tasks/bulk-score")
     suspend fun bulkScoreTasks(@Body data: List<Map<String, String>>): WearableHabitResponse<BulkTaskScoringData>
 

@@ -37,9 +37,11 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.wear:wear:1.2.0'
     implementation "androidx.wear:wear-input:1.1.0"
+
     //Networking
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+
     //REST API handling
     implementation('com.squareup.retrofit2:retrofit:2.9.0') {
         exclude module: 'okhttp'
