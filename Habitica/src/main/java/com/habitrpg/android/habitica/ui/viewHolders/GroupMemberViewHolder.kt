@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PartyMemberBinding
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 
 class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), PopupMenu.OnMenuItemClickListener {
     private val binding = PartyMemberBinding.bind(itemView)

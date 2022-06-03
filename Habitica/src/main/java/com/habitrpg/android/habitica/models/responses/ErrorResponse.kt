@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.models.responses
 
+import com.habitrpg.common.habitica.models.responses.HabiticaError
+
 class ErrorResponse {
     var message: String? = null
     var errors: List<HabiticaError>? = null

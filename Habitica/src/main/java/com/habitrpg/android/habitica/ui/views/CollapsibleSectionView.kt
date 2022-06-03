@@ -11,8 +11,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ViewCollapsibleSectionBinding
-import com.habitrpg.android.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 
 class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     val infoIconView: ImageView

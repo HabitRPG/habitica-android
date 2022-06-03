@@ -8,9 +8,9 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.EquipmentOverviewItemBinding
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 
 class EquipmentOverviewItem @JvmOverloads constructor(
     context: Context,

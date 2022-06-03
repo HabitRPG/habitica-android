@@ -19,7 +19,7 @@ import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestCollectBinding
 import com.habitrpg.android.habitica.databinding.QuestProgressBinding
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -28,8 +28,8 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.helpers.setMarkdown
-import com.habitrpg.android.habitica.ui.views.HabiticaIcons
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIcons
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.NPCBannerView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

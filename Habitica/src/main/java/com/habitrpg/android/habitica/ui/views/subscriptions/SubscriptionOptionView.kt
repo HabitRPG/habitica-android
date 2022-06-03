@@ -7,7 +7,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PurchaseSubscriptionViewBinding
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 

@@ -26,7 +26,7 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.waitForLayout
 
 /**

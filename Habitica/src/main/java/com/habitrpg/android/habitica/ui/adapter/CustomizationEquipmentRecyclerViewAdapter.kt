@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy

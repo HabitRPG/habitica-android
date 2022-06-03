@@ -13,8 +13,11 @@ import com.habitrpg.android.habitica.databinding.ActivityFixcharacterBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AppModule
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+
 import javax.inject.Inject
 
 class FixCharacterValuesActivity : BaseActivity() {

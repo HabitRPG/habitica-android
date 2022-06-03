@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.SkillResponse
-import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.social.Group

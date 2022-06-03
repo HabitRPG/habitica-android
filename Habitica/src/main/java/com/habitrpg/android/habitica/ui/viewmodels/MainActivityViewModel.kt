@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.api.HostConfig
+import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ContentRepository

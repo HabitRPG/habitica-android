@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.view.children
 import androidx.core.view.updateMargins
-import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.TaskType
 

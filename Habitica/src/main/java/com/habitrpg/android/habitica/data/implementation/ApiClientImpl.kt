@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
-import com.habitrpg.android.habitica.api.HostConfig
-import com.habitrpg.android.habitica.api.Server
+import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -32,11 +32,11 @@ import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.ErrorResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
-import com.habitrpg.android.habitica.models.responses.HabitResponse
+import com.habitrpg.common.habitica.models.responses.HabitResponse
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.Status
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
+import com.habitrpg.common.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.shops.Shop

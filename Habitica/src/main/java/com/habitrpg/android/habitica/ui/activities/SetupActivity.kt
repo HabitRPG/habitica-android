@@ -17,7 +17,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.api.HostConfig
+import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository

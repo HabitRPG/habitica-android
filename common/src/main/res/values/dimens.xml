@@ -4,6 +4,7 @@
     <dimen name="bar_padding">5dp</dimen>
     <dimen name="bar_padding_small">2dp</dimen>
     <dimen name="bar_radius">5dp</dimen>
+    <dimen name="bar_icon_padding">4dp</dimen>
 
     <dimen name="spacing_small">4dp</dimen>
     <dimen name="spacing_large">16dp</dimen>

@@ -12,11 +12,11 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogCompletedQuestContentBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.views.PixelArtView
 
 class QuestCompletedDialogContent : LinearLayout {

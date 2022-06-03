@@ -10,11 +10,11 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.executors.UIThread
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.KeyHelper
-import com.habitrpg.android.habitica.helpers.KeyHelper.Companion.getInstance
 import com.habitrpg.android.habitica.helpers.SoundFileLoader
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
+import com.habitrpg.common.habitica.helpers.KeyHelper
+import com.habitrpg.common.habitica.helpers.KeyHelper.Companion.getInstance
 import com.habitrpg.shared.habitica.HLogger
 import dagger.Module
 import dagger.Provides

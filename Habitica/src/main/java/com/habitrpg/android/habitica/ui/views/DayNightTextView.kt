@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 
 class DayNightTextView(context: Context, attrs: AttributeSet?) : AppCompatTextView(context, attrs) {
 

@@ -7,11 +7,11 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.notifications.AchievementData
-import com.habitrpg.android.habitica.models.notifications.ChallengeWonData
-import com.habitrpg.android.habitica.models.notifications.FirstDropData
-import com.habitrpg.android.habitica.models.notifications.LoginIncentiveData
+import com.habitrpg.common.habitica.models.Notification
+import com.habitrpg.common.habitica.models.notifications.AchievementData
+import com.habitrpg.common.habitica.models.notifications.ChallengeWonData
+import com.habitrpg.common.habitica.models.notifications.FirstDropData
+import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar

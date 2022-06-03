@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 
 class HabiticaClassArrayAdapter(context: Context, resource: Int, objects: List<CharSequence>) : ArrayAdapter<CharSequence>(context, resource, R.id.textView, objects) {
 

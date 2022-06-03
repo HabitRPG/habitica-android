@@ -8,15 +8,17 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.Notification
-import com.habitrpg.android.habitica.models.notifications.GroupTaskRequiresApprovalData
-import com.habitrpg.android.habitica.models.notifications.GuildInvitationData
-import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
-import com.habitrpg.android.habitica.models.notifications.NewStuffData
-import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
-import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.models.Notification
+import com.habitrpg.common.habitica.models.notifications.GroupTaskRequiresApprovalData
+import com.habitrpg.common.habitica.models.notifications.GuildInvitationData
+import com.habitrpg.common.habitica.models.notifications.GuildInvite
+import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.common.habitica.models.notifications.NewStuffData
+import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
+import com.habitrpg.common.habitica.models.notifications.PartyInvite
+import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -79,7 +81,7 @@ open class NotificationsViewModel : BaseViewModel() {
         return Flowable.combineLatest(
             serverNotifications,
             customNotifications.toFlowable(BackpressureStrategy.LATEST),
-            BiFunction<List<Notification>, List<Notification>, List<Notification>> {
+            BiFunction {
                     serverNotificationsList, customNotificationsList ->
                 if (serverNotificationsList.firstOrNull { notification -> notification.type == Notification.Type.NEW_STUFF.type } != null) {
                     return@BiFunction serverNotificationsList + customNotificationsList.filter { notification -> notification.type != Notification.Type.NEW_STUFF.type }
@@ -131,7 +133,10 @@ open class NotificationsViewModel : BaseViewModel() {
                 notification.id = "custom-party-invitation-" + it.id
                 notification.type = Notification.Type.PARTY_INVITATION.type
                 val data = PartyInvitationData()
-                data.invitation = it
+                data.invitation = PartyInvite()
+                data.invitation?.id = it.id
+                data.invitation?.name = it.name
+                data.invitation?.inviter = it.inviter
                 notification.data = data
                 notification
             } ?: emptyList()
@@ -143,7 +148,11 @@ open class NotificationsViewModel : BaseViewModel() {
                 notification.id = "custom-guild-invitation-" + it.id
                 notification.type = Notification.Type.GUILD_INVITATION.type
                 val data = GuildInvitationData()
-                data.invitation = it
+                data.invitation = GuildInvite()
+                data.invitation?.id = it.id
+                data.invitation?.name = it.name
+                data.invitation?.inviter = it.inviter
+                data.invitation?.publicGuild = it.publicGuild
                 notification.data = data
                 notification
             } ?: emptyList()

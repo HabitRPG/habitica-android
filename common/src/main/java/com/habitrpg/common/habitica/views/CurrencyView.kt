@@ -13,8 +13,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 

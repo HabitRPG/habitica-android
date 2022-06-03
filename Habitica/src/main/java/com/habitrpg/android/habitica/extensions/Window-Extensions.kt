@@ -4,6 +4,7 @@ import android.os.Build
 import android.view.View
 import android.view.Window
 import com.habitrpg.android.habitica.R
+import com.habitrpg.common.habitica.extensions.getThemeColor
 
 fun Window.updateStatusBarColor(color: Int, isLight: Boolean) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

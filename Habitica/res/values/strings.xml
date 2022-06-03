@@ -217,7 +217,6 @@
     <string name="guild">Guild</string>
     <string name="leave">Leave</string>
     <string name="join">Join</string>
-    <string name="gems">Gems</string>
     <string name="delete">Delete</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
@@ -352,8 +351,6 @@
     <string name="login_incentive_short_count">%d Checkins</string>
     <string name="create_account_short">create an account</string>
     <string name="successful_purchase">Purchased %1$s</string>
-    <string name="gold_plural">gold</string>
-    <string name="gold_capitalized">Gold</string>
     <string name="chat_message_copied">Message copied to Clipboard</string>
     <string name="edit_tag_btn_edit">Edit</string>
     <string name="confirm_delete_tag_title">Are you sure?</string>
@@ -1026,7 +1023,6 @@
     <string name="common_questions">Common Questions</string>
     <string name="game_mechanics">Game Mechanics</string>
     <string name="subscriber_currency">Subscriber Currency</string>
-    <string name="mystic_hourglasses">Mystic Hourglasses</string>
     <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica for three consecutive months or more. They are used in the Time Traveler’s shop to buy past gear sets, pets, mounts, animated backgrounds, or even special quests.\n\nYou can receive up to four Mystic Hourglasses a year. The time they are rewarded is based on your subscription renewal schedule. They are sent out on the first day of a new month after your last subscription payment that qualified you for an hourglass. See the [Subscription] page for more details.</string>
     <string name="clear_cache">Clear your Cache</string>
     <string name="clear_cache_description"><![CDATA[To clear your cache, open your phone’s Settings app. Go to Storage > Apps >  Habitica, then tap Clear Cache.]]></string>

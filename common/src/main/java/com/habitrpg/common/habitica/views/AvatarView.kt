@@ -18,7 +18,7 @@ import androidx.core.view.marginTop
 import coil.clear
 import coil.load
 import com.habitrpg.common.habitica.BuildConfig
-import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.AppConfigManager

@@ -4,8 +4,8 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.models.BaseObject
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
-import com.habitrpg.android.habitica.models.responses.TaskScoringResult
+import com.habitrpg.common.habitica.models.responses.TaskDirectionData
+import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TaskType
@@ -70,13 +70,17 @@ class TaskRepositoryImplTest : WordSpec({
             user.stats = Stats()
         }
         "debounce" {
-            every { apiClient.postTaskDirection(any(), "up") } returns Flowable.just(TaskDirectionData())
+            every { apiClient.postTaskDirection(any(), "up") } returns Flowable.just(
+                TaskDirectionData()
+            )
             repository.taskChecked(user, task, true, false, null).subscribe()
             repository.taskChecked(user, task, true, false, null).subscribe()
             verify(exactly = 1) { apiClient.postTaskDirection(any(), any()) }
         }
         "get user if not passed" {
-            every { apiClient.postTaskDirection(any(), "up") } returns Flowable.just(TaskDirectionData())
+            every { apiClient.postTaskDirection(any(), "up") } returns Flowable.just(
+                TaskDirectionData()
+            )
             every { localRepository.getUser("") } returns Flowable.just(user)
             repository.taskChecked(null, task, true, false, null)
             eventually(5000) {

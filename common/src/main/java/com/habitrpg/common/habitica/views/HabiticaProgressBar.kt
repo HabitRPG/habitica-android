@@ -10,7 +10,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.widget.ImageViewCompat
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.ProgressBarBinding
 import com.habitrpg.common.habitica.extensions.DataBindingUtils

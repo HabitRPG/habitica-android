@@ -7,10 +7,10 @@ import androidx.core.graphics.ColorUtils
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
-import com.habitrpg.android.habitica.models.responses.TaskDirection
+import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.ItemDetailDialog
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 
 class RewardViewHolder(
     itemView: View,

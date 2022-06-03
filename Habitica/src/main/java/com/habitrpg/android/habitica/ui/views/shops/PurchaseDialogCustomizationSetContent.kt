@@ -5,8 +5,8 @@ import android.widget.TextView
 import com.google.android.flexbox.FlexboxLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationsetBinding
-import com.habitrpg.android.habitica.extensions.dpToPx
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView

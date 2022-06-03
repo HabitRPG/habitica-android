@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AdButtonBinding
 import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import kotlinx.coroutines.Dispatchers

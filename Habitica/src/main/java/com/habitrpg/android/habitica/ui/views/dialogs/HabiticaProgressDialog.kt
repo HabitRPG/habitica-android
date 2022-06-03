@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.dpToPx
 
 class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
     companion object {

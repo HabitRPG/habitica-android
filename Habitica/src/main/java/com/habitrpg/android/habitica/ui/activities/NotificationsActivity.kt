@@ -20,17 +20,17 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.android.habitica.models.notifications.GroupTaskApprovedData
-import com.habitrpg.android.habitica.models.notifications.GroupTaskNeedsWorkData
-import com.habitrpg.android.habitica.models.notifications.GroupTaskRequiresApprovalData
-import com.habitrpg.android.habitica.models.notifications.GuildInvitationData
-import com.habitrpg.android.habitica.models.notifications.NewChatMessageData
-import com.habitrpg.android.habitica.models.notifications.NewStuffData
-import com.habitrpg.android.habitica.models.notifications.PartyInvitationData
-import com.habitrpg.android.habitica.models.notifications.QuestInvitationData
-import com.habitrpg.android.habitica.models.notifications.UnallocatedPointsData
+import com.habitrpg.common.habitica.models.notifications.GroupTaskApprovedData
+import com.habitrpg.common.habitica.models.notifications.GroupTaskNeedsWorkData
+import com.habitrpg.common.habitica.models.notifications.GroupTaskRequiresApprovalData
+import com.habitrpg.common.habitica.models.notifications.GuildInvitationData
+import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
+import com.habitrpg.common.habitica.models.notifications.NewStuffData
+import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
+import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
+import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import javax.inject.Inject
 

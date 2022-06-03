@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
-import com.habitrpg.android.habitica.api.HostConfig
+import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository

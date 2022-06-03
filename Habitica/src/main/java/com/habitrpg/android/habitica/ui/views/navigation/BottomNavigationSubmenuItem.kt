@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.databinding.BottomNavigationSubmenuBinding
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class BottomNavigationSubmenuItem @JvmOverloads constructor(
     context: Context,

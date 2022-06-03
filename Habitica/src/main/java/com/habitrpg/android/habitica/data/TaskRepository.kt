@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
-import com.habitrpg.android.habitica.models.responses.TaskScoringResult
+import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.tasks.TaskType

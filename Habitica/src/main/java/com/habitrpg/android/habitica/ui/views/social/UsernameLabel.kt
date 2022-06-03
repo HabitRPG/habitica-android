@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.members.PlayerTier
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 
 class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 

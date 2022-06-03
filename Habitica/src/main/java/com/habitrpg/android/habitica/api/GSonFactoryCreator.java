@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
-import com.habitrpg.android.habitica.models.Notification;
+import com.habitrpg.common.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;

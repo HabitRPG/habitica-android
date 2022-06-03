@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.extensions
+package com.habitrpg.common.habitica.extensions
 
 import android.content.Context
 

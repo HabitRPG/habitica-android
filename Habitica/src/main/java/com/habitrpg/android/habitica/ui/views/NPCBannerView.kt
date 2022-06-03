@@ -10,7 +10,7 @@ import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.NpcBannerBinding
-import com.habitrpg.android.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

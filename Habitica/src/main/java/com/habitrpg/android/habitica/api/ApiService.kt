@@ -17,11 +17,9 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
-import com.habitrpg.android.habitica.models.responses.HabitResponse
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.Status
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -36,6 +34,8 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.models.responses.HabitResponse
+import com.habitrpg.common.habitica.models.responses.TaskDirectionData
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.Body
 import retrofit2.http.DELETE

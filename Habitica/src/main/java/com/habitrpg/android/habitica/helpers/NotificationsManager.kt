@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.models.Notification
+import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.android.habitica.models.tasks.Task
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable

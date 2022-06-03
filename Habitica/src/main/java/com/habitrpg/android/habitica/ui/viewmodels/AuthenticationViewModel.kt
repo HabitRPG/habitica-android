@@ -21,11 +21,11 @@ import com.google.android.gms.common.UserRecoverableException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.api.HostConfig
+import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.KeyHelper
+import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
 import com.habitrpg.android.habitica.models.auth.UserAuthResponse

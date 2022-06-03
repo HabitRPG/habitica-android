@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data
 
-import com.habitrpg.android.habitica.api.HostConfig
+import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
@@ -17,11 +17,11 @@ import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.BuyResponse
 import com.habitrpg.android.habitica.models.responses.ErrorResponse
 import com.habitrpg.android.habitica.models.responses.FeedResponse
-import com.habitrpg.android.habitica.models.responses.HabitResponse
+import com.habitrpg.common.habitica.models.responses.HabitResponse
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.Status
-import com.habitrpg.android.habitica.models.responses.TaskDirectionData
+import com.habitrpg.common.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.shops.Shop

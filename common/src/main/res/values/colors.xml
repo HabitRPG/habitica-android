@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white">#ffffff</color>
+
     <color name="brand_50">#36205D</color>
     <color name="brand_100">#432874</color>
     <color name="brand_200">#4f2a93</color>
@@ -68,7 +70,28 @@
     <color name="gray_600">#edecee</color>
     <color name="gray_700">#f9f9f9</color>
 
+    <color name="blue_1">#033f5e</color>
+    <color name="teal_1">#005158</color>
+    <color name="green_1">#005737</color>
+    <color name="yellow_1">#794b00</color>
+    <color name="orange_1">#7f3300</color>
+
     <color name="hpColor">@color/red_100</color>
     <color name="xpColor">@color/yellow_100</color>
     <color name="mpColor">@color/blue_100</color>
+
+    <color name="text_primary">@color/gray_10</color>
+    <color name="text_secondary">@color/gray_100</color>
+    <color name="text_ternary">@color/gray_200</color>
+    <color name="text_quad">@color/gray_300</color>
+    <color name="text_dimmed">@color/gray_400</color>
+    <color name="text_inverted">@color/gray_700</color>
+    <color name="text_brand">@color/brand_300</color>
+    <color name="text_brand_neon">@color/brand_400</color>
+    <color name="text_red">@color/maroon_100</color>
+    <color name="text_orange">@color/orange_10</color>
+    <color name="text_yellow">@color/yellow_10</color>
+    <color name="text_green">@color/green_10</color>
+    <color name="text_blue">@color/blue_10</color>
+    <color name="text_teal">@color/teal_10</color>
 </resources>
