@@ -11,9 +11,9 @@ import com.habitrpg.wearos.habitica.ui.viewmodels.TaskListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TaskListActivity: BaseActivity<ActivityTasklistBinding>() {
+class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>() {
     private val adapter = TaskListAdapter()
-    private val viewModel: TaskListViewModel by viewModels()
+    override val viewModel: TaskListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityTasklistBinding.inflate(layoutInflater)

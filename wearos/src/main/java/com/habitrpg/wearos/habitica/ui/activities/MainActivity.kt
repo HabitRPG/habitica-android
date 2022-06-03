@@ -26,8 +26,8 @@ data class MenuItem(
 )
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
-    val viewModel: MainViewModel by viewModels()
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
+    override val viewModel: MainViewModel by viewModels()
 
     private val adapter = HubAdapter()
 
