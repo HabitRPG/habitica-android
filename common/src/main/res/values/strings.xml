@@ -15,4 +15,10 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="habits">Habits</string>
+    <string name="dailies">Dailies</string>
+    <string name="todos">To Do\'s</string>
+    <string name="rewards">Rewards</string>
+    <string name="stats">Stats</string>
+
 </resources>

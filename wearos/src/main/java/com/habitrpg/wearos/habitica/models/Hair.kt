@@ -1,7 +1,9 @@
 package com.habitrpg.wearos.habitica.models
 
 import com.habitrpg.common.habitica.models.AvatarHair
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class Hair: AvatarHair {
     override var mustache: Int = 0
     override var beard: Int = 0

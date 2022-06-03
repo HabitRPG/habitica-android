@@ -6,8 +6,15 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.shared.habitica.HLogger
+import com.habitrpg.wearos.habitica.BuildConfig
 import com.habitrpg.wearos.habitica.data.ApiClient
+import com.habitrpg.wearos.habitica.data.AttributeAdapter
+import com.habitrpg.wearos.habitica.data.FrequencyAdapter
+import com.habitrpg.wearos.habitica.data.TaskTypeAdapter
+import com.habitrpg.wearos.habitica.data.customDateAdapter
+import com.habitrpg.wearos.habitica.models.tasks.WrappedTasklistAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,13 +47,19 @@ class AppModule {
     fun providesConverterFactory(): Converter.Factory {
         return MoshiConverterFactory.create(
             Moshi.Builder()
+                .add(WrappedTasklistAdapter())
+                .add(customDateAdapter)
+                .add(FrequencyAdapter())
+                .add(TaskTypeAdapter())
+                .add(AttributeAdapter())
+                .addLast(KotlinJsonAdapterFactory())
                 .build()
         ).asLenient()
     }
 
     @Provides
     @Singleton
-    fun providesApiHelper(
+    fun providesApiHClient(
         hostConfig: HostConfig,
         @ApplicationContext context: Context,
         converter: Converter.Factory

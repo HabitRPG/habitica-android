@@ -30,14 +30,13 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'com.google.android.gms:play-services-wearable:17.1.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.wear:wear:1.2.0'
-
+    implementation "androidx.wear:wear-input:1.1.0"
     //Networking
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
@@ -47,6 +46,7 @@ dependencies {
     }
     implementation('com.squareup.retrofit2:converter-moshi:2.9.0')
     implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
 
     //Analytics
     implementation 'com.amplitude:android-sdk:3.35.1'
@@ -72,4 +72,22 @@ dependencies {
 }
 repositories {
     mavenCentral()
+}
+
+final File HRPG_PROPS_FILE = new File(projectDir.absolutePath + '/../habitica.properties')
+if (HRPG_PROPS_FILE.canRead()) {
+    Properties HRPG_PROPS = new Properties()
+    HRPG_PROPS.load(new FileInputStream(HRPG_PROPS_FILE))
+
+    if (HRPG_PROPS != null) {
+        android.buildTypes.all { buildType ->
+            HRPG_PROPS.any { property ->
+                buildType.buildConfigField "String", property.key, "\"${property.value}\""
+            }
+        }
+    } else {
+        throw new MissingResourceException('habitica.properties found but some entries are missing')
+    }
+} else {
+    throw new MissingResourceException('habitica.properties not found')
 }

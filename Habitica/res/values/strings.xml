@@ -129,10 +129,6 @@
     <string name="usernames_party">%s\'s Party</string>
     <string name="chat">Chat</string>
     <string name="members">Members</string>
-    <string name="habits">Habits</string>
-    <string name="dailies">Dailies</string>
-    <string name="todos">To Do\'s</string>
-    <string name="rewards">Rewards</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="discard">Discard</string>
@@ -603,7 +599,6 @@
     <string name="come_back_soon">Come back soon!</string>
     <string name="level">Level</string>
     <string name="streak_label">21-Day Streaks</string>
-    <string name="stats">Stats</string>
     <string name="fix_character_description">If you’ve encountered a bug or made a mistake that unfairly changed your character, you can manually correct those values here.</string>
     <string name="fix_character_values">Fix Character Values</string>
     <string name="saving">Saving</string>

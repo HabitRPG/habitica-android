@@ -1,7 +1,9 @@
 package com.habitrpg.wearos.habitica.models
 
 import com.habitrpg.common.habitica.models.AvatarStats
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class Stats: AvatarStats {
     override val buffs: Buffs? = null
     override var habitClass: String? = null

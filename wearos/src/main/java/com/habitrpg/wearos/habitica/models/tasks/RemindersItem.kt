@@ -2,6 +2,7 @@ package com.habitrpg.wearos.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -10,7 +11,8 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.TemporalAccessor
 
-open class RemindersItem : Parcelable {
+@JsonClass(generateAdapter = true)
+open class RemindersItem constructor() : Parcelable {
     var id: String? = null
     var startDate: String? = null
     var time: String? = null
@@ -34,13 +36,11 @@ open class RemindersItem : Parcelable {
         override fun newArray(size: Int): Array<RemindersItem?> = arrayOfNulls(size)
     }
 
-    constructor(source: Parcel) {
+    constructor(source: Parcel) : this() {
         id = source.readString()
         startDate = source.readString()
         time = source.readString()
     }
-
-    constructor()
 
     override fun equals(other: Any?): Boolean {
         return if (other is RemindersItem) {

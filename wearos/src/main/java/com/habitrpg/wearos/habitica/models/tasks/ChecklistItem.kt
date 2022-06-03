@@ -2,26 +2,19 @@ package com.habitrpg.wearos.habitica.models.tasks
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import java.util.UUID
 
-open class ChecklistItem: Parcelable {
-
-    var id: String? = null
-    var text: String? = null
+@JsonClass(generateAdapter = true)
+open class ChecklistItem constructor(
+    var id: String? = UUID.randomUUID().toString(),
+    var text: String? = null,
     var completed: Boolean = false
+) : Parcelable {
+
     var position: Int = 0
 
-    @JvmOverloads constructor(id: String? = null, text: String? = null, completed: Boolean = false) {
-        this.text = text
-        if (id?.isNotEmpty() == true) {
-            this.id = id
-        } else {
-            this.id = UUID.randomUUID().toString()
-        }
-        this.completed = completed
-    }
-
-    constructor(item: ChecklistItem) {
+    constructor(item: ChecklistItem) : this() {
         this.text = item.text
         this.id = item.id
         this.completed = item.completed
@@ -44,7 +37,7 @@ open class ChecklistItem: Parcelable {
         override fun newArray(size: Int): Array<ChecklistItem?> = arrayOfNulls(size)
     }
 
-    constructor(source: Parcel) {
+    constructor(source: Parcel) : this() {
         id = source.readString()
         text = source.readString()
         completed = source.readByte() == 1.toByte()

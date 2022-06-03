@@ -96,4 +96,6 @@ class ApiClient @Inject constructor(
     suspend fun removePushDevice(id: String) = apiService.removePushDevice(id).data
 
     suspend fun runCron() = apiService.runCron().data
+
+    suspend fun getTasks() = apiService.getTasks().data
 }

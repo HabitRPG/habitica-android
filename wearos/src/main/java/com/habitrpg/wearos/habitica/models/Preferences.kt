@@ -1,8 +1,9 @@
 package com.habitrpg.wearos.habitica.models
 
-import com.habitrpg.common.habitica.models.AvatarHair
 import com.habitrpg.common.habitica.models.AvatarPreferences
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class Preferences: AvatarPreferences {
     override val hair: Hair? = null
     override val costume: Boolean = false

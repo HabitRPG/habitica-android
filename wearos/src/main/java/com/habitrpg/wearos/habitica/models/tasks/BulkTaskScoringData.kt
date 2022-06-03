@@ -3,7 +3,9 @@ package com.habitrpg.wearos.habitica.models.tasks
 import com.habitrpg.common.habitica.models.responses.TaskDirectionData
 import com.habitrpg.wearos.habitica.models.Buffs
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class BulkTaskScoringData {
     @Json(name="con")
     var constitution: Int? = null

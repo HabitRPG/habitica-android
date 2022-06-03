@@ -1,7 +1,9 @@
 package com.habitrpg.wearos.habitica.models
 
 import com.habitrpg.common.habitica.models.AvatarBuffs
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class Buffs: AvatarBuffs {
     override var con: Float? = null
     override var str: Float? = null

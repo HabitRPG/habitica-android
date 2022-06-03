@@ -9,6 +9,7 @@ import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.R
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import org.json.JSONArray
 import org.json.JSONException
 import java.time.LocalDateTime
@@ -21,7 +22,8 @@ import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
 
-open class Task : Parcelable {
+@JsonClass(generateAdapter = true)
+open class Task constructor(): Parcelable {
 
     @Json(name="_id")
     var id: String? = null
@@ -32,7 +34,7 @@ open class Task : Parcelable {
     var type: TaskType?
         get() = TaskType.from(typeValue)
         set(value) { typeValue = value?.value }
-    private var typeValue: String? = null
+    internal var typeValue: String? = null
     var challengeID: String? = null
     var challengeBroken: String? = null
     var attribute: Attribute?
@@ -40,10 +42,8 @@ open class Task : Parcelable {
         set(value) { attributeValue = value?.value }
     var attributeValue: String? = Attribute.STRENGTH.value
     var value: Double = 0.0
-    var tags: List<Tag>? = listOf()
     var dateCreated: Date? = null
     var position: Int = 0
-    var group: TaskGroupPlan? = null
     // Habits
     var up: Boolean? = false
     var down: Boolean? = false
@@ -54,10 +54,7 @@ open class Task : Parcelable {
     var checklist: List<ChecklistItem>? = listOf()
     var reminders: List<RemindersItem>? = listOf()
     // dailies
-    var frequency: Frequency?
-        get() = Frequency.from(frequencyValue)
-        set(value) { frequencyValue = value?.value }
-    var frequencyValue: String? = null
+    var frequency: Frequency? = null
     var everyX: Int? = 0
     var streak: Int? = 0
     var startDate: Date? = null
@@ -83,8 +80,8 @@ open class Task : Parcelable {
     var isCreating: Boolean = false
     var yesterDaily: Boolean = true
 
-    private var daysOfMonthString: String? = null
-    private var weeksOfMonthString: String? = null
+    internal var daysOfMonthString: String? = null
+    internal var weeksOfMonthString: String? = null
 
     @Json(ignore = true)
     private var daysOfMonth: List<Int>? = null
@@ -165,16 +162,6 @@ open class Task : Parcelable {
 
     val isChecklistDisplayActive: Boolean
         get() = this.checklist?.size != this.completedChecklistCount
-
-    val isGroupTask: Boolean
-        get() = group?.groupID?.isNotBlank() == true
-
-    val isPendingApproval: Boolean
-        get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)
-
-    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
-
-    fun checkIfDue(): Boolean = isDue == true
 
     fun getNextReminderOccurence(oldTime: String?): ZonedDateTime? {
         if (oldTime == null) {
@@ -269,7 +256,6 @@ open class Task : Parcelable {
             checklist != task.checklist -> return true
             priority != task.priority -> return true
             attribute != task.attribute && attribute != null -> return true
-            tags != task.tags -> return true
         }
         if (type == TaskType.HABIT) {
             return when {
@@ -312,7 +298,6 @@ open class Task : Parcelable {
         dest.writeString(this.attribute?.value)
         dest.writeString(this.type?.value)
         dest.writeDouble(this.value)
-        dest.writeList(this.tags as? List<*>)
         dest.writeLong(this.dateCreated?.time ?: -1)
         dest.writeInt(this.position)
         dest.writeValue(this.up)
@@ -334,9 +319,8 @@ open class Task : Parcelable {
         dest.writeInt(this.counterDown ?: 0)
     }
 
-    constructor()
 
-    protected constructor(`in`: Parcel) {
+    protected constructor(`in`: Parcel): this() {
         this.userId = `in`.readString() ?: ""
         this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
         this.text = `in`.readString() ?: ""
@@ -344,8 +328,6 @@ open class Task : Parcelable {
         this.attribute = Attribute.from(`in`.readString() ?: "")
         this.type = TaskType.from(`in`.readString() ?: "")
         this.value = `in`.readDouble()
-        this.tags = listOf()
-        `in`.readList(this.tags as List<*>, TaskTag::class.java.classLoader)
         val tmpDateCreated = `in`.readLong()
         this.dateCreated = if (tmpDateCreated == -1L) null else Date(tmpDateCreated)
         this.position = `in`.readInt()
