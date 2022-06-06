@@ -10,7 +10,6 @@
         android:padding="@dimen/spacing_medium"
         android:gravity="center"
         style="@style/Chip">
-
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"

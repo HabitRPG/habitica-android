@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Chip">
+        <item name="android:layout_marginVertical">1dp</item>
+        <item name="android:layout_marginHorizontal">@dimen/spacing_medium</item>
+        <item name="background">@drawable/row_background</item>
+    </style>
+</resources>

@@ -1,16 +1,14 @@
 package com.habitrpg.wearos.habitica.ui.adapters
 
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.wearos.habitica.databinding.RowHabitBinding
 import com.habitrpg.wearos.habitica.databinding.RowHeaderBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
-import com.habitrpg.wearos.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
+import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder
 
-class TaskListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var title: String = ""
     var data: List<Task> = listOf()
     set(value) {
@@ -19,11 +17,7 @@ class TaskListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = parent.context.layoutInflater
-        return if (viewType == 0) {
-            HeaderViewHolder(RowHeaderBinding.inflate(inflater, parent, false).root)
-        } else {
-            TaskViewHolder(RowHabitBinding.inflate(inflater, parent, false).root)
-        }
+        return HeaderViewHolder(RowHeaderBinding.inflate(inflater, parent, false).root)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -41,13 +35,5 @@ class TaskListAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return data.size + 1
-    }
-}
-
-class TaskViewHolder(itemView: View) : BindableViewHolder<Task>(itemView) {
-    val binding = RowHabitBinding.bind(itemView)
-
-    override fun bind(task: Task) {
-        binding.title.text = task.text
     }
 }
