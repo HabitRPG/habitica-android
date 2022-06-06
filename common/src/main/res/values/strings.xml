@@ -21,4 +21,6 @@
     <string name="rewards">Rewards</string>
     <string name="stats">Stats</string>
     <string name="settings">Settings</string>
+    <string name="new_task">New Task</string>
+    <string name="avatar">Avatar</string>
 </resources>

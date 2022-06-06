@@ -1,14 +1,13 @@
 package com.habitrpg.wearos.habitica.ui.adapters
 
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.databinding.RowHeaderBinding
 import com.habitrpg.wearos.habitica.databinding.RowHubBinding
-import com.habitrpg.wearos.habitica.ui.activities.MenuItem
-import com.habitrpg.wearos.habitica.ui.viewHolders.BindableViewHolder
+import com.habitrpg.wearos.habitica.models.MenuItem
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
+import com.habitrpg.wearos.habitica.ui.viewHolders.HubViewHolder
 
 class HubAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var title: String = ""
@@ -44,15 +43,3 @@ class HubAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 }
 
-class HubViewHolder(itemView: View): BindableViewHolder<MenuItem>(itemView) {
-    val binding = RowHubBinding.bind(itemView)
-
-    override fun bind(data: MenuItem) {
-        binding.title.text = data.title
-        binding.iconView.setImageDrawable(data.icon)
-        binding.iconView.setColorFilter(data.color)
-        binding.root.setOnClickListener {
-            data.onClick()
-        }
-    }
-}

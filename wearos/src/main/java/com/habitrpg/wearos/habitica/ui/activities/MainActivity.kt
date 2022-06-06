@@ -1,29 +1,19 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.R
 import com.habitrpg.wearos.habitica.databinding.ActivityMainBinding
+import com.habitrpg.wearos.habitica.models.MenuItem
 import com.habitrpg.wearos.habitica.ui.adapters.HubAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.MainViewModel
+import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.abs
-
-data class MenuItem(
-    val identifier: String,
-    val title: String,
-    val icon: Drawable?,
-    val color: Int,
-    val onClick: () -> Unit
-)
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -48,18 +38,27 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         super.onStart()
         adapter.data = listOf(
             MenuItem(
+                "createTask",
+                getString(R.string.new_task),
+                AppCompatResources.getDrawable(this, R.drawable.icon_plus),
+                ContextCompat.getColor(this, R.color.brand_400),
+                true
+            ) {
+                openAvatarActivity()
+            },
+            MenuItem(
                 "avatar",
-                "Avatar",
-                AppCompatResources.getDrawable(this, R.drawable.ic_avatar),
+                getString(R.string.avatar),
+                AppCompatResources.getDrawable(this, R.drawable.icon_avatar),
                 ContextCompat.getColor(this, R.color.brand_400)
             ) {
-              openAvatarActivity()
+              openStatsActivity()
             },
             MenuItem(
                 "Stats",
                 getString(R.string.stats),
-                AppCompatResources.getDrawable(this, R.drawable.ic_stats),
-                ContextCompat.getColor(this, R.color.red_100)
+                AppCompatResources.getDrawable(this, R.drawable.icon_stats),
+                ContextCompat.getColor(this, R.color.brand_400)
             ) {
 
             },
@@ -67,7 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "habits",
                 getString(R.string.habits),
                 AppCompatResources.getDrawable(this, R.drawable.icon_habits),
-                ContextCompat.getColor(this, R.color.orange_100)
+                ContextCompat.getColor(this, R.color.brand_400)
             ) {
               openTasklist(TaskType.HABIT)
             },
@@ -75,7 +74,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "dailies",
                 getString(R.string.dailies),
                 AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
-                ContextCompat.getColor(this, R.color.yellow_100)
+                ContextCompat.getColor(this, R.color.brand_400)
             ) {
                 openTasklist(TaskType.DAILY)
             },
@@ -83,7 +82,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "todos",
                 getString(R.string.todos),
                 AppCompatResources.getDrawable(this, R.drawable.icon_todos),
-                ContextCompat.getColor(this, R.color.green_100)
+                ContextCompat.getColor(this, R.color.brand_400)
             ) {
                 openTasklist(TaskType.TODO)
             },
@@ -91,16 +90,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "rewards",
                 getString(R.string.rewards),
                 AppCompatResources.getDrawable(this, R.drawable.icon_rewards),
-                ContextCompat.getColor(this, R.color.teal_100)
+                ContextCompat.getColor(this, R.color.brand_400)
             ) {
                 openTasklist(TaskType.REWARD)
             },
             MenuItem(
                 "settings",
                 getString(R.string.settings),
-                AppCompatResources.getDrawable(this, R.drawable.ic_settings),
-                ContextCompat.getColor(this, R.color.blue_100)
+                AppCompatResources.getDrawable(this, R.drawable.icon_settings),
+                ContextCompat.getColor(this, R.color.brand_400)
             ) {
+                openSettingsActivity()
             }
         )
         viewModel.user.observe(this) {
@@ -109,8 +109,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    private fun openTaskFormActivity() {
+        startActivity(Intent(this, TaskFormActivity::class.java))
+    }
+
     private fun openAvatarActivity() {
         startActivity(Intent(this, AvatarActivity::class.java))
+    }
+
+
+    private fun openStatsActivity() {
+        startActivity(Intent(this, StatsActivity::class.java))
+    }
+
+    private fun openSettingsActivity() {
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     private fun openTasklist(type: TaskType) {
@@ -118,35 +131,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             putExtra("task_type", type.value)
         }
         startActivity(intent)
-    }
-}
-
-private const val MAX_ICON_PROGRESS = 0.8f
-
-class HabiticaScrollingLayoutCallback : WearableLinearLayoutManager.LayoutCallback() {
-
-    private var progressToCenter: Float = 0f
-
-    override fun onLayoutFinished(child: View, parent: RecyclerView) {
-        child.apply {
-            // Figure out % progress from top to bottom
-            val centerOffset = height.toFloat() / 2.0f / parent.height.toFloat()
-            val yRelativeToCenterOffset = y / parent.height + centerOffset
-
-            // Normalize for center
-            progressToCenter = abs(0.5f - yRelativeToCenterOffset) - 0.25f
-            if (progressToCenter < 0) {
-                scaleX = 1f
-                scaleY = 1f
-                alpha = 1f
-                return
-            }
-            // Adjust to the maximum scale
-            progressToCenter = Math.min(progressToCenter * 1.5f, MAX_ICON_PROGRESS)
-
-            scaleX = 1 - progressToCenter
-            scaleY = 1 - progressToCenter
-            alpha = 1 - progressToCenter * 2
-        }
     }
 }

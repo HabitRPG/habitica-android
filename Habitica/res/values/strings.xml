@@ -855,7 +855,6 @@
     <string name="switch_to_list_view">Switch to list view</string>
     <string name="switch_to_grid_view">Switch to grid view</string>
     <string name="confirm_deletion">Confirm deletion</string>
-    <string name="new_task">New Task</string>
     <string name="create_task">Create %s</string>
     <string name="details">Details</string>
     <string name="share_challenge_with">Share Challenge with</string>

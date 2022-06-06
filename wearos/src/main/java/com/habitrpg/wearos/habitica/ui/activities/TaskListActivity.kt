@@ -12,6 +12,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.RewardListAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.TaskListAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.ToDoListAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskListViewModel
+import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
