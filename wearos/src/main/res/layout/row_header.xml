@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/gray_300"
         tools:text="Header Text"
-        android:textStyle="bold"
-        android:textSize="20sp" />
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp" />
 </FrameLayout>

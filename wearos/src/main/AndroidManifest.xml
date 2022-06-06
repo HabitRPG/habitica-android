@@ -36,7 +36,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.TaskListActivity" />
+        <activity android:name=".ui.activities.TaskFormActivity" />
+
         <activity android:name=".ui.activities.AvatarActivity" />
+        <activity android:name=".ui.activities.StatsActivity" />
+        <activity android:name=".ui.activities.SettingsActivity" />
+
         <activity android:name="androidx.wear.activity.ConfirmationActivity" />
     </application>
 

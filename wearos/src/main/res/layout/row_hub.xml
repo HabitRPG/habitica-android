@@ -3,25 +3,30 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/spacing_medium"
-    android:paddingVertical="2dp">
+    android:paddingHorizontal="@dimen/row_side_spacing"
+    android:paddingVertical="@dimen/row_spacing">
     <LinearLayout
+        android:id="@+id/row_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/row_background"
-        android:padding="@dimen/spacing_medium"
+        android:paddingHorizontal="@dimen/row_padding_horizontal"
+        android:paddingVertical="@dimen/row_padding_vertical"
         android:gravity="center">
     <ImageView
         android:id="@+id/icon_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="35dp"
+        android:scaleType="center"
         android:src="@drawable/icon_habits"
-        android:paddingEnd="@dimen/spacing_medium"
-        android:paddingStart="0dp"/>
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginStart="0dp"/>
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/white"
+        android:textSize="@dimen/row_text_size" />
     </LinearLayout>
 </FrameLayout>

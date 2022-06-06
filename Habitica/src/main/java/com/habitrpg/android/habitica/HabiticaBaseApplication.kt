@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AdHandler
-import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.UserModule
@@ -43,7 +42,8 @@ import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.common.habitica.helpers.LanguageHelper
+import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import io.realm.Realm
 import io.realm.RealmConfiguration

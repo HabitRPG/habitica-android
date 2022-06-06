@@ -44,23 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 ContextCompat.getColor(this, R.color.brand_400),
                 true
             ) {
-                openAvatarActivity()
-            },
-            MenuItem(
-                "avatar",
-                getString(R.string.avatar),
-                AppCompatResources.getDrawable(this, R.drawable.icon_avatar),
-                ContextCompat.getColor(this, R.color.brand_400)
-            ) {
-              openStatsActivity()
-            },
-            MenuItem(
-                "Stats",
-                getString(R.string.stats),
-                AppCompatResources.getDrawable(this, R.drawable.icon_stats),
-                ContextCompat.getColor(this, R.color.brand_400)
-            ) {
-
+                openTaskFormActivity()
             },
             MenuItem(
                 "habits",
@@ -93,6 +77,22 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 ContextCompat.getColor(this, R.color.brand_400)
             ) {
                 openTasklist(TaskType.REWARD)
+            },
+            MenuItem(
+                "Stats",
+                getString(R.string.stats),
+                AppCompatResources.getDrawable(this, R.drawable.icon_stats),
+                ContextCompat.getColor(this, R.color.brand_400)
+            ) {
+                openStatsActivity()
+            },
+            MenuItem(
+                "avatar",
+                getString(R.string.avatar),
+                AppCompatResources.getDrawable(this, R.drawable.icon_avatar),
+                ContextCompat.getColor(this, R.color.brand_400)
+            ) {
+                openAvatarActivity()
             },
             MenuItem(
                 "settings",
