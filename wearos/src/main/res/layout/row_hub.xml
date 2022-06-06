@@ -2,17 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/row_side_spacing"
-    android:paddingVertical="@dimen/row_spacing">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/row_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/row_background"
-        android:paddingHorizontal="@dimen/row_padding_horizontal"
-        android:paddingVertical="@dimen/row_padding_vertical"
-        android:gravity="center">
+        style="@style/Chip">
     <ImageView
         android:id="@+id/icon_view"
         android:layout_width="36dp"

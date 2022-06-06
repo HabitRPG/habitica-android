@@ -8,6 +8,6 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.BindableViewHolder
 abstract class TaskViewHolder(itemView: View) : BindableViewHolder<Task>(itemView) {
     abstract val titleView: TextView
     override fun bind(data: Task) {
-
+        titleView.text = data.text
     }
 }
