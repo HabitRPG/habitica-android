@@ -108,8 +108,8 @@ class ReminderItemFormView @JvmOverloads constructor(
             if (taskType == TaskType.DAILY) {
                 val timePickerDialog = TimePickerDialog(
                     context, this,
-                    item.time?.let { item.getZonedDateTime()?.hour } ?: ZonedDateTime.now().hour,
-                        item.time?.let { item.getZonedDateTime()?.minute } ?: ZonedDateTime.now().minute,
+                    item.getZonedDateTime()?.hour ?: ZonedDateTime.now().hour,
+                    item.getZonedDateTime()?.minute ?: ZonedDateTime.now().minute,
                     android.text.format.DateFormat.is24HourFormat(context)
                 )
                 timePickerDialog.show()
