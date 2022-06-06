@@ -29,9 +29,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 WearableLinearLayoutManager(this@MainActivity, HabiticaScrollingLayoutCallback())
             adapter = this@MainActivity.adapter
         }
-        binding.root.post {
-            binding.root.setPaddingRelative(0, (binding.root.height * 0.25).toInt(), 0, (binding.root.height * 0.25).toInt())
-        }
     }
 
     override fun onStart() {

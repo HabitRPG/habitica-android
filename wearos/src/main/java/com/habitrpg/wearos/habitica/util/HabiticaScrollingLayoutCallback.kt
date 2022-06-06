@@ -1,5 +1,6 @@
 package com.habitrpg.wearos.habitica.util
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.wear.widget.WearableLinearLayoutManager
@@ -18,19 +19,23 @@ class HabiticaScrollingLayoutCallback : WearableLinearLayoutManager.LayoutCallba
             val yRelativeToCenterOffset = y / parent.height + centerOffset
 
             // Normalize for center
-            progressToCenter = abs(0.5f - yRelativeToCenterOffset) - 0.25f
+            progressToCenter = abs(0.5f - yRelativeToCenterOffset) - 0.32f
             if (progressToCenter < 0) {
                 scaleX = 1f
                 scaleY = 1f
                 alpha = 1f
+                translationY = 0f
                 return
             }
             // Adjust to the maximum scale
             progressToCenter = Math.min(progressToCenter * 1.5f, MAX_ICON_PROGRESS)
+            val scale = 1 - progressToCenter
 
-            scaleX = 1 - progressToCenter
-            scaleY = 1 - progressToCenter
-            alpha = 1 - progressToCenter * 2
+            scaleX = scale
+            scaleY = scale
+            translationY = (height - (scale * height)) / 2 * if (yRelativeToCenterOffset > 0.5) -1 else 1
+            Log.d("HabiticaScrollingLayoutCallback", "onLayoutFinished: $translationY $scale")
+            alpha = scale * 2
         }
     }
 }

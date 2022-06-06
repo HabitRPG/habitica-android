@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.wear.widget.WearableRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical">
 
-</androidx.wear.widget.WearableRecyclerView>
+</com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView>
