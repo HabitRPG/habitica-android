@@ -17,8 +17,12 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
     }
     fun getTasks(taskType: TaskType): Flow<List<Task>> = localRepository.getTasks(taskType)
 
+    suspend fun scoreTask(taskID: String, direction: TaskDirection) {
+        val response = apiClient.scoreTask(taskID, direction.text)
+    }
+
     suspend fun scoreTask(task: Task, direction: TaskDirection) {
         val id = task.id ?: return
-        val response = apiClient.scoreTask(id, direction.text)
+        val response = scoreTask(id, direction)
     }
 }

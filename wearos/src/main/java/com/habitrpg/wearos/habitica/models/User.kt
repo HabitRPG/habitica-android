@@ -4,25 +4,6 @@ import com.habitrpg.common.habitica.models.Avatar
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-open class Gear {
-    var equipped: Outfit? = null
-    var costume: Outfit? = null
-}
-
-@JsonClass(generateAdapter = true)
-class Items {
-    var gear: Gear? = null
-
-    var currentMount: String? = null
-    var currentPet: String? = null
-}
-
-@JsonClass(generateAdapter = true)
-class Profile {
-    var name: String? = null
-}
-
-@JsonClass(generateAdapter = true)
 class User: Avatar {
     override val currentMount: String?
         get() = items?.currentMount
