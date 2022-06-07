@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityGroupFormBinding
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.common.habitica.helpers.MarkdownParser
 
 class GroupFormActivity : BaseActivity() {
 

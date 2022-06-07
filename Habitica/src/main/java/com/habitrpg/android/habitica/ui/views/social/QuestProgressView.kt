@@ -27,7 +27,7 @@ import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.android.habitica.ui.helpers.setMarkdown
+import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.views.HabiticaIcons
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.NPCBannerView

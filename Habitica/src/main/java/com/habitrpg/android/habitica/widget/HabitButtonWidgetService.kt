@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.common.habitica.helpers.MarkdownParser
 import javax.inject.Inject
 import kotlin.math.min
 

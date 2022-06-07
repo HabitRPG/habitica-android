@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqDetailBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.MarkdownParser
+import com.habitrpg.common.habitica.helpers.MarkdownParser
 import javax.inject.Inject
 
 class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {

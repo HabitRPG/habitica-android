@@ -16,7 +16,7 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.setMarkdown
+import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.functions.Consumer
 import javax.inject.Inject

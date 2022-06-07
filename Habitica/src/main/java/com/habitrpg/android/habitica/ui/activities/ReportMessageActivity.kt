@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.helpers.setMarkdown
+import com.habitrpg.common.habitica.helpers.setMarkdown
 import javax.inject.Inject
 
 class ReportMessageActivity : BaseActivity() {
