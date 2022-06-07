@@ -38,4 +38,12 @@ class TaskLocalRepository @Inject constructor() {
             this.tasks[type.key]?.value = type.value
         }
     }
+
+    fun updateTask(task: Task) {
+        val oldList = tasks[task.type]?.value?.toMutableList()
+        oldList?.indexOfFirst { task.id == it.id }?.let { index ->
+            oldList.set(index, task)
+        }
+        tasks[task.type]?.value = oldList
+    }
 }

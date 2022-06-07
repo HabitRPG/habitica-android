@@ -7,6 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Chip">
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/circle"/>
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"

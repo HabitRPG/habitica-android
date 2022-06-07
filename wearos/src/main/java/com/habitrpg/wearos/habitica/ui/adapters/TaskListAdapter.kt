@@ -10,6 +10,7 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder
 
 open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var title: String = ""
+    var onTaskScore: ((Task) -> Unit)? = null
     var data: List<Task> = listOf()
     set(value) {
         field = value
@@ -24,6 +25,9 @@ open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (holder is TaskViewHolder) {
             val item = data[position - 1]
             holder.bind(item)
+            holder.onTaskScore = {
+                onTaskScore?.invoke(item)
+            }
         } else if (holder is HeaderViewHolder){
             holder.bind(title)
         }

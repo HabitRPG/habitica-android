@@ -1,6 +1,7 @@
 package com.habitrpg.wearos.habitica.data.repositories
 
 import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.models.tasks.Task
@@ -17,12 +18,14 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
     }
     fun getTasks(taskType: TaskType): Flow<List<Task>> = localRepository.getTasks(taskType)
 
-    suspend fun scoreTask(taskID: String, direction: TaskDirection) {
-        val response = apiClient.scoreTask(taskID, direction.text)
-    }
 
-    suspend fun scoreTask(task: Task, direction: TaskDirection) {
-        val id = task.id ?: return
-        val response = scoreTask(id, direction)
+    suspend fun scoreTask(task: Task, direction: TaskDirection): TaskScoringResult? {
+        val id = task.id ?: return null
+        val result = apiClient.scoreTask(id, direction.text)
+        if (result != null) {
+            task.completed = direction == TaskDirection.UP
+            localRepository.updateTask(task)
+        }
+        return result?.let { TaskScoringResult(it, null) }
     }
 }

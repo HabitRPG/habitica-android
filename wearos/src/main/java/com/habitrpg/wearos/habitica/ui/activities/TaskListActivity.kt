@@ -1,11 +1,16 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.wear.activity.ConfirmationActivity
 import androidx.wear.widget.WearableLinearLayoutManager
+import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.R
 import com.habitrpg.wearos.habitica.databinding.ActivityTasklistBinding
+import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.adapters.DailyListAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.HabitListAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.RewardListAdapter
@@ -33,6 +38,37 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
         viewModel.tasks.observe(this) {
             adapter.data = it
         }
+
+        adapter.onTaskScore = {
+            scoreTask(it)
+        }
+    }
+
+    private fun scoreTask(task: Task) {
+        var direction = TaskDirection.UP
+        if (task.type == TaskType.HABIT) {
+            if (task.up == true && task.down == true) {
+                return
+            } else {
+                direction = if (task.up == true) TaskDirection.UP else TaskDirection.DOWN
+            }
+        } else if (task.completed) {
+            direction = TaskDirection.DOWN
+        }
+        viewModel.scoreTask(task, direction) {
+            if (it != null) {
+                showTaskScoringResult(it)
+            }
+        }
+    }
+
+    private fun showTaskScoringResult(result: TaskScoringResult) {
+        val intent = Intent(this, ConfirmationActivity::class.java).apply {
+            putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION)
+            putExtra(ConfirmationActivity.EXTRA_MESSAGE, result.experienceDelta?.toString())
+            putExtra(ConfirmationActivity.EXTRA_ANIMATION_DURATION_MILLIS, 3000)
+        }
+        startActivity(intent)
     }
 
     private fun configureAdapter() {
