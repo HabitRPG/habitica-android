@@ -375,17 +375,17 @@ class AvatarView : FrameLayout {
                     offset = PointF(-25.0f, 0.0f) // compact hero box
                 }
                 LayerType.MOUNT_BODY, LayerType.MOUNT_HEAD -> offset =
-                    PointF(25.0f, 18.0f) // full hero box
+                    PointF(24.0f, 18.0f) // full hero box
                 LayerType.CHAIR, LayerType.BACK, LayerType.SKIN, LayerType.SHIRT, LayerType.ARMOR, LayerType.BODY, LayerType.HEAD_0, LayerType.HAIR_BASE, LayerType.HAIR_BANGS, LayerType.HAIR_MUSTACHE, LayerType.HAIR_BEARD, LayerType.EYEWEAR, LayerType.VISUAL_BUFF, LayerType.HEAD, LayerType.HEAD_ACCESSORY, LayerType.HAIR_FLOWER, LayerType.SHIELD, LayerType.WEAPON, LayerType.ZZZ -> if (showMount || showPet) {
                     // full hero box
                     offset = when {
                         hasMount -> if (layerMap[LayerType.MOUNT_HEAD]?.contains("Kangaroo") == true) {
-                            PointF(25.0f, 18f)
+                            PointF(24.0f, 18f)
                         } else {
-                            PointF(25.0f, 0f)
+                            PointF(24.0f, 0f)
                         }
-                        hasPet -> PointF(25.0f, 24.5f)
-                        else -> PointF(25.0f, 28.0f)
+                        hasPet -> PointF(24.0f, 24.5f)
+                        else -> PointF(24.0f, 28.0f)
                     }
                 } else if (showBackground) {
                     // compact hero box

@@ -1,6 +1,5 @@
 package com.habitrpg.wearos.habitica.util
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.wear.widget.WearableLinearLayoutManager
@@ -34,7 +33,6 @@ class HabiticaScrollingLayoutCallback : WearableLinearLayoutManager.LayoutCallba
             scaleX = scale
             scaleY = scale
             translationY = (height - (scale * height)) / 2 * if (yRelativeToCenterOffset > 0.5) -1 else 1
-            Log.d("HabiticaScrollingLayoutCallback", "onLayoutFinished: $translationY $scale")
             alpha = scale * 2
         }
     }
