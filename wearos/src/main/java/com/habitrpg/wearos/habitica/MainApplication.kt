@@ -1,6 +1,7 @@
 package com.habitrpg.wearos.habitica
 
 import android.app.Application
+import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import dagger.hilt.android.HiltAndroidApp
@@ -11,5 +12,6 @@ class MainApplication : Application() {
         super.onCreate()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
+        setupCoil()
     }
 }

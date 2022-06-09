@@ -6,7 +6,6 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.shared.habitica.HLogger
-import com.habitrpg.wearos.habitica.BuildConfig
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.AttributeAdapter
 import com.habitrpg.wearos.habitica.data.FrequencyAdapter
@@ -39,8 +38,7 @@ class AppModule {
         keyHelper: KeyHelper?,
         @ApplicationContext context: Context
     ): HostConfig {
-        return HostConfig(BuildConfig.DEBUG_USER_ID,
-            BuildConfig.DEBUG_API_KEY)
+        return HostConfig(sharedPreferences, keyHelper, context)
     }
 
     @Provides

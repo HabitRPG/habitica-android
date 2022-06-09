@@ -37,21 +37,6 @@
     <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
     <string name="preference_push_invited_to_quest">Invited to Quest</string>
 
-    <!-- Adding tasks -->
-    <string name="action_edit">Edit</string>
-    <string name="action_cancel">Cancel</string>
-    <string name="login_btn">Login</string>
-    <string name="register_btn">Register</string>
-    <string name="username">Username</string>
-    <string name="email_username">Email or Username</string>
-    <string name="password">Password</string>
-    <string name="emailAddress">Email address</string>
-    <string name="confirmpassword">Confirm password</string>
-
-    <string name="logout">Logout</string>
-    <string name="logout_description">Log out of your account</string>
-    <string name="LoginActivityName">Welcome</string>
-    <string name="about_title">About</string>
     <string name="about_libraries">Libraries</string>
     <string name="about_habitica_open_source">Habitica is available as open source software on Github</string>
     <string name="about_rate_our_app">Rate our App</string>
@@ -66,10 +51,6 @@
 
     <string name="authentication_error_title">Authentication Error</string>
     <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>
-
-    <string name="login_validation_error_title">Validation Error</string>
-    <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
-
     <string name="save_changes">Save</string>
     <string name="copy">Copy</string>
     <string name="notes">Notes</string>
@@ -470,7 +451,6 @@
     <string name="owned">Owned</string>
     <string name="not_owned">Not owned</string>
     <string name="login_btn_fb">Login with Facebook</string>
-    <string name="login_btn_google">Login with Google</string>
     <string name="login_btn_apple">Sign in with Apple</string>
     <string name="register_btn_fb">Sign up with Facebook</string>
     <string name="register_btn_google">Sign up with Google</string>

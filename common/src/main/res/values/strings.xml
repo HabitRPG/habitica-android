@@ -23,4 +23,24 @@
     <string name="settings">Settings</string>
     <string name="new_task">New Task</string>
     <string name="avatar">Avatar</string>
+
+    <string name="action_edit">Edit</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="login_btn">Login</string>
+    <string name="register_btn">Register</string>
+    <string name="username">Username</string>
+    <string name="email_username">Email or Username</string>
+    <string name="password">Password</string>
+    <string name="emailAddress">Email address</string>
+    <string name="confirmpassword">Confirm password</string>
+    <string name="login_btn_google">Login with Google</string>
+
+    <string name="logout">Logout</string>
+    <string name="logout_description">Log out of your account</string>
+    <string name="LoginActivityName">Welcome</string>
+    <string name="about_title">About</string>
+
+    <string name="login_validation_error_title">Validation Error</string>
+    <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.habitrpg.wearos.habitica.data
 
 import android.content.Context
+import com.amplitude.api.Amplitude
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
@@ -85,6 +86,12 @@ class ApiClient @Inject constructor(
         this.apiService = retrofitAdapter.create(ApiService::class.java)
     }
 
+    fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
+        this.hostConfig.userID = userID ?: ""
+        this.hostConfig.apiKey = apiToken ?: ""
+        Amplitude.getInstance().userId = this.hostConfig.userID
+    }
+
     private fun <T> process(response: WearableHabitResponse<T>): T? {
         return response.data
     }
@@ -104,4 +111,5 @@ class ApiClient @Inject constructor(
 
     suspend fun getTasks() = process(apiService.getTasks())
     suspend fun scoreTask(id: String, direction: String) = process(apiService.scoreTask(id, direction))
+
 }

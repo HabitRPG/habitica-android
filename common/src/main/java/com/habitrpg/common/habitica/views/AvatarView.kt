@@ -166,6 +166,7 @@ class AvatarView : FrameLayout {
                     }
 
                     override fun onSuccess(result: Drawable) {
+                        result.isFilterBitmap = false
                         super.onSuccess(result)
                         val bounds = getLayerBounds(layerKey, layerName, result)
                         imageView.imageMatrix = avatarMatrix
@@ -384,7 +385,7 @@ class AvatarView : FrameLayout {
                         } else {
                             PointF(24.0f, 0f)
                         }
-                        hasPet -> PointF(24.0f, 24.5f)
+                        hasPet -> PointF(24.0f, 24f)
                         else -> PointF(24.0f, 28.0f)
                     }
                 } else if (showBackground) {

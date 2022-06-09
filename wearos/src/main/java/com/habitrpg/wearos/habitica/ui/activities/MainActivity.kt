@@ -29,6 +29,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 WearableLinearLayoutManager(this@MainActivity, HabiticaScrollingLayoutCallback())
             adapter = this@MainActivity.adapter
         }
+        if (!viewModel.isAuthenticated) {
+            openLoginActivity()
+        }
     }
 
     override fun onStart() {
@@ -121,6 +124,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun openSettingsActivity() {
         startActivity(Intent(this, SettingsActivity::class.java))
+    }
+
+    private fun openLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     private fun openTasklist(type: TaskType) {

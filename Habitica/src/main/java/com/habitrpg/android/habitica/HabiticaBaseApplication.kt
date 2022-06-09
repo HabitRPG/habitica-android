@@ -18,13 +18,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import coil.Coil
-import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.transition.CrossfadeTransition
-import coil.util.DebugLogger
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -42,6 +36,7 @@ import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
+import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
@@ -90,20 +85,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             } catch (ignored: Resources.NotFoundException) {
             }
         }
-        var builder = ImageLoader.Builder(this)
-            .transition(CrossfadeTransition())
-            .allowHardware(false)
-            .componentRegistry {
-                if (SDK_INT >= 28) {
-                    add(ImageDecoderDecoder(this@HabiticaBaseApplication))
-                } else {
-                    add(GifDecoder())
-                }
-            }
-        if (BuildConfig.DEBUG) {
-            builder = builder.logger(DebugLogger())
-        }
-        Coil.setImageLoader(builder.build())
+        setupCoil()
 
         RxErrorHandler.init(analyticsManager)
 
