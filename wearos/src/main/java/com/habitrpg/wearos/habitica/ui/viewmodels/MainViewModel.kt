@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(
 
     init {
         user = userRepository.getUser().asLiveData()
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             userRepository.retrieveUser()
             taskRepository.retrieveTasks()
         }

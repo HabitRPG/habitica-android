@@ -36,6 +36,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
     val sharedPreferences: SharedPreferences,
     val apiClient: ApiClient
 ) : BaseViewModel(userRepository, exceptionBuilder) {
+    lateinit var onLoginCompleted: () -> Unit
     var googleEmail: String? = null
 
     fun handleGoogleLogin(
@@ -64,11 +65,10 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
     fun handleGoogleLoginResult(
         activity: Activity,
         recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
-        onSuccess: (UserAuthResponse?) -> Unit
     ) {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             val token = try {
                 GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes)
             } catch (e: IOException) {
@@ -82,7 +82,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
                 return@launch
             }
             val response = apiClient.loginSocial(UserAuthSocial())
-            onSuccess(response)
+            handleAuthResponse(response)
         }
     }
 
@@ -127,12 +127,14 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         return true
     }
 
-    fun handleAuthResponse(userAuthResponse: UserAuthResponse) {
+    suspend fun handleAuthResponse(userAuthResponse: UserAuthResponse?) {
+        if (userAuthResponse == null) return
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
         }
-
+        retrieveUser()
+        onLoginCompleted()
     }
 
     @Throws(Exception::class)
@@ -155,8 +157,11 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         }
     }
 
-    suspend fun login(username: String, password: String): UserAuthResponse? {
-        return apiClient.loginLocal(UserAuth(username, password))
+    fun login(username: String, password: String) {
+        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
+            val response = apiClient.loginLocal(UserAuth(username, password))
+            handleAuthResponse(response)
+        }
     }
 
     companion object {

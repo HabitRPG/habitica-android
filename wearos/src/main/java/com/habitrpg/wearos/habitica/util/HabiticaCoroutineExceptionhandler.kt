@@ -16,6 +16,7 @@ class ExceptionHandlerBuilder @Inject constructor() {
 
     fun userFacing(errorPresenter: ErrorPresenter): CoroutineExceptionHandler {
         return CoroutineExceptionHandler { _, throwable ->
+            Log.e("Coroutine Error", "Error: ${throwable.cause}", throwable)
             errorPresenter.errorValues.value = throwable.message?.let { DisplayedError(it) }
         }
     }

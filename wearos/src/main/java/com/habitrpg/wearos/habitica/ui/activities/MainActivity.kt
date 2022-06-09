@@ -18,7 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val viewModel: MainViewModel by viewModels()
-
     private val adapter = HubAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {

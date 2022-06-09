@@ -23,6 +23,10 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
+        viewModel.onLoginCompleted = {
+            startMainActivity()
+        }
+
         binding.loginButton.setOnClickListener { loginLocal() }
         binding.googleLoginButton.setOnClickListener { loginGoogle() }
         binding.registerButton.setOnClickListener { openRegisterOnPhone() }
@@ -39,24 +43,11 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             showValidationError(getString(R.string.login_validation_error_fieldsmissing))
             return
         }
-        lifecycleScope.launch {
-            val result = viewModel.login(username, password)
-            if (result != null) {
-                handleAuthResponse(result)
-            }
-        }
+        viewModel.login(username, password)
     }
 
     private fun loginGoogle() {
         viewModel.handleGoogleLogin(this, pickAccountResult)
-    }
-
-    private fun handleAuthResponse(response: UserAuthResponse) {
-        viewModel.handleAuthResponse(response)
-        lifecycleScope.launch {
-            viewModel.retrieveUser()
-            startMainActivity()
-        }
     }
 
     private fun showValidationError(message: String) {
@@ -72,11 +63,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) { response ->
-                if (response != null) {
-                    handleAuthResponse(response)
-                }
-            }
+            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult)
         }
     }
 
@@ -84,11 +71,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
-            viewModel.handleGoogleLoginResult(this, null) { response ->
-                if (response != null) {
-                    handleAuthResponse(response)
-                }
-            }
+            viewModel.handleGoogleLoginResult(this, null)
         }
     }
 
