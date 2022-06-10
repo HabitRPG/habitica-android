@@ -1,7 +1,28 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.6.21'
+    ext {
+        target_sdk = 32
+        app_version_name = '4.0'
+
+
+        kotlin_version = '1.6.21'
+        core_ktx_version = '1.8.0'
+        appcompat_version = '1.4.2'
+        lifecycle_version = '2.4.1'
+        coroutines_version = '1.6.1'
+        okhttp_version = '4.9.3'
+        retrofit_version = '2.9.0'
+        daggerhilt_version = '2.42'
+        recyclerview_version = '1.2.1'
+        amplitude_version = '3.35.1'
+        preferences_version = '1.2.0'
+        markwon_version = '4.6.2'
+        coil_version = '2.1.0'
+        play_wearables_version = '17.1.0'
+        play_auth_version = '20.2.0'
+        moshi_version = '1.13.0'
+    }
 
     repositories {
         google()
@@ -18,7 +39,7 @@ buildscript {
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0-rc01"
         classpath 'com.google.firebase:perf-plugin:1.4.1'
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.41'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerhilt_version"
     }
 }
 

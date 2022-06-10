@@ -7,18 +7,25 @@ plugins {
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 32
+    compileSdk target_sdk
 
     defaultConfig {
-        applicationId "com.habitrpg.wearos.habitica"
+        applicationId "com.habitrpg.android.habitica"
         minSdk 26
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        targetSdk target_sdk
+        versionCode 3521
+        versionName app_version_name
 
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            applicationIdSuffix ".debug"
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -30,48 +37,43 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'com.google.android.gms:play-services-wearable:17.1.0'
-    implementation 'androidx.percentlayout:percentlayout:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "com.google.android.gms:play-services-wearable:$play_wearables_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation 'androidx.wear:wear:1.2.0'
     implementation "androidx.wear:wear-input:1.1.0"
 
     //Networking
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     //REST API handling
-    implementation('com.squareup.retrofit2:retrofit:2.9.0') {
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version") {
         exclude module: 'okhttp'
     }
-    implementation('com.squareup.retrofit2:converter-moshi:2.9.0')
-    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshi_version")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi_version")
 
     //Analytics
-    implementation 'com.amplitude:android-sdk:3.35.1'
+    implementation "com.amplitude:android-sdk:$amplitude_version"
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.4.1"
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
-    implementation "androidx.preference:preference-ktx:1.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "androidx.preference:preference-ktx:$preferences_version"
 
-    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+    implementation "com.google.android.gms:play-services-auth:$play_auth_version"
 
     implementation project(':common')
     implementation project(':shared')
-    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
 
-    implementation "com.google.dagger:hilt-android:2.41"
-    kapt "com.google.dagger:hilt-compiler:2.41"
-    implementation "androidx.core:core-ktx:1.8.0"
+    implementation "com.google.dagger:hilt-android:$daggerhilt_version"
+    kapt "com.google.dagger:hilt-compiler:$daggerhilt_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
