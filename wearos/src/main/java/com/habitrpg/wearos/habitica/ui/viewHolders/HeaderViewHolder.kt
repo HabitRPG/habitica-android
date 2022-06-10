@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.viewHolders
 
 import android.view.View
-import com.habitrpg.wearos.habitica.databinding.RowHeaderBinding
+import com.habitrpg.android.habitica.databinding.RowHeaderBinding
 
 class HeaderViewHolder(itemView: View): BindableViewHolder<String>(itemView) {
     private val binding = RowHeaderBinding.bind(itemView)

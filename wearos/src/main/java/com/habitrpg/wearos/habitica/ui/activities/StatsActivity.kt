@@ -2,7 +2,7 @@ package com.habitrpg.wearos.habitica.ui.activities
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.habitrpg.wearos.habitica.databinding.ActivityStatsBinding
+import com.habitrpg.android.habitica.databinding.ActivityStatsBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.StatsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

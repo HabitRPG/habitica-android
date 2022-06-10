@@ -4,7 +4,7 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.habitrpg.wearos.habitica.databinding.RowTodoBinding
+import com.habitrpg.android.habitica.databinding.RowTodoBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
 
 class ToDoViewHolder(itemView: View) : TaskViewHolder(itemView) {

@@ -3,7 +3,7 @@ package com.habitrpg.wearos.habitica.ui.adapters
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.wearos.habitica.databinding.RowHeaderBinding
+import com.habitrpg.android.habitica.databinding.RowHeaderBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder

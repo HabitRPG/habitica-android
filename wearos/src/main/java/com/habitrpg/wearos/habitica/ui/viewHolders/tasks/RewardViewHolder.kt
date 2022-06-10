@@ -2,7 +2,7 @@ package com.habitrpg.wearos.habitica.ui.viewHolders.tasks
 
 import android.view.View
 import android.widget.TextView
-import com.habitrpg.wearos.habitica.databinding.RowRewardBinding
+import com.habitrpg.android.habitica.databinding.RowRewardBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
 
 class RewardViewHolder(itemView: View) : TaskViewHolder(itemView) {

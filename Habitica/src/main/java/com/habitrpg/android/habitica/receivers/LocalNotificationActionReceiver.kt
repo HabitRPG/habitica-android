@@ -127,6 +127,6 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     }
 
     private fun getMessageText(key: String?): String? {
-        return RemoteInput.getResultsFromIntent(intent)?.getCharSequence(key)?.toString()
+        return intent?.let { RemoteInput.getResultsFromIntent(it)?.getCharSequence(key)?.toString() }
     }
 }

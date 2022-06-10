@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.wearos.habitica.R
-import com.habitrpg.wearos.habitica.databinding.RowSettingsBinding
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.RowSettingsBinding
 import com.habitrpg.wearos.habitica.ui.viewHolders.BindableViewHolder
 
 class SettingsAdapter: RecyclerView.Adapter<SettingsViewHolder>() {

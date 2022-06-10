@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.wearable.Wearable
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -30,10 +31,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.hideKeyboard
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
@@ -47,10 +45,7 @@ import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
-import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
@@ -63,6 +58,12 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
+import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -140,6 +141,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             return
+        } else {
+            Wearable.getCapabilityClient(this).addLocalCapability("provide_auth")
         }
 
         setupToolbar(binding.toolbar)

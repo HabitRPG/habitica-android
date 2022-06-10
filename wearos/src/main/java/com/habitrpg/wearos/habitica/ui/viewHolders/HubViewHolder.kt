@@ -3,8 +3,8 @@ package com.habitrpg.wearos.habitica.ui.viewHolders
 import android.content.res.ColorStateList
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.habitrpg.wearos.habitica.R
-import com.habitrpg.wearos.habitica.databinding.RowHubBinding
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.RowHubBinding
 import com.habitrpg.wearos.habitica.models.MenuItem
 
 class HubViewHolder(itemView: View): BindableViewHolder<MenuItem>(itemView) {

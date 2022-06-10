@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.helpers.notifications.HabiticaFirebaseMessa
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager;
 import com.habitrpg.android.habitica.modules.UserModule;
 import com.habitrpg.android.habitica.modules.UserRepositoryModule;
+import com.habitrpg.android.habitica.receivers.DeviceCommunicationService;
 import com.habitrpg.android.habitica.receivers.LocalNotificationActionReceiver;
 import com.habitrpg.android.habitica.receivers.NotificationPublisher;
 import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
@@ -367,4 +368,6 @@ public interface UserComponent {
     void inject(@NotNull StableViewModel stableViewModel);
 
     void inject(@NotNull DeathActivity deathActivity);
+
+    void inject(@NotNull DeviceCommunicationService deviceCommunicationService);
 }

@@ -15,7 +15,7 @@ import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
-import coil.clear
+import coil.dispose
 import coil.load
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.R
@@ -150,7 +150,7 @@ class AvatarView : FrameLayout {
                 continue
             }
             imageView.tag = layerName
-            imageView.clear()
+            imageView.dispose()
             imageView.setImageResource(0)
 
             imageView.load(
@@ -182,7 +182,7 @@ class AvatarView : FrameLayout {
             }
         }
         while (i < (imageViewHolder.size)) {
-            imageViewHolder[i].clear()
+            imageViewHolder[i].dispose()
             imageViewHolder[i].setImageResource(0)
             imageViewHolder[i].tag = null
             i++

@@ -302,6 +302,15 @@
             android:name=".widget.TodosWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service android:name=".widget.HabitButtonWidgetService"/>
+        <service android:name=".receivers.DeviceCommunicationService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+
+                <data android:scheme="wear" android:host="*" />
+            </intent-filter>
+        </service>
 
     </application>
     <queries>

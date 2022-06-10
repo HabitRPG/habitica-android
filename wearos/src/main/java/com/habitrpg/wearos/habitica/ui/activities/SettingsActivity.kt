@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
-import com.habitrpg.wearos.habitica.R
-import com.habitrpg.wearos.habitica.databinding.ActivitySettingsBinding
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ActivitySettingsBinding
 import com.habitrpg.wearos.habitica.ui.adapters.SettingsAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.SettingsItem
 import com.habitrpg.wearos.habitica.ui.viewmodels.SettingsViewModel

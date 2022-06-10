@@ -8,8 +8,8 @@ import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.wearos.habitica.R
-import com.habitrpg.wearos.habitica.databinding.ActivityTasklistBinding
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ActivityTasklistBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.adapters.DailyListAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.HabitListAdapter

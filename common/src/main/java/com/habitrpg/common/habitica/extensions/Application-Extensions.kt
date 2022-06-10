@@ -12,11 +12,11 @@ import com.habitrpg.common.habitica.BuildConfig
 fun Application.setupCoil() {
     var builder = ImageLoader.Builder(this)
         .allowHardware(false)
-        .componentRegistry {
+        .components {
             if (Build.VERSION.SDK_INT >= 28) {
-                add(ImageDecoderDecoder(this@setupCoil))
+                add(ImageDecoderDecoder.Factory())
             } else {
-                add(GifDecoder())
+                add(GifDecoder.Factory())
             }
         }
     if (BuildConfig.DEBUG) {

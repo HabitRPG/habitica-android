@@ -7,13 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.habitrpg.wearos.habitica.R
-import com.habitrpg.wearos.habitica.databinding.ActivityLoginBinding
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {

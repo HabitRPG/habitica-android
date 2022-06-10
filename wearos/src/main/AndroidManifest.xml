@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.habitrpg.wearos.habitica">
+    package="com.habitrpg.android.habitica">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -11,16 +11,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".MainApplication"
+        android:name="com.habitrpg.wearos.habitica.MainApplication"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
-
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
@@ -29,20 +24,23 @@
             android:name="com.habitrpg.wearos.habitica.ui.activities.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
+        </activity>
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.LoginActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.LoginActivity" />
 
-        <activity android:name=".ui.activities.TaskListActivity" />
-        <activity android:name=".ui.activities.TaskFormActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskListActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskFormActivity" />
 
-        <activity android:name=".ui.activities.AvatarActivity" />
-        <activity android:name=".ui.activities.StatsActivity" />
-        <activity android:name=".ui.activities.SettingsActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.AvatarActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.StatsActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.SettingsActivity" />
 
         <activity android:name="androidx.wear.activity.ConfirmationActivity" />
     </application>

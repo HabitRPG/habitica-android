@@ -7,7 +7,7 @@ import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
 import androidx.activity.viewModels
 import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.wearos.habitica.databinding.ActivityAvatarBinding
+import com.habitrpg.android.habitica.databinding.ActivityAvatarBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.AvatarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Integer.max

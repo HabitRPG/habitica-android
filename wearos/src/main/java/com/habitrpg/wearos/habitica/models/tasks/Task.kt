@@ -3,11 +3,11 @@ package com.habitrpg.wearos.habitica.models.tasks
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
+import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.models.tasks.Attribute
 import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.wearos.habitica.R
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.json.JSONArray

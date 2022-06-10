@@ -7,8 +7,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.wearos.habitica.R
-import com.habitrpg.wearos.habitica.databinding.ActivityMainBinding
+import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.wearos.habitica.models.MenuItem
 import com.habitrpg.wearos.habitica.ui.adapters.HubAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.MainViewModel
@@ -27,9 +27,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             layoutManager =
                 WearableLinearLayoutManager(this@MainActivity, HabiticaScrollingLayoutCallback())
             adapter = this@MainActivity.adapter
-        }
-        if (!viewModel.isAuthenticated) {
-            openLoginActivity()
         }
     }
 
@@ -123,12 +120,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun openSettingsActivity() {
         startActivity(Intent(this, SettingsActivity::class.java))
-    }
-
-    private fun openLoginActivity() {
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
     }
 
     private fun openTasklist(type: TaskType) {
