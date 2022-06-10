@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:scrollbars="vertical">
-
-</com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView>
+    <com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+    <com.habitrpg.wearos.habitica.ui.views.AddTaskButton
+        android:id="@+id/add_task_button"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_gravity="center|bottom"
+        app:layout_behavior="com.habitrpg.wearos.habitica.ui.activities.ScrollAwayBehavior"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

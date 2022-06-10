@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/avatar_cutout"
+    android:clipChildren="true"
+    android:clipToOutline="true"
+    android:outlineProvider="background"
+    android:clipToPadding="true">
+    <com.habitrpg.common.habitica.views.AvatarView
+        android:id="@+id/avatar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
+</FrameLayout>

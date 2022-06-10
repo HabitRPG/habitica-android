@@ -3,6 +3,7 @@ package com.habitrpg.wearos.habitica.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
@@ -34,18 +35,23 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                 startLoginActivity()
             }
         }
+
+        viewModel.showAccountLoader.observe(this) {
+            binding.progressBar.isVisible = it
+            binding.textView.isVisible = it
+        }
     }
 
     private fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
     }
 
     private fun startLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+        finish()
     }
 
     private fun requestAuthenticationData(nodeID: String) {

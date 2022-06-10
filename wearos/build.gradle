@@ -25,10 +25,12 @@ android {
             applicationIdSuffix ".debug"
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
+            resValue "string", "app_name", "Habitica Debug"
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Habitica"
         }
     }
     buildFeatures {
@@ -53,6 +55,7 @@ dependencies {
     }
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
     implementation("com.squareup.moshi:moshi-kotlin:$moshi_version")
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi_version")
 
     //Analytics

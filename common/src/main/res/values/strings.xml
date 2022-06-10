@@ -42,5 +42,9 @@
 
     <string name="login_validation_error_title">Validation Error</string>
     <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
+    <string name="x_habits">%d Habits</string>
+    <string name="x_dailies">%d Dailies</string>
+    <string name="x_todos">%d To do\'s</string>
+    <string name="x_rewards">%d Rewards</string>
 
 </resources>

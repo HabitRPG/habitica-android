@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.MainActivity"
+    tools:context="com.habitrpg.wearos.habitica.ui.activities.MainActivity"
     android:scrollbars="vertical"
     tools:deviceIds="wear">
 

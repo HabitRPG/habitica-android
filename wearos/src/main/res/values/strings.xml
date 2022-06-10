@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Habitica</string>
     <string name="ok">OK</string>
+    <string name="syncing_account">Syncing Account from Phone</string>
 </resources>

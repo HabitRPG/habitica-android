@@ -10,7 +10,7 @@ class HabiticaRecyclerView @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         post {
-            setPaddingRelative(0, (height * 0.15).toInt(), 0, (height * 0.25).toInt())
+            setPaddingRelative(0, (height * 0.06).toInt(), 0, (height * 0.25).toInt())
             scrollToPosition(0)
         }
     }
