@@ -405,7 +405,7 @@
     <string name="save">Save</string>
     <string name="location">Location</string>
     <string name="tasks">Tasks</string>
-    <string name="challenge_create_error_enough_gems">You don&amp;rsquo;t have enough gems to create a challenge.</string>
+    <string name="challenge_create_error_enough_gems">You don\'t have enough gems to create a challenge.</string>
     <string name="challenge_create_error_no_tasks">You need to add at least one task to create this Challenge.</string>
     <string name="challenge_create_error_title">You need a title to create this Challenge.</string>
     <string name="description_optional">Description (optional)</string>
