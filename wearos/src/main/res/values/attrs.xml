@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HabitDirectionPickerButton">
+        <attr name="drawable" format="integer" />
+        <attr name="drawFromTop" format="boolean" />
+    </declare-styleable>
+</resources>

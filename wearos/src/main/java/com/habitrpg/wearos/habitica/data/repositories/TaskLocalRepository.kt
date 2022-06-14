@@ -7,6 +7,7 @@ import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.models.tasks.TaskList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,5 +46,15 @@ class TaskLocalRepository @Inject constructor() {
             oldList.set(index, task)
         }
         tasks[task.type]?.value = oldList
+    }
+
+    fun getTask(taskID: String): Flow<Task?> {
+        for (type in tasks.values) {
+            val task = type.value?.firstOrNull { it.id == taskID }
+            if (task != null) {
+                return flowOf(task)
+            }
+        }
+        return emptyFlow()
     }
 }

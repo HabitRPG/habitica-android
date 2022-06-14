@@ -7,6 +7,7 @@ import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.models.tasks.TaskList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import javax.inject.Inject
 
 class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepository: TaskLocalRepository) {
@@ -27,5 +28,10 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
             localRepository.updateTask(task)
         }
         return result?.let { TaskScoringResult(it, null) }
+    }
+
+    fun getTask(taskID: String?): Flow<Task?> {
+        if (taskID == null) return emptyFlow()
+        return localRepository.getTask(taskID)
     }
 }

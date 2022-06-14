@@ -43,14 +43,14 @@ class CurrencyViews : LinearLayout {
         get() = gemTextView.visibility
         set(value) { gemTextView.visibility = value }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        val attributes = context?.theme?.obtainStyledAttributes(
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.CurrencyViews,
             0, 0
         )
         setupViews()
-        val fallBackLight = context?.isUsingNightModeResources() != true
+        val fallBackLight = !context.isUsingNightModeResources()
         lightBackground = attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, fallBackLight) ?: fallBackLight
     }
 

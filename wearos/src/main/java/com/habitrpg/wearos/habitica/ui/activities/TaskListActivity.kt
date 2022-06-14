@@ -51,13 +51,16 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
             scoreTask(it)
         }
 
-        binding.addTaskButton.setOnClickListener {  }
+        binding.addTaskButton.setOnClickListener { openTaskFormActivity() }
     }
 
     private fun scoreTask(task: Task) {
         var direction = TaskDirection.UP
         if (task.type == TaskType.HABIT) {
             if (task.up == true && task.down == true) {
+                startActivity(Intent(this, HabitDirectionActivity::class.java).apply {
+                    putExtra("task_id", task.id)
+                })
                 return
             } else {
                 direction = if (task.up == true) TaskDirection.UP else TaskDirection.DOWN

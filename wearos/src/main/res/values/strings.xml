@@ -1,4 +1,5 @@
 <resources>
     <string name="ok">OK</string>
     <string name="syncing_account">Syncing Account from Phone</string>
+    <string name="how_did_you_do">How did you do?</string>
 </resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.habitrpg.wearos.habitica.ui.views.HabitDirectionPickerButton
+        android:id="@+id/plus_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:drawable="@drawable/watch_task_add"
+        app:drawFromTop="true"
+        />
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/how_did_you_do"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_400"/>
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:maxLines="2"
+        android:textColor="@color/white"/>
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <com.habitrpg.wearos.habitica.ui.views.HabitDirectionPickerButton
+        android:id="@+id/minus_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:drawable="@drawable/watch_task_minus"
+        />
+</LinearLayout>
