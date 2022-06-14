@@ -34,4 +34,11 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
         if (taskID == null) return emptyFlow()
         return localRepository.getTask(taskID)
     }
+
+    suspend fun createTask(task: Task) {
+        val newTask = apiClient.createTask(task)
+        if (newTask != null) {
+            localRepository.updateTask(newTask)
+        }
+    }
 }

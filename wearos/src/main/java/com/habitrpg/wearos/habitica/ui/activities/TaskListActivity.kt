@@ -85,7 +85,9 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
     }
 
     private fun openTaskFormActivity() {
-        startActivity(Intent(this, TaskFormActivity::class.java))
+        startActivity(Intent(this, TaskFormActivity::class.java).apply {
+            putExtra("task_type", viewModel.taskType?.value)
+        })
     }
 
     private fun configureAdapter() {

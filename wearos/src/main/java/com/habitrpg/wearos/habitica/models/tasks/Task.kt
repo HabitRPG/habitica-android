@@ -248,7 +248,6 @@ open class Task constructor(): Parcelable {
     }
 
     fun isBeingEdited(task: Task): Boolean {
-
         when {
             text != task.text -> return true
             notes != task.notes -> return true

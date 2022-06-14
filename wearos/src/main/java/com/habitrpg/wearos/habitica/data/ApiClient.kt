@@ -8,6 +8,7 @@ import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
+import com.habitrpg.wearos.habitica.models.tasks.Task
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -111,5 +112,5 @@ class ApiClient @Inject constructor(
 
     suspend fun getTasks() = process(apiService.getTasks())
     suspend fun scoreTask(id: String, direction: String) = process(apiService.scoreTask(id, direction))
-
+    suspend fun createTask(task: Task) = process(apiService.createTask(task))
 }

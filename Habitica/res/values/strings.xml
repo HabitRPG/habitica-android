@@ -420,10 +420,6 @@
     <string name="remove_tasks">Remove</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
-    <string name="daily">Daily</string>
-    <string name="habit">Habit</string>
-    <string name="reward">Reward</string>
-    <string name="todo">To Do</string>
     <string name="official">Official</string>
     <string name="challenge">Challenge</string>
     <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
@@ -835,7 +831,6 @@
     <string name="switch_to_list_view">Switch to list view</string>
     <string name="switch_to_grid_view">Switch to grid view</string>
     <string name="confirm_deletion">Confirm deletion</string>
-    <string name="create_task">Create %s</string>
     <string name="details">Details</string>
     <string name="share_challenge_with">Share Challenge with</string>
     <string name="app_theme">App Theme</string>
@@ -1019,8 +1014,6 @@
     <string name="your_progress">Your Progress</string>
     <string name="lets_get_started">Let\'s get started</string>
     <string name="percent_completed">%d%% Complete</string>
-    <string name="create_task_title">Create a Task</string>
-    <string name="complete_task_title">Complete a Task</string>
     <string name="hatch_pet_title">Hatch a new pet</string>
     <string name="feedPet_title">Feed a pet</string>
     <string name="purchase_equipment_title">Purchase Equipment</string>

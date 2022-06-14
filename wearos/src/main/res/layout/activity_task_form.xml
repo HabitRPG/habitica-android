@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-</LinearLayout>
+    <androidx.wear.widget.BoxInsetLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_boxedEdges="all">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="38dp"
+                android:orientation="vertical">
+                <include
+                    android:id="@+id/header"
+                    layout="@layout/row_header" />
+                <EditText
+                    android:id="@+id/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapWords" />
+                <Button
+                    android:id="@+id/task_type_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Chip"
+                    tools:text="Task Type"
+                    android:textAllCaps="false"
+                    android:textColor="@color/brand_500"/>
+            </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    </androidx.wear.widget.BoxInsetLayout>
+    <com.habitrpg.wearos.habitica.ui.views.AddTaskButton
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_gravity="bottom" />
+</FrameLayout>
