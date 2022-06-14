@@ -275,6 +275,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                             (recyclerAdapter?.data?.get(newPosition + 1)?.position ?: newPosition) - 1
                         }
                     }
+                    if (recyclerAdapter?.showAdventureGuide == true) {
+                        newPosition -= 1
+                    }
                     compositeSubscription.add(
                         taskRepository.updateTaskPosition(
                             taskType, validTaskId, newPosition
