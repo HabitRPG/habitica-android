@@ -5,7 +5,6 @@
     android:layout_gravity="center"
     android:background="@drawable/avatar_cutout"
     android:clipChildren="true"
-    android:clipToOutline="true"
     android:outlineProvider="background"
     android:clipToPadding="true">
     <com.habitrpg.common.habitica.views.AvatarView
