@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="HabiticaAppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="HabiticaAppTheme" parent="@android:style/Theme.DeviceDefault">
         <item name="android:windowBackground">@color/black</item>
     </style>
     <style name="Chip">

@@ -26,6 +26,7 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         super.onCreate(savedInstanceState)
         if (viewModel.hasAuthentication) {
             startMainActivity()
+            return
         }
 
         viewModel.onLoginCompleted = {
@@ -36,9 +37,17 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
             }
         }
 
-        viewModel.showAccountLoader.observe(this) {
-            binding.progressBar.isVisible = it
-            binding.textView.isVisible = it
+        messageClient.addListener(viewModel)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val info = Tasks.await(capabilityClient.getCapability("provide_auth", CapabilityClient.FILTER_REACHABLE))
+            val nodeID = info.nodes.firstOrNull { it.isNearby }
+            if (nodeID != null) {
+                showAccountLoader(true)
+                Tasks.await(messageClient.sendMessage(nodeID.id, "/request/auth", null))
+            } else {
+                showAccountLoader(false)
+                startLoginActivity()
+            }
         }
     }
 
@@ -54,24 +63,9 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
         finish()
     }
 
-    private fun requestAuthenticationData(nodeID: String) {
-        Tasks.await(messageClient.sendMessage(nodeID, "/request/auth", null).apply {
-            addOnSuccessListener {
-
-            }
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        messageClient.addListener(viewModel)
-        lifecycleScope.launch(Dispatchers.IO) {
-            val info = Tasks.await(capabilityClient.getCapability("provide_auth", CapabilityClient.FILTER_REACHABLE))
-            val nodeID = info.nodes.firstOrNull { it.isNearby }
-            if (nodeID != null) {
-                requestAuthenticationData(nodeID.id)
-            }
-        }
+    private fun showAccountLoader(show: Boolean) {
+        binding.progressBar.isVisible = show
+        binding.textView.isVisible = show
     }
 
     override fun onPause() {

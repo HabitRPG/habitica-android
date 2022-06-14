@@ -2,7 +2,6 @@ package com.habitrpg.wearos.habitica.ui.viewmodels
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.MessageEvent
@@ -24,9 +23,6 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
     val keyHelper: KeyHelper?
 ) : BaseViewModel(userRepository, exceptionBuilder), MessageClient.OnMessageReceivedListener {
     lateinit var onLoginCompleted: (Boolean) -> Unit
-
-    val showAccountLoader = MutableLiveData(false)
-
     val hasAuthentication: Boolean
     get() {
         return hostConfig.hasAuthentication()
@@ -44,6 +40,8 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
             try {
                 saveTokens(apiKey, userID)
             } catch (e: Exception) {
+                onLoginCompleted(false)
+                return@launch
             }
             retrieveUser()
             onLoginCompleted(true)
