@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_marginStart="24dp"
-    android:layout_marginEnd="24dp"
-    android:layout_height="40dp">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="28dp">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:background="@drawable/icon_stats"
+        android:layout_marginStart="30dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/bitmap"
         android:layout_width="22dp"
         android:layout_height="22dp"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@id/current_value" />
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/current_value"
+        app:layout_constraintEnd_toStartOf="@+id/current_value"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/current_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="4dp"
-        android:fontFamily="@font/press_start_reg"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="18sp"
+        android:autoSizeMinTextSize="12sp"
         android:autoSizeStepGranularity="2sp"
-        android:text="0000"
-        android:textSize="18sp" />
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/press_start_reg"
+        android:text="00"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/max_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="6dp"
-        android:layout_toEndOf="@id/current_value"
-        android:fontFamily="@font/press_start_reg"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="4sp"
+        android:layout_marginTop="4dp"
         android:autoSizeMaxTextSize="6sp"
-        android:text="/0000"
+        android:autoSizeMinTextSize="4sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/press_start_reg"
+        android:text="/00"
         android:textColor="@color/white"
-        android:textSize="6sp" />
+        android:textSize="6sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
