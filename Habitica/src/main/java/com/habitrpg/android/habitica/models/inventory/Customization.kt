@@ -79,6 +79,18 @@ open class Customization : RealmObject(), BaseObject {
 
     val path: String
         get() {
+            var path = if (type == "background") "backgrounds" else type
+            if (this.customizationSet != null) {
+                path = path + "." + this.customizationSet
+            } else if (this.category != null) {
+                path = path + "." + this.category
+            }
+            path = "$path.$identifier"
+            return path
+        }
+
+    val unlockPath: String
+        get() {
             var path = type
             if (this.category != null) {
                 path = path + "." + this.category

@@ -22,8 +22,8 @@
             android:paddingEnd="8dp">
             <ImageView
                 android:id="@+id/pin_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/shopitem_status_size"
+                android:layout_height="@dimen/shopitem_status_size"
                 android:layout_marginEnd="6dp"/>
             <TextView
                 android:id="@+id/pin_text"

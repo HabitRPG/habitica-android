@@ -87,6 +87,12 @@ class AvatarCustomizationFragment :
                 .subscribe({ }, RxErrorHandler.handleEmptyError())
         )
 
+        compositeSubscription.add(
+            this.inventoryRepository.getInAppRewards()
+                .map { rewards -> rewards.map { it.key } }
+                .subscribe({ adapter.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError())
+        )
+
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
