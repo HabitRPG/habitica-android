@@ -61,13 +61,13 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun updateStatViews(stats: Stats) {
-        binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0, HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hpColor)
-        binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0, HabiticaIconsHelper.imageOfExperience(), R.color.xpColor)
-        if (stats.lvl ?: 0 < 10) {
-            binding.mpStatValue.visibility = View.GONE
-        } else {
-            binding.mpStatValue.setStatValue(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0, HabiticaIconsHelper.imageOfMagic(), R.color.mpColor)
-        }
+//        binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0, HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hpColor)
+//        binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0, HabiticaIconsHelper.imageOfExperience(), R.color.xpColor)
+//        if (stats.lvl ?: 0 < 10) {
+//            binding.mpStatValue.visibility = View.GONE
+//        } else {
+//            binding.mpStatValue.setStatValue(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0, HabiticaIconsHelper.imageOfMagic(), R.color.mpColor)
+//        }
     }
 }
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_marginStart="24dp"
+    android:layout_marginEnd="24dp"
     android:layout_height="40dp">
 
     <ImageView
@@ -17,7 +19,11 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="4dp"
         android:fontFamily="@font/press_start_reg"
-        android:text="00"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="0000"
         android:textSize="18sp" />
 
     <TextView
@@ -25,12 +31,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
         android:layout_centerVertical="true"
         android:layout_marginEnd="6dp"
         android:layout_toEndOf="@id/current_value"
         android:fontFamily="@font/press_start_reg"
-        android:text="/000"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="4sp"
+        android:autoSizeMaxTextSize="6sp"
+        android:text="/0000"
+        android:textColor="@color/white"
         android:textSize="6sp" />
 
 </RelativeLayout>
