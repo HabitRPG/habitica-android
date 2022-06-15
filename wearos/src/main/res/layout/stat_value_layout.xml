@@ -46,7 +46,7 @@
         android:id="@+id/max_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="3dp"
         android:autoSizeMaxTextSize="6sp"
         android:autoSizeMinTextSize="4sp"
         android:autoSizeTextType="uniform"

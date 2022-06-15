@@ -52,7 +52,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
             binding.mpBar.visibility = View.GONE
         } else {
             binding.mpBar.ovalSize = ((height / 2) - 46)
-            binding.mpBar.setBarColor(R.color.mp_bar_color)
+            binding.mpBar.setBarColor(R.color.mpColor)
             binding.mpBar.setPercentageValues(stats.mp?.toInt() ?: 0, stats.maxMP ?: 0)
             binding.mpBar.animateProgress()
         }
@@ -61,8 +61,8 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun updateStatViews(stats: Stats) {
-        binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0, HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hpColor)
-        binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0, HabiticaIconsHelper.imageOfExperience(), R.color.xpColor)
+        binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0, HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hp_bar_color)
+        binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0, HabiticaIconsHelper.imageOfExperience(), R.color.exp_bar_color)
         if (stats.lvl ?: 0 < 10) {
             binding.mpStatValue.visibility = View.GONE
         } else {
