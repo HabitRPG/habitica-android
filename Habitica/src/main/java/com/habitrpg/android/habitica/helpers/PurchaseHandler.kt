@@ -70,7 +70,17 @@ class PurchaseHandler(
     private fun processPurchases(result: BillingResult, purchases: MutableList<Purchase>) {
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
+                val mostRecentSub = findMostRecentSubscription(purchases)
+                val plan = userViewModel.user.value?.purchased?.plan
                 for (purchase in purchases) {
+                    if (plan?.isActive == true) {
+                        if ((plan.additionalData?.data?.orderId == purchase.orderId &&
+                            ((plan.dateTerminated != null) == purchase.isAutoRenewing)) ||
+                                mostRecentSub?.orderId != purchase.orderId
+                        ) {
+                            return
+                        }
+                    }
                     handle(purchase)
                 }
             }
@@ -231,14 +241,6 @@ class PurchaseHandler(
                 }
             }
             PurchaseTypes.allSubscriptionTypes.contains(sku) -> {
-                val plan = userViewModel.user.value?.purchased?.plan
-                if (plan?.isActive == true) {
-                    if (plan.additionalData?.data?.orderId == purchase.orderId &&
-                        ((plan.dateTerminated != null) == purchase.isAutoRenewing)
-                    ) {
-                        return
-                    }
-                }
                 val validationRequest = buildValidationRequest(purchase)
                 apiClient.validateSubscription(validationRequest).subscribe({
                     processedPurchase(purchase)
@@ -310,14 +312,20 @@ class PurchaseHandler(
         }
         var fallback: Purchase? = null
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            val purchases = result.purchasesList.filter { it.isAcknowledged }.sortedByDescending { it.purchaseTime }
-            // If there is a subscription that is still active, prioritise that. Otherwise return the most recent one.
-            for (purchase in purchases) {
-                if (purchase.isAutoRenewing) {
-                    return purchase
-                } else if (!purchase.isAutoRenewing && fallback == null) {
-                    fallback = purchase
-                }
+            return findMostRecentSubscription(result.purchasesList)
+        }
+        return fallback
+    }
+
+    private fun findMostRecentSubscription(purchasesList: List<Purchase>): Purchase? {
+        val purchases = purchasesList.filter { it.isAcknowledged }.sortedByDescending { it.purchaseTime }
+        var fallback: Purchase? = null
+        // If there is a subscription that is still active, prioritise that. Otherwise return the most recent one.
+        for (purchase in purchases) {
+            if (purchase.isAutoRenewing) {
+                return purchase
+            } else if (!purchase.isAutoRenewing && fallback == null) {
+                fallback = purchase
             }
         }
         return fallback

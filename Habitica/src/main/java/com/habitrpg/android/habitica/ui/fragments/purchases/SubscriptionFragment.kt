@@ -29,11 +29,11 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
@@ -232,7 +232,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             if (user?.purchased?.plan?.paymentMethod == "Google" &&
                 user?.purchased?.plan?.isActive == true &&
                 user?.purchased?.plan?.dateTerminated == null &&
-                (newestSubscription?.isAutoRenewing == false)
+                (newestSubscription?.isAutoRenewing != true)
             ) {
                 compositeSubscription.add(
                     purchaseHandler.cancelSubscription()
