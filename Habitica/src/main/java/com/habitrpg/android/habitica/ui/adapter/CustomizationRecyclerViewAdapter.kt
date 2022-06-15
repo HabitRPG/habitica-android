@@ -47,6 +47,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         }
 
     var ownedCustomizations: List<String> = listOf()
+    private var pinnedItemKeys: List<String> = ArrayList()
 
     private val selectCustomizationEvents = PublishSubject.create<Customization>()
 
@@ -138,6 +139,11 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         return selectCustomizationEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
+    fun setPinnedItemKeys(pinnedItemKeys: List<String>) {
+        this.pinnedItemKeys = pinnedItemKeys
+        if (customizationList.size > 0) this.notifyDataSetChanged()
+    }
+
     internal inner class CustomizationViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val binding = CustomizationGridItemBinding.bind(itemView)
@@ -189,6 +195,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 } else {
                     customization?.let {
                         val dialog = PurchaseDialog(itemView.context, HabiticaBaseApplication.userComponent, ShopItem.fromCustomization(it, userSize, hairColor))
+                        if (it.type == "background") dialog.isPinned = pinnedItemKeys.contains(ShopItem.fromCustomization(it, userSize, hairColor).key)
                         dialog.show()
                     }
                 }
