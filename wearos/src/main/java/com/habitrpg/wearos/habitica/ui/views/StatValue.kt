@@ -17,14 +17,17 @@ class StatValue @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     var binding = StatValueLayoutBinding.inflate(context.layoutInflater, this)
 
-    fun setStatValue(maxValue: Int, currentValue: Int, bitmap: Bitmap, bitmapColor: Int) {
-        binding.bitmap.setImageBitmap(bitmap)
+    fun setStatValue(maxValue: Int, currentValue: Int) {
         binding.currentValue.text = currentValue.toString()
+        binding.maxValue.text = "/$maxValue"
+        invalidate()
+    }
+
+    fun setStatValueResources(bitmap: Bitmap, bitmapColor: Int) {
+        binding.bitmap.setImageBitmap(bitmap)
         binding.currentValue.setTextColor(
             context?.resources?.getColor(bitmapColor, null) ?: Color.WHITE
         )
-        binding.maxValue.text = "/$maxValue"
-        invalidate()
     }
 
 

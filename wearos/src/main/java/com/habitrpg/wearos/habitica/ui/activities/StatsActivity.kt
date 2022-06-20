@@ -23,21 +23,25 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
         binding = ActivityStatsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
+        setStatViews()
         viewModel.user.observe(this) {
             updateStats(it)
         }
     }
 
-    private fun updateStats(user: User) {
-        binding.root.waitForLayout {
-            val height: Int = binding.root.measuredHeight
-            val stats = user.stats
-            stats?.let { updateBarViews(it, height) }
-            stats?.let { updateStatViews(it) }
-        }
+    private fun setStatViews() {
+        binding.hpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hp_bar_color)
+        binding.expStatValue.setStatValueResources(HabiticaIconsHelper.imageOfExperience(), R.color.exp_bar_color)
+        binding.mpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfMagic(), R.color.mpColor)
     }
 
-    private fun updateBarViews(stats: Stats, height: Int) {
+    private fun updateStats(user: User) {
+        val stats = user.stats
+        stats?.let { updateBarViews(it) }
+        stats?.let { updateStatViews(it) }
+    }
+
+    private fun updateBarViews(stats: Stats) {
         binding.hpBar.setPercentageValues(stats.hp?.toInt() ?: 0, stats.maxHealth ?: 0)
         binding.hpBar.animateProgress()
 
@@ -53,12 +57,12 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun updateStatViews(stats: Stats) {
-        binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0, HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hp_bar_color)
-        binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0, HabiticaIconsHelper.imageOfExperience(), R.color.exp_bar_color)
+        binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0)
+        binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0)
         if (stats.lvl ?: 0 < 10) {
             binding.mpStatValue.visibility = View.GONE
         } else {
-            binding.mpStatValue.setStatValue(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0, HabiticaIconsHelper.imageOfMagic(), R.color.mpColor)
+            binding.mpStatValue.setStatValue(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0)
         }
     }
 }
