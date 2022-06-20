@@ -13,9 +13,6 @@ class StatsViewModel @Inject constructor(userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder
 ) : BaseViewModel(userRepository, exceptionBuilder) {
 
-    var user: LiveData<User>
+    var user: LiveData<User> = userRepository.getUser().asLiveData()
 
-    init {
-        user = userRepository.getUser().asLiveData()
-    }
 }

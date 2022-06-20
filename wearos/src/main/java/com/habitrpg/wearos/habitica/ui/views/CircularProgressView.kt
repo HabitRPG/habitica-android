@@ -15,8 +15,6 @@ class CircularProgressView(
     attrs: AttributeSet?
 ) : View(context, attrs) {
     private val ovalSpace = RectF()
-    private val parentArcColor = context?.resources?.getColor(R.color.bar_background_color, null) ?: Color.GRAY
-    private var fillArcColor = context?.resources?.getColor(R.color.hp_bar_color, null) ?: parentArcColor
     private var ovalSize = (resources.displayMetrics.heightPixels / 2)
     private var currentPercentage = 55
     private var PERCENTAGE_DIVIDER = 180
@@ -27,13 +25,14 @@ class CircularProgressView(
         0, 0
     )
     private val offset = attributes?.getInt(R.styleable.CircularProgressView_offset, 0)
-
+    private val backgroundArcColor = attributes?.getColor(R.styleable.CircularProgressView_backgroundArcColor, 0) ?: Color.GRAY
+    private var fillArcColor = attributes?.getColor(R.styleable.CircularProgressView_arcFillColor, 0) ?: Color.GRAY
 
 
     private val parentArcPaint = Paint().apply {
         style = Paint.Style.STROKE
         isAntiAlias = true
-        color = parentArcColor
+        color = backgroundArcColor
         strokeWidth = 10f
     }
 
@@ -82,7 +81,7 @@ class CircularProgressView(
     }
 
     fun setBarColor(barColor: Int) {
-        fillArcColor = context?.resources?.getColor(barColor, null) ?: parentArcColor
+        fillArcColor = context?.resources?.getColor(barColor, null) ?: backgroundArcColor
         fillArcPaint = Paint().apply {
             style = Paint.Style.STROKE
             isAntiAlias = true

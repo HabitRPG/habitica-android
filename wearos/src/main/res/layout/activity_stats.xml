@@ -8,19 +8,25 @@
         android:id="@+id/hp_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:offset="10"/>
+        app:offset="10"
+        app:backgroundArcColor="@color/bar_background_color"
+        app:arcFillColor="@color/hp_bar_color"/>
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
         android:id="@+id/exp_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:offset="28"/>
+        app:offset="28"
+        app:backgroundArcColor="@color/bar_background_color"
+        app:arcFillColor="@color/exp_bar_color"/>
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
         android:id="@+id/mp_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:offset="46"/>
+        app:offset="46"
+        app:backgroundArcColor="@color/bar_background_color"
+        app:arcFillColor="@color/mp_bar_color"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

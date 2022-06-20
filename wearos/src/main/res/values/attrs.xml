@@ -6,5 +6,7 @@
     </declare-styleable>
     <declare-styleable name="CircularProgressView">
         <attr name="offset" format="integer" />
+        <attr name="backgroundArcColor" format="color" />
+        <attr name="arcFillColor" format="color" />
     </declare-styleable>
 </resources>
