@@ -76,7 +76,7 @@ class CircularProgressView(
     }
 
     private fun drawInnerArc(canvas: Canvas) {
-        val percentageToFill = getCurrentPercentageToFill()
+        val percentageToFill = getCurrentAngleToFill()
         canvas.drawArc(ovalSpace, 270f, percentageToFill, false, fillArcPaint)
     }
 
@@ -122,6 +122,6 @@ class CircularProgressView(
         const val PERCENTAGE_VALUE_HOLDER = "percentage"
     }
 
-    private fun getCurrentPercentageToFill() = if(currentPercentage > 0) {(ARC_FULL_ROTATION_DEGREE.toFloat() * (currentPercentage.toFloat() / PERCENTAGE_DIVIDER.toFloat()))} else {1f}
+    private fun getCurrentAngleToFill() = if(currentPercentage > 0) {(ARC_FULL_ROTATION_DEGREE.toFloat() * (currentPercentage.toFloat() / PERCENTAGE_DIVIDER.toFloat()))} else {1f}
 }
 
