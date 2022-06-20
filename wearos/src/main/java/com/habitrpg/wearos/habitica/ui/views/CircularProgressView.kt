@@ -16,11 +16,19 @@ class CircularProgressView(
 ) : View(context, attrs) {
     private val ovalSpace = RectF()
     private val parentArcColor = context?.resources?.getColor(R.color.bar_background_color, null) ?: Color.GRAY
-    var fillArcColor = context?.resources?.getColor(R.color.hp_bar_color, null) ?: parentArcColor
-    var ovalSize = 200
+    private var fillArcColor = context?.resources?.getColor(R.color.hp_bar_color, null) ?: parentArcColor
+    private var ovalSize = (resources.displayMetrics.heightPixels / 2)
     private var currentPercentage = 55
     private var PERCENTAGE_DIVIDER = 180
     private val ARC_FULL_ROTATION_DEGREE = 360
+    val attributes = context?.theme?.obtainStyledAttributes(
+        attrs,
+        R.styleable.CircularProgressView,
+        0, 0
+    )
+    private val offset = attributes?.getInt(R.styleable.CircularProgressView_offset, 0)
+
+
 
     private val parentArcPaint = Paint().apply {
         style = Paint.Style.STROKE
@@ -45,6 +53,12 @@ class CircularProgressView(
         }
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        offset?.let { ovalSize = (height / 2) - it }
+        invalidate()
+    }
+
     private fun setSpace() {
         val horizontalCenter = (width.div(2)).toFloat()
         val verticalCenter = (height.div(2)).toFloat()
@@ -63,7 +77,7 @@ class CircularProgressView(
     }
 
     private fun drawInnerArc(canvas: Canvas) {
-        var percentageToFill = getCurrentPercentageToFill()
+        val percentageToFill = getCurrentPercentageToFill()
         canvas.drawArc(ovalSpace, 270f, percentageToFill, false, fillArcPaint)
     }
 

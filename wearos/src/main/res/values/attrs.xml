@@ -4,4 +4,7 @@
         <attr name="drawable" format="integer" />
         <attr name="drawFromTop" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="CircularProgressView">
+        <attr name="offset" format="integer" />
+    </declare-styleable>
 </resources>
