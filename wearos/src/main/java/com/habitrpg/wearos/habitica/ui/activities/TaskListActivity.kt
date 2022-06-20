@@ -1,14 +1,8 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.activity.viewModels
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.ViewCompat
-import androidx.wear.activity.ConfirmationActivity
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTasklistBinding
@@ -24,8 +18,6 @@ import com.habitrpg.wearos.habitica.ui.adapters.ToDoListAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskListViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Float.max
-import java.lang.Float.min
 
 @AndroidEntryPoint
 class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>() {
@@ -49,6 +41,10 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
 
         adapter.onTaskScore = {
             scoreTask(it)
+        }
+
+        viewModel.user.observe(this) {
+
         }
 
         binding.addTaskButton.setOnClickListener { openTaskFormActivity() }
@@ -76,12 +72,7 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
     }
 
     private fun showTaskScoringResult(result: TaskScoringResult) {
-        val intent = Intent(this, ConfirmationActivity::class.java).apply {
-            putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION)
-            putExtra(ConfirmationActivity.EXTRA_MESSAGE, result.experienceDelta?.toString())
-            putExtra(ConfirmationActivity.EXTRA_ANIMATION_DURATION_MILLIS, 3000)
-        }
-        startActivity(intent)
+        TaskResultActivity.show(this, result)
     }
 
     private fun openTaskFormActivity() {
@@ -124,39 +115,6 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
                 TaskType.DAILY -> getString(R.string.dailies)
                 TaskType.TODO -> getString(R.string.todos)
                 TaskType.REWARD -> getString(R.string.rewards)
-            }
-        }
-    }
-}
-
-class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
-    CoordinatorLayout.Behavior<V>(context, attrs) {
-
-    override fun onStartNestedScroll(
-        coordinatorLayout: CoordinatorLayout, child: V, directTargetChild: View, target: View, axes: Int, type: Int
-    ): Boolean {
-        return axes == ViewCompat.SCROLL_AXIS_VERTICAL
-    }
-
-    override fun onNestedPreScroll(
-        coordinatorLayout: CoordinatorLayout, child: V, target: View, dx: Int, dy: Int, consumed: IntArray, type: Int
-    ) {
-        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
-        child.translationY = max(0f, min(child.height.toFloat(), child.translationY + dy))
-    }
-
-    override fun onStopNestedScroll(
-        coordinatorLayout: CoordinatorLayout,
-        child: V,
-        target: View,
-        type: Int
-    ) {
-        super.onStopNestedScroll(coordinatorLayout, child, target, type)
-        if (child.translationY != 0f && child.translationY != child.height.toFloat()) {
-            if (child.translationY < (child.height.toFloat() / 2f)) {
-                child.translationY = 0f
-            } else {
-                child.translationY = child.height.toFloat()
             }
         }
     }

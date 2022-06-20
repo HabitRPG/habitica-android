@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
-import coil.load
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -212,7 +211,7 @@ class FullProfileActivity : BaseActivity() {
         if (imageUrl == null || imageUrl.isEmpty()) {
             binding.profileImage.visibility = View.GONE
         } else {
-            binding.profileImage.load(imageUrl)
+            //binding.profileImage.load(imageUrl)
         }
 
         val blurbText = profile.blurb

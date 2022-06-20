@@ -31,7 +31,7 @@ public class HabiticaIconsHelper {
         if (imageOfExperience != null)
             return imageOfExperience;
 
-        int size = scaleSize(24);
+        int size = scaleSize(18);
         imageOfExperience = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfExperience);
         canvas.scale(displayDensity, displayDensity);
@@ -45,7 +45,7 @@ public class HabiticaIconsHelper {
         if (imageOfMagic != null)
             return imageOfMagic;
 
-        int size = scaleSize(24);
+        int size = scaleSize(18);
         imageOfMagic = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfMagic);
         canvas.scale(displayDensity, displayDensity);

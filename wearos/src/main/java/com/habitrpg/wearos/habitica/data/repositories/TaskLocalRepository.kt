@@ -48,7 +48,9 @@ class TaskLocalRepository @Inject constructor() {
         } else {
             oldList?.add(0, task)
         }
-        tasks[task.type]?.value = oldList
+        oldList?.let {
+            tasks[task.type]?.value = it
+        }
     }
 
     fun getTask(taskID: String): Flow<Task?> {

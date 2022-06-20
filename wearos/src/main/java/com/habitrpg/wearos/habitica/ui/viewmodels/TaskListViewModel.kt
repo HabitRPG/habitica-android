@@ -1,6 +1,5 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -22,17 +21,16 @@ class TaskListViewModel @Inject constructor(
     userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder
 ) : BaseViewModel(userRepository, exceptionBuilder) {
+    val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
+    val tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT).asLiveData()
+    val user =  userRepository.getUser()
+        .asLiveData()
+
     fun scoreTask(task: Task, direction: TaskDirection, onResult: (TaskScoringResult?) -> Unit) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val result = taskRepository.scoreTask(task, direction)
+            val result = taskRepository.scoreTask(user.value, task, direction)
             onResult(result)
         }
     }
 
-    var tasks: LiveData<List<Task>>
-    val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
-
-    init {
-        tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT).asLiveData()
-    }
 }

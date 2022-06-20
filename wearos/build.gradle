@@ -13,7 +13,7 @@ android {
         applicationId "com.habitrpg.android.habitica"
         minSdk 26
         targetSdk target_sdk
-        versionCode 3521
+        versionCode 4001
         versionName app_version_name
 
     }

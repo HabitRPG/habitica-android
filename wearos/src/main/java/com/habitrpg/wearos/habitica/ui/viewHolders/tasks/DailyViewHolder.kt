@@ -20,6 +20,7 @@ class DailyViewHolder(itemView: View) : TaskViewHolder(itemView) {
 
     override fun bind(data: Task) {
         super.bind(data)
+        binding.checkbox.isChecked = data.completed
         binding.checkbox.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.mediumTaskColor))
     }
 }

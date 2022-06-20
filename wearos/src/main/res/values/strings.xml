@@ -2,4 +2,9 @@
     <string name="ok">OK</string>
     <string name="syncing_account">Syncing Account from Phone</string>
     <string name="how_did_you_do">How did you do?</string>
+    <string name="you_found">You found…</string>
+    <string name="one_quest_item">1 Quest item</string>
+    <string name="x_quest_item">%d Quest items</string>
+    <string name="x_and_y">%s and %s</string>
+    <string name="some_x">some %s</string>
 </resources>

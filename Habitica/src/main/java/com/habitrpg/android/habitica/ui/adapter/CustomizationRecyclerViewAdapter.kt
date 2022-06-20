@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import coil.load
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
@@ -15,16 +14,16 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
+import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.Avatar
 import com.habitrpg.common.habitica.views.AvatarView
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Date
+import java.util.EnumMap
 
 class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
@@ -151,7 +150,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             this.customization = customization
 
             if (customization.type == "background" && customization.identifier == "") {
-                binding.imageView.load(R.drawable.no_background)
+                binding.imageView.setImageResource(R.drawable.no_background)
                 binding.imageView.bitmap = null
             } else {
                 binding.imageView.loadImage(customization.getIconName(userSize, hairColor))

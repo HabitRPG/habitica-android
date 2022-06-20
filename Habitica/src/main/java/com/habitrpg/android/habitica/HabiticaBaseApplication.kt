@@ -18,7 +18,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import coil.annotation.ExperimentalCoilApi
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -60,7 +59,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
      */
     // endregion
 
-    @OptIn(ExperimentalCoilApi::class)
     override fun onCreate() {
         super.onCreate()
         registerActivityLifecycleCallbacks(this)

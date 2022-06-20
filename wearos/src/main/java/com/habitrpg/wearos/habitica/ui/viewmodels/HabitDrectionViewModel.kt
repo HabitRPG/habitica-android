@@ -21,9 +21,11 @@ class HabitDrectionViewModel @Inject constructor(
     val taskID = savedStateHandle.get<String>("task_id")
     val task = taskRepository.getTask(taskID).asLiveData()
 
+    val user = userRepository.getUser().asLiveData()
+
     fun scoreTask(direction: TaskDirection) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            task.value?.let { taskRepository.scoreTask(it, direction) }
+            task.value?.let { taskRepository.scoreTask(user.value, it, direction) }
         }
     }
 }

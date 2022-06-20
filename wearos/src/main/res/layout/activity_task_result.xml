@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <GridLayout
+        android:id="@+id/grid_layout"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:columnCount="3"
+        android:rowCount="3"
+        android:alignmentMode="alignBounds"
+        android:layout_gravity="center">
+
+    </GridLayout>
+</FrameLayout>
