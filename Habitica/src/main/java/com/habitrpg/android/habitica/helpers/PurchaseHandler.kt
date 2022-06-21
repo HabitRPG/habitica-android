@@ -73,7 +73,7 @@ class PurchaseHandler(
                 val mostRecentSub = findMostRecentSubscription(purchases)
                 val plan = userViewModel.user.value?.purchased?.plan
                 for (purchase in purchases) {
-                    if (plan?.isActive == true) {
+                    if (plan?.isActive == true && PurchaseTypes.allSubscriptionTypes.contains(purchase.skus.firstOrNull())) {
                         if ((plan.additionalData?.data?.orderId == purchase.orderId &&
                             ((plan.dateTerminated != null) == purchase.isAutoRenewing)) ||
                                 mostRecentSub?.orderId != purchase.orderId
