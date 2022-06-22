@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ic_launcher_background">@color/brand_300</color>
+    <color name="bar_background_color">#34313a</color>
+    <color name="exp_bar_color">@color/yellow_100</color>
+    <color name="mp_bar_color">#a9dcf6</color>
+    <color name="hp_bar_color">#f2666a</color>
+
 </resources>
