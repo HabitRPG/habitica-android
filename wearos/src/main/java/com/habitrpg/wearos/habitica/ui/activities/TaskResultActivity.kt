@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.animation.AlphaAnimation
 import android.widget.GridLayout
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskResultBinding
 import com.habitrpg.android.habitica.databinding.TaskRewardDropBinding
@@ -17,6 +18,10 @@ import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskResultViewModel
 import com.habitrpg.wearos.habitica.ui.views.TaskRewardChip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 @AndroidEntryPoint
 class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultViewModel>() {
@@ -30,6 +35,15 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
     override fun onStart() {
         super.onStart()
         makeChips()
+
+        binding.root.setOnClickListener {
+            finish()
+        }
+
+        lifecycleScope.launch {
+            delay(5.toDuration(DurationUnit.SECONDS))
+            finish()
+        }
     }
 
     private fun makeChips() {
