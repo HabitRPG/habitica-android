@@ -1,26 +1,17 @@
 package com.habitrpg.wearos.habitica.ui.viewHolders.tasks
 
-import android.content.res.ColorStateList
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.databinding.RowDailyBinding
-import com.habitrpg.wearos.habitica.models.tasks.Task
 
-class DailyViewHolder(itemView: View) : TaskViewHolder(itemView) {
+class DailyViewHolder(itemView: View) : CheckedTaskViewHolder(itemView) {
     private val binding = RowDailyBinding.bind(itemView)
     override val titleView: TextView
         get() = binding.title
-
-    init {
-        binding.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
-            onTaskScore?.invoke()
-        }
-    }
-
-    override fun bind(data: Task) {
-        super.bind(data)
-        binding.checkbox.isChecked = data.completed
-        binding.checkbox.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.mediumTaskColor))
-    }
+    override val checkbox: ImageView
+        get() = binding.checkbox
+    override val checkboxWrapper: ViewGroup
+        get() = binding.checkboxWrapper
 }

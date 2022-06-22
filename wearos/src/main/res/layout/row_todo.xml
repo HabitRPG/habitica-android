@@ -7,12 +7,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Chip">
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="@dimen/spacing_medium"
-            android:background="@drawable/circle"/>
+
+        <FrameLayout
+            android:id="@+id/checkbox_wrapper"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/circle"
+            android:layout_marginEnd="@dimen/spacing_medium">
+            <ImageView
+                android:id="@+id/checkbox"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/circle"
+                android:scaleType="center"
+                android:layout_gravity="center"/>
+        </FrameLayout>
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"

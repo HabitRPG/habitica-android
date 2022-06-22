@@ -92,6 +92,19 @@ open class Task constructor(): Parcelable {
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
 
+    val extraLightTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.watch_maroon_200
+                this.value < -10 -> return R.color.watch_red_200
+                this.value < -1 -> return R.color.watch_orange_200
+                this.value < 1 -> return R.color.watch_yellow_200
+                this.value < 5 -> return R.color.watch_green_200
+                this.value < 10 -> return R.color.watch_teal_200
+                else -> R.color.watch_blue_200
+            }
+        }
+
     val lightTaskColor: Int
         get() {
             return when {
