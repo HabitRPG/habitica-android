@@ -2,17 +2,13 @@ package com.habitrpg.wearos.habitica.ui.activities
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityStatsBinding
-import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
-import com.habitrpg.wearos.habitica.extensions.waitForLayout
-import com.habitrpg.wearos.habitica.models.Stats
-import com.habitrpg.wearos.habitica.models.User
+import com.habitrpg.wearos.habitica.models.user.Stats
+import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.ui.viewmodels.StatsViewModel
-import com.habitrpg.wearos.habitica.ui.views.StatValue
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +44,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
         binding.expBar.setPercentageValues(stats.exp?.toInt() ?: 0, stats.toNextLevel ?: 0)
         binding.expBar.animateProgress()
 
-        if (stats.lvl ?: 0 < 10) {
+        if ((stats.lvl ?: 0) < 10) {
             binding.mpBar.visibility = View.GONE
         } else {
             binding.mpBar.setPercentageValues(stats.mp?.toInt() ?: 0, stats.maxMP ?: 0)
@@ -59,7 +55,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     private fun updateStatViews(stats: Stats) {
         binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0)
         binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0)
-        if (stats.lvl ?: 0 < 10) {
+        if ((stats.lvl ?: 0) < 10) {
             binding.mpStatValue.visibility = View.GONE
         } else {
             binding.mpStatValue.setStatValue(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0)
