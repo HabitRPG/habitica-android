@@ -5,6 +5,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class User: Avatar {
+    val isDead: Boolean
+    get() = (stats?.hp ?: 0.0) <= 0.0
     override val currentMount: String?
         get() = items?.currentMount
     override val currentPet: String?

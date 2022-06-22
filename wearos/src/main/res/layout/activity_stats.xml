@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         app:arcFillColor="@color/hp_bar_color"
         app:backgroundArcColor="@color/bar_background_color"
-        app:offset="10" />
+        app:offset="5dp" />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
         android:id="@+id/exp_bar"
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         app:arcFillColor="@color/exp_bar_color"
         app:backgroundArcColor="@color/bar_background_color"
-        app:offset="28" />
+        app:offset="14dp" />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
         android:id="@+id/mp_bar"
@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         app:arcFillColor="@color/mp_bar_color"
         app:backgroundArcColor="@color/bar_background_color"
-        app:offset="46" />
+        app:offset="23dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"

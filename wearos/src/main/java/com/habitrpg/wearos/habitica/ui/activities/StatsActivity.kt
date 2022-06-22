@@ -38,16 +38,16 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun updateBarViews(stats: Stats) {
-        binding.hpBar.setPercentageValues(stats.hp?.toInt() ?: 0, stats.maxHealth ?: 0)
+        binding.hpBar.setPercentageValues(stats.hp?.toFloat() ?: 0f, stats.maxHealth?.toFloat() ?: 0f)
         binding.hpBar.animateProgress()
 
-        binding.expBar.setPercentageValues(stats.exp?.toInt() ?: 0, stats.toNextLevel ?: 0)
+        binding.expBar.setPercentageValues(stats.exp?.toFloat() ?: 0f, stats.toNextLevel?.toFloat() ?: 0f)
         binding.expBar.animateProgress()
 
         if ((stats.lvl ?: 0) < 10) {
             binding.mpBar.visibility = View.GONE
         } else {
-            binding.mpBar.setPercentageValues(stats.mp?.toInt() ?: 0, stats.maxMP ?: 0)
+            binding.mpBar.setPercentageValues(stats.mp?.toFloat() ?: 0f, stats.maxMP?.toFloat() ?: 0f)
             binding.mpBar.animateProgress()
         }
     }

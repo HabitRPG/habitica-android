@@ -40,9 +40,12 @@
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskDetailActivity" />
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.HabitDirectionActivity" />
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskResultActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.RYAActivity" />
 
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.AvatarActivity" />
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.StatsActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.FaintActivity" />
+
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.SettingsActivity" />
 
         <activity android:name="androidx.wear.activity.ConfirmationActivity" />

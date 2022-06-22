@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
+        android:id="@+id/hp_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:arcFillColor="@color/hp_bar_color"
+        app:backgroundArcColor="@color/bar_background_color"
+        app:offset="4dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/broken_heart"
+            android:layout_marginBottom="@dimen/spacing_medium"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/you_ran_out_of_hp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            style="@style/Text.Subheader1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/faint_description"
+            android:textColor="@color/watch_gray_500"
+            android:textSize="14sp"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/continue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/continue_text"
+            style="@style/ChipButton.Small.Red"/>
+    </LinearLayout>
+</FrameLayout>

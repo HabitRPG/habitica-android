@@ -13,6 +13,9 @@ import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.wearos.habitica.ui.views.IndeterminateProgressView
 
 abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivity() {
+    companion object {
+        var currentActivityClassName: String? = null
+    }
     private lateinit var wrapperBinding: ActivityWrapperBinding
     protected lateinit var binding: B
     abstract val viewModel: VM
@@ -33,6 +36,11 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
             }
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        currentActivityClassName = this.localClassName
     }
 
     fun startAnimatingProgress() {

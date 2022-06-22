@@ -3,12 +3,15 @@ package com.habitrpg.wearos.habitica.ui.views
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import com.habitrpg.android.habitica.R
-
+import com.habitrpg.common.habitica.extensions.dpToPx
 
 class CircularProgressView(
     context: Context?,
@@ -16,31 +19,34 @@ class CircularProgressView(
 ) : View(context, attrs) {
     private val ovalSpace = RectF()
     private var ovalSize = (resources.displayMetrics.heightPixels / 2)
-    private var currentPercentage = 55
-    private var PERCENTAGE_DIVIDER = 180
+    private var currentPercentage = 55f
+    private var PERCENTAGE_DIVIDER = 180f
     private val ARC_FULL_ROTATION_DEGREE = 360
     val attributes = context?.theme?.obtainStyledAttributes(
         attrs,
         R.styleable.CircularProgressView,
         0, 0
     )
-    private val offset = attributes?.getInt(R.styleable.CircularProgressView_offset, 0)
+    private val offset = attributes?.getDimension(R.styleable.CircularProgressView_offset, 0f)?.toInt()
     private val backgroundArcColor = attributes?.getColor(R.styleable.CircularProgressView_backgroundArcColor, 0) ?: Color.GRAY
     private var fillArcColor = attributes?.getColor(R.styleable.CircularProgressView_arcFillColor, 0) ?: Color.GRAY
-
+    set(value) {
+        field = value
+        fillArcPaint.color = fillArcColor
+    }
 
     private val parentArcPaint = Paint().apply {
         style = Paint.Style.STROKE
         isAntiAlias = true
         color = backgroundArcColor
-        strokeWidth = 10f
+        strokeWidth = 5f.dpToPx(context)
     }
 
     private var fillArcPaint = Paint().apply {
         style = Paint.Style.STROKE
         isAntiAlias = true
         color = fillArcColor
-        strokeWidth = 10f
+        strokeWidth = 5f.dpToPx(context)
         strokeCap = Paint.Cap.ROUND
     }
 
@@ -82,36 +88,29 @@ class CircularProgressView(
 
     fun setBarColor(barColor: Int) {
         fillArcColor = context?.resources?.getColor(barColor, null) ?: backgroundArcColor
-        fillArcPaint = Paint().apply {
-            style = Paint.Style.STROKE
-            isAntiAlias = true
-            color = fillArcColor
-            strokeWidth = 10f
-            strokeCap = Paint.Cap.ROUND
-        }
     }
 
-    fun setPercentageValues(currentValue: Int, maxValue: Int) {
+    fun setPercentageValues(currentValue: Float, maxValue: Float) {
         currentPercentage = currentValue
         PERCENTAGE_DIVIDER = maxValue
     }
 
-    fun animateProgress() {
-        val currentPercent: Int = currentPercentage
+    fun animateProgress(startValue: Float = 0f, animationDuration: Long = 1000) {
+        val currentPercent = currentPercentage
         val valuesHolder = PropertyValuesHolder.ofFloat(
             PERCENTAGE_VALUE_HOLDER,
-            1f,
+            startValue,
             currentPercent.toFloat()
         )
 
         val animator = ValueAnimator().apply {
             setValues(valuesHolder)
-            duration = 1000
+            duration = animationDuration
             interpolator = AccelerateDecelerateInterpolator()
 
             addUpdateListener {
                 val percentage = it.getAnimatedValue(PERCENTAGE_VALUE_HOLDER) as Float
-                currentPercentage = percentage.toInt()
+                currentPercentage = percentage
                 invalidate()
             }
         }
@@ -122,6 +121,6 @@ class CircularProgressView(
         const val PERCENTAGE_VALUE_HOLDER = "percentage"
     }
 
-    private fun getCurrentAngleToFill() = if(currentPercentage > 0) {(ARC_FULL_ROTATION_DEGREE.toFloat() * (currentPercentage.toFloat() / PERCENTAGE_DIVIDER.toFloat()))} else {1f}
+    private fun getCurrentAngleToFill() = if(currentPercentage > 0) {(ARC_FULL_ROTATION_DEGREE.toFloat() * (currentPercentage / PERCENTAGE_DIVIDER))} else {1f}
 }
 

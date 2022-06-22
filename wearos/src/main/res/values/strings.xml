@@ -14,4 +14,7 @@
     <string name="other_options">Other options</string>
     <string name="create_account">Create account</string>
     <string name="sign_in_password">Sign in with password</string>
+    <string name="continue_text">Continue</string>
+    <string name="you_ran_out_of_hp">You ran out of HP</string>
+    <string name="faint_description">You lost a Level, Exp, and Gold. Don’t give up!</string>
 </resources>
