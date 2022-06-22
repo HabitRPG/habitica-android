@@ -8,4 +8,10 @@
     <string name="x_and_y">%s and %s</string>
     <string name="some_x">some %s</string>
     <string name="edit_on_phone">Edit on phone</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_description">Create task lists and track progress with your gamified avatar</string>
+    <string name="sign_in_on_phone">Sign in on phone</string>
+    <string name="other_options">Other options</string>
+    <string name="create_account">Create account</string>
+    <string name="sign_in_password">Sign in with password</string>
 </resources>

@@ -33,11 +33,11 @@
     <string name="login_btn">Login</string>
     <string name="register_btn">Register</string>
     <string name="username">Username</string>
-    <string name="email_username">Email or Username</string>
+    <string name="email_username">Email/Username</string>
     <string name="password">Password</string>
     <string name="emailAddress">Email address</string>
     <string name="confirmpassword">Confirm password</string>
-    <string name="login_btn_google">Login with Google</string>
+    <string name="login_btn_google">Sign in with Google</string>
 
     <string name="logout">Logout</string>
     <string name="logout_description">Log out of your account</string>

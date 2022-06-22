@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/watch_purple_500"
+        android:textColor="@color/watch_purple_200"
         tools:text="Header Text"
         android:fontFamily="sans-serif-medium"
         android:textSize="16sp" />

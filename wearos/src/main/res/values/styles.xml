@@ -17,8 +17,28 @@
         <item name="android:paddingHorizontal">@dimen/row_padding_horizontal</item>
         <item name="android:paddingVertical">@dimen/row_padding_vertical</item>
         <item name="android:background">@drawable/row_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@string/medium</item>
         <item name="android:gravity">center</item>
         <item name="android:minHeight">52dp</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+    </style>
+
+    <style name="ChipButton.Purple">
+        <item name="android:backgroundTint">@color/watch_purple_100</item>
+    </style>
+
+    <style name="Text" />
+
+    <style name="Text.Subheader1">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Body2">
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>
