@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
-import com.habitrpg.wearos.habitica.models.User
+import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

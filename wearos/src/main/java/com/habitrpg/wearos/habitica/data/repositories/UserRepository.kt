@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.data.repositories
 
 import com.habitrpg.wearos.habitica.data.ApiClient
-import com.habitrpg.wearos.habitica.models.User
+import com.habitrpg.wearos.habitica.models.user.User
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(val apiClient: ApiClient, val localRepository: UserLocalRepository) {

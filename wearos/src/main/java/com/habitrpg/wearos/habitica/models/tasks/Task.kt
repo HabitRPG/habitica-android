@@ -92,68 +92,29 @@ open class Task constructor(): Parcelable {
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
 
-    val extraLightTaskColor: Int
-        get() {
-            return when {
-                this.value < -20 -> return R.color.maroon_500
-                this.value < -10 -> return R.color.red_500
-                this.value < -1 -> return R.color.orange_500
-                this.value < 1 -> return R.color.yellow_500
-                this.value < 5 -> return R.color.green_500
-                this.value < 10 -> return R.color.teal_500
-                else -> R.color.blue_500
-            }
-        }
-
     val lightTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_100
-                this.value < -10 -> return R.color.red_100
-                this.value < -1 -> return R.color.orange_100
-                this.value < 1 -> return R.color.yellow_100
-                this.value < 5 -> return R.color.green_100
-                this.value < 10 -> return R.color.teal_100
-                else -> R.color.blue_100
+                this.value < -20 -> return R.color.watch_maroon_100
+                this.value < -10 -> return R.color.watch_red_100
+                this.value < -1 -> return R.color.watch_orange_100
+                this.value < 1 -> return R.color.watch_yellow_100
+                this.value < 5 -> return R.color.watch_green_100
+                this.value < 10 -> return R.color.watch_teal_100
+                else -> R.color.watch_blue_100
             }
         }
 
     val mediumTaskColor: Int
         get() {
             return when {
-                this.value < -20 -> return R.color.maroon_50
-                this.value < -10 -> return R.color.red_50
-                this.value < -1 -> return R.color.orange_50
-                this.value < 1 -> return R.color.yellow_10
-                this.value < 5 -> return R.color.green_50
-                this.value < 10 -> return R.color.teal_50
-                else -> R.color.blue_50
-            }
-        }
-
-    val darkTaskColor: Int
-        get() {
-            return when {
-                this.value < -20 -> return R.color.maroon_10
-                this.value < -10 -> return R.color.red_10
-                this.value < -1 -> return R.color.orange_10
-                this.value < 1 -> return R.color.yellow_5
-                this.value < 5 -> return R.color.green_10
-                this.value < 10 -> return R.color.teal_10
-                else -> R.color.blue_10
-            }
-        }
-
-    val darkestTaskColor: Int
-        get() {
-            return when {
-                this.value < -20 -> return R.color.maroon_1
-                this.value < -10 -> return R.color.red_1
-                this.value < -1 -> return R.color.orange_1
-                this.value < 1 -> return R.color.yellow_1
-                this.value < 5 -> return R.color.green_1
-                this.value < 10 -> return R.color.teal_1
-                else -> R.color.blue_1
+                this.value < -20 -> return R.color.watch_maroon_10
+                this.value < -10 -> return R.color.watch_red_10
+                this.value < -1 -> return R.color.watch_orange_10
+                this.value < 1 -> return R.color.watch_yellow_10
+                this.value < 5 -> return R.color.watch_green_10
+                this.value < 10 -> return R.color.watch_teal_10
+                else -> R.color.watch_blue_10
             }
         }
 

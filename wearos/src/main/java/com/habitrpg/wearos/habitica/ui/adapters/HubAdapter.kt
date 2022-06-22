@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.databinding.RowHeaderBinding
 import com.habitrpg.android.habitica.databinding.RowHubBinding
-import com.habitrpg.wearos.habitica.models.MenuItem
+import com.habitrpg.wearos.habitica.models.user.MenuItem
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.HubViewHolder
 

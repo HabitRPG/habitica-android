@@ -4,7 +4,7 @@ import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.common.habitica.models.responses.TaskDirectionData
-import com.habitrpg.wearos.habitica.models.User
+import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import com.habitrpg.wearos.habitica.models.tasks.BulkTaskScoringData
 import com.habitrpg.wearos.habitica.models.tasks.Task

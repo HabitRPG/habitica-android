@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.models.tasks
 
 import com.habitrpg.common.habitica.models.responses.TaskDirectionData
-import com.habitrpg.wearos.habitica.models.Buffs
+import com.habitrpg.wearos.habitica.models.user.Buffs
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

@@ -34,9 +34,9 @@ class HabitViewHolder(itemView: View) : TaskViewHolder(itemView) {
             }
         }
         if (data.up != true && data.down != true) {
-            binding.habitButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.gray_300))
-            binding.habitButtonIcon.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.gray_100))
-            binding.habitButtonIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.gray_300))
+            binding.habitButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_100))
+            binding.habitButtonIcon.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_5))
+            binding.habitButtonIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_gray_100))
         } else {
             binding.habitButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.lightTaskColor))
             binding.habitButtonIcon.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.mediumTaskColor))

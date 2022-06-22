@@ -1,4 +1,4 @@
-package com.habitrpg.wearos.habitica.models
+package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.common.habitica.models.Avatar
 import com.squareup.moshi.JsonClass

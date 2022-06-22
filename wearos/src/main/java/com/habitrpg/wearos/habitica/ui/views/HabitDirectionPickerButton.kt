@@ -23,8 +23,8 @@ class HabitDirectionPickerButton @JvmOverloads constructor(
     private val rect = RectF(0f, 0f, 0f, 0f)
     private val bitmapRect = RectF(0f, 0f, 0f, 0f)
 
-    var mainTaskColor: Int = ContextCompat.getColor(context, R.color.gray_300)
-    var darkerTaskColor: Int = ContextCompat.getColor(context, R.color.gray_200)
+    var mainTaskColor: Int = ContextCompat.getColor(context, R.color.watch_gray_200)
+    var darkerTaskColor: Int = ContextCompat.getColor(context, R.color.watch_gray_10)
     var iconColor: Int = ContextCompat.getColor(context, R.color.white)
 
     private val radius = 15.dpToPx(context)

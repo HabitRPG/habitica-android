@@ -1,9 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">@color/brand_300</color>
-    <color name="bar_background_color">#34313a</color>
-    <color name="exp_bar_color">@color/yellow_100</color>
-    <color name="mp_bar_color">#a9dcf6</color>
-    <color name="hp_bar_color">#f2666a</color>
+    <color name="watch_red_500">#FFF0EF</color>
+    <color name="watch_red_200">#EFC0BD</color>
+    <color name="watch_red_100">#F06B63</color>
+    <color name="watch_red_10">#E43E42</color>
+    <color name="watch_red_5">#2D2424</color>
 
+    <color name="watch_orange_500">#FFEDE0</color>
+    <color name="watch_orange_200">#F8CCAE</color>
+    <color name="watch_orange_100">#FF944C</color>
+    <color name="watch_orange_10">#F37724</color>
+    <color name="watch_orange_5">#2B2622</color>
+
+    <color name="watch_yellow_200">#FEDEAD</color>
+    <color name="watch_yellow_100">#FFBE5D</color>
+    <color name="watch_yellow_10">#FAA11F</color>
+
+    <color name="watch_green_500">#E8FBF4</color>
+    <color name="watch_green_200">#9BDEC5</color>
+    <color name="watch_green_100">#24CC8F</color>
+    <color name="watch_green_10">#1FA574</color>
+    <color name="watch_green_5">#202725</color>
+
+    <color name="watch_teal_200">#97EBF2</color>
+    <color name="watch_teal_100">#3BCAD7</color>
+    <color name="watch_teal_10">#26A0AB</color>
+
+    <color name="watch_blue_500">#EAF8FF</color>
+    <color name="watch_blue_200">#B4DCF0</color>
+    <color name="watch_blue_100">#50B5E9</color>
+    <color name="watch_blue_10">#2B93CA</color>
+    <color name="watch_blue_5">#23292C</color>
+
+    <color name="watch_maroon_200">#F19595</color>
+    <color name="watch_maroon_100">#DE3F3F</color>
+    <color name="watch_maroon_10">#B51A1A</color>
+
+    <color name="watch_purple_700">#ede7f6</color>
+    <color name="watch_purple_500">#EAE3FF</color>
+    <color name="watch_purple_200">#BEAAF9</color>
+    <color name="watch_purple_100">#A675FF</color>
+    <color name="watch_purple_10">#6133B4</color>
+    <color name="watch_purple_5">#23202A</color>
+
+    <color name="watch_gray_500">#EFEFEF</color>
+    <color name="watch_gray_200">#C3C0C7</color>
+    <color name="watch_gray_100">#A5A1AC</color>
+    <color name="watch_gray_10">#878190</color>
+    <color name="watch_gray_5">#686274</color>
+
+    <color name="ic_launcher_background">@color/brand_300</color>
+    <color name="surface">#23202A</color>
 </resources>

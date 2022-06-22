@@ -21,13 +21,13 @@ class IndeterminateProgressView @JvmOverloads constructor(
     var progressBarWidth = 4f.dpToPx(context)
 
     private val rainbow = listOf(
-        ContextCompat.getColor(context, R.color.red_100),
-        ContextCompat.getColor(context, R.color.orange_100),
-        ContextCompat.getColor(context, R.color.yellow_100),
-        ContextCompat.getColor(context, R.color.green_100),
-        ContextCompat.getColor(context, R.color.blue_100),
-        ContextCompat.getColor(context, R.color.brand_400),
-        ContextCompat.getColor(context, R.color.red_100),
+        ContextCompat.getColor(context, R.color.watch_red_100),
+        ContextCompat.getColor(context, R.color.watch_orange_100),
+        ContextCompat.getColor(context, R.color.watch_yellow_100),
+        ContextCompat.getColor(context, R.color.watch_green_100),
+        ContextCompat.getColor(context, R.color.watch_blue_100),
+        ContextCompat.getColor(context, R.color.watch_purple_100),
+        ContextCompat.getColor(context, R.color.watch_red_100),
     ).toIntArray()
     val gradient = SweepGradient(225f, 225f, rainbow, null)
     private val paint = Paint()

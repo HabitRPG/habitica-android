@@ -33,7 +33,7 @@
                     style="@style/Chip"
                     tools:text="Task Type"
                     android:textAllCaps="false"
-                    android:textColor="@color/brand_500"/>
+                    android:textColor="@color/watch_purple_500"/>
             </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     </androidx.wear.widget.BoxInsetLayout>

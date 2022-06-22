@@ -40,7 +40,10 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             showValidationError(getString(R.string.login_validation_error_fieldsmissing))
             return
         }
-        viewModel.login(username, password)
+        viewModel.login(username, password) {
+            stopAnimatingProgress()
+        }
+        startAnimatingProgress()
     }
 
     private fun loginGoogle() {

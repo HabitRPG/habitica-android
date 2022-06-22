@@ -22,7 +22,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:textSize="14sp"
-        android:textColor="@color/gray_400"/>
+        android:textColor="@color/watch_gray_200"/>
     <TextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"

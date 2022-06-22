@@ -64,8 +64,14 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     }
 
     private fun showAccountLoader(show: Boolean) {
-        binding.progressBar.isVisible = show
-        binding.textView.isVisible = show
+        lifecycleScope.launch(Dispatchers.Main) {
+            if (show) {
+                startAnimatingProgress()
+            } else {
+                stopAnimatingProgress()
+            }
+            binding.textView.isVisible = show
+        }
     }
 
     override fun onPause() {

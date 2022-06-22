@@ -47,6 +47,7 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
     fun stopAnimatingProgress() {
         if (progressView != null) {
             wrapperBinding.root.removeView(progressView)
+            progressView = null
         } else {
             wrapperBinding.root.children.forEach {
                 if (it is IndeterminateProgressView) {

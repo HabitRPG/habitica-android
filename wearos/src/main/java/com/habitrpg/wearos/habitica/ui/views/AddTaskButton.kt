@@ -26,8 +26,8 @@ class AddTaskButton @JvmOverloads constructor(
         0f,
         0f,
         80.dpToPx(context).toFloat(),
-        ContextCompat.getColor(context, R.color.brand_400),
-        ContextCompat.getColor(context, R.color.blue_100),
+        ContextCompat.getColor(context, R.color.watch_purple_100),
+        ContextCompat.getColor(context, R.color.watch_blue_100),
         Shader.TileMode.CLAMP
     )
     private val path = Path()

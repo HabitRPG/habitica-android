@@ -9,7 +9,7 @@ import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.wearos.habitica.models.MenuItem
+import com.habitrpg.wearos.habitica.models.user.MenuItem
 import com.habitrpg.wearos.habitica.ui.adapters.HubAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.MainViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "createTask",
                 getString(R.string.new_task),
                 AppCompatResources.getDrawable(this, R.drawable.icon_plus),
-                ContextCompat.getColor(this, R.color.brand_400),
+                ContextCompat.getColor(this, R.color.watch_purple_100),
                 ContextCompat.getColor(this, R.color.black),
                 true
             ) {
@@ -47,8 +47,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "habits",
                 getString(R.string.habits),
                 AppCompatResources.getDrawable(this, R.drawable.icon_habits),
-                ContextCompat.getColor(this, R.color.brand_500),
-                ContextCompat.getColor(this, R.color.brand_700)
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
             ) {
               openTasklist(TaskType.HABIT)
             },
@@ -56,8 +56,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "dailies",
                 getString(R.string.dailies),
                 AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
-                ContextCompat.getColor(this, R.color.brand_500),
-                ContextCompat.getColor(this, R.color.brand_700)
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
             ) {
                 openTasklist(TaskType.DAILY)
             },
@@ -65,8 +65,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "todos",
                 getString(R.string.todos),
                 AppCompatResources.getDrawable(this, R.drawable.icon_todos),
-                ContextCompat.getColor(this, R.color.brand_500),
-                ContextCompat.getColor(this, R.color.brand_700)
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
             ) {
                 openTasklist(TaskType.TODO)
             },
@@ -74,8 +74,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "rewards",
                 getString(R.string.rewards),
                 AppCompatResources.getDrawable(this, R.drawable.icon_rewards),
-                ContextCompat.getColor(this, R.color.brand_500),
-                ContextCompat.getColor(this, R.color.brand_700)
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
             ) {
                 openTasklist(TaskType.REWARD)
             },
@@ -83,8 +83,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "Stats",
                 getString(R.string.stats),
                 AppCompatResources.getDrawable(this, R.drawable.icon_stats),
-                ContextCompat.getColor(this, R.color.brand_500),
-                ContextCompat.getColor(this, R.color.brand_700)
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
             ) {
                 openStatsActivity()
             },
@@ -92,8 +92,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "avatar",
                 getString(R.string.avatar),
                 AppCompatResources.getDrawable(this, R.drawable.icon_avatar),
-                ContextCompat.getColor(this, R.color.brand_500),
-                ContextCompat.getColor(this, R.color.brand_700)
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
             ) {
                 openAvatarActivity()
             },
@@ -101,8 +101,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 "settings",
                 getString(R.string.settings),
                 AppCompatResources.getDrawable(this, R.drawable.icon_settings),
-                ContextCompat.getColor(this, R.color.brand_500),
-                ContextCompat.getColor(this, R.color.brand_700)
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
             ) {
                 openSettingsActivity()
             }
