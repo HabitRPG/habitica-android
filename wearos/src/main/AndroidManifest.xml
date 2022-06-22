@@ -37,6 +37,7 @@
 
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskListActivity" />
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskFormActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskDetailActivity" />
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.HabitDirectionActivity" />
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskResultActivity" />
 

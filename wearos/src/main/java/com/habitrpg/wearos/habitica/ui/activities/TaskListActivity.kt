@@ -42,12 +42,21 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
         adapter.onTaskScore = {
             scoreTask(it)
         }
+        adapter.onTaskTapped = {
+            openTaskDetailActivity(it)
+        }
 
         viewModel.user.observe(this) {
 
         }
 
         binding.addTaskButton.setOnClickListener { openTaskFormActivity() }
+    }
+
+    private fun openTaskDetailActivity(task: Task) {
+        startActivity(Intent(this, TaskDetailActivity::class.java).apply {
+            putExtra("task_id", task.id)
+        })
     }
 
     private fun scoreTask(task: Task) {

@@ -2,13 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.wear.widget.BoxInsetLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <androidx.core.widget.NestedScrollView
+    <com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_boxedEdges="all">
@@ -35,8 +31,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/watch_purple_500"/>
             </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-    </androidx.wear.widget.BoxInsetLayout>
+    </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
     <com.habitrpg.wearos.habitica.ui.views.AddTaskButton
         android:id="@+id/save_button"
         android:layout_width="match_parent"

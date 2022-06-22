@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.wear.widget.BoxInsetLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_boxedEdges="all">
+            android:orientation="vertical">
             <EditText
                 android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
@@ -46,5 +42,4 @@
                 android:text="@string/register_btn"
                 android:layout_marginTop="@dimen/spacing_large"/>
         </LinearLayout>
-    </androidx.wear.widget.BoxInsetLayout>
-</androidx.core.widget.NestedScrollView>
+</com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>

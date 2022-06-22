@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/task_type_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/task_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/white"
+                android:layout_marginBottom="18dp"/>
+            <TextView
+                android:id="@+id/task_notes_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_400"
+                android:textSize="14sp"
+                android:layout_marginBottom="30dp"/>
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/ChipButton"
+                android:text="@string/edit_on_phone"/>
+        </LinearLayout>
+</com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>

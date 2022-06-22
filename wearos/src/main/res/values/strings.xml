@@ -7,4 +7,5 @@
     <string name="x_quest_item">%d Quest items</string>
     <string name="x_and_y">%s and %s</string>
     <string name="some_x">some %s</string>
+    <string name="edit_on_phone">Edit on phone</string>
 </resources>
