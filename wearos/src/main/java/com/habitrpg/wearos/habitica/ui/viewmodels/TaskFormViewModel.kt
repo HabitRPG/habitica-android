@@ -1,6 +1,5 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
-import androidx.lifecycle.SavedStateHandle
 import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
@@ -12,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskFormViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     userRepository: UserRepository,
     val taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder

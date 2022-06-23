@@ -17,37 +17,31 @@
         <item name="android:paddingHorizontal">@dimen/row_padding_horizontal</item>
         <item name="android:paddingVertical">@dimen/row_padding_vertical</item>
         <item name="android:background">@drawable/row_background</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:gravity">center</item>
         <item name="android:minHeight">52dp</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:letterSpacing">0.05</item>
+        <item name="android:letterSpacing">0.01</item>
         <item name="android:drawablePadding">8dp</item>
     </style>
 
-    <style name="ChipButton.Small">
-        <item name="android:paddingHorizontal">@dimen/row_padding_horizontal</item>
-        <item name="android:paddingVertical">@dimen/row_padding_vertical</item>
-        <item name="android:background">@drawable/row_background</item>
+    <style name="ChipButton.Small" parent="ChipButton">
         <item name="android:textSize">14sp</item>
-        <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:gravity">center</item>
         <item name="android:minHeight">32dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:letterSpacing">0.05</item>
-        <item name="android:drawablePadding">8dp</item>
     </style>
 
-    <style name="ChipButton.Purple">
+    <style name="ChipButton.Purple" parent="ChipButton">
         <item name="android:backgroundTint">@color/watch_purple_100</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="ChipButton.Red">
+    <style name="ChipButton.Red" parent="ChipButton">
         <item name="android:backgroundTint">@color/watch_red_200</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="ChipButton.Small.Red">
+    <style name="ChipButton.Small.Red" parent="ChipButton.Small">
         <item name="android:backgroundTint">@color/watch_red_200</item>
         <item name="android:textColor">@color/black</item>
     </style>

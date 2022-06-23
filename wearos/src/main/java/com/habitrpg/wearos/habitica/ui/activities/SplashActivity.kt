@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     override val viewModel: SplashViewModel by viewModels()
-    val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
-    val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
+    private val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
+    private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySplashBinding.inflate(layoutInflater)

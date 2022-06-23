@@ -4,11 +4,12 @@ import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.common.habitica.models.responses.TaskDirectionData
-import com.habitrpg.wearos.habitica.models.user.User
+import com.habitrpg.wearos.habitica.models.EmptyResponse
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import com.habitrpg.wearos.habitica.models.tasks.BulkTaskScoringData
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.models.tasks.TaskList
+import com.habitrpg.wearos.habitica.models.user.User
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -92,5 +93,5 @@ interface ApiService {
     suspend fun removePushDevice(@Path("regId") regId: String): WearableHabitResponse<List<Void>>
 
     @POST("cron")
-    suspend fun runCron(): WearableHabitResponse<Void>
+    suspend fun runCron(): WearableHabitResponse<EmptyResponse>
 }

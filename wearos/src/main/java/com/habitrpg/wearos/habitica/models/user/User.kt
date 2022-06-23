@@ -24,6 +24,8 @@ class User: Avatar {
         get() = items?.gear?.equipped
     override val hasClass: Boolean = false
 
+    var needsCron: Boolean = false
+
     var profile: Profile? = null
 
     override fun isValid(): Boolean {

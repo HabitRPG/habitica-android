@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
 import androidx.core.view.children
-import androidx.core.view.setPadding
 import androidx.core.widget.NestedScrollView
 
 class HabiticaScrollView @JvmOverloads constructor(
@@ -15,8 +14,17 @@ class HabiticaScrollView @JvmOverloads constructor(
         super.onLayout(changed, l, t, r, b)
         if (changed) {
             if (context.resources.configuration.isScreenRound) {
+                val verticalPadding =
+                    (0.146467f * Resources.getSystem().displayMetrics.widthPixels).toInt()
+                val horizontalPadding =
+                    (0.1f * Resources.getSystem().displayMetrics.widthPixels).toInt()
                 children.firstOrNull()
-                    ?.setPadding((0.146467f * Resources.getSystem().displayMetrics.widthPixels).toInt())
+                    ?.setPadding(
+                        horizontalPadding,
+                        verticalPadding,
+                        horizontalPadding,
+                        verticalPadding
+                    )
             }
         }
     }

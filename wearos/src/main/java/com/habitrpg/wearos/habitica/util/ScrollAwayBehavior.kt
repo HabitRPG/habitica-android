@@ -5,10 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
-import java.lang.Float
-import kotlin.Boolean
-import kotlin.Int
-import kotlin.IntArray
+import kotlin.math.max
+import kotlin.math.min
 
 class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
     CoordinatorLayout.Behavior<V>(context, attrs) {
@@ -24,7 +22,7 @@ class ScrollAwayBehavior<V : View>(context: Context, attrs: AttributeSet) :
     ) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
         child.translationY =
-            Float.max(0f, Float.min(child.height.toFloat(), child.translationY + dy))
+            max(0f, min(child.height.toFloat(), child.translationY + dy))
     }
 
     override fun onStopNestedScroll(

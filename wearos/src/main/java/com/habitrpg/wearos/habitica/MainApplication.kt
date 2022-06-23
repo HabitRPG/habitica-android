@@ -8,6 +8,7 @@ import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
+import com.habitrpg.wearos.habitica.ui.activities.RYAActivity
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
@@ -30,6 +31,10 @@ class MainApplication : Application() {
             userRepository.getUser().onEach {
                 if (it.isDead && BaseActivity.currentActivityClassName != FaintActivity::class.java.name) {
                     val intent = Intent(this@MainApplication, FaintActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name) {
+                    val intent = Intent(this@MainApplication, RYAActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }

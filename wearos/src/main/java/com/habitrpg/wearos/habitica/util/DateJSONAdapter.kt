@@ -29,7 +29,7 @@ var customDateAdapter: Any = object : Any() {
         var index = 0
         while (index < dateFormats.size && date == null) {
             try {
-                date = dateFormats[index].parse(s)
+                date = s?.let { dateFormats[index].parse(it) }
             } catch (_: ParseException) {}
             index += 1
         }

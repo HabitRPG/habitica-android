@@ -5,6 +5,8 @@ import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
 import com.habitrpg.android.habitica.HabiticaBaseApplication
+import com.habitrpg.android.habitica.ui.activities.LoginActivity
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.common.habitica.api.HostConfig
 import javax.inject.Inject
@@ -23,8 +25,15 @@ class DeviceCommunicationService : WearableListenerService() {
         super.onMessageReceived(event)
         when (event.path) {
             "/request/auth" -> processAuthRequest(event)
+            "/show/register" -> openActivity(LoginActivity::class.java)
+            "/show/rya" -> openActivity(MainActivity::class.java)
             "/tasks/edit" -> openTaskForm(event)
         }
+    }
+
+    private fun openActivity(activityClass: Class<*>) {
+        val intent = Intent(this, activityClass)
+        startActivity(intent)
     }
 
     private fun openTaskForm(event: MessageEvent) {
