@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
     <com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_boxedEdges="all">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <LinearLayout
+                android:id="@+id/task_confirmation_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/confirmation_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Text.Subheader1"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_200"
+                    />
+                <TextView
+                    android:id="@+id/confirmation_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Text.Body1"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    />
+                <Button
+                    android:id="@+id/save_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/ChipButton"
+                    android:text="@string/save"
+                    android:gravity="start|center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="4dp"
+                    android:drawableStart="@drawable/save"/>
+                <Button
+                    android:id="@+id/edit_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/ChipButton"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/action_edit"
+                    android:drawableStart="@drawable/edit"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/edit_task_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="38dp"
@@ -21,20 +68,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:importantForAutofill="no"
+                    android:minHeight="52dp"
+                    android:paddingHorizontal="18dp"
+                    android:hint="@string/task_title_hint"
+                    android:background="@drawable/row_background_outline"
                     android:inputType="textCapWords" />
-                <Button
-                    android:id="@+id/task_type_button"
+                <TextView
+                    android:id="@+id/task_type_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Chip"
-                    tools:text="Task Type"
-                    android:textAllCaps="false"
-                    android:textColor="@color/watch_purple_500"/>
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/watch_purple_200"
+                    android:text="@string/task_type" />
+                <LinearLayout
+                    android:id="@+id/task_type_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/todo_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Chip"
+                        android:gravity="start|center_vertical"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/todo" />
+                    <TextView
+                        android:id="@+id/daily_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Chip"
+                        android:gravity="start|center_vertical"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/daily" />
+                    <TextView
+                        android:id="@+id/habit_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Chip"
+                        android:gravity="start|center_vertical"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/habit" />
+                </LinearLayout>
             </LinearLayout>
+        </FrameLayout>
     </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
-    <com.habitrpg.wearos.habitica.ui.views.AddTaskButton
-        android:id="@+id/save_button"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_gravity="bottom" />
 </FrameLayout>

@@ -48,11 +48,12 @@
     <color name="watch_gray_100">#A5A1AC</color>
     <color name="watch_gray_10">#878190</color>
     <color name="watch_gray_5">#686274</color>
+    <color name="watch_gray_1">#34313A</color>
 
     <color name="ic_launcher_background">@color/brand_300</color>
-    <color name="surface">#23202A</color>
+    <color name="surface">@color/watch_purple_5</color>
 
-    <color name="bar_background_color">#34313a</color>
+    <color name="bar_background_color">@color/gray_1</color>
     <color name="exp_bar_color">@color/watch_yellow_100</color>
     <color name="mp_bar_color">@color/watch_blue_100</color>
     <color name="hp_bar_color">@color/watch_red_100</color>

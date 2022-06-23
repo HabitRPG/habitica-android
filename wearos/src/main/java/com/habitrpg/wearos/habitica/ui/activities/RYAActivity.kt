@@ -4,9 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import com.google.android.gms.wearable.CapabilityClient
-import com.google.android.gms.wearable.MessageClient
-import com.google.android.gms.wearable.Wearable
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityRyaBinding
 import com.habitrpg.android.habitica.databinding.RowDailyBinding
@@ -18,8 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
-    val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
-    val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
     override val viewModel: RYAViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +35,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         }
 
         binding.phoneButton.setOnClickListener {
-
+            openRemoteActivity("/show/rya")
         }
 
         binding.startDayButton.setOnClickListener {

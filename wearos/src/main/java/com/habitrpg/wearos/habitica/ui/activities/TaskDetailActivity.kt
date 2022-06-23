@@ -3,22 +3,13 @@ package com.habitrpg.wearos.habitica.ui.activities
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.tasks.Tasks
-import com.google.android.gms.wearable.CapabilityClient
-import com.google.android.gms.wearable.MessageClient
-import com.google.android.gms.wearable.Wearable
 import com.habitrpg.android.habitica.databinding.ActivityTaskDetailBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.Locale
 
 @AndroidEntryPoint
 class TaskDetailActivity: BaseActivity<ActivityTaskDetailBinding, TaskDetailViewModel>() {
-    val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
-    val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
 
     override val viewModel: TaskDetailViewModel by viewModels()
 
@@ -34,13 +25,7 @@ class TaskDetailActivity: BaseActivity<ActivityTaskDetailBinding, TaskDetailView
     }
 
     private fun openEditFormOnPhone() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val info = Tasks.await(capabilityClient.getCapability("edit_task", CapabilityClient.FILTER_REACHABLE))
-            val nodeID = info.nodes.firstOrNull { it.isNearby }
-            if (nodeID != null) {
-                Tasks.await(messageClient.sendMessage(nodeID.id, "/tasks/edit", viewModel.taskID?.toByteArray()))
-            }
-        }
+        sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray())
     }
 
     private fun subscribeUI() {

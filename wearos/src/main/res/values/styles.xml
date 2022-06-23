@@ -53,6 +53,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Text.Body1">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
     <style name="Text.Body2">
         <item name="android:textSize">14sp</item>
     </style>

@@ -81,7 +81,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private fun openRegisterOnPhone() {
-
+        openRemoteActivity("/show/register")
     }
 
     private fun loginLocal() {
