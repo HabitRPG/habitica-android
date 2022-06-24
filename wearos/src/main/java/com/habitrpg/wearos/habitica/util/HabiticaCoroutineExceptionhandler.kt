@@ -1,13 +1,14 @@
 package com.habitrpg.wearos.habitica.util
 
 import android.util.Log
+import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.models.DisplayedError
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineExceptionHandler
 import javax.inject.Inject
 
 @ViewModelScoped
-class ExceptionHandlerBuilder @Inject constructor() {
+class ExceptionHandlerBuilder @Inject constructor(val loadingManager: LoadingManager) {
     fun silent(): CoroutineExceptionHandler {
         return CoroutineExceptionHandler { context, throwable ->
             Log.e(context.toString(), "Error: ${throwable.cause}", throwable)
@@ -18,6 +19,7 @@ class ExceptionHandlerBuilder @Inject constructor() {
         return CoroutineExceptionHandler { _, throwable ->
             Log.e("Coroutine Error", "Error: ${throwable.cause}", throwable)
             errorPresenter.errorValues.value = throwable.message?.let { DisplayedError(it) }
+            loadingManager.endLoading()
         }
     }
 }

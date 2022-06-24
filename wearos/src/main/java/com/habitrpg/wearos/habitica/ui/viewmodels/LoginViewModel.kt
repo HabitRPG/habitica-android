@@ -23,6 +23,7 @@ import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
+import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -34,8 +35,8 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     val keyHelper: KeyHelper?,
     val sharedPreferences: SharedPreferences,
-    val apiClient: ApiClient
-) : BaseViewModel(userRepository, exceptionBuilder) {
+    val apiClient: ApiClient, loadingManager: LoadingManager
+) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
     lateinit var onLoginCompleted: () -> Unit
     var googleEmail: String? = null
 
@@ -133,7 +134,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
         }
-        retrieveUser()
+        userRepository.retrieveUser()
         onLoginCompleted()
     }
 

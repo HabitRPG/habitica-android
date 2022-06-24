@@ -14,12 +14,17 @@ import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
 import com.habitrpg.android.habitica.databinding.ActivityWrapperBinding
+import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.wearos.habitica.ui.views.IndeterminateProgressView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivity() {
+    @Inject
+    lateinit var loadingManager: LoadingManager
+
     val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
     val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
     companion object {
@@ -44,6 +49,14 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
                 putExtra(ConfirmationActivity.EXTRA_ANIMATION_DURATION_MILLIS, 3000)
             }
             startActivity(intent)
+        }
+
+        loadingManager.isLoading.observe(this) {
+            if (it) {
+                startAnimatingProgress()
+            } else {
+                stopAnimatingProgress()
+            }
         }
     }
 

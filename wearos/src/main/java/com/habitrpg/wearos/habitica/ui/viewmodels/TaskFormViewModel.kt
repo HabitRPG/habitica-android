@@ -4,6 +4,7 @@ import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
+import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,8 +14,8 @@ import javax.inject.Inject
 class TaskFormViewModel @Inject constructor(
     userRepository: UserRepository,
     val taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder
-) : BaseViewModel(userRepository, exceptionBuilder) {
+    exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
+) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
     suspend fun saveTask(text: CharSequence?, taskType: TaskType?) {
         if (text?.isNotBlank() != true || taskType == null) {
             return

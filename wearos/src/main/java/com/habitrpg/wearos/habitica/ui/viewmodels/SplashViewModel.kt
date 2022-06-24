@@ -9,6 +9,7 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
+import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,8 +21,8 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
     val hostConfig: HostConfig,
     val apiClient: ApiClient,
     val sharedPreferences: SharedPreferences,
-    val keyHelper: KeyHelper?
-) : BaseViewModel(userRepository, exceptionBuilder), MessageClient.OnMessageReceivedListener {
+    val keyHelper: KeyHelper?, loadingManager: LoadingManager
+) : BaseViewModel(userRepository, exceptionBuilder, loadingManager), MessageClient.OnMessageReceivedListener {
     lateinit var onLoginCompleted: (Boolean) -> Unit
     val hasAuthentication: Boolean
     get() {
@@ -43,7 +44,7 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
                 onLoginCompleted(false)
                 return@launch
             }
-            retrieveUser()
+            userRepository.retrieveUser()
             onLoginCompleted(true)
         }
     }

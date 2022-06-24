@@ -6,6 +6,7 @@ import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
+import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +17,8 @@ import javax.inject.Inject
 class RYAViewModel @Inject constructor(
     userRepository: UserRepository,
     val taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder
-) : BaseViewModel(userRepository, exceptionBuilder) {
+    exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
+) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
     val tasks = taskRepository.getTasks(TaskType.DAILY).asLiveData()
 
     private val tasksToComplete = mutableListOf<Task>()
@@ -38,12 +39,14 @@ class RYAViewModel @Inject constructor(
 
     fun runCron(function: (Boolean) -> Unit) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
+            loadingManager.startLoading()
             for (task in tasksToComplete) {
                 taskRepository.scoreTask(null, task, TaskDirection.UP)
             }
             userRepository.runCron()
             userRepository.retrieveUser()
             function(true)
+            loadingManager.endLoading()
         }
     }
 }
