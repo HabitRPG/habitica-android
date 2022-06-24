@@ -13,6 +13,10 @@
         <item name="android:minHeight">52dp</item>
     </style>
 
+    <style name="Chip.NoPadding">
+        <item name="android:layout_marginHorizontal">0dp</item>
+    </style>
+
     <style name="ChipButton">
         <item name="android:paddingHorizontal">@dimen/row_padding_horizontal</item>
         <item name="android:paddingVertical">@dimen/row_padding_vertical</item>

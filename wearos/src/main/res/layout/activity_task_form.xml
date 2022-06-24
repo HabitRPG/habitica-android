@@ -92,7 +92,7 @@
                         android:id="@+id/todo_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Chip"
+                        style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
                         android:text="@string/todo" />
@@ -100,7 +100,7 @@
                         android:id="@+id/daily_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Chip"
+                        style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
                         android:text="@string/daily" />
@@ -108,7 +108,7 @@
                         android:id="@+id/habit_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Chip"
+                        style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
                         android:text="@string/habit" />

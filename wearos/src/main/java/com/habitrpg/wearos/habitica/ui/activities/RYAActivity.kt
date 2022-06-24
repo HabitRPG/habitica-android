@@ -1,8 +1,8 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.activity.viewModels
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityRyaBinding
@@ -61,7 +61,10 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                 viewModel.tappedTask(task)
             }
             val verticalPadding = 2.dpToPx(this)
-            taskBinding.root.children.first().setPadding(0, verticalPadding, 0, verticalPadding)
+            val layoutParams = taskBinding.root.layoutParams as LinearLayout.LayoutParams
+            layoutParams.marginStart = 0
+            layoutParams.marginEnd = 0
+            taskBinding.root.layoutParams = layoutParams
             holder.bind(task)
         }
     }
