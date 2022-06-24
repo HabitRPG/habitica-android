@@ -44,7 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openTaskFormActivity()
             },
             MenuItem(
-                "habits",
+                TaskType.HABIT.value,
                 getString(R.string.habits),
                 AppCompatResources.getDrawable(this, R.drawable.icon_habits),
                 ContextCompat.getColor(this, R.color.watch_purple_200),
@@ -53,7 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
               openTasklist(TaskType.HABIT)
             },
             MenuItem(
-                "dailies",
+                TaskType.DAILY.value,
                 getString(R.string.dailies),
                 AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
                 ContextCompat.getColor(this, R.color.watch_purple_200),
@@ -62,7 +62,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openTasklist(TaskType.DAILY)
             },
             MenuItem(
-                "todos",
+                TaskType.TODO.value,
                 getString(R.string.todos),
                 AppCompatResources.getDrawable(this, R.drawable.icon_todos),
                 ContextCompat.getColor(this, R.color.watch_purple_200),
@@ -71,7 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openTasklist(TaskType.TODO)
             },
             MenuItem(
-                "rewards",
+                TaskType.REWARD.value,
                 getString(R.string.rewards),
                 AppCompatResources.getDrawable(this, R.drawable.icon_rewards),
                 ContextCompat.getColor(this, R.color.watch_purple_200),
@@ -110,6 +110,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         viewModel.user.observe(this) {
             adapter.title = it.profile?.name ?: ""
             adapter.notifyItemChanged(0)
+        }
+        viewModel.taskCounts.observe(this) {
+            adapter.data.forEach { menuItem ->
+                if (it.containsKey(menuItem.identifier) && it[menuItem.identifier]!! > 0) {
+                    menuItem.detailText = it[menuItem.identifier].toString()
+                } else {
+                    menuItem.detailText = null
+                }
+            }
+            adapter.notifyDataSetChanged()
         }
     }
 

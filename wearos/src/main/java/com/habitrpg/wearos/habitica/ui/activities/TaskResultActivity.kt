@@ -8,6 +8,7 @@ import android.view.animation.AlphaAnimation
 import android.widget.GridLayout
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskResultBinding
 import com.habitrpg.android.habitica.databinding.TaskRewardDropBinding
@@ -167,6 +168,8 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
 
     companion object {
         fun show(context: Activity, result: TaskScoringResult) {
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            if (sharedPreferences.getBoolean("hide_task_results", false)) return
             val intent = Intent(context, TaskResultActivity::class.java)
             intent.putExtra("result", result)
             context.startActivity(intent)

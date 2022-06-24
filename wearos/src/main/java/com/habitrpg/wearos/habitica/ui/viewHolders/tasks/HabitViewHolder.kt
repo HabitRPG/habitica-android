@@ -27,10 +27,10 @@ class HabitViewHolder(itemView: View) : TaskViewHolder(itemView) {
             binding.habitButtonIcon.setImageResource(R.drawable.watch_habit_posneg)
         } else {
             binding.habitButtonIcon.setBackgroundResource(R.drawable.habit_button_round)
-            if (data.up == true) {
-                binding.habitButtonIcon.setImageResource(R.drawable.watch_habit_positive)
-            } else {
+            if (data.down == true) {
                 binding.habitButtonIcon.setImageResource(R.drawable.watch_habit_negative)
+            } else {
+                binding.habitButtonIcon.setImageResource(R.drawable.watch_habit_positive)
             }
         }
         if (data.up != true && data.down != true) {

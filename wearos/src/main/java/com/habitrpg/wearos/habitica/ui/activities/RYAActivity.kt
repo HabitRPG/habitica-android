@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityRyaBinding
 import com.habitrpg.android.habitica.databinding.RowDailyBinding
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.wearos.habitica.ui.viewmodels.RYAViewModel
@@ -60,7 +59,6 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
             taskBinding.root.setOnClickListener {
                 viewModel.tappedTask(task)
             }
-            val verticalPadding = 2.dpToPx(this)
             val layoutParams = taskBinding.root.layoutParams as LinearLayout.LayoutParams
             layoutParams.marginStart = 0
             layoutParams.marginEnd = 0

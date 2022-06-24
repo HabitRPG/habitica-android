@@ -27,4 +27,6 @@
     <string name="task_type">Task Type</string>
     <string name="task_title_hint">Task title...</string>
     <string name="save">Save</string>
+    <string name="sync_data">Sync Data</string>
+    <string name="hide_task_rewards">Hide task rewards</string>
 </resources>

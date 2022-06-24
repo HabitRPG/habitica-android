@@ -11,6 +11,11 @@
             android:orientation="vertical"
             android:gravity="center"
             android:animateLayoutChanges="true">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_gryphon_white"
+                android:layout_marginBottom="@dimen/spacing_medium"/>
             <TextView
                 android:id="@+id/title_view"
                 android:layout_width="wrap_content"

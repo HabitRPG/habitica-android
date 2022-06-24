@@ -62,4 +62,11 @@ class TaskLocalRepository @Inject constructor() {
         }
         return emptyFlow()
     }
+
+    fun getTaskCounts() = flowOf(mapOf(
+            TaskType.HABIT.value to (tasks[TaskType.HABIT]?.value?.size ?: 0),
+            TaskType.DAILY.value to (tasks[TaskType.DAILY]?.value?.size ?: 0),
+            TaskType.TODO.value to (tasks[TaskType.TODO]?.value?.size ?: 0),
+            TaskType.REWARD.value to (tasks[TaskType.REWARD]?.value?.size ?: 0),
+        ))
 }

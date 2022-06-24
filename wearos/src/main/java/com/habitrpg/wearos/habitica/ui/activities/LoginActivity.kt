@@ -21,7 +21,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         INPUT
     }
     override val viewModel: LoginViewModel by viewModels()
-    var currentState: State = State.INITIAL
+    private var currentState: State = State.INITIAL
     set(value) {
         field = value
         when(value) {
@@ -59,6 +59,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 binding.loginButton.isVisible = true
             }
         }
+        binding.root.smoothScrollTo(0, 0)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -12,7 +12,9 @@ class HubViewHolder(itemView: View): BindableViewHolder<MenuItem>(itemView) {
 
     override fun bind(data: MenuItem) {
         binding.title.text = data.title
+        binding.detailView.text = data.detailText
         binding.title.setTextColor(data.textColor)
+        binding.detailView.setTextColor(data.textColor)
         binding.iconView.setImageDrawable(data.icon)
         if (data.isProminent) {
             binding.iconView.setColorFilter(ContextCompat.getColor(itemView.context, R.color.black))

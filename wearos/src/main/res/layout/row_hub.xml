@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/row_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         style="@style/Chip">
     <ImageView
         android:id="@+id/icon_view"
@@ -18,10 +18,17 @@
         android:layout_marginStart="0dp"/>
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/white"
         android:textSize="@dimen/row_text_size" />
+        <TextView
+            android:id="@+id/detail_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text.Body2"
+            android:textColor="@color/watch_purple_200" />
     </LinearLayout>
 </FrameLayout>

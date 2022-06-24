@@ -18,8 +18,7 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
         tasks?.let { localRepository.saveTasks(tasks) }
         return tasks
     }
-    fun getTasks(taskType: TaskType): Flow<List<Task>> = localRepository.getTasks(taskType)
-
+    fun getTasks(taskType: TaskType) = localRepository.getTasks(taskType)
 
     suspend fun scoreTask(user: User?, task: Task, direction: TaskDirection): TaskScoringResult? {
         val id = task.id ?: return null
@@ -42,4 +41,6 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
             localRepository.updateTask(newTask)
         }
     }
+
+    fun getTaskCounts() = localRepository.getTaskCounts()
 }

@@ -13,10 +13,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     userRepository: UserRepository,
-    val taskRepository: TaskRepository,
+    private val taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
 ) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
-    var user = userRepository.getUser().asLiveData()
+    val taskCounts = taskRepository.getTaskCounts().asLiveData()
+    val user = userRepository.getUser().asLiveData()
 
     init {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {

@@ -26,6 +26,7 @@ import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
@@ -70,17 +71,19 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val token = try {
-                GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes)
-            } catch (e: IOException) {
-                return@launch
-            } catch (e: GoogleAuthException) {
-                if (recoverFromPlayServicesErrorResult != null) {
-                    handleGoogleAuthException(e, activity, recoverFromPlayServicesErrorResult)
+            val token = launch(Dispatchers.IO) {
+                try {
+                    GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes)
+                } catch (e: IOException) {
+                    return@launch
+                } catch (e: GoogleAuthException) {
+                    if (recoverFromPlayServicesErrorResult != null) {
+                        handleGoogleAuthException(e, activity, recoverFromPlayServicesErrorResult)
+                    }
+                    return@launch
+                } catch (e: UserRecoverableException) {
+                    return@launch
                 }
-                return@launch
-            } catch (e: UserRecoverableException) {
-                return@launch
             }
             val response = apiClient.loginSocial(UserAuthSocial())
             handleAuthResponse(response)

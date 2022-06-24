@@ -9,5 +9,6 @@ data class MenuItem(
     val color: Int,
     val textColor: Int,
     val isProminent: Boolean = false,
+    var detailText: String? = null,
     val onClick: () -> Unit
 )
