@@ -4,6 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/stats_imageview"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/icon_stats"
+        android:layout_centerInParent="true"/>
+
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
         android:id="@+id/hp_bar"
         android:layout_width="match_parent"
@@ -37,17 +44,19 @@
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/hp_stat_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"/>
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/exp_stat_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="4dp"
             android:layout_height="wrap_content" />
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/mp_stat_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

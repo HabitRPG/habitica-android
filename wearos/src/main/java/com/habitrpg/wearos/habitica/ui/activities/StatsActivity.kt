@@ -1,7 +1,8 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.animation.ValueAnimator
 import android.os.Bundle
-import android.view.View
+import android.view.View.*
 import androidx.activity.viewModels
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityStatsBinding
@@ -9,7 +10,9 @@ import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.models.user.Stats
 import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.ui.viewmodels.StatsViewModel
+import com.habitrpg.wearos.habitica.ui.views.StatValue
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
@@ -18,14 +21,36 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityStatsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-
-        setStatViews()
+        setViews()
         viewModel.user.observe(this) {
-            updateStats(it)
+            loadViews(it)
         }
     }
 
+    private fun setViews() {
+        binding.statsImageview.visibility = VISIBLE
+        loadingManager.startLoading()
+        setBarViews()
+        setStatViews()
+    }
+
+    private fun loadViews(user: User) {
+        binding.statsImageview.visibility = GONE
+        loadingManager.endLoading()
+        updateStats(user)
+    }
+
+    private fun setBarViews() {
+        binding.hpBar.visibility = INVISIBLE
+        binding.expBar.visibility = INVISIBLE
+        binding.mpBar.visibility = INVISIBLE
+    }
+
     private fun setStatViews() {
+        binding.hpStatValue.visibility = INVISIBLE
+        binding.expStatValue.visibility = INVISIBLE
+        binding.mpStatValue.visibility = INVISIBLE
+
         binding.hpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hp_bar_color)
         binding.expStatValue.setStatValueResources(HabiticaIconsHelper.imageOfExperience(), R.color.exp_bar_color)
         binding.mpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfMagic(), R.color.mpColor)
@@ -38,6 +63,10 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun updateBarViews(stats: Stats) {
+        binding.hpBar.visibility = VISIBLE
+        binding.expBar.visibility = VISIBLE
+        binding.mpBar.visibility = VISIBLE
+
         binding.hpBar.setPercentageValues(stats.hp?.toFloat() ?: 0f, stats.maxHealth?.toFloat() ?: 0f)
         binding.hpBar.animateProgress()
 
@@ -45,7 +74,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
         binding.expBar.animateProgress()
 
         if ((stats.lvl ?: 0) < 10) {
-            binding.mpBar.visibility = View.GONE
+            binding.mpBar.visibility = GONE
         } else {
             binding.mpBar.setPercentageValues(stats.mp?.toFloat() ?: 0f, stats.maxMP?.toFloat() ?: 0f)
             binding.mpBar.animateProgress()
@@ -53,14 +82,19 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun updateStatViews(stats: Stats) {
-        binding.hpStatValue.setStatValue(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0)
-        binding.expStatValue.setStatValue(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0)
+        binding.hpStatValue.visibility = VISIBLE
+        binding.expStatValue.visibility = VISIBLE
+        binding.mpStatValue.visibility = VISIBLE
+
+        binding.hpStatValue.setStatValues(stats.maxHealth ?: 0, stats.hp?.toInt() ?: 0)
+        binding.expStatValue.setStatValues(stats.toNextLevel ?: 0, stats.exp?.toInt() ?: 0)
         if ((stats.lvl ?: 0) < 10) {
-            binding.mpStatValue.visibility = View.GONE
+            binding.mpStatValue.visibility = GONE
         } else {
-            binding.mpStatValue.setStatValue(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0)
+            binding.mpStatValue.setStatValues(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0)
         }
     }
+
 }
 
 
