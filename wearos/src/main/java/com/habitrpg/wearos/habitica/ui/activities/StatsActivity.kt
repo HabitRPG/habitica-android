@@ -41,9 +41,15 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun setBarViews() {
-        binding.hpBar.visibility = INVISIBLE
-        binding.expBar.visibility = INVISIBLE
-        binding.mpBar.visibility = INVISIBLE
+        binding.hpBar.setPercentageValues(1f, 100f)
+        binding.hpBar.animateProgress()
+
+        binding.expBar.setPercentageValues(1f, 100f)
+        binding.expBar.animateProgress()
+
+        binding.mpBar.setPercentageValues(1f, 100f)
+        binding.mpBar.animateProgress()
+
     }
 
     private fun setStatViews() {
