@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View.*
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityStatsBinding
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
@@ -28,6 +29,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun setViews() {
+        binding.statsImageview.setColorFilter(ContextCompat.getColor(this, R.color.watch_purple_200))
         binding.statsImageview.visibility = VISIBLE
         loadingManager.startLoading()
         setBarViews()

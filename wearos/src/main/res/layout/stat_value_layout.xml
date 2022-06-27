@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="30dp"
+    android:paddingStart="16dp"
     tools:parentTag="com.habitrpg.wearos.habitica.ui.views.StatValue">
 
     <View

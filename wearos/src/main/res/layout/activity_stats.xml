@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_stats"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
         android:id="@+id/hp_bar"
@@ -39,12 +40,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginStart="16dp"
         android:orientation="vertical">
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/hp_stat_value"
             android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"/>
 
