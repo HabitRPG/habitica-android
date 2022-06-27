@@ -43,4 +43,5 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
     }
 
     fun getTaskCounts() = localRepository.getTaskCounts()
+    fun getActiveTaskCounts() = localRepository.getActiveTaskCounts()
 }

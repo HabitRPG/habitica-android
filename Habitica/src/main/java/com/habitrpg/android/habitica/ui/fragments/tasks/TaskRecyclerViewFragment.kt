@@ -38,7 +38,7 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.EmptyItem
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel

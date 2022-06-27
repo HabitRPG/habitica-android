@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.GuildListAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.EmptyItem
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import javax.inject.Inject

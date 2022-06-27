@@ -27,6 +27,7 @@
     <string name="settings">Settings</string>
     <string name="new_task">New Task</string>
     <string name="avatar">Avatar</string>
+    <string name="user_level">Lvl. %d</string>
 
     <string name="action_edit">Edit</string>
     <string name="action_cancel">Cancel</string>
@@ -56,4 +57,8 @@
     <string name="create_task">Create %s</string>
 
     <string name="are_you_sure">Are you sure?</string>
+    <string name="task">Task</string>
+
+    <string name="failed">Failed to load</string>
+    <string name="retry">Retry</string>
 </resources>

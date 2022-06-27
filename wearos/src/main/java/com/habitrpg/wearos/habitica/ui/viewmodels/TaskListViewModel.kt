@@ -34,4 +34,9 @@ class TaskListViewModel @Inject constructor(
         }
     }
 
+    fun retrieveTasks() {
+        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
+            taskRepository.retrieveTasks()
+        }
+    }
 }

@@ -37,7 +37,7 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.helpers.EmptyItem
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel

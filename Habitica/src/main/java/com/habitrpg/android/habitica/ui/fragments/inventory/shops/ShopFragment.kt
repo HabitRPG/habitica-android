@@ -21,7 +21,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.RecyclerViewState
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyViews

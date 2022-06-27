@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTasklistBinding
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
@@ -32,6 +33,18 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
             layoutManager =
                 WearableLinearLayoutManager(this@TaskListActivity, HabiticaScrollingLayoutCallback())
             adapter = this@TaskListActivity.adapter
+            emptyItem = EmptyItem(
+                getString(R.string.no_tasks, getString(when(viewModel.taskType) {
+                    TaskType.HABIT -> R.string.habit
+                    TaskType.DAILY -> R.string.daily
+                    TaskType.TODO -> R.string.todo
+                    TaskType.REWARD -> R.string.reward
+                    else -> R.string.task
+                }))
+            )
+            onRefresh = {
+                viewModel.retrieveTasks()
+            }
         }
 
         viewModel.tasks.observe(this) {
@@ -44,10 +57,6 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
         }
         adapter.onTaskTapped = {
             openTaskDetailActivity(it)
-        }
-
-        viewModel.user.observe(this) {
-
         }
 
         binding.addTaskButton.setOnClickListener { openTaskFormActivity() }

@@ -16,6 +16,7 @@
             android:textColor="@color/watch_purple_200"
             android:text="@string/day_start"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:layout_marginBottom="10dp"/>
         <TextView
             android:id="@+id/description_view"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:text="@string/review_dailies"
             style="@style/ChipButton.Purple"
+            android:gravity="center"
             android:layout_marginBottom="@dimen/spacing_small"/>
         <Button
             android:id="@+id/phone_button"
@@ -39,7 +41,8 @@
             android:layout_height="wrap_content"
             android:text="@string/check_on_phone"
             android:drawableStart="@drawable/handoff"
-            style="@style/ChipButton"/>
+            style="@style/ChipButton"
+            android:gravity="center"/>
 
         <LinearLayout
             android:id="@+id/task_view"
@@ -54,6 +57,7 @@
             style="@style/ChipButton.Purple"
             android:text="@string/start_new_day"
             android:layout_marginTop="2dp"
+            android:gravity="center"
             android:visibility="gone"/>
         <TextView
             android:layout_width="match_parent"

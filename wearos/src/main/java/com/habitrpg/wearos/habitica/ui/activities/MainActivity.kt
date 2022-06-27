@@ -44,15 +44,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openTaskFormActivity()
             },
             MenuItem(
-                TaskType.HABIT.value,
-                getString(R.string.habits),
-                AppCompatResources.getDrawable(this, R.drawable.icon_habits),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
-            ) {
-              openTasklist(TaskType.HABIT)
-            },
-            MenuItem(
                 TaskType.DAILY.value,
                 getString(R.string.dailies),
                 AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
@@ -71,16 +62,26 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openTasklist(TaskType.TODO)
             },
             MenuItem(
+                TaskType.HABIT.value,
+                getString(R.string.habits),
+                AppCompatResources.getDrawable(this, R.drawable.icon_habits),
+                ContextCompat.getColor(this, R.color.watch_purple_200),
+                ContextCompat.getColor(this, R.color.watch_purple_700)
+            ) {
+                openTasklist(TaskType.HABIT)
+            },
+            MenuItem(
                 TaskType.REWARD.value,
                 getString(R.string.rewards),
                 AppCompatResources.getDrawable(this, R.drawable.icon_rewards),
                 ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
+                ContextCompat.getColor(this, R.color.watch_purple_700),
+                isHidden = true
             ) {
                 openTasklist(TaskType.REWARD)
             },
             MenuItem(
-                "Stats",
+                "stats",
                 getString(R.string.stats),
                 AppCompatResources.getDrawable(this, R.drawable.icon_stats),
                 ContextCompat.getColor(this, R.color.watch_purple_200),
@@ -110,6 +111,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         viewModel.user.observe(this) {
             adapter.title = it.profile?.name ?: ""
             adapter.notifyItemChanged(0)
+            val index = adapter.data.indexOfFirst { it.identifier == "stats" }
+            adapter.data[index].detailText = getString(R.string.user_level, it.stats?.lvl ?: 0)
+            adapter.notifyItemChanged(index)
         }
         viewModel.taskCounts.observe(this) {
             adapter.data.forEach { menuItem ->

@@ -16,7 +16,7 @@ class MainViewModel @Inject constructor(
     private val taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
 ) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
-    val taskCounts = taskRepository.getTaskCounts().asLiveData()
+    val taskCounts = taskRepository.getActiveTaskCounts().asLiveData()
     val user = userRepository.getUser().asLiveData()
 
     init {

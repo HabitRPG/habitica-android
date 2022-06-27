@@ -19,9 +19,11 @@ class HubViewHolder(itemView: View): BindableViewHolder<MenuItem>(itemView) {
         if (data.isProminent) {
             binding.iconView.setColorFilter(ContextCompat.getColor(itemView.context, R.color.black))
             binding.rowContainer.backgroundTintList = ColorStateList.valueOf(data.color)
+            binding.detailView.setTextColor(data.textColor)
         } else {
             binding.iconView.setColorFilter(data.color)
             binding.rowContainer.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.surface)
+            binding.detailView.setTextColor(ContextCompat.getColor(itemView.context, R.color.watch_purple_200))
         }
         binding.root.setOnClickListener {
             data.onClick()
