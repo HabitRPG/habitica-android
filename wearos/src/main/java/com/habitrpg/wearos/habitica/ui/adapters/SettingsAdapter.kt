@@ -80,7 +80,7 @@ class SettingsViewHolder(itemView: View) : BindableViewHolder<SettingsItem>(item
 
             if (data.value as? Boolean == true) {
                 binding.row.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_purple_100))
-                binding.row.background.alpha = 127
+                binding.row.background.alpha = 102
             } else {
                 binding.row.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_purple_5))
                 binding.row.background.alpha = 255

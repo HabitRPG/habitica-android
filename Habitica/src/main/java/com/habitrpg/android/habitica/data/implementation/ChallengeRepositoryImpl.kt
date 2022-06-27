@@ -69,7 +69,7 @@ class ChallengeRepositoryImpl(
 
         for ((key, value) in stringListMap) {
             val taskIdList = value.map { t -> t.id ?: "" }
-
+            if (key == null) continue
             when (key) {
                 TaskType.HABIT -> tasksOrder.habits = taskIdList
                 TaskType.DAILY -> tasksOrder.dailys = taskIdList

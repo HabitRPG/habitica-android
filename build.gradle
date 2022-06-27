@@ -4,9 +4,10 @@ buildscript {
     ext {
         target_sdk = 32
         app_version_name = '4.0'
+        app_version_code = 4010
 
 
-        kotlin_version = '1.6.21'
+        kotlin_version = '1.7.0'
         core_ktx_version = '1.8.0'
         appcompat_version = '1.4.2'
         lifecycle_version = '2.4.1'
@@ -37,7 +38,7 @@ buildscript {
         classpath "io.realm:realm-gradle-plugin:10.10.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0-rc01"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0-rc02"
         classpath 'com.google.firebase:perf-plugin:1.4.1'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerhilt_version"
     }

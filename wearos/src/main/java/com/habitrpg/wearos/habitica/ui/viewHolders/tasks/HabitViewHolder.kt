@@ -3,6 +3,7 @@ package com.habitrpg.wearos.habitica.ui.viewHolders.tasks
 import android.content.res.ColorStateList
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowHabitBinding
@@ -41,6 +42,13 @@ class HabitViewHolder(itemView: View) : TaskViewHolder(itemView) {
             binding.habitButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.lightTaskColor))
             binding.habitButtonIcon.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.mediumTaskColor))
             binding.habitButtonIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.white))
+        }
+        val streakString = data.streakString
+        if (streakString?.isNotBlank() == true) {
+            binding.streakView.text = streakString
+            binding.streakView.isVisible = true
+        } else {
+            binding.streakView.isVisible = false
         }
     }
 }

@@ -1,11 +1,11 @@
 package com.habitrpg.android.habitica.interactors
 
-import com.habitrpg.common.habitica.models.responses.TaskDirection
-import com.habitrpg.common.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.common.habitica.models.responses.TaskDirectionData
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToLong
@@ -46,6 +46,9 @@ class ScoreTaskLocallyInteractor {
         private fun scoreToDo(user: User, task: Task, direction: TaskDirection) {
         }
 
+        private fun scoreReward(user: User, task: Task, direction: TaskDirection) {
+        }
+
         fun score(user: User, task: Task, direction: TaskDirection): TaskDirectionData? {
             return if (task.type == TaskType.HABIT || direction == TaskDirection.UP) {
                 val stats = user.stats ?: return null
@@ -67,14 +70,16 @@ class ScoreTaskLocallyInteractor {
                     TaskType.HABIT -> scoreHabit(user, task, direction)
                     TaskType.DAILY -> scoreDaily(user, task, direction)
                     TaskType.TODO -> scoreToDo(user, task, direction)
+                    TaskType.REWARD -> scoreReward(user, task, direction)
+                    else -> {}
                 }
 
                 if (result.hp <= 0.0) {
                     result.hp = 0.0
                 }
-                if (result.exp >= stats.toNextLevel?.toDouble() ?: 0.0) {
+                if (result.exp >= (stats.toNextLevel?.toDouble() ?: 0.0)) {
                     result.exp = result.exp - (stats.toNextLevel?.toDouble() ?: 0.0)
-                    result.lvl = user.stats?.lvl ?: 0 + 1
+                    result.lvl = (user.stats?.lvl ?: 0) + 1
                     result.hp = 50.0
                 } else {
                     result.lvl = user.stats?.lvl ?: 0

@@ -67,16 +67,9 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
                 adapter.notifyItemChanged(index)
             },
             SettingsItem(
-                "spacer",
-                getString(R.string.settings),
-                SettingsItem.Types.SPACER,
-                null
-            ) {
-            },
-            SettingsItem(
                 "logout",
                 getString(R.string.logout),
-                SettingsItem.Types.DESTRUCTIVE_BUTTON,
+                SettingsItem.Types.BUTTON,
                 null
             ) {
                 showLogoutConfirmation()

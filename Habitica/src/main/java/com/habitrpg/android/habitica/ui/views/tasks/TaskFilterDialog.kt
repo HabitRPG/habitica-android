@@ -63,6 +63,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
                     binding.secondTaskFilter.setText(R.string.dated)
                     binding.thirdTaskFilter.setText(R.string.completed)
                 }
+                TaskType.REWARD -> {
+
+                }
             }
             setActiveFilter(viewModel.getActiveFilter(value))
         }

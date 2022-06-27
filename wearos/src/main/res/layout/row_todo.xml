@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,12 +23,24 @@
                 android:scaleType="center"
                 android:layout_gravity="center"/>
         </FrameLayout>
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lines="1"
-            tools:text="Task Title"
-            style="@style/Text.Body2"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                tools:text="Task Title"
+                style="@style/Text.Body2"/>
+            <TextView
+                android:id="@+id/streak_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/task_icon_streak"
+                android:drawablePadding="@dimen/spacing_small"
+                android:visibility="gone"/>
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ContentRepository
@@ -16,9 +15,10 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
-import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.TutorialView
+import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
@@ -136,7 +136,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { maintenanceResponse ->
-                        if (maintenanceResponse == null) {
+                        if (maintenanceResponse.activeMaintenance == null) {
                             return@subscribe
                         }
                         onResult(maintenanceResponse)

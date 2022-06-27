@@ -7,8 +7,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.common.habitica.models.responses.TaskDirection
 
 class HabitViewHolder(
     itemView: View,
@@ -110,15 +110,8 @@ class HabitViewHolder(
             this.btnMinus.isClickable = false
         }
 
-        var streakString = ""
-        if (data.counterUp != null && data.counterUp ?: 0 > 0 && data.counterDown != null && data.counterDown ?: 0 > 0) {
-            streakString = streakString + "+" + data.counterUp.toString() + " | -" + data.counterDown?.toString()
-        } else if (data.counterUp != null && data.counterUp ?: 0 > 0) {
-            streakString = streakString + "+" + data.counterUp.toString()
-        } else if (data.counterDown != null && data.counterDown ?: 0 > 0) {
-            streakString = streakString + "-" + data.counterDown.toString()
-        }
-        if (streakString.isNotEmpty()) {
+        val streakString = task?.streakString
+        if (streakString?.isNotEmpty() == true) {
             streakTextView.text = streakString
             streakTextView.visibility = View.VISIBLE
             streakIconView.visibility = View.VISIBLE
