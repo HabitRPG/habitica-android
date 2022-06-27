@@ -4,12 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/stats_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_stats"
+        android:layout_centerInParent="true"
+        />
+
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
         android:id="@+id/hp_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:arcFillColor="@color/hp_bar_color"
-        app:backgroundArcColor="@color/bar_background_color"
+        app:backgroundArcColor="@color/watch_gray_1"
         app:offset="5dp" />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
@@ -17,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:arcFillColor="@color/exp_bar_color"
-        app:backgroundArcColor="@color/bar_background_color"
+        app:backgroundArcColor="@color/watch_gray_1"
         app:offset="14dp" />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
@@ -25,29 +33,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:arcFillColor="@color/mp_bar_color"
-        app:backgroundArcColor="@color/bar_background_color"
+        app:backgroundArcColor="@color/watch_gray_1"
         app:offset="23dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginStart="16dp"
         android:orientation="vertical">
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/hp_stat_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/exp_stat_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="8dp"
             android:layout_height="wrap_content" />
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/mp_stat_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>

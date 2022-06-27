@@ -39,14 +39,14 @@ class CircularProgressView(
         style = Paint.Style.STROKE
         isAntiAlias = true
         color = backgroundArcColor
-        strokeWidth = 5f.dpToPx(context)
+        strokeWidth = 4f.dpToPx(context)
     }
 
     private var fillArcPaint = Paint().apply {
         style = Paint.Style.STROKE
         isAntiAlias = true
         color = fillArcColor
-        strokeWidth = 5f.dpToPx(context)
+        strokeWidth = 4f.dpToPx(context)
         strokeCap = Paint.Cap.ROUND
     }
 
