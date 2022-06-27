@@ -12,14 +12,15 @@
                 android:id="@+id/task_type_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                style="@style/Text.Body1"
                 android:layout_marginBottom="10dp"/>
             <TextView
                 android:id="@+id/task_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextAppearance.AppCompat.Subhead"
+                style="@style/Text.Subheader1"
                 android:textColor="@color/white"
+                android:gravity="center"
                 android:layout_marginBottom="18dp"/>
             <TextView
                 android:id="@+id/task_notes_view"
@@ -27,12 +28,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_400"
                 android:textSize="14sp"
+                android:gravity="center"
                 android:layout_marginBottom="30dp"/>
             <Button
                 android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/ChipButton"
+                android:drawableStart="@drawable/handoff"
                 android:text="@string/edit_on_phone"/>
         </LinearLayout>
 </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>

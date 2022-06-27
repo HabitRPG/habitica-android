@@ -55,6 +55,8 @@
     <string name="create_task_title">Create a Task</string>
     <string name="complete_task_title">Complete a Task</string>
     <string name="create_task">Create %s</string>
+    <string name="new_task_x">New %s</string>
+    <string name="save_task_x">Save %s</string>
 
     <string name="are_you_sure">Are you sure?</string>
     <string name="task">Task</string>

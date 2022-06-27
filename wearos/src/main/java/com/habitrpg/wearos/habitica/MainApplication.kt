@@ -5,6 +5,7 @@ import android.content.Intent
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class MainApplication : Application() {
 
     @Inject lateinit var userRepository: UserRepository
+    @Inject lateinit var taskRepository: TaskRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -39,6 +41,10 @@ class MainApplication : Application() {
                     startActivity(intent)
                 }
             }.collect()
+        }
+        MainScope().launch {
+            userRepository.retrieveUser()
+            taskRepository.retrieveTasks()
         }
     }
 }

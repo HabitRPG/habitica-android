@@ -113,14 +113,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             adapter.notifyItemChanged(0)
             val index = adapter.data.indexOfFirst { it.identifier == "stats" }
             adapter.data[index].detailText = getString(R.string.user_level, it.stats?.lvl ?: 0)
-            adapter.notifyItemChanged(index)
+            adapter.notifyItemChanged(index+1)
         }
         viewModel.taskCounts.observe(this) {
             adapter.data.forEach { menuItem ->
-                if (it.containsKey(menuItem.identifier) && it[menuItem.identifier]!! > 0) {
-                    menuItem.detailText = it[menuItem.identifier].toString()
-                } else {
-                    menuItem.detailText = null
+                if (it.containsKey(menuItem.identifier)) {
+                    if (it[menuItem.identifier]!! > 0) {
+                        menuItem.detailText = it[menuItem.identifier].toString()
+                    } else {
+                        menuItem.detailText = null
+                    }
                 }
             }
             adapter.notifyDataSetChanged()

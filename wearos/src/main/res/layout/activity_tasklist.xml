@@ -12,7 +12,7 @@
     <com.habitrpg.wearos.habitica.ui.views.AddTaskButton
         android:id="@+id/add_task_button"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="39dp"
         android:layout_gravity="center|bottom"
         app:layout_behavior="com.habitrpg.wearos.habitica.util.ScrollAwayBehavior"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

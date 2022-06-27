@@ -72,7 +72,7 @@
                     android:paddingHorizontal="18dp"
                     android:hint="@string/task_title_hint"
                     android:background="@drawable/row_background_outline"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapSentences" />
                 <TextView
                     android:id="@+id/task_type_header"
                     android:layout_width="match_parent"

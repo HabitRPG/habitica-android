@@ -1,6 +1,8 @@
 package com.habitrpg.wearos.habitica.data
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.amplitude.api.Amplitude
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.api.HostConfig
@@ -10,6 +12,7 @@ import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import okhttp3.Cache
+import okhttp3.CacheControl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -34,7 +37,21 @@ class ApiClient @Inject constructor(
         buildRetrofit()
     }
 
-    fun buildRetrofit() {
+    private fun hasNetwork(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        return when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
+    }
+
+    private fun buildRetrofit() {
         val logging = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             logging.level = HttpLoggingInterceptor.Level.BODY
@@ -44,15 +61,36 @@ class ApiClient @Inject constructor(
 
         val calendar = GregorianCalendar()
         val timeZone = calendar.timeZone
-        val timezoneOffset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
+        val timezoneOffset = -TimeUnit.MINUTES.convert(
+            timeZone.getOffset(calendar.timeInMillis).toLong(),
+            TimeUnit.MILLISECONDS
+        )
 
-        val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
-
+        val cacheSize = (5 * 1024 * 1024).toLong()
         val cache = Cache(File(context.cacheDir, "http_cache"), cacheSize)
 
         val client = OkHttpClient.Builder()
             .cache(cache)
             .addInterceptor(logging)
+            .addInterceptor { chain ->
+                val request = chain.request()
+                var cacheContol = CacheControl.Builder()
+                cacheContol = if (request.method == "GET") {
+                    if (hasNetwork(context)) {
+                        cacheContol.maxAge(5, TimeUnit.MINUTES)
+                    } else {
+                        cacheContol.maxAge(1, TimeUnit.DAYS)
+                            .onlyIfCached()
+                    }
+                } else {
+                    cacheContol.noCache()
+                        .noStore()
+                }
+                chain.proceed(request.newBuilder().header(
+                    "Cache-Control",
+                    cacheContol.build().toString()
+                    ).build())
+            }
             .addNetworkInterceptor { chain ->
                 val original = chain.request()
                 var builder: Request.Builder = original.newBuilder()
@@ -70,8 +108,16 @@ class ApiClient @Inject constructor(
                     builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY)
                 }
                 val request = builder.method(original.method, original.body)
+                    .removeHeader("Pragma")
                     .build()
-                chain.proceed(request)
+                val response = chain.proceed(request)
+                if (request.method == "GET") {
+                    response.newBuilder()
+                        .header("Cache-Control", request.header("Cache-Control") ?: "")
+                        .build()
+                } else {
+                    response
+                }
             }
             .readTimeout(2400, TimeUnit.SECONDS)
             .build()
@@ -111,6 +157,8 @@ class ApiClient @Inject constructor(
     suspend fun runCron() = process(apiService.runCron())
 
     suspend fun getTasks() = process(apiService.getTasks())
-    suspend fun scoreTask(id: String, direction: String) = process(apiService.scoreTask(id, direction))
+    suspend fun scoreTask(id: String, direction: String) =
+        process(apiService.scoreTask(id, direction))
+
     suspend fun createTask(task: Task) = process(apiService.createTask(task))
 }
