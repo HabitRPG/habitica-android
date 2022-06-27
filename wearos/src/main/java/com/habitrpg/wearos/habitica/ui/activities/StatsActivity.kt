@@ -57,7 +57,7 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
         binding.expStatValue.visibility = INVISIBLE
         binding.mpStatValue.visibility = INVISIBLE
 
-        binding.hpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfHeartLightBg(), R.color.hp_bar_color)
+        binding.hpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfHeartLarge(), R.color.hp_bar_color)
         binding.expStatValue.setStatValueResources(HabiticaIconsHelper.imageOfExperience(), R.color.exp_bar_color)
         binding.mpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfMagic(), R.color.mpColor)
     }

@@ -19,9 +19,9 @@
 
     <ImageView
         android:id="@+id/bitmap"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/current_value"
         app:layout_constraintEnd_toStartOf="@+id/current_value"

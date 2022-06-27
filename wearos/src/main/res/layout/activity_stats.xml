@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/stats_imageview"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/icon_stats"
         android:layout_centerInParent="true"/>
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:arcFillColor="@color/hp_bar_color"
-        app:backgroundArcColor="@color/bar_background_color"
+        app:backgroundArcColor="@color/watch_gray_1"
         app:offset="5dp" />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:arcFillColor="@color/exp_bar_color"
-        app:backgroundArcColor="@color/bar_background_color"
+        app:backgroundArcColor="@color/watch_gray_1"
         app:offset="14dp" />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:arcFillColor="@color/mp_bar_color"
-        app:backgroundArcColor="@color/bar_background_color"
+        app:backgroundArcColor="@color/watch_gray_1"
         app:offset="23dp" />
 
     <LinearLayout
@@ -46,12 +46,12 @@
             android:id="@+id/hp_stat_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="8dp"/>
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
             android:id="@+id/exp_stat_value"
             android:layout_width="match_parent"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="8dp"
             android:layout_height="wrap_content" />
 
         <com.habitrpg.wearos.habitica.ui.views.StatValue
