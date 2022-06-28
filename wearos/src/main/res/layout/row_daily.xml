@@ -26,20 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-        <TextView
+        <com.habitrpg.wearos.habitica.ui.views.TaskTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lines="1"
-            tools:text="Task Title"
-            style="@style/Text.Body2"/>
-        <TextView
-            android:id="@+id/streak_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:drawableStartCompat="@drawable/task_icon_streak"
-            android:drawablePadding="@dimen/spacing_small"
-            android:visibility="gone"/>
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="Task Title that is long and wraps and"
+            android:textColor="@color/white"
+            style="@style/Text.Body1"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

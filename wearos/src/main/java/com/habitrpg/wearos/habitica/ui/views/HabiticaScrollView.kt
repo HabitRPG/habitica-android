@@ -23,7 +23,7 @@ class HabiticaScrollView @JvmOverloads constructor(
                         horizontalPadding,
                         verticalPadding,
                         horizontalPadding,
-                        verticalPadding
+                        verticalPadding*2
                     )
             }
         }

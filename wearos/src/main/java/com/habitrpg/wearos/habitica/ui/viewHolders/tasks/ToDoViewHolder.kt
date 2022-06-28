@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.RowTodoBinding
+import com.habitrpg.wearos.habitica.ui.views.TaskTextView
 
 class ToDoViewHolder(itemView: View) : CheckedTaskViewHolder(itemView) {
     private val binding = RowTodoBinding.bind(itemView)
-    override val titleView: TextView
+    override val titleView: TaskTextView
         get() = binding.title
     override val checkbox: ImageView
         get() = binding.checkbox

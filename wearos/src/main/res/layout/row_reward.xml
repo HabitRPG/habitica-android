@@ -7,12 +7,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Chip">
-        <TextView
+        <com.habitrpg.wearos.habitica.ui.views.TaskTextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="1"
+            android:maxLines="2"
+            android:ellipsize="end"
             tools:text="Task Title"
+            android:textColor="@color/white"
             style="@style/Text.Body2"/>
     </LinearLayout>
 </FrameLayout>

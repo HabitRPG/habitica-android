@@ -2,9 +2,9 @@ package com.habitrpg.wearos.habitica.ui.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.databinding.RowHeaderBinding
 import com.habitrpg.android.habitica.databinding.RowHubBinding
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.models.user.MenuItem
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.HubViewHolder
@@ -27,19 +27,14 @@ class HubAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HubViewHolder) {
-            val item = data[position - 1]
-            holder.bind(item)
+            holder.bind(getItemAt(position - 1))
         } else if (holder is HeaderViewHolder){
             holder.bind(title)
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position == 0) 0 else 1
-    }
-
-    override fun getItemCount(): Int {
-        return data.size + 1
-    }
+    private fun getItemAt(position: Int) = data.filter { !it.isHidden }[position]
+    override fun getItemViewType(position: Int) = if (position == 0) 0 else 1
+    override fun getItemCount() =  data.filter { !it.isHidden }.size + 1
 }
 

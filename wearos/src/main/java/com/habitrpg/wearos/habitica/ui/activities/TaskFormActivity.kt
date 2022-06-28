@@ -28,8 +28,15 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
             updateTaskTypeButton(binding.todoButton, TaskType.TODO)
             updateTaskTypeButton(binding.dailyButton, TaskType.DAILY)
             updateTaskTypeButton(binding.habitButton, TaskType.HABIT)
-            binding.confirmationTitle.text = getString(R.string.new_task_x, taskType?.value)
-            binding.saveButton.text = getString(R.string.save_task_x, taskType?.value)
+            val typeName = getString(when(value) {
+                TaskType.HABIT -> R.string.habit
+                TaskType.DAILY -> R.string.daily
+                TaskType.TODO -> R.string.todo
+                TaskType.REWARD -> R.string.reward
+                else -> R.string.task
+            })
+            binding.confirmationTitle.text = getString(R.string.new_task_x, typeName)
+            binding.saveButton.text = getString(R.string.save_task_x, typeName)
         }
     override val viewModel: TaskFormViewModel by viewModels()
 

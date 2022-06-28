@@ -8,10 +8,10 @@ class TaskScoringResult(): Parcelable {
     constructor(data: TaskDirectionData, stats: AvatarStats?) : this() {
         hasLeveledUp = data.lvl > (stats?.lvl ?: 0)
         healthDelta = data.hp - (stats?.hp ?: 0.0)
-        if (hasLeveledUp) {
-            experienceDelta = (stats?.toNextLevel ?: 0).toDouble() - (stats?.exp ?: 0.0) + data.exp
+        experienceDelta = if (hasLeveledUp) {
+            (stats?.toNextLevel ?: 0).toDouble() - (stats?.exp ?: 0.0) + data.exp
         } else {
-            experienceDelta = data.exp - (stats?.exp ?: 0.0)
+            data.exp - (stats?.exp ?: 0.0)
         }
         manaDelta = data.mp - (stats?.mp ?: 0.0)
         goldDelta = data.gp - (stats?.gp ?: 0.0)
@@ -40,6 +40,7 @@ class TaskScoringResult(): Parcelable {
         level = parcel.readValue(Int::class.java.classLoader) as? Int
         questDamage = parcel.readValue(Double::class.java.classLoader) as? Double
         questItemsFound = parcel.readValue(Int::class.java.classLoader) as? Int
+        drop = parcel.readValue(TaskDirectionDataDrop::class.java.classLoader) as? TaskDirectionDataDrop
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -51,6 +52,7 @@ class TaskScoringResult(): Parcelable {
         parcel.writeValue(level)
         parcel.writeValue(questDamage)
         parcel.writeValue(questItemsFound)
+        parcel.writeValue(drop)
     }
 
     override fun describeContents(): Int {
