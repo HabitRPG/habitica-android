@@ -29,4 +29,5 @@
     <string name="save">Save</string>
     <string name="sync_data">Sync Data</string>
     <string name="hide_task_rewards">Hide task rewards</string>
+    <string name="log_out_of_habitica">Log out of Habitica?</string>
 </resources>

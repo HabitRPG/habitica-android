@@ -1,8 +1,9 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
-import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
@@ -12,6 +13,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.SettingsItem
 import com.habitrpg.wearos.habitica.ui.viewmodels.SettingsViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>() {
@@ -85,14 +87,20 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
     }
 
     private fun showLogoutConfirmation() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.are_you_sure)
-            .setPositiveButton(R.string.logout) { alert, _ ->
-                logout()
-                alert.dismiss()
-            }
-            .setPositiveButton(R.string.action_cancel) { alert, _ ->
-                alert.dismiss()
-            }.show()
+        val logoutDialog = Dialog(this)
+        val myLayout = layoutInflater.inflate(R.layout.logout_layout, null)
+        val positiveButton: Button = myLayout.findViewById(R.id.logout_button)
+        positiveButton.setOnClickListener {
+            logout()
+            logoutDialog.dismiss()
+        }
+        val negativeButton: Button = myLayout.findViewById(R.id.cancel_button)
+        negativeButton.setOnClickListener {
+            logoutDialog.dismiss()
+        }
+        logoutDialog.setContentView(myLayout)
+        logoutDialog.show()
     }
+
+
 }
