@@ -75,6 +75,7 @@ class SettingsViewHolder(itemView: View) : BindableViewHolder<SettingsItem>(item
             val radio = RadioButton(itemView.context)
             radio.isChecked = data.value as? Boolean == true
             radio.isEnabled = false
+            radio.isClickable = false
             widget = radio
             binding.row.addView(radio)
 
