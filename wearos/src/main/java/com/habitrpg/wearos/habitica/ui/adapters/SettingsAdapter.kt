@@ -3,7 +3,7 @@ package com.habitrpg.wearos.habitica.ui.adapters
 import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
+import android.widget.Switch
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -72,12 +72,12 @@ class SettingsViewHolder(itemView: View) : BindableViewHolder<SettingsItem>(item
         }
 
         if (data.type == SettingsItem.Types.TOGGLE) {
-            val radio = RadioButton(itemView.context)
-            radio.isChecked = data.value as? Boolean == true
-            radio.isEnabled = false
-            radio.isClickable = false
-            widget = radio
-            binding.row.addView(radio)
+            val switch = Switch(itemView.context)
+            switch.isChecked = data.value as? Boolean == true
+            switch.isClickable = false
+            switch.showText = false
+            widget = switch
+            binding.row.addView(switch)
 
             if (data.value as? Boolean == true) {
                 binding.row.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_purple_100))
