@@ -2,6 +2,7 @@ package com.habitrpg.wearos.habitica.ui.activities
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
@@ -80,8 +81,40 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
                 null
             ) {
                 showLogoutConfirmation()
+            },
+            SettingsItem(
+                "spacer",
+                getString(R.string.settings),
+                SettingsItem.Types.SPACER,
+                null
+            ) {
+            },
+            SettingsItem(
+                "footer",
+                getString(R.string.version_info, versionName, versionCode),
+                SettingsItem.Types.FOOTER,
+                null
+            ){
             }
         )
+    }
+
+    private val versionName: String by lazy {
+        try {
+            @Suppress("DEPRECATION")
+            packageManager?.getPackageInfo(packageName ?: "", 0)?.versionName ?: ""
+        } catch (e: PackageManager.NameNotFoundException) {
+            ""
+        }
+    }
+
+    private val versionCode: Int by lazy {
+        try {
+            @Suppress("DEPRECATION")
+            packageManager?.getPackageInfo(packageName ?: "", 0)?.versionCode ?: 0
+        } catch (e: PackageManager.NameNotFoundException) {
+            0
+        }
     }
 
     private fun showLogoutConfirmation() {

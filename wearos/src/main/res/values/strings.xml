@@ -29,4 +29,5 @@
     <string name="save">Save</string>
     <string name="sync_data">Sync Data</string>
     <string name="hide_task_rewards">Hide task rewards</string>
+    <string name="version_info">Version %1$s (%2$d)</string>
 </resources>
