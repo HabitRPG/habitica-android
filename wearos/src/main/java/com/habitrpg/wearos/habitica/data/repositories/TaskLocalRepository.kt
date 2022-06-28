@@ -3,6 +3,7 @@ package com.habitrpg.wearos.habitica.data.repositories
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.models.tasks.TaskList
 import kotlinx.coroutines.flow.Flow
@@ -28,22 +29,38 @@ class TaskLocalRepository @Inject constructor() {
         return tasks[type]?.asFlow() ?: emptyFlow()
     }
 
-    fun saveTasks(tasks: TaskList) {
+    fun saveTasks(tasks: TaskList, order: TasksOrder?) {
         val taskMap = mutableMapOf(
-            TaskType.HABIT to mutableListOf<Task>(),
-            TaskType.DAILY to mutableListOf<Task>(),
-            TaskType.TODO to mutableListOf<Task>(),
-            TaskType.REWARD to mutableListOf<Task>()
+            TaskType.HABIT to sortTasks(tasks.tasks, order?.habits ?: emptyList(), TaskType.HABIT),
+            TaskType.DAILY to sortTasks(tasks.tasks, order?.dailys ?: emptyList(), TaskType.DAILY),
+            TaskType.TODO to sortTasks(tasks.tasks, order?.todos ?: emptyList(), TaskType.TODO),
+            TaskType.REWARD to sortTasks(tasks.tasks, order?.rewards ?: emptyList(), TaskType.REWARD)
         )
-        for (task in tasks.tasks) {
-            if (task.value.type != null) {
-                taskMap[task.value.type]?.add(task.value)
-            }
-        }
         for (type in taskMap) {
             this.tasks[type.key]?.value = type.value
         }
         taskCountHelperValue.value = Date().time
+    }
+
+    private fun sortTasks(taskMap: MutableMap<String, Task>, taskOrder: List<String>, type: TaskType): List<Task> {
+        val taskList = ArrayList<Task>()
+        var position = 0
+        for (taskId in taskOrder) {
+            val task = taskMap[taskId]
+            if (task != null) {
+                task.position = position
+                taskList.add(task)
+                position++
+                taskMap.remove(taskId)
+            }
+        }
+        for (task in taskMap.values) {
+            if (task.type != type) continue
+            task.position = position
+            taskList.add(task)
+            position++
+        }
+        return taskList
     }
 
     fun updateTask(task: Task) {

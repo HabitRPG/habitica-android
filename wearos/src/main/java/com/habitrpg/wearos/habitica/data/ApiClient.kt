@@ -161,4 +161,5 @@ class ApiClient @Inject constructor(
         process(apiService.scoreTask(id, direction))
 
     suspend fun createTask(task: Task) = process(apiService.createTask(task))
+    fun hasAuthentication() = hostConfig.hasAuthentication()
 }

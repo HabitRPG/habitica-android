@@ -41,7 +41,8 @@ class TaskListViewModel @Inject constructor(
 
     fun retrieveTasks() {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            taskRepository.retrieveTasks()
+            val user = userRepository.retrieveUser()
+            taskRepository.retrieveTasks(user?.tasksOrder)
         }
     }
 }

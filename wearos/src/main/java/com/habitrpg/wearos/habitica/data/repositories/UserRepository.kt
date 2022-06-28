@@ -5,7 +5,8 @@ import com.habitrpg.wearos.habitica.models.user.User
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(val apiClient: ApiClient, val localRepository: UserLocalRepository) {
-
+    val hasAuthentication: Boolean
+    get() = apiClient.hasAuthentication()
     fun getUser() = localRepository.getUser()
 
     suspend fun retrieveUser(): User? {

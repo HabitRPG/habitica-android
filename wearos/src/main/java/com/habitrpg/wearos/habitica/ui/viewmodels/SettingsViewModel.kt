@@ -31,8 +31,8 @@ class SettingsViewModel @Inject constructor(userRepository: UserRepository,
     fun resyncData() {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             loadingManager.startLoading()
-            userRepository.retrieveUser()
-            taskRepository.retrieveTasks()
+            val user = userRepository.retrieveUser()
+            taskRepository.retrieveTasks(user?.tasksOrder)
             loadingManager.endLoading()
         }
     }

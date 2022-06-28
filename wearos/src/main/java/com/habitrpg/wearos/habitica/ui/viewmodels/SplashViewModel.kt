@@ -5,7 +5,6 @@ import androidx.core.content.edit
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.MessageEvent
-import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
@@ -18,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
-    val hostConfig: HostConfig,
     val apiClient: ApiClient,
     val sharedPreferences: SharedPreferences,
     val keyHelper: KeyHelper?, loadingManager: LoadingManager
@@ -26,7 +24,7 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
     lateinit var onLoginCompleted: (Boolean) -> Unit
     val hasAuthentication: Boolean
     get() {
-        return hostConfig.hasAuthentication()
+        return apiClient.hasAuthentication()
     }
 
     override fun onMessageReceived(event: MessageEvent) {

@@ -11,6 +11,7 @@ import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
 import com.habitrpg.wearos.habitica.ui.activities.RYAActivity
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -42,9 +43,13 @@ class MainApplication : Application() {
                 }
             }.collect()
         }
-        MainScope().launch {
-            userRepository.retrieveUser()
-            taskRepository.retrieveTasks()
+        if (userRepository.hasAuthentication) {
+            MainScope().launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+
+            }) {
+                val user = userRepository.retrieveUser()
+                taskRepository.retrieveTasks(user?.tasksOrder)
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.habitrpg.wearos.habitica.data.repositories
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.models.tasks.TaskList
@@ -13,9 +14,9 @@ import javax.inject.Inject
 
 class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepository: TaskLocalRepository, val userLocalRepository: UserLocalRepository) {
 
-    suspend fun retrieveTasks(): TaskList? {
+    suspend fun retrieveTasks(order: TasksOrder?): TaskList? {
         val tasks = apiClient.getTasks()
-        tasks?.let { localRepository.saveTasks(tasks) }
+        tasks?.let { localRepository.saveTasks(tasks, order) }
         return tasks
     }
     fun getTasks(taskType: TaskType) = localRepository.getTasks(taskType)
