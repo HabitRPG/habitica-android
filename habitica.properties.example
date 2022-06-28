@@ -1,0 +1,10 @@
+# Habitica Server Port
+# local instance
+# PORT=3000
+PORT=80
+BASE_URL=https://habitica.com
+STAGING_KEY=
+ANDROID_TESTING_UUID=
+APPLE_AUTH_CLIENT_ID=
+DEBUG_USER_ID=
+DEBUG_API_KEY=

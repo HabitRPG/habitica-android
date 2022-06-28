@@ -22,5 +22,8 @@ class UserRepository @Inject constructor(val apiClient: ApiClient, val localRepo
 
     suspend fun sleep() = apiClient.sleep()
     suspend fun revive() = apiClient.revive()
-    suspend fun runCron() = apiClient.runCron()
+    suspend fun runCron() {
+        apiClient.runCron()
+        retrieveUser()
+    }
 }
