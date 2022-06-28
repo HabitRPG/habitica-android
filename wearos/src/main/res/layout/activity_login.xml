@@ -54,6 +54,7 @@
                 android:id="@+id/google_login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/google_icon"
                 android:text="@string/login_btn_google"
                 android:layout_marginBottom="@dimen/spacing_small"
                 style="@style/ChipButton"/>
@@ -77,6 +78,7 @@
                 android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
+                android:textColorHint="@color/gray_200"
                 android:inputType="textEmailAddress"
                 android:hint="@string/email_username"
                 android:paddingHorizontal="16dp"
@@ -87,8 +89,8 @@
             <EditText
                 android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
+                android:textColorHint="@color/gray_200"
                 android:layout_height="52dp"
-                android:inputType="textPassword"
                 android:hint="@string/password"
                 android:background="@drawable/row_background_outline"
                 android:paddingHorizontal="16dp"
