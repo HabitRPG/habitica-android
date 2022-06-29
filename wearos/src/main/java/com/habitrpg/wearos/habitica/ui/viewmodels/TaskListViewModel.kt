@@ -27,13 +27,16 @@ class TaskListViewModel @Inject constructor(
     val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
     val tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT)
         .map {
-            val taskList: MutableList<Any> = it.sortedBy { it.completed }.toMutableList()
-            var firstCompletedIndex = taskList.indexOfFirst { it is Task &&  it.completed }
-            if (firstCompletedIndex < 0) {
-                firstCompletedIndex = 0
+            if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
+                val taskList: MutableList<Any> = it.sortedBy { it.completed }.toMutableList()
+                val firstCompletedIndex = taskList.indexOfFirst { it is Task &&  it.completed }
+                if (firstCompletedIndex >= 0) {
+                    taskList.add(firstCompletedIndex, "Done today")
+                }
+                taskList
+            } else {
+                it
             }
-            taskList.add(firstCompletedIndex, "Done today")
-            taskList
         }
         .asLiveData()
     val user = userRepository.getUser()
