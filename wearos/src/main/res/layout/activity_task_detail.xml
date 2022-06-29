@@ -28,14 +28,26 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_400"
                 android:gravity="center"
+                style="@style/Text.Body1"/>
+
+            <TextView
+                android:id="@+id/task_streak_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/watch_gray_200"
+                android:gravity="center"
+                android:drawableStart="@drawable/task_icon_streak"
+                android:drawableTint="@color/watch_gray_200"
+                android:drawablePadding="@dimen/spacing_small"
                 style="@style/Text.Body1"
-                android:layout_marginBottom="30dp"/>
+                android:textSize="12sp"/>
             <Button
                 android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/ChipButton"
                 android:drawableStart="@drawable/handoff"
-                android:text="@string/edit_on_phone"/>
+                android:text="@string/edit_on_phone"
+                android:layout_marginTop="12dp"/>
         </LinearLayout>
 </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>

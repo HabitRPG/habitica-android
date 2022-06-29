@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
 import android.os.Bundle
-import android.widget.LinearLayout
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
@@ -59,10 +59,10 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
             taskBinding.root.setOnClickListener {
                 viewModel.tappedTask(task)
             }
-            val layoutParams = taskBinding.root.layoutParams as LinearLayout.LayoutParams
+            val layoutParams = taskBinding.chip.layoutParams as FrameLayout.LayoutParams
             layoutParams.marginStart = 0
             layoutParams.marginEnd = 0
-            taskBinding.root.layoutParams = layoutParams
+            taskBinding.chip.layoutParams = layoutParams
             holder.bind(task)
         }
     }

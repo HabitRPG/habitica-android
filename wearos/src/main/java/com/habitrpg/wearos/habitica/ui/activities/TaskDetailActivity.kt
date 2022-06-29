@@ -50,6 +50,13 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
             } else {
                 binding.taskNotesView.isVisible = false
             }
+            val streakString = task?.streakString
+            if (streakString != null) {
+                binding.taskStreakView.isVisible = true
+                binding.taskStreakView.text = streakString
+            } else {
+                binding.taskStreakView.isVisible = false
+            }
         }
     }
 }
