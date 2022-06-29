@@ -3,6 +3,7 @@ package com.habitrpg.wearos.habitica.ui.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
@@ -32,6 +33,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         super.onCreate(savedInstanceState)
         configureAdapter()
         binding.recyclerView.apply {
+            overScrollMode = View.OVER_SCROLL_ALWAYS
             layoutManager =
                 WearableLinearLayoutManager(
                     this@TaskListActivity,

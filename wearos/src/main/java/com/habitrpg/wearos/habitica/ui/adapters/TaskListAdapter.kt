@@ -13,7 +13,7 @@ open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onTaskScore: ((Task) -> Unit)? = null
     var onTaskTapped:((Task) -> Unit)? = null
     var onRefresh:(() -> Unit)? = null
-    var data: List<Task> = listOf()
+    var data: List<Any> = listOf()
     set(value) {
         field = value
         notifyDataSetChanged()
@@ -25,7 +25,7 @@ open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is TaskViewHolder) {
-            val item = data[position - 1]
+            val item = data[position - 1] as Task
             holder.bind(item)
             holder.onTaskScore = {
                 onTaskScore?.invoke(item)
@@ -34,15 +34,24 @@ open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 onTaskTapped?.invoke(item)
             }
         } else if (holder is HeaderSectionViewHolder){
-            holder.bind(title)
-            holder.itemView.setOnClickListener {
-                onRefresh?.invoke()
+            if (position == 0) {
+                holder.bind(title)
+                holder.itemView.setOnClickListener {
+                    onRefresh?.invoke()
+                }
+            } else {
+                holder.bind(data[position - 1] as String)
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) 0 else 1
+        return if (position == 0) {
+            0
+        } else {
+            val item = data[position - 1]
+            if (item is Task)  1 else 0
+        }
     }
 
     override fun getItemCount(): Int {

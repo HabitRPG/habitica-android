@@ -14,7 +14,7 @@ class TaskResultViewModel @Inject constructor(savedStateHandle: SavedStateHandle
 ) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
     val hasDrop: Boolean
     get() {
-        return result?.drop?.key?.isNotBlank() == true || (result?.questItemsFound ?: 0) > 0
+        return result?.drop?.key?.isNotBlank() == true // || (result?.questItemsFound ?: 0) > 0
     }
     val result = savedStateHandle.get<TaskScoringResult>("result")
 }
