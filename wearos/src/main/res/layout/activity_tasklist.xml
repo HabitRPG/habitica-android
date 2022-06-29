@@ -2,8 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:scrollbars="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

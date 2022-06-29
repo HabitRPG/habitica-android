@@ -83,14 +83,14 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             )
             chips.add(chip)
         }
-        if ((viewModel.result?.questDamage ?: 0.0) > 0.0) {
+        /*if ((viewModel.result?.questDamage ?: 0.0) > 0.0) {
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.questDamage,
                 HabiticaIconsHelper.imageOfDamage()
             )
             chips.add(chip)
-        }
+        }*/
         var index = 0
         var currentRow = 0
         var currentColumn = 0
@@ -148,13 +148,13 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             layoutParams.columnSpec = GridLayout.spec(0, 3, GridLayout.CENTER)
             dropBinding.root.layoutParams = layoutParams
             val elements = mutableListOf<String>()
-            if ((viewModel.result?.questItemsFound?: 0) != 0) {
+            /* if ((viewModel.result?.questItemsFound?: 0) != 0) {
                 if (viewModel.result?.questItemsFound == 1) {
                     elements.add(getString(R.string.one_quest_item))
                 } else {
                     elements.add(getString(R.string.x_quest_item, viewModel.result?.questItemsFound))
                 }
-            }
+            }*/
             if (viewModel.result?.drop?.key != null) {
                 val type = viewModel.result?.drop?.type
                 val key = viewModel.result?.drop?.key

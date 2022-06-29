@@ -12,13 +12,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import javax.inject.Inject
 
-class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepository: TaskLocalRepository, val userLocalRepository: UserLocalRepository) {
+class TaskRepository @Inject constructor(
+    private val apiClient: ApiClient,
+    private val localRepository: TaskLocalRepository,
+    private val userLocalRepository: UserLocalRepository
+) {
 
-    suspend fun retrieveTasks(order: TasksOrder?): TaskList? {
-        val tasks = apiClient.getTasks()
+    suspend fun retrieveTasks(order: TasksOrder?, forced: Boolean = false): TaskList? {
+        val tasks = apiClient.getTasks(forced)
         tasks?.let { localRepository.saveTasks(tasks, order) }
         return tasks
     }
+
     fun getTasks(taskType: TaskType) = localRepository.getTasks(taskType)
 
     suspend fun scoreTask(user: User?, task: Task, direction: TaskDirection): TaskScoringResult? {
@@ -49,10 +54,6 @@ class TaskRepository @Inject constructor(val apiClient: ApiClient, val localRepo
             user.stats?.mp = result?.mp
             user.stats?.gp = result?.gp
             user.stats?.lvl = result?.lvl
-        /*user?.party?.quest?.progress?.up = (
-            user?.party?.quest?.progress?.up
-                ?: 0F
-            ) + (result?._tmp?.quest?.progressDelta?.toFloat() ?: 0F)*/
             userLocalRepository.saveUser(user)
         }
         return scoringResult

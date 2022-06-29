@@ -31,7 +31,7 @@ class TaskListViewModel @Inject constructor(
     fun scoreTask(task: Task, direction: TaskDirection, onResult: (TaskScoringResult?) -> Unit) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             val result = taskRepository.scoreTask(
-                userRepository.localRepository.getUser().first(),
+                userRepository.getUser().first(),
                 task,
                 direction
             )
@@ -41,8 +41,10 @@ class TaskListViewModel @Inject constructor(
 
     fun retrieveTasks() {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val user = userRepository.retrieveUser()
-            taskRepository.retrieveTasks(user?.tasksOrder)
+            loadingManager.startLoading()
+            val user = userRepository.retrieveUser(true)
+            taskRepository.retrieveTasks(user?.tasksOrder, true)
+            loadingManager.endLoading()
         }
     }
 }

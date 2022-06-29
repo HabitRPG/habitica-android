@@ -49,7 +49,7 @@ class TaskRewardChip @JvmOverloads constructor(
 
     fun set(value: Double?, icon: Bitmap) {
         binding.iconView.setImageBitmap(icon)
-        var text = formatter.format(value?.round(1))
+        var text = formatter.format(value?.round(if (value < 1 && value > -1) 1 else 0))
         if (text.firstOrNull() == '0') {
             text = text.substring(1)
         }

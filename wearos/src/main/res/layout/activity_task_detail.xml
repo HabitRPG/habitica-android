@@ -21,14 +21,14 @@
                 style="@style/Text.Subheader1"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:layout_marginBottom="18dp"/>
+                android:layout_marginBottom="12dp"/>
             <TextView
                 android:id="@+id/task_notes_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_400"
-                android:textSize="14sp"
                 android:gravity="center"
+                style="@style/Text.Body1"
                 android:layout_marginBottom="30dp"/>
             <Button
                 android:id="@+id/edit_button"

@@ -74,6 +74,9 @@ class ApiClient @Inject constructor(
             .addInterceptor(logging)
             .addInterceptor { chain ->
                 val request = chain.request()
+                if (request.header("Cache-Control")?.isNotBlank() == true) {
+                    return@addInterceptor chain.proceed(request)
+                }
                 var cacheContol = CacheControl.Builder()
                 cacheContol = if (request.method == "GET") {
                     if (hasNetwork(context)) {
@@ -143,7 +146,11 @@ class ApiClient @Inject constructor(
         return response.data
     }
 
-    suspend fun getUser() = process(apiService.getUser())
+    suspend fun getUser(forced: Boolean = false) = if (forced) {
+        process(apiService.getUserForced())
+    } else {
+        process(apiService.getUser())
+    }
     suspend fun updateUser(data: Map<String, Any>) = process(apiService.updateUser(data))
     suspend fun sleep() = process(apiService.sleep())
     suspend fun revive() = process(apiService.revive())
@@ -156,7 +163,11 @@ class ApiClient @Inject constructor(
 
     suspend fun runCron() = process(apiService.runCron())
 
-    suspend fun getTasks() = process(apiService.getTasks())
+    suspend fun getTasks(forced: Boolean = false) = if (forced) {
+            process(apiService.getTasksForced())
+        } else {
+            process(apiService.getTasks())
+        }
     suspend fun scoreTask(id: String, direction: String) =
         process(apiService.scoreTask(id, direction))
 

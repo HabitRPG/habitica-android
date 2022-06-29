@@ -14,6 +14,7 @@
             android:layout_height="34dp"
             android:background="@drawable/circle"
             android:layout_marginEnd="@dimen/spacing_medium"
+            android:foreground="@drawable/task_score_feedback"
             >
             <ImageView
                 android:id="@+id/habit_button_icon"

@@ -22,12 +22,12 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
-import com.habitrpg.common.habitica.models.PlayerTier
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.models.PlayerTier
 import com.habitrpg.common.habitica.views.UsernameLabel
 import javax.inject.Inject
 
@@ -149,7 +149,7 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
             context?.let {
                 val container = FrameLayout(it)
                 container.background = ContextCompat.getDrawable(it, R.drawable.layout_rounded_bg_window)
-                val label = UsernameLabel(context, null)
+                val label = UsernameLabel(it, null)
                 label.tier = tier.id
                 label.username = tier.title
                 val params = FrameLayout.LayoutParams(

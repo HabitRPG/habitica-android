@@ -15,6 +15,6 @@
             android:ellipsize="end"
             tools:text="Task Title"
             android:textColor="@color/white"
-            style="@style/Text.Body2"/>
+            style="@style/Text.Body1"/>
     </LinearLayout>
 </FrameLayout>

@@ -58,6 +58,10 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
         binding.editButton.setOnClickListener {
             binding.editTaskWrapper.isVisible = true
             binding.taskConfirmationWrapper.isVisible = false
+            if (intent.extras?.containsKey("task_type") == true) {
+                binding.editText.requestFocus()
+                showKeyboard()
+            }
         }
         binding.todoButton.setOnClickListener { taskType = TaskType.TODO }
         binding.dailyButton.setOnClickListener { taskType = TaskType.DAILY }
@@ -93,11 +97,15 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
     override fun onResume() {
         super.onResume()
         if (binding.editText.hasFocus()) {
-            binding.editText.postDelayed(100) {
-                val imm: InputMethodManager =
-                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.showSoftInput(binding.editText, InputMethodManager.SHOW_FORCED)
-            }
+            showKeyboard()
+        }
+    }
+
+    private fun showKeyboard() {
+        binding.editText.postDelayed(100) {
+            val imm: InputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.editText, InputMethodManager.SHOW_FORCED)
         }
     }
 

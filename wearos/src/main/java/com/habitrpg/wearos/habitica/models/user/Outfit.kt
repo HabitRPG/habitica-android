@@ -1,6 +1,7 @@
 package com.habitrpg.wearos.habitica.models.user
 
 import com.habitrpg.common.habitica.models.AvatarOutfit
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -11,6 +12,6 @@ class Outfit: AvatarOutfit {
     override var head: String = ""
     override var shield: String = ""
     override var weapon: String = ""
-    override var eyeWear: String = ""
+    @Json(name = "eyewear") override var eyeWear: String = ""
     override var headAccessory: String = ""
 }

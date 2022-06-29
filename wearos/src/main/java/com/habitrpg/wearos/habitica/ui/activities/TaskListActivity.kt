@@ -1,7 +1,9 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
@@ -21,7 +23,7 @@ import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>() {
+class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel>() {
     private lateinit var adapter: TaskListAdapter
     override val viewModel: TaskListViewModel by viewModels()
 
@@ -31,16 +33,23 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
         configureAdapter()
         binding.recyclerView.apply {
             layoutManager =
-                WearableLinearLayoutManager(this@TaskListActivity, HabiticaScrollingLayoutCallback())
+                WearableLinearLayoutManager(
+                    this@TaskListActivity,
+                    HabiticaScrollingLayoutCallback()
+                )
             adapter = this@TaskListActivity.adapter
             emptyItem = EmptyItem(
-                getString(R.string.no_tasks, getString(when(viewModel.taskType) {
-                    TaskType.HABIT -> R.string.habit
-                    TaskType.DAILY -> R.string.daily
-                    TaskType.TODO -> R.string.todo
-                    TaskType.REWARD -> R.string.reward
-                    else -> R.string.task
-                }))
+                getString(
+                    R.string.no_tasks, getString(
+                        when (viewModel.taskType) {
+                            TaskType.HABIT -> R.string.habit
+                            TaskType.DAILY -> R.string.daily
+                            TaskType.TODO -> R.string.todo
+                            TaskType.REWARD -> R.string.reward
+                            else -> R.string.task
+                        }
+                    )
+                )
             )
             onRefresh = {
                 viewModel.retrieveTasks()
@@ -68,13 +77,37 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
         })
     }
 
+    private var taskToScore: Task? = null
+    private val habitDirectionIntentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+            if (result.resultCode == Activity.RESULT_OK) {
+                val direction = result.data?.getStringExtra("direction")
+                    ?.let { TaskDirection.valueOf(it) }
+                    ?: TaskDirection.UP
+
+                taskToScore?.let {
+                    viewModel.scoreTask(it, direction) {
+                        if (it != null) {
+                            showTaskScoringResult(it)
+                        }
+                    }
+                }
+            }
+        }
+
     private fun scoreTask(task: Task) {
         var direction = TaskDirection.UP
         if (task.type == TaskType.HABIT) {
             if (task.up == true && task.down == true) {
-                startActivity(Intent(this, HabitDirectionActivity::class.java).apply {
-                    putExtra("task_id", task.id)
-                })
+                taskToScore = task
+                habitDirectionIntentLauncher.launch(
+                    Intent(
+                        this,
+                        HabitDirectionActivity::class.java
+                    ).apply {
+                        putExtra("task_id", task.id)
+                    })
                 return
             } else {
                 direction = if (task.up == true) TaskDirection.UP else TaskDirection.DOWN
@@ -116,6 +149,9 @@ class TaskListActivity: BaseActivity<ActivityTasklistBinding, TaskListViewModel>
             else -> {}
         }
         adapter.title = getTitle(null)
+        adapter.onRefresh = {
+            viewModel.retrieveTasks()
+        }
     }
 
     private fun getTitle(count: Int?): String {

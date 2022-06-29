@@ -44,8 +44,7 @@ class MainApplication : Application() {
             }.collect()
         }
         if (userRepository.hasAuthentication) {
-            MainScope().launch(CoroutineExceptionHandler { coroutineContext, throwable ->
-
+            MainScope().launch(CoroutineExceptionHandler { _, _ ->
             }) {
                 val user = userRepository.retrieveUser()
                 taskRepository.retrieveTasks(user?.tasksOrder)

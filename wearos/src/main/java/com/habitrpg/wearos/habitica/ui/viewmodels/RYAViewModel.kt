@@ -10,6 +10,7 @@ import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,13 +20,15 @@ class RYAViewModel @Inject constructor(
     val taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
 ) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
-    val tasks = taskRepository.getTasks(TaskType.DAILY).asLiveData()
+    val tasks = taskRepository.getTasks(TaskType.DAILY)
+        .map { it.filter { task -> task.isDue == true && !task.completed } }
+        .asLiveData()
 
     private val tasksToComplete = mutableListOf<Task>()
 
     fun tappedTask(task: Task) {
         task.completed = !task.completed
-        taskRepository.localRepository.updateTask(task)
+        // taskRepository.localRepository.updateTask(task)
         if (task.completed) {
             if (!tasksToComplete.contains(task)) {
                 tasksToComplete.add(task)

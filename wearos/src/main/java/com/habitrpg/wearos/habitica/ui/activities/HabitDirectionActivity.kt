@@ -1,5 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -28,11 +30,15 @@ class HabitDirectionActivity: BaseActivity<ActivityHabitDirectionBinding, HabitD
         }
 
         binding.plusButton.setOnClickListener {
-            viewModel.scoreTask(TaskDirection.UP)
+            val data = Intent()
+            data.putExtra("direction", TaskDirection.UP.name)
+            setResult(Activity.RESULT_OK, data)
             finish()
         }
         binding.minusButton.setOnClickListener {
-            viewModel.scoreTask(TaskDirection.DOWN)
+            val data = Intent()
+            data.putExtra("direction", TaskDirection.DOWN.name)
+            setResult(Activity.RESULT_OK, data)
             finish()
         }
     }

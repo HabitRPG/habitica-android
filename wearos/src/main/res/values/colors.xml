@@ -50,6 +50,9 @@
     <color name="watch_gray_5">#686274</color>
     <color name="watch_gray_1">#34313A</color>
 
+    <color name="watch_purple_100_20">#33A675FF</color>
+
+
     <color name="ic_launcher_background">@color/brand_300</color>
     <color name="surface">@color/watch_purple_5</color>
 

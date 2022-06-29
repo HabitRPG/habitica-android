@@ -4,7 +4,7 @@ buildscript {
     ext {
         target_sdk = 32
         app_version_name = '4.0'
-        app_version_code = 4010
+        app_version_code = 4020
 
 
         kotlin_version = '1.7.0'

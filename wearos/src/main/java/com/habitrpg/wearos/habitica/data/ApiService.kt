@@ -14,6 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -22,6 +23,9 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("user/")
     suspend fun getUser(): WearableHabitResponse<User>
+    @GET("user/")
+    @Headers("Cache-Control: no-cache")
+    suspend fun getUserForced(): WearableHabitResponse<User>
 
     @PUT("user/")
     suspend fun updateUser(@Body updateDictionary: Map<String, Any>): WearableHabitResponse<User>
@@ -31,6 +35,9 @@ interface ApiService {
 
     @GET("tasks/user")
     suspend fun getTasks(): WearableHabitResponse<TaskList>
+    @GET("tasks/user")
+    @Headers("Cache-Control: no-cache")
+    suspend fun getTasksForced(): WearableHabitResponse<TaskList>
 
     @GET("tasks/user")
     suspend fun getTasks(@Query("type") type: String): WearableHabitResponse<TaskList>
