@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_stats"
         android:layout_centerInParent="true"
+        android:importantForAccessibility="no"
         />
 
     <com.habitrpg.wearos.habitica.ui.views.CircularProgressView

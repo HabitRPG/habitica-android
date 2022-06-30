@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
+    <color name="watch_white">#ffffff</color>
+    <color name="watch_black">#000000</color>
 
     <color name="brand_50">#36205D</color>
     <color name="brand_100">#432874</color>

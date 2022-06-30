@@ -14,12 +14,6 @@ open class ChecklistItem constructor(
 
     var position: Int = 0
 
-    constructor(item: ChecklistItem) : this() {
-        this.text = item.text
-        this.id = item.id
-        this.completed = item.completed
-    }
-
     override fun describeContents(): Int {
         return 0
     }

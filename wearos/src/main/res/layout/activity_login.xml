@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,13 +14,14 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_gryphon_white"
+                android:importantForAccessibility="no"
                 android:layout_marginBottom="@dimen/spacing_medium"/>
             <TextView
                 android:id="@+id/title_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Text.Subheader1"
-                android:textColor="@color/white"
+                style="@style/Text.SubHeader1"
+                android:textColor="@color/watch_white"
                 android:text="@string/sign_in"
                 android:layout_marginBottom="@dimen/spacing_large"/>
             <TextView
@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:text="@string/sign_in_description"
                 style="@style/Text.Body2"
-                android:textColor="@color/white"
+                android:textColor="@color/watch_white"
                 android:layout_marginBottom="18dp"/>
             <Button
                 android:id="@+id/sign_in_on_phone_button"
@@ -95,6 +95,7 @@
                 android:paddingHorizontal="16dp"
                 android:autofillHints="password"
                 android:textColorHint="@color/watch_gray_200"
+                android:inputType="textPassword"
                 android:textSize="14sp"
                 android:layout_marginBottom="@dimen/spacing_small"/>
             <Button

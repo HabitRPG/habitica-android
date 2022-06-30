@@ -70,5 +70,4 @@ open class EllipsizedTextView @JvmOverloads constructor(context: Context, attrs:
 
 class TaskTextView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : EllipsizedTextView(context, attrs) {
-}
+) : EllipsizedTextView(context, attrs)

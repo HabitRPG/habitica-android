@@ -26,7 +26,7 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
     lateinit var loadingManager: LoadingManager
 
     val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
-    val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
+    private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
     companion object {
         var currentActivityClassName: String? = null
     }
@@ -76,6 +76,7 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
 
     fun stopAnimatingProgress() {
         if (progressView != null) {
+            progressView?.stopAnimation()
             wrapperBinding.root.removeView(progressView)
             progressView = null
         } else {

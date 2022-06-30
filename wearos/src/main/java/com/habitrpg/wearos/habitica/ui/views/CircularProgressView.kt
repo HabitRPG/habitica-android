@@ -20,9 +20,9 @@ class CircularProgressView(
     private val ovalSpace = RectF()
     private var ovalSize = (resources.displayMetrics.heightPixels / 2)
     private var currentPercentage = 55f
-    private var PERCENTAGE_DIVIDER = 180f
-    private val ARC_FULL_ROTATION_DEGREE = 360
-    val attributes = context?.theme?.obtainStyledAttributes(
+    private var percentageDivider = 180f
+    private val arcFullRotationDegree = 360
+    private val attributes = context?.theme?.obtainStyledAttributes(
         attrs,
         R.styleable.CircularProgressView,
         0, 0
@@ -86,13 +86,9 @@ class CircularProgressView(
         canvas.drawArc(ovalSpace, 270f, percentageToFill, false, fillArcPaint)
     }
 
-    fun setBarColor(barColor: Int) {
-        fillArcColor = context?.resources?.getColor(barColor, null) ?: backgroundArcColor
-    }
-
     fun setPercentageValues(currentValue: Float, maxValue: Float) {
         currentPercentage = currentValue
-        PERCENTAGE_DIVIDER = maxValue
+        percentageDivider = maxValue
     }
 
     fun animateProgress(startValue: Float = 0f, animationDuration: Long = 1000) {
@@ -100,7 +96,7 @@ class CircularProgressView(
         val valuesHolder = PropertyValuesHolder.ofFloat(
             PERCENTAGE_VALUE_HOLDER,
             startValue,
-            currentPercent.toFloat()
+            currentPercent
         )
 
         val animator = ValueAnimator().apply {
@@ -121,6 +117,6 @@ class CircularProgressView(
         const val PERCENTAGE_VALUE_HOLDER = "percentage"
     }
 
-    private fun getCurrentAngleToFill() = if(currentPercentage > 0) {(ARC_FULL_ROTATION_DEGREE.toFloat() * (currentPercentage / PERCENTAGE_DIVIDER))} else {1f}
+    private fun getCurrentAngleToFill() = if(currentPercentage > 0) {(arcFullRotationDegree.toFloat() * (currentPercentage / percentageDivider))} else {1f}
 }
 

@@ -23,7 +23,7 @@
                     android:id="@+id/confirmation_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Text.Subheader1"
+                    style="@style/Text.SubHeader1"
                     android:textSize="14sp"
                     android:textColor="@color/gray_200"
                     />
@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     style="@style/Text.Body1"
                     android:textSize="14sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/watch_white"
                     />
                 <Button
                     android:id="@+id/save_button"
@@ -95,7 +95,7 @@
                         style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/watch_white"
                         android:fontFamily="sans-serif-medium"
                         android:textSize="14sp"
                         android:text="@string/todo" />
@@ -106,7 +106,7 @@
                         style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/watch_white"
                         android:fontFamily="sans-serif-medium"
                         android:textSize="14sp"
                         android:text="@string/daily" />
@@ -117,7 +117,7 @@
                         style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/watch_white"
                         android:fontFamily="sans-serif-medium"
                         android:textSize="14sp"
                         android:text="@string/habit" />

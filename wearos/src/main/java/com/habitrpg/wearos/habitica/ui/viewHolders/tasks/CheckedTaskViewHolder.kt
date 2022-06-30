@@ -13,7 +13,7 @@ abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) 
     abstract val checkboxWrapper: ViewGroup
 
     override fun bind(data: Task) {
-        checkboxWrapper.setOnClickListener { _ ->
+        checkboxWrapper.setOnClickListener {
             onTaskScore?.invoke()
         }
         super.bind(data)

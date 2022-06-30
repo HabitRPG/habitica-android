@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:text="@string/rya_description"
             android:gravity="center"
-            android:textColor="@color/white"
-            style="@style/Text.Subheader1"
+            android:textColor="@color/watch_white"
+            style="@style/Text.SubHeader1"
             android:layout_marginBottom="@dimen/spacing_large"/>
         <Button
             android:id="@+id/rya_button"

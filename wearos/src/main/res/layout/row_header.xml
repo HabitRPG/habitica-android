@@ -12,5 +12,5 @@
         android:layout_gravity="center"
         android:textColor="@color/watch_purple_200"
         tools:text="Header Text"
-        style="@style/Text.Subheader1"/>
+        style="@style/Text.SubHeader1"/>
 </FrameLayout>

@@ -14,13 +14,13 @@
         android:layout_height="wrap_content"
         android:text="@string/reward_dialog_buy"
         android:textColor="@color/brand_300"
-        style="@style/Subheader1" />
+        style="@style/SubHeader1" />
     <com.habitrpg.common.habitica.views.CurrencyView
         android:id="@+id/priceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="10"
         tools:textColor="@color/green_10"
-        style="@style/Subheader1"
+        style="@style/SubHeader1"
         android:layout_marginStart="12dp"/>
 </LinearLayout>

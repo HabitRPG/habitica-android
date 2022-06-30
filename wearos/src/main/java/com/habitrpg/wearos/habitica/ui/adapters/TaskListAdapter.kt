@@ -8,7 +8,7 @@ import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderSectionViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder
 
-open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var title: String = ""
     var onTaskScore: ((Task) -> Unit)? = null
     var onTaskTapped:((Task) -> Unit)? = null

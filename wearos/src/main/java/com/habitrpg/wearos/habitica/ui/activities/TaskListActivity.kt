@@ -89,8 +89,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                     ?.let { TaskDirection.valueOf(it) }
                     ?: TaskDirection.UP
 
-                taskToScore?.let {
-                    viewModel.scoreTask(it, direction) {
+                taskToScore?.let { task ->
+                    viewModel.scoreTask(task, direction) {
                         if (it != null) {
                             showTaskScoringResult(it)
                         }

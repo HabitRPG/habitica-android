@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.models.tasks.Attribute
 import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
@@ -149,9 +148,6 @@ open class Task constructor(): Parcelable {
     val isDisplayedActive: Boolean
         get() = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO) && !completed
 
-    val isChecklistDisplayActive: Boolean
-        get() = this.checklist?.size != this.completedChecklistCount
-
     fun getNextReminderOccurence(oldTime: String?): ZonedDateTime? {
         if (oldTime == null) {
             return null
@@ -191,39 +187,6 @@ open class Task constructor(): Parcelable {
             (parsed as LocalDateTime).atZone(defaultZone)
         }
     }
-
-    fun parseMarkdown() {
-        parsedText = MarkdownParser.parseMarkdown(text)
-        parsedNotes = MarkdownParser.parseMarkdown(notes)
-    }
-
-    fun markdownText(callback: (CharSequence) -> Unit): CharSequence {
-        if (this.parsedText != null) {
-            return this.parsedText ?: ""
-        }
-
-        MarkdownParser.parseMarkdownAsync(this.text) { parsedText ->
-            this.parsedText = parsedText
-            callback(parsedText)
-        }
-
-        return this.text
-    }
-
-    fun markdownNotes(callback: (CharSequence) -> Unit): CharSequence? {
-        if (parsedNotes != null) {
-            return parsedNotes
-        }
-
-        if (notes?.isNotEmpty() == true) {
-            MarkdownParser.parseMarkdownAsync(notes) { parsedText ->
-                parsedNotes = parsedText
-                callback(parsedText)
-            }
-        }
-        return notes
-    }
-
     override fun equals(other: Any?): Boolean {
         if (other == null) {
             return false
@@ -245,30 +208,36 @@ open class Task constructor(): Parcelable {
             priority != task.priority -> return true
             attribute != task.attribute && attribute != null -> return true
         }
-        if (type == TaskType.HABIT) {
-            return when {
-                up != task.up -> true
-                down != task.down -> true
-                frequency != task.frequency -> true
-                counterUp != task.counterUp -> true
-                counterDown != task.counterDown -> true
-                else -> false
+        when (type) {
+            TaskType.HABIT -> {
+                return when {
+                    up != task.up -> true
+                    down != task.down -> true
+                    frequency != task.frequency -> true
+                    counterUp != task.counterUp -> true
+                    counterDown != task.counterDown -> true
+                    else -> false
+                }
             }
-        } else if (type == TaskType.DAILY) {
-            return when {
-                startDate != task.startDate -> true
-                everyX != task.everyX -> true
-                frequency != task.frequency -> true
-                repeat != task.repeat -> true
-                streak != task.streak -> true
-                else -> false
+            TaskType.DAILY -> {
+                return when {
+                    startDate != task.startDate -> true
+                    everyX != task.everyX -> true
+                    frequency != task.frequency -> true
+                    repeat != task.repeat -> true
+                    streak != task.streak -> true
+                    else -> false
+                }
             }
-        } else if (type == TaskType.TODO) {
-            return dueDate != task.dueDate
-        } else if (type == TaskType.REWARD) {
-            return value != task.value
-        } else {
-            return false
+            TaskType.TODO -> {
+                return dueDate != task.dueDate
+            }
+            TaskType.REWARD -> {
+                return value != task.value
+            }
+            else -> {
+                return false
+            }
         }
     }
 

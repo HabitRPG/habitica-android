@@ -17,7 +17,7 @@
             android:textSize="18sp"
             android:text="@string/log_out_of_habitica"
             android:fontFamily="sans-serif-medium"
-            android:textColor="@color/white"
+            android:textColor="@color/watch_white"
             android:layout_marginBottom="18dp"/>
 
         <Button

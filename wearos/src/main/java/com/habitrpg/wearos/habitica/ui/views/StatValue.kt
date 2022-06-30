@@ -9,9 +9,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.habitrpg.android.habitica.databinding.StatValueLayoutBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
-import kotlin.math.abs
-import kotlin.math.ln
-import kotlin.math.pow
 
 class StatValue @JvmOverloads constructor(
     context: Context,

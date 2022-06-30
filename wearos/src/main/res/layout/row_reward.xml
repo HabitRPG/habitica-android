@@ -14,7 +14,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             tools:text="Task Title"
-            android:textColor="@color/white"
+            android:textColor="@color/watch_white"
             style="@style/Text.Body1"/>
     </LinearLayout>
 </FrameLayout>

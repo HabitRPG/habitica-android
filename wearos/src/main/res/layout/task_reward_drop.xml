@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:textColor="@color/white"
+        android:textColor="@color/watch_white"
         android:text="@string/you_found"/>
     <TextView
         android:id="@+id/text_view"
@@ -17,7 +17,7 @@
         android:fontFamily="sans-serif-medium"
         android:textSize="14sp"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/watch_white"
         />
     <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/image_view"

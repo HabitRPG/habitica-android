@@ -60,7 +60,7 @@
         android:background="@drawable/purchase_button_background"
         android:textColor="@color/brand_400"
         android:gravity="center"
-        style="@style/Subheader1"
+        style="@style/SubHeader1"
         android:letterSpacing="0.02"
         android:layout_marginStart="@dimen/spacing_medium"
         android:layout_marginEnd="@dimen/spacing_medium"

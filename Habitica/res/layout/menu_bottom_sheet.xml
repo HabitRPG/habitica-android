@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         tools:text="Title"
         android:gravity="center"
-        style="@style/Subheader1"/>
+        style="@style/SubHeader1"/>
     <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/icon_view"
         android:layout_width="@dimen/shopitem_image_size"

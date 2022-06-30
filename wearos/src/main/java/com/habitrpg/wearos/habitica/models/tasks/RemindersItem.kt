@@ -3,13 +3,6 @@ package com.habitrpg.wearos.habitica.models.tasks
 import android.os.Parcel
 import android.os.Parcelable
 import com.squareup.moshi.JsonClass
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.TemporalAccessor
 
 @JsonClass(generateAdapter = true)
 open class RemindersItem constructor() : Parcelable {
@@ -50,45 +43,5 @@ open class RemindersItem constructor() : Parcelable {
 
     override fun hashCode(): Int {
         return id?.hashCode() ?: 0
-    }
-
-    fun getZonedDateTime(): ZonedDateTime? {
-        val formatter: DateTimeFormatter =
-            DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-                .appendPattern("['T'][' ']")
-                .append(DateTimeFormatter.ISO_LOCAL_TIME)
-                .appendPattern("[XX]")
-                .toFormatter()
-
-        val parsed: TemporalAccessor = formatter.parseBest(
-            time,
-            ZonedDateTime::from, LocalDateTime::from
-        )
-        return if (parsed is ZonedDateTime) {
-            parsed
-        } else {
-            val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone)
-        }
-    }
-
-    fun getLocalZonedDateTimeInstant(): Instant? {
-        val formatter: DateTimeFormatter =
-            DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-                .appendPattern("['T'][' ']")
-                .append(DateTimeFormatter.ISO_LOCAL_TIME)
-                .appendPattern("[XX]")
-                .toFormatter()
-
-        val parsed: TemporalAccessor = formatter.parseBest(
-            time,
-            ZonedDateTime::from, LocalDateTime::from
-        )
-        return if (parsed is ZonedDateTime) {
-            parsed.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        } else {
-            val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone).withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        }
     }
 }

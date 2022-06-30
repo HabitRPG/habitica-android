@@ -1,8 +1,9 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
-import android.animation.ValueAnimator
 import android.os.Bundle
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
@@ -11,9 +12,7 @@ import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.models.user.Stats
 import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.ui.viewmodels.StatsViewModel
-import com.habitrpg.wearos.habitica.ui.views.StatValue
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {

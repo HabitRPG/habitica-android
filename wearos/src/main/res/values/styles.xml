@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="HabiticaAppTheme" parent="@android:style/Theme.DeviceDefault">
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/watch_black</item>
     </style>
     <style name="Chip">
         <item name="android:layout_marginVertical">@dimen/row_spacing</item>
@@ -23,7 +23,7 @@
         <item name="android:paddingVertical">@dimen/row_padding_vertical</item>
         <item name="android:background">@drawable/row_background</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/watch_white</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:minHeight">52dp</item>
@@ -40,22 +40,22 @@
 
     <style name="ChipButton.Purple" parent="ChipButton">
         <item name="android:backgroundTint">@color/watch_purple_100</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/watch_black</item>
     </style>
 
     <style name="ChipButton.Red" parent="ChipButton">
         <item name="android:backgroundTint">@color/watch_red_200</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/watch_black</item>
     </style>
 
     <style name="ChipButton.Small.Red" parent="ChipButton.Small">
         <item name="android:backgroundTint">@color/watch_red_200</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/watch_black</item>
     </style>
 
     <style name="Text" />
 
-    <style name="Text.Subheader1">
+    <style name="Text.SubHeader1">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">16sp</item>
     </style>

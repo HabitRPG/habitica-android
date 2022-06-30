@@ -9,10 +9,10 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.wearos.habitica.data.ApiClient
-import com.habitrpg.wearos.habitica.data.AttributeAdapter
-import com.habitrpg.wearos.habitica.data.FrequencyAdapter
-import com.habitrpg.wearos.habitica.data.TaskTypeAdapter
-import com.habitrpg.wearos.habitica.data.customDateAdapter
+import com.habitrpg.wearos.habitica.util.AttributeAdapter
+import com.habitrpg.wearos.habitica.util.FrequencyAdapter
+import com.habitrpg.wearos.habitica.util.TaskTypeAdapter
+import com.habitrpg.wearos.habitica.util.customDateAdapter
 import com.habitrpg.wearos.habitica.models.tasks.WrappedTasklistAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

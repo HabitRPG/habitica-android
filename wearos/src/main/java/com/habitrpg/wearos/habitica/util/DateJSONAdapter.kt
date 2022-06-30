@@ -1,4 +1,4 @@
-package com.habitrpg.wearos.habitica.data
+package com.habitrpg.wearos.habitica.util
 
 import android.os.Build
 import com.habitrpg.common.habitica.models.tasks.Attribute

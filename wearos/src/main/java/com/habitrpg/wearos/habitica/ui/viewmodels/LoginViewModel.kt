@@ -12,7 +12,6 @@ import com.google.android.gms.auth.UserRecoverableAuthException
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.UserRecoverableException
@@ -66,10 +65,9 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             val account = async {
                 try {
-                    val account: GoogleSignInAccount = task.getResult(
+                    return@async task.getResult(
                         ApiException::class.java
                     )
-                    return@async account
                 } catch (e: IOException) {
                     return@async null
                 } catch (e: GoogleAuthException) {
@@ -116,23 +114,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         }
     }
 
-    private fun checkPlayServices(activity: Activity): Boolean {
-        val googleAPI = GoogleApiAvailability.getInstance()
-        val result = googleAPI.isGooglePlayServicesAvailable(activity)
-        if (result != ConnectionResult.SUCCESS) {
-            if (googleAPI.isUserResolvableError(result)) {
-                googleAPI.getErrorDialog(
-                    activity, result,
-                    PLAY_SERVICES_RESOLUTION_REQUEST
-                )?.show()
-            }
-            return false
-        }
-
-        return true
-    }
-
-    suspend fun handleAuthResponse(userAuthResponse: UserAuthResponse?) {
+    private suspend fun handleAuthResponse(userAuthResponse: UserAuthResponse?) {
         if (userAuthResponse == null) return
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
@@ -174,6 +156,5 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
 
     companion object {
         private const val REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001
-        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
     }
 }

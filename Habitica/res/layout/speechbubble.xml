@@ -27,7 +27,7 @@
 
         <com.habitrpg.android.habitica.ui.views.Typewriter
             android:id="@+id/textView"
-            style="@style/Subheader1"
+            style="@style/SubHeader1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="@string/welcome_text" />

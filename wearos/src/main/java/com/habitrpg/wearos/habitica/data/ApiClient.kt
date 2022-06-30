@@ -80,21 +80,21 @@ class ApiClient @Inject constructor(
                 if (request.header("Cache-Control")?.isNotBlank() == true) {
                     return@addInterceptor chain.proceed(request)
                 }
-                var cacheContol = CacheControl.Builder()
-                cacheContol = if (request.method == "GET") {
+                var cacheControl = CacheControl.Builder()
+                cacheControl = if (request.method == "GET") {
                     if (hasNetwork(context)) {
-                        cacheContol.maxAge(5, TimeUnit.MINUTES)
+                        cacheControl.maxAge(5, TimeUnit.MINUTES)
                     } else {
-                        cacheContol.maxAge(1, TimeUnit.DAYS)
+                        cacheControl.maxAge(1, TimeUnit.DAYS)
                             .onlyIfCached()
                     }
                 } else {
-                    cacheContol.noCache()
+                    cacheControl.noCache()
                         .noStore()
                 }
                 chain.proceed(request.newBuilder().header(
                     "Cache-Control",
-                    cacheContol.build().toString()
+                    cacheControl.build().toString()
                     ).build())
             }
             .addNetworkInterceptor { chain ->
