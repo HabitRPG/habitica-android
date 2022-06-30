@@ -22,7 +22,7 @@
             android:textColor="@color/text_primary"
             style="@style/Body1"
             android:layout_marginEnd="@dimen/spacing_medium"/>
-        <com.habitrpg.common.habitica.views.CurrencyView
+        <com.habitrpg.android.habitica.ui.views.CurrencyView
             android:id="@+id/set_price_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

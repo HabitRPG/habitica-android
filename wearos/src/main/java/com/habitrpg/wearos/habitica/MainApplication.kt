@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Intent
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
@@ -26,7 +25,6 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
         setupCoil()
 

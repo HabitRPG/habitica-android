@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.EquipmentOverviewItemBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class EquipmentOverviewItem @JvmOverloads constructor(
     context: Context,

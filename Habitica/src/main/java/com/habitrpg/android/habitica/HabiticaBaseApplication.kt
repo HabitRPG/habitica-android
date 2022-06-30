@@ -38,7 +38,7 @@ import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MarkdownParser
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import java.lang.ref.WeakReference

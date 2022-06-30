@@ -38,7 +38,7 @@
                 app:showMount="false"
                 app:showSleeping="false"
                 android:layout_gravity="center_horizontal"/>
-            <com.habitrpg.common.habitica.views.UsernameLabel
+            <com.habitrpg.android.habitica.ui.views.UsernameLabel
                 android:id="@+id/display_name_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

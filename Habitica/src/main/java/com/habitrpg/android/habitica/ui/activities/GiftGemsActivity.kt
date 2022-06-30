@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
-import com.habitrpg.common.habitica.views.CurrencyView
+import com.habitrpg.android.habitica.ui.views.CurrencyView
 import javax.inject.Inject
 
 class GiftGemsActivity : PurchaseActivity() {

@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.common.habitica.helpers.setMarkdown
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.functions.Consumer
 import javax.inject.Inject
 
@@ -45,13 +45,20 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfHeartLarge())
-        binding?.experienceSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
-        binding?.manaSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfMagicLarge())
-        binding?.goldSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
-        binding?.gemsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
-        binding?.hourglassesSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfHourglassLarge())
-        binding?.statsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(HabiticaIconsHelper.imageOfStats())
+        binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
+            HabiticaIconsHelper.imageOfHeartLarge())
+        binding?.experienceSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
+            HabiticaIconsHelper.imageOfExperienceReward())
+        binding?.manaSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
+            HabiticaIconsHelper.imageOfMagicLarge())
+        binding?.goldSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
+            HabiticaIconsHelper.imageOfGoldReward())
+        binding?.gemsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
+            HabiticaIconsHelper.imageOfGem())
+        binding?.hourglassesSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
+            HabiticaIconsHelper.imageOfHourglassLarge())
+        binding?.statsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
+            HabiticaIconsHelper.imageOfStats())
 
         binding?.moreHelpTextView?.setMarkdown(context?.getString(R.string.need_help_header_description, "[Habitica Help Guild](https://habitica.com/groups/guild/5481ccf3-5d2d-48a9-a871-70a7380cee5a)"))
         binding?.moreHelpTextView?.setOnClickListener { MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "5481ccf3-5d2d-48a9-a871-70a7380cee5a")) }

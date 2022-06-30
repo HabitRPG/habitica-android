@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.extensions.localizedCapitalize
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskResultViewModel
 import com.habitrpg.wearos.habitica.ui.views.TaskRewardChip
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +56,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.healthDelta,
-                HabiticaIconsHelper.imageOfHeartDarkBg()
+                R.drawable.heart
             )
             chips.add(chip)
         }
@@ -65,7 +64,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.experienceDelta,
-                HabiticaIconsHelper.imageOfExperience()
+                R.drawable.experience
             )
             chips.add(chip)
         }
@@ -73,7 +72,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.goldDelta,
-                HabiticaIconsHelper.imageOfGold()
+                R.drawable.gold
             )
             chips.add(chip)
         }
@@ -81,7 +80,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.manaDelta,
-                HabiticaIconsHelper.imageOfMagic()
+                R.drawable.magic
             )
             chips.add(chip)
         }

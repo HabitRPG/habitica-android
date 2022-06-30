@@ -6,7 +6,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class InsufficientHourglassesDialog(context: Context) : InsufficientCurrencyDialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {

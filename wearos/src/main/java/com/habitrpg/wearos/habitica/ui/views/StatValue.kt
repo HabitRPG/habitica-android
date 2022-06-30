@@ -2,7 +2,6 @@ package com.habitrpg.wearos.habitica.ui.views
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -31,8 +30,8 @@ class StatValue @JvmOverloads constructor(
         startUpdateCountAnimation(currentValue)
     }
 
-    fun setStatValueResources(bitmap: Bitmap, bitmapColor: Int) {
-        binding.bitmap.setImageBitmap(bitmap)
+    fun setStatValueResources(resId: Int, bitmapColor: Int) {
+        binding.bitmap.setImageResource(resId)
         binding.currentValue.setTextColor(
             context?.resources?.getColor(bitmapColor, null) ?: Color.WHITE
         )

@@ -47,8 +47,8 @@ class TaskRewardChip @JvmOverloads constructor(
         gravity = Gravity.CENTER
     }
 
-    fun set(value: Double?, icon: Bitmap) {
-        binding.iconView.setImageBitmap(icon)
+    fun set(value: Double?, iconRes: Int) {
+        binding.iconView.setImageResource(iconRes)
         var text = formatter.format(value?.round(if (value < 1 && value > -1) 1 else 0))
         if (text.firstOrNull() == '0') {
             text = text.substring(1)

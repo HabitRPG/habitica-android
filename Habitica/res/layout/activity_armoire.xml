@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal">
-        <com.habitrpg.common.habitica.views.CurrencyView
+        <com.habitrpg.android.habitica.ui.views.CurrencyView
             android:id="@+id/gold_view"
             android:layout_width="wrap_content"
             android:layout_height="30dp"

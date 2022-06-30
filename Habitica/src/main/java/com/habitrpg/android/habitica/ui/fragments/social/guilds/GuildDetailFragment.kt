@@ -26,8 +26,8 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
-import com.habitrpg.common.habitica.views.HabiticaIcons
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIcons
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import kotlinx.coroutines.Dispatchers
