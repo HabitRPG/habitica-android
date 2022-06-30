@@ -27,9 +27,10 @@ class RYAViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(exceptionBuilder.silent()) {
-            tasks.value = taskRepository.getTasks(TaskType.DAILY)
+            val taskList: List<Task> = taskRepository.getTasks(TaskType.DAILY)
                 .map { it.filter { task -> task.isDue == true && !task.completed } }
                 .first()
+            tasks.value = taskList
         }
     }
 

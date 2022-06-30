@@ -45,8 +45,11 @@ class ApiClient @Inject constructor(
             connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
         return when {
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_VPN) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_USB) -> true
             else -> false
         }
     }
@@ -115,9 +118,16 @@ class ApiClient @Inject constructor(
                     .build()
                 val response = chain.proceed(request)
                 if (request.method == "GET") {
-                    response.newBuilder()
-                        .header("Cache-Control", request.header("Cache-Control") ?: "")
-                        .build()
+                    if (response.code == 504) {
+                        // Cache miss. Network might be down, but retry call without cache to be sure.
+                        chain.proceed(request.newBuilder()
+                            .header("Cache-Control", "no-cache")
+                            .build())
+                    } else {
+                        response.newBuilder()
+                            .header("Cache-Control", request.header("Cache-Control") ?: "")
+                            .build()
+                    }
                 } else {
                     response
                 }

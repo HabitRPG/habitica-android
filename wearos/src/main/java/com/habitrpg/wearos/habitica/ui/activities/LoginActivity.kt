@@ -1,6 +1,5 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
-import android.accounts.AccountManager
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -9,6 +8,7 @@ import android.text.method.PasswordTransformationMethod
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.LoginViewModel
@@ -72,7 +72,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             startMainActivity()
         }
 
-        binding.signInOnPhoneButton.setOnClickListener {  }
+        binding.signInOnPhoneButton.setOnClickListener { openRegisterOnPhone() }
         binding.otherButton.setOnClickListener { currentState = State.OTHER }
         binding.usernamePasswordButton.setOnClickListener { currentState = State.INPUT }
 
@@ -117,17 +117,16 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult)
-        }
+        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+        viewModel.handleGoogleLoginResult(this, task, recoverFromPlayServicesErrorResult)
     }
 
     private val recoverFromPlayServicesErrorResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
-            viewModel.handleGoogleLoginResult(this, null)
+            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+            viewModel.handleGoogleLoginResult(this, task, null)
         }
     }
 

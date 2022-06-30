@@ -3,7 +3,9 @@ package com.habitrpg.wearos.habitica.modules
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.wearos.habitica.data.ApiClient
@@ -102,5 +104,11 @@ class AppModule {
         return if (keyStore == null) {
             null
         } else KeyHelper.getInstance(context, sharedPreferences, keyStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTestingLevel(): AppTestingLevel {
+        return AppTestingLevel.valueOf(BuildConfig.TESTING_LEVEL.uppercase())
     }
 }
