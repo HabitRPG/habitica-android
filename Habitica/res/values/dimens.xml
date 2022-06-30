@@ -4,8 +4,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
 
-    <dimen name="card_medium_text">18.0sp</dimen>
-    <dimen name="card_small_text">14.0sp</dimen>
+
     <dimen name="card_padding">12dp</dimen>
     <dimen name="card_padding_compact">6dp</dimen>
     <dimen name="section_leftright_padding">6dp</dimen>

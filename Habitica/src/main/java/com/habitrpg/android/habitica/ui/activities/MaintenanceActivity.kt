@@ -72,7 +72,7 @@ class MaintenanceActivity : BaseActivity() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         { maintenanceResponse ->
-                            if (!maintenanceResponse.activeMaintenance) {
+                            if (maintenanceResponse.activeMaintenance == false) {
                                 finish()
                             }
                         },

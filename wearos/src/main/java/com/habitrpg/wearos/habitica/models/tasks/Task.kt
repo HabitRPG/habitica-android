@@ -92,6 +92,21 @@ open class Task constructor(): Parcelable {
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
 
+    val streakString: String?
+        get() {
+            return if (counterUp != null && (counterUp ?: 0) > 0 && counterDown != null && (counterDown ?: 0) > 0) {
+                "+" + counterUp.toString() + " | -" + counterDown?.toString()
+            } else if (counterUp != null && (counterUp ?: 0) > 0) {
+                "+" + counterUp.toString()
+            } else if (counterDown != null && (counterDown ?: 0) > 0) {
+                "-" + counterDown.toString()
+            } else if ((streak ?: 0) > 0) {
+                return streak.toString()
+            } else {
+                null
+            }
+        }
+
     val extraLightTaskColor: Int
         get() {
             return when {

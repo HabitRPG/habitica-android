@@ -2,15 +2,15 @@ package com.habitrpg.wearos.habitica.ui.viewHolders.tasks
 
 import android.content.res.ColorStateList
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowHabitBinding
 import com.habitrpg.wearos.habitica.models.tasks.Task
+import com.habitrpg.wearos.habitica.ui.views.TaskTextView
 
 class HabitViewHolder(itemView: View) : TaskViewHolder(itemView) {
     private val binding = RowHabitBinding.bind(itemView)
-    override val titleView: TextView
+    override val titleView: TaskTextView
         get() = binding.title
 
     init {

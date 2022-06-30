@@ -1,13 +1,16 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.view.postDelayed
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
@@ -25,7 +28,15 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
             updateTaskTypeButton(binding.todoButton, TaskType.TODO)
             updateTaskTypeButton(binding.dailyButton, TaskType.DAILY)
             updateTaskTypeButton(binding.habitButton, TaskType.HABIT)
-            binding.confirmationTitle.text = getString(R.string.create_task, value?.value)
+            val typeName = getString(when(value) {
+                TaskType.HABIT -> R.string.habit
+                TaskType.DAILY -> R.string.daily
+                TaskType.TODO -> R.string.todo
+                TaskType.REWARD -> R.string.reward
+                else -> R.string.task
+            })
+            binding.confirmationTitle.text = getString(R.string.new_task_x, typeName)
+            binding.saveButton.text = getString(R.string.save_task_x, typeName)
         }
     override val viewModel: TaskFormViewModel by viewModels()
 
@@ -72,10 +83,21 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
             binding.taskTypeHeader.isVisible = false
             binding.taskTypeWrapper.isVisible = false
             binding.header.textView.text = getString(R.string.create_task, taskType?.value)
-            binding.confirmationTitle.text = getString(R.string.create_task, taskType?.value)
+            binding.editText.requestFocus()
         } else {
             taskType = TaskType.TODO
             binding.header.textView.text = getString(R.string.create_task_title)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (binding.editText.hasFocus()) {
+            binding.editText.postDelayed(100) {
+                val imm: InputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.editText, InputMethodManager.SHOW_FORCED)
+            }
         }
     }
 

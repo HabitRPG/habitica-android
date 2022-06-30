@@ -24,21 +24,21 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.common.habitica.helpers.EmojiParser
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import javax.inject.Inject
+import com.habitrpg.common.habitica.helpers.EmojiParser
+import com.habitrpg.common.habitica.helpers.setMarkdown
+import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import retrofit2.HttpException
+import javax.inject.Inject
 
 class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
 
@@ -117,7 +117,8 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                         val rewards = ArrayList<Task>()
 
                         for (entry in taskList) {
-                            when (entry.type) {
+                            val type = entry.type ?: continue
+                            when (type) {
                                 TaskType.TODO -> todos.add(entry)
                                 TaskType.HABIT -> habits.add(entry)
                                 TaskType.DAILY -> dailies.add(entry)

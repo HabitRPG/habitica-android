@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskResultBinding
 import com.habitrpg.android.habitica.databinding.TaskRewardDropBinding
+import com.habitrpg.android.habitica.extensions.localizedCapitalize
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
@@ -155,14 +156,16 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
                 }
             }
             if (viewModel.result?.drop?.key != null) {
-                elements.add(getString(R.string.some_x, viewModel.result?.drop?.type))
-                dropBinding.imageView.loadImage(viewModel.result?.drop?.key)
+                val type = viewModel.result?.drop?.type
+                val key = viewModel.result?.drop?.key
+                elements.add(getString(R.string.some_x, type))
+                dropBinding.imageView.loadImage("Pet_" + type + "_" + key)
             }
             dropBinding.textView.text = when (elements.size) {
                 1 -> elements[0]
                 2 -> getString(R.string.x_and_y, elements[0], elements[1])
                 else -> elements.joinToString(", ")
-            }
+            }.localizedCapitalize()
         }
     }
 

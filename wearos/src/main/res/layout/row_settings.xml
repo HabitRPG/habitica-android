@@ -10,7 +10,8 @@
         android:id="@+id/row"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Chip">
+        style="@style/Chip"
+        android:paddingHorizontal="20dp">
         <TextView
             android:id="@+id/title_view"
             android:layout_width="wrap_content"

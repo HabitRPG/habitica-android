@@ -150,7 +150,7 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
         resConfigs 'en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'zh', 'zh-rTW'
 
-        versionCode 4000
+        versionCode app_version_code
         versionName app_version_name
 
         targetSdkVersion target_sdk
@@ -212,22 +212,26 @@ android {
             dimension "buildType"
             buildConfigField "String", "TESTING_LEVEL", "\"staff\""
             resValue "string", "app_name", "Habitica Staff"
+            versionCode app_version_code + 6
         }
 
         alpha {
             dimension "buildType"
             buildConfigField "String", "TESTING_LEVEL", "\"alpha\""
             resValue "string", "app_name", "Habitica Alpha"
+            versionCode app_version_code + 4
         }
 
         beta {
             buildConfigField "String", "TESTING_LEVEL", "\"beta\""
             dimension "buildType"
+            versionCode app_version_code + 2
         }
 
         prod {
             buildConfigField "String", "TESTING_LEVEL", "\"production\""
             dimension "buildType"
+            versionCode app_version_code
         }
     }
 

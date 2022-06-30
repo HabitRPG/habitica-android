@@ -270,7 +270,6 @@
 &#8226; Bosses won’t do damage for your missed Dailies\n
 &#8226; Your boss damage or collection quest items will stay pending until check-out</string>
     <string name="empty_items">You don\'t have any %s</string>
-    <string name="user_level">Lvl %d</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
     <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
     <string name="warrior">Warrior</string>
@@ -1138,9 +1137,7 @@
     <string name="locked_equipment_shop_dialog">You must purchase the previous items in this sequence to unlock</string>
     <string name="caused_damage">You caused damage to the boss</string>
     <string name="avatar_style">Style</string>
-    <string name="failed">Failed to load</string>
     <string name="daily_item_checkbox">Daily Checkbox</string>
-    <string name="retry">Retry</string>
     <string name="empty_title">Nothing here yet</string>
     <string name="empty_equipment_description">You don\'t have any equipment of this type yet. You can purchase equipment from the market using the gold you earned.</string>
     <string name="todo_item_checkbox">Todo Checkbox</string>

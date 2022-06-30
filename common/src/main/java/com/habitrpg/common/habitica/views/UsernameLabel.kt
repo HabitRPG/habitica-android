@@ -13,7 +13,9 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.models.PlayerTier
 
-class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+class UsernameLabel @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
+) : LinearLayout(context, attrs) {
 
     private val textView = TextView(context)
     private val tierIconView = ImageView(context)
@@ -54,7 +56,7 @@ class UsernameLabel(context: Context?, attrs: AttributeSet?) : LinearLayout(cont
         textViewParams.gravity = Gravity.CENTER_VERTICAL
         textViewParams.weight = 1.0f
         addView(textView, textViewParams)
-        val padding = context?.resources?.getDimension(R.dimen.spacing_small)?.toInt() ?: 0
+        val padding = context.resources.getDimension(R.dimen.spacing_small).toInt()
         textView.setPadding(0, 0, padding, 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
         val iconViewParams = LayoutParams(

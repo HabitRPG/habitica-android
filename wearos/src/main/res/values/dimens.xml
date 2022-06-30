@@ -15,6 +15,6 @@
     <dimen name="row_text_size">16sp</dimen>
     <dimen name="row_padding_horizontal">10dp</dimen>
     <dimen name="row_padding_vertical">9dp</dimen>
-    <dimen name="row_side_spacing">11dp</dimen>
+    <dimen name="row_side_spacing">10dp</dimen>
     <dimen name="row_spacing">2dp</dimen>
 </resources>

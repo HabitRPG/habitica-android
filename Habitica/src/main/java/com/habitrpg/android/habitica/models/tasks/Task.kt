@@ -29,7 +29,6 @@ import java.util.Date
 import java.util.GregorianCalendar
 
 open class Task : RealmObject, BaseMainObject, Parcelable {
-
     override val realmClass: Class<Task>
         get() = Task::class.java
     override val primaryIdentifier: String?
@@ -108,6 +107,21 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
+
+    val streakString: String?
+        get() {
+            return if (counterUp != null && (counterUp ?: 0) > 0 && counterDown != null && (counterDown ?: 0) > 0) {
+                "+" + counterUp.toString() + " | -" + counterDown?.toString()
+            } else if (counterUp != null && (counterUp ?: 0) > 0) {
+                "+" + counterUp.toString()
+            } else if (counterDown != null && (counterDown ?: 0) > 0) {
+                "-" + counterDown.toString()
+            } else if ((streak ?: 0) > 0) {
+                return streak.toString()
+            } else {
+                null
+            }
+        }
 
     val extraLightTaskColor: Int
         get() {

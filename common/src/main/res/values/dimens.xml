@@ -12,4 +12,7 @@
     <dimen name="spacing_xlarge">32dp</dimen>
 
     <dimen name="icon_size">18dp</dimen>
+
+    <dimen name="card_medium_text">18.0sp</dimen>
+    <dimen name="card_small_text">14.0sp</dimen>
 </resources>

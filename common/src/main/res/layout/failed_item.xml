@@ -2,24 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical">
-    <androidx.constraintlayout.utils.widget.ImageFilterView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/baseline_error_outline_black_36dp"
-        android:tint="@color/text_quad"/>
+        android:src="@drawable/failed_loading"
+        app:tint="@color/text_quad"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/failed"
-        style="@style/Headline"
         android:textColor="@color/text_primary"/>
     <Button
         android:id="@+id/refresh_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/HabiticaButton.Primary"
         android:text="@string/retry"
         android:layout_marginTop="@dimen/spacing_large" />
 </LinearLayout>

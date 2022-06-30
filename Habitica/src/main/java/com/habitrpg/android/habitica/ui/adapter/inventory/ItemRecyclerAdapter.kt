@@ -8,7 +8,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
@@ -20,10 +19,11 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.loadImage
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -105,7 +105,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     hatchingItem?.key + "-" + item?.key
                 }
                 val pet = existingPets?.firstOrNull { it.key == petKey && it.type != "special" }
-                return pet != null && ownedPets?.get(pet.key)?.trained ?: 0 <= 0
+                return pet != null && (ownedPets?.get(pet.key)?.trained ?: 0) <= 0
             }
 
         init {
@@ -179,9 +179,9 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     }
                 } else if (item is SpecialItem) {
                     val specialItem = item as SpecialItem
-                    if (specialItem.isMysteryItem && ownedItem?.numberOwned ?: 0 > 0) {
+                    if (specialItem.isMysteryItem && (ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
-                    } else if (ownedItem?.numberOwned ?: 0 > 0) {
+                    } else if ((ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
                     }
                 }

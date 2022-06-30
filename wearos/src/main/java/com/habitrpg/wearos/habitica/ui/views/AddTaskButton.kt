@@ -20,8 +20,7 @@ class AddTaskButton @JvmOverloads constructor(
 ) : FrameLayout(context, attrs) {
     val binding = ButtonAddTaskBinding.inflate(context.layoutInflater, this)
 
-    private val paint = Paint()
-    private val gradient = LinearGradient(
+    private var gradient = LinearGradient(
         0f,
         0f,
         0f,
@@ -30,20 +29,34 @@ class AddTaskButton @JvmOverloads constructor(
         ContextCompat.getColor(context, R.color.watch_blue_100),
         Shader.TileMode.CLAMP
     )
+
+    private val fillPaint = Paint().apply {
+        style = Paint.Style.FILL_AND_STROKE
+        shader = gradient
+        isAntiAlias = true
+    }
+    private val strokePaint = Paint().apply {
+        style = Paint.Style.STROKE
+        color = ContextCompat.getColor(context, R.color.watch_purple_200)
+        strokeWidth = 3f.dpToPx(context)
+        isAntiAlias = true
+    }
     private val path = Path()
-    private val rect = RectF(0f, 0f, 0f, 0f)
+    private val rect = RectF(0f, 1.5f.dpToPx(context), 0f, 0f)
 
     init {
-        paint.style = Paint.Style.FILL_AND_STROKE
-        paint.shader = gradient
-        paint.isAntiAlias = true
         setWillNotDraw(false)
+        clipToOutline = false
+        clipChildren = false
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        rect.right = right.toFloat()
-        rect.bottom = bottom.toFloat() / 2f
+        val totalWidth = right - left
+        val width = totalWidth / 1.2375f
+        rect.left = (totalWidth - width)/2
+        rect.right = rect.left + width
+        rect.bottom = width / 1.8f
         invalidate()
     }
 
@@ -53,6 +66,7 @@ class AddTaskButton @JvmOverloads constructor(
         if (canvas == null) return
         path.reset()
         path.addArc(rect, 180f, 360f)
-        canvas.drawPath(path, paint)
+        canvas.drawPath(path, fillPaint)
+        canvas.drawPath(path, strokePaint)
     }
 }

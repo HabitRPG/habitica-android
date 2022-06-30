@@ -12,6 +12,7 @@ import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,14 +25,24 @@ class TaskListViewModel @Inject constructor(
 ) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
     val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
     val tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT).asLiveData()
-    val user =  userRepository.getUser()
+    val user = userRepository.getUser()
         .asLiveData()
 
     fun scoreTask(task: Task, direction: TaskDirection, onResult: (TaskScoringResult?) -> Unit) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val result = taskRepository.scoreTask(user.value, task, direction)
+            val result = taskRepository.scoreTask(
+                userRepository.localRepository.getUser().first(),
+                task,
+                direction
+            )
             onResult(result)
         }
     }
 
+    fun retrieveTasks() {
+        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
+            val user = userRepository.retrieveUser()
+            taskRepository.retrieveTasks(user?.tasksOrder)
+        }
+    }
 }

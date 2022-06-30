@@ -31,4 +31,5 @@
     <string name="hide_task_rewards">Hide task rewards</string>
     <string name="version_info">Version %1$s (%2$d)</string>
     <string name="log_out_of_habitica">Log out of Habitica?</string>
+    <string name="no_tasks">Create a %s to add to this list</string>
 </resources>

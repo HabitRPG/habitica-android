@@ -496,7 +496,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private fun checkMaintenance() {
         viewModel.ifNeedsMaintenance { maintenanceResponse ->
-            if (maintenanceResponse.activeMaintenance) {
+            if (maintenanceResponse.activeMaintenance == true) {
                 val intent = createMaintenanceIntent(maintenanceResponse, false)
                 startActivity(intent)
             } else {
@@ -504,7 +504,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     try {
                         val packageInfo = packageManager.getPackageInfo(packageName, 0)
                         @Suppress("DEPRECATION")
-                        if (packageInfo.versionCode < maintenanceResponse.minBuild) {
+                        if (packageInfo.versionCode < (maintenanceResponse.minBuild ?: 0)) {
                             val intent = createMaintenanceIntent(maintenanceResponse, true)
                             startActivity(intent)
                         }
