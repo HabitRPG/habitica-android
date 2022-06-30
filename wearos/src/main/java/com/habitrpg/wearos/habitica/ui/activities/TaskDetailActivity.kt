@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskDetailBinding
+import com.habitrpg.common.habitica.models.tasks.streakString
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -40,7 +41,7 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
             binding.taskTypeView.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    task?.extraLightTaskColor ?: R.color.white
+                    task?.extraLightTaskColor ?: R.color.watch_white
                 )
             )
             binding.taskTextView.text = task?.text

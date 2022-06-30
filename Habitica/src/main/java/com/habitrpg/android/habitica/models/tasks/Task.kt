@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.models.tasks.Attribute
+import com.habitrpg.common.habitica.models.tasks.BaseTask
 import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.realm.RealmList
@@ -18,17 +19,9 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.TemporalAccessor
-import java.util.Calendar
 import java.util.Date
-import java.util.GregorianCalendar
 
-open class Task : RealmObject, BaseMainObject, Parcelable {
+open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     override val realmClass: Class<Task>
         get() = Task::class.java
     override val primaryIdentifier: String?
@@ -43,7 +36,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     var priority: Float = 0.0f
     var text: String = ""
     var notes: String? = null
-    var type: TaskType?
+    override var type: TaskType?
         get() = TaskType.from(typeValue)
         set(value) { typeValue = value?.value }
     private var typeValue: String? = null
@@ -61,10 +54,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     // Habits
     var up: Boolean? = false
     var down: Boolean? = false
-    var counterUp: Int? = 0
-    var counterDown: Int? = 0
+    override var counterUp: Int? = 0
+    override var counterDown: Int? = 0
     // todos/dailies
-    var completed: Boolean = false
+    override var completed: Boolean = false
     var checklist: RealmList<ChecklistItem>? = RealmList()
     var reminders: RealmList<RemindersItem>? = RealmList()
     // dailies
@@ -73,7 +66,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         set(value) { frequencyValue = value?.value }
     var frequencyValue: String? = null
     var everyX: Int? = 0
-    var streak: Int? = 0
+    override var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
     // todos
@@ -86,7 +79,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     @Ignore
     var parsedNotes: Spanned? = null
 
-    var isDue: Boolean? = null
+    override var isDue: Boolean? = null
 
     var nextDue: RealmList<Date>? = null
 
@@ -188,9 +181,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
             }
         }
 
-    val isDisplayedActive: Boolean
-        get() = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO) && !completed
-
     val isChecklistDisplayActive: Boolean
         get() = this.checklist?.size != this.completedChecklistCount
 
@@ -203,46 +193,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
 
     fun checkIfDue(): Boolean = isDue == true
-
-    fun getNextReminderOccurence(oldTime: String?): ZonedDateTime? {
-        if (oldTime == null) {
-            return null
-        }
-        val nextDate = nextDue?.firstOrNull()
-
-        return if (nextDate != null && !isDisplayedActive) {
-            val nextDueCalendar = GregorianCalendar()
-            nextDueCalendar.time = nextDate
-            parse(oldTime)
-                ?.withYear(nextDueCalendar.get(Calendar.YEAR))
-                ?.withMonth(nextDueCalendar.get(Calendar.MONTH))
-                ?.withDayOfMonth(nextDueCalendar.get(Calendar.DAY_OF_MONTH))
-        } else if (isDisplayedActive) {
-            parse(oldTime)
-        } else {
-            null
-        }
-    }
-
-    fun formatter(): DateTimeFormatter =
-        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-            .appendPattern("['T'][' ']")
-            .append(DateTimeFormatter.ISO_LOCAL_TIME)
-            .appendPattern("[XX]")
-            .toFormatter()
-
-    fun parse(dateTime: String): ZonedDateTime? {
-        val parsed: TemporalAccessor = formatter().parseBest(
-            dateTime,
-            ZonedDateTime::from, LocalDateTime::from
-        )
-        return if (parsed is ZonedDateTime) {
-            parsed
-        } else {
-            val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone)
-        }
-    }
 
     fun parseMarkdown() {
         parsedText = MarkdownParser.parseMarkdown(text)

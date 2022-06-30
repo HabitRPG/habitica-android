@@ -5,24 +5,17 @@ import android.os.Parcelable
 import android.text.Spanned
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.models.tasks.Attribute
+import com.habitrpg.common.habitica.models.tasks.BaseTask
 import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.json.JSONArray
 import org.json.JSONException
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.TemporalAccessor
-import java.util.Calendar
 import java.util.Date
-import java.util.GregorianCalendar
 
 @JsonClass(generateAdapter = true)
-open class Task constructor(): Parcelable {
+open class Task constructor(): Parcelable, BaseTask {
 
     @Json(name="_id")
     var id: String? = null
@@ -30,7 +23,7 @@ open class Task constructor(): Parcelable {
     var priority: Float = 0.0f
     var text: String = ""
     var notes: String? = null
-    var type: TaskType?
+    override var type: TaskType?
         get() = TaskType.from(typeValue)
         set(value) { typeValue = value?.value }
     internal var typeValue: String? = null
@@ -46,16 +39,16 @@ open class Task constructor(): Parcelable {
     // Habits
     var up: Boolean? = false
     var down: Boolean? = false
-    var counterUp: Int? = 0
-    var counterDown: Int? = 0
+    override var counterUp: Int? = 0
+    override var counterDown: Int? = 0
     // todos/dailies
-    var completed: Boolean = false
+    override var completed: Boolean = false
     var checklist: List<ChecklistItem>? = listOf()
     var reminders: List<RemindersItem>? = listOf()
     // dailies
     var frequency: Frequency? = null
     var everyX: Int? = 0
-    var streak: Int? = 0
+    override var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
     // todos
@@ -69,7 +62,7 @@ open class Task constructor(): Parcelable {
     @Json(ignore = true)
     var parsedNotes: Spanned? = null
 
-    var isDue: Boolean? = null
+    override var isDue: Boolean? = null
 
     var nextDue: List<Date>? = null
 
@@ -90,21 +83,6 @@ open class Task constructor(): Parcelable {
 
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
-
-    val streakString: String?
-        get() {
-            return if ((counterUp ?: 0) > 0 && (counterDown ?: 0) > 0) {
-                "+" + counterUp.toString() + " | -" + counterDown?.toString()
-            } else if ((counterUp ?: 0) > 0) {
-                "+" + counterUp.toString()
-            } else if ((counterDown ?: 0) > 0) {
-                "-" + counterDown.toString()
-            } else if ((streak ?: 0) > 0) {
-                return streak.toString()
-            } else {
-                null
-            }
-        }
 
     val extraLightTaskColor: Int
         get() {
@@ -145,48 +123,10 @@ open class Task constructor(): Parcelable {
             }
         }
 
-    val isDisplayedActive: Boolean
-        get() = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO) && !completed
 
-    fun getNextReminderOccurence(oldTime: String?): ZonedDateTime? {
-        if (oldTime == null) {
-            return null
-        }
-        val nextDate = nextDue?.firstOrNull()
 
-        return if (nextDate != null && !isDisplayedActive) {
-            val nextDueCalendar = GregorianCalendar()
-            nextDueCalendar.time = nextDate
-            parse(oldTime)
-                ?.withYear(nextDueCalendar.get(Calendar.YEAR))
-                ?.withMonth(nextDueCalendar.get(Calendar.MONTH))
-                ?.withDayOfMonth(nextDueCalendar.get(Calendar.DAY_OF_MONTH))
-        } else if (isDisplayedActive) {
-            parse(oldTime)
-        } else {
-            null
-        }
-    }
 
-    fun formatter(): DateTimeFormatter =
-        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-            .appendPattern("['T'][' ']")
-            .append(DateTimeFormatter.ISO_LOCAL_TIME)
-            .appendPattern("[XX]")
-            .toFormatter()
 
-    fun parse(dateTime: String): ZonedDateTime? {
-        val parsed: TemporalAccessor = formatter().parseBest(
-            dateTime,
-            ZonedDateTime::from, LocalDateTime::from
-        )
-        return if (parsed is ZonedDateTime) {
-            parsed
-        } else {
-            val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone)
-        }
-    }
     override fun equals(other: Any?): Boolean {
         if (other == null) {
             return false

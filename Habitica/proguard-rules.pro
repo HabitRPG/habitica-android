@@ -123,20 +123,6 @@
     -dontwarn com.google.android.gms.**
 #end playservices
 
-#checkout
--keep class com.android.vending.billing.**
-
--assumenosideeffects class org.solovyev.android.checkout.Billing {
-    public static void debug(...);
-    public static void warning(...);
-    public static void error(...);
-}
-
--assumenosideeffects class org.solovyev.android.checkout.Check {
-    static *;
-}
-#end chekout
-
 #add warnings here, warnings in proguard is normal
 -dontwarn javax.annotation.**
 -dontwarn com.squareup.picasso.**

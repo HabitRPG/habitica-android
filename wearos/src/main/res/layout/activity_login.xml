@@ -78,7 +78,8 @@
                 android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|text"
+                android:imeOptions="actionNext"
                 android:hint="@string/email_username"
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/row_background_outline"
@@ -95,8 +96,9 @@
                 android:paddingHorizontal="16dp"
                 android:autofillHints="password"
                 android:textColorHint="@color/watch_gray_200"
-                android:inputType="textPassword"
+                android:inputType="textPassword|text"
                 android:textSize="14sp"
+                android:imeOptions="actionDone"
                 android:layout_marginBottom="@dimen/spacing_small"/>
             <Button
                 android:id="@+id/login_button"
