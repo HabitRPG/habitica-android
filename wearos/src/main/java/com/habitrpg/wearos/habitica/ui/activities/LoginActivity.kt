@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -12,6 +13,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
@@ -77,6 +79,8 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         binding.loginButton.setOnClickListener { loginLocal() }
         binding.googleLoginButton.setOnClickListener { loginGoogle() }
         binding.registerButton.setOnClickListener { openRegisterOnPhone() }
+
+        binding.passwordEditText.transformationMethod = PasswordTransformationMethod()
 
         currentState = State.INITIAL
     }
