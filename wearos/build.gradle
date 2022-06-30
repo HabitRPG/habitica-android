@@ -15,7 +15,7 @@ android {
         targetSdk target_sdk
         versionCode app_version_code + 1
         versionName app_version_name
-
+        buildConfigField "String", "TESTING_LEVEL", "\"production\""
     }
 
     buildTypes {
@@ -33,6 +33,44 @@ android {
             resValue "string", "app_name", "Habitica"
         }
     }
+
+    signingConfigs {
+        release
+    }
+    flavorDimensions "buildType"
+
+    productFlavors {
+        dev {
+            dimension "buildType"
+        }
+
+        staff {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"staff\""
+            resValue "string", "app_name", "Habitica Staff"
+            versionCode app_version_code + 7
+        }
+
+        alpha {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"alpha\""
+            resValue "string", "app_name", "Habitica Alpha"
+            versionCode app_version_code + 5
+        }
+
+        beta {
+            buildConfigField "String", "TESTING_LEVEL", "\"beta\""
+            dimension "buildType"
+            versionCode app_version_code + 3
+        }
+
+        prod {
+            buildConfigField "String", "TESTING_LEVEL", "\"production\""
+            dimension "buildType"
+            versionCode app_version_code + 1
+        }
+    }
+
     buildFeatures {
         viewBinding true
     }
@@ -102,4 +140,24 @@ if (HRPG_PROPS_FILE.canRead()) {
     }
 } else {
     throw new MissingResourceException('habitica.properties not found')
+}
+
+Properties props = new Properties()
+def propFile = new File('signingrelease.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
+            props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+        android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+        android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+        android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+        android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+    } else {
+        println 'signing.properties found but some entries are missing'
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
 }

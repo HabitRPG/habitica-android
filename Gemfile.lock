@@ -81,6 +81,8 @@ GEM
       xcodeproj (>= 1.13.0, < 2.0.0)
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
+    fastlane-plugin-properties (1.1.2)
+      java-properties
     fastlane-plugin-semantic_release (1.14.1)
     fastlane-plugin-versioning_android (0.1.0)
     gh_inspector (1.1.3)
@@ -116,6 +118,7 @@ GEM
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     httpclient (2.8.3)
+    java-properties (0.3.0)
     jmespath (1.4.0)
     json (2.3.0)
     jwt (2.1.0)
@@ -176,6 +179,7 @@ PLATFORMS
 
 DEPENDENCIES
   fastlane
+  fastlane-plugin-properties
   fastlane-plugin-semantic_release
   fastlane-plugin-versioning_android
 

@@ -33,8 +33,8 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'com.google.gms:google-services:4.3.10'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.0'
+        classpath 'com.google.gms:google-services:4.3.13'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
         classpath "io.realm:realm-gradle-plugin:10.10.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0"
@@ -51,6 +51,23 @@ allprojects {
         google()
         mavenCentral()
     }
+}
+
+Properties props = new Properties()
+def propFile = new File('version.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null && props.containsKey('NAME') && props.containsKey('CODE') ) {
+        ext.app_version_name = props['NAME']
+        ext.app_version_code = props['CODE'] as Integer
+    } else {
+        println 'signing.properties found but some entries are missing'
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println 'signing.properties not found'
+    android.buildTypes.release.signingConfig = null
 }
 
 detekt {

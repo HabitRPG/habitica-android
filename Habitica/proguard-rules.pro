@@ -65,6 +65,8 @@
 
 #keep Habitica code
 -keep class com.habitrpg.android.habitica.** { *; }
+-keep class com.habitrpg.common.habitica.** { *; }
+-keep class com.habitrpg.shared.habitica.** { *; }
 
 #realm
 -keep class io.realm.annotations.RealmModule

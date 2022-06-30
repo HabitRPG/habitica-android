@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.habitrpg.wearos.habitica.** { *; }
+-keep class com.habitrpg.common.habitica.** { *; }
+-keep class com.habitrpg.shared.habitica.** { *; }

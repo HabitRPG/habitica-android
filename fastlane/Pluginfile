@@ -4,3 +4,4 @@
 
 gem 'fastlane-plugin-versioning_android'
 gem 'fastlane-plugin-semantic_release'
+gem 'fastlane-plugin-properties'

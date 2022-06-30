@@ -15,6 +15,7 @@ import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
@@ -36,11 +37,11 @@ import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
@@ -88,11 +89,13 @@ class LoginActivity : BaseActivity() {
                 showValidationError(R.string.login_validation_error_fieldsmissing)
                 return@OnClickListener
             }
+            Log.d("LoginActivity", ": $username, $password")
             apiClient.connectUser(username, password).subscribe(
                 { handleAuthResponse(it) },
                 {
                     hideProgress()
                     RxErrorHandler.reportError(it)
+                    Log.d("LoginActivity", ": ${it.message}", it)
                 }
             )
         }
