@@ -14,7 +14,7 @@
         <item name="android:foreground">@drawable/touch_feedback</item>
     </style>
 
-    <style name="Chip.NoPadding">
+    <style name="Chip.NoPadding" parent="Chip">
         <item name="android:layout_marginHorizontal">0dp</item>
     </style>
 

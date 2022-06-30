@@ -62,7 +62,7 @@
                 android:orientation="vertical">
                 <include
                     android:id="@+id/header"
-                    layout="@layout/row_header" />
+                    layout="@layout/row_section_header" />
                 <EditText
                     android:id="@+id/edit_text"
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                     android:gravity="center"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="12dp"
-                    android:textSize="14sp"
+                    style="@style/Text.Body1"
                     android:textColor="@color/watch_purple_200"
                     android:text="@string/task_type" />
                 <LinearLayout
@@ -95,6 +95,9 @@
                         style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="14sp"
                         android:text="@string/todo" />
                     <TextView
                         android:id="@+id/daily_button"
@@ -103,6 +106,9 @@
                         style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="14sp"
                         android:text="@string/daily" />
                     <TextView
                         android:id="@+id/habit_button"
@@ -111,6 +117,9 @@
                         style="@style/Chip.NoPadding"
                         android:gravity="start|center_vertical"
                         android:paddingHorizontal="20dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-medium"
+                        android:textSize="14sp"
                         android:text="@string/habit" />
                 </LinearLayout>
             </LinearLayout>

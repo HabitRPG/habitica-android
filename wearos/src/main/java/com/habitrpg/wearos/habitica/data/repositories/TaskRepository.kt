@@ -36,7 +36,7 @@ class TaskRepository @Inject constructor(
                 if (direction == TaskDirection.UP) {
                     task.counterUp = task.counterUp?.plus(1) ?: 1
                 } else {
-                    task.counterUp = task.counterDown?.plus(1) ?: 1
+                    task.counterDown = task.counterDown?.plus(1) ?: 1
                 }
             } else if (task.type == TaskType.DAILY) {
                 if (direction == TaskDirection.UP) {

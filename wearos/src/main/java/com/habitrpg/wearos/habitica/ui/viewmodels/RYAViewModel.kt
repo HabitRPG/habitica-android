@@ -18,9 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class RYAViewModel @Inject constructor(
     userRepository: UserRepository,
-    val taskRepository: TaskRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     val tasks = MutableLiveData<List<Task>>()
 
     private val tasksToComplete = mutableListOf<Task>()
@@ -55,7 +55,8 @@ class RYAViewModel @Inject constructor(
                 taskRepository.scoreTask(null, task, TaskDirection.UP)
             }
             userRepository.runCron()
-            userRepository.retrieveUser()
+            val user = userRepository.retrieveUser(true)
+            taskRepository.retrieveTasks(user?.tasksOrder, true)
             function(true)
             loadingManager.endLoading()
         }

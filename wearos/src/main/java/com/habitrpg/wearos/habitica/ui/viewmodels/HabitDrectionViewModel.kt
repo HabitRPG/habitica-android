@@ -17,9 +17,9 @@ import javax.inject.Inject
 class HabitDrectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     userRepository: UserRepository,
-    val taskRepository: TaskRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     val taskID = savedStateHandle.get<String>("task_id")
     val task = taskRepository.getTask(taskID).asLiveData()
 

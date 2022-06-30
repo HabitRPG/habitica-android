@@ -6,7 +6,7 @@
     <LinearLayout
         android:id="@+id/chip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         style="@style/Chip">
         <FrameLayout
             android:id="@+id/checkbox_wrapper"

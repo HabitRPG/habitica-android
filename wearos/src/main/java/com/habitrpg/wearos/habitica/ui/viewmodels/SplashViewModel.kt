@@ -7,6 +7,7 @@ import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.MessageEvent
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.wearos.habitica.data.ApiClient
+import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
@@ -16,11 +17,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(userRepository: UserRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     val apiClient: ApiClient,
     val sharedPreferences: SharedPreferences,
     val keyHelper: KeyHelper?, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager), MessageClient.OnMessageReceivedListener {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager), MessageClient.OnMessageReceivedListener {
     lateinit var onLoginCompleted: (Boolean) -> Unit
     val hasAuthentication: Boolean
     get() {
@@ -34,7 +36,9 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
     }
 
     private fun authDataReceived(event: MessageEvent) {
-        viewModelScope.launch(exceptionBuilder.silent()) {
+        viewModelScope.launch(exceptionBuilder.silent {
+            onLoginCompleted(false)
+        }) {
             val (userID, apiKey) = String(event.data).split(":")
             try {
                 saveTokens(apiKey, userID)

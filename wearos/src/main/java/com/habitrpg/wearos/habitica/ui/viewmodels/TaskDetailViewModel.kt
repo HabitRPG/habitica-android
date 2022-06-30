@@ -15,7 +15,7 @@ class TaskDetailViewModel @Inject constructor(
     taskRepository: TaskRepository,
     userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     val taskID = savedStateHandle.get<String>("task_id")
     val task = taskRepository.getTask(taskID).asLiveData()
 }

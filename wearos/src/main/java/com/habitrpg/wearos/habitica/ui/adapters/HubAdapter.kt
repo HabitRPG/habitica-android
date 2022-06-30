@@ -11,6 +11,7 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.HubViewHolder
 
 class HubAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var title: String = ""
+    var onRefresh: (() -> Unit)? = null
     var data: List<MenuItem> = listOf()
     set(value) {
         field = value
@@ -30,6 +31,7 @@ class HubAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.bind(getItemAt(position - 1))
         } else if (holder is HeaderViewHolder){
             holder.bind(title)
+            holder.itemView.setOnClickListener { onRefresh?.invoke() }
         }
     }
 

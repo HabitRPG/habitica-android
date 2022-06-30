@@ -1,5 +1,6 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -20,21 +21,27 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskListViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val taskRepository: TaskRepository,
+    taskRepository: TaskRepository,
     userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     val taskType = TaskType.from(savedStateHandle.get<String>("task_type"))
+    val taskCount = MutableLiveData(0)
     val tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT)
         .map {
             if (taskType == TaskType.DAILY || taskType == TaskType.TODO) {
-                val taskList: MutableList<Any> = it.sortedBy { it.completed }.toMutableList()
+                val taskList: MutableList<Any> = it.filter { it.isDue == true || it.type == TaskType.TODO }.sortedBy { it.completed }.toMutableList()
                 val firstCompletedIndex = taskList.indexOfFirst { it is Task &&  it.completed }
                 if (firstCompletedIndex >= 0) {
+                    // since this is the index of the first completed task, this is also the number of incomplete tasks
+                    taskCount.value = firstCompletedIndex
                     taskList.add(firstCompletedIndex, "Done today")
+                } else {
+                    taskCount.value = taskList.size
                 }
                 taskList
             } else {
+                taskCount.value = it.size
                 it
             }
         }
@@ -50,15 +57,6 @@ class TaskListViewModel @Inject constructor(
                 direction
             )
             onResult(result)
-        }
-    }
-
-    fun retrieveTasks() {
-        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            loadingManager.startLoading()
-            val user = userRepository.retrieveUser(true)
-            taskRepository.retrieveTasks(user?.tasksOrder, true)
-            loadingManager.endLoading()
         }
     }
 }

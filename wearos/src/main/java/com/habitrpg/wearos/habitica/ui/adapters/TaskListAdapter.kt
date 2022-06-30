@@ -2,7 +2,7 @@ package com.habitrpg.wearos.habitica.ui.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.databinding.RowHeaderBinding
+import com.habitrpg.android.habitica.databinding.RowSectionHeaderBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderSectionViewHolder
@@ -20,7 +20,7 @@ open class TaskListAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = parent.context.layoutInflater
-        return HeaderSectionViewHolder(RowHeaderBinding.inflate(inflater, parent, false).root)
+        return HeaderSectionViewHolder(RowSectionHeaderBinding.inflate(inflater, parent, false).root)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -13,9 +13,9 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskFormViewModel @Inject constructor(
     userRepository: UserRepository,
-    val taskRepository: TaskRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     suspend fun saveTask(text: CharSequence?, taskType: TaskType?) {
         if (text?.isNotBlank() != true || taskType == null) {
             return

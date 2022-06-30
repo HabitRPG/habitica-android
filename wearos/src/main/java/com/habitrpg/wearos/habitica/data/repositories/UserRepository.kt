@@ -29,6 +29,5 @@ class UserRepository @Inject constructor(
     suspend fun revive() = apiClient.revive()
     suspend fun runCron() {
         apiClient.runCron()
-        retrieveUser()
     }
 }

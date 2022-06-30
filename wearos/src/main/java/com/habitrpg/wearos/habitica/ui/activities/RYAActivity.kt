@@ -59,6 +59,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
             taskBinding.root.setOnClickListener {
                 viewModel.tappedTask(task)
             }
+            holder.onTaskScore = { viewModel.tappedTask(task) }
             val layoutParams = taskBinding.chip.layoutParams as FrameLayout.LayoutParams
             layoutParams.marginStart = 0
             layoutParams.marginEnd = 0

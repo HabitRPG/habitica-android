@@ -39,6 +39,7 @@ class AvatarActivity: BaseActivity<ActivityAvatarBinding, AvatarViewModel>() {
                 windowManager.currentWindowMetrics.bounds.right
             )
         } else {
+            @Suppress("DEPRECATION")
             max(windowManager.defaultDisplay.width, windowManager.defaultDisplay.height)
         }
         var factor = (maxSize / 46f) / 3f

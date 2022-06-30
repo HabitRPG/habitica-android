@@ -18,7 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val viewModel: MainViewModel by viewModels()
-    private val adapter = HubAdapter()
+    private val adapter = HubAdapter().apply {
+        onRefresh = {
+            viewModel.retrieveFullUserData()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)

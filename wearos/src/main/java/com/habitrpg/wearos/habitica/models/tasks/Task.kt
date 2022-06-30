@@ -94,11 +94,11 @@ open class Task constructor(): Parcelable {
 
     val streakString: String?
         get() {
-            return if (counterUp != null && (counterUp ?: 0) > 0 && counterDown != null && (counterDown ?: 0) > 0) {
+            return if ((counterUp ?: 0) > 0 && (counterDown ?: 0) > 0) {
                 "+" + counterUp.toString() + " | -" + counterDown?.toString()
-            } else if (counterUp != null && (counterUp ?: 0) > 0) {
+            } else if ((counterUp ?: 0) > 0) {
                 "+" + counterUp.toString()
-            } else if (counterDown != null && (counterDown ?: 0) > 0) {
+            } else if ((counterDown ?: 0) > 0) {
                 "-" + counterDown.toString()
             } else if ((streak ?: 0) > 0) {
                 return streak.toString()
@@ -323,9 +323,9 @@ open class Task constructor(): Parcelable {
         this.down = `in`.readValue(Boolean::class.java.classLoader) as? Boolean ?: false
         this.completed = `in`.readByte().toInt() != 0
         this.checklist = listOf()
-        `in`.readList(this.checklist as List<*>, ChecklistItem::class.java.classLoader)
+        `in`.readList(this.checklist as List<ChecklistItem>, ChecklistItem::class.java.classLoader)
         this.reminders = listOf()
-        `in`.readList(this.reminders as MutableList<Any?>, RemindersItem::class.java.classLoader)
+        `in`.readList(this.reminders as List<RemindersItem>, RemindersItem::class.java.classLoader)
         this.frequency = Frequency.from(`in`.readString() ?: "")
         this.everyX = `in`.readValue(Int::class.java.classLoader) as? Int ?: 1
         this.daysOfMonthString = `in`.readString()

@@ -44,7 +44,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
-        binding.editText.setOnEditorActionListener { _, actionId, event ->
+        binding.editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
                 if (binding.editText.text?.isNotEmpty() == true) {
                     binding.editTaskWrapper.isVisible = false

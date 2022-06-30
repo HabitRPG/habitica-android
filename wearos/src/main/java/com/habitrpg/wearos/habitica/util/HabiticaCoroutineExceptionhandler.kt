@@ -9,9 +9,10 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class ExceptionHandlerBuilder @Inject constructor(val loadingManager: LoadingManager) {
-    fun silent(): CoroutineExceptionHandler {
+    fun silent(handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler {
         return CoroutineExceptionHandler { context, throwable ->
             Log.e(context.toString(), "Error: ${throwable.cause}", throwable)
+            handler?.invoke(throwable)
         }
     }
 

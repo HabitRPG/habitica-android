@@ -110,8 +110,8 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         val alert = AlertDialog.Builder(this).create()
         alert.setTitle(R.string.login_validation_error_title)
         alert.setMessage(message)
-        alert.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.ok)) { alert, _ ->
-            alert.dismiss()
+        alert.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.ok)) { thisAlert, _ ->
+            thisAlert.dismiss()
         }
         alert.show()
     }

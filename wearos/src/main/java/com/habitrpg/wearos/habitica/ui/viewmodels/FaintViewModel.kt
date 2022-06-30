@@ -1,5 +1,6 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
+import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
@@ -8,8 +9,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FaintViewModel @Inject constructor(userRepository: UserRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     suspend fun revive() {
         userRepository.revive()
     }

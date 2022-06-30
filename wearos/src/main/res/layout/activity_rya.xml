@@ -17,7 +17,7 @@
             android:text="@string/day_start"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="10dp"/>
         <TextView
             android:id="@+id/description_view"

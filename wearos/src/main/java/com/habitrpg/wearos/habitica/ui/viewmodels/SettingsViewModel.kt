@@ -14,12 +14,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(userRepository: UserRepository,
-    private val taskRepository: TaskRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     private val apiClient: ApiClient,
     private val sharedPreferences: SharedPreferences,
     loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
 
     fun logout() {
         sharedPreferences.edit {

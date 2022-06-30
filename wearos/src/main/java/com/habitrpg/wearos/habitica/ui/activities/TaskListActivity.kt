@@ -54,13 +54,15 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                 )
             )
             onRefresh = {
-                viewModel.retrieveTasks()
+                viewModel.retrieveFullUserData()
             }
         }
 
         viewModel.tasks.observe(this) {
             adapter.data = it
-            adapter.title = getTitle(it.size)
+        }
+        viewModel.taskCount.observe(this) {
+            adapter.title = getTitle(it)
         }
 
         adapter.onTaskScore = {
@@ -111,6 +113,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                         putExtra("task_id", task.id)
                     })
                 return
+            } else if (task.up != true && task.down != ) {
+                return
             } else {
                 direction = if (task.up == true) TaskDirection.UP else TaskDirection.DOWN
             }
@@ -152,7 +156,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         }
         adapter.title = getTitle(null)
         adapter.onRefresh = {
-            viewModel.retrieveTasks()
+            viewModel.retrieveFullUserData()
         }
     }
 

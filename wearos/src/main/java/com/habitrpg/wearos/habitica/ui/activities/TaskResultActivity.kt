@@ -29,6 +29,8 @@ import kotlin.time.toDuration
 class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultViewModel>() {
     override val viewModel: TaskResultViewModel by viewModels()
 
+    private var secondsToShow = 2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityTaskResultBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         }
 
         lifecycleScope.launch {
-            delay(5.toDuration(DurationUnit.SECONDS))
+            delay(secondsToShow.toDuration(DurationUnit.SECONDS))
             finish()
         }
     }
@@ -75,7 +77,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             )
             chips.add(chip)
         }
-        if ((viewModel.result?.manaDelta ?: 0.0) > 0.0) {
+        if ((viewModel.result?.manaDelta ?: 0.0) != 0.0) {
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.manaDelta,
@@ -105,6 +107,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         if (chips.size > 4 && hasDrop || (chips.size > 5 && !hasDrop)) {
             chips = chips.subList(0, if (hasDrop) 4 else 5)
         }
+        secondsToShow = chips.size
         chips.forEach {
             binding.gridLayout.addView(it)
             it.size = chipSize
@@ -158,7 +161,12 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             if (viewModel.result?.drop?.key != null) {
                 val type = viewModel.result?.drop?.type
                 val key = viewModel.result?.drop?.key
-                elements.add(getString(R.string.some_x, type))
+                elements.add(when (type) {
+                    "Food" -> getString(R.string.some_food)
+                    "Egg" -> getString(R.string.an_egg)
+                    "HatchingPotion" -> getString(R.string.a_potion)
+                    else -> getString(R.string.some_x, type)
+                })
                 dropBinding.imageView.loadImage("Pet_" + type + "_" + key)
             }
             dropBinding.textView.text = when (elements.size) {

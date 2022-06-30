@@ -15,7 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
-import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.UserRecoverableException
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
@@ -25,6 +24,7 @@ import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.wearos.habitica.data.ApiClient
+import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
@@ -39,11 +39,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(userRepository: UserRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     val keyHelper: KeyHelper?,
     val sharedPreferences: SharedPreferences,
     val apiClient: ApiClient, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     lateinit var onLoginCompleted: () -> Unit
 
     fun handleGoogleLogin(
@@ -62,7 +63,6 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         task: Task<GoogleSignInAccount>,
         recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
     ) {
-        val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             val account = async {
                 try {

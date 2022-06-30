@@ -11,9 +11,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     userRepository: UserRepository,
-    private val taskRepository: TaskRepository,
+    taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, exceptionBuilder, loadingManager) {
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
     val taskCounts = taskRepository.getActiveTaskCounts().asLiveData()
     val user = userRepository.getUser().asLiveData()
 }
