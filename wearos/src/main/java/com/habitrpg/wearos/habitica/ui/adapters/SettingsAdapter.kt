@@ -3,16 +3,18 @@ package com.habitrpg.wearos.habitica.ui.adapters
 import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
+import android.widget.Switch
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.RowFooterBinding
 import com.habitrpg.android.habitica.databinding.RowHeaderBinding
 import com.habitrpg.android.habitica.databinding.RowSettingsBinding
 import com.habitrpg.android.habitica.databinding.RowSpacerBinding
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.ui.viewHolders.BindableViewHolder
+import com.habitrpg.wearos.habitica.ui.viewHolders.FooterViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.SpacerViewHolder
 
@@ -23,22 +25,28 @@ class SettingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == 0) {
-            return HeaderViewHolder(RowHeaderBinding.inflate(parent.context.layoutInflater, parent, false).root)
-        } else if (viewType == 1) {
-            return SpacerViewHolder(RowSpacerBinding.inflate(parent.context.layoutInflater, parent, false).root)
-        } else {
-            return SettingsViewHolder(RowSettingsBinding.inflate(parent.context.layoutInflater, parent, false).root)
+        return when (viewType) {
+            0 -> { HeaderViewHolder(RowHeaderBinding.inflate(parent.context.layoutInflater, parent, false).root) }
+            1 -> { FooterViewHolder(RowFooterBinding.inflate(parent.context.layoutInflater, parent, false).root) }
+            2 -> { SpacerViewHolder(RowSpacerBinding.inflate(parent.context.layoutInflater, parent, false).root) }
+            else -> { SettingsViewHolder(RowSettingsBinding.inflate(parent.context.layoutInflater, parent, false).root) }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is SettingsViewHolder) {
-            holder.bind(data[position])
-        } else if (holder is HeaderViewHolder) {
-            holder.bind(data[position].title)
-        } else if (holder is SpacerViewHolder) {
-            holder.bind(16.dpToPx(holder.itemView.context))
+        when (holder) {
+            is SettingsViewHolder -> {
+                holder.bind(data[position])
+            }
+            is HeaderViewHolder -> {
+                holder.bind(data[position].title)
+            }
+            is FooterViewHolder -> {
+                holder.bind(data[position].title)
+            }
+            is SpacerViewHolder -> {
+                holder.bind(16.dpToPx(holder.itemView.context))
+            }
         }
     }
 
@@ -48,8 +56,9 @@ class SettingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val item = data[position]
         return when (item.type) {
             SettingsItem.Types.HEADER -> 0
-            SettingsItem.Types.SPACER -> 1
-            else -> 2
+            SettingsItem.Types.FOOTER -> 1
+            SettingsItem.Types.SPACER -> 2
+            else -> 3
         }
     }
 }
@@ -72,11 +81,12 @@ class SettingsViewHolder(itemView: View) : BindableViewHolder<SettingsItem>(item
         }
 
         if (data.type == SettingsItem.Types.TOGGLE) {
-            val radio = RadioButton(itemView.context)
-            radio.isChecked = data.value as? Boolean == true
-            radio.isEnabled = false
-            widget = radio
-            binding.row.addView(radio)
+            val switch = Switch(itemView.context)
+            switch.isChecked = data.value as? Boolean == true
+            switch.isClickable = false
+            switch.showText = false
+            widget = switch
+            binding.row.addView(switch)
 
             if (data.value as? Boolean == true) {
                 binding.row.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.watch_purple_100))
@@ -105,6 +115,7 @@ data class SettingsItem(
         DESTRUCTIVE_BUTTON,
         SPACER,
         TOGGLE,
-        HEADER
+        HEADER,
+        FOOTER
     }
 }
