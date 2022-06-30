@@ -84,7 +84,6 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
     private var taskToScore: Task? = null
     private val habitDirectionIntentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
             if (result.resultCode == Activity.RESULT_OK) {
                 val direction = result.data?.getStringExtra("direction")
                     ?.let { TaskDirection.valueOf(it) }
@@ -113,7 +112,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                         putExtra("task_id", task.id)
                     })
                 return
-            } else if (task.up != true && task.down != ) {
+            } else if (task.up != true && task.down != true) {
                 return
             } else {
                 direction = if (task.up == true) TaskDirection.UP else TaskDirection.DOWN

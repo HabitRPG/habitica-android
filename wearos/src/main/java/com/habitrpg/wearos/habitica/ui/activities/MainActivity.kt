@@ -1,7 +1,9 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -133,8 +135,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    private val openTaskForm = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val taskType = result.data?.getStringExtra("task_type")?.let { TaskType.from(it) }
+            if (taskType != null) {
+                openTasklist(taskType)
+            }
+        }
+    }
+
     private fun openTaskFormActivity() {
-        startActivity(Intent(this, TaskFormActivity::class.java))
+        openTaskForm.launch(Intent(this, TaskFormActivity::class.java))
     }
 
     private fun openAvatarActivity() {

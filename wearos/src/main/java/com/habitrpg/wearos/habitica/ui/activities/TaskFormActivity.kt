@@ -1,5 +1,6 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -75,6 +76,9 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
                 binding.taskConfirmationWrapper.isVisible = false
             }) {
                 viewModel.saveTask(binding.editText.text, taskType)
+                val data = Intent()
+                data.putExtra("task_type", taskType?.value)
+                setResult(Activity.RESULT_OK, data)
                 finish()
 
                 parent.startActivity(Intent(parent, TaskListActivity::class.java).apply {
