@@ -59,17 +59,6 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
                 viewModel.resyncData()
             },
             SettingsItem(
-                "hide_results",
-                getString(R.string.hide_task_rewards),
-                SettingsItem.Types.TOGGLE,
-                viewModel.isTaskResultHidden()
-            ) {
-                viewModel.setHideTaskResults(!viewModel.isTaskResultHidden())
-                val index = adapter.data.indexOfFirst { it.identifier == "hide_results" }
-                adapter.data[index].value = viewModel.isTaskResultHidden()
-                adapter.notifyItemChanged(index)
-            },
-            SettingsItem(
                 "logout",
                 getString(R.string.logout),
                 SettingsItem.Types.BUTTON,
