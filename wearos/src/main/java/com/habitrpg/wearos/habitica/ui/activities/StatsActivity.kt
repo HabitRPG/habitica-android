@@ -31,14 +31,12 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     private fun setViews() {
         binding.statsImageview.setColorFilter(ContextCompat.getColor(this, R.color.watch_purple_200))
         binding.statsImageview.visibility = VISIBLE
-        loadingManager.startLoading()
         setBarViews()
         setStatViews()
     }
 
     private fun loadViews(user: User) {
         binding.statsImageview.visibility = GONE
-        loadingManager.endLoading()
         updateStats(user)
     }
 
@@ -102,7 +100,6 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
             binding.mpStatValue.setStatValues(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0)
         }
     }
-
 }
 
 

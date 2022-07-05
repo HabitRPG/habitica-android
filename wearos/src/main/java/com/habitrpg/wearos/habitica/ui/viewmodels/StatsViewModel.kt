@@ -9,6 +9,7 @@ import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +24,13 @@ class StatsViewModel @Inject constructor(userRepository: UserRepository,
         }
     }
 
-    var user: LiveData<User> = userRepository.getUser().asLiveData()
+    var user: LiveData<User> = userRepository.getUser()
+        .distinctUntilChanged { old, new ->
+            val oldStats = old.stats ?: return@distinctUntilChanged  false
+            val newStats = new.stats ?: return@distinctUntilChanged  false
+            return@distinctUntilChanged (oldStats.hp ?: 0.0) + (oldStats.exp ?: 0.0) + (oldStats.exp ?: 0.0) ==
+                (newStats.hp ?: 0.0) + (newStats.exp ?: 0.0) + (newStats.exp ?: 0.0)
+        }
+        .asLiveData()
 
 }

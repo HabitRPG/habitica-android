@@ -1,22 +1,19 @@
 package com.habitrpg.common.habitica.views
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.PorterDuff
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.widget.ImageViewCompat
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.ProgressBarBinding
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import kotlin.math.min
 
-class HabiticaProgressBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+class HabiticaProgressBar @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
+) : FrameLayout(context, attrs) {
     val binding = ProgressBarBinding.inflate(context.layoutInflater, this)
 
     var barForegroundColor: Int = 0
