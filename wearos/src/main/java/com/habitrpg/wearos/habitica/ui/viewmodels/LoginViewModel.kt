@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.GoogleAuthException
+import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
 import com.google.android.gms.auth.UserRecoverableAuthException
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
+import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.UserRecoverableException
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
@@ -28,8 +30,10 @@ import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
 
@@ -76,11 +80,16 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
                     return@async null
                 }
             }.await()
+            val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
+            val scopes = "oauth2:$scopesString"
+            val token = withContext(Dispatchers.IO) {
+                account?.account?.let { GoogleAuthUtil.getToken(activity, it, scopes) }
+            }
             val auth = UserAuthSocial()
             auth.network = "google"
             auth.authResponse = UserAuthSocialTokens()
-            auth.authResponse?.client_id = account?.id
-            auth.authResponse?.access_token = account?.idToken
+            auth.authResponse?.client_id = account?.email
+            auth.authResponse?.access_token = token
             val response = apiClient.loginSocial(auth)
             handleAuthResponse(response)
         }

@@ -18,6 +18,10 @@ android {
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
     }
 
+    signingConfigs {
+        release
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
@@ -28,15 +32,13 @@ android {
             resValue "string", "app_name", "Habitica Debug"
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "Habitica"
         }
     }
 
-    signingConfigs {
-        release
-    }
     flavorDimensions "buildType"
 
     productFlavors {
