@@ -36,4 +36,5 @@
     <string name="a_potion">a Potion</string>
     <string name="some_food">Some Food</string>
     <string name="continue_on_your_phone">Continue on your phone</string>
+    <string name="levelup_description">You leveled up through all your hard work!</string>
 </resources>

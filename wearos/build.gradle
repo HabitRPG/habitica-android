@@ -50,6 +50,13 @@ android {
             dimension "buildType"
             buildConfigField "String", "TESTING_LEVEL", "\"staff\""
             resValue "string", "app_name", "Habitica Staff"
+            versionCode app_version_code + 9
+        }
+
+        partners {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"partners\""
+            resValue "string", "app_name", "Habitica"
             versionCode app_version_code + 7
         }
 
@@ -79,6 +86,8 @@ android {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: '../common/libs')
+
     implementation "androidx.core:core-ktx:$core_ktx_version"
     implementation "com.google.android.gms:play-services-wearable:$play_wearables_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"

@@ -9,8 +9,7 @@
     android:id="@+id/text_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="sans-serif-medium"
-    android:textSize="16sp"
+    style="@style/Text.SubHeader1"
     android:textColor="@color/watch_black"/>
     <ImageView
         android:id="@+id/icon_view"

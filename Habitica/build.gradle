@@ -26,7 +26,6 @@ configurations {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //Networking
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
@@ -215,6 +214,13 @@ android {
             dimension "buildType"
             buildConfigField "String", "TESTING_LEVEL", "\"staff\""
             resValue "string", "app_name", "Habitica Staff"
+            versionCode app_version_code + 8
+        }
+
+        partners {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"partners\""
+            resValue "string", "app_name", "Habitica"
             versionCode app_version_code + 6
         }
 

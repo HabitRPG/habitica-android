@@ -49,6 +49,13 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         }
     }
 
+    override fun finish() {
+        if (viewModel.result?.hasLeveledUp == true) {
+            startActivity(Intent(parent, LevelupActivity::class.java))
+        }
+        super.finish()
+    }
+
     private fun makeChips() {
         binding.gridLayout.removeAllViews()
         var chips = mutableListOf<TaskRewardChip>()

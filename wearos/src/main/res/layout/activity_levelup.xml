@@ -4,13 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
-        android:id="@+id/hp_bar"
+    <FrameLayout
+        android:id="@+id/confetti_anchor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:arcFillColor="@color/hp_bar_color"
-        app:backgroundArcColor="@color/bar_background_color"
-        app:offset="4dp" />
+        android:layout_height="match_parent" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,30 +19,37 @@
             android:id="@+id/icon_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/broken_heart"
+            android:src="@drawable/experience_large"
             android:importantForAccessibility="no"
             android:layout_marginBottom="@dimen/spacing_medium"/>
         <TextView
+            android:id="@+id/title_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/you_ran_out_of_hp"
             android:gravity="center"
             android:textColor="@color/watch_white"
             style="@style/Text.SubHeader1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/faint_description"
-            android:textColor="@color/watch_gray_500"
+            android:text="@string/levelup_description"
+            android:textColor="@color/watch_gray_200"
             style="@style/Text.Body1"
-            android:layout_marginHorizontal="@dimen/spacing_large"
             android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_marginHorizontal="@dimen/spacing_large"
             android:gravity="center"/>
         <Button
             android:id="@+id/continue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/continue_text"
-            style="@style/ChipButton.Small.Red"/>
+            style="@style/ChipButton.Small.Yellow"/>
     </LinearLayout>
+    <com.habitrpg.wearos.habitica.ui.views.CircularProgressView
+        android:id="@+id/exp_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:arcFillColor="@color/exp_bar_color"
+        app:backgroundArcColor="@color/bar_background_color"
+        app:offset="4dp" />
 </FrameLayout>

@@ -12,10 +12,9 @@
             android:id="@+id/title_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
             android:textColor="@color/watch_purple_200"
             android:text="@string/day_start"
-            android:fontFamily="sans-serif-medium"
+            style="@style/Text.Body1"
             android:gravity="center"
             android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="10dp"/>

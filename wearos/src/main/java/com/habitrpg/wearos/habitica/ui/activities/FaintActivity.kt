@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.databinding.ActivityFaintBinding
+import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.wearos.habitica.ui.viewmodels.FaintViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -28,6 +29,7 @@ class FaintActivity: BaseActivity<ActivityFaintBinding, FaintViewModel>() {
             }
         }
 
+        binding.iconView.startAnimation(Animations.bobbingAnimation(4f))
         binding.hpBar.setPercentageValues(0f, 50f)
     }
 

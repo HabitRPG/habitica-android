@@ -18,7 +18,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
-import com.habitrpg.android.habitica.helpers.Animations
+import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.common.habitica.extensions.loadImage

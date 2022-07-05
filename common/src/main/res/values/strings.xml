@@ -28,6 +28,7 @@
     <string name="new_task">New Task</string>
     <string name="avatar">Avatar</string>
     <string name="user_level">Lvl. %d</string>
+    <string name="user_level_long">Level %d</string>
 
     <string name="action_edit">Edit</string>
     <string name="action_cancel">Cancel</string>

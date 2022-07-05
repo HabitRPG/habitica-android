@@ -2,6 +2,7 @@
 <resources>
     <style name="HabiticaAppTheme" parent="@android:style/Theme.DeviceDefault">
         <item name="android:windowBackground">@color/watch_black</item>
+        <item name="fontFamily">sans-serif</item>
     </style>
     <style name="Chip">
         <item name="android:layout_marginVertical">@dimen/row_spacing</item>
@@ -24,7 +25,7 @@
         <item name="android:background">@drawable/row_background</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/watch_white</item>
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:gravity">center</item>
         <item name="android:minHeight">52dp</item>
         <item name="android:textAllCaps">false</item>
@@ -62,6 +63,11 @@
         <item name="android:textColor">@color/watch_black</item>
     </style>
 
+    <style name="ChipButton.Small.Yellow" parent="ChipButton.Small">
+        <item name="android:backgroundTint">@color/watch_yellow_200</item>
+        <item name="android:textColor">@color/watch_black</item>
+    </style>
+
     <style name="Text" />
 
     <style name="Text.SubHeader1">
@@ -75,5 +81,6 @@
     </style>
     <style name="Text.Body2">
         <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 </resources>

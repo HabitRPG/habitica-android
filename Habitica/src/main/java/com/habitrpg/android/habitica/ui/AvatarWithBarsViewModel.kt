@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
-import com.habitrpg.android.habitica.helpers.Animations
+import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User

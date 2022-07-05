@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CanHatchItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.Animations
+import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food

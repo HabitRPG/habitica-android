@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.helpers
+package com.habitrpg.common.habitica.helpers
 
 import android.view.View
 import android.view.ViewAnimationUtils

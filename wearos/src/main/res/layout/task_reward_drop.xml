@@ -14,8 +14,7 @@
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="14sp"
+        style="@style/Text.Body1"
         android:gravity="center"
         android:textColor="@color/watch_white"
         />
