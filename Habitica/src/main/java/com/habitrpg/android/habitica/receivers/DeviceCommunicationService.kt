@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.helpers.DeviceCommunication
 import javax.inject.Inject
 
 class DeviceCommunicationService : WearableListenerService() {
@@ -24,10 +25,11 @@ class DeviceCommunicationService : WearableListenerService() {
     override fun onMessageReceived(event: MessageEvent) {
         super.onMessageReceived(event)
         when (event.path) {
-            "/request/auth" -> processAuthRequest(event)
-            "/show/register" -> openActivity(LoginActivity::class.java)
-            "/show/rya" -> openActivity(MainActivity::class.java)
-            "/tasks/edit" -> openTaskForm(event)
+            DeviceCommunication.REQUEST_AUTH -> processAuthRequest(event)
+            DeviceCommunication.SHOW_REGISTER -> openActivity(LoginActivity::class.java)
+            DeviceCommunication.SHOW_LOGIN -> openActivity(LoginActivity::class.java)
+            DeviceCommunication.SHOW_RYA -> openActivity(MainActivity::class.java)
+            DeviceCommunication.SHOW_TASK_EDIT -> openTaskForm(event)
         }
     }
 

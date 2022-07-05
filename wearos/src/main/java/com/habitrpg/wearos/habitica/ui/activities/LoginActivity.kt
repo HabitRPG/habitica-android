@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
+import com.habitrpg.common.habitica.helpers.DeviceCommunication
 import com.habitrpg.wearos.habitica.ui.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -72,7 +73,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             startMainActivity()
         }
 
-        binding.signInOnPhoneButton.setOnClickListener { openRegisterOnPhone() }
+        binding.signInOnPhoneButton.setOnClickListener { openLoginOnPhone() }
         binding.otherButton.setOnClickListener { currentState = State.OTHER }
         binding.usernamePasswordButton.setOnClickListener { currentState = State.INPUT }
 
@@ -86,7 +87,11 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private fun openRegisterOnPhone() {
-        openRemoteActivity("/show/register")
+        openRemoteActivity(DeviceCommunication.SHOW_REGISTER)
+    }
+
+    private fun openLoginOnPhone() {
+        openRemoteActivity(DeviceCommunication.SHOW_LOGIN)
     }
 
     private fun loginLocal() {

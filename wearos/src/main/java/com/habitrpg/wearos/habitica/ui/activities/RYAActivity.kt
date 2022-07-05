@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityRyaBinding
 import com.habitrpg.android.habitica.databinding.RowDailyBinding
+import com.habitrpg.common.habitica.helpers.DeviceCommunication
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.wearos.habitica.ui.viewmodels.RYAViewModel
@@ -34,7 +35,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         }
 
         binding.phoneButton.setOnClickListener {
-            openRemoteActivity("/show/rya")
+            openRemoteActivity(DeviceCommunication.SHOW_RYA)
         }
 
         binding.startDayButton.setOnClickListener {

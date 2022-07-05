@@ -63,9 +63,10 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
     }
 
     private fun updateStats(user: User) {
-        val stats = user.stats
-        stats?.let { updateBarViews(it) }
-        stats?.let { updateStatViews(it) }
+        user.stats?.let {
+            updateBarViews(it)
+            updateStatViews(it)
+        }
     }
 
     private fun updateBarViews(stats: Stats) {

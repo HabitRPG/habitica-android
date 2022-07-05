@@ -33,14 +33,11 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
-
-
-
 @HiltViewModel
 class LoginViewModel @Inject constructor(userRepository: UserRepository,
     taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
-    val keyHelper: KeyHelper?,
+    private val keyHelper: KeyHelper?,
     val sharedPreferences: SharedPreferences,
     val apiClient: ApiClient, loadingManager: LoadingManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
@@ -120,7 +117,8 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
         }
-        userRepository.retrieveUser()
+        val user = userRepository.retrieveUser()
+        taskRepository.retrieveTasks(user?.tasksOrder)
         onLoginCompleted()
     }
 
