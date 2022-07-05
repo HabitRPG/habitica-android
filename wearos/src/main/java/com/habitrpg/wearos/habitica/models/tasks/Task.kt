@@ -123,10 +123,6 @@ open class Task constructor(): Parcelable, BaseTask {
             }
         }
 
-
-
-
-
     override fun equals(other: Any?): Boolean {
         if (other == null) {
             return false
