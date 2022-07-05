@@ -35,6 +35,7 @@ class DeviceCommunicationService : WearableListenerService() {
 
     private fun openActivity(activityClass: Class<*>) {
         val intent = Intent(this, activityClass)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
 
