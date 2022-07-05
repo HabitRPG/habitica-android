@@ -44,7 +44,7 @@ class ContinuePhoneActivity : BaseActivity<ActivityContinuePhoneBinding, Continu
         val set = AnimationSet(true)
         set.interpolator = AnticipateOvershootInterpolator()
         set.duration = 600
-        set.startOffset = 200
+        set.startOffset = 100
         set.fillBefore = true
         set.fillAfter = true
         set.addAnimation(alphaAnimation)

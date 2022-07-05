@@ -39,9 +39,8 @@
                     android:id="@+id/save_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/ChipButton"
+                    style="@style/ChipButton.Icon"
                     android:text="@string/save"
-                    android:gravity="start|center_vertical"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="4dp"
                     android:drawableStart="@drawable/save"/>
@@ -49,8 +48,7 @@
                     android:id="@+id/edit_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/ChipButton"
-                    android:gravity="start|center_vertical"
+                    style="@style/ChipButton.Icon"
                     android:text="@string/action_edit"
                     android:drawableStart="@drawable/edit"/>
             </LinearLayout>

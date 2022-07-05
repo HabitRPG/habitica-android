@@ -22,7 +22,7 @@
 
         <Button
             android:id="@+id/logout_button"
-            style="@style/ChipButton"
+            style="@style/ChipButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_small"
@@ -31,7 +31,7 @@
 
         <Button
             android:id="@+id/cancel_button"
-            style="@style/ChipButton"
+            style="@style/ChipButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/cancel"
