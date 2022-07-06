@@ -94,7 +94,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
             binding.editText.requestFocus()
         } else {
             taskType = TaskType.TODO
-            binding.header.textView.text = getString(R.string.create_task_title)
+            binding.header.textView.text = getString(R.string.new_task)
         }
     }
 

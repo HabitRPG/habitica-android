@@ -163,10 +163,10 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         val taskType = viewModel.taskType ?: return ""
         return if (count != null) {
             when (taskType) {
-                TaskType.HABIT -> getString(R.string.x_habits, count)
-                TaskType.DAILY -> getString(R.string.x_dailies, count)
-                TaskType.TODO -> getString(R.string.x_todos, count)
-                TaskType.REWARD -> getString(R.string.x_rewards, count)
+                TaskType.HABIT -> resources.getQuantityString(R.plurals.x_habits, count, count)
+                TaskType.DAILY -> resources.getQuantityString(R.plurals.x_dailies, count, count)
+                TaskType.TODO -> resources.getQuantityString(R.plurals.x_todos, count, count)
+                TaskType.REWARD -> resources.getQuantityString(R.plurals.x_rewards, count, count)
             }
         } else {
             when (taskType) {

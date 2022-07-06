@@ -129,7 +129,6 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$daggerhilt_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-
 }
 repositories {
     mavenCentral()

@@ -48,11 +48,22 @@
 
     <string name="login_validation_error_title">Validation Error</string>
     <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
-    <string name="x_habits">%d Habits</string>
-    <string name="x_dailies">%d Dailies</string>
-    <string name="x_todos">%d To do\'s</string>
-    <string name="x_rewards">%d Rewards</string>
-
+    <plurals name="x_habits">
+        <item quantity="one">%d Habit</item>
+        <item quantity="other">%d Habits</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Daily</item>
+        <item quantity="other">%d Dailies</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d To Do</item>
+        <item quantity="other">%d To Do\'s</item>
+    </plurals>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Reward</item>
+        <item quantity="other">%d Rewards</item>
+    </plurals>
     <string name="create_task_title">Create a Task</string>
     <string name="complete_task_title">Complete a Task</string>
     <string name="create_task">Create %s</string>
