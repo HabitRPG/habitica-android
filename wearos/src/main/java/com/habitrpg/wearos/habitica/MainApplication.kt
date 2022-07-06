@@ -59,8 +59,8 @@ class MainApplication : Application() {
         if (userRepository.hasAuthentication) {
             MainScope().launch(CoroutineExceptionHandler { _, _ ->
             }) {
-                val user = userRepository.retrieveUser()
-                taskRepository.retrieveTasks(user?.tasksOrder)
+                val user = userRepository.retrieveUser(true)
+                taskRepository.retrieveTasks(user?.tasksOrder, true)
             }
         }
 
@@ -74,6 +74,9 @@ class MainApplication : Application() {
     private fun setupFirebase() {
         if (!BuildConfig.DEBUG) {
             val crashlytics = Firebase.crashlytics
+            if (userRepository.hasAuthentication) {
+                crashlytics.setUserId(userRepository.userID)
+            }
             crashlytics.setCustomKey("is_wear", true)
         }
     }

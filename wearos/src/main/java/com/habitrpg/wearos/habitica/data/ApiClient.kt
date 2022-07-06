@@ -3,12 +3,12 @@ package com.habitrpg.wearos.habitica.data
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.amplitude.api.Amplitude
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.wearos.habitica.models.NetworkResult
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import okhttp3.Cache
@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
+import retrofit2.Response
 import retrofit2.Retrofit
 import java.io.File
 import java.util.GregorianCalendar
@@ -28,6 +29,8 @@ class ApiClient @Inject constructor(
     private val hostConfig: HostConfig,
     private val context: Context
 ) {
+    val userID: String
+    get() = hostConfig.userID
     private lateinit var retrofitAdapter: Retrofit
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
@@ -117,6 +120,8 @@ class ApiClient @Inject constructor(
                     .removeHeader("Pragma")
                     .build()
                 val response = chain.proceed(request)
+                val responseBuilder = response.newBuilder()
+                responseBuilder.header("was-cached", (response.networkResponse == null).toString())
                 if (request.method == "GET") {
                     if (response.code == 504) {
                         // Cache miss. Network might be down, but retry call without cache to be sure.
@@ -124,12 +129,12 @@ class ApiClient @Inject constructor(
                             .header("Cache-Control", "no-cache")
                             .build())
                     } else {
-                        response.newBuilder()
+                        responseBuilder
                             .header("Cache-Control", request.header("Cache-Control") ?: "")
                             .build()
                     }
                 } else {
-                    response
+                    responseBuilder.build()
                 }
             }
             .readTimeout(2400, TimeUnit.SECONDS)
@@ -149,38 +154,57 @@ class ApiClient @Inject constructor(
     fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
-        Amplitude.getInstance().userId = this.hostConfig.userID
     }
 
-    private fun <T> process(response: WearableHabitResponse<T>): T? {
-        return response.data
+    private suspend fun <T: Any> process(call: suspend () -> Response<WearableHabitResponse<T>>): NetworkResult<T> {
+        val response: Response<WearableHabitResponse<T>>
+        try {
+            response = call.invoke()
+        } catch (t: Exception) {
+            return NetworkResult.Error(t, false)
+        }
+
+        val wasCached = response.headers()["was-cached"] == "true"
+
+        return if (!response.isSuccessful) {
+            val errorBody = response.errorBody()
+            @Suppress("BlockingMethodInNonBlockingContext")
+            NetworkResult.Error(Exception((response.message() + errorBody?.string())), !wasCached)
+        } else {
+            val body = response.body()
+            return if (body?.data != null) {
+                NetworkResult.Success(body.data!!, !wasCached)
+            } else {
+                NetworkResult.Error(Exception("response.body() can't be null"), !wasCached)
+            }
+        }
     }
 
     suspend fun getUser(forced: Boolean = false) = if (forced) {
-        process(apiService.getUserForced())
+        process { apiService.getUserForced() }
     } else {
-        process(apiService.getUser())
+        process { apiService.getUser() }
     }
-    suspend fun updateUser(data: Map<String, Any>) = process(apiService.updateUser(data))
-    suspend fun sleep() = process(apiService.sleep())
-    suspend fun revive() = process(apiService.revive())
+    suspend fun updateUser(data: Map<String, Any>) = process { apiService.updateUser(data) }
+    suspend fun sleep() = process { apiService.sleep() }
+    suspend fun revive() = process { apiService.revive() }
 
-    suspend fun loginLocal(auth: UserAuth) = process(apiService.connectLocal(auth))
-    suspend fun loginSocial(auth: UserAuthSocial) = process(apiService.connectSocial(auth))
+    suspend fun loginLocal(auth: UserAuth) = process { apiService.connectLocal(auth) }
+    suspend fun loginSocial(auth: UserAuthSocial) = process { apiService.connectSocial(auth) }
 
-    suspend fun addPushDevice(data: Map<String, String>) = process(apiService.addPushDevice(data))
-    suspend fun removePushDevice(id: String) = process(apiService.removePushDevice(id))
+    suspend fun addPushDevice(data: Map<String, String>) = process { apiService.addPushDevice(data) }
+    suspend fun removePushDevice(id: String) = process { apiService.removePushDevice(id) }
 
-    suspend fun runCron() = process(apiService.runCron())
+    suspend fun runCron() = process { apiService.runCron() }
 
     suspend fun getTasks(forced: Boolean = false) = if (forced) {
-            process(apiService.getTasksForced())
+            process { apiService.getTasksForced() }
         } else {
-            process(apiService.getTasks())
+            process { apiService.getTasks() }
         }
     suspend fun scoreTask(id: String, direction: String) =
-        process(apiService.scoreTask(id, direction))
+        process { apiService.scoreTask(id, direction) }
 
-    suspend fun createTask(task: Task) = process(apiService.createTask(task))
+    suspend fun createTask(task: Task) = process { apiService.createTask(task) }
     fun hasAuthentication() = hostConfig.hasAuthentication()
 }

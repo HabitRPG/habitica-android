@@ -91,7 +91,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
             auth.authResponse?.client_id = account?.email
             auth.authResponse?.access_token = token
             val response = apiClient.loginSocial(auth)
-            handleAuthResponse(response)
+            handleAuthResponse(response.responseData)
         }
     }
 
@@ -153,7 +153,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
 
     fun login(username: String, password: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val response = apiClient.loginLocal(UserAuth(username, password))
+            val response = apiClient.loginLocal(UserAuth(username, password)).responseData
             handleAuthResponse(response)
             onResult(response?.id != null)
         }.invokeOnCompletion {
