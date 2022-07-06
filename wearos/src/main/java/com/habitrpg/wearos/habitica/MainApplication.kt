@@ -2,6 +2,10 @@ package com.habitrpg.wearos.habitica
 
 import android.app.Application
 import android.content.Intent
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.models.tasks.TaskType
@@ -30,6 +34,7 @@ class MainApplication : Application() {
         super.onCreate()
         MarkdownParser.setup(this)
         setupCoil()
+        setupFirebase()
 
         MainScope().launch {
             userRepository.getUser().onEach {
@@ -57,6 +62,19 @@ class MainApplication : Application() {
                 val user = userRepository.retrieveUser()
                 taskRepository.retrieveTasks(user?.tasksOrder)
             }
+        }
+
+        logLaunch()
+    }
+
+    private fun logLaunch() {
+        Firebase.analytics.logEvent("wear_launched", null)
+    }
+
+    private fun setupFirebase() {
+        if (!BuildConfig.DEBUG) {
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKey("is_wear", true)
         }
     }
 }
