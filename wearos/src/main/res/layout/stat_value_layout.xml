@@ -6,7 +6,7 @@
     android:layout_height="30dp"
     android:paddingStart="16dp"
     android:paddingEnd="0dp"
-    tools:parentTag="com.habitrpg.wearos.habitica.ui.views.StatValue">
+    tools:parentTag="com.habitrpg.wearos.habitica.ui.views.StatValueView">
 
     <View
         android:id="@+id/view"
