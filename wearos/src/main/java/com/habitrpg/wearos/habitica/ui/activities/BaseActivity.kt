@@ -8,11 +8,11 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
-import androidx.wear.activity.ConfirmationActivity
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityWrapperBinding
 import com.habitrpg.wearos.habitica.managers.LoadingManager
 import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
@@ -44,9 +44,8 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
 
         viewModel.errorValues.observe(this) {
             val intent = Intent(this, ConfirmationActivity::class.java).apply {
-                putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.FAILURE_ANIMATION)
-                putExtra(ConfirmationActivity.EXTRA_MESSAGE, it.title)
-                putExtra(ConfirmationActivity.EXTRA_ANIMATION_DURATION_MILLIS, 3000)
+                putExtra("text", it.title)
+                putExtra("icon", R.drawable.error)
             }
             startActivity(intent)
         }

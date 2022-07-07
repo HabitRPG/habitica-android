@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
 import android.os.Bundle
-import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
@@ -22,6 +22,10 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         super.onCreate(savedInstanceState)
 
         viewModel.tasks.observe(this) {
+            if (it.isEmpty()) {
+                runCron()
+                return@observe
+            }
             createTaskListViews(it)
         }
 
@@ -39,15 +43,33 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         }
 
         binding.startDayButton.setOnClickListener {
-            startAnimatingProgress()
-            binding.startDayButton.isEnabled = false
-            viewModel.runCron {
-                stopAnimatingProgress()
-                if (it) {
-                    finish()
-                } else {
-                    binding.startDayButton.isEnabled = true
-                }
+            runCron()
+        }
+    }
+
+    private fun runCron() {
+        startAnimatingProgress()
+        binding.startDayButton.isEnabled = false
+        binding.startingTextView.isVisible = true
+        binding.startDayButton.isVisible = false
+        binding.taskView.isVisible = false
+        binding.descriptionView.isVisible = false
+        binding.titleView.isVisible = false
+        binding.phoneDescriptionView.isVisible = false
+        binding.ryaButton.isVisible = false
+        binding.phoneButton.isVisible = false
+        viewModel.runCron {
+            stopAnimatingProgress()
+            if (it) {
+                finish()
+            } else {
+                binding.startDayButton.isEnabled = true
+                binding.startingTextView.isVisible = false
+                binding.startDayButton.isVisible = true
+                binding.taskView.isVisible = true
+                binding.descriptionView.isVisible = true
+                binding.titleView.isVisible = true
+                binding.phoneDescriptionView.isVisible = true
             }
         }
     }
@@ -61,7 +83,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                 viewModel.tappedTask(task)
             }
             holder.onTaskScore = { viewModel.tappedTask(task) }
-            val layoutParams = taskBinding.chip.layoutParams as FrameLayout.LayoutParams
+            val layoutParams = taskBinding.chip.layoutParams as LinearLayout.LayoutParams
             layoutParams.marginStart = 0
             layoutParams.marginEnd = 0
             taskBinding.chip.layoutParams = layoutParams

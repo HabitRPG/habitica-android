@@ -157,12 +157,7 @@ class ApiClient @Inject constructor(
     }
 
     private suspend fun <T: Any> process(call: suspend () -> Response<WearableHabitResponse<T>>): NetworkResult<T> {
-        val response: Response<WearableHabitResponse<T>>
-        try {
-            response = call.invoke()
-        } catch (t: Exception) {
-            return NetworkResult.Error(t, false)
-        }
+        val response: Response<WearableHabitResponse<T>> = call.invoke()
 
         val wasCached = response.headers()["was-cached"] == "true"
 
@@ -170,6 +165,7 @@ class ApiClient @Inject constructor(
             val errorBody = response.errorBody()
             @Suppress("BlockingMethodInNonBlockingContext")
             NetworkResult.Error(Exception((response.message() + errorBody?.string())), !wasCached)
+            throw(java.lang.Exception(response.message()))
         } else {
             val body = response.body()
             return if (body?.data != null) {

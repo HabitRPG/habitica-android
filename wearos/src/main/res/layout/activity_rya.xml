@@ -57,6 +57,7 @@
             android:layout_marginTop="2dp"
             android:visibility="gone"/>
         <TextView
+            android:id="@+id/phone_description_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/checklist_disclaimer"
@@ -64,5 +65,15 @@
             android:gravity="center"
             style="@style/Text.Body1"
             android:layout_marginTop="@dimen/spacing_medium" />
+        <TextView
+            android:id="@+id/starting_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:text="@string/starting_your_day"
+            style="@style/Text.SubHeader1"
+            android:textColor="@color/gray_500"
+            android:gravity="center"
+            android:layout_margin="@dimen/spacing_xlarge"
+            android:visibility="gone"/>
     </LinearLayout>
 </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
