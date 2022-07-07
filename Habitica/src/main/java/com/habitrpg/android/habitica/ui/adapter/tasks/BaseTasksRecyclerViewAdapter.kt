@@ -8,11 +8,11 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
@@ -60,13 +60,13 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
         if (taskType != task.type)
             return
         var i = 0
-        while (i < this.content?.size ?: 0) {
+        while (i < (this.content?.size ?: 0)) {
             if (content?.get(i)?.id == task.id) {
                 break
             }
             ++i
         }
-        if (i < content?.size ?: 0) {
+        if (i < (content?.size ?: 0)) {
             content?.set(i, task)
         }
         filter()

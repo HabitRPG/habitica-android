@@ -18,6 +18,9 @@ android {
         versionCode app_version_code + 1
         versionName app_version_name
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
+
+        def formattedDate = new Date().format('yyMMdd')
+        archivesBaseName = "Habitica-WearOS-${formattedDate}${versionCode}"
     }
 
     signingConfigs {
