@@ -13,4 +13,8 @@
         <attr name="ellipsis" format="string" />
         <attr name="ellipsisColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="TextActionChip">
+        <attr name="chipText" format="string" />
+        <attr name="chipImage" format="reference" />
+    </declare-styleable>
 </resources>

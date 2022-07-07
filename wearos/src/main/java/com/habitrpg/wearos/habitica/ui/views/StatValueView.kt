@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.databinding.StatValueLayoutBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 
-class StatValue @JvmOverloads constructor(
+class StatValueView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
