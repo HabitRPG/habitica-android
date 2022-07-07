@@ -34,7 +34,7 @@
                 android:ellipsize="end"
                 tools:text="Task Title"
                 android:textColor="@color/watch_white"
-                style="@style/Text.Body2"/>
+                style="@style/Text.Body1"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

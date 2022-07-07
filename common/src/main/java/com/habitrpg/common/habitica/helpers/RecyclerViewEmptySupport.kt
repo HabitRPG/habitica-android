@@ -39,6 +39,8 @@ class FailedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 }
 
+class HolderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+
 class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val binding = EmptyItemBinding.bind(itemView)
@@ -66,6 +68,7 @@ class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onRefresh: (() -> Unit)? = null
+    var emptyViewBuilder: (() -> View)? = null
     var emptyItem: EmptyItem? = null
         set(value) {
             field = value
@@ -90,7 +93,11 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
                 object : RecyclerView.ViewHolder(view) {}
             }
             1 -> FailedViewHolder(parent.inflate(R.layout.failed_item))
-            else -> EmptyViewHolder(parent.inflate(R.layout.empty_item))
+            else ->if (emptyViewBuilder != null) {
+                HolderViewHolder(emptyViewBuilder?.invoke() ?: View(parent.context))
+            } else {
+                EmptyViewHolder(parent.inflate(R.layout.empty_item))
+            }
         }
     }
 

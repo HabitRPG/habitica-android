@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTasklistBinding
-import com.habitrpg.common.habitica.helpers.EmptyItem
+import com.habitrpg.android.habitica.databinding.EmptyTaskListBinding
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
@@ -32,6 +32,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         binding = ActivityTasklistBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         configureAdapter()
+
         binding.recyclerView.apply {
             overScrollMode = View.OVER_SCROLL_ALWAYS
             layoutManager =
@@ -40,8 +41,10 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                     HabiticaScrollingLayoutCallback()
                 )
             adapter = this@TaskListActivity.adapter
-            emptyItem = EmptyItem(
-                getString(
+            emptyViewBuilder = {
+                val emptyBinding = EmptyTaskListBinding.inflate(layoutInflater)
+                emptyBinding.header.textView.text = getTitle(viewModel.taskCount.value)
+                emptyBinding.descriptionView.text = getString(
                     R.string.no_tasks, getString(
                         when (viewModel.taskType) {
                             TaskType.HABIT -> R.string.habit
@@ -52,7 +55,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                         }
                     )
                 )
-            )
+                emptyBinding.root
+            }
             onRefresh = {
                 viewModel.retrieveFullUserData()
             }

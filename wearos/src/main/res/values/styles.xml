@@ -23,7 +23,7 @@
         <item name="android:paddingHorizontal">@dimen/row_padding_horizontal</item>
         <item name="android:paddingVertical">@dimen/row_padding_vertical</item>
         <item name="android:background">@drawable/row_background</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/watch_white</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:gravity">center</item>
@@ -35,6 +35,7 @@
 
     <style name="ChipButton.Icon" parent="ChipButton">
         <item name="android:gravity">start|center_vertical</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:drawablePadding">8dp</item>
     </style>
 

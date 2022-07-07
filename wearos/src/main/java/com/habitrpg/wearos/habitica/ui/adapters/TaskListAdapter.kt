@@ -8,7 +8,7 @@ import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderSectionViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder
 
-open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), BaseAdapter {
     var title: String = ""
     var onTaskScore: ((Task) -> Unit)? = null
     var onTaskTapped:((Task) -> Unit)? = null
@@ -18,6 +18,11 @@ open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         field = value
         notifyDataSetChanged()
     }
+
+    override fun hasData(): Boolean {
+        return data.isNotEmpty()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = parent.context.layoutInflater
         return HeaderSectionViewHolder(RowSectionHeaderBinding.inflate(inflater, parent, false).root)

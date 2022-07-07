@@ -21,7 +21,7 @@
                 style="@style/Text.SubHeader1"
                 android:textColor="@color/watch_white"
                 android:gravity="center"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="7dp"/>
             <TextView
                 android:id="@+id/task_notes_view"
                 android:layout_width="wrap_content"
@@ -37,9 +37,10 @@
                 android:textColor="@color/watch_gray_200"
                 android:gravity="center"
                 android:drawableStart="@drawable/task_icon_streak"
-                android:drawableTint="@color/watch_gray_200"
+                android:drawableTint="@color/watch_gray_10"
                 android:drawablePadding="@dimen/spacing_small"
                 style="@style/Text.Body1"
+                android:layout_marginTop="5dp"
                 android:textSize="12sp"/>
             <Button
                 android:id="@+id/edit_button"

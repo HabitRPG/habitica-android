@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/row_section_header" android:id="@+id/header" />
+    <TextView
+        android:id="@+id/description_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        style="@style/Text.Body1"
+        android:gravity="center"
+        android:textColor="@color/watch_gray_200"
+        android:paddingHorizontal="@dimen/spacing_xlarge"
+        android:layout_marginTop="36dp"/>
+</LinearLayout>

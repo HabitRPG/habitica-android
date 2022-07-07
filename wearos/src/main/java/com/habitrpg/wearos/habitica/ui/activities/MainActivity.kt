@@ -145,7 +145,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun openTaskFormActivity() {
-        throw RuntimeException("WEAR TEST")
         openTaskForm.launch(Intent(this, TaskFormActivity::class.java))
     }
 

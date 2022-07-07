@@ -40,8 +40,7 @@
             android:layout_height="wrap_content"
             android:text="@string/check_on_phone"
             android:drawableStart="@drawable/handoff"
-            style="@style/ChipButton.Icon"
-            android:gravity="center"/>
+            style="@style/ChipButton.Icon"/>
 
         <LinearLayout
             android:id="@+id/task_view"
