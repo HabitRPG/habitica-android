@@ -126,7 +126,11 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
                 layoutParams.columnSpec = GridLayout.spec(0, 3, GridLayout.CENTER)
                 currentRow += 1
             } else {
-                layoutParams.columnSpec = GridLayout.spec(currentColumn, 1)
+                if (chips.size == 2) {
+                    layoutParams.columnSpec = GridLayout.spec(currentColumn, 3, GridLayout.CENTER)
+                } else {
+                    layoutParams.columnSpec = GridLayout.spec(currentColumn, 1)
+                }
                 if (currentColumn > 0) {
                     layoutParams.marginStart = margin
                 }
