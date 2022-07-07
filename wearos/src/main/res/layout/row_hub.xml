@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/row_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/Chip">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    style="@style/Chip">
     <ImageView
         android:id="@+id/icon_view"
         android:layout_width="36dp"
@@ -23,12 +20,11 @@
         android:layout_height="wrap_content"
         android:textColor="@color/watch_white"
         style="@style/Text.SubHeader1"/>
-        <TextView
-            android:id="@+id/detail_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Text.Body1"
-            android:textColor="@color/watch_purple_200"
-            android:layout_marginEnd="@dimen/spacing_medium"/>
-    </LinearLayout>
-</FrameLayout>
+    <TextView
+        android:id="@+id/detail_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Text.Body1"
+        android:textColor="@color/watch_purple_200"
+        android:layout_marginEnd="@dimen/spacing_medium"/>
+</LinearLayout>

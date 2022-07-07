@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chip"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="52dp"
+    style="@style/Chip">
+    <FrameLayout
+        android:id="@+id/checkbox_wrapper"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:background="@drawable/circle"
+        android:layout_marginEnd="6dp"
+        android:foreground="@drawable/task_score_feedback">
+        <ImageView
+            android:id="@+id/checkbox"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/daily_square"
+            android:scaleType="center"
+            android:layout_gravity="center"/>
+    </FrameLayout>
     <LinearLayout
-        android:id="@+id/chip"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        style="@style/Chip">
-        <FrameLayout
-            android:id="@+id/checkbox_wrapper"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:background="@drawable/circle"
-            android:layout_marginEnd="6dp"
-            android:foreground="@drawable/task_score_feedback">
-            <ImageView
-                android:id="@+id/checkbox"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@drawable/daily_square"
-                android:scaleType="center"
-                android:layout_gravity="center"/>
-        </FrameLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <com.habitrpg.wearos.habitica.ui.views.TaskTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -36,6 +33,5 @@
             tools:text="Task Title that is long and wraps and"
             android:textColor="@color/watch_white"
             style="@style/Text.Body1"/>
-        </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

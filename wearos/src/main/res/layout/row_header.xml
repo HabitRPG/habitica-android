@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp">
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@color/watch_purple_200"
-        tools:text="Header Text"
-        style="@style/Text.SubHeader1"/>
-</FrameLayout>
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:textColor="@color/watch_purple_200"
+    tools:text="Header Text"
+    style="@style/Text.SubHeader1"
+    android:padding="6dp"/>
