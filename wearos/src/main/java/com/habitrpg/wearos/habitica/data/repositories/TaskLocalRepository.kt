@@ -106,4 +106,11 @@ class TaskLocalRepository @Inject constructor() {
             TaskType.REWARD.value to (tasks[TaskType.REWARD]?.value?.size ?: 0),
         )
     }
+
+    fun clearData() {
+        tasks.values.forEach {
+            it.value = null
+        }
+        taskCountHelperValue.value = 0
+    }
 }

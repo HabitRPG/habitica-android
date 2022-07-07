@@ -39,4 +39,8 @@ class UserRepository @Inject constructor(
     suspend fun runCron() {
         apiClient.runCron()
     }
+
+    fun clearData() {
+        localRepository.clearData()
+    }
 }

@@ -78,4 +78,5 @@ class TaskRepository @Inject constructor(
 
     fun getTaskCounts() = localRepository.getTaskCounts()
     fun getActiveTaskCounts() = localRepository.getActiveTaskCounts()
+    fun clearData() = localRepository.clearData()
 }

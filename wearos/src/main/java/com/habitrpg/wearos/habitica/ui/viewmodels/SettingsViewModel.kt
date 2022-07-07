@@ -26,6 +26,8 @@ class SettingsViewModel @Inject constructor(userRepository: UserRepository,
             clear()
         }
         apiClient.updateAuthenticationCredentials(null, null)
+        userRepository.clearData()
+        taskRepository.clearData()
     }
 
     fun resyncData() {
