@@ -2,10 +2,10 @@ package com.habitrpg.wearos.habitica.ui.adapters
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.databinding.RowSectionHeaderBinding
+import com.habitrpg.android.habitica.databinding.RowTaskHeaderBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.models.tasks.Task
-import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderSectionViewHolder
+import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderTaskViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder
 
 open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), BaseAdapter {
@@ -25,7 +25,7 @@ open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ba
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = parent.context.layoutInflater
-        return HeaderSectionViewHolder(RowSectionHeaderBinding.inflate(inflater, parent, false).root)
+        return HeaderTaskViewHolder(RowTaskHeaderBinding.inflate(inflater, parent, false).root)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -38,14 +38,14 @@ open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ba
             holder.itemView.setOnClickListener {
                 onTaskTapped?.invoke(item)
             }
-        } else if (holder is HeaderSectionViewHolder){
+        } else if (holder is HeaderTaskViewHolder){
             if (position == 0) {
-                holder.bind(title)
+                holder.bind(title, data.firstOrNull() is String)
                 holder.itemView.setOnClickListener {
                     onRefresh?.invoke()
                 }
             } else {
-                holder.bind(data[position - 1] as String)
+                holder.bind(data[position - 1] as String, false)
             }
         }
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+    <include
+        layout="@layout/row_section_header"
+        android:id="@+id/header" />
+    <TextView
+        android:id="@+id/done_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/all_done_today"
+        android:layout_marginHorizontal="@dimen/spacing_xlarge"
+        android:drawableTop="@drawable/done_sparkles"
+        android:drawablePadding="4dp"
+        style="@style/Text.Body1"
+        android:textColor="@color/watch_gray_200"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="32dp"/>
+</LinearLayout>
