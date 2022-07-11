@@ -1,17 +1,14 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.view.postDelayed
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
@@ -45,23 +42,16 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
-        binding.editText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
-                if (binding.editText.text?.isNotEmpty() == true) {
-                    binding.editTaskWrapper.isVisible = false
-                    binding.taskConfirmationWrapper.isVisible = true
-                    binding.confirmationText.text = binding.editText.text
-                    binding.editText.clearFocus()
-                }
-            }
-            false
+        binding.editText.setOnClickListener {
+            it.clearFocus()
+            requestInput()
         }
+
         binding.editButton.setOnClickListener {
             binding.editTaskWrapper.isVisible = true
             binding.taskConfirmationWrapper.isVisible = false
             if (intent.extras?.containsKey("task_type") == true) {
-                binding.editText.requestFocus()
-                showKeyboard()
+                requestInput()
             }
         }
         binding.todoButton.setOnClickListener { taskType = TaskType.TODO }
@@ -91,26 +81,28 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
             binding.taskTypeHeader.isVisible = false
             binding.taskTypeWrapper.isVisible = false
             binding.header.textView.text = getString(R.string.create_task, taskType?.value)
-            binding.editText.requestFocus()
+            requestInput()
         } else {
             taskType = TaskType.TODO
             binding.header.textView.text = getString(R.string.new_task)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (binding.editText.hasFocus()) {
-            showKeyboard()
+    private val inputResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        val input = it.data?.getStringExtra("input")
+        if (input?.isNotBlank() == true) {
+            binding.editTaskWrapper.isVisible = false
+            binding.taskConfirmationWrapper.isVisible = true
+            binding.confirmationText.text = input
+            binding.editText.setText(input)
         }
     }
 
-    private fun showKeyboard() {
-        binding.editText.postDelayed(100) {
-            val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(binding.editText, InputMethodManager.SHOW_FORCED)
+    private fun requestInput() {
+        val intent = Intent(this, InputActivity::class.java).apply {
+            putExtra("title", getString(R.string.task_title_hint))
         }
+        inputResult.launch(intent)
     }
 
     private fun updateTaskTypeButton(button: TextView, thisType: TaskType) {

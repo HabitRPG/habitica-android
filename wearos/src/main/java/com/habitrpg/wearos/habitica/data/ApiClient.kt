@@ -123,7 +123,7 @@ class ApiClient @Inject constructor(
                 val responseBuilder = response.newBuilder()
                 responseBuilder.header("was-cached", (response.networkResponse == null).toString())
                 if (request.method == "GET") {
-                    if (response.code == 504) {
+                    if (response.code == 504 || response.request.header("x-api-user") != hostConfig.userID) {
                         // Cache miss. Network might be down, but retry call without cache to be sure.
                         chain.proceed(request.newBuilder()
                             .header("Cache-Control", "no-cache")

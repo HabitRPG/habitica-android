@@ -52,6 +52,7 @@
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.LevelupActivity" />
 
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.ConfirmationActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.InputActivity" />
     </application>
 
 </manifest>

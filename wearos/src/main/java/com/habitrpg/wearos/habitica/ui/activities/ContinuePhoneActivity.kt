@@ -20,7 +20,7 @@ import kotlin.time.toDuration
 class ContinuePhoneActivity : BaseActivity<ActivityContinuePhoneBinding, ContinuePhoneViewModel>() {
     override val viewModel: ContinuePhoneViewModel by viewModels()
 
-    private var secondsToShow = 2
+    private var secondsToShow = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityContinuePhoneBinding.inflate(layoutInflater)
@@ -29,14 +29,21 @@ class ContinuePhoneActivity : BaseActivity<ActivityContinuePhoneBinding, Continu
 
     override fun onStart() {
         super.onStart()
+        messageClient.addListener(viewModel)
 
         binding.root.setOnClickListener {
             finish()
         }
 
-        lifecycleScope.launch {
-            delay(secondsToShow.toDuration(DurationUnit.SECONDS))
+        viewModel.onActionCompleted = {
             finish()
+        }
+
+        if (!viewModel.keepActive) {
+            lifecycleScope.launch {
+                delay(secondsToShow.toDuration(DurationUnit.SECONDS))
+                finish()
+            }
         }
 
         val alphaAnimation = AlphaAnimation(0f, 1f)
@@ -50,5 +57,10 @@ class ContinuePhoneActivity : BaseActivity<ActivityContinuePhoneBinding, Continu
         set.addAnimation(alphaAnimation)
         set.addAnimation(translateAnimation)
         binding.iconView.startAnimation(set)
+    }
+
+    override fun onDestroy() {
+        messageClient.removeListener(viewModel)
+        super.onDestroy()
     }
 }

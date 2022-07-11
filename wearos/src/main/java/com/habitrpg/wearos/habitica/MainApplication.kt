@@ -58,7 +58,9 @@ class MainApplication : Application() {
     }
 
     private fun logLaunch() {
-        Firebase.analytics.logEvent("wear_launched", null)
+        if (!BuildConfig.DEBUG) {
+            Firebase.analytics.logEvent("wear_launched", null)
+        }
     }
 
     private fun setupFirebase() {

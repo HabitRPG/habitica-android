@@ -30,8 +30,13 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                 startLoginActivity()
             }
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
         messageClient.addListener(viewModel)
+
+        if (!viewModel.hasAuthentication) {
             sendMessage("provide_auth", "/request/auth", null) {
                 if (it) {
                     showAccountLoader(true)
@@ -40,6 +45,13 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                     startLoginActivity()
                 }
             }
+        }
+    }
+
+
+    override fun onStop() {
+        messageClient.removeListener(viewModel)
+        super.onStop()
     }
 
     private fun startMainActivity() {
@@ -63,10 +75,5 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
             }
             binding.textView.isVisible = show
         }
-    }
-
-    override fun onPause() {
-        messageClient.removeListener(viewModel)
-        super.onPause()
     }
 }

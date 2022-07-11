@@ -87,7 +87,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     }
 
     private fun openRegisterOnPhone() {
-        openRemoteActivity(DeviceCommunication.SHOW_REGISTER)
+        openRemoteActivity(DeviceCommunication.SHOW_REGISTER, true)
     }
 
     private fun openLoginOnPhone() {

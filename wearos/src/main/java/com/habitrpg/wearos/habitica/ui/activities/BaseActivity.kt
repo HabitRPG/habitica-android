@@ -87,9 +87,12 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
         }
     }
 
-    internal fun openRemoteActivity(url: String) {
+    internal fun openRemoteActivity(url: String, keepActive: Boolean = false) {
         sendMessage("open_activity", url, null)
-        startActivity(Intent(this, ContinuePhoneActivity::class.java))
+        startActivity(Intent(this, ContinuePhoneActivity::class.java)
+            .apply {
+                putExtra("keep_active", keepActive)
+            })
     }
 
     internal fun sendMessage(

@@ -26,17 +26,18 @@ class DeviceCommunicationService : WearableListenerService() {
         super.onMessageReceived(event)
         when (event.path) {
             DeviceCommunication.REQUEST_AUTH -> processAuthRequest(event)
-            DeviceCommunication.SHOW_REGISTER -> openActivity(LoginActivity::class.java)
-            DeviceCommunication.SHOW_LOGIN -> openActivity(LoginActivity::class.java)
-            DeviceCommunication.SHOW_RYA -> openActivity(MainActivity::class.java)
+            DeviceCommunication.SHOW_REGISTER -> openActivity(event, LoginActivity::class.java)
+            DeviceCommunication.SHOW_LOGIN -> openActivity(event, LoginActivity::class.java)
+            DeviceCommunication.SHOW_RYA -> openActivity(event, MainActivity::class.java)
             DeviceCommunication.SHOW_TASK_EDIT -> openTaskForm(event)
         }
     }
 
-    private fun openActivity(activityClass: Class<*>) {
+    private fun openActivity(event: MessageEvent, activityClass: Class<*>) {
         val intent = Intent(this, activityClass)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+        messageClient.sendMessage(event.sourceNodeId, "/action_completed", null)
     }
 
     private fun openTaskForm(event: MessageEvent) {
@@ -44,7 +45,8 @@ class DeviceCommunicationService : WearableListenerService() {
         val startIntent = Intent(this, TaskFormActivity::class.java).apply {
             putExtra(TaskFormActivity.TASK_ID_KEY, taskID)
         }
-         startActivity(startIntent)
+        startActivity(startIntent)
+        messageClient.sendMessage(event.sourceNodeId, "/action_completed", null)
     }
 
     private fun processAuthRequest(event: MessageEvent) {

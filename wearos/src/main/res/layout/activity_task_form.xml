@@ -65,6 +65,7 @@
                 android:paddingHorizontal="18dp"
                 android:hint="@string/task_title_hint"
                 android:background="@drawable/row_background_outline"
+                android:focusable="false"
                 android:inputType="textCapSentences" />
             <TextView
                 android:id="@+id/task_type_header"
