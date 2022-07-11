@@ -187,24 +187,26 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
 
     fun checkIfDue(): Boolean = isDue == true
 
-    fun getNextReminderOccurence(oldTime: String?): ZonedDateTime? {
-        if (oldTime == null) {
-            return null
-        }
-        val nextDate = nextDue?.firstOrNull()
+    fun getNextReminderOccurrence(remindersItem: RemindersItem): ZonedDateTime? {
+        remindersItem.time?.let {
+            val oldTime = it
+            val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
+            val nextDate = nextDue?.firstOrNull()
 
-        return if (nextDate != null && !isDisplayedActive) {
-            val nextDueCalendar = GregorianCalendar()
-            nextDueCalendar.time = nextDate
-            parse(oldTime)
-                ?.withYear(nextDueCalendar.get(Calendar.YEAR))
-                ?.withMonth(nextDueCalendar.get(Calendar.MONTH))
-                ?.withDayOfMonth(nextDueCalendar.get(Calendar.DAY_OF_MONTH))
-        } else if (isDisplayedActive) {
-            parse(oldTime)
-        } else {
-            null
+            //If task !isDisplayedActive or if isDisplayedActive but reminder passed,
+            //set a updated reminder with nextDate
+            return if (nextDate != null && (!isDisplayedActive || remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true)) {
+                val nextDueCalendar = GregorianCalendar()
+                nextDueCalendar.time = nextDate
+                parse(oldTime)
+                    ?.withYear(nextDueCalendar.get(Calendar.YEAR))
+                    ?.withMonth(nextDueCalendar.get(Calendar.MONTH) + 1) //+1 to handle Gregorian Calendar month range from 0-11
+                    ?.withDayOfMonth(nextDueCalendar.get(Calendar.DAY_OF_MONTH))
+            } else {
+                return parse(oldTime)
+            }
         }
+        return null
     }
 
     fun formatter(): DateTimeFormatter =

@@ -75,10 +75,9 @@ class TaskAlarmManager(
     }
 
     private fun setTimeForDailyReminder(remindersItem: RemindersItem?, task: Task): RemindersItem? {
-        val oldTime = remindersItem?.time
-        val newTime = (task.getNextReminderOccurence(oldTime) ?: return null)
+        val newTime = (remindersItem?.let { task.getNextReminderOccurrence(it) } ?: return null)
 
-        remindersItem?.time = newTime.withZoneSameLocal(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        remindersItem.time = newTime.withZoneSameLocal(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
         return remindersItem
     }
