@@ -176,7 +176,7 @@ class UserRepositoryImpl(
     }
 
     override fun unlockPath(customization: Customization): Flowable<UnlockResponse> {
-        return unlockPath(customization.path, customization.price ?: 0)
+        return unlockPath(customization.unlockPath, customization.price ?: 0)
     }
 
     override fun runCron() {
