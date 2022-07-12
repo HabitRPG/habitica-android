@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTasklistBinding
@@ -22,6 +24,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.ToDoListAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskListViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel>() {
@@ -43,6 +46,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
             adapter = this@TaskListActivity.adapter
             emptyViewBuilder = {
                 val emptyBinding = EmptyTaskListBinding.inflate(layoutInflater)
+                emptyBinding.disconnected.root.isVisible = !appStateManager.isAppConnected.value
                 emptyBinding.header.textView.text = getTitle(viewModel.taskCount.value)
                 emptyBinding.descriptionView.text = getString(
                     R.string.no_tasks, getString(
@@ -68,6 +72,12 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         viewModel.taskCount.observe(this) {
             adapter.title = getTitle(it)
         }
+        lifecycleScope.launch {
+            appStateManager.isAppConnected.collect {
+                adapter.isDisconnected = !it
+            }
+        }
+
 
         adapter.onTaskScore = {
             scoreTask(it)

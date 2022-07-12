@@ -73,8 +73,8 @@ class HabiticaRecyclerView @JvmOverloads constructor(
 
     internal fun updateState(isInitial: Boolean = false) {
         state = if (actualAdapter != null && !isInitial) {
-            val emptyViewVisible = if (actualAdapter is BaseAdapter) {
-                (actualAdapter as? BaseAdapter)?.hasData() != true
+            val emptyViewVisible = if (actualAdapter is BaseAdapter<*>) {
+                (actualAdapter as? BaseAdapter<*>)?.hasData() != true
         } else {
             actualAdapter?.itemCount == 0
         }

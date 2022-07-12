@@ -14,7 +14,7 @@ import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityWrapperBinding
-import com.habitrpg.wearos.habitica.managers.LoadingManager
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.wearos.habitica.ui.views.IndeterminateProgressView
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivity() {
     @Inject
-    lateinit var loadingManager: LoadingManager
+    lateinit var appStateManager: AppStateManager
 
     val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
     private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
@@ -50,11 +50,13 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
             startActivity(intent)
         }
 
-        loadingManager.isLoading.observe(this) {
-            if (it) {
-                startAnimatingProgress()
-            } else {
-                stopAnimatingProgress()
+        lifecycleScope.launch {
+            appStateManager.isLoading.collect {
+                if (it) {
+                    startAnimatingProgress()
+                } else {
+                    stopAnimatingProgress()
+                }
             }
         }
     }

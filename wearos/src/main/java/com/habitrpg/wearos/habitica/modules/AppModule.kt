@@ -9,11 +9,12 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.wearos.habitica.data.ApiClient
+import com.habitrpg.wearos.habitica.managers.AppStateManager
+import com.habitrpg.wearos.habitica.models.tasks.WrappedTasklistAdapter
 import com.habitrpg.wearos.habitica.util.AttributeAdapter
 import com.habitrpg.wearos.habitica.util.FrequencyAdapter
 import com.habitrpg.wearos.habitica.util.TaskTypeAdapter
 import com.habitrpg.wearos.habitica.util.customDateAdapter
-import com.habitrpg.wearos.habitica.models.tasks.WrappedTasklistAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -62,11 +63,13 @@ class AppModule {
     fun providesApiHClient(
         hostConfig: HostConfig,
         @ApplicationContext context: Context,
-        converter: Converter.Factory
+        converter: Converter.Factory,
+        appStateManager: AppStateManager
     ): ApiClient {
         return ApiClient(
             converter,
             hostConfig,
+            appStateManager,
             context
         )
     }

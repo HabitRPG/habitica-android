@@ -8,6 +8,7 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.models.NetworkResult
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import com.habitrpg.wearos.habitica.models.tasks.Task
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class ApiClient @Inject constructor(
     private val converter: Converter.Factory,
     private val hostConfig: HostConfig,
+    private val appStateManager: AppStateManager,
     private val context: Context
 ) {
     val userID: String
@@ -88,8 +90,8 @@ class ApiClient @Inject constructor(
                     if (hasNetwork(context)) {
                         cacheControl.maxAge(5, TimeUnit.MINUTES)
                     } else {
+                        appStateManager.isAppConnected.value = false
                         cacheControl.maxAge(1, TimeUnit.DAYS)
-                            .onlyIfCached()
                     }
                 } else {
                     cacheControl.noCache()
@@ -162,13 +164,16 @@ class ApiClient @Inject constructor(
         val wasCached = response.headers()["was-cached"] == "true"
 
         return if (!response.isSuccessful) {
-            val errorBody = response.errorBody()
-            @Suppress("BlockingMethodInNonBlockingContext")
-            NetworkResult.Error(Exception((response.message() + errorBody?.string())), !wasCached)
-            throw(java.lang.Exception(response.message()))
+            appStateManager.isAppConnected.value = false
+            if (response.code() == 504) {
+                NetworkResult.Error(Exception(), !wasCached)
+            } else {
+                throw(java.lang.Exception(response.message()))
+            }
         } else {
             val body = response.body()
-            return if (body?.data != null) {
+            if (body?.data != null) {
+                appStateManager.isAppConnected.value = true
                 NetworkResult.Success(body.data!!, !wasCached)
             } else {
                 NetworkResult.Error(Exception("response.body() can't be null"), !wasCached)

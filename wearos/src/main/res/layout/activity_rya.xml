@@ -1,79 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/title_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/watch_purple_200"
-            android:text="@string/day_start"
-            style="@style/Text.Body1"
-            android:gravity="center"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginBottom="10dp"/>
-        <TextView
-            android:id="@+id/description_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rya_description"
-            android:gravity="center"
-            android:textColor="@color/watch_white"
-            style="@style/Text.SubHeader1"
-            android:layout_marginBottom="@dimen/spacing_large"/>
-        <Button
-            android:id="@+id/rya_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/review_dailies"
-            style="@style/ChipButton.Purple"
-            android:layout_marginBottom="@dimen/spacing_small"/>
-        <Button
-            android:id="@+id/phone_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/check_on_phone"
-            android:drawableStart="@drawable/handoff"
-            style="@style/ChipButton.Icon"/>
-
+        android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/task_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"/>
-        <Button
-            android:id="@+id/start_day_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/ChipButton.Purple"
-            android:text="@string/start_new_day"
-            android:layout_marginTop="2dp"
-            android:visibility="gone"/>
-        <TextView
-            android:id="@+id/phone_description_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/checklist_disclaimer"
-            android:textColor="@color/gray_400"
             android:gravity="center"
-            style="@style/Text.Body1"
-            android:layout_marginTop="@dimen/spacing_medium" />
-        <TextView
-            android:id="@+id/starting_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:text="@string/starting_your_day"
-            style="@style/Text.SubHeader1"
-            android:textColor="@color/gray_500"
-            android:gravity="center"
-            android:layout_margin="@dimen/spacing_xlarge"
-            android:visibility="gone"/>
-    </LinearLayout>
-</com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/title_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/watch_purple_200"
+                android:text="@string/day_start"
+                style="@style/Text.Body1"
+                android:gravity="center"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/description_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rya_description"
+                android:gravity="center"
+                android:textColor="@color/watch_white"
+                style="@style/Text.SubHeader1"
+                android:layout_marginBottom="@dimen/spacing_large"/>
+            <Button
+                android:id="@+id/rya_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/review_dailies"
+                style="@style/ChipButton.Purple"
+                android:layout_marginBottom="@dimen/spacing_small"/>
+            <Button
+                android:id="@+id/phone_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/check_on_phone"
+                android:drawableStart="@drawable/handoff"
+                style="@style/ChipButton.Icon"/>
+
+            <LinearLayout
+                android:id="@+id/task_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/start_day_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/ChipButton.Purple"
+                android:text="@string/start_new_day"
+                android:layout_marginTop="2dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/phone_description_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/checklist_disclaimer"
+                android:textColor="@color/gray_400"
+                android:gravity="center"
+                style="@style/Text.Body1"
+                android:layout_marginTop="@dimen/spacing_medium" />
+        </LinearLayout>
+    </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
+    <TextView
+        android:id="@+id/starting_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:text="@string/starting_your_day"
+        style="@style/Text.SubHeader1"
+        android:textColor="@color/gray_500"
+        android:gravity="center"
+        android:layout_margin="@dimen/spacing_xlarge"
+        android:visibility="gone"/>
+</FrameLayout>

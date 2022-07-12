@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
@@ -16,6 +17,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.HubAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.MainViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -33,6 +35,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             layoutManager =
                 WearableLinearLayoutManager(this@MainActivity, HabiticaScrollingLayoutCallback())
             adapter = this@MainActivity.adapter
+        }
+        lifecycleScope.launch {
+            appStateManager.isAppConnected.collect {
+                adapter.isDisconnected = !it
+            }
         }
     }
 

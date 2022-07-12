@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawableTop="@drawable/disconnected"
+    android:text="@string/disconnected"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:padding="@dimen/spacing_medium"
+    style="@style/Text.Body1">
+
+</TextView>

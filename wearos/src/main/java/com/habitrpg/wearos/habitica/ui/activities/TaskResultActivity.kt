@@ -51,7 +51,10 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
 
     override fun finish() {
         if (viewModel.result?.hasLeveledUp == true) {
-            startActivity(Intent(this, LevelupActivity::class.java))
+            startActivity(Intent(this, LevelupActivity::class.java)
+                .apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
         }
         super.finish()
     }

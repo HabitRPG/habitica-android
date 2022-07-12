@@ -5,7 +5,7 @@ import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.MessageEvent
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
-import com.habitrpg.wearos.habitica.managers.LoadingManager
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,8 +16,8 @@ class ContinuePhoneViewModel @Inject constructor(
     userRepository: UserRepository,
     taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
-    loadingManager: LoadingManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager), MessageClient.OnMessageReceivedListener {
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager), MessageClient.OnMessageReceivedListener {
     val keepActive = savedStateHandle.get<Boolean>("keep_active") ?: false
     var onActionCompleted: (() -> Unit)? = null
 

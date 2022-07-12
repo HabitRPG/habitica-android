@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityRyaBinding
 import com.habitrpg.android.habitica.databinding.RowDailyBinding
@@ -12,6 +13,9 @@ import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.wearos.habitica.ui.viewmodels.RYAViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Date
 
 @AndroidEntryPoint
 class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
@@ -47,7 +51,10 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         }
     }
 
+    lateinit var startTime: Date
+
     private fun runCron() {
+        startTime = Date()
         startAnimatingProgress()
         binding.startDayButton.isEnabled = false
         binding.startingTextView.isVisible = true
@@ -59,10 +66,18 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         binding.ryaButton.isVisible = false
         binding.phoneButton.isVisible = false
         viewModel.runCron {
-            stopAnimatingProgress()
             if (it) {
-                finish()
+                lifecycleScope.launch {
+                    val elapsed = Date().time - startTime.time
+                    if (elapsed <= 1000) {
+                        // always show it at least 1 second
+                        delay(1000 - elapsed)
+                    }
+                    stopAnimatingProgress()
+                    finish()
+                }
             } else {
+                stopAnimatingProgress()
                 binding.startDayButton.isEnabled = true
                 binding.startingTextView.isVisible = false
                 binding.startDayButton.isVisible = true

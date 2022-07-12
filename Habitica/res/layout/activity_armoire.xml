@@ -85,6 +85,7 @@
             tools:text="+21 Experience"
             android:textStyle="bold"
             android:textSize="28sp"
+            android:gravity="center"
             android:textColor="@color/text_primary"/>
         <TextView
             android:id="@+id/subtitle_view"

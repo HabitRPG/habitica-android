@@ -39,4 +39,5 @@
     <string name="levelup_description">You leveled up through all your hard work!</string>
     <string name="all_done_today">All done today!</string>
     <string name="starting_your_day">Starting your Day...</string>
+    <string name="disconnected">Disconnected</string>
 </resources>

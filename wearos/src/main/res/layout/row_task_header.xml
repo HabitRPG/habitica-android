@@ -5,6 +5,9 @@
     android:orientation="vertical"
     android:gravity="center">
     <include
+        layout="@layout/row_disconnected"
+        android:id="@+id/disconnected" />
+    <include
         layout="@layout/row_section_header"
         android:id="@+id/header" />
     <TextView

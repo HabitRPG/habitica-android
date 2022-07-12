@@ -27,7 +27,7 @@ import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
-import com.habitrpg.wearos.habitica.managers.LoadingManager
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -43,8 +43,8 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     private val keyHelper: KeyHelper?,
     val sharedPreferences: SharedPreferences,
-    val apiClient: ApiClient, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
+    val apiClient: ApiClient, appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     lateinit var onLoginCompleted: () -> Unit
 
     fun handleGoogleLogin(

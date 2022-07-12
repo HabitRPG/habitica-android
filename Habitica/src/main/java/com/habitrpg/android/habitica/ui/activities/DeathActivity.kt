@@ -105,7 +105,7 @@ class DeathActivity: BaseActivity() {
             .setSpeedRange(0.01f, 0.03f)
             .setFadeOut(4000, AccelerateInterpolator())
             .setSpeedModuleAndAngleRange(0.01f, 0.03f, startAngle, startAngle+80)
-            .emit(550, 680, 3, 6000)
+            .emit(550, 690, 3, 6000)
 
     }
 

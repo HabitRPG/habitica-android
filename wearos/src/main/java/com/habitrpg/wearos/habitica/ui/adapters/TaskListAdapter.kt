@@ -8,24 +8,17 @@ import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderTaskViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder
 
-open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), BaseAdapter {
-    var title: String = ""
+open class TaskListAdapter : BaseAdapter<Any>() {
     var onTaskScore: ((Task) -> Unit)? = null
     var onTaskTapped:((Task) -> Unit)? = null
-    var onRefresh:(() -> Unit)? = null
-    var data: List<Any> = listOf()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
-
-    override fun hasData(): Boolean {
-        return data.isNotEmpty()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = parent.context.layoutInflater
-        return HeaderTaskViewHolder(RowTaskHeaderBinding.inflate(inflater, parent, false).root)
+        if (viewType == TYPE_HEADER) {
+            val inflater = parent.context.layoutInflater
+            return HeaderTaskViewHolder(RowTaskHeaderBinding.inflate(inflater, parent, false).root)
+        } else {
+            return super.onCreateViewHolder(parent, viewType)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -40,26 +33,24 @@ open class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ba
             }
         } else if (holder is HeaderTaskViewHolder){
             if (position == 0) {
-                holder.bind(title, data.firstOrNull() is String)
+                holder.bind(title, data.firstOrNull() is String, isDisconnected)
                 holder.itemView.setOnClickListener {
                     onRefresh?.invoke()
                 }
             } else {
-                holder.bind(data[position - 1] as String, false)
+                holder.bind(data[position - 1] as String, false, isDisconnected)
             }
+        } else {
+            super.onBindViewHolder(holder, position)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
-            0
+            TYPE_HEADER
         } else {
             val item = data[position - 1]
             if (item is Task)  1 else 0
         }
-    }
-
-    override fun getItemCount(): Int {
-        return data.size + 1
     }
 }
