@@ -18,8 +18,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.AppTestingLevel
-import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
@@ -32,6 +30,8 @@ import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import java.util.Locale
 import javax.inject.Inject
 
@@ -294,7 +294,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     override fun setUser(user: User?) {
         super.setUser(user)
-        if (10 <= user?.stats?.lvl ?: 0) {
+        if (10 <= (user?.stats?.lvl ?: 0)) {
             if (user?.flags?.classSelected == true) {
                 if (user.preferences?.disableClasses == true) {
                     classSelectionPreference?.title = getString(R.string.enable_class)
