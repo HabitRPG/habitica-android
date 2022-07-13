@@ -35,11 +35,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
         set(value) {
             if (field == value) return
             field = value
-            if (value) {
-                notifyItemInserted(0)
-            } else {
-                notifyItemRemoved(0)
-            }
+            notifyDataSetChanged()
         }
     override var user: User? = null
         set(value) {
