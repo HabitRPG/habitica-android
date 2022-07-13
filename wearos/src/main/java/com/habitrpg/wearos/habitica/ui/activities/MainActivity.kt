@@ -123,7 +123,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         )
         viewModel.user.observe(this) { user ->
             adapter.title = user.profile?.name ?: ""
-            adapter.notifyItemChanged(0)
             val index = adapter.data.indexOfFirst { it.identifier == "stats" }
             adapter.data[index].detailText = getString(R.string.user_level, user.stats?.lvl ?: 0)
             adapter.notifyItemChanged(index+1)

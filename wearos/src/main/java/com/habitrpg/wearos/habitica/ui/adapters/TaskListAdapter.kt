@@ -23,7 +23,7 @@ open class TaskListAdapter : BaseAdapter<Any>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is TaskViewHolder) {
-            val item = data[position - 1] as Task
+            val item = getItemAt(position) as Task
             holder.bind(item)
             holder.onTaskScore = {
                 onTaskScore?.invoke(item)

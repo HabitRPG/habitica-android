@@ -32,6 +32,7 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
         }
 
         adapter.data = buildSettings()
+        adapter.title = getString(R.string.settings)
         lifecycleScope.launch {
             appStateManager.isAppConnected.collect {
                 adapter.isDisconnected = !it
@@ -49,13 +50,6 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
 
     private fun buildSettings(): List<SettingsItem> {
         return listOf(
-            SettingsItem(
-                "header",
-                getString(R.string.settings),
-                SettingsItem.Types.HEADER,
-                null
-            ) {
-            },
             SettingsItem(
                 "sync",
                 getString(R.string.sync_data),

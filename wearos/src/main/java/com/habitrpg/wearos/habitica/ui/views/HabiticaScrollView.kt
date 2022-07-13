@@ -11,6 +11,11 @@ class HabiticaScrollView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : NestedScrollView(context, attrs) {
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        requestFocus()
+    }
+
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, l, t, r, b)
         if (changed) {

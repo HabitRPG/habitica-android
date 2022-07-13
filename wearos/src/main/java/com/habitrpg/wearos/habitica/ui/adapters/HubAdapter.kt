@@ -19,13 +19,12 @@ class HubAdapter: BaseAdapter<MenuItem>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HubViewHolder) {
-            holder.bind(getItemAt(position - 1))
+            holder.bind(getItemAt(position))
         } else {
             super.onBindViewHolder(holder, position)
         }
     }
 
-    private fun getItemAt(position: Int) = data.filter { !it.isHidden }[position]
     override fun getItemViewType(position: Int) = if (position == 0) TYPE_HEADER else 1
 }
 

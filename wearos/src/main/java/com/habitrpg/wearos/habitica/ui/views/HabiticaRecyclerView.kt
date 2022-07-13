@@ -17,6 +17,7 @@ class HabiticaRecyclerView @JvmOverloads constructor(
         post {
             setPadding(0, (height * 0.1).toInt(), 0, (height * 0.25).toInt())
             scrollToPosition(0)
+            requestFocus()
         }
     }
 

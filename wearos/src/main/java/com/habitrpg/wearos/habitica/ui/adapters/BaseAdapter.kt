@@ -10,6 +10,11 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.SpacerViewHolder
 
 abstract class BaseAdapter<D: Any> : RecyclerView.Adapter<RecyclerView.ViewHolder >() {
     var title: String = ""
+    set(value) {
+        val previous = field
+        field = value
+        notifyItemChanged(0)
+    }
     var onRefresh: (() -> Unit)? = null
     var isDisconnected = false
     set(value) {
@@ -31,13 +36,8 @@ abstract class BaseAdapter<D: Any> : RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    override fun getItemCount(): Int {
-        var count = data.size
-        if (title.isNotBlank()) {
-            count++
-        }
-        return count
-    }
+    override fun getItemCount() = data.size + 1
+    protected fun getItemAt(position: Int) = data[position - 1]
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is HeaderViewHolder) {

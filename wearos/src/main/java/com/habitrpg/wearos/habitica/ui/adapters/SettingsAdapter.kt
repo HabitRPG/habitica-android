@@ -29,10 +29,10 @@ class SettingsAdapter: BaseAdapter<SettingsItem>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is SettingsViewHolder -> {
-                holder.bind(data[position])
+                holder.bind(getItemAt(position))
             }
             is FooterViewHolder -> {
-                holder.bind(data[position].title)
+                holder.bind(getItemAt(position).title)
             }
             is SpacerViewHolder -> {
                 holder.bind(16.dpToPx(holder.itemView.context))
@@ -42,7 +42,8 @@ class SettingsAdapter: BaseAdapter<SettingsItem>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = data[position]
+        if (position == 0) return TYPE_HEADER
+        val item = getItemAt(position)
         return when (item.type) {
             SettingsItem.Types.HEADER -> TYPE_HEADER
             SettingsItem.Types.FOOTER -> 1
