@@ -30,6 +30,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                 runCron()
                 return@observe
             }
+            binding.scrollView.isVisible = true
             createTaskListViews(it)
         }
 
@@ -58,13 +59,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         startAnimatingProgress()
         binding.startDayButton.isEnabled = false
         binding.startingTextView.isVisible = true
-        binding.startDayButton.isVisible = false
-        binding.taskView.isVisible = false
-        binding.descriptionView.isVisible = false
-        binding.titleView.isVisible = false
-        binding.phoneDescriptionView.isVisible = false
-        binding.ryaButton.isVisible = false
-        binding.phoneButton.isVisible = false
+        binding.scrollView.isVisible = false
         viewModel.runCron {
             if (it) {
                 lifecycleScope.launch {
@@ -80,11 +75,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                 stopAnimatingProgress()
                 binding.startDayButton.isEnabled = true
                 binding.startingTextView.isVisible = false
-                binding.startDayButton.isVisible = true
-                binding.taskView.isVisible = true
-                binding.descriptionView.isVisible = true
-                binding.titleView.isVisible = true
-                binding.phoneDescriptionView.isVisible = true
+                binding.scrollView.isVisible = true
             }
         }
     }
