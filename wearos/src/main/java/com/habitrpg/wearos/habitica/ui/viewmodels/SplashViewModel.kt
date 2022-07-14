@@ -41,6 +41,9 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
         }) {
             val (userID, apiKey) = String(event.data).split(":")
             try {
+                if (userID.isBlank() || apiKey.isBlank()) {
+                    return@launch
+                }
                 saveTokens(apiKey, userID)
             } catch (e: Exception) {
                 onLoginCompleted(false)

@@ -1,5 +1,6 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -29,6 +30,8 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
 
     private fun openEditFormOnPhone() {
         sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray())
+        startActivity(
+            Intent(this, ContinuePhoneActivity::class.java))
     }
 
     private fun subscribeUI() {

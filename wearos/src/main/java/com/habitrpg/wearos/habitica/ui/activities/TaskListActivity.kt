@@ -149,6 +149,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         startActivity(Intent(this, TaskFormActivity::class.java).apply {
             putExtra("task_type", viewModel.taskType?.value)
         })
+        overridePendingTransition(R.anim.scale_up, 0)
     }
 
     private fun configureAdapter() {

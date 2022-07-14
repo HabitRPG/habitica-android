@@ -110,7 +110,7 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
                     CapabilityClient.FILTER_REACHABLE
                 )
             )
-            val nodeID = info.nodes.firstOrNull { it.isNearby }
+            val nodeID = info.nodes.firstOrNull()
             if (nodeID != null) {
                 function?.invoke(true)
                 Tasks.await(

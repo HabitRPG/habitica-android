@@ -125,6 +125,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
+            return
         }
         val user = userRepository.retrieveUser(true)
         taskRepository.retrieveTasks(user?.tasksOrder, true)

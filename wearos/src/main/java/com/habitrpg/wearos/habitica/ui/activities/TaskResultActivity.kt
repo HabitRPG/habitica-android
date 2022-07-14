@@ -49,14 +49,20 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         }
     }
 
-    override fun finish() {
+    override fun onDestroy() {
         if (viewModel.result?.hasLeveledUp == true) {
             startActivity(Intent(this, LevelupActivity::class.java)
                 .apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })
+            overridePendingTransition(R.anim.scale_in, R.anim.move_away)
         }
+        super.onDestroy()
+    }
+
+    override fun finish() {
         super.finish()
+        overridePendingTransition(0, R.anim.scale_out)
     }
 
     private fun makeChips() {
@@ -148,7 +154,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             it.layoutParams = layoutParams
 
             val animator = AlphaAnimation(0f, 1f)
-            animator.startOffset = (index * 150).toLong() + 200
+            animator.startOffset = (index * 150).toLong() + 600
             animator.duration = 300
             animator.fillAfter = true
             animator.fillBefore = true
@@ -197,6 +203,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val intent = Intent(context, TaskResultActivity::class.java)
             intent.putExtra("result", result)
             context.startActivity(intent)
+            context.overridePendingTransition(R.anim.scale_in, R.anim.move_away)
         }
     }
 }

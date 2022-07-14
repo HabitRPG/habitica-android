@@ -97,10 +97,27 @@ class ApiClient @Inject constructor(
                     cacheControl.noCache()
                         .noStore()
                 }
-                chain.proceed(request.newBuilder().header(
+                val response = chain.proceed(request.newBuilder().header(
                     "Cache-Control",
                     cacheControl.build().toString()
-                    ).build())
+                ).build())
+                val responseBuilder = response.newBuilder()
+                responseBuilder.header("was-cached", (response.networkResponse == null).toString())
+                if (request.method == "GET") {
+                    if (response.code == 504 || response.request.header("x-api-user") != hostConfig.userID) {
+                        // Cache miss. Network might be down, but retry call without cache to be sure.
+                        response.close()
+                        chain.proceed(request.newBuilder()
+                            .header("Cache-Control", "no-cache")
+                            .build())
+                    } else {
+                        responseBuilder
+                            .header("Cache-Control", request.header("Cache-Control") ?: "")
+                            .build()
+                    }
+                } else {
+                    responseBuilder.build()
+                }
             }
             .addNetworkInterceptor { chain ->
                 val original = chain.request()
@@ -121,23 +138,7 @@ class ApiClient @Inject constructor(
                 val request = builder.method(original.method, original.body)
                     .removeHeader("Pragma")
                     .build()
-                val response = chain.proceed(request)
-                val responseBuilder = response.newBuilder()
-                responseBuilder.header("was-cached", (response.networkResponse == null).toString())
-                if (request.method == "GET") {
-                    if (response.code == 504 || response.request.header("x-api-user") != hostConfig.userID) {
-                        // Cache miss. Network might be down, but retry call without cache to be sure.
-                        chain.proceed(request.newBuilder()
-                            .header("Cache-Control", "no-cache")
-                            .build())
-                    } else {
-                        responseBuilder
-                            .header("Cache-Control", request.header("Cache-Control") ?: "")
-                            .build()
-                    }
-                } else {
-                    responseBuilder.build()
-                }
+                chain.proceed(request)
             }
             .readTimeout(2400, TimeUnit.SECONDS)
             .build()

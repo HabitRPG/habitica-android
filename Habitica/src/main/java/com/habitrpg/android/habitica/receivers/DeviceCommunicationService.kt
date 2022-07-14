@@ -45,6 +45,7 @@ class DeviceCommunicationService : WearableListenerService() {
         val startIntent = Intent(this, TaskFormActivity::class.java).apply {
             putExtra(TaskFormActivity.TASK_ID_KEY, taskID)
         }
+        startIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(startIntent)
         messageClient.sendMessage(event.sourceNodeId, "/action_completed", null)
     }

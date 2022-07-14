@@ -18,7 +18,7 @@ class IndeterminateProgressView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    var progressBarWidth = 5f.dpToPx(context)
+    var progressBarWidth = 6f.dpToPx(context)
 
     private val rainbow = listOf(
         ContextCompat.getColor(context, R.color.black),

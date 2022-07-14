@@ -20,6 +20,7 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.amplitude.api.Amplitude
 import com.amplitude.api.Identify
+import com.google.android.gms.wearable.Wearable
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -35,10 +36,10 @@ import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MarkdownParser
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import java.lang.ref.WeakReference
@@ -272,6 +273,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             }
             reloadUserComponent()
             getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
+            Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
             startActivity(LoginActivity::class.java, context)
         }
 

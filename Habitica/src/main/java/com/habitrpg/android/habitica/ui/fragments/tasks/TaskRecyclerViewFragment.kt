@@ -38,16 +38,16 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TaskRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.tasks.TodosRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Job
@@ -102,6 +102,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             recyclerSubscription.dispose()
         }
         recyclerSubscription = CompositeDisposable()
+        if (viewModel == null && parentFragment is TasksFragment) {
+            viewModel = (parentFragment as TasksFragment).viewModel
+        }
         viewModel?.let { viewModel ->
             val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
                 TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
@@ -200,6 +203,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
