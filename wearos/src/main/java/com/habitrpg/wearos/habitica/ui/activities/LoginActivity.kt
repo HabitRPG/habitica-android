@@ -8,10 +8,10 @@ import android.text.method.PasswordTransformationMethod
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
-import com.habitrpg.common.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.wearos.habitica.ui.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,12 +82,12 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         binding.registerButton.setOnClickListener { openRegisterOnPhone() }
 
         binding.passwordEditText.transformationMethod = PasswordTransformationMethod()
-        binding.usernameEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
+        binding.usernameEditText.doOnTextChanged { text, start, before, count ->
             setLoginButtonIsEnabled()
-        })
-        binding.passwordEditText.addTextChangedListener(OnChangeTextWatcher { _, _, _, _ ->
+        }
+        binding.passwordEditText.doOnTextChanged { text, start, before, count ->
             setLoginButtonIsEnabled()
-        })
+        }
 
         currentState = State.INITIAL
     }
