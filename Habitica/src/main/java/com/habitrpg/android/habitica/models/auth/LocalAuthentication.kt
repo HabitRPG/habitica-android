@@ -9,6 +9,6 @@ import io.realm.annotations.RealmClass
 open class LocalAuthentication : RealmObject(), BaseObject {
     var username: String? = null
     var email: String? = null
-    @SerializedName("local")
+    @SerializedName("has_password")
     var hasPassword: Boolean? = false
 }
