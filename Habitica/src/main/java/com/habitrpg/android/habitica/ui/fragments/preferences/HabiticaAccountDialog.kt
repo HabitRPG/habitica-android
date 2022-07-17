@@ -14,10 +14,14 @@ import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
 import com.habitrpg.android.habitica.models.user.User
 
 
-class HabiticaAccountDialog(private var thisContext: Context, private val accountAction: String, val accountUpdateConfirmed: AccountUpdateConfirmed, val user: User?) : DialogFragment(R.layout.dialog_habitica_account) {
+class HabiticaAccountDialog(private var thisContext: Context, ) : DialogFragment(R.layout.dialog_habitica_account) {
 
     private var _binding: DialogHabiticaAccountBinding? = null
     private val binding get() = _binding!!
+
+    var accountAction: String? = null
+    var accountUpdateConfirmed: AccountUpdateConfirmed? = null
+    var user: User? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DialogHabiticaAccountBinding.inflate(layoutInflater)
@@ -31,6 +35,8 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
             "reset_account" -> setResetAccountViews()
             "delete_account" -> setDeleteAccountViews()
         }
+
+        binding.backImagebutton.setOnClickListener{dismiss()}
 
     }
 
@@ -62,7 +68,7 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
 
         binding.confirmActionTextview.setOnClickListener {
             if (binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.reset_caps)) {
-                accountUpdateConfirmed.resetConfirmedClicked()
+                accountUpdateConfirmed?.resetConfirmedClicked()
             }
         }
     }
@@ -102,11 +108,11 @@ class HabiticaAccountDialog(private var thisContext: Context, private val accoun
         binding.confirmActionTextview.setOnClickListener {
             if (user?.authentication?.hasPassword != true) {
                 if (binding.confirmActionTextview.text.toString() == context?.getString(R.string.delete_caps)) {
-                    accountUpdateConfirmed.deletionConfirmClicked(binding.confirmationInputEdittext.text.toString())
+                    accountUpdateConfirmed?.deletionConfirmClicked(binding.confirmationInputEdittext.text.toString())
                 }
             } else {
                 if (binding.confirmationInputEdittext.text.toString().length > 5) {
-                    accountUpdateConfirmed.deletionConfirmClicked(binding.confirmationInputEdittext.text.toString())
+                    accountUpdateConfirmed?.deletionConfirmClicked(binding.confirmationInputEdittext.text.toString())
                 }
             }
 
