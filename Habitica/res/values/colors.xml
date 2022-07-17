@@ -180,6 +180,7 @@
     <color name="disabled_background">@color/gray_400</color>
     <color name="separator">@color/gray_400</color>
     <color name="system_bars">@color/brand_200</color>
+    <color name="account_dialog_bars">@color/white</color>
     <color name="equipment_overview_background">@color/gray_50</color>
     <color name="inverted_background">@color/gray_100</color>
     <color name="inverted_background_offset">@color/gray_200</color>

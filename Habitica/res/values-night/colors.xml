@@ -28,6 +28,7 @@
     <color name="disabled_background">@color/gray_200</color>
     <color name="separator">@color/gray_200</color>
     <color name="system_bars">@color/gray_1</color>
+    <color name="account_dialog_bars">@color/gray_1</color>
     <color name="habit_inactive_gray">@color/gray_10</color>
     <color name="equipment_overview_background">@color/gray_10</color>
     <color name="inverted_background">@color/gray_10</color>

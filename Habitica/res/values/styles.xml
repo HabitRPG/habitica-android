@@ -391,7 +391,7 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:statusBarColor">@color/gray_2_alpha</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/account_dialog_bars</item>
     </style>
 
 
