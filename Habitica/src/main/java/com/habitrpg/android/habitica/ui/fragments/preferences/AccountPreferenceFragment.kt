@@ -404,7 +404,10 @@ class AccountPreferenceFragment :
     }
 
     private fun showAccountDeleteConfirmation(user: User?) {
-        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "delete_account", this, user) }
+        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it) }
+        habiticaAccountDialog?.accountAction = "delete_account"
+        habiticaAccountDialog?.accountUpdateConfirmed = this
+        habiticaAccountDialog?.user = user
         habiticaAccountDialog?.show(parentFragmentManager, "account")
 
         if (habiticaAccountDialog != null) {
@@ -428,7 +431,10 @@ class AccountPreferenceFragment :
     }
 
     private fun showAccountResetConfirmation(user: User?) {
-        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it, "reset_account", this, user) }
+        val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it) }
+        habiticaAccountDialog?.accountAction = "reset_account"
+        habiticaAccountDialog?.accountUpdateConfirmed = this
+        habiticaAccountDialog?.user = user
         habiticaAccountDialog?.show(parentFragmentManager, "account")
 
         if (habiticaAccountDialog != null) {
