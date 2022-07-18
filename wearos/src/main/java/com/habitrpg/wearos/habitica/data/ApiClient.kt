@@ -94,6 +94,9 @@ class ApiClient @Inject constructor(
                         cacheControl.maxAge(1, TimeUnit.DAYS)
                     }
                 } else {
+                    if (!hasNetwork(context)) {
+                        appStateManager.isAppConnected.value = false
+                    }
                     cacheControl.noCache()
                         .noStore()
                 }
