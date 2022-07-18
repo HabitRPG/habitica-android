@@ -13,7 +13,7 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.util.Locale
 
 class QuestMenuView : LinearLayout {

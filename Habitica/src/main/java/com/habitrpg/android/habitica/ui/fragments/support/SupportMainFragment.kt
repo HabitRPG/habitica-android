@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -59,7 +60,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
 
         binding?.resetTutorialButton?.setOnClickListener {
             userRepository.resetTutorial().subscribe({
-                activity?.showSnackbar(null, getString(R.string.tutorial_reset_confirmation))
+                activity?.showSnackbar(null, null, getString(R.string.tutorial_reset_confirmation), displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
             }, RxErrorHandler.handleEmptyError())
         }
     }

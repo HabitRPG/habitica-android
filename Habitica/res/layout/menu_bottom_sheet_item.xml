@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         style="@style/BottomMenuItemText"
         tools:text="Menu Item"/>
-    <com.habitrpg.common.habitica.views.CurrencyView
+    <com.habitrpg.android.habitica.ui.views.CurrencyView
         android:id="@+id/currency_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

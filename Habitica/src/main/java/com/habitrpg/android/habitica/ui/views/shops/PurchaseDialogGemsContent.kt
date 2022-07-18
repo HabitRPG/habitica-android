@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.databinding.DialogPurchaseGemsBinding
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.views.PixelArtView
 
 internal class PurchaseDialogGemsContent(context: Context) : PurchaseDialogContent(context) {

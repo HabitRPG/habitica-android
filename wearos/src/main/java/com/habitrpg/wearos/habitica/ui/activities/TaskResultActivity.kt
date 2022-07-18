@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.extensions.localizedCapitalize
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskResultViewModel
 import com.habitrpg.wearos.habitica.ui.views.TaskRewardChip
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +49,22 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         }
     }
 
+    override fun onDestroy() {
+        if (viewModel.result?.hasLeveledUp == true) {
+            startActivity(Intent(this, LevelupActivity::class.java)
+                .apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
+            overridePendingTransition(R.anim.scale_in, R.anim.move_away)
+        }
+        super.onDestroy()
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, R.anim.scale_out)
+    }
+
     private fun makeChips() {
         binding.gridLayout.removeAllViews()
         var chips = mutableListOf<TaskRewardChip>()
@@ -57,7 +72,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.healthDelta,
-                HabiticaIconsHelper.imageOfHeartDarkBg()
+                R.drawable.heart
             )
             chips.add(chip)
         }
@@ -65,7 +80,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.experienceDelta,
-                HabiticaIconsHelper.imageOfExperience()
+                R.drawable.experience
             )
             chips.add(chip)
         }
@@ -73,7 +88,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.goldDelta,
-                HabiticaIconsHelper.imageOfGold()
+                R.drawable.gold
             )
             chips.add(chip)
         }
@@ -81,7 +96,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.manaDelta,
-                HabiticaIconsHelper.imageOfMagic()
+                R.drawable.magic
             )
             chips.add(chip)
         }
@@ -120,7 +135,11 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
                 layoutParams.columnSpec = GridLayout.spec(0, 3, GridLayout.CENTER)
                 currentRow += 1
             } else {
-                layoutParams.columnSpec = GridLayout.spec(currentColumn, 1)
+                if (chips.size == 2) {
+                    layoutParams.columnSpec = GridLayout.spec(currentColumn, 3, GridLayout.CENTER)
+                } else {
+                    layoutParams.columnSpec = GridLayout.spec(currentColumn, 1)
+                }
                 if (currentColumn > 0) {
                     layoutParams.marginStart = margin
                 }
@@ -135,7 +154,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             it.layoutParams = layoutParams
 
             val animator = AlphaAnimation(0f, 1f)
-            animator.startOffset = (index * 150).toLong() + 200
+            animator.startOffset = (index * 150).toLong() + 600
             animator.duration = 300
             animator.fillAfter = true
             animator.fillBefore = true
@@ -184,6 +203,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             val intent = Intent(context, TaskResultActivity::class.java)
             intent.putExtra("result", result)
             context.startActivity(intent)
+            context.overridePendingTransition(R.anim.scale_in, R.anim.move_away)
         }
     }
 }

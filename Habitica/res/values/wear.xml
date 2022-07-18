@@ -3,5 +3,6 @@
     tools:keep="@array/android_wear_capabilities">
     <string-array name="android_wear_capabilities">
         <item>edit_task</item>
+        <item>open_activity</item>
     </string-array>
 </resources>

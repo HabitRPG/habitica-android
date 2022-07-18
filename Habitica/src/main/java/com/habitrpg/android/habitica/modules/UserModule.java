@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.modules;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.habitrpg.android.habitica.BuildConfig;
 import com.habitrpg.android.habitica.data.TaskRepository;
 import com.habitrpg.android.habitica.data.UserRepository;
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager;
@@ -28,7 +29,11 @@ public class UserModule {
     @Named(NAMED_USER_ID)
     @UserScope
     public String providesUserID(SharedPreferences sharedPreferences) {
-        return sharedPreferences.getString("UserID", "");
+        if (BuildConfig.DEBUG && !BuildConfig.TEST_USER_ID.isEmpty()) {
+            return BuildConfig.TEST_USER_ID;
+        } else {
+            return sharedPreferences.getString("UserID", "");
+        }
     }
 
     @Provides

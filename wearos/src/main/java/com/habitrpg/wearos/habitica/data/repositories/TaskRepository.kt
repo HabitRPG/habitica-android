@@ -18,9 +18,14 @@ class TaskRepository @Inject constructor(
     private val userLocalRepository: UserLocalRepository
 ) {
 
-    suspend fun retrieveTasks(order: TasksOrder?, forced: Boolean = false): TaskList? {
-        val tasks = apiClient.getTasks(forced)
-        tasks?.let { localRepository.saveTasks(tasks, order) }
+    suspend fun retrieveTasks(order: TasksOrder?, ensureFresh: Boolean = false): TaskList? {
+        val response = apiClient.getTasks()
+        var tasks = response.responseData
+        tasks?.let { localRepository.saveTasks(it, order) }
+        if (ensureFresh && !response.isResponseFresh) {
+            tasks = apiClient.getTasks(true).responseData
+            tasks?.let { localRepository.saveTasks(tasks, order) }
+        }
         return tasks
     }
 
@@ -28,7 +33,7 @@ class TaskRepository @Inject constructor(
 
     suspend fun scoreTask(user: User?, task: Task, direction: TaskDirection): TaskScoringResult? {
         val id = task.id ?: return null
-        val result = apiClient.scoreTask(id, direction.text)
+        val result = apiClient.scoreTask(id, direction.text).responseData
         if (result != null) {
             task.completed = direction == TaskDirection.UP
             task.value += result.delta
@@ -65,7 +70,7 @@ class TaskRepository @Inject constructor(
     }
 
     suspend fun createTask(task: Task) {
-        val newTask = apiClient.createTask(task)
+        val newTask = apiClient.createTask(task).responseData
         if (newTask != null) {
             localRepository.updateTask(newTask)
         }
@@ -73,4 +78,5 @@ class TaskRepository @Inject constructor(
 
     fun getTaskCounts() = localRepository.getTaskCounts()
     fun getActiveTaskCounts() = localRepository.getActiveTaskCounts()
+    fun clearData() = localRepository.clearData()
 }

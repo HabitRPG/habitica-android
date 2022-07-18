@@ -27,7 +27,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.Action
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 abstract class BaseTaskViewHolder constructor(
@@ -36,6 +36,7 @@ abstract class BaseTaskViewHolder constructor(
     var openTaskFunc: ((Pair<Task, View>) -> Unit),
     var brokenTaskFunc: ((Task) -> Unit)
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
+    private val scope = MainScope()
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
@@ -108,7 +109,7 @@ abstract class BaseTaskViewHolder constructor(
         }
         notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
             override fun ellipsisStateChanged(ellipses: Boolean) {
-                GlobalScope.launch(Dispatchers.Main.immediate) {
+                scope.launch(Dispatchers.Main.immediate) {
                     if (ellipses && notesTextView.maxLines != 3) {
                         notesTextView.maxLines = 3
                     }
@@ -209,7 +210,7 @@ abstract class BaseTaskViewHolder constructor(
         titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
 
         if (displayMode == "standard") {
-            iconViewReminder?.visibility = if (data.reminders?.size ?: 0 > 0) View.VISIBLE else View.GONE
+            iconViewReminder?.visibility = if ((data.reminders?.size ?: 0) > 0) View.VISIBLE else View.GONE
 
             iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
             if (task?.challengeID != null) {

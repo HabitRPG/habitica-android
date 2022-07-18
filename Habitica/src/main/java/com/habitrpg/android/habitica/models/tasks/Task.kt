@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.models.tasks.Attribute
+import com.habitrpg.common.habitica.models.tasks.BaseTask
 import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.realm.RealmList
@@ -28,7 +29,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
 
-open class Task : RealmObject, BaseMainObject, Parcelable {
+open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     override val realmClass: Class<Task>
         get() = Task::class.java
     override val primaryIdentifier: String?
@@ -43,7 +44,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     var priority: Float = 0.0f
     var text: String = ""
     var notes: String? = null
-    var type: TaskType?
+    override var type: TaskType?
         get() = TaskType.from(typeValue)
         set(value) { typeValue = value?.value }
     private var typeValue: String? = null
@@ -61,10 +62,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     // Habits
     var up: Boolean? = false
     var down: Boolean? = false
-    var counterUp: Int? = 0
-    var counterDown: Int? = 0
+    override var counterUp: Int? = 0
+    override var counterDown: Int? = 0
     // todos/dailies
-    var completed: Boolean = false
+    override var completed: Boolean = false
     var checklist: RealmList<ChecklistItem>? = RealmList()
     var reminders: RealmList<RemindersItem>? = RealmList()
     // dailies
@@ -73,7 +74,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
         set(value) { frequencyValue = value?.value }
     var frequencyValue: String? = null
     var everyX: Int? = 0
-    var streak: Int? = 0
+    override var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
     // todos
@@ -86,7 +87,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
     @Ignore
     var parsedNotes: Spanned? = null
 
-    var isDue: Boolean? = null
+    override var isDue: Boolean? = null
 
     var nextDue: RealmList<Date>? = null
 
@@ -187,9 +188,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable {
                 else -> R.color.blue_1
             }
         }
-
-    val isDisplayedActive: Boolean
-        get() = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO) && !completed
 
     val isChecklistDisplayActive: Boolean
         get() = this.checklist?.size != this.completedChecklistCount

@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_primary"
         android:text="@string/armoire_rate_equipment_title"
-        style="@style/Subheader1" />
+        style="@style/SubHeader1" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_primary"
         android:text="@string/armoire_rate_food_title"
-        style="@style/Subheader1" />
+        style="@style/SubHeader1" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_primary"
         android:text="@string/armoire_rate_experience_title"
-        style="@style/Subheader1" />
+        style="@style/SubHeader1" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

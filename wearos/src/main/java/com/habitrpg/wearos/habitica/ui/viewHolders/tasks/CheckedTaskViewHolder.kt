@@ -13,14 +13,14 @@ abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) 
     abstract val checkboxWrapper: ViewGroup
 
     override fun bind(data: Task) {
-        checkboxWrapper.setOnClickListener { _ ->
+        checkboxWrapper.setOnClickListener {
             onTaskScore?.invoke()
         }
         super.bind(data)
         if (data.completed) {
             checkbox.setImageResource(R.drawable.checkmark)
             checkboxWrapper.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.amp_transparent))
+                ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.transparent))
             checkbox.backgroundTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(
                     itemView.context,

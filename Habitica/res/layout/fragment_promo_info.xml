@@ -65,7 +65,7 @@
                     android:id="@+id/promo_banner_duration_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Subheader1"/>
+                    style="@style/SubHeader1"/>
             </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
             android:id="@+id/prompt_button"
             android:layout_width="match_parent"
             android:layout_height="38dp"
-            style="@style/Subheader1"
+            style="@style/SubHeader1"
             android:gravity="center" />
 
         <TextView

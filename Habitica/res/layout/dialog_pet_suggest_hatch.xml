@@ -52,12 +52,14 @@
                 android:id="@+id/shimmer_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:shimmer_repeat_delay="8000">
+                app:shimmer_repeat_delay="8000"
+                app:shimmer_base_color="@color/text_dimmed"
+                app:shimmer_highlight_color="@color/content_background"
+                app:shimmer_highlight_alpha="0.8">
             <com.habitrpg.common.habitica.views.PixelArtView
                 android:id="@+id/pet_view"
                 android:layout_width="@dimen/gear_image_size"
                 android:layout_height="@dimen/gear_image_size"
-                android:alpha="0.1"
                 android:layout_gravity="center" />
             </com.facebook.shimmer.ShimmerFrameLayout>
         </FrameLayout>

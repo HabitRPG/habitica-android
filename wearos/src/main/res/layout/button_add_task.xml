@@ -10,5 +10,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_plus"
         android:layout_gravity="center"
+        android:importantForAccessibility="no"
         />
 </merge>

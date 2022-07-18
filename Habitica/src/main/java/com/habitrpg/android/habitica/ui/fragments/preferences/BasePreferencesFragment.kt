@@ -28,7 +28,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        userViewModel.user.observe(viewLifecycleOwner) { user = it }
+        userViewModel.user.observe(viewLifecycleOwner) { setUser(it) }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

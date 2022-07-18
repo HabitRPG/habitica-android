@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import io.reactivex.rxjava3.core.BackpressureStrategy
@@ -126,7 +126,8 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                     equipment?.value ?: 0
                 }.toString()
 
-                (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(HabiticaIconsHelper.imageOfGem())
+                (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(
+                    HabiticaIconsHelper.imageOfGem())
 
                 val dialog = HabiticaAlertDialog(itemView.context)
                 dialog.addButton(R.string.purchase_button, true) { _, _ ->

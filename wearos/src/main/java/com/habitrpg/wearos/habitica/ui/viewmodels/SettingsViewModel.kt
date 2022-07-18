@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
-import com.habitrpg.wearos.habitica.managers.LoadingManager
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,22 +18,24 @@ class SettingsViewModel @Inject constructor(userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     private val apiClient: ApiClient,
     private val sharedPreferences: SharedPreferences,
-    loadingManager: LoadingManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
+    appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
 
     fun logout() {
         sharedPreferences.edit {
             clear()
         }
         apiClient.updateAuthenticationCredentials(null, null)
+        userRepository.clearData()
+        taskRepository.clearData()
     }
 
     fun resyncData() {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            loadingManager.startLoading()
+            appStateManager.startLoading()
             val user = userRepository.retrieveUser(true)
             taskRepository.retrieveTasks(user?.tasksOrder, true)
-            loadingManager.endLoading()
+            appStateManager.endLoading()
         }
     }
 

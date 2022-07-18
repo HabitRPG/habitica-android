@@ -28,7 +28,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.models.PlayerTier
-import com.habitrpg.common.habitica.views.UsernameLabel
+import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import javax.inject.Inject
 
 class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {

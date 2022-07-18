@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Spell Name"
-                style="@style/Subheader1"/>
+                style="@style/SubHeader1"/>
 
             <TextView
                 android:id="@+id/skill_notes"

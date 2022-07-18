@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="wrap_content"
+    tools:layout_width="match_parent"
+    tools:parentTag="com.habitrpg.wearos.habitica.ui.views.TextActionChipView">
+
+    <ImageView
+        android:id="@+id/chip_imageview"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="14dp"
+        android:clickable="false"
+        android:duplicateParentState="true"
+        android:elevation="2dp" />
+
+    <TextView
+        android:id="@+id/chip_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="34dp"
+        android:clickable="false"
+        android:duplicateParentState="true"
+        android:elevation="2dp"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing=".01"
+        android:paddingHorizontal="@dimen/row_padding_horizontal"
+        android:textColor="@color/watch_white"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/wear_chip_button"
+        style="@style/ChipButton.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:duplicateParentState="true" />
+
+</merge>

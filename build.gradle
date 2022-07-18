@@ -10,8 +10,8 @@ buildscript {
         kotlin_version = '1.7.0'
         core_ktx_version = '1.8.0'
         appcompat_version = '1.4.2'
-        lifecycle_version = '2.4.1'
-        coroutines_version = '1.6.1'
+        lifecycle_version = '2.5.0'
+        coroutines_version = '1.6.2'
         okhttp_version = '4.9.3'
         retrofit_version = '2.9.0'
         daggerhilt_version = '2.42'
@@ -35,10 +35,10 @@ buildscript {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.google.gms:google-services:4.3.13'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.1'
-        classpath "io.realm:realm-gradle-plugin:10.10.1"
+        classpath "io.realm:realm-gradle-plugin:10.11.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0-rc02"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0"
         classpath 'com.google.firebase:perf-plugin:1.4.1'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerhilt_version"
     }

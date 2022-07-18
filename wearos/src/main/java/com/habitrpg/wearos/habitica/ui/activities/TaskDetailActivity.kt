@@ -1,14 +1,16 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskDetailBinding
+import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.common.habitica.models.tasks.streakString
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 
 @AndroidEntryPoint
 class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailViewModel>() {
@@ -28,19 +30,23 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
 
     private fun openEditFormOnPhone() {
         sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray())
+        startActivity(
+            Intent(this, ContinuePhoneActivity::class.java))
     }
 
     private fun subscribeUI() {
         viewModel.task.observe(this) { task ->
-            binding.taskTypeView.text = task?.type?.value?.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.getDefault()
-                ) else it.toString()
+            binding.taskTypeView.text = when (task?.type) {
+                TaskType.HABIT -> getString(R.string.habit)
+                TaskType.DAILY -> getString(R.string.daily)
+                TaskType.TODO -> getString(R.string.todo)
+                TaskType.REWARD -> getString(R.string.reward)
+                null -> ""
             }
             binding.taskTypeView.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    task?.extraLightTaskColor ?: R.color.white
+                    task?.extraLightTaskColor ?: R.color.watch_white
                 )
             )
             binding.taskTextView.text = task?.text

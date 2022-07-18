@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTasklistBinding
-import com.habitrpg.common.habitica.helpers.EmptyItem
+import com.habitrpg.android.habitica.databinding.EmptyTaskListBinding
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
@@ -22,6 +24,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.ToDoListAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskListViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel>() {
@@ -32,6 +35,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         binding = ActivityTasklistBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         configureAdapter()
+
         binding.recyclerView.apply {
             overScrollMode = View.OVER_SCROLL_ALWAYS
             layoutManager =
@@ -40,8 +44,11 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                     HabiticaScrollingLayoutCallback()
                 )
             adapter = this@TaskListActivity.adapter
-            emptyItem = EmptyItem(
-                getString(
+            emptyViewBuilder = {
+                val emptyBinding = EmptyTaskListBinding.inflate(layoutInflater)
+                emptyBinding.disconnected.root.isVisible = !appStateManager.isAppConnected.value
+                emptyBinding.header.textView.text = getTitle(viewModel.taskCount.value)
+                emptyBinding.descriptionView.text = getString(
                     R.string.no_tasks, getString(
                         when (viewModel.taskType) {
                             TaskType.HABIT -> R.string.habit
@@ -52,7 +59,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                         }
                     )
                 )
-            )
+                emptyBinding.root
+            }
             onRefresh = {
                 viewModel.retrieveFullUserData()
             }
@@ -64,6 +72,12 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         viewModel.taskCount.observe(this) {
             adapter.title = getTitle(it)
         }
+        lifecycleScope.launch {
+            appStateManager.isAppConnected.collect {
+                adapter.isDisconnected = !it
+            }
+        }
+
 
         adapter.onTaskScore = {
             scoreTask(it)
@@ -89,8 +103,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                     ?.let { TaskDirection.valueOf(it) }
                     ?: TaskDirection.UP
 
-                taskToScore?.let {
-                    viewModel.scoreTask(it, direction) {
+                taskToScore?.let { task ->
+                    viewModel.scoreTask(task, direction) {
                         if (it != null) {
                             showTaskScoringResult(it)
                         }
@@ -135,6 +149,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         startActivity(Intent(this, TaskFormActivity::class.java).apply {
             putExtra("task_type", viewModel.taskType?.value)
         })
+        overridePendingTransition(R.anim.scale_up, 0)
     }
 
     private fun configureAdapter() {
@@ -163,10 +178,10 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         val taskType = viewModel.taskType ?: return ""
         return if (count != null) {
             when (taskType) {
-                TaskType.HABIT -> getString(R.string.x_habits, count)
-                TaskType.DAILY -> getString(R.string.x_dailies, count)
-                TaskType.TODO -> getString(R.string.x_todos, count)
-                TaskType.REWARD -> getString(R.string.x_rewards, count)
+                TaskType.HABIT -> resources.getQuantityString(R.plurals.x_habits, count, count)
+                TaskType.DAILY -> resources.getQuantityString(R.plurals.x_dailies, count, count)
+                TaskType.TODO -> resources.getQuantityString(R.plurals.x_todos, count, count)
+                TaskType.REWARD -> resources.getQuantityString(R.plurals.x_rewards, count, count)
             }
         } else {
             when (taskType) {

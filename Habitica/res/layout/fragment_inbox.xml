@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/pms_disabled"
                 android:gravity="center"
-                style="@style/Subheader1"
+                style="@style/SubHeader1"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="4dp"/>
             <TextView

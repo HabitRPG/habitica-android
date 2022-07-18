@@ -3,7 +3,6 @@ package com.habitrpg.wearos.habitica.ui.viewHolders.tasks
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.RowTodoBinding
 import com.habitrpg.wearos.habitica.ui.views.TaskTextView
 

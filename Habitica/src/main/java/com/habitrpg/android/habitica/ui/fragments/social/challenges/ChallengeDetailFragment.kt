@@ -36,7 +36,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import retrofit2.HttpException
 import javax.inject.Inject
 

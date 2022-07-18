@@ -27,7 +27,7 @@ class HabiticaScrollingLayoutCallback : WearableLinearLayoutManager.LayoutCallba
                 return
             }
             // Adjust to the maximum scale
-            progressToCenter = Math.min(progressToCenter * 1.5f, MAX_ICON_PROGRESS)
+            progressToCenter = (progressToCenter * 1.5f).coerceAtMost(MAX_ICON_PROGRESS)
             val scale = 1 - progressToCenter
 
             scaleX = scale

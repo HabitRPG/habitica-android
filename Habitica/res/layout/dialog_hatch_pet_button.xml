@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="60dp"
     android:background="@drawable/button_background_primary"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="6dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,8 +17,9 @@
         android:textColor="@color/white"
         android:layout_marginEnd="6dp"
         />
-    <com.habitrpg.common.habitica.views.CurrencyView
+    <com.habitrpg.android.habitica.ui.views.CurrencyView
         android:id="@+id/currencyView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:fontFamily="sans-serif-medium"/>
 </LinearLayout>

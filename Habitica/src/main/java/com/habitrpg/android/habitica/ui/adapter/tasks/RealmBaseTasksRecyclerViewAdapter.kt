@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.functions.Action
@@ -35,11 +35,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
         set(value) {
             if (field == value) return
             field = value
-            if (value) {
-                notifyItemInserted(0)
-            } else {
-                notifyItemRemoved(0)
-            }
+            notifyDataSetChanged()
         }
     override var user: User? = null
         set(value) {

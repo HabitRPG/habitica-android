@@ -5,7 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="30dp"
     android:paddingStart="16dp"
-    tools:parentTag="com.habitrpg.wearos.habitica.ui.views.StatValue">
+    android:paddingEnd="0dp"
+    tools:parentTag="com.habitrpg.wearos.habitica.ui.views.StatValueView">
 
     <View
         android:id="@+id/view"
@@ -24,6 +25,7 @@
         android:layout_height="17dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="6dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@+id/current_value"
         app:layout_constraintEnd_toStartOf="@+id/current_value"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +40,7 @@
         android:autoSizeStepGranularity="2sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/press_start_reg"
-        android:text="00"
+        tools:text="00"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/view"
@@ -53,8 +55,8 @@
         android:autoSizeMinTextSize="4sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/press_start_reg"
-        android:text="/00"
-        android:textColor="@color/white"
+        tools:text="/00"
+        android:textColor="@color/watch_white"
         android:textSize="6sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/view"

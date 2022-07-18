@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormHabitScoringBinding
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class HabitScoringButtonsView @JvmOverloads constructor(
     context: Context,

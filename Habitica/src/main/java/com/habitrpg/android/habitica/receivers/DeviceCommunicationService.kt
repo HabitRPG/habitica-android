@@ -9,6 +9,7 @@ import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.helpers.DeviceCommunication
 import javax.inject.Inject
 
 class DeviceCommunicationService : WearableListenerService() {
@@ -24,16 +25,19 @@ class DeviceCommunicationService : WearableListenerService() {
     override fun onMessageReceived(event: MessageEvent) {
         super.onMessageReceived(event)
         when (event.path) {
-            "/request/auth" -> processAuthRequest(event)
-            "/show/register" -> openActivity(LoginActivity::class.java)
-            "/show/rya" -> openActivity(MainActivity::class.java)
-            "/tasks/edit" -> openTaskForm(event)
+            DeviceCommunication.REQUEST_AUTH -> processAuthRequest(event)
+            DeviceCommunication.SHOW_REGISTER -> openActivity(event, LoginActivity::class.java)
+            DeviceCommunication.SHOW_LOGIN -> openActivity(event, LoginActivity::class.java)
+            DeviceCommunication.SHOW_RYA -> openActivity(event, MainActivity::class.java)
+            DeviceCommunication.SHOW_TASK_EDIT -> openTaskForm(event)
         }
     }
 
-    private fun openActivity(activityClass: Class<*>) {
+    private fun openActivity(event: MessageEvent, activityClass: Class<*>) {
         val intent = Intent(this, activityClass)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+        messageClient.sendMessage(event.sourceNodeId, "/action_completed", null)
     }
 
     private fun openTaskForm(event: MessageEvent) {
@@ -41,7 +45,9 @@ class DeviceCommunicationService : WearableListenerService() {
         val startIntent = Intent(this, TaskFormActivity::class.java).apply {
             putExtra(TaskFormActivity.TASK_ID_KEY, taskID)
         }
-         startActivity(startIntent)
+        startIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(startIntent)
+        messageClient.sendMessage(event.sourceNodeId, "/action_completed", null)
     }
 
     private fun processAuthRequest(event: MessageEvent) {

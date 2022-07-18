@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.views.HabiticaIcons
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIcons
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class OldQuestProgressView : LinearLayout {
     private val binding = QuestProgressOldBinding.inflate(context.layoutInflater, this)

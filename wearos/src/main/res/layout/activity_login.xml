@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -15,13 +14,14 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_gryphon_white"
+                android:importantForAccessibility="no"
                 android:layout_marginBottom="@dimen/spacing_medium"/>
             <TextView
                 android:id="@+id/title_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Text.Subheader1"
-                android:textColor="@color/white"
+                style="@style/Text.SubHeader1"
+                android:textColor="@color/watch_white"
                 android:text="@string/sign_in"
                 android:layout_marginBottom="@dimen/spacing_large"/>
             <TextView
@@ -31,54 +31,55 @@
                 android:gravity="center"
                 android:text="@string/sign_in_description"
                 style="@style/Text.Body2"
-                android:textColor="@color/white"
+                android:textColor="@color/watch_white"
                 android:layout_marginBottom="18dp"/>
-            <Button
+
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/sign_in_on_phone_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/ChipButton"
-                android:text="@string/sign_in_on_phone"
-                android:drawableStart="@drawable/handoff"
-                android:layout_marginBottom="@dimen/spacing_small"/>
-            <Button
+                android:layout_marginBottom="4dp"
+                app:chipImage="@drawable/handoff"
+                app:chipText="@string/sign_in_on_phone" />
+
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/other_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/ChipButton"
-                android:drawableStart="@drawable/ic_keyboard"
-                android:text="@string/other_options"/>
+                android:layout_marginBottom="4dp"
+                app:chipImage="@drawable/ic_keyboard"
+                app:chipText="@string/other_options" />
 
-
-            <Button
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/google_login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/google_icon"
-                android:text="@string/login_btn_google"
-                android:layout_marginBottom="@dimen/spacing_small"
-                style="@style/ChipButton"/>
-            <Button
+                android:layout_marginBottom="4dp"
+                app:chipImage="@drawable/google_icon"
+                app:chipText="@string/login_btn_google" />
+
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/username_password_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_in_password"
-                android:layout_marginBottom="@dimen/spacing_small"
-                android:drawableStart="@drawable/ic_keyboard"
-                style="@style/ChipButton"/>
-            <Button
+                android:layout_marginBottom="4dp"
+                app:chipImage="@drawable/ic_keyboard"
+                app:chipText="@string/sign_in_password" />
+
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/create_account"
-                android:drawableStart="@drawable/handoff"
-                style="@style/ChipButton"/>
+                android:layout_marginBottom="4dp"
+                app:chipImage="@drawable/handoff"
+                app:chipText="@string/create_account" />
 
             <EditText
                 android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"
                 android:hint="@string/email_username"
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/row_background_outline"
@@ -95,7 +96,9 @@
                 android:paddingHorizontal="16dp"
                 android:autofillHints="password"
                 android:textColorHint="@color/watch_gray_200"
+                android:inputType="textPassword|text"
                 android:textSize="14sp"
+                android:imeOptions="actionDone"
                 android:layout_marginBottom="@dimen/spacing_small"/>
             <Button
                 android:id="@+id/login_button"

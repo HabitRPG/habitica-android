@@ -19,19 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/how_did_you_do"
-        android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:textSize="14sp"
+        style="@style/Text.Body1"
         android:textColor="@color/watch_gray_200"/>
     <TextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:textSize="16sp"
+        style="@style/Text.SubHeader1"
         android:maxLines="2"
-        android:textColor="@color/white"/>
+        android:textColor="@color/watch_white"/>
     <Space
         android:layout_width="1dp"
         android:layout_height="0dp"

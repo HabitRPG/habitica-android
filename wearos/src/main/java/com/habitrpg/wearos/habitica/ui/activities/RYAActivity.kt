@@ -1,16 +1,21 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
 import android.os.Bundle
-import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityRyaBinding
 import com.habitrpg.android.habitica.databinding.RowDailyBinding
+import com.habitrpg.common.habitica.helpers.DeviceCommunication
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.wearos.habitica.ui.viewmodels.RYAViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Date
 
 @AndroidEntryPoint
 class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
@@ -21,6 +26,11 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         super.onCreate(savedInstanceState)
 
         viewModel.tasks.observe(this) {
+            if (it.isEmpty()) {
+                runCron()
+                return@observe
+            }
+            binding.scrollView.isVisible = true
             createTaskListViews(it)
         }
 
@@ -34,19 +44,38 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         }
 
         binding.phoneButton.setOnClickListener {
-            openRemoteActivity("/show/rya")
+            openRemoteActivity(DeviceCommunication.SHOW_RYA)
         }
 
         binding.startDayButton.setOnClickListener {
-            startAnimatingProgress()
-            binding.startDayButton.isEnabled = false
-            viewModel.runCron {
-                stopAnimatingProgress()
-                if (it) {
+            runCron()
+        }
+    }
+
+    lateinit var startTime: Date
+
+    private fun runCron() {
+        startTime = Date()
+        startAnimatingProgress()
+        binding.startDayButton.isEnabled = false
+        binding.startingTextView.isVisible = true
+        binding.scrollView.isVisible = false
+        viewModel.runCron {
+            if (it) {
+                lifecycleScope.launch {
+                    val elapsed = Date().time - startTime.time
+                    if (elapsed <= 1000) {
+                        // always show it at least 1 second
+                        delay(1000 - elapsed)
+                    }
+                    stopAnimatingProgress()
                     finish()
-                } else {
-                    binding.startDayButton.isEnabled = true
                 }
+            } else {
+                stopAnimatingProgress()
+                binding.startDayButton.isEnabled = true
+                binding.startingTextView.isVisible = false
+                binding.scrollView.isVisible = true
             }
         }
     }
@@ -60,7 +89,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
                 viewModel.tappedTask(task)
             }
             holder.onTaskScore = { viewModel.tappedTask(task) }
-            val layoutParams = taskBinding.chip.layoutParams as FrameLayout.LayoutParams
+            val layoutParams = taskBinding.chip.layoutParams as LinearLayout.LayoutParams
             layoutParams.marginStart = 0
             layoutParams.marginEnd = 0
             taskBinding.chip.layoutParams = layoutParams

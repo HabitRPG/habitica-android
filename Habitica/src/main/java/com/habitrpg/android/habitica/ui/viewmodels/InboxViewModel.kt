@@ -10,21 +10,21 @@ import androidx.paging.PositionalDataSource
 import androidx.paging.toLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.common.habitica.extensions.Optional
-import com.habitrpg.common.habitica.extensions.asOptional
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.common.habitica.extensions.Optional
+import com.habitrpg.common.habitica.extensions.asOptional
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.ceil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseViewModel() {
     @Inject
@@ -101,7 +101,7 @@ class MessagesDataSource(
             callback.onResult(emptyList())
             return
         }
-        GlobalScope.launch(Dispatchers.Main.immediate) {
+        MainScope().launch(Dispatchers.Main.immediate) {
             if (recipientID?.isNotBlank() != true) { return@launch }
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
             socialRepository.retrieveInboxMessages(recipientID ?: "", page)
@@ -120,7 +120,7 @@ class MessagesDataSource(
 
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<ChatMessage>) {
         lastFetchWasEnd = false
-        GlobalScope.launch(Dispatchers.Main.immediate) {
+        MainScope().launch(Dispatchers.Main.immediate) {
             socialRepository.getInboxMessages(recipientID)
                 .map { socialRepository.getUnmanagedCopy(it) }
                 .firstElement()

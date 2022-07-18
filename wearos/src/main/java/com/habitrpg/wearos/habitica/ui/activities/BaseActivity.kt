@@ -8,13 +8,13 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
-import androidx.wear.activity.ConfirmationActivity
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityWrapperBinding
-import com.habitrpg.wearos.habitica.managers.LoadingManager
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.wearos.habitica.ui.views.IndeterminateProgressView
 import kotlinx.coroutines.Dispatchers
@@ -23,10 +23,10 @@ import javax.inject.Inject
 
 abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivity() {
     @Inject
-    lateinit var loadingManager: LoadingManager
+    lateinit var appStateManager: AppStateManager
 
     val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
-    val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
+    private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
     companion object {
         var currentActivityClassName: String? = null
     }
@@ -44,18 +44,19 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
 
         viewModel.errorValues.observe(this) {
             val intent = Intent(this, ConfirmationActivity::class.java).apply {
-                putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.FAILURE_ANIMATION)
-                putExtra(ConfirmationActivity.EXTRA_MESSAGE, it.title)
-                putExtra(ConfirmationActivity.EXTRA_ANIMATION_DURATION_MILLIS, 3000)
+                putExtra("text", it.title)
+                putExtra("icon", R.drawable.error)
             }
             startActivity(intent)
         }
 
-        loadingManager.isLoading.observe(this) {
-            if (it) {
-                startAnimatingProgress()
-            } else {
-                stopAnimatingProgress()
+        lifecycleScope.launch {
+            appStateManager.isLoading.collect {
+                if (it) {
+                    startAnimatingProgress()
+                } else {
+                    stopAnimatingProgress()
+                }
             }
         }
     }
@@ -76,6 +77,7 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
 
     fun stopAnimatingProgress() {
         if (progressView != null) {
+            progressView?.stopAnimation()
             wrapperBinding.root.removeView(progressView)
             progressView = null
         } else {
@@ -87,8 +89,12 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
         }
     }
 
-    internal fun openRemoteActivity(url: String) {
+    internal fun openRemoteActivity(url: String, keepActive: Boolean = false) {
         sendMessage("open_activity", url, null)
+        startActivity(Intent(this, ContinuePhoneActivity::class.java)
+            .apply {
+                putExtra("keep_active", keepActive)
+            })
     }
 
     internal fun sendMessage(
@@ -104,7 +110,7 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
                     CapabilityClient.FILTER_REACHABLE
                 )
             )
-            val nodeID = info.nodes.firstOrNull { it.isNearby }
+            val nodeID = info.nodes.firstOrNull()
             if (nodeID != null) {
                 function?.invoke(true)
                 Tasks.await(

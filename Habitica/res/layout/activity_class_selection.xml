@@ -180,7 +180,7 @@
                 android:layout_height="43dp"
                 android:textColor="@color/white"
                 android:gravity="center"
-                style="@style/Subheader1"
+                style="@style/SubHeader1"
                 android:background="@drawable/layout_rounded_bg_yellow_10"
                 tools:text="Becoma a Healer"/>
         </LinearLayout>

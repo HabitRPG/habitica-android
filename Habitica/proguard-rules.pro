@@ -97,21 +97,6 @@
 -keepclassmembers class * {
     native <methods>;
 }
-# Keep our interfaces so they can be used by other ProGuard rules.
-# See http://sourceforge.net/p/proguard/bugs/466/
--keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
-
-# Do not strip any method/class that is annotated with @DoNotStrip
--keep @com.facebook.common.internal.DoNotStrip class *
--keepclassmembers class * {
-    @com.facebook.common.internal.DoNotStrip *;
-}
-
-# Keep native methods
--keepclassmembers class * {
-    native <methods>;
-}
-#end fresko
 
 #amplitude
 -keep class com.google.android.gms.ads.** { *; }
@@ -137,20 +122,6 @@
     -keep class com.google.android.gms.** { *; }
     -dontwarn com.google.android.gms.**
 #end playservices
-
-#checkout
--keep class com.android.vending.billing.**
-
--assumenosideeffects class org.solovyev.android.checkout.Billing {
-    public static void debug(...);
-    public static void warning(...);
-    public static void error(...);
-}
-
--assumenosideeffects class org.solovyev.android.checkout.Check {
-    static *;
-}
-#end chekout
 
 #add warnings here, warnings in proguard is normal
 -dontwarn javax.annotation.**

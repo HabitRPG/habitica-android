@@ -10,7 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
-import com.habitrpg.android.habitica.helpers.Animations
+import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.ui.activities.mainActivityCreatedAt
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.HealthFormatter
 import com.habitrpg.common.habitica.models.Avatar
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.util.Date
 import java.util.Locale
 import kotlin.math.floor

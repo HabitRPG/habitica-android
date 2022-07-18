@@ -60,4 +60,5 @@
     <color name="exp_bar_color">@color/watch_yellow_100</color>
     <color name="mp_bar_color">@color/watch_blue_100</color>
     <color name="hp_bar_color">@color/watch_red_100</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

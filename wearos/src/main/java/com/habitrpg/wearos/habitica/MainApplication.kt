@@ -2,9 +2,12 @@ package com.habitrpg.wearos.habitica
 
 import android.app.Application
 import android.content.Intent
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.MarkdownParser
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
@@ -26,9 +29,9 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
         setupCoil()
+        setupFirebase()
 
         MainScope().launch {
             userRepository.getUser().onEach {
@@ -46,9 +49,27 @@ class MainApplication : Application() {
         if (userRepository.hasAuthentication) {
             MainScope().launch(CoroutineExceptionHandler { _, _ ->
             }) {
-                val user = userRepository.retrieveUser()
-                taskRepository.retrieveTasks(user?.tasksOrder)
+                val user = userRepository.retrieveUser(true)
+                taskRepository.retrieveTasks(user?.tasksOrder, true)
             }
+        }
+
+        logLaunch()
+    }
+
+    private fun logLaunch() {
+        if (!BuildConfig.DEBUG) {
+            Firebase.analytics.logEvent("wear_launched", null)
+        }
+    }
+
+    private fun setupFirebase() {
+        if (!BuildConfig.DEBUG) {
+            val crashlytics = Firebase.crashlytics
+            if (userRepository.hasAuthentication) {
+                crashlytics.setUserId(userRepository.userID)
+            }
+            crashlytics.setCustomKey("is_wear", true)
         }
     }
 }

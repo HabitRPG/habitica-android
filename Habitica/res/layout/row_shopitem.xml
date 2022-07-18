@@ -27,7 +27,7 @@
             android:minHeight="40dp"
             android:gravity="center"
             android:background="@drawable/layout_rounded_bg_shopitem_price">
-            <com.habitrpg.common.habitica.views.CurrencyView
+            <com.habitrpg.android.habitica.ui.views.CurrencyView
                 android:id="@+id/priceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

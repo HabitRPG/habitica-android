@@ -5,7 +5,7 @@
     <string name="you_found">You found…</string>
     <string name="one_quest_item">1 Quest item</string>
     <string name="x_quest_item">%d Quest items</string>
-    <string name="x_and_y">%s and %s</string>
+    <string name="x_and_y">%1$s and %2$s</string>
     <string name="some_x">some %s</string>
     <string name="edit_on_phone">Edit on phone</string>
     <string name="sign_in">Sign in</string>
@@ -35,4 +35,9 @@
     <string name="an_egg">an Egg</string>
     <string name="a_potion">a Potion</string>
     <string name="some_food">Some Food</string>
+    <string name="continue_on_your_phone">Continue on your phone</string>
+    <string name="levelup_description">You leveled up through all your hard work!</string>
+    <string name="all_done_today">All done today!</string>
+    <string name="starting_your_day">Starting your Day...</string>
+    <string name="disconnected">Disconnected</string>
 </resources>

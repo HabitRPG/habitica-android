@@ -5,27 +5,33 @@ import android.content.res.Resources
 import android.util.AttributeSet
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
+import com.habitrpg.common.habitica.extensions.dpToPx
 
 class HabiticaScrollView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : NestedScrollView(context, attrs) {
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        requestFocus()
+    }
+
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, l, t, r, b)
         if (changed) {
-            if (context.resources.configuration.isScreenRound) {
-                val verticalPadding =
-                    (0.146467f * Resources.getSystem().displayMetrics.widthPixels).toInt()
-                val horizontalPadding =
-                    (0.1f * Resources.getSystem().displayMetrics.widthPixels).toInt()
-                children.firstOrNull()
-                    ?.setPadding(
-                        horizontalPadding,
-                        verticalPadding,
-                        horizontalPadding,
-                        verticalPadding*2
-                    )
+            val verticalPadding = if (context.resources.configuration.isScreenRound) {
+                (0.146467f * Resources.getSystem().displayMetrics.widthPixels).toInt()
+            } else {
+                0
             }
+            val horizontalPadding = 10.dpToPx(context)
+            children.firstOrNull()
+                ?.setPadding(
+                    horizontalPadding,
+                    verticalPadding,
+                    horizontalPadding,
+                    verticalPadding*2
+                )
         }
     }
 }

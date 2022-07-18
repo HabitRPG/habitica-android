@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp">
+    android:orientation="vertical">
+    <include layout="@layout/row_disconnected" android:id="@+id/disconnected" />
     <TextView
         android:id="@+id/text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:textColor="@color/watch_purple_200"
         tools:text="Header Text"
-        style="@style/Text.Subheader1"/>
-</FrameLayout>
+        style="@style/Text.SubHeader1"
+        android:padding="6dp"/>
+
+</LinearLayout>

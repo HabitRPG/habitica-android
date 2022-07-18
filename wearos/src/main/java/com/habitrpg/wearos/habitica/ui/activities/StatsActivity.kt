@@ -1,19 +1,17 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
-import android.animation.ValueAnimator
 import android.os.Bundle
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityStatsBinding
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
 import com.habitrpg.wearos.habitica.models.user.Stats
 import com.habitrpg.wearos.habitica.models.user.User
 import com.habitrpg.wearos.habitica.ui.viewmodels.StatsViewModel
-import com.habitrpg.wearos.habitica.ui.views.StatValue
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
@@ -26,19 +24,19 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
         viewModel.user.observe(this) {
             loadViews(it)
         }
+
+        viewModel.retrieveUser()
     }
 
     private fun setViews() {
         binding.statsImageview.setColorFilter(ContextCompat.getColor(this, R.color.watch_purple_200))
         binding.statsImageview.visibility = VISIBLE
-        loadingManager.startLoading()
         setBarViews()
         setStatViews()
     }
 
     private fun loadViews(user: User) {
         binding.statsImageview.visibility = GONE
-        loadingManager.endLoading()
         updateStats(user)
     }
 
@@ -59,15 +57,16 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
         binding.expStatValue.visibility = INVISIBLE
         binding.mpStatValue.visibility = INVISIBLE
 
-        binding.hpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfHeartLarge(), R.color.hp_bar_color)
-        binding.expStatValue.setStatValueResources(HabiticaIconsHelper.imageOfExperience(), R.color.exp_bar_color)
-        binding.mpStatValue.setStatValueResources(HabiticaIconsHelper.imageOfMagic(), R.color.mpColor)
+        binding.hpStatValue.setStatValueResources(R.drawable.heart, R.color.hp_bar_color)
+        binding.expStatValue.setStatValueResources(R.drawable.experience, R.color.exp_bar_color)
+        binding.mpStatValue.setStatValueResources(R.drawable.magic, R.color.mpColor)
     }
 
     private fun updateStats(user: User) {
-        val stats = user.stats
-        stats?.let { updateBarViews(it) }
-        stats?.let { updateStatViews(it) }
+        user.stats?.let {
+            updateBarViews(it)
+            updateStatViews(it)
+        }
     }
 
     private fun updateBarViews(stats: Stats) {
@@ -102,7 +101,6 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
             binding.mpStatValue.setStatValues(stats.maxMP ?: 0, stats.mp?.toInt() ?: 0)
         }
     }
-
 }
 
 

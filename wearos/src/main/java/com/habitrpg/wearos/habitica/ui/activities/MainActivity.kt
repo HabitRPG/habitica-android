@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
@@ -16,6 +17,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.HubAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.MainViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
@@ -33,6 +35,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             layoutManager =
                 WearableLinearLayoutManager(this@MainActivity, HabiticaScrollingLayoutCallback())
             adapter = this@MainActivity.adapter
+        }
+        lifecycleScope.launch {
+            appStateManager.isAppConnected.collect {
+                adapter.isDisconnected = !it
+            }
         }
     }
 
@@ -114,11 +121,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openSettingsActivity()
             }
         )
-        viewModel.user.observe(this) {
-            adapter.title = it.profile?.name ?: ""
-            adapter.notifyItemChanged(0)
+        viewModel.user.observe(this) { user ->
+            adapter.title = user.profile?.name ?: ""
             val index = adapter.data.indexOfFirst { it.identifier == "stats" }
-            adapter.data[index].detailText = getString(R.string.user_level, it.stats?.lvl ?: 0)
+            adapter.data[index].detailText = getString(R.string.user_level, user.stats?.lvl ?: 0)
             adapter.notifyItemChanged(index+1)
         }
         viewModel.taskCounts.observe(this) {

@@ -60,7 +60,7 @@
                 android:textColor="@color/white"
                 android:elevation="4dp"
                 android:textAllCaps="false"
-                style="@style/Subheader1"
+                style="@style/SubHeader1"
                 />
         </LinearLayout>
         <LinearLayout
@@ -110,7 +110,7 @@
                 android:textColor="@color/white"
                 android:elevation="4dp"
                 android:textAllCaps="false"
-                style="@style/Subheader1"
+                style="@style/SubHeader1"
                 />
         </LinearLayout>
         <LinearLayout
@@ -159,7 +159,7 @@
                 android:background="@drawable/support_info_lower_bg"
                 android:elevation="4dp"
                 android:textColor="@color/white"
-                style="@style/Subheader1"
+                style="@style/SubHeader1"
                 />
         </LinearLayout>
     </LinearLayout>

@@ -9,7 +9,7 @@ import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
-import com.habitrpg.wearos.habitica.managers.LoadingManager
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,8 +21,8 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     val apiClient: ApiClient,
     val sharedPreferences: SharedPreferences,
-    val keyHelper: KeyHelper?, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager), MessageClient.OnMessageReceivedListener {
+    val keyHelper: KeyHelper?, appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager), MessageClient.OnMessageReceivedListener {
     lateinit var onLoginCompleted: (Boolean) -> Unit
     val hasAuthentication: Boolean
     get() {
@@ -41,6 +41,9 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
         }) {
             val (userID, apiKey) = String(event.data).split(":")
             try {
+                if (userID.isBlank() || apiKey.isBlank()) {
+                    return@launch
+                }
                 saveTokens(apiKey, userID)
             } catch (e: Exception) {
                 onLoginCompleted(false)

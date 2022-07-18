@@ -7,12 +7,12 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.databinding.ActivityHabitDirectionBinding
 import com.habitrpg.common.habitica.models.responses.TaskDirection
-import com.habitrpg.wearos.habitica.ui.viewmodels.HabitDrectionViewModel
+import com.habitrpg.wearos.habitica.ui.viewmodels.HabitDirectionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HabitDirectionActivity: BaseActivity<ActivityHabitDirectionBinding, HabitDrectionViewModel>() {
-        override val viewModel: HabitDrectionViewModel by viewModels()
+class HabitDirectionActivity: BaseActivity<ActivityHabitDirectionBinding, HabitDirectionViewModel>() {
+        override val viewModel: HabitDirectionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityHabitDirectionBinding.inflate(layoutInflater)

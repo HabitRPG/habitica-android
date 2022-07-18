@@ -85,7 +85,7 @@ abstract class TaskListFactory internal constructor(
             remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.lightTaskColor)
             val fillInIntent = Intent()
             fillInIntent.putExtra(TaskListWidgetProvider.TASK_ID_ITEM, task.id)
-            //remoteView.setOnClickFillInIntent(R.id.checkbox_background, fillInIntent)
+            remoteView.setOnClickFillInIntent(R.id.checkbox_background, fillInIntent)
         }
         return remoteView
     }

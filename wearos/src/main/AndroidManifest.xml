@@ -48,8 +48,11 @@
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.FaintActivity" />
 
         <activity android:name="com.habitrpg.wearos.habitica.ui.activities.SettingsActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.ContinuePhoneActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.LevelupActivity" />
 
-        <activity android:name="androidx.wear.activity.ConfirmationActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.ConfirmationActivity" />
+        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.InputActivity" />
     </application>
 
 </manifest>

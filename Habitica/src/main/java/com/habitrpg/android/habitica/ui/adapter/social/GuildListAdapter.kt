@@ -19,7 +19,7 @@ import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.common.habitica.helpers.EmojiParser
-import com.habitrpg.common.habitica.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import java.util.Locale

@@ -103,7 +103,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/joined"
-                            style="@style/Subheader1"/>
+                            style="@style/SubHeader1"/>
                         <TextView
                             android:id="@+id/joined_view"
                             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/last_login"
-                            style="@style/Subheader1"/>
+                            style="@style/SubHeader1"/>
                         <TextView
                             android:id="@+id/last_login_view"
                             android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/total_checkins"
-                            style="@style/Subheader1"/>
+                            style="@style/SubHeader1"/>
                         <TextView
                             android:id="@+id/total_checkins_view"
                             android:layout_width="wrap_content"

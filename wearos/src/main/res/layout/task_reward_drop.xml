@@ -8,19 +8,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:textColor="@color/white"
+        android:textColor="@color/watch_white"
         android:text="@string/you_found"/>
     <TextView
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="14sp"
+        style="@style/Text.Body1"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/watch_white"
         />
-    <com.habitrpg.common.habitica.views.PixelArtView
-        android:id="@+id/image_view"
+    <FrameLayout
         android:layout_width="40dp"
-        android:layout_height="40dp" />
+        android:layout_height="45dp">
+        <com.habitrpg.common.habitica.views.PixelArtView
+            android:id="@+id/image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"/>
+    </FrameLayout>
 </LinearLayout>

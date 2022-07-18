@@ -7,14 +7,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.GoogleAuthException
+import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
 import com.google.android.gms.auth.UserRecoverableAuthException
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
+import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.UserRecoverableException
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
@@ -26,25 +27,24 @@ import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
-import com.habitrpg.wearos.habitica.managers.LoadingManager
+import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
-
-
-
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(userRepository: UserRepository,
     taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
-    val keyHelper: KeyHelper?,
+    private val keyHelper: KeyHelper?,
     val sharedPreferences: SharedPreferences,
-    val apiClient: ApiClient, loadingManager: LoadingManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, loadingManager) {
+    val apiClient: ApiClient, appStateManager: AppStateManager
+) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     lateinit var onLoginCompleted: () -> Unit
 
     fun handleGoogleLogin(
@@ -66,10 +66,9 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             val account = async {
                 try {
-                    val account: GoogleSignInAccount = task.getResult(
+                    return@async task.getResult(
                         ApiException::class.java
                     )
-                    return@async account
                 } catch (e: IOException) {
                     return@async null
                 } catch (e: GoogleAuthException) {
@@ -81,13 +80,18 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
                     return@async null
                 }
             }.await()
+            val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
+            val scopes = "oauth2:$scopesString"
+            val token = withContext(Dispatchers.IO) {
+                account?.account?.let { GoogleAuthUtil.getToken(activity, it, scopes) }
+            }
             val auth = UserAuthSocial()
             auth.network = "google"
             auth.authResponse = UserAuthSocialTokens()
-            auth.authResponse?.client_id = account?.id
-            auth.authResponse?.access_token = account?.idToken
+            auth.authResponse?.client_id = account?.email
+            auth.authResponse?.access_token = token
             val response = apiClient.loginSocial(auth)
-            handleAuthResponse(response)
+            handleAuthResponse(response.responseData)
         }
     }
 
@@ -116,29 +120,15 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
         }
     }
 
-    private fun checkPlayServices(activity: Activity): Boolean {
-        val googleAPI = GoogleApiAvailability.getInstance()
-        val result = googleAPI.isGooglePlayServicesAvailable(activity)
-        if (result != ConnectionResult.SUCCESS) {
-            if (googleAPI.isUserResolvableError(result)) {
-                googleAPI.getErrorDialog(
-                    activity, result,
-                    PLAY_SERVICES_RESOLUTION_REQUEST
-                )?.show()
-            }
-            return false
-        }
-
-        return true
-    }
-
-    suspend fun handleAuthResponse(userAuthResponse: UserAuthResponse?) {
+    private suspend fun handleAuthResponse(userAuthResponse: UserAuthResponse?) {
         if (userAuthResponse == null) return
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
+            return
         }
-        userRepository.retrieveUser()
+        val user = userRepository.retrieveUser(true)
+        taskRepository.retrieveTasks(user?.tasksOrder, true)
         onLoginCompleted()
     }
 
@@ -164,7 +154,7 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
 
     fun login(username: String, password: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val response = apiClient.loginLocal(UserAuth(username, password))
+            val response = apiClient.loginLocal(UserAuth(username, password)).responseData
             handleAuthResponse(response)
             onResult(response?.id != null)
         }.invokeOnCompletion {
@@ -174,6 +164,5 @@ class LoginViewModel @Inject constructor(userRepository: UserRepository,
 
     companion object {
         private const val REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001
-        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
     }
 }

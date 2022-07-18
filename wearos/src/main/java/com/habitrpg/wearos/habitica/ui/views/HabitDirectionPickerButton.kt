@@ -25,7 +25,7 @@ class HabitDirectionPickerButton @JvmOverloads constructor(
 
     var mainTaskColor: Int = ContextCompat.getColor(context, R.color.watch_gray_200)
     var darkerTaskColor: Int = ContextCompat.getColor(context, R.color.watch_gray_10)
-    var iconColor: Int = ContextCompat.getColor(context, R.color.white)
+    var iconColor: Int = ContextCompat.getColor(context, R.color.watch_white)
 
     private val radius = 15.dpToPx(context)
 

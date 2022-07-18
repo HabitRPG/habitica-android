@@ -16,25 +16,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:paddingVertical="@dimen/spacing_medium">
         <ImageView
+            android:id="@+id/icon_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/broken_heart"
+            android:importantForAccessibility="no"
             android:layout_marginBottom="@dimen/spacing_medium"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/you_ran_out_of_hp"
             android:gravity="center"
-            android:textColor="@color/white"
-            style="@style/Text.Subheader1"/>
+            android:textColor="@color/watch_white"
+            style="@style/Text.SubHeader1"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/faint_description"
             android:textColor="@color/watch_gray_500"
-            android:textSize="14sp"
+            style="@style/Text.Body1"
+            android:layout_marginHorizontal="@dimen/spacing_large"
             android:layout_marginBottom="@dimen/spacing_large"
             android:gravity="center"/>
         <Button

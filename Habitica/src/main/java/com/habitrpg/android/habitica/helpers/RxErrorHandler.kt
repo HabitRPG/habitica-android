@@ -37,6 +37,7 @@ class RxErrorHandler {
                     !HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     !retrofit2.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     !EOFException::class.java.isAssignableFrom(throwable.javaClass) &&
+                    !retrofit2.adapter.rxjava3.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     throwable !is ConnectionShutdownException
                 ) {
                     instance?.analyticsManager?.logException(throwable)

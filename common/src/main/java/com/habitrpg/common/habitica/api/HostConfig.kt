@@ -7,12 +7,6 @@ import androidx.core.content.edit
 import com.habitrpg.common.habitica.BuildConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 
-/**
- * The configuration of the host<br></br>
- * Currently, the Port isn't used at all.
- *
- * @author MagicMicky
- */
 class HostConfig {
     var address: String
     var port: String
@@ -30,6 +24,11 @@ class HostConfig {
         this.port = BuildConfig.PORT
         if (BuildConfig.DEBUG) {
             this.address = BuildConfig.BASE_URL
+            if (BuildConfig.TEST_USER_ID.isNotBlank()) {
+                userID = BuildConfig.TEST_USER_ID
+                apiKey = BuildConfig.TEST_USER_KEY
+                return
+            }
         } else {
             val address = sharedPreferences.getString("server_url", null)
             if (address != null && address.isNotEmpty()) {
@@ -39,7 +38,6 @@ class HostConfig {
             }
         }
         this.userID = sharedPreferences.getString(context.getString(com.habitrpg.common.habitica.R.string.SP_userID), null) ?: ""
-
         this.apiKey = loadAPIKey(sharedPreferences, keyHelper)
     }
 

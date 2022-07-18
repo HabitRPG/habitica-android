@@ -35,7 +35,7 @@
     </style>
 
     <!-- Subheader -->
-    <style name="Subheader1">
+    <style name="SubHeader1">
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">?textColorSecondary</item>
