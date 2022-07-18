@@ -50,8 +50,8 @@
     </style>
 
     <style name="ChipButton.Purple" parent="ChipButton">
-        <item name="android:backgroundTint">@color/watch_purple_100</item>
-        <item name="android:textColor">@color/watch_black</item>
+        <item name="android:backgroundTint">@drawable/button_state_color</item>
+        <item name="android:textColor">@drawable/button_text_state_color</item>
     </style>
 
     <style name="ChipButton.Red" parent="ChipButton">

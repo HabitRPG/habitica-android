@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
@@ -82,6 +83,12 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         binding.registerButton.setOnClickListener { openRegisterOnPhone() }
 
         binding.passwordEditText.transformationMethod = PasswordTransformationMethod()
+        binding.usernameEditText.doOnTextChanged { text, start, before, count ->
+            setLoginButtonIsEnabled()
+        }
+        binding.passwordEditText.doOnTextChanged { text, start, before, count ->
+            setLoginButtonIsEnabled()
+        }
 
         currentState = State.INITIAL
     }
@@ -119,6 +126,10 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
             thisAlert.dismiss()
         }
         alert.show()
+    }
+
+    private fun setLoginButtonIsEnabled() {
+        binding.loginButton.isEnabled = binding.usernameEditText.text.isNotEmpty() && binding.passwordEditText.text.isNotEmpty()
     }
 
     private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

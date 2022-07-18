@@ -78,7 +78,7 @@
                 android:id="@+id/username_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:inputType="textEmailAddress|text"
+                android:inputType="textEmailAddress"
                 android:imeOptions="actionNext"
                 android:hint="@string/email_username"
                 android:paddingHorizontal="16dp"
@@ -105,7 +105,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_in"
-                style="@style/ChipButton.Purple"
-                android:textSize="16sp"/>
+                android:fontFamily="sans-serif-medium"
+                android:enabled="false"
+                android:textAlignment="center"
+                style="@style/ChipButton.Purple"/>
         </LinearLayout>
 </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>
