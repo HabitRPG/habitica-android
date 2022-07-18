@@ -130,7 +130,7 @@ class ReminderItemFormView @JvmOverloads constructor(
     }
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         valueChangedListener?.let {
-            val zonedDateTime = ZonedDateTime.now()
+            val zonedDateTime = (item.getZonedDateTime() ?: ZonedDateTime.now())
                 .withHour(hourOfDay)
                 .withMinute(minute)
             item.time = zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
