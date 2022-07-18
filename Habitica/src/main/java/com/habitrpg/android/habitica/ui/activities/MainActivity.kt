@@ -130,8 +130,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
-        } catch (e: IllegalStateException) {
-            RxErrorHandler.reportError(e)
+        } catch (e: Exception) {
+            // pass
         }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
