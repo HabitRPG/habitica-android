@@ -34,7 +34,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
                 else -> R.string.task
             })
             binding.confirmationTitle.text = getString(R.string.new_task_x, typeName)
-            binding.saveButton.text = getString(R.string.save_task_x, typeName)
+            binding.saveButton.setChipText(getString(R.string.save_task_x, typeName))
         }
     override val viewModel: TaskFormViewModel by viewModels()
 

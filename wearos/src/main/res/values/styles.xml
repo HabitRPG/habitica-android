@@ -85,4 +85,18 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
+
+    <style name="Text.TextActionChipTextView">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginStart">37dp</item>
+        <item name="android:clickable">false</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">.01</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:textColor">@color/watch_white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

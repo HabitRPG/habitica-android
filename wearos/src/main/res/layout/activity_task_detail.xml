@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,13 +42,14 @@
                 style="@style/Text.Body1"
                 android:layout_marginTop="5dp"
                 android:textSize="12sp"/>
-            <Button
+
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/ChipButton.Icon"
-                android:drawableStart="@drawable/handoff"
-                android:text="@string/edit_on_phone"
-                android:layout_marginTop="12dp"/>
+                android:layout_marginTop="12dp"
+                app:chipImage="@drawable/handoff"
+                app:chipText="@string/edit_on_phone" />
+
         </LinearLayout>
 </com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView>

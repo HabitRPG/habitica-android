@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.databinding.ActivitySettingsBinding
 import com.habitrpg.wearos.habitica.ui.adapters.SettingsAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.SettingsItem
 import com.habitrpg.wearos.habitica.ui.viewmodels.SettingsViewModel
+import com.habitrpg.wearos.habitica.ui.views.TextActionChipView
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -104,12 +105,12 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
     private fun showLogoutConfirmation() {
         val logoutDialog = Dialog(this)
         val myLayout = layoutInflater.inflate(R.layout.logout_layout, null)
-        val positiveButton: Button = myLayout.findViewById(R.id.logout_button)
+        val positiveButton: TextActionChipView = myLayout.findViewById(R.id.logout_button)
         positiveButton.setOnClickListener {
             logout()
             logoutDialog.dismiss()
         }
-        val negativeButton: Button = myLayout.findViewById(R.id.cancel_button)
+        val negativeButton: TextActionChipView = myLayout.findViewById(R.id.cancel_button)
         negativeButton.setOnClickListener {
             logoutDialog.dismiss()
         }
