@@ -41,6 +41,7 @@ open class ShopItem : RealmObject(), BaseObject {
     var limitedNumberLeft: Int? = null
     var unlockCondition: ShopItemUnlockCondition? = null
     var path: String? = null
+    var unlockPath: String? = null
     var isSuggested: String? = null
     var pinType: String? = null
     @SerializedName("klass")
@@ -164,6 +165,8 @@ open class ShopItem : RealmObject(), BaseObject {
             item.notes = customization.notes
             item.value = customization.price ?: 0
             item.path = customization.path
+            item.unlockPath  = customization.unlockPath
+            item.pinType = customization.type
             item.purchaseType = if (customization.type == "background") "background" else "customization"
             item.imageName = customization.getImageName(userSize, hairColor)
             return item
@@ -173,12 +176,12 @@ open class ShopItem : RealmObject(), BaseObject {
             val item = ShopItem()
             var path = ""
             for (customization in set.customizations) {
-                path = path + "," + customization.path
+                path = path + "," + customization.unlockPath
             }
             if (path.isEmpty()) {
-                item.path = path
+                item.unlockPath = path
             } else {
-                item.path = path.substring(1)
+                item.unlockPath = path.substring(1)
             }
             item.text = set.text
             item.key = set.identifier ?: ""
