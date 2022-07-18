@@ -33,16 +33,11 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     var customizationType: String? = null
     var gemBalance: Int = 0
     var unsortedCustomizations: List<Customization> = ArrayList()
-    var customizationList: MutableList<Any> = ArrayList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    private var customizationList: MutableList<Any> = ArrayList()
     var additionalSetItems: List<Customization> = ArrayList()
     var activeCustomization: String? = null
         set(value) {
             field = value
-            this.notifyDataSetChanged()
         }
 
     var ownedCustomizations: List<String> = listOf()
@@ -50,23 +45,27 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     private val selectCustomizationEvents = PublishSubject.create<Customization>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        return if (viewType == 0) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.customization_section_header, parent, false)
-            SectionViewHolder(view)
-        } else if (viewType == 1) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.customization_section_footer, parent, false)
-            SectionFooterViewHolder(view)
-        } else {
-            val viewID: Int = if (customizationType == "background") {
-                R.layout.customization_grid_background_item
-            } else {
-                R.layout.customization_grid_item
+        return when (viewType) {
+            0 -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.customization_section_header, parent, false)
+                SectionViewHolder(view)
             }
+            1 -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.customization_section_footer, parent, false)
+                SectionFooterViewHolder(view)
+            }
+            else -> {
+                val viewID: Int = if (customizationType == "background") {
+                    R.layout.customization_grid_background_item
+                } else {
+                    R.layout.customization_grid_item
+                }
 
-            val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
-            CustomizationViewHolder(view)
+                val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
+                CustomizationViewHolder(view)
+            }
         }
     }
 
@@ -108,7 +107,14 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         val today = Date()
         for (customization in newCustomizationList) {
             if (customization.availableFrom != null || customization.availableUntil != null) {
-                if ((customization.availableFrom?.compareTo(today) ?: 0 > 0 || customization.availableUntil?.compareTo(today) ?: 0 < 0) && !customization.isUsable(ownedCustomizations.contains(customization.id))) {
+                if (((customization.availableFrom?.compareTo(today)
+                        ?: 0) > 0 || (customization.availableUntil?.compareTo(today)
+                        ?: 0) < 0) && !customization.isUsable(
+                        ownedCustomizations.contains(
+                            customization.id
+                        )
+                    )
+                ) {
                     continue
                 }
             }
@@ -205,6 +211,8 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 layerMap[AvatarView.LayerType.BACKGROUND] = customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName }
                 purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatar(avatar!!, layerMap)
                 alert.setAdditionalContentView(purchasedCustomizationView)
+                alert.setTitle(customization?.text)
+                alert.setMessage(customization?.notes)
                 alert.addButton(R.string.equip, true) { _, _ ->
                     customization?.let {
                         selectCustomizationEvents.onNext(it)
@@ -218,7 +226,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 customization?.let {
                     selectCustomizationEvents.onNext(it)
                 }
-
             }
         }
     }
