@@ -8,6 +8,8 @@ import android.widget.Button
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivitySettingsBinding
 import com.habitrpg.wearos.habitica.ui.adapters.SettingsAdapter
@@ -43,6 +45,14 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
 
     private fun logout() {
         viewModel.logout()
+        try {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .build()
+            val client = GoogleSignIn.getClient(this, gso)
+            client.signOut()
+        } catch (e: Exception) {
+
+        }
 
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

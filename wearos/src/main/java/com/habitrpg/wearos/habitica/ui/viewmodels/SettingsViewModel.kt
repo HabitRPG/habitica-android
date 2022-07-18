@@ -3,6 +3,8 @@ package com.habitrpg.wearos.habitica.ui.viewmodels
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.habitrpg.wearos.habitica.data.ApiClient
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
