@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Date
 
 class SubscriptionDetailsView : LinearLayout {
 
@@ -101,8 +101,8 @@ class SubscriptionDetailsView : LinearLayout {
 
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
-        if (plan.monthsUntilNextHourglass != null){
-            val nextHourglassMonth = LocalDate.now().plusMonths(plan.monthsUntilNextHourglass!!.toLong()).format(DateTimeFormatter.ofPattern("MMM"))
+        plan.monthsUntilNextHourglass?.let { nextHourglass ->
+            val nextHourglassMonth = LocalDate.now().plusMonths(nextHourglass.toLong()).format(DateTimeFormatter.ofPattern("MMMM"))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
         }
 
