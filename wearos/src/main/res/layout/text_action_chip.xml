@@ -19,16 +19,7 @@
         android:id="@+id/chip_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="34dp"
-        android:clickable="false"
-        android:duplicateParentState="true"
-        android:elevation="2dp"
-        android:fontFamily="sans-serif-medium"
-        android:letterSpacing=".01"
-        android:paddingHorizontal="@dimen/row_padding_horizontal"
-        android:textColor="@color/watch_white"
-        android:textSize="14sp" />
+        style="@style/Text.TextActionChipTextView"/>
 
     <ImageView
         android:id="@+id/wear_chip_button"

@@ -2,7 +2,8 @@
 <com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,22 +31,22 @@
                 android:textSize="14sp"
                 android:textColor="@color/watch_white"
                 />
-            <Button
+
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/save_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/ChipButton.Icon"
-                android:text="@string/save"
+                app:chipImage="@drawable/save"
+                app:chipText="@string/save"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="4dp"
-                android:drawableStart="@drawable/save"/>
-            <Button
+                android:layout_marginBottom="4dp"/>
+
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/ChipButton.Icon"
-                android:text="@string/action_edit"
-                android:drawableStart="@drawable/edit"/>
+                app:chipImage="@drawable/edit"
+                app:chipText="@string/action_edit" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/edit_task_wrapper"

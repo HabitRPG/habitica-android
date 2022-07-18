@@ -24,4 +24,8 @@ class TextActionChipView @JvmOverloads constructor(context: Context, attrs: Attr
         binding.chipTextview.text = chipText
         binding.chipImageview.setImageDrawable(chipImage)
     }
+
+    fun setChipText(text: String) {
+        binding.chipTextview.text = text
+    }
 }
