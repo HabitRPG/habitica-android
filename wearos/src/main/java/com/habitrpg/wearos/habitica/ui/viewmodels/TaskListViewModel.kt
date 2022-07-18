@@ -13,6 +13,7 @@ import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.util.ExceptionHandlerBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -56,6 +57,11 @@ class TaskListViewModel @Inject constructor(
                 task,
                 direction
             )
+            if (result?.hasLeveledUp == true) {
+                launch(Dispatchers.Main) {
+                    userRepository.retrieveUser()
+                }
+            }
             onResult(result)
         }
     }

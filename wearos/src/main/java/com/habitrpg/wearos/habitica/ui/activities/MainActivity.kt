@@ -84,16 +84,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openTasklist(TaskType.HABIT)
             },
             MenuItem(
-                TaskType.REWARD.value,
-                getString(R.string.rewards),
-                AppCompatResources.getDrawable(this, R.drawable.icon_rewards),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700),
-                isHidden = true
-            ) {
-                openTasklist(TaskType.REWARD)
-            },
-            MenuItem(
                 "stats",
                 getString(R.string.stats),
                 AppCompatResources.getDrawable(this, R.drawable.icon_stats),

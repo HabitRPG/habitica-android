@@ -12,7 +12,6 @@ import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityWrapperBinding
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
@@ -45,7 +44,7 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
         viewModel.errorValues.observe(this) {
             val intent = Intent(this, ConfirmationActivity::class.java).apply {
                 putExtra("text", it.title)
-                putExtra("icon", R.drawable.error)
+                putExtra("icon", it.icon)
             }
             startActivity(intent)
         }
