@@ -12,9 +12,9 @@ import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
+import com.habitrpg.wearos.habitica.ui.activities.MainActivity
 import com.habitrpg.wearos.habitica.ui.activities.RYAActivity
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -35,23 +35,16 @@ class MainApplication : Application() {
 
         MainScope().launch {
             userRepository.getUser().onEach {
-                if (it.isDead && BaseActivity.currentActivityClassName != FaintActivity::class.java.name) {
+                if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
                     val intent = Intent(this@MainApplication, FaintActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
-                } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name) {
+                } else if (it.needsCron && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
                     val intent = Intent(this@MainApplication, RYAActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
             }.collect()
-        }
-        if (userRepository.hasAuthentication) {
-            MainScope().launch(CoroutineExceptionHandler { _, _ ->
-            }) {
-                val user = userRepository.retrieveUser(true)
-                taskRepository.retrieveTasks(user?.tasksOrder, true)
-            }
         }
 
         logLaunch()

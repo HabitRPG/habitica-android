@@ -1,5 +1,6 @@
 package com.habitrpg.wearos.habitica.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.activity.viewModels
@@ -50,6 +51,17 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         binding.startDayButton.setOnClickListener {
             runCron()
         }
+    }
+
+    override fun onDestroy() {
+        if (!viewModel.hasRunCron) {
+            startActivity(
+                Intent(this, RYAActivity::class.java)
+                .apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
+        }
+        super.onDestroy()
     }
 
     lateinit var startTime: Date

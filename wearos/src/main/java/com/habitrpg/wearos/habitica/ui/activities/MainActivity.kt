@@ -131,6 +131,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.periodicUserRefresh()
+    }
+
     private val openTaskForm = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val taskType = result.data?.getStringExtra("task_type")?.let { TaskType.from(it) }

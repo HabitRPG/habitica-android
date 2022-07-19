@@ -21,6 +21,7 @@ class RYAViewModel @Inject constructor(
     taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+    var hasRunCron: Boolean = false
     val tasks = MutableLiveData<List<Task>>()
 
     private val tasksToComplete = mutableListOf<Task>()
@@ -55,6 +56,7 @@ class RYAViewModel @Inject constructor(
                 taskRepository.scoreTask(null, task, TaskDirection.UP)
             }
             userRepository.runCron()
+            hasRunCron = true
             val user = userRepository.retrieveUser(true)
             taskRepository.retrieveTasks(user?.tasksOrder, true)
             function(true)

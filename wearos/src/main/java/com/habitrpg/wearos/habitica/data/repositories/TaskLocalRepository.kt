@@ -109,7 +109,7 @@ class TaskLocalRepository @Inject constructor() {
 
     fun clearData() {
         tasks.values.forEach {
-            it.value = null
+            it.value = emptyList()
         }
         taskCountHelperValue.value = 0
     }

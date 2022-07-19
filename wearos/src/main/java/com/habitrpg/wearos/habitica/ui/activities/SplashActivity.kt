@@ -9,7 +9,11 @@ import com.habitrpg.android.habitica.databinding.ActivitySplashBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 @AndroidEntryPoint
 class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
@@ -74,6 +78,11 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
                 stopAnimatingProgress()
             }
             binding.textView.isVisible = show
+            delay(90.toDuration(DurationUnit.SECONDS))
+            if (isActive) {
+                // the sync attempt has timed out
+                startLoginActivity()
+            }
         }
     }
 }
