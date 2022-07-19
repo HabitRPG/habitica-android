@@ -32,7 +32,7 @@
             android:label="@string/app_name"
             android:theme="@style/LaunchAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:exported="true">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
@@ -54,6 +54,7 @@
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/PS_settings_title"
             tools:ignore="UnusedAttribute"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:exported="true">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.VIEW" />
@@ -88,6 +89,7 @@
         <activity
             android:name=".ui.activities.FixCharacterValuesActivity"
             android:parentActivityName=".ui.activities.PrefsActivity"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:label="@string/PS_settings_title"
             tools:ignore="UnusedAttribute">
         </activity>
@@ -95,6 +97,7 @@
             android:name=".ui.activities.LoginActivity"
             android:label="@string/LoginActivityName"
             android:screenOrientation="unspecified"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
@@ -115,19 +118,19 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity
-            android:name=".ui.activities.SkillTasksActivity"
-            android:label="@string/app_name">
+            android:name=".ui.activities.SkillTasksActivity">
         </activity>
         <activity
-            android:name=".ui.activities.SkillMemberActivity"
-            android:label="@string/app_name">
+            android:name=".ui.activities.SkillMemberActivity">
         </activity>
         <activity
             android:name=".ui.activities.GiftSubscriptionActivity"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:label="@string/gift_subscription">
         </activity>
         <activity
             android:name=".ui.activities.GiftGemsActivity"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:label="@string/gift_gems">
         </activity>
         <activity
@@ -139,7 +142,7 @@
             android:name=".ui.activities.TaskFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             tools:ignore="UnusedAttribute"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:windowSoftInputMode="stateVisible|adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -148,6 +151,7 @@
         <activity
             android:name=".ui.activities.GroupFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -156,6 +160,7 @@
         <activity
             android:name=".ui.activities.ClassSelectionActivity"
             android:parentActivityName=".ui.activities.MainActivity"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             tools:ignore="UnusedAttribute"
             android:label="@string/select_class">
             <meta-data
@@ -169,6 +174,7 @@
         <activity
             android:name=".ui.activities.FullProfileActivity"
             android:parentActivityName=".ui.activities.MainActivity"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:theme="@style/MainAppTheme"
             tools:ignore="UnusedAttribute"
             android:exported="true">
@@ -187,6 +193,7 @@
         <activity
             android:name=".ui.activities.ChallengeFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -239,6 +246,7 @@
         <activity
             android:name=".ui.activities.ReportMessageActivity"
             android:theme="@style/SheetDialog"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <service
