@@ -9,9 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AdventureGuideMenuBannerBinding
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
@@ -19,6 +16,9 @@ import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.models.responses.TaskDirection
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.functions.Action
@@ -40,7 +40,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     override var user: User? = null
         set(value) {
             field = value
-            notifyItemChanged(0)
+            notifyDataSetChanged()
         }
 
     override var taskDisplayMode: String = "standard"
@@ -92,7 +92,16 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return data.size + if (showAdventureGuide) 1 else 0
+    }
+
+    override fun getItem(position: Int): Task? {
+        if (showAdventureGuide && position == 0) {
+            return null
+        } else if (showAdventureGuide) {
+            return super.getItem(position - 1)
+        }
+        return super.getItem(position)
     }
 
     override fun getItemViewType(position: Int): Int {

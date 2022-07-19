@@ -1,11 +1,11 @@
-- New unsaved changes warning for tasks
-- New design for the Gem screen
-- New design for Starting Objectives
-- New private messages will show without needing to scroll
-- Purchased Backgrounds show correctly
-- Fixes Armoire error when you don’t have enough Gold
-- Fixes issue where the wrong task filters would show sometimes
-- Gift subs can be properly selected
-- Ended Challenges will go away properly
-- External links work in Guilds
-- Proper 12h/24h support
+What’s new in version 4.0:
+-Habitica has a brand new WearOS app for smart watches!
+-Newly designed Backgrounds section
+-Ability to filter, preview, and pin Backgrounds
+-New bottom sheet designs in Items, Pets & Mounts, and Filters
+-New Day Start Adjustment interface
+-Improvements to task reminder reliability
+-Improvements to payment and subscription handling
+-Fixes account deletion confirmation prompt
+-Fixes task reorder bug for new accounts
+-Fixes sprite size in Quest Details preview

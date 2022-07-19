@@ -108,4 +108,6 @@
     <dimen name="task_spacing_horizontal">10dp</dimen>
     <dimen name="bottom_sheet_radius">20dp</dimen>
     <dimen name="bottom_sheet_inset">16dp</dimen>
+    <!-- this is equivalent to match_parent -->
+    <dimen name="drawer_width">-1px</dimen>
 </resources>

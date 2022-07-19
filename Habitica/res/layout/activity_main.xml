@@ -160,7 +160,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navigation_drawer"
         class="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         tools:layout="@layout/drawer_main"/>
