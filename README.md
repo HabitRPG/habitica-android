@@ -80,7 +80,7 @@ You can install our code style scheme to Intellij and/or Android Studio via this
 
    c. Create two apps in the project: `com.habitrpg.android.habitica` and `com.habitrpg.android.habitica.debug`
 
-   d. Creating each app will generate a `google-services.json` file. Download the `google-services.json` file from the second app and put it in `\Habitica\`
+   d. Creating each app will generate a `google-services.json` file. Download the `google-services.json` file from the second app and put it in `\Habitica\` and `\wearos\`
 
    You can skip the last part of the app creation wizards (where you run the app to verify installation).
 
