@@ -10,15 +10,15 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.AvatarWithBarsBinding
-import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.mainActivityCreatedAt
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.HealthFormatter
 import com.habitrpg.common.habitica.models.Avatar
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import java.util.Date
 import java.util.Locale
 import kotlin.math.floor
@@ -39,9 +39,9 @@ class AvatarWithBarsViewModel(
         binding.xpBar.setIcon(HabiticaIconsHelper.imageOfExperience())
         binding.mpBar.setIcon(HabiticaIconsHelper.imageOfMagic())
 
-        setHpBarData(0f, 50)
-        setXpBarData(0f, 1)
-        setMpBarData(0f, 1)
+        setHpBarData(0.0, 50)
+        setXpBarData(0.0, 1)
+        setMpBarData(0.0, 1)
 
         viewModel?.user?.observeForever {
             if (it != null) {
@@ -76,9 +76,9 @@ class AvatarWithBarsViewModel(
             )
         }
 
-        setHpBarData(stats.hp?.toFloat() ?: 0.toFloat(), stats.maxHealth ?: 0)
-        setXpBarData(stats.exp?.toFloat() ?: 0.toFloat(), stats.toNextLevel ?: 0)
-        setMpBarData(stats.mp?.toFloat() ?: 0.toFloat(), stats.maxMP ?: 0)
+        setHpBarData(stats.hp ?: 0.0, stats.maxHealth ?: 0)
+        setXpBarData(stats.exp ?: 0.0, stats.toNextLevel ?: 0)
+        setMpBarData(stats.mp ?: 0.0, stats.maxMP ?: 0)
 
         if (!stats.isBuffed) {
             binding.buffImageView.visibility = View.GONE
@@ -103,28 +103,28 @@ class AvatarWithBarsViewModel(
         }
     }
 
-    private fun setHpBarData(value: Float, valueMax: Int) {
+    private fun setHpBarData(value: Double, valueMax: Int) {
         if (valueMax != 0) {
             cachedMaxHealth = valueMax
         }
         if (binding.hpBar.currentValue > value) {
             binding.hpBar.progressBar.startAnimation(Animations.negativeShakeAnimation())
         }
-        binding.hpBar.set(HealthFormatter.format(value.toDouble()), cachedMaxHealth.toDouble())
+        binding.hpBar.set(HealthFormatter.format(value), cachedMaxHealth.toDouble())
     }
 
-    private fun setXpBarData(value: Float, valueMax: Int) {
+    private fun setXpBarData(value: Double, valueMax: Int) {
         if (valueMax != 0) {
             cachedMaxExp = valueMax
         }
-        binding.xpBar.set(floor(value.toDouble()), cachedMaxExp.toDouble())
+        binding.xpBar.set(floor(value), cachedMaxExp.toDouble())
     }
 
-    private fun setMpBarData(value: Float, valueMax: Int) {
+    private fun setMpBarData(value: Double, valueMax: Int) {
         if (valueMax != 0) {
             cachedMaxMana = valueMax
         }
-        binding.mpBar.set(floor(value.toDouble()), cachedMaxMana.toDouble())
+        binding.mpBar.set(floor(value), cachedMaxMana.toDouble())
     }
 
     companion object {
