@@ -16,10 +16,10 @@ import android.widget.TimePicker
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormReminderItemBinding
+import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import java.text.DateFormat
 import java.time.ZonedDateTime
@@ -114,11 +114,12 @@ class ReminderItemFormView @JvmOverloads constructor(
                 )
                 timePickerDialog.show()
             } else {
+                val zonedDateTime = (item.getZonedDateTime() ?: ZonedDateTime.now())
                 val timePickerDialog = DatePickerDialog(
                     context, this,
-                    ZonedDateTime.now().year,
-                    ZonedDateTime.now().monthValue,
-                    ZonedDateTime.now().dayOfMonth
+                    zonedDateTime.year,
+                    zonedDateTime.monthValue - 1,
+                    zonedDateTime.dayOfMonth
                 )
                 if ((firstDayOfWeek ?: -1) >= 0) {
                     timePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0

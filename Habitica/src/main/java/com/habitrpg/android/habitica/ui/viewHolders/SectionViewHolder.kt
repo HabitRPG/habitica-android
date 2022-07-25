@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders
 
 import android.content.Context
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -61,6 +62,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } else {
             countPill?.visibility = View.VISIBLE
         }
+        label.gravity = Gravity.START
         countPill?.text = itemView.context.getString(R.string.pet_ownership_fraction, section.ownedCount, section.totalCount)
     }
 

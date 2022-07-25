@@ -14,12 +14,12 @@ import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
-import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.ads.AdButton
+import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
 import javax.inject.Inject
 
@@ -105,7 +105,7 @@ class DeathActivity: BaseActivity() {
             .setSpeedRange(0.01f, 0.03f)
             .setFadeOut(4000, AccelerateInterpolator())
             .setSpeedModuleAndAngleRange(0.01f, 0.03f, startAngle, startAngle+80)
-            .emit(550, 690, 3, 6000)
+            .emit(550, 670, 3, 6000)
 
     }
 

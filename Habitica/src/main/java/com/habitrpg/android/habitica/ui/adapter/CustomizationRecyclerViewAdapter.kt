@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.Avatar
 import com.habitrpg.common.habitica.views.AvatarView
@@ -24,6 +25,7 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.Date
 import java.util.EnumMap
+import kotlin.math.min
 
 class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
@@ -31,7 +33,8 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     var hairColor: String? = null
     var avatar: Avatar? = null
     var customizationType: String? = null
-    var gemBalance: Int = 0
+    var gemBalance = 0
+    var columnCount = 1
     var unsortedCustomizations: List<Customization> = ArrayList()
     private var customizationList: MutableList<Any> = ArrayList()
     var additionalSetItems: List<Customization> = ArrayList()
@@ -79,6 +82,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             (holder as SectionViewHolder).bind(obj as CustomizationSet)
         } else if (getItemViewType(position) == 1) {
             (holder as SectionFooterViewHolder).bind(obj as CustomizationSet)
+            holder.buttonWidth = (min(columnCount, obj.customizations.size) * 76.dpToPx(holder.itemView.context))
         } else {
             (holder as CustomizationViewHolder).bind(customizationList[position] as Customization)
         }
@@ -254,6 +258,14 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         private val binding = CustomizationSectionFooterBinding.bind(itemView)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
+
+        var buttonWidth: Int
+        get() = binding.purchaseSetButton.width
+        set(value) {
+            val params = binding.purchaseSetButton.layoutParams
+            params.width = value
+            binding.purchaseSetButton.layoutParams = params
+        }
 
         init {
             binding.purchaseSetButton.setOnClickListener(this)

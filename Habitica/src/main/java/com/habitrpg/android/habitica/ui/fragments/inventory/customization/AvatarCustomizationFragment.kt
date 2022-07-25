@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection.ROW
@@ -22,7 +23,6 @@ import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.CustomizationFilter
@@ -35,6 +35,8 @@ import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.kotlin.combineLatest
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -120,6 +122,10 @@ class AvatarCustomizationFragment :
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
         currentFilter.onNext(CustomizationFilter())
+
+        binding?.recyclerView?.doOnLayout {
+            adapter.columnCount = it.width / (80.dpToPx(context))
+        }
     }
 
     override fun onDestroy() {

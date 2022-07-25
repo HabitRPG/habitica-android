@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
         android:id="@+id/purchaseSetButton"
         android:visibility="gone"
@@ -25,6 +25,7 @@
         <com.habitrpg.android.habitica.ui.views.CurrencyView
             android:id="@+id/set_price_label"
             android:layout_width="wrap_content"
+            android:fontFamily="sans-serif-medium"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </FrameLayout>
