@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import java.util.Locale
@@ -119,13 +120,22 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 intent.putExtras(bundle)
 
                 if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
-                    context?.let { context ->
-                        val builder = AlertDialog.Builder(context)
-                            .setMessage(getString(R.string.change_class_confirmation))
-                            .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                            .setPositiveButton(getString(R.string.change_class)) { _, _ -> classSelectionResult.launch(intent) }
-                        val alert = builder.create()
-                        alert.show()
+                    if ((user?.gemCount ?: 0) >= 3) {
+                        context?.let { context ->
+                            val builder = AlertDialog.Builder(context)
+                                .setMessage(getString(R.string.change_class_confirmation))
+                                .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
+                                .setPositiveButton(getString(R.string.change_class)) { _, _ ->
+                                    classSelectionResult.launch(
+                                        intent
+                                    )
+                                }
+                            val alert = builder.create()
+                            alert.show()
+                        }
+                    } else {
+                        val dialog = context?.let { InsufficientGemsDialog(it, 3) }
+                        dialog?.show()
                     }
                 } else {
                     classSelectionResult.launch(intent)
