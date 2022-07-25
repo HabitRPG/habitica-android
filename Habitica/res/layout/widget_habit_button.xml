@@ -24,12 +24,10 @@
                 android:src="@drawable/plus"
                 android:scaleType="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?selectableItemBackground" />
+                android:layout_height="match_parent" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?selectableItemBackground"
                 android:textSize="24sp"
                 />
         </FrameLayout>
@@ -43,12 +41,10 @@
                 android:src="@drawable/minus"
                 android:scaleType="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?selectableItemBackground" />
+                android:layout_height="match_parent" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?selectableItemBackground"
                 android:textSize="24sp"
                 />
         </FrameLayout>

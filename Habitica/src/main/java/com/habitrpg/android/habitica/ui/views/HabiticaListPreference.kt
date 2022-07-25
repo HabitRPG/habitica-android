@@ -22,9 +22,9 @@ class HabiticaListPreference : ListPreference {
     override fun onClick() {
         val subtitleText = TextView(context)
         subtitleText.setText(R.string.cds_subtitle)
-        val builder = AlertDialog.Builder(context).setSingleChoiceItems(entries, getValueIndex()) { dialog, index ->
-            if (callChangeListener(entryValues[index].toString())) {
-                setValueIndex(index)
+        val builder = AlertDialog.Builder(context).setSingleChoiceItems(entries, getValueIndex()+1) { dialog, index ->
+            if (callChangeListener(entryValues[index-1].toString())) {
+                setValueIndex(index-1)
             }
             dialog.dismiss()
         }

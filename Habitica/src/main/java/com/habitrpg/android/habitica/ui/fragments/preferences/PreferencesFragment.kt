@@ -276,17 +276,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
-            if (preference.getKey() == "cds_time") {
-                if (parentFragmentManager.findFragmentByTag(DayStartPreferenceDialogFragment.TAG) == null) {
-                    DayStartPreferenceDialogFragment.newInstance(this, preference.getKey())
-                        .show(parentFragmentManager, DayStartPreferenceDialogFragment.TAG)
-                }
-            } else {
                 if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
                     TimePreferenceDialogFragment.newInstance(this, preference.getKey())
                         .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
                 }
-            }
         } else {
             super.onDisplayPreferenceDialog(preference)
         }

@@ -321,7 +321,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             userRepository.getUserFlowable()
                 .distinct { it.hasCompletedOnboarding }
                 .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
-                .takeUntil { it.hasCompletedOnboarding }
                 .subscribe({ recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError())
         )
     }

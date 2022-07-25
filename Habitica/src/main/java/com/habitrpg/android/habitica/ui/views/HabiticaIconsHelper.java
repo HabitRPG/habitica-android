@@ -165,7 +165,7 @@ public class HabiticaIconsHelper {
         if (imageOfHeartLightBg != null)
             return imageOfHeartLightBg;
 
-        int size = scaleSize(24);
+        int size = scaleSize(18);
         imageOfHeartLightBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfHeartLightBg);
         canvas.scale(displayDensity, displayDensity);

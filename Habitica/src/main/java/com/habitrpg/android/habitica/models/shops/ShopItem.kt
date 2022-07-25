@@ -191,6 +191,10 @@ open class ShopItem : RealmObject(), BaseObject {
             set.customizations.forEach {
                 item.setImageNames.add(it.getIconName(userSize, hairColor))
             }
+            if (set.customizations.firstOrNull()?.type == "background") {
+                // TODO: Needs a way to be translated.
+                item.notes = "Get all three Backgrounds in this bundle."
+            }
             return item
         }
     }
