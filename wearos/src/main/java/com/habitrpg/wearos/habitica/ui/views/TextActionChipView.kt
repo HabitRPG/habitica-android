@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TextActionChipBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
-class TextActionChipView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+open class TextActionChipView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     RelativeLayout(context, attrs) {
     private val attributes = context.theme?.obtainStyledAttributes(
         attrs,

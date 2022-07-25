@@ -34,7 +34,7 @@
                 android:textColor="@color/watch_white"
                 android:layout_marginBottom="18dp"/>
 
-            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
+            <com.habitrpg.wearos.habitica.ui.views.ConnectedActionChipView
                 android:id="@+id/sign_in_on_phone_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 app:chipImage="@drawable/ic_keyboard"
                 app:chipText="@string/sign_in_password" />
 
-            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
+            <com.habitrpg.wearos.habitica.ui.views.ConnectedActionChipView
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

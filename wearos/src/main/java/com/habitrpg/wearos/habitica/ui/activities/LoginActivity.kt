@@ -45,7 +45,7 @@ class LoginActivity: BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 binding.signInOnPhoneButton.isVisible = false
                 binding.otherButton.isVisible = false
                 binding.googleLoginButton.isVisible = true
-                binding.registerButton.isVisible = true
+                binding.registerButton.isVisible = binding.registerButton.isEnabled
                 binding.usernamePasswordButton.isVisible = true
                 binding.usernameEditText.isVisible = false
                 binding.passwordEditText.isVisible = false

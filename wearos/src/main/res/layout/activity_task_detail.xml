@@ -43,7 +43,7 @@
                 android:layout_marginTop="5dp"
                 android:textSize="12sp"/>
 
-            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
+            <com.habitrpg.wearos.habitica.ui.views.ConnectedActionChipView
                 android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

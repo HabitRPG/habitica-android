@@ -2,7 +2,8 @@
 <FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.habitrpg.wearos.habitica.ui.views.HabiticaScrollView
         android:id="@+id/scroll_view"
         android:orientation="vertical"
@@ -33,20 +34,19 @@
                 android:textColor="@color/watch_white"
                 style="@style/Text.SubHeader1"
                 android:layout_marginBottom="@dimen/spacing_large"/>
-            <Button
+            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
                 android:id="@+id/rya_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/review_dailies"
                 style="@style/ChipButton.Purple"
                 android:layout_marginBottom="@dimen/spacing_small"/>
-            <Button
+            <com.habitrpg.wearos.habitica.ui.views.ConnectedActionChipView
                 android:id="@+id/phone_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/check_on_phone"
-                android:drawableStart="@drawable/handoff"
-                style="@style/ChipButton.Icon"/>
+                app:chipImage="@drawable/handoff"
+                app:chipText="@string/check_on_phone" />
 
             <LinearLayout
                 android:id="@+id/task_view"
