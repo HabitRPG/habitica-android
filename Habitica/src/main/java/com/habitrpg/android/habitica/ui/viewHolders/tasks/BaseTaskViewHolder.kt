@@ -231,6 +231,7 @@ abstract class BaseTaskViewHolder constructor(
             taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
         } else {
             taskIconWrapper?.visibility = View.GONE
+            mainTaskWrapper.minimumHeight = 48.dpToPx(context)
         }
 
         if (data.isPendingApproval) {
