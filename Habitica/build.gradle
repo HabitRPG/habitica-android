@@ -145,7 +145,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STORE", "\"google\""
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
-        resConfigs 'en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'zh', 'zh-rTW'
+        resConfigs 'en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'uk', 'zh', 'zh-rTW'
 
         versionCode app_version_code
         versionName app_version_name
