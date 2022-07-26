@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.R
@@ -14,7 +15,7 @@ import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
 import com.habitrpg.android.habitica.models.user.User
 
 
-class HabiticaAccountDialog(private var thisContext: Context, ) : DialogFragment(R.layout.dialog_habitica_account) {
+class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R.layout.dialog_habitica_account) {
 
     private var _binding: DialogHabiticaAccountBinding? = null
     private val binding get() = _binding!!
@@ -30,6 +31,7 @@ class HabiticaAccountDialog(private var thisContext: Context, ) : DialogFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         when (accountAction) {
             "reset_account" -> setResetAccountViews()
@@ -48,7 +50,7 @@ class HabiticaAccountDialog(private var thisContext: Context, ) : DialogFragment
 
         binding.confirmationInputEdittext.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_10))
+                binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
                 binding.confirmActionTextview.alpha = .4f
             }
 
@@ -57,7 +59,7 @@ class HabiticaAccountDialog(private var thisContext: Context, ) : DialogFragment
                     binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
                     binding.confirmActionTextview.alpha = 1.0f
                 } else {
-                    binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_10))
+                    binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
                     binding.confirmActionTextview.alpha = .4f
                 }
             }
@@ -85,19 +87,19 @@ class HabiticaAccountDialog(private var thisContext: Context, ) : DialogFragment
 
         binding.confirmationInputEdittext.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_10))
+                binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
                 binding.confirmActionTextview.alpha = .4f
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (binding.confirmationInputEdittext.text.toString().length > 5) {
                     if ((user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.delete_caps)) ||
-                            user?.authentication?.hasPassword == true) {
+                        user?.authentication?.hasPassword == true) {
                         binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
                         binding.confirmActionTextview.alpha = 1.0f
                     }
                 } else {
-                    binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_10))
+                    binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
                     binding.confirmActionTextview.alpha = .4f
                 }
             }

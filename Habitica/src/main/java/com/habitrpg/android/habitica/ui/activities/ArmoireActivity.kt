@@ -115,7 +115,7 @@ class ArmoireActivity : BaseActivity() {
             finish()
         }
         binding.equipButton.setOnClickListener {
-            equipmentKey?.let { it1 -> inventoryRepository.equip("gear", it1).subscribe({}, RxErrorHandler.handleEmptyError()) }
+            equipmentKey?.let { it1 -> inventoryRepository.equip("equipped", it1).subscribe({}, RxErrorHandler.handleEmptyError()) }
             finish()
         }
         binding.dropRateButton.setOnClickListener {

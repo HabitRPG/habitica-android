@@ -6,4 +6,18 @@ class CustomizationSet {
     var price: Int = 0
     var hasPurchasable = false
     var customizations: MutableList<Customization> = mutableListOf()
+    var ownedCustomizations: MutableList<Customization> = mutableListOf()
+
+    fun isSetDeal(): Boolean {
+        var total = 0
+        for (customization in customizations) {
+            if (!ownedCustomizations.contains(customization)) {
+                customization.price?.let { total += it }
+            }
+        }
+        if (total >= price) {
+            return true
+        }
+        return false
+    }
 }

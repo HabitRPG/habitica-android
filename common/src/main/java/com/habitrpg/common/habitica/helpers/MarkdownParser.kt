@@ -150,7 +150,11 @@ private fun handleUrlClicks(context: Context, url: String) {
     val webpage = if (url.startsWith("/")) {
         Uri.parse("${context.getString(R.string.base_url)}$url")
     } else {
-        Uri.parse(url)
+        if (Uri.parse(url).scheme == null) {
+            Uri.parse("http://$url");
+        } else {
+            Uri.parse(url)
+        }
     }
     val intent = Intent(Intent.ACTION_VIEW, webpage)
     if (intent.resolveActivity(context.packageManager) != null) {
