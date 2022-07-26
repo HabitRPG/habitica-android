@@ -18,12 +18,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormTaskSchedulingBinding
+import com.habitrpg.android.habitica.models.tasks.Days
+import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.common.habitica.models.tasks.Frequency
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import java.text.DateFormat
 import java.text.DateFormatSymbols
 import java.util.Calendar
@@ -111,16 +111,20 @@ class TaskSchedulingControls @JvmOverloads constructor(
             generateSummary()
         }
 
-    var firstDayOfWeek: Int? = null
+    var firstDayOfWeek: Int = -1
+    set(value) {
+        field = value
+        if (value >= 0) {
+            val codes = (1..7).toList()
+            Collections.rotate(codes, -firstDayOfWeek+1)
+            weekdayOrder = codes
+        }
+    }
 
     private val weekdays: Array<String> by lazy {
         DateFormatSymbols().weekdays
     }
-    private val weekdayOrder: List<Int> by lazy {
-        val codes = (1..7).toList()
-        Collections.rotate(codes, -startDateCalendar.firstDayOfWeek)
-        codes
-    }
+    private var weekdayOrder: List<Int> = (1..7).toList()
 
     init {
         binding.repeatsEverySpinner.adapter = frequencyAdapter
@@ -165,8 +169,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
                 }
             }
 
-            if ((firstDayOfWeek ?: -1) >= 0) {
-                datePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek ?: 0
+            if (firstDayOfWeek >= 0) {
+                datePickerDialog.datePicker.firstDayOfWeek = firstDayOfWeek
             }
             if (taskType == TaskType.TODO) {
                 datePickerDialog.setButton(DialogInterface.BUTTON_NEUTRAL, resources.getString(R.string.clear)) { _, _ ->

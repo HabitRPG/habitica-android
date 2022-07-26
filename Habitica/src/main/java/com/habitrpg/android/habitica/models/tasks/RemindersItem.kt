@@ -56,6 +56,9 @@ open class RemindersItem : RealmObject, Parcelable {
     }
 
     fun getZonedDateTime(): ZonedDateTime? {
+        if (time == null) {
+            return null
+        }
         val formatter: DateTimeFormatter =
             DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
                 .appendPattern("['T'][' ']")
