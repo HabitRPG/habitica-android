@@ -39,7 +39,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
     private var uuid: String = ""
     private var expandedMessageId: String? = null
 
-    private val likeMessageEvents = PublishSubject.create<ChatMessage>()
+    var onMessageLike: ((ChatMessage) -> Unit)? = null
     private val userLabelClickEvents = PublishSubject.create<String>()
     private val deleteMessageEvents = PublishSubject.create<ChatMessage>()
     private val flagMessageEvents = PublishSubject.create<ChatMessage>()
@@ -73,7 +73,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
                 message,
                 expandedMessageId == data[position].id
             )
-            sysChatHolder.onShouldExpand = { expandMessage(message) }
+            sysChatHolder.onShouldExpand = { expandMessage(message, position) }
         } else {
             val chatHolder = holder as? ChatRecyclerMessageViewHolder ?: return
             val message = data[position]
@@ -83,8 +83,8 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
                 user,
                 expandedMessageId == message.id
             )
-            chatHolder.onShouldExpand = { expandMessage(message) }
-            chatHolder.onLikeMessage = { likeMessageEvents.onNext(it) }
+            chatHolder.onShouldExpand = { expandMessage(message, position) }
+            chatHolder.onLikeMessage = { onMessageLike?.invoke(it) }
             chatHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
             chatHolder.onReply = { replyMessageEvents.onNext(it) }
             chatHolder.onCopyMessage = { copyMessageEvents.onNext(it) }
@@ -96,10 +96,6 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
     override fun getItemViewType(position: Int): Int {
         if (data.size <= position) return 0
         return if (data[position].isSystemMessage) 0 else 1
-    }
-
-    fun getLikeMessageFlowable(): Flowable<ChatMessage> {
-        return likeMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     fun getUserLabelClickFlowable(): Flowable<String> {
@@ -122,13 +118,13 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
         return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
-    private fun expandMessage(message: ChatMessage) {
+    private fun expandMessage(message: ChatMessage, position: Int?) {
         expandedMessageId = if (expandedMessageId == message.id) {
             null
         } else {
             message.id
         }
-        notifyItemChanged(data.indexOf(message))
+        notifyItemChanged(position ?: data.indexOf(message))
     }
 }
 

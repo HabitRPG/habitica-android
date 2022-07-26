@@ -79,7 +79,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getReplyMessageEvents().subscribe({ setReplyTo(it) }, RxErrorHandler.handleEmptyError()))
             compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getLikeMessageFlowable().subscribe({ viewModel?.likeMessage(it) }, RxErrorHandler.handleEmptyError()))
+            adapter.onMessageLike = { viewModel?.likeMessage(it) }
         }
 
         binding?.chatBarView?.sendAction = { sendChatMessage(it) }
