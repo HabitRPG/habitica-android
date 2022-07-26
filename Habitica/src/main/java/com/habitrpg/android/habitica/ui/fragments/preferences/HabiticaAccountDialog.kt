@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
         binding.titleTextview.setText(R.string.reset_account_title)
         binding.warningDescriptionTextview.setText(R.string.reset_account_description)
         binding.confirmationTextInputLayout.setHint(R.string.confirm_reset)
+        binding.confirmationInputEdittext.inputType = InputType.TYPE_CLASS_TEXT
         binding.confirmActionTextview.setText(R.string.reset_account)
 
         binding.confirmationInputEdittext.addTextChangedListener(object : TextWatcher {
@@ -83,6 +85,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
         if (user?.authentication?.hasPassword != true) {
             binding.warningDescriptionTextview.text = context?.getString(R.string.delete_oauth_account_description)
             binding.confirmationTextInputLayout.setHint(R.string.confirm_deletion)
+            binding.confirmationInputEdittext.inputType = InputType.TYPE_CLASS_TEXT
         }
 
         binding.confirmationInputEdittext.addTextChangedListener(object : TextWatcher {

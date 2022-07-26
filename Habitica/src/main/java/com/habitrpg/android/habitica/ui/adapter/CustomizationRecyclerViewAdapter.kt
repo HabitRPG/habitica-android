@@ -82,7 +82,8 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             (holder as SectionViewHolder).bind(obj as CustomizationSet)
         } else if (getItemViewType(position) == 1) {
             (holder as SectionFooterViewHolder).bind(obj as CustomizationSet)
-            holder.buttonWidth = (min(columnCount, obj.customizations.size) * 76.dpToPx(holder.itemView.context))
+            val count = min(columnCount, obj.customizations.size)
+            holder.buttonWidth = (count * 76.dpToPx(holder.itemView.context)) + ((count - 1) * 12.dpToPx(holder.itemView.context))
         } else {
             (holder as CustomizationViewHolder).bind(customizationList[position] as Customization)
         }
