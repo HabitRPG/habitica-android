@@ -46,6 +46,7 @@
     <color name="checkbox_fill_selected">#40ffffff</color>
     <color name="taskform_gray">#3D3945</color>
     <color name="reward_buy_button_text">#FFFFB445</color>
+    <color name="back_button">#FFFFFF</color>
 
     <color name="content_95_alpha">#f21A181D</color>
     <color name="content_80_alpha">#cc1A181D</color>

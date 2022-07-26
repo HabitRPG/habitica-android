@@ -134,7 +134,10 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             customizationList.add(customization)
             lastSet.customizations.add(customization)
             if (customization.isUsable(ownedCustomizations.contains(customization.id)) && lastSet.hasPurchasable) {
-                lastSet.hasPurchasable = false
+                lastSet.ownedCustomizations.add(customization)
+                if (!lastSet.isSetDeal()) {
+                    lastSet.hasPurchasable = false
+                }
             }
         }
         this.notifyDataSetChanged()

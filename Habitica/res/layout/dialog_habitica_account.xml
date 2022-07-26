@@ -1,104 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/toolbar_cardview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/gray_2_alpha"
-        app:cardCornerRadius="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/toolbar_cardview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            app:cardBackgroundColor="@color/gray_2_alpha"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/back_imagebutton"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/button_padding_small"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:src="@drawable/ic_arrow_back_white_36dp"
-                app:tint="@android:color/black" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/confirm_action_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:alpha=".4"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="@string/font_family_medium"
-                android:padding="8dp"
-                android:text="@string/delete_account"
-                android:textColor="@color/gray_200"
-                android:textSize="18sp" />
+                <ImageButton
+                    android:id="@+id/back_imagebutton"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/button_padding_small"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_arrow_back_white_36dp"
+                    app:tint="@color/back_button" />
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/confirm_action_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:alpha=".4"
+                    android:background="?attr/selectableItemBackground"
+                    android:fontFamily="@string/font_family_medium"
+                    android:padding="8dp"
+                    android:text="@string/delete_account"
+                    android:textColor="@color/gray_300"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
 
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/title_textview"
-        style="@style/DialogHabiticaAccountTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_cardview"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_large"
-        android:text="@string/are_you_sure_you_want_to_delete" />
-
-    <TextView
-        android:id="@+id/warning_description_textview"
-        style="@style/DialogHabiticaAccountBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_textview"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_large"
-        android:text="@string/delete_account_description" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmation_text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_rounded_bg_window"
-        android:layout_below="@id/warning_description_textview"
-        android:layout_marginStart="@dimen/spacing_large"
-        style="@style/DialogHabiticaAccountInputLayout"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_large"
-        android:hint="@string/password"
-        app:hintTextColor="@color/gray_10"
-        android:textColorHint="@color/text_secondary"
-        app:hintTextAppearance="@style/DialogHabiticaAccountHintLabel">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirmation_input_edittext"
+        <TextView
+            android:id="@+id/title_textview"
+            style="@style/DialogHabiticaAccountTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:color/transparent"
-            android:textSize="20sp"
-            android:inputType="textPassword"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_large"
-            android:textColorHint="@color/text_secondary" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_below="@id/toolbar_cardview"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:text="@string/are_you_sure_you_want_to_delete" />
+
+        <TextView
+            android:id="@+id/warning_description_textview"
+            style="@style/DialogHabiticaAccountBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_textview"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:text="@string/delete_account_description" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmation_text_input_layout"
+            style="@style/DialogHabiticaAccountInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/warning_description_textview"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:background="@drawable/layout_rounded_bg_window"
+            android:hint="@string/password"
+            android:textColorHint="@color/text_secondary"
+            app:hintTextAppearance="@style/DialogHabiticaAccountHintLabel"
+            app:hintTextColor="@color/gray_10">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmation_input_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@android:color/transparent"
+                android:inputType="textPassword"
+                android:paddingStart="@dimen/spacing_large"
+                android:paddingEnd="@dimen/spacing_large"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

@@ -99,6 +99,7 @@
     <color name="checkbox_fill_inactive">#99FFFFFF</color>
     <color name="checkbox_fill_selected">@color/gray_600</color>
     <color name="taskform_gray">#99edecee</color>
+    <color name="back_button">#000000</color>
 
     <color name="content_95_alpha">#f2ffffff</color>
     <color name="content_80_alpha">#ccffffff</color>
