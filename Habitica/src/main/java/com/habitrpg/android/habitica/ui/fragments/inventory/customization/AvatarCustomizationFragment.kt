@@ -121,7 +121,7 @@ class AvatarCustomizationFragment :
         this.loadCustomizations()
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
-        currentFilter.onNext(CustomizationFilter())
+        currentFilter.onNext(CustomizationFilter(false, type != "background"))
 
         binding?.recyclerView?.doOnLayout {
             adapter.columnCount = it.width / (80.dpToPx(context))
@@ -287,7 +287,7 @@ class AvatarCustomizationFragment :
             currentFilter.onNext(filter)
         }
         binding.clearButton.setOnClickListener {
-            currentFilter.onNext(CustomizationFilter())
+            currentFilter.onNext(CustomizationFilter(false, type != "background"))
             dialog.dismiss()
         }
         if (type == "background") {
