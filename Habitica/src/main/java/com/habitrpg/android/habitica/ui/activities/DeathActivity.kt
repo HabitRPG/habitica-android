@@ -89,11 +89,15 @@ class DeathActivity: BaseActivity() {
 
     private fun startAnimating() {
         binding.ghostView.startAnimation(Animations.bobbingAnimation())
-        makeCoins(305)
-        makeCoins(160)
+        binding.heartView.post {
+            makeCoins(305)
+            makeCoins(160)
+        }
     }
 
     private fun makeCoins(startAngle: Int) {
+        val positionArray = intArrayOf(0, 0)
+        binding.heartView.getLocationOnScreen(positionArray)
         ParticleSystem(
             binding.confettiContainer,
             14,
@@ -105,7 +109,7 @@ class DeathActivity: BaseActivity() {
             .setSpeedRange(0.01f, 0.03f)
             .setFadeOut(4000, AccelerateInterpolator())
             .setSpeedModuleAndAngleRange(0.01f, 0.03f, startAngle, startAngle+80)
-            .emit(550, 670, 3, 6000)
+            .emit(binding.root.width / 2, positionArray[1] + (binding.heartView.height/2), 3, 6000)
 
     }
 

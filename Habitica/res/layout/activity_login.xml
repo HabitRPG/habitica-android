@@ -57,8 +57,6 @@
                 android:scaleType="centerCrop"
                 android:paddingBottom="400dp"
                 />
-
-
         </com.habitrpg.android.habitica.ui.views.login.LoginBackgroundView>
 
     </com.habitrpg.android.habitica.ui.views.login.LockableScrollView>

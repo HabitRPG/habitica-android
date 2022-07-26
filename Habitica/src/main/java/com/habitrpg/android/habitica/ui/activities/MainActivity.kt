@@ -462,7 +462,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         val now = Date().time
-        if (!this.isFinishing && now - lastDeathDialogDisplay > 60000) {
+        if (!this.isFinishing && MainNavigationController.isReady && now - lastDeathDialogDisplay > 60000) {
             lastDeathDialogDisplay = now
             MainNavigationController.navigate(R.id.deathActivity)
         }

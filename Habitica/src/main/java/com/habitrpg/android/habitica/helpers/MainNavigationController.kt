@@ -19,6 +19,9 @@ object MainNavigationController {
     private val navController: NavController?
         get() { return controllerReference?.get() }
 
+    val isReady: Boolean
+    get() = controllerReference?.get() != null
+
     fun setup(navController: NavController) {
         this.controllerReference = WeakReference(navController)
     }
