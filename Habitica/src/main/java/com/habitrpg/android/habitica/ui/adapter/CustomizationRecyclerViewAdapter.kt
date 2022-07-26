@@ -96,7 +96,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     override fun getItemViewType(position: Int): Int {
         if (customizationList.size <= position) return 0
         return if (this.customizationList[position] is CustomizationSet &&
-            (position < customizationList.size && customizationList[position + 1] is CustomizationSet)
+            (position == (customizationList.size - 1) || (position < customizationList.size && customizationList[position + 1] is CustomizationSet))
         ) {
             1
         } else if (this.customizationList[position] is CustomizationSet) {
@@ -144,6 +144,9 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                     lastSet.hasPurchasable = false
                 }
             }
+        }
+        if (lastSet.hasPurchasable) {
+            customizationList.add(lastSet)
         }
         this.notifyDataSetChanged()
     }
