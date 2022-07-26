@@ -205,6 +205,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             dialog.addButton(R.string.yes, true, true) { _, _ ->
                 viewModel?.deleteMessage(chatMessage)
             }
+            dialog.show()
         }
     }
 
