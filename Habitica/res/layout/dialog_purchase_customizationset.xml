@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:flexWrap="wrap"
         app:flexDirection="row"
-        app:alignItems="center"
+        app:justifyContent="center"
         app:dividerDrawable="@drawable/purchase_dialog_spacing"
         android:layout_marginTop="24dp"
         app:showDivider="middle"/>

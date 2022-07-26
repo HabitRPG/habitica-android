@@ -909,6 +909,7 @@
 
     <style name="Widget.App.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <item name="android:backgroundTint">@color/window_background</item>
+        <item name="backgroundTint">@color/window_background</item>
         <item name="android:background">@drawable/bottom_sheet_background</item>
         <item name="shapeAppearanceOverlay">@null</item>
         <item name="shapeAppearance">@null</item>

@@ -108,8 +108,12 @@ constructor(
                 container.addView(createTextView(context, questDamage, HabiticaIconsHelper.imageOfDamage()))
             }
 
+            val childCount = container.childCount
+            if (childCount == 0) {
+                return Pair(null, displayType)
+            }
             val padding = context.resources.getDimension(R.dimen.spacing_medium).toInt()
-            (1 until container.childCount)
+            (1 until childCount)
                 .map { container.getChildAt(it) }
                 .forEach { it.setPadding(padding, 0, 0, 0) }
 

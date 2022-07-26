@@ -96,7 +96,7 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     }
 
     private fun removeStarViews() {
-        if (starViews?.size ?: 0 > 0) {
+        if ((starViews?.size ?: 0) > 0) {
             starViews?.forEach { this.removeView(it) }
             starViews?.clear()
         }

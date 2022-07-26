@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -134,6 +135,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 val binding = DialogHatchPetButtonBinding.inflate(layoutInflater)
                 binding.currencyView.value = hatchPrice.toDouble()
                 binding.currencyView.currency = "gems"
+                binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
                 addButton(binding.root, true) { _, _ ->
                     val activity = (getActivity() as? MainActivity) ?: return@addButton
                     val thisPotion = potion ?: return@addButton
