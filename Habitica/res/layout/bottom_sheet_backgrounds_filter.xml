@@ -42,7 +42,7 @@
         android:textColor="@color/text_quad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/show_me"
+        android:text="@string/display"
         android:textAllCaps="true"/>
     <RadioGroup
         android:id="@+id/show_me_wrapper"

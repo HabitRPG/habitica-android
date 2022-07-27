@@ -614,6 +614,7 @@
         <item name="android:background">@drawable/pill_radio_button</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">8dp</item>
+        <item name="fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@drawable/radio_button_text_color</item>
     </style>
 

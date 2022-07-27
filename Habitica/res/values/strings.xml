@@ -1222,4 +1222,5 @@
     <string name="faint_broken_equipment">Broken equipment can be repurchased from Rewards</string>
     <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>…]]></string>
     <string name="account_reset">Account Reset</string>
+    <string name="display">Display</string>
 </resources>
