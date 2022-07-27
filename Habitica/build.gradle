@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.1'
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.preference:preference-ktx:$preferences_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     //Desugaring
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
@@ -86,20 +87,18 @@ dependencies {
     androidTestImplementation 'io.kotest:kotest-assertions-core:5.3.0'
     androidTestUtil("androidx.test:orchestrator:1.4.1")
 
-    implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
-
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     //Leak Detection
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
     //Push Notifications
-    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-core'
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.android.gms:play-services-ads:21.0.0'
+    implementation 'com.google.android.gms:play-services-ads:21.1.0'
     implementation "com.google.android.gms:play-services-auth:$play_auth_version"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "com.google.android.gms:play-services-wearable:$play_wearables_version"

@@ -113,7 +113,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshi_version")
 
-    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
 

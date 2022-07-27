@@ -17,4 +17,5 @@ class InputViewModel @Inject constructor(
     appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     val title = savedStateHandle.get<String>("title") ?: ""
+    val existingInput = savedStateHandle.get<String>("input")
 }

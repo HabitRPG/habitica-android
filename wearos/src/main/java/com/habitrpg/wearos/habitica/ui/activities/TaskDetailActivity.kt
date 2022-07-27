@@ -11,6 +11,7 @@ import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.common.habitica.models.tasks.streakString
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DateFormat
 
 @AndroidEntryPoint
 class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailViewModel>() {
@@ -56,12 +57,21 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
             } else {
                 binding.taskNotesView.isVisible = false
             }
-            val streakString = task?.streakString
-            if (streakString != null) {
-                binding.taskStreakView.isVisible = true
-                binding.taskStreakView.text = streakString
+            if (task?.type == TaskType.TODO) {
+                task.dueDate?.let { dueDate ->
+                    val format = DateFormat.getDateInstance()
+                    binding.taskStreakView.text = format.format(dueDate)
+                    binding.taskStreakView.isVisible = true
+                    binding.taskStreakView.setCompoundDrawables(null, null, null, null)
+                }
             } else {
-                binding.taskStreakView.isVisible = false
+                val streakString = task?.streakString
+                if (streakString != null) {
+                    binding.taskStreakView.isVisible = true
+                    binding.taskStreakView.text = streakString
+                } else {
+                    binding.taskStreakView.isVisible = false
+                }
             }
         }
     }

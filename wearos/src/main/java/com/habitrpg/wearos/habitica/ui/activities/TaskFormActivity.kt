@@ -101,6 +101,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
     private fun requestInput() {
         val intent = Intent(this, InputActivity::class.java).apply {
             putExtra("title", getString(R.string.task_title_hint))
+            putExtra("input", binding.editText.text.toString())
         }
         inputResult.launch(intent)
     }

@@ -71,7 +71,7 @@
             android:foreground="?selectableItemBackground"
             android:paddingTop="@dimen/spacing_small"
             android:paddingBottom="@dimen/spacing_small"/>
-        <androidx.legacy.widget.Space
+        <Space
             android:id="@+id/cutout_space"
             android:layout_width="50dp"
             android:layout_height="wrap_content" />

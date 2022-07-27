@@ -16,10 +16,11 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 /**
  * Created by phillip on 27.09.17.
@@ -69,14 +70,19 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
                 CoroutineScope(Dispatchers.IO).launch {
                     val sku = purchaseHandler.getInAppPurchaseSKU(PurchaseTypes.Purchase4Gems)
                         ?: return@launch
-                    val purchaseTextView =
-                        contentView.findViewById<TextView>(R.id.purchase_textview)
-                    purchaseTextView.text = sku.title
-                    purchaseButton?.text = sku.price
+                    withContext(Dispatchers.Main) {
+                        val purchaseTextView =
+                            contentView.findViewById<TextView>(R.id.purchase_textview)
+                        purchaseTextView.text = sku.title
+                        purchaseButton?.text = sku.price
 
-                    purchaseButton?.setOnClickListener {
-                        FirebaseAnalytics.getInstance(context).logEvent("purchased_gems_from_insufficient", bundleOf(Pair("gemPrice", gemPrice), Pair("sku", "")))
-                        purchaseHandler.purchase(activity, sku)
+                        purchaseButton?.setOnClickListener {
+                            FirebaseAnalytics.getInstance(context).logEvent(
+                                "purchased_gems_from_insufficient",
+                                bundleOf(Pair("gemPrice", gemPrice), Pair("sku", ""))
+                            )
+                            purchaseHandler.purchase(activity, sku)
+                        }
                     }
                 }
 

@@ -49,6 +49,7 @@ class InputActivity: BaseActivity<ActivityInputBinding, InputViewModel>() {
 
     private fun showKeyboard() {
         binding.editText.hint = binding.titleView.text
+        binding.editText.setText(viewModel.existingInput)
         binding.editText.requestFocus()
         binding.editText.postDelayed(100) {
             val imm: InputMethodManager =

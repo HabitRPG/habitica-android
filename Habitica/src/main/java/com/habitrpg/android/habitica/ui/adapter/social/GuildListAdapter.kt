@@ -13,13 +13,14 @@ import com.habitrpg.android.habitica.databinding.ItemPublicGuildBinding
 import com.habitrpg.android.habitica.databinding.ItemUserGuildBinding
 import com.habitrpg.android.habitica.databinding.PillTextviewBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.EmojiParser
+import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import java.util.Locale
@@ -142,6 +143,9 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
                     textView.root.setTextColor(ContextCompat.getColor(itemView.context, R.color.text_secondary))
                     ContextCompat.getDrawable(itemView.context, R.drawable.pill_bg_gray)
                 }
+                val hPadding = 10.dpToPx(itemView.context)
+                val vPadding = 3.dpToPx(itemView.context)
+                textView.root.setPadding(hPadding, vPadding, hPadding, vPadding)
             }
         }
     }

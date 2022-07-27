@@ -31,8 +31,7 @@
                     android:layout_marginStart="@dimen/button_padding_small"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
-                    android:src="@drawable/ic_arrow_back_white_36dp"
-                    app:tint="@color/back_button" />
+                    android:src="?attr/homeAsUpIndicator" />
 
                 <TextView
                     android:id="@+id/confirm_action_textview"

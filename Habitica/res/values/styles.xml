@@ -484,11 +484,11 @@
         <item name="android:textColor">@color/text_ternary</item>
     </style>
 
-    <style name="Pill.Window">
+    <style name="Pill.Window" parent="Pill">
         <item name="android:background">@drawable/pill_bg_window</item>
     </style>
 
-    <style name="Pill.Content">
+    <style name="Pill.Content" parent="Pill">
         <item name="android:background">@drawable/pill_bg_content</item>
     </style>
     <style name="Pill.Purple">
