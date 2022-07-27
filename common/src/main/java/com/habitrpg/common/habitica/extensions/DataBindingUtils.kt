@@ -13,6 +13,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.R
+import com.habitrpg.common.habitica.extensions.DataBindingUtils.BASE_IMAGE_URL
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.Collections
@@ -31,6 +32,21 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
                 bitmap = it.toBitmap()
             }
         }
+    }
+}
+
+fun PixelArtView.loadGif(
+    imageName: String?,
+    builder: ImageRequest.Builder.() -> Unit = {}
+) {
+    if (imageName != null) {
+        val fullname = BASE_IMAGE_URL + DataBindingUtils.getFullFilename(imageName)
+        val request = ImageRequest.Builder(context)
+            .data(fullname)
+            .target(this)
+            .apply(builder)
+            .build()
+        context.imageLoader.enqueue(request)
     }
 }
 
