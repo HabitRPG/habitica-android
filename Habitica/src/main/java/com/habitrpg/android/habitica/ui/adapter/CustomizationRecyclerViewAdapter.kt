@@ -84,6 +84,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             (holder as SectionFooterViewHolder).bind(obj as CustomizationSet)
             val count = min(columnCount, obj.customizations.size)
             holder.buttonWidth = (count * 76.dpToPx(holder.itemView.context)) + ((count - 1) * 12.dpToPx(holder.itemView.context))
+            holder.additionalSetItems = additionalSetItems.filter { it.purchasable && (it.price ?: 0) > 0 }
         } else {
             (holder as CustomizationViewHolder).bind(customizationList[position] as Customization)
         }
@@ -125,7 +126,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 }
             }
             if (customization.customizationSet != null && customization.customizationSet != lastSet.identifier) {
-                if (lastSet.hasPurchasable) {
+                if (lastSet.hasPurchasable && lastSet.price > 0) {
                     customizationList.add(lastSet)
                 }
                 val set = CustomizationSet()
@@ -262,6 +263,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         private val binding = CustomizationSectionFooterBinding.bind(itemView)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
+        var additionalSetItems: List<Customization>? = null
 
         var buttonWidth: Int
         get() = binding.purchaseSetButton.width
@@ -288,7 +290,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
 
         override fun onClick(v: View) {
             set?.let {
-                val dialog = PurchaseDialog(itemView.context, HabiticaBaseApplication.userComponent, ShopItem.fromCustomizationSet(it, userSize, hairColor))
+                val dialog = PurchaseDialog(itemView.context, HabiticaBaseApplication.userComponent, ShopItem.fromCustomizationSet(it, additionalSetItems, userSize, hairColor))
                 dialog.show()
             }
         }

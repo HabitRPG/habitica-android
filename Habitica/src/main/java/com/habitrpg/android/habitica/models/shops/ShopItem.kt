@@ -172,11 +172,21 @@ open class ShopItem : RealmObject(), BaseObject {
             return item
         }
 
-        fun fromCustomizationSet(set: CustomizationSet, userSize: String?, hairColor: String?): ShopItem {
+        fun fromCustomizationSet(
+            set: CustomizationSet,
+            additionalSetItems: List<Customization>?,
+            userSize: String?,
+            hairColor: String?
+        ): ShopItem {
             val item = ShopItem()
             var path = ""
             for (customization in set.customizations) {
                 path = path + "," + customization.unlockPath
+                item.setImageNames.add(customization.getIconName(userSize, hairColor))
+            }
+            for (customization in additionalSetItems ?: emptyList()) {
+                path = path + "," + customization.unlockPath
+                item.setImageNames.add(customization.getIconName(userSize, hairColor))
             }
             if (path.isEmpty()) {
                 item.unlockPath = path
@@ -188,9 +198,6 @@ open class ShopItem : RealmObject(), BaseObject {
             item.currency = "gems"
             item.value = set.price
             item.purchaseType = "customizationSet"
-            set.customizations.forEach {
-                item.setImageNames.add(it.getIconName(userSize, hairColor))
-            }
             if (set.customizations.firstOrNull()?.type == "background") {
                 // TODO: Needs a way to be translated.
                 item.notes = "Get all three Backgrounds in this bundle."

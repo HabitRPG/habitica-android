@@ -49,8 +49,6 @@
                     android:textSize="18sp" />
 
             </RelativeLayout>
-
-
         </androidx.cardview.widget.CardView>
 
         <TextView

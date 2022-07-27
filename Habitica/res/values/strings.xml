@@ -1222,5 +1222,12 @@
     <string name="faint_broken_equipment">Broken equipment can be repurchased from Rewards</string>
     <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>…]]></string>
     <string name="account_reset">Account Reset</string>
+    <string name="avatar_skin_customization">Avatar Skin Customization</string>
+    <string name="avatar_shirt_customization">Avatar Shirt Customization</string>
+    <string name="avatar_beard_customization">Avatar Beard Customization</string>
+    <string name="avatar_mustache_customization">Avatar Mustache Customization</string>
+    <string name="avatar_bangs_customization">Avatar Bangs Customization</string>
+    <string name="avatar_hair_color_customization">Avatar Hair Color Customization</string>
+    <string name="avatar_hair_style_customization">Avatar Hair Style Customization</string>
     <string name="display">Display</string>
 </resources>
