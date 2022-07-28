@@ -15,14 +15,14 @@ class EquipmentItemRow(context: Context, attrs: AttributeSet?) : LinearLayout(co
     var equipmentIdentifier: String? = null
         set(value) {
             field = value
-            val imageName = if (equipmentIdentifier?.isNotEmpty() == true && equipmentIdentifier?.endsWith("base_0") == false) "shop_$equipmentIdentifier" else "head_0"
+            val imageName = if (equipmentIdentifier?.isNotEmpty() == true && equipmentIdentifier?.endsWith("base_0") == false) "shop_$equipmentIdentifier" else "icon_head_0"
             binding.imageView.loadImage(imageName)
         }
 
     var customizationIdentifier: String? = null
         set(value) {
             field = value
-            val imageName = if (customizationIdentifier?.isNotEmpty() == true) customizationIdentifier else "head_0"
+            val imageName = if (customizationIdentifier?.isNotEmpty() == true) "icon_$customizationIdentifier" else "icon_head_0"
             binding.imageView.loadImage(imageName)
         }
 

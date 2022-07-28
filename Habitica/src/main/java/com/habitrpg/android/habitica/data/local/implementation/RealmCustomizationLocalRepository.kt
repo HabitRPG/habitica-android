@@ -30,7 +30,7 @@ class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalReposit
         }
         return RxJavaBridge.toV3Flowable(
             query
-                .sort("customizationSetName")
+                .sort("customizationSet")
                 .findAll()
                 .asFlowable()
                 .filter { it.isLoaded }
