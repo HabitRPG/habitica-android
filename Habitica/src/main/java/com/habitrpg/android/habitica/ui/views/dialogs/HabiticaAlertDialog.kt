@@ -19,16 +19,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.plattysoft.leonids.ParticleSystem
-import java.lang.ref.WeakReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
 
@@ -40,7 +40,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     var isCelebratory: Boolean = false
     private val view: RelativeLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as RelativeLayout
     private val dialogWrapper: LinearLayout
-    private val dialogContainer: LinearLayout
+    internal val dialogContainer: LinearLayout
     private var titleTextView: TextView
     private var messageTextView: TextView
     internal var contentView: ViewGroup
@@ -246,7 +246,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             params
         } else {
             LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 48.dpToPx(context))
-        }
+        }   
         buttonView.layoutParams = layoutParams
         buttonView.elevation = 10f
 

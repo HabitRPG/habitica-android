@@ -723,6 +723,11 @@
         <item name="android:textColor">@color/brand_400</item>
     </style>
 
+    <style name="HabiticaButton.White.Small" parent="HabiticaButton.Small">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/brand_400</item>
+    </style>
+
     <style name="CurrencyTextView">
         <item name="android:textSize">12sp</item>
         <item name="android:layout_marginLeft">4dp</item>

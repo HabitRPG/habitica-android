@@ -1234,4 +1234,6 @@
     <string name="unable_to_delete">Unable to delete</string>
     <string name="delete_account_subscription_active">You can\'t delete your account while you have an active subscription. Please cancel the subscription first.</string>
     <string name="go_to_subscription">Go to subscription</string>
+    <string name="mor_gems_title">You’ll need more Gems to buy this!</string>
+    <string name="gems_support">Purchasing Gems supports our small team at Habitica</string>
 </resources>

@@ -2,11 +2,11 @@ package com.habitrpg.android.habitica.ui.views.insufficientCurrency
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -28,7 +28,6 @@ import javax.inject.Inject
 
 class InsufficientGemsDialog(context: Context, var gemPrice: Int) : InsufficientCurrencyDialog(context) {
 
-    private var purchaseButton: Button? = null
     @Inject
     lateinit var configManager: AppConfigManager
     @Inject
@@ -40,56 +39,45 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
         return R.layout.dialog_insufficient_gems
     }
 
-    var sku: String? = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
-        imageView.setImageResource(R.drawable.gems_84)
         textView.setText(R.string.insufficientGems)
+        addButton(R.string.see_other_options, true) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
         addCloseButton()
+        contentView.setPadding(0, 0, 0, 0)
+        dialogContainer.setPadding(0, 0, 0, dialogContainer.paddingBottom)
     }
-
-
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         getActivity()?.let { activity ->
-            if (configManager.insufficientGemPurchase()) {
-                purchaseButton = contentView.findViewById(R.id.purchase_button)
-                purchaseHandler.startListening()
-                sku = if (configManager.insufficientGemPurchaseAdjust()) {
-                    if (gemPrice > 4) {
-                        PurchaseTypes.Purchase21Gems
-                    } else {
-                        PurchaseTypes.Purchase4Gems
-                    }
-                } else {
-                    PurchaseTypes.Purchase4Gems
-                }
-                CoroutineScope(Dispatchers.IO).launch {
-                    val sku = purchaseHandler.getInAppPurchaseSKU(PurchaseTypes.Purchase4Gems)
-                        ?: return@launch
-                    withContext(Dispatchers.Main) {
-                        val purchaseTextView =
-                            contentView.findViewById<TextView>(R.id.purchase_textview)
-                        purchaseTextView.text = sku.title
-                        purchaseButton?.text = sku.price
-
-                        purchaseButton?.setOnClickListener {
-                            FirebaseAnalytics.getInstance(context).logEvent(
-                                "purchased_gems_from_insufficient",
-                                bundleOf(Pair("gemPrice", gemPrice), Pair("sku", ""))
-                            )
-                            purchaseHandler.purchase(activity, sku)
-                        }
-                    }
-                }
-
-                addButton(R.string.see_other_options, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
+            val purchaseTextView = contentView.findViewById<TextView>(R.id.purchase_textview)
+            val purchaseButton = contentView.findViewById<Button>(R.id.purchase_button)
+            purchaseHandler.startListening()
+            val gemSku = if (gemPrice > 4) {
+                purchaseTextView.text = "21"
+                PurchaseTypes.Purchase21Gems
             } else {
-                contentView.findViewById<LinearLayout>(R.id.purchase_wrapper).visibility = View.GONE
-                addButton(R.string.purchase_gems, false) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
+                purchaseTextView.text = "4"
+                PurchaseTypes.Purchase4Gems
+            }
+            CoroutineScope(Dispatchers.IO).launch {
+                val sku = purchaseHandler.getInAppPurchaseSKU(gemSku)
+                    ?: return@launch
+                withContext(Dispatchers.Main) {
+                    purchaseButton?.text = sku.price
+                    contentView.findViewById<ProgressBar>(R.id.loading_indicator).isVisible = false
+                    purchaseButton.isVisible = true
+
+                    purchaseButton?.setOnClickListener {
+                        FirebaseAnalytics.getInstance(context).logEvent(
+                            "purchased_gems_from_insufficient",
+                            bundleOf(Pair("gemPrice", gemPrice), Pair("sku", ""))
+                        )
+                        purchaseHandler.purchase(activity, sku)
+                    }
+                }
             }
         }
     }

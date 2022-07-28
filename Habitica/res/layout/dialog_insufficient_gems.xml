@@ -5,43 +5,99 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical">
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:scaleType="center" />
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" />
     <LinearLayout
         android:id="@+id/purchase_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_rounded_bg_brand_700"
-        android:layout_marginTop="@dimen/spacing_medium"
-        android:padding="@dimen/spacing_medium"
-        android:gravity="center">
+        android:background="@color/brand_400"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Title1"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:text="@string/mor_gems_title"
+            android:layout_margin="26dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginBottom="26dp">
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/gems_4" />
-        <TextView
-            android:id="@+id/purchase_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/SubHeader1"
-            tools:text="4 Gems"
-            android:gravity="center"/>
-        <Button
-            android:id="@+id/purchase_button"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            style="@style/HabiticaButton.Purple"
-            android:minWidth="40dp"
-            tools:text="$0.99" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="26dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/purchase_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/SubHeader1"
+                    tools:text="4"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="4dp"
+                    android:textAllCaps="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Subheader2"
+                    android:text="@string/gems"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textAllCaps="true"/>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ProgressBar
+                android:id="@+id/loading_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateBehavior="cycle"
+                android:indeterminateTint="@color/white"
+                android:layout_gravity="center"/>
+            <Button
+                android:id="@+id/purchase_button"
+                android:layout_width="129dp"
+                android:layout_height="44dp"
+                style="@style/HabiticaButton.White.Small"
+                tools:text="$0.99"
+                android:visibility="invisible"/>
+            </FrameLayout>
+        </LinearLayout>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/not_enough_gems_wave"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="-1dp"
+            />
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/text_ternary"
+        android:lineSpacingExtra="6sp"
+        android:textSize="16sp"
+        android:gravity="center_horizontal"
+        android:text="@string/gems_support"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="16dp"
+        />
 </LinearLayout>
