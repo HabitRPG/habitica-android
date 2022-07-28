@@ -86,7 +86,7 @@
             android:hint="@string/password"
             android:textColorHint="@color/text_secondary"
             app:hintTextAppearance="@style/DialogHabiticaAccountHintLabel"
-            app:hintTextColor="@color/gray_10">
+            app:hintTextColor="@color/text_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmation_input_edittext"
@@ -98,6 +98,7 @@
                 android:paddingStart="@dimen/spacing_large"
                 android:paddingEnd="@dimen/spacing_large"
                 android:textColorHint="@color/text_secondary"
+                android:textColor="@color/text_primary"
                 android:textSize="20sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
