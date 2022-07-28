@@ -50,7 +50,7 @@ open class Customization : RealmObject(), BaseObject {
         return if (type == "background") {
             "icon_background_$identifier"
         } else {
-            getImageName(userSize, hairColor)
+            "icon_" + getImageName(userSize, hairColor)
         }
     }
 

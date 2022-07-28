@@ -167,8 +167,13 @@ open class ShopItem : RealmObject(), BaseObject {
             item.path = customization.path
             item.unlockPath  = customization.unlockPath
             item.pinType = customization.type
-            item.purchaseType = if (customization.type == "background") "background" else "customization"
-            item.imageName = customization.getImageName(userSize, hairColor)
+            if (customization.type == "background") {
+                item.purchaseType = "background"
+                item.imageName = customization.getImageName(userSize, hairColor)
+            } else {
+                item.purchaseType = "customization"
+                item.imageName = customization.getIconName(userSize, hairColor)
+            }
             return item
         }
 

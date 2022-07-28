@@ -13,10 +13,9 @@
         android:layout_height="76dp">
         <com.habitrpg.common.habitica.views.PixelArtView
             android:id="@+id/imageView"
-            android:layout_width="60dp"
+            android:layout_width="68dp"
             android:layout_height="68dp"
-            android:layout_gravity="start"
-            android:scaleType="fitCenter" />
+            android:layout_gravity="center" />
     </FrameLayout>
         <FrameLayout
             android:id="@+id/buy_button"
