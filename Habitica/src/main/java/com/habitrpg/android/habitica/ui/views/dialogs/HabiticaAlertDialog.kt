@@ -236,6 +236,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         }
         configureButtonLayoutParams(buttonView)
         buttonsWrapper.addView(buttonView)
+        // for some reason the padding gets lost somewhere.
+        buttonView.setPadding(24.dpToPx(context), 0, 24.dpToPx(context), 0)
         return buttonView
     }
 

@@ -488,7 +488,7 @@ class AccountPreferenceFragment :
         val clipboard: ClipboardManager? = context?.let { getSystemService(it, ClipboardManager::class.java) }
         clipboard?.setPrimaryClip(ClipData.newPlainText(name, value))
         (activity as? SnackbarActivity)?.showSnackbar(
-            content = context?.getString(R.string.copied_to_clipboard),
+            content = context?.getString(R.string.copied_to_clipboard, name),
             displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
         )
     }
