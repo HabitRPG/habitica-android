@@ -20,6 +20,8 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
@@ -404,6 +406,15 @@ class AccountPreferenceFragment :
     }
 
     private fun showAccountDeleteConfirmation(user: User?) {
+        if (user?.purchased?.plan?.isActive == true && user.purchased?.plan?.dateTerminated == null) {
+            val dialog = context?.let { HabiticaAlertDialog(it) }
+            dialog?.setTitle(R.string.unable_to_delete)
+            dialog?.setMessage(R.string.delete_account_subscription_active)
+            dialog?.addButton(R.string.go_to_subscription, false) { _, _ ->
+                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+            }
+            dialog?.addCloseButton()
+        }
         val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it) }
         habiticaAccountDialog?.accountAction = "delete_account"
         habiticaAccountDialog?.accountUpdateConfirmed = this

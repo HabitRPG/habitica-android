@@ -1231,4 +1231,7 @@
     <string name="avatar_hair_style_customization">Avatar Hair Style Customization</string>
     <string name="display">Display</string>
     <string name="facial_hair_notes">This set includes all beards and mustaches</string>
+    <string name="unable_to_delete">Unable to delete</string>
+    <string name="delete_account_subscription_active">You can\'t delete your account while you have an active subscription. Please cancel the subscription first.</string>
+    <string name="go_to_subscription">Go to subscription</string>
 </resources>
