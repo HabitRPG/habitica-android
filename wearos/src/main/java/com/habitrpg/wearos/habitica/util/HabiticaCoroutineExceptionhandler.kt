@@ -22,9 +22,9 @@ class ExceptionHandlerBuilder @Inject constructor(val appStateManager: AppStateM
         return CoroutineExceptionHandler { _, throwable ->
             Log.e("Coroutine Error", "Error: ${throwable.cause}", throwable)
             if (throwable is IOException) {
-                errorPresenter.errorValues.value = throwable.message?.let {
-                    DisplayedError(R.drawable.disconnected, "Disconnected")
-                }
+                errorPresenter.errorValues.value = DisplayedError(R.drawable.disconnected, "Disconnected")
+            } else if (throwable.message == "12501: ") {
+                errorPresenter.errorValues.value = DisplayedError(R.drawable.error, "There was an error when signing in with Google.")
             } else {
                 errorPresenter.errorValues.value = throwable.message?.let {
                     DisplayedError(R.drawable.error, it)
