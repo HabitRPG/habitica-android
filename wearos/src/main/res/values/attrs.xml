@@ -16,5 +16,7 @@
     <declare-styleable name="TextActionChip">
         <attr name="chipText" format="string" />
         <attr name="chipImage" format="reference" />
+        <attr name="chipColor" format="color" />
+        <attr name="chipTextColor" format="color" />
     </declare-styleable>
 </resources>

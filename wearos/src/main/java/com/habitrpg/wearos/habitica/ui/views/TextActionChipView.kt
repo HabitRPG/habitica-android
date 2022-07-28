@@ -1,6 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.views
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 import com.habitrpg.android.habitica.R
@@ -18,11 +19,14 @@ open class TextActionChipView @JvmOverloads constructor(context: Context, attrs:
     val binding = TextActionChipBinding.inflate(context.layoutInflater, this)
 
     init {
-        val chipText = attributes?.getText(R.styleable.TextActionChip_chipText)
-        val chipImage = attributes?.getDrawable(R.styleable.TextActionChip_chipImage)
-
-        binding.chipTextview.text = chipText
-        binding.chipImageview.setImageDrawable(chipImage)
+        binding.chipTextview.text = attributes?.getText(R.styleable.TextActionChip_chipText)
+        binding.chipImageview.setImageDrawable(attributes?.getDrawable(R.styleable.TextActionChip_chipImage))
+        attributes?.getColor(R.styleable.TextActionChip_chipColor, context.getColor(R.color.surface))?.let {
+            binding.wearChipButton.backgroundTintList = ColorStateList.valueOf(it)
+        }
+        attributes?.getColor(R.styleable.TextActionChip_chipTextColor, context.getColor(R.color.watch_white))?.let {
+            binding.chipTextview.setTextColor(it)
+        }
     }
 
     fun setChipText(text: String) {
