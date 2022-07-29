@@ -14,5 +14,6 @@ class FaintViewModel @Inject constructor(userRepository: UserRepository,
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     suspend fun revive() {
         userRepository.revive()
+        userRepository.retrieveUser(true)
     }
 }

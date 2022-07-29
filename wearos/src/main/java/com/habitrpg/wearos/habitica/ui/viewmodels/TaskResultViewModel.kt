@@ -16,6 +16,10 @@ class TaskResultViewModel @Inject constructor(
     userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+    val hasLeveledUp: Boolean
+    get() = result?.hasLeveledUp == true
+    val hasDied: Boolean
+    get() = result?.hasDied == true
     val hasDrop: Boolean
         get() {
             return result?.drop?.key?.isNotBlank() == true // || (result?.questItemsFound ?: 0) > 0

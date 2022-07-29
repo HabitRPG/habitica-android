@@ -12,13 +12,17 @@ import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
 import com.habitrpg.wearos.habitica.ui.activities.FaintActivity
+import com.habitrpg.wearos.habitica.ui.activities.MainActivity
 import com.habitrpg.wearos.habitica.ui.activities.RYAActivity
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 @HiltAndroidApp
 class MainApplication : Application() {
@@ -33,8 +37,9 @@ class MainApplication : Application() {
         setupFirebase()
 
         MainScope().launch {
-            userRepository.getUser().onEach {
-                if (it.isDead && BaseActivity.currentActivityClassName != FaintActivity::class.java.name) {
+            userRepository.getUser()
+                .onEach {
+                if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
                     val intent = Intent(this@MainApplication, FaintActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
@@ -43,6 +48,7 @@ class MainApplication : Application() {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
+                    delay(1.toDuration(DurationUnit.SECONDS))
             }.collect()
         }
 

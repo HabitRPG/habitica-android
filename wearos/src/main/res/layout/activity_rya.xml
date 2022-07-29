@@ -34,14 +34,12 @@
                 android:textColor="@color/watch_white"
                 style="@style/Text.SubHeader1"
                 android:layout_marginBottom="@dimen/spacing_large"/>
-            <com.habitrpg.wearos.habitica.ui.views.TextActionChipView
+            <Button
                 android:id="@+id/rya_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:chipText="@string/review_dailies"
-                app:chipColor="@color/watch_purple_100"
-                app:chipTextColor="@color/watch_black"
-                android:layout_marginBottom="@dimen/spacing_small"/>
+                style="@style/ChipButton.Purple"
+                android:text="@string/review_dailies" />
             <com.habitrpg.wearos.habitica.ui.views.ConnectedActionChipView
                 android:id="@+id/phone_button"
                 android:layout_width="match_parent"

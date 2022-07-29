@@ -8,6 +8,7 @@ class TaskScoringResult(): Parcelable {
     constructor(data: TaskDirectionData, stats: AvatarStats?) : this() {
         hasLeveledUp = data.lvl > (stats?.lvl ?: 0)
         healthDelta = data.hp - (stats?.hp ?: 0.0)
+        hasDied = data.hp <= 0.0
         experienceDelta = if (hasLeveledUp) {
             (stats?.toNextLevel ?: 0).toDouble() - (stats?.exp ?: 0.0) + data.exp
         } else {
@@ -21,6 +22,7 @@ class TaskScoringResult(): Parcelable {
         drop = data._tmp?.drop
     }
 
+    var hasDied: Boolean = false
     var drop: TaskDirectionDataDrop? = null
     var experienceDelta: Double? = null
     var healthDelta: Double? = null

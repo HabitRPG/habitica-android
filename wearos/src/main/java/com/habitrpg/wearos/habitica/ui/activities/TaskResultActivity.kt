@@ -50,8 +50,14 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
     }
 
     override fun onDestroy() {
-        if (viewModel.result?.hasLeveledUp == true) {
+        if (viewModel.hasLeveledUp) {
             startActivity(Intent(this, LevelupActivity::class.java)
+                .apply {
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                })
+            overridePendingTransition(R.anim.scale_in, R.anim.move_away)
+        } else if (viewModel.hasDied) {
+            startActivity(Intent(this, FaintActivity::class.java)
                 .apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 })

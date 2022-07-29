@@ -1236,4 +1236,5 @@
     <string name="go_to_subscription">Go to subscription</string>
     <string name="mor_gems_title">You’ll need more Gems to buy this!</string>
     <string name="gems_support">Purchasing Gems supports our small team at Habitica</string>
+    <string name="month_released">Month Released</string>
 </resources>
