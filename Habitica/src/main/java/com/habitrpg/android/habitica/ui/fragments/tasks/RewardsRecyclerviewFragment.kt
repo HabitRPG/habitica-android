@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.functions.Consumer
 
@@ -78,7 +77,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         )?.let { compositeSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
 
-        viewModel?.user?.observe(viewLifecycleOwner) {
+        viewModel.user.observe(viewLifecycleOwner) {
             (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it
         }
     }
@@ -138,9 +137,8 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
     }
 
     companion object {
-        fun newInstance(context: Context?, classType: TaskType, showCustomRewards: Boolean, viewModel: TasksViewModel): RewardsRecyclerviewFragment {
+        fun newInstance(context: Context?, classType: TaskType, showCustomRewards: Boolean): RewardsRecyclerviewFragment {
             val fragment = RewardsRecyclerviewFragment()
-            fragment.viewModel = viewModel
             fragment.taskType = classType
             fragment.showCustomRewards = showCustomRewards
 

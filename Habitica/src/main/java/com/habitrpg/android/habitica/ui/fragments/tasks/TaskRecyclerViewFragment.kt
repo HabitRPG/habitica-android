@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -58,7 +59,7 @@ import javax.inject.Inject
 
 open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     private var taskFlowJob: Job? = null
-    var viewModel: TasksViewModel? = null
+    val viewModel: TasksViewModel by viewModels({requireParentFragment()})
 
     internal var canEditTasks: Boolean = true
     internal var canScoreTaks: Boolean = true
@@ -102,10 +103,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             recyclerSubscription.dispose()
         }
         recyclerSubscription = CompositeDisposable()
-        if (viewModel == null && parentFragment is TasksFragment) {
-            viewModel = (parentFragment as TasksFragment).viewModel
-        }
-        viewModel?.let { viewModel ->
+        viewModel.let { viewModel ->
             val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
                 TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
                 TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, viewModel)
@@ -145,9 +143,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler { MainNavigationController.navigate(R.id.adventureGuideActivity) }?.let { recyclerSubscription.add(it) }
 
-        viewModel?.ownerID?.observe(viewLifecycleOwner) {
-            canEditTasks = viewModel?.isPersonalBoard ?: true
-            canScoreTaks = viewModel?.isPersonalBoard ?: true
+        viewModel.ownerID.observe(viewLifecycleOwner) {
+            canEditTasks = viewModel.isPersonalBoard ?: true
+            canScoreTaks = viewModel.isPersonalBoard ?: true
             recyclerAdapter?.canScoreTasks = canScoreTaks
             updateTaskSubscription(it)
         }
@@ -272,7 +270,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             ) {
                 if (validTaskId != null) {
                     var newPosition = viewHolder.bindingAdapterPosition
-                    if ((viewModel?.filterCount(taskType) ?: 0) > 0) {
+                    if ((viewModel.filterCount(taskType) ?: 0) > 0) {
                         newPosition = if ((newPosition + 1) == recyclerAdapter?.data?.size) {
                             recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
                         } else {
@@ -372,7 +370,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun setEmptyLabels() {
-        binding?.recyclerView?.emptyItem = if ((viewModel?.filterCount(taskType) ?: 0) > 0) {
+        binding?.recyclerView?.emptyItem = if ((viewModel.filterCount(taskType) ?: 0) > 0) {
             when (this.taskType) {
                 TaskType.HABIT -> {
                     EmptyItem(
@@ -440,7 +438,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun scoreTask(task: Task, direction: TaskDirection) {
-        viewModel?.scoreTask(task, direction) { result, value ->
+        viewModel.scoreTask(task, direction) { result, value ->
             handleTaskResult(result, value)
         }
     }
@@ -455,7 +453,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        viewModel?.refreshData {
+        viewModel.refreshData {
             binding?.refreshLayout?.isRefreshing = false
         }
     }
@@ -465,13 +463,13 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
             if (it != null) {
                 when (taskType) {
-                    TaskType.TODO -> viewModel?.setActiveFilter(
+                    TaskType.TODO -> viewModel.setActiveFilter(
                         TaskType.TODO,
                         Task.FILTER_ACTIVE
                     )
                     TaskType.DAILY -> {
                         if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
-                            viewModel?.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
+                            viewModel.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
                         }
                     }
                     else -> {}
@@ -488,7 +486,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     fun setActiveFilter(activeFilter: String) {
-        viewModel?.setActiveFilter(taskType, activeFilter)
+        viewModel.setActiveFilter(taskType, activeFilter)
         recyclerAdapter?.filter()
 
         setEmptyLabels()
@@ -519,10 +517,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     companion object {
         private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
 
-        fun newInstance(context: Context?, classType: TaskType, viewModel: TasksViewModel): TaskRecyclerViewFragment {
+        fun newInstance(context: Context?, classType: TaskType): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
             fragment.taskType = classType
-            fragment.viewModel = viewModel
             var tutorialTexts: List<String>? = null
             if (context != null) {
                 when (fragment.taskType) {

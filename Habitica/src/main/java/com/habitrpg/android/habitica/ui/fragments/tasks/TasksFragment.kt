@@ -217,10 +217,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
             override fun createFragment(position: Int): Fragment {
                 val fragment: TaskRecyclerViewFragment = when (position) {
-                    0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT, viewModel)
-                    1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY, viewModel)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true, viewModel)
-                    else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO, viewModel)
+                    0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT)
+                    1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY)
+                    3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true)
+                    else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO)
                 }
                 viewFragmentsDictionary?.put(position, fragment)
                 return fragment
