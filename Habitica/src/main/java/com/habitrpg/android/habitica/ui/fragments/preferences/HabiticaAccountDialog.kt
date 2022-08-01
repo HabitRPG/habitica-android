@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
@@ -23,6 +24,11 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
     var accountUpdateConfirmed: AccountUpdateConfirmed? = null
     var user: User? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.DialogTheme)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DialogHabiticaAccountBinding.inflate(layoutInflater)
         return binding.root
@@ -30,6 +36,10 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        activity?.let { activity ->
+            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = true
+        }
 
         when (accountAction) {
             "reset_account" -> setResetAccountViews()

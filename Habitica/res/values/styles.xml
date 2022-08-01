@@ -376,6 +376,10 @@
         <item name="android:textColor">@color/brand_100</item>
     </style>
 
+    <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
     <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/text_brand_neon</item>
         <item name="colorAccent">@color/color_accent</item>
@@ -616,6 +620,7 @@
         <item name="android:padding">8dp</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@drawable/radio_button_text_color</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TagEditTextTheme">

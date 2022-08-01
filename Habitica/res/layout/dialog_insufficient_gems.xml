@@ -19,6 +19,7 @@
             style="@style/Title1"
             android:textColor="@color/white"
             android:gravity="center_horizontal"
+            android:letterSpacing="0.05"
             android:text="@string/mor_gems_title"
             android:layout_margin="26dp" />
         <LinearLayout
@@ -74,9 +75,10 @@
             <Button
                 android:id="@+id/purchase_button"
                 android:layout_width="129dp"
-                android:layout_height="44dp"
+                android:layout_height="50dp"
                 style="@style/HabiticaButton.White.Small"
                 tools:text="$0.99"
+                android:textSize="16sp"
                 android:visibility="invisible"/>
             </FrameLayout>
         </LinearLayout>

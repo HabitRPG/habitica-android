@@ -3,12 +3,12 @@ package com.habitrpg.android.habitica.ui.views.shops
 import android.content.Context
 import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.PurchaseDialogBackgroundBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.models.Avatar
 import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.common.habitica.views.PixelArtView
-import java.util.*
+import java.util.EnumMap
 
 class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(context) {
     val binding = PurchaseDialogBackgroundBinding.inflate(context.layoutInflater, this)
@@ -24,7 +24,7 @@ class PurchaseDialogBackgroundContent(context: Context) : PurchaseDialogContent(
 
     fun setAvatarWithBackgroundPreview(avatar: Avatar, item: ShopItem) {
         val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
-        layerMap[AvatarView.LayerType.BACKGROUND] = item.imageName
+        layerMap[AvatarView.LayerType.BACKGROUND] = item.imageName?.removePrefix("icon_")
 
         binding.avatarView.setAvatar(avatar, layerMap)
     }

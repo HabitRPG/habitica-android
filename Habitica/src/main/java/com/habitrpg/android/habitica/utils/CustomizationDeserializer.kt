@@ -190,9 +190,9 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                 customization.isBuyable = false
             }
             else -> {
-                val readableSetName = "SET $setCount: ${
+                val readableSetName = "SET ${setCount+1}: ${
                     getMonthName(
-                        setName.substring(11, 13).toInt()
+                        setName.substring(11, 13).toInt() - 1
                     )
                 } ${setName.substring(13, 17)}"
                 customization.customizationSetName = readableSetName

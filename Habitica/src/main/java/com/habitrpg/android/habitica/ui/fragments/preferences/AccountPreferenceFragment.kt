@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class AccountPreferenceFragment :
@@ -414,6 +415,7 @@ class AccountPreferenceFragment :
                 MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
             }
             dialog?.addCloseButton()
+            dialog?.show()
         }
         val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it) }
         habiticaAccountDialog?.accountAction = "delete_account"
@@ -436,6 +438,13 @@ class AccountPreferenceFragment :
                 activity?.finish()
             }) { throwable ->
                 dialog?.dismiss()
+                if (throwable is HttpException && throwable.code() == 401) {
+                    val errorDialog = context?.let { HabiticaAlertDialog(it) }
+                    errorDialog?.setTitle(R.string.authentication_error_title)
+                    errorDialog?.setMessage(R.string.incorrect_password)
+                    errorDialog?.addCloseButton()
+                    errorDialog?.show()
+                }
                 RxErrorHandler.reportError(throwable)
             }
         )

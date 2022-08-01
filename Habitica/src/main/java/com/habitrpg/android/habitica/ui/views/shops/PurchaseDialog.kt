@@ -107,7 +107,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     checkGearClass()
                 }
                 "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
-                "background" == shopItem.purchaseType -> {
+                "background" == shopItem.purchaseType || "backgrounds" == shopItem.purchaseType -> {
                     contentView = PurchaseDialogBackgroundContent(context)
                 }
                 "customization" == shopItem.purchaseType -> contentView = PurchaseDialogCustomizationContent(context)

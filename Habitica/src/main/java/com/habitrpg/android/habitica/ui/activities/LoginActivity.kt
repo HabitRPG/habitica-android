@@ -25,7 +25,12 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
+import com.google.android.gms.tasks.Tasks
+import com.google.android.gms.wearable.CapabilityClient
+import com.google.android.gms.wearable.MessageClient
+import com.google.android.gms.wearable.Wearable
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -42,12 +47,17 @@ import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
 
     private lateinit var viewModel: AuthenticationViewModel
     private lateinit var binding: ActivityLoginBinding
+
+    val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
+    private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
 
     @Inject
     lateinit var apiClient: ApiClient
@@ -227,6 +237,23 @@ class LoginActivity : BaseActivity() {
 
     private fun handleAuthResponse(response: UserAuthResponse) {
         viewModel.handleAuthResponse(response)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val info = Tasks.await(
+                capabilityClient.getCapability(
+                    "receive_message",
+                    CapabilityClient.FILTER_REACHABLE
+                )
+            )
+            info.nodes.forEach {
+                Tasks.await(
+                    messageClient.sendMessage(
+                        it.id,
+                        "/auth",
+                        "${response.id}:${response.apiToken}".toByteArray()
+                    )
+                )
+            }
+        }
         compositeSubscription.add(
             userRepository.retrieveUser(true)
                 .subscribe({

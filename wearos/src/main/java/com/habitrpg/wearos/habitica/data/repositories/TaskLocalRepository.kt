@@ -7,7 +7,9 @@ import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.models.tasks.TaskList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import java.util.Date
@@ -17,16 +19,16 @@ import javax.inject.Singleton
 @Singleton
 class TaskLocalRepository @Inject constructor() {
     private val tasks = mapOf(
-        TaskType.HABIT to MutableLiveData<List<Task>>(),
-        TaskType.DAILY to MutableLiveData<List<Task>>(),
-        TaskType.TODO to MutableLiveData<List<Task>>(),
-        TaskType.REWARD to MutableLiveData<List<Task>>()
+        TaskType.HABIT to MutableStateFlow<List<Task>?>(null),
+        TaskType.DAILY to MutableStateFlow<List<Task>?>(null),
+        TaskType.TODO to MutableStateFlow<List<Task>?>(null),
+        TaskType.REWARD to MutableStateFlow<List<Task>?>(null)
     )
 
     private val taskCountHelperValue = MutableLiveData<Long>()
 
     fun getTasks(type: TaskType): Flow<List<Task>> {
-        return tasks[type]?.asFlow() ?: emptyFlow()
+        return tasks[type]!!.filterNotNull()
     }
 
     fun saveTasks(tasks: TaskList, order: TasksOrder?) {

@@ -878,7 +878,7 @@
     <string name="preference_push_party_activity">Party Activity</string>
     <string name="promo_subscription_buy_gems_prompt">Need Gems?</string>
     <string name="promo_subscription_buy_gems_description">Become a Subscriber to buy Gems with gold, get monthly mystery items, increased drop caps and more!</string>
-    <string name="see_other_options">See other Options</string>
+    <string name="see_other_options">See Other Options</string>
     <string name="gift_gems">Gift Gems</string>
     <string name="profile_send_message">Send\nMessage</string>
     <string name="profile_gift_gems">Gift\nGems</string>
@@ -1237,4 +1237,5 @@
     <string name="mor_gems_title">You’ll need more Gems to buy this!</string>
     <string name="gems_support">Purchasing Gems supports our small team at Habitica</string>
     <string name="month_released">Month Released</string>
+    <string name="incorrect_password">The password was incorrect</string>
 </resources>

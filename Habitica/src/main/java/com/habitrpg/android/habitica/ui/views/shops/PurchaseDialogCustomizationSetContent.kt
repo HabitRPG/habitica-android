@@ -28,7 +28,7 @@ class PurchaseDialogCustomizationSetContent(context: Context) : PurchaseDialogCo
             imageView.layoutParams = FlexboxLayout.LayoutParams(76.dpToPx(context), 76.dpToPx(context))
             binding.imageViewWrapper.addView(imageView)
         }
-        if (item.path?.contains("facialHair") == true) {
+        if (item.key == "facialHair") {
             binding.notesTextView.text = context.getString(R.string.facial_hair_notes)
         } else {
             binding.notesTextView.text = item.notes

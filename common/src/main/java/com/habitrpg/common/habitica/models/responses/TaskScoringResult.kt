@@ -43,6 +43,7 @@ class TaskScoringResult(): Parcelable {
         questDamage = parcel.readValue(Double::class.java.classLoader) as? Double
         questItemsFound = parcel.readValue(Int::class.java.classLoader) as? Int
         drop = parcel.readValue(TaskDirectionDataDrop::class.java.classLoader) as? TaskDirectionDataDrop
+        hasDied = parcel.readByte() != 0.toByte()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -55,6 +56,7 @@ class TaskScoringResult(): Parcelable {
         parcel.writeValue(questDamage)
         parcel.writeValue(questItemsFound)
         parcel.writeValue(drop)
+        parcel.writeByte(if (hasDied) 1 else 0)
     }
 
     override fun describeContents(): Int {
