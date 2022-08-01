@@ -98,7 +98,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             )
             chips.add(chip)
         }
-        if ((viewModel.result?.manaDelta ?: 0.0) != 0.0) {
+        if ((viewModel.result?.manaDelta ?: 0.0) != 0.0 && viewModel.user.value?.hasClass == true) {
             val chip = TaskRewardChip(this)
             chip.set(
                 viewModel.result?.manaDelta,

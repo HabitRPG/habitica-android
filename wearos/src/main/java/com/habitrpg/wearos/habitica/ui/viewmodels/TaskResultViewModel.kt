@@ -1,6 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.asLiveData
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
@@ -16,6 +17,7 @@ class TaskResultViewModel @Inject constructor(
     userRepository: UserRepository,
     exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+    val user = userRepository.getUser().asLiveData()
     val hasLeveledUp: Boolean
     get() = result?.hasLeveledUp == true
     val hasDied: Boolean
