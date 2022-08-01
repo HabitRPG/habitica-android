@@ -416,6 +416,7 @@ class AccountPreferenceFragment :
             }
             dialog?.addCloseButton()
             dialog?.show()
+            return
         }
         val habiticaAccountDialog = context?.let { HabiticaAccountDialog(it) }
         habiticaAccountDialog?.accountAction = "delete_account"
