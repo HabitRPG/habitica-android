@@ -27,6 +27,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
@@ -237,22 +238,26 @@ class LoginActivity : BaseActivity() {
 
     private fun handleAuthResponse(response: UserAuthResponse) {
         viewModel.handleAuthResponse(response)
-        lifecycleScope.launch(Dispatchers.IO) {
-            val info = Tasks.await(
-                capabilityClient.getCapability(
-                    "receive_message",
-                    CapabilityClient.FILTER_REACHABLE
-                )
-            )
-            info.nodes.forEach {
-                Tasks.await(
-                    messageClient.sendMessage(
-                        it.id,
-                        "/auth",
-                        "${response.id}:${response.apiToken}".toByteArray()
+        try {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val info = Tasks.await(
+                    capabilityClient.getCapability(
+                        "receive_message",
+                        CapabilityClient.FILTER_REACHABLE
                     )
                 )
+                info.nodes.forEach {
+                    Tasks.await(
+                        messageClient.sendMessage(
+                            it.id,
+                            "/auth",
+                            "${response.id}:${response.apiToken}".toByteArray()
+                        )
+                    )
+                }
             }
+        } catch (e: ApiException) {
+            // Wearable API is not available on this device.
         }
         compositeSubscription.add(
             userRepository.retrieveUser(true)

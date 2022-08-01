@@ -297,8 +297,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         when {
             text != task.text -> return true
             notes != task.notes -> return true
-            reminders != task.reminders -> return true
-            checklist != task.checklist -> return true
+            reminders?.mapIndexed { index, remindersItem -> task.reminders?.get(index) != remindersItem }?.contains(true) == true -> return true
+            checklist?.mapIndexed { index, item -> task.checklist?.get(index) != item }?.contains(true) == true -> return true
             priority != task.priority -> return true
             attribute != task.attribute && attribute != null -> return true
             tags != task.tags -> return true
