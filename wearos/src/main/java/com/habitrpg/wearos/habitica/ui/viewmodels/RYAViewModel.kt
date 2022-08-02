@@ -1,5 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
+import android.content.SharedPreferences
+import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.common.habitica.models.responses.TaskDirection
@@ -19,6 +21,7 @@ import javax.inject.Inject
 class RYAViewModel @Inject constructor(
     userRepository: UserRepository,
     taskRepository: TaskRepository,
+    val sharedPreferences: SharedPreferences,
     exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     var hasRunCron: Boolean = false
@@ -50,6 +53,8 @@ class RYAViewModel @Inject constructor(
     }
 
     fun runCron(function: (Boolean) -> Unit) {
+        //Clear shared pref values for saved to-do tasks
+        sharedPreferences.edit { putString("to_do_tasks", null) }
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             appStateManager.startLoading()
             for (task in tasksToComplete) {
