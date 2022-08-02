@@ -67,7 +67,9 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         }
 
         viewModel.tasks.observe(this) {
-            adapter.data = it
+            if (!it.isNullOrEmpty()) {
+                adapter.data = it
+            }
         }
         viewModel.taskCount.observe(this) {
             adapter.title = getTitle(it)

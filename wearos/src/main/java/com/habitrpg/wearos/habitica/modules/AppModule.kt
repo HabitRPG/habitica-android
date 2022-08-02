@@ -45,17 +45,22 @@ class AppModule {
     }
 
     @Provides
-    fun providesConverterFactory(): Converter.Factory {
+    fun providesConverterFactory(moshi: Moshi): Converter.Factory {
         return MoshiConverterFactory.create(
-            Moshi.Builder()
-                .add(WrappedTasklistAdapter())
-                .add(customDateAdapter)
-                .add(FrequencyAdapter())
-                .add(TaskTypeAdapter())
-                .add(AttributeAdapter())
-                .addLast(KotlinJsonAdapterFactory())
-                .build()
+            moshi
         ).asLenient()
+    }
+
+    @Provides
+    fun providesMoshi(): Moshi {
+        return Moshi.Builder()
+            .add(WrappedTasklistAdapter())
+            .add(customDateAdapter)
+            .add(FrequencyAdapter())
+            .add(TaskTypeAdapter())
+            .add(AttributeAdapter())
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
     }
 
     @Provides

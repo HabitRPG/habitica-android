@@ -18,7 +18,7 @@ class ExceptionHandlerBuilder @Inject constructor(val appStateManager: AppStateM
         }
     }
 
-    fun userFacing(errorPresenter: ErrorPresenter): CoroutineExceptionHandler {
+    fun userFacing(errorPresenter: ErrorPresenter, handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler {
         return CoroutineExceptionHandler { _, throwable ->
             Log.e("Coroutine Error", "Error: ${throwable.cause}", throwable)
             if (throwable is IOException) {
@@ -30,7 +30,7 @@ class ExceptionHandlerBuilder @Inject constructor(val appStateManager: AppStateM
                     DisplayedError(R.drawable.error, it)
                 }
             }
-
+            handler?.invoke(throwable)
             appStateManager.endLoading()
         }
     }
