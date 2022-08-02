@@ -2,6 +2,7 @@ package com.habitrpg.wearos.habitica
 
 import android.app.Application
 import android.content.Intent
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
@@ -69,6 +70,7 @@ class MainApplication : Application() {
                 crashlytics.setUserId(userRepository.userID)
             }
             crashlytics.setCustomKey("is_wear", true)
+            FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
         }
     }
 }

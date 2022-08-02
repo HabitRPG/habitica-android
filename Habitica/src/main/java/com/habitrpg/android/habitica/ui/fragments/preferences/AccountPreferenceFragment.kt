@@ -324,8 +324,8 @@ class AccountPreferenceFragment :
                 emailEditText?.showErrorIfNecessary()
                 passwordEditText?.showErrorIfNecessary()
                 passwordRepeatEditText?.showErrorIfNecessary()
-                if (emailEditText?.isValid != true || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
-                val email = if (showEmail) emailEditText.text else user?.authentication?.findFirstSocialEmail()
+                if ((showEmail && emailEditText?.isValid != true) || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
+                val email = if (showEmail) emailEditText?.text else user?.authentication?.findFirstSocialEmail()
                 apiClient.registerUser(user?.username ?: "", email ?: "", passwordEditText.text ?: "", passwordRepeatEditText?.text ?: "")
                     .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(

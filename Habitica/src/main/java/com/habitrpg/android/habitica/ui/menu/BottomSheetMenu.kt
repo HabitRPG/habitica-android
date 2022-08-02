@@ -2,9 +2,13 @@ package com.habitrpg.android.habitica.ui.menu
 
 import android.content.Context
 import android.view.View
+import android.view.animation.LinearInterpolator
+import android.view.animation.TranslateAnimation
+import androidx.core.view.children
 import com.habitrpg.android.habitica.databinding.MenuBottomSheetBinding
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.loadImage
 
 class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), View.OnClickListener {
     private var binding = MenuBottomSheetBinding.inflate(layoutInflater)
@@ -13,6 +17,19 @@ class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), Vi
     init {
         setContentView(binding.root)
         binding.titleView.visibility = View.GONE
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        binding.menuItems.children.forEachIndexed { index, view ->
+            val anim = TranslateAnimation(0f, 0f, 10f.dpToPx(context) + (5f.dpToPx(context)*index), 0f)
+            anim.startOffset = 300 + (20 * index).toLong()
+            anim.fillBefore = true
+            anim.fillAfter = true
+            anim.interpolator = LinearInterpolator()
+            anim.duration = 200 + (20 * index).toLong()
+            view.startAnimation(anim)
+        }
     }
 
     fun setSelectionRunnable(runnable: (Int) -> Unit) {

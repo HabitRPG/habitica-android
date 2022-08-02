@@ -52,7 +52,8 @@
                 android:id="@+id/shimmer_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:shimmer_repeat_delay="8000"
+                app:shimmer_repeat_delay="4000"
+                app:shimmer_duration="200"
                 app:shimmer_base_color="@color/text_dimmed"
                 app:shimmer_highlight_color="@color/content_background"
                 app:shimmer_highlight_alpha="0.8">
