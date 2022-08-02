@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/checklist_disclaimer"
-                android:textColor="@color/gray_400"
+                android:textColor="@color/watch_gray_200"
                 android:gravity="center"
                 style="@style/Text.Body1"
                 android:layout_marginTop="@dimen/spacing_medium" />
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:text="@string/starting_your_day"
         style="@style/Text.SubHeader1"
-        android:textColor="@color/gray_500"
+        android:textColor="@color/watch_gray_500"
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_margin="@dimen/spacing_xlarge"

@@ -41,7 +41,7 @@
             android:id="@+id/achievement_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Caption3"
+            style="@style/Caption4"
             android:textColor="@color/text_secondary"/>
     </LinearLayout>
 </LinearLayout>

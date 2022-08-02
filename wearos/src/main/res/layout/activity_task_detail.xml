@@ -26,7 +26,7 @@
                 android:id="@+id/task_notes_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_400"
+                android:textColor="@color/watch_gray_200"
                 android:gravity="center"
                 style="@style/Text.Body1"/>
 

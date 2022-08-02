@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="HabiticaAppTheme" parent="@android:style/Theme.DeviceDefault">
+    <style name="HabiticaAppTheme" parent="Theme.AppCompat">
         <item name="android:windowBackground">@color/watch_black</item>
         <item name="fontFamily">sans-serif</item>
     </style>
@@ -97,6 +97,12 @@
         <item name="android:paddingHorizontal">10dp</item>
         <item name="android:textColor">@color/watch_white</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/watch_gray_200</item>
+        <item name="android:textColorHint">@color/watch_gray_200</item>
     </style>
 
 </resources>

@@ -1,7 +1,5 @@
 package com.habitrpg.wearos.habitica.data.repositories
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asFlow
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.common.habitica.models.tasks.TasksOrder
 import com.habitrpg.wearos.habitica.models.tasks.Task
@@ -25,20 +23,21 @@ class TaskLocalRepository @Inject constructor() {
         TaskType.REWARD to MutableStateFlow<List<Task>?>(null)
     )
 
-    private val taskCountHelperValue = MutableLiveData<Long>()
+    private val taskCountHelperValue = MutableStateFlow<Long>(0)
 
     fun getTasks(type: TaskType): Flow<List<Task>> {
         return tasks[type]!!.filterNotNull()
     }
 
     fun saveTasks(tasks: TaskList, order: TasksOrder?) {
-        val taskMap = mutableMapOf(
+        val taskMap = mapOf(
             TaskType.HABIT to sortTasks(tasks.tasks, order?.habits ?: emptyList(), TaskType.HABIT),
             TaskType.DAILY to sortTasks(tasks.tasks, order?.dailys ?: emptyList(), TaskType.DAILY),
             TaskType.TODO to sortTasks(tasks.tasks, order?.todos ?: emptyList(), TaskType.TODO),
             TaskType.REWARD to sortTasks(tasks.tasks, order?.rewards ?: emptyList(), TaskType.REWARD)
         )
         for (type in taskMap) {
+            this.tasks[type.key]?.value = null
             this.tasks[type.key]?.value = type.value
         }
         taskCountHelperValue.value = Date().time
@@ -74,6 +73,7 @@ class TaskLocalRepository @Inject constructor() {
             oldList?.add(0, task)
         }
         oldList?.let {
+            tasks[task.type]?.value = null
             tasks[task.type]?.value = it
         }
         taskCountHelperValue.value = Date().time
@@ -89,7 +89,7 @@ class TaskLocalRepository @Inject constructor() {
         return emptyFlow()
     }
 
-    fun getTaskCounts() = taskCountHelperValue.asFlow().map {
+    fun getTaskCounts() = taskCountHelperValue.map {
         mapOf(
             TaskType.HABIT.value to (tasks[TaskType.HABIT]?.value?.size ?: 0),
             TaskType.DAILY.value to (tasks[TaskType.DAILY]?.value?.size ?: 0),
@@ -98,7 +98,7 @@ class TaskLocalRepository @Inject constructor() {
         )
     }
 
-    fun getActiveTaskCounts() = taskCountHelperValue.asFlow().map {
+    fun getActiveTaskCounts() = taskCountHelperValue.map {
         mapOf(
             TaskType.HABIT.value to (tasks[TaskType.HABIT]?.value?.size ?: 0),
             TaskType.DAILY.value to (tasks[TaskType.DAILY]?.value?.filter { it.isDue == true && !it.completed }?.size

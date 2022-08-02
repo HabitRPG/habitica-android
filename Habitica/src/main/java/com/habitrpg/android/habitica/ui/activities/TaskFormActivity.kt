@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
@@ -31,20 +30,20 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.social.Challenge
-import com.habitrpg.common.habitica.models.tasks.Attribute
-import com.habitrpg.common.habitica.models.tasks.Frequency
-import com.habitrpg.common.habitica.models.tasks.HabitResetOption
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.models.tasks.Attribute
+import com.habitrpg.common.habitica.models.tasks.Frequency
+import com.habitrpg.common.habitica.models.tasks.HabitResetOption
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.util.Date
 import javax.inject.Inject
@@ -276,11 +275,9 @@ class TaskFormActivity : BaseActivity() {
                 isDiscardCancelled = true
                 alert.dismiss()
             }
-            alert.setOnDismissListener(
-                DialogInterface.OnDismissListener {
+            alert.setOnDismissListener {
                     isDiscardCancelled = true
                 }
-            )
             alert.show()
         } else {
             super.onBackPressed()

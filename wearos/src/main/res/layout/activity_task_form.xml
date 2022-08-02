@@ -21,14 +21,14 @@
                 android:layout_height="wrap_content"
                 style="@style/Text.SubHeader1"
                 android:textSize="14sp"
-                android:textColor="@color/gray_200"
+                android:textColor="@color/watch_gray_200"
                 />
             <TextView
                 android:id="@+id/confirmation_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Text.Body1"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="@color/watch_white"
                 />
 
@@ -64,6 +64,7 @@
                 android:importantForAutofill="no"
                 android:minHeight="52dp"
                 android:paddingHorizontal="18dp"
+                style="@style/EditText"
                 android:hint="@string/task_title_hint"
                 android:background="@drawable/row_background_outline"
                 android:focusable="false"

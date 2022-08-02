@@ -8,37 +8,23 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
-import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
-import com.habitrpg.common.habitica.models.PurchaseValidationRequest
-import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.WorldState
-import com.habitrpg.common.habitica.models.auth.UserAuth
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.habitrpg.common.habitica.models.auth.UserAuthSocial
-import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.BuyResponse
-import com.habitrpg.common.habitica.models.responses.ErrorResponse
-import com.habitrpg.common.habitica.models.responses.FeedResponse
-import com.habitrpg.common.habitica.models.responses.HabitResponse
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.responses.SkillResponse
-import com.habitrpg.common.habitica.models.responses.Status
-import com.habitrpg.common.habitica.models.responses.TaskDirectionData
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
-import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -52,6 +38,20 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.api.Server
+import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import com.habitrpg.common.habitica.models.PurchaseValidationResult
+import com.habitrpg.common.habitica.models.auth.UserAuth
+import com.habitrpg.common.habitica.models.auth.UserAuthResponse
+import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens
+import com.habitrpg.common.habitica.models.responses.ErrorResponse
+import com.habitrpg.common.habitica.models.responses.FeedResponse
+import com.habitrpg.common.habitica.models.responses.HabitResponse
+import com.habitrpg.common.habitica.models.responses.Status
+import com.habitrpg.common.habitica.models.responses.TaskDirectionData
+import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
@@ -131,7 +131,6 @@ class ApiClientImpl(
 
         val client = OkHttpClient.Builder()
             .cache(cache)
-            .addInterceptor(logging)
             .addNetworkInterceptor { chain ->
                 val original = chain.request()
                 var builder: Request.Builder = original.newBuilder()
@@ -153,6 +152,7 @@ class ApiClientImpl(
                 lastAPICallURL = original.url.toString()
                 chain.proceed(request)
             }
+            .addInterceptor(logging)
             .readTimeout(2400, TimeUnit.SECONDS)
             .build()
 
@@ -655,7 +655,7 @@ class ApiClientImpl(
     }
 
     override fun getMemberAchievements(memberId: String): Flowable<List<Achievement>> {
-        return apiService.getMemberAchievements(memberId).compose(configureApiCallObserver())
+        return apiService.getMemberAchievements(memberId, languageCode).compose(configureApiCallObserver())
     }
 
     override fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>> {
@@ -667,7 +667,7 @@ class ApiClientImpl(
     }
 
     override fun retrieveShopIventory(identifier: String): Flowable<Shop> {
-        return apiService.retrieveShopInventory(identifier).compose(configureApiCallObserver())
+        return apiService.retrieveShopInventory(identifier, languageCode).compose(configureApiCallObserver())
     }
 
     override fun addPushDevice(pushDeviceData: Map<String, String>): Flowable<List<Void>> {
@@ -795,7 +795,9 @@ class ApiClientImpl(
     override fun updateEmail(newEmail: String, password: String): Flowable<Void> {
         val updateObject = HashMap<String, String>()
         updateObject["newEmail"] = newEmail
-        updateObject["password"] = password
+        if (password.isNotBlank()) {
+            updateObject["password"] = password
+        }
         return apiService.updateEmail(updateObject).compose(configureApiCallObserver())
     }
 
@@ -844,7 +846,7 @@ class ApiClientImpl(
     }
 
     override fun retrieveMarketGear(): Flowable<Shop> {
-        return apiService.retrieveMarketGear().compose(configureApiCallObserver())
+        return apiService.retrieveMarketGear(languageCode).compose(configureApiCallObserver())
     }
 
     override val worldState: Flowable<WorldState>

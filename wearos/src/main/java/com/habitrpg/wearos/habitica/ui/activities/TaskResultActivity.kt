@@ -21,6 +21,7 @@ import com.habitrpg.wearos.habitica.ui.views.TaskRewardChip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.Integer.max
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -128,7 +129,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
         if (chips.size > 4 && hasDrop || (chips.size > 5 && !hasDrop)) {
             chips = chips.subList(0, if (hasDrop) 4 else 5)
         }
-        secondsToShow = chips.size
+        secondsToShow = max(chips.size, 2)
         chips.forEach {
             binding.gridLayout.addView(it)
             it.size = chipSize

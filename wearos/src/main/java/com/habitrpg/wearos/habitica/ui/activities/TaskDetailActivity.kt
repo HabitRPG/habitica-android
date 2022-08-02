@@ -63,6 +63,8 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
                     binding.taskStreakView.text = format.format(dueDate)
                     binding.taskStreakView.isVisible = true
                     binding.taskStreakView.setCompoundDrawables(null, null, null, null)
+                } ?: run {
+                    binding.taskStreakView.isVisible = false
                 }
             } else {
                 val streakString = task?.streakString

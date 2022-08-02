@@ -24,6 +24,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.ToDoListAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskListViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -66,8 +67,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
             }
         }
 
-        viewModel.tasks.observe(this) {
-            if (!it.isNullOrEmpty()) {
+        lifecycleScope.launch {
+            viewModel.tasks.collectLatest {
                 adapter.data = it
             }
         }
@@ -79,7 +80,6 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                 adapter.isDisconnected = !it
             }
         }
-
 
         adapter.onTaskScore = {
             scoreTask(it)

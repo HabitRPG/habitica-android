@@ -53,7 +53,6 @@ class TaskListViewModel @Inject constructor(
                 else -> map(it)
             }
         }
-        .asLiveData()
     val user = userRepository.getUser()
         .asLiveData()
 

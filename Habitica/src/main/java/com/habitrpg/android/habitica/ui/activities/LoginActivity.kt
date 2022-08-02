@@ -57,9 +57,6 @@ class LoginActivity : BaseActivity() {
     private lateinit var viewModel: AuthenticationViewModel
     private lateinit var binding: ActivityLoginBinding
 
-    val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
-    private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
-
     @Inject
     lateinit var apiClient: ApiClient
     @Inject
@@ -239,6 +236,8 @@ class LoginActivity : BaseActivity() {
     private fun handleAuthResponse(response: UserAuthResponse) {
         viewModel.handleAuthResponse(response)
         try {
+            val messageClient: MessageClient = Wearable.getMessageClient(this)
+            val capabilityClient: CapabilityClient = Wearable.getCapabilityClient(this)
             lifecycleScope.launch(Dispatchers.IO) {
                 val info = Tasks.await(
                     capabilityClient.getCapability(

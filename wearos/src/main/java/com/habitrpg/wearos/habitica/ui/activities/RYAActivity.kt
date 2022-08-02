@@ -27,6 +27,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         super.onCreate(savedInstanceState)
 
         viewModel.tasks.observe(this) {
+            if (!viewModel.hasTaskData) return@observe
             if (it.isEmpty()) {
                 runCron()
                 return@observe
@@ -64,7 +65,7 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         super.onDestroy()
     }
 
-    lateinit var startTime: Date
+    private lateinit var startTime: Date
 
     private fun runCron() {
         startTime = Date()

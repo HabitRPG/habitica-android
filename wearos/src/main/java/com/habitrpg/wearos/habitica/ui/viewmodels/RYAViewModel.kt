@@ -26,6 +26,7 @@ class RYAViewModel @Inject constructor(
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     var hasRunCron: Boolean = false
     val tasks = MutableLiveData<List<Task>>()
+    var hasTaskData = false
 
     private val tasksToComplete = mutableListOf<Task>()
 
@@ -35,6 +36,7 @@ class RYAViewModel @Inject constructor(
                 .map { it.filter { task -> task.isDue == true && !task.completed } }
                 .first()
             tasks.value = taskList
+            hasTaskData = true
         }
     }
 

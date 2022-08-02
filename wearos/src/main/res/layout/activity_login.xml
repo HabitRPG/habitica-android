@@ -84,7 +84,7 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/row_background_outline"
                 android:autofillHints="username"
-                android:textColorHint="@color/watch_gray_200"
+                style="@style/EditText"
                 android:textSize="14sp"
                 android:layout_marginBottom="@dimen/spacing_small"/>
             <EditText
@@ -95,7 +95,7 @@
                 android:background="@drawable/row_background_outline"
                 android:paddingHorizontal="16dp"
                 android:autofillHints="password"
-                android:textColorHint="@color/watch_gray_200"
+                style="@style/EditText"
                 android:inputType="textPassword|text"
                 android:textSize="14sp"
                 android:imeOptions="actionDone"

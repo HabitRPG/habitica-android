@@ -13,7 +13,6 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -31,16 +30,17 @@ import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
-import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.views.PixelArtView
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -192,8 +192,8 @@ class FullProfileActivity : BaseActivity() {
 
     private fun showSendMessageToUserDialog() {
         finish()
-        lifecycleScope.launch(context = Dispatchers.Main) {
-            delay(1000L)
+        MainScope().launch(context = Dispatchers.Main) {
+            delay(500L)
             MainNavigationController.navigate(R.id.inboxMessageListFragment, bundleOf(Pair("username", username), Pair("userID", userID)))
         }
     }

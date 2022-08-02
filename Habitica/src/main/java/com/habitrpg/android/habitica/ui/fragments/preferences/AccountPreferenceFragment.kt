@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.util.PatternsCompat
+import androidx.core.view.isVisible
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.google.android.material.textfield.TextInputLayout
@@ -139,17 +140,17 @@ class AccountPreferenceFragment :
             "username" -> showLoginNameDialog()
             "confirm_username" -> showConfirmUsernameDialog()
             "email" -> {
-                if (user?.authentication?.hasPassword == true) {
-                    showEmailDialog()
-                } else {
+                if (user?.authentication?.hasPassword != true && user?.authentication?.localAuthentication?.email?.isNotBlank() == true) {
                     showAddPasswordDialog(true)
+                } else {
+                    showEmailDialog()
                 }
             }
             "password" -> {
                 if (user?.authentication?.hasPassword == true) {
                     showChangePasswordDialog()
                 } else {
-                    showAddPasswordDialog(true)
+                    showAddPasswordDialog(user?.authentication?.localAuthentication?.email?.isNotBlank() != true)
                 }
             }
             "UserID" -> {
@@ -354,6 +355,9 @@ class AccountPreferenceFragment :
         emailEditText?.errorText = getString(R.string.email_invalid)
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.email)
         val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.password_edit_text)
+        if (user?.authentication?.hasPassword != true) {
+            passwordEditText?.isVisible = false
+        }
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.change_email)

@@ -3,25 +3,17 @@ package com.habitrpg.android.habitica.api
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.LeaveChallengeBody
-import com.habitrpg.common.habitica.models.PurchaseValidationRequest
-import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.WorldState
-import com.habitrpg.common.habitica.models.auth.UserAuth
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.BuyResponse
-import com.habitrpg.common.habitica.models.responses.FeedResponse
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.responses.SkillResponse
-import com.habitrpg.common.habitica.models.responses.Status
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
-import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -34,8 +26,16 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import com.habitrpg.common.habitica.models.PurchaseValidationResult
+import com.habitrpg.common.habitica.models.auth.UserAuth
+import com.habitrpg.common.habitica.models.auth.UserAuthResponse
+import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.common.habitica.models.responses.FeedResponse
 import com.habitrpg.common.habitica.models.responses.HabitResponse
+import com.habitrpg.common.habitica.models.responses.Status
 import com.habitrpg.common.habitica.models.responses.TaskDirectionData
+import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -316,7 +316,7 @@ interface ApiService {
     fun getMemberWithUsername(@Path("username") username: String): Flowable<HabitResponse<Member>>
 
     @GET("members/{mid}/achievements")
-    fun getMemberAchievements(@Path("mid") memberId: String): Flowable<HabitResponse<List<Achievement>>>
+    fun getMemberAchievements(@Path("mid") memberId: String, @Query("lang") language: String?): Flowable<HabitResponse<List<Achievement>>>
 
     @POST("members/send-private-message")
     fun postPrivateMessage(@Body messageDetails: Map<String, String>): Flowable<HabitResponse<PostChatMessageResult>>
@@ -332,10 +332,10 @@ interface ApiService {
     fun flagInboxMessage(@Path("mid") mid: String, @Body data: Map<String, String>): Flowable<HabitResponse<Void>>
 
     @GET("shops/{identifier}")
-    fun retrieveShopInventory(@Path("identifier") identifier: String): Flowable<HabitResponse<Shop>>
+    fun retrieveShopInventory(@Path("identifier") identifier: String, @Query("lang") language: String?): Flowable<HabitResponse<Shop>>
 
     @GET("shops/market-gear")
-    fun retrieveMarketGear(): Flowable<HabitResponse<Shop>>
+    fun retrieveMarketGear(@Query("lang") language: String?): Flowable<HabitResponse<Shop>>
 
     // Push notifications
     @POST("user/push-devices")

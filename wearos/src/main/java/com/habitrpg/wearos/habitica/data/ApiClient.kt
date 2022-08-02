@@ -8,10 +8,14 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
+import com.habitrpg.common.habitica.models.responses.ErrorResponse
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.models.NetworkResult
 import com.habitrpg.wearos.habitica.models.WearableHabitResponse
 import com.habitrpg.wearos.habitica.models.tasks.Task
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
@@ -88,7 +92,7 @@ class ApiClient @Inject constructor(
                 var cacheControl = CacheControl.Builder()
                 cacheControl = if (request.method == "GET") {
                     if (hasNetwork(context)) {
-                        cacheControl.maxAge(5, TimeUnit.MINUTES)
+                        cacheControl.maxAge(1, TimeUnit.MINUTES)
                     } else {
                         appStateManager.isAppConnected.value = false
                         cacheControl.maxAge(1, TimeUnit.DAYS)
@@ -107,7 +111,8 @@ class ApiClient @Inject constructor(
                 val responseBuilder = response.newBuilder()
                 responseBuilder.header("was-cached", (response.networkResponse == null).toString())
                 if (request.method == "GET") {
-                    if (response.code == 504 || response.request.header("x-api-user") != hostConfig.userID) {
+                    val userID = response.request.header("x-api-user") ?: request.header("x-api-user")
+                    if (response.code == 504 || (userID != null && userID != hostConfig.userID)) {
                         // Cache miss. Network might be down, but retry call without cache to be sure.
                         response.close()
                         chain.proceed(request.newBuilder()
@@ -162,6 +167,9 @@ class ApiClient @Inject constructor(
         this.hostConfig.apiKey = apiToken ?: ""
     }
 
+    private val adapter: JsonAdapter<ErrorResponse>? = Moshi.Builder()
+        .addLast(KotlinJsonAdapterFactory()).build().adapter(ErrorResponse::class.java).lenient()
+
     private suspend fun <T: Any> process(call: suspend () -> Response<WearableHabitResponse<T>>): NetworkResult<T> {
         val response: Response<WearableHabitResponse<T>> = call.invoke()
 
@@ -172,7 +180,12 @@ class ApiClient @Inject constructor(
             if (response.code() == 504) {
                 NetworkResult.Error(Exception(), !wasCached)
             } else {
+                response.errorBody()?.string()?.let {
+                    val errorResponse = adapter?.fromJson(it)
+                    throw(java.lang.Exception(errorResponse?.message))
+                }
                 throw(java.lang.Exception(response.message()))
+
             }
         } else {
             val body = response.body()

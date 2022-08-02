@@ -144,7 +144,7 @@ class ReminderItemFormView @JvmOverloads constructor(
         valueChangedListener?.let {
             val zonedDateTime = ZonedDateTime.now()
                 .withYear(year)
-                .withMonth(month)
+                .withMonth(month + 1)
                 .withDayOfMonth(dayOfMonth)
             item.time = zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
             binding.textView.text = formattedTime
