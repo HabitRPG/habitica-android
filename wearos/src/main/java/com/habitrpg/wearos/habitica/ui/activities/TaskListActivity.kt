@@ -82,9 +82,6 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
 
 
         adapter.onTaskScore = {
-            if (it.type == TaskType.TODO) {
-                viewModel.setCurrentToDoAsComplete(it)
-            }
             scoreTask(it)
         }
         adapter.onTaskTapped = {
