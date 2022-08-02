@@ -83,7 +83,7 @@ class TaskListViewModel @Inject constructor(
         return taskList
     }
 
-    private fun getCurrentTasks(): List<Any>? {
+    private fun getCurrentToDos(): List<Any>? {
         val gson = Gson()
         val data = mutableListOf<Any>()
         val tasksString = sharedPreferences.getString("to_do_tasks", null)
@@ -106,11 +106,11 @@ class TaskListViewModel @Inject constructor(
     }
 
     private fun mapTodos(tasks: List<Task>): List<Any>? {
-        saveCurrentTasks(tasks)
-        return getCurrentTasks()
+        saveCurrentToDos(tasks)
+        return getCurrentToDos()
     }
 
-    private fun saveCurrentTasks(tasks: List<Task>) {
+    private fun saveCurrentToDos(tasks: List<Task>) {
         val taskList = mutableListOf<Task>()
         val type: Type = object : TypeToken<ArrayList<Task?>?>() {}.type
         if (tasksString != null) {
