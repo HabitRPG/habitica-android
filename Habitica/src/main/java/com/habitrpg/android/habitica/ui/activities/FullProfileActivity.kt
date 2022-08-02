@@ -206,6 +206,7 @@ class FullProfileActivity : BaseActivity() {
         username = user.username
 
         title = profile.name
+        supportActionBar?.subtitle = user.formattedUsername
 
         val imageUrl = profile.imageUrl
         if (imageUrl == null || imageUrl.isEmpty()) {
