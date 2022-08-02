@@ -58,9 +58,9 @@ class TaskListViewModel @Inject constructor(
 
     fun scoreTask(task: Task, direction: TaskDirection, onResult: (TaskScoringResult?) -> Unit) {
         if (taskType == TaskType.TODO) {
-            if (direction == TaskDirection.UP) {
+            if (direction == TaskDirection.UP && !completedToDos.contains(task)) {
                 completedToDos.add(task)
-            } else {
+            } else if (direction == TaskDirection.DOWN) {
                 completedToDos.remove(task)
             }
         }
