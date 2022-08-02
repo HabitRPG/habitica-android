@@ -140,7 +140,7 @@ class AccountPreferenceFragment :
             "username" -> showLoginNameDialog()
             "confirm_username" -> showConfirmUsernameDialog()
             "email" -> {
-                if (user?.authentication?.hasPassword != true && user?.authentication?.localAuthentication?.email?.isNotBlank() == true) {
+                if (user?.authentication?.hasPassword != true && user?.authentication?.localAuthentication?.email?.isNotBlank() != true) {
                     showAddPasswordDialog(true)
                 } else {
                     showEmailDialog()
