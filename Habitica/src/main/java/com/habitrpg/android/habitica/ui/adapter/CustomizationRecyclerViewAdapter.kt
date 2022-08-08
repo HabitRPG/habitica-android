@@ -191,8 +191,8 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 }
                 binding.priceLabel.value = customization.price?.toDouble() ?: 0.0
             }
-
-            if (activeCustomization == customization.identifier) {
+            val identifier = if (customization.type == "chair") "chair_${customization.identifier}" else customization.identifier
+            if (activeCustomization == identifier) {
                 binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window_tint_border)
             } else {
                 binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
