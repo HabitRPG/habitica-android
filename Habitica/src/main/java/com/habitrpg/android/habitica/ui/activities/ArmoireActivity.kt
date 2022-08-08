@@ -14,17 +14,17 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
-import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
 import java.util.Locale
 import javax.inject.Inject
@@ -65,7 +65,7 @@ class ArmoireActivity : BaseActivity() {
 
         userViewModel.user.observeOnce(this) { user ->
             gold = user?.stats?.gp
-            val remaining = inventoryRepository.getArmoireRemainingCount()
+            val remaining = inventoryRepository.getArmoireRemainingCount() - 1
             binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
             binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
         }
