@@ -49,6 +49,7 @@ class TasksViewModel : BaseViewModel() {
     val ownerID: MutableLiveData<String?> by lazy {
         MutableLiveData()
     }
+    var initialPreferenceFilterSet: Boolean = false
 
     val isPersonalBoard: Boolean
         get() {
