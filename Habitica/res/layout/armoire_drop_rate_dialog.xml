@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/enchanted_armoire_drop_rates"
-        style="@style/Title1"
+        style="@style/ArmoireTitleTextView"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
-        android:textColor="@color/text_primary"
         android:layout_marginBottom="18dp"
         />
     <TextView
@@ -23,9 +23,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
         android:text="@string/armoire_rate_equipment_description"
-        style="@style/Caption2"
+        style="@style/ArmoireDescriptionTextView"
         android:layout_marginBottom="12dp"
         />
 
@@ -38,9 +37,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
         android:text="@string/armoire_rate_food_description"
-        style="@style/Caption2"
+        style="@style/ArmoireDescriptionTextView"
         android:layout_marginBottom="12dp"
         />
 
@@ -53,8 +51,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
         android:text="@string/armoire_rate_experience_description"
-        style="@style/Caption2"
+        style="@style/ArmoireDescriptionTextView"
         />
 </LinearLayout>

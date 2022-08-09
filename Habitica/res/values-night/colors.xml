@@ -64,6 +64,8 @@
     <color name="text_brand_white">@color/white</color>
     <color name="lightly_tinted_background">@color/brand_50</color>
     <color name="dialog_background">@color/gray_10</color>
+    <color name="armoire_text">@color/gray_400</color>
+
 
     <color name="widget_background">#2B203A</color>
 </resources>

@@ -33,6 +33,7 @@
     <color name="task_secondary_text">#B2B2B2</color>
     <color name="gem_icon_color">#24cc8f</color>
     <color name="subscription_description_text">#b1000000</color>
+    <color name="armoire_text">@color/gray_200</color>
     <color name="white_95_alpha">#f2ffffff</color>
     <color name="white_80_alpha">#ccffffff</color>
     <color name="white_75_alpha">#bfffffff</color>
