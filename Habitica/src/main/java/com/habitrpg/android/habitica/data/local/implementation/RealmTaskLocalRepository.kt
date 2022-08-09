@@ -5,9 +5,9 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.common.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
@@ -169,8 +169,9 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             return Flowable.empty()
         }
         return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java).equalTo("id", taskId).findFirstAsync().asFlowable<RealmObject>()
-                .filter { realmObject -> realmObject.isLoaded }
+            realm.where(Task::class.java).equalTo("id", taskId).findAll().asFlowable()
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+                .map { it.first() }
                 .cast(Task::class.java)
         )
     }
@@ -187,8 +188,8 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun markTaskCompleted(taskId: String, isCompleted: Boolean) {
-        val task = realm.where(Task::class.java).equalTo("id", taskId).findFirstAsync()
-        executeTransaction { task.completed = true }
+        val task = realm.where(Task::class.java).equalTo("id", taskId).findFirst()
+        executeTransaction { task?.completed = true }
     }
 
     override fun swapTaskPosition(firstPosition: Int, secondPosition: Int) {

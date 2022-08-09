@@ -59,7 +59,7 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .equalTo("id", userID)
                 .findAll()
                 .toFlow()
-                .filter { it.isLoaded }
+                .filter { it.isLoaded && it.size > 0 }
                 .map { it.first()?.questAchievements ?: emptyList() }
     }
 

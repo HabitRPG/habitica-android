@@ -8,6 +8,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
+import com.habitrpg.android.habitica.extensions.getAsString
 import com.habitrpg.android.habitica.models.social.Challenge
 import java.lang.reflect.Type
 import java.util.Date
@@ -22,10 +23,8 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
 
         challenge.id = jsonObject.get("id").asString
         challenge.name = jsonObject.get("name").asString
-        if (jsonObject.has("shortName")) {
-            challenge.shortName = jsonObject.get("shortName").asString
-        }
-        challenge.description = jsonObject.get("description").asString
+        challenge.shortName = jsonObject.getAsString("shortName")
+        challenge.description = jsonObject.getAsString("description")
         challenge.memberCount = jsonObject.get("memberCount").asInt
 
         val prizeElement = jsonObject.get("prize")

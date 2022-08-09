@@ -364,7 +364,8 @@ class FullProfileActivity : BaseActivity() {
 
         binding.equipmentTableLayout.removeAllViews()
         for (index in 1 until binding.attributesTableLayout.childCount) {
-            if (binding.attributesTableLayout.getChildAt(index).isAttachedToWindow) {
+            val child = binding.attributesTableLayout.getChildAt(index) ?: continue
+            if (child.isAttachedToWindow) {
                 binding.attributesTableLayout.removeViewAt(index)
             }
         }

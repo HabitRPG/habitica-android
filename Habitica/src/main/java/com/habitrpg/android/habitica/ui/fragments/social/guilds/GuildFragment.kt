@@ -57,8 +57,8 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.groupViewType = GroupViewType.GUILD
-        viewModel.getGroupData().observe(viewLifecycleOwner, { setGroup(it) })
-        viewModel.getIsMemberData().observe(viewLifecycleOwner, { activity?.invalidateOptionsMenu() })
+        viewModel.getGroupData().observe(viewLifecycleOwner) { setGroup(it) }
+        viewModel.getIsMemberData().observe(viewLifecycleOwner) { activity?.invalidateOptionsMenu() }
 
         arguments?.let {
             val args = GuildFragmentArgs.fromBundle(it)

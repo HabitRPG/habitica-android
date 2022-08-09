@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 
 interface SocialRepository : BaseRepository {
     fun getPublicGuilds(): Flowable<out List<Group>>
@@ -40,7 +41,8 @@ interface SocialRepository : BaseRepository {
     fun postGroupChat(groupId: String, message: String): Flowable<PostChatMessageResult>
 
     fun retrieveGroup(id: String): Flowable<Group>
-    fun getGroup(id: String?): Flowable<Group>
+    fun getGroup(id: String?): Flow<Group?>
+    fun getGroupFlowable(id: String?): Flowable<Group>
 
     fun leaveGroup(id: String?, keepChallenges: Boolean): Flowable<Group>
 
@@ -77,7 +79,7 @@ interface SocialRepository : BaseRepository {
 
     fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>>
 
-    fun getGroupMembers(id: String): Flowable<out List<Member>>
+    fun getGroupMembers(id: String): Flow<List<Member>>
     fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>>
 
     fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<Void>>

@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface SocialLocalRepository : BaseLocalRepository {
     fun getPublicGuilds(): Flowable<out List<Group>>
@@ -14,14 +15,15 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun getUserGroups(userID: String, type: String?): Flowable<out List<Group>>
     fun getGroups(type: String): Flowable<out List<Group>>
 
-    fun getGroup(id: String): Flowable<Group>
+    fun getGroup(id: String): Flow<Group?>
+    fun getGroupFlowable(id: String): Flowable<Group>
     fun saveGroup(group: Group)
 
     fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>>
 
     fun deleteMessage(id: String)
 
-    fun getGroupMembers(partyId: String): Flowable<out List<Member>>
+    fun getGroupMembers(partyId: String): Flow<List<Member>>
 
     fun updateRSVPNeeded(user: User?, newValue: Boolean)
 

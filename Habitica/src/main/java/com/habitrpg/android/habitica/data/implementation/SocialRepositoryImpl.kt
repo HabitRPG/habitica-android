@@ -17,8 +17,12 @@ import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
-import java.util.UUID
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.util.UUID
 
 class SocialRepositoryImpl(
     localRepository: SocialLocalRepository,
@@ -26,7 +30,7 @@ class SocialRepositoryImpl(
     userID: String
 ) : BaseRepositoryImpl<SocialLocalRepository>(localRepository, apiClient, userID), SocialRepository {
     override fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group> {
-        return localRepository.getGroup(groupID)
+        return localRepository.getGroupFlowable(groupID)
             .map {
                 val group = localRepository.getUnmanagedCopy(it)
                 group.leaderID = userID
@@ -131,25 +135,23 @@ class SocialRepositoryImpl(
         return Flowable.zip(
             apiClient.getGroup(id).doOnNext { localRepository.saveGroup(it) },
             retrieveGroupChat(id)
-                .toFlowable(),
-            { group, _ ->
-                group
-            }
-        ).doOnError {
+                .toFlowable()
+        ) { group, _ ->
+            group
+        }.doOnError {
             if (it is HttpException && it.code() == 404) {
-                localRepository.getGroup(id).firstElement().subscribe { group ->
-                    localRepository.delete(group)
+                MainScope().launch {
+                    val group = localRepository.getGroup(id).first()
+                    if (group != null) {
+                        localRepository.delete(group)
+                    }
                 }
             }
         }
     }
 
-    override fun getGroup(id: String?): Flowable<Group> {
-        if (id?.isNotBlank() != true) {
-            return Flowable.empty()
-        }
-        return localRepository.getGroup(id)
-    }
+    override fun getGroup(id: String?) = id?.let { localRepository.getGroup(it) } ?: emptyFlow()
+    override fun getGroupFlowable(id: String?): Flowable<Group> = id?.let { localRepository.getGroupFlowable(it) } ?: Flowable.empty()
 
     override fun leaveGroup(id: String?, keepChallenges: Boolean): Flowable<Group> {
         if (id?.isNotBlank() != true) {
@@ -157,7 +159,7 @@ class SocialRepositoryImpl(
         }
         return apiClient.leaveGroup(id, if (keepChallenges) "remain-in-challenges" else "leave-challenges")
             .doOnNext { localRepository.updateMembership(userID, id, false) }
-            .flatMapMaybe { localRepository.getGroup(id).firstElement() }
+            .flatMapMaybe { localRepository.getGroupFlowable(id).firstElement() }
     }
 
     override fun joinGroup(id: String?): Flowable<Group> {
@@ -256,7 +258,7 @@ class SocialRepositoryImpl(
         return postPrivateMessage(recipientId, messageObject)
     }
 
-    override fun getGroupMembers(id: String): Flowable<out List<Member>> = localRepository.getGroupMembers(id)
+    override fun getGroupMembers(id: String) = localRepository.getGroupMembers(id)
 
     override fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>> {
         return apiClient.getGroupMembers(id, includeAllPublicFields)

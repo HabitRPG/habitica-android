@@ -50,6 +50,7 @@ object Animations {
     }
 
     fun circularReveal(view: View, duration: Long = 300) {
+        if (!view.isAttachedToWindow) return
         val cx = view.width / 2
         val cy = view.height / 2
         val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()

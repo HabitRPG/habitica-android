@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -12,6 +13,7 @@ import com.habitrpg.android.habitica.databinding.ActivitySkillMembersBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SkillMemberActivity : BaseActivity() {
@@ -56,10 +58,12 @@ class SkillMemberActivity : BaseActivity() {
         )?.let { compositeSubscription.add(it) }
         binding.recyclerView.adapter = viewAdapter
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable()
-                .flatMap { user -> socialRepository.getGroupMembers(user.party?.id ?: "") }
-                .subscribe({ viewAdapter?.data = it }, RxErrorHandler.handleEmptyError())
-        )
+        val user = userViewModel.user.value
+        lifecycleScope.launch {
+            socialRepository.getGroupMembers(user?.party?.id ?: "")
+                .collect {
+                    viewAdapter?.data = it
+                }
+        }
     }
 }

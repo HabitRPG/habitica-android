@@ -20,21 +20,19 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
@@ -48,9 +46,6 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     @Inject
     lateinit var userRepository: UserRepository
-
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGuildDetailBinding {
         return FragmentGuildDetailBinding.inflate(inflater, container, false)

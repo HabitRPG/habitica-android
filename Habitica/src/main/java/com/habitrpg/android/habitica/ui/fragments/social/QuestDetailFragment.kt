@@ -24,10 +24,10 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.common.habitica.helpers.MarkdownParser
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.MarkdownParser
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -79,7 +79,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 }
                 .skipWhile { it.isBlank() }
                 .distinctUntilChanged()
-                .flatMap { socialRepository.getGroup(it) }
+                .flatMap { socialRepository.getGroupFlowable(it) }
                 .doOnNext { updateParty(it) }
                 .map {
                     it.quest?.key ?: ""

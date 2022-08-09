@@ -46,6 +46,7 @@ class SoundFile(val theme: String, private val fileName: String) {
             player?.setVolume(100f, 100f)
             player?.isLooping = false
             player?.start()
+        } catch (e: IllegalStateException) {
         } catch (e: Exception) {
             RxErrorHandler.reportError(e)
         }

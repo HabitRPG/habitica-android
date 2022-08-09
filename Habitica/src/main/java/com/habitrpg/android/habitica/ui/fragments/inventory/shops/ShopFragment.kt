@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -21,11 +22,13 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.RecyclerViewState
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>() {
@@ -133,18 +136,20 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             updateCurrencyView(it)
         }
 
-        compositeSubscription.add(
+        lifecycleScope.launch {
             socialRepository.getGroup(Group.TAVERN_ID)
-                .filter { it.hasActiveQuest }
-                .filter { group -> group.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false }
-                .filter { group -> group.quest?.rageStrikes?.filter { it.key == shopIdentifier }?.get(0)?.wasHit == true }
-                .subscribe(
-                    {
-                        adapter?.shopSpriteSuffix = "_" + it.quest?.key
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+                .filter { it?.hasActiveQuest == true }
+                .filter { group ->
+                    group?.quest?.rageStrikes?.any { it.key == shopIdentifier } ?: false
+                }
+                .filter { group ->
+                    group?.quest?.rageStrikes?.filter { it.key == shopIdentifier }
+                        ?.get(0)?.wasHit == true
+                }
+                .collect {
+                    adapter?.shopSpriteSuffix = "_" + it?.quest?.key
+                }
+        }
 
         view.post { setGridSpanCount(view.width) }
 

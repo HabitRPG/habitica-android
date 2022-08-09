@@ -144,8 +144,8 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler { MainNavigationController.navigate(R.id.adventureGuideActivity) }?.let { recyclerSubscription.add(it) }
 
         viewModel.ownerID.observe(viewLifecycleOwner) {
-            canEditTasks = viewModel.isPersonalBoard ?: true
-            canScoreTaks = viewModel.isPersonalBoard ?: true
+            canEditTasks = viewModel.isPersonalBoard
+            canScoreTaks = viewModel.isPersonalBoard
             recyclerAdapter?.canScoreTasks = canScoreTaks
             updateTaskSubscription(it)
         }
@@ -270,8 +270,8 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             ) {
                 if (validTaskId != null) {
                     var newPosition = viewHolder.bindingAdapterPosition
-                    if ((viewModel.filterCount(taskType) ?: 0) > 0) {
-                        newPosition = if ((newPosition + 1) == recyclerAdapter?.data?.size) {
+                    if (viewModel.filterCount(taskType) > 0) {
+                        newPosition = if ((newPosition + 1) >= (recyclerAdapter?.data?.size ?: 0)) {
                             recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
                         } else {
                             (recyclerAdapter?.data?.get(newPosition + 1)?.position ?: newPosition) - 1
@@ -370,7 +370,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun setEmptyLabels() {
-        binding?.recyclerView?.emptyItem = if ((viewModel.filterCount(taskType) ?: 0) > 0) {
+        binding?.recyclerView?.emptyItem = if (viewModel.filterCount(taskType) > 0) {
             when (this.taskType) {
                 TaskType.HABIT -> {
                     EmptyItem(

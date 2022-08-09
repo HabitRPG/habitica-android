@@ -110,6 +110,7 @@ class AvatarCustomizationFragment :
         }
         adapter.customizationType = type
         binding?.refreshLayout?.setOnRefreshListener(this)
+        layoutManager = FlexboxLayoutManager(activity, ROW)
         layoutManager.justifyContent = JustifyContent.CENTER
         layoutManager.alignItems = AlignItems.FLEX_START
         binding?.recyclerView?.layoutManager = layoutManager

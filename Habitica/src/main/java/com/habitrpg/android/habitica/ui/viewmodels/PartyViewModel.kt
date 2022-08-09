@@ -2,12 +2,14 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
+import kotlinx.coroutines.launch
 
 class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeComponent) {
     constructor() : this(true)
@@ -39,10 +41,16 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
     private fun loadMembersFromLocal() {
         disposable.add(
             groupIDSubject.toFlowable(BackpressureStrategy.LATEST)
+                .distinctUntilChanged()
                 .filterOptionalDoOnEmpty { members.value = null }
-                .flatMap { socialRepository.getGroupMembers(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ members.value = it }, RxErrorHandler.handleEmptyError())
+                .subscribe({
+                    viewModelScope.launch {
+                        socialRepository.getGroupMembers(it)
+                            .collect {
+                                members.value = it
+                            }
+                    }}, RxErrorHandler.handleEmptyError())
         )
     }
 

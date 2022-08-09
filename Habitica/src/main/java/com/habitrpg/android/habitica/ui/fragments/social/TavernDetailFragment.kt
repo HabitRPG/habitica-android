@@ -26,9 +26,9 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.models.PlayerTier
-import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import javax.inject.Inject
 
 class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
@@ -74,7 +74,7 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
         bindButtons()
 
         compositeSubscription.add(
-            socialRepository.getGroup(Group.TAVERN_ID)
+            socialRepository.getGroupFlowable(Group.TAVERN_ID)
                 .doOnNext { if (!it.hasActiveQuest) binding?.worldBossSection?.visibility = View.GONE }
                 .filter { it.hasActiveQuest }
                 .doOnNext {

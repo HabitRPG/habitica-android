@@ -27,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.NullPointerException
 
 object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
@@ -97,9 +98,13 @@ object MarkdownParser {
         // Adding this space here bc for some reason some markdown is not rendered correctly when the whole string is supposed to be formatted
         val result = markwon?.toMarkdown("$text ") ?: SpannableString(text)
 
-        cache[hashCode] = result
-        if (cache.size > 100) {
-            cache.remove(0)
+        try {
+            cache[hashCode] = result
+            if (cache.size > 100) {
+                cache.remove(cache.firstKey())
+            }
+        } catch (_: NullPointerException) {
+            // for some reason hashCode seems to be null sometimes.
         }
         return result
     }
@@ -114,7 +119,11 @@ object MarkdownParser {
     }
 
     fun hasCached(input: String?): Boolean {
-        return cache.containsKey(input?.hashCode())
+        return try {
+            cache.containsKey(input?.hashCode())
+        } catch (_: NullPointerException) {
+            false
+        }
     }
 
     /**

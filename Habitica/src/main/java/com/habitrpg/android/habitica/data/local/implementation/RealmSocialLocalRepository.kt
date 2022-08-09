@@ -13,6 +13,10 @@ import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.Sort
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
 
@@ -165,7 +169,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         )
     }
 
-    override fun getGroup(id: String): Flowable<Group> {
+    override fun getGroupFlowable(id: String): Flowable<Group> {
         return RxJavaBridge.toV3Flowable(
             realm.where(Group::class.java)
                 .equalTo("id", id)
@@ -174,6 +178,15 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 .filter { group -> group.isLoaded && group.isValid && !group.isEmpty() }
                 .map { groups -> groups.first() }
         )
+    }
+
+    override fun getGroup(id: String): Flow<Group?> {
+        return realm.where(Group::class.java)
+            .equalTo("id", id)
+            .findAll()
+            .toFlow()
+            .filter { group -> group.isLoaded && group.isValid && !group.isEmpty() }
+            .map { groups -> groups.first() }
     }
 
     override fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>> {
@@ -192,14 +205,12 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         executeTransaction { chatMessage?.deleteFromRealm() }
     }
 
-    override fun getGroupMembers(partyId: String): Flowable<out List<Member>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Member::class.java)
+    override fun getGroupMembers(partyId: String): Flow<List<Member>> {
+        return realm.where(Member::class.java)
                 .equalTo("party.id", partyId)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
     override fun updateRSVPNeeded(user: User?, newValue: Boolean) {

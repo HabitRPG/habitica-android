@@ -26,17 +26,17 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.helpers.LanguageHelper
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.Date
 import java.util.Locale
@@ -245,8 +245,10 @@ abstract class BaseActivity : AppCompatActivity() {
         sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
         if (image != null) {
             val path = MediaStore.Images.Media.insertImage(this.contentResolver, image, "${(Date())}", null)
-            val uri = Uri.parse(path)
-            sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            if (path != null) {
+                val uri = Uri.parse(path)
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            }
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
     }

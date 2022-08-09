@@ -27,7 +27,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
@@ -239,23 +238,27 @@ class LoginActivity : BaseActivity() {
             val messageClient: MessageClient = Wearable.getMessageClient(this)
             val capabilityClient: CapabilityClient = Wearable.getCapabilityClient(this)
             lifecycleScope.launch(Dispatchers.IO) {
-                val info = Tasks.await(
-                    capabilityClient.getCapability(
-                        "receive_message",
-                        CapabilityClient.FILTER_REACHABLE
-                    )
-                )
-                info.nodes.forEach {
-                    Tasks.await(
-                        messageClient.sendMessage(
-                            it.id,
-                            "/auth",
-                            "${response.id}:${response.apiToken}".toByteArray()
+                try {
+                    val info = Tasks.await(
+                        capabilityClient.getCapability(
+                            "receive_message",
+                            CapabilityClient.FILTER_REACHABLE
                         )
                     )
+                    info.nodes.forEach {
+                        Tasks.await(
+                            messageClient.sendMessage(
+                                it.id,
+                                "/auth",
+                                "${response.id}:${response.apiToken}".toByteArray()
+                            )
+                        )
+                    }
+                } catch (e: Exception) {
+                    // Wearable API is not available on this device.
                 }
             }
-        } catch (e: ApiException) {
+        } catch (e: Exception) {
             // Wearable API is not available on this device.
         }
         compositeSubscription.add(

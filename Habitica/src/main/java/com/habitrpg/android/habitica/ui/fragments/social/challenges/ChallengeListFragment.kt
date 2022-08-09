@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.kotlin.Flowables
 import javax.inject.Inject
@@ -84,7 +84,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
         }
 
         compositeSubscription.add(
-            Flowables.combineLatest(socialRepository.getGroup(Group.TAVERN_ID), socialRepository.getUserGroups("guild")).subscribe(
+            Flowables.combineLatest(socialRepository.getGroupFlowable(Group.TAVERN_ID), socialRepository.getUserGroups("guild")).subscribe(
                 {
                     this.filterGroups = mutableListOf()
                     filterGroups?.add(it.first)

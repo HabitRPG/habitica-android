@@ -6,24 +6,24 @@ import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.common.habitica.extensions.Optional
-import com.habitrpg.common.habitica.extensions.asOptional
 import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.common.habitica.extensions.Optional
+import com.habitrpg.common.habitica.extensions.asOptional
+import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import retrofit2.HttpException
 
 enum class GroupViewType(internal val order: String) {
     PARTY("party"),
@@ -121,7 +121,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         disposable.add(
             groupIDFlowable
                 .filterOptionalDoOnEmpty { group.value = null }
-                .flatMap { socialRepository.getGroup(it) }
+                .flatMap { socialRepository.getGroupFlowable(it) }
                 .map { socialRepository.getUnmanagedCopy(it) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ group.value = it }, RxErrorHandler.handleEmptyError())
@@ -132,7 +132,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         disposable.add(
             groupIDFlowable
                 .filterOptionalDoOnEmpty { leader.value = null }
-                .flatMap { socialRepository.getGroup(it) }
+                .flatMap { socialRepository.getGroupFlowable(it) }
                 .distinctUntilChanged { group1, group2 -> group1.id == group2.id }
                 .flatMap { socialRepository.getMember(it.leaderID) }
                 .observeOn(AndroidSchedulers.mainThread())
