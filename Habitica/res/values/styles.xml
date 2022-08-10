@@ -740,6 +740,20 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="ArmoireTitleTextView">
+        <item name="android:fontFamily">@string/font_family_medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.07</item>
+        <item name="android:textColor">@color/armoire_text</item>
+    </style>
+
+    <style name="ArmoireDescriptionTextView">
+        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textColor">@color/armoire_text</item>
+    </style>
+
     <style name="QuestRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/quest_difficulty_rating</item>
         <item name="android:minHeight">12dip</item>
