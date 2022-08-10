@@ -321,6 +321,8 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
                 .subscribe({ recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError())
         )
+
+        setPreferenceTaskFilters()
     }
 
     private fun updateTaskSubscription(ownerID: String?) {
@@ -458,26 +460,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
-            if (it != null) {
-                when (taskType) {
-                    TaskType.TODO -> viewModel.setActiveFilter(
-                        TaskType.TODO,
-                        Task.FILTER_ACTIVE
-                    )
-                    TaskType.DAILY -> {
-                        if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
-                            viewModel.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
-                        }
-                    }
-                    else -> {}
-                }
-            }
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
@@ -493,6 +475,28 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         if (activeFilter == Task.FILTER_COMPLETED) {
             compositeSubscription.add(taskRepository.retrieveCompletedTodos().subscribe({}, RxErrorHandler.handleEmptyError()))
+        }
+    }
+
+    private fun setPreferenceTaskFilters() {
+        (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
+            if (it != null) {
+                when (taskType) {
+                    TaskType.TODO -> viewModel.setActiveFilter(
+                        TaskType.TODO,
+                        Task.FILTER_ACTIVE
+                    )
+                    TaskType.DAILY -> {
+                        if (!viewModel.initialPreferenceFilterSet) {
+                            viewModel.initialPreferenceFilterSet = true
+                            if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
+                                viewModel.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
+                            }
+                        }
+                    }
+                    else -> {}
+                }
+            }
         }
     }
 
