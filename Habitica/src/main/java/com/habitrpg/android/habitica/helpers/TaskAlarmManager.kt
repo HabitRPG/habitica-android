@@ -82,9 +82,16 @@ class TaskAlarmManager(
         return remindersItem
     }
 
+
+    /**
+     * If reminderItem time is before now, a new reminder will not be created until the reminder passes.
+     * The exception to this is if the task & reminder was newly created for the same time,
+     * in which the alarm will be created -
+     * which is indicated by first nextDue being null (As the alarm is created before the API returns nextDue times)
+     */
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
         val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        if (remindersItem == null || remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true) {
+        if (remindersItem == null || (remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true && reminderItemTask.nextDue?.first() != null)) {
             return
         }
 
