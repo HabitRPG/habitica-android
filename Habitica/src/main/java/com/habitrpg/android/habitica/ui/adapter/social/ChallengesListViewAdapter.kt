@@ -10,8 +10,8 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
-import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.helpers.EmojiParser
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -53,7 +53,7 @@ class ChallengesListViewAdapter(
 
         var query = unfilteredData.where()
 
-        if (filterOptions.showByGroups != null && filterOptions.showByGroups.size > 0) {
+        if (filterOptions.showByGroups.isNotEmpty()) {
             val groupIds = arrayOfNulls<String>(filterOptions.showByGroups.size)
             var index = 0
             for (group in filterOptions.showByGroups) {

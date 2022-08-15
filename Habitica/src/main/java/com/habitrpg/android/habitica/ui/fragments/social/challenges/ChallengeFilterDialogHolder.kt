@@ -15,7 +15,7 @@ internal class ChallengeFilterDialogHolder private constructor(
 ) {
     private val binding = DialogChallengeFilterBinding.bind(view)
 
-    private var filterGroups: List<Group>? = null
+    private var filterGroups: List<Group> = emptyList()
     private var currentFilter: ChallengeFilterOptions? = null
     private var selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)? = null
     private var adapter: ChallengesFilterRecyclerViewAdapter? = null
@@ -23,6 +23,12 @@ internal class ChallengeFilterDialogHolder private constructor(
     init {
         binding.challengeFilterButtonAll.setOnClickListener { allClicked() }
         binding.challengeFilterButtonNone.setOnClickListener { noneClicked() }
+        binding.challengeFilterOwned.setOnCheckedChangeListener { _, isChecked ->
+            currentFilter?.showOwned = isChecked
+        }
+        binding.challengeFilterNotOwned.setOnCheckedChangeListener { _, isChecked ->
+            currentFilter?.notOwned = isChecked
+        }
     }
 
     fun bind(
@@ -43,38 +49,41 @@ internal class ChallengeFilterDialogHolder private constructor(
 
     private fun fillChallengeGroups() {
         binding.challengeFilterRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = filterGroups?.let { ChallengesFilterRecyclerViewAdapter(it) }
+        adapter = ChallengesFilterRecyclerViewAdapter(filterGroups)
         if (currentFilter != null && currentFilter?.showByGroups != null) {
-            adapter?.selectAll(currentFilter?.showByGroups ?: emptyList())
+            adapter?.checkedEntries?.addAll(currentFilter?.showByGroups ?: emptyList())
         }
 
         binding.challengeFilterRecyclerView.adapter = adapter
     }
 
     private fun allClicked() {
-        this.adapter?.selectAll()
+        this.adapter?.checkedEntries?.clear()
+        adapter?.checkedEntries?.addAll(filterGroups)
     }
 
     private fun noneClicked() {
-        this.adapter?.deSelectAll()
+        this.adapter?.checkedEntries?.clear()
     }
 
     companion object {
-
         fun showDialog(
             activity: Activity,
             filterGroups: List<Group>,
             currentFilter: ChallengeFilterOptions?,
-            selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)?
+            selectedGroupsCallback: ((ChallengeFilterOptions) -> Unit)
         ) {
             val dialogLayout = activity.layoutInflater.inflate(R.layout.dialog_challenge_filter, null)
 
-            val challengeFilterDialogHolder = ChallengeFilterDialogHolder(dialogLayout, activity)
+            val holder = ChallengeFilterDialogHolder(dialogLayout, activity)
 
             val sheet = HabiticaBottomSheetDialog(activity)
             sheet.setContentView(dialogLayout)
+            sheet.setOnDismissListener {
+                selectedGroupsCallback(ChallengeFilterOptions(holder.adapter?.checkedEntries ?: emptyList(), holder.binding.challengeFilterOwned.isChecked, holder.binding.challengeFilterNotOwned.isChecked))
+            }
 
-            challengeFilterDialogHolder.bind(filterGroups, currentFilter, selectedGroupsCallback)
+            holder.bind(filterGroups, currentFilter, selectedGroupsCallback)
             sheet.show()
         }
     }
