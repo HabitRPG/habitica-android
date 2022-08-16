@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
 import com.habitrpg.android.habitica.data.local.UserQuestStatus
-import com.habitrpg.common.habitica.extensions.Optional
 import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
@@ -16,15 +15,16 @@ import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.SkillResponse
-import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
-import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.common.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.common.habitica.extensions.Optional
+import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.common.habitica.models.tasks.Attribute
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
@@ -94,7 +94,7 @@ class UserRepositoryImpl(
                     val calendar = GregorianCalendar()
                     val timeZone = calendar.timeZone
                     val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
-                    if (offset.toInt() != user.preferences?.timezoneOffset ?: 0) {
+                    if (offset.toInt() != (user.preferences?.timezoneOffset ?: 0)) {
                         return@flatMap updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
                     } else {
                         return@flatMap Flowable.just(user)
@@ -136,9 +136,9 @@ class UserRepositoryImpl(
 
     override fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "", taskId)) { response, user ->
-            response.hpDiff = response.user?.stats?.hp ?: 0 - (user.stats?.hp ?: 0.0)
-            response.expDiff = response.user?.stats?.exp ?: 0 - (user.stats?.exp ?: 0.0)
-            response.goldDiff = response.user?.stats?.gp ?: 0 - (user.stats?.gp ?: 0.0)
+            response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
+            response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+            response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
             response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
             response.user?.let { mergeUser(user, it) }
             response
@@ -147,9 +147,9 @@ class UserRepositoryImpl(
 
     override fun useSkill(key: String, target: String?): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "")) { response, user ->
-            response.hpDiff = response.user?.stats?.hp ?: 0 - (user.stats?.hp ?: 0.0)
-            response.expDiff = response.user?.stats?.exp ?: 0 - (user.stats?.exp ?: 0.0)
-            response.goldDiff = response.user?.stats?.gp ?: 0 - (user.stats?.gp ?: 0.0)
+            response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
+            response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+            response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
             response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
             response.user?.let { mergeUser(user, it) }
             response

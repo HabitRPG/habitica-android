@@ -81,7 +81,10 @@ class AvatarCustomizationFragment :
             adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
                     if (customization.type == "background") {
-                        userRepository.unlockPath(customization)
+                        val using = if (customization.identifier?.isBlank() != false) {
+                            customization.unlockPath + activeCustomization
+                        } else customization.unlockPath
+                        userRepository.unlockPath(using, 0)
                             .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
                         userRepository.useCustomization(customization.type ?: "", customization.category, customization.identifier ?: "")
