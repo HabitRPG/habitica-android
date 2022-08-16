@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
-import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -63,8 +62,10 @@ class ArmoireActivity : BaseActivity() {
         binding.goldView.minForAbbrevation = 1000000
         binding.goldView.decimals = 0
 
-        userViewModel.user.observeOnce(this) { user ->
-            gold = user?.stats?.gp
+        userViewModel.user.observe(this) { user ->
+            if (gold == null) {
+                gold = user?.stats?.gp
+            }
             val remaining = inventoryRepository.getArmoireRemainingCount()
             binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
             binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
