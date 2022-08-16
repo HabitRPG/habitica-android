@@ -21,22 +21,30 @@ import kotlinx.coroutines.flow.filter
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
-    override fun getTasks(taskType: TaskType, userID: String): Flow<List<Task>> {
+    override fun getTasks(taskType: TaskType, userID: String, includedGroupIDs: Array<String>): Flow<List<Task>> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(Task::class.java)
             .equalTo("typeValue", taskType.value)
+            .beginGroup()
             .equalTo("userId", userID)
+            .or()
+            .`in`("group.groupID", includedGroupIDs)
+            .endGroup()
             .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
     }
 
-    override fun getTasksFlowable(taskType: TaskType, userID: String): Flowable<out List<Task>> {
+    override fun getTasksFlowable(taskType: TaskType, userID: String, includedGroupIDs: Array<String>): Flowable<out List<Task>> {
         if (realm.isClosed) return Flowable.empty()
         return RxJavaBridge.toV3Flowable(realm.where(Task::class.java)
             .equalTo("typeValue", taskType.value)
+            .beginGroup()
             .equalTo("userId", userID)
+            .or()
+            .`in`("group.groupID", includedGroupIDs)
+            .endGroup()
             .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
             .asFlowable()
@@ -53,17 +61,20 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun saveTasks(ownerID: String, tasksOrder: TasksOrder, tasks: TaskList) {
-        val sortedTasks = ArrayList<Task>()
+        val sortedTasks = mutableListOf<Task>()
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.habits))
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.dailys))
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.todos))
         sortedTasks.addAll(sortTasks(tasks.tasks, tasksOrder.rewards))
+        for (task in tasks.tasks.values) {
+            task.position = (sortedTasks.lastOrNull { it.type == task.type }?.position ?: -1) + 1
+            sortedTasks.add(task)
+        }
         removeOldTasks(ownerID, sortedTasks)
 
         val allChecklistItems = ArrayList<ChecklistItem>()
         val allReminders = ArrayList<RemindersItem>()
         sortedTasks.forEach {
-            if (it.userId.isBlank()) it.userId = ownerID
             it.checklist?.let { it1 -> allChecklistItems.addAll(it1) }
             it.reminders?.let { it1 -> allReminders.addAll(it1) }
         }
@@ -109,11 +120,6 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 position++
                 taskMap.remove(taskId)
             }
-        }
-        for (task in taskMap.values) {
-            task.position = position
-            taskList.add(task)
-            position++
         }
         return taskList
     }

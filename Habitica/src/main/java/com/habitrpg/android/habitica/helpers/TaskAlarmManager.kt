@@ -11,9 +11,9 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import kotlinx.coroutines.flow.firstOrNull
@@ -91,7 +91,7 @@ class TaskAlarmManager(
      */
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
         val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        if (remindersItem == null || (remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true && reminderItemTask.nextDue?.first() != null)) {
+        if (remindersItem == null || (remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null)) {
             return
         }
 
@@ -104,7 +104,7 @@ class TaskAlarmManager(
         intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.text)
         intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.id)
 
-        val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
+        val intentId = remindersItem.id?.hashCode() ?: (0 and 0xfffffff)
         // Cancel alarm if already exists
         val previousSender = PendingIntent.getBroadcast(
             context,
@@ -130,7 +130,7 @@ class TaskAlarmManager(
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
-        val intentId = remindersItem.id?.hashCode() ?: 0 and 0xfffffff
+        val intentId = remindersItem.id?.hashCode() ?: (0 and 0xfffffff)
         val sender = PendingIntent.getBroadcast(
             context,
             intentId,

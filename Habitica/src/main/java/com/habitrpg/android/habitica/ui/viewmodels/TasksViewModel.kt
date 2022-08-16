@@ -11,11 +11,10 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.models.responses.TaskDirection
 import com.habitrpg.common.habitica.models.responses.TaskScoringResult
-import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.modules.AppModule
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.Case
 import io.realm.OrderedRealmCollection
@@ -24,7 +23,6 @@ import io.realm.Sort
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
-import javax.inject.Named
 
 class TasksViewModel : BaseViewModel() {
     private var compositeSubscription: CompositeDisposable = CompositeDisposable()
@@ -33,8 +31,6 @@ class TasksViewModel : BaseViewModel() {
         component.inject(this)
     }
 
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userID: String
     @Inject
     lateinit var taskRepository: TaskRepository
     @Inject
@@ -53,7 +49,7 @@ class TasksViewModel : BaseViewModel() {
 
     val isPersonalBoard: Boolean
         get() {
-            return ownerID.value == userID
+            return ownerID.value == userViewModel.userID
         }
     val ownerTitle: CharSequence
         get() {
@@ -65,7 +61,7 @@ class TasksViewModel : BaseViewModel() {
             viewModelScope.launch {
                 userRepository.getTeamPlans()
                     .collect {
-                        owners = listOf(Pair(userID, userViewModel.displayName)) + it.map {
+                        owners = listOf(Pair(userViewModel.userID, userViewModel.displayName)) + it.map {
                             Pair(
                                 it.id,
                                 it.summary

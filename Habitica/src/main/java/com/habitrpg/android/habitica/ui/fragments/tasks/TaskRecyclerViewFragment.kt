@@ -329,8 +329,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         if (taskFlowJob?.isActive == true) {
             taskFlowJob?.cancel()
         }
+        val additionalGroupIDs = viewModel.userViewModel.mirrorGroupTasks.toTypedArray()
         taskFlowJob = lifecycleScope.launch {
-            taskRepository.getTasks(taskType, ownerID).collect {
+            taskRepository.getTasks(taskType, ownerID, additionalGroupIDs).collect {
                 recyclerAdapter?.updateUnfilteredData(it)
             }
         }

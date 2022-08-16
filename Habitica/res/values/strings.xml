@@ -265,10 +265,9 @@
     <string name="notification_purchase_reward" >You purchased a reward</string>
     <string name="world_quest">World Quest</string>
     <string name="inn_description">Need a break? Check into Daniel’s Inn to pause some of Habitica’s more difficult game mechanics:\n\n
-&#8226; Missed Dailies won’t damage you\n
-&#8226; Tasks won’t lose streaks or decay in color\n
-&#8226; Bosses won’t do damage for your missed Dailies\n
-&#8226; Your boss damage or collection quest items will stay pending until check-out</string>
+&#8226; Your missed Dailies won\'t damage you (bosses will still do damage caused by other Party member\'s missed Dailies)
+&#8226; Your Task streaks and Habit counters will not reset
+&#8226; Your damage to the Quest boss or found collection items will remain pending until you check out of the Inn</string>
     <string name="empty_items">You don\'t have any %s</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
     <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>

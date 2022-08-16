@@ -39,11 +39,11 @@ class TaskRepositoryImpl(
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
     private var lastTaskAction: Long = 0
 
-    override fun getTasks(taskType: TaskType, userID: String?): Flow<List<Task>> =
-        this.localRepository.getTasks(taskType, userID ?: this.userID)
+    override fun getTasks(taskType: TaskType, userID: String?, includedGroupIDs: Array<String>): Flow<List<Task>> =
+        this.localRepository.getTasks(taskType, userID ?: this.userID, includedGroupIDs)
 
-    override fun getTasksFlowable(taskType: TaskType, userID: String?): Flowable<out List<Task>> =
-        this.localRepository.getTasksFlowable(taskType, userID ?: this.userID)
+    override fun getTasksFlowable(taskType: TaskType, userID: String?, includedGroupIDs: Array<String>): Flowable<out List<Task>> =
+        this.localRepository.getTasksFlowable(taskType, userID ?: this.userID, includedGroupIDs)
 
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
         localRepository.saveTasks(userId, order, tasks)

@@ -13,10 +13,10 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.WidgetConfigureHabitButtonBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -82,7 +82,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         CoroutineScope(Dispatchers.Main + job).launch {
-            adapter?.data = taskRepository.getTasks(TaskType.HABIT, userId).firstOrNull() ?: listOf()
+            adapter?.data = taskRepository.getTasks(TaskType.HABIT, userId, emptyArray()).firstOrNull() ?: listOf()
         }
     }
 

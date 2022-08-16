@@ -195,6 +195,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     val isGroupTask: Boolean
         get() = group?.groupID?.isNotBlank() == true
 
+    fun isAssignedToUser(userID: String): Boolean {
+        return group?.assignedUsers?.contains(userID) == true
+    }
+
     val isPendingApproval: Boolean
         get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)
 

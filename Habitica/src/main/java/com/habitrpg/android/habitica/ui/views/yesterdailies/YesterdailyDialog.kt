@@ -12,14 +12,14 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.lang.ref.WeakReference
@@ -226,7 +226,7 @@ class YesterdailyDialog private constructor(
                     }
                     .firstElement()
                     .zipWith(
-                        taskRepository.getTasksFlowable(TaskType.DAILY).firstElement()
+                        taskRepository.getTasksFlowable(TaskType.DAILY, null, emptyArray()).firstElement()
                             .map {
                                 val taskMap = mutableMapOf<String, Int>()
                                 it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }

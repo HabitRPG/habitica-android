@@ -24,17 +24,17 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import java.util.Date
 import java.util.WeakHashMap
 
@@ -80,9 +80,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             val taskTypeValue = args.taskType
             if (args.ownerID?.isNotBlank() == true) {
                 viewModel.canSwitchOwners.value = false
-                viewModel.ownerID.value = args.ownerID ?: viewModel.userID
+                viewModel.ownerID.value = args.ownerID ?: viewModel.userViewModel.userID
             } else {
-                viewModel.ownerID.value = viewModel.userID
+                viewModel.ownerID.value = viewModel.userViewModel.userID
             }
             if (taskTypeValue?.isNotBlank() == true) {
                 val taskType = TaskType.from(taskTypeValue)

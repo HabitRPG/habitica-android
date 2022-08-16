@@ -11,22 +11,21 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import javax.inject.Named
 
 class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     @Inject
     lateinit var taskRepository: TaskRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
     var taskType: TaskType? = null
 
     override var binding: FragmentRecyclerviewBinding? = null
@@ -65,7 +64,8 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         )
         binding?.recyclerView?.adapter = adapter
 
-        var tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT)
+        val additionalGroupIDs = userViewModel.mirrorGroupTasks.toTypedArray()
+        var tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT, userViewModel.userID, additionalGroupIDs)
             .map { it.filter { it.challengeID == null && it.group == null } }
         if (taskType == TaskType.TODO) {
             tasks = tasks.map { it.filter { !it.completed } }

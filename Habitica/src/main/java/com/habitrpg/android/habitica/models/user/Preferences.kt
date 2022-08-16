@@ -40,4 +40,5 @@ open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
     var pushNotifications: PushNotificationsPreference? = null
     var emailNotifications: EmailNotificationsPreference? = null
     var autoEquip: Boolean = true
+    var tasks: UserTaskPreferences? = null
 }

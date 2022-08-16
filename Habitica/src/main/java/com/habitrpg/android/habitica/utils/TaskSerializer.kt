@@ -5,6 +5,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import com.google.gson.JsonSerializer
 import com.habitrpg.android.habitica.extensions.getAsString
@@ -19,6 +20,13 @@ import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date
+
+private val JsonPrimitive.asBooleanOrFalse: Boolean
+    get() = if (isBoolean) {
+        asBoolean
+    } else {
+        false
+    }
 
 class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
 
@@ -116,11 +124,11 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         if (obj.has("group")) {
             val groupObject = obj.getAsJsonObject("group")
             val group: TaskGroupPlan = context.deserialize(groupObject, TaskGroupPlan::class.java)
-            if (group.groupID?.isNotBlank() == true) {
+            if (group.groupID?.isNotBlank() == true && groupObject.has("approval")) {
                 val approvalObject = groupObject.getAsJsonObject("approval")
-                if (approvalObject.has("requested")) group.approvalRequested = approvalObject.getAsJsonPrimitive("requested").asBoolean
-                if (approvalObject.has("approved")) group.approvalApproved = approvalObject.getAsJsonPrimitive("approved").asBoolean
-                if (approvalObject.has("required")) group.approvalRequired = approvalObject.getAsJsonPrimitive("required").asBoolean
+                if (approvalObject.has("requested")) group.approvalRequested = approvalObject.getAsJsonPrimitive("requested").asBooleanOrFalse
+                if (approvalObject.has("approved")) group.approvalApproved = approvalObject.getAsJsonPrimitive("approved").asBooleanOrFalse
+                if (approvalObject.has("required")) group.approvalRequired = approvalObject.getAsJsonPrimitive("required").asBooleanOrFalse
                 task.group = group
             }
         }

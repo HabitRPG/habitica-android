@@ -65,7 +65,7 @@ class ArmoireActivity : BaseActivity() {
 
         userViewModel.user.observeOnce(this) { user ->
             gold = user?.stats?.gp
-            val remaining = inventoryRepository.getArmoireRemainingCount() - 1
+            val remaining = inventoryRepository.getArmoireRemainingCount()
             binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
             binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
         }

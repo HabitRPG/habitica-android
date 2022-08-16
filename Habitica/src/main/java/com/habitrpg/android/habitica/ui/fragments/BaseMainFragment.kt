@@ -17,11 +17,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import javax.inject.Inject
 
 abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
@@ -96,7 +96,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     open fun updateToolbarInteractivity() {
         activity?.binding?.toolbarTitle?.background?.alpha = if (isTitleInteractive) 255 else 0
         if (isTitleInteractive) {
-            activity?.binding?.toolbarTitle?.setScaledPadding(context, 16, 1, 16, 1)
+            activity?.binding?.toolbarTitle?.setScaledPadding(context, 16, 4, 16, 4)
         } else {
             activity?.binding?.toolbarTitle?.setPadding(0)
         }

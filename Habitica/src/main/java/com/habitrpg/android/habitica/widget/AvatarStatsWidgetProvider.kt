@@ -5,28 +5,31 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.common.habitica.helpers.HealthFormatter
-import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.helpers.HealthFormatter
+import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import com.habitrpg.common.habitica.views.AvatarView
 
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
+    private lateinit var avatarView: AvatarView
     private var user: User? = null
     private var appWidgetManager: AppWidgetManager? = null
 
     private var showManaBar: Boolean = true
     private var showAvatar: Boolean = true
+
 
     override fun layoutResourceId(): Int {
         return R.layout.widget_avatar_stats
@@ -41,6 +44,10 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
+        avatarView = AvatarView(context, showBackground = true, showMount = true, showPet = true)
+        val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
+        avatarView.layoutParams = layoutParams
+
         this.setUp()
         userRepository.getUserFlowable().subscribe({
             user = it
@@ -54,6 +61,11 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
+        if (!this::avatarView.isInitialized) {
+            avatarView = AvatarView(context, showBackground = true, showMount = true, showPet = true)
+            val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
+            avatarView.layoutParams = layoutParams
+        }
         this.setUp()
         this.appWidgetManager = appWidgetManager
         this.context = context
@@ -74,7 +86,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         columns: Int,
         rows: Int
     ): RemoteViews {
-        showAvatar = columns > 3
+        showAvatar = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) columns > 4 else columns > 3
         if (showAvatar) {
             remoteViews.setViewVisibility(R.id.avatar_view, View.VISIBLE)
         } else {
@@ -141,10 +153,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             remoteViews.setTextViewText(R.id.lvl_tv, context.getString(R.string.user_level, user.stats?.lvl ?: 0))
 
             if (showAvatar) {
-                val avatarView =
-                    AvatarView(context, showBackground = true, showMount = true, showPet = true)
-                val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
-                avatarView.layoutParams = layoutParams
                 avatarView.setAvatar(user)
                 val finalRemoteViews = remoteViews
                 avatarView.onAvatarImageReady { bitmap ->

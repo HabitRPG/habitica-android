@@ -2,12 +2,12 @@ package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.common.habitica.models.tasks.TasksOrder
-import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 interface TaskRepository : BaseRepository {
-    fun getTasks(taskType: TaskType, userID: String? = null): Flow<List<Task>>
-    fun getTasksFlowable(taskType: TaskType, userID: String? = null): Flowable<out List<Task>>
+    fun getTasks(taskType: TaskType, userID: String? = null, includedGroupIDs: Array<String>): Flow<List<Task>>
+    fun getTasksFlowable(taskType: TaskType, userID: String? = null, includedGroupIDs: Array<String>): Flowable<out List<Task>>
     fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
 
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList>

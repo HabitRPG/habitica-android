@@ -7,16 +7,22 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AppModule
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import javax.inject.Inject
+import javax.inject.Named
 
 class MainUserViewModel(val userRepository: UserRepository) {
+
+    @field:[Inject Named(AppModule.NAMED_USER_ID)]
+    lateinit var injectedUserID: String
 
     val formattedUsername: CharSequence?
         get() = user.value?.formattedUsername
     val partyInvitations: List<PartyInvite>
         get() = user.value?.invitations?.parties ?: emptyList()
-    val userID: String?
-        get() = user.value?.id
+    val userID: String
+        get() = user.value?.id ?: injectedUserID
     val username: CharSequence
         get() = user.value?.username ?: ""
     val displayName: CharSequence
@@ -27,6 +33,8 @@ class MainUserViewModel(val userRepository: UserRepository) {
         get() = (user.value?.stats?.hp ?: 1.0) == 0.0
     val isUserInParty: Boolean
         get() = user.value?.hasParty == true
+    val mirrorGroupTasks: List<String>
+    get() = user.value?.preferences?.tasks?.mirrorGroupTasks ?: emptyList()
 
     val user: LiveData<User?>
 
