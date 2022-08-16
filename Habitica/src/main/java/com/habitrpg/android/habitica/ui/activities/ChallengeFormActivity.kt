@@ -24,13 +24,11 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityCreateChallengeBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragmentDirections
@@ -39,6 +37,8 @@ import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -70,10 +70,10 @@ class ChallengeFormActivity : BaseActivity() {
 
     override var overrideModernHeader: Boolean? = true
     // Add {*} Items
-    private var addHabit: Task? = null
-    private var addDaily: Task? = null
-    private var addTodo: Task? = null
-    private var addReward: Task? = null
+    private var addHabit = createTask(resources.getString(R.string.add_habit))
+    private var addDaily = createTask(resources.getString(R.string.add_daily))
+    private var addTodo = createTask(resources.getString(R.string.add_todo))
+    private var addReward = createTask(resources.getString(R.string.add_reward))
     private var user: User? = null
 
     private var savingInProgress = false
@@ -202,7 +202,7 @@ class ChallengeFormActivity : BaseActivity() {
         } else {
             binding.createChallengeTaskError.visibility = View.GONE
         }
-        if (errorMessages.count() > 0) {
+        if (errorMessages.isNotEmpty()) {
             val alert = HabiticaAlertDialog(this)
             alert.setMessage(errorMessages.joinToString("\n"))
             alert.addCloseButton(true)
@@ -323,8 +323,6 @@ class ChallengeFormActivity : BaseActivity() {
     }
 
     private fun fillControls() {
-        val resources = resources
-
         val supportActionBar = supportActionBar
         if (supportActionBar != null) {
             supportActionBar.setDisplayShowHomeEnabled(true)
@@ -381,26 +379,21 @@ class ChallengeFormActivity : BaseActivity() {
             false
         }
 
-        addHabit = createTask(resources.getString(R.string.add_habit))
-        addDaily = createTask(resources.getString(R.string.add_daily))
-        addTodo = createTask(resources.getString(R.string.add_todo))
-        addReward = createTask(resources.getString(R.string.add_reward))
-
         val taskList = ArrayList<Task>()
-        addHabit?.let { taskList.add(it) }
-        addDaily?.let { taskList.add(it) }
-        addTodo?.let { taskList.add(it) }
-        addReward?.let { taskList.add(it) }
+        taskList.add(addHabit)
+        taskList.add(addDaily)
+        taskList.add(addTodo)
+        taskList.add(addReward)
 
         challengeTasks.setTasks(taskList)
         compositeSubscription.add(
             challengeTasks.addItemObservable().subscribe(
                 { t ->
-                    when (t) {
-                        addHabit -> openNewTaskActivity(TaskType.HABIT, null)
-                        addDaily -> openNewTaskActivity(TaskType.DAILY, null)
-                        addTodo -> openNewTaskActivity(TaskType.TODO, null)
-                        addReward -> openNewTaskActivity(TaskType.REWARD, null)
+                    when (t.text) {
+                        addHabit.text -> openNewTaskActivity(TaskType.HABIT, null)
+                        addDaily.text -> openNewTaskActivity(TaskType.DAILY, null)
+                        addTodo.text -> openNewTaskActivity(TaskType.TODO, null)
+                        addReward.text -> openNewTaskActivity(TaskType.REWARD, null)
                     }
                 },
                 RxErrorHandler.handleEmptyError()
@@ -512,7 +505,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private fun addOrUpdateTaskInList(task: Task, isExistingTask: Boolean = false) {
         if (!challengeTasks.replaceTask(task)) {
-            val taskAbove: Task? = when (task.type) {
+            val taskAbove = when (task.type) {
                 TaskType.HABIT -> addHabit
                 TaskType.DAILY -> addDaily
                 TaskType.TODO -> addTodo
