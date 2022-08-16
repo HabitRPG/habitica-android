@@ -98,7 +98,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     lateinit var binding: ActivityMainBinding
 
     val snackbarContainer: ViewGroup
-        get() = binding.snackbarContainer
+        get() = binding.content.snackbarContainer
 
     private var avatarInHeader: AvatarWithBarsViewModel? = null
     val notificationsViewModel: NotificationsViewModel by viewModels()
@@ -111,7 +111,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var lastNotificationOpen: Long? = null
 
     val isAppBarExpanded: Boolean
-        get() = binding.appbar.height - binding.appbar.bottom == 0
+        get() = binding.content.appbar.height - binding.content.appbar.bottom == 0
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_main
@@ -145,9 +145,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             Wearable.getCapabilityClient(this).addLocalCapability("provide_auth")
         }
 
-        setupToolbar(binding.toolbar)
+        setupToolbar(binding.content.toolbar)
 
-        avatarInHeader = AvatarWithBarsViewModel(this, binding.avatarWithBars, viewModel.userViewModel)
+        avatarInHeader = AvatarWithBarsViewModel(this, binding.content.avatarWithBars, viewModel.userViewModel)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         viewModel.user.observe(this) {
@@ -215,11 +215,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     }
 
     override fun setTitle(title: CharSequence?) {
-        binding.toolbarTitle.text = title
+        binding.content.toolbarTitle.text = title
     }
 
     override fun setTitle(titleId: Int) {
-        binding.toolbarTitle.text = getString(titleId)
+        binding.content.toolbarTitle.text = getString(titleId)
     }
 
     private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
@@ -249,9 +249,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     }
 
     private fun setupBottomnavigationLayoutListener() {
-        binding.bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
-            if (binding.bottomNavigation.visibility == View.VISIBLE) {
-                snackbarContainer.setPadding(0, 0, 0, binding.bottomNavigation.barHeight + 12.dpToPx(this))
+        binding.content.bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
+            if (binding.content.bottomNavigation.visibility == View.VISIBLE) {
+                snackbarContainer.setPadding(0, 0, 0, binding.content.bottomNavigation.barHeight + 12.dpToPx(this))
             } else {
                 snackbarContainer.setPadding(0, 0, 0, 0)
             }
@@ -272,7 +272,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (drawerToggle?.onOptionsItemSelected(item) == true) {
+        return if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
+            true
+        } else if (item.itemId == android.R.id.home) {
+            drawerFragment?.toggleDrawer()
             true
         } else super.onOptionsItemSelected(item)
     }
@@ -326,7 +329,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         launchTrace?.stop()
         launchTrace = null
 
-        if (binding.toolbarTitle.text?.isNotBlank() != true) {
+        if (binding.content.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
         }
     }
@@ -401,7 +404,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 viewModel.updateUser("flags.welcomed", true)
             }
 
-            val title = binding.toolbarTitle.text
+            val title = binding.content.toolbarTitle.text
             if (title.isBlank()) {
                 viewModel.getToolbarTitle(0, null, null) { newTitle ->
                     this.title = newTitle
@@ -485,12 +488,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val view = TutorialView(this, step, viewModel)
         view.setTutorialTexts(texts)
         view.setCanBeDeferred(canBeDeferred)
-        binding.overlayFrameLayout.children.forEach {
+        binding.content.overlayFrameLayout.children.forEach {
             if (it is TutorialView) {
-                binding.overlayFrameLayout.removeView(it)
+                binding.content.overlayFrameLayout.removeView(it)
             }
         }
-        binding.overlayFrameLayout.addView(view)
+        binding.content.overlayFrameLayout.addView(view)
         viewModel.logTutorialStatus(step, false)
     }
 
@@ -544,11 +547,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 // a new error resets the timer to hide the error message
                 errorJob?.cancel()
             }
-            binding.connectionIssueView.visibility = View.VISIBLE
-            binding.connectionIssueTextview.text = message
+            binding.content.connectionIssueView.visibility = View.VISIBLE
+            binding.content.connectionIssueTextview.text = message
             errorJob = lifecycleScope.launch(Dispatchers.Main) {
                 delay(1.toDuration(DurationUnit.MINUTES))
-                binding.connectionIssueView.visibility = View.GONE
+                binding.content.connectionIssueView.visibility = View.GONE
             }
         }
     }
@@ -558,8 +561,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             errorJob?.cancel()
         }
         lifecycleScope.launch(Dispatchers.Main) {
-            if (binding.connectionIssueView.visibility == View.VISIBLE) {
-                binding.connectionIssueView.visibility = View.GONE
+            if (binding.content.connectionIssueView.visibility == View.VISIBLE) {
+                binding.content.connectionIssueView.visibility = View.GONE
             }
         }
     }

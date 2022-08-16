@@ -234,4 +234,6 @@
         <item>compact</item>
         <item>minimal</item>
     </string-array>
+    
+    <bool name="isTabletUI">false</bool>
 </resources>

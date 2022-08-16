@@ -119,7 +119,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         bottomNavigation?.listener = this
         bottomNavigation?.canAddTasks = viewModel.isPersonalBoard
 
-        activity?.binding?.toolbarTitle?.setOnClickListener {
+        activity?.binding?.content?.toolbarTitle?.setOnClickListener {
             viewModel.cycleOwnerIDs()
         }
     }
@@ -199,7 +199,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             dialog.viewModel = viewModel
 
             // There are some cases where these things might not be correctly set after the app resumes. This is just to catch that as best as possible
-            val navigation = bottomNavigation ?: activity?.binding?.bottomNavigation
+            val navigation = bottomNavigation ?: activity?.binding?.content?.bottomNavigation
             val taskType = navigation?.activeTaskType ?: activeFragment?.taskType
 
             dialog.setOnDismissListener { updateFilterIcon() }

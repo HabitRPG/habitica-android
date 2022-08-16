@@ -36,10 +36,10 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     protected var showsBackButton: Boolean = false
 
     open val activity get() = getActivity() as? MainActivity
-    val tabLayout get() = activity?.binding?.detailTabs
-    val collapsingToolbar get() = activity?.binding?.toolbar
-    val toolbarAccessoryContainer get() = activity?.binding?.toolbarAccessoryContainer
-    val bottomNavigation get() = activity?.binding?.bottomNavigation
+    val tabLayout get() = activity?.binding?.content?.detailTabs
+    val collapsingToolbar get() = activity?.binding?.content?.toolbar
+    val toolbarAccessoryContainer get() = activity?.binding?.content?.toolbarAccessoryContainer
+    val bottomNavigation get() = activity?.binding?.content?.bottomNavigation
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
@@ -94,11 +94,11 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     var isTitleInteractive = false
 
     open fun updateToolbarInteractivity() {
-        activity?.binding?.toolbarTitle?.background?.alpha = if (isTitleInteractive) 255 else 0
+        activity?.binding?.content?.toolbarTitle?.background?.alpha = if (isTitleInteractive) 255 else 0
         if (isTitleInteractive) {
-            activity?.binding?.toolbarTitle?.setScaledPadding(context, 16, 4, 16, 4)
+            activity?.binding?.content?.toolbarTitle?.setScaledPadding(context, 16, 4, 16, 4)
         } else {
-            activity?.binding?.toolbarTitle?.setPadding(0)
+            activity?.binding?.content?.toolbarTitle?.setPadding(0)
         }
     }
 
@@ -118,11 +118,11 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     }
 
     private fun hideToolbar() {
-        activity?.binding?.avatarWithBars?.root?.visibility = View.GONE
+        activity?.binding?.content?.avatarWithBars?.root?.visibility = View.GONE
     }
 
     private fun showToolbar() {
-        activity?.binding?.avatarWithBars?.root?.visibility = View.VISIBLE
+        activity?.binding?.content?.avatarWithBars?.root?.visibility = View.VISIBLE
     }
 
     private fun disableToolbarScrolling() {

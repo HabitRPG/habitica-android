@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -27,8 +29,6 @@ import com.habitrpg.android.habitica.databinding.DrawerMainBinding
 import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -46,6 +46,7 @@ import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Dispatchers
@@ -83,7 +84,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private var activePromo: HabiticaPromotion? = null
 
-    private var drawerLayout: androidx.drawerlayout.widget.DrawerLayout? = null
+    private var drawerLayout: DrawerLayout? = null
     private var fragmentContainerView: View? = null
 
     private var mCurrentSelectedPosition = 0
@@ -95,6 +96,8 @@ class NavigationDrawerFragment : DialogFragment() {
 
     val isDrawerOpen: Boolean
         get() = drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
+
+    private var isTabletUI: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val context = context
@@ -111,6 +114,7 @@ class NavigationDrawerFragment : DialogFragment() {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION)
             mFromSavedInstanceState = true
         }
+        isTabletUI = resources.getBoolean(R.bool.isTabletUI)
         setHasOptionsMenu(true)
     }
 
@@ -265,7 +269,9 @@ class NavigationDrawerFragment : DialogFragment() {
             if (!user.hasClass && !hasSpecialItems) {
                 item.isVisible = false
             } else {
-                if (user.stats?.lvl ?: 0 < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)) {
+                if ((user.stats?.lvl
+                        ?: 0) < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)
+                ) {
                     item.pillText = getString(R.string.unlock_lvl_11)
                 } else {
                     item.pillText = null
@@ -277,7 +283,7 @@ class NavigationDrawerFragment : DialogFragment() {
         val statsItem = getItemWithIdentifier(SIDEBAR_STATS)
         if (statsItem != null) {
             if (user.preferences?.disableClasses != true) {
-                if (user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0) {
+                if ((user.stats?.lvl ?: 0) >= 10 && (user.stats?.points ?: 0) > 0) {
                     statsItem.pillText = user.stats?.points.toString()
                 } else {
                     statsItem.pillText = null
@@ -399,7 +405,9 @@ class NavigationDrawerFragment : DialogFragment() {
         openSelection: Boolean = true,
         preventReselection: Boolean = true
     ) {
-        closeDrawer()
+        if (!isTabletUI) {
+            closeDrawer()
+        }
         if (adapter.selectedItem != null && adapter.selectedItem == transitionId && bundle == null && preventReselection) return
         adapter.selectedItem = transitionId
 
@@ -417,7 +425,9 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     private fun startNotificationsActivity() {
-        closeDrawer()
+        if (!isTabletUI) {
+            closeDrawer()
+        }
 
         val activity = activity as? MainActivity
         if (activity != null) {
@@ -445,7 +455,7 @@ class NavigationDrawerFragment : DialogFragment() {
      */
     fun setUp(
         fragmentId: Int,
-        drawerLayout: androidx.drawerlayout.widget.DrawerLayout,
+        drawerLayout: DrawerLayout,
         viewModel: NotificationsViewModel
     ) {
         fragmentContainerView = activity?.findViewById(fragmentId)
@@ -475,15 +485,32 @@ class NavigationDrawerFragment : DialogFragment() {
 
     fun openDrawer() {
         val containerView = fragmentContainerView
-        if (containerView != null) {
+        if (containerView != null && containerView.parent is DrawerLayout) {
             drawerLayout?.openDrawer(containerView)
+        } else {
+            containerView?.isVisible = true
         }
     }
 
     fun closeDrawer() {
         val containerView = fragmentContainerView
-        if (containerView != null) {
+        if (containerView != null && containerView.parent is DrawerLayout) {
             drawerLayout?.closeDrawer(containerView)
+        } else {
+            containerView?.isVisible = false
+        }
+    }
+
+    fun toggleDrawer() {
+        val containerView = fragmentContainerView
+        if (containerView != null && containerView.parent is DrawerLayout) {
+            if (drawerLayout?.isDrawerOpen(containerView) == true) {
+                drawerLayout?.closeDrawer(containerView)
+            } else {
+                drawerLayout?.openDrawer(containerView)
+            }
+        } else {
+            containerView?.isVisible = containerView?.isVisible != true
         }
     }
 

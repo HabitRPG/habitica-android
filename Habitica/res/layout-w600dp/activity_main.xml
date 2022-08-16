@@ -1,0 +1,28 @@
+<!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.habitrpg.android.habitica.ui.activities.MainActivity"
+    android:background="@color/content_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/navigation_drawer"
+            class="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment"
+            android:layout_width="@dimen/drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            tools:layout="@layout/drawer_main"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/window_background"/>
+        <include layout="@layout/activity_main_content" android:id="@+id/content" />
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
