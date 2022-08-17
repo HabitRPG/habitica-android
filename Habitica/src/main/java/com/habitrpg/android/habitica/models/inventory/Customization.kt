@@ -79,9 +79,13 @@ open class Customization : RealmObject(), BaseObject {
 
     val path: String
         get() {
-            var path = if (type == "background") "backgrounds" else type
+            var path = if (type == "background") "backgrounds.backgrounds" else type
             if (this.customizationSet != null) {
-                path = path + "." + this.customizationSet
+                path = if (type == "background") {
+                    path + this.customizationSet?.substring(5, 7) + this.customizationSet?.substring(0, 4)
+                } else {
+                    path + "." + this.customizationSet
+                }
             } else if (this.category != null) {
                 path = path + "." + this.category
             }
