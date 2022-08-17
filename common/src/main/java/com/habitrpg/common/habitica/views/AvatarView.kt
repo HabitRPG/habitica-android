@@ -159,15 +159,17 @@ class AvatarView : FrameLayout {
                 )
             ) {
                 allowHardware(false)
-                target(object : coil.target.ImageViewTarget(imageView) {
+                target(object : coil.target.Target {
                     override fun onError(error: Drawable?) {
                         super.onError(error)
+                        imageView.setImageDrawable(error)
                         onLayerComplete()
                     }
 
                     override fun onSuccess(result: Drawable) {
                         result.isFilterBitmap = false
                         super.onSuccess(result)
+                        imageView.setImageDrawable(result)
                         val bounds = getLayerBounds(layerKey, layerName, result)
                         imageView.imageMatrix = avatarMatrix
                         val layoutParams = imageView.layoutParams as? LayoutParams
