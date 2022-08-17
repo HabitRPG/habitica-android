@@ -354,7 +354,7 @@
     <style name="Toolbar.Modern" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
         <item name="android:textColorPrimary">?attr/headerTextColor</item>
         <item name="textColorSecondary">?attr/headerTextColor</item>
-        <item name="background">?attr/headerBackgroundColor</item>
+        <item name="android:background">?attr/headerBackgroundColor</item>
         <item name="actionMenuTextColor">?attr/toolbarContentColor</item>
         <item name="android:actionMenuTextColor">?attr/toolbarContentColor</item>
         <item name="android:itemTextAppearance">@style/menu_item_color</item>
@@ -720,7 +720,7 @@
     </style>
 
     <style name="HabiticaButton.Yellow" parent="HabiticaButton">
-        <item name="android:backgroundTint">@color/yellow_100</item>
+        <item name="android:backgroundTint">@color/yellow_5</item>
     </style>
 
     <style name="HabiticaButton.White" parent="HabiticaButton">

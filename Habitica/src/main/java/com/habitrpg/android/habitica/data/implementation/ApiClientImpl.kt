@@ -225,7 +225,7 @@ class ApiClientImpl(
             this.showConnectionProblemDialog(R.string.internal_error_api)
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body)
-        } else if (throwableClass == retrofit2.adapter.rxjava3.HttpException::class.java) {
+        } else if (retrofit2.adapter.rxjava3.HttpException::class.java.isAssignableFrom(throwable.javaClass) || HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
             val error = throwable as HttpException
             val res = getErrorResponse(error)
             val status = error.code()

@@ -70,10 +70,10 @@ class ChallengeFormActivity : BaseActivity() {
 
     override var overrideModernHeader: Boolean? = true
     // Add {*} Items
-    private var addHabit = createTask(resources.getString(R.string.add_habit))
-    private var addDaily = createTask(resources.getString(R.string.add_daily))
-    private var addTodo = createTask(resources.getString(R.string.add_todo))
-    private var addReward = createTask(resources.getString(R.string.add_reward))
+    private lateinit var addHabit: Task
+    private lateinit var addDaily: Task
+    private lateinit var addTodo: Task
+    private lateinit var addReward: Task
     private var user: User? = null
 
     private var savingInProgress = false
@@ -212,6 +212,11 @@ class ChallengeFormActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        addHabit = createTask(resources.getString(R.string.add_habit))
+        addDaily = createTask(resources.getString(R.string.add_daily))
+        addTodo = createTask(resources.getString(R.string.add_todo))
+        addReward = createTask(resources.getString(R.string.add_reward))
+
         super.onCreate(savedInstanceState)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
