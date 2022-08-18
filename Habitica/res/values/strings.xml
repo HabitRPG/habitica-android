@@ -1237,4 +1237,19 @@
     <string name="gems_support">Purchasing Gems supports our small team at Habitica</string>
     <string name="month_released">Month Released</string>
     <string name="incorrect_password">The password was incorrect</string>
+
+    <string name="habitica_official">Habitica Official</string>
+    <string name="academics">Academics</string>
+    <string name="advocacy_causes">Advocacy + Causes</string>
+    <string name="creativity">Creativity</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="finance">Finance</string>
+    <string name="health_fitness">Health + Fitness</string>
+    <string name="hobbies_occupations">Hobbies + Occupations</string>
+    <string name="location_based">Location-based</string>
+    <string name="mental_health">Mental Health + Self Care</string>
+    <string name="getting_organized">Getting Organized</string>
+    <string name="self_improvement">Self Improvement</string>
+    <string name="spirituality">Spirituality</string>
+    <string name="time_management">Time Management + Accountability</string>
 </resources>

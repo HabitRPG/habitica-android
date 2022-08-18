@@ -366,7 +366,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
-        } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background" || shopItem.purchaseType == "customizationSet") {
+        } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds" || shopItem.purchaseType == "customizationSet") {
             observable = userRepository.unlockPath(item.unlockPath ?: "", item.value).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)

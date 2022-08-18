@@ -18,7 +18,7 @@ open class TaskGroupPlan : RealmObject(), BaseObject {
     var assigningUsername: String? = null
     var assignedUsers: RealmList<String> = RealmList()
 
-    var approvalRequested: Boolean = false
-    var approvalApproved: Boolean = false
-    var approvalRequired: Boolean = false
+    var approvalRequested: Boolean? = false
+    var approvalApproved: Boolean? = false
+    var approvalRequired: Boolean? = false
 }

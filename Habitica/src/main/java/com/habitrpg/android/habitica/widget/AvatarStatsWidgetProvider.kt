@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RemoteViews
@@ -95,8 +94,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         columns: Int,
         rows: Int
     ): RemoteViews {
-        showAvatar[widgetId] =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) columns > 4 else columns > 3
+        showAvatar[widgetId] = columns > 3
         if (showAvatar[widgetId] == true) {
             remoteViews.setViewVisibility(R.id.avatar_view, View.VISIBLE)
         } else {

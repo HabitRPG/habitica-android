@@ -16,7 +16,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -219,8 +218,7 @@ class ChallengeFormActivity : BaseActivity() {
 
         super.onCreate(savedInstanceState)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setupToolbar(findViewById(R.id.toolbar))
 
         val intent = intent
         val bundle = intent.extras

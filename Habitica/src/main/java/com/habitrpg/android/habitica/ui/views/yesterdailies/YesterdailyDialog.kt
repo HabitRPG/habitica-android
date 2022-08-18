@@ -36,6 +36,7 @@ class YesterdailyDialog private constructor(
 ) : HabiticaAlertDialog(context) {
 
     private lateinit var yesterdailiesList: LinearLayout
+
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         val view = inflater?.inflate(R.layout.dialog_yesterdaily, null)
@@ -94,21 +95,29 @@ class YesterdailyDialog private constructor(
                 task.completed = !task.completed
                 configureTaskView(taskView, task)
 
-                if (task.checklist?.size ?: 0 > 0) {
+                if ((task.checklist?.size ?: 0) > 0) {
                     val checklistContainer = taskView.findViewById<ViewGroup>(R.id.checklistView)
                     checklistContainer.removeAllViews()
                     for (item in task.checklist ?: emptyList<ChecklistItem>()) {
-                        val checklistView = inflater.inflate(R.layout.checklist_item_row, checklistContainer, false) as ViewGroup
+                        val checklistView = inflater.inflate(
+                            R.layout.checklist_item_row,
+                            checklistContainer,
+                            false
+                        ) as ViewGroup
                         configureChecklistView(checklistView, task, item)
                         checklistContainer.addView(checklistView)
                     }
                 }
             }
 
-            if (task.checklist?.size ?: 0 > 0) {
+            if ((task.checklist?.size ?: 0) > 0) {
                 val checklistContainer = taskView.findViewById<ViewGroup>(R.id.checklistView)
                 for (item in task.checklist ?: emptyList<ChecklistItem>()) {
-                    val checklistView = inflater.inflate(R.layout.checklist_item_row, checklistContainer, false) as ViewGroup
+                    val checklistView = inflater.inflate(
+                        R.layout.checklist_item_row,
+                        checklistContainer,
+                        false
+                    ) as ViewGroup
                     configureChecklistView(checklistView, task, item)
                     checklistContainer.addView(checklistView)
                 }
@@ -128,12 +137,14 @@ class YesterdailyDialog private constructor(
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
         checkboxHolder?.setOnClickListener { _ ->
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, RxErrorHandler.handleEmptyError())
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
+                .subscribe({ }, RxErrorHandler.handleEmptyError())
             configureChecklistView(checklistView, task, item)
         }
         checkboxHolder?.setBackgroundResource(
@@ -225,8 +236,12 @@ class YesterdailyDialog private constructor(
                         return@filter true
                     }
                     .firstElement()
+                    .map {
+                        it.filter { !it.isGroupTask }
+                    }
                     .zipWith(
-                        taskRepository.getTasksFlowable(TaskType.DAILY, null, emptyArray()).firstElement()
+                        taskRepository.getTasksFlowable(TaskType.DAILY, null, emptyArray())
+                            .firstElement()
                             .map {
                                 val taskMap = mutableMapOf<String, Int>()
                                 it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
@@ -239,10 +254,22 @@ class YesterdailyDialog private constructor(
                         { tasks ->
                             val additionalData = HashMap<String, Any>()
                             additionalData["task count"] = tasks.size
-                            AmplitudeManager.sendEvent("show cron", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+                            AmplitudeManager.sendEvent(
+                                "show cron",
+                                AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
+                                AmplitudeManager.EVENT_HITTYPE_EVENT,
+                                additionalData
+                            )
 
                             if (tasks.isNotEmpty()) {
-                                displayedDialog = WeakReference(showDialog(activity, userRepository, taskRepository, tasks))
+                                displayedDialog = WeakReference(
+                                    showDialog(
+                                        activity,
+                                        userRepository,
+                                        taskRepository,
+                                        tasks
+                                    )
+                                )
                             } else {
                                 lastCronRun = Date()
                                 userRepository.runCron()

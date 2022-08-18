@@ -129,8 +129,8 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                 if (approvalObject.has("requested")) group.approvalRequested = approvalObject.getAsJsonPrimitive("requested").asBooleanOrFalse
                 if (approvalObject.has("approved")) group.approvalApproved = approvalObject.getAsJsonPrimitive("approved").asBooleanOrFalse
                 if (approvalObject.has("required")) group.approvalRequired = approvalObject.getAsJsonPrimitive("required").asBooleanOrFalse
-                task.group = group
             }
+            task.group = group
         }
         // Work around since Realm does not support Arrays of ints
         getMonthlyDays(json, task)
