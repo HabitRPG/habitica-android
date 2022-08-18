@@ -315,7 +315,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val cdsTimePreference = findPreference("cds_time") as? ListPreference
         cdsTimePreference?.value = user?.preferences?.dayStart.toString()
         cdsTimePreference?.summary = cdsTimePreference?.entry
-        findPreference<Preference>("dailyDueDefaultView")?.setDefaultValue(user?.preferences?.dailyDueDefaultView)
+        val dailyDueDefault = findPreference<Preference>("dailyDueDefaultView") as? CheckBoxPreference
+        dailyDueDefault?.isChecked = user?.preferences?.dailyDueDefaultView == true
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language
         languagePreference?.summary = languagePreference?.entry
