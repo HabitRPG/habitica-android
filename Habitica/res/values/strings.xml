@@ -1192,7 +1192,7 @@
     <string name="armoire_rate_equipment_description">New Equipment pieces are added every month. If you own all pieces of equipment, then you\'ll get Food or Experience, 50/50 odds.</string>
     <string name="armoire_rate_equipment_title">60% Piece of Equipment</string>
     <string name="armoire_rate_food_title">20% Piece of Food</string>
-    <string name="armoire_rate_food_description">During special events, normal food items will change to their cake or candy counterparts.</string>
+    <string name="armoire_rate_food_description">You’ll receive one of the ten types of Food. During special events, normal foods will change to their cake or candy counterparts.</string>
     <string name="armoire_rate_experience_title">20% Experience points</string>
     <string name="armoire_rate_experience_description">The amount gained varies randomly from 10 to 50</string>
     <string name="day_start_adjustment">Day Start Adjustment</string>
