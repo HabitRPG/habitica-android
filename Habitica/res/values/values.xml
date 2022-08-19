@@ -250,8 +250,8 @@
         <item>mental_health</item>
         <item>getting_organized</item>
         <item>self_improvement</item>
-        <item>spirituality'</item>
-        <item>time_management'</item>
+        <item>spirituality</item>
+        <item>time_management</item>
     </string-array>
 
     <string-array name="challenge_category_labels">

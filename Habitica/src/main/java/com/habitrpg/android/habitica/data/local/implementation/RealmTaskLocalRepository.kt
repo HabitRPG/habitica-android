@@ -125,9 +125,14 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     private fun removeOldTasks(userID: String, onlineTaskList: List<Task>) {
+        val groupIDs = onlineTaskList.map { it.group?.groupID }.distinct().toTypedArray()
         if (realm.isClosed) return
         val localTasks = realm.where(Task::class.java)
+            .beginGroup()
             .equalTo("userId", userID)
+            .or()
+            .`in`("group.groupID", groupIDs)
+            .endGroup()
             .beginGroup()
             .beginGroup()
             .equalTo("typeValue", TaskType.TODO.value)
