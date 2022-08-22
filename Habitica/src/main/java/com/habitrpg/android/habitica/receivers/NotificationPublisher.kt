@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.functions.BiFunction
 import java.util.Calendar
 import java.util.Date

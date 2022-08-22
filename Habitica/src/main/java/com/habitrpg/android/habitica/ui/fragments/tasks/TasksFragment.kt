@@ -34,7 +34,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.util.Date
 import java.util.WeakHashMap
 

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.api;
 
-import com.habitrpg.common.habitica.models.responses.MaintenanceResponse;
+import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse;
 
 import io.reactivex.rxjava3.core.Flowable;
 import retrofit2.http.GET;

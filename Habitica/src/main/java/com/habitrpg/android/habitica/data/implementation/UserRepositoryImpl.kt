@@ -22,9 +22,9 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.common.habitica.extensions.Optional
-import com.habitrpg.common.habitica.models.responses.TaskDirection
-import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
-import com.habitrpg.common.habitica.models.tasks.Attribute
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.shared.habitica.models.tasks.Attribute
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction

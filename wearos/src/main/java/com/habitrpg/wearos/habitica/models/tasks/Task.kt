@@ -4,10 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.models.tasks.Attribute
-import com.habitrpg.common.habitica.models.tasks.BaseTask
-import com.habitrpg.common.habitica.models.tasks.Frequency
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.Attribute
+import com.habitrpg.shared.habitica.models.tasks.BaseTask
+import com.habitrpg.shared.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.json.JSONArray

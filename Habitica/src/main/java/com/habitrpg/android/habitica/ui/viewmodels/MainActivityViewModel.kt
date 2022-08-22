@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
+import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid

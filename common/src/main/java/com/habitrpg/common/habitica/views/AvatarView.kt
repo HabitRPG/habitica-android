@@ -22,7 +22,7 @@ import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.Avatar
 import java.util.Date
 import java.util.EnumMap
 import java.util.concurrent.atomic.AtomicInteger

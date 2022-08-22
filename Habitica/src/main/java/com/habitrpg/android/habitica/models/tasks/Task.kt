@@ -9,10 +9,10 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.common.habitica.helpers.MarkdownParser
-import com.habitrpg.common.habitica.models.tasks.Attribute
-import com.habitrpg.common.habitica.models.tasks.BaseTask
-import com.habitrpg.common.habitica.models.tasks.Frequency
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.Attribute
+import com.habitrpg.shared.habitica.models.tasks.BaseTask
+import com.habitrpg.shared.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Ignore

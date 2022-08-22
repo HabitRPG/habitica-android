@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.databinding.MainNavigationViewBinding
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 
 interface HabiticaBottomNavigationViewListener {
     fun onTabSelected(taskType: TaskType, smooth: Boolean)

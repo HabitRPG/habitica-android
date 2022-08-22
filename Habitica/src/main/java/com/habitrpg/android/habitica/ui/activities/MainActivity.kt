@@ -61,8 +61,8 @@ import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.models.responses.MaintenanceResponse
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

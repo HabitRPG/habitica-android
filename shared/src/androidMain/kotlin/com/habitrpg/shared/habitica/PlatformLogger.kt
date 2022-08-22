@@ -1,11 +1,10 @@
 package com.habitrpg.shared.habitica
 
 import android.util.Log
-import space.thelen.shared.cluetective.BuildConfig
 
 actual class PlatformLogger actual constructor() {
     actual val enabled: Boolean
-        get() = BuildConfig.DEBUG
+        get() = true
 
     actual fun logDebug(tag: String, message: String) {
         Log.d(tag, message)

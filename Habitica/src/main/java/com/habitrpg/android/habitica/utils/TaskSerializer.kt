@@ -14,9 +14,9 @@ import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
-import com.habitrpg.common.habitica.models.tasks.Attribute
-import com.habitrpg.common.habitica.models.tasks.Frequency
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.Attribute
+import com.habitrpg.shared.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.lang.reflect.Type
 import java.util.Date

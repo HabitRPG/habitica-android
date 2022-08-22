@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
-import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import java.text.DateFormat

@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.ui.viewmodels
 
-import com.habitrpg.common.habitica.models.tasks.Frequency
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.AppStateManager

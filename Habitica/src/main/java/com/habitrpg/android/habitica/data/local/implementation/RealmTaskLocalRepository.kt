@@ -6,8 +6,8 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.common.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe

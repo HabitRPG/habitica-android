@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.common.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.Avatar
 import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -33,8 +33,9 @@ open class Member : RealmObject(), Avatar, BaseMainObject {
     var party: UserParty? = null
     var contributor: ContributorInfo? = null
     var backer: Backer? = null
-    var authentication: Authentication? = null
-    var items: Items? = null
+    override var balance: Double = 0.0
+    override var authentication: Authentication? = null
+    override var items: Items? = null
     override var costume: Outfit? = null
     override var equipped: Outfit? = null
 
@@ -54,18 +55,6 @@ open class Member : RealmObject(), Avatar, BaseMainObject {
     val mountsTamedCount: Int
         get() = this.items?.mounts?.size ?: 0
 
-    val username: String?
-        get() = authentication?.localAuthentication?.username
-    val formattedUsername: String?
-        get() = if (username != null) "@$username" else null
-
-    override val hasClass: Boolean
-        get() {
-            return preferences?.disableClasses == false && stats?.habitClass?.isNotEmpty() == true
-        }
-
-    override val sleep: Boolean
-        get() = preferences?.sleep ?: false
     override val realmClass: Class<out RealmModel>
         get() = Member::class.java
     override val primaryIdentifier: String?

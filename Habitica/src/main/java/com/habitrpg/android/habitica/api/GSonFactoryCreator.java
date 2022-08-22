@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.android.habitica.models.members.Member;
-import com.habitrpg.common.habitica.models.responses.FeedResponse;
+import com.habitrpg.shared.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.FindUsernameResult;

@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.interactors
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.models.responses.TaskDirection
-import com.habitrpg.common.habitica.models.responses.TaskDirectionData
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToLong

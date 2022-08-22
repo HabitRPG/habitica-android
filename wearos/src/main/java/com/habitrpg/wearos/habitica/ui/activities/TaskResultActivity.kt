@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.databinding.TaskRewardDropBinding
 import com.habitrpg.android.habitica.extensions.localizedCapitalize
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskResultViewModel
 import com.habitrpg.wearos.habitica.ui.views.TaskRewardChip
 import dagger.hilt.android.AndroidEntryPoint

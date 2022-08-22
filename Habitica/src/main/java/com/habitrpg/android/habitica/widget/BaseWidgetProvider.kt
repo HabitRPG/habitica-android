@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import javax.inject.Inject
 
 abstract class BaseWidgetProvider : AppWidgetProvider() {

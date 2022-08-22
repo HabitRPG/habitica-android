@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import java.lang.ref.WeakReference

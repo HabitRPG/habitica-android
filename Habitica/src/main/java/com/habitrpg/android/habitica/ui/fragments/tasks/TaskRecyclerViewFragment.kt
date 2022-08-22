@@ -46,9 +46,9 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import com.habitrpg.common.habitica.models.responses.TaskDirection
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Job

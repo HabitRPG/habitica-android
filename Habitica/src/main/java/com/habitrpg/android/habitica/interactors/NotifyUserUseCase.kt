@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.extensions.filterMap
-import com.habitrpg.android.habitica.extensions.round
+import com.habitrpg.shared.habitica.extensions.round
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity

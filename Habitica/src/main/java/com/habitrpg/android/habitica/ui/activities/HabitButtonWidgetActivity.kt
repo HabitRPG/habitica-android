@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

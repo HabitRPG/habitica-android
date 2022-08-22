@@ -14,8 +14,9 @@ import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.nameRes
+import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 
 class TaskDifficultyButtons @JvmOverloads constructor(
     context: Context,

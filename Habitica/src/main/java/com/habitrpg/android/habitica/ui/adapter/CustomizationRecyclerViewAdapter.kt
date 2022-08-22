@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.Avatar
 import com.habitrpg.common.habitica.views.AvatarView
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable

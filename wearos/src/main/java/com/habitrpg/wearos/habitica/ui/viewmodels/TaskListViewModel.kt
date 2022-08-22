@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.habitrpg.common.habitica.models.responses.TaskDirection
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.AppStateManager

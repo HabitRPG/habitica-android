@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica
 
-actual class PlatformLogger actual constructor() {
+actual class PlatformLogger {
     actual val enabled: Boolean
         get() = true
 

@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.functions.Action

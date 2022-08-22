@@ -36,6 +36,16 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import com.habitrpg.common.habitica.models.PurchaseValidationResult
+import com.habitrpg.common.habitica.models.auth.UserAuthResponse
+import com.habitrpg.shared.habitica.models.responses.ErrorResponse
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
+import com.habitrpg.common.habitica.models.HabitResponse
+import com.habitrpg.shared.habitica.models.responses.Status
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.FlowableTransformer
 import retrofit2.HttpException

@@ -4,12 +4,12 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.models.BaseObject
-import com.habitrpg.common.habitica.models.responses.TaskDirectionData
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.common.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import io.kotest.common.ExperimentalKotest

@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.models.responses
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.user.Buffs
 import com.habitrpg.android.habitica.models.user.Training
-import com.habitrpg.common.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 
 class BulkTaskScoringData {
     @SerializedName("con")

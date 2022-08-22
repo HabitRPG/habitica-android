@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject

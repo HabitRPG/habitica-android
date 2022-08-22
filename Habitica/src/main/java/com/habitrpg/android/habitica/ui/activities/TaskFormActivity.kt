@@ -38,12 +38,10 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.models.tasks.Attribute
-import com.habitrpg.common.habitica.models.tasks.Frequency
-import com.habitrpg.common.habitica.models.tasks.HabitResetOption
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.Attribute
+import com.habitrpg.shared.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import java.util.Date
 import javax.inject.Inject

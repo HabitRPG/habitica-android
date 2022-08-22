@@ -2,7 +2,7 @@ package com.habitrpg.wearos.habitica.ui.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.managers.AppStateManager

@@ -10,9 +10,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSetupTasksBinding
 import com.habitrpg.android.habitica.models.tasks.Days
-import com.habitrpg.common.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
 import com.habitrpg.android.habitica.ui.adapter.setup.TaskSetupAdapter

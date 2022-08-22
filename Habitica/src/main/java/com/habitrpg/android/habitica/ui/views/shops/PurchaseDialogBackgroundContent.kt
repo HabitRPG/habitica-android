@@ -5,7 +5,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.PurchaseDialogBackgroundBinding
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.Avatar
 import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.EnumMap

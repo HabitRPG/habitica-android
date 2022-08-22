@@ -6,7 +6,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope

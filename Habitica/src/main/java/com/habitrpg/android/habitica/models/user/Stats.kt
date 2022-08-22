@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
-import com.habitrpg.common.habitica.models.AvatarStats
+import com.habitrpg.shared.habitica.models.AvatarStats
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 

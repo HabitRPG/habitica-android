@@ -31,11 +31,11 @@ import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
-import com.habitrpg.common.habitica.models.responses.FeedResponse
-import com.habitrpg.common.habitica.models.responses.HabitResponse
-import com.habitrpg.common.habitica.models.responses.Status
-import com.habitrpg.common.habitica.models.responses.TaskDirectionData
-import com.habitrpg.common.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
+import com.habitrpg.common.habitica.models.HabitResponse
+import com.habitrpg.shared.habitica.models.responses.Status
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.Body
 import retrofit2.http.DELETE

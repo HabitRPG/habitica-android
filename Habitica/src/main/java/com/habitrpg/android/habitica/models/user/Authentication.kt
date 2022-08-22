@@ -4,11 +4,12 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.user.auth.SocialAuthentication
+import com.habitrpg.shared.habitica.models.AvatarAuthentication
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
-open class Authentication : RealmObject(), BaseObject {
+open class Authentication : RealmObject(), BaseObject, AvatarAuthentication {
     fun findFirstSocialEmail(): String? {
         for (auth in listOf(googleAuthentication, appleAuthentication, facebookAuthentication)) {
             if (auth?.emails?.isNotEmpty() == true) {
@@ -21,7 +22,7 @@ open class Authentication : RealmObject(), BaseObject {
     val hasPassword: Boolean
         get() = localAuthentication?.hasPassword == true
     @SerializedName("local")
-    var localAuthentication: LocalAuthentication? = null
+    override var localAuthentication: LocalAuthentication? = null
     @SerializedName("google")
     var googleAuthentication: SocialAuthentication? = null
     @SerializedName("apple")

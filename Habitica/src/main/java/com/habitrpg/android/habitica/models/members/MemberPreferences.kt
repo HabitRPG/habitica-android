@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.members
 
 import com.habitrpg.android.habitica.models.user.Hair
-import com.habitrpg.common.habitica.models.AvatarPreferences
+import com.habitrpg.shared.habitica.models.AvatarPreferences
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 

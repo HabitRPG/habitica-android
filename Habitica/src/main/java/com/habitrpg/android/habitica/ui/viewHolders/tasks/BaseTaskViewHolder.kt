@@ -21,7 +21,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
-import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.Action

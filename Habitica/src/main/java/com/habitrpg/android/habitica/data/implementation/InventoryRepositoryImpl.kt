@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.Flow
 

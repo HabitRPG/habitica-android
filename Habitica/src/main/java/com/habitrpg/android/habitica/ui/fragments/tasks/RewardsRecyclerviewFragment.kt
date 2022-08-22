@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter

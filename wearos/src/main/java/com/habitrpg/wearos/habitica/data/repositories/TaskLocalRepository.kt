@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.data.repositories
 
-import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.common.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.wearos.habitica.models.tasks.Task
 import com.habitrpg.wearos.habitica.models.tasks.TaskList
 import kotlinx.coroutines.flow.Flow

@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.models.inventory.QuestRageStrike
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupCategory
-import com.habitrpg.common.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type

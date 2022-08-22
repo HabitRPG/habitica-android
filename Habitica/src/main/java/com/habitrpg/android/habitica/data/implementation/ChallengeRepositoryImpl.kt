@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.common.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.reactivex.rxjava3.core.Flowable
 import retrofit2.HttpException
 

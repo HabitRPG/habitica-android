@@ -1,9 +1,9 @@
 package com.habitrpg.wearos.habitica.util
 
 import android.os.Build
-import com.habitrpg.common.habitica.models.tasks.Attribute
-import com.habitrpg.common.habitica.models.tasks.Frequency
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.Attribute
+import com.habitrpg.shared.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
 import java.text.DateFormat

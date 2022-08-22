@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.wearos.habitica.models.user.MenuItem
 import com.habitrpg.wearos.habitica.ui.adapters.HubAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.MainViewModel

@@ -2,7 +2,6 @@ package com.habitrpg.wearos.habitica.ui.views
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -10,7 +9,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskRewardChipBinding
-import com.habitrpg.android.habitica.extensions.round
+import com.habitrpg.shared.habitica.extensions.round
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.math.RoundingMode

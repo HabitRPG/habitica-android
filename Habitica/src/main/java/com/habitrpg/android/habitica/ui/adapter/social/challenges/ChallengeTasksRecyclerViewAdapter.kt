@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder

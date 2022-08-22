@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.text.DateFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter

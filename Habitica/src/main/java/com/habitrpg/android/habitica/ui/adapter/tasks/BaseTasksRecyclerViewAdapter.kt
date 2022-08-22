@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(

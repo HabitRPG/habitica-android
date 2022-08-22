@@ -1,7 +1,7 @@
 package com.habitrpg.wearos.habitica.models.user
 
-import com.habitrpg.common.habitica.models.Avatar
-import com.habitrpg.common.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

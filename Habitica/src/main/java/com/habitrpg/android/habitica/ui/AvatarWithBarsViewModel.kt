@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.HealthFormatter
-import com.habitrpg.common.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.Avatar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.floor

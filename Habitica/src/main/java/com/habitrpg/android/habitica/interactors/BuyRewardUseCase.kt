@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.interactors
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.helpers.SoundManager
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.core.Flowable

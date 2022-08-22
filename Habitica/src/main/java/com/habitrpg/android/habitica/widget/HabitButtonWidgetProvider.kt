@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import javax.inject.Inject
 
 class HabitButtonWidgetProvider : BaseWidgetProvider() {

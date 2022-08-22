@@ -5,9 +5,9 @@ import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.models.responses.TaskScoringResult
-import com.habitrpg.common.habitica.models.tasks.TaskType
-import com.habitrpg.common.habitica.models.tasks.TasksOrder
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single

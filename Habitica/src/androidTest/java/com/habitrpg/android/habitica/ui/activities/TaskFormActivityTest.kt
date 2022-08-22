@@ -11,9 +11,9 @@ import androidx.test.filters.LargeTest
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.common.habitica.models.tasks.Frequency
+import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.common.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.github.kakaocup.kakao.common.assertions.BaseAssertions
 import io.github.kakaocup.kakao.common.matchers.ChildCountMatcher
 import io.github.kakaocup.kakao.common.views.KView
