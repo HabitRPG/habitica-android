@@ -12,7 +12,6 @@ import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.realm.Realm
-import io.realm.RealmObject
 import io.realm.Sort
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
@@ -75,6 +74,9 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val allChecklistItems = ArrayList<ChecklistItem>()
         val allReminders = ArrayList<RemindersItem>()
         sortedTasks.forEach {
+            if (it.userId.isBlank() && it.group?.groupID?.isNotBlank() != true) {
+                it.userId = ownerID
+            }
             it.checklist?.let { it1 -> allChecklistItems.addAll(it1) }
             it.reminders?.let { it1 -> allReminders.addAll(it1) }
         }
@@ -167,9 +169,9 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     }
 
     override fun deleteTask(taskID: String) {
-        val task = realm.where(Task::class.java).equalTo("id", taskID).findFirstAsync()
+        val task = realm.where(Task::class.java).equalTo("id", taskID).findFirst()
         executeTransaction {
-            if (task.isManaged) {
+            if (task?.isManaged == true) {
                 task.deleteFromRealm()
             }
         }
@@ -216,7 +218,11 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTaskAtPosition(taskType: String, position: Int): Flowable<Task> {
         return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java).equalTo("typeValue", taskType).equalTo("position", position).findFirstAsync().asFlowable<RealmObject>()
+            realm.where(Task::class.java).equalTo("typeValue", taskType).equalTo("position", position)
+                .findAll()
+                .asFlowable()
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+                .map { it.first() }
                 .filter { realmObject -> realmObject.isLoaded }
                 .cast(Task::class.java)
         )

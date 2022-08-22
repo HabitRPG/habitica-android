@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.data
 
-import com.habitrpg.android.habitica.data.local.UserQuestStatus
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill

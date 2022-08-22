@@ -151,9 +151,10 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         return RxJavaBridge.toV3Flowable(
             realm.where(Equipment::class.java)
                 .equalTo("key", key)
-                .findFirstAsync()
-                .asFlowable<RealmObject>()
-                .filter { realmObject -> realmObject.isLoaded }
+                .findAll()
+                .asFlowable()
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+                .map { it.first() }
                 .cast(Equipment::class.java)
         )
     }
@@ -276,8 +277,11 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
             else -> Egg::class.java
         }
         return RxJavaBridge.toV3Flowable(
-            realm.where(itemClass).equalTo("key", key).findFirstAsync().asFlowable<RealmObject>()
-                .filter { realmObject -> realmObject.isLoaded }
+            realm.where(itemClass).equalTo("key", key)
+                .findAll()
+                .asFlowable()
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+                .map { it.first() }
                 .cast(Item::class.java)
         )
     }

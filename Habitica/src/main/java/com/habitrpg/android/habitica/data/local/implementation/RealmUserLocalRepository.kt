@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
-import com.habitrpg.android.habitica.data.local.UserQuestStatus
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement

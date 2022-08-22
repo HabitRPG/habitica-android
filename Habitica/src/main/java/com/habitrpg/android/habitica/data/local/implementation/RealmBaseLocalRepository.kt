@@ -66,6 +66,11 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         realm.executeTransaction { realm1 -> realm1.insertOrUpdate(`object`) }
     }
 
+    override fun <T : BaseObject> saveSyncronous(objects: List<T>) {
+        if (isClosed) { return }
+        realm.executeTransaction { realm1 -> realm1.insertOrUpdate(objects) }
+    }
+
     override fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
         if (isClosed) { return }
         val liveObject = getLiveObject(obj) ?: return

@@ -8,15 +8,9 @@ import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.Flow
-
-enum class UserQuestStatus {
-    NO_QUEST,
-    QUEST_COLLECT,
-    QUEST_BOSS,
-    QUEST_UNKNOWN
-}
 
 interface UserLocalRepository : BaseLocalRepository {
 
