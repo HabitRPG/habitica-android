@@ -38,6 +38,8 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
@@ -537,7 +539,7 @@ class TaskFormActivity : BaseActivity() {
         thisTask = configureTask(thisTask)
 
         val resultIntent = Intent()
-        resultIntent.putExtra(TASK_TYPE_KEY, taskType)
+        resultIntent.putExtra(TASK_TYPE_KEY, taskType.value)
         if (!isChallengeTask) {
             if (isCreating) {
                 if (isDiscardCancelled) {
