@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -33,6 +35,8 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.LanguageHelper
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
@@ -64,6 +68,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
+
+        userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError())
     }
 
     override fun setupPreferences() {
@@ -354,6 +360,35 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val useEmailNotifications = user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false
         emailNotificationsPreference?.isEnabled = useEmailNotifications
         useEmailPreference?.isChecked = useEmailNotifications
+
+        lifecycleScope.launch {
+            val teams = userRepository.getTeamPlans().firstOrNull() ?: return@launch
+            val context = context ?: return@launch
+            val groupCategory = findPreference<PreferenceCategory>("groups_category")
+            groupCategory?.removeAll()
+            if (teams.isEmpty()) {
+                groupCategory?.isVisible = false
+            } else {
+                groupCategory?.isVisible = true
+                for (team in teams) {
+                    val newPreference = CheckBoxPreference(context)
+                    newPreference.title = team.summary
+                    newPreference.key = "copy_tasks-${team.id}"
+                    newPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+                        val currentIds = user?.preferences?.tasks?.mirrorGroupTasks?.toMutableList() ?: mutableListOf()
+                        if (newValue == true && !currentIds.contains(team.id)) {
+                            currentIds.add(team.id)
+                        } else if (newValue == false && currentIds.contains(team.id)) {
+                            currentIds.remove(team.id)
+                        }
+                        userRepository.updateUser("preferences.tasks.mirrorGroupTasks", currentIds).subscribe({}, RxErrorHandler.handleEmptyError())
+                        true
+                    }
+                    groupCategory?.addPreference(newPreference)
+                    newPreference.isChecked = user?.preferences?.tasks?.mirrorGroupTasks?.contains(team.id) == true
+                }
+            }
+        }
 
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dip"
+        style="@style/Body1"
+        android:textAllCaps="true"
+        android:textSize="12sp"
+        android:background="@color/transparent"
+        android:textColor="@color/text_quad"
+        android:paddingStart="32dip"
+        android:paddingEnd="32dip"
+        android:paddingTop="16dip"
+        tools:text="Title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Body1"
+        android:textAllCaps="true"
+        android:textSize="12sp"
+        android:background="@color/transparent"
+        android:textColor="@color/text_quad"
+        android:paddingStart="32dip"
+        android:paddingEnd="32dip"
+        android:paddingTop="16dip"
+        android:text="@string/copy_shared_tasks"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dip"
+        style="@style/Body1"
+        android:textSize="11sp"
+        android:textColor="@color/text_dimmed"
+        android:paddingStart="32dip"
+        android:paddingEnd="32dip"
+        android:paddingTop="4dp"
+        android:text="@string/copy_tasks_description"/>
+</LinearLayout>

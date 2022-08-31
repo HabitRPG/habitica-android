@@ -192,6 +192,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="groups_category"
+        android:title="@string/groups"
+        android:layout="@layout/preference_category_groups"
+        app:isPreferenceVisible="false"/>
+
+    <PreferenceCategory
         android:title="@string/pref_reminder_header"
         android:layout="@layout/preference_category">
 

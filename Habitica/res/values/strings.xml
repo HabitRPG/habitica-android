@@ -1252,4 +1252,6 @@
     <string name="self_improvement">Self Improvement</string>
     <string name="spirituality">Spirituality</string>
     <string name="time_management">Time Management + Accountability</string>
+    <string name="copy_tasks_description">Show assigned and open tasks on your personal task lists</string>
+    <string name="copy_shared_tasks">Copy shared tasks</string>
 </resources>
