@@ -86,8 +86,9 @@ interface InventoryRepository : BaseRepository {
     fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Void>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
-    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
-    fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>>
+    fun getItemsFlowable(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
+    fun getItemsFlowable(itemClass: Class<out Item>): Flowable<out List<Item>>
+    fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
     fun getLatestMysteryItem(): Flowable<Equipment>
     fun getItem(type: String, key: String): Flowable<Item>
     fun getAvailableLimitedItems(): Flowable<List<Item>>

@@ -289,7 +289,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                     }
                     .map { items -> items.mapNotNull { it.key } }
                     .map {
-                        inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
+                        inventoryRepository.getItemsFlowable(itemClass, it.toTypedArray()).firstOrNull()
                     }
                     .collect {
                         val itemMap = mutableMapOf<String, Item>()

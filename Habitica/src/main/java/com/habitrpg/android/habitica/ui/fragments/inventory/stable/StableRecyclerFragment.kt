@@ -19,12 +19,12 @@ import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.StableViewModelFactory
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -107,8 +107,8 @@ class StableRecyclerFragment :
             adapter = StableRecyclerAdapter()
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 lifecycleScope.launch {
-                    val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstOrNull()?.firstOrNull() as? Egg
-                    val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstOrNull()?.firstOrNull() as? HatchingPotion
+                    val egg = inventoryRepository.getItemsFlowable(Egg::class.java, arrayOf(animal.animal)).firstOrNull()?.firstOrNull() as? Egg
+                    val potion = inventoryRepository.getItemsFlowable(HatchingPotion::class.java, arrayOf(animal.color)).firstOrNull()?.firstOrNull() as? HatchingPotion
                     callback(Pair(egg, potion))
                 }
             }

@@ -115,7 +115,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
             items = (items + items).sortedBy { it.key }
             Flowable.just(items)
         }
-        every { inventoryRepository.getItems(Food::class.java, any()) } answers {
+        every { inventoryRepository.getItemsFlowable(Food::class.java, any()) } answers {
             Flowable.just((content.eggs + content.eggs).sortedBy { it.key })
         }
         fragment.itemType = "food"

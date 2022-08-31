@@ -35,8 +35,8 @@ interface InventoryLocalRepository : ContentLocalRepository {
 
     fun getOwnedEquipment(type: String): Flowable<out List<Equipment>>
 
-    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
-    fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>>
+    fun getItemsFlowable(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
+    fun getItemsFlowable(itemClass: Class<out Item>): Flowable<out List<Item>>
     fun getOwnedItems(itemType: String, userID: String, includeZero: Boolean): Flow<List<OwnedItem>>
     fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>>
     fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>>
@@ -66,4 +66,5 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun save(items: Items, userID: String)
 
     fun getLiveObject(obj: OwnedItem): OwnedItem?
+    fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
 }

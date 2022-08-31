@@ -296,7 +296,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                             adapter?.data = filteredItems
                         }
                         .map { items -> items.mapNotNull { it.key } }
-                        .map { inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull() }
+                        .map { inventoryRepository.getItemsFlowable(itemClass, it.toTypedArray()).firstOrNull() }
                         .collect {
                             val itemMap = mutableMapOf<String, Item>()
                             for (item in it ?: emptyList()) {

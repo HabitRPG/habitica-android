@@ -95,17 +95,17 @@ open class HabiticaTestCase : TestCase() {
         content = loadJsonFile("content", ContentResult::class.java)
         every { inventoryRepository.getPets() } returns Flowable.just(content.pets)
         every { inventoryRepository.getMounts() } returns Flowable.just(content.mounts)
-        every { inventoryRepository.getItems(Food::class.java) } returns Flowable.just(content.food)
-        every { inventoryRepository.getItems(Egg::class.java) } returns Flowable.just(content.eggs)
-        every { inventoryRepository.getItems(HatchingPotion::class.java) } returns Flowable.just(content.hatchingPotions)
-        every { inventoryRepository.getItems(QuestContent::class.java) } returns Flowable.just(content.quests)
+        every { inventoryRepository.getItemsFlowable(Food::class.java) } returns Flowable.just(content.food)
+        every { inventoryRepository.getItemsFlowable(Egg::class.java) } returns Flowable.just(content.eggs)
+        every { inventoryRepository.getItemsFlowable(HatchingPotion::class.java) } returns Flowable.just(content.hatchingPotions)
+        every { inventoryRepository.getItemsFlowable(QuestContent::class.java) } returns Flowable.just(content.quests)
 
-        every { inventoryRepository.getItems(Food::class.java, any()) } returns Flowable.just(content.food)
-        every { inventoryRepository.getItems(Egg::class.java, any()) } answers {
+        every { inventoryRepository.getItemsFlowable(Food::class.java, any()) } returns Flowable.just(content.food)
+        every { inventoryRepository.getItemsFlowable(Egg::class.java, any()) } answers {
             Flowable.just(content.eggs)
         }
-        every { inventoryRepository.getItems(HatchingPotion::class.java, any()) } returns Flowable.just(content.hatchingPotions)
-        every { inventoryRepository.getItems(QuestContent::class.java, any()) } returns Flowable.just(content.quests)
+        every { inventoryRepository.getItemsFlowable(HatchingPotion::class.java, any()) } returns Flowable.just(content.hatchingPotions)
+        every { inventoryRepository.getItemsFlowable(QuestContent::class.java, any()) } returns Flowable.just(content.quests)
     }
 
     internal fun <T> loadJsonFile(s: String, type: Type): T {

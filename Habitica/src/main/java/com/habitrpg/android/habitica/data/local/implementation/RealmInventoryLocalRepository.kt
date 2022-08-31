@@ -120,16 +120,21 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
         }
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
+    override fun getItemsFlowable(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
         return realm.where(itemClass).`in`("key", keys).findAll().toFlow()
                 .filter { it.isLoaded }
     }
 
-    override fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>> {
+    override fun getItemsFlowable(itemClass: Class<out Item>): Flowable<out List<Item>> {
         return RxJavaBridge.toV3Flowable(
             realm.where(itemClass).findAll().asFlowable()
                 .filter { it.isLoaded }
         )
+    }
+
+    override fun getItems(itemClass: Class<out Item>): Flow<List<Item>> {
+        return realm.where(itemClass).findAll().toFlow()
+            .filter { it.isLoaded }
     }
 
     override fun getOwnedItems(userID: String, includeZero: Boolean): Flowable<Map<String, OwnedItem>> {

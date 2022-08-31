@@ -33,7 +33,7 @@ open class Task constructor(): Parcelable, BaseTask {
         get() = Attribute.from(attributeValue)
         set(value) { attributeValue = value?.value }
     var attributeValue: String? = Attribute.STRENGTH.value
-    var value: Double = 0.0
+    var value: Double? = 0.0
     var dateCreated: Date? = null
     var position: Int = 0
     // Habits
@@ -86,39 +86,42 @@ open class Task constructor(): Parcelable, BaseTask {
 
     val extraLightTaskColor: Int
         get() {
+            val value = value ?: 0.0
             return when {
-                this.value < -20 -> return R.color.watch_maroon_200
-                this.value < -10 -> return R.color.watch_red_200
-                this.value < -1 -> return R.color.watch_orange_200
-                this.value < 1 -> return R.color.watch_yellow_200
-                this.value < 5 -> return R.color.watch_green_200
-                this.value < 10 -> return R.color.watch_teal_200
+                value < -20 -> return R.color.watch_maroon_200
+                value < -10 -> return R.color.watch_red_200
+                value < -1 -> return R.color.watch_orange_200
+                value < 1 -> return R.color.watch_yellow_200
+                value < 5 -> return R.color.watch_green_200
+                value < 10 -> return R.color.watch_teal_200
                 else -> R.color.watch_blue_200
             }
         }
 
     val lightTaskColor: Int
         get() {
+            val value = value ?: 0.0
             return when {
-                this.value < -20 -> return R.color.watch_maroon_100
-                this.value < -10 -> return R.color.watch_red_100
-                this.value < -1 -> return R.color.watch_orange_100
-                this.value < 1 -> return R.color.watch_yellow_100
-                this.value < 5 -> return R.color.watch_green_100
-                this.value < 10 -> return R.color.watch_teal_100
+                value < -20 -> return R.color.watch_maroon_100
+                value < -10 -> return R.color.watch_red_100
+                value < -1 -> return R.color.watch_orange_100
+                value < 1 -> return R.color.watch_yellow_100
+                value < 5 -> return R.color.watch_green_100
+                value < 10 -> return R.color.watch_teal_100
                 else -> R.color.watch_blue_100
             }
         }
 
     val mediumTaskColor: Int
         get() {
+            val value = value ?: 0.0
             return when {
-                this.value < -20 -> return R.color.watch_maroon_10
-                this.value < -10 -> return R.color.watch_red_10
-                this.value < -1 -> return R.color.watch_orange_10
-                this.value < 1 -> return R.color.watch_yellow_10
-                this.value < 5 -> return R.color.watch_green_10
-                this.value < 10 -> return R.color.watch_teal_10
+                value < -20 -> return R.color.watch_maroon_10
+                value < -10 -> return R.color.watch_red_10
+                value < -1 -> return R.color.watch_orange_10
+                value < 1 -> return R.color.watch_yellow_10
+                value < 5 -> return R.color.watch_green_10
+                value < 10 -> return R.color.watch_teal_10
                 else -> R.color.watch_blue_10
             }
         }
@@ -190,7 +193,7 @@ open class Task constructor(): Parcelable, BaseTask {
         dest.writeString(this.notes)
         dest.writeString(this.attribute?.value)
         dest.writeString(this.type?.value)
-        dest.writeDouble(this.value)
+        this.value?.let { dest.writeDouble(it) }
         dest.writeLong(this.dateCreated?.time ?: -1)
         dest.writeInt(this.position)
         dest.writeValue(this.up)

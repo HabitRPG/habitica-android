@@ -13,9 +13,9 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.flow.firstOrNull
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -77,11 +77,11 @@ class TaskAlarmManager(
     private fun setTimeForDailyReminder(remindersItem: RemindersItem?, task: Task): RemindersItem? {
         val newTime = (remindersItem?.let { task.getNextReminderOccurrence(it) } ?: return null)
 
-        remindersItem.time = newTime.withZoneSameLocal(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        remindersItem.time = newTime.withZoneSameLocal(ZoneId.systemDefault())
+            .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
         return remindersItem
     }
-
 
     /**
      * If reminderItem time is before now, a new reminder will not be created until the reminder passes.
@@ -91,11 +91,15 @@ class TaskAlarmManager(
      */
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
         val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        if (remindersItem == null || (remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null)) {
+        val zonedTime = remindersItem?.getLocalZonedDateTimeInstant()
+        if (remindersItem == null
+            || (reminderItemTask.type == TaskType.DAILY && zonedTime?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null)
+            || (reminderItemTask.type == TaskType.TODO && zonedTime?.isBefore(now) == true)
+        ) {
             return
         }
 
-        val time = Date.from(remindersItem.getLocalZonedDateTimeInstant())
+        val time = Date.from(zonedTime)
         val cal = Calendar.getInstance()
         cal.time = time
 

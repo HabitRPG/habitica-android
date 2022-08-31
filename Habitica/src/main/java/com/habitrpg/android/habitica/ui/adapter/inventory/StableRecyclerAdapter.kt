@@ -20,10 +20,10 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
+import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
@@ -204,8 +204,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             this.animal = item
             val context = itemView.context
             val egg = eggs[item.animal]
-            if (egg != null) {
-                titleView.text = if (item.type == "drop" || itemType == "mounts") egg.mountText else egg.text
+            titleView.text = if (egg != null) {
+                if (item.type == "drop" || itemType == "mounts") egg.mountText else egg.text
             } else item.animal
             ownedTextView.visibility = View.VISIBLE
 

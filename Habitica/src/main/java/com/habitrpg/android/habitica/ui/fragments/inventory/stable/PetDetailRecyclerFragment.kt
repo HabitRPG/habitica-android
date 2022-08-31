@@ -112,10 +112,10 @@ class PetDetailRecyclerFragment :
         binding?.recyclerView?.layoutManager = layoutManager
         adapter.animalIngredientsRetriever = { animal, callback ->
             lifecycleScope.launch {
-                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
+                val egg = inventoryRepository.getItemsFlowable(Egg::class.java, arrayOf(animal.animal))
                     .firstOrNull()?.firstOrNull() as? Egg
                 val potion =
-                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color))
+                    inventoryRepository.getItemsFlowable(HatchingPotion::class.java, arrayOf(animal.color))
                         .firstOrNull()?.firstOrNull() as? HatchingPotion
                 callback(Pair(egg, potion))
             }

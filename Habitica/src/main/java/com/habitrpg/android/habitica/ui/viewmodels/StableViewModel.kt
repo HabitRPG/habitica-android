@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -36,8 +37,15 @@ class StableViewModel(private val application: Application?, private val itemTyp
 
     private val _items: MutableLiveData<List<Any>> = MutableLiveData()
     val items: LiveData<List<Any>> = _items
-    private val _eggs: MutableLiveData<Map<String, Egg>> = MutableLiveData()
-    val eggs: LiveData<Map<String, Egg>> = _eggs
+    val eggs: LiveData<Map<String, Egg>> = inventoryRepository.getItems(Egg::class.java)
+        .map {
+            val eggMap = mutableMapOf<String, Egg>()
+            it.forEach { egg ->
+                eggMap[egg.key] = egg as Egg
+            }
+            eggMap
+        }
+        .asLiveData()
     private val _ownedItems: MutableLiveData<Map<String, OwnedItem>> = MutableLiveData()
     val ownedItems: LiveData<Map<String, OwnedItem>> = _ownedItems
     private val _mounts: MutableLiveData<List<Mount>> = MutableLiveData()
@@ -71,22 +79,9 @@ class StableViewModel(private val application: Application?, private val itemTyp
                 _items.value = mapAnimals(animals, it)
             }
 
-            disposable.add(
-                inventoryRepository.getItems(Egg::class.java)
-                    .map {
-                        val eggMap = mutableMapOf<String, Egg>()
-                        it.forEach { egg ->
-                            eggMap[egg.key] = egg as Egg
-                        }
-                        eggMap
-                    }
-                    .subscribe(
-                        {
-                            _eggs.value = it
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+            viewModelScope.launch {
+
+            }
             disposable.add(inventoryRepository.getOwnedItems(true).subscribe({ _ownedItems.value = it }, RxErrorHandler.handleEmptyError()))
             _mounts.value = if ("pets" == itemType) {
                 inventoryRepository.getMounts().firstOrNull() ?: emptyList()

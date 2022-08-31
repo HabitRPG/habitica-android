@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +53,8 @@ import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -149,6 +152,14 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             recyclerAdapter?.canScoreTasks = canScoreTaks
             updateTaskSubscription(it)
         }
+        lifecycleScope.launch {
+            viewModel.userViewModel.user.asFlow()
+                .map { it?.preferences?.tasks?.mirrorGroupTasks }
+                .distinctUntilChanged()
+                .collect {
+                    updateTaskSubscription(viewModel.ownerID.value)
+                }
+        }
     }
 
     private fun handleTaskResult(result: TaskScoringResult, value: Int) {
@@ -237,7 +248,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
             ): Int {
-                return if (recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition) ?: 0 != 0) {
+                return if ((recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
+                        ?: 0) != 0
+                ) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
                     makeFlag(

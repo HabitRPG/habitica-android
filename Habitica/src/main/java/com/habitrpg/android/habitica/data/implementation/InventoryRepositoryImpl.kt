@@ -75,11 +75,15 @@ class InventoryRepositoryImpl(
         return localRepository.getOwnedItems(userID, includeZero)
     }
 
-    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
-        return localRepository.getItems(itemClass, keys)
+    override fun getItemsFlowable(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
+        return localRepository.getItemsFlowable(itemClass, keys)
     }
 
-    override fun getItems(itemClass: Class<out Item>): Flowable<out List<Item>> {
+    override fun getItemsFlowable(itemClass: Class<out Item>): Flowable<out List<Item>> {
+        return localRepository.getItemsFlowable(itemClass)
+    }
+
+    override fun getItems(itemClass: Class<out Item>): Flow<List<Item>> {
         return localRepository.getItems(itemClass)
     }
 
