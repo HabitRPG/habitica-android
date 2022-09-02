@@ -365,6 +365,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             val teams = userRepository.getTeamPlans().firstOrNull() ?: return@launch
             val context = context ?: return@launch
             val groupCategory = findPreference<PreferenceCategory>("groups_category")
+            val footer = groupCategory?.findPreference<Preference>("groups_footer")
+            footer?.order = 9999
             groupCategory?.removeAll()
             if (teams.isEmpty()) {
                 groupCategory?.isVisible = false
@@ -372,7 +374,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 groupCategory?.isVisible = true
                 for (team in teams) {
                     val newPreference = CheckBoxPreference(context)
-                    newPreference.title = team.summary
+                    newPreference.layoutResource = R.layout.preference_child_summary
+                    newPreference.title = getString(R.string.copy_shared_tasks)
+                    newPreference.summary = team.summary
                     newPreference.key = "copy_tasks-${team.id}"
                     newPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
                         val currentIds = user?.preferences?.tasks?.mirrorGroupTasks?.toMutableList() ?: mutableListOf()
@@ -387,6 +391,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     groupCategory?.addPreference(newPreference)
                     newPreference.isChecked = user?.preferences?.tasks?.mirrorGroupTasks?.contains(team.id) == true
                 }
+            }
+            if (footer != null) {
+                groupCategory.addPreference(footer)
             }
         }
 

@@ -1,12 +1,11 @@
-New in 4.0.1:
+New in 4.0.2:
 -Habitica has a brand new WearOS app for smart watches!
--Some pesky bug fixes
+-Group Plan subscribers can switch on displaying shared tasks from Settings
+-Past To Do reminders will not constantly show anymore
+-Pet category labels show again
 -Newly designed Backgrounds section
 -Ability to filter, preview, and pin Backgrounds
 -New bottom sheet designs in Items, Pets & Mounts, and Filters
 -New Day Start Adjustment interface
--Improvements to task reminder reliability
 -Improvements to payment and subscription handling
--Fixes account deletion confirmation prompt
--Fixes task reorder bug for new accounts
--Fixes sprite size in Quest Details preview
+

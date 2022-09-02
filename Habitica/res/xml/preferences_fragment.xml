@@ -193,9 +193,13 @@
 
     <PreferenceCategory
         android:key="groups_category"
-        android:title="@string/groups"
-        android:layout="@layout/preference_category_groups"
-        app:isPreferenceVisible="false"/>
+        android:title="@string/group_plan_settings"
+        android:layout="@layout/preference_category"
+        app:isPreferenceVisible="false">
+        <Preference android:title="@string/copy_tasks_description"
+            android:key="groups_footer"
+            android:layout="@layout/preference_group_footer"/>
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/pref_reminder_header"

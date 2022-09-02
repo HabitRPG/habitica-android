@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@android:id/title"
+    android:layout_marginBottom="16dip"
+    style="@style/Body1"
+    android:textSize="12sp"
+    android:textColor="@color/text_ternary"
+    android:paddingStart="32dip"
+    android:paddingEnd="32dip"
+    android:paddingBottom="16dp"
+    android:text="@string/copy_tasks_description"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

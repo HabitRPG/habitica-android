@@ -36,7 +36,7 @@ class TaskRepository @Inject constructor(
         val result = apiClient.scoreTask(id, direction.text).responseData
         if (result != null) {
             task.completed = direction == TaskDirection.UP
-            task.value += result.delta
+            task.value = (task.value ?: 0.0) + result.delta
             if (task.type == TaskType.HABIT) {
                 if (direction == TaskDirection.UP) {
                     task.counterUp = task.counterUp?.plus(1) ?: 1
