@@ -269,7 +269,7 @@
                 android:layout_centerHorizontal="true"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/next_hourglass"
-                android:textColor="@color/black_50_alpha" />
+                android:textColor="@color/text_primary" />
         </RelativeLayout>
 
     </RelativeLayout>
