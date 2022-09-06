@@ -388,6 +388,7 @@
     <string name="subscription_hourglasses">+%d Mystic Hourglass</string>
     <string name="payment_method">Payment method</string>
     <string name="subscription">Subscription</string>
+    <string name="subscription_credit_canceling">"Your <b>+%d</b> months of subscription credit will activate after canceling</string>
     <string name="active">Active</string>
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
@@ -397,7 +398,7 @@
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months subscribed</string>
     <string name="current_hourclasses">Current Mystic Hourglasses</string>
-    <string name="next_hourglass">Next Hourglass</string>
+    <string name="next_hourglass">Next Hourglass delivery</string>
     <string name="monthly_gem_cap">Monthly gem cap</string>
     <string name="inactive">Inactive</string>
     <string name="one_month">1 Month</string>
@@ -909,7 +910,8 @@
     <string name="not_recurring">Not Recurring</string>
     <string name="ending_on">Ending on %s</string>
     <string name="subscribe_options_title">Choose the Subscription length that works for you</string>
-    <string name="thanks_for_subscribing">Thanks for subscribing</string>
+    <string name="thanks_for_supporting">Thanks for supporting Habitica</string>
+    <string name="subscribers_mythic_hourglasses"><i>Subscribers receive Mystic Hourglasses within the first three days of the month.</i></string>
     <string name="renew_subscription">Renew Subscription</string>
     <string name="resubscribe">Resubscribe</string>
     <string name="resubscribe_description">Want to continue your benefits? You can start a new subscription before this one runs out to keep your benefits active.</string>

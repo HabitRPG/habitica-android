@@ -709,7 +709,7 @@
     <string name="resubscribe_description">Você quer continuar com seus benefícios\? Você pode iniciar uma nova assinatura antes que esta acabe para manter seus benefícios ativos.</string>
     <string name="resubscribe">Assinar novamente</string>
     <string name="renew_subscription">Renovar assinatura</string>
-    <string name="thanks_for_subscribing">Obrigado por assinar</string>
+    <string name="thanks_for_supporting">Obrigado por assinar</string>
     <string name="subscribe_options_title">Escolha o tempo de assinatura que funciona para você</string>
     <string name="ending_on">Finalizando em %s</string>
     <string name="not_recurring">Não recorrente</string>

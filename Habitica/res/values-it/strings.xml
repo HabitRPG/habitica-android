@@ -908,7 +908,7 @@
     <string name="resubscribe_description">Vuoi continuare ad avere i tuoi vantaggi\? Puoi iniziare un nuovo abbonamento prima che questo scada per mantenerli attivi.</string>
     <string name="resubscribe">Riabbonati</string>
     <string name="renew_subscription">Rinnova l\'Abbonamento</string>
-    <string name="thanks_for_subscribing">Grazie per esserti iscritto</string>
+    <string name="thanks_for_supporting">Grazie per esserti iscritto</string>
     <string name="subscribe_options_title">Scegli la durata dell\'abbonamento che fa per te</string>
     <string name="ending_on">Termina il %s</string>
     <string name="not_recurring">Non ricorrente</string>

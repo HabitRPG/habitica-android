@@ -751,7 +751,7 @@
     <string name="copy_userid">Gebruikers ID kopiëren</string>
     <string name="resubscribe">Opnieuw abonneren</string>
     <string name="renew_subscription">Abonnement vernieuwen</string>
-    <string name="thanks_for_subscribing">Bedankt voor het abonneren</string>
+    <string name="thanks_for_supporting">Bedankt voor het abonneren</string>
     <string name="subscribe_options_title">Kies de abonnementslengte die voor u werkt</string>
     <string name="ending_on">Eindigend op %s</string>
     <string name="not_recurring">Niet Terugkerend</string>

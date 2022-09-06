@@ -559,6 +559,23 @@
         <item name="android:layout_marginEnd">16dp</item>
     </style>
 
+    <style name="subscriptionBoxCompactText">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="subscriptionBoxCompactTitle">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="subscriptionBoxCompactNumber">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="HabiticaButton.Purple" parent="HabiticaButton">
         <item name="android:backgroundTint">@color/color_accent</item>
         <item name="android:textColor">@color/white</item>
