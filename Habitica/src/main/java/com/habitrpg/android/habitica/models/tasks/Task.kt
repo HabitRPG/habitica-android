@@ -90,6 +90,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     override var isDue: Boolean? = null
 
     var nextDue: RealmList<Date>? = null
+    var updatedAt: Date? = null
+    val isUpdatedToday: Boolean
+        get() = ZonedDateTime.ofInstant(updatedAt?.toInstant(), ZoneId.systemDefault()).toLocalDate()
+            .equals(ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault()).toLocalDate())
+
 
     // Needed for offline creating/updating
     var isSaving: Boolean = false

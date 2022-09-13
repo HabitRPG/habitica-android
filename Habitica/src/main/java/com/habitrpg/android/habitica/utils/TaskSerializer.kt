@@ -85,6 +85,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         } catch (ignored: java.lang.UnsupportedOperationException) {}
         task.dateCreated = context.deserialize(obj.get("createdAt"), Date::class.java)
         task.dueDate = context.deserialize(obj.get("date"), Date::class.java)
+        task.updatedAt = context.deserialize(obj.get("updatedAt"), Date::class.java)
         task.startDate = context.deserialize(obj.get("startDate"), Date::class.java)
         task.isDue = obj.get("isDue")?.asBoolean
         if (obj.has("nextDue")) {
