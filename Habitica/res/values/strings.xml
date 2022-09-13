@@ -305,7 +305,7 @@
     <string name="share_levelup">I got to level %d in #Habitica by improving my real-life habits!</string>
     <string name="share_hatched">I just hatched a %1$s %2$s pet in #Habitica by completing my real-life tasks!</string>
     <string name="share_raised">I just gained a %1$s mount in #Habitica by completing my real-life tasks!</string>
-    <string name="open_in_store">Open in play store</string>
+    <string name="open_in_store">Open Play Store</string>
     <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
     <string name="change_class_equipment_warning">Warning: You will no longer be able to buy equipment from the %s class.</string>
     <string name="confirm">Confirm</string>
@@ -364,7 +364,7 @@
     <string name="belongs_to_challenge">Belongs to Challenge</string>
     <string name="has_reminder">Has Reminder</string>
     <string name="has_tag">Has Tag</string>
-    <string name="subscribe_title">Subscribing supports the developers and helps keep Habitica running</string>
+    <string name="subscribe_title">Subscribing supports our small team and help keeps Habitica running, thank you!</string>
     <string name="subscribe_prompt">Become a subscriber to receive these exclusive benefits!</string>
     <string name="subscribe_listitem1">Gold for Gems</string>
     <string name="subscribe_listitem2">Mystic Hourglasses</string>
@@ -392,14 +392,14 @@
     <string name="active">Active</string>
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
-    <string name="cancel_subscription_google_description">No longer want to subscribe? You can find the option to unsubscribe in the “My Apps” section of the Google Play Store. Any months of subscription credit will be applied after your subscription has ended.</string>
+    <string name="cancel_subscription_google_description">You can cancel your subscription from the Google Play Store app. Any months of Subscription credit will be applied after your recurring Subscription has ended.</string>
     <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you!</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>
-    <string name="months_subscribed">Months subscribed</string>
+    <string name="months_subscribed">Months Subscribed</string>
     <string name="current_hourclasses">Current Mystic Hourglasses</string>
     <string name="next_hourglass">Next Hourglass delivery</string>
-    <string name="monthly_gem_cap">Monthly gem cap</string>
+    <string name="monthly_gem_cap">Monthly Gem Cap</string>
     <string name="inactive">Inactive</string>
     <string name="one_month">1 Month</string>
     <string name="x_months">%d Months</string>

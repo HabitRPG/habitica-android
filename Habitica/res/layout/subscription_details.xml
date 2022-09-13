@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/calendar_icon"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/months_subscribed" />
 
             <TextView
@@ -326,12 +326,11 @@
 
         <Button
             android:id="@+id/change_subscription_button"
-            style="@style/HabiticaButton.Purple"
+            style="@style/HabiticaButton.Yellow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:text="@string/visit_website" />
+            android:layout_marginTop="@dimen/spacing_medium"/>
     </LinearLayout>
 
 </LinearLayout>
