@@ -243,7 +243,7 @@
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
-                android:src="@drawable/sub_benefits_hourglasses" />
+                android:src="@drawable/hourglass_fancy_left" />
 
             <ImageView
                 android:layout_width="60dp"
@@ -251,7 +251,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/sub_benefits_hourglasses" />
+
+                android:src="@drawable/hourglass_fancy_right" />
 
             <TextView
                 android:id="@+id/next_hourglass_textview"
