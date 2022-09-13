@@ -46,7 +46,7 @@ class TaskReceiver : BroadcastReceiver() {
                 .firstElement()
                 .subscribe(
                     Consumer {
-                        if (!it.isValid || it.completed) {
+                        if (it.isUpdatedToday && it.completed) {
                             return@Consumer
                         }
 
