@@ -40,6 +40,7 @@
             android:layout_marginEnd="2dp"
             tools:text="21" />
         <com.habitrpg.android.habitica.ui.views.DayNightTextView
+            android:id="@+id/gem_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:dayTextColor="@color/white"

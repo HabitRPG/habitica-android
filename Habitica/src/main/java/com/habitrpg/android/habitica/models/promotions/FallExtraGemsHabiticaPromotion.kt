@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.promotions
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -88,18 +89,33 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
     override fun configurePurchaseBanner(binding: FragmentSubscriptionBinding) {
     }
 
+    @SuppressLint("SetTextI18n")
     override fun configureGemView(binding: PurchaseGemViewBinding, regularAmount: Int) {
         val context = binding.root.context
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
+        binding.purchaseButton.setTextColor(ContextCompat.getColor(context, R.color.white))
         binding.gemAmount.setTextColor(Color.parseColor("#FEE2B6"))
+        binding.gemLabel.setTextColor(Color.parseColor("#FEE2B6"))
         binding.footerTextView.visibility = View.VISIBLE
         binding.footerTextView.text = context.getString(R.string.usually_x_gems, regularAmount)
-        binding.gemAmount.text = when (regularAmount) {
-            4 -> "5 GEMS"
-            21 -> "30 GEMS"
-            42 -> "60 GEMS"
-            84 -> "125 GEMS"
+        when (regularAmount) {
+            4 -> {
+                binding.gemAmount.text = "5"
+                binding.gemImage.setImageResource(R.drawable.fall_gems_4)
+            }
+            21 -> {
+                binding.gemAmount.text = "30"
+                binding.gemImage.setImageResource(R.drawable.fall_gems_21)
+            }
+            42 -> {
+                binding.gemAmount.text = "60"
+                binding.gemImage.setImageResource(R.drawable.fall_gems_42)
+            }
+            84 -> {
+                binding.gemAmount.text = "125"
+                binding.gemImage.setImageResource(R.drawable.fall_gems_84)
+            }
             else -> regularAmount.toString()
         }
     }

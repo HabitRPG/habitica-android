@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
+import io.reactivex.rxjava3.kotlin.combineLatest
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -270,19 +271,19 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     private fun loadMarketGear() {
         compositeSubscription.add(
             inventoryRepository.retrieveMarketGear()
-                .zipWith(
-                    inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } },
-                    { shop, equipment ->
-                        for (category in shop.categories) {
-                            val items = category.items.asSequence().filter {
-                                !equipment.contains(it.key)
-                            }.sortedBy { it.locked }.toList()
-                            category.items.clear()
-                            category.items.addAll(items)
-                        }
-                        shop
-                    }
+                .combineLatest(
+                    inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }
                 )
+                .map { (shop, equipment) ->
+                    for (category in shop.categories) {
+                        val items = category.items.asSequence().filter {
+                            !equipment.contains(it.key)
+                        }.sortedBy { it.locked }.toList()
+                        category.items.clear()
+                        category.items.addAll(items)
+                    }
+                    shop
+                }
                 .subscribe(
                     {
                         this.gearCategories = it.categories

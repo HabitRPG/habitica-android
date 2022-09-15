@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Runs all the tests
 
+### android staffapk
+
+```sh
+[bundle exec] fastlane android staffapk
+```
+
+Build Staff APK for sara
+
 ### android staff
 
 ```sh
