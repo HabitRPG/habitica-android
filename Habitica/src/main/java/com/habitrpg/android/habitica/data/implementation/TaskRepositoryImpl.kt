@@ -146,6 +146,8 @@ class TaskRepositoryImpl(
                     bgTask.completed = up
                     if (TaskType.DAILY == bgTask.type && up) {
                         bgTask.streak = (bgTask.streak ?: 0) + 1
+                    } else if(TaskType.DAILY == bgTask.type && !up && (bgTask.streak != null && bgTask.streak!! >= 1)){
+                        bgTask.streak = bgTask.streak!! - 1
                     }
                 } else if (TaskType.HABIT == bgTask.type) {
                     if (up) {
