@@ -161,7 +161,7 @@ class UserRepositoryImpl(
     override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(withTasks = false, forced = true) }
 
     override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
-        .flatMap { retrieveUser(false) }
+        .flatMap { retrieveUser(false, forced = true) }
 
     override fun unlockPath(path: String, price: Int): Flowable<UnlockResponse> {
         return zipWithLiveUser(apiClient.unlockPath(path)) { unlockResponse, copiedUser ->
