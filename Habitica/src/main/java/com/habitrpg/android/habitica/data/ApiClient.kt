@@ -27,12 +27,12 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.shared.habitica.models.responses.ErrorResponse
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
@@ -44,23 +44,19 @@ interface ApiClient {
 
     val hostConfig: HostConfig
 
-    val status: Flowable<Status>
-
-    val content: Flowable<ContentResult>
+    suspend fun getStatus(): Status?
 
     /* user API */
 
-    val user: Flowable<User>
-
-    val tasks: Flowable<TaskList>
+    suspend fun getTasks(): TaskList?
 
     /* challenges api */
 
     fun getUserChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>>
 
-    val worldState: Flowable<WorldState>
+    suspend fun getWorldState(): WorldState?
     fun setLanguageCode(languageCode: String)
-    fun getContent(language: String): Flowable<ContentResult>
+    suspend fun getContent(language: String? = null): ContentResult?
 
     fun updateUser(updateDictionary: Map<String, Any>): Flowable<User>
 
@@ -83,7 +79,7 @@ interface ApiClient {
     fun purchaseSpecialSpell(key: String): Flowable<Void>
     fun validateSubscription(request: PurchaseValidationRequest): Flowable<Any>
     fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
-    fun cancelSubscription(): Flowable<Void>
+    suspend fun cancelSubscription(): Void?
 
     fun sellItem(itemType: String, itemKey: String): Flowable<User>
 
@@ -127,19 +123,16 @@ interface ApiClient {
 
     fun loginApple(authToken: String): Flowable<UserAuthResponse>
 
-    fun sleep(): Flowable<Boolean>
-
-    fun revive(): Flowable<User>
+    suspend fun sleep(): Boolean?
+    suspend fun revive(): User?
 
     fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse>
 
     fun useSkill(skillName: String, targetType: String): Flowable<SkillResponse>
 
-    fun changeClass(): Flowable<User>
+    suspend fun changeClass(className: String?): User?
 
-    fun changeClass(className: String): Flowable<User>
-
-    fun disableClasses(): Flowable<User>
+    suspend fun disableClasses(): User?
 
     fun markPrivateMessagesRead(): Flowable<Void>
 
@@ -147,26 +140,26 @@ interface ApiClient {
 
     fun listGroups(type: String): Flowable<List<Group>>
 
-    fun getGroup(groupId: String): Flowable<Group>
+    suspend fun getGroup(groupId: String): Group?
 
-    fun createGroup(group: Group): Flowable<Group>
-    fun updateGroup(id: String, item: Group): Flowable<Group>
-    fun removeMemberFromGroup(groupID: String, userID: String): Flowable<Void>
+    suspend fun createGroup(group: Group): Group?
+    suspend fun updateGroup(id: String, item: Group): Group?
+    suspend fun removeMemberFromGroup(groupID: String, userID: String): Void?
 
-    fun listGroupChat(groupId: String): Flowable<List<ChatMessage>>
+    suspend fun listGroupChat(groupId: String): List<ChatMessage>?
 
-    fun joinGroup(groupId: String): Flowable<Group>
+    suspend fun joinGroup(groupId: String): Group?
 
-    fun leaveGroup(groupId: String, keepChallenges: String): Flowable<Void>
+    suspend fun leaveGroup(groupId: String, keepChallenges: String): Void?
 
     fun postGroupChat(groupId: String, message: Map<String, String>): Flowable<PostChatMessageResult>
 
     fun deleteMessage(groupId: String, messageId: String): Flowable<Void>
     fun deleteInboxMessage(id: String): Flowable<Void>
 
-    fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?): Flowable<List<Member>>
+    suspend fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?): List<Member>?
 
-    fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?, lastId: String): Flowable<List<Member>>
+    suspend fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?, lastId: String): List<Member>?
 
     // Like returns the full chat list
     fun likeMessage(groupId: String, mid: String): Flowable<ChatMessage>
@@ -199,12 +192,12 @@ interface ApiClient {
     fun changeCustomDayStart(updateObject: Map<String, Any>): Flowable<User>
 
     // Members URL
-    fun getMember(memberId: String): Flowable<Member>
-    fun getMemberWithUsername(username: String): Flowable<Member>
+    suspend fun getMember(memberId: String): Member?
+    suspend fun getMemberWithUsername(username: String): Member?
 
     fun getMemberAchievements(memberId: String): Flowable<List<Achievement>>
 
-    fun postPrivateMessage(messageDetails: Map<String, String>): Flowable<PostChatMessageResult>
+    suspend fun postPrivateMessage(messageDetails: Map<String, String>): PostChatMessageResult?
 
     fun retrieveShopIventory(identifier: String): Flowable<Shop>
 
@@ -243,8 +236,8 @@ interface ApiClient {
 
     fun hasAuthenticationKeys(): Boolean
 
-    fun retrieveUser(withTasks: Boolean): Flowable<User>
-    fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
+    suspend fun retrieveUser(withTasks: Boolean = false): User?
+    suspend fun retrieveInboxMessages(uuid: String, page: Int): List<ChatMessage>?
     fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
 
     fun <T : Any> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
@@ -253,7 +246,7 @@ interface ApiClient {
 
     fun runCron(): Flowable<Void>
 
-    fun reroll(): Flowable<User>
+    suspend fun reroll(): User?
 
     fun resetAccount(): Flowable<Void>
     fun deleteAccount(password: String): Flowable<Void>
@@ -282,5 +275,5 @@ interface ApiClient {
     fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
     fun blockMember(userID: String): Flowable<List<String>>
     fun getTeamPlans(): Flowable<List<TeamPlan>>
-    fun getTeamPlanTasks(teamID: String): Flowable<TaskList>
+    suspend fun getTeamPlanTasks(teamID: String): TaskList?
 }

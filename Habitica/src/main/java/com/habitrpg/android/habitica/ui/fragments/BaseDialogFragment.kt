@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -80,7 +80,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
                                     mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
                                 }
                             },
-                            RxErrorHandler.handleEmptyError()
+                            ExceptionHandler.rx()
                         )
                 )
             }

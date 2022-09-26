@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -148,12 +148,12 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                         observable = observable.flatMap { activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1) }
                     }
                     observable
-                        .flatMap { activity.userRepository.retrieveUser(true, forced = true) }
                         .subscribe(
                             {
+                                // TODO: activity.userRepository.retrieveUser(true, forced = true)
                                 hatchPet(thisPotion, thisEgg)
                             },
-                            RxErrorHandler.handleEmptyError()
+                            ExceptionHandler.rx()
                         )
                 }
             }
@@ -173,7 +173,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     {
                         binding.petView.bitmap = drawable.toBitmap()
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         }
     }

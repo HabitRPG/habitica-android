@@ -21,7 +21,7 @@ class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
             pushNotificationManager.displayNotification(remoteMessage)
 
             if (remoteMessage.data["identifier"]?.contains(PushNotificationManager.WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true) {
-                // userRepository.retrieveUser(true).subscribe({}, RxErrorHandler.handleEmptyError())
+                // userRepository.retrieveUser(true).subscribe({}, ExceptionHandler.rx())
             }
         }
     }

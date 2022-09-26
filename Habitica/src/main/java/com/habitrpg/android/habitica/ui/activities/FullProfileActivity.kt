@@ -13,6 +13,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
@@ -20,8 +21,8 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Equipment
@@ -82,7 +83,12 @@ class FullProfileActivity : BaseActivity() {
 
         setTitle(R.string.profile_loading_data)
 
-        compositeSubscription.add(socialRepository.getMember(this.userID).subscribe({ this.updateView(it) }, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val member = socialRepository.retrieveMember(userID)
+            if (member != null) {
+                updateView(member)
+            }
+        }
         avatarWithBars = AvatarWithBarsViewModel(this, binding.avatarWithBars)
 
         binding.avatarWithBars.root.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
@@ -96,15 +102,13 @@ class FullProfileActivity : BaseActivity() {
         binding.sendMessageButton.setOnClickListener { showSendMessageToUserDialog() }
         binding.giftGemsButton.setOnClickListener { MainNavigationController.navigate(R.id.giftGemsActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
         binding.giftSubscriptionButton.setOnClickListener { MainNavigationController.navigate(R.id.giftSubscriptionActivity, bundleOf(Pair("userID", userID), Pair("username", null))) }
-        compositeSubscription.add(
-            userRepository.getUserFlowable().subscribe(
-                {
-                    blocks = it.inbox?.blocks ?: listOf()
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser()
+                .collect {
+                    blocks = it?.inbox?.blocks ?: listOf()
                     binding.blockedDisclaimerView.visibility = if (isUserBlocked()) View.VISIBLE else View.GONE
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+                }
+        }
     }
 
     override fun onDestroy() {
@@ -168,13 +172,14 @@ class FullProfileActivity : BaseActivity() {
 
     private fun useBlock() {
         compositeSubscription.add(
-            socialRepository.blockMember(userID).flatMap {
-                userRepository.retrieveUser()
-            }.subscribe(
+            socialRepository.blockMember(userID).subscribe(
                 {
-                    invalidateOptionsMenu()
+                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                        userRepository.retrieveUser()
+                        invalidateOptionsMenu()
+                    }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }
@@ -227,16 +232,16 @@ class FullProfileActivity : BaseActivity() {
 
         avatarWithBars?.updateData(user)
 
-        compositeSubscription.add(loadItemDataByOutfit(user.equipped).subscribe({ gear -> this.gotGear(gear, user) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(loadItemDataByOutfit(user.equipped).subscribe({ gear -> this.gotGear(gear, user) }, ExceptionHandler.rx()))
 
         if (user.preferences?.costume == true) {
-            compositeSubscription.add(loadItemDataByOutfit(user.costume).subscribe({ this.gotCostume(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(loadItemDataByOutfit(user.costume).subscribe({ this.gotCostume(it) }, ExceptionHandler.rx()))
         } else {
             binding.costumeCard.visibility = View.GONE
         }
 
         // Load the members achievements now
-        compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe({ this.fillAchievements(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(socialRepository.getMemberAchievements(this.userID).subscribe({ this.fillAchievements(it) }, ExceptionHandler.rx()))
     }
 
     private fun updatePetsMountsView(user: Member) {

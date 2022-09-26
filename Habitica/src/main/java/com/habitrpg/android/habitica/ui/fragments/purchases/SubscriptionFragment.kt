@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -15,20 +16,20 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.loadImage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -93,7 +94,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                     binding?.subBenefitsMysteryItemIcon?.loadImage("shop_set_mystery_${it.key?.split("_")?.last()}")
                     binding?.subBenefitsMysteryItemText?.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
 
@@ -108,15 +109,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun refresh() {
-        compositeSubscription.add(
-            userRepository.retrieveUser(withTasks = false, forced = true).subscribe(
-                {
-                    this.setUser(it)
-                    binding?.refreshLayout?.isRefreshing = false
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val user = userRepository.retrieveUser(true)
+            user?.let { setUser(it) }
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -124,7 +121,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     fun loadInventory() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
             val subscriptions = purchaseHandler.getAllSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
@@ -227,17 +224,16 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun checkIfNeedsCancellation() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
             val newestSubscription = purchaseHandler.checkForSubscription()
             if (user?.purchased?.plan?.paymentMethod == "Google" &&
                 user?.purchased?.plan?.isActive == true &&
                 user?.purchased?.plan?.dateTerminated == null &&
                 (newestSubscription?.isAutoRenewing != true)
             ) {
-                compositeSubscription.add(
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     purchaseHandler.cancelSubscription()
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
-                )
+                }
             }
         }
     }

@@ -29,7 +29,7 @@ import com.habitrpg.android.habitica.components.AppComponent
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AdHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
@@ -86,7 +86,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
         setupCoil()
 
-        RxErrorHandler.init(analyticsManager)
+        ExceptionHandler.init(analyticsManager)
 
         FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
@@ -120,7 +120,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             .deleteRealmIfMigrationNeeded()
             .allowWritesOnUiThread(true)
             .compactOnLaunch { totalBytes, usedBytes ->
-
                 // Compact if the file is over 100MB in size and less than 50% 'used'
                 val oneHundredMB = 50 * 1024 * 1024
                 (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5

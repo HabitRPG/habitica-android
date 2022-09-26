@@ -7,7 +7,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 
 class PushNotificationManager(
@@ -46,7 +46,7 @@ class PushNotificationManager(
             val pushDeviceData = HashMap<String, String>()
             pushDeviceData["regId"] = this.refreshedToken
             pushDeviceData["type"] = "android"
-            apiClient.addPushDevice(pushDeviceData).subscribe({ }, RxErrorHandler.handleEmptyError())
+            apiClient.addPushDevice(pushDeviceData).subscribe({ }, ExceptionHandler.rx())
         }
     }
 
@@ -54,7 +54,7 @@ class PushNotificationManager(
         if (this.refreshedToken.isEmpty()) {
             return
         }
-        apiClient.deletePushDevice(this.refreshedToken).subscribe({ }, RxErrorHandler.handleEmptyError())
+        apiClient.deletePushDevice(this.refreshedToken).subscribe({ }, ExceptionHandler.rx())
     }
 
     private fun userHasPushDevice(): Boolean {

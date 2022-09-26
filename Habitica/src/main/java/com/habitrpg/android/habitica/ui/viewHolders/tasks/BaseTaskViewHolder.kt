@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
@@ -37,6 +37,7 @@ abstract class BaseTaskViewHolder constructor(
     var brokenTaskFunc: ((Task) -> Unit)
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     private val scope = MainScope()
+
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
@@ -164,7 +165,7 @@ abstract class BaseTaskViewHolder constructor(
                                 data.parsedText = parsedText
                                 titleTextView.setParsedMarkdown(parsedText)
                             },
-                            RxErrorHandler.handleEmptyError()
+                            ExceptionHandler.rx()
                         )
                 }
             }
@@ -191,7 +192,7 @@ abstract class BaseTaskViewHolder constructor(
                                         data.parsedNotes = parsedNotes
                                         notesTextView?.setParsedMarkdown(parsedNotes)
                                     },
-                                    RxErrorHandler.handleEmptyError()
+                                    ExceptionHandler.rx()
                                 )
                         }
                     }

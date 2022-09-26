@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection.ROW
@@ -24,7 +25,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.user.OwnedCustomization
@@ -41,6 +42,7 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.kotlin.combineLatest
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AvatarCustomizationFragment :
@@ -81,22 +83,19 @@ class AvatarCustomizationFragment :
             adapter.getSelectCustomizationEvents()
                 .flatMap { customization ->
                     if (customization.type == "background") {
-                        val using = if (customization.identifier?.isBlank() != false) {
-                            customization.unlockPath + activeCustomization
-                        } else customization.unlockPath
-                        userRepository.unlockPath(using, 0)
-                            .flatMap { userRepository.retrieveUser(false, true, true) }
+                        userRepository.unlockPath(customization)
+                            //TODO: .flatMap { userRepository.retrieveUser(false, true, true) }
                     } else {
                         userRepository.useCustomization(customization.type ?: "", customization.category, customization.identifier ?: "")
                     }
                 }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
 
         compositeSubscription.add(
             this.inventoryRepository.getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
-                .subscribe({ adapter.setPinnedItemKeys(it) }, RxErrorHandler.handleEmptyError())
+                .subscribe({ adapter.setPinnedItemKeys(it) }, ExceptionHandler.rx())
         )
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -212,12 +211,12 @@ class AvatarCustomizationFragment :
                             )
                         }
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         )
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"
-            compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe({ adapter.additionalSetItems = it }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe({ adapter.additionalSetItems = it }, ExceptionHandler.rx()))
         }
     }
 
@@ -270,14 +269,10 @@ class AvatarCustomizationFragment :
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(
-            userRepository.retrieveUser(withTasks = false, forced = true).subscribe(
-                {
-                    binding?.refreshLayout?.isRefreshing = false
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(true, true)
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 
     fun showFilterDialog() {

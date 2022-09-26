@@ -26,13 +26,13 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
@@ -49,27 +49,27 @@ import retrofit2.http.Query
 
 @JvmSuppressWildcards
 interface ApiService {
-    @get:GET("status")
-    val status: Flowable<HabitResponse<Status>>
+    @GET("status")
+    suspend fun getStatus(): HabitResponse<Status>
 
     /* user API */
 
-    @get:GET("user/")
-    val user: Flowable<HabitResponse<User>>
+    @GET("user/")
+    suspend fun getUser(): HabitResponse<User>
 
     @GET("inbox/messages")
-    fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): Flowable<HabitResponse<List<ChatMessage>>>
+    suspend fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): HabitResponse<List<ChatMessage>>
     @GET("inbox/conversations")
     fun getInboxConversations(): Flowable<HabitResponse<List<InboxConversation>>>
 
-    @get:GET("tasks/user")
-    val tasks: Flowable<HabitResponse<TaskList>>
+    @GET("tasks/user")
+    suspend fun getTasks(): HabitResponse<TaskList>
 
-    @get:GET("world-state")
-    val worldState: Flowable<HabitResponse<WorldState>>
+    @GET("world-state")
+    suspend fun worldState(): HabitResponse<WorldState>
 
     @GET("content")
-    fun getContent(@Query("language") language: String?): Flowable<HabitResponse<ContentResult>>
+    suspend fun getContent(@Query("language") language: String?): HabitResponse<ContentResult>
 
     @PUT("user/")
     fun updateUser(@Body updateDictionary: Map<String, Any>): Flowable<HabitResponse<User>>
@@ -177,10 +177,10 @@ interface ApiService {
     fun loginApple(@Body auth: Map<String, Any>): Flowable<HabitResponse<UserAuthResponse>>
 
     @POST("user/sleep")
-    fun sleep(): Flowable<HabitResponse<Boolean>>
+    suspend fun sleep(): HabitResponse<Boolean>
 
     @POST("user/revive")
-    fun revive(): Flowable<HabitResponse<User>>
+    suspend fun revive(): HabitResponse<User>
 
     @POST("user/class/cast/{skill}")
     fun useSkill(
@@ -193,13 +193,13 @@ interface ApiService {
     fun useSkill(@Path("skill") skillName: String, @Query("targetType") targetType: String): Flowable<HabitResponse<SkillResponse>>
 
     @POST("user/change-class")
-    fun changeClass(): Flowable<HabitResponse<User>>
+    suspend fun changeClass(): HabitResponse<User>
 
     @POST("user/change-class")
-    fun changeClass(@Query("class") className: String): Flowable<HabitResponse<User>>
+    suspend fun changeClass(@Query("class") className: String): HabitResponse<User>
 
     @POST("user/disable-classes")
-    fun disableClasses(): Flowable<HabitResponse<User>>
+    suspend fun disableClasses(): HabitResponse<User>
 
     @POST("user/mark-pms-read")
     fun markPrivateMessagesRead(): Flowable<Void>
@@ -210,25 +210,25 @@ interface ApiService {
     fun listGroups(@Query("type") type: String): Flowable<HabitResponse<List<Group>>>
 
     @GET("groups/{gid}")
-    fun getGroup(@Path("gid") groupId: String): Flowable<HabitResponse<Group>>
+    suspend fun getGroup(@Path("gid") groupId: String): HabitResponse<Group>
 
     @POST("groups")
-    fun createGroup(@Body item: Group): Flowable<HabitResponse<Group>>
+    suspend fun createGroup(@Body item: Group): HabitResponse<Group>
 
     @PUT("groups/{id}")
-    fun updateGroup(@Path("id") id: String, @Body item: Group): Flowable<HabitResponse<Group>>
+    suspend fun updateGroup(@Path("id") id: String, @Body item: Group): HabitResponse<Group>
 
     @POST("groups/{groupID}/removeMember/{userID}")
-    fun removeMemberFromGroup(@Path("groupID") groupID: String, @Path("userID") userID: String): Flowable<HabitResponse<Void>>
+    suspend fun removeMemberFromGroup(@Path("groupID") groupID: String, @Path("userID") userID: String): HabitResponse<Void>
 
     @GET("groups/{gid}/chat")
-    fun listGroupChat(@Path("gid") groupId: String): Flowable<HabitResponse<List<ChatMessage>>>
+    suspend fun listGroupChat(@Path("gid") groupId: String): HabitResponse<List<ChatMessage>>
 
     @POST("groups/{gid}/join")
-    fun joinGroup(@Path("gid") groupId: String): Flowable<HabitResponse<Group>>
+    suspend fun joinGroup(@Path("gid") groupId: String): HabitResponse<Group>
 
     @POST("groups/{gid}/leave")
-    fun leaveGroup(@Path("gid") groupId: String, @Query("keepChallenges") keepChallenges: String): Flowable<HabitResponse<Void>>
+    suspend fun leaveGroup(@Path("gid") groupId: String, @Query("keepChallenges") keepChallenges: String): HabitResponse<Void>
 
     @POST("groups/{gid}/chat")
     fun postGroupChat(@Path("gid") groupId: String, @Body message: Map<String, String>): Flowable<HabitResponse<PostChatMessageResult>>
@@ -240,17 +240,17 @@ interface ApiService {
     fun deleteInboxMessage(@Path("messageId") messageId: String): Flowable<HabitResponse<Void>>
 
     @GET("groups/{gid}/members")
-    fun getGroupMembers(
+    suspend fun getGroupMembers(
         @Path("gid") groupId: String,
         @Query("includeAllPublicFields") includeAllPublicFields: Boolean?
-    ): Flowable<HabitResponse<List<Member>>>
+    ): HabitResponse<List<Member>>
 
     @GET("groups/{gid}/members")
-    fun getGroupMembers(
+    suspend fun getGroupMembers(
         @Path("gid") groupId: String,
         @Query("includeAllPublicFields") includeAllPublicFields: Boolean?,
         @Query("lastId") lastId: String
-    ): Flowable<HabitResponse<List<Member>>>
+    ): HabitResponse<List<Member>>
 
     // Like returns the full chat list
     @POST("groups/{gid}/chat/{mid}/like")
@@ -300,7 +300,7 @@ interface ApiService {
     fun validateSubscription(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<Void>>
 
     @GET("/iap/android/subscribe/cancel")
-    fun cancelSubscription(): Flowable<HabitResponse<Void>>
+    suspend fun cancelSubscription(): HabitResponse<Void>
 
     @POST("/iap/android/norenew-subscribe")
     fun validateNoRenewSubscription(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<Void>>
@@ -310,16 +310,16 @@ interface ApiService {
 
     // Members URL
     @GET("members/{mid}")
-    fun getMember(@Path("mid") memberId: String): Flowable<HabitResponse<Member>>
+    suspend fun getMember(@Path("mid") memberId: String): HabitResponse<Member>
 
     @GET("members/username/{username}")
-    fun getMemberWithUsername(@Path("username") username: String): Flowable<HabitResponse<Member>>
+    suspend fun getMemberWithUsername(@Path("username") username: String): HabitResponse<Member>
 
     @GET("members/{mid}/achievements")
     fun getMemberAchievements(@Path("mid") memberId: String, @Query("lang") language: String?): Flowable<HabitResponse<List<Achievement>>>
 
     @POST("members/send-private-message")
-    fun postPrivateMessage(@Body messageDetails: Map<String, String>): Flowable<HabitResponse<PostChatMessageResult>>
+    suspend fun postPrivateMessage(@Body messageDetails: Map<String, String>): HabitResponse<PostChatMessageResult>
 
     @GET("members/find/{username}")
     fun findUsernames(
@@ -440,7 +440,7 @@ interface ApiService {
     fun blockMember(@Path("userID") userID: String): Flowable<HabitResponse<List<String>>>
 
     @POST("user/reroll")
-    fun reroll(): Flowable<HabitResponse<User>>
+    suspend fun reroll(): HabitResponse<User>
 
     // Team Plans
 
@@ -448,5 +448,5 @@ interface ApiService {
     fun getTeamPlans(): Flowable<HabitResponse<List<TeamPlan>>>
 
     @GET("tasks/group/{groupID}")
-    fun getTeamPlanTasks(@Path("groupID") groupId: String): Flowable<HabitResponse<TaskList>>
+    suspend fun getTeamPlanTasks(@Path("groupID") groupId: String): HabitResponse<TaskList>
 }

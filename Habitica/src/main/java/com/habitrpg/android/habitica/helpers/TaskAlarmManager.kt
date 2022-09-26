@@ -58,7 +58,7 @@ class TaskAlarmManager(
         taskRepository.getTaskCopy(taskId)
             .filter { task -> task.isValid && task.isManaged && TaskType.DAILY == task.type }
             .firstElement()
-            .subscribe({ this.setAlarmsForTask(it) }, RxErrorHandler.handleEmptyError())
+            .subscribe({ this.setAlarmsForTask(it) }, ExceptionHandler.rx())
     }
 
     suspend fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {

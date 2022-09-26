@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.user.User
@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 
 class MainUserViewModel(private val providedUserID: String, val userRepository: UserRepository, val socialRepository: SocialRepository) {
-
 
     val formattedUsername: CharSequence?
         get() = user.value?.formattedUsername
@@ -55,14 +54,14 @@ class MainUserViewModel(private val providedUserID: String, val userRepository: 
     fun updateUser(path: String, value: Any) {
         disposable.add(
             userRepository.updateUser(path, value)
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 
     fun updateUser(data: Map<String, Any>) {
         disposable.add(
             userRepository.updateUser(data)
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 }

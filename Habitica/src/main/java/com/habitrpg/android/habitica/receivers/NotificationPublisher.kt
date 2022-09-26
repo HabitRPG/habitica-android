@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
@@ -76,7 +76,7 @@ class NotificationPublisher : BroadcastReceiver() {
                         notify(intent, buildNotification(wasInactive, pair.second.authentication?.timestamps?.createdAt))
                     }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         } else {
             notify(intent, buildNotification(wasInactive))

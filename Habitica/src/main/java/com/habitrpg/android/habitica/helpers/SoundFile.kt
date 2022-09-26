@@ -48,7 +48,7 @@ class SoundFile(val theme: String, private val fileName: String) {
             player?.start()
         } catch (e: IllegalStateException) {
         } catch (e: Exception) {
-            RxErrorHandler.reportError(e)
+            ExceptionHandler.reportError(e)
         }
     }
 }

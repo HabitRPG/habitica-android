@@ -35,7 +35,7 @@ interface InventoryRepository : BaseRepository {
     fun getPets(): Flow<List<Pet>>
 
     fun getOwnedPets(): Flow<List<OwnedPet>>
-    fun getQuestContent(key: String): Flowable<QuestContent>
+    fun getQuestContent(key: String): Flow<QuestContent?>
     fun getQuestContent(keys: List<String>): Flow<List<QuestContent>>
 
     fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>>
@@ -86,7 +86,7 @@ interface InventoryRepository : BaseRepository {
     fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Void>
 
     fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
-    fun getItemsFlowable(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
+    fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
     fun getItemsFlowable(itemClass: Class<out Item>): Flowable<out List<Item>>
     fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
     fun getLatestMysteryItem(): Flowable<Equipment>

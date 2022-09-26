@@ -22,7 +22,7 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
             {
                 worldState = it
             },
-            RxErrorHandler.handleEmptyError()
+            ExceptionHandler.rx()
         )
     }
 

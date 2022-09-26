@@ -25,7 +25,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
@@ -34,9 +33,9 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.models.IAPGift
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.Transaction
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -88,7 +87,7 @@ class PurchaseHandler(
                 return
             }
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                     for (purchase in purchases) {
                         consume(purchase)
                     }
@@ -220,7 +219,7 @@ class PurchaseHandler(
                 apiClient.validatePurchase(validationRequest).subscribe({
                     processedPurchase(purchase)
                     val gift = removeGift(sku)
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                         consume(purchase)
                     }
                     displayConfirmationDialog(purchase, gift?.second)
@@ -233,7 +232,7 @@ class PurchaseHandler(
                 apiClient.validateNoRenewSubscription(validationRequest).subscribe({
                     processedPurchase(purchase)
                     val gift = removeGift(sku)
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                         consume(purchase)
                     }
                     displayConfirmationDialog(purchase, gift?.second)
@@ -246,7 +245,7 @@ class PurchaseHandler(
                 apiClient.validateSubscription(validationRequest).subscribe({
                     processedPurchase(purchase)
                     analyticsManager.logEvent("user_subscribed", bundleOf(Pair("sku", sku)))
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                         acknowledgePurchase(purchase)
                     }
                     displayConfirmationDialog(purchase)
@@ -269,7 +268,9 @@ class PurchaseHandler(
     }
 
     private fun processedPurchase(purchase: Purchase) {
-        userViewModel.userRepository.retrieveUser(false, true).subscribeWithErrorHandler {}
+        MainScope().launch(ExceptionHandler.coroutine()) {
+            userViewModel.userRepository.retrieveUser(false, true)
+        }
     }
 
     private fun buildValidationRequest(purchase: Purchase): PurchaseValidationRequest {
@@ -297,7 +298,7 @@ class PurchaseHandler(
                 if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                     processedPurchase(purchase)
                     removeGift(purchase.skus.firstOrNull())
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                         consume(purchase)
                     }
                     return
@@ -332,9 +333,9 @@ class PurchaseHandler(
         return fallback
     }
 
-    fun cancelSubscription(): Flowable<User> {
-        return apiClient.cancelSubscription()
-            .flatMap { userViewModel.userRepository.retrieveUser(false, true) }
+    suspend fun cancelSubscription(): User? {
+        apiClient.cancelSubscription()
+        return userViewModel.userRepository.retrieveUser(false, true)
     }
 
     private fun durationString(sku: String): String {
@@ -371,7 +372,7 @@ class PurchaseHandler(
     }
 
     private fun displayConfirmationDialog(purchase: Purchase, giftedTo: String? = null) {
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
             val application = (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
             val sku = purchase.skus.firstOrNull() ?: return@launch

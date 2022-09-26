@@ -37,9 +37,9 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
@@ -68,6 +68,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -130,8 +131,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
-        } catch (e: Exception) {
-            // pass
+        } catch (e: IllegalStateException) {
+            ExceptionHandler.reportError(e)
         }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
@@ -393,16 +394,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
             val quest = user.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(
-                    inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "").firstElement().subscribe(
-                        {
-                            QuestCompletedDialog.showWithQuest(this, it)
-
-                            viewModel.updateUser("party.quest.completed", "")
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-                )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val questContent = inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "").firstOrNull()
+                    if (questContent != null) {
+                        QuestCompletedDialog.showWithQuest(this@MainActivity, questContent)
+                    }
+                    viewModel.updateUser("party.quest.completed", "")
+                }
             }
 
             if (user.flags?.welcomed == false) {
@@ -451,14 +449,14 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         viewModel.user.value, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp, data.level
                     )
                 )
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, ExceptionHandler.rx())
             )
         }
 
         val showItemsFound = userQuestStatus == UserQuestStatus.QUEST_COLLECT
         compositeSubscription.add(
             displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 
@@ -517,7 +515,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                             startActivity(intent)
                         }
                     } catch (e: PackageManager.NameNotFoundException) {
-                        RxErrorHandler.reportError(e)
+                        ExceptionHandler.reportError(e)
                     }
                 }
             }

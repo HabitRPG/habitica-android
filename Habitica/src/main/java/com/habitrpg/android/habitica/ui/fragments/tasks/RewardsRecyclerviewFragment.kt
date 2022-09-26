@@ -9,11 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -22,6 +23,8 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.functions.Consumer
+import kotlinx.coroutines.launch
+import java.util.*
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
@@ -33,7 +36,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe({ }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe({ }, ExceptionHandler.rx()))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -62,7 +65,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                     {
                         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
             )
         }
@@ -73,7 +76,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
                 val intent = Intent(activity, SkillMemberActivity::class.java)
                 cardSelectedResult.launch(intent)
             },
-            RxErrorHandler.handleEmptyError()
+            ExceptionHandler.rx()
         )?.let { compositeSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
 
@@ -93,12 +96,14 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.retrieveUser(withTasks = true, forced = true)
-                .flatMap { inventoryRepository.retrieveInAppRewards() }
+        }
+        compositeSubscription.add(
+            inventoryRepository.retrieveInAppRewards()
                 .doOnTerminate {
                     binding?.refreshLayout?.isRefreshing = false
-                }.subscribe({ }, RxErrorHandler.handleEmptyError())
+                }.subscribe({ }, ExceptionHandler.rx())
         )
     }
 

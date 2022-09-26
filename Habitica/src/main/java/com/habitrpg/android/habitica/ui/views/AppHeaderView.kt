@@ -26,6 +26,7 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.ProgressIndicatorDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -103,7 +104,7 @@ fun AppHeaderView(
     viewModel: MainUserViewModel,
 ) {
     val user by viewModel.user.observeAsState(null)
-    val displayedTeamPlan = viewModel.currentTeamPlan
+    val displayedTeamPlan by viewModel.currentTeamPlan.collectAsState()
     Column {
         Row {
             ComposableAvatarView(

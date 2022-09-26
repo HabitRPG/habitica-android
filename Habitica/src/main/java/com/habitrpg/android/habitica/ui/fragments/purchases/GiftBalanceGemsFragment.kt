@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemBalanceBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
@@ -64,14 +66,16 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
             giftedMember?.id?.let {
                 compositeSubscription.add(
                     socialRepository.transferGems(it, amount)
-                        .flatMap { userRepository.retrieveUser(false, true) }
                         .doOnError {
                             isGifting = false
                         }
                         .subscribe(
                             {
-                                activity?.finish()
-                            }, RxErrorHandler.handleEmptyError()
+                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                    userRepository.retrieveUser(false)
+                                }
+                            activity?.finish()
+                            }, ExceptionHandler.rx()
                         )
                 )
             }

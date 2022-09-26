@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.util.PatternsCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.google.android.material.textfield.TextInputLayout
@@ -22,8 +23,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
@@ -36,8 +39,7 @@ import com.habitrpg.android.habitica.ui.views.ValidatingEditText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -203,8 +205,11 @@ class AccountPreferenceFragment :
             dialog.setTitle(R.string.are_you_sure)
             dialog.addButton(R.string.disconnect, true) { _, _ ->
                 apiClient.disconnectSocial(network)
-                    .flatMap { userRepository.retrieveUser(true, true) }
-                    .subscribe({ displayDisconnectSuccess(networkName) }, RxErrorHandler.handleEmptyError())
+                    .subscribe({
+                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                            userRepository.retrieveUser(true, true)
+                        }
+                        displayDisconnectSuccess(networkName) }, ExceptionHandler.rx())
             }
             dialog.addCancelButton()
             dialog.show()
@@ -252,7 +257,7 @@ class AccountPreferenceFragment :
         showSingleEntryDialog(value, title) {
             if (value != it) {
                 userRepository.updateUser(path, it ?: "")
-                    .subscribe({}, RxErrorHandler.handleEmptyError())
+                    .subscribe({}, ExceptionHandler.rx())
             }
         }
     }
@@ -278,9 +283,7 @@ class AccountPreferenceFragment :
                 userRepository.updatePassword(
                     oldPasswordEditText?.text ?: "",
                     passwordEditText.text ?: "",
-                    passwordRepeatEditText.text ?: ""
-                )
-                    .flatMap { userRepository.retrieveUser(true, true) }
+                    passwordRepeatEditText.text ?: "")
                     .subscribe(
                         {
                             (activity as? SnackbarActivity)?.showSnackbar(
@@ -288,7 +291,7 @@ class AccountPreferenceFragment :
                                 displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                             )
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
                 dialog.dismiss()
             }
@@ -327,7 +330,6 @@ class AccountPreferenceFragment :
                 if ((showEmail && emailEditText?.isValid != true) || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
                 val email = if (showEmail) emailEditText?.text else user?.authentication?.findFirstSocialEmail()
                 apiClient.registerUser(user?.username ?: "", email ?: "", passwordEditText.text ?: "", passwordRepeatEditText?.text ?: "")
-                    .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(
                         {
                             (activity as? SnackbarActivity)?.showSnackbar(
@@ -335,7 +337,7 @@ class AccountPreferenceFragment :
                                 displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                             )
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
                 dialog.dismiss()
             }
@@ -366,12 +368,14 @@ class AccountPreferenceFragment :
                 emailEditText?.showErrorIfNecessary()
                 if (emailEditText?.isValid != true) return@addButton
                 userRepository.updateEmail(emailEditText.text.toString(), passwordEditText?.text.toString())
-                    .flatMap { userRepository.retrieveUser(true, true) }
                     .subscribe(
                         {
+                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                userRepository.retrieveUser(true, true)
+                            }
                             configurePreference(findPreference("email"), emailEditText.text.toString())
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
                 dialog.dismiss()
             }
@@ -385,7 +389,7 @@ class AccountPreferenceFragment :
     private fun showLoginNameDialog() {
         showSingleEntryDialog(user?.username, getString(R.string.username)) {
             userRepository.updateLoginName(it ?: "")
-                .subscribe({}, RxErrorHandler.handleEmptyError())
+                .subscribe({}, ExceptionHandler.rx())
         }
     }
 
@@ -450,7 +454,7 @@ class AccountPreferenceFragment :
                     errorDialog?.addCloseButton()
                     errorDialog?.show()
                 }
-                RxErrorHandler.reportError(throwable)
+                ExceptionHandler.reportError(throwable)
             }
         )
     }
@@ -475,7 +479,7 @@ class AccountPreferenceFragment :
         dialog.setMessage(R.string.confirm_username_description)
         dialog.addButton(R.string.confirm, true) { _, _ ->
             userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         }
         dialog.addCancelButton()
         dialog.show()
@@ -483,19 +487,10 @@ class AccountPreferenceFragment :
 
     private fun resetAccount() {
         val dialog = HabiticaProgressDialog.show(context, R.string.resetting_account)
-        compositeSubscription.add(
-            userRepository.resetAccount().subscribe({
-                dialog?.dismiss()
-                accountDialog.dismiss()
-                (activity as? SnackbarActivity)?.showSnackbar(
-                    content = context?.getString(R.string.account_reset),
-                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-                )
-            }) { throwable ->
-                dialog?.dismiss()
-                RxErrorHandler.reportError(throwable)
-            }
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.resetAccount()
+            dialog?.dismiss()
+        }
     }
 
     private fun copyValue(name: String, value: CharSequence?) {

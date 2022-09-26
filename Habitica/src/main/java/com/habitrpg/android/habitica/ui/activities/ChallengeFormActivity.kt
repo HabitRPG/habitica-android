@@ -23,8 +23,8 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityCreateChallengeBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -41,6 +41,7 @@ import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
@@ -156,7 +157,7 @@ class ChallengeFormActivity : BaseActivity() {
                         { throwable ->
                             dialog?.dismiss()
                             savingInProgress = false
-                            RxErrorHandler.reportError(throwable)
+                            ExceptionHandler.reportError(throwable)
                         }
                     )
             )
@@ -337,36 +338,26 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        compositeSubscription.add(
-            socialRepository.getUserGroups("guild").zipWith(
-                userRepository.getUserFlowable()
-                    .map { it.party?.id ?: "" }
-                    .distinctUntilChanged()
-                    .flatMap {
-                        if (it.isBlank()) {
-                            return@flatMap Flowable.empty<Group>()
-                        }
-                        socialRepository.retrieveGroup(it)
-                    }
-            ) { user, groups -> Pair(user, groups) }
-                .subscribe(
-                    { groups ->
-                        val mutableGroups = groups.first.toMutableList()
-                        if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
-                            val tavern = Group()
-                            tavern.id = "00000000-0000-4000-A000-000000000000"
-                            tavern.name = getString(R.string.public_challenge)
-                            mutableGroups.add(0, tavern)
-                        }
-                        if (groups.second != null) {
-                            mutableGroups.add(groups.second)
-                        }
-                        locationAdapter.clear()
-                        locationAdapter.addAll(mutableGroups)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val groups = socialRepository.getUserGroups("guild").firstOrNull()?.toMutableList() ?: return@launch
+            val partyID = userRepository.getUser().firstOrNull()?.party?.id
+            val party = if (partyID?.isNotBlank() == true) {
+                socialRepository.retrieveGroup(partyID)
+            } else {
+                null
+            }
+            if (groups.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
+                val tavern = Group()
+                tavern.id = "00000000-0000-4000-A000-000000000000"
+                tavern.name = getString(R.string.public_challenge)
+                groups.add(0, tavern)
+            }
+            if (party != null) {
+                groups.add(party)
+            }
+            locationAdapter.clear()
+            locationAdapter.addAll(groups)
+        }
 
         binding.challengeLocationSpinner.adapter = locationAdapter
         binding.challengeLocationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -399,7 +390,7 @@ class ChallengeFormActivity : BaseActivity() {
                         addReward.text -> openNewTaskActivity(TaskType.REWARD, null)
                     }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
 
@@ -438,7 +429,7 @@ class ChallengeFormActivity : BaseActivity() {
                     }
                     checkPrizeAndMinimumForTavern()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
             challengeRepository.getChallengeTasks(it).subscribe(
                 { tasks ->
@@ -446,7 +437,7 @@ class ChallengeFormActivity : BaseActivity() {
                         addOrUpdateTaskInList(task, true)
                     }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         }
     }

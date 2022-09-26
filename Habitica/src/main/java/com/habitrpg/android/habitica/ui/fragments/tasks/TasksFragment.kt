@@ -26,8 +26,8 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -306,7 +306,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                         }
                     }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }
@@ -422,7 +422,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (viewModel.ownerTitle.isNotBlank()) {
             activity?.title = viewModel.ownerTitle
         }
-        viewModel.userViewModel.currentTeamPlan = viewModel.teamPlans[viewModel.ownerID.value]
+        viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]
         val isPersonalBoard = viewModel.isPersonalBoard
         bottomNavigation?.canAddTasks = isPersonalBoard
     }

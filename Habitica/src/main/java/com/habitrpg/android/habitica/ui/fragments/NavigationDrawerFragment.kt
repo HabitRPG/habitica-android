@@ -29,10 +29,11 @@ import com.habitrpg.android.habitica.databinding.DrawerMainBinding
 import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
@@ -140,7 +141,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 {
                     setSelection(it.transitionId, it.bundle, true)
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
         subscriptions?.add(
@@ -151,7 +152,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     }
                     updatePromo()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
 
@@ -172,12 +173,12 @@ class NavigationDrawerFragment : DialogFragment() {
                         updateSeasonalMenuEntries(gearEvent, pair.second)
                     }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
 
         if (configManager.enableTeamBoards()) {
-            lifecycleScope.launch {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.getTeamPlans()
                     .distinctUntilChanged()
                     .collect {

@@ -26,10 +26,11 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
@@ -38,6 +39,7 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
@@ -94,16 +96,16 @@ abstract class BaseActivity : AppCompatActivity() {
         injectActivity(HabiticaBaseApplication.userComponent)
         setContentView(getContentView())
         compositeSubscription = CompositeDisposable()
-        compositeSubscription.add(
-            notificationsManager.displayNotificationEvents.subscribe(
-                {
-                    if (ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)) {
-                        compositeSubscription.add(userRepository.retrieveUser(false, true).subscribeWithErrorHandler {})
+        compositeSubscription.add(notificationsManager.displayNotificationEvents.subscribe(
+            {
+                if (ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)) {
+                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                        userRepository.retrieveUser(false, true)
                     }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+                }
+            },
+            ExceptionHandler.rx()
+        ))
     }
 
     override fun onRestart() {

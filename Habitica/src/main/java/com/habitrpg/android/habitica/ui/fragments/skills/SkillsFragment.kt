@@ -14,7 +14,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSkillsBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.User
@@ -91,7 +91,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
                 allEntries.add(item)
             }
             return@combineLatest allEntries
-        }.subscribe({ skills -> adapter?.setSkillList(skills) }, RxErrorHandler.handleEmptyError())
+        }.subscribe({ skills -> adapter?.setSkillList(skills) }, ExceptionHandler.rx())
     }
 
     private fun onSkillSelected(skill: Skill) {
@@ -128,7 +128,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
             }
         }
         if (response.damage > 0) {
-            lifecycleScope.launch {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 delay(2000L)
                 if (!isAdded) return@launch
                 showSnackbar(
@@ -140,7 +140,9 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
                 )
             }
         }
-        compositeSubscription.add(userRepository.retrieveUser(false).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(true)
+        }
     }
 
     private val taskSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -167,7 +169,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         compositeSubscription.add(
             observable.subscribe(
                 { skillResponse -> this.displaySkillResult(skill, skillResponse) },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }

@@ -20,9 +20,9 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
@@ -42,7 +42,6 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -99,11 +98,16 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 shopItem.isTypeItem -> contentView = PurchaseDialogItemContent(context)
                 shopItem.isTypeQuest -> {
                     contentView = PurchaseDialogQuestContent(context)
-                    inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe({ contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                    MainScope().launch(ExceptionHandler.coroutine()) {
+                        val content = inventoryRepository.getQuestContent(shopItem.key).firstOrNull()
+                        if (content != null) {
+                            contentView.setQuestContentItem(content)
+                        }
+                    }
                 }
                 shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
-                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe({ contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
+                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe({ contentView.setEquipment(it) }, ExceptionHandler.rx())
                     checkGearClass()
                 }
                 "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
@@ -182,7 +186,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
         } else if (shopItem.event?.end != null) {
             limitedTextViewJob?.cancel()
-            limitedTextViewJob = GlobalScope.launch(Dispatchers.Main) {
+            limitedTextViewJob = MainScope().launch(Dispatchers.Main) {
                 limitedTextView.visibility = View.VISIBLE
                 while (shopItem.event?.end?.after(Date()) == true) {
                     limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
@@ -250,11 +254,11 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         priceLabel = buyButton.findViewById(R.id.priceLabel)
         priceLabel.animationDuration = 0L
         buyLabel = buyButton.findViewById(R.id.buy_label)
-        pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe({ isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
+        pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe({ isPinned = !this.isPinned }, ExceptionHandler.rx()) }
 
         shopItem = item
 
-        compositeSubscription.add(userRepository.getUserFlowable().subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        compositeSubscription.add(userRepository.getUserFlowable().subscribe({ this.setUser(it) }, ExceptionHandler.rx()))
     }
 
     private fun setUser(user: User) {
@@ -360,8 +364,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             } else {
                 inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key).cast(Any::class.java)
             }
-        } else if (shopItem.purchaseType == "fortify") {
-            observable = userRepository.reroll().cast(Any::class.java)
+        // TODO: } else if (shopItem.purchaseType == "fortify") {
+            // observable = userRepository.reroll().cast(Any::class.java)
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
             observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
         } else if (shopItem.purchaseType == "debuffPotion") {
@@ -412,7 +416,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                     rightText = "-" + priceLabel.text
                 )
             }
-            .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
+            // TODO: .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
             .flatMap { inventoryRepository.retrieveInAppRewards() }
             .subscribe({
                 if (item.isTypeGear || item.currency == "hourglasses") {

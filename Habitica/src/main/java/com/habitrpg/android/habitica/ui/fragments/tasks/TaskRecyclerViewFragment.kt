@@ -25,10 +25,10 @@ import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -54,7 +54,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -127,9 +130,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         recyclerAdapter?.errorButtonEvents?.subscribe(
             {
-                taskRepository.syncErroredTasks().subscribe({}, RxErrorHandler.handleEmptyError())
+                taskRepository.syncErroredTasks().subscribe({}, ExceptionHandler.rx())
             },
-            RxErrorHandler.handleEmptyError()
+            ExceptionHandler.rx()
         )?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
             openTaskForm(it.first)
@@ -299,7 +302,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                             .subscribe(
                                 {
                                 },
-                                RxErrorHandler.handleEmptyError()
+                                ExceptionHandler.rx()
                             )
                     )
                 }
@@ -328,14 +331,15 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             }
         })
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable()
-                .distinct { it.hasCompletedOnboarding }
-                .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
-                .subscribe({ recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError())
-        )
-
-        setPreferenceTaskFilters()
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser()
+                .distinctUntilChangedBy { it?.hasCompletedOnboarding }
+                .onEach { recyclerAdapter?.showAdventureGuide = it?.hasCompletedOnboarding != true }
+                .takeWhile { it?.hasCompletedOnboarding != true }
+                .collect {
+                    recyclerAdapter?.user = it
+                }
+        }
     }
 
     private fun updateTaskSubscription(ownerID: String?) {
@@ -343,7 +347,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             taskFlowJob?.cancel()
         }
         val additionalGroupIDs = viewModel.userViewModel.mirrorGroupTasks.toTypedArray()
-        taskFlowJob = lifecycleScope.launch {
+        taskFlowJob = lifecycleScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.getTasks(taskType, ownerID, additionalGroupIDs).collect {
                 recyclerAdapter?.updateUnfilteredData(it)
             }
@@ -364,8 +368,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
                         if (!task.isValid) return@addButton
                         taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
-                            .flatMap { userRepository.retrieveUser(true, forced = true) }
-                            .subscribe({}, RxErrorHandler.handleEmptyError())
+                            .subscribe({
+                                       lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                           userRepository.retrieveUser(true, forced = true)
+                                       }
+                            }, ExceptionHandler.rx())
                     }
                     dialog.addButton(
                         it.getString(R.string.delete_x_tasks, taskCount),
@@ -374,13 +381,16 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     ) { _, _ ->
                         if (!task.isValid) return@addButton
                         taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
-                            .flatMap { userRepository.retrieveUser(true, forced = true) }
-                            .subscribe({}, RxErrorHandler.handleEmptyError())
+                            .subscribe({
+                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                    userRepository.retrieveUser(true, forced = true)
+                                }
+                            }, ExceptionHandler.rx())
                     }
                     dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                     dialog.show()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         }
     }
@@ -488,7 +498,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         setEmptyLabels()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
-            compositeSubscription.add(taskRepository.retrieveCompletedTodos().subscribe({}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(taskRepository.retrieveCompletedTodos().subscribe({}, ExceptionHandler.rx()))
         }
     }
 

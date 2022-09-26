@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -52,7 +52,7 @@ class TaskReceiver : BroadcastReceiver() {
 
                         createNotification(context, it)
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         }
     }

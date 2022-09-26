@@ -5,7 +5,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
@@ -49,9 +49,10 @@ class TaskRepositoryImpl(
         localRepository.saveTasks(userId, order, tasks)
     }
 
-    override fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList> {
-        return this.apiClient.tasks
-            .doOnNext { res -> this.localRepository.saveTasks(userId, tasksOrder, res) }
+    override suspend fun retrieveTasks(userId: String, tasksOrder: TasksOrder): TaskList? {
+        val tasks = apiClient.getTasks() ?: return null
+        this.localRepository.saveTasks(userId, tasksOrder, tasks)
+        return tasks
     }
 
     override fun retrieveCompletedTodos(userId: String?): Flowable<TaskList> {
@@ -309,11 +310,11 @@ class TaskRepositoryImpl(
         getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
     override fun updateTaskInBackground(task: Task) {
-        updateTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
+        updateTask(task).subscribe({ }, ExceptionHandler.rx())
     }
 
     override fun createTaskInBackground(task: Task) {
-        createTask(task).subscribe({ }, RxErrorHandler.handleEmptyError())
+        createTask(task).subscribe({ }, ExceptionHandler.rx())
     }
 
     override fun getTaskCopies(userId: String): Flow<List<Task>> =

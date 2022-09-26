@@ -26,18 +26,13 @@ interface UserRepository : BaseRepository {
     fun updateUser(updateData: Map<String, Any>): Flowable<User>
     fun updateUser(key: String, value: Any): Flowable<User>
 
-    fun retrieveUser(withTasks: Boolean): Flowable<User>
-    fun retrieveUser(
-        withTasks: Boolean = false,
-        forced: Boolean = false,
-        overrideExisting: Boolean = false
-    ): Flowable<User>
+    suspend fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false, overrideExisting: Boolean = false): User?
 
-    fun revive(): Flowable<User>
+    suspend fun revive(): User?
 
     fun resetTutorial(): Maybe<User>
 
-    fun sleep(user: User): Flowable<User>
+    suspend fun sleep(user: User): User?
 
     fun getSkills(user: User): Flowable<out List<Skill>>
 
@@ -46,17 +41,14 @@ interface UserRepository : BaseRepository {
     fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse>
     fun useSkill(key: String, target: String?): Flowable<SkillResponse>
 
-    fun changeClass(): Flowable<User>
-
-    fun disableClasses(): Flowable<User>
-
-    fun changeClass(selectedClass: String): Flowable<User>
+    suspend fun disableClasses(): User?
+    suspend fun changeClass(selectedClass: String? = null): User?
 
     fun unlockPath(path: String, price: Int): Flowable<UnlockResponse>
     fun unlockPath(customization: Customization): Flowable<UnlockResponse>
 
-    fun runCron(tasks: MutableList<Task>)
-    fun runCron()
+    suspend fun runCron(tasks: MutableList<Task>)
+    suspend fun runCron()
 
     fun readNotification(id: String): Flowable<List<Any>>
     fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
@@ -66,7 +58,7 @@ interface UserRepository : BaseRepository {
 
     fun updateLanguage(languageCode: String): Flowable<User>
 
-    fun resetAccount(): Flowable<User>
+    suspend fun resetAccount(): User?
     fun deleteAccount(password: String): Flowable<Void>
 
     fun sendPasswordResetEmail(email: String): Flowable<Void>
@@ -86,9 +78,9 @@ interface UserRepository : BaseRepository {
 
     fun getUserQuestStatus(): Flowable<UserQuestStatus>
 
-    fun reroll(): Flowable<User>
+    suspend fun reroll(): User?
     fun retrieveTeamPlans(): Flowable<List<TeamPlan>>
     fun getTeamPlans(): Flow<List<TeamPlan>>
-    fun retrieveTeamPlan(teamID: String): Flowable<Group>
+    suspend fun retrieveTeamPlan(teamID: String): Group?
     fun getTeamPlan(teamID: String): Flowable<Group>
 }

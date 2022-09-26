@@ -13,17 +13,17 @@ import com.habitrpg.android.habitica.databinding.ChatItemBinding
 import com.habitrpg.android.habitica.databinding.TavernChatIntroItemBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -41,7 +41,8 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRec
         binding.sublineTextview.setOnClickListener { onOpenProfile?.invoke(replyToUUID) }
     }
 
-    fun bind(member: Member) {
+    fun bind(member: Member?) {
+        if (member == null) return
         binding.avatarView.setAvatar(member)
         binding.displayNameTextview.username = member.displayName
         binding.displayNameTextview.tier = member.contributor?.level ?: 0
@@ -193,7 +194,7 @@ class ChatRecyclerMessageViewHolder(
                         chatMessage?.parsedText = parsedText
                         binding.messageText.setParsedMarkdown(parsedText)
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         }
 

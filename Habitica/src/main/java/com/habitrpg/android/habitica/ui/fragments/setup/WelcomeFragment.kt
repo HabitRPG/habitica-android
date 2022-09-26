@@ -8,16 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentWelcomeBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -100,14 +104,13 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                 }
         )
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable().firstElement().subscribe {
-                binding?.displayNameEditText?.setText(it.profile?.name)
-                displayNameVerificationEvents.onNext(it.profile?.name ?: "")
-                binding?.usernameEditText?.setText(it.username)
-                usernameVerificationEvents.onNext(it.username ?: "")
-            }
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val user = userRepository.getUser().firstOrNull()
+            binding?.displayNameEditText?.setText(user?.profile?.name)
+            displayNameVerificationEvents.onNext(user?.profile?.name ?: "")
+            binding?.usernameEditText?.setText(user?.authentication?.localAuthentication?.username)
+            usernameVerificationEvents.onNext(user?.username ?: "")
+        }
     }
 
     override fun injectFragment(component: UserComponent) {

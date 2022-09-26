@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationEquipmentRecyclerViewAdapter
@@ -19,6 +20,7 @@ import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AvatarEquipmentFragment :
@@ -55,14 +57,14 @@ class AvatarEquipmentFragment :
                     val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
                     inventoryRepository.equip(if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped", key)
                 }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
         compositeSubscription.add(
             adapter.getUnlockCustomizationEvents()
                 .flatMap<UnlockResponse> {
                     Flowable.empty()
                 }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -110,7 +112,7 @@ class AvatarEquipmentFragment :
                 {
                     adapter.setEquipment(it)
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }
@@ -148,13 +150,9 @@ class AvatarEquipmentFragment :
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(
-            userRepository.retrieveUser(false, true).subscribe(
-                {
-                    binding?.refreshLayout?.isRefreshing = false
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(true, true)
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 }

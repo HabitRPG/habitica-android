@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -19,8 +20,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentTavernDetailBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
@@ -29,6 +30,11 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.models.PlayerTier
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
@@ -73,33 +79,30 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
         addPlayerTiers()
         bindButtons()
 
-        compositeSubscription.add(
-            socialRepository.getGroupFlowable(Group.TAVERN_ID)
-                .doOnNext { if (!it.hasActiveQuest) binding?.worldBossSection?.visibility = View.GONE }
-                .filter { it.hasActiveQuest }
-                .doOnNext {
-                    binding?.questProgressView?.progress = it.quest
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            socialRepository.getGroup(Group.TAVERN_ID)
+                .onEach { if (it?.hasActiveQuest == false) binding?.worldBossSection?.visibility = View.GONE }
+                .filter { it != null && it.hasActiveQuest }
+                .onEach {
+                    binding?.questProgressView?.progress = it?.quest
                     binding?.shopHeader?.descriptionView?.setText(R.string.tavern_description_world_boss)
-                    val filtered = it.quest?.rageStrikes?.filter { strike -> strike.key == "tavern" }
-                    if (filtered?.size ?: 0 > 0 && filtered?.get(0)?.wasHit == true) {
+                    val filtered = it?.quest?.rageStrikes?.filter { strike -> strike.key == "tavern" }
+                    if ((filtered?.size ?: 0) > 0 && filtered?.get(0)?.wasHit == true) {
                         val key = it.quest?.key
                         if (key != null) {
                             shopSpriteSuffix = key
                         }
                     }
                 }
-                .flatMapMaybe { inventoryRepository.getQuestContent(it.quest?.key ?: "").firstElement() }
-                .subscribe(
-                    {
-                        binding?.questProgressView?.quest = it
-                        binding?.worldBossSection?.visibility = View.VISIBLE
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+                .map { inventoryRepository.getQuestContent(it?.quest?.key ?: "").firstOrNull() }
+                .collect {
+                    binding?.questProgressView?.quest = it
+                    binding?.worldBossSection?.visibility = View.VISIBLE
+                }
+        }
 
-        compositeSubscription.add(socialRepository.retrieveGroup(Group.TAVERN_ID).subscribe({ }, RxErrorHandler.handleEmptyError()))
-
+        lifecycleScope.launch(ExceptionHandler.coroutine()) { socialRepository.retrieveGroup(Group.TAVERN_ID) }
+        
         user?.let { binding?.questProgressView?.configure(it) }
     }
 
@@ -112,7 +115,9 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
 
     private fun bindButtons() {
         binding?.innButton?.setOnClickListener {
-            user?.let { user -> userRepository.sleep(user).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                user?.let { user -> userRepository.sleep(user) }
+            }
         }
         binding?.guidelinesButton?.setOnClickListener {
             MainNavigationController.navigate(R.id.guidelinesActivity)

@@ -4,24 +4,31 @@ import android.util.Log
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.functions.Consumer
-import java.io.EOFException
-import java.io.IOException
+import kotlinx.coroutines.CoroutineExceptionHandler
 import okhttp3.internal.http2.ConnectionShutdownException
 import retrofit2.HttpException
+import java.io.EOFException
+import java.io.IOException
 
-class RxErrorHandler {
+class ExceptionHandler {
     private var analyticsManager: AnalyticsManager? = null
 
     companion object {
 
-        private var instance: RxErrorHandler? = null
+        private var instance = ExceptionHandler()
 
         fun init(analyticsManager: AnalyticsManager) {
-            instance = RxErrorHandler()
-            instance?.analyticsManager = analyticsManager
+            instance.analyticsManager = analyticsManager
         }
 
-        fun handleEmptyError(): Consumer<Throwable> {
+        fun coroutine(handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler {
+            return CoroutineExceptionHandler { _, throwable ->
+                reportError(throwable)
+                handler?.invoke(throwable)
+            }
+        }
+
+        fun rx(): Consumer<Throwable> {
             // Can't be turned into a lambda, because it then doesn't work for some reason.
             return Consumer { reportError(it) }
         }
@@ -40,7 +47,7 @@ class RxErrorHandler {
                     !retrofit2.adapter.rxjava3.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     throwable !is ConnectionShutdownException
                 ) {
-                    instance?.analyticsManager?.logException(throwable)
+                    instance.analyticsManager?.logException(throwable)
                 }
             }
         }

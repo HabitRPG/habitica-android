@@ -13,8 +13,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -72,13 +72,13 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             compositeSubscription.add(
                 adapter.getUserLabelClickFlowable().subscribe(
                     { userId -> FullProfileActivity.open(userId) },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
             )
-            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getReplyMessageEvents().subscribe({ setReplyTo(it) }, RxErrorHandler.handleEmptyError()))
-            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, ExceptionHandler.rx()))
+            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, ExceptionHandler.rx()))
+            compositeSubscription.add(adapter.getReplyMessageEvents().subscribe({ setReplyTo(it) }, ExceptionHandler.rx()))
+            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, ExceptionHandler.rx()))
             adapter.onMessageLike = { viewModel?.likeMessage(it) }
         }
 
@@ -141,7 +141,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
                 {
                     refresh()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         refresh()
     }

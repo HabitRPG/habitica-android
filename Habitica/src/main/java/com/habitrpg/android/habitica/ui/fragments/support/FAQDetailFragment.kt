@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqDetailBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import javax.inject.Inject
@@ -48,7 +48,7 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
                             binding?.questionTextView?.text = faq.question
                             binding?.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
                 )
             }

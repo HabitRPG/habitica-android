@@ -34,7 +34,7 @@ class SoundManager {
         soundFiles.add(SoundFile(soundTheme, SoundReward))
         soundFiles.add(SoundFile(soundTheme, SoundTodo))
         soundFileLoader.download(soundFiles)
-            .subscribe({}, RxErrorHandler.handleEmptyError())
+            .subscribe({}, ExceptionHandler.rx())
     }
 
     fun loadAndPlayAudio(type: String) {
@@ -54,7 +54,7 @@ class SoundManager {
                     loadedSoundFiles[type] = file
                     file.play()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         }
     }

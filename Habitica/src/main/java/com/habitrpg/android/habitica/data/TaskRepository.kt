@@ -19,7 +19,7 @@ interface TaskRepository : BaseRepository {
     fun getTasksFlowable(taskType: TaskType, userID: String? = null, includedGroupIDs: Array<String>): Flowable<out List<Task>>
     fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
 
-    fun retrieveTasks(userId: String, tasksOrder: TasksOrder): Flowable<TaskList>
+    suspend fun retrieveTasks(userId: String, tasksOrder: TasksOrder): TaskList?
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList>
 
     fun taskChecked(

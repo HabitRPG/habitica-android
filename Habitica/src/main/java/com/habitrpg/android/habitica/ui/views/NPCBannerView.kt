@@ -10,9 +10,9 @@ import android.widget.ImageView
 import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.NpcBannerBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import kotlin.math.roundToInt
@@ -56,7 +56,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
                     {
                         binding.backgroundView.background = it
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         }
     }

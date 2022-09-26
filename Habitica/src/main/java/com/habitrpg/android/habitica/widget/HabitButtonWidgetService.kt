@@ -16,10 +16,10 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.helpers.MarkdownParser
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -43,7 +43,7 @@ class HabitButtonWidgetService : Service() {
         makeTaskMapping()
 
         for (taskid in this.taskMapping.keys) {
-            taskRepository.getUnmanagedTask(taskid).firstElement().subscribe({ this.updateData(it) }, RxErrorHandler.handleEmptyError())
+            taskRepository.getUnmanagedTask(taskid).firstElement().subscribe({ this.updateData(it) }, ExceptionHandler.rx())
         }
 
         stopSelf()

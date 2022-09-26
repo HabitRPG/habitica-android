@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.R
@@ -10,15 +11,15 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class GiftSubscriptionActivity : PurchaseActivity() {
 
@@ -70,20 +71,15 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         binding.subscriptionButton.setOnClickListener {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
-
-        compositeSubscription.add(
-            socialRepository.getMember(giftedUsername ?: giftedUserID).subscribe(
-                {
-                    binding.avatarView.setAvatar(it)
-                    binding.displayNameTextView.username = it.profile?.name
-                    binding.displayNameTextView.tier = it.contributor?.level ?: 0
-                    binding.usernameTextView.text = "@${it.username}"
-                    giftedUserID = it.id
-                    giftedUsername = it.username
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID) ?: return@launch
+            binding.avatarView.setAvatar(member)
+            binding.displayNameTextView.username = member.profile?.name
+            binding.displayNameTextView.tier = member.contributor?.level ?: 0
+            binding.usernameTextView.text = "@${member.username}"
+            giftedUserID = member.id
+            giftedUsername = member.username
+        }
 
         if (appConfigManager.activePromo()?.identifier == "g1g1") {
             binding.giftSubscriptionContainer.visibility = View.VISIBLE
@@ -94,7 +90,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
             val subscriptions = purchaseHandler.getAllGiftSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {

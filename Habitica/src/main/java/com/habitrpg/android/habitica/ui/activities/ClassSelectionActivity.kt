@@ -8,24 +8,25 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.functions.Consumer
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ClassSelectionActivity : BaseActivity(), Consumer<User> {
+class ClassSelectionActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
@@ -85,10 +86,10 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
         }
 
         if (!isInitialSelection) {
-            compositeSubscription.add(
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.changeClass()
-                    .subscribe({ classWasUnset = true }, RxErrorHandler.handleEmptyError())
-            )
+                classWasUnset
+            }
         }
 
         binding.healerWrapper.setOnClickListener { newClass = "healer" }
@@ -254,20 +255,26 @@ class ClassSelectionActivity : BaseActivity(), Consumer<User> {
     private fun optOutOfClasses() {
         shouldFinish = true
         this.displayProgressDialog(getString(R.string.opting_out_progress))
-        compositeSubscription.add(userRepository.disableClasses().subscribe(this, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.disableClasses()
+            dismiss()
+        }
     }
 
     private fun selectClass(selectedClass: String) {
         shouldFinish = true
         this.displayProgressDialog(getString(R.string.changing_class_progress))
-        compositeSubscription.add(userRepository.changeClass(selectedClass).subscribe(this, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.changeClass(selectedClass)
+            dismiss()
+        }
     }
 
     private fun displayProgressDialog(progressText: String) {
         HabiticaProgressDialog.show(this, progressText)
     }
 
-    override fun accept(user: User) {
+    private fun dismiss() {
         if (shouldFinish == true) {
             progressDialog?.dismiss()
             finish()

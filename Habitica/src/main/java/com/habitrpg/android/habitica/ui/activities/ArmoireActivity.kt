@@ -17,7 +17,8 @@ import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
@@ -93,7 +94,7 @@ class ArmoireActivity : BaseActivity() {
                             binding.adButton.visibility = View.INVISIBLE
                             hasAnimatedChanges = false
                             gold = null
-                        }, RxErrorHandler.handleEmptyError())
+                        }, ExceptionHandler.rx())
                 )
             }
             handler.prepare {
@@ -116,7 +117,7 @@ class ArmoireActivity : BaseActivity() {
             finish()
         }
         binding.equipButton.setOnClickListener {
-            equipmentKey?.let { it1 -> inventoryRepository.equip("equipped", it1).subscribe({}, RxErrorHandler.handleEmptyError()) }
+            equipmentKey?.let { it1 -> inventoryRepository.equip("equipped", it1).subscribe({}, ExceptionHandler.rx()) }
             finish()
         }
         binding.dropRateButton.setOnClickListener {

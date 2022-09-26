@@ -10,14 +10,16 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.viewpagerindicator.IconPagerAdapter
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
@@ -44,7 +46,9 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         binding.skipButton.setOnClickListener(this)
         binding.finishButton.setOnClickListener(this)
 
-        compositeSubscription.add(contentRepository.retrieveContent().subscribe({ }, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            contentRepository.retrieveContent()
+        }
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

@@ -1,14 +1,13 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.members.Member
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.BackpressureStrategy
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeComponent) {
@@ -23,60 +22,48 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
                 ?: true
             )
 
-    private val members: MutableLiveData<List<Member>?> by lazy {
-        MutableLiveData<List<Member>?>()
-    }
+    private val membersFlow = groupIDFlow
+        .filterNotNull()
+        .flatMapLatest { socialRepository.getGroupMembers(it) }
+    private val members = membersFlow.asLiveData()
 
     init {
         groupViewType = GroupViewType.PARTY
-        loadMembersFromLocal()
     }
 
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
 
-    fun getMembersData(): LiveData<List<Member>?> = members
-
-    private fun loadMembersFromLocal() {
-        disposable.add(
-            groupIDSubject.toFlowable(BackpressureStrategy.LATEST)
-                .distinctUntilChanged()
-                .filterOptionalDoOnEmpty { members.value = null }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewModelScope.launch {
-                        socialRepository.getGroupMembers(it)
-                            .collect {
-                                members.value = it
-                            }
-                    }}, RxErrorHandler.handleEmptyError())
-        )
-    }
+    fun getMembersData() = members
 
     fun acceptQuest() {
-        groupIDSubject.value?.value?.let { groupID ->
+        groupID?.let { groupID ->
             disposable.add(
                 socialRepository.acceptQuest(null, groupID)
-                    .flatMap { userRepository.retrieveUser() }
-                    .flatMap { socialRepository.retrieveGroup(groupID) }
-                    .subscribe(
-                        {},
-                        RxErrorHandler.handleEmptyError()
+                    .subscribe({
+                               viewModelScope.launch(ExceptionHandler.coroutine()) {
+                                   socialRepository.retrieveGroup(groupID)
+                                   userRepository.retrieveUser()
+                               }
+                    },
+                        ExceptionHandler.rx()
                     )
             )
         }
     }
 
     fun rejectQuest() {
-        groupIDSubject.value?.value?.let { groupID ->
+        groupID?.let { groupID ->
             disposable.add(
                 socialRepository.rejectQuest(null, groupID)
-                    .flatMap { userRepository.retrieveUser() }
-                    .flatMap { socialRepository.retrieveGroup(groupID) }
-                    .subscribe(
-                        {},
-                        RxErrorHandler.handleEmptyError()
+                    .subscribe({
+                        viewModelScope.launch(ExceptionHandler.coroutine()) {
+                            socialRepository.retrieveGroup(groupID)
+                            userRepository.retrieveUser()
+                        }
+                    },
+                        ExceptionHandler.rx()
                     )
             )
         }
@@ -88,16 +75,14 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
     }
 
     fun loadPartyID() {
-        disposable.add(
-            userRepository.getUserFlowable()
-                .map { it.party?.id ?: "" }
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser()
+                .map { it?.party?.id }
                 .distinctUntilChanged()
-                .subscribe(
-                    { groupID ->
-                        setGroupID(groupID)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+                .filterNotNull()
+                .collect {
+                    setGroupID(it)
+                }
+        }
     }
 }

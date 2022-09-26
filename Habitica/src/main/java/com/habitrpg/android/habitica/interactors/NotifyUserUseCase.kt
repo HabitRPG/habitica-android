@@ -14,14 +14,13 @@ import androidx.core.util.Pair
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.extensions.filterMap
-import com.habitrpg.shared.habitica.extensions.round
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
+import com.habitrpg.shared.habitica.extensions.round
 import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 import kotlin.math.abs
@@ -48,8 +47,9 @@ constructor(
             }
             if (requestValues.hasLeveledUp == true) {
                 return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context, requestValues.snackbarTargetView))
-                    .flatMap { userRepository.retrieveUser(true) }
-                    .filterMap { it.stats }
+                    // TODO: .flatMap { userRepository.retrieveUser(true) }
+                    .flatMap { userRepository.getUserFlowable().firstElement().toFlowable() }
+                    .map { it.stats }
             } else {
                 return@defer Flowable.just(stats)
             }

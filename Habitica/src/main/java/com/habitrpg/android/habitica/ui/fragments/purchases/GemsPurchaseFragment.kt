@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.promotions.PromoType
@@ -99,7 +100,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     }
 
     private fun loadInventory() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
             val skus = purchaseHandler.getAllGemSKUs()
             withContext(Dispatchers.Main) {
                 for (sku in skus) {

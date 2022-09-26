@@ -9,10 +9,13 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DialogBulkAllocateBinding
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : AlertDialog(context) {
@@ -67,7 +70,7 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
                     this.dismiss()
                 },
                 {
-                    RxErrorHandler.reportError(it)
+                    ExceptionHandler.reportError(it)
                     this.dismiss()
                 }
             )
@@ -75,16 +78,17 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subscription = userRepository.getUserFlowable().subscribe(
-            {
-                pointsToAllocate = it.stats?.points ?: 0
-                binding.strengthSliderView.previousValue = it.stats?.strength ?: 0
-                binding.intelligenceSliderView.previousValue = it.stats?.intelligence ?: 0
-                binding.constitutionSliderView.previousValue = it.stats?.constitution ?: 0
-                binding.perceptionSliderView.previousValue = it.stats?.per ?: 0
-            },
-            RxErrorHandler.handleEmptyError()
-        )
+        MainScope().launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser()
+                .filterNotNull()
+                .collect {
+                    pointsToAllocate = it.stats?.points ?: 0
+                    binding.strengthSliderView.previousValue = it.stats?.strength ?: 0
+                    binding.intelligenceSliderView.previousValue = it.stats?.intelligence ?: 0
+                    binding.constitutionSliderView.previousValue = it.stats?.constitution ?: 0
+                    binding.perceptionSliderView.previousValue = it.stats?.per ?: 0
+                }
+        }
 
         binding.strengthSliderView.allocateAction = {
             checkRedistribution(binding.strengthSliderView)
@@ -130,7 +134,7 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         firstSlider: StatsSliderView?,
         secondSlider: StatsSliderView?
     ): StatsSliderView? {
-        return if (firstSlider?.currentValue ?: 0 > secondSlider?.currentValue ?: 0) {
+        return if ((firstSlider?.currentValue ?: 0) > (secondSlider?.currentValue ?: 0)) {
             firstSlider
         } else {
             secondSlider

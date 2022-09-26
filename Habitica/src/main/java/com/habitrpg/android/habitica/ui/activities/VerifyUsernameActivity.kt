@@ -6,17 +6,20 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityVerifyUsernameBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.runDelayed
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class VerifyUsernameActivity : BaseActivity() {
@@ -90,25 +93,23 @@ class VerifyUsernameActivity : BaseActivity() {
                             binding.issuesTextView.visibility = View.VISIBLE
                             binding.issuesTextView.text = it.issues.joinToString("\n")
                         }
-                    },
-                { displayNameUsable, usernameUsable -> displayNameUsable && usernameUsable.isUsable }
-            )
+                    }
+            ) { displayNameUsable, usernameUsable -> displayNameUsable && usernameUsable.isUsable }
                 .subscribe(
                     {
                         binding.confirmUsernameButton.isEnabled = it
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         )
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable().firstElement().subscribe {
-                binding.displayNameEditText.setText(it.profile?.name)
-                displayNameVerificationEvents.onNext(it.profile?.name ?: "")
-                binding.usernameEditText.setText(it.authentication?.localAuthentication?.username)
-                usernameVerificationEvents.onNext(it.username ?: "")
-            }
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val user = userRepository.getUser().firstOrNull()
+            binding.displayNameEditText.setText(user?.profile?.name)
+            displayNameVerificationEvents.onNext(user?.profile?.name ?: "")
+            binding.usernameEditText.setText(user?.authentication?.localAuthentication?.username)
+            usernameVerificationEvents.onNext(user?.username ?: "")
+        }
     }
 
     private fun confirmNames() {
@@ -118,7 +119,7 @@ class VerifyUsernameActivity : BaseActivity() {
                 .flatMap { userRepository.updateLoginName(binding.usernameEditText.text.toString()).toFlowable() }
                 .doOnComplete { showConfirmationAndFinish() }
                 .doOnEach { binding.confirmUsernameButton.isClickable = true }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 

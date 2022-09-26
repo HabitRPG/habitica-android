@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
@@ -23,7 +23,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.util.*
 import javax.inject.Inject
 
 class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
@@ -71,7 +71,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
 
     fun onCreate() {
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
             }
         } catch (e: Exception) {
@@ -89,20 +89,21 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
 
     fun retrieveUser(forced: Boolean = false) {
         if (hostConfig.hasAuthentication()) {
-            disposable.add(
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 contentRepository.retrieveWorldState()
-                    .flatMap { userRepository.retrieveUser(true, forced) }
-                    .doOnNext { user1 ->
-                        analyticsManager.setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
-                        analyticsManager.setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
-                        analyticsManager.setUserProperty("checkin_count", user1.loginIncentives.toString())
-                        analyticsManager.setUserProperty("level", user1.stats?.lvl?.toString() ?: "")
-                        pushNotificationManager.setUser(user1)
-                        pushNotificationManager.addPushDeviceUsingStoredToken()
-                    }
-                    .flatMap { userRepository.retrieveTeamPlans() }
-                    .flatMap { contentRepository.retrieveContent() }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                userRepository.retrieveUser(true, forced)?.let { user ->
+                    analyticsManager.setUserProperty("has_party", if (user.party?.id?.isNotEmpty() == true) "true" else "false")
+                    analyticsManager.setUserProperty("is_subscribed", if (user.isSubscribed) "true" else "false")
+                    analyticsManager.setUserProperty("checkin_count", user.loginIncentives.toString())
+                    analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
+                    pushNotificationManager.setUser(user)
+                    pushNotificationManager.addPushDeviceUsingStoredToken()
+                }
+                contentRepository.retrieveContent()
+            }
+            disposable.add(
+                userRepository.retrieveTeamPlans()
+                    .subscribe({ }, ExceptionHandler.rx())
             )
         }
     }
@@ -141,7 +142,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                         }
                         onResult(maintenanceResponse)
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         )
     }
@@ -165,7 +166,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                             }
                         )
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
             )
         } else {

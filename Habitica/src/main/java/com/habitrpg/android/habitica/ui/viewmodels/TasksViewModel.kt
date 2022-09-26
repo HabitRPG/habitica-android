@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -34,10 +34,13 @@ class TasksViewModel : BaseViewModel() {
 
     @Inject
     lateinit var taskRepository: TaskRepository
+
     @Inject
     lateinit var tagRepository: TagRepository
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -60,7 +63,7 @@ class TasksViewModel : BaseViewModel() {
 
     init {
         if (appConfigManager.enableTeamBoards()) {
-            viewModelScope.launch {
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.getTeamPlans()
                     .collect { plans ->
                         teamPlans = plans.associateBy { it.id }
@@ -76,28 +79,22 @@ class TasksViewModel : BaseViewModel() {
                     }
             }
             compositeSubscription.add(
-                userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError())
+                userRepository.retrieveTeamPlans().subscribe({}, ExceptionHandler.rx())
             )
         }
     }
 
     internal fun refreshData(onComplete: () -> Unit) {
-        if (isPersonalBoard) {
-            compositeSubscription.add(
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            if (isPersonalBoard) {
                 userRepository.retrieveUser(
                     withTasks = true,
                     forced = true
-                ).doOnTerminate {
-                    onComplete()
-                }.subscribe({ }, RxErrorHandler.handleEmptyError())
-            )
-        } else {
-            compositeSubscription.add(
+                )
+            } else {
                 userRepository.retrieveTeamPlan(ownerID.value ?: "")
-                    .doOnTerminate {
-                        onComplete()
-                    }.subscribe({ }, RxErrorHandler.handleEmptyError())
-            )
+            }
+            onComplete()
         }
     }
 
@@ -111,9 +108,18 @@ class TasksViewModel : BaseViewModel() {
         }
     }
 
-    fun scoreTask(task: Task, direction: TaskDirection, onResult: (TaskScoringResult, Int) -> Unit) {
+    fun scoreTask(
+        task: Task,
+        direction: TaskDirection,
+        onResult: (TaskScoringResult, Int) -> Unit
+    ) {
         compositeSubscription.add(
-            taskRepository.taskChecked(null, task.id ?: "", direction == TaskDirection.UP, false) { result ->
+            taskRepository.taskChecked(
+                null,
+                task.id ?: "",
+                direction == TaskDirection.UP,
+                false
+            ) { result ->
                 onResult(result, task.value.toInt())
                 if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
                     AmplitudeManager.sendEvent(
@@ -125,15 +131,16 @@ class TasksViewModel : BaseViewModel() {
                         putLong("last_task_reporting", Date().time)
                     }
                 }
-            }.subscribe({}, RxErrorHandler.handleEmptyError())
+            }.subscribe({}, ExceptionHandler.rx())
         )
     }
 
-    private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> = hashMapOf(
-        Pair(TaskType.HABIT, MutableLiveData()),
-        Pair(TaskType.DAILY, MutableLiveData()),
-        Pair(TaskType.TODO, MutableLiveData())
-    )
+    private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> =
+        hashMapOf(
+            Pair(TaskType.HABIT, MutableLiveData()),
+            Pair(TaskType.DAILY, MutableLiveData()),
+            Pair(TaskType.TODO, MutableLiveData())
+        )
 
     fun getFilterSet(type: TaskType): MutableLiveData<Triple<String?, String?, List<String>>>? {
         return filterSets[type]
@@ -279,10 +286,12 @@ class TasksViewModel : BaseViewModel() {
                     } else {
                         query.equalTo("completed", false)
                     }
-                    Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
+                    Task.FILTER_GRAY -> query =
+                        query.equalTo("completed", true).or().equalTo("isDue", false)
                     Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
                     Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
-                    Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false).sort("dueDate")
+                    Task.FILTER_DATED -> query =
+                        query.isNotNull("dueDate").equalTo("completed", false).sort("dueDate")
                     Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
             }

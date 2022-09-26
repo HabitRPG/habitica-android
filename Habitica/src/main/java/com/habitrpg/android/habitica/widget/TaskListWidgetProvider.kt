@@ -12,7 +12,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.extensions.withMutableFlag
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import javax.inject.Inject
 
@@ -50,7 +50,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
                             showToastForTaskDirection(context, taskDirectionData)
                             AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
             }
         }

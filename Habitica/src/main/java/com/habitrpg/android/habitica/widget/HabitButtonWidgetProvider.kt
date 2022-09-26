@@ -8,7 +8,7 @@ import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import javax.inject.Inject
 
@@ -73,7 +73,7 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
 
             if (taskId != null) {
                 userRepository.getUserFlowable().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null) }
-                    .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, RxErrorHandler.handleEmptyError(), { this.onUpdate(context, mgr, ids) })
+                    .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, ExceptionHandler.rx(), { this.onUpdate(context, mgr, ids) })
             }
         }
         super.onReceive(context, intent)

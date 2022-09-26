@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -19,8 +20,8 @@ import com.habitrpg.android.habitica.databinding.DialogChallengeDetailTaskGroupB
 import com.habitrpg.android.habitica.databinding.FragmentChallengeDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -32,11 +33,12 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -101,10 +103,11 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                         return@map (it.leaderId ?: "")
                     }
                     .filter { it.isNotEmpty() }
-                    .flatMap { creatorID ->
-                        return@flatMap socialRepository.getMember(creatorID)
-                    }
-                    .subscribe({ set(it) }, RxErrorHandler.handleEmptyError())
+                    .subscribe({
+                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                            set(socialRepository.retrieveMember(it))
+                        }
+                        }, ExceptionHandler.rx())
             )
             compositeSubscription.add(
                 challengeRepository.getChallengeTasks(id).subscribe(
@@ -142,7 +145,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                             addRewards(rewards)
                         }
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
             )
 
@@ -151,7 +154,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                     { isMember ->
                         setJoined(isMember)
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
             )
         }
@@ -159,8 +162,11 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         binding?.joinButton?.setOnClickListener {
             challenge?.let { challenge ->
                 challengeRepository.joinChallenge(challenge)
-                    .flatMap { userRepository.retrieveUser(true) }
-                    .subscribe({}, RxErrorHandler.handleEmptyError())
+                    .subscribe({
+                               lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                   userRepository.retrieveUser(true)
+                               }
+                    }, ExceptionHandler.rx())
             }
         }
         binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
@@ -230,7 +236,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                     if (it is HttpException && it.code() == 404) {
                         MainNavigationController.navigateBack()
                     }
-                    RxErrorHandler.reportError(it)
+                    ExceptionHandler.reportError(it)
                 })
         }
     }
@@ -245,7 +251,8 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         binding?.participantCount?.text = challenge.memberCount.toString()
     }
 
-    private fun set(creator: Member) {
+    private fun set(creator: Member?) {
+        if (creator == null) return
         binding?.creatorAvatarview?.setAvatar(creator)
         binding?.creatorLabel?.tier = creator.contributor?.level ?: 0
         binding?.creatorLabel?.username = creator.displayName
@@ -335,11 +342,11 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         alert.setMessage(this.getString(R.string.challenge_leave_description))
         alert.addButton(R.string.leave_keep_tasks, true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
+            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe({}, ExceptionHandler.rx())
         }
         alert.addButton(R.string.leave_delete_tasks, isPrimary = false, isDestructive = true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
+            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, ExceptionHandler.rx())
         }
         alert.setExtraCloseButtonVisibility(View.VISIBLE)
         alert.show()

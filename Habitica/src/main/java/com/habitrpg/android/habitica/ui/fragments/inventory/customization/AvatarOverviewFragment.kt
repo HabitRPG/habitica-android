@@ -8,7 +8,7 @@ import android.widget.AdapterView
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -99,7 +99,7 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
 
         compositeSubscription.add(
             userRepository.updateUser("preferences.size", newSize)
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 
