@@ -60,7 +60,7 @@ class AvatarWithBarsViewModel(
         binding.avatarView.setAvatar(user)
 
         if (stats.habitClass != null && stats is Stats) {
-            userClass = stats.getTranslatedClassName(context)
+            userClass = stats.getTranslatedClassName(context.resources)
         }
 
         binding.mpBar.visibility = if (stats.habitClass == null || (stats.lvl

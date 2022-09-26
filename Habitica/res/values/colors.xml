@@ -119,4 +119,5 @@
     <color name="lightly_tinted_background">@color/brand_700</color>
     <color name="dialog_background">@color/white</color>
     <color name="error_banner_background">@color/maroon_5</color>
+    <color name="text_gold">@color/yellow_1</color>
 </resources>

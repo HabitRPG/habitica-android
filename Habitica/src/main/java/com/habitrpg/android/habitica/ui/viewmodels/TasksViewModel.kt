@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
@@ -45,6 +46,7 @@ class TasksViewModel : BaseViewModel() {
     val ownerID: MutableLiveData<String?> by lazy {
         MutableLiveData()
     }
+    var teamPlans = mapOf<String, TeamPlan>()
     var initialPreferenceFilterSet: Boolean = false
 
     val isPersonalBoard: Boolean
@@ -60,8 +62,9 @@ class TasksViewModel : BaseViewModel() {
         if (appConfigManager.enableTeamBoards()) {
             viewModelScope.launch {
                 userRepository.getTeamPlans()
-                    .collect {
-                        owners = listOf(Pair(userViewModel.userID, userViewModel.displayName)) + it.map {
+                    .collect { plans ->
+                        teamPlans = plans.associateBy { it.id }
+                        owners = listOf(Pair(userViewModel.userID, userViewModel.displayName)) + plans.map {
                             Pair(
                                 it.id,
                                 it.summary

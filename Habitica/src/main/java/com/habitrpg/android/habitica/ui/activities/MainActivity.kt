@@ -22,6 +22,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.wearable.Wearable
+import com.google.android.material.composethemeadapter.MdcTheme
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -29,7 +30,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.observeOnce
@@ -46,11 +46,12 @@ import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
+import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
@@ -61,9 +62,9 @@ import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
-import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -100,7 +101,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     val snackbarContainer: ViewGroup
         get() = binding.content.snackbarContainer
 
-    private var avatarInHeader: AvatarWithBarsViewModel? = null
     val notificationsViewModel: NotificationsViewModel by viewModels()
     val viewModel: MainActivityViewModel by viewModels()
     private var sideAvatarView: AvatarView? = null
@@ -147,7 +147,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         setupToolbar(binding.content.toolbar)
 
-        avatarInHeader = AvatarWithBarsViewModel(this, binding.content.avatarWithBars, viewModel.userViewModel)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         viewModel.user.observe(this) {
@@ -210,6 +209,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         supportActionBar?.setHomeButtonEnabled(true)
         setupNotifications()
         setupBottomnavigationLayoutListener()
+        
+        binding.content.headerView.setContent {
+            MdcTheme(setTextColors = true) {
+                AppHeaderView(viewModel.userViewModel)
+            }
+        }
 
         viewModel.onCreate()
     }

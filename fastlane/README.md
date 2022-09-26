@@ -29,7 +29,7 @@ Runs all the tests
 [bundle exec] fastlane android staffapk
 ```
 
-Build Staff APK for sara
+Build Staff APK
 
 ### android staff
 

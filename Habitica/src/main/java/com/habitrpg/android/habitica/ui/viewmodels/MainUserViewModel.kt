@@ -2,27 +2,28 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.habitrpg.android.habitica.HabiticaBaseApplication
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.modules.AppModule
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import javax.inject.Inject
-import javax.inject.Named
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 
-class MainUserViewModel(val userRepository: UserRepository) {
+class MainUserViewModel(private val providedUserID: String, val userRepository: UserRepository, val socialRepository: SocialRepository) {
 
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var injectedUserID: String
 
     val formattedUsername: CharSequence?
         get() = user.value?.formattedUsername
     val partyInvitations: List<PartyInvite>
         get() = user.value?.invitations?.parties ?: emptyList()
     val userID: String
-        get() = user.value?.id ?: injectedUserID
+        get() = user.value?.id ?: providedUserID
     val username: CharSequence
         get() = user.value?.username ?: ""
     val displayName: CharSequence
@@ -36,12 +37,13 @@ class MainUserViewModel(val userRepository: UserRepository) {
     val mirrorGroupTasks: List<String>
     get() = user.value?.preferences?.tasks?.mirrorGroupTasks ?: emptyList()
 
-    val user: LiveData<User?>
-
-    init {
-        HabiticaBaseApplication.userComponent?.inject(this)
-        user = userRepository.getUser().asLiveData()
-    }
+    val user: LiveData<User?> = userRepository.getUser().asLiveData()
+    var currentTeamPlan: MutableStateFlow<TeamPlan?> = MutableStateFlow(null)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    var currentTeamPlanGroup = currentTeamPlan
+        .filterNotNull()
+        .distinctUntilChanged { old, new -> old.id == new.id }
+        .flatMapLatest { socialRepository.getGroup(it.id) }
 
     fun onCleared() {
         userRepository.close()

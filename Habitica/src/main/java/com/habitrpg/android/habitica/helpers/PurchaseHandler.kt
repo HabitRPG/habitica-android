@@ -26,18 +26,15 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.common.habitica.models.IAPGift
-import com.habitrpg.common.habitica.models.PurchaseValidationRequest
-import com.habitrpg.common.habitica.models.Transaction
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.models.IAPGift
+import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import com.habitrpg.common.habitica.models.Transaction
 import io.reactivex.rxjava3.core.Flowable
-import java.util.Date
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -45,6 +42,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class PurchaseHandler(
     private val context: Context,
@@ -186,7 +186,8 @@ class PurchaseHandler(
         return skuDetailsResult.skuDetailsList
     }
 
-    fun purchase(activity: Activity, skuDetails: SkuDetails, recipient: String? = null) {
+    fun purchase(activity: Activity, skuDetails: SkuDetails, recipient: String? = null, isSaleGemPurchase: Boolean = false) {
+        this.isSaleGemPurchase = isSaleGemPurchase
         recipient?.let {
             addGift(skuDetails.sku, it)
         }
@@ -346,13 +347,26 @@ class PurchaseHandler(
         }
     }
 
+    private var isSaleGemPurchase = false
+
     private fun gemAmountString(sku: String): String {
-        return when (sku) {
-            PurchaseTypes.Purchase4Gems -> "4"
-            PurchaseTypes.Purchase21Gems -> "21"
-            PurchaseTypes.Purchase42Gems -> "42"
-            PurchaseTypes.Purchase84Gems -> "84"
-            else -> ""
+        if (isSaleGemPurchase) {
+            isSaleGemPurchase = false
+            return when (sku) {
+                PurchaseTypes.Purchase4Gems -> "5"
+                PurchaseTypes.Purchase21Gems -> "30"
+                PurchaseTypes.Purchase42Gems -> "60"
+                PurchaseTypes.Purchase84Gems -> "125"
+                else -> ""
+            }
+        } else {
+            return when (sku) {
+                PurchaseTypes.Purchase4Gems -> "4"
+                PurchaseTypes.Purchase21Gems -> "21"
+                PurchaseTypes.Purchase42Gems -> "42"
+                PurchaseTypes.Purchase84Gems -> "84"
+                else -> ""
+            }
         }
     }
 

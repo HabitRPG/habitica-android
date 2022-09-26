@@ -422,6 +422,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (viewModel.ownerTitle.isNotBlank()) {
             activity?.title = viewModel.ownerTitle
         }
+        viewModel.userViewModel.currentTeamPlan = viewModel.teamPlans[viewModel.ownerID.value]
         val isPersonalBoard = viewModel.isPersonalBoard
         bottomNavigation?.canAddTasks = isPersonalBoard
     }

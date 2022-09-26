@@ -137,9 +137,7 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
     }
 
     fun enableTeamBoards(): Boolean {
-        if (BuildConfig.DEBUG) {
-            return true
-        }
+        return true
         return remoteConfig.getBoolean("enableTeamBoards")
     }
 

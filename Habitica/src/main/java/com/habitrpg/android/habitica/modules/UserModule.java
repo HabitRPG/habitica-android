@@ -38,7 +38,7 @@ public class UserModule {
 
     @Provides
     @UserScope
-    MainUserViewModel providesUserViewModel(UserRepository userRepository) {
-        return new MainUserViewModel(userRepository);
+    MainUserViewModel providesUserViewModel(String userID, UserRepository userRepository) {
+        return new MainUserViewModel(userID, userRepository);
     }
 }
