@@ -1,15 +1,18 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.text.format.DateUtils
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.AssignedTextProvider
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -25,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
-class TasksViewModel : BaseViewModel() {
+class TasksViewModel : BaseViewModel(), AssignedTextProvider {
     private var compositeSubscription: CompositeDisposable = CompositeDisposable()
 
     override fun inject(component: UserComponent) {
@@ -300,5 +303,20 @@ class TasksViewModel : BaseViewModel() {
             }
         }
         return query
+    }
+
+    fun canScoreTask(item: Task): Boolean {
+        if (!item.isGroupTask) {
+            return true
+        }
+        return item.isAssignedToUser(userViewModel.userID) || item.group?.assignedUsers?.isEmpty() != false
+    }
+
+    override fun textForTask(resources: Resources, assignedUsers: List<String>): String {
+        return if (assignedUsers.contains(userViewModel.userID)) {
+            resources.getQuantityString(R.plurals.you_x_others, assignedUsers.size - 1)
+        } else {
+            resources.getQuantityString(R.plurals.people, assignedUsers.size)
+        }
     }
 }

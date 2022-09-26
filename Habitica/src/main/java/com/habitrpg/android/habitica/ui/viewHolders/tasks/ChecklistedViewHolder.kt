@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AssignedTextProvider
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -30,8 +31,9 @@ abstract class ChecklistedViewHolder(
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Pair<Task, View>) -> Unit),
-    brokenTaskFunc: ((Task) -> Unit)
-) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
+    brokenTaskFunc: ((Task) -> Unit),
+    assignedTextProvider: AssignedTextProvider?
+) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
 
     private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)
     private val checkmarkView: ImageView = itemView.findViewById(R.id.checkmark)
@@ -48,7 +50,12 @@ abstract class ChecklistedViewHolder(
         checklistIndicatorWrapper.setOnClickListener { onChecklistIndicatorClicked() }
     }
 
-    override fun bind(data: Task, position: Int, displayMode: String) {
+    override fun bind(
+        data: Task,
+        position: Int,
+        displayMode: String,
+        ownerID: String?
+    ) {
         var completed = data.completed
         if (data.isPendingApproval) {
             completed = false
@@ -69,7 +76,7 @@ abstract class ChecklistedViewHolder(
         this.updateChecklistDisplay()
 
         this.checklistIndicatorWrapper.visibility = if (data.checklist?.size == 0) View.GONE else View.VISIBLE
-        super.bind(data, position, displayMode)
+        super.bind(data, position, displayMode, ownerID)
         val regularBoxBackground = if (task?.type == TaskType.DAILY) R.drawable.daily_unchecked else R.drawable.todo_unchecked
         val completedBoxBackground = if (task?.type == TaskType.DAILY) R.drawable.daily_checked else R.drawable.todo_checked
         val inactiveBoxBackground = R.drawable.daily_inactive

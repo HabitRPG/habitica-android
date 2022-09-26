@@ -114,12 +114,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
                 TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, viewModel)
                 TaskType.TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, viewModel)
-                TaskType.REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
+                TaskType.REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, viewModel)
                 else -> null
             }
 
             recyclerAdapter = adapter as? TaskRecyclerViewAdapter
-            recyclerAdapter?.canScoreTasks = canScoreTaks
             binding?.recyclerView?.adapter = adapter
 
             viewModel.getFilterSet(taskType)?.observe(viewLifecycleOwner) {
@@ -152,7 +151,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         viewModel.ownerID.observe(viewLifecycleOwner) {
             canEditTasks = viewModel.isPersonalBoard
             canScoreTaks = viewModel.isPersonalBoard
-            recyclerAdapter?.canScoreTasks = canScoreTaks
             updateTaskSubscription(it)
         }
         lifecycleScope.launch {
@@ -346,7 +344,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         if (taskFlowJob?.isActive == true) {
             taskFlowJob?.cancel()
         }
-        val additionalGroupIDs = viewModel.userViewModel.mirrorGroupTasks.toTypedArray()
+        val additionalGroupIDs = if (ownerID == viewModel.userViewModel.userID) viewModel.userViewModel.mirrorGroupTasks.toTypedArray() else emptyArray()
         taskFlowJob = lifecycleScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.getTasks(taskType, ownerID, additionalGroupIDs).collect {
                 recyclerAdapter?.updateUnfilteredData(it)

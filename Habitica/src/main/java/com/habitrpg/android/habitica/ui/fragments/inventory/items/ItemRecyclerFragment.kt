@@ -247,7 +247,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 val user = userRepository.retrieveUser(false, true)
                 if (user?.hasParty == true) {
                     val party = socialRepository.retrieveGroup("party")
-                    socialRepository.retrieveGroupMembers(party?.id ?: "", true)
+                    socialRepository.retrievePartyMembers(party?.id ?: "", true)
                     MainNavigationController.navigate(
                         R.id.partyFragment,
                         bundleOf(Pair("partyID", user.party?.id))

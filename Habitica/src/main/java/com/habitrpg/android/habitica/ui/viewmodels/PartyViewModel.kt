@@ -24,7 +24,7 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
 
     private val membersFlow = groupIDFlow
         .filterNotNull()
-        .flatMapLatest { socialRepository.getGroupMembers(it) }
+        .flatMapLatest { socialRepository.getPartyMembers(it) }
     private val members = membersFlow.asLiveData()
 
     init {

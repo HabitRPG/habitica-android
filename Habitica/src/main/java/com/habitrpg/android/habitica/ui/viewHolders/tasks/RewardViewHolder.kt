@@ -6,18 +6,20 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding
-import com.habitrpg.common.habitica.helpers.NumberAbbreviator
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.helpers.AssignedTextProvider
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.ItemDetailDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
 class RewardViewHolder(
     itemView: View,
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     openTaskFunc: ((Pair<Task, View>) -> Unit),
-    brokenTaskFunc: ((Task) -> Unit)
-) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
+    brokenTaskFunc: ((Task) -> Unit),
+    assignedTextProvider: AssignedTextProvider?
+) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
     private val binding = RewardItemCardBinding.bind(itemView)
 
     private val isItem: Boolean
@@ -61,10 +63,10 @@ class RewardViewHolder(
         binding.buyButton.isEnabled = !taskActionsDisabled
     }
 
-    fun bind(reward: Task, position: Int, canBuy: Boolean, displayMode: String) {
+    fun bind(reward: Task, position: Int, canBuy: Boolean, displayMode: String, ownerID: String?) {
         this.task = reward
         streakTextView.visibility = View.GONE
-        super.bind(reward, position, displayMode)
+        super.bind(reward, position, displayMode, ownerID)
         binding.priceLabel.text = NumberAbbreviator.abbreviate(itemView.context, this.task?.value ?: 0.0)
 
         if (isLocked) {

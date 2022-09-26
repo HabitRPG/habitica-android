@@ -190,10 +190,17 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         executeTransaction { chatMessage?.deleteFromRealm() }
     }
 
-    override fun getGroupMembers(partyId: String) = realm.where(Member::class.java)
+    override fun getPartyMembers(partyId: String) = realm.where(Member::class.java)
                 .equalTo("party.id", partyId)
                 .findAll()
             .toFlow()
+
+    override fun getGroupMembers(groupID: String) = realm.where(GroupMembership::class.java)
+        .equalTo("groupID", groupID)
+        .findAll()
+        .toFlow()
+        .map { memberships -> memberships.map { it.userID }.toTypedArray() }
+        .flatMapLatest { realm.where(Member::class.java).`in`("id", it).findAll().toFlow() }
 
     override fun updateRSVPNeeded(user: User?, newValue: Boolean) {
         executeTransaction { user?.party?.quest?.RSVPNeeded = newValue }
@@ -221,7 +228,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun saveGroupMembers(groupId: String?, members: List<Member>) {
+    override fun savePartyMembers(groupId: String?, members: List<Member>) {
         saveSyncronous(members)
         if (groupId != null) {
             val existingMembers = realm.where(Member::class.java).equalTo("party.id", groupId).findAll()

@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
-import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
@@ -16,9 +15,11 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.common.habitica.extensions.Optional
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -382,14 +383,16 @@ class UserRepositoryImpl(
 
     override suspend fun retrieveTeamPlan(teamID: String): Group? {
         val team = apiClient.getGroup(teamID) ?: return null
-        team.tasks = apiClient.getTeamPlanTasks(teamID)
+        val tasks = apiClient.getTeamPlanTasks(teamID)
         localRepository.save(team)
         val id = team.id
         val tasksOrder = team.tasksOrder
-        val tasks = team.tasks
         if (id.isNotBlank() && tasksOrder != null && tasks != null) {
             taskRepository.saveTasks(id, tasksOrder, tasks)
         }
+        val members = apiClient.getGroupMembers(teamID, true) ?: return team
+        localRepository.save(members.map { it.id?.let { member -> GroupMembership(member, id) } }.filterNotNull())
+        members.let { localRepository.save(members) }
         return team
     }
 

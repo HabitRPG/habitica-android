@@ -181,7 +181,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             if (user?.hasParty == true) {
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     val group = socialRepository.retrieveGroup("party")
-                    socialRepository.retrieveGroupMembers(group?.id ?: "", true)
+                    socialRepository.retrievePartyMembers(group?.id ?: "", true)
                 }
             }
         }

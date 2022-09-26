@@ -78,8 +78,9 @@ interface SocialRepository : BaseRepository {
 
     suspend fun postPrivateMessage(recipientId: String, message: String): List<ChatMessage>?
 
+    suspend fun getPartyMembers(id: String): Flow<List<Member>>
     suspend fun getGroupMembers(id: String): Flow<List<Member>>
-    suspend fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): List<Member>?
+    suspend fun retrievePartyMembers(id: String, includeAllPublicFields: Boolean): List<Member>?
 
     fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<Void>>
 

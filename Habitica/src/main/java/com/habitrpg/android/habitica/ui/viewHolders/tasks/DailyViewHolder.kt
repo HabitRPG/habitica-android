@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.helpers.AssignedTextProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
@@ -13,8 +14,9 @@ class DailyViewHolder(
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Pair<Task, View>) -> Unit),
-    brokenTaskFunc: ((Task) -> Unit)
-) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc) {
+    brokenTaskFunc: ((Task) -> Unit),
+    assignedTextProvider: AssignedTextProvider?
+) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
 
     override val taskIconWrapperIsVisible: Boolean
         get() {
@@ -25,7 +27,12 @@ class DailyViewHolder(
             return isVisible
         }
 
-    override fun bind(data: Task, position: Int, displayMode: String) {
+    override fun bind(
+        data: Task,
+        position: Int,
+        displayMode: String,
+        ownerID: String?
+    ) {
         this.task = data
         setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
 
@@ -59,7 +66,7 @@ class DailyViewHolder(
             reminderTextView.text = reminderString
         }
 
-        super.bind(data, position, displayMode)
+        super.bind(data, position, displayMode, ownerID)
     }
 
     override fun shouldDisplayAsActive(newTask: Task?): Boolean {
@@ -68,7 +75,7 @@ class DailyViewHolder(
 
     override fun configureSpecialTaskTextView(task: Task) {
         super.configureSpecialTaskTextView(task)
-        if (task.streak ?: 0 > 0) {
+        if ((task.streak ?: 0) > 0) {
             this.streakTextView.text = task.streak.toString()
             this.streakTextView.visibility = View.VISIBLE
             this.streakIconView.visibility = View.VISIBLE

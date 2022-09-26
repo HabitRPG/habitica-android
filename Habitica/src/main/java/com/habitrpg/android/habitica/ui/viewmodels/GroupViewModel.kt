@@ -20,7 +20,6 @@ import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -129,7 +128,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
             }) {
                 val group = socialRepository.retrieveGroup(groupID ?: "")
                 if (groupViewType == GroupViewType.PARTY) {
-                    socialRepository.retrieveGroupMembers(group?.id ?: "", true)
+                    socialRepository.retrievePartyMembers(group?.id ?: "", true)
                 }
                 function?.invoke()
             }

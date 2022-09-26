@@ -27,9 +27,8 @@ import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter(
     private val layoutResource: Int,
-    private val viewModel: TasksViewModel
+    val viewModel: TasksViewModel
 ) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
-    override var canScoreTasks = true
     private var unfilteredData: List<Task>? = null
     override var showAdventureGuide = false
         set(value) {
@@ -80,8 +79,8 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null && holder is BaseTaskViewHolder) {
-            holder.isLocked = !canScoreTasks
-            holder.bind(item, position, taskDisplayMode)
+            holder.isLocked = !viewModel.canScoreTask(item)
+            holder.bind(item, position, taskDisplayMode, viewModel.ownerID.value)
             holder.errorButtonClicked = Action {
                 errorButtonEventsSubject.onNext("")
             }

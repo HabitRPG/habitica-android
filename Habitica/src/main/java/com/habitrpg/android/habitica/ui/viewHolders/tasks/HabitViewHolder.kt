@@ -6,7 +6,9 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AssignedTextProvider
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
@@ -14,8 +16,9 @@ class HabitViewHolder(
     itemView: View,
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     openTaskFunc: ((Pair<Task, View>) -> Unit),
-    brokenTaskFunc: ((Task) -> Unit)
-) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc) {
+    brokenTaskFunc: ((Task) -> Unit),
+    assignedTextProvider: AssignedTextProvider?
+) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
 
     private val btnPlusWrapper: FrameLayout = itemView.findViewById(R.id.btnPlusWrapper)
     private val btnPlusIconView: ImageView = itemView.findViewById(R.id.btnPlusIconView)
@@ -33,7 +36,12 @@ class HabitViewHolder(
         btnMinus.isClickable = true
     }
 
-    override fun bind(data: Task, position: Int, displayMode: String) {
+    override fun bind(
+        data: Task,
+        position: Int,
+        displayMode: String,
+        ownerID: String?
+    ) {
         this.task = data
         if (data.up == true) {
             val plusIcon = if (isLocked) {
@@ -121,7 +129,7 @@ class HabitViewHolder(
         }
         reminderTextView.visibility = View.GONE
         calendarIconView?.visibility = View.GONE
-        super.bind(data, position, displayMode)
+        super.bind(data, position, displayMode, ownerID)
         if (data.up == false && data.down == false) {
             titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_quad))

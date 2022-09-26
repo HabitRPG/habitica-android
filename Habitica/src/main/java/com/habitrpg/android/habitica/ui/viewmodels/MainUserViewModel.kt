@@ -43,6 +43,10 @@ class MainUserViewModel(private val providedUserID: String, val userRepository: 
         .filterNotNull()
         .distinctUntilChanged { old, new -> old.id == new.id }
         .flatMapLatest { socialRepository.getGroup(it.id) }
+    var currentTeamPlanMembers = currentTeamPlan
+        .filterNotNull()
+        .distinctUntilChanged { old, new -> old.id == new.id }
+        .flatMapLatest { socialRepository.getGroupMembers(it.id) }
 
     fun onCleared() {
         userRepository.close()

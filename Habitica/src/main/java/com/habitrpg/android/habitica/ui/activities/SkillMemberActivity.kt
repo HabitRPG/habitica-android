@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -66,7 +65,7 @@ class SkillMemberActivity : BaseActivity() {
             userRepository.getUser()
                 .map { it?.party?.id }
                 .filterNotNull()
-                .flatMapLatest { socialRepository.getGroupMembers(it) }
+                .flatMapLatest { socialRepository.getPartyMembers(it) }
                 .collect { viewAdapter?.data = it }
         }
     }

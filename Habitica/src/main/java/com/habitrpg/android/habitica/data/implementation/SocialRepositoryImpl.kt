@@ -35,7 +35,7 @@ class SocialRepositoryImpl(
 
     override suspend fun removeMemberFromGroup(groupID: String, userID: String): List<Member>? {
         apiClient.removeMemberFromGroup(groupID, userID)
-        return retrieveGroupMembers(groupID, true)
+        return retrievePartyMembers(groupID, true)
     }
 
     override fun blockMember(userID: String): Flowable<List<String>> {
@@ -237,11 +237,12 @@ class SocialRepositoryImpl(
         return postPrivateMessage(recipientId, messageObject)
     }
 
+    override suspend fun getPartyMembers(id: String) = localRepository.getPartyMembers(id)
     override suspend fun getGroupMembers(id: String) = localRepository.getGroupMembers(id)
 
-    override suspend fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): List<Member>? {
+    override suspend fun retrievePartyMembers(id: String, includeAllPublicFields: Boolean): List<Member>? {
         val members = apiClient.getGroupMembers(id, includeAllPublicFields)
-        members?.let { localRepository.saveGroupMembers(id, it) }
+        members?.let { localRepository.savePartyMembers(id, it) }
         return members
     }
 

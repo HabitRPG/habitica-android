@@ -12,6 +12,14 @@
     android:paddingBottom="@dimen/task_top_bottom_padding"
     android:layout_marginEnd="@dimen/task_text_padding"
     android:layout_marginStart="@dimen/task_text_padding">
+    <TextView
+        android:id="@+id/assigned_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Caption4"
+        android:text="@string/pending_approval"
+        android:textColor="@color/text_ternary"
+        />
         <com.habitrpg.android.habitica.ui.views.EllipsisTextView
             android:id="@+id/checkedTextView"
             style="@style/Subheader3"

@@ -11,13 +11,16 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -33,15 +36,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
@@ -104,7 +111,8 @@ fun AppHeaderView(
     viewModel: MainUserViewModel,
 ) {
     val user by viewModel.user.observeAsState(null)
-    val displayedTeamPlan by viewModel.currentTeamPlan.collectAsState()
+    val teamPlan by viewModel.currentTeamPlan.collectAsState(null)
+    val teamPlanMembers by viewModel.currentTeamPlanMembers.collectAsState(null)
     Column {
         Row {
             ComposableAvatarView(
@@ -114,7 +122,7 @@ fun AppHeaderView(
                     .padding(end = 16.dp)
             )
             Column(modifier = Modifier.height(100.dp)) {
-                Row(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
                     Column(modifier = Modifier.weight(1f)) {
                         LabeledBar(
                             icon = HabiticaIconsHelper.imageOfHeartLightBg(),
@@ -122,7 +130,7 @@ fun AppHeaderView(
                             color = colorResource(R.color.hpColor),
                             value = user?.stats?.hp ?: 0.0,
                             maxValue = user?.stats?.maxHealth?.toDouble() ?: 0.0,
-                            displayCompact = displayedTeamPlan != null,
+                            displayCompact = teamPlan != null,
                             modifier = Modifier.weight(1f)
                         )
                         LabeledBar(
@@ -131,7 +139,7 @@ fun AppHeaderView(
                             color = colorResource(R.color.xpColor),
                             value = user?.stats?.exp ?: 0.0,
                             maxValue = user?.stats?.toNextLevel?.toDouble() ?: 0.0,
-                            displayCompact = displayedTeamPlan != null,
+                            displayCompact = teamPlan != null,
                             modifier = Modifier.weight(1f)
                         )
                         if (user?.hasClass == true) {
@@ -141,50 +149,73 @@ fun AppHeaderView(
                                 color = colorResource(R.color.mpColor),
                                 value = user?.stats?.mp ?: 0.0,
                                 maxValue = user?.stats?.maxMP?.toDouble() ?: 0.0,
-                                displayCompact = displayedTeamPlan != null,
+                                displayCompact = teamPlan != null,
                                 modifier = Modifier.weight(1f)
                             )
                         }
                     }
                     val animWidth = with(LocalDensity.current) { 48.dp.roundToPx() }
                     AnimatedVisibility(
-                        visible = displayedTeamPlan != null,
+                        visible = teamPlan != null,
                         enter = slideInHorizontally { animWidth } + fadeIn(),
                         exit = slideOutHorizontally { animWidth } + fadeOut()) {
                         Row(
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .height(72.dp)
-                                .width(48.dp)
                                 .padding(start = 12.dp)
+                                .width(72.dp)
+                                .height(48.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(
                                     colorResource(R.color.window_background)
                                 )
+                                .clickable {
+                                    MainNavigationController.navigate(
+                                        R.id.guildFragment,
+                                        bundleOf("groupID" to teamPlan?.id)
+                                    )
+                                }
                         ) {
-                            Text("M")
+                            Image(painterResource(R.drawable.icon_chat), null, colorFilter = ColorFilter.tint(
+                                colorResource(R.color.text_ternary)))
                         }
                     }
                 }
                 val animHeight = with(LocalDensity.current) { 40.dp.roundToPx() }
                 AnimatedVisibility(
-                    visible = displayedTeamPlan != null,
+                    visible = teamPlan != null,
                     enter = slideInVertically { animHeight } + fadeIn(),
                     exit = slideOutVertically { animHeight } + fadeOut()) {
                     Row(
-                        horizontalArrangement = Arrangement.Center,
+                        horizontalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterHorizontally),
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(40.dp)
                             .padding(top = 12.dp)
+                            .height(40.dp)
+                            .width(72.dp)
                             .clip(RoundedCornerShape(8.dp))
                             .background(
                                 colorResource(R.color.window_background)
                             )
+                            .clickable {
+                                MainNavigationController.navigate(
+                                    R.id.guildFragment,
+                                    bundleOf("groupID" to teamPlan?.id)
+                                )
+                            }
                     ) {
-                        Text("A")
+                        for (member in teamPlanMembers?.filter { it.id != user?.id }?.take(6) ?: emptyList()) {
+                            Box(modifier = Modifier.clip(CircleShape).size(26.dp).padding(end = 6.dp, top = 4.dp)) {
+                                ComposableAvatarView(
+                                    avatar = member,
+                                    Modifier
+                                        .size(64.dp)
+                                        .requiredSize(64.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }

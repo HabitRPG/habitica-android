@@ -23,13 +23,14 @@ interface SocialLocalRepository : BaseLocalRepository {
 
     fun deleteMessage(id: String)
 
-    fun getGroupMembers(partyId: String): Flow<List<Member>>
+    fun getPartyMembers(partyId: String): Flow<List<Member>>
+    fun getGroupMembers(groupID: String): Flow<List<Member>>
 
     fun updateRSVPNeeded(user: User?, newValue: Boolean)
 
     fun likeMessage(chatMessage: ChatMessage, userId: String, liked: Boolean)
 
-    fun saveGroupMembers(groupId: String?, members: List<Member>)
+    fun savePartyMembers(groupId: String?, members: List<Member>)
 
     fun removeQuest(partyId: String)
 
