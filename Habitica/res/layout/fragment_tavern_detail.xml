@@ -43,7 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/inn_description"
-            android:layout_marginTop="@dimen/spacing_large"/>
+            android:layout_marginTop="@dimen/spacing_large"
+            android:background="@drawable/layout_rounded_bg_window"
+            android:padding="@dimen/spacing_large"/>
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
     <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
         android:layout_width="match_parent"
@@ -61,7 +63,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/guidelines_description"
-            android:layout_marginTop="@dimen/spacing_large"/>
+            android:layout_marginTop="@dimen/spacing_large"
+            android:background="@drawable/layout_rounded_bg_window"
+            android:padding="@dimen/spacing_large"/>
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
     <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
         android:layout_width="match_parent"
@@ -100,7 +104,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tiers_descriptions"/>
+            android:text="@string/tiers_descriptions"
+            android:background="@drawable/layout_rounded_bg_window"
+            android:padding="@dimen/spacing_large"/>
     </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
 </LinearLayout>
 </androidx.core.widget.NestedScrollView>
