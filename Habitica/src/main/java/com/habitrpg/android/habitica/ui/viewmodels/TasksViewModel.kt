@@ -314,9 +314,13 @@ class TasksViewModel : BaseViewModel(), AssignedTextProvider {
 
     override fun textForTask(resources: Resources, assignedUsers: List<String>): String {
         return if (assignedUsers.contains(userViewModel.userID)) {
-            resources.getQuantityString(R.plurals.you_x_others, assignedUsers.size - 1)
+            if (assignedUsers.size == 1) {
+                resources.getString(R.string.you)
+            } else {
+                resources.getQuantityString(R.plurals.you_x_others, assignedUsers.size - 1, assignedUsers.size - 1)
+            }
         } else {
-            resources.getQuantityString(R.plurals.people, assignedUsers.size)
+            resources.getQuantityString(R.plurals.people, assignedUsers.size, assignedUsers.size)
         }
     }
 }

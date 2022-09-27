@@ -16,9 +16,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MainNavigationViewBinding
+import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 
 interface HabiticaBottomNavigationViewListener {
@@ -69,7 +69,8 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             val animator = ObjectAnimator.ofFloat(0f, 1.0f)
             if (field) {
                 val params = binding.cutoutFill.layoutParams
-                params.height = binding.cutoutBackground.height
+                // add some additional height because otherwise there is a weird white line
+                params.height = binding.cutoutBackground.height + 10
                 binding.cutoutFill.layoutParams = params
                 animator.addUpdateListener {
                     val reversed = 1.0f - it.animatedFraction
@@ -82,7 +83,8 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
                     .setDuration(200)
             } else {
                 val params = binding.cutoutFill.layoutParams
-                params.height = binding.cutoutBackground.height
+                // add some additional height because otherwise there is a weird white line
+                params.height = binding.cutoutBackground.height + 10
                 binding.cutoutFill.layoutParams = params
                 animator.addUpdateListener {
                     binding.cutoutFill.translationY = -it.animatedFraction * (binding.cutoutBackground.height)

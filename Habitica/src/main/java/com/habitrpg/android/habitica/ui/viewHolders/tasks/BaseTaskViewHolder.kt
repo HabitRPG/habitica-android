@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AssignedTextProvider
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
@@ -47,7 +46,7 @@ abstract class BaseTaskViewHolder constructor(
     var isLocked = false
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
-    protected val assignedTextView: EllipsisTextView = itemView.findViewById(R.id.assigned_textview)
+    protected val assignedTextView: TextView = itemView.findViewById(R.id.assigned_textview)
     protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
     protected val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
@@ -254,7 +253,7 @@ abstract class BaseTaskViewHolder constructor(
             approvalRequiredTextView.visibility = View.GONE
         }
 
-        if (data.group?.assignedUsers?.isEmpty() != false) {
+        if (data.group?.assignedUsers?.isNotEmpty() == true) {
             assignedTextView.text = assignedTextProvider?.textForTask(context.resources, data.group?.assignedUsers ?: emptyList())
             assignedTextView.visibility = View.VISIBLE
         } else {
