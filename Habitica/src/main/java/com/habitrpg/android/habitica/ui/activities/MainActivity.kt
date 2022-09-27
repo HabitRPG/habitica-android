@@ -281,7 +281,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
             true
         } else if (item.itemId == android.R.id.home) {
-            drawerFragment?.toggleDrawer()
+            if (drawerToggle?.isDrawerIndicatorEnabled == true) {
+                drawerFragment?.toggleDrawer()
+            } else {
+                MainNavigationController.navigateBack()
+            }
             true
         } else super.onOptionsItemSelected(item)
     }
