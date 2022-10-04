@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.BounceInterpolator
 import android.view.animation.LinearInterpolator
@@ -68,28 +67,11 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
             field = value
             val animator = ObjectAnimator.ofFloat(0f, 1.0f)
             if (field) {
-                val params = binding.cutoutFill.layoutParams
-                // add some additional height because otherwise there is a weird white line
-                params.height = binding.cutoutBackground.height + 10
-                binding.cutoutFill.layoutParams = params
-                animator.addUpdateListener {
-                    val reversed = 1.0f - it.animatedFraction
-                    binding.cutoutFill.translationY = -(reversed) * binding.cutoutBackground.height
-                }
-                binding.cutoutSpace.visibility = View.VISIBLE
                 binding.addButtonBackground.animate()
                     .translationY(0f)
                     .alpha(1f)
                     .setDuration(200)
             } else {
-                val params = binding.cutoutFill.layoutParams
-                // add some additional height because otherwise there is a weird white line
-                params.height = binding.cutoutBackground.height + 10
-                binding.cutoutFill.layoutParams = params
-                animator.addUpdateListener {
-                    binding.cutoutFill.translationY = -it.animatedFraction * (binding.cutoutBackground.height)
-                }
-                binding.cutoutSpace.visibility = View.INVISIBLE
                 binding.addButtonBackground.animate()
                     .translationY(-binding.addButtonBackground.height.toFloat() / 2)
                     .alpha(0.0f)

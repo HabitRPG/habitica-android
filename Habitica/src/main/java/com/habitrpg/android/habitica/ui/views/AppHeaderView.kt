@@ -112,7 +112,7 @@ fun AppHeaderView(
 ) {
     val user by viewModel.user.observeAsState(null)
     val teamPlan by viewModel.currentTeamPlan.collectAsState(null)
-    val teamPlanMembers by viewModel.currentTeamPlanMembers.collectAsState(null)
+    val teamPlanMembers by viewModel.currentTeamPlanMembers.observeAsState()
     Column {
         Row {
             ComposableAvatarView(
@@ -207,7 +207,10 @@ fun AppHeaderView(
                             }
                     ) {
                         for (member in teamPlanMembers?.filter { it.id != user?.id }?.take(6) ?: emptyList()) {
-                            Box(modifier = Modifier.clip(CircleShape).size(26.dp).padding(end = 6.dp, top = 4.dp)) {
+                            Box(modifier = Modifier
+                                .clip(CircleShape)
+                                .size(26.dp)
+                                .padding(end = 6.dp, top = 4.dp)) {
                                 ComposableAvatarView(
                                     avatar = member,
                                     Modifier

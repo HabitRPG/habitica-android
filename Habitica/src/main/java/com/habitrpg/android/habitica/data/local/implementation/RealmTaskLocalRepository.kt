@@ -45,7 +45,15 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             .beginGroup()
             .equalTo("userId", ownerID)
             .or()
+            .beginGroup()
             .`in`("group.groupID", includedGroupIDs)
+            .and()
+            .beginGroup()
+            .contains("group.assignedUsers", ownerID)
+            .or()
+            .isEmpty("group.assignedUsers")
+            .endGroup()
+            .endGroup()
             .or()
             .equalTo("group.groupID", ownerID)
             .endGroup()
@@ -129,14 +137,13 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         return taskList
     }
 
-    private fun removeOldTasks(userID: String, onlineTaskList: List<Task>) {
-        val groupIDs = onlineTaskList.map { it.group?.groupID }.distinct().toTypedArray()
+    private fun removeOldTasks(ownerID: String, onlineTaskList: List<Task>) {
         if (realm.isClosed) return
         val localTasks = realm.where(Task::class.java)
             .beginGroup()
-            .equalTo("userId", userID)
+            .equalTo("userId", ownerID)
             .or()
-            .`in`("group.groupID", groupIDs)
+            .equalTo("group.groupID", ownerID)
             .endGroup()
             .beginGroup()
             .beginGroup()

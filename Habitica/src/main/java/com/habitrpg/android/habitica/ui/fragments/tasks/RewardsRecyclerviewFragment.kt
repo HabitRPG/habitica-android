@@ -16,15 +16,14 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.shops.ShopItem
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.coroutines.launch
-import java.util.*
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
@@ -45,7 +44,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
         (layoutManager as? GridLayoutManager)?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (recyclerAdapter?.getItemViewType(position) ?: 0 < 2) {
+                return if ((recyclerAdapter?.getItemViewType(position) ?: 0) < 2) {
                     (layoutManager as? GridLayoutManager)?.spanCount ?: 1
                 } else {
                     1

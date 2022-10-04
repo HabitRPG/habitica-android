@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.AssignedTextProvider
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
@@ -36,7 +36,7 @@ abstract class BaseTaskViewHolder constructor(
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var openTaskFunc: ((Pair<Task, View>) -> Unit),
     var brokenTaskFunc: ((Task) -> Unit),
-    var assignedTextProvider: AssignedTextProvider?
+    var assignedTextProvider: GroupPlanInfoProvider?
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     private val scope = MainScope()
 
@@ -254,7 +254,7 @@ abstract class BaseTaskViewHolder constructor(
         }
 
         if (data.group?.assignedUsers?.isNotEmpty() == true) {
-            assignedTextView.text = assignedTextProvider?.textForTask(context.resources, data.group?.assignedUsers ?: emptyList())
+            assignedTextView.text = assignedTextProvider?.assignedTextForTask(context.resources, data.group?.assignedUsers ?: emptyList())
             assignedTextView.visibility = View.VISIBLE
         } else {
             assignedTextView.visibility = View.GONE

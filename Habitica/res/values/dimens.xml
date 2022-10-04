@@ -36,7 +36,7 @@
     <dimen name="checkbox_size">24dp</dimen>
     <dimen name="checkbox_compact_size">20dp</dimen>
 
-    <dimen name="task_top_bottom_padding">10dp</dimen>
+    <dimen name="task_top_bottom_padding">8dp</dimen>
     <dimen name="task_top_bottom_compact_padding">8dp</dimen>
     <dimen name="reward_spacing">8dp</dimen>
     <dimen name="grid_item_margin">6dp</dimen>

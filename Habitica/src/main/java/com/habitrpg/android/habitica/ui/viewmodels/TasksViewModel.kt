@@ -12,8 +12,8 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.AssignedTextProvider
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
-class TasksViewModel : BaseViewModel(), AssignedTextProvider {
+class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
     private var compositeSubscription: CompositeDisposable = CompositeDisposable()
 
     override fun inject(component: UserComponent) {
@@ -305,14 +305,21 @@ class TasksViewModel : BaseViewModel(), AssignedTextProvider {
         return query
     }
 
-    fun canScoreTask(item: Task): Boolean {
-        if (!item.isGroupTask) {
+    override fun canScoreTask(task: Task): Boolean {
+        if (!task.isGroupTask) {
             return true
         }
-        return item.isAssignedToUser(userViewModel.userID) || item.group?.assignedUsers?.isEmpty() != false
+        return task.isAssignedToUser(userViewModel.userID) || task.group?.assignedUsers?.isEmpty() != false
     }
 
-    override fun textForTask(resources: Resources, assignedUsers: List<String>): String {
+    override fun canEditTask(task: Task): Boolean {
+        if (!task.isGroupTask) {
+            return true
+        }
+        return false
+    }
+
+    override fun assignedTextForTask(resources: Resources, assignedUsers: List<String>): String {
         return if (assignedUsers.contains(userViewModel.userID)) {
             if (assignedUsers.size == 1) {
                 resources.getString(R.string.you)
@@ -320,7 +327,11 @@ class TasksViewModel : BaseViewModel(), AssignedTextProvider {
                 resources.getQuantityString(R.plurals.you_x_others, assignedUsers.size - 1, assignedUsers.size - 1)
             }
         } else {
-            resources.getQuantityString(R.plurals.people, assignedUsers.size, assignedUsers.size)
+            if (assignedUsers.size == 1) {
+                userViewModel.currentTeamPlanMembers.value?.firstOrNull { it.id == assignedUsers.first() }?.displayName ?: ""
+            } else {
+                resources.getQuantityString(R.plurals.people, assignedUsers.size, assignedUsers.size)
+            }
         }
     }
 }

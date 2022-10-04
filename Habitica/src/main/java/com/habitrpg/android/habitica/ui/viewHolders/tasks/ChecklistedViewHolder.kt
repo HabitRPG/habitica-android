@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.AssignedTextProvider
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -32,7 +32,7 @@ abstract class ChecklistedViewHolder(
     var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Pair<Task, View>) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: AssignedTextProvider?
+    assignedTextProvider: GroupPlanInfoProvider?
 ) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
 
     private val checkboxHolder: ViewGroup = itemView.findViewById(R.id.checkBoxHolder)

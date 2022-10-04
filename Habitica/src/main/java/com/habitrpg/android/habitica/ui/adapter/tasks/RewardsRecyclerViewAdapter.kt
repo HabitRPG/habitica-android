@@ -96,7 +96,7 @@ class RewardsRecyclerViewAdapter(
         if (customRewards != null && position < customRewardCount) {
             val reward = customRewards?.get(position) ?: return
             val gold = user?.stats?.gp ?: 0.0
-            (holder as? RewardViewHolder)?.isLocked = false
+            (holder as? RewardViewHolder)?.isLocked = !viewModel.canScoreTask(reward)
             (holder as? RewardViewHolder)?.bind(reward, position, reward.value <= gold, taskDisplayMode, viewModel.ownerID.value)
         } else if (inAppRewards != null) {
             val item = inAppRewards?.get(position - customRewardCount) ?: return
@@ -122,7 +122,9 @@ class RewardsRecyclerViewAdapter(
 
     override fun getItemCount(): Int {
         var rewardCount = customRewardCount
-        rewardCount += inAppRewardCount
+        if (viewModel.isPersonalBoard) {
+            rewardCount += inAppRewardCount
+        }
         return rewardCount
     }
 

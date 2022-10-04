@@ -73,6 +73,8 @@
     <color name="gray_600">#edecee</color>
     <color name="gray_700">#f9f9f9</color>
 
+    <color name="gray_1_30">#4D1A181D</color>
+
     <color name="blue_1">#033f5e</color>
     <color name="teal_1">#005158</color>
     <color name="green_1">#005737</color>

@@ -6,9 +6,8 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.AssignedTextProvider
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
@@ -17,7 +16,7 @@ class HabitViewHolder(
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     openTaskFunc: ((Pair<Task, View>) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: AssignedTextProvider?
+    assignedTextProvider: GroupPlanInfoProvider?
 ) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
 
     private val btnPlusWrapper: FrameLayout = itemView.findViewById(R.id.btnPlusWrapper)

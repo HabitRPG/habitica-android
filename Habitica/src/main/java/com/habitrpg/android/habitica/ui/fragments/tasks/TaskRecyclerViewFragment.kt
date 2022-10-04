@@ -214,7 +214,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         component.inject(this)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let { this.taskType = TaskType.from(savedInstanceState.getString(CLASS_TYPE_KEY, "")) ?: TaskType.HABIT }

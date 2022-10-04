@@ -7,6 +7,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.invitations.PartyInvite
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,10 +44,12 @@ class MainUserViewModel(private val providedUserID: String, val userRepository: 
         .filterNotNull()
         .distinctUntilChanged { old, new -> old.id == new.id }
         .flatMapLatest { socialRepository.getGroup(it.id) }
-    var currentTeamPlanMembers = currentTeamPlan
+    @OptIn(ExperimentalCoroutinesApi::class)
+    var currentTeamPlanMembers: LiveData<List<Member>> = currentTeamPlan
         .filterNotNull()
         .distinctUntilChanged { old, new -> old.id == new.id }
         .flatMapLatest { socialRepository.getGroupMembers(it.id) }
+        .asLiveData()
 
     fun onCleared() {
         userRepository.close()
