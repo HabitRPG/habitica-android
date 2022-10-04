@@ -2,9 +2,6 @@ package com.habitrpg.android.habitica.helpers.notifications
 
 import android.content.Context
 
-/**
- * Created by keithholliday on 6/28/16.
- */
 class HabiticaLocalNotificationFactory {
     // use getShape method to get object of type shape
     fun build(notificationType: String?, context: Context?): HabiticaLocalNotification {

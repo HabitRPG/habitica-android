@@ -9,6 +9,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -16,10 +17,10 @@ import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.functions.Consumer
 import javax.inject.Inject
 
@@ -67,6 +68,7 @@ class TaskReceiver : BroadcastReceiver() {
 
         var notificationBuilder = NotificationCompat.Builder(context, "default")
             .setSmallIcon(R.drawable.ic_gryphon_white)
+            .setColor(ContextCompat.getColor(context, R.color.brand_300))
             .setContentTitle(task.text)
             .setStyle(
                 NotificationCompat.BigTextStyle()

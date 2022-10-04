@@ -27,7 +27,6 @@ import java.util.Date
 import java.util.Random
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
 // https://gist.github.com/BrandonSmith/6679223
 class NotificationPublisher : BroadcastReceiver() {
 
@@ -145,8 +144,7 @@ class NotificationPublisher : BroadcastReceiver() {
 
     private fun getRandomDailyTip(): String {
         val thisContext = context ?: return ""
-        val index = Random().nextInt(4)
-        return when (index) {
+        return when (Random().nextInt(10)) {
             0 -> thisContext.getString(R.string.daily_tip_0)
             1 -> thisContext.getString(R.string.daily_tip_1)
             2 -> thisContext.getString(R.string.daily_tip_2)
@@ -162,7 +160,6 @@ class NotificationPublisher : BroadcastReceiver() {
     }
 
     companion object {
-
         var NOTIFICATION_ID = "notification-id"
         var CHECK_DAILIES = "check-dailies"
     }
