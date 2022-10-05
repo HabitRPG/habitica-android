@@ -205,19 +205,19 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 TaskAlarmManager.scheduleDailyReminder(context)
             }
             "usePushNotifications" -> {
-                val userPushNotifications = sharedPreferences.getBoolean(key, false)
-                pushNotificationsPreference?.isEnabled = userPushNotifications
-                userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", userPushNotifications).subscribe()
-                if (userPushNotifications) {
+                val usePushNotifications = sharedPreferences.getBoolean(key, true)
+                pushNotificationsPreference?.isEnabled = usePushNotifications
+                userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications).subscribe()
+                if (usePushNotifications) {
                     pushNotificationManager.addPushDeviceUsingStoredToken()
                 } else {
                     pushNotificationManager.removePushDeviceUsingStoredToken()
                 }
             }
             "useEmails" -> {
-                val useEmailNotifications = sharedPreferences.getBoolean(key, false)
+                val useEmailNotifications = sharedPreferences.getBoolean(key, true)
                 emailNotificationsPreference?.isEnabled = useEmailNotifications
-                userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", useEmailNotifications).subscribe()
+                userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", !useEmailNotifications).subscribe()
             }
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
@@ -356,13 +356,13 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
-        val usePushNotifications = user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false
+        val usePushNotifications = !(user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false)
         pushNotificationsPreference?.isEnabled = usePushNotifications
         usePushPreference?.isChecked = usePushNotifications
 
         val useEmailPreference = findPreference("useEmails") as? CheckBoxPreference
         emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
-        val useEmailNotifications = user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false
+        val useEmailNotifications = !(user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false)
         emailNotificationsPreference?.isEnabled = useEmailNotifications
         useEmailPreference?.isChecked = useEmailNotifications
 

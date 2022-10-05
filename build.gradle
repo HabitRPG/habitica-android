@@ -6,7 +6,6 @@ buildscript {
         app_version_name = ''
         app_version_code = 0
 
-
         amplitude_version = '3.35.1'
         appcompat_version = '1.5.1'
         coil_version = '2.1.0'
