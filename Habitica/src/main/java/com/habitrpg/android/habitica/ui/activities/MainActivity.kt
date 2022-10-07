@@ -49,6 +49,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
@@ -212,7 +213,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         setupBottomnavigationLayoutListener()
         
         binding.content.headerView.setContent {
-            MdcTheme(setTextColors = true) {
+            HabiticaTheme {
                 AppHeaderView(viewModel.userViewModel)
             }
         }

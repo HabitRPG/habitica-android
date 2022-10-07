@@ -83,7 +83,7 @@ GEM
       xcpretty-travis-formatter (>= 0.0.3)
     fastlane-plugin-properties (1.1.2)
       java-properties
-    fastlane-plugin-semantic_release (1.14.1)
+    fastlane-plugin-semantic_release (1.18.0)
     fastlane-plugin-versioning_android (0.1.0)
     gh_inspector (1.1.3)
     google-api-client (0.38.0)
