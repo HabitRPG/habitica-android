@@ -8,6 +8,11 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -185,6 +190,7 @@ class TaskFormActivity : BaseActivity() {
         binding.notesEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
             binding.notesInputLayout.alpha = if (isFocused) 0.8f else 0.6f
         }
+        binding.notesEditText.movementMethod = LinkMovementMethod.getInstance()
         binding.statStrengthButton.setOnClickListener { selectedStat = Attribute.STRENGTH }
         binding.statIntelligenceButton.setOnClickListener { selectedStat = Attribute.INTELLIGENCE }
         binding.statConstitutionButton.setOnClickListener { selectedStat = Attribute.CONSTITUTION }
@@ -404,7 +410,12 @@ class TaskFormActivity : BaseActivity() {
         }
         canSave = true
         binding.textEditText.setText(task.text)
-        binding.notesEditText.setText(task.notes)
+        val spannable: Spannable = SpannableString(task.notes)
+        Linkify.addLinks(spannable, Linkify.WEB_URLS)
+        //Append a zero-width space to the Spannable to allow clicking
+        //on the open spaces (and prevent links from opening)
+        val text: CharSequence = TextUtils.concat(spannable, "\u200B")
+        binding.notesEditText.setText(text)
         binding.taskDifficultyButtons.selectedDifficulty = task.priority
         when (taskType) {
             TaskType.HABIT -> {
