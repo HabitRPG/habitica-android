@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Body1"
+<Space xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="22dp"
-    android:gravity="center_vertical"
-    android:paddingStart="@dimen/drawer_padding"
-    android:paddingEnd="@dimen/drawer_padding"
-    android:textAllCaps="true"
-    android:textColor="@color/white"
-    android:textSize="12sp"
-    tools:text="Social" />
+    android:layout_height="30dp" />

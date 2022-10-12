@@ -52,10 +52,8 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment;
 import com.habitrpg.android.habitica.ui.fragments.PromoWebFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
@@ -164,8 +162,6 @@ public interface UserComponent {
     void inject(AvatarOverviewFragment avatarOverviewFragment);
 
     void inject(EquipmentDetailFragment equipmentDetailFragment);
-
-    void inject(EquipmentOverviewFragment equipmentOverviewFragment);
 
     void inject(ItemRecyclerFragment itemRecyclerFragment);
 
@@ -332,8 +328,6 @@ public interface UserComponent {
     void inject(SupportMainFragment supportMainFragment);
 
     void inject(BugFixFragment bugFixFragment);
-
-    void inject(AvatarEquipmentFragment avatarEquipmentFragment);
 
     void inject(FAQDetailFragment faqDetailFragment);
 

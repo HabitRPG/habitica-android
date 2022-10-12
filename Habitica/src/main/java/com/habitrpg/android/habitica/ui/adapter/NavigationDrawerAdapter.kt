@@ -4,19 +4,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
-import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
+import com.habitrpg.common.habitica.extensions.dpToPx
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -27,19 +24,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
         set(value) {
             field = value
             notifyDataSetChanged()
-        }
-
-    var backgroundTintColor: Int = backgroundTintColor
-        set(value) {
-            field = value
-            for (item in items) {
-                if (item.isHeader) {
-                    val visiblePosition = getVisibleItemPosition(item.identifier)
-                    if (visiblePosition >= 0) {
-                        notifyItemChanged(visiblePosition)
-                    }
-                }
-            }
         }
 
     internal val items: MutableList<HabiticaDrawerItem> = ArrayList()
@@ -77,32 +61,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
         notifyDataSetChanged()
     }
 
-    fun setTeams(teams: List<TeamPlan>) {
-        var teamHeaderIndex = -1
-        var nextHeaderIndex = -1
-        for ((index, item) in items.withIndex()) {
-            if (teamHeaderIndex != -1 && item.isHeader) {
-                nextHeaderIndex = index
-                break
-            } else if (item.identifier == NavigationDrawerFragment.SIDEBAR_TEAMS) {
-                teamHeaderIndex = index
-            }
-        }
-        if (teamHeaderIndex != -1 && nextHeaderIndex != -1) {
-            for (x in nextHeaderIndex - 1 downTo teamHeaderIndex + 1) {
-                items.removeAt(x)
-                notifyItemRemoved(x)
-            }
-            for ((index, team) in teams.withIndex()) {
-                val item = HabiticaDrawerItem(R.id.tasksFragment, team.id, team.summary)
-                item.bundle = bundleOf(Pair("ownerID", team.id))
-                val newIndex = teamHeaderIndex + index + 1
-                items.add(newIndex, item)
-                notifyItemInserted(newIndex)
-            }
-        }
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val drawerItem = getItem(position)
         when {
@@ -111,10 +69,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 itemHolder?.tintColor = tintColor
                 itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
                 itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
-            }
-            getItemViewType(position) == 1 -> {
-                (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
-                (holder as? SectionHeaderViewHolder)?.bind(drawerItem)
             }
             getItemViewType(position) == 5 -> {
                 activePromo?.let { promo ->
@@ -216,10 +170,5 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
     class SectionHeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var backgroundTintColor: Int = 0
-
-        fun bind(drawerItem: HabiticaDrawerItem) {
-            (itemView as? TextView)?.text = drawerItem.text
-            itemView.setBackgroundColor(backgroundTintColor)
-        }
     }
 }

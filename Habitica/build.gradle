@@ -147,7 +147,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion min_sdk
         applicationId "com.habitrpg.android.habitica"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STORE", "\"google\""

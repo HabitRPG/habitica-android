@@ -26,7 +26,6 @@ import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragmentDirections
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.AvatarCustomizationOverviewView
@@ -83,7 +82,7 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>
     }
 
     private fun displayEquipmentFragment(type: String, equipped: String?, isCostume: Boolean = false) {
-        MainNavigationController.navigate(EquipmentOverviewFragmentDirections.openEquipmentDetail(type, isCostume, equipped ?: ""))
+        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openEquipmentDetail(type, isCostume, equipped ?: ""))
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
