@@ -145,8 +145,12 @@ class TaskRepositoryImpl(
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
                     bgTask.completed = up
-                    if (TaskType.DAILY == bgTask.type && up) {
-                        bgTask.streak = (bgTask.streak ?: 0) + 1
+                    if (TaskType.DAILY == bgTask.type) {
+                        if (up) {
+                            bgTask.streak = (bgTask.streak ?: 0) + 1
+                        } else {
+                            bgTask.streak = (bgTask.streak ?: 0) - 1
+                        }
                     }
                 } else if (TaskType.HABIT == bgTask.type) {
                     if (up) {
