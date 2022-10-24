@@ -485,7 +485,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         super.onResume()
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
         setInnerAdapter()
-        recyclerAdapter?.filter()
     }
 
     fun setActiveFilter(activeFilter: String) {
