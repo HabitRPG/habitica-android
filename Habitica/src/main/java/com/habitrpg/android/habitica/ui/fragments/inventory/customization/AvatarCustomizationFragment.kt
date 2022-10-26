@@ -227,7 +227,7 @@ class AvatarCustomizationFragment :
     ): Boolean {
         return if (filter.onlyPurchased && ownedCustomizations.find { it.key == customization.identifier } == null) {
             true
-        } else filter.months.isNotEmpty() && !filter.months.contains(customization.customizationSetName?.substringAfter('.'))
+        } else filter.months.isNotEmpty() && !filter.months.contains(customization.customizationSet?.substringAfter('.'))
     }
 
     fun updateUser(user: User?) {
