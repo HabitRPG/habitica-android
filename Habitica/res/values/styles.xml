@@ -26,6 +26,7 @@
         <item name="colorPrimaryDistinct">@color/brand_500</item>
         <item name="colorBadgeBackground">@color/brand_400</item>
         <item name="taskFormTint">@color/brand_300</item>
+        <item name="colorSecondaryVariant">@color/brand</item>
 
         <item name="textColorPrimary">@color/text_primary</item>
         <item name="textColorSecondary">@color/text_secondary</item>

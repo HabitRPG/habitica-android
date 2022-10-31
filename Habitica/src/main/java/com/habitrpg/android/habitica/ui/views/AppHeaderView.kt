@@ -52,6 +52,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import java.lang.Double.max
 import java.math.RoundingMode
 import java.text.NumberFormat
 
@@ -261,6 +262,8 @@ fun LabeledBar(
     formatter.roundingMode = RoundingMode.UP
     formatter.isGroupingUsed = true
 
+    val cleanedMaxVlaue = max(1.0, maxValue)
+
     val animatedValue = animateFloatAsState(
         targetValue = value.toFloat(),
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
@@ -274,7 +277,7 @@ fun LabeledBar(
         }
         Column(modifier = Modifier.weight(1f)) {
             LinearProgressIndicator(
-                progress = (animatedValue / maxValue).toFloat(),
+                progress = (animatedValue / cleanedMaxVlaue).toFloat(),
                 Modifier
                     .fillMaxWidth()
                     .clip(CircleShape)
@@ -288,7 +291,7 @@ fun LabeledBar(
                     modifier = Modifier.padding(top = 2.dp)
                 ) {
                     Text(
-                        "${formatter.format(animatedValue)} / ${formatter.format(maxValue)}",
+                        "${formatter.format(animatedValue)} / ${formatter.format(cleanedMaxVlaue)}",
                         fontSize = 12.sp,
                         color = colorResource(R.color.text_ternary)
                     )

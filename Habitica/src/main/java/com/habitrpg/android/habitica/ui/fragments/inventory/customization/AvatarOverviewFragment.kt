@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.AvatarCustomizationOverviewView
 import com.habitrpg.android.habitica.ui.views.EquipmentOverviewView
+import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import javax.inject.Inject
 
 class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>(),
@@ -108,11 +109,17 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
         Modifier
             .padding(horizontal = 8.dp)
             .padding(bottom = 16.dp)) {
-        Row(Modifier.padding(horizontal = 12.dp, vertical = 15.dp)) {
+        Row(Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
+            verticalAlignment = Alignment.CenterVertically) {
             Text(
                 stringResource(R.string.avatar_size),
                 style = HabiticaTheme.typography.subtitle2
             )
+            Spacer(modifier = Modifier.weight(1f))
+            SegmentedControl(items = listOf(stringResource(R.string.avatar_size_slim), stringResource(R.string.avatar_size_broad
+            )), defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1, onItemSelection = {
+                userViewModel.updateUser("preferences.size", if (it == 0) "slim" else "broad")
+            })
         }
         AvatarCustomizationOverviewView(user?.preferences, onCustomizationTap)
         Row(
