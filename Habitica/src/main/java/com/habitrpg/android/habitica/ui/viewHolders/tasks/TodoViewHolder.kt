@@ -42,7 +42,7 @@ class TodoViewHolder(
         }
     }
 
-    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
-        return newTask?.completed != true
+    override fun shouldDisplayAsActive(task: Task?, userID: String?): Boolean {
+        return task?.completed(userID) != true
     }
 }

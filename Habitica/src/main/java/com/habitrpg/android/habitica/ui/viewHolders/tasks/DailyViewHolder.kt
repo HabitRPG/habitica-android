@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
-import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -69,8 +68,8 @@ class DailyViewHolder(
         super.bind(data, position, displayMode, ownerID)
     }
 
-    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
-        return newTask?.isDisplayedActive ?: false
+    override fun shouldDisplayAsActive(task: Task?, userID: String?): Boolean {
+        return task?.isDisplayedActive ?: false
     }
 
     override fun configureSpecialTaskTextView(task: Task) {

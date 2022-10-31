@@ -43,6 +43,7 @@ abstract class BaseTaskViewHolder constructor(
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
+    var userID: String? = null
     var isLocked = false
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)

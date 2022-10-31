@@ -117,6 +117,19 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
 
+    fun completed(byUserID: String?): Boolean {
+        return if (isGroupTask) {
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == byUserID }?.completed ?: false
+        } else {
+            completed
+        }
+    }
+
+    fun isDisplayedActiveForUser(userID: String?): Boolean {
+        val isActive = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO)
+        return isActive && completed(userID)
+    }
+
     val streakString: String?
         get() {
             return if (counterUp != null && (counterUp ?: 0) > 0 && counterDown != null && (counterDown ?: 0) > 0) {

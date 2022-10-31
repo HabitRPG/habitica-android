@@ -79,6 +79,7 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null && holder is BaseTaskViewHolder) {
+            holder.userID = user?.id
             holder.isLocked = !viewModel.canScoreTask(item)
             holder.bind(item, position, taskDisplayMode, viewModel.ownerID.value)
             holder.errorButtonClicked = Action {

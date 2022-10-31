@@ -6,6 +6,8 @@ import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
+import com.habitrpg.android.habitica.models.tasks.GroupAssignedDetails;
+import com.habitrpg.android.habitica.utils.AssignedDetailsDeserializer;
 import com.habitrpg.common.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.Tag;
@@ -101,6 +103,8 @@ public class GSonFactoryCreator {
         }.getType();
         Type achievementsListType = new TypeToken<List<Achievement>>() {
         }.getType();
+        Type assignedDetailsListType = new TypeToken<RealmList<GroupAssignedDetails>>() {
+        }.getType();
 
         return new GsonBuilder()
                 .registerTypeAdapter(taskTagClassListType, new TaskTagDeserializer())
@@ -129,6 +133,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(ownedPetListType, new OwnedPetListDeserializer())
                 .registerTypeAdapter(ownedMountListType, new OwnedMountListDeserializer())
                 .registerTypeAdapter(achievementsListType, new AchievementListDeserializer())
+                .registerTypeAdapter(assignedDetailsListType, new AssignedDetailsDeserializer())
                 .registerTypeAdapter(Quest.class, new QuestDeserializer())
                 .registerTypeAdapter(Member.class, new MemberSerialization())
                 .registerTypeAdapter(WorldState.class, new WorldStateSerialization())
