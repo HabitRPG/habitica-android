@@ -9,17 +9,17 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
-import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.shared.habitica.models.tasks.TaskType
-import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
+import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
+import com.habitrpg.shared.habitica.models.tasks.TaskType
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
@@ -144,7 +144,7 @@ class TaskRepositoryImpl(
             if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
-                    bgTask.completed = up
+                    bgTask.completeForUser(userID, up)
                     if (TaskType.DAILY == bgTask.type) {
                         if (up) {
                             bgTask.streak = (bgTask.streak ?: 0) + 1

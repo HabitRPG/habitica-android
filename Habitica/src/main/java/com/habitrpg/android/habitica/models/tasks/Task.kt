@@ -119,15 +119,26 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     fun completed(byUserID: String?): Boolean {
         return if (isGroupTask) {
-            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == byUserID }?.completed ?: false
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == byUserID }?.completed ?: completed
         } else {
             completed
         }
     }
 
+    fun completeForUser(userID: String?, completed: Boolean) {
+        if (isGroupTask && group?.assignedUsersDetail?.isNotEmpty() == true) {
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed = completed
+            if (group?.assignedUsersDetail?.filter { it.completed != completed }?.isEmpty() == true) {
+                this.completed = completed
+            }
+        } else {
+            this.completed = completed
+        }
+    }
+
     fun isDisplayedActiveForUser(userID: String?): Boolean {
         val isActive = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO)
-        return isActive && completed(userID)
+        return isActive && !completed(userID)
     }
 
     val streakString: String?
