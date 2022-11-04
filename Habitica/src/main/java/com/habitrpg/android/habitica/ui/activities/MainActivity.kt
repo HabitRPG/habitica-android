@@ -13,6 +13,7 @@ import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.children
@@ -111,6 +112,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
     private var lastNotificationOpen: Long? = null
+
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted -> if (granted) { viewModel.pushNotificationManager.addPushDeviceUsingStoredToken() } }
 
     val isAppBarExpanded: Boolean
         get() = binding.content.appbar.height - binding.content.appbar.bottom == 0
@@ -304,6 +309,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val navigationController = navHostFragment.navController
         MainNavigationController.setup(navigationController)
         navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
+
+        viewModel.requestNotificationPermission.observe(this) { requestNotificationPermission ->
+            if (requestNotificationPermission && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
+                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                viewModel.requestNotificationPermission.value = false
+            }
+        }
 
         if (launchScreen == "/party") {
             viewModel.user.observeOnce(this) {

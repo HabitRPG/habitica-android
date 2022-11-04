@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -189,6 +190,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
     }
 
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted -> if (granted) { pushNotificationManager.addPushDeviceUsingStoredToken() } }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             "use_reminder" -> {
@@ -209,7 +214,11 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 pushNotificationsPreference?.isEnabled = usePushNotifications
                 userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications).subscribe()
                 if (usePushNotifications) {
-                    pushNotificationManager.addPushDeviceUsingStoredToken()
+                    if (!pushNotificationManager.notificationPermissionEnabled() && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
+                        notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                    } else {
+                        pushNotificationManager.addPushDeviceUsingStoredToken()
+                    }
                 } else {
                     pushNotificationManager.removePushDeviceUsingStoredToken()
                 }
