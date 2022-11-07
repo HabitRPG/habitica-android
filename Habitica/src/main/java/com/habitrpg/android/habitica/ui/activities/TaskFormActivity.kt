@@ -31,8 +31,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
@@ -48,9 +46,9 @@ import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
-import java.util.Date
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 class TaskFormActivity : BaseActivity() {
@@ -105,7 +103,7 @@ class TaskFormActivity : BaseActivity() {
         return R.layout.activity_task_form
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -203,36 +201,32 @@ class TaskFormActivity : BaseActivity() {
         when {
             taskId != null -> {
                 isCreating = false
-                compositeSubscription.add(
-                    taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(
-                        {
-                            if (!it.isValid) return@subscribe
-                            task = it
-                            initialTaskInstance = it
-                            // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
-                            fillForm(it)
-                            it.challengeID?.let { challengeID ->
-                                compositeSubscription.add(
-                                    challengeRepository.retrieveChallenge(challengeID)
-                                        .subscribe(
-                                            { challenge ->
-                                                this.challenge = challenge
-                                                binding.challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
-                                                binding.challengeNameView.visibility = View.VISIBLE
-                                                disableEditingForUneditableFieldsInChallengeTask()
-                                            },
-                                            ExceptionHandler.rx()
-                                        )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val task = taskRepository.getUnmanagedTask(taskId).firstOrNull() ?: return@launch
+                    if (!task.isValid) return@launch
+                    this@TaskFormActivity.task = task
+                    initialTaskInstance = task
+                    // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
+                    fillForm(task)
+                    task.challengeID?.let { challengeID ->
+                        compositeSubscription.add(
+                            challengeRepository.retrieveChallenge(challengeID)
+                                .subscribe(
+                                    { challenge ->
+                                        this@TaskFormActivity.challenge = challenge
+                                        binding.challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
+                                        binding.challengeNameView.visibility = View.VISIBLE
+                                        disableEditingForUneditableFieldsInChallengeTask()
+                                    },
+                                    ExceptionHandler.rx()
                                 )
-                            }
-                        },
-                        ExceptionHandler.rx()
-                    )
-                )
+                        )
+                    }
+                }
             }
             bundle.containsKey(PARCELABLE_TASK) -> {
                 isCreating = false
-                task = bundle.getParcelable(PARCELABLE_TASK)
+                task = bundle.getParcelable(PARCELABLE_TASK, Task::class.java)
                 task?.let { fillForm(it) }
             }
             else -> {
@@ -547,15 +541,12 @@ class TaskFormActivity : BaseActivity() {
         resultIntent.putExtra(TASK_TYPE_KEY, taskType.value)
         if (!isChallengeTask) {
             if (isCreating) {
-                if (isDiscardCancelled) {
-                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
-                }
                 taskRepository.createTaskInBackground(thisTask)
             } else {
-                if (isDiscardCancelled) {
-                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
-                }
                 taskRepository.updateTaskInBackground(thisTask)
+            }
+            if (isDiscardCancelled) {
+                analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
             }
 
             if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {

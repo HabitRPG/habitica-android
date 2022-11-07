@@ -18,6 +18,8 @@ import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
@@ -187,19 +189,17 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getTask(taskId: String): Flowable<Task> {
+    override fun getTask(taskId: String): Flow<Task> {
         if (realm.isClosed) {
-            return Flowable.empty()
+            return emptyFlow()
         }
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java).equalTo("id", taskId).findAll().asFlowable()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-                .map { it.first() }
-                .cast(Task::class.java)
-        )
+        return realm.where(Task::class.java).equalTo("id", taskId).findAll().toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .map { it.first() }
+            .filterNotNull()
     }
 
-    override fun getTaskCopy(taskId: String): Flowable<Task> {
+    override fun getTaskCopy(taskId: String): Flow<Task> {
         return getTask(taskId)
             .map { task ->
                 return@map if (task.isManaged && task.isValid) {
@@ -270,7 +270,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         ).retry(1)
     }
 
-    override fun getUser(userID: String): Flowable<User> {
+    override fun getUserFlowable(userID: String): Flowable<User> {
         return RxJavaBridge.toV3Flowable(
             realm.where(User::class.java)
                 .equalTo("id", userID)
@@ -279,6 +279,16 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
                 .map { users -> users.first() }
         )
+    }
+
+    override fun getUser(userID: String): Flow<User> {
+        return realm.where(User::class.java)
+            .equalTo("id", userID)
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+            .map { users -> users.first() }
+            .filterNotNull()
     }
 
     override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<out List<Task>> {

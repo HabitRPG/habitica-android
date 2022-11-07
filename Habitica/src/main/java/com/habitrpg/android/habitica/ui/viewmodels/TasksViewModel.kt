@@ -116,7 +116,7 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
         direction: TaskDirection,
         onResult: (TaskScoringResult, Int) -> Unit
     ) {
-        compositeSubscription.add(
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.taskChecked(
                 null,
                 task.id ?: "",
@@ -134,8 +134,8 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
                         putLong("last_task_reporting", Date().time)
                     }
                 }
-            }.subscribe({}, ExceptionHandler.rx())
-        )
+            }
+        }
     }
 
     private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> =

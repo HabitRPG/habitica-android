@@ -113,16 +113,17 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
             }
             context?.getString(R.string.complete_task_action) -> {
                 taskID?.let {
-                    taskRepository.taskChecked(null, it, up = true, force = false) {
-                    }.subscribe({
-                        val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
-                            it.experienceDelta,
-                            it.healthDelta,
-                            it.goldDelta,
-                            it.manaDelta
-                        )
-                        showToast(pair.first)
-                    }, ExceptionHandler.rx())
+                    MainScope().launch(ExceptionHandler.coroutine()) {
+                        taskRepository.taskChecked(null, it, up = true, force = false) {
+                            val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
+                                it.experienceDelta,
+                                it.healthDelta,
+                                it.goldDelta,
+                                it.manaDelta
+                            )
+                            showToast(pair.first)
+                        }
+                    }
                 }
             }
         }
@@ -134,6 +135,8 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     }
 
     private fun getMessageText(key: String?): String? {
-        return intent?.let { RemoteInput.getResultsFromIntent(it)?.getCharSequence(key)?.toString() }
+        return intent?.let {
+            RemoteInput.getResultsFromIntent(it)?.getCharSequence(key)?.toString()
+        }
     }
 }

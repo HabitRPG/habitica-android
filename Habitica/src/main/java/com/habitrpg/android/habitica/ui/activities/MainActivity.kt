@@ -119,7 +119,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return R.layout.activity_main
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         return binding.root
     }

@@ -49,7 +49,7 @@ class ArmoireActivity : BaseActivity() {
         component?.inject(this)
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityArmoireBinding.inflate(layoutInflater)
         return binding.root
     }

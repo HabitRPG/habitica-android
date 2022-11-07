@@ -19,8 +19,8 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun deleteTask(taskID: String)
 
-    fun getTask(taskId: String): Flowable<Task>
-    fun getTaskCopy(taskId: String): Flowable<Task>
+    fun getTask(taskId: String): Flow<Task>
+    fun getTaskCopy(taskId: String): Flow<Task>
 
     fun markTaskCompleted(taskId: String, isCompleted: Boolean)
 
@@ -33,6 +33,7 @@ interface TaskLocalRepository : BaseLocalRepository {
     fun updateTaskPositions(taskOrder: List<String>)
     fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>)
     fun getErroredTasks(userID: String): Flowable<out List<Task>>
-    fun getUser(userID: String): Flowable<User>
+    fun getUserFlowable(userID: String): Flowable<User>
+    fun getUser(userID: String): Flow<User>
     fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<out List<Task>>
 }

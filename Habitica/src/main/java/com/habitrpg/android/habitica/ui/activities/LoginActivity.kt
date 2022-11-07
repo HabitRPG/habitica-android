@@ -113,7 +113,7 @@ class LoginActivity : BaseActivity() {
         return R.layout.activity_login
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         return binding.root
     }

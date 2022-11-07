@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -22,7 +23,7 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import java.util.Calendar
@@ -83,7 +84,7 @@ class YesterdailyDialog private constructor(
             }
         }
         lastCronRun = Date()
-        GlobalScope.launch(ExceptionHandler.coroutine()) {
+        MainScope().launch(ExceptionHandler.coroutine()) {
             userRepository.runCron(completedTasks)
         }
         displayedDialog = null
@@ -141,12 +142,12 @@ class YesterdailyDialog private constructor(
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
         checkboxHolder?.setOnClickListener { _ ->
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, ExceptionHandler.rx())
+            scoreChecklistItem(task, item)
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, ExceptionHandler.rx())
+            scoreChecklistItem(task, item)
             configureChecklistView(checklistView, task, item)
         }
         checkboxHolder?.setBackgroundResource(
@@ -173,6 +174,15 @@ class YesterdailyDialog private constructor(
                 }
                 )
         )
+    }
+
+    private fun scoreChecklistItem(
+        task: Task,
+        item: ChecklistItem
+    ) {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
+        }
     }
 
     private fun configureTaskView(taskView: View, task: Task) {
@@ -274,7 +284,7 @@ class YesterdailyDialog private constructor(
                                 )
                             } else {
                                 lastCronRun = Date()
-                                GlobalScope.launch(ExceptionHandler.coroutine()) {
+                                MainScope().launch(ExceptionHandler.coroutine()) {
                                     userRepository.runCron()
                                 }
                             }

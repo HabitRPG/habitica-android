@@ -93,12 +93,12 @@ interface ApiClient {
 
     fun getTask(id: String): Flowable<Task>
 
-    fun postTaskDirection(id: String, direction: String): Flowable<TaskDirectionData>
+    suspend fun postTaskDirection(id: String, direction: String): TaskDirectionData?
     fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData>
 
     fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>>
 
-    fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
+    suspend fun scoreChecklistItem(taskId: String, itemId: String): Task?
 
     fun createTask(item: Task): Flowable<Task>
 

@@ -78,7 +78,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private var savingInProgress = false
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityCreateChallengeBinding.inflate(layoutInflater)
         return binding.root
     }

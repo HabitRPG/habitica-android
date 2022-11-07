@@ -81,10 +81,10 @@ class TaskRepositoryImplTest : WordSpec({
             every { apiClient.postTaskDirection(any(), "up") } returns Flowable.just(
                 TaskDirectionData()
             )
-            every { localRepository.getUser("") } returns Flowable.just(user)
+            every { localRepository.getUserFlowable("") } returns Flowable.just(user)
             repository.taskChecked(null, task, true, false, null)
             eventually(5000) {
-                localRepository.getUser("")
+                localRepository.getUserFlowable("")
             }
         }
         "does not update user for team tasks" {

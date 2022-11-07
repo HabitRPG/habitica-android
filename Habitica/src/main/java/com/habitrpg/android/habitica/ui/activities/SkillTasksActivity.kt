@@ -41,7 +41,7 @@ class SkillTasksActivity : BaseActivity() {
         loadTaskLists()
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivitySkillTasksBinding.inflate(layoutInflater)
         return binding.root
     }

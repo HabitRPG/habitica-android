@@ -64,7 +64,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         return R.layout.activity_setup
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivitySetupBinding.inflate(layoutInflater)
         return binding.root
     }

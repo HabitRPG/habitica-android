@@ -451,8 +451,8 @@ class ApiClientImpl(
         return apiService.getTask(id).compose(configureApiCallObserver())
     }
 
-    override fun postTaskDirection(id: String, direction: String): Flowable<TaskDirectionData> {
-        return apiService.postTaskDirection(id, direction).compose(configureApiCallObserver())
+    override suspend fun postTaskDirection(id: String, direction: String): TaskDirectionData? {
+        return handleSuspendCall { apiService.postTaskDirection(id, direction) }
     }
 
     override fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData> {
@@ -463,8 +463,8 @@ class ApiClientImpl(
         return apiService.postTaskNewPosition(id, position).compose(configureApiCallObserver())
     }
 
-    override fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task> {
-        return apiService.scoreChecklistItem(taskId, itemId).compose(configureApiCallObserver())
+    override suspend fun scoreChecklistItem(taskId: String, itemId: String): Task? {
+        return handleSuspendCall { apiService.scoreChecklistItem(taskId, itemId) }
     }
 
     override fun createTask(item: Task): Flowable<Task> {

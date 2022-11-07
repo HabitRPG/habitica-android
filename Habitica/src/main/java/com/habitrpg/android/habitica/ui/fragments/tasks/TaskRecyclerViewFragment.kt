@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -30,6 +29,7 @@ import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
@@ -141,10 +141,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 playSound(it.second)
                 context?.let { it1 -> notificationsManager.dismissTaskNotification(it1, it.first) }
             }?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { recyclerSubscription.add(it) }
-        recyclerAdapter?.checklistItemScoreEvents
-            ?.flatMap {
-                taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
-            }?.subscribeWithErrorHandler {}?.let { recyclerSubscription.add(it) }
+        recyclerAdapter?.checklistItemScoreEvents?.subscribeWithErrorHandler {
+            scoreChecklistItem(it.first, it.second)
+        }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler { MainNavigationController.navigate(R.id.adventureGuideActivity) }?.let { recyclerSubscription.add(it) }
 
@@ -160,6 +159,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 .collect {
                     updateTaskSubscription(viewModel.ownerID.value)
                 }
+        }
+    }
+
+    private fun scoreChecklistItem(task: Task, item: ChecklistItem) {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
         }
     }
 
@@ -530,12 +535,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
         bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
-        val intent = Intent(activity, TaskFormActivity::class.java)
-        intent.putExtras(bundle)
-        TasksFragment.lastTaskFormOpen = Date()
-        if (isAdded) {
-            startActivity(intent)
+        if (task.canEdit(viewModel.userViewModel.userID)) {
+            MainNavigationController.navigate(R.id.taskFormActivity, bundle)
+        } else {
+            MainNavigationController.navigate(R.id.taskSummaryActivity, bundle)
         }
+        TasksFragment.lastTaskFormOpen = Date()
     }
 
     companion object {

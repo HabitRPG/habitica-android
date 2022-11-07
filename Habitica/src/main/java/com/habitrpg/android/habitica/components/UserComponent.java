@@ -38,6 +38,8 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskSummaryActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskSummaryViewModel;
 import com.habitrpg.android.habitica.ui.activities.VerifyUsernameActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
@@ -364,4 +366,8 @@ public interface UserComponent {
     void inject(@NotNull DeathActivity deathActivity);
 
     void inject(@NotNull DeviceCommunicationService deviceCommunicationService);
+
+    void inject(@NotNull TaskSummaryActivity taskSummaryActivity);
+
+    void inject(@NotNull TaskSummaryViewModel taskSummaryViewModel);
 }

@@ -22,24 +22,24 @@ interface TaskRepository : BaseRepository {
     suspend fun retrieveTasks(userId: String, tasksOrder: TasksOrder): TaskList?
     fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList>
 
-    fun taskChecked(
+    suspend fun taskChecked(
         user: User?,
         task: Task,
         up: Boolean,
         force: Boolean,
         notifyFunc: ((TaskScoringResult) -> Unit)?
-    ): Flowable<TaskScoringResult>
-    fun taskChecked(
+    ): TaskScoringResult?
+    suspend fun taskChecked(
         user: User?,
         taskId: String,
         up: Boolean,
         force: Boolean,
         notifyFunc: ((TaskScoringResult) -> Unit)?
-    ): Maybe<TaskScoringResult>
-    fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
+    ): TaskScoringResult?
+    suspend fun scoreChecklistItem(taskId: String, itemId: String): Task?
 
-    fun getTask(taskId: String): Flowable<Task>
-    fun getTaskCopy(taskId: String): Flowable<Task>
+    fun getTask(taskId: String): Flow<Task>
+    fun getTaskCopy(taskId: String): Flow<Task>
     fun createTask(task: Task, force: Boolean = false): Flowable<Task>
     fun updateTask(task: Task, force: Boolean = false): Maybe<Task>?
     fun deleteTask(taskId: String): Flowable<Void>
@@ -55,7 +55,7 @@ interface TaskRepository : BaseRepository {
 
     fun updateTaskPosition(taskType: TaskType, taskID: String, newPosition: Int): Maybe<List<String>>
 
-    fun getUnmanagedTask(taskid: String): Flowable<Task>
+    fun getUnmanagedTask(taskid: String): Flow<Task>
 
     fun updateTaskInBackground(task: Task)
 

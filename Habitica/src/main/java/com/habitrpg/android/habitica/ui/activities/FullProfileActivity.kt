@@ -496,7 +496,7 @@ class FullProfileActivity : BaseActivity() {
         return R.layout.activity_full_profile
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityFullProfileBinding.inflate(layoutInflater)
         return binding.root
     }

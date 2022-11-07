@@ -51,7 +51,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityNotificationsBinding.inflate(layoutInflater)
         return binding.root
     }

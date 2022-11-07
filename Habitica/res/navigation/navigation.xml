@@ -34,6 +34,16 @@
         <deepLink app:uri="habitica.com/tasks" />
         <deepLink app:uri="habitica.com" />
     </fragment>
+    <activity
+        android:id="@+id/taskFormActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.TaskFormActivity">
+
+    </activity>
+    <activity
+        android:id="@+id/taskSummaryActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.TaskSummaryActivity">
+
+    </activity>
     <fragment
         android:id="@+id/partyFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment"

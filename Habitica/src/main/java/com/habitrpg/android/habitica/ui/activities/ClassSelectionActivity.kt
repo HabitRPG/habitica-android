@@ -60,7 +60,7 @@ class ClassSelectionActivity : BaseActivity() {
         return R.layout.activity_class_selection
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityClassSelectionBinding.inflate(layoutInflater)
         return binding.root
     }

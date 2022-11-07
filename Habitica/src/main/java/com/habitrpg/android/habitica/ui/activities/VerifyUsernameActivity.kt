@@ -39,7 +39,7 @@ class VerifyUsernameActivity : BaseActivity() {
         return R.layout.activity_verify_username
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityVerifyUsernameBinding.inflate(layoutInflater)
         return binding.root
     }

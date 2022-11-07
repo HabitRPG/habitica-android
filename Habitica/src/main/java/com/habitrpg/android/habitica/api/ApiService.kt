@@ -130,7 +130,7 @@ interface ApiService {
     fun getTask(@Path("id") id: String): Flowable<HabitResponse<Task>>
 
     @POST("tasks/{id}/score/{direction}")
-    fun postTaskDirection(@Path("id") id: String, @Path("direction") direction: String): Flowable<HabitResponse<TaskDirectionData>>
+    suspend fun postTaskDirection(@Path("id") id: String, @Path("direction") direction: String): HabitResponse<TaskDirectionData>
     @POST("tasks/bulk-score")
     fun bulkScoreTasks(@Body data: List<Map<String, String>>): Flowable<HabitResponse<BulkTaskScoringData>>
 
@@ -138,7 +138,7 @@ interface ApiService {
     fun postTaskNewPosition(@Path("id") id: String, @Path("position") position: Int): Flowable<HabitResponse<List<String>>>
 
     @POST("tasks/{taskId}/checklist/{itemId}/score")
-    fun scoreChecklistItem(@Path("taskId") taskId: String, @Path("itemId") itemId: String): Flowable<HabitResponse<Task>>
+    suspend fun scoreChecklistItem(@Path("taskId") taskId: String, @Path("itemId") itemId: String): HabitResponse<Task>
 
     @POST("tasks/user")
     fun createTask(@Body item: Task): Flowable<HabitResponse<Task>>

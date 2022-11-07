@@ -32,7 +32,7 @@ class MaintenanceActivity : BaseActivity() {
         return R.layout.activity_maintenance
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityMaintenanceBinding.inflate(layoutInflater)
         return binding.root
     }

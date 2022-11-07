@@ -21,7 +21,9 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.functions.Consumer
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TaskReceiver : BroadcastReceiver() {
@@ -43,18 +45,13 @@ class TaskReceiver : BroadcastReceiver() {
                 taskAlarmManager.addAlarmForTaskId(taskId)
             }
 
-            taskRepository.getTask(taskId ?: "")
-                .firstElement()
-                .subscribe(
-                    Consumer {
-                        if (it.isUpdatedToday && it.completed) {
-                            return@Consumer
-                        }
-
-                        createNotification(context, it)
-                    },
-                    ExceptionHandler.rx()
-                )
+            MainScope().launch(ExceptionHandler.coroutine()) {
+                val task = taskRepository.getTask(taskId ?: "").firstOrNull() ?: return@launch
+                if (task.isUpdatedToday && task.completed) {
+                    return@launch
+                }
+                createNotification(context, task)
+            }
         }
     }
 

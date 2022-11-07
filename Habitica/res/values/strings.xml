@@ -1255,6 +1255,7 @@
     <string name="copy_tasks_description">Show assigned and open tasks on your personal task lists</string>
     <string name="copy_shared_tasks">Copy shared tasks</string>
     <string name="group_plan_settings">Group Plan Settings</string>
+    <string name="task_summary">Task Summary</string>
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
         <item quantity="one">You, %d other</item>
