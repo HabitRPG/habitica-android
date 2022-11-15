@@ -222,7 +222,11 @@ class TaskAlarmManager(
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
             } else {
-                alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
+                try {
+                    alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
+                } catch (e: SecurityException) {
+                    alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
+                }
             }
         }
     }

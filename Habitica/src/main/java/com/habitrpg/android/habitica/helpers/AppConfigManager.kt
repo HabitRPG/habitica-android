@@ -18,12 +18,16 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
     private var worldState: WorldState? = null
 
     init {
-        contentRepository?.getWorldState()?.subscribe(
-            {
-                worldState = it
-            },
-            ExceptionHandler.rx()
-        )
+        try {
+            contentRepository?.getWorldState()?.subscribe(
+                {
+                    worldState = it
+                },
+                ExceptionHandler.rx()
+            )
+        } catch (_: java.lang.IllegalStateException) {
+            // pass
+        }
     }
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
