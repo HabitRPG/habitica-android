@@ -101,7 +101,9 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                     analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
                     if (!pushNotificationManager.notificationPermissionEnabled() && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
-                        requestNotificationPermission.value = true
+                        if (sharedPreferences.getBoolean("usePushNotifications", true)) {
+                            requestNotificationPermission.value = true
+                        }
                     } else {
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
@@ -112,6 +114,13 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                 userRepository.retrieveTeamPlans()
                     .subscribe({ }, ExceptionHandler.rx())
             )
+        }
+    }
+
+    fun updateAllowPushNotifications(allowPushNotifications: Boolean) {
+        sharedPreferences.getBoolean("usePushNotifications", true)
+        sharedPreferences.edit {
+            putBoolean("usePushNotifications", allowPushNotifications)
         }
     }
 

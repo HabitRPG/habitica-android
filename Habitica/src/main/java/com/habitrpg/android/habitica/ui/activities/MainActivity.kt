@@ -115,7 +115,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { granted -> if (granted) { viewModel.pushNotificationManager.addPushDeviceUsingStoredToken() } }
+    ) { granted ->
+        if (granted) {
+            viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
+        } else {
+            viewModel.updateAllowPushNotifications(false)
+        }
+    }
 
     val isAppBarExpanded: Boolean
         get() = binding.content.appbar.height - binding.content.appbar.bottom == 0
