@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
-class InboxAdapter(private var user: User?, private var replyToUser: Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+class InboxAdapter(private var user: User?, private var replyToUser: Member?) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
     private val FIRST_MESSAGE = 0
     private val NORMAL_MESSAGE = 1
 
@@ -43,7 +43,7 @@ class InboxAdapter(private var user: User?, private var replyToUser: Member) : P
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser.id!!)
+        return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser?.id ?: "")
         else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
     }
 

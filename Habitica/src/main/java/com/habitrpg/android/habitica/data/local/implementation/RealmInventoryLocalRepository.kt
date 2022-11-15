@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.InventoryLocalRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -39,14 +39,12 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
                 .filter { it.isLoaded }
     }
 
-    override fun getQuestContent(key: String): Flowable<QuestContent> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(QuestContent::class.java).equalTo("key", key)
+    override fun getQuestContent(key: String): Flow<QuestContent?> {
+        return realm.where(QuestContent::class.java).equalTo("key", key)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { content -> content.isLoaded && content.isValid && !content.isEmpty() }
                 .map { content -> content.first() }
-        )
     }
 
     override fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>> {
@@ -240,7 +238,7 @@ class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(
     }
 
     override fun changeOwnedCount(type: String, key: String, userID: String, amountToAdd: Int) {
-        getOwnedItem(userID, type, key, true).firstElement().subscribe({ changeOwnedCount(it, amountToAdd) }, RxErrorHandler.handleEmptyError())
+        getOwnedItem(userID, type, key, true).firstElement().subscribe({ changeOwnedCount(it, amountToAdd) }, ExceptionHandler.rx())
     }
 
     override fun changeOwnedCount(item: OwnedItem, amountToAdd: Int?) {

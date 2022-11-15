@@ -73,6 +73,8 @@
     <color name="gray_600">#edecee</color>
     <color name="gray_700">#f9f9f9</color>
 
+    <color name="gray_1_30">#4D1A181D</color>
+
     <color name="blue_1">#033f5e</color>
     <color name="teal_1">#005158</color>
     <color name="green_1">#005737</color>
@@ -83,7 +85,7 @@
     <color name="xpColor">@color/yellow_100</color>
     <color name="mpColor">@color/blue_100</color>
 
-    <color name="text_primary">@color/gray_10</color>
+    <color name="text_primary">@color/gray_50</color>
     <color name="text_secondary">@color/gray_100</color>
     <color name="text_ternary">@color/gray_200</color>
     <color name="text_quad">@color/gray_300</color>

@@ -15,7 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -26,8 +25,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -81,7 +79,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             if (args.ownerID?.isNotBlank() == true) {
                 viewModel.canSwitchOwners.value = false
                 viewModel.ownerID.value = args.ownerID ?: viewModel.userViewModel.userID
-            } else {
+            } else if (viewModel.ownerID.value?.isNotBlank() != true) {
                 viewModel.ownerID.value = viewModel.userViewModel.userID
             }
             if (taskTypeValue?.isNotBlank() == true) {
@@ -183,10 +181,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             R.id.action_reload -> {
                 refreshItem = item
                 viewModel.refreshData { }
-                true
-            }
-            R.id.action_team_info -> {
-                MainNavigationController.navigate(R.id.guildFragment, bundleOf(Pair("groupID", viewModel.ownerID)))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -306,7 +300,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                         }
                     }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }
@@ -422,6 +416,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (viewModel.ownerTitle.isNotBlank()) {
             activity?.title = viewModel.ownerTitle
         }
+        viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]
         val isPersonalBoard = viewModel.isPersonalBoard
         bottomNavigation?.canAddTasks = isPersonalBoard
     }

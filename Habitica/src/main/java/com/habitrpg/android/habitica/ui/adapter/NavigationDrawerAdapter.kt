@@ -4,19 +4,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
-import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
+import com.habitrpg.common.habitica.extensions.dpToPx
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -75,32 +72,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
-    }
-
-    fun setTeams(teams: List<TeamPlan>) {
-        var teamHeaderIndex = -1
-        var nextHeaderIndex = -1
-        for ((index, item) in items.withIndex()) {
-            if (teamHeaderIndex != -1 && item.isHeader) {
-                nextHeaderIndex = index
-                break
-            } else if (item.identifier == NavigationDrawerFragment.SIDEBAR_TEAMS) {
-                teamHeaderIndex = index
-            }
-        }
-        if (teamHeaderIndex != -1 && nextHeaderIndex != -1) {
-            for (x in nextHeaderIndex - 1 downTo teamHeaderIndex + 1) {
-                items.removeAt(x)
-                notifyItemRemoved(x)
-            }
-            for ((index, team) in teams.withIndex()) {
-                val item = HabiticaDrawerItem(R.id.tasksFragment, team.id, team.summary)
-                item.bundle = bundleOf(Pair("ownerID", team.id))
-                val newIndex = teamHeaderIndex + index + 1
-                items.add(newIndex, item)
-                notifyItemInserted(newIndex)
-            }
-        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

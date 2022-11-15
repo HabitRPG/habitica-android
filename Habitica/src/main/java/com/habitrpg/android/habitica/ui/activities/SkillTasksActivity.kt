@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivitySkillTasksBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.modules.AppModule
@@ -41,7 +41,7 @@ class SkillTasksActivity : BaseActivity() {
         loadTaskLists()
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivitySkillTasksBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -60,7 +60,7 @@ class SkillTasksActivity : BaseActivity() {
                     1 -> TaskType.DAILY
                     else -> TaskType.TODO
                 }
-                compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, RxErrorHandler.handleEmptyError()))
+                compositeSubscription.add(fragment.getTaskSelectionEvents().subscribe({ task -> taskSelected(task) }, ExceptionHandler.rx()))
                 viewFragmentsDictionary.put(position, fragment)
                 return fragment
             }

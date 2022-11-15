@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.activities
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -11,12 +12,14 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftGemsBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GiftGemsActivity : PurchaseActivity() {
@@ -46,7 +49,7 @@ class GiftGemsActivity : PurchaseActivity() {
         return R.layout.activity_gift_gems
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGiftGemsBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -74,27 +77,17 @@ class GiftGemsActivity : PurchaseActivity() {
 
         setViewPagerAdapter()
 
-        compositeSubscription.add(
-            socialRepository.getMember(giftedUsername ?: giftedUserID).firstElement().subscribe(
-                {
-                    giftedMember = it
-                    giftedUserID = it.id
-                    giftedUsername = it.username
-                    purchaseFragment?.giftedMember = it
-                    balanceFragment?.giftedMember = it
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID) ?: return@launch
+            giftedMember = member
+            giftedUserID = member.id
+            giftedUsername = member.username
+            purchaseFragment?.giftedMember = member
+            balanceFragment?.giftedMember = member
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable().subscribe(
-                {
-                    currencyView.value = it.gemCount.toDouble()
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+            val user = userRepository.getUser().firstOrNull()
+            currencyView.value = user?.gemCount?.toDouble() ?: 0.0
+        }
     }
 
     private fun setViewPagerAdapter() {

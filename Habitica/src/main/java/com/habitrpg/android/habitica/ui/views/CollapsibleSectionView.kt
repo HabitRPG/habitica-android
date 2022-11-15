@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -48,14 +47,6 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
 
     var identifier: String? = null
 
-    var separatorColor: Int
-        get() {
-            return (binding.separator.background as? ColorDrawable)?.color ?: 0
-        }
-        set(value) {
-            binding.separator.setBackgroundColor(value)
-        }
-
     private fun showViews() {
         updatePreferences()
         setCaretImage()
@@ -67,7 +58,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
     private fun hideViews() {
         updatePreferences()
         setCaretImage()
-        (2 until childCount)
+        (0 until childCount)
             .map { getChildAt(it) }
             .filter { it != binding.sectionTitleView }
             .forEach {
@@ -87,7 +78,7 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
     }
 
     private fun setChildMargins() {
-        (2 until childCount)
+        (0 until childCount)
             .map { getChildAt(it) }
             .filter { it != binding.sectionTitleView }
             .forEach {
@@ -104,11 +95,9 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         var height = 0
-        measureChildWithMargins(binding.separator, widthMeasureSpec, 0, heightMeasureSpec, height)
-        height += binding.separator.measuredHeight
         measureChildWithMargins(binding.sectionTitleView, widthMeasureSpec, 0, heightMeasureSpec, height)
         height += binding.sectionTitleView.measuredHeight
-        (2 until childCount)
+        (1 until childCount)
             .map { getChildAt(it) }
             .forEach {
                 if (it.visibility != View.GONE) {

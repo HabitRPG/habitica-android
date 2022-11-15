@@ -15,7 +15,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
 import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class ReportMessageActivity : BaseActivity() {
         component?.inject(this)
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityReportMessageBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -98,7 +98,7 @@ class ReportMessageActivity : BaseActivity() {
                 .doOnError { isReporting = false }
                 .subscribe(
                     { finish() },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         }
     }

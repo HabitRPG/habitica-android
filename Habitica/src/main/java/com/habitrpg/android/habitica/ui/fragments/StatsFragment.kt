@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setScaledPadding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.user.Stats
@@ -132,7 +132,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
         binding?.automaticAllocationSwitch?.setOnCheckedChangeListener { _, isChecked ->
             userRepository.updateUser("preferences.automaticAllocation", isChecked)
-                .subscribe({}, RxErrorHandler.handleEmptyError())
+                .subscribe({}, ExceptionHandler.rx())
         }
 
         binding?.strengthStatsView?.allocateAction = { allocatePoint(Attribute.STRENGTH) }
@@ -163,7 +163,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             userRepository.updateUser(
                 "preferences.allocationMode",
                 allocationMode
-            ).subscribe({}, RxErrorHandler.handleEmptyError())
+            ).subscribe({}, ExceptionHandler.rx())
         )
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         binding?.distributeClassButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
@@ -179,7 +179,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     private fun allocatePoint(stat: Attribute) {
         compositeSubscription.add(
-            userRepository.allocatePoint(stat).subscribe({ }, RxErrorHandler.handleEmptyError())
+            userRepository.allocatePoint(stat).subscribe({ }, ExceptionHandler.rx())
         )
     }
 
@@ -326,7 +326,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
                         binding?.constitutionStatsView?.equipmentValue = constitution
                         binding?.perceptionStatsView?.equipmentValue = perception
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         )
     }

@@ -8,8 +8,8 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -51,8 +51,8 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
 
         setText(stringBuilder)
         job?.cancel()
-        job = GlobalScope.launch(Dispatchers.Main) {
-            while (index <= stringBuilder?.length ?: 0) {
+        job = MainScope().launch(Dispatchers.Main) {
+            while (index <= (stringBuilder?.length ?: 0)) {
                 stringBuilder?.setSpan(visibleSpan, 0, index++, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
                 setText(stringBuilder)
                 delay(delay)

@@ -63,7 +63,7 @@ class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, 
     fun setUpUser() {
         user.stats?.lvl = 20
         user.stats?.points = 30
-        userSubject.onNext(user)
+        userState.onNext(user)
 
         every { inventoryRepository.getEquipment(listOf()) } returns Flowable.just(listOf())
     }

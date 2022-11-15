@@ -8,7 +8,6 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.BaseTaskViewHolder
@@ -17,6 +16,7 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -69,18 +69,18 @@ class ChallengeTasksRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder<Task> {
         val viewHolder: BindableViewHolder<Task> = when (viewType) {
-            TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }, { }) { task ->
+            TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }, { }, { task ->
                 taskOpenEventsSubject.onNext(task)
-            }
-            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }, { }) { task ->
+            }, null)
+            TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }, { }, { task ->
                 taskOpenEventsSubject.onNext(task)
-            }
-            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }, { }) { task ->
+            }, null)
+            TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }, { }, { task ->
                 taskOpenEventsSubject.onNext(task)
-            }
-            TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }, { }) { task ->
+            }, null)
+            TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }, { }, { task ->
                 taskOpenEventsSubject.onNext(task)
-            }
+            }, null)
             TYPE_ADD_ITEM -> AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), addItemSubject)
             else -> DividerViewHolder(getContentView(parent, R.layout.challenge_task_divider))
         }
@@ -124,7 +124,11 @@ class ChallengeTasksRecyclerViewAdapter(
             addBtn.setOnClickListener { newTask?.let { callback.onNext(it) } }
         }
 
-        override fun bind(data: Task, position: Int, displayMode: String) {
+        override fun bind(
+            data: Task,
+            position: Int,
+            displayMode: String
+        ) {
             this.newTask = data
             addBtn.text = data.text
         }
@@ -134,7 +138,11 @@ class ChallengeTasksRecyclerViewAdapter(
 
         private val dividerName: TextView = itemView.findViewById(R.id.divider_name)
 
-        override fun bind(data: Task, position: Int, displayMode: String) {
+        override fun bind(
+            data: Task,
+            position: Int,
+            displayMode: String
+        ) {
             dividerName.text = data.text
         }
     }

@@ -21,22 +21,25 @@ import com.google.android.gms.common.UserRecoverableException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.common.habitica.helpers.KeyHelper
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
-import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.helpers.KeyHelper
+import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.exceptions.Exceptions
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
@@ -136,10 +139,12 @@ class AuthenticationViewModel() {
                     newUser = it.newUser
                     handleAuthResponse(it)
                 }
-                .flatMap { userRepository.retrieveUser(true, true) }
                 .subscribe(
                     {
-                        onSuccess(it, newUser)
+                        MainScope().launch(ExceptionHandler.coroutine()) {
+                            val user = userRepository.retrieveUser(true, true) ?: return@launch
+                            onSuccess(user, newUser)
+                        }
                     },
                     { throwable ->
                         if (recoverFromPlayServicesErrorResult == null) return@subscribe

@@ -38,7 +38,7 @@ class GroupInviteActivity : BaseActivity() {
         return R.layout.activity_party_invite
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityPartyInviteBinding.inflate(layoutInflater)
         return binding.root
     }

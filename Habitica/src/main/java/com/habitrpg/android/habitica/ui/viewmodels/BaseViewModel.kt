@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -40,7 +40,7 @@ abstract class BaseViewModel(initializeComponent: Boolean = true) : ViewModel() 
     fun updateUser(path: String, value: Any) {
         disposable.add(
             userRepository.updateUser(path, value)
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 }

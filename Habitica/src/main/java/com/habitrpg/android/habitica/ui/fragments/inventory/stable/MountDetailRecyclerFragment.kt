@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
@@ -102,7 +102,7 @@ class MountDetailRecyclerFragment :
                     {
                         adapter?.currentMount = it.currentMount
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )?.let { compositeSubscription.add(it) }
         }
         userViewModel.user.observe(viewLifecycleOwner) { adapter?.currentMount = it?.currentMount }
@@ -136,7 +136,7 @@ class MountDetailRecyclerFragment :
 
     private fun loadItems() {
         if (animalType != null || animalGroup != null) {
-            lifecycleScope.launch {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val mounts = inventoryRepository.getMounts(animalType, animalGroup, animalColor).firstOrNull() ?: emptyList()
                 inventoryRepository.getOwnedMounts().map {  ownedMounts ->
                     val mountMap = mutableMapOf<String, OwnedMount>()
@@ -173,13 +173,9 @@ class MountDetailRecyclerFragment :
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(
-            userRepository.retrieveUser(false, true).subscribe(
-                {
-                    binding?.refreshLayout?.isRefreshing = false
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(false, true)
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 }

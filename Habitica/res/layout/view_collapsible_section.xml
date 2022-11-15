@@ -5,11 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:parentTag="android.widget.LinearLayout">
-    <View
-        android:id="@+id/separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/content_background_offset"/>
     <LinearLayout
         android:id="@+id/section_title_view"
         android:layout_width="match_parent"

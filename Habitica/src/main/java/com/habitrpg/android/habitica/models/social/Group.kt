@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -34,7 +33,6 @@ open class Group : RealmObject(), BaseMainObject {
     var logo: String? = null
     var quest: Quest? = null
     var privacy: String? = null
-    var members: RealmList<User>? = null
     var challengeCount: Int = 0
     var leaderMessage: String? = null
     var leaderOnlyChallenges: Boolean = false
@@ -43,8 +41,6 @@ open class Group : RealmObject(), BaseMainObject {
 
     @Ignore
     var tasksOrder: TasksOrder? = null
-    @Ignore
-    var tasks: TaskList? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

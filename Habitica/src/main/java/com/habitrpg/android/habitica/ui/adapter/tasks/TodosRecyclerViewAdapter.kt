@@ -15,11 +15,10 @@ class TodosRecyclerViewAdapter(layoutResource: Int, viewModel: TasksViewModel) :
                 {
                         task ->
                     taskOpenEventsSubject.onNext(task)
-                }
-            ) {
-                    task ->
-                brokenTaskEventsSubject.onNext(task)
-            }
+                }, {
+                        task ->
+                    brokenTaskEventsSubject.onNext(task)
+                }, viewModel)
         } else {
             super.onCreateViewHolder(parent, viewType)
         }

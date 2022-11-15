@@ -179,6 +179,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
                 android:lineSpacingExtra="4sp"
+                android:background="@drawable/layout_rounded_bg_window"
+                android:padding="@dimen/spacing_large"
                 tools:text="There’s always more to learn! Maybe it’s a specialized topic you’re interested in, or maybe it’s the experiences of a notable contributor. Read about it and you may win 15 gems!" />
         </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
 

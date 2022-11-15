@@ -120,6 +120,6 @@ class MainNotificationsManager: NotificationsManager {
 
     private fun readNotification(notification: Notification) {
         apiClient?.get()?.readNotification(notification.id)
-            ?.subscribe({ }, RxErrorHandler.handleEmptyError())
+            ?.subscribe({ }, ExceptionHandler.rx())
     }
 }

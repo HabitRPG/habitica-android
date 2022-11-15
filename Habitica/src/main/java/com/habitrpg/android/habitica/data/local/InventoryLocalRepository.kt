@@ -28,7 +28,7 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun getOwnedPets(userID: String): Flow<List<OwnedPet>>
 
     fun getInAppRewards(): Flowable<out List<ShopItem>>
-    fun getQuestContent(key: String): Flowable<QuestContent>
+    fun getQuestContent(key: String): Flow<QuestContent?>
     fun getQuestContent(keys: List<String>): Flow<List<QuestContent>>
 
     fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>>

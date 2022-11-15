@@ -17,10 +17,6 @@
         android:contentDescription="@string/gems"
         android:layout_marginTop="20dp"/>
 
-    <com.habitrpg.android.habitica.ui.views.SparkView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,6 +36,7 @@
             android:layout_marginEnd="2dp"
             tools:text="21" />
         <com.habitrpg.android.habitica.ui.views.DayNightTextView
+            android:id="@+id/gem_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:dayTextColor="@color/white"

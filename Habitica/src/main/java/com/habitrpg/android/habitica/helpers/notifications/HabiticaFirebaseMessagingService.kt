@@ -16,13 +16,16 @@ class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
     internal lateinit var pushNotificationManager: PushNotificationManager
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        userComponent?.inject(this)
-        if (this::pushNotificationManager.isInitialized) {
-            pushNotificationManager.displayNotification(remoteMessage)
+        try {
+            userComponent?.inject(this)
+        } catch (_: java.lang.IllegalStateException) {
+        }
+        PushNotificationManager.displayNotification(remoteMessage, applicationContext)
 
-            if (remoteMessage.data["identifier"]?.contains(PushNotificationManager.WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true) {
+        if (remoteMessage.data["identifier"]?.contains(PushNotificationManager.WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true) {
+            // if (this::userRepository.isInitialized) {
                 // userRepository.retrieveUser(true).subscribe({}, RxErrorHandler.handleEmptyError())
-            }
+            // }
         }
     }
 

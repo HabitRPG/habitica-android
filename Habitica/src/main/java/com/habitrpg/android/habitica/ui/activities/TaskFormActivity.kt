@@ -22,6 +22,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -30,7 +31,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -45,6 +46,8 @@ import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
@@ -100,7 +103,7 @@ class TaskFormActivity : BaseActivity() {
         return R.layout.activity_task_form
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -160,7 +163,7 @@ class TaskFormActivity : BaseActivity() {
                         tags = it
                         setTagViews()
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         )
         userViewModel.user.observe(this) {
@@ -198,36 +201,32 @@ class TaskFormActivity : BaseActivity() {
         when {
             taskId != null -> {
                 isCreating = false
-                compositeSubscription.add(
-                    taskRepository.getUnmanagedTask(taskId).firstElement().subscribe(
-                        {
-                            if (!it.isValid) return@subscribe
-                            task = it
-                            initialTaskInstance = it
-                            // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
-                            fillForm(it)
-                            it.challengeID?.let { challengeID ->
-                                compositeSubscription.add(
-                                    challengeRepository.retrieveChallenge(challengeID)
-                                        .subscribe(
-                                            { challenge ->
-                                                this.challenge = challenge
-                                                binding.challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
-                                                binding.challengeNameView.visibility = View.VISIBLE
-                                                disableEditingForUneditableFieldsInChallengeTask()
-                                            },
-                                            RxErrorHandler.handleEmptyError()
-                                        )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val task = taskRepository.getUnmanagedTask(taskId).firstOrNull() ?: return@launch
+                    if (!task.isValid) return@launch
+                    this@TaskFormActivity.task = task
+                    initialTaskInstance = task
+                    // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
+                    fillForm(task)
+                    task.challengeID?.let { challengeID ->
+                        compositeSubscription.add(
+                            challengeRepository.retrieveChallenge(challengeID)
+                                .subscribe(
+                                    { challenge ->
+                                        this@TaskFormActivity.challenge = challenge
+                                        binding.challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
+                                        binding.challengeNameView.visibility = View.VISIBLE
+                                        disableEditingForUneditableFieldsInChallengeTask()
+                                    },
+                                    ExceptionHandler.rx()
                                 )
-                            }
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-                )
+                        )
+                    }
+                }
             }
             bundle.containsKey(PARCELABLE_TASK) -> {
                 isCreating = false
-                task = bundle.getParcelable(PARCELABLE_TASK)
+                task = bundle.getParcelable(PARCELABLE_TASK, Task::class.java)
                 task?.let { fillForm(it) }
             }
             else -> {
@@ -542,15 +541,12 @@ class TaskFormActivity : BaseActivity() {
         resultIntent.putExtra(TASK_TYPE_KEY, taskType.value)
         if (!isChallengeTask) {
             if (isCreating) {
-                if (isDiscardCancelled) {
-                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
-                }
                 taskRepository.createTaskInBackground(thisTask)
             } else {
-                if (isDiscardCancelled) {
-                    analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
-                }
                 taskRepository.updateTaskInBackground(thisTask)
+            }
+            if (isDiscardCancelled) {
+                analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
             }
 
             if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {
@@ -582,7 +578,7 @@ class TaskFormActivity : BaseActivity() {
         alert.setTitle(R.string.are_you_sure)
         alert.addButton(R.string.delete_task, true) { _, _ ->
             if (task?.isValid != true) return@addButton
-            task?.id?.let { taskRepository.deleteTask(it).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+            task?.id?.let { taskRepository.deleteTask(it).subscribe({ }, ExceptionHandler.rx()) }
             finish()
         }
         alert.addCancelButton()
@@ -602,12 +598,14 @@ class TaskFormActivity : BaseActivity() {
                             compositeSubscription.add(
                                 challengeRepository.leaveChallenge(it, "keep-all")
                                     .flatMap { taskRepository.deleteTask(task?.id ?: "") }
-                                    .flatMap { userRepository.retrieveUser(true, true) }
                                     .subscribe(
                                         {
+                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                                userRepository.retrieveUser(true, true)
+                                            }
                                             finish()
                                         },
-                                        RxErrorHandler.handleEmptyError()
+                                        ExceptionHandler.rx()
                                     )
                             )
                         }
@@ -616,12 +614,14 @@ class TaskFormActivity : BaseActivity() {
                         challenge?.let {
                             compositeSubscription.add(
                                 challengeRepository.leaveChallenge(it, "remove-all")
-                                    .flatMap { userRepository.retrieveUser(true, true) }
                                     .subscribe(
                                         {
+                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                                userRepository.retrieveUser(true, true)
+                                            }
                                             finish()
                                         },
-                                        RxErrorHandler.handleEmptyError()
+                                        ExceptionHandler.rx()
                                     )
                             )
                         }
@@ -629,7 +629,7 @@ class TaskFormActivity : BaseActivity() {
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
                     alert.show()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }
@@ -648,28 +648,32 @@ class TaskFormActivity : BaseActivity() {
                     dialog.setMessage(this.getString(R.string.broken_challenge_description, taskCount))
                     dialog.addButton(this.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
                         taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
-                            .flatMap { userRepository.retrieveUser(true, true) }
                             .subscribe(
-                                {
-                                    finish()
-                                },
-                                RxErrorHandler.handleEmptyError()
-                            )
+                            {
+                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                    userRepository.retrieveUser(true, true)
+                                }
+                                finish()
+                            },
+                            ExceptionHandler.rx()
+                        )
                     }
                     dialog.addButton(this.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
                         taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
-                            .flatMap { userRepository.retrieveUser(true, true) }
                             .subscribe(
-                                {
-                                    finish()
-                                },
-                                RxErrorHandler.handleEmptyError()
-                            )
+                            {
+                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                    userRepository.retrieveUser(true, true)
+                                }
+                                finish()
+                            },
+                            ExceptionHandler.rx()
+                        )
                     }
                     dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                     dialog.show()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }

@@ -9,11 +9,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -22,6 +23,8 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import java.util.Calendar
 import java.util.Date
@@ -81,7 +84,9 @@ class YesterdailyDialog private constructor(
             }
         }
         lastCronRun = Date()
-        userRepository.runCron(completedTasks)
+        MainScope().launch(ExceptionHandler.coroutine()) {
+            userRepository.runCron(completedTasks)
+        }
         displayedDialog = null
     }
 
@@ -137,14 +142,12 @@ class YesterdailyDialog private constructor(
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
         checkboxHolder?.setOnClickListener { _ ->
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+            scoreChecklistItem(task, item)
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+            scoreChecklistItem(task, item)
             configureChecklistView(checklistView, task, item)
         }
         checkboxHolder?.setBackgroundResource(
@@ -171,6 +174,15 @@ class YesterdailyDialog private constructor(
                 }
                 )
         )
+    }
+
+    private fun scoreChecklistItem(
+        task: Task,
+        item: ChecklistItem
+    ) {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
+        }
     }
 
     private fun configureTaskView(taskView: View, task: Task) {
@@ -272,10 +284,12 @@ class YesterdailyDialog private constructor(
                                 )
                             } else {
                                 lastCronRun = Date()
-                                userRepository.runCron()
+                                MainScope().launch(ExceptionHandler.coroutine()) {
+                                    userRepository.runCron()
+                                }
                             }
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
             }
         }

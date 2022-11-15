@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.user.Items
@@ -37,7 +37,7 @@ constructor(
             dialog.setAdditionalContentView(petWrapper)
             dialog.addButton(R.string.equip, true) { _, _ ->
                 inventoryRepository.equip("pet", requestValues.egg.key + "-" + requestValues.potion.key)
-                    .subscribe({}, RxErrorHandler.handleEmptyError())
+                    .subscribe({}, ExceptionHandler.rx())
             }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val message = requestValues.context.getString(R.string.share_hatched, potionName, eggName)

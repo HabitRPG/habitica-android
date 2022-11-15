@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -11,8 +12,8 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
@@ -21,7 +22,8 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.kotlin.Flowables
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -66,7 +68,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
         super.onViewCreated(view, savedInstanceState)
 
         challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userId)
-        challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe({ openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
+        challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe({ openDetailFragment(it) }, ExceptionHandler.rx())
             ?.let { compositeSubscription.add(it) }
 
         binding?.refreshLayout?.setOnRefreshListener(this)
@@ -83,16 +85,15 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             binding?.recyclerView?.setBackgroundResource(R.color.content_background)
         }
 
-        compositeSubscription.add(
-            Flowables.combineLatest(socialRepository.getGroupFlowable(Group.TAVERN_ID), socialRepository.getUserGroups("guild")).subscribe(
-                {
-                    this.filterGroups = mutableListOf()
-                    filterGroups?.add(it.first)
-                    filterGroups?.addAll(it.second)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            socialRepository.getGroup(Group.TAVERN_ID).combine(socialRepository.getUserGroups("guild")) { tavern, guilds ->
+                return@combine Pair(tavern, guilds)
+            }.collect {
+                this@ChallengeListFragment.filterGroups = mutableListOf()
+                it.first?.let { tavern -> filterGroups?.add(tavern) }
+                filterGroups?.addAll(it.second)
+            }
+        }
 
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -144,7 +145,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
                     this.challenges = challenges
                     challengeAdapter?.updateUnfilteredData(challenges)
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }
@@ -164,7 +165,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
                     }
                     nextPageToLoad += 1
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         )
     }

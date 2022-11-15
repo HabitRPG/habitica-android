@@ -68,4 +68,5 @@
 
 
     <color name="widget_background">#2B203A</color>
+    <color name="text_gold">@color/yellow_100</color>
 </resources>

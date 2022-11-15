@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.adapter.social.GuildListAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.common.habitica.helpers.EmptyItem
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), SearchView.OnQueryTextListener, SearchView.OnCloseListener, SwipeRefreshLayout.OnRefreshListener {
@@ -52,7 +54,12 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
 
         viewAdapter.onlyShowUsersGuilds = onlyShowUsersGuilds
         if (onlyShowUsersGuilds) {
-            compositeSubscription.add(socialRepository.getUserGroups("guild").subscribe({ viewAdapter.setUnfilteredData(it) }, RxErrorHandler.handleEmptyError()))
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                socialRepository.getUserGroups("guild")
+                    .collect {
+                        viewAdapter.setUnfilteredData(it)
+                    }
+            }
         } else {
             compositeSubscription.add(
                 this.socialRepository.getPublicGuilds()
@@ -60,7 +67,7 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
                         { groups ->
                             this@GuildListFragment.viewAdapter.setUnfilteredData(groups)
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
             )
         }
@@ -79,7 +86,7 @@ class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), Se
                     {
                         binding?.refreshLayout?.isRefreshing = false
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
         )
     }

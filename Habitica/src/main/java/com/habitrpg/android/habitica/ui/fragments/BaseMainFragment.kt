@@ -118,11 +118,11 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     }
 
     private fun hideToolbar() {
-        activity?.binding?.content?.avatarWithBars?.root?.visibility = View.GONE
+        activity?.binding?.content?.headerView?.visibility = View.GONE
     }
 
     private fun showToolbar() {
-        activity?.binding?.content?.avatarWithBars?.root?.visibility = View.VISIBLE
+        activity?.binding?.content?.headerView?.visibility = View.VISIBLE
     }
 
     private fun disableToolbarScrolling() {

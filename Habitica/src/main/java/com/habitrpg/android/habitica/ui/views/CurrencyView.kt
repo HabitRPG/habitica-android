@@ -69,21 +69,21 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
 
     private fun configureCurrency() {
         if ("gold" == currency) {
-            icon = com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper.imageOfGold()
+            icon = HabiticaIconsHelper.imageOfGold()
             if (lightBackground) {
                 setTextColor(ContextCompat.getColor(context, R.color.yellow_1))
             } else {
                 setTextColor(ContextCompat.getColor(context, R.color.yellow_100))
             }
         } else if ("gems" == currency) {
-            icon = com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper.imageOfGem()
+            icon = HabiticaIconsHelper.imageOfGem()
             if (lightBackground) {
                 setTextColor(ContextCompat.getColor(context, R.color.green_10))
             } else {
                 setTextColor(ContextCompat.getColor(context, R.color.green_50))
             }
         } else if ("hourglasses" == currency) {
-            icon = com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper.imageOfHourglass()
+            icon = HabiticaIconsHelper.imageOfHourglass()
             if (lightBackground) {
                 setTextColor(ContextCompat.getColor(context, R.color.brand_300))
             } else {

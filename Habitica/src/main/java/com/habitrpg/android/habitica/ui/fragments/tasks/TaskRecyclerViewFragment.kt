@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.tasks
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -25,11 +24,12 @@ import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
@@ -54,7 +54,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -111,12 +114,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
                 TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, viewModel)
                 TaskType.TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, viewModel)
-                TaskType.REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card)
+                TaskType.REWARD -> RewardsRecyclerViewAdapter(null, R.layout.reward_item_card, viewModel)
                 else -> null
             }
 
             recyclerAdapter = adapter as? TaskRecyclerViewAdapter
-            recyclerAdapter?.canScoreTasks = canScoreTaks
             binding?.recyclerView?.adapter = adapter
 
             viewModel.getFilterSet(taskType)?.observe(viewLifecycleOwner) {
@@ -127,9 +129,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
 
         recyclerAdapter?.errorButtonEvents?.subscribe(
             {
-                taskRepository.syncErroredTasks().subscribe({}, RxErrorHandler.handleEmptyError())
+                taskRepository.syncErroredTasks().subscribe({}, ExceptionHandler.rx())
             },
-            RxErrorHandler.handleEmptyError()
+            ExceptionHandler.rx()
         )?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
             openTaskForm(it.first)
@@ -139,17 +141,15 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 playSound(it.second)
                 context?.let { it1 -> notificationsManager.dismissTaskNotification(it1, it.first) }
             }?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }?.let { recyclerSubscription.add(it) }
-        recyclerAdapter?.checklistItemScoreEvents
-            ?.flatMap {
-                taskRepository.scoreChecklistItem(it.first.id ?: "", it.second.id ?: "")
-            }?.subscribeWithErrorHandler {}?.let { recyclerSubscription.add(it) }
+        recyclerAdapter?.checklistItemScoreEvents?.subscribeWithErrorHandler {
+            scoreChecklistItem(it.first, it.second)
+        }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { recyclerSubscription.add(it) }
         recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler { MainNavigationController.navigate(R.id.adventureGuideActivity) }?.let { recyclerSubscription.add(it) }
 
         viewModel.ownerID.observe(viewLifecycleOwner) {
             canEditTasks = viewModel.isPersonalBoard
             canScoreTaks = viewModel.isPersonalBoard
-            recyclerAdapter?.canScoreTasks = canScoreTaks
             updateTaskSubscription(it)
         }
         lifecycleScope.launch {
@@ -159,6 +159,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 .collect {
                     updateTaskSubscription(viewModel.ownerID.value)
                 }
+        }
+    }
+
+    private fun scoreChecklistItem(task: Task, item: ChecklistItem) {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
         }
     }
 
@@ -212,7 +218,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -299,7 +304,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                             .subscribe(
                                 {
                                 },
-                                RxErrorHandler.handleEmptyError()
+                                ExceptionHandler.rx()
                             )
                     )
                 }
@@ -328,22 +333,23 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
             }
         })
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable()
-                .distinct { it.hasCompletedOnboarding }
-                .doOnNext { recyclerAdapter?.showAdventureGuide = !it.hasCompletedOnboarding }
-                .subscribe({ recyclerAdapter?.user = it }, RxErrorHandler.handleEmptyError())
-        )
-
-        setPreferenceTaskFilters()
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser()
+                .distinctUntilChangedBy { it?.hasCompletedOnboarding }
+                .onEach { recyclerAdapter?.showAdventureGuide = it?.hasCompletedOnboarding != true }
+                .takeWhile { it?.hasCompletedOnboarding != true }
+                .collect {
+                    recyclerAdapter?.user = it
+                }
+        }
     }
 
     private fun updateTaskSubscription(ownerID: String?) {
         if (taskFlowJob?.isActive == true) {
             taskFlowJob?.cancel()
         }
-        val additionalGroupIDs = viewModel.userViewModel.mirrorGroupTasks.toTypedArray()
-        taskFlowJob = lifecycleScope.launch {
+        val additionalGroupIDs = if (ownerID == viewModel.userViewModel.userID) viewModel.userViewModel.mirrorGroupTasks.toTypedArray() else emptyArray()
+        taskFlowJob = lifecycleScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.getTasks(taskType, ownerID, additionalGroupIDs).collect {
                 recyclerAdapter?.updateUnfilteredData(it)
             }
@@ -364,8 +370,11 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     dialog.addButton(it.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
                         if (!task.isValid) return@addButton
                         taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
-                            .flatMap { userRepository.retrieveUser(true, forced = true) }
-                            .subscribe({}, RxErrorHandler.handleEmptyError())
+                            .subscribe({
+                                       lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                           userRepository.retrieveUser(true, forced = true)
+                                       }
+                            }, ExceptionHandler.rx())
                     }
                     dialog.addButton(
                         it.getString(R.string.delete_x_tasks, taskCount),
@@ -374,13 +383,16 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     ) { _, _ ->
                         if (!task.isValid) return@addButton
                         taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
-                            .flatMap { userRepository.retrieveUser(true, forced = true) }
-                            .subscribe({}, RxErrorHandler.handleEmptyError())
+                            .subscribe({
+                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                    userRepository.retrieveUser(true, forced = true)
+                                }
+                            }, ExceptionHandler.rx())
                     }
                     dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                     dialog.show()
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         }
     }
@@ -478,7 +490,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         super.onResume()
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
         setInnerAdapter()
-        recyclerAdapter?.filter()
     }
 
     fun setActiveFilter(activeFilter: String) {
@@ -488,7 +499,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         setEmptyLabels()
 
         if (activeFilter == Task.FILTER_COMPLETED) {
-            compositeSubscription.add(taskRepository.retrieveCompletedTodos().subscribe({}, RxErrorHandler.handleEmptyError()))
+            compositeSubscription.add(taskRepository.retrieveCompletedTodos().subscribe({}, ExceptionHandler.rx()))
         }
     }
 
@@ -524,12 +535,12 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
         bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
-        val intent = Intent(activity, TaskFormActivity::class.java)
-        intent.putExtras(bundle)
-        TasksFragment.lastTaskFormOpen = Date()
-        if (isAdded) {
-            startActivity(intent)
+        if (task.canEdit(viewModel.userViewModel.userID)) {
+            MainNavigationController.navigate(R.id.taskFormActivity, bundle)
+        } else {
+            MainNavigationController.navigate(R.id.taskSummaryActivity, bundle)
         }
+        TasksFragment.lastTaskFormOpen = Date()
     }
 
     companion object {

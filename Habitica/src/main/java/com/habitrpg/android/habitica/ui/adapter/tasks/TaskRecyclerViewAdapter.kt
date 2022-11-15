@@ -1,16 +1,15 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
 import android.view.View
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import io.reactivex.rxjava3.core.Flowable
 
 interface TaskRecyclerViewAdapter {
     var user: User?
     var showAdventureGuide: Boolean
-    var canScoreTasks: Boolean
     var data: List<Task>
 
     val errorButtonEvents: Flowable<String>

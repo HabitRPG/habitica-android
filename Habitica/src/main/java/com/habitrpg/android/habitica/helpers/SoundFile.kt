@@ -37,7 +37,7 @@ class SoundFile(val theme: String, private val fileName: String) {
             player?.setDataSource(file?.path)
             val attributes = AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                .setLegacyStreamType(AudioManager.STREAM_MUSIC)
                 .build()
             player?.setAudioAttributes(attributes)
             player?.prepare()
@@ -48,7 +48,7 @@ class SoundFile(val theme: String, private val fileName: String) {
             player?.start()
         } catch (e: IllegalStateException) {
         } catch (e: Exception) {
-            RxErrorHandler.reportError(e)
+            ExceptionHandler.reportError(e)
         }
     }
 }

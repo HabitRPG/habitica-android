@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.databinding.ActivityMaintenanceBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -32,7 +32,7 @@ class MaintenanceActivity : BaseActivity() {
         return R.layout.activity_maintenance
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityMaintenanceBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -76,7 +76,7 @@ class MaintenanceActivity : BaseActivity() {
                                 finish()
                             }
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
             )
         }

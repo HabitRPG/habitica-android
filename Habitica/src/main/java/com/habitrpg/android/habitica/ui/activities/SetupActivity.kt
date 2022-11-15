@@ -14,23 +14,25 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivitySetupBinding
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
+import com.habitrpg.common.habitica.api.HostConfig
 import com.viewpagerindicator.IconPagerAdapter
 import io.reactivex.rxjava3.core.BackpressureStrategy
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
@@ -62,15 +64,19 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         return R.layout.activity_setup
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivitySetupBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        compositeSubscription.add(userRepository.getUserFlowable().subscribe({ this.onUserReceived(it) }, RxErrorHandler.handleEmptyError()))
-        compositeSubscription.add(userRepository.retrieveUser().subscribe({}, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser().collect { onUserReceived(it) }
+        }
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(true, true)
+        }
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"
         AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
@@ -80,7 +86,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             if (language == currentDeviceLanguage) {
                 compositeSubscription.add(
                     apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                        .subscribe({ }, ExceptionHandler.rx())
                 )
             }
         }
@@ -135,7 +141,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             this.completedSetup = true
             createdTasks = true
             newTasks?.let {
-                this.taskRepository.createTasks(it).subscribe({ onUserReceived(user) }, RxErrorHandler.handleEmptyError())
+                this.taskRepository.createTasks(it).subscribe({ onUserReceived(user) }, ExceptionHandler.rx())
             }
         } else if (binding.viewPager.currentItem == 0) {
 
@@ -211,7 +217,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                         }
                         startMainActivity()
                     },
-                    RxErrorHandler.handleEmptyError()
+                    ExceptionHandler.rx()
                 )
             )
             return
@@ -235,7 +241,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         compositeSubscription.add(
             userRepository.updateUser("profile.name", displayName)
                 .flatMap { userRepository.updateLoginName(username).toFlowable() }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 

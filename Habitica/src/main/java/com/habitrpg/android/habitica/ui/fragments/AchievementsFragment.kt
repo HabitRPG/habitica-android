@@ -16,7 +16,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import kotlinx.coroutines.flow.combine
@@ -93,7 +93,7 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        lifecycleScope.launch {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.getAchievements().combine(userRepository.getQuestAchievements()) { achievements, questAchievements ->
                 return@combine Pair(achievements, questAchievements)
             }.combine(userRepository.getQuestAchievements()
@@ -171,7 +171,7 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
             userRepository.retrieveAchievements().subscribe(
                 {
                 },
-                RxErrorHandler.handleEmptyError(), { binding?.refreshLayout?.isRefreshing = false }
+                ExceptionHandler.rx(), { binding?.refreshLayout?.isRefreshing = false }
             )
         )
     }

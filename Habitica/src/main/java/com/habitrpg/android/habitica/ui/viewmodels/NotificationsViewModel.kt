@@ -2,12 +2,13 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.models.Notification
@@ -24,6 +25,7 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class NotificationsViewModel : BaseViewModel() {
@@ -116,7 +118,7 @@ open class NotificationsViewModel : BaseViewModel() {
             .distinctUntilChanged()
     }
 
-    fun refreshNotifications(): Flowable<*> {
+    suspend fun refreshNotifications(): User? {
         return userRepository.retrieveUser(withTasks = false, forced = true)
     }
 
@@ -204,7 +206,7 @@ open class NotificationsViewModel : BaseViewModel() {
 
         disposable.add(
             userRepository.readNotification(notification.id)
-                .subscribe({}, RxErrorHandler.handleEmptyError())
+                .subscribe({}, ExceptionHandler.rx())
         )
     }
 
@@ -230,7 +232,7 @@ open class NotificationsViewModel : BaseViewModel() {
 
         disposable.add(
             userRepository.readNotifications(notificationIds)
-                .subscribe({}, RxErrorHandler.handleEmptyError())
+                .subscribe({}, ExceptionHandler.rx())
         )
     }
 
@@ -249,7 +251,7 @@ open class NotificationsViewModel : BaseViewModel() {
 
         disposable.add(
             userRepository.seeNotifications(notificationIds)
-                .subscribe({}, RxErrorHandler.handleEmptyError())
+                .subscribe({}, ExceptionHandler.rx())
         )
     }
 
@@ -327,7 +329,9 @@ open class NotificationsViewModel : BaseViewModel() {
             Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> acceptTaskApproval(notification)
         }
         if (isCustomNotification(notification)) {
-            disposable.add(userRepository.retrieveUser(false).subscribe())
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.retrieveUser()
+            }
         } else {
             dismissNotification(notification)
         }
@@ -354,16 +358,10 @@ open class NotificationsViewModel : BaseViewModel() {
 
     private fun acceptGroupInvitation(groupId: String?) {
         groupId?.let {
-            disposable.add(
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 socialRepository.joinGroup(it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(
-                        {
-                            refreshNotifications()
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+                refreshUser()
+            }
         }
     }
 
@@ -371,12 +369,11 @@ open class NotificationsViewModel : BaseViewModel() {
         groupId?.let {
             disposable.add(
                 socialRepository.rejectGroupInvite(it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
                     .subscribe(
                         {
-                            refreshNotifications()
+                            refreshUser()
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
             )
         }
@@ -386,12 +383,11 @@ open class NotificationsViewModel : BaseViewModel() {
         party?.id?.let {
             disposable.add(
                 socialRepository.acceptQuest(null, it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
                     .subscribe(
                         {
-                            refreshNotifications()
+                            refreshUser()
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
             )
         }
@@ -401,14 +397,19 @@ open class NotificationsViewModel : BaseViewModel() {
         party?.id?.let {
             disposable.add(
                 socialRepository.rejectQuest(null, it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
                     .subscribe(
                         {
-                            refreshNotifications()
+                            refreshUser()
                         },
-                        RxErrorHandler.handleEmptyError()
+                        ExceptionHandler.rx()
                     )
             )
+        }
+    }
+
+    private fun refreshUser() {
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            refreshNotifications()
         }
     }
 

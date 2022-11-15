@@ -18,12 +18,16 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
     private var worldState: WorldState? = null
 
     init {
-        contentRepository?.getWorldState()?.subscribe(
-            {
-                worldState = it
-            },
-            RxErrorHandler.handleEmptyError()
-        )
+        try {
+            contentRepository?.getWorldState()?.subscribe(
+                {
+                    worldState = it
+                },
+                ExceptionHandler.rx()
+            )
+        } catch (_: java.lang.IllegalStateException) {
+            // pass
+        }
     }
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
@@ -137,9 +141,7 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
     }
 
     fun enableTeamBoards(): Boolean {
-        if (BuildConfig.DEBUG) {
-            return true
-        }
+        return true
         return remoteConfig.getBoolean("enableTeamBoards")
     }
 

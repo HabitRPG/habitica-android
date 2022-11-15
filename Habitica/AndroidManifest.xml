@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 
     <application
         android:name=".HabiticaApplication"
@@ -29,7 +30,6 @@
             android:value="@string/application_ad_id"/>
         <activity
             android:name=".ui.activities.MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/LaunchAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
@@ -256,6 +256,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_gryphon_white" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/brand_300" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="@string/content_provider"

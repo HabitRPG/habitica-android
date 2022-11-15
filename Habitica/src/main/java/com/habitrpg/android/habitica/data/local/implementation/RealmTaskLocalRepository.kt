@@ -12,42 +12,55 @@ import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.realm.Realm
+import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
 class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TaskLocalRepository {
 
     override fun getTasks(taskType: TaskType, userID: String, includedGroupIDs: Array<String>): Flow<List<Task>> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(Task::class.java)
-            .equalTo("typeValue", taskType.value)
-            .beginGroup()
-            .equalTo("userId", userID)
-            .or()
-            .`in`("group.groupID", includedGroupIDs)
-            .endGroup()
-            .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
-            .findAll()
+        return findTasks(taskType, userID, includedGroupIDs)
             .toFlow()
             .filter { it.isLoaded }
     }
 
     override fun getTasksFlowable(taskType: TaskType, userID: String, includedGroupIDs: Array<String>): Flowable<out List<Task>> {
         if (realm.isClosed) return Flowable.empty()
-        return RxJavaBridge.toV3Flowable(realm.where(Task::class.java)
+        return RxJavaBridge.toV3Flowable(findTasks(taskType, userID, includedGroupIDs)
+            .asFlowable()
+            .filter { it.isLoaded })
+    }
+
+    private fun findTasks(
+        taskType: TaskType,
+        ownerID: String,
+        includedGroupIDs: Array<String>
+    ): RealmResults<Task> {
+        return realm.where(Task::class.java)
             .equalTo("typeValue", taskType.value)
             .beginGroup()
-            .equalTo("userId", userID)
+            .equalTo("userId", ownerID)
             .or()
+            .beginGroup()
             .`in`("group.groupID", includedGroupIDs)
+            .and()
+            .beginGroup()
+            .contains("group.assignedUsers", ownerID)
+            .or()
+            .isEmpty("group.assignedUsers")
+            .endGroup()
+            .endGroup()
+            .or()
+            .equalTo("group.groupID", ownerID)
             .endGroup()
             .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
-            .asFlowable()
-            .filter { it.isLoaded })
     }
 
     override fun getTasks(userId: String): Flow<List<Task>> {
@@ -126,14 +139,13 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         return taskList
     }
 
-    private fun removeOldTasks(userID: String, onlineTaskList: List<Task>) {
-        val groupIDs = onlineTaskList.map { it.group?.groupID }.distinct().toTypedArray()
+    private fun removeOldTasks(ownerID: String, onlineTaskList: List<Task>) {
         if (realm.isClosed) return
         val localTasks = realm.where(Task::class.java)
             .beginGroup()
-            .equalTo("userId", userID)
+            .equalTo("userId", ownerID)
             .or()
-            .`in`("group.groupID", groupIDs)
+            .equalTo("group.groupID", ownerID)
             .endGroup()
             .beginGroup()
             .beginGroup()
@@ -177,19 +189,17 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         }
     }
 
-    override fun getTask(taskId: String): Flowable<Task> {
+    override fun getTask(taskId: String): Flow<Task> {
         if (realm.isClosed) {
-            return Flowable.empty()
+            return emptyFlow()
         }
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java).equalTo("id", taskId).findAll().asFlowable()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-                .map { it.first() }
-                .cast(Task::class.java)
-        )
+        return realm.where(Task::class.java).equalTo("id", taskId).findAll().toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .map { it.first() }
+            .filterNotNull()
     }
 
-    override fun getTaskCopy(taskId: String): Flowable<Task> {
+    override fun getTaskCopy(taskId: String): Flow<Task> {
         return getTask(taskId)
             .map { task ->
                 return@map if (task.isManaged && task.isValid) {
@@ -260,7 +270,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         ).retry(1)
     }
 
-    override fun getUser(userID: String): Flowable<User> {
+    override fun getUserFlowable(userID: String): Flowable<User> {
         return RxJavaBridge.toV3Flowable(
             realm.where(User::class.java)
                 .equalTo("id", userID)
@@ -269,6 +279,16 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
                 .map { users -> users.first() }
         )
+    }
+
+    override fun getUser(userID: String): Flow<User> {
+        return realm.where(User::class.java)
+            .equalTo("id", userID)
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+            .map { users -> users.first() }
+            .filterNotNull()
     }
 
     override fun getTasksForChallenge(challengeID: String?, userID: String?): Flowable<out List<Task>> {

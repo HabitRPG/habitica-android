@@ -15,12 +15,13 @@ import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DeathActivity: BaseActivity() {
@@ -39,7 +40,7 @@ class DeathActivity: BaseActivity() {
         component?.inject(this)
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityDeathBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -59,7 +60,7 @@ class DeathActivity: BaseActivity() {
                 compositeSubscription.add(
                         userRepository.updateUser("stats.hp", 1).subscribe({
                                                                            finish()
-                        }, RxErrorHandler.handleEmptyError())
+                        }, ExceptionHandler.rx())
                 )
             }
             handler.prepare {
@@ -80,9 +81,10 @@ class DeathActivity: BaseActivity() {
 
         binding.restartButton.setOnClickListener {
             binding.restartButton.isEnabled = false
-            userRepository.revive().subscribe({
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.revive()
                 finish()
-            }, RxErrorHandler.handleEmptyError())
+            }
         }
         startAnimating()
     }

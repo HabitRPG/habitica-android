@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
 import com.habitrpg.android.habitica.databinding.EditTagItemBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -106,7 +106,7 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
     override fun show() {
         tagDisposale = viewModel.tagRepository.getTags().subscribe({
             setTags(it)
-        }, RxErrorHandler.handleEmptyError())
+        }, ExceptionHandler.rx())
         super.show()
         this.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
@@ -193,9 +193,9 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
         createTagViews()
         binding.tagEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> editedTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
-        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> createdTags.remove(tag.id) }, RxErrorHandler.handleEmptyError())
-        repository.deleteTags(deletedTags).subscribe({ deletedTags.clear() }, RxErrorHandler.handleEmptyError())
+        repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> editedTags.remove(tag.id) }, ExceptionHandler.rx())
+        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> createdTags.remove(tag.id) }, ExceptionHandler.rx())
+        repository.deleteTags(deletedTags).subscribe({ deletedTags.clear() }, ExceptionHandler.rx())
     }
 
     private fun createTagEditViews() {

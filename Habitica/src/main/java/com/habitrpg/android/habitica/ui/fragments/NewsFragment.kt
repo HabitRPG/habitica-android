@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
-import com.habitrpg.android.habitica.BuildConfig
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 
 class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
@@ -29,13 +32,38 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    private val webviewClient = object : WebViewClient() {
+
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            if (url?.contains("/static/new-stuff") == true) {
+                view?.loadUrl(url)
+            } else if (url != null) {
+                    MainNavigationController.navigate(url)
+            }
+            return true
+        }
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            if (request?.url?.path == "/static/new-stuff") {
+                view?.loadUrl(request.url.toString())
+            } else {
+                request?.url?.let { MainNavigationController.navigate(it) }
+            }
+            return true
+        }
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val address = if (BuildConfig.DEBUG) BuildConfig.BASE_URL else context?.getString(R.string.base_url)
+        val address = context?.getString(R.string.base_url)
         val webSettings = binding?.newsWebview?.settings
         webSettings?.javaScriptEnabled = true
         webSettings?.domStorageEnabled = true
+        binding?.newsWebview?.webViewClient = webviewClient
         binding?.newsWebview?.webChromeClient = object : WebChromeClient() {
         }
         binding?.newsWebview?.loadUrl("$address/static/new-stuff")

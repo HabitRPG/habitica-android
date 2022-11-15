@@ -11,7 +11,7 @@ import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -55,7 +55,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         userRepository.getUserFlowable().subscribe({
             user = it
             updateData()
-        }, RxErrorHandler.handleEmptyError())
+        }, ExceptionHandler.rx())
     }
 
     override fun onUpdate(
@@ -82,7 +82,7 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             userRepository.getUserFlowable().firstElement().subscribe({
                 user = it
                 updateData(appWidgetIds)
-            }, RxErrorHandler.handleEmptyError())
+            }, ExceptionHandler.rx())
         } else {
             updateData()
         }

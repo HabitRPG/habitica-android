@@ -1,14 +1,12 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
-import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
@@ -17,9 +15,11 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.common.habitica.extensions.Optional
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -28,7 +28,9 @@ import com.habitrpg.shared.habitica.models.tasks.Attribute
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
@@ -70,45 +72,39 @@ class UserRepositoryImpl(
         return updateUser(userID, key, value)
     }
 
-    override fun retrieveUser(withTasks: Boolean): Flowable<User> =
-        retrieveUser(withTasks, false)
-
     @Suppress("ReturnCount")
-    override fun retrieveUser(withTasks: Boolean, forced: Boolean, overrideExisting: Boolean): Flowable<User> {
+    override suspend fun retrieveUser(withTasks: Boolean, forced: Boolean, overrideExisting: Boolean): User? {
         // Only retrieve again after 3 minutes or it's forced.
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
+            val user = apiClient.retrieveUser(withTasks) ?: return null
             lastSync = Date()
-            return apiClient.retrieveUser(withTasks)
-                .doOnNext { localRepository.saveUser(it, overrideExisting) }
-                .doOnNext { user ->
-                    if (withTasks) {
-                        val id = user.id
-                        val tasksOrder = user.tasksOrder
-                        val tasks = user.tasks
-                        if (id != null && tasksOrder != null && tasks != null) {
-                            taskRepository.saveTasks(id, tasksOrder, tasks)
-                        }
-                    }
+            localRepository.saveUser(user)
+            if (withTasks) {
+                val id = user.id
+                val tasksOrder = user.tasksOrder
+                val tasks = user.tasks
+                if (id != null && tasksOrder != null && tasks != null) {
+                    taskRepository.saveTasks(id, tasksOrder, tasks)
                 }
-                .flatMap { user ->
-                    val calendar = GregorianCalendar()
-                    val timeZone = calendar.timeZone
-                    val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
-                    if (offset.toInt() != (user.preferences?.timezoneOffset ?: 0)) {
-                        return@flatMap updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
-                    } else {
-                        return@flatMap Flowable.just(user)
-                    }
-                }
+            }
+            val calendar = GregorianCalendar()
+            val timeZone = calendar.timeZone
+            val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
+            /*if (offset.toInt() != user.preferences?.timezoneOffset ?: 0) {
+                return@flatMap updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
+            } else {
+                return@flatMap Flowable.just(user)
+            }*/
+            return user
         } else {
-            return localRepository.getUserFlowable(userID).take(1)
+            return null
         }
     }
 
-    override fun revive(): Flowable<User> = zipWithLiveUser(apiClient.revive()) { newUser, user ->
-        mergeUser(user, newUser)
+    override suspend fun revive(): User? {
+        apiClient.revive()
+        return retrieveUser(false, true)
     }
-        .flatMap { retrieveUser(false, true) }
 
     override fun resetTutorial(): Maybe<User> {
         return localRepository.getTutorialSteps()
@@ -123,9 +119,13 @@ class UserRepositoryImpl(
             .flatMap { updateData -> updateUser(updateData).firstElement() }
     }
 
-    override fun sleep(user: User): Flowable<User> {
-        localRepository.modify(user) { it.preferences?.sleep = !(it.preferences?.sleep ?: false) }
-        return apiClient.sleep().map { user }
+    override suspend fun sleep(user: User): User {
+        val newValue = !(user.preferences?.sleep ?: false)
+        localRepository.modify(user) { it.preferences?.sleep = newValue }
+        if (apiClient.sleep() != true) {
+            localRepository.modify(user) { it.preferences?.sleep = !newValue }
+        }
+        return user
     }
 
     override fun getSkills(user: User): Flowable<out List<Skill>> =
@@ -137,7 +137,7 @@ class UserRepositoryImpl(
     override fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "", taskId)) { response, user ->
             response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-            response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+            response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
             response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
             response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
             response.user?.let { mergeUser(user, it) }
@@ -148,7 +148,7 @@ class UserRepositoryImpl(
     override fun useSkill(key: String, target: String?): Flowable<SkillResponse> {
         return zipWithLiveUser(apiClient.useSkill(key, target ?: "")) { response, user ->
             response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-            response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+            response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
             response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
             response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
             response.user?.let { mergeUser(user, it) }
@@ -156,12 +156,16 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun changeClass(): Flowable<User> = apiClient.changeClass().flatMap { retrieveUser(withTasks = false, forced = true) }
+    override suspend fun disableClasses(): User? = apiClient.disableClasses()
 
-    override fun disableClasses(): Flowable<User> = apiClient.disableClasses().flatMap { retrieveUser(withTasks = false, forced = true) }
+    override suspend fun changeClass(selectedClass: String?): User? {
+        apiClient.changeClass(selectedClass)
+        return retrieveUser(false, forced = true)
+    }
 
-    override fun changeClass(selectedClass: String): Flowable<User> = apiClient.changeClass(selectedClass)
-        .flatMap { retrieveUser(false, forced = true) }
+    override fun unlockPath(customization: Customization): Flowable<UnlockResponse> {
+        return unlockPath(customization.path, customization.price ?: 0)
+    }
 
     override fun unlockPath(path: String, price: Int): Flowable<UnlockResponse> {
         return zipWithLiveUser(apiClient.unlockPath(path)) { unlockResponse, copiedUser ->
@@ -175,11 +179,7 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun unlockPath(customization: Customization): Flowable<UnlockResponse> {
-        return unlockPath(customization.unlockPath, customization.price ?: 0)
-    }
-
-    override fun runCron() {
+    override suspend fun runCron() {
         runCron(ArrayList())
     }
 
@@ -188,9 +188,8 @@ class UserRepositoryImpl(
         return localRepository.getUserQuestStatus(userID)
     }
 
-    override fun reroll(): Flowable<User> {
+    override suspend fun reroll(): User? {
         return apiClient.reroll()
-            .flatMap { retrieveUser(true, true, true) }
     }
 
     override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
@@ -210,8 +209,9 @@ class UserRepositoryImpl(
             .doOnNext { apiClient.setLanguageCode(languageCode) }
     }
 
-    override fun resetAccount(): Flowable<User> {
-        return apiClient.resetAccount().flatMap { retrieveUser(withTasks = true, forced = true) }
+    override suspend fun resetAccount(): User? {
+        apiClient.resetAccount()
+        return retrieveUser(withTasks = true, forced = true)
     }
 
     override fun deleteAccount(password: String): Flowable<Void> =
@@ -262,7 +262,7 @@ class UserRepositoryImpl(
                     liveUser.stats?.points = liveUser.stats?.points?.dec()
                 }
             },
-            RxErrorHandler.handleEmptyError()
+            ExceptionHandler.rx()
         )
         return zipWithLiveUser(apiClient.allocatePoint(stat.value)) { stats, user ->
             localRepository.modify(user) { liveUser ->
@@ -295,26 +295,33 @@ class UserRepositoryImpl(
             stats
         }
 
-    override fun runCron(tasks: MutableList<Task>) {
-        var observable: Maybe<Any> = localRepository.getUserFlowable(userID).firstElement()
-            .filter { it.needsCron }
-            .map { user ->
-                localRepository.modify(user) { liveUser ->
-                    liveUser.needsCron = false
-                    liveUser.lastCron = Date()
+    override suspend fun runCron(tasks: MutableList<Task>) {
+        withContext(Dispatchers.Main) {
+            var observable: Maybe<Any> = localRepository.getUserFlowable(userID).firstElement()
+                .filter { it.needsCron }
+                .map { user ->
+                    localRepository.modify(user) { liveUser ->
+                        liveUser.needsCron = false
+                        liveUser.lastCron = Date()
+                    }
+                    user
                 }
-                user
+            if (tasks.isNotEmpty()) {
+                val scoringList = mutableListOf<Map<String, String>>()
+                for (task in tasks) {
+                    val map = mutableMapOf<String, String>()
+                    map["id"] = task.id ?: ""
+                    map["direction"] = TaskDirection.UP.text
+                    scoringList.add(map)
+                }
+                observable = observable.flatMap { taskRepository.bulkScoreTasks(scoringList).firstElement() }
             }
-        if (tasks.isNotEmpty()) {
-            val scoringList = tasks.map { mapOf(Pair("id", it.id ?: ""), Pair("direction", TaskDirection.UP.text)) }
-            observable = observable.flatMap { taskRepository.bulkScoreTasks(scoringList).firstElement() }
+            observable.flatMap { apiClient.runCron().firstElement() }
+                // .flatMap {
+                // this.retrieveUser(withTasks = true, forced = true)
+                // }
+                .subscribe({ }, ExceptionHandler.rx())
         }
-        observable.flatMap { apiClient.runCron().firstElement() }
-            .flatMap { this.retrieveUser(withTasks = true, forced = true).firstElement() }
-            .subscribe({ }, {
-                analyticsManager.logEvent("cron failed", bundleOf(Pair("error", it.localizedMessage)))
-                RxErrorHandler.reportError(it)
-            })
     }
 
     override fun useCustomization(type: String, category: String?, identifier: String): Flowable<User> {
@@ -340,7 +347,7 @@ class UserRepositoryImpl(
                         }
                     }
                 },
-                RxErrorHandler.handleEmptyError()
+                ExceptionHandler.rx()
             )
         }
         var updatePath = "preferences.$type"
@@ -375,22 +382,19 @@ class UserRepositoryImpl(
         return localRepository.getTeamPlans(userID)
     }
 
-    override fun retrieveTeamPlan(teamID: String): Flowable<Group> {
-        return Flowable.zip(
-            apiClient.getGroup(teamID), apiClient.getTeamPlanTasks(teamID)
-        ) { team, tasks ->
-            team.tasks = tasks
-            team
+    override suspend fun retrieveTeamPlan(teamID: String): Group? {
+        val team = apiClient.getGroup(teamID) ?: return null
+        val tasks = apiClient.getTeamPlanTasks(teamID)
+        localRepository.save(team)
+        val id = team.id
+        val tasksOrder = team.tasksOrder
+        if (id.isNotBlank() && tasksOrder != null && tasks != null) {
+            taskRepository.saveTasks(id, tasksOrder, tasks)
         }
-            .doOnNext { localRepository.save(it) }
-            .doOnNext { team ->
-                val id = team.id
-                val tasksOrder = team.tasksOrder
-                val tasks = team.tasks
-                if (id.isNotBlank() && tasksOrder != null && tasks != null) {
-                    taskRepository.saveTasks(id, tasksOrder, tasks)
-                }
-            }
+        val members = apiClient.getGroupMembers(teamID, true) ?: return team
+        localRepository.save(members.map { it.id?.let { member -> GroupMembership(member, id) } }.filterNotNull())
+        members.let { localRepository.save(members) }
+        return team
     }
 
     override fun getTeamPlan(teamID: String): Flowable<Group> {

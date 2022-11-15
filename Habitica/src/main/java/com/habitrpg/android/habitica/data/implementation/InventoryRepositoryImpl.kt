@@ -31,13 +31,9 @@ class InventoryRepositoryImpl(
     userID: String,
     var appConfigManager: AppConfigManager
 ) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
-    override fun getQuestContent(keys: List<String>): Flow<List<QuestContent>> {
-        return localRepository.getQuestContent(keys)
-    }
+    override fun getQuestContent(keys: List<String>) = localRepository.getQuestContent(keys)
 
-    override fun getQuestContent(key: String): Flowable<QuestContent> {
-        return localRepository.getQuestContent(key)
-    }
+    override fun getQuestContent(key: String) = localRepository.getQuestContent(key)
 
     override fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>> {
         return localRepository.getEquipment(searchedKeys)
@@ -75,7 +71,7 @@ class InventoryRepositoryImpl(
         return localRepository.getOwnedItems(userID, includeZero)
     }
 
-    override fun getItemsFlowable(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
+    override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
         return localRepository.getItemsFlowable(itemClass, keys)
     }
 

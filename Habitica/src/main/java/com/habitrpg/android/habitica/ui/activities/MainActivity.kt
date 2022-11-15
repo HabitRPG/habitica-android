@@ -22,6 +22,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.wearable.Wearable
+import com.google.android.material.composethemeadapter.MdcTheme
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -29,7 +30,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
-import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.observeOnce
@@ -37,20 +37,22 @@ import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
+import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
@@ -61,12 +63,13 @@ import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
-import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -100,7 +103,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     val snackbarContainer: ViewGroup
         get() = binding.content.snackbarContainer
 
-    private var avatarInHeader: AvatarWithBarsViewModel? = null
     val notificationsViewModel: NotificationsViewModel by viewModels()
     val viewModel: MainActivityViewModel by viewModels()
     private var sideAvatarView: AvatarView? = null
@@ -117,7 +119,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return R.layout.activity_main
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityMainBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -130,8 +132,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
         try {
             launchTrace = FirebasePerformance.getInstance().newTrace("MainActivityLaunch")
-        } catch (e: Exception) {
-            // pass
+        } catch (e: IllegalStateException) {
+            ExceptionHandler.reportError(e)
         }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
@@ -147,7 +149,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         setupToolbar(binding.content.toolbar)
 
-        avatarInHeader = AvatarWithBarsViewModel(this, binding.content.avatarWithBars, viewModel.userViewModel)
         sideAvatarView = AvatarView(this, showBackground = true, showMount = false, showPet = false)
 
         viewModel.user.observe(this) {
@@ -210,6 +211,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         supportActionBar?.setHomeButtonEnabled(true)
         setupNotifications()
         setupBottomnavigationLayoutListener()
+        
+        binding.content.headerView.setContent {
+            HabiticaTheme {
+                AppHeaderView(viewModel.userViewModel)
+            }
+        }
 
         viewModel.onCreate()
     }
@@ -275,7 +282,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
             true
         } else if (item.itemId == android.R.id.home) {
-            drawerFragment?.toggleDrawer()
+            if (drawerToggle?.isDrawerIndicatorEnabled == true) {
+                drawerFragment?.toggleDrawer()
+            } else {
+                MainNavigationController.navigateBack()
+            }
             true
         } else super.onOptionsItemSelected(item)
     }
@@ -388,16 +399,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
             val quest = user.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
-                compositeSubscription.add(
-                    inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "").firstElement().subscribe(
-                        {
-                            QuestCompletedDialog.showWithQuest(this, it)
-
-                            viewModel.updateUser("party.quest.completed", "")
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-                )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val questContent = inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "").firstOrNull()
+                    if (questContent != null) {
+                        QuestCompletedDialog.showWithQuest(this@MainActivity, questContent)
+                    }
+                    viewModel.updateUser("party.quest.completed", "")
+                }
             }
 
             if (user.flags?.welcomed == false) {
@@ -446,14 +454,14 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         viewModel.user.value, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp, data.level
                     )
                 )
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    .subscribe({ }, ExceptionHandler.rx())
             )
         }
 
         val showItemsFound = userQuestStatus == UserQuestStatus.QUEST_COLLECT
         compositeSubscription.add(
             displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+                .subscribe({ }, ExceptionHandler.rx())
         )
     }
 
@@ -512,7 +520,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                             startActivity(intent)
                         }
                     } catch (e: PackageManager.NameNotFoundException) {
-                        RxErrorHandler.reportError(e)
+                        ExceptionHandler.reportError(e)
                     }
                 }
             }

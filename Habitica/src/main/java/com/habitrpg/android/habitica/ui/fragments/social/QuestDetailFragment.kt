@@ -10,14 +10,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.toHtml
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentQuestDetailBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.Member
@@ -28,6 +29,12 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.MarkdownParser
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -72,30 +79,22 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         binding?.questCancelButton?.setOnClickListener { onQuestCancel() }
         binding?.questLeaveButton?.setOnClickListener { onQuestLeave() }
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable()
-                .map {
-                    it.party?.id ?: ""
-                }
-                .skipWhile { it.isBlank() }
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser()
+                .map { it?.party?.id }
+                .filterNotNull()
                 .distinctUntilChanged()
-                .flatMap { socialRepository.getGroupFlowable(it) }
-                .doOnNext { updateParty(it) }
-                .map {
-                    it.quest?.key ?: ""
-                }
-                .skipWhile {
-                    it.isBlank()
-                }
+                .flatMapLatest { socialRepository.getGroup(it) }
+                .onEach { updateParty(it) }
+                .map { it?.quest?.key }
+                .filterNotNull()
                 .distinctUntilChanged()
-                .flatMap { inventoryRepository.getQuestContent(it) }
-                .subscribe(
-                    {
-                        updateQuestContent(it)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+                .flatMapLatest { inventoryRepository.getQuestContent(it) }
+                .filterNotNull()
+                .collect {
+                    updateQuestContent(it)
+                }
+        }
     }
 
     private fun updateParty(group: Group?) {
@@ -105,16 +104,12 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         party = group
         quest = group.quest
         setQuestParticipants(group.quest?.participants)
-        compositeSubscription.add(
-            socialRepository.getMember(quest?.leader).subscribe(
-                { member ->
-                    if (context != null && binding?.questLeaderView != null) {
-                        binding?.questLeaderView?.text = context?.getString(R.string.quest_leader_header, member.displayName)
-                    }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val member = socialRepository.retrieveMember(quest?.leader)
+            if (context != null && binding?.questLeaderView != null) {
+                binding?.questLeaderView?.text = context?.getString(R.string.quest_leader_header, member?.displayName)
+            }
+            }
 
         val user = userViewModel.user.value
         if (binding?.questResponseWrapper != null) {
@@ -223,7 +218,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 val party = party
                 if (party != null) {
                     socialRepository.forceStartQuest(party)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                        .subscribe({ }, ExceptionHandler.rx())
                 }
             }
             alert.addButton(R.string.no, false)
@@ -239,10 +234,12 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     .setMessage(R.string.quest_abort_message)
                     .setPositiveButton(R.string.yes) { _, _ ->
                         party?.id?.let { partyID ->
-                            @Suppress("DEPRECATION")
                             socialRepository.abortQuest(partyID)
-                                .flatMap { userRepository.retrieveUser() }
-                                .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                                .subscribe({
+                                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                        userRepository.retrieveUser(true)
+                                    }
+                                    getActivity()?.supportFragmentManager?.popBackStack() }, ExceptionHandler.rx())
                         }
                     }.setNegativeButton(R.string.no) { _, _ -> }
                 builder.show()
@@ -251,10 +248,13 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 alert.setMessage(R.string.quest_cancel_message)
                 alert.addButton(R.string.yes, true) { _, _ ->
                     party?.id?.let { partyID ->
-                        @Suppress("DEPRECATION")
                         socialRepository.cancelQuest(partyID)
-                            .flatMap { userRepository.retrieveUser() }
-                            .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                            .subscribe({
+                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                    userRepository.retrieveUser(true)
+                                }
+                                getActivity()?.supportFragmentManager?.popBackStack()
+                                       }, ExceptionHandler.rx())
                     }
                 }
                 alert.addButton(R.string.no, false)
@@ -269,11 +269,13 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
             .setPositiveButton(R.string.yes) { _, _ ->
                 party?.id?.let { partyID ->
-                    @Suppress("DEPRECATION")
                     socialRepository.leaveQuest(partyID)
-                        .flatMap { userRepository.retrieveUser() }
-                        .flatMap { socialRepository.retrieveGroup(partyID) }
-                        .subscribe({ getActivity()?.supportFragmentManager?.popBackStack() }, RxErrorHandler.handleEmptyError())
+                        .subscribe({
+                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                socialRepository.retrieveGroup(partyID)
+                                userRepository.retrieveUser(true)
+                            }
+                            getActivity()?.supportFragmentManager?.popBackStack() }, ExceptionHandler.rx())
                 }
             }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()

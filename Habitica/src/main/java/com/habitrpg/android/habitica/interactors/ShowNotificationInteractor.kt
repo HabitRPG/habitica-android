@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
@@ -126,7 +127,7 @@ class ShowNotificationInteractor(
         } else {
             200
         }
-        lifecycleScope.launch {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             delay(delayTime)
             lifecycleScope.launch(context = Dispatchers.Main) {
                 val dialog = AchievementDialog(activity)

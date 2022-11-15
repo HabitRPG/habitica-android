@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogLevelup10Binding
 import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -94,7 +94,7 @@ constructor(
 
     private fun showClassSelection(requestValues: RequestValues) {
         checkClassSelectionUseCase.observable(CheckClassSelectionUseCase.RequestValues(requestValues.user, true, null, requestValues.activity))
-            .subscribe({ }, RxErrorHandler.handleEmptyError())
+            .subscribe({ }, ExceptionHandler.rx())
     }
 
     class RequestValues(

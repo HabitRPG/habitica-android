@@ -13,7 +13,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
@@ -34,15 +35,19 @@ abstract class BaseTaskViewHolder constructor(
     itemView: View,
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var openTaskFunc: ((Pair<Task, View>) -> Unit),
-    var brokenTaskFunc: ((Task) -> Unit)
+    var brokenTaskFunc: ((Task) -> Unit),
+    var assignedTextProvider: GroupPlanInfoProvider?
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     private val scope = MainScope()
+
     var task: Task? = null
     var movingFromPosition: Int? = null
     var errorButtonClicked: Action? = null
+    var userID: String? = null
     var isLocked = false
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
+    protected val assignedTextView: TextView = itemView.findViewById(R.id.assigned_textview)
     protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
     protected val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
@@ -51,7 +56,7 @@ abstract class BaseTaskViewHolder constructor(
     private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
-    private val approvalRequiredTextView: TextView? = itemView.findViewById(R.id.approvalRequiredTextField)
+    private val approvalRequiredTextView: TextView = itemView.findViewById(R.id.approvalRequiredTextField)
     private val expandNotesButton: Button? = itemView.findViewById(R.id.expand_notes_button)
     private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
     private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
@@ -132,6 +137,15 @@ abstract class BaseTaskViewHolder constructor(
     }
 
     override fun bind(data: Task, position: Int, displayMode: String) {
+        bind(data, position, displayMode, null)
+    }
+
+    open fun bind(
+        data: Task,
+        position: Int,
+        displayMode: String,
+        ownerID: String?
+    ) {
         notesExpanded = false
         task = data
         itemView.setBackgroundColor(context.getThemeColor(R.attr.colorContentBackground))
@@ -164,7 +178,7 @@ abstract class BaseTaskViewHolder constructor(
                                 data.parsedText = parsedText
                                 titleTextView.setParsedMarkdown(parsedText)
                             },
-                            RxErrorHandler.handleEmptyError()
+                            ExceptionHandler.rx()
                         )
                 }
             }
@@ -191,7 +205,7 @@ abstract class BaseTaskViewHolder constructor(
                                         data.parsedNotes = parsedNotes
                                         notesTextView?.setParsedMarkdown(parsedNotes)
                                     },
-                                    RxErrorHandler.handleEmptyError()
+                                    ExceptionHandler.rx()
                                 )
                         }
                     }
@@ -226,7 +240,7 @@ abstract class BaseTaskViewHolder constructor(
             }
             configureSpecialTaskTextView(data)
 
-            iconViewTeam?.visibility = if (data.isGroupTask) View.VISIBLE else View.GONE
+            iconViewTeam?.visibility = if (data.isGroupTask && ownerID != data.group?.groupID) View.VISIBLE else View.GONE
 
             taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
         } else {
@@ -235,9 +249,16 @@ abstract class BaseTaskViewHolder constructor(
         }
 
         if (data.isPendingApproval) {
-            approvalRequiredTextView?.visibility = View.VISIBLE
+            approvalRequiredTextView.visibility = View.VISIBLE
         } else {
-            approvalRequiredTextView?.visibility = View.GONE
+            approvalRequiredTextView.visibility = View.GONE
+        }
+
+        if (data.group?.assignedUsers?.isNotEmpty() == true) {
+            assignedTextView.text = assignedTextProvider?.assignedTextForTask(context.resources, data.group?.assignedUsers ?: emptyList())
+            assignedTextView.visibility = View.VISIBLE
+        } else {
+            assignedTextView.visibility = View.GONE
         }
 
         syncingView?.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE

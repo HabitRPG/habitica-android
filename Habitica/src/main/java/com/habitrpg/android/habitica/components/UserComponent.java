@@ -38,6 +38,8 @@ import com.habitrpg.android.habitica.ui.activities.SetupActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity;
 import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskSummaryActivity;
+import com.habitrpg.android.habitica.ui.activities.TaskSummaryViewModel;
 import com.habitrpg.android.habitica.ui.activities.VerifyUsernameActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
@@ -52,10 +54,8 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment;
 import com.habitrpg.android.habitica.ui.fragments.PromoWebFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment;
-import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemRecyclerFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemsFragment;
@@ -164,8 +164,6 @@ public interface UserComponent {
     void inject(AvatarOverviewFragment avatarOverviewFragment);
 
     void inject(EquipmentDetailFragment equipmentDetailFragment);
-
-    void inject(EquipmentOverviewFragment equipmentOverviewFragment);
 
     void inject(ItemRecyclerFragment itemRecyclerFragment);
 
@@ -333,8 +331,6 @@ public interface UserComponent {
 
     void inject(BugFixFragment bugFixFragment);
 
-    void inject(AvatarEquipmentFragment avatarEquipmentFragment);
-
     void inject(FAQDetailFragment faqDetailFragment);
 
     void inject(AdventureGuideActivity adventureGuideFragment);
@@ -370,4 +366,8 @@ public interface UserComponent {
     void inject(@NotNull DeathActivity deathActivity);
 
     void inject(@NotNull DeviceCommunicationService deviceCommunicationService);
+
+    void inject(@NotNull TaskSummaryActivity taskSummaryActivity);
+
+    void inject(@NotNull TaskSummaryViewModel taskSummaryViewModel);
 }

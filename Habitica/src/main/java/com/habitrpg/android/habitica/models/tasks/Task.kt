@@ -5,7 +5,7 @@ import android.os.Parcelable
 import android.text.Spanned
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.common.habitica.helpers.MarkdownParser
@@ -92,8 +92,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     var nextDue: RealmList<Date>? = null
     var updatedAt: Date? = null
     val isUpdatedToday: Boolean
-        get() = ZonedDateTime.ofInstant(updatedAt?.toInstant(), ZoneId.systemDefault()).toLocalDate()
-            .equals(ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault()).toLocalDate())
+        get() {
+            val updatedAt = updatedAt ?: return false
+            return ZonedDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()).toLocalDate()
+                .equals(ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault()).toLocalDate())
+        }
 
 
     // Needed for offline creating/updating
@@ -113,6 +116,30 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
+
+    fun completed(byUserID: String?): Boolean {
+        return if (isGroupTask) {
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == byUserID }?.completed ?: completed
+        } else {
+            completed
+        }
+    }
+
+    fun completeForUser(userID: String?, completed: Boolean) {
+        if (isGroupTask && group?.assignedUsersDetail?.isNotEmpty() == true) {
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed = completed
+            if (group?.assignedUsersDetail?.filter { it.completed != completed }?.isEmpty() == true) {
+                this.completed = completed
+            }
+        } else {
+            this.completed = completed
+        }
+    }
+
+    fun isDisplayedActiveForUser(userID: String?): Boolean {
+        val isActive = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO)
+        return isActive && !completed(userID)
+    }
 
     val streakString: String?
         get() {
@@ -436,7 +463,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                         i += 1
                     }
                 } catch (e: JSONException) {
-                    RxErrorHandler.reportError(e)
+                    ExceptionHandler.reportError(e)
                 }
             }
             this.weeksOfMonth = weeksOfMonth.toList()
@@ -465,7 +492,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                         i += 1
                     }
                 } catch (e: JSONException) {
-                    RxErrorHandler.reportError(e)
+                    ExceptionHandler.reportError(e)
                 }
             }
             this.daysOfMonth = daysOfMonth
