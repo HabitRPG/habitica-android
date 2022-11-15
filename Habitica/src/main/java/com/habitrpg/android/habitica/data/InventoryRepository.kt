@@ -39,7 +39,7 @@ interface InventoryRepository : BaseRepository {
     fun getQuestContent(keys: List<String>): Flow<List<QuestContent>>
 
     fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>>
-    fun retrieveInAppRewards(): Flowable<List<ShopItem>>
+    suspend fun retrieveInAppRewards(): List<ShopItem>?
 
     fun getOwnedEquipment(type: String): Flowable<out List<Equipment>>
     fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>>
@@ -71,21 +71,21 @@ interface InventoryRepository : BaseRepository {
 
     fun inviteToQuest(quest: QuestContent): Flowable<Quest>
 
-    fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): Flowable<BuyResponse>
+    suspend fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): BuyResponse?
 
     fun retrieveShopInventory(identifier: String): Flowable<Shop>
     fun retrieveMarketGear(): Flowable<Shop>
 
-    fun purchaseMysterySet(categoryIdentifier: String): Flowable<Void>
+    suspend fun purchaseMysterySet(categoryIdentifier: String): Void?
 
-    fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Void>
+    suspend fun purchaseHourglassItem(purchaseType: String, key: String): Void?
 
-    fun purchaseQuest(key: String): Flowable<Void>
-    fun purchaseSpecialSpell(key: String): Flowable<Void>
+    suspend fun purchaseQuest(key: String): Void?
+    suspend fun purchaseSpecialSpell(key: String): Void?
 
-    fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Void>
+    suspend fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Void?
 
-    fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>>
+    suspend fun togglePinnedItem(item: ShopItem): List<ShopItem>?
     fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
     fun getItemsFlowable(itemClass: Class<out Item>): Flowable<out List<Item>>
     fun getItems(itemClass: Class<out Item>): Flow<List<Item>>

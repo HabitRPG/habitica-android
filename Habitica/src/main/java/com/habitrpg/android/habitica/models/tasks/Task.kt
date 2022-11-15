@@ -501,6 +501,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         return daysOfMonth
     }
 
+    fun canEdit(userID: String): Boolean {
+        return true
+    }
+
     companion object CREATOR : Parcelable.Creator<Task> {
         override fun createFromParcel(source: Parcel): Task = Task(source)
 

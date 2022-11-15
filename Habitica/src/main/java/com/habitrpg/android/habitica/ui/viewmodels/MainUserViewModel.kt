@@ -11,10 +11,12 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.User
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.launch
 
 class MainUserViewModel(private val providedUserID: String, val userRepository: UserRepository, val socialRepository: SocialRepository) {
 
@@ -59,16 +61,14 @@ class MainUserViewModel(private val providedUserID: String, val userRepository: 
     internal val disposable = CompositeDisposable()
 
     fun updateUser(path: String, value: Any) {
-        disposable.add(
+        MainScope().launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser(path, value)
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+        }
     }
 
     fun updateUser(data: Map<String, Any>) {
-        disposable.add(
+        MainScope().launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser(data)
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+        }
     }
 }

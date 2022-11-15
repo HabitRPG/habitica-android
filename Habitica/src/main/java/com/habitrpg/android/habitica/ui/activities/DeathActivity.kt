@@ -57,11 +57,10 @@ class DeathActivity: BaseActivity() {
                     return@AdHandler
                 }
                 Log.d("AdHandler", "Reviving user")
-                compositeSubscription.add(
-                        userRepository.updateUser("stats.hp", 1).subscribe({
-                                                                           finish()
-                        }, ExceptionHandler.rx())
-                )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    userRepository.updateUser("stats.hp", 1)
+                    finish()
+                }
             }
             handler.prepare {
                 if (it && binding.adButton.state == AdButton.State.LOADING) {

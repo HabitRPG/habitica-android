@@ -114,13 +114,12 @@ class VerifyUsernameActivity : BaseActivity() {
 
     private fun confirmNames() {
         binding.confirmUsernameButton.isClickable = false
-        compositeSubscription.add(
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser("profile.name", binding.displayNameEditText.text.toString())
-                .flatMap { userRepository.updateLoginName(binding.usernameEditText.text.toString()).toFlowable() }
-                .doOnComplete { showConfirmationAndFinish() }
-                .doOnEach { binding.confirmUsernameButton.isClickable = true }
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+            userRepository.updateLoginName(binding.usernameEditText.text.toString())
+            showConfirmationAndFinish()
+            binding.confirmUsernameButton.isClickable = true
+        }
     }
 
     private fun showConfirmationAndFinish() {

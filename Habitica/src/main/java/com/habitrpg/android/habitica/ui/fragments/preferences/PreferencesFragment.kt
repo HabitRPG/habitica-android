@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
@@ -207,7 +208,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "usePushNotifications" -> {
                 val usePushNotifications = sharedPreferences.getBoolean(key, true)
                 pushNotificationsPreference?.isEnabled = usePushNotifications
-                userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications).subscribe()
+                lifecycleScope.launchCatching {
+                    userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications)
+                }
                 if (usePushNotifications) {
                     pushNotificationManager.addPushDeviceUsingStoredToken()
                 } else {
@@ -217,7 +220,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "useEmails" -> {
                 val useEmailNotifications = sharedPreferences.getBoolean(key, true)
                 emailNotificationsPreference?.isEnabled = useEmailNotifications
-                userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", !useEmailNotifications).subscribe()
+                lifecycleScope.launchCatching {
+                    userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", !useEmailNotifications)
+                }
             }
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
@@ -238,10 +243,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 if (user?.preferences?.language == languageHelper.languageCode) {
                     return
                 }
-
-                userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                    .subscribe({ reloadContent(false) }, ExceptionHandler.rx())
-
+                lifecycleScope.launchCatching {
+                    userRepository.updateLanguage(languageHelper.languageCode ?: "en")
+                    reloadContent(false)
+                }
                 val intent = Intent(activity, MainActivity::class.java)
                 this.startActivity(intent)
                 activity?.finishAffinity()
@@ -249,10 +254,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
-                    compositeSubscription.add(
+                    lifecycleScope.launchCatching {
                         userRepository.updateUser("preferences.sound", newAudioTheme)
-                            .subscribe({ }, ExceptionHandler.rx())
-                    )
+                    }
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
                 }
@@ -265,8 +269,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
-            "dailyDueDefaultView" -> userRepository.updateUser("preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                .subscribe({ }, ExceptionHandler.rx())
+            "dailyDueDefaultView" -> lifecycleScope.launchCatching {
+                userRepository.updateUser(
+                    "preferences.dailyDueDefaultView",
+                    sharedPreferences.getBoolean(key, false)
+                )
+            }
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
@@ -282,10 +290,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
-                    compositeSubscription.add(
+                    lifecycleScope.launchCatching {
                         userRepository.updateUser("inbox.optOut", isDisabled)
-                            .subscribe({ }, ExceptionHandler.rx())
-                    )
+                    }
                 }
             }
             "launch_screen" -> {
@@ -390,7 +397,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                         } else if (newValue == false && currentIds.contains(team.id)) {
                             currentIds.remove(team.id)
                         }
-                        userRepository.updateUser("preferences.tasks.mirrorGroupTasks", currentIds).subscribe({}, ExceptionHandler.rx())
+                        lifecycleScope.launchCatching {
+                            userRepository.updateUser(
+                                "preferences.tasks.mirrorGroupTasks",
+                                currentIds
+                            )
+                        }
                         true
                     }
                     groupCategory?.addPreference(newPreference)

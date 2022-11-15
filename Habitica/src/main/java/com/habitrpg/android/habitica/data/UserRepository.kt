@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.data
 
-import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
@@ -8,14 +7,14 @@ import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
-import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.models.user.UserQuestStatus
+import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
+import com.habitrpg.shared.habitica.models.tasks.Attribute
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository : BaseRepository {
@@ -23,14 +22,14 @@ interface UserRepository : BaseRepository {
     fun getUserFlowable(): Flowable<User>
     fun getUser(userID: String): Flow<User?>
 
-    fun updateUser(updateData: Map<String, Any>): Flowable<User>
-    fun updateUser(key: String, value: Any): Flowable<User>
+    suspend fun updateUser(updateData: Map<String, Any>): User?
+    suspend fun updateUser(key: String, value: Any): User?
 
     suspend fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false, overrideExisting: Boolean = false): User?
 
     suspend fun revive(): User?
 
-    fun resetTutorial(): Maybe<User>
+    suspend fun resetTutorial(): User?
 
     suspend fun sleep(user: User): User?
 
@@ -38,14 +37,14 @@ interface UserRepository : BaseRepository {
 
     fun getSpecialItems(user: User): Flowable<out List<Skill>>
 
-    fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse>
-    fun useSkill(key: String, target: String?): Flowable<SkillResponse>
+    suspend fun useSkill(key: String, target: String?, taskId: String): SkillResponse?
+    suspend fun useSkill(key: String, target: String?): SkillResponse?
 
     suspend fun disableClasses(): User?
     suspend fun changeClass(selectedClass: String? = null): User?
 
-    fun unlockPath(path: String, price: Int): Flowable<UnlockResponse>
-    fun unlockPath(customization: Customization): Flowable<UnlockResponse>
+    suspend fun unlockPath(path: String, price: Int): UnlockResponse?
+    suspend fun unlockPath(customization: Customization): UnlockResponse?
 
     suspend fun runCron(tasks: MutableList<Task>)
     suspend fun runCron()
@@ -56,14 +55,14 @@ interface UserRepository : BaseRepository {
 
     fun changeCustomDayStart(dayStartTime: Int): Flowable<User>
 
-    fun updateLanguage(languageCode: String): Flowable<User>
+    suspend fun updateLanguage(languageCode: String): User?
 
     suspend fun resetAccount(): User?
     fun deleteAccount(password: String): Flowable<Void>
 
     fun sendPasswordResetEmail(email: String): Flowable<Void>
 
-    fun updateLoginName(newLoginName: String, password: String? = null): Maybe<User>
+    suspend fun updateLoginName(newLoginName: String, password: String? = null): User?
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
     fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
     fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
@@ -71,7 +70,7 @@ interface UserRepository : BaseRepository {
     fun allocatePoint(stat: Attribute): Flowable<Stats>
     fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
 
-    fun useCustomization(type: String, category: String?, identifier: String): Flowable<User>
+    suspend fun useCustomization(type: String, category: String?, identifier: String): User?
     fun retrieveAchievements(): Flowable<List<Achievement>>
     fun getAchievements(): Flow<List<Achievement>>
     fun getQuestAchievements(): Flow<List<QuestAchievement>>

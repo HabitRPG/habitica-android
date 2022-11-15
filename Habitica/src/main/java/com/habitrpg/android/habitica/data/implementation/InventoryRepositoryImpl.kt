@@ -47,8 +47,12 @@ class InventoryRepositoryImpl(
         return localRepository.getInAppRewards()
     }
 
-    override fun retrieveInAppRewards(): Flowable<List<ShopItem>> {
-        return apiClient.retrieveInAppRewards().doOnNext { localRepository.saveInAppRewards(it) }
+    override suspend fun retrieveInAppRewards(): List<ShopItem>? {
+        val rewards =  apiClient.retrieveInAppRewards()
+        if (rewards != null) {
+            localRepository.saveInAppRewards(rewards)
+        }
+        return rewards
     }
 
     override fun getOwnedEquipment(type: String): Flowable<out List<Equipment>> {
@@ -238,35 +242,32 @@ class InventoryRepositoryImpl(
             .doOnNext { localRepository.changeOwnedCount("quests", quest.key, userID, -1) }
     }
 
-    override fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): Flowable<BuyResponse> {
-        return apiClient.buyItem(id, purchaseQuantity)
-            .doOnNext { buyResponse ->
-                if (user == null) {
-                    return@doOnNext
-                }
-                val copiedUser = localRepository.getUnmanagedCopy(user)
-                if (buyResponse.items != null) {
-                    copiedUser.items = buyResponse.items
-                }
-                if (buyResponse.hp != null) {
-                    copiedUser.stats?.hp = buyResponse.hp
-                }
-                if (buyResponse.exp != null) {
-                    copiedUser.stats?.exp = buyResponse.exp
-                }
-                if (buyResponse.mp != null) {
-                    copiedUser.stats?.mp = buyResponse.mp
-                }
-                if (buyResponse.gp != null) {
-                    copiedUser.stats?.gp = buyResponse.gp
-                } else {
-                    copiedUser.stats?.gp = copiedUser.stats?.gp ?: 0 - (value * purchaseQuantity)
-                }
-                if (buyResponse.lvl != null) {
-                    copiedUser.stats?.lvl = buyResponse.lvl
-                }
-                localRepository.save(copiedUser)
-            }
+    override suspend fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): BuyResponse? {
+        val buyResponse = apiClient.buyItem(id, purchaseQuantity) ?: return null
+        val foundUser = user ?: localRepository.getLiveUser(userID) ?: return buyResponse
+        val copiedUser = localRepository.getUnmanagedCopy(foundUser)
+        if (buyResponse.items != null) {
+            copiedUser.items = buyResponse.items
+        }
+        if (buyResponse.hp != null) {
+            copiedUser.stats?.hp = buyResponse.hp
+        }
+        if (buyResponse.exp != null) {
+            copiedUser.stats?.exp = buyResponse.exp
+        }
+        if (buyResponse.mp != null) {
+            copiedUser.stats?.mp = buyResponse.mp
+        }
+        if (buyResponse.gp != null) {
+            copiedUser.stats?.gp = buyResponse.gp
+        } else {
+            copiedUser.stats?.gp = (copiedUser.stats?.gp ?: 0.0) - (value * purchaseQuantity)
+        }
+        if (buyResponse.lvl != null) {
+            copiedUser.stats?.lvl = buyResponse.lvl
+        }
+        localRepository.save(copiedUser)
+        return buyResponse
     }
 
     override fun getAvailableLimitedItems(): Flowable<List<Item>> {
@@ -281,30 +282,30 @@ class InventoryRepositoryImpl(
         return apiClient.retrieveMarketGear()
     }
 
-    override fun purchaseMysterySet(categoryIdentifier: String): Flowable<Void> {
+    override suspend fun purchaseMysterySet(categoryIdentifier: String): Void? {
         return apiClient.purchaseMysterySet(categoryIdentifier)
     }
 
-    override fun purchaseHourglassItem(purchaseType: String, key: String): Flowable<Void> {
+    override suspend fun purchaseHourglassItem(purchaseType: String, key: String): Void? {
         return apiClient.purchaseHourglassItem(purchaseType, key)
     }
 
-    override fun purchaseQuest(key: String): Flowable<Void> {
+    override suspend fun purchaseQuest(key: String): Void? {
         return apiClient.purchaseQuest(key)
     }
 
-    override fun purchaseSpecialSpell(key: String): Flowable<Void> {
+    override suspend fun purchaseSpecialSpell(key: String): Void? {
         return apiClient.purchaseSpecialSpell(key)
     }
 
-    override fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Flowable<Void> {
+    override suspend fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Void? {
         return apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
     }
 
-    override fun togglePinnedItem(item: ShopItem): Flowable<List<ShopItem>> {
-        return if (!item.isValid) {
-            Flowable.empty()
-        } else apiClient.togglePinnedItem(item.pinType ?: "", item.path ?: "")
-            .flatMap { retrieveInAppRewards() }
+    override suspend fun togglePinnedItem(item: ShopItem): List<ShopItem>? {
+        if (item.isValid) {
+            apiClient.togglePinnedItem(item.pinType ?: "", item.path ?: "")
+        }
+        return retrieveInAppRewards()
     }
 }

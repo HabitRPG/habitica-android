@@ -10,11 +10,12 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import io.reactivex.rxjava3.core.Flowable
+import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface UserLocalRepository : BaseLocalRepository {
 
-    fun getTutorialSteps(): Flowable<List<TutorialStep>>
+    suspend fun getTutorialSteps(): Flow<RealmResults<TutorialStep>>
 
     fun getUser(userID: String): Flow<User?>
     fun getUserFlowable(userID: String): Flowable<User>

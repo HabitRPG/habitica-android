@@ -105,7 +105,7 @@ class ApiClientImpl(
         return habitResponse.data
     }
 
-    suspend fun <T> handleSuspendCall(apiCall: suspend () -> HabitResponse<T>): T? {
+    private suspend fun <T> process(apiCall: suspend () -> HabitResponse<T>): T? {
         try {
             return processResponse(apiCall())
         } catch (throwable: Throwable) {
@@ -280,14 +280,14 @@ class ApiClientImpl(
     }
 
     override suspend fun retrieveUser(withTasks: Boolean): User? {
-        val user = handleSuspendCall { apiService.getUser() }
+        val user = process { apiService.getUser() }
         val tasks = getTasks()
         user?.tasks = tasks
         return user
     }
 
     override suspend fun retrieveInboxMessages(uuid: String, page: Int): List<ChatMessage>? {
-        return handleSuspendCall { apiService.getInboxMessages(uuid, page) }
+        return process { apiService.getInboxMessages(uuid, page) }
     }
 
     override fun retrieveInboxConversations(): Flowable<List<InboxConversation>> {
@@ -346,34 +346,30 @@ class ApiClientImpl(
         this.languageCode = languageCode
     }
 
-    override suspend fun getStatus(): Status? = handleSuspendCall { apiService.getStatus() }
+    override suspend fun getStatus(): Status? = process { apiService.getStatus() }
 
     override suspend fun getContent(language: String?): ContentResult? {
-        return handleSuspendCall {  apiService.getContent(language) }
+        return process {  apiService.getContent(language) }
     }
 
-    override fun updateUser(updateDictionary: Map<String, Any>): Flowable<User> {
-        return apiService.updateUser(updateDictionary).compose(configureApiCallObserver())
+    override suspend fun updateUser(updateDictionary: Map<String, Any>): User? {
+        return process { apiService.updateUser(updateDictionary) }
     }
 
     override fun registrationLanguage(registrationLanguage: String): Flowable<User> {
         return apiService.registrationLanguage(registrationLanguage).compose(configureApiCallObserver())
     }
 
-    override fun retrieveInAppRewards(): Flowable<List<ShopItem>> {
-        return apiService.retrieveInAppRewards().compose(configureApiCallObserver())
-    }
-
-    override fun retrieveOldGear(): Flowable<List<ShopItem>> {
-        return apiService.retrieveOldGearRewards().compose(configureApiCallObserver())
+    override suspend fun retrieveInAppRewards(): List<ShopItem>? {
+        return process { apiService.retrieveInAppRewards() }
     }
 
     override fun equipItem(type: String, itemKey: String): Flowable<Items> {
         return apiService.equipItem(type, itemKey).compose(configureApiCallObserver())
     }
 
-    override fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse> {
-        return apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
+    override suspend fun buyItem(itemKey: String, purchaseQuantity: Int): BuyResponse? {
+        return process { apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
     }
 
     override fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void> {
@@ -384,8 +380,8 @@ class ApiClientImpl(
         return apiService.blockMember(userID).compose(configureApiCallObserver())
     }
 
-    override fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Void> {
-        return apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))).compose(configureApiCallObserver())
+    override suspend fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Void? {
+        return process { apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
     }
 
     override fun validateSubscription(request: PurchaseValidationRequest): Flowable<Any> {
@@ -400,20 +396,20 @@ class ApiClientImpl(
         return processResponse(apiService.cancelSubscription())
     }
 
-    override fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Void> {
-        return apiService.purchaseHourglassItem(type, itemKey).compose(configureApiCallObserver())
+    override suspend fun purchaseHourglassItem(type: String, itemKey: String): Void? {
+        return process { apiService.purchaseHourglassItem(type, itemKey) }
     }
 
-    override fun purchaseMysterySet(itemKey: String): Flowable<Void> {
-        return apiService.purchaseMysterySet(itemKey).compose(configureApiCallObserver())
+    override suspend fun purchaseMysterySet(itemKey: String): Void? {
+        return process { apiService.purchaseMysterySet(itemKey) }
     }
 
-    override fun purchaseQuest(key: String): Flowable<Void> {
-        return apiService.purchaseQuest(key).compose(configureApiCallObserver())
+    override suspend fun purchaseQuest(key: String): Void? {
+        return process { apiService.purchaseQuest(key) }
     }
 
-    override fun purchaseSpecialSpell(key: String): Flowable<Void> {
-        return apiService.purchaseSpecialSpell(key).compose(configureApiCallObserver())
+    override suspend fun purchaseSpecialSpell(key: String): Void? {
+        return process { apiService.purchaseSpecialSpell(key) }
     }
 
     override fun sellItem(itemType: String, itemKey: String): Flowable<User> {
@@ -433,7 +429,7 @@ class ApiClientImpl(
         return apiService.hatchPet(eggKey, hatchingPotionKey).compose(configureApiCallObserver())
     }
 
-    override suspend fun getTasks(): TaskList? = handleSuspendCall { apiService.getTasks() }
+    override suspend fun getTasks(): TaskList? = process { apiService.getTasks() }
 
     override fun getTasks(type: String): Flowable<TaskList> {
         return apiService.getTasks(type).compose(configureApiCallObserver())
@@ -443,8 +439,8 @@ class ApiClientImpl(
         return apiService.getTasks(type, dueDate).compose(configureApiCallObserver())
     }
 
-    override fun unlockPath(path: String): Flowable<UnlockResponse> {
-        return apiService.unlockPath(path).compose(configureApiCallObserver())
+    override suspend fun unlockPath(path: String): UnlockResponse? {
+        return process { apiService.unlockPath(path) }
     }
 
     override fun getTask(id: String): Flowable<Task> {
@@ -452,7 +448,7 @@ class ApiClientImpl(
     }
 
     override suspend fun postTaskDirection(id: String, direction: String): TaskDirectionData? {
-        return handleSuspendCall { apiService.postTaskDirection(id, direction) }
+        return process { apiService.postTaskDirection(id, direction) }
     }
 
     override fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData> {
@@ -464,7 +460,7 @@ class ApiClientImpl(
     }
 
     override suspend fun scoreChecklistItem(taskId: String, itemId: String): Task? {
-        return handleSuspendCall { apiService.scoreChecklistItem(taskId, itemId) }
+        return process { apiService.scoreChecklistItem(taskId, itemId) }
     }
 
     override fun createTask(item: Task): Flowable<Task> {
@@ -495,20 +491,20 @@ class ApiClientImpl(
         return apiService.deleteTag(id).compose(configureApiCallObserver())
     }
 
-    override suspend fun sleep(): Boolean? = handleSuspendCall { apiService.sleep() }
+    override suspend fun sleep(): Boolean? = process { apiService.sleep() }
 
-    override suspend fun revive(): User? = handleSuspendCall { apiService.revive() }
+    override suspend fun revive(): User? = process { apiService.revive() }
 
-    override fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse> {
-        return apiService.useSkill(skillName, targetType, targetId).compose(configureApiCallObserver())
+    suspend override fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse? {
+        return process { apiService.useSkill(skillName, targetType, targetId) }
     }
 
-    override fun useSkill(skillName: String, targetType: String): Flowable<SkillResponse> {
-        return apiService.useSkill(skillName, targetType).compose(configureApiCallObserver())
+    suspend override fun useSkill(skillName: String, targetType: String): SkillResponse? {
+        return process { apiService.useSkill(skillName, targetType) }
     }
 
     override suspend fun changeClass(className: String?): User? {
-        return handleSuspendCall {
+        return process {
             if (className != null) {
                 apiService.changeClass(className)
             } else {
@@ -517,7 +513,7 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun disableClasses(): User? = handleSuspendCall { apiService.disableClasses() }
+    override suspend fun disableClasses(): User? = process { apiService.disableClasses() }
 
     override fun markPrivateMessagesRead(): Flowable<Void> {
         // This is necessary, because the API call returns weird data.
@@ -650,7 +646,7 @@ class ApiClientImpl(
     }
 
     override suspend fun postPrivateMessage(messageDetails: Map<String, String>): PostChatMessageResult? {
-        return handleSuspendCall { apiService.postPrivateMessage(messageDetails) }
+        return process { apiService.postPrivateMessage(messageDetails) }
     }
 
     override fun retrieveShopIventory(identifier: String): Flowable<Shop> {
@@ -733,7 +729,7 @@ class ApiClientImpl(
         return apiService.runCron().compose(configureApiCallObserver())
     }
 
-    override suspend fun reroll(): User? = handleSuspendCall { apiService.reroll() }
+    override suspend fun reroll(): User? = process { apiService.reroll() }
 
     override fun resetAccount(): Flowable<Void> {
         return apiService.resetAccount().compose(configureApiCallObserver())
@@ -745,8 +741,8 @@ class ApiClientImpl(
         return apiService.deleteAccount(updateObject).compose(configureApiCallObserver())
     }
 
-    override fun togglePinnedItem(pinType: String, path: String): Flowable<Void> {
-        return apiService.togglePinnedItem(pinType, path).compose(configureApiCallObserver())
+    override suspend fun togglePinnedItem(pinType: String, path: String): Void? {
+        return process { apiService.togglePinnedItem(pinType, path) }
     }
 
     override fun sendPasswordResetEmail(email: String): Flowable<Void> {
@@ -755,17 +751,17 @@ class ApiClientImpl(
         return apiService.sendPasswordResetEmail(data).compose(configureApiCallObserver())
     }
 
-    override fun updateLoginName(newLoginName: String, password: String): Flowable<Void> {
+    override suspend fun updateLoginName(newLoginName: String, password: String): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = newLoginName
         updateObject["password"] = password
-        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver())
+        return process { apiService.updateLoginName(updateObject) }
     }
 
-    override fun updateUsername(newLoginName: String): Flowable<Void> {
+    override suspend fun updateUsername(newLoginName: String): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = newLoginName
-        return apiService.updateLoginName(updateObject).compose(configureApiCallObserver())
+        return process { apiService.updateLoginName(updateObject) }
     }
 
     override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> {
@@ -831,7 +827,7 @@ class ApiClientImpl(
         return apiService.retrieveMarketGear(languageCode).compose(configureApiCallObserver())
     }
 
-    override suspend fun getWorldState(): WorldState? = handleSuspendCall { apiService.worldState() }
+    override suspend fun getWorldState(): WorldState? = process { apiService.worldState() }
 
     companion object {
         fun createGsonFactory(): GsonConverterFactory {

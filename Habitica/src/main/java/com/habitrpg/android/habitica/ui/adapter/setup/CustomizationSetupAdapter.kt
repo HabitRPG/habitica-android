@@ -24,8 +24,7 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
 
     private val equipGearEventSubject = PublishSubject.create<String>()
     val equipGearEvents: Flowable<String> = equipGearEventSubject.toFlowable(BackpressureStrategy.DROP)
-    private val updateUserEventsSubject = PublishSubject.create<Map<String, Any>>()
-    val updateUserEvents: Flowable<Map<String, Any>> = updateUserEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    var onUpdateUser: ((Map<String, Any>) -> Unit)? = null
 
     fun setCustomizationList(newCustomizationList: List<SetupCustomization>) {
         this.customizationList = newCustomizationList
@@ -128,7 +127,7 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
                     val updateData = HashMap<String, Any>()
                     val updatePath = "preferences." + selectedCustomization.path
                     updateData[updatePath] = selectedCustomization.key
-                    updateUserEventsSubject.onNext(updateData)
+                    onUpdateUser?.invoke(updateData)
                 }
             }
         }

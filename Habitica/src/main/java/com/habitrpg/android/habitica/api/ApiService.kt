@@ -72,41 +72,38 @@ interface ApiService {
     suspend fun getContent(@Query("language") language: String?): HabitResponse<ContentResult>
 
     @PUT("user/")
-    fun updateUser(@Body updateDictionary: Map<String, Any>): Flowable<HabitResponse<User>>
+    suspend fun updateUser(@Body updateDictionary: Map<String, Any>): HabitResponse<User>
 
     @PUT("user/")
     fun registrationLanguage(@Header("Accept-Language") registrationLanguage: String): Flowable<HabitResponse<User>>
 
     @GET("user/in-app-rewards")
-    fun retrieveInAppRewards(): Flowable<HabitResponse<List<ShopItem>>>
-
-    @GET("user/inventory/buy")
-    fun retrieveOldGearRewards(): Flowable<HabitResponse<List<ShopItem>>>
+    suspend fun retrieveInAppRewards(): HabitResponse<List<ShopItem>>
 
     @POST("user/equip/{type}/{key}")
     fun equipItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Items>>
 
     @POST("user/buy/{key}")
-    fun buyItem(@Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<BuyResponse>>
+    suspend fun buyItem(@Path("key") itemKey: String, @Body quantity: Map<String, Int>): HabitResponse<BuyResponse>
 
     @POST("user/purchase/{type}/{key}")
-    fun purchaseItem(
+    suspend fun purchaseItem(
         @Path("type") type: String,
         @Path("key") itemKey: String,
         @Body quantity: Map<String, Int>
-    ): Flowable<HabitResponse<Void>>
+    ): HabitResponse<Void>
 
     @POST("user/purchase-hourglass/{type}/{key}")
-    fun purchaseHourglassItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseHourglassItem(@Path("type") type: String, @Path("key") itemKey: String): HabitResponse<Void>
 
     @POST("user/buy-mystery-set/{key}")
-    fun purchaseMysterySet(@Path("key") itemKey: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseMysterySet(@Path("key") itemKey: String): HabitResponse<Void>
 
     @POST("user/buy-quest/{key}")
-    fun purchaseQuest(@Path("key") key: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseQuest(@Path("key") key: String): HabitResponse<Void>
 
     @POST("user/buy-special-spell/{key}")
-    fun purchaseSpecialSpell(@Path("key") key: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseSpecialSpell(@Path("key") key: String): HabitResponse<Void>
 
     @POST("user/sell/{type}/{key}")
     fun sellItem(@Path("type") itemType: String, @Path("key") itemKey: String): Flowable<HabitResponse<User>>
@@ -124,7 +121,7 @@ interface ApiService {
     fun getTasks(@Query("type") type: String, @Query("dueDate") dueDate: String): Flowable<HabitResponse<TaskList>>
 
     @POST("user/unlock")
-    fun unlockPath(@Query("path") path: String): Flowable<HabitResponse<UnlockResponse>>
+    suspend fun unlockPath(@Query("path") path: String): HabitResponse<UnlockResponse>
 
     @GET("tasks/{id}")
     fun getTask(@Path("id") id: String): Flowable<HabitResponse<Task>>
@@ -183,14 +180,14 @@ interface ApiService {
     suspend fun revive(): HabitResponse<User>
 
     @POST("user/class/cast/{skill}")
-    fun useSkill(
+    suspend fun useSkill(
         @Path("skill") skillName: String,
         @Query("targetType") targetType: String,
         @Query("targetId") targetId: String
-    ): Flowable<HabitResponse<SkillResponse>>
+    ): HabitResponse<SkillResponse>
 
     @POST("user/class/cast/{skill}")
-    fun useSkill(@Path("skill") skillName: String, @Query("targetType") targetType: String): Flowable<HabitResponse<SkillResponse>>
+    suspend fun useSkill(@Path("skill") skillName: String, @Query("targetType") targetType: String): HabitResponse<SkillResponse>
 
     @POST("user/change-class")
     suspend fun changeClass(): HabitResponse<User>
@@ -407,13 +404,13 @@ interface ApiService {
     fun deleteAccount(@Body body: Map<String, String>): Flowable<HabitResponse<Void>>
 
     @GET("user/toggle-pinned-item/{pinType}/{path}")
-    fun togglePinnedItem(@Path("pinType") pinType: String, @Path("path") path: String): Flowable<HabitResponse<Void>>
+    suspend fun togglePinnedItem(@Path("pinType") pinType: String, @Path("path") path: String): HabitResponse<Void>
 
     @POST("user/reset-password")
     fun sendPasswordResetEmail(@Body data: Map<String, String>): Flowable<HabitResponse<Void>>
 
     @PUT("user/auth/update-username")
-    fun updateLoginName(@Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+    suspend fun updateLoginName(@Body data: Map<String, String>): HabitResponse<Void>
 
     @POST("user/auth/verify-username")
     fun verifyUsername(@Body data: Map<String, String>): Flowable<HabitResponse<VerifyUsernameResponse>>

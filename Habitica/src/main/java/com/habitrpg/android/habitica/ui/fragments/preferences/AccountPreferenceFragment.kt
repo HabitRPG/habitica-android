@@ -27,6 +27,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
@@ -256,8 +257,9 @@ class AccountPreferenceFragment :
     private fun updateUser(path: String, value: String?, title: String) {
         showSingleEntryDialog(value, title) {
             if (value != it) {
-                userRepository.updateUser(path, it ?: "")
-                    .subscribe({}, ExceptionHandler.rx())
+                lifecycleScope.launchCatching {
+                    userRepository.updateUser(path, it ?: "")
+                }
             }
         }
     }
@@ -388,8 +390,9 @@ class AccountPreferenceFragment :
 
     private fun showLoginNameDialog() {
         showSingleEntryDialog(user?.username, getString(R.string.username)) {
-            userRepository.updateLoginName(it ?: "")
-                .subscribe({}, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                userRepository.updateLoginName(it ?: "")
+            }
         }
     }
 
@@ -478,8 +481,11 @@ class AccountPreferenceFragment :
         dialog.setTitle(R.string.confirm_username_title)
         dialog.setMessage(R.string.confirm_username_description)
         dialog.addButton(R.string.confirm, true) { _, _ ->
-            userRepository.updateLoginName(user?.authentication?.localAuthentication?.username ?: "")
-                .subscribe({ }, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                userRepository.updateLoginName(
+                    user?.authentication?.localAuthentication?.username ?: ""
+                )
+            }
         }
         dialog.addCancelButton()
         dialog.show()

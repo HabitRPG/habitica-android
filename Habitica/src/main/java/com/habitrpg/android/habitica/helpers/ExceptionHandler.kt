@@ -5,6 +5,8 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import okhttp3.internal.http2.ConnectionShutdownException
 import retrofit2.HttpException
 import java.io.EOFException
@@ -52,4 +54,8 @@ class ExceptionHandler {
             }
         }
     }
+}
+
+fun CoroutineScope.launchCatching(function: suspend CoroutineScope.() -> Unit) {
+    launch((ExceptionHandler.coroutine()), block = function)
 }

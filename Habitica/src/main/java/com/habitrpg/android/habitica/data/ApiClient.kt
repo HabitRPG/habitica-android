@@ -58,25 +58,24 @@ interface ApiClient {
     fun setLanguageCode(languageCode: String)
     suspend fun getContent(language: String? = null): ContentResult?
 
-    fun updateUser(updateDictionary: Map<String, Any>): Flowable<User>
+    suspend fun updateUser(updateDictionary: Map<String, Any>): User?
 
     fun registrationLanguage(registrationLanguage: String): Flowable<User>
 
-    fun retrieveInAppRewards(): Flowable<List<ShopItem>>
-    fun retrieveOldGear(): Flowable<List<ShopItem>>
+    suspend fun retrieveInAppRewards(): List<ShopItem>?
 
     fun equipItem(type: String, itemKey: String): Flowable<Items>
 
-    fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse>
+    suspend fun buyItem(itemKey: String, purchaseQuantity: Int): BuyResponse?
 
-    fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Void>
+    suspend fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Void?
 
-    fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Void>
+    suspend fun purchaseHourglassItem(type: String, itemKey: String): Void?
 
-    fun purchaseMysterySet(itemKey: String): Flowable<Void>
+    suspend fun purchaseMysterySet(itemKey: String): Void?
 
-    fun purchaseQuest(key: String): Flowable<Void>
-    fun purchaseSpecialSpell(key: String): Flowable<Void>
+    suspend fun purchaseQuest(key: String): Void?
+    suspend fun purchaseSpecialSpell(key: String): Void?
     fun validateSubscription(request: PurchaseValidationRequest): Flowable<Any>
     fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
     suspend fun cancelSubscription(): Void?
@@ -89,7 +88,7 @@ interface ApiClient {
     fun getTasks(type: String): Flowable<TaskList>
     fun getTasks(type: String, dueDate: String): Flowable<TaskList>
 
-    fun unlockPath(path: String): Flowable<UnlockResponse>
+    suspend fun unlockPath(path: String): UnlockResponse?
 
     fun getTask(id: String): Flowable<Task>
 
@@ -126,9 +125,9 @@ interface ApiClient {
     suspend fun sleep(): Boolean?
     suspend fun revive(): User?
 
-    fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse>
+    suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse?
 
-    fun useSkill(skillName: String, targetType: String): Flowable<SkillResponse>
+    suspend fun useSkill(skillName: String, targetType: String): SkillResponse?
 
     suspend fun changeClass(className: String?): User?
 
@@ -251,12 +250,12 @@ interface ApiClient {
     fun resetAccount(): Flowable<Void>
     fun deleteAccount(password: String): Flowable<Void>
 
-    fun togglePinnedItem(pinType: String, path: String): Flowable<Void>
+    suspend fun togglePinnedItem(pinType: String, path: String): Void?
 
     fun sendPasswordResetEmail(email: String): Flowable<Void>
 
-    fun updateLoginName(newLoginName: String, password: String): Flowable<Void>
-    fun updateUsername(newLoginName: String): Flowable<Void>
+    suspend fun updateLoginName(newLoginName: String, password: String): Void?
+    suspend fun updateUsername(newLoginName: String): Void?
 
     fun updateEmail(newEmail: String, password: String): Flowable<Void>
 

@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -22,7 +24,6 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import java.util.Locale
 import javax.inject.Inject
@@ -140,21 +141,16 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     val activity = (getActivity() as? MainActivity) ?: return@addButton
                     val thisPotion = potion ?: return@addButton
                     val thisEgg = egg ?: return@addButton
-                    var observable: Flowable<Any> = Flowable.just("")
-                    if (!hasEgg) {
-                        observable = observable.flatMap { activity.inventoryRepository.purchaseItem("eggs", thisEgg.key, 1) }
+                    lifecycleScope.launchCatching {
+                        if (!hasEgg) {
+                            activity.inventoryRepository.purchaseItem("eggs", thisEgg.key, 1)
+                        }
+                        if (!hasPotion) {
+                            activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1)
+                        }
+                        activity.userRepository.retrieveUser(true, forced = true)
+                        hatchPet(thisPotion, thisEgg)
                     }
-                    if (!hasPotion) {
-                        observable = observable.flatMap { activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1) }
-                    }
-                    observable
-                        .subscribe(
-                            {
-                                // TODO: activity.userRepository.retrieveUser(true, forced = true)
-                                hatchPet(thisPotion, thisEgg)
-                            },
-                            ExceptionHandler.rx()
-                        )
                 }
             }
 

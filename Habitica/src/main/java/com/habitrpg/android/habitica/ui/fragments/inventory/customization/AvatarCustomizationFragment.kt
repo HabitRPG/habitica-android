@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBin
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.user.OwnedCustomization
@@ -79,18 +80,20 @@ class AvatarCustomizationFragment :
         savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
-        compositeSubscription.add(
-            adapter.getSelectCustomizationEvents()
-                .flatMap { customization ->
+            adapter.onCustomizationSelected = { customization ->
+                lifecycleScope.launchCatching {
                     if (customization.type == "background") {
                         userRepository.unlockPath(customization)
-                            //TODO: .flatMap { userRepository.retrieveUser(false, true, true) }
+                        userRepository.retrieveUser(false, true, true)
                     } else {
-                        userRepository.useCustomization(customization.type ?: "", customization.category, customization.identifier ?: "")
+                        userRepository.useCustomization(
+                            customization.type ?: "",
+                            customization.category,
+                            customization.identifier ?: ""
+                        )
                     }
                 }
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+            }
 
         compositeSubscription.add(
             this.inventoryRepository.getInAppRewards()

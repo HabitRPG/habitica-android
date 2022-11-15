@@ -20,11 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -89,10 +90,9 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
-        compositeSubscription.add(
+        lifecycleScope.launchCatching {
             userRepository.updateUser("preferences.size", newSize)
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) { /* no-on */

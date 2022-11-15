@@ -5,18 +5,22 @@ actual class PlatformLogger {
         get() = true
 
     actual fun logDebug(tag: String, message: String) {
-        println("[DEBUG] $tag: $message")
+        println("[🟢] $tag: $message")
     }
 
     actual fun logInfo(tag: String, message: String) {
-        println("[INFO] $tag: $message")
+        println("[🟡] $tag: $message")
+    }
+
+    actual fun logWarning(tag: String, message: String) {
+        println("[🟠] $tag: $message")
     }
 
     actual fun logError(tag: String, message: String) {
-        println("[ERROR] $tag: $message")
+        println("[🔴] $tag: $message")
     }
 
     actual fun logError(tag: String, message: String, exception: Throwable) {
-        println("[ERROR] $tag: $message\n${exception.getStackTrace().joinToString("\n")}")
+        println("[🔴] $tag: $message\n${exception.getStackTrace().joinToString("\n")}")
     }
 }

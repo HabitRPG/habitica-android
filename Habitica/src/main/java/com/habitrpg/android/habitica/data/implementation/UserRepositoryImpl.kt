@@ -30,6 +30,7 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.functions.BiFunction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.GregorianCalendar
@@ -51,24 +52,23 @@ class UserRepositoryImpl(
 
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
 
-    private fun updateUser(userID: String, updateData: Map<String, Any>): Flowable<User> {
-        return Flowable.zip(
-            apiClient.updateUser(updateData),
-            localRepository.getUserFlowable(userID).firstElement().toFlowable()
-        ) { newUser, user -> mergeUser(user, newUser) }
+    private suspend fun updateUser(userID: String, updateData: Map<String, Any>): User? {
+        val networkUser = apiClient.updateUser(updateData) ?: return null
+        val oldUser = localRepository.getUser(userID).firstOrNull()
+        return mergeUser(oldUser, networkUser)
     }
 
-    private fun updateUser(userID: String, key: String, value: Any): Flowable<User> {
+    private suspend fun updateUser(userID: String, key: String, value: Any): User? {
         val updateData = HashMap<String, Any>()
         updateData[key] = value
         return updateUser(userID, updateData)
     }
 
-    override fun updateUser(updateData: Map<String, Any>): Flowable<User> {
+    override suspend fun updateUser(updateData: Map<String, Any>): User? {
         return updateUser(userID, updateData)
     }
 
-    override fun updateUser(key: String, value: Any): Flowable<User> {
+    override suspend fun updateUser(key: String, value: Any): User? {
         return updateUser(userID, key, value)
     }
 
@@ -90,12 +90,11 @@ class UserRepositoryImpl(
             val calendar = GregorianCalendar()
             val timeZone = calendar.timeZone
             val offset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
-            /*if (offset.toInt() != user.preferences?.timezoneOffset ?: 0) {
-                return@flatMap updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
+            return if (offset.toInt() != (user.preferences?.timezoneOffset ?: 0)) {
+                updateUser(user.id ?: "", "preferences.timezoneOffset", offset.toString())
             } else {
-                return@flatMap Flowable.just(user)
-            }*/
-            return user
+                user
+            }
         } else {
             return null
         }
@@ -106,17 +105,13 @@ class UserRepositoryImpl(
         return retrieveUser(false, true)
     }
 
-    override fun resetTutorial(): Maybe<User> {
-        return localRepository.getTutorialSteps()
-            .firstElement()
-            .map<Map<String, Any>> { tutorialSteps ->
-                val updateData = HashMap<String, Any>()
-                for (step in tutorialSteps) {
-                    updateData[step.flagPath] = false
-                }
-                updateData
-            }
-            .flatMap { updateData -> updateUser(updateData).firstElement() }
+    override suspend fun resetTutorial(): User? {
+        val tutorialSteps = localRepository.getTutorialSteps().firstOrNull() ?: return null
+        val updateData = HashMap<String, Any>()
+        for (step in tutorialSteps) {
+            updateData[step.flagPath] = false
+        }
+        return updateUser(updateData)
     }
 
     override suspend fun sleep(user: User): User {
@@ -134,26 +129,26 @@ class UserRepositoryImpl(
     override fun getSpecialItems(user: User): Flowable<out List<Skill>> =
         localRepository.getSpecialItems(user)
 
-    override fun useSkill(key: String, target: String?, taskId: String): Flowable<SkillResponse> {
-        return zipWithLiveUser(apiClient.useSkill(key, target ?: "", taskId)) { response, user ->
-            response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-            response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
-            response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
-            response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
-            response.user?.let { mergeUser(user, it) }
-            response
-        }
+    override suspend fun useSkill(key: String, target: String?, taskId: String): SkillResponse? {
+        val response = apiClient.useSkill(key, target ?: "", taskId) ?: return null
+        val user = getLiveUser() ?: return response
+        response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
+        response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+        response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
+        response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
+        response.user?.let { mergeUser(user, it) }
+        return response
     }
 
-    override fun useSkill(key: String, target: String?): Flowable<SkillResponse> {
-        return zipWithLiveUser(apiClient.useSkill(key, target ?: "")) { response, user ->
-            response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-            response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
-            response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
-            response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
-            response.user?.let { mergeUser(user, it) }
-            response
-        }
+    override suspend fun useSkill(key: String, target: String?): SkillResponse? {
+        val response = apiClient.useSkill(key, target ?: "") ?: return null
+        val user = getLiveUser() ?: return response
+        response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
+        response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+        response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
+        response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
+        response.user?.let { mergeUser(user, it) }
+        return response
     }
 
     override suspend fun disableClasses(): User? = apiClient.disableClasses()
@@ -163,20 +158,19 @@ class UserRepositoryImpl(
         return retrieveUser(false, forced = true)
     }
 
-    override fun unlockPath(customization: Customization): Flowable<UnlockResponse> {
+    override suspend fun unlockPath(customization: Customization): UnlockResponse? {
         return unlockPath(customization.path, customization.price ?: 0)
     }
 
-    override fun unlockPath(path: String, price: Int): Flowable<UnlockResponse> {
-        return zipWithLiveUser(apiClient.unlockPath(path)) { unlockResponse, copiedUser ->
-            val user = localRepository.getUnmanagedCopy(copiedUser)
-            user.preferences = unlockResponse.preferences
-            user.purchased = unlockResponse.purchased
-            user.items = unlockResponse.items
-            user.balance = copiedUser.balance - (price / 4.0)
-            localRepository.saveUser(copiedUser, false)
-            unlockResponse
-        }
+    override suspend fun unlockPath(path: String, price: Int): UnlockResponse? {
+        val unlockResponse = apiClient.unlockPath(path) ?: return null
+        val user = localRepository.getUser(userID).firstOrNull() ?: return unlockResponse
+        user.preferences = unlockResponse.preferences
+        user.purchased = unlockResponse.purchased
+        user.items = unlockResponse.items
+        user.balance = user.balance - (price / 4.0)
+        localRepository.saveUser(user, false)
+        return unlockResponse
     }
 
     override suspend fun runCron() {
@@ -204,9 +198,10 @@ class UserRepositoryImpl(
         return apiClient.changeCustomDayStart(updateObject)
     }
 
-    override fun updateLanguage(languageCode: String): Flowable<User> {
-        return updateUser("preferences.language", languageCode)
-            .doOnNext { apiClient.setLanguageCode(languageCode) }
+    override suspend fun updateLanguage(languageCode: String): User? {
+        val user = updateUser("preferences.language", languageCode)
+        apiClient.setLanguageCode(languageCode)
+        return user
     }
 
     override suspend fun resetAccount(): User? {
@@ -220,21 +215,18 @@ class UserRepositoryImpl(
     override fun sendPasswordResetEmail(email: String): Flowable<Void> =
         apiClient.sendPasswordResetEmail(email)
 
-    override fun updateLoginName(newLoginName: String, password: String?): Maybe<User> {
-        return (
-            if (password != null && password.isNotEmpty()) {
-                apiClient.updateLoginName(newLoginName.trim(), password.trim())
-            } else {
-                apiClient.updateUsername(newLoginName.trim())
-            }
-            ).flatMapMaybe { localRepository.getUserFlowable(userID).firstElement() }
-            .doOnNext { user ->
-                localRepository.modify(user) { liveUser ->
-                    liveUser.authentication?.localAuthentication?.username = newLoginName
-                    liveUser.flags?.verifiedUsername = true
-                }
-            }
-            .firstElement()
+    override suspend fun updateLoginName(newLoginName: String, password: String?): User? {
+        if (password != null && password.isNotEmpty()) {
+            apiClient.updateLoginName(newLoginName.trim(), password.trim())
+        } else {
+            apiClient.updateUsername(newLoginName.trim())
+        }
+        val user = localRepository.getUser(userID).firstOrNull() ?: return null
+        localRepository.modify(user) { liveUser ->
+            liveUser.authentication?.localAuthentication?.username = newLoginName
+            liveUser.flags?.verifiedUsername = true
+        }
+        return user
     }
 
     override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username.trim())
@@ -250,7 +242,7 @@ class UserRepositoryImpl(
         apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override fun allocatePoint(stat: Attribute): Flowable<Stats> {
-        getLiveUser().firstElement().subscribe(
+        getLiveUserFlowable().firstElement().subscribe(
             { liveUser ->
                 localRepository.executeTransaction {
                     when (stat) {
@@ -324,7 +316,7 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun useCustomization(type: String, category: String?, identifier: String): Flowable<User> {
+    override suspend fun useCustomization(type: String, category: String?, identifier: String): User? {
         if (appConfigManager.enableLocalChanges()) {
             localRepository.getUserFlowable(userID).firstElement().subscribe(
                 { liveUser ->
@@ -401,14 +393,19 @@ class UserRepositoryImpl(
         return localRepository.getTeamPlan(teamID)
     }
 
-    private fun getLiveUser(): Flowable<User> {
+    private fun getLiveUserFlowable(): Flowable<User> {
         return localRepository.getUserFlowable(userID)
             .map { Optional(localRepository.getLiveObject(it)) }
             .filterMapEmpty()
     }
 
+    private suspend fun getLiveUser(): User? {
+        val user = localRepository.getUser(userID).firstOrNull() ?: return null
+        return localRepository.getLiveObject(user)
+    }
+
     private fun <T : Any> zipWithLiveUser(flowable: Flowable<T>, mergeFunc: BiFunction<T, User, T>): Flowable<T> {
-        return Flowable.zip(flowable, getLiveUser().firstElement().toFlowable(), mergeFunc)
+        return Flowable.zip(flowable, getLiveUserFlowable().firstElement().toFlowable(), mergeFunc)
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User {

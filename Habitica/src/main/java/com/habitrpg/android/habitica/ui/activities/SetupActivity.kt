@@ -209,17 +209,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
-            compositeSubscription.add(
-                userRepository.updateUser("flags.welcomed", true).subscribe(
-                    {
-                        if (!compositeSubscription.isDisposed) {
-                            compositeSubscription.dispose()
-                        }
-                        startMainActivity()
-                    },
-                    ExceptionHandler.rx()
-                )
-            )
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.updateUser("flags.welcomed", true)
+                startMainActivity()
+            }
             return
         }
         this.user = user
@@ -238,11 +231,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun confirmNames(displayName: String, username: String) {
-        compositeSubscription.add(
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser("profile.name", displayName)
-                .flatMap { userRepository.updateLoginName(username).toFlowable() }
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+            userRepository.updateLoginName(username)
+        }
     }
 
     private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {

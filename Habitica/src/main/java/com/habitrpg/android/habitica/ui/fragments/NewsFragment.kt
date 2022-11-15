@@ -9,11 +9,13 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import kotlinx.coroutines.launch
 
 class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
@@ -75,6 +77,8 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        compositeSubscription.add(userRepository.updateUser("flags.newStuff", false).subscribeWithErrorHandler({}))
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.updateUser("flags.newStuff", false)
+        }
     }
 }

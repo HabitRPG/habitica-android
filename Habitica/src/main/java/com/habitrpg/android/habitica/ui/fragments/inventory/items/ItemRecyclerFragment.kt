@@ -19,8 +19,9 @@ import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -28,7 +29,6 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
-import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
@@ -44,7 +44,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -322,16 +321,10 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         if (specialItem == null || memberID == null) {
             return
         }
-
-        val observable: Flowable<SkillResponse> =
+        lifecycleScope.launchCatching {
             userRepository.useSkill(specialItem.key, specialItem.target, memberID)
-
-        compositeSubscription.add(
-            observable.subscribe(
-                { this.displaySpecialItemResult(specialItem) },
-                ExceptionHandler.rx()
-            )
-        )
+            displaySpecialItemResult(specialItem)
+        }
     }
 
     private fun displaySpecialItemResult(specialItem: SpecialItem?) {

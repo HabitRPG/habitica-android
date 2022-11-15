@@ -5,23 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.UserStatComputer
-import com.habitrpg.shared.habitica.models.tasks.Attribute
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
+import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.shared.habitica.models.tasks.Attribute
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -131,8 +133,9 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         }
 
         binding?.automaticAllocationSwitch?.setOnCheckedChangeListener { _, isChecked ->
-            userRepository.updateUser("preferences.automaticAllocation", isChecked)
-                .subscribe({}, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                userRepository.updateUser("preferences.automaticAllocation", isChecked)
+            }
         }
 
         binding?.strengthStatsView?.allocateAction = { allocatePoint(Attribute.STRENGTH) }
@@ -159,12 +162,12 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     }
 
     private fun changeAutoAllocationMode(allocationMode: String) {
-        compositeSubscription.add(
+        lifecycleScope.launchCatching {
             userRepository.updateUser(
                 "preferences.allocationMode",
                 allocationMode
-            ).subscribe({}, ExceptionHandler.rx())
-        )
+            )
+        }
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
         binding?.distributeClassButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_CLASSBASED
         binding?.distributeTaskButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_TASKBASED
