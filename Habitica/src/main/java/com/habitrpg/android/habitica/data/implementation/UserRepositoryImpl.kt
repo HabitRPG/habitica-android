@@ -159,7 +159,8 @@ class UserRepositoryImpl(
     override suspend fun disableClasses(): User? = apiClient.disableClasses()
 
     override suspend fun changeClass(selectedClass: String?): User? {
-        return apiClient.changeClass(selectedClass)
+        apiClient.changeClass(selectedClass)
+        return retrieveUser(false, forced = true)
     }
 
     override fun unlockPath(customization: Customization): Flowable<UnlockResponse> {
