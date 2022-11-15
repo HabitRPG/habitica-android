@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -93,6 +94,24 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
             FullProfileActivity.open(leaderID)
         }
 
+        loadTasks()
+
+        binding?.joinButton?.setOnClickListener {
+            challenge?.let { challenge ->
+                challengeRepository.joinChallenge(challenge)
+                    .subscribe({
+                               lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                                   userRepository.retrieveUser(true)
+                               }
+                    }, ExceptionHandler.rx())
+            }
+        }
+        binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
+
+        refresh()
+    }
+
+    private fun loadTasks() {
         challengeID?.let { id ->
             compositeSubscription.add(
                 challengeRepository.getChallenge(id)
@@ -107,7 +126,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                         lifecycleScope.launch(ExceptionHandler.coroutine()) {
                             set(socialRepository.retrieveMember(it))
                         }
-                        }, ExceptionHandler.rx())
+                    }, ExceptionHandler.rx())
             )
             compositeSubscription.add(
                 challengeRepository.getChallengeTasks(id).subscribe(
@@ -158,20 +177,6 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                 )
             )
         }
-
-        binding?.joinButton?.setOnClickListener {
-            challenge?.let { challenge ->
-                challengeRepository.joinChallenge(challenge)
-                    .subscribe({
-                               lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                   userRepository.retrieveUser(true)
-                               }
-                    }, ExceptionHandler.rx())
-            }
-        }
-        binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
-
-        refresh()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -232,7 +237,11 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         challengeID?.let { id ->
             challengeRepository.retrieveChallenge(id)
                 .flatMap { challengeRepository.retrieveChallengeTasks(id) }
-                .subscribe({ }, {
+                .subscribe({ taskList ->
+                    if (binding?.taskGroupLayout?.childCount == 0 && taskList.tasks.isNotEmpty()) {
+                        loadTasks()
+                    }
+                }, {
                     if (it is HttpException && it.code() == 404) {
                         MainNavigationController.navigateBack()
                     }
