@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -264,7 +265,11 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 .setTitle(R.string.confirm_delete_tag_title)
                 .setMessage(R.string.confirm_delete_tag_message)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, ExceptionHandler.rx()) }
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    lifecycleScope.launchCatching {
+                        socialRepository.deleteMessage(chatMessage)
+                    }
+                }
                 .setNegativeButton(R.string.no, null).show()
         }
     }

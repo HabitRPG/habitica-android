@@ -22,7 +22,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.wearable.Wearable
-import com.google.android.material.composethemeadapter.MdcTheme
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -33,7 +32,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.observeOnce
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -41,6 +39,7 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
@@ -154,11 +153,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         viewModel.user.observe(this) {
             setUserData(it)
         }
-        compositeSubscription.add(
-            userRepository.getUserQuestStatus().subscribeWithErrorHandler {
+        lifecycleScope.launchCatching {
+            userRepository.getUserQuestStatus().collect {
                 userQuestStatus = it
             }
-        )
+        }
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
@@ -383,7 +382,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         if (user != null) {
             val preferences = user.preferences
 
-            preferences?.language?.let { apiClient.setLanguageCode(it) }
+            preferences?.language?.let { apiClient.languageCode = it }
             if (preferences?.language != viewModel.preferenceLanguage) {
                 viewModel.preferenceLanguage = preferences?.language
             }
@@ -391,11 +390,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user.id, userRepository, taskRepository)
-
-            if (user.flags?.verifiedUsername == false && isActivityVisible) {
-                val intent = Intent(this, VerifyUsernameActivity::class.java)
-                startActivity(intent)
-            }
 
             val quest = user.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
@@ -447,22 +441,35 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 UserQuestStatus.QUEST_BOSS -> data.questDamage
                 else -> 0.0
             }
-            compositeSubscription.add(
-                notifyUserUseCase.observable(
+            lifecycleScope.launchCatching {
+                notifyUserUseCase.callInteractor(
                     NotifyUserUseCase.RequestValues(
-                        this, snackbarContainer,
-                        viewModel.user.value, data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta, damageValue, data.hasLeveledUp, data.level
+                        this@MainActivity,
+                        snackbarContainer,
+                        viewModel.user.value,
+                        data.experienceDelta,
+                        data.healthDelta,
+                        data.goldDelta,
+                        data.manaDelta,
+                        damageValue,
+                        data.hasLeveledUp,
+                        data.level
                     )
                 )
-                    .subscribe({ }, ExceptionHandler.rx())
-            )
+            }
         }
 
         val showItemsFound = userQuestStatus == UserQuestStatus.QUEST_COLLECT
-        compositeSubscription.add(
-            displayItemDropUseCase.observable(DisplayItemDropUseCase.RequestValues(data, this, snackbarContainer, showItemsFound))
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+        lifecycleScope.launchCatching {
+            displayItemDropUseCase.callInteractor(
+                DisplayItemDropUseCase.RequestValues(
+                    data,
+                    this@MainActivity,
+                    snackbarContainer,
+                    showItemsFound
+                )
+            )
+        }
     }
 
     private var lastDeathDialogDisplay = 0L

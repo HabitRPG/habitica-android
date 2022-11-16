@@ -8,16 +8,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.setMarkdown
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ReportMessageActivity : BaseActivity() {
@@ -94,12 +96,11 @@ class ReportMessageActivity : BaseActivity() {
         }
         isReporting = true
         messageID?.let {
-            socialRepository.flagMessage(it, binding.additionalInfoEdittext.text.toString(), groupID)
-                .doOnError { isReporting = false }
-                .subscribe(
-                    { finish() },
-                    ExceptionHandler.rx()
-                )
+            lifecycleScope.launch(ExceptionHandler.coroutine {
+                isReporting = false
+            }) {
+                finish()
+            }
         }
     }
 

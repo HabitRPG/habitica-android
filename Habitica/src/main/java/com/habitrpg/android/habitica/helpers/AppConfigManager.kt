@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import kotlinx.coroutines.MainScope
 
 class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.common.habitica.helpers.AppConfigManager() {
 
@@ -19,12 +20,11 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
 
     init {
         try {
-            contentRepository?.getWorldState()?.subscribe(
-                {
-                    worldState = it
-                },
-                ExceptionHandler.rx()
-            )
+            MainScope().launchCatching {
+                contentRepository?.getWorldState()?.collect {
+                        worldState = it
+                    }
+            }
         } catch (_: java.lang.IllegalStateException) {
             // pass
         }

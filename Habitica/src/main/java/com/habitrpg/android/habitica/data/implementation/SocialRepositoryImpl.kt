@@ -4,7 +4,6 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.local.SocialLocalRepository
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
@@ -15,7 +14,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
@@ -38,13 +36,13 @@ class SocialRepositoryImpl(
         return retrievePartyMembers(groupID, true)
     }
 
-    override fun blockMember(userID: String): Flowable<List<String>> {
+    override suspend fun blockMember(userID: String): List<String>? {
         return apiClient.blockMember(userID)
     }
 
     override fun getGroupMembership(id: String) = localRepository.getGroupMembership(userID, id)
 
-    override fun getGroupMemberships(): Flowable<out List<GroupMembership>> {
+    override fun getGroupMemberships(): Flow<List<GroupMembership>> {
         return localRepository.getGroupMemberships(userID)
     }
 
@@ -54,18 +52,18 @@ class SocialRepositoryImpl(
         return messages
     }
 
-    override fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>> {
+    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> {
         return localRepository.getGroupChat(groupId)
     }
 
-    override fun markMessagesSeen(seenGroupId: String) {
-        apiClient.seenMessages(seenGroupId).subscribe({ }, ExceptionHandler.rx())
+    override suspend fun markMessagesSeen(seenGroupId: String) {
+        apiClient.seenMessages(seenGroupId)
     }
 
-    override fun flagMessage(chatMessageID: String, additionalInfo: String, groupID: String?): Flowable<Void> {
+    override suspend fun flagMessage(chatMessageID: String, additionalInfo: String, groupID: String?): Void? {
         return when {
-            chatMessageID.isBlank() -> Flowable.empty()
-            userID == BuildConfig.ANDROID_TESTING_UUID -> Flowable.empty()
+            chatMessageID.isBlank() -> return null
+            userID == BuildConfig.ANDROID_TESTING_UUID -> return null
             else -> {
                 val data = mutableMapOf<String, String>()
                 data["comment"] = additionalInfo
@@ -78,38 +76,36 @@ class SocialRepositoryImpl(
         }
     }
 
-    override fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage> {
+    override suspend fun likeMessage(chatMessage: ChatMessage): ChatMessage? {
         if (chatMessage.id.isBlank()) {
-            return Flowable.empty()
+            return null
         }
         val liked = chatMessage.userLikesMessage(userID)
         if (chatMessage.isManaged) {
             localRepository.likeMessage(chatMessage, userID, !liked)
         }
-        return apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
-            .map {
-                it.groupId = chatMessage.groupId
-                it
-            }
+        val message = apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
+        message?.groupId = chatMessage.groupId
+        return null
     }
 
-    override fun deleteMessage(chatMessage: ChatMessage): Flowable<Void> {
-        return if (chatMessage.isInboxMessage) {
+    override suspend fun deleteMessage(chatMessage: ChatMessage): Void? {
+        if (chatMessage.isInboxMessage) {
             apiClient.deleteInboxMessage(chatMessage.id)
         } else {
             apiClient.deleteMessage(chatMessage.groupId ?: "", chatMessage.id)
-        }.doOnNext { localRepository.deleteMessage(chatMessage.id) }
+        }
+        localRepository.deleteMessage(chatMessage.id)
+        return null
     }
 
-    override fun postGroupChat(groupId: String, messageObject: HashMap<String, String>): Flowable<PostChatMessageResult> {
-        return apiClient.postGroupChat(groupId, messageObject)
-            .map { postChatMessageResult ->
-                postChatMessageResult.message.groupId = groupId
-                postChatMessageResult
-            }
+    override suspend fun postGroupChat(groupId: String, messageObject: HashMap<String, String>): PostChatMessageResult? {
+        val result = apiClient.postGroupChat(groupId, messageObject)
+        result?.message?.groupId = groupId
+        return result
     }
 
-    override fun postGroupChat(groupId: String, message: String): Flowable<PostChatMessageResult> {
+    override suspend fun postGroupChat(groupId: String, message: String): PostChatMessageResult? {
         val messageObject = HashMap<String, String>()
         messageObject["message"] = message
         return postGroupChat(groupId, messageObject)
@@ -189,17 +185,16 @@ class SocialRepositoryImpl(
         return apiClient.updateGroup(copiedGroup.id, copiedGroup)
     }
 
-    override fun retrieveGroups(type: String): Flowable<List<Group>> {
-        return apiClient.listGroups(type)
-            .doOnNext { groups ->
-                if ("guilds" == type) {
-                    val memberships = groups.map {
-                        GroupMembership(userID, it.id)
-                    }
-                    localRepository.saveGroupMemberships(userID, memberships)
-                }
-                localRepository.save(groups)
+    override suspend fun retrieveGroups(type: String): List<Group>? {
+        val groups = apiClient.listGroups(type) ?: return null
+        if ("guilds" == type) {
+            val memberships = groups.map {
+                GroupMembership(userID, it.id)
             }
+            localRepository.saveGroupMemberships(userID, memberships)
+        }
+        localRepository.save(groups)
+        return groups
     }
 
     override fun getGroups(type: String) = localRepository.getGroups(type)
@@ -219,14 +214,14 @@ class SocialRepositoryImpl(
         return messages
     }
 
-    override fun retrieveInboxConversations(): Flowable<List<InboxConversation>> {
-        return apiClient.retrieveInboxConversations().doOnNext { conversations ->
-            localRepository.saveInboxConversations(userID, conversations)
-        }
+    override suspend fun retrieveInboxConversations(): List<InboxConversation>? {
+        val conversations = apiClient.retrieveInboxConversations() ?: return null
+        localRepository.saveInboxConversations(userID, conversations)
+        return conversations
     }
 
     override suspend fun postPrivateMessage(recipientId: String, messageObject: HashMap<String, String>): List<ChatMessage>? {
-        val message = apiClient.postPrivateMessage(messageObject)
+        apiClient.postPrivateMessage(messageObject)
         return retrieveInboxMessages(recipientId, 0)
     }
 
@@ -246,7 +241,7 @@ class SocialRepositoryImpl(
         return members
     }
 
-    override fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<Void>> = apiClient.inviteToGroup(id, inviteData)
+    override suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>) = apiClient.inviteToGroup(id, inviteData)
 
     override suspend fun retrieveMember(userId: String?): Member? {
         return if (userId == null) {
@@ -264,11 +259,11 @@ class SocialRepositoryImpl(
         return retrieveMember(username)
     }
 
-    override fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>> {
+    override suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>? {
         return apiClient.findUsernames(username, context, id)
     }
 
-    override fun markPrivateMessagesRead(user: User?): Flowable<Void> {
+    override suspend fun markPrivateMessagesRead(user: User?): Void? {
         if (user?.isManaged == true) {
             localRepository.modify(user) {
                 it.inbox?.hasUserSeenInbox = true
@@ -298,57 +293,57 @@ class SocialRepositoryImpl(
 
     override fun getUserGroups(type: String?) = localRepository.getUserGroups(userID, type)
 
-    override fun acceptQuest(user: User?, partyId: String): Flowable<Void> {
-        return apiClient.acceptQuest(partyId)
-            .doOnNext {
-                user?.let {
-                    localRepository.updateRSVPNeeded(it, false)
-                }
+    override suspend fun acceptQuest(user: User?, partyId: String): Void? {
+        apiClient.acceptQuest(partyId)
+            user?.let {
+                localRepository.updateRSVPNeeded(it, false)
             }
+        return null
     }
 
-    override fun rejectQuest(user: User?, partyId: String): Flowable<Void> {
-        return apiClient.rejectQuest(partyId)
-            .doOnNext { _ ->
-                user?.let {
-                    localRepository.updateRSVPNeeded(it, false)
-                }
+    override suspend fun rejectQuest(user: User?, partyId: String): Void? {
+        apiClient.rejectQuest(partyId)
+            user?.let {
+                localRepository.updateRSVPNeeded(it, false)
             }
+        return null
     }
 
-    override fun leaveQuest(partyId: String): Flowable<Void> {
+    override suspend fun leaveQuest(partyId: String): Void? {
         return apiClient.leaveQuest(partyId)
     }
 
-    override fun cancelQuest(partyId: String): Flowable<Void> {
-        return apiClient.cancelQuest(partyId)
-            .doOnNext { localRepository.removeQuest(partyId) }
+    override suspend fun cancelQuest(partyId: String): Void? {
+        apiClient.cancelQuest(partyId)
+        localRepository.removeQuest(partyId)
+        return null
     }
 
-    override fun abortQuest(partyId: String): Flowable<Quest> {
-        return apiClient.abortQuest(partyId)
-            .doOnNext { localRepository.removeQuest(partyId) }
+    override suspend fun abortQuest(partyId: String): Quest? {
+        val quest = apiClient.abortQuest(partyId)
+        localRepository.removeQuest(partyId)
+        return quest
     }
 
-    override fun rejectGroupInvite(groupId: String): Flowable<Void> {
-        return apiClient.rejectGroupInvite(groupId)
-            .doOnNext {
-                localRepository.rejectGroupInvitation(userID, groupId)
-            }
+    override suspend fun rejectGroupInvite(groupId: String): Void? {
+        apiClient.rejectGroupInvite(groupId)
+        localRepository.rejectGroupInvitation(userID, groupId)
+        return null
     }
 
-    override fun forceStartQuest(party: Group): Flowable<Quest> {
-        return apiClient.forceStartQuest(party.id, localRepository.getUnmanagedCopy(party))
-            .doOnNext { localRepository.setQuestActivity(party, true) }
+    override suspend fun forceStartQuest(party: Group): Quest? {
+        val quest = apiClient.forceStartQuest(party.id, localRepository.getUnmanagedCopy(party))
+        localRepository.setQuestActivity(party, true)
+        return quest
     }
 
-    override fun getMemberAchievements(userId: String?): Flowable<List<Achievement>> {
+    override suspend fun getMemberAchievements(userId: String?): List<Achievement>? {
         return if (userId == null) {
-            Flowable.empty()
+            null
         } else apiClient.getMemberAchievements(userId)
     }
 
-    override fun transferGems(giftedID: String, amount: Int): Flowable<Void> {
+    override suspend fun transferGems(giftedID: String, amount: Int): Void? {
         return apiClient.transferGems(giftedID, amount)
     }
 }

@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.MainScope
@@ -65,15 +66,20 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
             }
             context?.getString(R.string.reject_party_invite) -> {
                 groupID?.let {
-                    socialRepository.rejectGroupInvite(it)
-                        .subscribe({ }, ExceptionHandler.rx())
+                    MainScope().launchCatching {
+                        socialRepository.rejectGroupInvite(it)
+                    }
                 }
             }
             context?.getString(R.string.accept_quest_invite) -> {
-                socialRepository.acceptQuest(user).subscribe({ }, ExceptionHandler.rx())
+                MainScope().launchCatching {
+                    socialRepository.acceptQuest(user)
+                }
             }
             context?.getString(R.string.reject_quest_invite) -> {
-                socialRepository.rejectQuest(user).subscribe({ }, ExceptionHandler.rx())
+                MainScope().launchCatching {
+                    socialRepository.rejectQuest(user)
+                }
             }
             context?.getString(R.string.accept_guild_invite) -> {
                 groupID?.let {
@@ -84,21 +90,20 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
             }
             context?.getString(R.string.reject_guild_invite) -> {
                 groupID?.let {
-                    socialRepository.rejectGroupInvite(it)
-                        .subscribe({ }, ExceptionHandler.rx())
+                    MainScope().launchCatching {
+                        socialRepository.rejectGroupInvite(it)
+                    }
                 }
             }
             context?.getString(R.string.group_message_reply) -> {
                 groupID?.let {
                     getMessageText(context?.getString(R.string.group_message_reply))?.let { message ->
-                        socialRepository.postGroupChat(it, message).subscribe(
-                            {
-                                context?.let { c ->
-                                    NotificationManagerCompat.from(c).cancel(it.hashCode())
-                                }
-                            },
-                            ExceptionHandler.rx()
-                        )
+                        MainScope().launchCatching {
+                            socialRepository.postGroupChat(it, message)
+                            context?.let { c ->
+                                NotificationManagerCompat.from(c).cancel(it.hashCode())
+                            }
+                        }
                     }
                 }
             }

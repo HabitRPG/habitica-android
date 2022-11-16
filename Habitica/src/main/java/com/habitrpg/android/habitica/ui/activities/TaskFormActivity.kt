@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
@@ -33,6 +34,7 @@ import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -47,6 +49,7 @@ import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -56,16 +59,22 @@ class TaskFormActivity : BaseActivity() {
     private lateinit var binding: ActivityTaskFormBinding
     private var userScrolled: Boolean = false
     private var isSaving: Boolean = false
+
     @Inject
     lateinit var taskRepository: TaskRepository
+
     @Inject
     lateinit var tagRepository: TagRepository
+
     @Inject
     lateinit var taskAlarmManager: TaskAlarmManager
+
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -135,18 +144,23 @@ class TaskFormActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         if (forcedTheme == "yellow") {
-            binding.taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.text_yellow)
-            binding.habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.text_yellow)
+            binding.taskDifficultyButtons.textTintColor =
+                ContextCompat.getColor(this, R.color.text_yellow)
+            binding.habitScoringButtons.textTintColor =
+                ContextCompat.getColor(this, R.color.text_yellow)
         } else if (forcedTheme == "taskform") {
-            binding.taskDifficultyButtons.textTintColor = ContextCompat.getColor(this, R.color.text_brand_neon)
-            binding.habitScoringButtons.textTintColor = ContextCompat.getColor(this, R.color.text_brand_neon)
+            binding.taskDifficultyButtons.textTintColor =
+                ContextCompat.getColor(this, R.color.text_brand_neon)
+            binding.habitScoringButtons.textTintColor =
+                ContextCompat.getColor(this, R.color.text_brand_neon)
         }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         tintColor = getThemeColor(R.attr.taskFormTint)
-        val upperTintColor = if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
+        val upperTintColor =
+            if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(upperTintColor))
         binding.upperTextWrapper.setBackgroundColor(upperTintColor)
 
@@ -155,19 +169,17 @@ class TaskFormActivity : BaseActivity() {
         taskType = TaskType.from(bundle.getString(TASK_TYPE_KEY)) ?: TaskType.HABIT
         preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
-        compositeSubscription.add(
+        lifecycleScope.launchCatching {
             tagRepository.getTags()
                 .map { tagRepository.getUnmanagedCopy(it) }
-                .subscribe(
-                    {
-                        tags = it
-                        setTagViews()
-                    },
-                    ExceptionHandler.rx()
-                )
-        )
+                .collect {
+                    tags = it
+                    setTagViews()
+                }
+        }
         userViewModel.user.observe(this) {
-            usesTaskAttributeStats = it?.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
+            usesTaskAttributeStats =
+                it?.preferences?.allocationMode == "taskbased" && it.preferences?.automaticAllocation == true
             configureForm()
         }
 
@@ -188,7 +200,8 @@ class TaskFormActivity : BaseActivity() {
         binding.statConstitutionButton.setOnClickListener { selectedStat = Attribute.CONSTITUTION }
         binding.statPerceptionButton.setOnClickListener { selectedStat = Attribute.PERCEPTION }
         binding.scrollView.setOnTouchListener { view, event ->
-            userScrolled = view == binding.scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
+            userScrolled =
+                view == binding.scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
             return@setOnTouchListener false
         }
         binding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, _: Int, _: Int, _: Int ->
@@ -202,31 +215,33 @@ class TaskFormActivity : BaseActivity() {
             taskId != null -> {
                 isCreating = false
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    val task = taskRepository.getUnmanagedTask(taskId).firstOrNull() ?: return@launch
+                    val task =
+                        taskRepository.getUnmanagedTask(taskId).firstOrNull() ?: return@launch
                     if (!task.isValid) return@launch
                     this@TaskFormActivity.task = task
                     initialTaskInstance = task
                     // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(task)
                     task.challengeID?.let { challengeID ->
-                        compositeSubscription.add(
-                            challengeRepository.retrieveChallenge(challengeID)
-                                .subscribe(
-                                    { challenge ->
-                                        this@TaskFormActivity.challenge = challenge
-                                        binding.challengeNameView.text = getString(R.string.challenge_task_name, challenge.name)
-                                        binding.challengeNameView.visibility = View.VISIBLE
-                                        disableEditingForUneditableFieldsInChallengeTask()
-                                    },
-                                    ExceptionHandler.rx()
-                                )
-                        )
+                        lifecycleScope.launchCatching {
+                            val challenge = challengeRepository.retrieveChallenge(challengeID)
+                                ?: return@launchCatching
+                            this@TaskFormActivity.challenge = challenge
+                            binding.challengeNameView.text =
+                                getString(R.string.challenge_task_name, challenge.name)
+                            binding.challengeNameView.visibility = View.VISIBLE
+                            disableEditingForUneditableFieldsInChallengeTask()
+                        }
                     }
                 }
             }
             bundle.containsKey(PARCELABLE_TASK) -> {
                 isCreating = false
-                task = bundle.getParcelable(PARCELABLE_TASK, Task::class.java)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    task = bundle.getParcelable(PARCELABLE_TASK, Task::class.java)
+                } else {
+                    task = bundle.getParcelable(PARCELABLE_TASK)
+                }
                 task?.let { fillForm(it) }
             }
             else -> {
@@ -249,7 +264,8 @@ class TaskFormActivity : BaseActivity() {
 
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
         super.loadTheme(sharedPreferences, forced)
-        val upperTintColor = if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
+        val upperTintColor =
+            if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
         window.statusBarColor = upperTintColor
     }
 
@@ -275,8 +291,8 @@ class TaskFormActivity : BaseActivity() {
                 alert.dismiss()
             }
             alert.setOnDismissListener {
-                    isDiscardCancelled = true
-                }
+                isDiscardCancelled = true
+            }
             alert.show()
         } else {
             super.onBackPressed()
@@ -315,13 +331,15 @@ class TaskFormActivity : BaseActivity() {
         binding.habitScoringButtons.visibility = habitViewsVisibility
         binding.habitResetStreakTitleView.visibility = habitViewsVisibility
         binding.habitResetStreakButtons.visibility = habitViewsVisibility
-        (binding.habitAdjustNegativeStreakView.parent as ViewGroup).visibility = habitViewsVisibility
+        (binding.habitAdjustNegativeStreakView.parent as ViewGroup).visibility =
+            habitViewsVisibility
         if (taskType == TaskType.HABIT) {
             binding.habitScoringButtons.isPositive = true
             binding.habitScoringButtons.isNegative = false
         }
 
-        val habitDailyVisibility = if (taskType == TaskType.DAILY || taskType == TaskType.HABIT) View.VISIBLE else View.GONE
+        val habitDailyVisibility =
+            if (taskType == TaskType.DAILY || taskType == TaskType.HABIT) View.VISIBLE else View.GONE
         binding.adjustStreakTitleView.visibility = habitDailyVisibility
         binding.adjustStreakWrapper.visibility = habitDailyVisibility
         if (taskType == TaskType.HABIT) {
@@ -332,13 +350,18 @@ class TaskFormActivity : BaseActivity() {
             binding.adjustStreakTitleView.text = getString(R.string.adjust_streak)
         }
 
-        val todoDailyViewsVisibility = if (taskType == TaskType.DAILY || taskType == TaskType.TODO) View.VISIBLE else View.GONE
+        val todoDailyViewsVisibility =
+            if (taskType == TaskType.DAILY || taskType == TaskType.TODO) View.VISIBLE else View.GONE
 
-        binding.checklistTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
-        binding.checklistContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        binding.checklistTitleView.visibility =
+            if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        binding.checklistContainer.visibility =
+            if (isChallengeTask) View.GONE else todoDailyViewsVisibility
 
-        binding.remindersTitleView.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
-        binding.remindersContainer.visibility = if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        binding.remindersTitleView.visibility =
+            if (isChallengeTask) View.GONE else todoDailyViewsVisibility
+        binding.remindersContainer.visibility =
+            if (isChallengeTask) View.GONE else todoDailyViewsVisibility
         binding.remindersContainer.taskType = taskType
         binding.remindersContainer.firstDayOfWeek = firstDayOfWeek
 
@@ -405,12 +428,15 @@ class TaskFormActivity : BaseActivity() {
                 binding.habitScoringButtons.isPositive = task.up ?: false
                 binding.habitScoringButtons.isNegative = task.down ?: false
                 task.frequency?.let {
-                    binding.habitResetStreakButtons.selectedResetOption = HabitResetOption.from(it) ?: HabitResetOption.DAILY
+                    binding.habitResetStreakButtons.selectedResetOption =
+                        HabitResetOption.from(it) ?: HabitResetOption.DAILY
                 }
                 binding.habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
                 binding.habitAdjustNegativeStreakView.setText((task.counterDown ?: 0).toString())
-                (binding.habitAdjustPositiveStreakView.parent as ViewGroup).visibility = if (task.up == true) View.VISIBLE else View.GONE
-                (binding.habitAdjustNegativeStreakView.parent as ViewGroup).visibility = if (task.down == true) View.VISIBLE else View.GONE
+                (binding.habitAdjustPositiveStreakView.parent as ViewGroup).visibility =
+                    if (task.up == true) View.VISIBLE else View.GONE
+                (binding.habitAdjustNegativeStreakView.parent as ViewGroup).visibility =
+                    if (task.down == true) View.VISIBLE else View.GONE
                 if (task.up != true && task.down != true) {
                     binding.adjustStreakTitleView.visibility = View.GONE
                     binding.adjustStreakWrapper.visibility = View.GONE
@@ -440,13 +466,24 @@ class TaskFormActivity : BaseActivity() {
     private fun setSelectedAttribute(attributeName: Attribute) {
         if (!usesTaskAttributeStats) return
         configureStatsButton(binding.statStrengthButton, attributeName == Attribute.STRENGTH)
-        configureStatsButton(binding.statIntelligenceButton, attributeName == Attribute.INTELLIGENCE)
-        configureStatsButton(binding.statConstitutionButton, attributeName == Attribute.CONSTITUTION)
+        configureStatsButton(
+            binding.statIntelligenceButton,
+            attributeName == Attribute.INTELLIGENCE
+        )
+        configureStatsButton(
+            binding.statConstitutionButton,
+            attributeName == Attribute.CONSTITUTION
+        )
         configureStatsButton(binding.statPerceptionButton, attributeName == Attribute.PERCEPTION)
     }
 
     private fun configureStatsButton(button: TextView, isSelected: Boolean) {
-        button.background.setTint(if (isSelected) tintColor else ContextCompat.getColor(this, R.color.taskform_gray))
+        button.background.setTint(
+            if (isSelected) tintColor else ContextCompat.getColor(
+                this,
+                R.color.taskform_gray
+            )
+        )
         val textColorID = if (isSelected) R.color.window_background else R.color.text_secondary
         button.setTextColor(ContextCompat.getColor(this, textColorID))
         if (isSelected) {
@@ -578,7 +615,11 @@ class TaskFormActivity : BaseActivity() {
         alert.setTitle(R.string.are_you_sure)
         alert.addButton(R.string.delete_task, true) { _, _ ->
             if (task?.isValid != true) return@addButton
-            task?.id?.let { taskRepository.deleteTask(it).subscribe({ }, ExceptionHandler.rx()) }
+            task?.id?.let {
+                lifecycleScope.launchCatching {
+                    taskRepository.deleteTask(it)
+                }
+            }
             finish()
         }
         alert.addCancelButton()
@@ -586,52 +627,46 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun showChallengeDeleteTask() {
-        compositeSubscription.add(
-            taskRepository.getTasksForChallenge(task?.challengeID).firstElement().subscribe(
-                { tasks ->
-                    val taskCount = tasks.size
-                    val alert = HabiticaAlertDialog(this)
-                    alert.setTitle(getString(R.string.delete_challenge_task_title))
-                    alert.setMessage(getString(R.string.delete_challenge_task_description, taskCount, challenge?.name ?: ""))
-                    alert.addButton(R.string.leave_delete_task, isPrimary = true, isDestructive = true) { _, _ ->
-                        challenge?.let {
-                            compositeSubscription.add(
-                                challengeRepository.leaveChallenge(it, "keep-all")
-                                    .flatMap { taskRepository.deleteTask(task?.id ?: "") }
-                                    .subscribe(
-                                        {
-                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                                userRepository.retrieveUser(true, true)
-                                            }
-                                            finish()
-                                        },
-                                        ExceptionHandler.rx()
-                                    )
-                            )
-                        }
-                    }
-                    alert.addButton(getString(R.string.leave_delete_x_tasks, taskCount), isPrimary = false, isDestructive = true) { _, _ ->
-                        challenge?.let {
-                            compositeSubscription.add(
-                                challengeRepository.leaveChallenge(it, "remove-all")
-                                    .subscribe(
-                                        {
-                                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                                userRepository.retrieveUser(true, true)
-                                            }
-                                            finish()
-                                        },
-                                        ExceptionHandler.rx()
-                                    )
-                            )
-                        }
-                    }
-                    alert.setExtraCloseButtonVisibility(View.VISIBLE)
-                    alert.show()
-                },
-                ExceptionHandler.rx()
+        lifecycleScope.launchCatching {
+            val tasks = taskRepository.getTasksForChallenge(task?.challengeID).firstOrNull() ?: return@launchCatching
+            val taskCount = tasks.size
+            val alert = HabiticaAlertDialog(this@TaskFormActivity)
+            alert.setTitle(getString(R.string.delete_challenge_task_title))
+            alert.setMessage(
+                getString(
+                    R.string.delete_challenge_task_description,
+                    taskCount,
+                    challenge?.name ?: ""
+                )
             )
-        )
+            alert.addButton(
+                R.string.leave_delete_task,
+                isPrimary = true,
+                isDestructive = true
+            ) { _, _ ->
+                challenge?.let {
+                    lifecycleScope.launchCatching {
+                        challengeRepository.leaveChallenge(it, "keep-all")
+                        taskRepository.deleteTask(task?.id ?: "")
+                        userRepository.retrieveUser(true, true)
+                    }
+                }
+            }
+            alert.addButton(
+                getString(R.string.leave_delete_x_tasks, taskCount),
+                isPrimary = false,
+                isDestructive = true
+            ) { _, _ ->
+                challenge?.let {
+                    lifecycleScope.launchCatching {
+                        challengeRepository.leaveChallenge(it, "remove-all")
+                        userRepository.retrieveUser(true, true)
+                    }
+                }
+            }
+            alert.setExtraCloseButtonVisibility(View.VISIBLE)
+            alert.show()
+        }
     }
 
     private fun showBrokenChallengeDialog() {
@@ -639,43 +674,40 @@ class TaskFormActivity : BaseActivity() {
         if (!task.isValid) {
             return
         }
-        compositeSubscription.add(
-            taskRepository.getTasksForChallenge(task.challengeID).subscribe(
-                { tasks ->
+        lifecycleScope.launchCatching {
+            val tasks = taskRepository.getTasksForChallenge(task.challengeID).firstOrNull() ?: return@launchCatching
                     val taskCount = tasks.size
-                    val dialog = HabiticaAlertDialog(this)
+                    val dialog = HabiticaAlertDialog(this@TaskFormActivity)
                     dialog.setTitle(R.string.broken_challenge)
-                    dialog.setMessage(this.getString(R.string.broken_challenge_description, taskCount))
-                    dialog.addButton(this.getString(R.string.keep_x_tasks, taskCount), true) { _, _ ->
-                        taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
-                            .subscribe(
-                            {
-                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                    userRepository.retrieveUser(true, true)
-                                }
-                                finish()
-                            },
-                            ExceptionHandler.rx()
+                    dialog.setMessage(
+                        getString(
+                            R.string.broken_challenge_description,
+                            taskCount
                         )
+                    )
+                    dialog.addButton(
+                        getString(R.string.keep_x_tasks, taskCount),
+                        true
+                    ) { _, _ ->
+                        lifecycleScope.launchCatching {
+                            taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
+                            userRepository.retrieveUser(true, true)
+                        }
                     }
-                    dialog.addButton(this.getString(R.string.delete_x_tasks, taskCount), false, true) { _, _ ->
+                    dialog.addButton(
+                        getString(R.string.delete_x_tasks, taskCount),
+                        false,
+                        true
+                    ) { _, _ ->
+                        lifecycleScope.launchCatching {
+
                         taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
-                            .subscribe(
-                            {
-                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                    userRepository.retrieveUser(true, true)
-                                }
-                                finish()
-                            },
-                            ExceptionHandler.rx()
-                        )
+                                        userRepository.retrieveUser(true, true)
+                                    }
                     }
                     dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                     dialog.show()
-                },
-                ExceptionHandler.rx()
-            )
-        )
+    }
     }
 
     private fun disableEditingForUneditableFieldsInChallengeTask() {

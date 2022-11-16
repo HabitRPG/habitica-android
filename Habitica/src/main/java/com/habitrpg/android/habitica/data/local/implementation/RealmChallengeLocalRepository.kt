@@ -1,84 +1,79 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.ChallengeLocalRepository
-import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.Sort
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ChallengeLocalRepository {
 
-    override fun isChallengeMember(userID: String, challengeID: String): Flowable<Boolean> = RxJavaBridge.toV3Flowable(
-        realm.where(ChallengeMembership::class.java)
+    override fun isChallengeMember(userID: String, challengeID: String): Flow<Boolean> = realm.where(ChallengeMembership::class.java)
             .equalTo("userID", userID)
             .equalTo("challengeID", challengeID)
             .findAll()
-            .asFlowable()
+            .toFlow()
             .filter { it.isLoaded }
-    ).map { it.count() > 0 }
+        .map { it.count() > 0 }
 
-    override fun getChallengeMembership(userId: String, id: String): Flowable<ChallengeMembership> = RxJavaBridge.toV3Flowable(
-        realm.where(ChallengeMembership::class.java)
+    override fun getChallengeMembership(userId: String, id: String) = realm.where(ChallengeMembership::class.java)
             .equalTo("userID", userId)
             .equalTo("challengeID", id)
             .findAll()
-            .asFlowable()
+            .toFlow()
             .filter { it.isLoaded }
-    ).filterMap { it.first() }
+            .map { it.first() }
+        .filterNotNull()
 
-    override fun getChallengeMemberships(userId: String): Flowable<out List<ChallengeMembership>> = RxJavaBridge.toV3Flowable(
-        realm.where(ChallengeMembership::class.java)
+    override fun getChallengeMemberships(userId: String) = realm.where(ChallengeMembership::class.java)
             .equalTo("userID", userId)
             .findAll()
-            .asFlowable()
+            .toFlow()
             .filter { it.isLoaded }
-    )
 
-    override fun getChallenge(id: String): Flowable<Challenge> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Challenge::class.java)
+    override fun getChallenge(id: String): Flow<Challenge> {
+        return realm.where(Challenge::class.java)
                 .equalTo("id", id)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
                 .map { it.first() }
-        )
+            .filterNotNull()
     }
 
-    override fun getTasks(challengeID: String): Flowable<out List<Task>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Task::class.java)
+    override fun getTasks(challengeID: String): Flow<List<Task>> {
+        return realm.where(Task::class.java)
                 .equalTo("userId", challengeID)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { realmObject -> realmObject.isLoaded }
-        )
     }
 
-    override val challenges: Flowable<out List<Challenge>>
-        get() = RxJavaBridge.toV3Flowable(
-            realm.where(Challenge::class.java)
+    override val challenges: Flow<List<Challenge>>
+        get() = realm.where(Challenge::class.java)
                 .isNotNull("name")
                 .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
 
-    override fun getUserChallenges(userId: String): Flowable<out List<Challenge>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(ChallengeMembership::class.java)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getUserChallenges(userId: String): Flow<List<Challenge>> {
+        return realm.where(ChallengeMembership::class.java)
                 .equalTo("userID", userId)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
-            .flatMap { it ->
+            .flatMapLatest { it ->
                 val ids = it.map {
                     return@map it.challengeID
                 }.toTypedArray()
@@ -91,7 +86,7 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
                     .endGroup()
                     .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
                     .findAll()
-                    .asFlowable()
+                    .toFlow()
                     .filter { it.isLoaded }
             }
     }

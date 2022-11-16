@@ -42,6 +42,7 @@ import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
@@ -81,14 +82,15 @@ class LoginActivity : BaseActivity() {
                 showValidationError(getString(R.string.password_too_short, configManager.minimumPasswordLength()))
                 return@OnClickListener
             }
-            apiClient.registerUser(username, email, password, confirmPassword)
-                .subscribe(
-                    { handleAuthResponse(it) },
-                    {
-                        hideProgress()
-                        ExceptionHandler.reportError(it)
-                    }
-                )
+            lifecycleScope.launch(ExceptionHandler.coroutine {
+                hideProgress()
+                ExceptionHandler.reportError(it)
+            }) {
+                val response = apiClient.registerUser(username, email, password, confirmPassword)
+                if (response != null) {
+                    handleAuthResponse(response)
+                }
+            }
         } else {
             val username: String = binding.username.text.toString().trim { it <= ' ' }
             val password: String = binding.password.text.toString()
@@ -97,14 +99,15 @@ class LoginActivity : BaseActivity() {
                 return@OnClickListener
             }
             Log.d("LoginActivity", ": $username, $password")
-            apiClient.connectUser(username, password).subscribe(
-                { handleAuthResponse(it) },
-                {
-                    hideProgress()
-                    ExceptionHandler.reportError(it)
-                    Log.d("LoginActivity", ": ${it.message}", it)
+            lifecycleScope.launch(ExceptionHandler.coroutine {
+                hideProgress()
+                ExceptionHandler.reportError(it)
+            }) {
+                val response = apiClient.connectUser(username, password)
+                if (response != null) {
+                    handleAuthResponse(response)
                 }
-            )
+            }
         }
     }
 
@@ -450,7 +453,10 @@ class LoginActivity : BaseActivity() {
         alertDialog.setMessage(R.string.forgot_password_description)
         alertDialog.setAdditionalContentView(input)
         alertDialog.addButton(R.string.send, true) { _, _ ->
-            userRepository.sendPasswordResetEmail(input.text.toString()).subscribe({ showPasswordEmailConfirmation() }, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                userRepository.sendPasswordResetEmail(input.text.toString())
+                showPasswordEmailConfirmation()
+            }
         }
         alertDialog.addCancelButton()
         alertDialog.show()

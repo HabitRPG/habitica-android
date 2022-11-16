@@ -17,16 +17,15 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
-import com.google.android.gms.common.UserRecoverableException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -34,13 +33,8 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.exceptions.Exceptions
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 class AuthenticationViewModel() {
@@ -120,46 +114,25 @@ class AuthenticationViewModel() {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
         var newUser = false
-        compositeSubscription.add(
-            Flowable.defer {
-                try {
-                    @Suppress("Deprecation")
-                    return@defer Flowable.just(GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes))
-                } catch (e: IOException) {
-                    throw Exceptions.propagate(e)
-                } catch (e: GoogleAuthException) {
-                    throw Exceptions.propagate(e)
-                } catch (e: UserRecoverableException) {
-                    return@defer Flowable.empty()
+        MainScope().launchCatching({ throwable ->
+            if (recoverFromPlayServicesErrorResult == null) return@launchCatching
+            throwable.cause?.let {
+                if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
+                    handleGoogleAuthException(
+                        throwable.cause as GoogleAuthException,
+                        activity,
+                        recoverFromPlayServicesErrorResult
+                    )
                 }
             }
-                .subscribeOn(Schedulers.io())
-                .flatMap { token -> apiClient.connectSocial("google", googleEmail ?: "", token) }
-                .doOnNext {
-                    newUser = it.newUser
-                    handleAuthResponse(it)
-                }
-                .subscribe(
-                    {
-                        MainScope().launch(ExceptionHandler.coroutine()) {
-                            val user = userRepository.retrieveUser(true, true) ?: return@launch
-                            onSuccess(user, newUser)
-                        }
-                    },
-                    { throwable ->
-                        if (recoverFromPlayServicesErrorResult == null) return@subscribe
-                        throwable.cause?.let {
-                            if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
-                                handleGoogleAuthException(
-                                    throwable.cause as GoogleAuthException,
-                                    activity,
-                                    recoverFromPlayServicesErrorResult
-                                )
-                            }
-                        }
-                    }
-                )
-        )
+        }) {
+            val token = GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes)
+            val response = apiClient.connectSocial("google", googleEmail ?: "", token) ?: return@launchCatching
+            newUser = response.newUser
+            handleAuthResponse(response)
+            val user = userRepository.retrieveUser(true, true) ?: return@launchCatching
+            onSuccess(user, newUser)
+        }
     }
 
     private fun handleGoogleAuthException(

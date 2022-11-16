@@ -5,11 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DialogBulkAllocateBinding
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import io.reactivex.rxjava3.disposables.Disposable
@@ -59,21 +61,15 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
 
     private fun saveChanges() {
         getButton(BUTTON_POSITIVE).isEnabled = false
-        userRepository.bulkAllocatePoints(
-            binding.strengthSliderView.currentValue,
-            binding.intelligenceSliderView.currentValue,
-            binding.constitutionSliderView.currentValue,
-            binding.perceptionSliderView.currentValue
-        )
-            .subscribe(
-                {
-                    this.dismiss()
-                },
-                {
-                    ExceptionHandler.reportError(it)
-                    this.dismiss()
-                }
+        lifecycleScope.launchCatching {
+            userRepository.bulkAllocatePoints(
+                binding.strengthSliderView.currentValue,
+                binding.intelligenceSliderView.currentValue,
+                binding.constitutionSliderView.currentValue,
+                binding.perceptionSliderView.currentValue
             )
+            dismiss()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

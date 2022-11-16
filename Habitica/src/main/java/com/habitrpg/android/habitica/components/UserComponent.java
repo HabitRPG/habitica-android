@@ -40,7 +40,6 @@ import com.habitrpg.android.habitica.ui.activities.SkillTasksActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskSummaryActivity;
 import com.habitrpg.android.habitica.ui.activities.TaskSummaryViewModel;
-import com.habitrpg.android.habitica.ui.activities.VerifyUsernameActivity;
 import com.habitrpg.android.habitica.ui.adapter.social.challenges.ChallengeTasksRecyclerViewAdapter;
 import com.habitrpg.android.habitica.ui.adapter.tasks.DailiesRecyclerViewHolder;
 import com.habitrpg.android.habitica.ui.adapter.tasks.HabitsRecyclerViewAdapter;
@@ -292,8 +291,6 @@ public interface UserComponent {
     void inject(NavigationDrawerFragment navigationDrawerFragment);
 
     void inject(ChallengeDetailFragment challengeDetailFragment);
-
-    void inject(VerifyUsernameActivity verifyUsernameActivity);
 
     void inject(GroupViewModel viewModel);
 

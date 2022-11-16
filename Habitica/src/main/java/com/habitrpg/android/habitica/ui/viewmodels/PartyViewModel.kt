@@ -4,6 +4,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -39,33 +40,21 @@ class PartyViewModel(initializeComponent: Boolean) : GroupViewModel(initializeCo
 
     fun acceptQuest() {
         groupID?.let { groupID ->
-            disposable.add(
+            viewModelScope.launchCatching {
                 socialRepository.acceptQuest(null, groupID)
-                    .subscribe({
-                               viewModelScope.launch(ExceptionHandler.coroutine()) {
-                                   socialRepository.retrieveGroup(groupID)
-                                   userRepository.retrieveUser()
-                               }
-                    },
-                        ExceptionHandler.rx()
-                    )
-            )
+                socialRepository.retrieveGroup(groupID)
+                userRepository.retrieveUser()
+            }
         }
     }
 
     fun rejectQuest() {
         groupID?.let { groupID ->
-            disposable.add(
+            viewModelScope.launchCatching {
                 socialRepository.rejectQuest(null, groupID)
-                    .subscribe({
-                        viewModelScope.launch(ExceptionHandler.coroutine()) {
-                            socialRepository.retrieveGroup(groupID)
-                            userRepository.retrieveUser()
-                        }
-                    },
-                        ExceptionHandler.rx()
-                    )
-            )
+                socialRepository.retrieveGroup(groupID)
+                userRepository.retrieveUser()
+            }
         }
     }
 

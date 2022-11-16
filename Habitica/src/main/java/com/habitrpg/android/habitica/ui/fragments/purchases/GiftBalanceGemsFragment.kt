@@ -10,10 +10,9 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemBalanceBinding
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
@@ -64,20 +63,12 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         try {
             val amount = binding?.giftEditText?.text.toString().toInt()
             giftedMember?.id?.let {
-                compositeSubscription.add(
+                lifecycleScope.launchCatching({
+                    isGifting = false
+                }) {
                     socialRepository.transferGems(it, amount)
-                        .doOnError {
-                            isGifting = false
-                        }
-                        .subscribe(
-                            {
-                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                    userRepository.retrieveUser(false)
-                                }
-                            activity?.finish()
-                            }, ExceptionHandler.rx()
-                        )
-                )
+                    userRepository.retrieveUser(false)
+                }
             }
         } catch (ignored: NumberFormatException) {}
     }

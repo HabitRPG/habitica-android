@@ -46,6 +46,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.lang.Integer.max
@@ -108,7 +109,10 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 }
                 shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
-                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe({ contentView.setEquipment(it) }, ExceptionHandler.rx())
+                    lifecycleScope.launchCatching {
+                        inventoryRepository.getEquipment(shopItem.key).firstOrNull()
+                            ?.let { contentView.setEquipment(it) }
+                    }
                     checkGearClass()
                 }
                 "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
@@ -263,8 +267,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
 
         shopItem = item
-
-        compositeSubscription.add(userRepository.getUserFlowable().subscribe({ this.setUser(it) }, ExceptionHandler.rx()))
+        lifecycleScope.launchCatching {
+            userRepository.getUser().filterNotNull().collect { setUser(it) }
+        }
     }
 
     private fun setUser(user: User) {

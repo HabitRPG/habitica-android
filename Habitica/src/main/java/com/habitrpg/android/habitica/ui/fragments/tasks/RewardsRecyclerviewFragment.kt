@@ -61,14 +61,11 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         if (showCustomRewards) {
-            compositeSubscription.add(
-                inventoryRepository.getInAppRewards().subscribe(
-                    {
-                        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
-                    },
-                    ExceptionHandler.rx()
-                )
-            )
+            lifecycleScope.launchCatching {
+                inventoryRepository.getInAppRewards().collect {
+                    (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
+                }
+            }
         }
 
         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe(

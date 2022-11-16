@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -81,9 +82,9 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
                         }
                     }
             }
-            compositeSubscription.add(
-                userRepository.retrieveTeamPlans().subscribe({}, ExceptionHandler.rx())
-            )
+            viewModelScope.launchCatching {
+                userRepository.retrieveTeamPlans()
+            }
         }
     }
 

@@ -18,8 +18,8 @@ abstract class UseCase<Q : UseCase.RequestValues?, T: Any> protected constructor
 
 abstract class FlowUseCase<Q : FlowUseCase.RequestValues?, T> {
     protected abstract suspend fun run(requestValues: Q): T
-    suspend fun observable(requestValues: Q): T {
-        return withContext(Dispatchers.IO) {
+    suspend fun callInteractor(requestValues: Q): T {
+        return withContext(Dispatchers.Main) {
             run(requestValues)
         }
     }

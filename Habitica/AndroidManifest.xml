@@ -204,9 +204,6 @@
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.GemPurchaseActivity"
                   android:screenOrientation="unspecified" />
-        <activity android:name=".ui.activities.VerifyUsernameActivity"
-            android:screenOrientation="unspecified"
-            android:windowSoftInputMode="stateHidden" />
         <receiver android:name=".receivers.NotificationPublisher" />
 
         <receiver android:name=".receivers.TaskReceiver" android:enabled="true" android:exported="true">

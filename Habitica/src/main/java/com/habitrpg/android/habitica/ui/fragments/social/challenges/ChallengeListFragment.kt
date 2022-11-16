@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
@@ -21,26 +22,32 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
-class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -68,7 +75,8 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
         super.onViewCreated(view, savedInstanceState)
 
         challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userId)
-        challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe({ openDetailFragment(it) }, ExceptionHandler.rx())
+        challengeAdapter?.getOpenDetailFragmentFlowable()
+            ?.subscribe({ openDetailFragment(it) }, ExceptionHandler.rx())
             ?.let { compositeSubscription.add(it) }
 
         binding?.refreshLayout?.setOnRefreshListener(this)
@@ -79,16 +87,18 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
                 getString(R.string.empty_discover_description)
             )
         }
-        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
+        binding?.recyclerView?.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         binding?.recyclerView?.adapter = challengeAdapter
         if (!viewUserChallengesOnly) {
             binding?.recyclerView?.setBackgroundResource(R.color.content_background)
         }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            socialRepository.getGroup(Group.TAVERN_ID).combine(socialRepository.getUserGroups("guild")) { tavern, guilds ->
-                return@combine Pair(tavern, guilds)
-            }.collect {
+            socialRepository.getGroup(Group.TAVERN_ID)
+                .combine(socialRepository.getUserGroups("guild")) { tavern, guilds ->
+                    return@combine Pair(tavern, guilds)
+                }.collect {
                 this@ChallengeListFragment.filterGroups = mutableListOf()
                 it.first?.let { tavern -> filterGroups?.add(tavern) }
                 filterGroups?.addAll(it.second)
@@ -112,7 +122,11 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun openDetailFragment(challengeID: String) {
-        MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeID))
+        MainNavigationController.navigate(
+            ChallengesOverviewFragmentDirections.openChallengeDetail(
+                challengeID
+            )
+        )
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -130,24 +144,20 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun loadLocalChallenges() {
-        val observable: Flowable<out List<Challenge>> = if (viewUserChallengesOnly) {
-            challengeRepository.getUserChallenges()
-        } else {
-            challengeRepository.getChallenges()
+        lifecycleScope.launchCatching {
+            val flow = if (viewUserChallengesOnly) {
+                challengeRepository.getUserChallenges()
+            } else {
+                challengeRepository.getChallenges()
+            }
+            flow.collect { challenges ->
+                if (challenges.isEmpty()) {
+                    retrieveChallengesPage()
+                }
+                this@ChallengeListFragment.challenges = challenges
+                challengeAdapter?.updateUnfilteredData(challenges)
+            }
         }
-
-        compositeSubscription.add(
-            observable.subscribe(
-                { challenges ->
-                    if (challenges.isEmpty()) {
-                        retrieveChallengesPage()
-                    }
-                    this.challenges = challenges
-                    challengeAdapter?.updateUnfilteredData(challenges)
-                },
-                ExceptionHandler.rx()
-            )
-        )
     }
 
     internal fun retrieveChallengesPage(forced: Boolean = false) {
@@ -155,19 +165,15 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             return
         }
         setRefreshing(true)
-        compositeSubscription.add(
-            challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly).doOnComplete {
-                setRefreshing(false)
-            }.subscribe(
-                {
-                    if (it.size < 10) {
-                        loadedAllData = true
-                    }
-                    nextPageToLoad += 1
-                },
-                ExceptionHandler.rx()
-            )
-        )
+        lifecycleScope.launchCatching {
+            val challenges =
+                challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly)
+            setRefreshing(false)
+            if ((challenges?.size ?: 0) < 10) {
+                loadedAllData = true
+            }
+            nextPageToLoad += 1
+        }
     }
 
     internal fun showFilterDialog() {
@@ -175,7 +181,8 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             ChallengeFilterDialogHolder.showDialog(
                 it,
                 filterGroups ?: emptyList(),
-                filterOptions) {
+                filterOptions
+            ) {
                 changeFilter(it)
             }
         }

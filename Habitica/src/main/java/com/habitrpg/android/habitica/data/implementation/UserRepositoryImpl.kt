@@ -4,12 +4,9 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.data.local.UserLocalRepository
-import com.habitrpg.android.habitica.extensions.filterMapEmpty
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
-import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.responses.SkillResponse
@@ -21,17 +18,10 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
-import com.habitrpg.common.habitica.extensions.Optional
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.shared.habitica.models.tasks.Attribute
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.functions.BiFunction
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
@@ -48,8 +38,6 @@ class UserRepositoryImpl(
     private var lastSync: Date? = null
 
     override fun getUser(): Flow<User?> = getUser(userID)
-    override fun getUserFlowable(): Flowable<User> = localRepository.getUserFlowable(userID)
-
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
 
     private suspend fun updateUser(userID: String, updateData: Map<String, Any>): User? {
@@ -123,11 +111,9 @@ class UserRepositoryImpl(
         return user
     }
 
-    override fun getSkills(user: User): Flowable<out List<Skill>> =
-        localRepository.getSkills(user)
+    override fun getSkills(user: User) = localRepository.getSkills(user)
 
-    override fun getSpecialItems(user: User): Flowable<out List<Skill>> =
-        localRepository.getSpecialItems(user)
+    override fun getSpecialItems(user: User) = localRepository.getSpecialItems(user)
 
     override suspend fun useSkill(key: String, target: String?, taskId: String): SkillResponse? {
         val response = apiClient.useSkill(key, target ?: "", taskId) ?: return null
@@ -177,8 +163,8 @@ class UserRepositoryImpl(
         runCron(ArrayList())
     }
 
-    override fun readNotification(id: String): Flowable<List<Any>> = apiClient.readNotification(id)
-    override fun getUserQuestStatus(): Flowable<UserQuestStatus> {
+    override suspend fun readNotification(id: String) = apiClient.readNotification(id)
+    override fun getUserQuestStatus(): Flow<UserQuestStatus> {
         return localRepository.getUserQuestStatus(userID)
     }
 
@@ -186,13 +172,11 @@ class UserRepositoryImpl(
         return apiClient.reroll()
     }
 
-    override fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
-        apiClient.readNotifications(notificationIds)
+    override suspend fun readNotifications(notificationIds: Map<String, List<String>>) = apiClient.readNotifications(notificationIds)
 
-    override fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>> =
-        apiClient.seeNotifications(notificationIds)
+    override suspend fun seeNotifications(notificationIds: Map<String, List<String>>) = apiClient.seeNotifications(notificationIds)
 
-    override fun changeCustomDayStart(dayStartTime: Int): Flowable<User> {
+    override suspend fun changeCustomDayStart(dayStartTime: Int): User? {
         val updateObject = HashMap<String, Any>()
         updateObject["dayStart"] = dayStartTime
         return apiClient.changeCustomDayStart(updateObject)
@@ -200,7 +184,7 @@ class UserRepositoryImpl(
 
     override suspend fun updateLanguage(languageCode: String): User? {
         val user = updateUser("preferences.language", languageCode)
-        apiClient.setLanguageCode(languageCode)
+        apiClient.languageCode = languageCode
         return user
     }
 
@@ -209,11 +193,9 @@ class UserRepositoryImpl(
         return retrieveUser(withTasks = true, forced = true)
     }
 
-    override fun deleteAccount(password: String): Flowable<Void> =
-        apiClient.deleteAccount(password)
+    override suspend fun deleteAccount(password: String) = apiClient.deleteAccount(password)
 
-    override fun sendPasswordResetEmail(email: String): Flowable<Void> =
-        apiClient.sendPasswordResetEmail(email)
+    override suspend fun sendPasswordResetEmail(email: String) = apiClient.sendPasswordResetEmail(email)
 
     override suspend fun updateLoginName(newLoginName: String, password: String?): User? {
         if (password != null && password.isNotEmpty()) {
@@ -229,35 +211,32 @@ class UserRepositoryImpl(
         return user
     }
 
-    override fun verifyUsername(username: String): Flowable<VerifyUsernameResponse> = apiClient.verifyUsername(username.trim())
+    override suspend fun verifyUsername(username: String) = apiClient.verifyUsername(username.trim())
 
-    override fun updateEmail(newEmail: String, password: String): Flowable<Void> =
-        apiClient.updateEmail(newEmail.trim(), password)
+    override suspend fun updateEmail(newEmail: String, password: String) = apiClient.updateEmail(newEmail.trim(), password)
 
-    override fun updatePassword(
+    override suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
         newPasswordConfirmation: String
-    ): Flowable<Void> =
-        apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
+    ) = apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
-    override fun allocatePoint(stat: Attribute): Flowable<Stats> {
-        getLiveUserFlowable().firstElement().subscribe(
-            { liveUser ->
-                localRepository.executeTransaction {
-                    when (stat) {
-                        Attribute.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
-                        Attribute.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
-                        Attribute.CONSTITUTION -> liveUser.stats?.constitution = liveUser.stats?.constitution?.inc()
-                        Attribute.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
-                    }
-                    liveUser.stats?.points = liveUser.stats?.points?.dec()
+    override suspend fun allocatePoint(stat: Attribute): Stats? {
+        val liveUser = getLiveUser()
+        if (liveUser != null) {
+            localRepository.executeTransaction {
+                when (stat) {
+                    Attribute.STRENGTH -> liveUser.stats?.strength = liveUser.stats?.strength?.inc()
+                    Attribute.INTELLIGENCE -> liveUser.stats?.intelligence = liveUser.stats?.intelligence?.inc()
+                    Attribute.CONSTITUTION -> liveUser.stats?.constitution = liveUser.stats?.constitution?.inc()
+                    Attribute.PERCEPTION -> liveUser.stats?.per = liveUser.stats?.per?.inc()
                 }
-            },
-            ExceptionHandler.rx()
-        )
-        return zipWithLiveUser(apiClient.allocatePoint(stat.value)) { stats, user ->
-            localRepository.modify(user) { liveUser ->
+                liveUser.stats?.points = liveUser.stats?.points?.dec()
+            }
+        }
+        val stats = apiClient.allocatePoint(stat.value) ?: return null
+        if (liveUser != null) {
+            localRepository.executeTransaction {
                 liveUser.stats?.strength = stats.strength
                 liveUser.stats?.constitution = stats.constitution
                 liveUser.stats?.per = stats.per
@@ -265,17 +244,24 @@ class UserRepositoryImpl(
                 liveUser.stats?.points = stats.points
                 liveUser.stats?.mp = stats.mp
             }
-            stats
         }
+        return stats
     }
 
-    override fun bulkAllocatePoints(
+    override suspend fun bulkAllocatePoints(
         strength: Int,
         intelligence: Int,
         constitution: Int,
         perception: Int
-    ): Flowable<Stats> =
-        zipWithLiveUser(apiClient.bulkAllocatePoints(strength, intelligence, constitution, perception)) { stats, user ->
+    ): Stats? {
+        val stats = apiClient.bulkAllocatePoints(
+            strength,
+            intelligence,
+            constitution,
+            perception
+        ) ?: return null
+        val user = getLiveUser()
+        if (user != null) {
             localRepository.modify(user) { liveUser ->
                 liveUser.stats?.strength = stats.strength
                 liveUser.stats?.constitution = stats.constitution
@@ -284,63 +270,54 @@ class UserRepositoryImpl(
                 liveUser.stats?.points = stats.points
                 liveUser.stats?.mp = stats.mp
             }
-            stats
         }
+        return stats
+    }
 
     override suspend fun runCron(tasks: MutableList<Task>) {
-        withContext(Dispatchers.Main) {
-            var observable: Maybe<Any> = localRepository.getUserFlowable(userID).firstElement()
-                .filter { it.needsCron }
-                .map { user ->
-                    localRepository.modify(user) { liveUser ->
-                        liveUser.needsCron = false
-                        liveUser.lastCron = Date()
-                    }
-                    user
-                }
-            if (tasks.isNotEmpty()) {
-                val scoringList = mutableListOf<Map<String, String>>()
-                for (task in tasks) {
-                    val map = mutableMapOf<String, String>()
-                    map["id"] = task.id ?: ""
-                    map["direction"] = TaskDirection.UP.text
-                    scoringList.add(map)
-                }
-                observable = observable.flatMap { taskRepository.bulkScoreTasks(scoringList).firstElement() }
+        val user = getLiveUser()
+        if (user != null) {
+            localRepository.modify(user) { liveUser ->
+                liveUser.needsCron = false
+                liveUser.lastCron = Date()
             }
-            observable.flatMap { apiClient.runCron().firstElement() }
-                // .flatMap {
-                // this.retrieveUser(withTasks = true, forced = true)
-                // }
-                .subscribe({ }, ExceptionHandler.rx())
         }
+        if (tasks.isNotEmpty()) {
+            val scoringList = mutableListOf<Map<String, String>>()
+            for (task in tasks) {
+                val map = mutableMapOf<String, String>()
+                map["id"] = task.id ?: ""
+                map["direction"] = TaskDirection.UP.text
+                scoringList.add(map)
+            }
+            taskRepository.bulkScoreTasks(scoringList)
+        }
+        apiClient.runCron()
     }
 
     override suspend fun useCustomization(type: String, category: String?, identifier: String): User? {
         if (appConfigManager.enableLocalChanges()) {
-            localRepository.getUserFlowable(userID).firstElement().subscribe(
-                { liveUser ->
-                    localRepository.modify(liveUser) { user ->
-                        when (type) {
-                            "skin" -> user.preferences?.skin = identifier
-                            "shirt" -> user.preferences?.shirt = identifier
-                            "hair" -> {
-                                when (category) {
-                                    "color" -> user.preferences?.hair?.color = identifier
-                                    "flower" -> user.preferences?.hair?.flower = identifier.toInt()
-                                    "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
-                                    "beard" -> user.preferences?.hair?.beard = identifier.toInt()
-                                    "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
-                                    "base" -> user.preferences?.hair?.base = identifier.toInt()
-                                }
+            val liveUser = getLiveUser()
+            if (liveUser != null) {
+                localRepository.modify(liveUser) { user ->
+                    when (type) {
+                        "skin" -> user.preferences?.skin = identifier
+                        "shirt" -> user.preferences?.shirt = identifier
+                        "hair" -> {
+                            when (category) {
+                                "color" -> user.preferences?.hair?.color = identifier
+                                "flower" -> user.preferences?.hair?.flower = identifier.toInt()
+                                "mustache" -> user.preferences?.hair?.mustache = identifier.toInt()
+                                "beard" -> user.preferences?.hair?.beard = identifier.toInt()
+                                "bangs" -> user.preferences?.hair?.bangs = identifier.toInt()
+                                "base" -> user.preferences?.hair?.base = identifier.toInt()
                             }
-                            "background" -> user.preferences?.background = identifier
-                            "chair" -> user.preferences?.chair = identifier
                         }
+                        "background" -> user.preferences?.background = identifier
+                        "chair" -> user.preferences?.chair = identifier
                     }
-                },
-                ExceptionHandler.rx()
-            )
+                }
+            }
         }
         var updatePath = "preferences.$type"
         if (category != null) {
@@ -349,10 +326,10 @@ class UserRepositoryImpl(
         return updateUser(updatePath, identifier)
     }
 
-    override fun retrieveAchievements(): Flowable<List<Achievement>> {
-        return apiClient.getMemberAchievements(userID).doOnNext {
-            localRepository.save(it)
-        }
+    override suspend fun retrieveAchievements(): List<Achievement>? {
+        val achievements = apiClient.getMemberAchievements(userID) ?: return null
+        localRepository.save(achievements)
+        return achievements
     }
 
     override fun getAchievements(): Flow<List<Achievement>> {
@@ -363,11 +340,11 @@ class UserRepositoryImpl(
         return localRepository.getQuestAchievements(userID)
     }
 
-    override fun retrieveTeamPlans(): Flowable<List<TeamPlan>> {
-        return apiClient.getTeamPlans().doOnNext { teams ->
-            teams.forEach { it.userID = userID }
-            localRepository.save(teams)
-        }
+    override suspend fun retrieveTeamPlans(): List<TeamPlan>? {
+        val teams = apiClient.getTeamPlans() ?: return null
+        teams.forEach { it.userID = userID }
+        localRepository.save(teams)
+        return teams
     }
 
     override fun getTeamPlans(): Flow<List<TeamPlan>> {
@@ -389,23 +366,13 @@ class UserRepositoryImpl(
         return team
     }
 
-    override fun getTeamPlan(teamID: String): Flowable<Group> {
+    override fun getTeamPlan(teamID: String): Flow<Group> {
         return localRepository.getTeamPlan(teamID)
-    }
-
-    private fun getLiveUserFlowable(): Flowable<User> {
-        return localRepository.getUserFlowable(userID)
-            .map { Optional(localRepository.getLiveObject(it)) }
-            .filterMapEmpty()
     }
 
     private suspend fun getLiveUser(): User? {
         val user = localRepository.getUser(userID).firstOrNull() ?: return null
         return localRepository.getLiveObject(user)
-    }
-
-    private fun <T : Any> zipWithLiveUser(flowable: Flowable<T>, mergeFunc: BiFunction<T, User, T>): Flowable<T> {
-        return Flowable.zip(flowable, getLiveUserFlowable().firstElement().toFlowable(), mergeFunc)
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User {

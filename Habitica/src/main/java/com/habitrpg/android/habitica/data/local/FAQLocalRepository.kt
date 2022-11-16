@@ -1,10 +1,10 @@
 package com.habitrpg.android.habitica.data.local
 
 import com.habitrpg.android.habitica.models.FAQArticle
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface FAQLocalRepository : ContentLocalRepository {
-    fun getArticle(position: Int): Flowable<FAQArticle>
+    fun getArticle(position: Int): Flow<FAQArticle>
 
-    val articles: Flowable<out List<FAQArticle>>
+    val articles: Flow<List<FAQArticle>>
 }

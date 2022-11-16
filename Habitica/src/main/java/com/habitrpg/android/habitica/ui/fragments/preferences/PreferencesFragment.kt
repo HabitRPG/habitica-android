@@ -70,7 +70,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
 
-        userRepository.retrieveTeamPlans().subscribe({}, ExceptionHandler.rx())
+        lifecycleScope.launchCatching {
+            userRepository.retrieveTeamPlans()
+        }
     }
 
     override fun setupPreferences() {
@@ -227,7 +229,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
                 val hour = Integer.parseInt(timeval)
-                userRepository.changeCustomDayStart(hour).subscribe({ }, ExceptionHandler.rx())
+                lifecycleScope.launchCatching {
+                    userRepository.changeCustomDayStart(hour)
+                }
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference?.entry
             }

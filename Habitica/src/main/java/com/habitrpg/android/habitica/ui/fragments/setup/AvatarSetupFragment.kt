@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSetupAvatarBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
@@ -63,7 +62,11 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
                 userRepository.updateUser(it)
             }
         }
-        adapter?.equipGearEvents?.flatMap { inventoryRepository.equip("equipped", it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
+        adapter?.onEquipGear = {
+            lifecycleScope.launchCatching {
+                inventoryRepository.equip("equipped", it)
+            }
+        }
 
         this.adapter?.user = this.user
         val layoutManager = LinearLayoutManager(activity)

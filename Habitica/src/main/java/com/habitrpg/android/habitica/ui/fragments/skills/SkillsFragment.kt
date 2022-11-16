@@ -28,8 +28,8 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -80,19 +80,19 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         adapter?.mana = user.stats?.mp ?: 0.0
         adapter?.level = user.stats?.lvl ?: 0
         adapter?.specialItems = user.items?.special
-        Flowable.combineLatest(
-            userRepository.getSkills(user),
-            userRepository.getSpecialItems(user)
-        ) { skills, items ->
-            val allEntries = mutableListOf<Skill>()
-            for (skill in skills) {
-                allEntries.add(skill)
-            }
-            for (item in items) {
-                allEntries.add(item)
-            }
-            return@combineLatest allEntries
-        }.subscribe({ skills -> adapter?.setSkillList(skills) }, ExceptionHandler.rx())
+        lifecycleScope.launchCatching {
+            userRepository.getSkills(user)
+                .combine(userRepository.getSpecialItems(user)) { skills, items ->
+                    val allEntries = mutableListOf<Skill>()
+                    for (skill in skills) {
+                        allEntries.add(skill)
+                    }
+                    for (item in items) {
+                        allEntries.add(item)
+                    }
+                    return@combine allEntries
+                }.collect { skills -> adapter?.setSkillList(skills) }
+        }
     }
 
     private fun onSkillSelected(skill: Skill) {

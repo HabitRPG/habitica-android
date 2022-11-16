@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.launchCatching
@@ -141,50 +140,42 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 adapter = ItemRecyclerAdapter(context)
             }
             binding?.recyclerView?.adapter = adapter
-            adapter?.useSpecialEvents?.subscribeWithErrorHandler { onSpecialItemSelected(it) }?.let { compositeSubscription.add(it) }
-            adapter?.let { adapter ->
-                compositeSubscription.add(
-                    adapter.getSellItemFlowable()
-                        .flatMap { item -> inventoryRepository.sellItem(item) }
-                        .subscribe({ }, ExceptionHandler.rx())
-                )
-
-                compositeSubscription.add(
-                    adapter.getQuestInvitationFlowable()
-                        .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
-                        //.flatMap { socialRepository.retrieveGroup("party") }
-                        .subscribe(
-                            {
-                                MainNavigationController.navigate(R.id.partyFragment)
-                            },
-                            ExceptionHandler.rx()
-                        )
-                )
-                compositeSubscription.add(
-                    adapter.getOpenMysteryItemFlowable()
-                        .flatMap { inventoryRepository.openMysteryItem(user) }
-                        .doOnNext {
-                            val activity = activity as? MainActivity
-                            if (activity != null) {
-                                val dialog = OpenedMysteryitemDialog(activity)
-                                dialog.isCelebratory = true
-                                dialog.setTitle(R.string.mystery_item_title)
-                                dialog.binding.iconView.loadImage("shop_${it.key}")
-                                dialog.binding.titleView.text = it.text
-                                dialog.binding.descriptionView.text = it.notes
-                                dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip("equipped", it.key ?: "").subscribe({}, ExceptionHandler.rx())
-                                }
-                                dialog.addCloseButton()
-                                dialog.enqueue()
+            adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
+            adapter?.onSellItem = {
+                lifecycleScope.launchCatching {
+                    inventoryRepository.sellItem(it)
+                }
+            }
+            adapter?.onQuestInvitation = {
+                lifecycleScope.launchCatching {
+                    inventoryRepository.inviteToQuest(it)
+                    MainNavigationController.navigate(R.id.partyFragment)
+                }
+            }
+            adapter?.onOpenMysteryItem = {
+                lifecycleScope.launchCatching {
+                    val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
+                    val activity = activity as? MainActivity
+                    if (activity != null) {
+                        val dialog = OpenedMysteryitemDialog(activity)
+                        dialog.isCelebratory = true
+                        dialog.setTitle(R.string.mystery_item_title)
+                        dialog.binding.iconView.loadImage("shop_${it.key}")
+                        dialog.binding.titleView.text = item.text
+                        dialog.binding.descriptionView.text = item.notes
+                        dialog.addButton(R.string.equip, true) { _, _ ->
+                            lifecycleScope.launchCatching {
+                                inventoryRepository.equip("equipped", it.key)
                             }
                         }
-                        .subscribe({ }, ExceptionHandler.rx())
-                )
-                compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler { showHatchingDialog(it) })
-                compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
-                compositeSubscription.addAll(adapter.startNewPartyEvents.subscribeWithErrorHandler { createNewParty() })
+                        dialog.addCloseButton()
+                        dialog.enqueue()
+                    }
+                }
             }
+            adapter?.onStartHatching = { showHatchingDialog(it) }
+            adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
+            adapter?.onCreateNewParty = { createNewParty() }
         }
     }
 
@@ -218,14 +209,14 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         (activity as? BaseActivity)?.let {
-            compositeSubscription.add(
-                hatchPetUseCase.observable(
+            lifecycleScope.launchCatching {
+                hatchPetUseCase.callInteractor(
                     HatchPetUseCase.RequestValues(
                         potion, egg,
                         it
                     )
-                ).subscribeWithErrorHandler {}
-            )
+                )
+            }
         }
     }
 

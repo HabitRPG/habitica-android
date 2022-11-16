@@ -39,10 +39,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.kotlin.combineLatest
-import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -71,8 +70,8 @@ class AvatarCustomizationFragment :
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
     internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(activity, ROW)
 
-    private val currentFilter = BehaviorSubject.create<CustomizationFilter>()
-    private val ownedCustomizations = PublishSubject.create<List<OwnedCustomization>>()
+    private val currentFilter = MutableStateFlow<CustomizationFilter>(CustomizationFilter(false, type != "background"))
+    private val ownedCustomizations = MutableStateFlow<List<OwnedCustomization>>(emptyList())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,11 +94,11 @@ class AvatarCustomizationFragment :
                 }
             }
 
-        compositeSubscription.add(
-            this.inventoryRepository.getInAppRewards()
+        lifecycleScope.launchCatching {
+            inventoryRepository.getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
-                .subscribe({ adapter.setPinnedItemKeys(it) }, ExceptionHandler.rx())
-        )
+                .collect { adapter.setPinnedItemKeys(it) }
+        }
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -127,7 +126,6 @@ class AvatarCustomizationFragment :
         this.loadCustomizations()
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
-        currentFilter.onNext(CustomizationFilter(false, type != "background"))
 
         binding?.recyclerView?.doOnLayout {
             adapter.columnCount = it.width / (80.dpToPx(context))
@@ -182,15 +180,13 @@ class AvatarCustomizationFragment :
 
     private fun loadCustomizations() {
         val type = this.type ?: return
-        compositeSubscription.add(
+        lifecycleScope.launchCatching {
             customizationRepository.getCustomizations(type, category, false)
-                .combineLatest(
-                    currentFilter.toFlowable(BackpressureStrategy.DROP),
-                    ownedCustomizations.toFlowable(BackpressureStrategy.DROP)
-                )
-                .subscribe(
-                    { (customizations, filter, ownedCustomizations) ->
-                        adapter.ownedCustomizations = ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
+                .combine(currentFilter) { customizations, filter -> Pair(customizations, filter) }
+                .combine(ownedCustomizations) { pair, ownedCustomizations -> Triple(pair.first, pair.second, ownedCustomizations) }
+                .collect { (customizations, filter, ownedCustomizations) ->
+                        adapter.ownedCustomizations =
+                            ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
                         if (filter.isFiltering) {
                             val displayedCustomizations = mutableListOf<Customization>()
                             for (customization in customizations) {
@@ -213,13 +209,15 @@ class AvatarCustomizationFragment :
                                 }
                             )
                         }
-                    },
-                    ExceptionHandler.rx()
-                )
-        )
+                    }
+        }
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"
-            compositeSubscription.add(customizationRepository.getCustomizations(type, otherCategory, true).subscribe({ adapter.additionalSetItems = it }, ExceptionHandler.rx()))
+            lifecycleScope.launchCatching {
+                customizationRepository.getCustomizations(type, otherCategory, true).collect {
+                    adapter.additionalSetItems = it
+                }
+            }
         }
     }
 
@@ -236,7 +234,7 @@ class AvatarCustomizationFragment :
     fun updateUser(user: User?) {
         if (user == null) return
         this.updateActiveCustomization(user)
-        ownedCustomizations.onNext(user.purchased?.customizations?.filter { it.type == this.type && it.purchased })
+        ownedCustomizations.value = user.purchased?.customizations?.filter { it.type == this.type && it.purchased } ?: emptyList()
         this.adapter.userSize = user.preferences?.size
         this.adapter.hairColor = user.preferences?.hair?.color
         this.adapter.gemBalance = user.gemCount
@@ -286,17 +284,17 @@ class AvatarCustomizationFragment :
         binding.showMeWrapper.check(if (filter.onlyPurchased) R.id.show_purchased_button else R.id.show_all_button)
         binding.showMeWrapper.setOnCheckedChangeListener { _, checkedId ->
             filter.onlyPurchased = checkedId == R.id.show_purchased_button
-            currentFilter.onNext(filter)
+            currentFilter.value = filter
         }
         binding.clearButton.setOnClickListener {
-            currentFilter.onNext(CustomizationFilter(false, type != "background"))
+            currentFilter.value = CustomizationFilter(false, type != "background")
             dialog.dismiss()
         }
         if (type == "background") {
             binding.sortByWrapper.check(if (filter.ascending) R.id.oldest_button else R.id.newest_button)
             binding.sortByWrapper.setOnCheckedChangeListener { _, checkedId ->
                 filter.ascending = checkedId == R.id.oldest_button
-                currentFilter.onNext(filter)
+                currentFilter.value = filter
             }
             configureMonthFilterButton(binding.januaryButton, 1, filter)
             configureMonthFilterButton(binding.febuaryButton, 2, filter)
@@ -333,7 +331,7 @@ class AvatarCustomizationFragment :
                 button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
                 filter.months.add(identifier)
             }
-            currentFilter.onNext(filter)
+            currentFilter.value = filter
         }
     }
 }

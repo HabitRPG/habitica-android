@@ -8,19 +8,15 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 interface TaskRepository : BaseRepository {
     fun getTasks(taskType: TaskType, userID: String? = null, includedGroupIDs: Array<String>): Flow<List<Task>>
-    fun getTasksFlowable(taskType: TaskType, userID: String? = null, includedGroupIDs: Array<String>): Flowable<out List<Task>>
     fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList)
 
     suspend fun retrieveTasks(userId: String, tasksOrder: TasksOrder): TaskList?
-    fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): Flowable<TaskList>
+    suspend fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): TaskList?
 
     suspend fun taskChecked(
         user: User?,
@@ -40,12 +36,12 @@ interface TaskRepository : BaseRepository {
 
     fun getTask(taskId: String): Flow<Task>
     fun getTaskCopy(taskId: String): Flow<Task>
-    fun createTask(task: Task, force: Boolean = false): Flowable<Task>
-    fun updateTask(task: Task, force: Boolean = false): Maybe<Task>?
-    fun deleteTask(taskId: String): Flowable<Void>
+    suspend fun createTask(task: Task, force: Boolean = false): Task?
+    suspend fun updateTask(task: Task, force: Boolean = false): Task?
+    suspend fun deleteTask(taskId: String): Void?
     fun saveTask(task: Task)
 
-    fun createTasks(newTasks: List<Task>): Flowable<List<Task>>
+    suspend fun createTasks(newTasks: List<Task>): List<Task>?
 
     fun markTaskCompleted(taskId: String, isCompleted: Boolean)
 
@@ -53,7 +49,7 @@ interface TaskRepository : BaseRepository {
 
     fun swapTaskPosition(firstPosition: Int, secondPosition: Int)
 
-    fun updateTaskPosition(taskType: TaskType, taskID: String, newPosition: Int): Maybe<List<String>>
+    suspend fun updateTaskPosition(taskType: TaskType, taskID: String, newPosition: Int): List<String>?
 
     fun getUnmanagedTask(taskid: String): Flow<Task>
 
@@ -65,10 +61,10 @@ interface TaskRepository : BaseRepository {
 
     fun getTaskCopies(tasks: List<Task>): List<Task>
 
-    fun retrieveDailiesFromDate(date: Date): Flowable<TaskList>
-    fun retrieveCompletedTodos(userId: String? = null): Flowable<TaskList>
-    fun syncErroredTasks(): Single<List<Task>>
-    fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
-    fun getTasksForChallenge(challengeID: String?): Flowable<out List<Task>>
-    fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData>
+    suspend fun retrieveDailiesFromDate(date: Date): TaskList?
+    suspend fun retrieveCompletedTodos(userId: String? = null): TaskList?
+    suspend fun syncErroredTasks(): List<Task>?
+    suspend fun unlinkAllTasks(challengeID: String?, keepOption: String): Void?
+    fun getTasksForChallenge(challengeID: String?): Flow<out List<Task>>
+    suspend fun bulkScoreTasks(data: List<Map<String, String>>): BulkTaskScoringData?
 }

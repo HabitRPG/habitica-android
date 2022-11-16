@@ -56,6 +56,8 @@ class ExceptionHandler {
     }
 }
 
-fun CoroutineScope.launchCatching(function: suspend CoroutineScope.() -> Unit) {
-    launch((ExceptionHandler.coroutine()), block = function)
+fun CoroutineScope.launchCatching(errorHandler: ((Throwable) -> Unit)? = null, function: suspend CoroutineScope.() -> Unit) {
+    launch((ExceptionHandler.coroutine {
+        errorHandler?.invoke(it)
+    }), block = function)
 }

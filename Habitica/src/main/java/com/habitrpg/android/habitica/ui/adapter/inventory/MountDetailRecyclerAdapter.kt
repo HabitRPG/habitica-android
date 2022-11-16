@@ -6,11 +6,10 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
 class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+    var onEquip: ((String) -> Unit)? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
 
     private val equipEvents = PublishSubject.create<String>()
@@ -27,14 +26,10 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
         this.notifyDataSetChanged()
     }
 
-    fun getEquipFlowable(): Flowable<String> {
-        return equipEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
-            else -> MountViewHolder(parent, equipEvents)
+            else -> MountViewHolder(parent, onEquip)
         }
 
     override fun onBindViewHolder(

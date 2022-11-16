@@ -18,15 +18,14 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository : BaseRepository {
 
     fun getArmoireRemainingCount(): Long
 
-    fun getInAppRewards(): Flowable<out List<ShopItem>>
-    fun getOwnedEquipment(): Flowable<out List<Equipment>>
+    fun getInAppRewards(): Flow<List<ShopItem>>
+    fun getOwnedEquipment(): Flow<List<Equipment>>
 
     fun getMounts(): Flow<List<Mount>>
 
@@ -38,18 +37,18 @@ interface InventoryRepository : BaseRepository {
     fun getQuestContent(key: String): Flow<QuestContent?>
     fun getQuestContent(keys: List<String>): Flow<List<QuestContent>>
 
-    fun getEquipment(searchedKeys: List<String>): Flowable<out List<Equipment>>
+    fun getEquipment(searchedKeys: List<String>): Flow<List<Equipment>>
     suspend fun retrieveInAppRewards(): List<ShopItem>?
 
-    fun getOwnedEquipment(type: String): Flowable<out List<Equipment>>
-    fun getEquipmentType(type: String, set: String): Flowable<out List<Equipment>>
+    fun getOwnedEquipment(type: String): Flow<List<Equipment>>
+    fun getEquipmentType(type: String, set: String): Flow<List<Equipment>>
 
     fun getOwnedItems(itemType: String, includeZero: Boolean = false): Flow<List<OwnedItem>>
-    fun getOwnedItems(includeZero: Boolean = false): Flowable<Map<String, OwnedItem>>
+    fun getOwnedItems(includeZero: Boolean = false): Flow<Map<String, OwnedItem>>
 
-    fun getEquipment(key: String): Flowable<Equipment>
+    fun getEquipment(key: String): Flow<Equipment>
 
-    fun openMysteryItem(user: User?): Flowable<Equipment>
+    suspend fun openMysteryItem(user: User?): Equipment?
 
     fun saveEquipment(equipment: Equipment)
     fun getMounts(type: String?, group: String?, color: String?): Flow<List<Mount>>
@@ -57,24 +56,24 @@ interface InventoryRepository : BaseRepository {
 
     fun updateOwnedEquipment(user: User)
 
-    fun changeOwnedCount(type: String, key: String, amountToAdd: Int)
+    suspend fun changeOwnedCount(type: String, key: String, amountToAdd: Int)
 
-    fun sellItem(type: String, key: String): Flowable<User>
-    fun sellItem(item: OwnedItem): Flowable<User>
+    suspend fun sellItem(type: String, key: String): User?
+    suspend fun sellItem(item: OwnedItem): User?
 
-    fun equipGear(equipment: String, asCostume: Boolean): Flowable<Items>
-    fun equip(type: String, key: String): Flowable<Items>
+    suspend fun equipGear(equipment: String, asCostume: Boolean): Items?
+    suspend fun equip(type: String, key: String): Items?
 
-    fun feedPet(pet: Pet, food: Food): Flowable<FeedResponse>
+    suspend fun feedPet(pet: Pet, food: Food): FeedResponse?
 
-    fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Flowable<Items>
+    suspend fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Items?
 
-    fun inviteToQuest(quest: QuestContent): Flowable<Quest>
+    suspend fun inviteToQuest(quest: QuestContent): Quest?
 
     suspend fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): BuyResponse?
 
-    fun retrieveShopInventory(identifier: String): Flowable<Shop>
-    fun retrieveMarketGear(): Flowable<Shop>
+    suspend fun retrieveShopInventory(identifier: String): Shop?
+    suspend fun retrieveMarketGear(): Shop?
 
     suspend fun purchaseMysterySet(categoryIdentifier: String): Void?
 
@@ -87,9 +86,8 @@ interface InventoryRepository : BaseRepository {
 
     suspend fun togglePinnedItem(item: ShopItem): List<ShopItem>?
     fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
-    fun getItemsFlowable(itemClass: Class<out Item>): Flowable<out List<Item>>
     fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
-    fun getLatestMysteryItem(): Flowable<Equipment>
-    fun getItem(type: String, key: String): Flowable<Item>
-    fun getAvailableLimitedItems(): Flowable<List<Item>>
+    fun getLatestMysteryItem(): Flow<Equipment>
+    fun getItem(type: String, key: String): Flow<Item>
+    fun getAvailableLimitedItems(): Flow<List<Item>>
 }

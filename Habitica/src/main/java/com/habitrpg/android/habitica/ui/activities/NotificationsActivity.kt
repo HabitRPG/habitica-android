@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.common.habitica.models.Notification
@@ -65,15 +66,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
-        compositeSubscription.add(
-            viewModel.getNotifications().subscribe(
-                {
-                    this.setNotifications(it)
-                    viewModel.markNotificationsAsSeen(it)
-                },
-                ExceptionHandler.rx()
-            )
-        )
+        lifecycleScope.launchCatching {
+            viewModel.getNotifications().collect {
+                setNotifications(it)
+                viewModel.markNotificationsAsSeen(it)
+            }
+        }
 
         binding.notificationsRefreshLayout.setOnRefreshListener(this)
     }

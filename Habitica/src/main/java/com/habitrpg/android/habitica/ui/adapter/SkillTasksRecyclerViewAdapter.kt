@@ -8,14 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding
 import com.habitrpg.android.habitica.models.tasks.Task
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.UUID
 
 class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
 
-    private val taskSelectionEvents = PublishSubject.create<Task>()
+    var onTaskSelection: ((Task) -> Unit)? = null
 
     override fun getItemId(position: Int): Long {
         val task = getItem(position)
@@ -33,10 +30,6 @@ class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRe
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bindHolder(data[position])
-    }
-
-    fun getTaskSelectionEvents(): Flowable<Task> {
-        return taskSelectionEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -63,7 +56,7 @@ class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRe
         override fun onClick(v: View) {
             if (v == itemView) {
                 task?.let {
-                    taskSelectionEvents.onNext(it)
+                    onTaskSelection?.invoke(it)
                 }
             }
         }

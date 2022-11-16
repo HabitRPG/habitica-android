@@ -6,27 +6,21 @@ import android.os.Bundle
 import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
-import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
-class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostExecutionThread) : UseCase<CheckClassSelectionUseCase.RequestValues, Void>(postExecutionThread) {
+class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostExecutionThread) : FlowUseCase<CheckClassSelectionUseCase.RequestValues, Unit>() {
 
-    override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Void> {
-        return Flowable.defer {
-            val user = requestValues.user
-
-            if (requestValues.currentClass == null) {
-                if (user?.stats?.lvl ?: 0 >= 9 &&
-                    user?.preferences?.disableClasses != true &&
-                    user?.flags?.classSelected != true
-                ) {
-                    displayClassSelectionActivity(true, null, requestValues.activity)
-                }
-            } else {
-                displayClassSelectionActivity(requestValues.isInitialSelection, requestValues.currentClass, requestValues.activity)
+    override suspend fun run(requestValues: RequestValues) {
+        val user = requestValues.user
+        if (requestValues.currentClass == null) {
+            if ((user?.stats?.lvl ?: 0) >= 9 &&
+                user?.preferences?.disableClasses != true &&
+                user?.flags?.classSelected != true
+            ) {
+                displayClassSelectionActivity(true, null, requestValues.activity)
             }
-
-            Flowable.empty()
+        } else {
+            displayClassSelectionActivity(requestValues.isInitialSelection, requestValues.currentClass, requestValues.activity)
         }
     }
 
@@ -49,5 +43,5 @@ class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostEx
         val isInitialSelection: Boolean,
         val currentClass: String?,
         val activity: Activity
-    ) : UseCase.RequestValues
+    ) : FlowUseCase.RequestValues
 }

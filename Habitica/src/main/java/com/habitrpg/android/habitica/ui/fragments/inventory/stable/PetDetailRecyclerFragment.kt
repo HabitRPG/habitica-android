@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -124,23 +125,19 @@ class PetDetailRecyclerFragment :
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadItems()
 
-        compositeSubscription.add(
-            adapter.getEquipFlowable()
-                .flatMap { key -> inventoryRepository.equip("pet", key) }
-                .subscribe(
-                    {
-                        adapter.currentPet = it.currentPet
-                    },
-                    ExceptionHandler.rx()
-                )
-        )
+        adapter.onEquip = {
+            lifecycleScope.launchCatching {
+                val items = inventoryRepository.equip("pet", it)
+                adapter.currentPet = items?.currentPet
+            }
+        }
         userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }
-        compositeSubscription.add(adapter.feedFlowable.subscribe({
+        adapter.onFeed = { pet, food ->
             showFeedingDialog(
-                it.first,
-                it.second
+                pet,
+                food
             )
-        }, ExceptionHandler.rx()))
+        }
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -179,10 +176,9 @@ class PetDetailRecyclerFragment :
                         return@map mountMap
                     }.collect { adapter.setOwnedMounts(it) }
             }
-            compositeSubscription.add(
-                inventoryRepository.getOwnedItems(true)
-                    .subscribe({ adapter.setOwnedItems(it) }, ExceptionHandler.rx())
-            )
+            lifecycleScope.launchCatching {
+                inventoryRepository.getOwnedItems(true).collect { adapter.setOwnedItems(it) }
+            }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val mounts = inventoryRepository.getMounts(
                     animalType,
@@ -231,14 +227,14 @@ class PetDetailRecyclerFragment :
     private fun showFeedingDialog(pet: Pet, food: Food?) {
         if (food != null) {
             val context = activity ?: context ?: return
-            compositeSubscription.add(
-                feedPetUseCase.observable(
+            lifecycleScope.launchCatching {
+                feedPetUseCase.callInteractor(
                     FeedPetUseCase.RequestValues(
                         pet, food,
                         context
                     )
-                ).subscribeWithErrorHandler {}
-            )
+                )
+            }
             return
         }
         val fragment = ItemDialogFragment()

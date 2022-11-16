@@ -13,36 +13,40 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.kotlin.toFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
     UserLocalRepository {
-    override fun getUserQuestStatus(userID: String): Flowable<UserQuestStatus> {
-        return getUserFlowable(userID)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getUserQuestStatus(userID: String): Flow<UserQuestStatus> {
+        return getUser(userID)
+            .filterNotNull()
             .map { it.party?.id ?: "" }
-            .distinctUntilChanged()
             .filter { it.isNotBlank() }
-            .flatMap {
-                RxJavaBridge.toV3Flowable(
+            .flatMapLatest {
                     realm.where(Group::class.java)
                         .equalTo("id", it)
                         .findAll()
-                        .asFlowable()
+                        .toFlow()
                         .filter { groups -> groups.size > 0 }
-                ).filterMap { it.first() }
+                        .map { it.firstOrNull() }
+                        .filterNotNull()
             }
             .map {
                 when {
                     it.quest?.members?.find { questMember -> questMember.key == userID } === null -> UserQuestStatus.NO_QUEST
                     it.quest?.progress?.collect?.isNotEmpty()
                         ?: false -> UserQuestStatus.QUEST_COLLECT
-                    it.quest?.progress?.hp ?: 0.0 > 0.0 -> UserQuestStatus.QUEST_BOSS
+                    (it.quest?.progress?.hp ?: 0.0) > 0.0 -> UserQuestStatus.QUEST_BOSS
                     else -> UserQuestStatus.QUEST_UNKNOWN
                 }
             }
@@ -77,17 +81,6 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
             .toFlow()
             .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
             .map { users -> users.first() }
-    }
-
-    override fun getUserFlowable(userID: String): Flowable<User> {
-        if (realm.isClosed) return Flowable.empty()
-        return RxJavaBridge.toV3Flowable(
-            realm.where(User::class.java)
-                .equalTo("id", userID)
-                .findAll()
-                .asFlowable()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
-                .map { users -> users.first() })
     }
 
     override fun saveUser(user: User, overrideExisting: Boolean) {
@@ -134,45 +127,40 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
             .filter { it.isLoaded }
     }
 
-    override fun getTeamPlan(teamID: String): Flowable<Group> {
-        if (realm.isClosed) return Flowable.empty()
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Group::class.java)
+    override fun getTeamPlan(teamID: String): Flow<Group> {
+        if (realm.isClosed) return emptyFlow()
+        return realm.where(Group::class.java)
                 .equalTo("id", teamID)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
-                .map { teams -> teams.first() }
-        )
+                .map { teams -> teams.firstOrNull() }
+            .filterNotNull()
     }
 
-    override fun getSkills(user: User): Flowable<out List<Skill>> {
+    override fun getSkills(user: User): Flow<List<Skill>> {
         val habitClass =
             if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Skill::class.java)
+        return realm.where(Skill::class.java)
                 .equalTo("habitClass", habitClass)
                 .sort("lvl")
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
-    override fun getSpecialItems(user: User): Flowable<out List<Skill>> {
+    override fun getSpecialItems(user: User): Flow<List<Skill>> {
         val specialItems = user.items?.special
         val ownedItems = ArrayList<String>()
         for (key in listOf("snowball", "shinySeed", "seafoam", "spookySparkles")) {
-            if (specialItems?.firstOrNull() { it.key == key }?.numberOwned ?: 0 > 0) {
+            if ((specialItems?.firstOrNull { it.key == key }?.numberOwned ?: 0) > 0) {
                 ownedItems.add(key)
             }
         }
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Skill::class.java)
+        return realm.where(Skill::class.java)
                 .`in`("key", ownedItems.toTypedArray())
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 }

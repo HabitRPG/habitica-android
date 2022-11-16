@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
@@ -176,12 +175,14 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         (getActivity() as? BaseActivity)?.let {
-            hatchPetUseCase.observable(
-                HatchPetUseCase.RequestValues(
-                    potion, egg,
-                    it
+            it.lifecycleScope.launchCatching {
+                hatchPetUseCase.callInteractor(
+                    HatchPetUseCase.RequestValues(
+                        potion, egg,
+                        it
+                    )
                 )
-            ).subscribeWithErrorHandler {}
+            }
         }
     }
 

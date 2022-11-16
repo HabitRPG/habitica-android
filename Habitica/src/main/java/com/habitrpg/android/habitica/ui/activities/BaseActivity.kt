@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.NotificationsManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
@@ -36,7 +37,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.LanguageHelper
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Locale
@@ -66,8 +66,6 @@ abstract class BaseActivity : AppCompatActivity() {
         return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(layoutResId ?: 0, null)
     }
 
-    var compositeSubscription = CompositeDisposable()
-
     private val habiticaApplication: HabiticaApplication
         get() = application as HabiticaApplication
 
@@ -95,17 +93,15 @@ abstract class BaseActivity : AppCompatActivity() {
         getLayoutResId()?.let {
             setContentView(getContentView(it))
         }
-        compositeSubscription = CompositeDisposable()
-        compositeSubscription.add(notificationsManager.displayNotificationEvents.subscribe(
-            {
-                if (ShowNotificationInteractor(this, lifecycleScope).handleNotification(it)) {
-                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                        userRepository.retrieveUser(false, true)
+        lifecycleScope.launchCatching {
+            notificationsManager.displayNotificationEvents.collect {
+                    if (ShowNotificationInteractor(this@BaseActivity, lifecycleScope).handleNotification(it)) {
+                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                            userRepository.retrieveUser(false, true)
+                        }
                     }
                 }
-            },
-            ExceptionHandler.rx()
-        ))
+        }
     }
 
     override fun onRestart() {
@@ -212,10 +208,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         destroyed = true
-
-        if (!compositeSubscription.isDisposed) {
-            compositeSubscription.dispose()
-        }
         super.onDestroy()
     }
 

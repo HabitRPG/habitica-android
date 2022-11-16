@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivitySkillMembersBinding
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import kotlinx.coroutines.flow.filterNotNull
@@ -50,15 +51,14 @@ class SkillMemberActivity : BaseActivity() {
     private fun loadMemberList() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         viewAdapter = PartyMemberRecyclerViewAdapter()
-        viewAdapter?.getUserClickedEvents()?.subscribe(
-            { userId ->
+        viewAdapter?.onUserClicked = {
+            lifecycleScope.launchCatching {
                 val resultIntent = Intent()
-                resultIntent.putExtra("member_id", userId)
+                resultIntent.putExtra("member_id", it)
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
-            },
-            ExceptionHandler.rx()
-        )?.let { compositeSubscription.add(it) }
+            }
+        }
         binding.recyclerView.adapter = viewAdapter
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {

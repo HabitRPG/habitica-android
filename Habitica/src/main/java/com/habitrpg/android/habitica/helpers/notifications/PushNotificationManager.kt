@@ -7,8 +7,9 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
+import kotlinx.coroutines.MainScope
 
 class PushNotificationManager(
     var apiClient: ApiClient,
@@ -51,14 +52,18 @@ class PushNotificationManager(
         val pushDeviceData = HashMap<String, String>()
         pushDeviceData["regId"] = this.refreshedToken
         pushDeviceData["type"] = "android"
-        apiClient.addPushDevice(pushDeviceData).subscribe({ }, ExceptionHandler.rx())
+        MainScope().launchCatching {
+            apiClient.addPushDevice(pushDeviceData)
+        }
     }
 
     fun removePushDeviceUsingStoredToken() {
         if (this.refreshedToken.isEmpty() || !userHasPushDevice()) {
             return
         }
-        apiClient.deletePushDevice(this.refreshedToken).subscribe({ }, ExceptionHandler.rx())
+        MainScope().launchCatching {
+            apiClient.deletePushDevice(refreshedToken)
+        }
     }
 
     private fun userHasPushDevice(): Boolean {

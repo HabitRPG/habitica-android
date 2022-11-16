@@ -14,12 +14,10 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
 import com.habitrpg.shared.habitica.models.tasks.Attribute
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository : BaseRepository {
     fun getUser(): Flow<User?>
-    fun getUserFlowable(): Flowable<User>
     fun getUser(userID: String): Flow<User?>
 
     suspend fun updateUser(updateData: Map<String, Any>): User?
@@ -33,9 +31,9 @@ interface UserRepository : BaseRepository {
 
     suspend fun sleep(user: User): User?
 
-    fun getSkills(user: User): Flowable<out List<Skill>>
+    fun getSkills(user: User): Flow<List<Skill>>
 
-    fun getSpecialItems(user: User): Flowable<out List<Skill>>
+    fun getSpecialItems(user: User): Flow<List<Skill>>
 
     suspend fun useSkill(key: String, target: String?, taskId: String): SkillResponse?
     suspend fun useSkill(key: String, target: String?): SkillResponse?
@@ -49,37 +47,37 @@ interface UserRepository : BaseRepository {
     suspend fun runCron(tasks: MutableList<Task>)
     suspend fun runCron()
 
-    fun readNotification(id: String): Flowable<List<Any>>
-    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
-    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
+    suspend fun readNotification(id: String): List<Any>?
+    suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>?
+    suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any>?
 
-    fun changeCustomDayStart(dayStartTime: Int): Flowable<User>
+    suspend fun changeCustomDayStart(dayStartTime: Int): User?
 
     suspend fun updateLanguage(languageCode: String): User?
 
     suspend fun resetAccount(): User?
-    fun deleteAccount(password: String): Flowable<Void>
+    suspend fun deleteAccount(password: String): Void?
 
-    fun sendPasswordResetEmail(email: String): Flowable<Void>
+    suspend fun sendPasswordResetEmail(email: String): Void?
 
     suspend fun updateLoginName(newLoginName: String, password: String? = null): User?
-    fun updateEmail(newEmail: String, password: String): Flowable<Void>
-    fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
-    fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
+    suspend fun updateEmail(newEmail: String, password: String): Void?
+    suspend fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Void?
+    suspend fun verifyUsername(username: String): VerifyUsernameResponse?
 
-    fun allocatePoint(stat: Attribute): Flowable<Stats>
-    fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
+    suspend fun allocatePoint(stat: Attribute): Stats?
+    suspend fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Stats?
 
     suspend fun useCustomization(type: String, category: String?, identifier: String): User?
-    fun retrieveAchievements(): Flowable<List<Achievement>>
+    suspend fun retrieveAchievements(): List<Achievement>?
     fun getAchievements(): Flow<List<Achievement>>
     fun getQuestAchievements(): Flow<List<QuestAchievement>>
 
-    fun getUserQuestStatus(): Flowable<UserQuestStatus>
+    fun getUserQuestStatus(): Flow<UserQuestStatus>
 
     suspend fun reroll(): User?
-    fun retrieveTeamPlans(): Flowable<List<TeamPlan>>
+    suspend fun retrieveTeamPlans(): List<TeamPlan>?
     fun getTeamPlans(): Flow<List<TeamPlan>>
     suspend fun retrieveTeamPlan(teamID: String): Group?
-    fun getTeamPlan(teamID: String): Flowable<Group>
+    fun getTeamPlan(teamID: String): Flow<Group>
 }
