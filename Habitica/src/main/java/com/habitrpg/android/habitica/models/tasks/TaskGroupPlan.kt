@@ -9,11 +9,12 @@ import java.util.Date
 
 @RealmClass(embedded = true)
 open class GroupAssignedDetails: RealmObject(), BaseObject {
-    var assignedDate: String? = null
+    var assignedDate: Date? = null
     var assignedUsername: String? = null
     var assignedUserID: String? = null
     var assigningUsername: String? = null
     var completed: Boolean = false
+    var completedDate: Date? = null
 }
 
 @RealmClass(embedded = true)

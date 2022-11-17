@@ -149,6 +149,16 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
+            android:name=".ui.activities.TaskSummaryActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            tools:ignore="UnusedAttribute"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity
             android:name=".ui.activities.GroupFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"

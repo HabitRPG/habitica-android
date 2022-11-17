@@ -53,6 +53,7 @@
     <string name="authentication_error_body">Your Username and/or Password was incorrect.</string>
     <string name="save_changes">Save</string>
     <string name="copy">Copy</string>
+    <string name="title">Title</string>
     <string name="notes">Notes</string>
     <string name="difficulty">Difficulty</string>
     <string name="tags">Tags</string>
@@ -1256,6 +1257,13 @@
     <string name="copy_shared_tasks">Copy shared tasks</string>
     <string name="group_plan_settings">Group Plan Settings</string>
     <string name="task_summary">Task Summary</string>
+    <string name="habit_summary_description">This is a **%s** Habit that is **%s**.</string>
+    <string name="todo_summary_description_duedate">This is a **%s** Task that is due **%s**.</string>
+    <string name="todo_summary_description">This is a **%s** Task that does not have a due date.</string>
+    <string name="daily_summary_description">This is a **%s** Task that repeats **%s**.</string>
+    <string name="positive_and_negative">positive and negative</string>
+    <string name="assigned_to">Assigned to</string>
+    <string name="completed_at">Completed at %s</string>
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
         <item quantity="one">You, %d other</item>

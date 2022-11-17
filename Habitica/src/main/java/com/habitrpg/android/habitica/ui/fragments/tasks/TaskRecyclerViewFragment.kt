@@ -66,7 +66,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     private var taskFlowJob: Job? = null
     val viewModel: TasksViewModel by viewModels({ requireParentFragment() })
 
-    internal var canEditTasks: Boolean = true
     internal var canScoreTaks: Boolean = true
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -159,7 +158,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
 
         viewModel.ownerID.observe(viewLifecycleOwner) {
-            canEditTasks = viewModel.isPersonalBoard
             canScoreTaks = viewModel.isPersonalBoard
             updateTaskSubscription(it)
         }
@@ -555,7 +553,7 @@ private fun setPreferenceTaskFilters() {
 
 private fun openTaskForm(task: Task) {
     if (Date().time - (TasksFragment.lastTaskFormOpen?.time
-            ?: 0) < 2000 || !task.isValid || !canEditTasks
+            ?: 0) < 2000 || !task.isValid
     ) {
         return
     }
@@ -565,7 +563,7 @@ private fun openTaskForm(task: Task) {
     bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
     bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
-    if (task.canEdit(viewModel.userViewModel.userID)) {
+    if (viewModel.canEditTask(task)) {
         MainNavigationController.navigate(R.id.taskFormActivity, bundle)
     } else {
         MainNavigationController.navigate(R.id.taskSummaryActivity, bundle)
