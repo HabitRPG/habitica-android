@@ -107,6 +107,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "com.google.android.material:compose-theme-adapter:1.1.21"
+    implementation "androidx.compose.material3:material3:1.0.1"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.1"
 
     implementation 'androidx.activity:activity-compose:1.6.1'
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"

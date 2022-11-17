@@ -156,6 +156,32 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             }
         }
 
+    val lightestTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.maroon_700
+                this.value < -10 -> return R.color.red_700
+                this.value < -1 -> return R.color.orange_700
+                this.value < 1 -> return R.color.yellow_700
+                this.value < 5 -> return R.color.green_700
+                this.value < 10 -> return R.color.teal_700
+                else -> R.color.blue_700
+            }
+        }
+
+    val extraExtraLightTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.maroon_600
+                this.value < -10 -> return R.color.red_600
+                this.value < -1 -> return R.color.orange_600
+                this.value < 1 -> return R.color.yellow_600
+                this.value < 5 -> return R.color.green_600
+                this.value < 10 -> return R.color.teal_600
+                else -> R.color.blue_600
+            }
+        }
+
     val extraLightTaskColor: Int
         get() {
             return when {
