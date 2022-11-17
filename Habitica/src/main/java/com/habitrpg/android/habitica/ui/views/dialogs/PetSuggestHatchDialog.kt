@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Animal
@@ -22,8 +21,7 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.MainScope
 import java.util.Locale
 import javax.inject.Inject
 
@@ -162,14 +160,9 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         DataBindingUtils.loadImage(context, imageName) {
             val resources = context.resources ?: return@loadImage
             val drawable = if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
-            Observable.just(drawable)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        binding.petView.bitmap = drawable.toBitmap()
-                    },
-                    ExceptionHandler.rx()
-                )
+            MainScope().launchCatching {
+                binding.petView.bitmap = drawable.toBitmap()
+            }
         }
     }
 

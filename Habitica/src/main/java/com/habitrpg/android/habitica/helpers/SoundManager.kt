@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.MainScope
 import javax.inject.Inject
 
 class SoundManager {
@@ -33,8 +33,9 @@ class SoundManager {
         soundFiles.add(SoundFile(soundTheme, SoundPlusHabit))
         soundFiles.add(SoundFile(soundTheme, SoundReward))
         soundFiles.add(SoundFile(soundTheme, SoundTodo))
-        soundFileLoader.download(soundFiles)
-            .subscribe({}, ExceptionHandler.rx())
+        MainScope().launchCatching {
+            soundFileLoader.download(soundFiles)
+        }
     }
 
     fun loadAndPlayAudio(type: String) {
@@ -48,14 +49,12 @@ class SoundManager {
             val soundFiles = ArrayList<SoundFile>()
 
             soundFiles.add(SoundFile(soundTheme, type))
-            soundFileLoader.download(soundFiles).observeOn(Schedulers.newThread()).subscribe(
-                {
-                    val file = soundFiles[0]
-                    loadedSoundFiles[type] = file
-                    file.play()
-                },
-                ExceptionHandler.rx()
-            )
+            MainScope().launchCatching {
+                val newFiles = soundFileLoader.download(soundFiles)
+                val file = newFiles[0]
+                loadedSoundFiles[type] = file
+                file.play()
+            }
         }
     }
 

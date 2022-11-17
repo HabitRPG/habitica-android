@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.data.implementation
 
 import android.content.Context
-import com.amplitude.api.Amplitude
 import com.google.gson.JsonSyntaxException
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -51,7 +50,6 @@ import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
-import io.reactivex.rxjava3.functions.Consumer
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -59,7 +57,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.HttpException
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.io.IOException
@@ -76,7 +73,7 @@ class ApiClientImpl(
     private val analyticsManager: AnalyticsManager,
     private val notificationsManager: NotificationsManager,
     private val context: Context
-) : Consumer<Throwable>, ApiClient {
+): ApiClient {
 
     private lateinit var retrofitAdapter: Retrofit
 
@@ -157,7 +154,6 @@ class ApiClientImpl(
         retrofitAdapter = Retrofit.Builder()
             .client(client)
             .baseUrl(server.toString())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(converter)
             .build()
 
@@ -211,7 +207,7 @@ class ApiClientImpl(
         return process { apiService.loginApple(mapOf(Pair("code", authToken))) }
     }
 
-    override fun accept(throwable: Throwable) {
+    fun accept(throwable: Throwable) {
         val throwableClass = throwable.javaClass
         if (SocketTimeoutException::class.java.isAssignableFrom(throwableClass)) {
             return
@@ -221,7 +217,7 @@ class ApiClientImpl(
             this.showConnectionProblemDialog(R.string.internal_error_api)
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
             this.showConnectionProblemDialog(R.string.network_error_no_network_body)
-        } else if (retrofit2.adapter.rxjava3.HttpException::class.java.isAssignableFrom(throwable.javaClass) || HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
+        } else if (HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
             val error = throwable as HttpException
             val res = getErrorResponse(error)
             val status = error.code()
@@ -319,7 +315,6 @@ class ApiClientImpl(
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
         analyticsManager.setUserIdentifier(this.hostConfig.userID)
-        Amplitude.getInstance().userId = this.hostConfig.userID
     }
 
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }

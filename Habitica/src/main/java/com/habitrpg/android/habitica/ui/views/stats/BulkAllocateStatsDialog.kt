@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -24,8 +23,6 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
     private val binding = DialogBulkAllocateBinding.inflate(context.layoutInflater)
     @Inject
     lateinit var userRepository: UserRepository
-
-    var subscription: Disposable? = null
 
     private val allocatedPoints: Int
         get() {
@@ -135,11 +132,6 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         } else {
             secondSlider
         }
-    }
-
-    override fun dismiss() {
-        subscription?.dispose()
-        super.dismiss()
     }
 
     @SuppressLint("SetTextI18n")

@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
@@ -51,7 +50,6 @@ import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -79,7 +77,6 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
-    private var recyclerSubscription: CompositeDisposable = CompositeDisposable()
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
 
@@ -113,13 +110,9 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         get() = this.taskType
 
     private fun setInnerAdapter() {
-        if (binding?.recyclerView?.adapter != null && binding?.recyclerView?.adapter == recyclerAdapter && !recyclerSubscription.isDisposed) {
+        if (binding?.recyclerView?.adapter != null && binding?.recyclerView?.adapter == recyclerAdapter) {
             return
         }
-        if (!recyclerSubscription.isDisposed) {
-            recyclerSubscription.dispose()
-        }
-        recyclerSubscription = CompositeDisposable()
         viewModel.let { viewModel ->
             val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
                 TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
@@ -142,33 +135,28 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
 
-        recyclerAdapter?.errorButtonEvents?.subscribe(
-            {
+        recyclerAdapter?.errorButtonEvents = {
                 lifecycleScope.launchCatching {
                     taskRepository.syncErroredTasks()
                 }
-            },
-            ExceptionHandler.rx()
-        )?.let { recyclerSubscription.add(it) }
-        recyclerAdapter?.taskOpenEvents?.subscribeWithErrorHandler {
-            openTaskForm(it.first)
-        }?.let { recyclerSubscription.add(it) }
-        recyclerAdapter?.taskScoreEvents
-            ?.doOnNext {
-                playSound(it.second)
-                context?.let { it1 -> notificationsManager.dismissTaskNotification(it1, it.first) }
-            }?.subscribeWithErrorHandler { scoreTask(it.first, it.second) }
-            ?.let { recyclerSubscription.add(it) }
-        recyclerAdapter?.checklistItemScoreEvents?.subscribeWithErrorHandler {
-            scoreChecklistItem(it.first, it.second)
-        }?.let { recyclerSubscription.add(it) }
-        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }
-            ?.let { recyclerSubscription.add(it) }
-        recyclerAdapter?.adventureGuideOpenEvents?.subscribeWithErrorHandler {
+            }
+        recyclerAdapter?.taskOpenEvents = { task, view ->
+            openTaskForm(task)
+        }
+        recyclerAdapter?.taskScoreEvents = { task, direction ->
+                playSound(direction)
+                context?.let { it1 -> notificationsManager.dismissTaskNotification(it1, task) }
+            scoreTask(task, direction)
+            }
+        recyclerAdapter?.checklistItemScoreEvents =  { task, item ->
+            scoreChecklistItem(task, item)
+        }
+        recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
+        recyclerAdapter?.adventureGuideOpenEvents = {
             MainNavigationController.navigate(
                 R.id.adventureGuideActivity
             )
-        }?.let { recyclerSubscription.add(it) }
+        }
 
         viewModel.ownerID.observe(viewLifecycleOwner) {
             canEditTasks = viewModel.isPersonalBoard

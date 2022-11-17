@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
@@ -32,8 +31,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
     protected var tutorialCanBeDeferred = true
     var tutorialTexts: MutableList<String> = ArrayList()
 
-    protected var compositeSubscription: CompositeDisposable = CompositeDisposable()
-
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
@@ -51,8 +48,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        compositeSubscription = CompositeDisposable()
-
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = this.javaClass.simpleName
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
@@ -89,10 +84,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
 
     override fun onDestroyView() {
         binding = null
-        if (!compositeSubscription.isDisposed) {
-            compositeSubscription.dispose()
-        }
-
         super.onDestroyView()
     }
 

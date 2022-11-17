@@ -93,9 +93,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.context = context
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-            adapter?.changeClassEvents?.subscribe {
+            adapter?.changeClassEvents = {
                 showClassChangeDialog(it)
-            }?.let { compositeSubscription.add(it) }
+            }
         }
 
         if (binding?.recyclerView?.layoutManager == null) {

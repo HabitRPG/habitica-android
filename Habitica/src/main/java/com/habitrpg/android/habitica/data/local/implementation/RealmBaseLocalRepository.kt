@@ -1,12 +1,9 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository
-import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.kotlin.deleteFromRealm
@@ -114,16 +111,5 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
                 .toFlow()
             .filter { it.isLoaded && it.isValid && !it.isEmpty() }
             .map { it.firstOrNull() }
-    }
-
-    fun queryUserFlowable(userID: String): Flowable<User> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(User::class.java)
-                .equalTo("id", userID)
-                .findAll()
-                .asFlowable()
-        )
-            .filter { it.isLoaded && it.isValid && !it.isEmpty() }
-            .filterMap { it.first() }
     }
 }

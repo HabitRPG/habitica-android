@@ -3,12 +3,11 @@ package com.habitrpg.android.habitica.interactors
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import javax.inject.Inject
 
-class CheckClassSelectionUseCase @Inject constructor(postExecutionThread: PostExecutionThread) : FlowUseCase<CheckClassSelectionUseCase.RequestValues, Unit>() {
+class CheckClassSelectionUseCase @Inject constructor() : FlowUseCase<CheckClassSelectionUseCase.RequestValues, Unit>() {
 
     override suspend fun run(requestValues: RequestValues) {
         val user = requestValues.user

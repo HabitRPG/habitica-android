@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.helpers
 import android.util.Log
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
-import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -30,11 +29,6 @@ class ExceptionHandler {
             }
         }
 
-        fun rx(): Consumer<Throwable> {
-            // Can't be turned into a lambda, because it then doesn't work for some reason.
-            return Consumer { reportError(it) }
-        }
-
         fun reportError(throwable: Throwable) {
             if (BuildConfig.DEBUG) {
                 try {
@@ -46,7 +40,6 @@ class ExceptionHandler {
                     !HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     !retrofit2.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     !EOFException::class.java.isAssignableFrom(throwable.javaClass) &&
-                    !retrofit2.adapter.rxjava3.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     throwable !is ConnectionShutdownException
                 ) {
                     instance.analyticsManager?.logException(throwable)

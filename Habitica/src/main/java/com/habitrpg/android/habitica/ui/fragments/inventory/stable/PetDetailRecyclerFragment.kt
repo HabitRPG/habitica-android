@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
@@ -243,7 +242,6 @@ class PetDetailRecyclerFragment :
         fragment.isHatching = false
         fragment.itemType = "food"
         fragment.itemTypeText = getString(R.string.food)
-        fragment.parentSubscription = compositeSubscription
         parentFragmentManager.let { fragment.show(it, "feedDialog") }
     }
 

@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -25,11 +25,10 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.Disposable
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class ChatFragment() : BaseFragment<FragmentChatBinding>() {
 
@@ -52,7 +51,6 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
     private var isFirstRefresh = true
-    private var refreshDisposable: Disposable? = null
     var autocompleteContext: String = ""
 
     override fun injectFragment(component: UserComponent) {
@@ -69,16 +67,11 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
 
         chatAdapter = ChatRecyclerViewAdapter(null, true)
         chatAdapter?.let { adapter ->
-            compositeSubscription.add(
-                adapter.getUserLabelClickFlowable().subscribe(
-                    { userId -> FullProfileActivity.open(userId) },
-                    ExceptionHandler.rx()
-                )
-            )
-            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, ExceptionHandler.rx()))
-            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, ExceptionHandler.rx()))
-            compositeSubscription.add(adapter.getReplyMessageEvents().subscribe({ setReplyTo(it) }, ExceptionHandler.rx()))
-            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, ExceptionHandler.rx()))
+            adapter.onOpenProfile = { userId -> FullProfileActivity.open(userId) }
+            adapter.onDeleteMessage = { this.showDeleteConfirmationDialog(it) }
+            adapter.onFlagMessage = { this.showFlagConfirmationDialog(it) }
+            adapter.onReply = { setReplyTo(it) }
+            adapter.onCopyMessage = { this.copyMessageToClipboard(it) }
             adapter.onMessageLike = { viewModel?.likeMessage(it) }
         }
 
@@ -108,48 +101,18 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
         }
 
         viewModel?.user?.observe(
-            viewLifecycleOwner,
-            {
-                chatAdapter?.user = it
-                binding?.chatBarView?.hasAcceptedGuidelines = it?.flags?.communityGuidelinesAccepted == true
-            }
-        )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stopAutoRefreshing()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startAutoRefreshing()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        stopAutoRefreshing()
-    }
-
-    private fun startAutoRefreshing() {
-        if (refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
+            viewLifecycleOwner
+        ) {
+            chatAdapter?.user = it
+            binding?.chatBarView?.hasAcceptedGuidelines =
+                it?.flags?.communityGuidelinesAccepted == true
         }
-        refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    refresh()
-                },
-                ExceptionHandler.rx()
-            )
-        refresh()
-    }
 
-    private fun stopAutoRefreshing() {
-        if (refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
-            refreshDisposable = null
+        lifecycleScope.launchWhenResumed {
+            while (true) {
+                refresh()
+                delay(30.toDuration(DurationUnit.SECONDS))
+            }
         }
     }
 

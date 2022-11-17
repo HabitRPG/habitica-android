@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.proxy
 
 import android.content.Context
 import android.os.Bundle
-import com.amplitude.api.Amplitude
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
@@ -16,7 +15,7 @@ class AnalyticsManagerImpl(context: Context) : AnalyticsManager {
 
     override fun setUserIdentifier(identifier: String) {
         FirebaseCrashlytics.getInstance().setUserId(identifier)
-        Amplitude.getInstance().userId = identifier
+        AmplitudeManager.amplitude.userId = identifier
     }
 
     override fun setUserProperty(identifier: String, value: String) {

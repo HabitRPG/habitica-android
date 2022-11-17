@@ -8,8 +8,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
@@ -227,15 +225,12 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
             .filterNotNull()
     }
 
-    override fun updateIsdue(daily: TaskList): Maybe<TaskList> {
-        return Flowable.just(realm.where(Task::class.java).equalTo("typeValue", TaskType.DAILY.value).findAll())
-            .firstElement()
-            .map { tasks ->
-                realm.beginTransaction()
-                tasks.filter { daily.tasks.containsKey(it.id) }.forEach { it.isDue = daily.tasks[it.id]?.isDue }
-                realm.commitTransaction()
-                daily
-            }
+    override fun updateIsdue(daily: TaskList): TaskList {
+        val tasks = realm.where(Task::class.java).equalTo("typeValue", TaskType.DAILY.value).findAll()
+        realm.beginTransaction()
+        tasks.filter { daily.tasks.containsKey(it.id) }.forEach { it.isDue = daily.tasks[it.id]?.isDue }
+        realm.commitTransaction()
+        return daily
     }
 
     override fun updateTaskPositions(taskOrder: List<String>) {

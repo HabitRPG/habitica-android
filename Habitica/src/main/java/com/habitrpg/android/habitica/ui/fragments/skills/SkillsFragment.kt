@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSkillsBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.Skill
@@ -52,7 +51,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         savedInstanceState: Bundle?
     ): View? {
         adapter = SkillsRecyclerViewAdapter()
-        adapter?.useSkillEvents?.subscribeWithErrorHandler { onSkillSelected(it) }?.let { compositeSubscription.add(it) }
+        adapter?.onUseSkill = { onSkillSelected(it) }
 
         this.tutorialStepIdentifier = "skills"
         this.tutorialTexts = listOf(getString(R.string.tutorial_skills))

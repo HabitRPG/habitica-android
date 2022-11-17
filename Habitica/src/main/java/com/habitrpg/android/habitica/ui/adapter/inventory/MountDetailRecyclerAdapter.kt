@@ -6,13 +6,11 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
-import io.reactivex.rxjava3.subjects.PublishSubject
 
 class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var onEquip: ((String) -> Unit)? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
 
-    private val equipEvents = PublishSubject.create<String>()
     var currentMount: String? = null
         set(value) {
             field = value

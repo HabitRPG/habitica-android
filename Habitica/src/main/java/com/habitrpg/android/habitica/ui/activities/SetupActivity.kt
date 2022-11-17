@@ -32,7 +32,6 @@ import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
 import com.habitrpg.common.habitica.api.HostConfig
 import com.viewpagerindicator.IconPagerAdapter
-import io.reactivex.rxjava3.core.BackpressureStrategy
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
@@ -260,9 +259,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 else -> {
                     val fragment = WelcomeFragment()
                     welcomeFragment = fragment
-                    welcomeFragment?.nameValidEvents?.toFlowable(BackpressureStrategy.DROP)?.subscribe {
-                        setNextButtonEnabled(it)
-                    }
+                    welcomeFragment?.onNameValid = { setNextButtonEnabled(it == true) }
                     fragment
                 }
             }
@@ -283,9 +280,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 }
                 is WelcomeFragment -> {
                     welcomeFragment = item
-                    item.nameValidEvents.toFlowable(BackpressureStrategy.DROP).subscribe {
-                        setNextButtonEnabled(it)
-                    }
+                    item.onNameValid = { setNextButtonEnabled(it == true) }
                 }
             }
             return item

@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -68,15 +67,12 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             }
         }
 
-        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe(
-            {
+        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents = {
                 selectedCard = it
                 val intent = Intent(activity, SkillMemberActivity::class.java)
                 cardSelectedResult.launch(intent)
-            },
-            ExceptionHandler.rx()
-        )?.let { compositeSubscription.add(it) }
-        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
+            }
+        recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
 
         viewModel.user.observe(viewLifecycleOwner) {
             (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it

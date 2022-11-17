@@ -33,7 +33,6 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.MainScope
 import javax.inject.Inject
 
@@ -51,8 +50,6 @@ class AuthenticationViewModel() {
     @Inject
     @JvmField
     var keyHelper: KeyHelper? = null
-
-    private var compositeSubscription = CompositeDisposable()
 
     var googleEmail: String? = null
 

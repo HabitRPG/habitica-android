@@ -40,8 +40,6 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -221,7 +219,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
     }
 
-    private val compositeSubscription: CompositeDisposable = CompositeDisposable()
     var shopIdentifier: String? = null
     private var user: User? = null
     var isPinned: Boolean = false
@@ -313,13 +310,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         userRepository.close()
         inventoryRepository.close()
         limitedTextViewJob?.cancel()
-        if (!compositeSubscription.isDisposed) {
-            compositeSubscription.dispose()
-        }
         super.dismiss()
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun onBuyButtonClicked() {
         if (shopItem.isValid && !shopItem.locked) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
@@ -368,7 +361,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         )
         HapticFeedbackManager.tap(contentView)
         val snackbarText = arrayOf("")
-        val observable: (suspend () -> Unit)
+        val observable: (suspend () -> Any?)
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
             observable = if (shopItem.purchaseType == "gear") {
                 { inventoryRepository.purchaseMysterySet(shopItem.key) }
@@ -408,10 +401,8 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             observable = { inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity) }
         }
         lifecycleScope.launchCatching {
-            observable()
-            val text = if (snackbarText[0].isNotEmpty()) {
-                snackbarText[0]
-            } else {
+            val result = observable() ?: return@launchCatching
+            val text = snackbarText[0].ifEmpty {
                 context.getString(R.string.successful_purchase, shopItem.text)
             }
             val rightTextColor = when (item.currency) {

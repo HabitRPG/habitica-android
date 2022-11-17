@@ -10,20 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SkillListItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.user.OwnedItem
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensions.loadImage
 import io.realm.RealmList
 
 class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
 
-    private val useSkillSubject = PublishSubject.create<Skill>()
-    val useSkillEvents: Flowable<Skill> = useSkillSubject.toFlowable(BackpressureStrategy.DROP)
+    var onUseSkill: ((Skill) -> Unit)? = null
 
     var mana: Double = 0.0
         set(value) {
@@ -130,7 +126,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
 
         override fun onClick(v: View) {
             if ((skill?.lvl ?: 0) <= level) {
-                skill?.let { useSkillSubject.onNext(it) }
+                skill?.let { onUseSkill?.invoke(it) }
             }
         }
 

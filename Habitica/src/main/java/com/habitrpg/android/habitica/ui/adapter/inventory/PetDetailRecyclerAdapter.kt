@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
-import io.reactivex.rxjava3.subjects.PublishSubject
 
 class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var onFeed: ((Pet, Food?) -> Unit)? = null
@@ -34,8 +33,6 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             field = value
             notifyDataSetChanged()
         }
-    private val equipEvents = PublishSubject.create<String>()
-    private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
     private var ownsSaddles: Boolean = false
 
     private var itemList: List<Any> = ArrayList()

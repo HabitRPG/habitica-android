@@ -19,10 +19,6 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.functions.Action
-import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter(
@@ -50,18 +46,12 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
             }
         }
 
-    private var errorButtonEventsSubject: PublishSubject<String> = PublishSubject.create()
-    override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    protected var taskScoreEventsSubject: PublishSubject<Pair<Task, TaskDirection>> = PublishSubject.create()
-    override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    protected var checklistItemScoreSubject: PublishSubject<Pair<Task, ChecklistItem>> = PublishSubject.create()
-    override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
-    protected var taskOpenEventsSubject: PublishSubject<Pair<Task, View>> = PublishSubject.create()
-    override val taskOpenEvents: Flowable<Pair<Task, View>> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    protected var brokenTaskEventsSubject: PublishSubject<Task> = PublishSubject.create()
-    override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    protected var adventureGuideOpenSubject: PublishSubject<Boolean> = PublishSubject.create()
-    override val adventureGuideOpenEvents: Flowable<Boolean> = adventureGuideOpenSubject.toFlowable(BackpressureStrategy.DROP)
+    override var errorButtonEvents: ((String) -> Unit)? = null
+    override var taskScoreEvents: ((Task, TaskDirection) -> Unit)? = null
+    override var checklistItemScoreEvents: ((Task, ChecklistItem) -> Unit)? = null
+    override var taskOpenEvents: ((Task, View) -> Unit)? = null
+    override var brokenTaskEvents: ((Task) -> Unit)? = null
+    override var adventureGuideOpenEvents: ((Boolean) -> Unit)? = null
 
     override fun getItemId(index: Int): Long = index.toLong()
 
@@ -82,11 +72,11 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
             holder.userID = user?.id
             holder.isLocked = !viewModel.canScoreTask(item)
             holder.bind(item, position, taskDisplayMode, viewModel.ownerID.value)
-            holder.errorButtonClicked = Action {
-                errorButtonEventsSubject.onNext("")
+            holder.errorButtonClicked = {
+                errorButtonEvents?.invoke("")
             }
         } else if (holder is AdventureGuideViewHolder) {
-            holder.itemView.setOnClickListener { adventureGuideOpenSubject.onNext(true) }
+            holder.itemView.setOnClickListener { adventureGuideOpenEvents?.invoke(true) }
             user?.let { holder.update(it) }
         }
     }

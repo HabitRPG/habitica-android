@@ -5,7 +5,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.reactivex.rxjava3.core.Maybe
 import kotlinx.coroutines.flow.Flow
 
 interface TaskLocalRepository : BaseLocalRepository {
@@ -26,7 +25,7 @@ interface TaskLocalRepository : BaseLocalRepository {
 
     fun getTaskAtPosition(taskType: String, position: Int): Flow<Task>
 
-    fun updateIsdue(daily: TaskList): Maybe<TaskList>
+    fun updateIsdue(daily: TaskList): TaskList
 
     fun updateTaskPositions(taskOrder: List<String>)
     fun saveCompletedTodos(userId: String, tasks: MutableCollection<Task>)

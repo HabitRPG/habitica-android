@@ -36,7 +36,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -44,8 +43,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
-
-    var parentSubscription: CompositeDisposable? = null
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository

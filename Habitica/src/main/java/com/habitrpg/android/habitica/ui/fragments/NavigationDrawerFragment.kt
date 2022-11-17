@@ -30,7 +30,6 @@ import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.WorldStateEvent
@@ -47,7 +46,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.common.habitica.extensions.getThemeColor
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -97,8 +95,6 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private lateinit var adapter: NavigationDrawerAdapter
 
-    private var subscriptions: CompositeDisposable? = null
-
     val isDrawerOpen: Boolean
         get() = drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
 
@@ -114,7 +110,6 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             NavigationDrawerAdapter(0, 0)
         }
-        subscriptions = CompositeDisposable()
         HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
@@ -145,25 +140,15 @@ class NavigationDrawerFragment : DialogFragment() {
             false
         initializeMenuItems()
 
-        subscriptions?.add(
-            adapter.getItemSelectionEvents().subscribe(
-                {
+            adapter.itemSelectedEvents = {
                     setSelection(it.transitionId, it.bundle, true)
-                },
-                ExceptionHandler.rx()
-            )
-        )
-        subscriptions?.add(
-            adapter.getPromoCloseEvents().subscribe(
-                {
+                }
+            adapter.promoClosedSubject = {
                     sharedPreferences.edit {
                         putBoolean("hide$it", true)
                     }
                     updatePromo()
-                },
-                ExceptionHandler.rx()
-            )
-        )
+                }
 
         lifecycleScope.launchCatching {
             contentRepository.getWorldState()
@@ -354,7 +339,6 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     override fun onDestroy() {
-        subscriptions?.dispose()
         socialRepository.close()
         inventoryRepository.close()
         userRepository.close()

@@ -18,9 +18,6 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
@@ -28,8 +25,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
     private var shopIdentifier: String? = null
     private var ownedItems: Map<String, OwnedItem> = HashMap()
 
-    private val changeClassSubject = BehaviorSubject.create<String>()
-    val changeClassEvents: Flowable<String> = changeClassSubject.toFlowable(BackpressureStrategy.DROP)
+    var changeClassEvents: ((String) -> Unit)? = null
 
     var shopSpriteSuffix: String = ""
         set(value) {
@@ -128,7 +124,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                                 sectionHolder.notesView?.text = context.getString(R.string.class_gear_disclaimer)
                                 if (user?.hasClass == true) {
                                     sectionHolder.switchClassButton?.setOnClickListener {
-                                        changeClassSubject.onNext(selectedGearCategory)
+                                        changeClassEvents?.invoke(selectedGearCategory)
                                     }
                                     // TODO: Enable this again when we have a nicer design
                                     sectionHolder.switchClassButton?.visibility = View.GONE

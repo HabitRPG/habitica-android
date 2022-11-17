@@ -75,10 +75,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
         super.onViewCreated(view, savedInstanceState)
 
         challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userId)
-        challengeAdapter?.getOpenDetailFragmentFlowable()
-            ?.subscribe({ openDetailFragment(it) }, ExceptionHandler.rx())
-            ?.let { compositeSubscription.add(it) }
-
+        challengeAdapter?.onOpenChallengeFragment = { openDetailFragment(it) }
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         if (viewUserChallengesOnly) {

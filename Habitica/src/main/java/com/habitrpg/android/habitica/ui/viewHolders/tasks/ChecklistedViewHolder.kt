@@ -22,9 +22,10 @@ import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 abstract class ChecklistedViewHolder(
     itemView: View,
@@ -131,16 +132,12 @@ abstract class ChecklistedViewHolder(
                     textView?.text = item.text
                     textView?.setTextColor(ContextCompat.getColor(context, if (item.completed) R.color.text_dimmed else R.color.text_secondary))
                     if (item.text != null) {
-                        Observable.just(item.text ?: "")
-                            .map { MarkdownParser.parseMarkdown(it) }
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                {
-                                    textView?.setParsedMarkdown(it)
-                                },
-                                ExceptionHandler.rx()
-                            )
+                        MainScope().launch(Dispatchers.IO) {
+                            val parsedText = MarkdownParser.parseMarkdown(item.text ?: "")
+                            withContext(Dispatchers.Main) {
+                                textView?.setParsedMarkdown(parsedText)
+                            }
+                        }
                     }
                     val checkmark = itemView?.findViewById<ImageView>(R.id.checkmark)
                     checkmark?.drawable?.setTintMode(PorterDuff.Mode.SRC_ATOP)

@@ -7,8 +7,6 @@ import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
-import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.executors.UIThread
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.SoundFileLoader
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -82,12 +80,6 @@ class AppModule(private val application: Application) {
     @Singleton
     fun providesSoundManager(): SoundManager {
         return SoundManager()
-    }
-
-    @Provides
-    @Singleton
-    fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread {
-        return uiThread
     }
 
     @Provides

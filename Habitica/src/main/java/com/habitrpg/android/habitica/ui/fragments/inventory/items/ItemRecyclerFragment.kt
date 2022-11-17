@@ -190,7 +190,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
         fragment.isHatching = true
         fragment.isFeeding = false
-        fragment.parentSubscription = compositeSubscription
         parentFragmentManager.let { fragment.show(it, "hatchingDialog") }
     }
 

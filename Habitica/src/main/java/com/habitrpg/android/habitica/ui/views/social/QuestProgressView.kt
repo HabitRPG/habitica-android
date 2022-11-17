@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestCollectBinding
 import com.habitrpg.android.habitica.databinding.QuestProgressBinding
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
@@ -32,8 +33,7 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.setMarkdown
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.MainScope
 
 class QuestProgressView : LinearLayout {
     private val binding = QuestProgressBinding.inflate(context.layoutInflater, this, true)
@@ -181,22 +181,17 @@ class QuestProgressView : LinearLayout {
             val iconView = ImageView(context)
             if (strike.wasHit) {
                 DataBindingUtils.loadImage(context, "rage_strike_${strike.key}") {
-                    Observable.just(it)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { drawable ->
-                                val bitmap = drawable.toBitmap()
-                                val displayDensity = resources.displayMetrics.density
-                                val width = bitmap.width * displayDensity
-                                val height = bitmap.height * displayDensity
-                                val scaledImage = Bitmap.createScaledBitmap(bitmap, width.toInt(), height.toInt(), false)
-                                iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
-                                iconView.setOnClickListener {
-                                    showActiveStrikeAlert(strike.key)
-                                }
-                            },
-                            ExceptionHandler.rx()
-                        )
+                    MainScope().launchCatching {
+                        val bitmap = it.toBitmap()
+                        val displayDensity = resources.displayMetrics.density
+                        val width = bitmap.width * displayDensity
+                        val height = bitmap.height * displayDensity
+                        val scaledImage = Bitmap.createScaledBitmap(bitmap, width.toInt(), height.toInt(), false)
+                        iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
+                        iconView.setOnClickListener {
+                            showActiveStrikeAlert(strike.key)
+                        }
+                    }
                 }
             } else {
                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeInactive())

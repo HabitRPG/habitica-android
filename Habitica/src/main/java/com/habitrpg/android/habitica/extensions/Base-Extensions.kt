@@ -1,13 +1,18 @@
 package com.habitrpg.android.habitica.extensions
 
-import io.reactivex.rxjava3.core.Completable
-import java.util.concurrent.TimeUnit
+import com.habitrpg.android.habitica.helpers.launchCatching
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 /**
  * Created by phillip on 01.02.18.
  */
 
-fun runDelayed(interval: Long, timeUnit: TimeUnit, function: () -> Unit) {
-    Completable.complete().delay(interval, timeUnit)
-        .subscribe(function)
+fun runDelayed(interval: Long, timeUnit: DurationUnit, function: () -> Unit) {
+    MainScope().launchCatching {
+        delay(interval.toDuration(timeUnit))
+        function()
+    }
 }

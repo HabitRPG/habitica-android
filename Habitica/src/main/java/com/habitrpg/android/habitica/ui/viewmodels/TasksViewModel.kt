@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
@@ -30,8 +29,6 @@ import java.util.Date
 import javax.inject.Inject
 
 class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
-    private var compositeSubscription: CompositeDisposable = CompositeDisposable()
-
     override fun inject(component: UserComponent) {
         component.inject(this)
     }

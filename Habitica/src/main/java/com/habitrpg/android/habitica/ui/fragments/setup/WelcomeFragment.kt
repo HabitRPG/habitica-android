@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
@@ -29,7 +28,7 @@ import javax.inject.Inject
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
-    val nameValidEvents = PublishSubject.create<Boolean>()
+    var onNameValid: ((Boolean?) -> Unit)? = null
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -132,7 +131,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                         binding?.issuesTextView?.visibility = View.VISIBLE
                         binding?.issuesTextView?.text = it?.issues?.joinToString("\n")
                     }
-                    nameValidEvents.onNext(it?.isUsable)
+                    onNameValid?.invoke(it?.isUsable)
                 }
         }
 
