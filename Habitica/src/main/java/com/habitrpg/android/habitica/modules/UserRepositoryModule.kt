@@ -63,6 +63,7 @@ class UserRepositoryModule {
     }
 
     @Provides
+    @UserScope
     fun providesTaskRepository(
         localRepository: TaskLocalRepository,
         apiClient: ApiClient,

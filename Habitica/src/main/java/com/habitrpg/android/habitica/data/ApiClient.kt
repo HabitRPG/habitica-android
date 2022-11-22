@@ -270,4 +270,6 @@ interface ApiClient {
     suspend fun blockMember(userID: String): List<String>?
     suspend fun getTeamPlans(): List<TeamPlan>?
     suspend fun getTeamPlanTasks(teamID: String): TaskList?
+    suspend fun assignToTask(taskId: String, ids: List<String>): Task?
+    suspend fun unassignFromTask(taskId: String, userID: String): Task?
 }

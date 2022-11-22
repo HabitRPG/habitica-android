@@ -294,15 +294,40 @@ class TaskRepositoryImpl(
 
     override fun getUnmanagedTask(taskid: String) = getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
-    override fun updateTaskInBackground(task: Task) {
+    override fun updateTaskInBackground(task: Task, assignChanges: Map<String, MutableList<String>>) {
         MainScope().launchCatching {
-            updateTask(task)
+            val updatedTask = updateTask(task) ?: return@launchCatching
+            handleAssignmentChanges(updatedTask, assignChanges)
         }
     }
 
-    override fun createTaskInBackground(task: Task) {
+    override fun createTaskInBackground(task: Task, assignChanges: Map<String, MutableList<String>>) {
         MainScope().launchCatching {
-            createTask(task)
+            val createdTask = createTask(task) ?: return@launchCatching
+            handleAssignmentChanges(createdTask, assignChanges)
+        }
+    }
+
+    private suspend fun handleAssignmentChanges(task: Task, assignChanges: Map<String, MutableList<String>>) {
+        val taskID = task.id ?: return
+        assignChanges["assign"]?.let { assignments ->
+            if (assignments.isEmpty()) return@let
+            val savedTask = apiClient.assignToTask(taskID, assignments) ?: return@let
+            savedTask.id = task.id
+            savedTask.position = task.position
+            localRepository.save(task)
+        }
+
+        assignChanges["unassign"]?.let { unassignments ->
+            var savedTask: Task? = null
+            for (unassignment in unassignments) {
+                savedTask = apiClient.unassignFromTask(taskID, unassignment)
+            }
+            if (savedTask != null) {
+                savedTask.id = task.id
+                savedTask.position = task.position
+                localRepository.save(task)
+            }
         }
     }
 

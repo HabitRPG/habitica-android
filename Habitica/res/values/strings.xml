@@ -1264,6 +1264,9 @@
     <string name="positive_and_negative">positive and negative</string>
     <string name="assigned_to">Assigned to</string>
     <string name="completed_at">Completed at %s</string>
+    <string name="assign">Assign</string>
+    <string name="edit_assignees">Edit assignees</string>
+    <string name="assign_to">Assign to...</string>
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
         <item quantity="one">You, %d other</item>

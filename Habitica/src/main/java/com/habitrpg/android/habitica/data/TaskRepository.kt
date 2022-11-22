@@ -53,9 +53,9 @@ interface TaskRepository : BaseRepository {
 
     fun getUnmanagedTask(taskid: String): Flow<Task>
 
-    fun updateTaskInBackground(task: Task)
+    fun updateTaskInBackground(task: Task, assignChanges: Map<String, MutableList<String>>)
 
-    fun createTaskInBackground(task: Task)
+    fun createTaskInBackground(task: Task, assignChanges: Map<String, MutableList<String>>)
 
     fun getTaskCopies(userId: String): Flow<List<Task>>
 

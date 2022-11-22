@@ -61,7 +61,7 @@
                             android:paddingStart="@dimen/spacing_medium"
                             android:paddingEnd="@dimen/spacing_medium"
                             android:layout_marginStart="1dp"
-                            android:background="@color/window_background"
+                            android:background="?attr/colorWindowBackground"
                             android:gravity="center_vertical"
                             />
                         <View android:background="@color/gray_600"
@@ -81,7 +81,7 @@
                     </TableRow>
                     <TableRow>
                         <TextView android:text="@string/username"
-                            android:background="@color/window_background"
+                            android:background="?attr/colorWindowBackground"
                             android:layout_height="41dp"
                             android:paddingStart="@dimen/spacing_medium"
                             android:paddingEnd="@dimen/spacing_medium"

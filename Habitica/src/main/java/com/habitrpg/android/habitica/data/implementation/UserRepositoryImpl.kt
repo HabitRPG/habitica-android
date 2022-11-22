@@ -22,6 +22,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
@@ -366,8 +367,11 @@ class UserRepositoryImpl(
         return team
     }
 
-    override fun getTeamPlan(teamID: String): Flow<Group> {
+    override fun getTeamPlan(teamID: String): Flow<Group?> {
         return localRepository.getTeamPlan(teamID)
+            .map {
+                it ?: retrieveTeamPlan(teamID)
+            }
     }
 
     private suspend fun getLiveUser(): User? {

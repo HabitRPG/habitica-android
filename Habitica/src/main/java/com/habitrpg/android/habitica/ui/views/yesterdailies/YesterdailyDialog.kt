@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.MainScope
@@ -196,7 +197,7 @@ class YesterdailyDialog private constructor(
         val checkboxBackground = taskView.findViewById<View>(R.id.checkbox_background)
         checkmark?.visibility = if (completed) View.VISIBLE else View.GONE
         if (completed) {
-            checkboxHolder.setBackgroundResource(R.color.window_background)
+            checkboxHolder.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
             checkboxBackground.setBackgroundResource(R.drawable.daily_checked)
         } else {
             checkboxHolder.setBackgroundResource(task.lightTaskColor)

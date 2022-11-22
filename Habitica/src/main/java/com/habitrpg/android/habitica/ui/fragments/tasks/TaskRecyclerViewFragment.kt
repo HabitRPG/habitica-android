@@ -50,6 +50,7 @@ import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
@@ -58,6 +59,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
 
@@ -561,12 +563,18 @@ private fun openTaskForm(task: Task) {
     val bundle = Bundle()
     bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type?.value)
     bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
+    bundle.putString(TaskFormActivity.GROUP_ID_KEY, task.group?.groupID)
     bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
-    if (viewModel.canEditTask(task)) {
-        MainNavigationController.navigate(R.id.taskFormActivity, bundle)
-    } else {
-        MainNavigationController.navigate(R.id.taskSummaryActivity, bundle)
+    lifecycleScope.launchCatching {
+        val id = if (viewModel.canEditTask(task)) {
+            R.id.taskFormActivity
+        } else {
+            R.id.taskSummaryActivity
+        }
+        withContext(Dispatchers.Main) {
+            MainNavigationController.navigate(id, bundle)
+        }
     }
     TasksFragment.lastTaskFormOpen = Date()
 }

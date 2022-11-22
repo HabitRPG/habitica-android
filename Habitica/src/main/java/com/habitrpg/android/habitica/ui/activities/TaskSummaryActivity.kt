@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -23,7 +22,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -48,8 +46,9 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.TaskDescriptionBuilder
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
+import com.habitrpg.android.habitica.ui.views.CompletedAt
+import com.habitrpg.android.habitica.ui.views.UserRow
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import java.text.DateFormat
 import javax.inject.Inject
 
 class TaskSummaryViewModel(val taskId: String) : BaseViewModel() {
@@ -100,7 +99,6 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
     val task by viewModel.task.observeAsState()
     val titleModifier = Modifier.padding(top = 30.dp)
     val textModifier = Modifier.padding(top = 4.dp)
-    val completedTimeFormat = DateFormat.getTimeInstance(DateFormat.SHORT)
     if (task != null) {
         val darkestColor = colorResource(task?.darkestTaskColor ?: R.color.text_primary)
         val systemUiController = rememberSystemUiController()
@@ -245,18 +243,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 .fillMaxWidth(),
                             color = darkestColor,
                             extraContent = if (item.completed) ({
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.padding(top = 4.dp)
-                                ) {
-                                    Image(painterResource(R.drawable.completed), null)
-                                    Text(stringResource(R.string.completed_at,
-                                        item.completedDate?.let { completedTimeFormat.format(it) }
-                                            ?: ""),
-                                        fontSize = 14.sp,
-                                        color = colorResource(R.color.green_10),
-                                        modifier = Modifier.padding(start = 4.dp))
-                                }
+                                CompletedAt(item.completedDate)
                             }) else null
                         )
                     }
@@ -277,26 +264,6 @@ private fun String.makeBoldComposable(): AnnotatedString {
                 append(segment)
             }
             isBold = !isBold
-        }
-    }
-}
-
-@Composable
-fun UserRow(
-    username: String,
-    modifier: Modifier = Modifier,
-    extraContent: @Composable (() -> Unit)? = null,
-    color: Color? = null
-) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
-        Column {
-            Text(
-                "@$username", fontSize = 16.sp, fontWeight = FontWeight.Medium, color = color ?: MaterialTheme.colors.primary, modifier = Modifier
-                    .fillMaxWidth()
-            )
-            if (extraContent != null) {
-                extraContent()
-            }
         }
     }
 }

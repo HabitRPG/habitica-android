@@ -100,9 +100,9 @@ class FullProfileActivity : BaseActivity() {
                 R.color.transparent
             )
         )
-        binding.avatarWithBars.hpBar.barBackgroundColor = getThemeColor(R.color.window_background)
-        binding.avatarWithBars.xpBar.barBackgroundColor = getThemeColor(R.color.window_background)
-        binding.avatarWithBars.mpBar.barBackgroundColor = getThemeColor(R.color.window_background)
+        binding.avatarWithBars.hpBar.barBackgroundColor = getThemeColor(R.attr.colorWindowBackground)
+        binding.avatarWithBars.xpBar.barBackgroundColor = getThemeColor(R.attr.colorWindowBackground)
+        binding.avatarWithBars.mpBar.barBackgroundColor = getThemeColor(R.attr.colorWindowBackground)
 
         attributeRows.clear()
         binding.attributesCardView.setOnClickListener { toggleAttributeDetails() }

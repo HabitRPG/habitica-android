@@ -445,4 +445,10 @@ interface ApiService {
 
     @GET("tasks/group/{groupID}")
     suspend fun getTeamPlanTasks(@Path("groupID") groupId: String): HabitResponse<TaskList>
+
+    @POST("tasks/{taskID}/assign")
+    suspend fun assignToTask(@Path("taskID") taskId: String?, @Body ids: List<String>): HabitResponse<Task>
+
+    @POST("tasks/{taskID}/unassign/{userID}")
+    suspend fun unassignFromTask(@Path("taskID") taskID: String, @Path("userID") userID: String): HabitResponse<Task>
 }

@@ -124,15 +124,14 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
             .filter { it.isLoaded }
     }
 
-    override fun getTeamPlan(teamID: String): Flow<Group> {
+    override fun getTeamPlan(teamID: String): Flow<Group?> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(Group::class.java)
                 .equalTo("id", teamID)
                 .findAll()
                 .toFlow()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && !realmObject.isEmpty() }
+                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid }
                 .map { teams -> teams.firstOrNull() }
-            .filterNotNull()
     }
 
     override fun getSkills(user: User): Flow<List<Skill>> {

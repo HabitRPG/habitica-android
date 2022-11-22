@@ -36,6 +36,7 @@ import com.habitrpg.android.habitica.databinding.StatsViewBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
 @Composable
@@ -166,8 +167,8 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
                 binding.allocatedValueTextView.setTextColor(statColor)
                 binding.allocatedLabelView.setTextColor(statColor)
             } else {
-                binding.allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
-                binding.allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+                binding.allocatedWrapper.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
+                binding.allocateButton.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
                 binding.allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
                 binding.allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
             }

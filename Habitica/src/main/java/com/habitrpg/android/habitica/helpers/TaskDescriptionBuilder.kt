@@ -3,6 +3,8 @@ package com.habitrpg.android.habitica.helpers
 import android.content.Context
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.common.habitica.extensions.nameRes
+import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.text.DateFormat
 import java.util.Date
@@ -41,12 +43,6 @@ class TaskDescriptionBuilder(private val context: Context) {
     }
 
     private fun describeDifficulty(difficulty: Float): String {
-        return when (difficulty) {
-            0.1f -> context.getString(R.string.trivial)
-            1.0f -> context.getString(R.string.easy)
-            1.5f -> context.getString(R.string.medium)
-            2.0f -> context.getString(R.string.hard)
-            else -> ""
-        }
+        return context.getString(TaskDifficulty.valueOf(difficulty).nameRes)
     }
 }

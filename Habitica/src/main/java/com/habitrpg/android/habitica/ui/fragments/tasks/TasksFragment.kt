@@ -116,7 +116,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
         binding?.viewPager?.currentItem = binding?.viewPager?.currentItem ?: 0
         bottomNavigation?.listener = this
-        bottomNavigation?.canAddTasks = viewModel.isPersonalBoard
+        lifecycleScope.launchCatching {
+            bottomNavigation?.canAddTasks = viewModel.canAddTasks()
+        }
 
         activity?.binding?.content?.toolbarTitle?.setOnClickListener {
             viewModel.cycleOwnerIDs()
@@ -324,6 +326,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type.value)
+        if (!viewModel.isPersonalBoard) {
+            bundle.putString(TaskFormActivity.GROUP_ID_KEY, viewModel.ownerID.value)
+        }
         bundle.putStringArrayList(TaskFormActivity.SELECTED_TAGS_KEY, ArrayList(viewModel.tags))
 
         val intent = Intent(activity, TaskFormActivity::class.java)
@@ -417,7 +422,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             activity?.title = viewModel.ownerTitle
         }
         viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]
-        val isPersonalBoard = viewModel.isPersonalBoard
-        bottomNavigation?.canAddTasks = isPersonalBoard
+        lifecycleScope.launchCatching {
+            bottomNavigation?.canAddTasks = viewModel.canAddTasks()
+        }
     }
 }

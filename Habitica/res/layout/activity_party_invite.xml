@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.activities.PrefsActivity"
         android:orientation="vertical"
-        android:background="@color/content_background">
+        android:background="?attr/colorContentBackground">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:background="@color/window_background"
+        android:background="?attr/colorWindowBackground"
         android:elevation="0dp"
         android:fillViewport="false"
 
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:background="@color/content_background" />
+        android:background="?attr/colorContentBackground" />
 
 </LinearLayout>
 

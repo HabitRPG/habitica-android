@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/colorTintedBackground"
     tools:context="com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -29,7 +30,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorTintedBackground"
             android:paddingBottom="@dimen/spacing_large">
             <LinearLayout
                 android:id="@+id/upper_text_wrapper"
@@ -126,8 +126,18 @@
                     android:layout_height="wrap_content"
                     android:text="@string/difficulty"
                     style="@style/TaskFormSectionheader"/>
-                <com.habitrpg.android.habitica.ui.views.tasks.form.TaskDifficultyButtons
+                <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/task_difficulty_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/assign_title_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/assign"
+                    style="@style/TaskFormSectionheader" />
+                <androidx.compose.ui.platform.ComposeView
+                    android:id="@+id/assign_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         style="@style/FragmentDialogTitle"
         android:id="@+id/titleTextView"
-        android:background="@color/window_background"
+        android:background="?attr/colorWindowBackground"
         android:textColor="@color/text_primary" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"

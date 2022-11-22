@@ -24,6 +24,7 @@ import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -310,11 +311,22 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
         return task.isAssignedToUser(userViewModel.userID) || task.group?.assignedUsers?.isEmpty() != false
     }
 
-    override fun canEditTask(task: Task): Boolean {
+    override suspend fun canEditTask(task: Task): Boolean {
         if (!task.isGroupTask) {
             return true
         }
-        return false
+        val groupID = task.group?.groupID ?: return true
+        val group = userRepository.getTeamPlan(groupID).firstOrNull()
+        return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
+    }
+
+    override suspend fun canAddTasks(): Boolean {
+        if (isPersonalBoard) {
+            return true
+        }
+        val groupID = ownerID.value ?: return true
+        val group = userRepository.getTeamPlan(groupID).firstOrNull()
+        return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
     }
 
     override fun assignedTextForTask(resources: Resources, assignedUsers: List<String>): String {

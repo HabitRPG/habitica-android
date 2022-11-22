@@ -28,5 +28,5 @@ interface UserLocalRepository : BaseLocalRepository {
     fun getQuestAchievements(userID: String): Flow<List<QuestAchievement>>
     fun getUserQuestStatus(userID: String): Flow<UserQuestStatus>
     fun getTeamPlans(userID: String): Flow<List<TeamPlan>>
-    fun getTeamPlan(teamID: String): Flow<Group>
+    fun getTeamPlan(teamID: String): Flow<Group?>
 }

@@ -771,6 +771,14 @@ class ApiClientImpl(
         return processResponse(apiService.getTeamPlanTasks(teamID))
     }
 
+    override suspend fun assignToTask(taskId: String, ids: List<String>): Task? {
+        return process { apiService.assignToTask(taskId, ids) }
+    }
+
+    override suspend fun unassignFromTask(taskId: String, userID: String): Task? {
+        return process { apiService.unassignFromTask(taskId, userID) }
+    }
+
     override suspend fun bulkAllocatePoints(
         strength: Int,
         intelligence: Int,

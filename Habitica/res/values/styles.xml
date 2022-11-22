@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
 
-        <item name="android:elevation" tools:targetApi="21">0dp</item>
+        <item name="android:elevation">0dp</item>
         <item name="elevation">0dp</item>
 
         <item name="android:windowContentOverlay">@null</item>
@@ -37,6 +37,7 @@
         <item name="barColor">@color/brand_300</item>
 
         <item name="colorContentBackground">@color/content_background</item>
+        <item name="colorContentBackgroundOffset">@color/content_background_offset</item>
         <item name="colorWindowBackground">@color/window_background</item>
         <item name="colorTintedBackground">@color/brand_800</item>
         <item name="colorTintedBackgroundOffset">@color/brand_700</item>
@@ -55,8 +56,8 @@
         <item name="toolbarContentColor">@color/text_primary</item>
         <item name="colorPrimaryText">@color/brand_50</item>
         <item name="colorBoxStroke">@color/brand_50</item>
-        <item name="headerBackgroundColor">@color/content_background</item>
-        <item name="headerOffsetColor">@color/window_background</item>
+        <item name="headerBackgroundColor">?attr/colorContentBackground</item>
+        <item name="headerOffsetColor">?attr/colorWindowBackground</item>
         <item name="headerTextColor">@color/text_primary</item>
     </style>
 
@@ -311,7 +312,7 @@
 
 
     <style name="PopupTheme" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/content_background</item>
+        <item name="android:popupBackground">?attr/colorContentBackground</item>
     </style>
 
     <style name="CardText">
@@ -595,7 +596,7 @@
     </style>
 
     <style name="HabiticaButton.Content" parent="HabiticaButton">
-        <item name="android:backgroundTint">@color/content_background</item>
+        <item name="android:backgroundTint">?attr/colorContentBackground</item>
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
@@ -708,7 +709,7 @@
     </style>
 
     <style name="HabiticaButton.Gray" parent="HabiticaButton">
-        <item name="android:backgroundTint">@color/window_background</item>
+        <item name="android:backgroundTint">?attr/colorWindowBackground</item>
         <item name="android:textColor">@color/text_brand_neon</item>
     </style>
 
@@ -975,8 +976,8 @@
     </style>
 
     <style name="Widget.App.BottomSheet.Modal" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="android:backgroundTint">@color/window_background</item>
-        <item name="backgroundTint">@color/window_background</item>
+        <item name="android:backgroundTint">?attr/colorWindowBackground</item>
+        <item name="backgroundTint">?attr/colorWindowBackground</item>
         <item name="android:background">@drawable/bottom_sheet_background</item>
         <item name="shapeAppearanceOverlay">@null</item>
         <item name="shapeAppearance">@null</item>
