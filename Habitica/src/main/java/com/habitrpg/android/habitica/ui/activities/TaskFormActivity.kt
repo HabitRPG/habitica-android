@@ -395,6 +395,7 @@ class TaskFormActivity : BaseActivity() {
             val view = CheckBox(this)
             view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
             view.text = tag.name
+            view.setTextColor(getThemeColor(R.attr.colorPrimaryDark))
             if (preselectedTags?.contains(tag.id) == true) {
                 view.isChecked = true
             }
@@ -479,13 +480,10 @@ class TaskFormActivity : BaseActivity() {
 
     private fun configureStatsButton(button: TextView, isSelected: Boolean) {
         button.background.setTint(
-            if (isSelected) tintColor else ContextCompat.getColor(
-                this,
-                R.color.taskform_gray
-            )
+            if (isSelected) tintColor else getThemeColor(R.attr.colorTintedBackgroundOffset)
         )
-        val textColorID = if (isSelected) R.color.window_background else R.color.text_secondary
-        button.setTextColor(ContextCompat.getColor(this, textColorID))
+        val textColorID = if (isSelected) R.attr.colorTintedBackground else R.attr.colorPrimaryDark
+        button.setTextColor(getThemeColor(textColorID))
         if (isSelected) {
             button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
@@ -501,7 +499,7 @@ class TaskFormActivity : BaseActivity() {
                     intArrayOf(-android.R.attr.state_checked), // unchecked
                     intArrayOf(android.R.attr.state_checked) // checked
                 ),
-                intArrayOf(ContextCompat.getColor(this, R.color.text_dimmed), tintColor)
+                intArrayOf(getThemeColor(R.attr.colorTintedBackgroundOffset), tintColor)
             )
             tagView?.buttonTintList = colorStateList
         }

@@ -12,7 +12,8 @@
     <color name="brand_400">#925CF3</color>
     <color name="brand_500">#bda8ff</color>
     <color name="brand_600">#D5C8FF</color>
-    <color name="brand_700">#ede7f6</color>
+    <color name="brand_700">#F4F0FC</color>
+    <color name="brand_800">#FAF7FF</color>
     <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
@@ -50,8 +51,8 @@
     <color name="yellow_10">#FFA624</color>
     <color name="yellow_5">#EE9109</color>
 
-    <color name="green_700">#F5FFFB</color>
-    <color name="green_600">#EDFCF7</color>
+    <color name="green_700">#F7FFFC</color>
+    <color name="green_600">#EDFAF6</color>
     <color name="green_500">#77f4c7</color>
     <color name="green_100">#24CC8F</color>
     <color name="green_50">#20B780</color>

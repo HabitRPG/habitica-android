@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.asDrawable
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.nameRes
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 
@@ -75,9 +76,9 @@ class TaskDifficultyButtons @JvmOverloads constructor(
             view.findViewById<TextView>(R.id.text_view).setTextColor(textTintColor ?: tintColor)
             view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
-            view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
+            view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
             view.findViewById<TextView>(R.id.text_view).setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-            difficultyColor = ContextCompat.getColor(context, R.color.disabled_background)
+            difficultyColor = context.getThemeColor(R.attr.colorPrimaryDark)
             view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
         val drawable = HabiticaIconsHelper.imageOfTaskDifficultyStars(difficultyColor, difficulty.value, true).asDrawable(resources)

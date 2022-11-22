@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.nameRes
 import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 
@@ -40,8 +41,8 @@ class HabitResetStreakButtons @JvmOverloads constructor(
 
     private fun addAllButtons() {
         val lastResetOption = HabitResetOption.values().last()
-        val margin = 16.dpToPx(context)
-        val height = 28.dpToPx(context)
+        val margin = 10.dpToPx(context)
+        val height = 48.dpToPx(context)
         for (resetOption in HabitResetOption.values()) {
             val button = createButton(resetOption)
             val layoutParams = LayoutParams(0, height)
@@ -70,11 +71,11 @@ class HabitResetStreakButtons @JvmOverloads constructor(
 
         if (isActive) {
             button.background.setTint(tintColor)
-            button.setTextColor(ContextCompat.getColor(context, R.color.white))
+            button.setTextColor(context.getThemeColor(R.attr.colorTintedBackground))
             button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
         } else {
-            button.background.setTint(ContextCompat.getColor(context, R.color.taskform_gray))
-            button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            button.background.setTint(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
+            button.setTextColor(context.getThemeColor(R.attr.colorPrimaryDark))
             button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
         button.setOnClickListener {

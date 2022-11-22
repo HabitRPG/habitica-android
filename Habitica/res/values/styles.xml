@@ -38,6 +38,8 @@
 
         <item name="colorContentBackground">@color/content_background</item>
         <item name="colorWindowBackground">@color/window_background</item>
+        <item name="colorTintedBackground">@color/brand_800</item>
+        <item name="colorTintedBackgroundOffset">@color/brand_700</item>
 
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
@@ -93,6 +95,8 @@
         <item name="taskFormTint">@color/red_50</item>
         <item name="toolbarContentColor">@color/red_1</item>
         <item name="colorPrimaryText">@color/red_1</item>
+        <item name="colorTintedBackground">@color/red_700</item>
+        <item name="colorTintedBackgroundOffset">@color/red_600</item>
     </style>
 
     <style name="MainAppTheme.Red.Dark">
@@ -101,6 +105,8 @@
         <item name="colorBoxStroke">@color/red_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/red_100</item>
+        <item name="colorTintedBackground">@color/red_1</item>
+        <item name="colorTintedBackgroundOffset">@color/red_5</item>
     </style>
 
     <style name="MainAppTheme.Maroon">
@@ -120,6 +126,8 @@
         <item name="barColor">@color/red_1</item>
         <item name="taskFormTint">@color/maroon_50</item>
         <item name="colorPrimaryText">@color/maroon_1</item>
+        <item name="colorTintedBackground">@color/maroon_700</item>
+        <item name="colorTintedBackgroundOffset">@color/maroon_600</item>
     </style>
 
     <style name="MainAppTheme.Maroon.Dark">
@@ -127,6 +135,8 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/maroon_100</item>
+        <item name="colorTintedBackground">@color/maroon_1</item>
+        <item name="colorTintedBackgroundOffset">@color/maroon_5</item>
     </style>
 
     <style name="MainAppTheme.Orange">
@@ -147,6 +157,8 @@
         <item name="taskFormTint">@color/orange_50</item>
         <item name="toolbarContentColor">@color/orange_1</item>
         <item name="colorPrimaryText">@color/orange_1</item>
+        <item name="colorTintedBackground">@color/orange_700</item>
+        <item name="colorTintedBackgroundOffset">@color/orange_600</item>
     </style>
 
     <style name="MainAppTheme.Orange.Dark">
@@ -155,6 +167,8 @@
         <item name="colorBoxStroke">@color/orange_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/orange_100</item>
+        <item name="colorTintedBackground">@color/orange_1</item>
+        <item name="colorTintedBackgroundOffset">@color/orange_5</item>
     </style>
 
     <style name="MainAppTheme.Yellow">
@@ -175,6 +189,8 @@
         <item name="taskFormTint">@color/yellow_10</item>
         <item name="toolbarContentColor">@color/yellow_1</item>
         <item name="colorPrimaryText">@color/yellow_1</item>
+        <item name="colorTintedBackground">@color/yellow_700</item>
+        <item name="colorTintedBackgroundOffset">@color/yellow_600</item>
     </style>
 
     <style name="MainAppTheme.Yellow.Dark">
@@ -183,6 +199,7 @@
         <item name="colorBoxStroke">@color/yellow_5</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/yellow_100</item>
+        <item name="colorTintedBackground">@color/yellow_5</item>
     </style>
 
     <style name="MainAppTheme.Green">
@@ -203,6 +220,8 @@
         <item name="taskFormTint">@color/green_50</item>
         <item name="toolbarContentColor">@color/green_1</item>
         <item name="colorPrimaryText">@color/green_1</item>
+        <item name="colorTintedBackground">@color/green_700</item>
+        <item name="colorTintedBackgroundOffset">@color/green_600</item>
     </style>
 
     <style name="MainAppTheme.Green.Dark">
@@ -211,6 +230,8 @@
         <item name="colorBoxStroke">@color/green_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/green_100</item>
+        <item name="colorTintedBackground">@color/green_1</item>
+        <item name="colorTintedBackgroundOffset">@color/green_5</item>
     </style>
 
     <style name="MainAppTheme.Teal">
@@ -231,6 +252,8 @@
         <item name="taskFormTint">@color/teal_50</item>
         <item name="toolbarContentColor">@color/teal_1</item>
         <item name="colorPrimaryText">@color/teal_1</item>
+        <item name="colorTintedBackground">@color/teal_700</item>
+        <item name="colorTintedBackgroundOffset">@color/teal_600</item>
     </style>
 
     <style name="MainAppTheme.Teal.Dark">
@@ -239,6 +262,8 @@
         <item name="colorBoxStroke">@color/teal_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/teal_100</item>
+        <item name="colorTintedBackground">@color/teal_1</item>
+        <item name="colorTintedBackgroundOffset">@color/teal_5</item>
     </style>
 
     <style name="MainAppTheme.Blue">
@@ -259,6 +284,8 @@
         <item name="taskFormTint">@color/blue_50</item>
         <item name="toolbarContentColor">@color/blue_1</item>
         <item name="colorPrimaryText">@color/blue_1</item>
+        <item name="colorTintedBackground">@color/blue_700</item>
+        <item name="colorTintedBackgroundOffset">@color/blue_600</item>
     </style>
 
     <style name="MainAppTheme.Blue.Dark">
@@ -267,6 +294,8 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="colorBoxStroke">@color/blue_10</item>
         <item name="toolbarContentColor">@color/blue_100</item>
+        <item name="colorTintedBackground">@color/blue_1</item>
+        <item name="colorTintedBackgroundOffset">@color/blue_5</item>
     </style>
 
     <style name="MyWidgetTheme">
@@ -852,18 +881,18 @@
 
     <style name="TaskFormSectionheader">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">?colorPrimaryDark</item>
         <item name="android:layout_marginTop">@dimen/spacing_large</item>
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
         <item name="android:accessibilityHeading">true</item>
     </style>
 
     <style name="TaskFormToggle">
-        <item name="android:background">@drawable/layout_rounded_bg_content</item>
+        <item name="android:background">@drawable/layout_rounded_bg_tinted</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingTop">@dimen/spacing_small</item>
         <item name="android:paddingBottom">@dimen/spacing_small</item>
-        <item name="android:height">28dp</item>
+        <item name="android:height">48dp</item>
     </style>
 
     <style name="TaskFormWeekdayButton">

@@ -121,7 +121,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         MainNavigationController.navigateBack()
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = darkestColor),
-                    elevation = ButtonDefaults.elevation(0.dp)
+                    elevation = ButtonDefaults.elevation(0.dp, 0.dp)
                 ) {
                     Image(
                         painterResource(R.drawable.arrow_back),
@@ -259,6 +259,9 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 }
                             }) else null
                         )
+                    }
+                    task?.group?.assignedUsersDetail?.find { it.assignedUserID == viewModel.userViewModel.userID }?.let {
+                        Text("", )
                     }
                 }
             }

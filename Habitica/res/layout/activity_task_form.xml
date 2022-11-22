@@ -29,7 +29,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?attr/colorContentBackground"
+            android:background="?attr/colorTintedBackground"
             android:paddingBottom="@dimen/spacing_large">
             <LinearLayout
                 android:id="@+id/upper_text_wrapper"
@@ -165,6 +165,7 @@
                         android:id="@+id/habit_adjust_positive_input_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        app:boxBackgroundColor="?attr/colorTintedBackgroundOffset"
                         android:hint="@string/positive_habit_form"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
@@ -181,6 +182,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/negative_habit_form"
+                        app:boxBackgroundColor="?attr/colorTintedBackgroundOffset"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/habit_adjust_negative_streak_view"
@@ -214,7 +216,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_large">
+                        android:layout_marginBottom="10dp">
                         <TextView
                             android:id="@+id/stat_strength_button"
                             style="@style/TaskFormToggle"
@@ -241,7 +243,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/intelligence"
-                            android:layout_marginEnd="@dimen/spacing_large"/>
+                            android:layout_marginEnd="10dp"/>
                         <TextView
                             android:id="@+id/stat_perception_button"
                             style="@style/TaskFormToggle"
