@@ -221,7 +221,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             }
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
-                val hour = Integer.parseInt(timeval)
+                val hour = timeval.toInt()
                 userRepository.changeCustomDayStart(hour).subscribe({ }, ExceptionHandler.rx())
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference?.entry

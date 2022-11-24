@@ -159,8 +159,8 @@ class TaskAlarmManager(
                 val pieces =
                     timeval?.split(":".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
                         ?: return
-                val hour = Integer.parseInt(pieces[0])
-                val minute = Integer.parseInt(pieces[1])
+                val hour = pieces[0].toInt()
+                val minute = pieces[1].toInt()
                 val cal = Calendar.getInstance()
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)

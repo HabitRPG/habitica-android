@@ -57,7 +57,9 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     var questAchievements = RealmList<QuestAchievement>()
         set(value) {
             field = value
-            field.forEach { it.userID = id }
+            for(i in field) {
+                i.userID = id
+            }
         }
     var challengeAchievements = RealmList<String>()
 

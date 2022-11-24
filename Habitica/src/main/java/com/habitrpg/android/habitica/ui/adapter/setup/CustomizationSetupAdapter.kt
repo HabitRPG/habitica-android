@@ -57,17 +57,17 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
             SetupCustomizationRepository.CATEGORY_SKIN -> customization.key == prefs.skin
             SetupCustomizationRepository.CATEGORY_HAIR -> {
                 when (customization.subcategory) {
-                    SetupCustomizationRepository.SUBCATEGORY_BANGS -> Integer.parseInt(customization.key) == prefs.hair?.bangs
-                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL -> Integer.parseInt(customization.key) == prefs.hair?.base
+                    SetupCustomizationRepository.SUBCATEGORY_BANGS -> customization.key.toInt() == prefs.hair?.bangs
+                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL -> customization.key.toInt() == prefs.hair?.base
                     SetupCustomizationRepository.SUBCATEGORY_COLOR -> customization.key == prefs.hair?.color
-                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> Integer.parseInt(customization.key) == prefs.hair?.flower
+                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> customization.key.toInt() == prefs.hair?.flower
                     else -> false
                 }
             }
             SetupCustomizationRepository.CATEGORY_EXTRAS -> {
                 when (customization.subcategory) {
                     SetupCustomizationRepository.SUBCATEGORY_GLASSES -> customization.key == this.user?.items?.gear?.equipped?.eyeWear || "eyewear_base_0" == this.user?.items?.gear?.equipped?.eyeWear && customization.key.isEmpty()
-                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> Integer.parseInt(customization.key) == prefs.hair?.flower
+                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> customization.key.toInt() == prefs.hair?.flower
                     SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR -> "chair_" + customization.key == prefs.chair || customization.key == prefs.chair || customization.key == "none" && prefs.chair == null
                     else -> false
                 }

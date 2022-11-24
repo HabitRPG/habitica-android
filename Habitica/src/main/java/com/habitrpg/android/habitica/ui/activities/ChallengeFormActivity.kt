@@ -106,7 +106,7 @@ class ChallengeFormActivity : BaseActivity() {
             c.name = binding.createChallengeTitle.text.toString()
             c.description = binding.createChallengeDescription.text.toString()
             c.shortName = binding.createChallengeTag.text.toString()
-            c.prize = Integer.parseInt(binding.createChallengePrize.text.toString())
+            c.prize = binding.createChallengePrize.text.toString().toInt()
 
             return c
         }
@@ -266,7 +266,7 @@ class ChallengeFormActivity : BaseActivity() {
         if (stringValue.isEmpty()) {
             stringValue = "0"
         }
-        var currentVal = Integer.parseInt(stringValue)
+        var currentVal = stringValue.toInt()
         currentVal++
 
         binding.createChallengePrize.setText(currentVal.toString())
@@ -279,7 +279,7 @@ class ChallengeFormActivity : BaseActivity() {
         if (stringValue.isEmpty()) {
             stringValue = "0"
         }
-        var currentVal = Integer.parseInt(stringValue)
+        var currentVal = stringValue.toInt()
         currentVal--
 
         binding.createChallengePrize.setText(currentVal.toString())
@@ -297,7 +297,7 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         val currentVal = try {
-            Integer.parseInt(inputValue)
+            inputValue.toInt()
         } catch (_: NumberFormatException) {
             0
         }
