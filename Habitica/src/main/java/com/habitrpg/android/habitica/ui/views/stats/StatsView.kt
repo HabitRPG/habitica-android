@@ -166,7 +166,7 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
                 binding.allocatedValueTextView.setTextColor(statColor)
                 binding.allocatedLabelView.setTextColor(statColor)
             } else {
-                binding.allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+                binding.allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
                 binding.allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
                 binding.allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
                 binding.allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
