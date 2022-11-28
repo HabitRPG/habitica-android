@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.theme
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Shapes
 import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -8,6 +10,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.material.composethemeadapter.createMdcTheme
 
@@ -17,7 +20,7 @@ fun HabiticaTheme(
 ) {
     val context = LocalContext.current
     val layoutDirection = LocalLayoutDirection.current
-    val (colors, typography, shapes) = createMdcTheme(
+    val (colors, _, shapes) = createMdcTheme(
         context = context,
         layoutDirection = layoutDirection,
         setTextColors = true
@@ -72,7 +75,11 @@ fun HabiticaTheme(
                 letterSpacing = 1.5.sp
             )
         ),
-        shapes = shapes ?: MaterialTheme.shapes,
+        shapes = Shapes(
+            RoundedCornerShape(4.dp),
+            RoundedCornerShape(8.dp),
+            RoundedCornerShape(12.dp)
+        ),
         content = content
     )
 }

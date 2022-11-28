@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
@@ -84,16 +84,16 @@ private fun TaskDifficultySelection(
     val textColor = selectedState.animateColor {
         if (it) MaterialTheme.colors.primary else colorResource(R.color.text_secondary)
     }
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp), modifier = modifier) {
         Box(
             contentAlignment = Alignment.Center, modifier = Modifier
                 .size(57.dp)
                 .background(
                     Color(
                         LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)
-                    ), RoundedCornerShape(6.dp)
+                    ), MaterialTheme.shapes.medium
                 )
-                .clip(RoundedCornerShape(6.dp))
+                .clip(MaterialTheme.shapes.medium)
                 .clickable { onSelect(value) }
         ) {
             this@Column.AnimatedVisibility(
@@ -104,7 +104,7 @@ private fun TaskDifficultySelection(
                 Box(
                     Modifier
                         .size(57.dp)
-                        .background(MaterialTheme.colors.primary, RoundedCornerShape(6.dp))
+                        .background(MaterialTheme.colors.primary, MaterialTheme.shapes.medium)
                 )
             }
             Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
@@ -118,7 +118,7 @@ private fun TaskDifficultySelection(
     }
 }
 
-class DifficultyProvider : PreviewParameterProvider<TaskDifficulty> {
+private class DifficultyProvider : PreviewParameterProvider<TaskDifficulty> {
     override val values = TaskDifficulty.values().asSequence()
 }
 

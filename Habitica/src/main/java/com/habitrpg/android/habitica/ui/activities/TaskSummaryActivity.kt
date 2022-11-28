@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -212,7 +213,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                         colorResource(
                                             task?.extraExtraLightTaskColor ?: R.color.gray_700
                                         ),
-                                        RoundedCornerShape(8.dp)
+                                        MaterialTheme.shapes.medium
                                     )
                                     .padding(15.dp)
                                     .fillMaxWidth()
@@ -236,7 +237,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                     colorResource(
                                         task?.extraExtraLightTaskColor ?: R.color.gray_700
                                     ),
-                                    RoundedCornerShape(8.dp)
+                                    MaterialTheme.shapes.medium
                                 )
                                 .padding(15.dp, 12.dp)
                                 .heightIn(min = 24.dp)

@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -128,7 +128,7 @@ fun AppHeaderView(
                                 .padding(start = 12.dp)
                                 .width(72.dp)
                                 .height(48.dp)
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(MaterialTheme.shapes.medium)
                                 .background(
                                     colorResource(R.color.window_background)
                                 )
@@ -157,7 +157,7 @@ fun AppHeaderView(
                             .padding(top = 12.dp)
                             .height(40.dp)
                             .width(72.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(MaterialTheme.shapes.medium)
                             .background(
                                 colorResource(R.color.window_background)
                             )

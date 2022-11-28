@@ -96,10 +96,11 @@
                 android:orientation="vertical"
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large">
-                <com.habitrpg.android.habitica.ui.views.tasks.form.HabitScoringButtonsView
+                <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/habit_scoring_buttons"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" />
                 <TextView
                     android:id="@+id/reward_value_title_view"
                     android:layout_width="match_parent"
@@ -146,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/reset_counter"
                     style="@style/TaskFormSectionheader"/>
-                <com.habitrpg.android.habitica.ui.views.tasks.form.HabitResetStreakButtons
+                <androidx.compose.ui.platform.ComposeView
                     android:id="@+id/habit_reset_streak_buttons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -223,45 +224,10 @@
                         android:layout_height="wrap_content"
                         android:text="@string/assigned_stat"
                         style="@style/TaskFormSectionheader"/>
-                    <LinearLayout
+                    <androidx.compose.ui.platform.ComposeView
+                        android:id="@+id/stats_selector"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp">
-                        <TextView
-                            android:id="@+id/stat_strength_button"
-                            style="@style/TaskFormToggle"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/strength"
-                            android:layout_marginEnd="@dimen/spacing_large"/>
-                        <TextView
-                            android:id="@+id/stat_constitution_button"
-                            style="@style/TaskFormToggle"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/constitution"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/stat_intelligence_button"
-                            style="@style/TaskFormToggle"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/intelligence"
-                            android:layout_marginEnd="10dp"/>
-                        <TextView
-                            android:id="@+id/stat_perception_button"
-                            style="@style/TaskFormToggle"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:text="@string/perception"/>
-                    </LinearLayout>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
                 <TextView
                     android:id="@+id/tags_title_view"

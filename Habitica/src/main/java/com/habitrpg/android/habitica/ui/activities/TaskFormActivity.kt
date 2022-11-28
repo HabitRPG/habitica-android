@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -16,7 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -38,7 +37,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -46,7 +44,6 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,7 +57,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
@@ -87,11 +83,15 @@ import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.TaskFormViewModel
 import com.habitrpg.android.habitica.ui.views.CompletedAt
 import com.habitrpg.android.habitica.ui.views.UserRow
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
+import com.habitrpg.android.habitica.ui.views.tasks.form.HabitScoringSelector
+import com.habitrpg.android.habitica.ui.views.tasks.form.LabeledValue
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskDifficultySelector
+import com.habitrpg.android.habitica.ui.views.tasks.form.TaskFormSelector
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.shared.habitica.models.tasks.Attribute
@@ -107,6 +107,8 @@ import java.util.Date
 import javax.inject.Inject
 
 class TaskFormActivity : BaseActivity() {
+
+    private val viewModel: TaskFormViewModel by viewModels()
 
     private lateinit var binding: ActivityTaskFormBinding
     private var userScrolled: Boolean = false
@@ -148,22 +150,13 @@ class TaskFormActivity : BaseActivity() {
     private var taskCompletedMap = mutableStateMapOf<String, Date>()
     private var preselectedTags: ArrayList<String>? = null
     private var hasPreselectedTags = false
-    private var selectedStat = Attribute.STRENGTH
-        set(value) {
-            field = value
-            setSelectedAttribute(value)
-        }
 
     private var isDiscardCancelled: Boolean = false
     private var canSave: Boolean = false
 
-    private var taskDifficulty = mutableStateOf(TaskDifficulty.EASY)
-
     private var tintColor: Int = 0
         set(value) {
             field = value
-            binding.habitScoringButtons.tintColor = value
-            binding.habitResetStreakButtons.tintColor = value
             binding.taskSchedulingControls.tintColor = value
             updateTagViewsColors()
         }
@@ -203,14 +196,6 @@ class TaskFormActivity : BaseActivity() {
             "taskform"
         }
         super.onCreate(savedInstanceState)
-
-        if (forcedTheme == "yellow") {
-            binding.habitScoringButtons.textTintColor =
-                ContextCompat.getColor(this, R.color.text_yellow)
-        } else if (forcedTheme == "taskform") {
-            binding.habitScoringButtons.textTintColor =
-                ContextCompat.getColor(this, R.color.text_brand_neon)
-        }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -252,10 +237,6 @@ class TaskFormActivity : BaseActivity() {
         binding.notesEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
             binding.notesInputLayout.alpha = if (isFocused) 0.8f else 0.6f
         }
-        binding.statStrengthButton.setOnClickListener { selectedStat = Attribute.STRENGTH }
-        binding.statIntelligenceButton.setOnClickListener { selectedStat = Attribute.INTELLIGENCE }
-        binding.statConstitutionButton.setOnClickListener { selectedStat = Attribute.CONSTITUTION }
-        binding.statPerceptionButton.setOnClickListener { selectedStat = Attribute.PERCEPTION }
         binding.scrollView.setOnTouchListener { view, event ->
             userScrolled =
                 view == binding.scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
@@ -273,7 +254,9 @@ class TaskFormActivity : BaseActivity() {
                     AssignedView(
                         groupMembers.filter { assignedIDs.contains(it.id) },
                         taskCompletedMap,
-                        task?.extraExtraLightTaskColor?.let { colorResource(it) } ?: Color(getThemeColor(R.attr.colorTintedBackgroundOffset)),
+                        task?.extraExtraLightTaskColor?.let { colorResource(it) } ?: Color(
+                            getThemeColor(R.attr.colorTintedBackgroundOffset)
+                        ),
                         colorResource(task?.darkestTaskColor ?: R.color.text_primary),
                         {
                             showAssignDialog()
@@ -346,7 +329,45 @@ class TaskFormActivity : BaseActivity() {
 
         binding.taskDifficultyButtons.setContent {
             HabiticaTheme {
-                TaskDifficultySelector(taskDifficulty.value, onSelect = { taskDifficulty.value = it })
+                TaskDifficultySelector(
+                    viewModel.taskDifficulty.value,
+                    onSelect = { viewModel.taskDifficulty.value = it })
+            }
+        }
+
+        if (taskType == TaskType.HABIT) {
+            binding.habitScoringButtons.setContent {
+                HabiticaTheme {
+                    HabitScoringSelector(
+                        viewModel.habitScoringPositive.value,
+                        viewModel.habitScoringNegative.value,
+                        { viewModel.habitScoringPositive.value = !viewModel.habitScoringPositive.value },
+                        { viewModel.habitScoringNegative.value = !viewModel.habitScoringNegative.value })
+                }
+            }
+
+            binding.habitResetStreakButtons.setContent {
+                HabiticaTheme {
+                    TaskFormSelector(
+                        viewModel.habitResetOption.value, listOf(
+                            LabeledValue(getString(R.string.repeat_daily), HabitResetOption.DAILY),
+                            LabeledValue(getString(R.string.weekly), HabitResetOption.WEEKLY),
+                            LabeledValue(getString(R.string.monthly), HabitResetOption.MONTHLY)
+                        ), { viewModel.habitResetOption.value = it }, columnSize = 3
+                    )
+                }
+            }
+        }
+
+
+        binding.statsSelector.setContent {
+            HabiticaTheme {
+                TaskFormSelector(viewModel.selectedAttribute.value, listOf(
+                    LabeledValue(getString(R.string.strength), Attribute.STRENGTH),
+                    LabeledValue(getString(R.string.constitution), Attribute.CONSTITUTION),
+                    LabeledValue(getString(R.string.intelligence), Attribute.INTELLIGENCE),
+                    LabeledValue(getString(R.string.perception), Attribute.PERCEPTION)
+                ), { viewModel.selectedAttribute.value = it })
             }
         }
 
@@ -424,10 +445,6 @@ class TaskFormActivity : BaseActivity() {
         binding.habitResetStreakButtons.visibility = habitViewsVisibility
         (binding.habitAdjustNegativeStreakView.parent as ViewGroup).visibility =
             habitViewsVisibility
-        if (taskType == TaskType.HABIT) {
-            binding.habitScoringButtons.isPositive = true
-            binding.habitScoringButtons.isNegative = false
-        }
 
         val habitDailyVisibility =
             if (taskType == TaskType.DAILY || taskType == TaskType.HABIT) View.VISIBLE else View.GONE
@@ -519,13 +536,13 @@ class TaskFormActivity : BaseActivity() {
         canSave = true
         binding.textEditText.setText(task.text)
         binding.notesEditText.setText(task.notes)
-        taskDifficulty.value = TaskDifficulty.valueOf(task.priority)
+        viewModel.taskDifficulty.value = TaskDifficulty.valueOf(task.priority)
         when (taskType) {
             TaskType.HABIT -> {
-                binding.habitScoringButtons.isPositive = task.up ?: false
-                binding.habitScoringButtons.isNegative = task.down ?: false
+                viewModel.habitScoringPositive.value = task.up ?: false
+                viewModel.habitScoringNegative.value = task.down ?: false
                 task.frequency?.let {
-                    binding.habitResetStreakButtons.selectedResetOption =
+                    viewModel.habitResetOption.value =
                         HabitResetOption.from(it) ?: HabitResetOption.DAILY
                 }
                 binding.habitAdjustPositiveStreakView.setText((task.counterUp ?: 0).toString())
@@ -556,7 +573,7 @@ class TaskFormActivity : BaseActivity() {
             binding.remindersContainer.taskType = taskType
             task.reminders?.let { binding.remindersContainer.reminders = it }
         }
-        task.attribute?.let { selectedStat = it }
+        task.attribute?.let { viewModel.selectedAttribute.value = it }
 
         if (task.isGroupTask) {
             (binding.habitAdjustPositiveStreakView.parent as ViewGroup).visibility = View.GONE
@@ -565,7 +582,9 @@ class TaskFormActivity : BaseActivity() {
             binding.habitResetStreakTitleView.visibility = View.GONE
             binding.habitResetStreakButtons.visibility = View.GONE
 
-            assignedIDs = task.group?.assignedUsersDetail?.map { it.assignedUserID }?.filterNotNull()?.toMutableStateList() ?: mutableStateListOf()
+            assignedIDs =
+                task.group?.assignedUsersDetail?.map { it.assignedUserID }?.filterNotNull()
+                    ?.toMutableStateList() ?: mutableStateListOf()
             task.group?.assignedUsersDetail?.forEach {
                 it.completedDate?.let { date ->
                     taskCompletedMap[it.assignedUserID ?: ""] = date
@@ -574,33 +593,6 @@ class TaskFormActivity : BaseActivity() {
         }
 
         setAllTagSelections()
-    }
-
-    private fun setSelectedAttribute(attributeName: Attribute) {
-        if (!usesTaskAttributeStats) return
-        configureStatsButton(binding.statStrengthButton, attributeName == Attribute.STRENGTH)
-        configureStatsButton(
-            binding.statIntelligenceButton,
-            attributeName == Attribute.INTELLIGENCE
-        )
-        configureStatsButton(
-            binding.statConstitutionButton,
-            attributeName == Attribute.CONSTITUTION
-        )
-        configureStatsButton(binding.statPerceptionButton, attributeName == Attribute.PERCEPTION)
-    }
-
-    private fun configureStatsButton(button: TextView, isSelected: Boolean) {
-        button.background.setTint(
-            if (isSelected) tintColor else getThemeColor(R.attr.colorTintedBackgroundOffset)
-        )
-        val textColorID = if (isSelected) R.attr.colorTintedBackground else R.attr.colorPrimaryDark
-        button.setTextColor(getThemeColor(textColorID))
-        if (isSelected) {
-            button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-        } else {
-            button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
-        }
     }
 
     private fun updateTagViewsColors() {
@@ -623,14 +615,14 @@ class TaskFormActivity : BaseActivity() {
 
         thisTask.text = binding.textEditText.text.toString()
         thisTask.notes = binding.notesEditText.text.toString()
-        thisTask.priority = taskDifficulty.value.value
+        thisTask.priority = viewModel.taskDifficulty.value.value
         if (usesTaskAttributeStats) {
-            thisTask.attribute = selectedStat
+            thisTask.attribute = viewModel.selectedAttribute.value
         }
         if (taskType == TaskType.HABIT) {
-            thisTask.up = binding.habitScoringButtons.isPositive
-            thisTask.down = binding.habitScoringButtons.isNegative
-            thisTask.frequency = binding.habitResetStreakButtons.selectedResetOption.value
+            thisTask.up = viewModel.habitScoringPositive.value
+            thisTask.down = viewModel.habitScoringNegative.value
+            thisTask.frequency = viewModel.habitResetOption.value.value
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.counterUp =
                 binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
             if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) thisTask.counterDown =
@@ -914,19 +906,19 @@ fun AssignedView(
             .padding(vertical = 4.dp)
             .background(
                 backgroundColor,
-                RoundedCornerShape(8.dp)
+                MaterialTheme.shapes.medium
             )
             .padding(15.dp, 12.dp)
             .heightIn(min = 24.dp)
             .fillMaxWidth()
         for (assignable in assigned) {
-                UserRow(
-                    username = assignable.identifiableName, modifier = rowModifier,
-                    color = color,
+            UserRow(
+                username = assignable.identifiableName, modifier = rowModifier,
+                color = color,
                 extraContent = {
                     completedAt[assignable.id]?.let { CompletedAt(completedAt = it) }
-                    }
-                )
+                }
+            )
         }
         if (showEditButton) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
@@ -936,7 +928,7 @@ fun AssignedView(
                 .padding(vertical = 4.dp)
                 .background(
                     backgroundColor,
-                    RoundedCornerShape(8.dp)
+                    MaterialTheme.shapes.medium
                 )
                 .padding(15.dp, 12.dp)
                 .heightIn(min = 24.dp)
@@ -946,8 +938,10 @@ fun AssignedView(
                     null,
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
                 )
-                Text(stringResource(R.string.edit_assignees), color = color,
-                modifier = Modifier.padding(start = 4.dp))
+                Text(
+                    stringResource(R.string.edit_assignees), color = color,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
             }
         }
     }
@@ -985,17 +979,25 @@ fun AssignSheet(
         for (member in members) {
             val isAssigned = assignedMembers.contains(member.id)
             val transition = updateTransition(isAssigned, label = "isAssigned")
-            val rotation = transition.animateFloat(label = "isAssigned", transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessLow) }) {
+            val rotation = transition.animateFloat(
+                label = "isAssigned",
+                transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessLow) }) {
                 if (it) 0f else 45f
             }
-            val backgroundColor = transition.animateColor(label = "isAssigned", transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
+            val backgroundColor = transition.animateColor(
+                label = "isAssigned",
+                transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
                 if (it) MaterialTheme.colors.primary else colorResource(id = R.color.transparent)
             }
-            val color = transition.animateColor(label = "isAssigned", transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
+            val color = transition.animateColor(
+                label = "isAssigned",
+                transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
                 fadeIn(tween(10000))
                 colorResource(if (it) R.color.white else R.color.text_dimmed)
             }
-            val borderColor = transition.animateColor(label = "isAssigned", transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
+            val borderColor = transition.animateColor(
+                label = "isAssigned",
+                transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
                 fadeIn(tween(10000))
                 if (it) MaterialTheme.colors.primary else colorResource(id = R.color.text_dimmed)
             }

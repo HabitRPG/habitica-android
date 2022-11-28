@@ -107,6 +107,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel;
+import com.habitrpg.android.habitica.ui.viewmodels.TaskFormViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel;
 import com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment.EquipmentOverviewViewModel;
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog;
@@ -367,4 +368,6 @@ public interface UserComponent {
     void inject(@NotNull TaskSummaryActivity taskSummaryActivity);
 
     void inject(@NotNull TaskSummaryViewModel taskSummaryViewModel);
+
+    void inject(@NotNull TaskFormViewModel taskFormViewModel);
 }
