@@ -842,7 +842,7 @@
     <string name="not_recurring">不重复</string>
     <string name="ending_on">在%s结束</string>
     <string name="subscribe_options_title">选择最适合的订阅计划</string>
-    <string name="thanks_for_subscribing">感谢您的订阅</string>
+    <string name="thanks_for_supporting">感谢您的订阅</string>
     <string name="renew_subscription">更新订阅</string>
     <string name="resubscribe">重新订阅</string>
     <string name="resubscribe_description">要继续用您的订阅增值？您可以在现在的订阅结束前开始新的订阅，就能继续使用。</string>

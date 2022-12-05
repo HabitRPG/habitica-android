@@ -908,7 +908,7 @@
     <string name="resubscribe_description">Vous voulez encore profiter des bonus \? Vous pouvez commencer un nouvel abonnement avant que celui-ci ne se termine pour les conserver.</string>
     <string name="resubscribe">Se réinscrire</string>
     <string name="renew_subscription">Renouveler l\'abonnement</string>
-    <string name="thanks_for_subscribing">Merci d\'avoir souscrit un abonnement</string>
+    <string name="thanks_for_supporting">Merci d\'avoir souscrit un abonnement</string>
     <string name="subscribe_options_title">Choisissez la durée d\'abonnement qui marche pour vous</string>
     <string name="ending_on">Termine le %s</string>
     <string name="not_recurring">Ne se renouvelle pas</string>
