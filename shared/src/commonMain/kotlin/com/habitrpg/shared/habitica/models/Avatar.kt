@@ -27,11 +27,12 @@ interface Avatar {
 
     val hasClass: Boolean
         get() {
-            return preferences?.disableClasses != true && flags?.classSelected == true && stats?.habitClass?.isNotEmpty() == true
+            return preferences?.disableClasses != true && flags?.classSelected ?: true == true && stats?.habitClass?.isNotEmpty() == true
         }
 
     val currentMount: String?
         get() = items?.currentMount ?: ""
+
     val currentPet: String?
         get() = items?.currentPet ?: ""
 
