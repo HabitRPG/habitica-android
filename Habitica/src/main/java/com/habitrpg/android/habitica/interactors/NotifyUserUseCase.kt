@@ -19,7 +19,7 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import com.habitrpg.shared.habitica.extensions.round
+import java.text.NumberFormat
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -60,6 +60,10 @@ constructor(
     ) : FlowUseCase.RequestValues
 
     companion object {
+        val formatter = NumberFormat.getInstance().apply {
+            this.minimumFractionDigits = 0
+            this.maximumFractionDigits = 2
+        }
 
         fun getNotificationAndAddStatsToUser(
             context: Context,
@@ -115,14 +119,22 @@ constructor(
             val iconDrawable = BitmapDrawable(context.resources, icon)
             textView.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
             val text: String = if (value > 0) {
-                " + " + abs(value.round(2)).toString()
+                " + " + formatter.format(abs(value))
             } else {
-                " - " + abs(value.round(2)).toString()
+                " - " + formatter.format(abs(value))
             }
             textView.text = text
             textView.gravity = Gravity.CENTER_VERTICAL
             textView.setTextColor(ContextCompat.getColor(context, R.color.white))
             return textView
+        }
+
+        private fun formatValue(value: Double): String {
+            return if (value >= 0) {
+                " + " + formatter.format(abs(value))
+            } else {
+                " - " + formatter.format(abs(value))
+            }
         }
 
         fun getNotificationAndAddStatsToUserAsText(
@@ -134,24 +146,23 @@ constructor(
             val builder = SpannableStringBuilder()
             var displayType = SnackbarDisplayType.NORMAL
 
-            if ((xp ?: 0.0) > 0) {
-                builder.append(" + ").append(xp?.round(2).toString()).append(" Exp")
+            if (xp != null && xp != 0.0) {
+                builder.append(formatValue(xp)).append(" Exp")
             }
-            if (hp != 0.0) {
-                displayType = SnackbarDisplayType.FAILURE
-                builder.append(" - ").append(abs(hp?.round(2) ?: 0.0).toString()).append(" Health")
-            }
-            if (gold != 0.0) {
-                if ((gold ?: 0.0) > 0) {
-                    builder.append(" + ").append(gold?.round(2).toString())
-                } else if ((gold ?: 0.0) < 0) {
+            if (hp != null && hp != 0.0) {
+                if (hp < 0) {
                     displayType = SnackbarDisplayType.FAILURE
-                    builder.append(" - ").append(abs(gold?.round(2) ?: 0.0).toString())
                 }
-                builder.append(" Gold")
+                builder.append(formatValue(hp)).append(" Health")
             }
-            if ((mp ?: 0.0) > 0) {
-                builder.append(" + ").append(mp?.round(2).toString()).append(" Mana")
+            if (gold != null && gold != 0.0) {
+                if (gold < 0) {
+                    displayType = SnackbarDisplayType.FAILURE
+                }
+                builder.append(formatValue(gold)).append(" Gold")
+            }
+            if (mp != null && mp != 0.0) {
+                builder.append(formatValue(mp)).append(" Exp").append(" Mana")
             }
 
             return Pair(builder, displayType)
