@@ -30,7 +30,6 @@
             android:value="@string/application_ad_id"/>
         <activity
             android:name=".ui.activities.MainActivity"
-            android:label="@string/app_name"
             android:theme="@style/LaunchAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
@@ -150,6 +149,16 @@
                 android:value=".ui.activities.MainActivity" />
         </activity>
         <activity
+            android:name=".ui.activities.TaskSummaryActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            tools:ignore="UnusedAttribute"
+            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity
             android:name=".ui.activities.GroupFormActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
@@ -205,9 +214,6 @@
                   android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activities.GemPurchaseActivity"
                   android:screenOrientation="unspecified" />
-        <activity android:name=".ui.activities.VerifyUsernameActivity"
-            android:screenOrientation="unspecified"
-            android:windowSoftInputMode="stateHidden" />
         <receiver android:name=".receivers.NotificationPublisher" />
 
         <receiver android:name=".receivers.TaskReceiver" android:enabled="true" android:exported="true">
@@ -257,6 +263,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_gryphon_white" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/brand_300" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="@string/content_provider"

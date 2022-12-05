@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:text="@string/close"
         android:background="@drawable/alert_dialog_background"
-        android:backgroundTint="@color/content_background"
+        android:backgroundTint="?attr/colorContentBackground"
         android:layout_marginTop="@dimen/spacing_large"
         android:visibility="gone"
         tools:visibility="visible"

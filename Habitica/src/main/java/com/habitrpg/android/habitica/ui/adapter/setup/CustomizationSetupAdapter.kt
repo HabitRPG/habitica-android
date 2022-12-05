@@ -12,9 +12,6 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 
 internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
 
@@ -22,10 +19,8 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
     var user: User? = null
     private var customizationList: List<SetupCustomization> = emptyList()
 
-    private val equipGearEventSubject = PublishSubject.create<String>()
-    val equipGearEvents: Flowable<String> = equipGearEventSubject.toFlowable(BackpressureStrategy.DROP)
-    private val updateUserEventsSubject = PublishSubject.create<Map<String, Any>>()
-    val updateUserEvents: Flowable<Map<String, Any>> = updateUserEventsSubject.toFlowable(BackpressureStrategy.DROP)
+    var onEquipGear: ((String) -> Unit)? = null
+    var onUpdateUser: ((Map<String, Any>) -> Unit)? = null
 
     fun setCustomizationList(newCustomizationList: List<SetupCustomization>) {
         this.customizationList = newCustomizationList
@@ -123,12 +118,12 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
                     } else {
                         selectedCustomization.key
                     }
-                    key?.let { equipGearEventSubject.onNext(it) }
+                    key?.let { onEquipGear?.invoke(it) }
                 } else {
                     val updateData = HashMap<String, Any>()
                     val updatePath = "preferences." + selectedCustomization.path
                     updateData[updatePath] = selectedCustomization.key
-                    updateUserEventsSubject.onNext(updateData)
+                    onUpdateUser?.invoke(updateData)
                 }
             }
         }

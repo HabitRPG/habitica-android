@@ -1,19 +1,18 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.Tag
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.flow.Flow
 
 interface TagRepository : BaseRepository {
 
-    fun getTags(): Flowable<out List<Tag>>
-    fun getTags(userId: String): Flowable<out List<Tag>>
+    fun getTags(): Flow<List<Tag>>
+    fun getTags(userId: String): Flow<List<Tag>>
 
-    fun createTag(tag: Tag): Flowable<Tag>
-    fun updateTag(tag: Tag): Flowable<Tag>
-    fun deleteTag(id: String): Flowable<Void>
+    suspend fun createTag(tag: Tag): Tag?
+    suspend fun updateTag(tag: Tag): Tag?
+    suspend fun deleteTag(id: String): Void?
 
-    fun createTags(tags: Collection<Tag>): Single<List<Tag>>
-    fun updateTags(tags: Collection<Tag>): Single<List<Tag>>
-    fun deleteTags(tagIds: Collection<String>): Single<List<Void>>
+    suspend fun createTags(tags: Collection<Tag>): List<Tag>
+    suspend fun updateTags(tags: Collection<Tag>): List<Tag>
+    suspend fun deleteTags(tagIds: Collection<String>): List<Void>
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -7,39 +8,36 @@
     tools:parentTag="android.widget.RelativeLayout">
     <View android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/window_background"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"/>
-    <View android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/content_background_offset"
+        android:background="@drawable/layout_rounded_bg_task_form"
+        android:backgroundTint="?colorTintedBackgroundOffset"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"/>
     <ImageButton
         android:id="@+id/down_button"
         android:layout_width="56dp"
         android:layout_height="match_parent"
-        android:background="@color/offset_background"
+        android:background="@color/transparent"
         android:src="@drawable/ic_arrow_drop_down_gray_48dp_states"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        app:tint="?colorPrimaryDark"
         />
     <ImageButton
         android:id="@+id/up_button"
         android:layout_width="56dp"
         android:layout_height="match_parent"
-        android:background="@color/offset_background"
+        android:background="@color/transparent"
         android:src="@drawable/ic_arrow_drop_up_gray_48dp_states"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        />
+        app:tint="?colorPrimaryDark" />
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:background="@color/transparent"
-        android:textColor="@color/text_secondary"
+        android:textColor="?colorPrimaryDark"
         android:textSize="16sp"
         tools:text="100.0"
         android:inputType="numberDecimal"

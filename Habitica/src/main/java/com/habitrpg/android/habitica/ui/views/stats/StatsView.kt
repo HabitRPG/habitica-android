@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -36,6 +37,7 @@ import com.habitrpg.android.habitica.databinding.StatsViewBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
 @Composable
@@ -52,7 +54,7 @@ fun StatsViewComposable(
     Column(
         Modifier
             .background(colorResource(R.color.window_background))
-            .clip(RoundedCornerShape(12.dp))) {
+            .clip(MaterialTheme.shapes.large)) {
         Row(
             Modifier
                 .height(43.dp)
@@ -166,8 +168,8 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
                 binding.allocatedValueTextView.setTextColor(statColor)
                 binding.allocatedLabelView.setTextColor(statColor)
             } else {
-                binding.allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
-                binding.allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+                binding.allocatedWrapper.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
+                binding.allocateButton.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
                 binding.allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
                 binding.allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
             }

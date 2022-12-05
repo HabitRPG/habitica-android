@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -19,11 +20,10 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
@@ -101,10 +101,9 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                 }
                 contentRepository.retrieveContent()
             }
-            disposable.add(
+            viewModelScope.launchCatching {
                 userRepository.retrieveTeamPlans()
-                    .subscribe({ }, ExceptionHandler.rx())
-            )
+            }
         }
     }
 
@@ -131,20 +130,13 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
     }
 
     fun ifNeedsMaintenance(onResult: ((MaintenanceResponse) -> Unit)) {
-        disposable.add(
-            this.maintenanceService.maintenanceStatus
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { maintenanceResponse ->
-                        if (maintenanceResponse.activeMaintenance == null) {
-                            return@subscribe
-                        }
-                        onResult(maintenanceResponse)
-                    },
-                    ExceptionHandler.rx()
-                )
-        )
+        viewModelScope.launchCatching {
+            val maintenanceResponse = maintenanceService.getMaintenanceStatus()
+            if (maintenanceResponse?.activeMaintenance == null) {
+                return@launchCatching
+            }
+            onResult(maintenanceResponse)
+        }
     }
 
     fun getToolbarTitle(
@@ -154,21 +146,17 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
         onSuccess: ((CharSequence?) -> Unit)
     ) {
         if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
-            disposable.add(
-                inventoryRepository.getItem("egg", eggType ?: "").firstElement().subscribe(
-                    {
-                        if (!it.isValid()) return@subscribe
-                        onSuccess(
-                            if (id == R.id.petDetailRecyclerFragment) {
-                                (it as? Egg)?.text
-                            } else {
-                                (it as? Egg)?.mountText
-                            }
-                        )
-                    },
-                    ExceptionHandler.rx()
+            viewModelScope.launchCatching {
+                val item = inventoryRepository.getItem("egg", eggType ?: "").firstOrNull()
+                if (item?.isValid() != true) return@launchCatching
+                onSuccess(
+                    if (id == R.id.petDetailRecyclerFragment) {
+                        (item as? Egg)?.text
+                    } else {
+                        (item as? Egg)?.mountText
+                    }
                 )
-            )
+            }
         } else {
             onSuccess(
                 if (id == R.id.promoInfoFragment) {

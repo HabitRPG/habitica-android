@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -26,8 +27,8 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
-import io.reactivex.rxjava3.kotlin.combineLatest
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -92,9 +93,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.context = context
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-            adapter?.changeClassEvents?.subscribe {
+            adapter?.changeClassEvents = {
                 showClassChangeDialog(it)
-            }?.let { compositeSubscription.add(it) }
+            }
         }
 
         if (binding?.recyclerView?.layoutManager == null) {
@@ -180,62 +181,48 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             Shop.SEASONAL_SHOP -> "seasonal"
             else -> ""
         }
-        compositeSubscription.add(
-            this.inventoryRepository.retrieveShopInventory(shopUrl)
-                .map { shop1 ->
-                    if (shop1.identifier == Shop.MARKET) {
-                        val user = userViewModel.user.value
-                        val specialCategory = ShopCategory()
-                        specialCategory.text = getString(R.string.special)
-                        if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
-                            val item = ShopItem.makeGemItem(context?.resources)
-                            item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft
-                            specialCategory.items.add(item)
-                        }
-                        specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
-                        shop1.categories.add(specialCategory)
-                    }
-                    when (shop1.identifier) {
-                        Shop.TIME_TRAVELERS_SHOP -> {
-                            formatTimeTravelersShop(shop1)
-                        }
-                        Shop.SEASONAL_SHOP -> {
-                            shop1.categories.sortWith(
-                                compareBy<ShopCategory> { it.items.size != 1 }
-                                    .thenBy { it.items.firstOrNull()?.currency != "gold" }
-                                    .thenByDescending { it.items.firstOrNull()?.event?.end }
-                            )
-                            shop1
-                        }
-                        else -> {
-                            shop1
-                        }
-                    }
+        lifecycleScope.launchCatching({
+            binding?.recyclerView?.state = RecyclerViewState.FAILED
+        }) {
+            val shop1 = inventoryRepository.retrieveShopInventory(shopUrl) ?: return@launchCatching
+            if (shop1.identifier == Shop.MARKET) {
+                val user = userViewModel.user.value
+                val specialCategory = ShopCategory()
+                specialCategory.text = getString(R.string.special)
+                if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
+                    val item = ShopItem.makeGemItem(context?.resources)
+                    item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft
+                    specialCategory.items.add(item)
                 }
-                .subscribe(
-                    {
-                        this.shop = it
-                        this.adapter?.setShop(it)
-                    },
-                    {
-                        binding?.recyclerView?.state = RecyclerViewState.FAILED
-                        ExceptionHandler.reportError(it)
-                    },
-                    {
-                        binding?.refreshLayout?.isRefreshing = false
-                    }
-                )
-        )
+                specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
+                shop1.categories.add(specialCategory)
+            }
+            when (shop1.identifier) {
+                Shop.TIME_TRAVELERS_SHOP -> {
+                    formatTimeTravelersShop(shop1)
+                }
+                Shop.SEASONAL_SHOP -> {
+                    shop1.categories.sortWith(
+                        compareBy<ShopCategory> { it.items.size != 1 }
+                            .thenBy { it.items.firstOrNull()?.currency != "gold" }
+                            .thenByDescending { it.items.firstOrNull()?.event?.end }
+                    )
+                }
+            }
+            shop = shop1
+            adapter?.setShop(shop1)
+            binding?.refreshLayout?.isRefreshing = false
+        }
 
-        compositeSubscription.add(
-            this.inventoryRepository.getOwnedItems()
-                .subscribe({ adapter?.setOwnedItems(it) }, ExceptionHandler.rx())
-        )
-        compositeSubscription.add(
-            this.inventoryRepository.getInAppRewards()
+        lifecycleScope.launchCatching {
+            inventoryRepository.getOwnedItems()
+                .collect { adapter?.setOwnedItems(it) }
+        }
+        lifecycleScope.launchCatching {
+            inventoryRepository.getInAppRewards()
                 .map { rewards -> rewards.map { it.key } }
-                .subscribe({ adapter?.setPinnedItemKeys(it) }, ExceptionHandler.rx())
-        )
+                .collect { adapter?.setPinnedItemKeys(it) }
+        }
     }
 
     private fun formatTimeTravelersShop(shop: Shop): Shop {
@@ -264,29 +251,22 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun loadMarketGear() {
-        compositeSubscription.add(
-            inventoryRepository.retrieveMarketGear()
-                .combineLatest(
-                    inventoryRepository.getOwnedEquipment().map { equipment -> equipment.map { it.key } }
-                )
-                .map { (shop, equipment) ->
-                    for (category in shop.categories) {
+        lifecycleScope.launchCatching {
+            val shop = inventoryRepository.retrieveMarketGear()
+            inventoryRepository.getOwnedEquipment()
+                        .map { equipment -> equipment.map { it.key } }
+                .collect { equipment ->
+                    for (category in shop?.categories ?: emptyList()) {
                         val items = category.items.asSequence().filter {
                             !equipment.contains(it.key)
                         }.sortedBy { it.locked }.toList()
                         category.items.clear()
                         category.items.addAll(items)
                     }
-                    shop
+                    gearCategories = shop?.categories
+                    adapter?.gearCategories = shop?.categories ?: mutableListOf()
                 }
-                .subscribe(
-                    {
-                        this.gearCategories = it.categories
-                        adapter?.gearCategories = it.categories
-                    },
-                    ExceptionHandler.rx()
-                )
-        )
+        }
     }
 
     override fun injectFragment(component: UserComponent) {

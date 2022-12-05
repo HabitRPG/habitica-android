@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.databinding.FragmentQuestDetailBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.Member
@@ -42,16 +43,22 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentQuestDetailBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentQuestDetailBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentQuestDetailBinding {
         return FragmentQuestDetailBinding.inflate(inflater, container, false)
     }
 
@@ -107,9 +114,10 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val member = socialRepository.retrieveMember(quest?.leader)
             if (context != null && binding?.questLeaderView != null) {
-                binding?.questLeaderView?.text = context?.getString(R.string.quest_leader_header, member?.displayName)
+                binding?.questLeaderView?.text =
+                    context?.getString(R.string.quest_leader_header, member?.displayName)
             }
-            }
+        }
 
         val user = userViewModel.user.value
         if (binding?.questResponseWrapper != null) {
@@ -142,7 +150,10 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         }
         binding?.titleView?.text = questContent.text
         // We need to do this, because the quest description can contain markdown AND HTML.
-        binding?.descriptionView?.setText(MarkdownParser.parseMarkdown(questContent.notes).toHtml().fromHtml(), TextView.BufferType.SPANNABLE)
+        binding?.descriptionView?.setText(
+            MarkdownParser.parseMarkdown(questContent.notes).toHtml().fromHtml(),
+            TextView.BufferType.SPANNABLE
+        )
 
         binding?.questScrollImageView?.loadImage("inventory_quest_scroll_" + questContent.key)
     }
@@ -158,7 +169,8 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             if (quest?.active == true && participant.participatesInQuest == false) {
                 continue
             }
-            val participantView = inflater?.inflate(R.layout.quest_participant, binding?.questParticipantList, false)
+            val participantView =
+                inflater?.inflate(R.layout.quest_participant, binding?.questParticipantList, false)
             val textView = participantView?.findViewById<View>(R.id.participant_name) as? TextView
             textView?.text = participant.displayName
             val statusTextView = participantView?.findViewById<View>(R.id.status_view) as? TextView
@@ -167,15 +179,30 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     when (participant.participatesInQuest) {
                         null -> {
                             statusTextView?.setText(R.string.pending)
-                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.text_ternary))
+                            statusTextView?.setTextColor(
+                                ContextCompat.getColor(
+                                    it,
+                                    R.color.text_ternary
+                                )
+                            )
                         }
                         true -> {
                             statusTextView?.setText(R.string.accepted)
-                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.text_green))
+                            statusTextView?.setTextColor(
+                                ContextCompat.getColor(
+                                    it,
+                                    R.color.text_green
+                                )
+                            )
                         }
                         else -> {
                             statusTextView?.setText(R.string.declined)
-                            statusTextView?.setTextColor(ContextCompat.getColor(it, R.color.text_red))
+                            statusTextView?.setTextColor(
+                                ContextCompat.getColor(
+                                    it,
+                                    R.color.text_red
+                                )
+                            )
                         }
                     }
                 }
@@ -196,8 +223,10 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         } else {
             binding?.participantsHeader?.setText(R.string.invitations)
             @SuppressLint("SetTextI18n")
-            binding?.participantsHeaderCount?.text = participantCount.toString() + "/" + participants?.size
-            beginQuestMessage = getString(R.string.quest_begin_message, participantCount, participants?.size)
+            binding?.participantsHeaderCount?.text =
+                participantCount.toString() + "/" + participants?.size
+            beginQuestMessage =
+                getString(R.string.quest_begin_message, participantCount, participants?.size)
         }
     }
 
@@ -217,8 +246,9 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             alert.addButton(R.string.yes, true) { _, _ ->
                 val party = party
                 if (party != null) {
-                    socialRepository.forceStartQuest(party)
-                        .subscribe({ }, ExceptionHandler.rx())
+                    lifecycleScope.launchCatching {
+                        socialRepository.forceStartQuest(party)
+                    }
                 }
             }
             alert.addButton(R.string.no, false)
@@ -234,12 +264,11 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                     .setMessage(R.string.quest_abort_message)
                     .setPositiveButton(R.string.yes) { _, _ ->
                         party?.id?.let { partyID ->
-                            socialRepository.abortQuest(partyID)
-                                .subscribe({
-                                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                        userRepository.retrieveUser(true)
-                                    }
-                                    getActivity()?.supportFragmentManager?.popBackStack() }, ExceptionHandler.rx())
+                            lifecycleScope.launchCatching {
+                                socialRepository.abortQuest(partyID)
+                                userRepository.retrieveUser(true)
+                                getActivity()?.supportFragmentManager?.popBackStack()
+                            }
                         }
                     }.setNegativeButton(R.string.no) { _, _ -> }
                 builder.show()
@@ -248,13 +277,11 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                 alert.setMessage(R.string.quest_cancel_message)
                 alert.addButton(R.string.yes, true) { _, _ ->
                     party?.id?.let { partyID ->
-                        socialRepository.cancelQuest(partyID)
-                            .subscribe({
-                                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                    userRepository.retrieveUser(true)
-                                }
-                                getActivity()?.supportFragmentManager?.popBackStack()
-                                       }, ExceptionHandler.rx())
+                        lifecycleScope.launchCatching {
+                            socialRepository.cancelQuest(partyID)
+                            userRepository.retrieveUser(true)
+                            getActivity()?.supportFragmentManager?.popBackStack()
+                        }
                     }
                 }
                 alert.addButton(R.string.no, false)
@@ -269,13 +296,12 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
             .setPositiveButton(R.string.yes) { _, _ ->
                 party?.id?.let { partyID ->
-                    socialRepository.leaveQuest(partyID)
-                        .subscribe({
-                            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                socialRepository.retrieveGroup(partyID)
-                                userRepository.retrieveUser(true)
-                            }
-                            getActivity()?.supportFragmentManager?.popBackStack() }, ExceptionHandler.rx())
+                    lifecycleScope.launchCatching {
+                        socialRepository.leaveQuest(partyID)
+                        socialRepository.retrieveGroup(partyID)
+                        userRepository.retrieveUser(true)
+                        getActivity()?.supportFragmentManager?.popBackStack()
+                    }
                 }
             }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()

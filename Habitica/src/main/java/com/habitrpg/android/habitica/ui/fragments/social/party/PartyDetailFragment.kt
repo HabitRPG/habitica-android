@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -108,12 +109,10 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
 
         binding?.invitationsView?.rejectCall = {
-            socialRepository.rejectGroupInvite(it)
-                .subscribe({
-                           lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                               userRepository.retrieveUser(false, true)
-                           }
-                }, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                socialRepository.rejectGroupInvite(it)
+                userRepository.retrieveUser(false, true)
+            }
         }
 
         viewModel?.getGroupData()?.observe(viewLifecycleOwner) { updateParty(it) }
@@ -370,11 +369,12 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun getGroupChallenges(): List<Challenge> {
         val groupChallenges = mutableListOf<Challenge>()
-        userRepository.getUserFlowable().forEach {
-            it.challenges?.forEach {
-                challengeRepository.getChallenge(it.challengeID).forEach {
-                    if (it.groupId.equals(viewModel?.groupID)) {
-                        groupChallenges.add(it)
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect {
+                it?.challenges?.forEach { membership ->
+                    val challenge = challengeRepository.getChallenge(membership.challengeID).firstOrNull()
+                    if (challenge != null && challenge.groupId == viewModel?.groupID) {
+                        groupChallenges.add(challenge)
                     }
                 }
             }

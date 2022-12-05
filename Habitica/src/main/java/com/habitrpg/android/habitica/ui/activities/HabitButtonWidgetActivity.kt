@@ -42,7 +42,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
         return R.layout.widget_configure_habit_button
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = WidgetConfigureHabitButtonBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -75,10 +75,9 @@ class HabitButtonWidgetActivity : BaseActivity() {
         }
 
         adapter = SkillTasksRecyclerViewAdapter()
-        adapter?.getTaskSelectionEvents()?.subscribe(
-            { task -> taskSelected(task.id) },
-            ExceptionHandler.rx()
-        )?.let { compositeSubscription.add(it) }
+        adapter?.onTaskSelection = {
+            taskSelected(it.id)
+        }
         binding.recyclerView.adapter = adapter
 
         CoroutineScope(Dispatchers.Main + job).launch(ExceptionHandler.coroutine()) {

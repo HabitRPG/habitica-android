@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityRyaBinding
@@ -26,15 +27,21 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         binding = ActivityRyaBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
-        viewModel.tasks.observe(this) {
-            if (!viewModel.hasTaskData) return@observe
-            if (it.isEmpty()) {
-                runCron()
-                return@observe
+        viewModel.tasks.observe(
+            this,
+            object : Observer<List<Task>> {
+                override fun onChanged(list: List<Task>) {
+                    if (list.isEmpty()) {
+                        runCron()
+                        viewModel.tasks.removeObserver(this)
+                    } else {
+                        binding.scrollView.isVisible = true
+                        createTaskListViews(list)
+                        viewModel.tasks.removeObserver(this)
+                    }
+                }
             }
-            binding.scrollView.isVisible = true
-            createTaskListViews(it)
-        }
+        )
 
         binding.ryaButton.setOnClickListener {
             binding.titleView.text = getString(R.string.check_off_yesterday)
@@ -58,9 +65,9 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         if (!viewModel.hasRunCron) {
             startActivity(
                 Intent(this, RYAActivity::class.java)
-                .apply {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                })
+                    .apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    })
         }
         super.onDestroy()
     }

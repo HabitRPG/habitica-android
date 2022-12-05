@@ -7,6 +7,7 @@ import android.media.RingtoneManager
 import androidx.annotation.CallSuper
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -32,6 +33,7 @@ abstract class HabiticaLocalNotification(
         val path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         return notificationBuilder
             .setSound(path)
+            .setColor(ContextCompat.getColor(context, R.color.brand_300))
     }
 
     @CallSuper

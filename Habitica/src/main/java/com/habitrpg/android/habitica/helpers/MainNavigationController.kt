@@ -70,6 +70,6 @@ object MainNavigationController {
     }
 
     fun navigateBack() {
-        navController?.navigateUp()
+        navController?.popBackStack()
     }
 }

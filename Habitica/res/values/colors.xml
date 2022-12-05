@@ -19,7 +19,7 @@
     <color name="checkbox_checked_fill">#c8ffffff</color>
     <color name="checkbox_checklist_fill">#23000000</color>
 
-    <color name="habit_inactive_gray">#F9F9F9</color>
+    <color name="habit_inactive_gray">@color/window_background</color>
 
     <!-- buttons -->
     <color name="btn_success">@color/green_10</color>

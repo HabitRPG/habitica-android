@@ -12,12 +12,13 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,10 +46,11 @@ class EquipmentDetailFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        compositeSubscription.add(
-            this.adapter.equipEvents.flatMapMaybe { key -> inventoryRepository.equipGear(key, isCostume ?: false).firstElement() }
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+        adapter.onEquip = {
+            lifecycleScope.launchCatching {
+                inventoryRepository.equipGear(it, isCostume ?: false)
+            }
+        }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -82,7 +84,11 @@ class EquipmentDetailFragment :
         binding?.recyclerView?.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
-        type?.let { type -> inventoryRepository.getOwnedEquipment(type).subscribe({ this.adapter.data = it }, ExceptionHandler.rx()) }
+        type?.let { type ->
+            lifecycleScope.launchCatching {
+                inventoryRepository.getOwnedEquipment(type).collect { adapter.data = it }
+            }
+        }
     }
 
     override fun onDestroy() {

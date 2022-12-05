@@ -16,7 +16,11 @@ import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -55,10 +59,12 @@ class TaskAlarmManager(
     // We currently only use this function to schedule the next reminder for dailies
     // We may be able to use repeating alarms instead of this in the future
     fun addAlarmForTaskId(taskId: String) {
-        taskRepository.getTaskCopy(taskId)
-            .filter { task -> task.isValid && task.isManaged && TaskType.DAILY == task.type }
-            .firstElement()
-            .subscribe({ this.setAlarmsForTask(it) }, ExceptionHandler.rx())
+        MainScope().launch(ExceptionHandler.coroutine()) {
+            val task = taskRepository.getTaskCopy(taskId)
+                .filter { task -> task.isValid && task.isManaged && TaskType.DAILY == task.type }
+                .first()
+            setAlarmsForTask(task)
+        }
     }
 
     suspend fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {
@@ -216,7 +222,11 @@ class TaskAlarmManager(
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
             } else {
-                alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
+                try {
+                    alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
+                } catch (e: SecurityException) {
+                    alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
+                }
             }
         }
     }

@@ -50,7 +50,7 @@
         android:gravity="center_horizontal"
         android:textColor="@color/text_secondary"
         style="@style/Body1"
-        app:backgroundTint="@color/content_background_offset"
+        app:backgroundTint="?attr/colorContentBackgroundOffset"
         android:textSize="16sp"
         android:inputType="number"/>
 </merge>

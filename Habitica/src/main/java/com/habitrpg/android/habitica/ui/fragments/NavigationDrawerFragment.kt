@@ -29,11 +29,9 @@ import com.habitrpg.android.habitica.databinding.DrawerMainBinding
 import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
@@ -48,12 +46,10 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.common.habitica.extensions.getThemeColor
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
@@ -70,16 +66,22 @@ class NavigationDrawerFragment : DialogFragment() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var contentRepository: ContentRepository
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -93,8 +95,6 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private lateinit var adapter: NavigationDrawerAdapter
 
-    private var subscriptions: CompositeDisposable? = null
-
     val isDrawerOpen: Boolean
         get() = drawerLayout?.isDrawerOpen(GravityCompat.START) ?: false
 
@@ -103,11 +103,13 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val context = context
         adapter = if (context != null) {
-            NavigationDrawerAdapter(context.getThemeColor(R.attr.colorPrimary), context.getThemeColor(R.attr.colorPrimaryOffset))
+            NavigationDrawerAdapter(
+                context.getThemeColor(R.attr.colorPrimary),
+                context.getThemeColor(R.attr.colorPrimaryOffset)
+            )
         } else {
             NavigationDrawerAdapter(0, 0)
         }
-        subscriptions = CompositeDisposable()
         HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
@@ -132,62 +134,40 @@ class NavigationDrawerFragment : DialogFragment() {
         binding = DrawerMainBinding.bind(view)
 
         binding?.recyclerView?.adapter = adapter
-        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-        (binding?.recyclerView?.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+        binding?.recyclerView?.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
+        (binding?.recyclerView?.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations =
+            false
         initializeMenuItems()
 
-        subscriptions?.add(
-            adapter.getItemSelectionEvents().subscribe(
-                {
+            adapter.itemSelectedEvents = {
                     setSelection(it.transitionId, it.bundle, true)
-                },
-                ExceptionHandler.rx()
-            )
-        )
-        subscriptions?.add(
-            adapter.getPromoCloseEvents().subscribe(
-                {
+                }
+            adapter.promoClosedSubject = {
                     sharedPreferences.edit {
                         putBoolean("hide$it", true)
                     }
                     updatePromo()
-                },
-                ExceptionHandler.rx()
-            )
-        )
+                }
 
-        subscriptions?.add(
-            Flowable.combineLatest(
-                contentRepository.getWorldState(), inventoryRepository.getAvailableLimitedItems()
-            ) { state, items ->
-                return@combineLatest Pair(state, items)
-            }.subscribe(
-                { pair ->
+        lifecycleScope.launchCatching {
+            contentRepository.getWorldState()
+                .combine(
+                    inventoryRepository.getAvailableLimitedItems()
+                ) { state, items -> Pair(state, items) }
+                .collect { pair ->
                     val gearEvent = pair.first.events.firstOrNull { it.gear }
                     createUpdatingJob("seasonal", {
                         gearEvent?.isCurrentlyActive == true || pair.second.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
-                        if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) 1.toDuration(DurationUnit.SECONDS) else 1.toDuration(DurationUnit.MINUTES)
+                        if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) 1.toDuration(
+                            DurationUnit.SECONDS
+                        ) else 1.toDuration(DurationUnit.MINUTES)
                     }) {
                         updateSeasonalMenuEntries(gearEvent, pair.second)
                     }
-                },
-                ExceptionHandler.rx()
-            )
-        )
-
-        if (configManager.enableTeamBoards()) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.getTeamPlans()
-                    .distinctUntilChanged()
-                    .collect {
-                        getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = it.isNotEmpty()
-                        adapter.setTeams(it)
-                    }
-            }
-        } else {
-            getItemWithIdentifier(SIDEBAR_TEAMS)?.isVisible = false
+                }
         }
 
         userViewModel.user.observe(viewLifecycleOwner) {
@@ -196,8 +176,22 @@ class NavigationDrawerFragment : DialogFragment() {
             }
         }
 
-        binding?.messagesButtonWrapper?.setOnClickListener { setSelection(R.id.inboxFragment, null, true, preventReselection = false) }
-        binding?.settingsButtonWrapper?.setOnClickListener { setSelection(R.id.prefsActivity, null, true, preventReselection = false) }
+        binding?.messagesButtonWrapper?.setOnClickListener {
+            setSelection(
+                R.id.inboxFragment,
+                null,
+                true,
+                preventReselection = false
+            )
+        }
+        binding?.settingsButtonWrapper?.setOnClickListener {
+            setSelection(
+                R.id.prefsActivity,
+                null,
+                true,
+                preventReselection = false
+            )
+        }
         binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
     }
 
@@ -234,7 +228,8 @@ class NavigationDrawerFragment : DialogFragment() {
         shop.pillText = context?.getString(R.string.open)
         if (gearEvent?.isCurrentlyActive == true) {
             shop.isVisible = true
-            shop.subtitle = context?.getString(R.string.open_for, gearEvent.end?.getShortRemainingString())
+            shop.subtitle =
+                context?.getString(R.string.open_for, gearEvent.end?.getShortRemainingString())
         } else {
             shop.isVisible = false
         }
@@ -243,7 +238,10 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun updateUser(user: User) {
         binding?.avatarView?.setOnClickListener {
-            MainNavigationController.navigate(R.id.openProfileActivity, bundleOf(Pair("userID", user.id)))
+            MainNavigationController.navigate(
+                R.id.openProfileActivity,
+                bundleOf(Pair("userID", user.id))
+            )
         }
 
         setMessagesCount(user.inbox)
@@ -304,7 +302,8 @@ class NavigationDrawerFragment : DialogFragment() {
             val daysDiff = TimeUnit.MILLISECONDS.toDays(msDiff)
             if (daysDiff <= 30) {
                 context?.let {
-                    subscriptionItem?.subtitle = user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
+                    subscriptionItem?.subtitle =
+                        user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
                     subscriptionItem?.subtitleTextColor = when {
                         daysDiff <= 2 -> ContextCompat.getColor(it, R.color.red_100)
                         daysDiff <= 7 -> ContextCompat.getColor(it, R.color.brand_400)
@@ -340,7 +339,6 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     override fun onDestroy() {
-        subscriptions?.dispose()
         socialRepository.close()
         inventoryRepository.close()
         userRepository.close()
@@ -352,39 +350,182 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun initializeMenuItems() {
         val items = ArrayList<HabiticaDrawerItem>()
         context?.let { context ->
-            items.add(HabiticaDrawerItem(R.id.tasksFragment, SIDEBAR_TASKS, context.getString(R.string.sidebar_tasks)))
-            items.add(HabiticaDrawerItem(R.id.skillsFragment, SIDEBAR_SKILLS, context.getString(R.string.sidebar_skills)))
-            items.add(HabiticaDrawerItem(R.id.statsFragment, SIDEBAR_STATS, context.getString(R.string.sidebar_stats)))
-            items.add(HabiticaDrawerItem(R.id.achievementsFragment, SIDEBAR_ACHIEVEMENTS, context.getString(R.string.sidebar_achievements)))
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.tasksFragment,
+                    SIDEBAR_TASKS,
+                    context.getString(R.string.sidebar_tasks)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.skillsFragment,
+                    SIDEBAR_SKILLS,
+                    context.getString(R.string.sidebar_skills)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.statsFragment,
+                    SIDEBAR_STATS,
+                    context.getString(R.string.sidebar_stats)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.achievementsFragment,
+                    SIDEBAR_ACHIEVEMENTS,
+                    context.getString(R.string.sidebar_achievements)
+                )
+            )
 
-            items.add(HabiticaDrawerItem(0, SIDEBAR_TEAMS, context.getString(R.string.sidebar_teams), true))
-
-            items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_shops), true))
-            items.add(HabiticaDrawerItem(R.id.marketFragment, SIDEBAR_SHOPS_MARKET, context.getString(R.string.market)))
-            items.add(HabiticaDrawerItem(R.id.questShopFragment, SIDEBAR_SHOPS_QUEST, context.getString(R.string.questShop)))
-            val seasonalShopEntry = HabiticaDrawerItem(R.id.seasonalShopFragment, SIDEBAR_SHOPS_SEASONAL, context.getString(R.string.seasonalShop))
+            items.add(
+                HabiticaDrawerItem(
+                    0,
+                    SIDEBAR_INVENTORY,
+                    context.getString(R.string.sidebar_shops),
+                    isHeader = true
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.marketFragment,
+                    SIDEBAR_SHOPS_MARKET,
+                    context.getString(R.string.market)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.questShopFragment,
+                    SIDEBAR_SHOPS_QUEST,
+                    context.getString(R.string.questShop)
+                )
+            )
+            val seasonalShopEntry = HabiticaDrawerItem(
+                R.id.seasonalShopFragment,
+                SIDEBAR_SHOPS_SEASONAL,
+                context.getString(R.string.seasonalShop)
+            )
             seasonalShopEntry.isVisible = false
             items.add(seasonalShopEntry)
-            items.add(HabiticaDrawerItem(R.id.timeTravelersShopFragment, SIDEBAR_SHOPS_TIMETRAVEL, context.getString(R.string.timeTravelers)))
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.timeTravelersShopFragment,
+                    SIDEBAR_SHOPS_TIMETRAVEL,
+                    context.getString(R.string.timeTravelers)
+                )
+            )
 
-            items.add(HabiticaDrawerItem(0, SIDEBAR_INVENTORY, context.getString(R.string.sidebar_section_inventory), true))
-            items.add(HabiticaDrawerItem(R.id.itemsFragment, SIDEBAR_ITEMS, context.getString(R.string.sidebar_items)))
-            items.add(HabiticaDrawerItem(R.id.equipmentOverviewFragment, SIDEBAR_EQUIPMENT, context.getString(R.string.sidebar_equipment)))
-            items.add(HabiticaDrawerItem(R.id.stableFragment, SIDEBAR_STABLE, context.getString(R.string.sidebar_stable)))
-            items.add(HabiticaDrawerItem(R.id.avatarOverviewFragment, SIDEBAR_AVATAR, context.getString(R.string.sidebar_avatar)))
-            items.add(HabiticaDrawerItem(R.id.gemPurchaseActivity, SIDEBAR_GEMS, context.getString(R.string.sidebar_gems)))
-            items.add(HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION, context.getString(R.string.sidebar_subscription)))
+            items.add(
+                HabiticaDrawerItem(
+                    0,
+                    SIDEBAR_INVENTORY,
+                    context.getString(R.string.sidebar_section_inventory),
+                    isHeader = true
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.avatarOverviewFragment,
+                    SIDEBAR_AVATAR,
+                    context.getString(R.string.sidebar_avatar_equipment)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.itemsFragment,
+                    SIDEBAR_ITEMS,
+                    context.getString(R.string.sidebar_items)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.stableFragment,
+                    SIDEBAR_STABLE,
+                    context.getString(R.string.sidebar_stable)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.gemPurchaseActivity,
+                    SIDEBAR_GEMS,
+                    context.getString(R.string.sidebar_gems)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.subscriptionPurchaseActivity,
+                    SIDEBAR_SUBSCRIPTION,
+                    context.getString(R.string.sidebar_subscription)
+                )
+            )
 
-            items.add(HabiticaDrawerItem(0, SIDEBAR_SOCIAL, context.getString(R.string.sidebar_section_social), true))
-            items.add(HabiticaDrawerItem(R.id.partyFragment, SIDEBAR_PARTY, context.getString(R.string.sidebar_party)))
-            items.add(HabiticaDrawerItem(R.id.tavernFragment, SIDEBAR_TAVERN, context.getString(R.string.sidebar_tavern)))
-            items.add(HabiticaDrawerItem(R.id.guildOverviewFragment, SIDEBAR_GUILDS, context.getString(R.string.sidebar_guilds)))
-            items.add(HabiticaDrawerItem(R.id.challengesOverviewFragment, SIDEBAR_CHALLENGES, context.getString(R.string.sidebar_challenges)))
+            items.add(
+                HabiticaDrawerItem(
+                    0,
+                    SIDEBAR_SOCIAL,
+                    context.getString(R.string.sidebar_section_social),
+                    isHeader = true
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.partyFragment,
+                    SIDEBAR_PARTY,
+                    context.getString(R.string.sidebar_party)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.tavernFragment,
+                    SIDEBAR_TAVERN,
+                    context.getString(R.string.sidebar_tavern)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.guildOverviewFragment,
+                    SIDEBAR_GUILDS,
+                    context.getString(R.string.sidebar_guilds)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.challengesOverviewFragment,
+                    SIDEBAR_CHALLENGES,
+                    context.getString(R.string.sidebar_challenges)
+                )
+            )
 
-            items.add(HabiticaDrawerItem(0, SIDEBAR_ABOUT_HEADER, context.getString(R.string.sidebar_about), true))
-            items.add(HabiticaDrawerItem(R.id.newsFragment, SIDEBAR_NEWS, context.getString(R.string.sidebar_news)))
-            items.add(HabiticaDrawerItem(R.id.supportMainFragment, SIDEBAR_HELP, context.getString(R.string.sidebar_help)))
-            items.add(HabiticaDrawerItem(R.id.aboutFragment, SIDEBAR_ABOUT, context.getString(R.string.sidebar_about)))
+            items.add(
+                HabiticaDrawerItem(
+                    0,
+                    SIDEBAR_ABOUT_HEADER,
+                    context.getString(R.string.sidebar_about),
+                    isHeader = true
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.newsFragment,
+                    SIDEBAR_NEWS,
+                    context.getString(R.string.sidebar_news)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.supportMainFragment,
+                    SIDEBAR_HELP,
+                    context.getString(R.string.sidebar_help)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.aboutFragment,
+                    SIDEBAR_ABOUT,
+                    context.getString(R.string.sidebar_about)
+                )
+            )
         }
 
         val promoItem = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_PROMO)
@@ -393,7 +534,8 @@ class NavigationDrawerFragment : DialogFragment() {
         items.add(promoItem)
 
         if (configManager.showSubscriptionBanner()) {
-            val item = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
+            val item =
+                HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
             item.itemViewType = 2
             items.add(item)
         }
@@ -439,14 +581,15 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    private val notificationClickResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            (activity as? MainActivity)?.notificationsViewModel?.click(
-                it.data?.getStringExtra("notificationId") ?: "",
-                MainNavigationController
-            )
+    private val notificationClickResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (activity as? MainActivity)?.notificationsViewModel?.click(
+                    it.data?.getStringExtra("notificationId") ?: "",
+                    MainNavigationController
+                )
+            }
         }
-    }
 
     /**
      * Users of this fragment must call this method to set UP the navigation drawer interactions.
@@ -466,22 +609,22 @@ class NavigationDrawerFragment : DialogFragment() {
         this.drawerLayout?.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // set UP the drawer's list view with items and click listener
 
-        subscriptions?.add(
-            viewModel.getNotificationCount().subscribeWithErrorHandler {
+        lifecycleScope.launchCatching {
+            viewModel.getNotificationCount().collect {
                 setNotificationsCount(it)
             }
-        )
-        subscriptions?.add(
-            viewModel.allNotificationsSeen().subscribeWithErrorHandler {
+        }
+        lifecycleScope.launchCatching {
+            viewModel.allNotificationsSeen().collect {
                 setNotificationsSeen(it)
             }
-        )
-        subscriptions?.add(
-            viewModel.getHasPartyNotification().subscribeWithErrorHandler {
+        }
+        lifecycleScope.launchCatching {
+            viewModel.getHasPartyNotification().collect {
                 val partyMenuItem = getItemWithIdentifier(SIDEBAR_PARTY)
                 partyMenuItem?.showBubble = it
             }
-        )
+        }
     }
 
     fun openDrawer() {
@@ -608,15 +751,20 @@ class NavigationDrawerFragment : DialogFragment() {
             }
             if (promotedItem == null) return@let
             promotedItem.pillText = context?.getString(R.string.sale)
-            promotedItem.pillBackground = context?.let { activePromo.pillBackgroundDrawable(it) }
+            promotedItem.pillBackground =
+                context?.let { activePromo.pillBackgroundDrawable(it) }
             createUpdatingJob(activePromo.promoType.name, {
                 activePromo.isActive
             }, {
-                val diff = (activePromo.endDate.time - Date().time).toDuration(DurationUnit.SECONDS)
+                val diff =
+                    (activePromo.endDate.time - Date().time).toDuration(DurationUnit.SECONDS)
                 1.toDuration(diff.getMinuteOrSeconds())
             }) {
                 if (activePromo.isActive) {
-                    promotedItem.subtitle = context?.getString(R.string.sale_ends_in, activePromo.endDate.getShortRemainingString())
+                    promotedItem.subtitle = context?.getString(
+                        R.string.sale_ends_in,
+                        activePromo.endDate.getShortRemainingString()
+                    )
                     updateItem(promotedItem)
                 } else {
                     promotedItem.subtitle = null
@@ -636,7 +784,6 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_SKILLS = "skills"
         const val SIDEBAR_STATS = "stats"
         const val SIDEBAR_ACHIEVEMENTS = "achievements"
-        const val SIDEBAR_TEAMS = "teams"
         const val SIDEBAR_SOCIAL = "social"
         const val SIDEBAR_TAVERN = "tavern"
         const val SIDEBAR_PARTY = "party"

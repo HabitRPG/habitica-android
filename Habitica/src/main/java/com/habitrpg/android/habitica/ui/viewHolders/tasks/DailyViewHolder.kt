@@ -69,8 +69,8 @@ class DailyViewHolder(
         super.bind(data, position, displayMode, ownerID)
     }
 
-    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
-        return newTask?.isDisplayedActive ?: false
+    override fun shouldDisplayAsActive(task: Task?, userID: String?): Boolean {
+        return task?.isDisplayedActiveForUser(userID) ?: false
     }
 
     override fun configureSpecialTaskTextView(task: Task) {

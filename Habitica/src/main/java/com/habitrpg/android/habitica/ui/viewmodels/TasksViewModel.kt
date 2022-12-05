@@ -14,23 +14,22 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
 class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
-    private var compositeSubscription: CompositeDisposable = CompositeDisposable()
-
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
@@ -81,9 +80,9 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
                         }
                     }
             }
-            compositeSubscription.add(
-                userRepository.retrieveTeamPlans().subscribe({}, ExceptionHandler.rx())
-            )
+            viewModelScope.launchCatching {
+                userRepository.retrieveTeamPlans()
+            }
         }
     }
 
@@ -116,7 +115,7 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
         direction: TaskDirection,
         onResult: (TaskScoringResult, Int) -> Unit
     ) {
-        compositeSubscription.add(
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.taskChecked(
                 null,
                 task.id ?: "",
@@ -134,8 +133,8 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
                         putLong("last_task_reporting", Date().time)
                     }
                 }
-            }.subscribe({}, ExceptionHandler.rx())
-        )
+            }
+        }
     }
 
     private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> =
@@ -312,11 +311,22 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
         return task.isAssignedToUser(userViewModel.userID) || task.group?.assignedUsers?.isEmpty() != false
     }
 
-    override fun canEditTask(task: Task): Boolean {
+    override suspend fun canEditTask(task: Task): Boolean {
         if (!task.isGroupTask) {
             return true
         }
-        return false
+        val groupID = task.group?.groupID ?: return true
+        val group = userRepository.getTeamPlan(groupID).firstOrNull()
+        return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
+    }
+
+    override suspend fun canAddTasks(): Boolean {
+        if (isPersonalBoard) {
+            return true
+        }
+        val groupID = ownerID.value ?: return true
+        val group = userRepository.getTeamPlan(groupID).firstOrNull()
+        return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
     }
 
     override fun assignedTextForTask(resources: Resources, assignedUsers: List<String>): String {

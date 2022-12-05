@@ -12,9 +12,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.GearListItemBinding
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.common.habitica.extensions.loadImage
 
 class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
 
@@ -22,7 +21,7 @@ class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, Equipmen
     var isCostume: Boolean? = null
     var type: String? = null
 
-    val equipEvents: PublishSubject<String> = PublishSubject.create()
+    var onEquip: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GearViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.gear_list_item, parent, false)
@@ -45,7 +44,7 @@ class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, Equipmen
             itemView.setOnClickListener {
                 val key = gear?.key
                 if (key != null) {
-                    equipEvents.onNext(key)
+                    onEquip?.invoke(key)
                     equippedGear = if (key == equippedGear) {
                         type + "_base_0"
                     } else {

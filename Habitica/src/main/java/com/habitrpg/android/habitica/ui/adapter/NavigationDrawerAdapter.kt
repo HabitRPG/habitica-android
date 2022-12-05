@@ -4,22 +4,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
-import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.common.habitica.extensions.dpToPx
 
 class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -49,13 +43,10 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
             notifyDataSetChanged()
         }
 
-    private val itemSelectedEvents = PublishSubject.create<HabiticaDrawerItem>()
-    private val promoClosedSubject = PublishSubject.create<String>()
+    var itemSelectedEvents: ((HabiticaDrawerItem) -> Unit)? = null
+    var promoClosedSubject: ((String) -> Unit)? = null
 
     var activePromo: HabiticaPromotion? = null
-
-    fun getItemSelectionEvents(): Flowable<HabiticaDrawerItem> = itemSelectedEvents.toFlowable(BackpressureStrategy.DROP)
-    fun getPromoCloseEvents(): Flowable<String> = promoClosedSubject.toFlowable(BackpressureStrategy.DROP)
 
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
         items.find { it.identifier == identifier }
@@ -77,32 +68,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
         notifyDataSetChanged()
     }
 
-    fun setTeams(teams: List<TeamPlan>) {
-        var teamHeaderIndex = -1
-        var nextHeaderIndex = -1
-        for ((index, item) in items.withIndex()) {
-            if (teamHeaderIndex != -1 && item.isHeader) {
-                nextHeaderIndex = index
-                break
-            } else if (item.identifier == NavigationDrawerFragment.SIDEBAR_TEAMS) {
-                teamHeaderIndex = index
-            }
-        }
-        if (teamHeaderIndex != -1 && nextHeaderIndex != -1) {
-            for (x in nextHeaderIndex - 1 downTo teamHeaderIndex + 1) {
-                items.removeAt(x)
-                notifyItemRemoved(x)
-            }
-            for ((index, team) in teams.withIndex()) {
-                val item = HabiticaDrawerItem(R.id.tasksFragment, team.id, team.summary)
-                item.bundle = bundleOf(Pair("ownerID", team.id))
-                val newIndex = teamHeaderIndex + index + 1
-                items.add(newIndex, item)
-                notifyItemInserted(newIndex)
-            }
-        }
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val drawerItem = getItem(position)
         when {
@@ -110,7 +75,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 val itemHolder = holder as? DrawerItemViewHolder
                 itemHolder?.tintColor = tintColor
                 itemHolder?.bind(drawerItem, drawerItem.transitionId == selectedItem)
-                itemHolder?.itemView?.setOnClickListener { itemSelectedEvents.onNext(drawerItem) }
+                itemHolder?.itemView?.setOnClickListener { itemSelectedEvents?.invoke(drawerItem) }
             }
             getItemViewType(position) == 1 -> {
                 (holder as? SectionHeaderViewHolder)?.backgroundTintColor = backgroundTintColor
@@ -120,7 +85,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 activePromo?.let { promo ->
                     (holder as? PromoMenuViewHolder)?.bind(promo)
                     (holder as? PromoMenuViewHolder)?.promoView?.binding?.closeButton?.setOnClickListener {
-                        promoClosedSubject.onNext(promo.identifier)
+                        promoClosedSubject?.invoke(promo.identifier)
                     }
                 }
             }

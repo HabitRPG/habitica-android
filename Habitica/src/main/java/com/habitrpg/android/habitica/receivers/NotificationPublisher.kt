@@ -15,19 +15,17 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
-import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.functions.BiFunction
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.firstOrNull
 import java.util.Calendar
 import java.util.Date
 import java.util.Random
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
 // https://gist.github.com/BrandonSmith/6679223
 class NotificationPublisher : BroadcastReceiver() {
 
@@ -58,26 +56,20 @@ class NotificationPublisher : BroadcastReceiver() {
         }
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
-            taskRepository.getTasksFlowable(TaskType.DAILY, null, emptyArray()).firstElement().zipWith(
-                userRepository.getUserFlowable().firstElement(),
-                BiFunction<List<Task>, User, Pair<List<Task>, User>> { tasks, user ->
-                    return@BiFunction Pair(tasks, user)
+            MainScope().launchCatching {
+                val tasks = taskRepository.getTasks(TaskType.DAILY, null, emptyArray()).firstOrNull()
+                val user = userRepository.getUser().firstOrNull()
+                var showNotifications = false
+                for (task in tasks ?: emptyList()) {
+                    if (task.checkIfDue()) {
+                        showNotifications = true
+                        break
+                    }
                 }
-            ).subscribe(
-                { pair ->
-                    var showNotifications = false
-                    for (task in pair.first) {
-                        if (task.checkIfDue()) {
-                            showNotifications = true
-                            break
-                        }
-                    }
-                    if (showNotifications) {
-                        notify(intent, buildNotification(wasInactive, pair.second.authentication?.timestamps?.createdAt))
-                    }
-                },
-                ExceptionHandler.rx()
-            )
+                if (showNotifications) {
+                    notify(intent, buildNotification(wasInactive, user?.authentication?.timestamps?.createdAt))
+                }
+            }
         } else {
             notify(intent, buildNotification(wasInactive))
         }
@@ -145,8 +137,7 @@ class NotificationPublisher : BroadcastReceiver() {
 
     private fun getRandomDailyTip(): String {
         val thisContext = context ?: return ""
-        val index = Random().nextInt(4)
-        return when (index) {
+        return when (Random().nextInt(10)) {
             0 -> thisContext.getString(R.string.daily_tip_0)
             1 -> thisContext.getString(R.string.daily_tip_1)
             2 -> thisContext.getString(R.string.daily_tip_2)
@@ -162,7 +153,6 @@ class NotificationPublisher : BroadcastReceiver() {
     }
 
     companion object {
-
         var NOTIFICATION_ID = "notification-id"
         var CHECK_DAILIES = "check-dailies"
     }

@@ -13,8 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSkillsBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.User
@@ -27,8 +27,8 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,7 +51,7 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         savedInstanceState: Bundle?
     ): View? {
         adapter = SkillsRecyclerViewAdapter()
-        adapter?.useSkillEvents?.subscribeWithErrorHandler { onSkillSelected(it) }?.let { compositeSubscription.add(it) }
+        adapter?.onUseSkill = { onSkillSelected(it) }
 
         this.tutorialStepIdentifier = "skills"
         this.tutorialTexts = listOf(getString(R.string.tutorial_skills))
@@ -79,19 +79,19 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         adapter?.mana = user.stats?.mp ?: 0.0
         adapter?.level = user.stats?.lvl ?: 0
         adapter?.specialItems = user.items?.special
-        Flowable.combineLatest(
-            userRepository.getSkills(user),
-            userRepository.getSpecialItems(user)
-        ) { skills, items ->
-            val allEntries = mutableListOf<Skill>()
-            for (skill in skills) {
-                allEntries.add(skill)
-            }
-            for (item in items) {
-                allEntries.add(item)
-            }
-            return@combineLatest allEntries
-        }.subscribe({ skills -> adapter?.setSkillList(skills) }, ExceptionHandler.rx())
+        lifecycleScope.launchCatching {
+            userRepository.getSkills(user)
+                .combine(userRepository.getSpecialItems(user)) { skills, items ->
+                    val allEntries = mutableListOf<Skill>()
+                    for (skill in skills) {
+                        allEntries.add(skill)
+                    }
+                    for (item in items) {
+                        allEntries.add(item)
+                    }
+                    return@combine allEntries
+                }.collect { skills -> adapter?.setSkillList(skills) }
+        }
     }
 
     private fun onSkillSelected(skill: Skill) {
@@ -161,16 +161,15 @@ class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
         if (skill == null) {
             return
         }
-        val observable: Flowable<SkillResponse> = if (taskId != null) {
-            userRepository.useSkill(skill.key, skill.target, taskId)
-        } else {
-            userRepository.useSkill(skill.key, skill.target)
+        lifecycleScope.launchCatching {
+            val skillResponse = if (taskId != null) {
+                userRepository.useSkill(skill.key, skill.target, taskId)
+            } else {
+                userRepository.useSkill(skill.key, skill.target)
+            }
+            if (skillResponse != null) {
+                displaySkillResult(skill, skillResponse)
+            }
         }
-        compositeSubscription.add(
-            observable.subscribe(
-                { skillResponse -> this.displaySkillResult(skill, skillResponse) },
-                ExceptionHandler.rx()
-            )
-        )
     }
 }

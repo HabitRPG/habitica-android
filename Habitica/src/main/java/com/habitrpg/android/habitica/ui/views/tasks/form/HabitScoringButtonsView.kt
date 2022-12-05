@@ -1,81 +1,140 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
-import android.content.Context
-import android.graphics.Typeface
-import android.util.AttributeSet
-import android.view.Gravity
-import android.view.accessibility.AccessibilityEvent
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.databinding.TaskFormHabitScoringBinding
-import com.habitrpg.android.habitica.extensions.asDrawable
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 
-class HabitScoringButtonsView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
-    private val binding = TaskFormHabitScoringBinding.inflate(context.layoutInflater, this)
-
-    var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
-    var textTintColor: Int? = null
-
-    override fun setEnabled(isEnabled: Boolean) {
-        super.setEnabled(isEnabled)
-        binding.positiveView.isEnabled = isEnabled
-        binding.negativeView.isEnabled = isEnabled
+@Composable
+fun HabitScoringSelector(
+    selectedUp: Boolean,
+    selectedDown: Boolean,
+    onSelectUp: () -> Unit,
+    onSelectDown: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(30.dp, Alignment.CenterHorizontally),
+        modifier = modifier
+    ) {
+        HabitScoringSelection(
+            selected = selectedUp,
+            icon = painterResource(id = R.drawable.habit_plus),
+            text = stringResource(R.string.positive_habit_form),
+            onSelect = onSelectUp
+        )
+        HabitScoringSelection(
+            selected = selectedDown,
+            icon = painterResource(id = R.drawable.habit_minus),
+            text = stringResource(R.string.negative_habit_form),
+            onSelect = onSelectDown
+        )
     }
+}
 
-    var isPositive = true
-        set(value) {
-            field = value
-            binding.positiveImageView.setImageDrawable(HabiticaIconsHelper.imageOfHabitControlPlus(tintColor, value).asDrawable(resources))
-            if (value) {
-                binding.positiveTextView.setTextColor(textTintColor ?: tintColor)
-                binding.positiveView.contentDescription = toContentDescription(R.string.positive_habit_form, R.string.on)
-                binding.positiveTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-            } else {
-                binding.positiveTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-                binding.positiveView.contentDescription = toContentDescription(R.string.positive_habit_form, R.string.off)
-                binding.positiveTextView.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
-            }
-        }
-
-    var isNegative = true
-        set(value) {
-            field = value
-            binding.negativeImageView.setImageDrawable(HabiticaIconsHelper.imageOfHabitControlMinus(tintColor, value).asDrawable(resources))
-            if (value) {
-                binding.negativeTextView.setTextColor(textTintColor ?: tintColor)
-                binding.negativeView.contentDescription = toContentDescription(R.string.negative_habit_form, R.string.on)
-                binding.negativeTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-            } else {
-                binding.negativeTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-                binding.negativeView.contentDescription = toContentDescription(R.string.negative_habit_form, R.string.off)
-                binding.negativeTextView.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
-            }
-        }
-
-    private fun toContentDescription(descriptionStringId: Int, statusStringId: Int): String {
-        return context.getString(descriptionStringId) + ", " + context.getString(statusStringId)
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun HabitScoringSelection(
+    selected: Boolean,
+    icon: Painter,
+    text: String,
+    onSelect: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val selectedState = updateTransition(selected)
+    val iconColor = selectedState.animateColor {
+        val context = LocalContext.current
+        if (it) Color(context.getThemeColor(R.attr.colorTintedBackground)) else colorResource(R.color.text_dimmed)
     }
-
-    init {
-        gravity = Gravity.CENTER
-
-        binding.positiveView.setOnClickListener {
-            isPositive = !isPositive
-            sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
+    val textColor = selectedState.animateColor {
+        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_secondary)
+    }
+    val borderColor = selectedState.animateColor {
+        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_dimmed)
+    }
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier) {
+        Box(
+            contentAlignment = Alignment.Center, modifier = Modifier
+                .padding(horizontal = 12.dp)
+                .size(34.dp)
+                .border(1.dp, borderColor.value, CircleShape
+                )
+                .clip(CircleShape)
+                .clickable { onSelect() }
+        ) {
+            this@Column.AnimatedVisibility(
+                selected,
+                enter = scaleIn(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
+                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium))
+            ) {
+                Box(
+                    Modifier
+                        .size(32.dp)
+                        .background(MaterialTheme.colors.primary, CircleShape)
+                )
+            }
+            Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
         }
-        binding.negativeView.setOnClickListener {
-            isNegative = !isNegative
-            sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
-        }
+        Text(
+            text,
+            fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
+            fontSize = 14.sp,
+            color = textColor.value
+        )
+    }
+}
 
-        isPositive = true
-        isNegative = true
+@Preview
+@Composable
+private fun Preview() {
+    val selectedUp = remember { mutableStateOf(true) }
+    val selectedDown = remember { mutableStateOf(false) }
+    Box(
+        Modifier
+            .background(MaterialTheme.colors.background)
+            .width(300.dp)
+            .padding(8.dp)) {
+        HabitScoringSelector(
+            selectedUp.value, selectedDown.value,
+            { selectedUp.value = !selectedUp.value },
+            { selectedDown.value = !selectedDown.value }, Modifier.align(Alignment.Center)
+        )
     }
 }

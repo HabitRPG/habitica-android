@@ -32,7 +32,7 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         return R.layout.activity_intro
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityIntroBinding.inflate(layoutInflater)
         return binding.root
     }

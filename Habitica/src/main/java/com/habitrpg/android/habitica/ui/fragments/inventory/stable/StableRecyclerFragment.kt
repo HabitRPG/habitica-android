@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
@@ -118,11 +119,11 @@ class StableRecyclerFragment :
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
             adapter?.let {
-                compositeSubscription.add(
-                    it.getEquipFlowable()
-                        .flatMap { key -> inventoryRepository.equip(if (itemType == "pets") "pet" else "mount", key) }
-                        .subscribe({ }, ExceptionHandler.rx())
-                )
+                it.onEquip = {
+                    lifecycleScope.launchCatching {
+                        inventoryRepository.equip(if (itemType == "pets") "pet" else "mount", it)
+                    }
+                }
             }
         }
         userViewModel.user.observe(viewLifecycleOwner) {

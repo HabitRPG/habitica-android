@@ -5,12 +5,13 @@ expect class PlatformLogger() {
 
     fun logDebug(tag: String, message: String)
     fun logInfo(tag: String, message: String)
+    fun logWarning(tag: String, message: String)
     fun logError(tag: String, message: String)
     fun logError(tag: String, message: String, exception: Throwable)
 }
 
 enum class LogLevel {
-    ERROR, INFO, DEBUG
+    ERROR, INFO, WARNING, DEBUG
 }
 
 class HLogger {
@@ -26,6 +27,7 @@ class HLogger {
             when (level) {
                 LogLevel.ERROR -> platformLogger.logError(tag, message)
                 LogLevel.INFO -> platformLogger.logInfo(tag, message)
+                LogLevel.WARNING -> platformLogger.logWarning(tag, message)
                 LogLevel.DEBUG -> platformLogger.logDebug(tag, message)
             }
         }

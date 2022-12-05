@@ -5,10 +5,11 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqDetailBinding
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import javax.inject.Inject
@@ -42,15 +43,12 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
                 binding?.questionTextView?.text = args.question
                 binding?.answerTextView?.text = MarkdownParser.parseMarkdown(args.answer)
             } else {
-                compositeSubscription.add(
-                    faqRepository.getArticle(args.position).subscribe(
-                        { faq ->
-                            binding?.questionTextView?.text = faq.question
-                            binding?.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)
-                        },
-                        ExceptionHandler.rx()
-                    )
-                )
+                lifecycleScope.launchCatching {
+                    faqRepository.getArticle(args.position).collect { faq ->
+                        binding?.questionTextView?.text = faq.question
+                        binding?.answerTextView?.text = MarkdownParser.parseMarkdown(faq.answer)
+                    }
+                }
             }
         }
 

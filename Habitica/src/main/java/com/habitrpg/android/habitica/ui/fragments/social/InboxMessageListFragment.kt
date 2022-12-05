@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -34,12 +35,8 @@ import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -64,7 +61,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private val viewModel: InboxViewModel by viewModels(factoryProducer = {
         InboxViewModelFactory(replyToUserUUID, chatRoomUser)
     })
-    private var refreshDisposable: Disposable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,17 +103,12 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             binding?.recyclerView?.adapter = chatAdapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             chatAdapter?.let { adapter ->
-                compositeSubscription.add(
-                    adapter.getUserLabelClickFlowable().subscribe(
-                        {
+                    adapter.onOpenProfile = {
                             FullProfileActivity.open(it)
-                        },
-                        ExceptionHandler.rx()
-                    )
-                )
-                compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ showDeleteConfirmationDialog(it) }, ExceptionHandler.rx()))
-                compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ showFlagConfirmationDialog(it) }, ExceptionHandler.rx()))
-                compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ copyMessageToClipboard(it) }, ExceptionHandler.rx()))
+                        }
+                adapter.onDeleteMessage = { showDeleteConfirmationDialog(it) }
+                adapter.onFlagMessage = { showFlagConfirmationDialog(it) }
+                adapter.onCopyMessage = { copyMessageToClipboard(it) }
             }
         }
 
@@ -131,13 +122,19 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
 
         binding?.chatBarView?.hasAcceptedGuidelines = true
+
+        lifecycleScope.launchWhenResumed {
+            while (true) {
+                refreshConversation()
+                delay(30.toDuration(DurationUnit.SECONDS))
+            }
+        }
     }
 
     override fun onResume() {
         if (replyToUserUUID?.isNotBlank() != true && chatRoomUser?.isNotBlank() != true) {
             parentFragmentManager.popBackStack()
         }
-        startAutoRefreshing()
         super.onResume()
     }
 
@@ -146,16 +143,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         view?.forceLayout()
 
         super.onAttach(context)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stopAutoRefreshing()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        stopAutoRefreshing()
     }
 
     override fun onDestroy() {
@@ -184,28 +171,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     private fun markMessagesAsRead(messages: List<ChatMessage>) {
         socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
-    }
-
-    private fun startAutoRefreshing() {
-        if (refreshDisposable != null && refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
-        }
-        refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    refreshConversation()
-                },
-                ExceptionHandler.rx()
-            )
-        refreshConversation()
-    }
-
-    private fun stopAutoRefreshing() {
-        if (refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
-            refreshDisposable = null
-        }
     }
 
     private fun refreshConversation() {
@@ -264,7 +229,11 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 .setTitle(R.string.confirm_delete_tag_title)
                 .setMessage(R.string.confirm_delete_tag_message)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, ExceptionHandler.rx()) }
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    lifecycleScope.launchCatching {
+                        socialRepository.deleteMessage(chatMessage)
+                    }
+                }
                 .setNegativeButton(R.string.no, null).show()
         }
     }

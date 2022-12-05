@@ -92,8 +92,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     var nextDue: RealmList<Date>? = null
     var updatedAt: Date? = null
     val isUpdatedToday: Boolean
-        get() = ZonedDateTime.ofInstant(updatedAt?.toInstant(), ZoneId.systemDefault()).toLocalDate()
-            .equals(ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault()).toLocalDate())
+        get() {
+            val updatedAt = updatedAt ?: return false
+            return ZonedDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()).toLocalDate()
+                .equals(ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault()).toLocalDate())
+        }
 
 
     // Needed for offline creating/updating
@@ -114,6 +117,30 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     val completedChecklistCount: Int
         get() = checklist?.count { it.completed } ?: 0
 
+    fun completed(byUserID: String?): Boolean {
+        return if (isGroupTask) {
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == byUserID }?.completed ?: completed
+        } else {
+            completed
+        }
+    }
+
+    fun completeForUser(userID: String?, completed: Boolean) {
+        if (isGroupTask && group?.assignedUsersDetail?.isNotEmpty() == true) {
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed = completed
+            if (group?.assignedUsersDetail?.filter { it.completed != completed }?.isEmpty() == true) {
+                this.completed = completed
+            }
+        } else {
+            this.completed = completed
+        }
+    }
+
+    fun isDisplayedActiveForUser(userID: String?): Boolean {
+        val isActive = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO)
+        return isActive && !completed(userID)
+    }
+
     val streakString: String?
         get() {
             return if (counterUp != null && (counterUp ?: 0) > 0 && counterDown != null && (counterDown ?: 0) > 0) {
@@ -126,6 +153,32 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                 return streak.toString()
             } else {
                 null
+            }
+        }
+
+    val lightestTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.maroon_700
+                this.value < -10 -> return R.color.red_700
+                this.value < -1 -> return R.color.orange_700
+                this.value < 1 -> return R.color.yellow_700
+                this.value < 5 -> return R.color.green_700
+                this.value < 10 -> return R.color.teal_700
+                else -> R.color.blue_700
+            }
+        }
+
+    val extraExtraLightTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.maroon_600
+                this.value < -10 -> return R.color.red_600
+                this.value < -1 -> return R.color.orange_600
+                this.value < 1 -> return R.color.yellow_600
+                this.value < 5 -> return R.color.green_600
+                this.value < 10 -> return R.color.teal_600
+                else -> R.color.blue_600
             }
         }
 

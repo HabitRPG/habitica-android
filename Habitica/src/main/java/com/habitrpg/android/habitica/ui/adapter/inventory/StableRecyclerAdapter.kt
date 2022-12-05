@@ -25,16 +25,13 @@ import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
-    private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
+    var onFeed: ((Pet, Food?) -> Unit)? = null
     var itemType: String? = null
     var currentPet: String? = null
         set(value) {
@@ -46,16 +43,13 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             field = value
             notifyDataSetChanged()
         }
-    private val equipEvents = PublishSubject.create<String>()
+   var onEquip: ((String) -> Unit)? = null
     private var existingMounts: List<Mount>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
     private var ownsSaddles: Boolean = false
     private var itemList: List<Any> = ArrayList()
 
-    fun getEquipFlowable(): Flowable<String> {
-        return equipEvents.toFlowable(BackpressureStrategy.DROP)
-    }
 
     private fun canRaiseToMount(pet: Pet): Boolean {
         if (pet.type == "special") return false
@@ -101,8 +95,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             1 -> SectionViewHolder(parent)
             4 -> StableViewHolder(parent.inflate(R.layout.pet_overview_item))
             5 -> StableViewHolder(parent.inflate(R.layout.mount_overview_item))
-            2 -> PetViewHolder(parent, equipEvents, feedEvents, animalIngredientsRetriever)
-            3 -> MountViewHolder(parent, equipEvents)
+            2 -> PetViewHolder(parent, onEquip, onFeed, animalIngredientsRetriever)
+            3 -> MountViewHolder(parent, onEquip)
             else -> StableHeaderViewHolder(parent)
         }
 
