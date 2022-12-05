@@ -23,8 +23,9 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityCreateChallengeBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -38,9 +39,9 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
@@ -51,8 +52,10 @@ class ChallengeFormActivity : BaseActivity() {
 
     @Inject
     internal lateinit var challengeRepository: ChallengeRepository
+
     @Inject
     internal lateinit var socialRepository: SocialRepository
+
     @Inject
     internal lateinit var userViewModel: MainUserViewModel
 
@@ -68,6 +71,7 @@ class ChallengeFormActivity : BaseActivity() {
     private val removedTasks = HashMap<String, Task>()
 
     override var overrideModernHeader: Boolean? = true
+
     // Add {*} Items
     private lateinit var addHabit: Task
     private lateinit var addDaily: Task
@@ -77,7 +81,7 @@ class ChallengeFormActivity : BaseActivity() {
 
     private var savingInProgress = false
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityCreateChallengeBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -129,37 +133,34 @@ class ChallengeFormActivity : BaseActivity() {
             savingInProgress = true
             val dialog = HabiticaProgressDialog.show(this, R.string.saving)
 
-            val observable: Flowable<Challenge> = if (editMode) {
-                updateChallenge()
-            } else {
-                createChallenge()
-            }
+            lifecycleScope.launchCatching({
+                dialog?.dismiss()
+                savingInProgress = false
+                ExceptionHandler.reportError(it)
+            }) {
+                val challenge = if (editMode) {
+                    updateChallenge()
+                } else {
+                    createChallenge()
+                }
 
-            compositeSubscription.add(
-                observable
-                    .flatMap {
-                        challengeId = it.id
-                        challengeRepository.retrieveChallenges(0, true)
+                challengeId = challenge?.id
+                challengeRepository.retrieveChallenges(0, true)
+
+                dialog?.dismiss()
+                savingInProgress = false
+                finish()
+                if (!editMode) {
+                    lifecycleScope.launch(context = Dispatchers.Main) {
+                        delay(500L)
+                        MainNavigationController.navigate(
+                            ChallengesOverviewFragmentDirections.openChallengeDetail(
+                                challengeId ?: ""
+                            )
+                        )
                     }
-                    .subscribe(
-                        {
-                            dialog?.dismiss()
-                            savingInProgress = false
-                            finish()
-                            if (!editMode) {
-                                lifecycleScope.launch(context = Dispatchers.Main) {
-                                    delay(500L)
-                                    MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeId ?: ""))
-                                }
-                            }
-                        },
-                        { throwable ->
-                            dialog?.dismiss()
-                            savingInProgress = false
-                            RxErrorHandler.reportError(throwable)
-                        }
-                    )
-            )
+                }
+            }
         } else if (item.itemId == android.R.id.home) {
             finish()
             return true
@@ -228,13 +229,11 @@ class ChallengeFormActivity : BaseActivity() {
             openTaskDisabled = false,
             taskActionsDisabled = true
         ).also { challengeTasks = it }
-        compositeSubscription.add(
-            challengeTasks.taskOpenEvents.subscribe {
-                if (it.isValid) {
-                    openNewTaskActivity(it.type, it)
-                }
+        challengeTasks.onTaskOpen = {
+            if (it.isValid) {
+                openNewTaskActivity(it.type, it)
             }
-        )
+        }
         locationAdapter = GroupArrayAdapter(this)
 
         if (bundle != null) {
@@ -337,45 +336,43 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        compositeSubscription.add(
-            socialRepository.getUserGroups("guild").zipWith(
-                userRepository.getUserFlowable()
-                    .map { it.party?.id ?: "" }
-                    .distinctUntilChanged()
-                    .flatMap {
-                        if (it.isBlank()) {
-                            return@flatMap Flowable.empty<Group>()
-                        }
-                        socialRepository.retrieveGroup(it)
-                    }
-            ) { user, groups -> Pair(user, groups) }
-                .subscribe(
-                    { groups ->
-                        val mutableGroups = groups.first.toMutableList()
-                        if (groups.first.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
-                            val tavern = Group()
-                            tavern.id = "00000000-0000-4000-A000-000000000000"
-                            tavern.name = getString(R.string.public_challenge)
-                            mutableGroups.add(0, tavern)
-                        }
-                        if (groups.second != null) {
-                            mutableGroups.add(groups.second)
-                        }
-                        locationAdapter.clear()
-                        locationAdapter.addAll(mutableGroups)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val groups = socialRepository.getUserGroups("guild").firstOrNull()?.toMutableList()
+                ?: return@launch
+            val partyID = userRepository.getUser().firstOrNull()?.party?.id
+            val party = if (partyID?.isNotBlank() == true) {
+                socialRepository.retrieveGroup(partyID)
+            } else {
+                null
+            }
+            if (groups.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
+                val tavern = Group()
+                tavern.id = "00000000-0000-4000-A000-000000000000"
+                tavern.name = getString(R.string.public_challenge)
+                groups.add(0, tavern)
+            }
+            if (party != null) {
+                groups.add(party)
+            }
+            locationAdapter.clear()
+            locationAdapter.addAll(groups)
+        }
 
         binding.challengeLocationSpinner.adapter = locationAdapter
-        binding.challengeLocationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View?, i: Int, l: Long) {
-                checkPrizeAndMinimumForTavern()
-            }
+        binding.challengeLocationSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    adapterView: AdapterView<*>,
+                    view: View?,
+                    i: Int,
+                    l: Long
+                ) {
+                    checkPrizeAndMinimumForTavern()
+                }
 
-            override fun onNothingSelected(adapterView: AdapterView<*>) { /* no-on */ }
-        }
+                override fun onNothingSelected(adapterView: AdapterView<*>) { /* no-on */
+                }
+            }
         binding.createChallengePrize.setOnKeyListener { _, _, _ ->
             checkPrizeAndMinimumForTavern()
 
@@ -389,21 +386,17 @@ class ChallengeFormActivity : BaseActivity() {
         taskList.add(addReward)
 
         challengeTasks.setTasks(taskList)
-        compositeSubscription.add(
-            challengeTasks.addItemObservable().subscribe(
-                { t ->
-                    when (t.text) {
-                        addHabit.text -> openNewTaskActivity(TaskType.HABIT, null)
-                        addDaily.text -> openNewTaskActivity(TaskType.DAILY, null)
-                        addTodo.text -> openNewTaskActivity(TaskType.TODO, null)
-                        addReward.text -> openNewTaskActivity(TaskType.REWARD, null)
-                    }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        challengeTasks.onTaskOpen = { t ->
+            when (t.text) {
+                addHabit.text -> openNewTaskActivity(TaskType.HABIT, null)
+                addDaily.text -> openNewTaskActivity(TaskType.DAILY, null)
+                addTodo.text -> openNewTaskActivity(TaskType.TODO, null)
+                addReward.text -> openNewTaskActivity(TaskType.REWARD, null)
+            }
+        }
 
-        binding.createChallengeTaskList.addOnItemTouchListener(object : androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
+        binding.createChallengeTaskList.addOnItemTouchListener(object :
+            androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
             override fun onInterceptTouchEvent(
                 rv: androidx.recyclerview.widget.RecyclerView,
                 e: MotionEvent
@@ -413,13 +406,14 @@ class ChallengeFormActivity : BaseActivity() {
             }
         })
         binding.createChallengeTaskList.adapter = challengeTasks
-        binding.createChallengeTaskList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        binding.createChallengeTaskList.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(this)
     }
 
     private fun fillControlsByChallenge() {
         challengeId?.let {
-            challengeRepository.getChallenge(it).subscribe(
-                { challenge ->
+            lifecycleScope.launchCatching {
+                challengeRepository.getChallenge(it).collect { challenge ->
                     groupID = challenge.groupId
                     editMode = true
                     binding.createChallengeTitle.setText(challenge.name)
@@ -437,17 +431,15 @@ class ChallengeFormActivity : BaseActivity() {
                         }
                     }
                     checkPrizeAndMinimumForTavern()
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-            challengeRepository.getChallengeTasks(it).subscribe(
-                { tasks ->
+                }
+            }
+            lifecycleScope.launchCatching {
+                challengeRepository.getChallengeTasks(it).collect { tasks ->
                     tasks.forEach { task ->
                         addOrUpdateTaskInList(task, true)
                     }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
+                }
+            }
         }
     }
 
@@ -469,16 +461,17 @@ class ChallengeFormActivity : BaseActivity() {
         newTaskResult.launch(intent)
     }
 
-    private val newTaskResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
-            if (task != null) {
-                addOrUpdateTaskInList(task)
+    private val newTaskResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val task = it.data?.getParcelableExtra<Task>(TaskFormActivity.PARCELABLE_TASK)
+                if (task != null) {
+                    addOrUpdateTaskInList(task)
+                }
             }
         }
-    }
 
-    private fun createChallenge(): Flowable<Challenge> {
+    private suspend fun createChallenge(): Challenge? {
         val c = challengeData
 
         val taskList = challengeTasks.taskList
@@ -490,7 +483,7 @@ class ChallengeFormActivity : BaseActivity() {
         return challengeRepository.createChallenge(c, taskList)
     }
 
-    private fun updateChallenge(): Flowable<Challenge> {
+    private suspend fun updateChallenge(): Challenge? {
         val c = challengeData
 
         val taskList = challengeTasks.taskList
@@ -537,7 +530,8 @@ class ChallengeFormActivity : BaseActivity() {
         return editText.text.toString()
     }
 
-    private class GroupArrayAdapter(context: Context) : ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
+    private class GroupArrayAdapter(context: Context) :
+        ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val checkedTextView = super.getView(position, convertView, parent) as? TextView
@@ -546,7 +540,8 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val checkedTextView = super.getDropDownView(position, convertView, parent) as? AppCompatCheckedTextView
+            val checkedTextView =
+                super.getDropDownView(position, convertView, parent) as? AppCompatCheckedTextView
             checkedTextView?.text = getItem(position)?.name
             return checkedTextView ?: View(context)
         }

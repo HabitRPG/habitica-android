@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:background="@drawable/layout_rounded_bg_window"
     android:padding="@dimen/spacing_large"
     android:foreground="?android:attr/selectableItemBackground"
-    android:focusable="true">
+    android:focusable="true"
+    android:layout_marginBottom="@dimen/spacing_medium">
     <com.habitrpg.common.habitica.views.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="97dp"
@@ -88,7 +90,7 @@
                     android:layout_height="@dimen/bar_size"
                     android:id="@+id/health_bar"
                     app:barForegroundColor="@color/hpColor"
-                    app:barBackgroundColor="@color/window_background"/>
+                    app:barBackgroundColor="@color/offset_background"/>
                 <TextView
                     android:id="@+id/health_textview"
                     android:layout_width="wrap_content"
@@ -106,7 +108,7 @@
                     android:layout_height="@dimen/bar_size"
                     android:id="@+id/experience_bar"
                     app:barForegroundColor="@color/xpColor"
-                    app:barBackgroundColor="@color/window_background"/>
+                    app:barBackgroundColor="@color/offset_background"/>
                 <TextView
                     android:id="@+id/experience_textview"
                     android:layout_width="wrap_content"
@@ -124,7 +126,7 @@
                     android:layout_height="@dimen/bar_size"
                     android:id="@+id/mana_bar"
                     app:barForegroundColor="@color/mpColor"
-                    app:barBackgroundColor="@color/window_background"/>
+                    app:barBackgroundColor="@color/offset_background"/>
                 <TextView
                     android:id="@+id/mana_textview"
                     android:layout_width="wrap_content"

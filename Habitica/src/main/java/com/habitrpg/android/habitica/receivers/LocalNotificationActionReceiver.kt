@@ -14,9 +14,12 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.user.User
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LocalNotificationActionReceiver : BroadcastReceiver() {
@@ -56,66 +59,76 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
         when (action) {
             context?.getString(R.string.accept_party_invite) -> {
                 groupID?.let {
-                    socialRepository.joinGroup(it).subscribe({ }, RxErrorHandler.handleEmptyError())
+                    MainScope().launch(ExceptionHandler.coroutine()) {
+                        socialRepository.joinGroup(it)
+                    }
                 }
             }
             context?.getString(R.string.reject_party_invite) -> {
                 groupID?.let {
-                    socialRepository.rejectGroupInvite(it)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    MainScope().launchCatching {
+                        socialRepository.rejectGroupInvite(it)
+                    }
                 }
             }
             context?.getString(R.string.accept_quest_invite) -> {
-                socialRepository.acceptQuest(user).subscribe({ }, RxErrorHandler.handleEmptyError())
+                MainScope().launchCatching {
+                    socialRepository.acceptQuest(user)
+                }
             }
             context?.getString(R.string.reject_quest_invite) -> {
-                socialRepository.rejectQuest(user).subscribe({ }, RxErrorHandler.handleEmptyError())
+                MainScope().launchCatching {
+                    socialRepository.rejectQuest(user)
+                }
             }
             context?.getString(R.string.accept_guild_invite) -> {
                 groupID?.let {
-                    socialRepository.joinGroup(it).subscribe({ }, RxErrorHandler.handleEmptyError())
+                    MainScope().launch(ExceptionHandler.coroutine()) {
+                        socialRepository.joinGroup(it)
+                    }
                 }
             }
             context?.getString(R.string.reject_guild_invite) -> {
                 groupID?.let {
-                    socialRepository.rejectGroupInvite(it)
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
+                    MainScope().launchCatching {
+                        socialRepository.rejectGroupInvite(it)
+                    }
                 }
             }
             context?.getString(R.string.group_message_reply) -> {
                 groupID?.let {
                     getMessageText(context?.getString(R.string.group_message_reply))?.let { message ->
-                        socialRepository.postGroupChat(it, message).subscribe(
-                            {
-                                context?.let { c ->
-                                    NotificationManagerCompat.from(c).cancel(it.hashCode())
-                                }
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
+                        MainScope().launchCatching {
+                            socialRepository.postGroupChat(it, message)
+                            context?.let { c ->
+                                NotificationManagerCompat.from(c).cancel(it.hashCode())
+                            }
+                        }
                     }
                 }
             }
             context?.getString(R.string.inbox_message_reply) -> {
                 senderID?.let {
                     getMessageText(context?.getString(R.string.inbox_message_reply))?.let { message ->
-                        socialRepository.postPrivateMessage(it, message)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError())
+                        MainScope().launch(ExceptionHandler.coroutine()) {
+                            socialRepository.postPrivateMessage(it, message)
+                        }
                     }
                 }
             }
             context?.getString(R.string.complete_task_action) -> {
                 taskID?.let {
-                    taskRepository.taskChecked(null, it, up = true, force = false) {
-                    }.subscribe({
-                        val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
-                            it?.experienceDelta,
-                            it?.healthDelta,
-                            it?.goldDelta,
-                            it?.manaDelta
-                        )
-                        showToast(pair.first)
-                    }, RxErrorHandler.handleEmptyError())
+                    MainScope().launch(ExceptionHandler.coroutine()) {
+                        taskRepository.taskChecked(null, it, up = true, force = false) {
+                            val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
+                                it.experienceDelta,
+                                it.healthDelta,
+                                it.goldDelta,
+                                it.manaDelta
+                            )
+                            showToast(pair.first)
+                        }
+                    }
                 }
             }
         }
@@ -127,6 +140,8 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     }
 
     private fun getMessageText(key: String?): String? {
-        return intent?.let { RemoteInput.getResultsFromIntent(it)?.getCharSequence(key)?.toString() }
+        return intent?.let {
+            RemoteInput.getResultsFromIntent(it)?.getCharSequence(key)?.toString()
+        }
     }
 }

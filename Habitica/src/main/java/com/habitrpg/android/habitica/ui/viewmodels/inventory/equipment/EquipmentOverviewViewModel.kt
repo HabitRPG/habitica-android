@@ -1,14 +1,14 @@
 package com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment
 
-import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import javax.inject.Inject
 
-class EquipmentOverviewViewModel(savedStateHandle: SavedStateHandle) : BaseViewModel() {
+class EquipmentOverviewViewModel : BaseViewModel() {
     val usesAutoEquip: Boolean
         get() = user.value?.preferences?.autoEquip == true
     val usesCostume: Boolean
@@ -22,10 +22,10 @@ class EquipmentOverviewViewModel(savedStateHandle: SavedStateHandle) : BaseViewM
     }
 
     fun getGear(key: String, onSuccess: (Equipment) -> Unit) {
-        disposable.add(
-            inventoryRepository.getEquipment(key).subscribe({
+        viewModelScope.launchCatching {
+            inventoryRepository.getEquipment(key).collect {
                 onSuccess(it)
-            }, RxErrorHandler.handleEmptyError())
-        )
+            }
+        }
     }
 }

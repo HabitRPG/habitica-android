@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGuildDetailBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
@@ -31,6 +32,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -133,11 +135,12 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     private fun getGroupChallenges(): List<Challenge> {
         val groupChallenges = mutableListOf<Challenge>()
-        userRepository.getUserFlowable().forEach {
-            it.challenges?.forEach {
-                challengeRepository.getChallenge(it.challengeID).forEach {
-                    if (it.groupId.equals(viewModel?.groupID)) {
-                        groupChallenges.add(it)
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect {
+                it?.challenges?.forEach { membership ->
+                    val challenge = challengeRepository.getChallenge(membership.challengeID).firstOrNull()
+                    if (challenge != null && challenge.groupId == viewModel?.groupID) {
+                        groupChallenges.add(challenge)
                     }
                 }
             }

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/Toolbar"
-            android:background="@color/content_background"
+            android:background="?attr/colorContentBackground"
             app:layout_scrollFlags="scroll|enterAlways"
             app:title="@string/choose_class"
             app:titleTextColor="@color/text_primary"

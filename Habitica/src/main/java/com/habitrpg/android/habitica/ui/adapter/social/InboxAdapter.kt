@@ -11,20 +11,17 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerIntroViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 
-class InboxAdapter(private var user: User?, private var replyToUser: Member) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+class InboxAdapter(private var user: User?, private var replyToUser: Member?) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
     private val FIRST_MESSAGE = 0
     private val NORMAL_MESSAGE = 1
 
     private var expandedMessageId: String? = null
-    private val userLabelClickEvents = PublishSubject.create<String>()
-    private val deleteMessageEvents = PublishSubject.create<ChatMessage>()
-    private val flagMessageEvents = PublishSubject.create<ChatMessage>()
-    private val replyMessageEvents = PublishSubject.create<String>()
-    private val copyMessageEvents = PublishSubject.create<ChatMessage>()
+    var onOpenProfile: ((String) -> Unit)? = null
+    var onDeleteMessage: ((ChatMessage) -> Unit)? = null
+    var onFlagMessage: ((ChatMessage) -> Unit)? = null
+    var onReply: ((String) -> Unit)? = null
+    var onCopyMessage: ((ChatMessage) -> Unit)? = null
 
     private fun isPositionIntroMessage(position: Int): Boolean {
         return (position == super.getItemCount() - 1)
@@ -43,7 +40,7 @@ class InboxAdapter(private var user: User?, private var replyToUser: Member) : P
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser.id!!)
+        return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser?.id ?: "")
         else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
     }
 
@@ -52,7 +49,7 @@ class InboxAdapter(private var user: User?, private var replyToUser: Member) : P
         if (firstMessage) {
             val introHolder = holder as ChatRecyclerIntroViewHolder
             introHolder.bind(replyToUser)
-            introHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
+            introHolder.onOpenProfile = onOpenProfile
         } else {
             val message: ChatMessage = getItem(position) ?: return
             val messageHolder = holder as ChatRecyclerMessageViewHolder
@@ -63,28 +60,12 @@ class InboxAdapter(private var user: User?, private var replyToUser: Member) : P
                 expandedMessageId == message.id
             )
             messageHolder.onShouldExpand = { expandMessage(message.id, position) }
-            messageHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
-            messageHolder.onReply = { replyMessageEvents.onNext(it) }
-            messageHolder.onCopyMessage = { copyMessageEvents.onNext(it) }
-            messageHolder.onFlagMessage = { flagMessageEvents.onNext(it) }
-            messageHolder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
+            messageHolder.onOpenProfile = onOpenProfile
+            messageHolder.onReply = onReply
+            messageHolder.onCopyMessage = onCopyMessage
+            messageHolder.onFlagMessage = onFlagMessage
+            messageHolder.onDeleteMessage = onDeleteMessage
         }
-    }
-
-    fun getUserLabelClickFlowable(): Flowable<String> {
-        return userLabelClickEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getFlagMessageClickFlowable(): Flowable<ChatMessage> {
-        return flagMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getDeleteMessageFlowable(): Flowable<ChatMessage> {
-        return deleteMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getCopyMessageFlowable(): Flowable<ChatMessage> {
-        return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     private fun expandMessage(id: String, position: Int) {

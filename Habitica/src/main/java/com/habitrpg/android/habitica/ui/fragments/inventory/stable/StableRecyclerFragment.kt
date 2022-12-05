@@ -14,7 +14,8 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.ui.adapter.inventory.StableRecyclerAdapter
@@ -106,9 +107,9 @@ class StableRecyclerFragment :
         if (adapter == null) {
             adapter = StableRecyclerAdapter()
             adapter?.animalIngredientsRetriever = { animal, callback ->
-                lifecycleScope.launch {
-                    val egg = inventoryRepository.getItemsFlowable(Egg::class.java, arrayOf(animal.animal)).firstOrNull()?.firstOrNull() as? Egg
-                    val potion = inventoryRepository.getItemsFlowable(HatchingPotion::class.java, arrayOf(animal.color)).firstOrNull()?.firstOrNull() as? HatchingPotion
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstOrNull()?.firstOrNull() as? Egg
+                    val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstOrNull()?.firstOrNull() as? HatchingPotion
                     callback(Pair(egg, potion))
                 }
             }
@@ -118,11 +119,11 @@ class StableRecyclerFragment :
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
             adapter?.let {
-                compositeSubscription.add(
-                    it.getEquipFlowable()
-                        .flatMap { key -> inventoryRepository.equip(if (itemType == "pets") "pet" else "mount", key) }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
-                )
+                it.onEquip = {
+                    lifecycleScope.launchCatching {
+                        inventoryRepository.equip(if (itemType == "pets") "pet" else "mount", it)
+                    }
+                }
             }
         }
         userViewModel.user.observe(viewLifecycleOwner) {
@@ -179,13 +180,9 @@ class StableRecyclerFragment :
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(
-            userRepository.retrieveUser(false, true).subscribe(
-                {
-                    binding?.refreshLayout?.isRefreshing = false
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(true, true)
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 }

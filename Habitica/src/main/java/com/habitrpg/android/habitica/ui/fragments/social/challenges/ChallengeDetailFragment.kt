@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
@@ -19,8 +20,9 @@ import com.habitrpg.android.habitica.databinding.DialogChallengeDetailTaskGroupB
 import com.habitrpg.android.habitica.databinding.FragmentChallengeDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -32,11 +34,13 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -92,23 +96,19 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         }
 
         challengeID?.let { id ->
-            compositeSubscription.add(
+            lifecycleScope.launchCatching {
                 challengeRepository.getChallenge(id)
-                    .doOnNext {
-                        set(it)
-                    }
                     .map {
-                        return@map (it.leaderId ?: "")
+                        set(it)
+                        (it.leaderId ?: "")
                     }
-                    .filter { it.isNotEmpty() }
-                    .flatMap { creatorID ->
-                        return@flatMap socialRepository.getMember(creatorID)
+                    .distinctUntilChanged()
+                    .collect {
+                        set(socialRepository.retrieveMember(it))
                     }
-                    .subscribe({ set(it) }, RxErrorHandler.handleEmptyError())
-            )
-            compositeSubscription.add(
-                challengeRepository.getChallengeTasks(id).subscribe(
-                    { taskList ->
+            }
+            lifecycleScope.launchCatching {
+                challengeRepository.getChallengeTasks(id).collect { taskList ->
                         binding?.taskGroupLayout?.removeAllViewsInLayout()
 
                         val todos = ArrayList<Task>()
@@ -141,26 +141,22 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                         if (rewards.size > 0) {
                             addRewards(rewards)
                         }
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-            )
+                    }
+            }
 
-            compositeSubscription.add(
-                challengeRepository.isChallengeMember(id).subscribe(
-                    { isMember ->
-                        setJoined(isMember)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-            )
+            lifecycleScope.launchCatching {
+                challengeRepository.isChallengeMember(id).collect { isMember ->
+                    setJoined(isMember)
+                }
+            }
         }
 
         binding?.joinButton?.setOnClickListener {
             challenge?.let { challenge ->
-                challengeRepository.joinChallenge(challenge)
-                    .flatMap { userRepository.retrieveUser(true) }
-                    .subscribe({}, RxErrorHandler.handleEmptyError())
+                lifecycleScope.launchCatching {
+                    challengeRepository.joinChallenge(challenge)
+                    userRepository.retrieveUser(true)
+                }
             }
         }
         binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
@@ -224,14 +220,15 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
 
     private fun refresh() {
         challengeID?.let { id ->
-            challengeRepository.retrieveChallenge(id)
-                .flatMap { challengeRepository.retrieveChallengeTasks(id) }
-                .subscribe({ }, {
-                    if (it is HttpException && it.code() == 404) {
-                        MainNavigationController.navigateBack()
-                    }
-                    RxErrorHandler.reportError(it)
-                })
+            lifecycleScope.launchCatching({
+                if (it is HttpException && it.code() == 404) {
+                    MainNavigationController.navigateBack()
+                }
+                ExceptionHandler.reportError(it)
+            }) {
+                challengeRepository.retrieveChallenge(id)
+                challengeRepository.retrieveChallengeTasks(id)
+            }
         }
     }
 
@@ -245,7 +242,8 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         binding?.participantCount?.text = challenge.memberCount.toString()
     }
 
-    private fun set(creator: Member) {
+    private fun set(creator: Member?) {
+        if (creator == null) return
         binding?.creatorAvatarview?.setAvatar(creator)
         binding?.creatorLabel?.tier = creator.contributor?.level ?: 0
         binding?.creatorLabel?.username = creator.displayName
@@ -267,7 +265,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until habits.size) {
             val task = habits[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.habit_item_card)
-            val viewHolder = HabitViewHolder(entry, { _, _ -> }, {}, {})
+            val viewHolder = HabitViewHolder(entry, { _, _ -> }, {}, {}, null)
             viewHolder.isLocked = true
             viewHolder.bind(task, i, "normal")
             groupBinding.tasksLayout.addView(entry)
@@ -282,7 +280,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until dailies.size) {
             val task = dailies[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.daily_item_card)
-            val viewHolder = DailyViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {})
+            val viewHolder = DailyViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {}, null)
             viewHolder.isLocked = true
             viewHolder.bind(task, i, "normal")
             groupBinding.tasksLayout.addView(entry)
@@ -297,7 +295,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until todos.size) {
             val task = todos[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.todo_item_card)
-            val viewHolder = TodoViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {})
+            val viewHolder = TodoViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {}, null)
             viewHolder.isLocked = true
             viewHolder.bind(task, i, "normal")
             groupBinding.tasksLayout.addView(entry)
@@ -312,9 +310,9 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until rewards.size) {
             val task = rewards[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.reward_item_card)
-            val viewHolder = RewardViewHolder(entry, { _, _ -> }, {}, {})
+            val viewHolder = RewardViewHolder(entry, { _, _ -> }, {}, {}, null)
             viewHolder.isLocked = true
-            viewHolder.bind(task, i, true, "normal")
+            viewHolder.bind(task, i, true, "normal", null)
             groupBinding.tasksLayout.addView(entry)
         }
     }
@@ -335,11 +333,15 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         alert.setMessage(this.getString(R.string.challenge_leave_description))
         alert.addButton(R.string.leave_keep_tasks, true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe({}, RxErrorHandler.handleEmptyError())
+            lifecycleScope.launchCatching {
+                challengeRepository.leaveChallenge(challenge, "keep-all")
+            }
         }
         alert.addButton(R.string.leave_delete_tasks, isPrimary = false, isDestructive = true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, RxErrorHandler.handleEmptyError())
+            lifecycleScope.launchCatching {
+                challengeRepository.leaveChallenge(challenge, "remove-all")
+            }
         }
         alert.setExtraCloseButtonVisibility(View.VISIBLE)
         alert.show()

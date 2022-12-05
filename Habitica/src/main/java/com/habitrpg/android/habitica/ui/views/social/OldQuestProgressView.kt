@@ -20,13 +20,14 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 
 class OldQuestProgressView : LinearLayout {
     private val binding = QuestProgressOldBinding.inflate(context.layoutInflater, this)
 
     private val rect = RectF()
     private val displayDensity = context.resources.displayMetrics.density
-    private val lightGray = ContextCompat.getColor(context, R.color.window_background)
+    private val lightGray = context.getThemeColor(R.attr.colorWindowBackground)
     private val mediumGray = ContextCompat.getColor(context, R.color.offset_background)
     private val darkGray = ContextCompat.getColor(context, R.color.separator)
 

@@ -20,9 +20,10 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
@@ -69,7 +70,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
 
-        userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError())
+        lifecycleScope.launchCatching {
+            userRepository.retrieveTeamPlans()
+        }
     }
 
     override fun setupPreferences() {
@@ -152,18 +155,22 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloading_content)
                 )
-                contentRepository.retrieveContent(true).subscribe(
-                    {
-                        (activity as? SnackbarActivity)?.showSnackbar(
-                            content = context?.getString(R.string.reloaded_content),
-                            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-                        )
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+                reloadContent(true)
             }
         }
         return super.onPreferenceTreeClick(preference)
+    }
+
+    private fun reloadContent(withConfirmation: Boolean) {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            contentRepository.retrieveContent(true)
+            if (withConfirmation) {
+                (activity as? SnackbarActivity)?.showSnackbar(
+                    content = context?.getString(R.string.reloaded_content),
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                )
+            }
+        }
     }
 
     private fun logout() {
@@ -180,7 +187,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
     }
 
     private val classSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        userRepository.retrieveUser(true, forced = true)
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(true, true)
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
@@ -199,24 +208,30 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 TaskAlarmManager.scheduleDailyReminder(context)
             }
             "usePushNotifications" -> {
-                val userPushNotifications = sharedPreferences.getBoolean(key, false)
-                pushNotificationsPreference?.isEnabled = userPushNotifications
-                userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", userPushNotifications).subscribe()
-                if (userPushNotifications) {
+                val usePushNotifications = sharedPreferences.getBoolean(key, true)
+                pushNotificationsPreference?.isEnabled = usePushNotifications
+                lifecycleScope.launchCatching {
+                    userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications)
+                }
+                if (usePushNotifications) {
                     pushNotificationManager.addPushDeviceUsingStoredToken()
                 } else {
                     pushNotificationManager.removePushDeviceUsingStoredToken()
                 }
             }
             "useEmails" -> {
-                val useEmailNotifications = sharedPreferences.getBoolean(key, false)
+                val useEmailNotifications = sharedPreferences.getBoolean(key, true)
                 emailNotificationsPreference?.isEnabled = useEmailNotifications
-                userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", useEmailNotifications).subscribe()
+                lifecycleScope.launchCatching {
+                    userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", !useEmailNotifications)
+                }
             }
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
                 val hour = Integer.parseInt(timeval)
-                userRepository.changeCustomDayStart(hour).subscribe({ }, RxErrorHandler.handleEmptyError())
+                lifecycleScope.launchCatching {
+                    userRepository.changeCustomDayStart(hour)
+                }
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference?.entry
             }
@@ -232,11 +247,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 if (user?.preferences?.language == languageHelper.languageCode) {
                     return
                 }
-
-                userRepository.updateLanguage(languageHelper.languageCode ?: "en")
-                    .flatMap { contentRepository.retrieveContent(true) }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
-
+                lifecycleScope.launchCatching {
+                    userRepository.updateLanguage(languageHelper.languageCode ?: "en")
+                    reloadContent(false)
+                }
                 val intent = Intent(activity, MainActivity::class.java)
                 this.startActivity(intent)
                 activity?.finishAffinity()
@@ -244,10 +258,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
-                    compositeSubscription.add(
+                    lifecycleScope.launchCatching {
                         userRepository.updateUser("preferences.sound", newAudioTheme)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError())
-                    )
+                    }
                     soundManager.soundTheme = newAudioTheme
                     soundManager.preloadAllFiles()
                 }
@@ -260,8 +273,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
-            "dailyDueDefaultView" -> userRepository.updateUser("preferences.dailyDueDefaultView", sharedPreferences.getBoolean(key, false))
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+            "dailyDueDefaultView" -> lifecycleScope.launchCatching {
+                userRepository.updateUser(
+                    "preferences.dailyDueDefaultView",
+                    sharedPreferences.getBoolean(key, false)
+                )
+            }
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
@@ -277,10 +294,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
-                    compositeSubscription.add(
+                    lifecycleScope.launchCatching {
                         userRepository.updateUser("inbox.optOut", isDisabled)
-                            .subscribe({ }, RxErrorHandler.handleEmptyError())
-                    )
+                    }
                 }
             }
             "launch_screen" -> {
@@ -351,13 +367,13 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
-        val usePushNotifications = user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false
+        val usePushNotifications = !(user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false)
         pushNotificationsPreference?.isEnabled = usePushNotifications
         usePushPreference?.isChecked = usePushNotifications
 
         val useEmailPreference = findPreference("useEmails") as? CheckBoxPreference
         emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
-        val useEmailNotifications = user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false
+        val useEmailNotifications = !(user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false)
         emailNotificationsPreference?.isEnabled = useEmailNotifications
         useEmailPreference?.isChecked = useEmailNotifications
 
@@ -385,7 +401,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                         } else if (newValue == false && currentIds.contains(team.id)) {
                             currentIds.remove(team.id)
                         }
-                        userRepository.updateUser("preferences.tasks.mirrorGroupTasks", currentIds).subscribe({}, RxErrorHandler.handleEmptyError())
+                        lifecycleScope.launchCatching {
+                            userRepository.updateUser(
+                                "preferences.tasks.mirrorGroupTasks",
+                                currentIds
+                            )
+                        }
                         true
                     }
                     groupCategory?.addPreference(newPreference)

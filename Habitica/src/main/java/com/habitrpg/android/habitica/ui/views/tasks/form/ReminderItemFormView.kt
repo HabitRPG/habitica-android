@@ -91,7 +91,7 @@ class ReminderItemFormView @JvmOverloads constructor(
     init {
         minimumHeight = 38.dpToPx(context)
         background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_task_form)
-        background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
+        background.mutate().setTint(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
         gravity = Gravity.CENTER_VERTICAL
 
         binding.button.setOnClickListener {

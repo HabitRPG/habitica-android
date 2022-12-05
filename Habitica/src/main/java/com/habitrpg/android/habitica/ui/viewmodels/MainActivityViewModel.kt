@@ -10,8 +10,9 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -19,9 +20,8 @@ import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 import io.realm.kotlin.isValid
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -71,7 +71,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
 
     fun onCreate() {
         try {
-            viewModelScope.launch {
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
             }
         } catch (e: Exception) {
@@ -89,21 +89,21 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
 
     fun retrieveUser(forced: Boolean = false) {
         if (hostConfig.hasAuthentication()) {
-            disposable.add(
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 contentRepository.retrieveWorldState()
-                    .flatMap { userRepository.retrieveUser(true, forced) }
-                    .doOnNext { user1 ->
-                        analyticsManager.setUserProperty("has_party", if (user1.party?.id?.isNotEmpty() == true) "true" else "false")
-                        analyticsManager.setUserProperty("is_subscribed", if (user1.isSubscribed) "true" else "false")
-                        analyticsManager.setUserProperty("checkin_count", user1.loginIncentives.toString())
-                        analyticsManager.setUserProperty("level", user1.stats?.lvl?.toString() ?: "")
-                        pushNotificationManager.setUser(user1)
-                        pushNotificationManager.addPushDeviceUsingStoredToken()
-                    }
-                    .flatMap { userRepository.retrieveTeamPlans() }
-                    .flatMap { contentRepository.retrieveContent() }
-                    .subscribe({ }, RxErrorHandler.handleEmptyError())
-            )
+                userRepository.retrieveUser(true, forced)?.let { user ->
+                    analyticsManager.setUserProperty("has_party", if (user.party?.id?.isNotEmpty() == true) "true" else "false")
+                    analyticsManager.setUserProperty("is_subscribed", if (user.isSubscribed) "true" else "false")
+                    analyticsManager.setUserProperty("checkin_count", user.loginIncentives.toString())
+                    analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
+                    pushNotificationManager.setUser(user)
+                    pushNotificationManager.addPushDeviceUsingStoredToken()
+                }
+                contentRepository.retrieveContent()
+            }
+            viewModelScope.launchCatching {
+                userRepository.retrieveTeamPlans()
+            }
         }
     }
 
@@ -130,20 +130,13 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
     }
 
     fun ifNeedsMaintenance(onResult: ((MaintenanceResponse) -> Unit)) {
-        disposable.add(
-            this.maintenanceService.maintenanceStatus
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { maintenanceResponse ->
-                        if (maintenanceResponse.activeMaintenance == null) {
-                            return@subscribe
-                        }
-                        onResult(maintenanceResponse)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        viewModelScope.launchCatching {
+            val maintenanceResponse = maintenanceService.getMaintenanceStatus()
+            if (maintenanceResponse?.activeMaintenance == null) {
+                return@launchCatching
+            }
+            onResult(maintenanceResponse)
+        }
     }
 
     fun getToolbarTitle(
@@ -153,21 +146,17 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
         onSuccess: ((CharSequence?) -> Unit)
     ) {
         if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
-            disposable.add(
-                inventoryRepository.getItem("egg", eggType ?: "").firstElement().subscribe(
-                    {
-                        if (!it.isValid()) return@subscribe
-                        onSuccess(
-                            if (id == R.id.petDetailRecyclerFragment) {
-                                (it as? Egg)?.text
-                            } else {
-                                (it as? Egg)?.mountText
-                            }
-                        )
-                    },
-                    RxErrorHandler.handleEmptyError()
+            viewModelScope.launchCatching {
+                val item = inventoryRepository.getItem("egg", eggType ?: "").firstOrNull()
+                if (item?.isValid() != true) return@launchCatching
+                onSuccess(
+                    if (id == R.id.petDetailRecyclerFragment) {
+                        (item as? Egg)?.text
+                    } else {
+                        (item as? Egg)?.mountText
+                    }
                 )
-            )
+            }
         } else {
             onSuccess(
                 if (id == R.id.promoInfoFragment) {

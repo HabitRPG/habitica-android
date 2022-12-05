@@ -115,7 +115,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
             items = (items + items).sortedBy { it.key }
             Flowable.just(items)
         }
-        every { inventoryRepository.getItemsFlowable(Food::class.java, any()) } answers {
+        every { inventoryRepository.getItems(Food::class.java, any()) } answers {
             Flowable.just((content.eggs + content.eggs).sortedBy { it.key })
         }
         fragment.itemType = "food"
@@ -134,7 +134,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     @Test
     fun canHatchPetWithEggs() {
         val slot = CapturingSlot<HatchPetUseCase.RequestValues>()
-        every { hatchPetUseCase.observable(capture(slot)) } returns mockk(relaxed = true)
+        every { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
         fragment.itemType = "eggs"
         launchFragment()
         screen {
@@ -142,7 +142,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
                 childWith<ItemItem> { withDescendant { withText("Wolf") } }.click()
                 KView { withText(R.string.hatch_with_potion) }.click()
                 KView { withText("Shade") }.click()
-                verify { hatchPetUseCase.observable(any()) }
+                verify { hatchPetUseCase.callInteractor(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
             }
@@ -152,7 +152,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     @Test
     fun canHatchPetWithPotions() {
         val slot = CapturingSlot<HatchPetUseCase.RequestValues>()
-        every { hatchPetUseCase.observable(capture(slot)) } returns mockk(relaxed = true)
+        every { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
         fragment.itemType = "hatchingPotions"
         launchFragment()
         screen {
@@ -160,7 +160,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
                 childWith<ItemItem> { withDescendant { withText("Shade") } }.click()
                 KView { withText(R.string.hatch_egg) }.click()
                 KView { withText("Wolf") }.click()
-                verify { hatchPetUseCase.observable(any()) }
+                verify { hatchPetUseCase.callInteractor(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
             }

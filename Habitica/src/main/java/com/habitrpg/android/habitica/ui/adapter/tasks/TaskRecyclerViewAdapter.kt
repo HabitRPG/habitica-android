@@ -1,19 +1,17 @@
 package com.habitrpg.android.habitica.ui.adapter.tasks
 
 import android.view.View
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.rxjava3.core.Flowable
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
 interface TaskRecyclerViewAdapter {
     var user: User?
     var showAdventureGuide: Boolean
-    var canScoreTasks: Boolean
     var data: List<Task>
 
-    val errorButtonEvents: Flowable<String>
+    var errorButtonEvents: ((String) -> Unit)?
 
     var taskDisplayMode: String
 
@@ -25,9 +23,9 @@ interface TaskRecyclerViewAdapter {
 
     fun updateUnfilteredData(data: List<Task>?)
 
-    val taskScoreEvents: Flowable<Pair<Task, TaskDirection>>
-    val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>>
-    val taskOpenEvents: Flowable<Pair<Task, View>>
-    val brokenTaskEvents: Flowable<Task>
-    val adventureGuideOpenEvents: Flowable<Boolean>?
+    var taskScoreEvents: ((Task, TaskDirection) -> Unit)?
+    var checklistItemScoreEvents: ((Task, ChecklistItem) -> Unit)?
+    var taskOpenEvents: ((Task, View) -> Unit)?
+    var brokenTaskEvents: ((Task) -> Unit)?
+    var adventureGuideOpenEvents: ((Boolean) -> Unit)?
 }

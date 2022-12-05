@@ -2,9 +2,9 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TagLocalRepository
 import com.habitrpg.android.habitica.models.Tag
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
 
 class RealmTagLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TagLocalRepository {
     override fun deleteTag(tagID: String) {
@@ -12,9 +12,7 @@ class RealmTagLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), T
         executeTransaction { tags.deleteAllFromRealm() }
     }
 
-    override fun getTags(userId: String): Flowable<out List<Tag>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Tag::class.java).equalTo("userId", userId).findAll().asFlowable()
-        )
+    override fun getTags(userId: String): Flow<List<Tag>> {
+        return realm.where(Tag::class.java).equalTo("userId", userId).findAll().toFlow()
     }
 }

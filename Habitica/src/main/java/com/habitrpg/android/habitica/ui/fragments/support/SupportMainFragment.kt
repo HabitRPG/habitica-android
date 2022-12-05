@@ -6,16 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -59,9 +61,11 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         }
 
         binding?.resetTutorialButton?.setOnClickListener {
-            userRepository.resetTutorial().subscribe({
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.resetTutorial()
                 activity?.showSnackbar(null, null, getString(R.string.tutorial_reset_confirmation), displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
-            }, RxErrorHandler.handleEmptyError())
+
+            }
         }
     }
 

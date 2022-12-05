@@ -26,17 +26,16 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
-import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
-import io.reactivex.rxjava3.core.Flowable
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -49,404 +48,407 @@ import retrofit2.http.Query
 
 @JvmSuppressWildcards
 interface ApiService {
-    @get:GET("status")
-    val status: Flowable<HabitResponse<Status>>
+    @GET("status")
+    suspend fun getStatus(): HabitResponse<Status>
 
     /* user API */
 
-    @get:GET("user/")
-    val user: Flowable<HabitResponse<User>>
+    @GET("user/")
+    suspend fun getUser(): HabitResponse<User>
 
     @GET("inbox/messages")
-    fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): Flowable<HabitResponse<List<ChatMessage>>>
+    suspend fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): HabitResponse<List<ChatMessage>>
     @GET("inbox/conversations")
-    fun getInboxConversations(): Flowable<HabitResponse<List<InboxConversation>>>
+    suspend fun getInboxConversations(): HabitResponse<List<InboxConversation>>
 
-    @get:GET("tasks/user")
-    val tasks: Flowable<HabitResponse<TaskList>>
+    @GET("tasks/user")
+    suspend fun getTasks(): HabitResponse<TaskList>
 
-    @get:GET("world-state")
-    val worldState: Flowable<HabitResponse<WorldState>>
+    @GET("world-state")
+    suspend fun worldState(): HabitResponse<WorldState>
 
     @GET("content")
-    fun getContent(@Query("language") language: String?): Flowable<HabitResponse<ContentResult>>
+    suspend fun getContent(@Query("language") language: String?): HabitResponse<ContentResult>
 
     @PUT("user/")
-    fun updateUser(@Body updateDictionary: Map<String, Any>): Flowable<HabitResponse<User>>
+    suspend fun updateUser(@Body updateDictionary: Map<String, Any>): HabitResponse<User>
 
     @PUT("user/")
-    fun registrationLanguage(@Header("Accept-Language") registrationLanguage: String): Flowable<HabitResponse<User>>
+    suspend fun registrationLanguage(@Header("Accept-Language") registrationLanguage: String): HabitResponse<User>
 
     @GET("user/in-app-rewards")
-    fun retrieveInAppRewards(): Flowable<HabitResponse<List<ShopItem>>>
-
-    @GET("user/inventory/buy")
-    fun retrieveOldGearRewards(): Flowable<HabitResponse<List<ShopItem>>>
+    suspend fun retrieveInAppRewards(): HabitResponse<List<ShopItem>>
 
     @POST("user/equip/{type}/{key}")
-    fun equipItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Items>>
+    suspend fun equipItem(@Path("type") type: String, @Path("key") itemKey: String): HabitResponse<Items>
 
     @POST("user/buy/{key}")
-    fun buyItem(@Path("key") itemKey: String, @Body quantity: Map<String, Int>): Flowable<HabitResponse<BuyResponse>>
+    suspend fun buyItem(@Path("key") itemKey: String, @Body quantity: Map<String, Int>): HabitResponse<BuyResponse>
 
     @POST("user/purchase/{type}/{key}")
-    fun purchaseItem(
+    suspend fun purchaseItem(
         @Path("type") type: String,
         @Path("key") itemKey: String,
         @Body quantity: Map<String, Int>
-    ): Flowable<HabitResponse<Void>>
+    ): HabitResponse<Void>
 
     @POST("user/purchase-hourglass/{type}/{key}")
-    fun purchaseHourglassItem(@Path("type") type: String, @Path("key") itemKey: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseHourglassItem(@Path("type") type: String, @Path("key") itemKey: String): HabitResponse<Void>
 
     @POST("user/buy-mystery-set/{key}")
-    fun purchaseMysterySet(@Path("key") itemKey: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseMysterySet(@Path("key") itemKey: String): HabitResponse<Void>
 
     @POST("user/buy-quest/{key}")
-    fun purchaseQuest(@Path("key") key: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseQuest(@Path("key") key: String): HabitResponse<Void>
 
     @POST("user/buy-special-spell/{key}")
-    fun purchaseSpecialSpell(@Path("key") key: String): Flowable<HabitResponse<Void>>
+    suspend fun purchaseSpecialSpell(@Path("key") key: String): HabitResponse<Void>
 
     @POST("user/sell/{type}/{key}")
-    fun sellItem(@Path("type") itemType: String, @Path("key") itemKey: String): Flowable<HabitResponse<User>>
+    suspend fun sellItem(@Path("type") itemType: String, @Path("key") itemKey: String): HabitResponse<User>
 
     @POST("user/feed/{pet}/{food}")
-    fun feedPet(@Path("pet") petKey: String, @Path("food") foodKey: String): Flowable<HabitResponse<FeedResponse>>
+    suspend fun feedPet(@Path("pet") petKey: String, @Path("food") foodKey: String): HabitResponse<FeedResponse>
 
     @POST("user/hatch/{egg}/{hatchingPotion}")
-    fun hatchPet(@Path("egg") eggKey: String, @Path("hatchingPotion") hatchingPotionKey: String): Flowable<HabitResponse<Items>>
+    suspend fun hatchPet(@Path("egg") eggKey: String, @Path("hatchingPotion") hatchingPotionKey: String): HabitResponse<Items>
 
     @GET("tasks/user")
-    fun getTasks(@Query("type") type: String): Flowable<HabitResponse<TaskList>>
+    suspend fun getTasks(@Query("type") type: String): HabitResponse<TaskList>
 
     @GET("tasks/user")
-    fun getTasks(@Query("type") type: String, @Query("dueDate") dueDate: String): Flowable<HabitResponse<TaskList>>
+    suspend fun getTasks(@Query("type") type: String, @Query("dueDate") dueDate: String): HabitResponse<TaskList>
 
     @POST("user/unlock")
-    fun unlockPath(@Query("path") path: String): Flowable<HabitResponse<UnlockResponse>>
+    suspend fun unlockPath(@Query("path") path: String): HabitResponse<UnlockResponse>
 
     @GET("tasks/{id}")
-    fun getTask(@Path("id") id: String): Flowable<HabitResponse<Task>>
+    suspend fun getTask(@Path("id") id: String): HabitResponse<Task>
 
     @POST("tasks/{id}/score/{direction}")
-    fun postTaskDirection(@Path("id") id: String, @Path("direction") direction: String): Flowable<HabitResponse<TaskDirectionData>>
+    suspend fun postTaskDirection(@Path("id") id: String, @Path("direction") direction: String): HabitResponse<TaskDirectionData>
     @POST("tasks/bulk-score")
-    fun bulkScoreTasks(@Body data: List<Map<String, String>>): Flowable<HabitResponse<BulkTaskScoringData>>
+    suspend fun bulkScoreTasks(@Body data: List<Map<String, String>>): HabitResponse<BulkTaskScoringData>
 
     @POST("tasks/{id}/move/to/{position}")
-    fun postTaskNewPosition(@Path("id") id: String, @Path("position") position: Int): Flowable<HabitResponse<List<String>>>
+    suspend fun postTaskNewPosition(@Path("id") id: String, @Path("position") position: Int): HabitResponse<List<String>>
 
     @POST("tasks/{taskId}/checklist/{itemId}/score")
-    fun scoreChecklistItem(@Path("taskId") taskId: String, @Path("itemId") itemId: String): Flowable<HabitResponse<Task>>
+    suspend fun scoreChecklistItem(@Path("taskId") taskId: String, @Path("itemId") itemId: String): HabitResponse<Task>
 
     @POST("tasks/user")
-    fun createTask(@Body item: Task): Flowable<HabitResponse<Task>>
+    suspend fun createTask(@Body item: Task): HabitResponse<Task>
 
     @POST("tasks/user")
-    fun createTasks(@Body tasks: List<Task>): Flowable<HabitResponse<List<Task>>>
+    suspend fun createTasks(@Body tasks: List<Task>): HabitResponse<List<Task>>
 
     @PUT("tasks/{id}")
-    fun updateTask(@Path("id") id: String, @Body item: Task): Flowable<HabitResponse<Task>>
+    suspend fun updateTask(@Path("id") id: String, @Body item: Task): HabitResponse<Task>
 
     @DELETE("tasks/{id}")
-    fun deleteTask(@Path("id") id: String): Flowable<HabitResponse<Void>>
+    suspend fun deleteTask(@Path("id") id: String): HabitResponse<Void>
 
     @POST("tags")
-    fun createTag(@Body tag: Tag): Flowable<HabitResponse<Tag>>
+    suspend fun createTag(@Body tag: Tag): HabitResponse<Tag>
 
     @PUT("tags/{id}")
-    fun updateTag(@Path("id") id: String, @Body tag: Tag): Flowable<HabitResponse<Tag>>
+    suspend fun updateTag(@Path("id") id: String, @Body tag: Tag): HabitResponse<Tag>
 
     @DELETE("tags/{id}")
-    fun deleteTag(@Path("id") id: String): Flowable<HabitResponse<Void>>
+    suspend fun deleteTag(@Path("id") id: String): HabitResponse<Void>
 
     @POST("user/auth/local/register")
-    fun registerUser(@Body auth: UserAuth): Flowable<HabitResponse<UserAuthResponse>>
+    suspend fun registerUser(@Body auth: UserAuth): HabitResponse<UserAuthResponse>
 
     @POST("user/auth/local/login")
-    fun connectLocal(@Body auth: UserAuth): Flowable<HabitResponse<UserAuthResponse>>
+    suspend fun connectLocal(@Body auth: UserAuth): HabitResponse<UserAuthResponse>
 
     @POST("user/auth/social")
-    fun connectSocial(@Body auth: UserAuthSocial): Flowable<HabitResponse<UserAuthResponse>>
+    suspend fun connectSocial(@Body auth: UserAuthSocial): HabitResponse<UserAuthResponse>
 
     @DELETE("user/auth/social/{network}")
-    fun disconnectSocial(@Path("network") network: String): Flowable<HabitResponse<Void>>
+    suspend fun disconnectSocial(@Path("network") network: String): HabitResponse<Void>
 
     @POST("user/auth/apple")
-    fun loginApple(@Body auth: Map<String, Any>): Flowable<HabitResponse<UserAuthResponse>>
+    suspend fun loginApple(@Body auth: Map<String, Any>): HabitResponse<UserAuthResponse>
 
     @POST("user/sleep")
-    fun sleep(): Flowable<HabitResponse<Boolean>>
+    suspend fun sleep(): HabitResponse<Boolean>
 
     @POST("user/revive")
-    fun revive(): Flowable<HabitResponse<User>>
+    suspend fun revive(): HabitResponse<User>
 
     @POST("user/class/cast/{skill}")
-    fun useSkill(
+    suspend fun useSkill(
         @Path("skill") skillName: String,
         @Query("targetType") targetType: String,
         @Query("targetId") targetId: String
-    ): Flowable<HabitResponse<SkillResponse>>
+    ): HabitResponse<SkillResponse>
 
     @POST("user/class/cast/{skill}")
-    fun useSkill(@Path("skill") skillName: String, @Query("targetType") targetType: String): Flowable<HabitResponse<SkillResponse>>
+    suspend fun useSkill(@Path("skill") skillName: String, @Query("targetType") targetType: String): HabitResponse<SkillResponse>
 
     @POST("user/change-class")
-    fun changeClass(): Flowable<HabitResponse<User>>
+    suspend fun changeClass(): HabitResponse<User>
 
     @POST("user/change-class")
-    fun changeClass(@Query("class") className: String): Flowable<HabitResponse<User>>
+    suspend fun changeClass(@Query("class") className: String): HabitResponse<User>
 
     @POST("user/disable-classes")
-    fun disableClasses(): Flowable<HabitResponse<User>>
+    suspend fun disableClasses(): HabitResponse<User>
 
     @POST("user/mark-pms-read")
-    fun markPrivateMessagesRead(): Flowable<Void>
+    suspend fun markPrivateMessagesRead(): Void
 
     /* Group API */
 
     @GET("groups")
-    fun listGroups(@Query("type") type: String): Flowable<HabitResponse<List<Group>>>
+    suspend fun listGroups(@Query("type") type: String): HabitResponse<List<Group>>
 
     @GET("groups/{gid}")
-    fun getGroup(@Path("gid") groupId: String): Flowable<HabitResponse<Group>>
+    suspend fun getGroup(@Path("gid") groupId: String): HabitResponse<Group>
 
     @POST("groups")
-    fun createGroup(@Body item: Group): Flowable<HabitResponse<Group>>
+    suspend fun createGroup(@Body item: Group): HabitResponse<Group>
 
     @PUT("groups/{id}")
-    fun updateGroup(@Path("id") id: String, @Body item: Group): Flowable<HabitResponse<Group>>
+    suspend fun updateGroup(@Path("id") id: String, @Body item: Group): HabitResponse<Group>
 
     @POST("groups/{groupID}/removeMember/{userID}")
-    fun removeMemberFromGroup(@Path("groupID") groupID: String, @Path("userID") userID: String): Flowable<HabitResponse<Void>>
+    suspend fun removeMemberFromGroup(@Path("groupID") groupID: String, @Path("userID") userID: String): HabitResponse<Void>
 
     @GET("groups/{gid}/chat")
-    fun listGroupChat(@Path("gid") groupId: String): Flowable<HabitResponse<List<ChatMessage>>>
+    suspend fun listGroupChat(@Path("gid") groupId: String): HabitResponse<List<ChatMessage>>
 
     @POST("groups/{gid}/join")
-    fun joinGroup(@Path("gid") groupId: String): Flowable<HabitResponse<Group>>
+    suspend fun joinGroup(@Path("gid") groupId: String): HabitResponse<Group>
 
     @POST("groups/{gid}/leave")
-    fun leaveGroup(@Path("gid") groupId: String, @Query("keepChallenges") keepChallenges: String): Flowable<HabitResponse<Void>>
+    suspend fun leaveGroup(@Path("gid") groupId: String, @Query("keepChallenges") keepChallenges: String): HabitResponse<Void>
 
     @POST("groups/{gid}/chat")
-    fun postGroupChat(@Path("gid") groupId: String, @Body message: Map<String, String>): Flowable<HabitResponse<PostChatMessageResult>>
+    suspend fun postGroupChat(@Path("gid") groupId: String, @Body message: Map<String, String>): HabitResponse<PostChatMessageResult>
 
     @DELETE("groups/{gid}/chat/{messageId}")
-    fun deleteMessage(@Path("gid") groupId: String, @Path("messageId") messageId: String): Flowable<HabitResponse<Void>>
+    suspend fun deleteMessage(@Path("gid") groupId: String, @Path("messageId") messageId: String): HabitResponse<Void>
 
     @DELETE("inbox/messages/{messageId}")
-    fun deleteInboxMessage(@Path("messageId") messageId: String): Flowable<HabitResponse<Void>>
+    suspend fun deleteInboxMessage(@Path("messageId") messageId: String): HabitResponse<Void>
 
     @GET("groups/{gid}/members")
-    fun getGroupMembers(
+    suspend fun getGroupMembers(
         @Path("gid") groupId: String,
         @Query("includeAllPublicFields") includeAllPublicFields: Boolean?
-    ): Flowable<HabitResponse<List<Member>>>
+    ): HabitResponse<List<Member>>
 
     @GET("groups/{gid}/members")
-    fun getGroupMembers(
+    suspend fun getGroupMembers(
         @Path("gid") groupId: String,
         @Query("includeAllPublicFields") includeAllPublicFields: Boolean?,
         @Query("lastId") lastId: String
-    ): Flowable<HabitResponse<List<Member>>>
+    ): HabitResponse<List<Member>>
 
     // Like returns the full chat list
     @POST("groups/{gid}/chat/{mid}/like")
-    fun likeMessage(@Path("gid") groupId: String, @Path("mid") mid: String): Flowable<HabitResponse<ChatMessage>>
+    suspend fun likeMessage(@Path("gid") groupId: String, @Path("mid") mid: String): HabitResponse<ChatMessage>
 
     @POST("groups/{gid}/chat/{mid}/flag")
-    fun flagMessage(
+    suspend fun flagMessage(
         @Path("gid") groupId: String,
         @Path("mid") mid: String,
         @Body data: Map<String, String>
-    ): Flowable<HabitResponse<Void>>
+    ): HabitResponse<Void>
 
     @POST("groups/{gid}/chat/seen")
-    fun seenMessages(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
+    suspend fun seenMessages(@Path("gid") groupId: String): HabitResponse<Void>
 
     @POST("groups/{gid}/invite")
-    fun inviteToGroup(@Path("gid") groupId: String, @Body inviteData: Map<String, Any>): Flowable<HabitResponse<List<Void>>>
+    suspend fun inviteToGroup(@Path("gid") groupId: String, @Body inviteData: Map<String, Any>): HabitResponse<List<Void>>
 
     @POST("groups/{gid}/reject-invite")
-    fun rejectGroupInvite(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
+    suspend fun rejectGroupInvite(@Path("gid") groupId: String): HabitResponse<Void>
 
     @POST("groups/{gid}/quests/accept")
-    fun acceptQuest(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
+    suspend fun acceptQuest(@Path("gid") groupId: String): HabitResponse<Void>
 
     @POST("groups/{gid}/quests/reject")
-    fun rejectQuest(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
+    suspend fun rejectQuest(@Path("gid") groupId: String): HabitResponse<Void>
 
     @POST("groups/{gid}/quests/cancel")
-    fun cancelQuest(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
+    suspend fun cancelQuest(@Path("gid") groupId: String): HabitResponse<Void>
 
     @POST("groups/{gid}/quests/force-start")
-    fun forceStartQuest(@Path("gid") groupId: String, @Body group: Group): Flowable<HabitResponse<Quest>>
+    suspend fun forceStartQuest(@Path("gid") groupId: String, @Body group: Group): HabitResponse<Quest>
 
     @POST("groups/{gid}/quests/invite/{questKey}")
-    fun inviteToQuest(@Path("gid") groupId: String, @Path("questKey") questKey: String): Flowable<HabitResponse<Quest>>
+    suspend fun inviteToQuest(@Path("gid") groupId: String, @Path("questKey") questKey: String): HabitResponse<Quest>
 
     @POST("groups/{gid}/quests/abort")
-    fun abortQuest(@Path("gid") groupId: String): Flowable<HabitResponse<Quest>>
+    suspend fun abortQuest(@Path("gid") groupId: String): HabitResponse<Quest>
 
     @POST("groups/{gid}/quests/leave")
-    fun leaveQuest(@Path("gid") groupId: String): Flowable<HabitResponse<Void>>
+    suspend fun leaveQuest(@Path("gid") groupId: String): HabitResponse<Void>
 
     @POST("/iap/android/verify")
-    fun validatePurchase(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<PurchaseValidationResult>>
+    suspend fun validatePurchase(@Body request: PurchaseValidationRequest): HabitResponse<PurchaseValidationResult>
 
     @POST("/iap/android/subscribe")
-    fun validateSubscription(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<Void>>
+    suspend fun validateSubscription(@Body request: PurchaseValidationRequest): HabitResponse<Void>
 
     @GET("/iap/android/subscribe/cancel")
-    fun cancelSubscription(): Flowable<HabitResponse<Void>>
+    suspend fun cancelSubscription(): HabitResponse<Void>
 
     @POST("/iap/android/norenew-subscribe")
-    fun validateNoRenewSubscription(@Body request: PurchaseValidationRequest): Flowable<HabitResponse<Void>>
+    suspend fun validateNoRenewSubscription(@Body request: PurchaseValidationRequest): HabitResponse<Void>
 
     @POST("user/custom-day-start")
-    fun changeCustomDayStart(@Body updateObject: Map<String, Any>): Flowable<HabitResponse<User>>
+    suspend fun changeCustomDayStart(@Body updateObject: Map<String, Any>): HabitResponse<User>
 
     // Members URL
     @GET("members/{mid}")
-    fun getMember(@Path("mid") memberId: String): Flowable<HabitResponse<Member>>
+    suspend fun getMember(@Path("mid") memberId: String): HabitResponse<Member>
 
     @GET("members/username/{username}")
-    fun getMemberWithUsername(@Path("username") username: String): Flowable<HabitResponse<Member>>
+    suspend fun getMemberWithUsername(@Path("username") username: String): HabitResponse<Member>
 
     @GET("members/{mid}/achievements")
-    fun getMemberAchievements(@Path("mid") memberId: String, @Query("lang") language: String?): Flowable<HabitResponse<List<Achievement>>>
+    suspend fun getMemberAchievements(@Path("mid") memberId: String, @Query("lang") language: String?): HabitResponse<List<Achievement>>
 
     @POST("members/send-private-message")
-    fun postPrivateMessage(@Body messageDetails: Map<String, String>): Flowable<HabitResponse<PostChatMessageResult>>
+    suspend fun postPrivateMessage(@Body messageDetails: Map<String, String>): HabitResponse<PostChatMessageResult>
 
     @GET("members/find/{username}")
-    fun findUsernames(
+    suspend fun findUsernames(
         @Path("username") username: String,
         @Query("context") context: String?,
         @Query("id") id: String?
-    ): Flowable<HabitResponse<List<FindUsernameResult>>>
+    ): HabitResponse<List<FindUsernameResult>>
 
     @POST("members/flag-private-message/{mid}")
-    fun flagInboxMessage(@Path("mid") mid: String, @Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+    suspend fun flagInboxMessage(@Path("mid") mid: String, @Body data: Map<String, String>): HabitResponse<Void>
 
     @GET("shops/{identifier}")
-    fun retrieveShopInventory(@Path("identifier") identifier: String, @Query("lang") language: String?): Flowable<HabitResponse<Shop>>
+    suspend fun retrieveShopInventory(@Path("identifier") identifier: String, @Query("lang") language: String?): HabitResponse<Shop>
 
     @GET("shops/market-gear")
-    fun retrieveMarketGear(@Query("lang") language: String?): Flowable<HabitResponse<Shop>>
+    suspend fun retrieveMarketGear(@Query("lang") language: String?): HabitResponse<Shop>
 
     // Push notifications
     @POST("user/push-devices")
-    fun addPushDevice(@Body pushDeviceData: Map<String, String>): Flowable<HabitResponse<List<Void>>>
+    suspend fun addPushDevice(@Body pushDeviceData: Map<String, String>): HabitResponse<List<Void>>
 
     @DELETE("user/push-devices/{regId}")
-    fun deletePushDevice(@Path("regId") regId: String): Flowable<HabitResponse<List<Void>>>
+    suspend fun deletePushDevice(@Path("regId") regId: String): HabitResponse<List<Void>>
 
     /* challenges api */
 
     @GET("challenges/user")
-    fun getUserChallenges(@Query("page") page: Int?, @Query("member") memberOnly: Boolean): Flowable<HabitResponse<List<Challenge>>>
+    suspend fun getUserChallenges(@Query("page") page: Int?, @Query("member") memberOnly: Boolean): HabitResponse<List<Challenge>>
 
     @GET("challenges/user")
-    fun getUserChallenges(@Query("page") page: Int?): Flowable<HabitResponse<List<Challenge>>>
+    suspend fun getUserChallenges(@Query("page") page: Int?): HabitResponse<List<Challenge>>
 
     @GET("tasks/challenge/{challengeId}")
-    fun getChallengeTasks(@Path("challengeId") challengeId: String): Flowable<HabitResponse<TaskList>>
+    suspend fun getChallengeTasks(@Path("challengeId") challengeId: String): HabitResponse<TaskList>
 
     @GET("challenges/{challengeId}")
-    fun getChallenge(@Path("challengeId") challengeId: String): Flowable<HabitResponse<Challenge>>
+    suspend fun getChallenge(@Path("challengeId") challengeId: String): HabitResponse<Challenge>
 
     @POST("challenges/{challengeId}/join")
-    fun joinChallenge(@Path("challengeId") challengeId: String): Flowable<HabitResponse<Challenge>>
+    suspend fun joinChallenge(@Path("challengeId") challengeId: String): HabitResponse<Challenge>
 
     @POST("challenges/{challengeId}/leave")
-    fun leaveChallenge(@Path("challengeId") challengeId: String, @Body body: LeaveChallengeBody): Flowable<HabitResponse<Void>>
+    suspend fun leaveChallenge(@Path("challengeId") challengeId: String, @Body body: LeaveChallengeBody): HabitResponse<Void>
 
     @POST("challenges")
-    fun createChallenge(@Body challenge: Challenge): Flowable<HabitResponse<Challenge>>
+    suspend fun createChallenge(@Body challenge: Challenge): HabitResponse<Challenge>
 
     @POST("tasks/challenge/{challengeId}")
-    fun createChallengeTasks(@Path("challengeId") challengeId: String, @Body tasks: List<Task>): Flowable<HabitResponse<List<Task>>>
+    suspend fun createChallengeTasks(@Path("challengeId") challengeId: String, @Body tasks: List<Task>): HabitResponse<List<Task>>
 
     @POST("tasks/challenge/{challengeId}")
-    fun createChallengeTask(@Path("challengeId") challengeId: String, @Body task: Task): Flowable<HabitResponse<Task>>
+    suspend fun createChallengeTask(@Path("challengeId") challengeId: String, @Body task: Task): HabitResponse<Task>
 
     @PUT("challenges/{challengeId}")
-    fun updateChallenge(@Path("challengeId") challengeId: String, @Body challenge: Challenge): Flowable<HabitResponse<Challenge>>
+    suspend fun updateChallenge(@Path("challengeId") challengeId: String, @Body challenge: Challenge): HabitResponse<Challenge>
 
     @DELETE("challenges/{challengeId}")
-    fun deleteChallenge(@Path("challengeId") challengeId: String): Flowable<HabitResponse<Void>>
+    suspend fun deleteChallenge(@Path("challengeId") challengeId: String): HabitResponse<Void>
 
     // DEBUG: These calls only work on a local development server
 
     @POST("debug/add-ten-gems")
-    fun debugAddTenGems(): Flowable<HabitResponse<Void>>
+    suspend fun debugAddTenGems(): HabitResponse<Void>
 
     // Notifications
     @POST("notifications/{notificationId}/read")
-    fun readNotification(@Path("notificationId") notificationId: String): Flowable<HabitResponse<List<Any>>>
+    suspend fun readNotification(@Path("notificationId") notificationId: String): HabitResponse<List<Any>>
 
     @POST("notifications/read")
-    fun readNotifications(@Body notificationIds: Map<String, List<String>>): Flowable<HabitResponse<List<Any>>>
+    suspend fun readNotifications(@Body notificationIds: Map<String, List<String>>): HabitResponse<List<Any>>
 
     @POST("notifications/see")
-    fun seeNotifications(@Body notificationIds: Map<String, List<String>>): Flowable<HabitResponse<List<Any>>>
+    suspend fun seeNotifications(@Body notificationIds: Map<String, List<String>>): HabitResponse<List<Any>>
 
     @POST("user/open-mystery-item")
-    fun openMysteryItem(): Flowable<HabitResponse<Equipment>>
+    suspend fun openMysteryItem(): HabitResponse<Equipment>
 
     @POST("cron")
-    fun runCron(): Flowable<HabitResponse<Void>>
+    suspend fun runCron(): HabitResponse<Void>
 
     @POST("user/reset")
-    fun resetAccount(): Flowable<HabitResponse<Void>>
+    suspend fun resetAccount(): HabitResponse<Void>
 
     @HTTP(method = "DELETE", path = "user", hasBody = true)
-    fun deleteAccount(@Body body: Map<String, String>): Flowable<HabitResponse<Void>>
+    suspend fun deleteAccount(@Body body: Map<String, String>): HabitResponse<Void>
 
     @GET("user/toggle-pinned-item/{pinType}/{path}")
-    fun togglePinnedItem(@Path("pinType") pinType: String, @Path("path") path: String): Flowable<HabitResponse<Void>>
+    suspend fun togglePinnedItem(@Path("pinType") pinType: String, @Path("path") path: String): HabitResponse<Void>
 
     @POST("user/reset-password")
-    fun sendPasswordResetEmail(@Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+    suspend fun sendPasswordResetEmail(@Body data: Map<String, String>): HabitResponse<Void>
 
     @PUT("user/auth/update-username")
-    fun updateLoginName(@Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+    suspend fun updateLoginName(@Body data: Map<String, String>): HabitResponse<Void>
 
     @POST("user/auth/verify-username")
-    fun verifyUsername(@Body data: Map<String, String>): Flowable<HabitResponse<VerifyUsernameResponse>>
+    suspend fun verifyUsername(@Body data: Map<String, String>): HabitResponse<VerifyUsernameResponse>
 
     @PUT("user/auth/update-email")
-    fun updateEmail(@Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+    suspend fun updateEmail(@Body data: Map<String, String>): HabitResponse<Void>
 
     @PUT("user/auth/update-password")
-    fun updatePassword(@Body data: Map<String, String>): Flowable<HabitResponse<Void>>
+    suspend fun updatePassword(@Body data: Map<String, String>): HabitResponse<Void>
 
     @POST("user/allocate")
-    fun allocatePoint(@Query("stat") stat: String): Flowable<HabitResponse<Stats>>
+    suspend fun allocatePoint(@Query("stat") stat: String): HabitResponse<Stats>
 
     @POST("user/allocate-bulk")
-    fun bulkAllocatePoints(@Body stats: Map<String, Map<String, Int>>): Flowable<HabitResponse<Stats>>
+    suspend fun bulkAllocatePoints(@Body stats: Map<String, Map<String, Int>>): HabitResponse<Stats>
 
     @POST("members/transfer-gems")
-    fun transferGems(@Body data: Map<String, Any>): Flowable<HabitResponse<Void>>
+    suspend fun transferGems(@Body data: Map<String, Any>): HabitResponse<Void>
 
     @POST("tasks/unlink-all/{challengeID}")
-    fun unlinkAllTasks(@Path("challengeID") challengeID: String?, @Query("keep") keepOption: String): Flowable<HabitResponse<Void>>
+    suspend fun unlinkAllTasks(@Path("challengeID") challengeID: String?, @Query("keep") keepOption: String): HabitResponse<Void>
 
     @POST("user/block/{userID}")
-    fun blockMember(@Path("userID") userID: String): Flowable<HabitResponse<List<String>>>
+    suspend fun blockMember(@Path("userID") userID: String): HabitResponse<List<String>>
 
     @POST("user/reroll")
-    fun reroll(): Flowable<HabitResponse<User>>
+    suspend fun reroll(): HabitResponse<User>
 
     // Team Plans
 
     @GET("group-plans")
-    fun getTeamPlans(): Flowable<HabitResponse<List<TeamPlan>>>
+    suspend fun getTeamPlans(): HabitResponse<List<TeamPlan>>
 
     @GET("tasks/group/{groupID}")
-    fun getTeamPlanTasks(@Path("groupID") groupId: String): Flowable<HabitResponse<TaskList>>
+    suspend fun getTeamPlanTasks(@Path("groupID") groupId: String): HabitResponse<TaskList>
+
+    @POST("tasks/{taskID}/assign")
+    suspend fun assignToTask(@Path("taskID") taskId: String?, @Body ids: List<String>): HabitResponse<Task>
+
+    @POST("tasks/{taskID}/unassign/{userID}")
+    suspend fun unassignFromTask(@Path("taskID") taskID: String, @Path("userID") userID: String): HabitResponse<Task>
 }

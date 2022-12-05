@@ -13,9 +13,9 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.promotions.PromoType
@@ -25,11 +25,12 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import javax.inject.Inject
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
@@ -50,6 +51,8 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         component.inject(this)
     }
 
+    private var isGemSaleHappening = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -67,6 +70,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         val promo = appConfigManager.activePromo()
         if (promo != null) {
             binding?.let {
+                isGemSaleHappening = true
                 promo.configurePurchaseBanner(it)
                 if (promo.promoType != PromoType.SUBSCRIPTION) {
                     promo.configureGemView(it.gems4View.binding, 4)
@@ -96,7 +100,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     }
 
     private fun loadInventory() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
             val skus = purchaseHandler.getAllGemSKUs()
             withContext(Dispatchers.Main) {
                 for (sku in skus) {
@@ -122,7 +126,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     private fun purchaseGems(view: GemPurchaseOptionsView?) {
         val identifier = view?.sku ?: return
-        activity?.let { purchaseHandler.purchase(it, identifier) }
+        activity?.let { purchaseHandler.purchase(it, identifier, null, isGemSaleHappening) }
     }
 
     private fun showGiftGemsDialog() {

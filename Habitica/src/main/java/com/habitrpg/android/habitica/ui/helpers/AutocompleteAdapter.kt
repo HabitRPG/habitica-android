@@ -43,11 +43,11 @@ class AutocompleteAdapter(
                             lastAutocomplete = Date().time
                             userResults = arrayListOf()
                             isAutocompletingUsers = true
-                            socialRepository.findUsernames(constraint.toString().drop(1), autocompleteContext, groupID).blockingSubscribe {
+                            /*socialRepository.findUsernames(constraint.toString().drop(1), autocompleteContext, groupID).blockingSubscribe {
                                 userResults = it
                                 filterResults.values = userResults
                                 filterResults.count = userResults.size
-                            }
+                            }*/
                         } else {
                             filterResults.values = userResults
                             filterResults.count = userResults.size

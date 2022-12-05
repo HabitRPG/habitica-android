@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -20,25 +21,25 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.InboxAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.KeyboardUtil
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.Disposable
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>() {
 
@@ -60,7 +61,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private val viewModel: InboxViewModel by viewModels(factoryProducer = {
         InboxViewModelFactory(replyToUserUUID, chatRoomUser)
     })
-    private var refreshDisposable: Disposable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,60 +84,57 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
-        val observable = if (replyToUserUUID?.isNotBlank() == true) {
-            apiClient.getMember(replyToUserUUID!!)
-        } else {
-            apiClient.getMemberWithUsername(chatRoomUser ?: "")
-        }
-        compositeSubscription.add(
-            observable.subscribe(
-                { member ->
-                    setReceivingUser(member.username, member.id)
-                    activity?.title = member.displayName
-                    chatAdapter = InboxAdapter(viewModel.user.value, member)
-                    chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                            if (positionStart == 0) {
-                                binding?.recyclerView?.scrollToPosition(0)
-                            }
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val member = if (replyToUserUUID?.isNotBlank() == true) {
+                apiClient.getMember(replyToUserUUID!!)
+            } else {
+                apiClient.getMemberWithUsername(chatRoomUser ?: "")
+            }
+            setReceivingUser(member?.username, member?.id)
+            activity?.title = member?.displayName
+            chatAdapter = InboxAdapter(viewModel.user.value, member)
+            chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    if (positionStart == 0) {
+                        binding?.recyclerView?.scrollToPosition(0)
+                    }
+                }
+            })
+            binding?.recyclerView?.adapter = chatAdapter
+            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+            chatAdapter?.let { adapter ->
+                    adapter.onOpenProfile = {
+                            FullProfileActivity.open(it)
                         }
-                    })
-                    viewModel.messages.observe(this.viewLifecycleOwner) {
-                        markMessagesAsRead(it)
-                        chatAdapter?.submitList(it)
-                    }
+                adapter.onDeleteMessage = { showDeleteConfirmationDialog(it) }
+                adapter.onFlagMessage = { showFlagConfirmationDialog(it) }
+                adapter.onCopyMessage = { copyMessageToClipboard(it) }
+            }
+        }
 
-                    binding?.recyclerView?.adapter = chatAdapter
-                    binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-                    chatAdapter?.let { adapter ->
-                        compositeSubscription.add(
-                            adapter.getUserLabelClickFlowable().subscribe(
-                                {
-                                    FullProfileActivity.open(it)
-                                },
-                                RxErrorHandler.handleEmptyError()
-                            )
-                        )
-                        compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-                        compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, RxErrorHandler.handleEmptyError()))
-                        compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, RxErrorHandler.handleEmptyError()))
-                    }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        viewModel.messages.observe(viewLifecycleOwner) {
+            markMessagesAsRead(it)
+            chatAdapter?.submitList(it)
+        }
+
 
         binding?.chatBarView?.sendAction = { sendMessage(it) }
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
 
         binding?.chatBarView?.hasAcceptedGuidelines = true
+
+        lifecycleScope.launchWhenResumed {
+            while (true) {
+                refreshConversation()
+                delay(30.toDuration(DurationUnit.SECONDS))
+            }
+        }
     }
 
     override fun onResume() {
         if (replyToUserUUID?.isNotBlank() != true && chatRoomUser?.isNotBlank() != true) {
             parentFragmentManager.popBackStack()
         }
-        startAutoRefreshing()
         super.onResume()
     }
 
@@ -146,16 +143,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         view?.forceLayout()
 
         super.onAttach(context)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stopAutoRefreshing()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        stopAutoRefreshing()
     }
 
     override fun onDestroy() {
@@ -186,63 +173,31 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
     }
 
-    private fun startAutoRefreshing() {
-        if (refreshDisposable != null && refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
-        }
-        refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    refreshConversation()
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        refreshConversation()
-    }
-
-    private fun stopAutoRefreshing() {
-        if (refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
-            refreshDisposable = null
-        }
-    }
-
     private fun refreshConversation() {
         if (viewModel.memberID?.isNotBlank() != true) { return }
-        compositeSubscription.add(
-            this.socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
-                .subscribe(
-                    {}, RxErrorHandler.handleEmptyError(),
-                    {
-                        viewModel.invalidateDataSource()
-                    }
-                )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
+            viewModel.invalidateDataSource()
+        }
     }
 
     private fun sendMessage(chatText: String) {
         viewModel.memberID?.let { userID ->
-            socialRepository.postPrivateMessage(userID, chatText)
-                .delay(200, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        viewModel.invalidateDataSource()
-                    },
-                    { error ->
-                        RxErrorHandler.reportError(error)
-                        binding?.let {
-                            val alert = HabiticaAlertDialog(it.chatBarView.context)
-                            alert.setTitle("You cannot reply to this conversation")
-                            alert.setMessage("This user is unable to receive your private message")
-                            alert.addOkButton()
-                            alert.show()
-                        }
-                        binding?.chatBarView?.message = chatText
-                    }
-                )
-            KeyboardUtil.dismissKeyboard(getActivity())
+            lifecycleScope.launch(ExceptionHandler.coroutine { error ->
+                ExceptionHandler.reportError(error)
+                binding?.let {
+                    val alert = HabiticaAlertDialog(it.chatBarView.context)
+                    alert.setTitle("You cannot reply to this conversation")
+                    alert.setMessage("This user is unable to receive your private message")
+                    alert.addOkButton()
+                    alert.show()
+                }
+                binding?.chatBarView?.message = chatText
+            }) {
+                socialRepository.postPrivateMessage(userID, chatText)
+                delay(200.toDuration(DurationUnit.MILLISECONDS))
+                viewModel.invalidateDataSource()
+            }
         }
     }
 
@@ -274,7 +229,11 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 .setTitle(R.string.confirm_delete_tag_title)
                 .setMessage(R.string.confirm_delete_tag_message)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.yes) { _, _ -> socialRepository.deleteMessage(chatMessage).subscribe({ }, RxErrorHandler.handleEmptyError()) }
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    lifecycleScope.launchCatching {
+                        socialRepository.deleteMessage(chatMessage)
+                    }
+                }
                 .setNegativeButton(R.string.no, null).show()
         }
     }

@@ -12,8 +12,11 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.extensions.withMutableFlag
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 abstract class TaskListWidgetProvider : BaseWidgetProvider() {
@@ -44,14 +47,12 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             val taskId = intent.getStringExtra(TASK_ID_ITEM)
 
             if (taskId != null) {
-                userRepository.getUserFlowable().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null) }
-                    .subscribe(
-                        { taskDirectionData ->
-                            showToastForTaskDirection(context, taskDirectionData)
-                            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
+                MainScope().launch(ExceptionHandler.coroutine()) {
+                    val user = userRepository.getUser().firstOrNull()
+                    val response = taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null)
+                    showToastForTaskDirection(context, response)
+                    AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
+                }
             }
         }
         super.onReceive(context, intent)

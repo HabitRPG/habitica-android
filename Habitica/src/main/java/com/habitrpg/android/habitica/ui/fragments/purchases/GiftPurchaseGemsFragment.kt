@@ -9,16 +9,17 @@ import com.android.billingclient.api.SkuDetails
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemPurchaseBinding
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() {
 
@@ -54,7 +55,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
     }
 
     fun setupCheckout() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
             val skus = purchaseHandler?.getAllGemSKUs()
             withContext(Dispatchers.Main) {
                 for (sku in skus ?: emptyList()) {

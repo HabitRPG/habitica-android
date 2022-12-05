@@ -5,46 +5,69 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.databinding.FragmentAvatarOverviewBinding
+import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.AvatarCustomizationOverviewView
+import com.habitrpg.android.habitica.ui.views.EquipmentOverviewView
+import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import javax.inject.Inject
 
-class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>(), AdapterView.OnItemSelectedListener {
+class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>(),
+    AdapterView.OnItemSelectedListener {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    override var binding: FragmentAvatarOverviewBinding? = null
+    override var binding: FragmentComposeScrollingBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAvatarOverviewBinding {
-        return FragmentAvatarOverviewBinding.inflate(inflater, container, false)
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentComposeScrollingBinding {
+        return FragmentComposeScrollingBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding?.avatarSizeSpinner?.onItemSelectedListener = this
-
-        binding?.avatarShirtView?.setOnClickListener { displayCustomizationFragment("shirt", null) }
-        binding?.avatarSkinView?.setOnClickListener { displayCustomizationFragment("skin", null) }
-        binding?.avatarChairView?.setOnClickListener { displayCustomizationFragment("chair", null) }
-        binding?.avatarGlassesView?.setOnClickListener { displayEquipmentFragment("eyewear", "glasses") }
-        binding?.avatarAnimalEarsView?.setOnClickListener { displayEquipmentFragment("headAccessory", "animal") }
-        binding?.avatarAnimalTailView?.setOnClickListener { displayEquipmentFragment("back", "animal") }
-        binding?.avatarHeadbandView?.setOnClickListener { displayEquipmentFragment("headAccessory", "headband") }
-        binding?.avatarHairColorView?.setOnClickListener { displayCustomizationFragment("hair", "color") }
-        binding?.avatarHairBangsView?.setOnClickListener { displayCustomizationFragment("hair", "bangs") }
-        binding?.avatarHairBaseView?.setOnClickListener { displayCustomizationFragment("hair", "base") }
-        binding?.avatarAccentView?.setOnClickListener { displayCustomizationFragment("hair", "flower") }
-        binding?.avatarHairBeardView?.setOnClickListener { displayCustomizationFragment("hair", "beard") }
-        binding?.avatarHairMustacheView?.setOnClickListener { displayCustomizationFragment("hair", "mustache") }
-        binding?.avatarBackgroundView?.setOnClickListener { displayCustomizationFragment("background", null) }
-
-        userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        binding?.composeView?.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                HabiticaTheme {
+                    AvatarOverviewView(userViewModel, { type, category ->
+                        displayCustomizationFragment(type, category)
+                    }, { type, equipped, isCostume ->
+                        displayEquipmentFragment(type, equipped, isCostume)
+                    })
+                }
+            }
+        }
+        return view
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -52,56 +75,94 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentAvatarOverviewBinding>()
     }
 
     private fun displayCustomizationFragment(type: String, category: String?) {
-        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarDetail(type, category ?: ""))
+        MainNavigationController.navigate(
+            AvatarOverviewFragmentDirections.openAvatarDetail(
+                type,
+                category ?: ""
+            )
+        )
     }
 
-    private fun displayEquipmentFragment(type: String, category: String?) {
-        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarEquipment(type, category ?: ""))
-    }
-
-    fun updateUser(user: User?) {
-        this.setSize(user?.preferences?.size)
-        setCustomizations(user)
-    }
-
-    private fun setCustomizations(user: User?) {
-        if (user == null) return
-        binding?.avatarShirtView?.customizationIdentifier = user.preferences?.size + "_shirt_" + user.preferences?.shirt
-        binding?.avatarSkinView?.customizationIdentifier = "skin_" + user.preferences?.skin
-        val chair = user.preferences?.chair
-        binding?.avatarChairView?.customizationIdentifier = if (chair?.startsWith("handleless") == true) "chair_$chair" else chair
-        binding?.avatarGlassesView?.equipmentIdentifier = user.equipped?.eyeWear
-        binding?.avatarAnimalEarsView?.equipmentIdentifier = user.equipped?.headAccessory
-        binding?.avatarHeadbandView?.equipmentIdentifier = user.equipped?.headAccessory
-        binding?.avatarAnimalTailView?.equipmentIdentifier = user.equipped?.back
-        binding?.avatarHairColorView?.customizationIdentifier = if (user.preferences?.hair?.color != null && user.preferences?.hair?.color != "") "hair_bangs_1_" + user.preferences?.hair?.color else ""
-        binding?.avatarHairBangsView?.customizationIdentifier = if (user.preferences?.hair?.bangs != null && user.preferences?.hair?.bangs != 0) "hair_bangs_" + user.preferences?.hair?.bangs + "_" + user.preferences?.hair?.color else ""
-        binding?.avatarHairBaseView?.customizationIdentifier = if (user.preferences?.hair?.base != null && user.preferences?.hair?.base != 0) "hair_base_" + user.preferences?.hair?.base + "_" + user.preferences?.hair?.color else ""
-        binding?.avatarAccentView?.customizationIdentifier = if (user.preferences?.hair?.flower != null && user.preferences?.hair?.flower != 0) "hair_flower_" + user.preferences?.hair?.flower else ""
-        binding?.avatarHairBeardView?.customizationIdentifier = if (user.preferences?.hair?.beard != null && user.preferences?.hair?.beard != 0) "hair_beard_" + user.preferences?.hair?.beard + "_" + user.preferences?.hair?.color else ""
-        binding?.avatarHairMustacheView?.customizationIdentifier = if (user.preferences?.hair?.mustache != null && user.preferences?.hair?.mustache != 0) "hair_mustache_" + user.preferences?.hair?.mustache + "_" + user.preferences?.hair?.color else ""
-        binding?.avatarBackgroundView?.customizationIdentifier = "background_" + user.preferences?.background
-    }
-
-    private fun setSize(size: String?) {
-        if (size == null) {
-            return
-        }
-        if (size == "slim") {
-            binding?.avatarSizeSpinner?.setSelection(0, false)
-        } else {
-            binding?.avatarSizeSpinner?.setSelection(1, false)
-        }
+    private fun displayEquipmentFragment(type: String, equipped: String?, isCostume: Boolean = false) {
+        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openEquipmentDetail(type, isCostume, equipped ?: ""))
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
-        compositeSubscription.add(
+        lifecycleScope.launchCatching {
             userRepository.updateUser("preferences.size", newSize)
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
-        )
+        }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>) { /* no-on */ }
+    override fun onNothingSelected(parent: AdapterView<*>) { /* no-on */
+    }
+}
+
+@Composable
+fun AvatarOverviewView(userViewModel: MainUserViewModel,
+    onCustomizationTap: (String, String?) -> Unit,
+    onEquipmentTap: (String, String?, Boolean) -> Unit
+    ) {
+    val user by userViewModel.user.observeAsState()
+    Column(
+        Modifier
+            .padding(horizontal = 8.dp)
+            .padding(bottom = 16.dp)) {
+        Row(Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                stringResource(R.string.avatar_size),
+                style = HabiticaTheme.typography.subtitle2
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            SegmentedControl(items = listOf(stringResource(R.string.avatar_size_slim), stringResource(R.string.avatar_size_broad
+            )), defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1, onItemSelection = {
+                userViewModel.updateUser("preferences.size", if (it == 0) "slim" else "broad")
+            })
+        }
+        AvatarCustomizationOverviewView(user?.preferences, onCustomizationTap)
+        Row(
+            Modifier
+                .padding(horizontal = 12.dp)
+                .padding(top = 15.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+            Text(stringResource(R.string.equipped), style = HabiticaTheme.typography.subtitle2)
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                stringResource(R.string.equip_automatically),
+                style = HabiticaTheme.typography.body2
+            )
+            Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
+                userViewModel.updateUser("preferences.autoEquip", it)
+            })
+        }
+        EquipmentOverviewView(user?.items?.gear?.equipped, { type, equipped ->
+            onEquipmentTap(type, equipped, false)
+        })
+        Row(
+            Modifier
+                .padding(horizontal = 12.dp)
+                .padding(top = 15.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                stringResource(R.string.costume),
+                style = HabiticaTheme.typography.subtitle2
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                stringResource(R.string.wear_costume),
+                style = HabiticaTheme.typography.body2
+            )
+            Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
+                userViewModel.updateUser("preferences.costume", it)
+            })
+        }
+        AnimatedVisibility(visible = user?.preferences?.costume == true) {
+            EquipmentOverviewView(user?.items?.gear?.costume, { type, equipped ->
+                onEquipmentTap(type, equipped, true)
+            })
+        }
+    }
 }

@@ -1,9 +1,10 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import java.text.DateFormat
 
 class TodoViewHolder(
@@ -11,17 +12,23 @@ class TodoViewHolder(
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Pair<Task, View>) -> Unit),
-    brokenTaskFunc: ((Task) -> Unit)
-) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc) {
+    brokenTaskFunc: ((Task) -> Unit),
+    assignedTextProvider: GroupPlanInfoProvider?
+) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
 
     private val dateFormatter: DateFormat = android.text.format.DateFormat.getDateFormat(context)
 
-    override fun bind(data: Task, position: Int, displayMode: String) {
+    override fun bind(
+        data: Task,
+        position: Int,
+        displayMode: String,
+        ownerID: String?
+    ) {
         this.task = data
         setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
         reminderTextView.visibility = View.GONE
         this.streakTextView.visibility = View.GONE
-        super.bind(data, position, displayMode)
+        super.bind(data, position, displayMode, ownerID)
     }
 
     override fun configureSpecialTaskTextView(task: Task) {
@@ -35,7 +42,7 @@ class TodoViewHolder(
         }
     }
 
-    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
-        return newTask?.completed != true
+    override fun shouldDisplayAsActive(task: Task?, userID: String?): Boolean {
+        return task?.completed(userID) != true
     }
 }

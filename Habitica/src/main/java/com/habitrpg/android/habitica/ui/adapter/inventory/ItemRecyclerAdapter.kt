@@ -24,9 +24,6 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,31 +43,14 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             notifyDataSetChanged()
         }
 
-    private val sellItemEvents = PublishSubject.create<OwnedItem>()
-    private val questInvitationEvents = PublishSubject.create<QuestContent>()
-    private val openMysteryItemEvents = PublishSubject.create<Item>()
-    private val startHatchingSubject = PublishSubject.create<Item>()
-    private val hatchPetSubject = PublishSubject.create<Pair<HatchingPotion, Egg>>()
-    private val feedPetSubject = PublishSubject.create<Food>()
-    private val createNewPartySubject = PublishSubject.create<Boolean>()
-    private val useSpecialSubject = PublishSubject.create<SpecialItem>()
-
-    fun getSellItemFlowable(): Flowable<OwnedItem> {
-        return sellItemEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getQuestInvitationFlowable(): Flowable<QuestContent> {
-        return questInvitationEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-    fun getOpenMysteryItemFlowable(): Flowable<Item> {
-        return openMysteryItemEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    val startHatchingEvents: Flowable<Item> = startHatchingSubject.toFlowable(BackpressureStrategy.DROP)
-    val hatchPetEvents: Flowable<Pair<HatchingPotion, Egg>> = hatchPetSubject.toFlowable(BackpressureStrategy.DROP)
-    val feedPetEvents: Flowable<Food> = feedPetSubject.toFlowable(BackpressureStrategy.DROP)
-    val startNewPartyEvents: Flowable<Boolean> = createNewPartySubject.toFlowable(BackpressureStrategy.DROP)
-    val useSpecialEvents: Flowable<SpecialItem> = useSpecialSubject.toFlowable(BackpressureStrategy.DROP)
+    var onSellItem: ((OwnedItem) -> Unit)? = null
+    var onQuestInvitation: ((QuestContent) -> Unit)? = null
+    var onOpenMysteryItem: ((Item) -> Unit)? = null
+    var onStartHatching: ((Item) -> Unit)? = null
+    var onHatchPet: ((HatchingPotion, Egg) -> Unit)? = null
+    var onFeedPet: ((Food) -> Unit)? = null
+    var onCreateNewParty: (() -> Unit)? = null
+    var onUseSpecialItem: ((SpecialItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
@@ -188,12 +168,12 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 menu.setSelectionRunnable { index ->
                     item?.let { selectedItem ->
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem) && index == 0) {
-                            ownedItem?.let { selectedOwnedItem -> sellItemEvents.onNext(selectedOwnedItem) }
+                            ownedItem?.let { selectedOwnedItem -> onSellItem?.invoke(selectedOwnedItem) }
                             return@let
                         }
                         when (selectedItem) {
-                            is Egg -> item?.let { startHatchingSubject.onNext(it) }
-                            is HatchingPotion -> startHatchingSubject.onNext(selectedItem)
+                            is Egg -> item?.let { onStartHatching?.invoke(it) }
+                            is HatchingPotion -> onStartHatching?.invoke(selectedItem)
                             is QuestContent -> {
                                 if (index == 0) {
                                     val dialog = DetailDialog(context)
@@ -201,17 +181,17 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                                     dialog.show()
                                 } else {
                                     if (user?.hasParty == true) {
-                                        questInvitationEvents.onNext(selectedItem)
+                                        onQuestInvitation?.invoke(selectedItem)
                                     } else {
-                                        createNewPartySubject.onNext(true)
+                                        onCreateNewParty?.invoke()
                                     }
                                 }
                             }
                             is SpecialItem ->
                                 if (item?.key != "inventory_present") {
-                                    useSpecialSubject.onNext(selectedItem)
+                                    onUseSpecialItem?.invoke(selectedItem)
                                 } else {
-                                    openMysteryItemEvents.onNext(selectedItem)
+                                    onOpenMysteryItem?.invoke(selectedItem)
                                 }
                         }
                     }
@@ -224,17 +204,17 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 item?.let { firstItem ->
                     if (firstItem is Egg) {
                         (hatchingItem as? HatchingPotion)?.let { potion ->
-                            hatchPetSubject.onNext(Pair(potion, firstItem))
+                            onHatchPet?.invoke(potion, firstItem)
                         }
                     } else if (firstItem is HatchingPotion) {
                         (hatchingItem as? Egg)?.let { egg ->
-                            hatchPetSubject.onNext(Pair(firstItem, egg))
+                            onHatchPet?.invoke(firstItem, egg)
                         }
                     }
                     return@let
                 }
             } else if (isFeeding) {
-                feedPetSubject.onNext(item as Food?)
+                (item as Food?)?.let { onFeedPet?.invoke(it) }
                 fragment?.dismiss()
             }
         }

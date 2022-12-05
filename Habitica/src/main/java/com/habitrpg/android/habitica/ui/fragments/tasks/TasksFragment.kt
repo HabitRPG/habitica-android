@@ -15,9 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -26,8 +26,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -81,7 +80,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             if (args.ownerID?.isNotBlank() == true) {
                 viewModel.canSwitchOwners.value = false
                 viewModel.ownerID.value = args.ownerID ?: viewModel.userViewModel.userID
-            } else {
+            } else if (viewModel.ownerID.value?.isNotBlank() != true) {
                 viewModel.ownerID.value = viewModel.userViewModel.userID
             }
             if (taskTypeValue?.isNotBlank() == true) {
@@ -117,7 +116,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
         binding?.viewPager?.currentItem = binding?.viewPager?.currentItem ?: 0
         bottomNavigation?.listener = this
-        bottomNavigation?.canAddTasks = viewModel.isPersonalBoard
+        lifecycleScope.launchCatching {
+            bottomNavigation?.canAddTasks = viewModel.canAddTasks()
+        }
 
         activity?.binding?.content?.toolbarTitle?.setOnClickListener {
             viewModel.cycleOwnerIDs()
@@ -183,10 +184,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             R.id.action_reload -> {
                 refreshItem = item
                 viewModel.refreshData { }
-                true
-            }
-            R.id.action_team_info -> {
-                MainNavigationController.navigate(R.id.guildFragment, bundleOf(Pair("groupID", viewModel.ownerID)))
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -263,9 +260,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(
-            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(
-                { tutorialSteps ->
+        lifecycleScope.launchCatching {
+            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards"))
+                .collect { tutorialSteps ->
                     val activeTutorialFragments = ArrayList<TaskType>()
                     for (step in tutorialSteps) {
                         var id = -1
@@ -297,7 +294,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                         }
                     }
                     if (activeTutorialFragments.size == 1) {
-                        val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
+                        val fragment =
+                            viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
                         if (fragment?.tutorialTexts != null && context != null) {
                             val finalText = context?.getString(R.string.tutorial_tasks_complete)
                             if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
@@ -305,10 +303,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                             }
                         }
                     }
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+                }
+        }
     }
     // endregion
 
@@ -330,6 +326,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type.value)
+        if (!viewModel.isPersonalBoard) {
+            bundle.putString(TaskFormActivity.GROUP_ID_KEY, viewModel.ownerID.value)
+        }
         bundle.putStringArrayList(TaskFormActivity.SELECTED_TAGS_KEY, ArrayList(viewModel.tags))
 
         val intent = Intent(activity, TaskFormActivity::class.java)
@@ -422,7 +421,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (viewModel.ownerTitle.isNotBlank()) {
             activity?.title = viewModel.ownerTitle
         }
-        val isPersonalBoard = viewModel.isPersonalBoard
-        bottomNavigation?.canAddTasks = isPersonalBoard
+        viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]
+        lifecycleScope.launchCatching {
+            bottomNavigation?.canAddTasks = viewModel.canAddTasks()
+        }
     }
 }

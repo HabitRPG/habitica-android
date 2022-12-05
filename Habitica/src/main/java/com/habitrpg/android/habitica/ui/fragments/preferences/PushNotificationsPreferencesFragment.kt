@@ -2,9 +2,10 @@ package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 
 class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -75,7 +76,9 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
             else -> null
         }
         if (pathKey != null) {
-            compositeSubscription.add(userRepository.updateUser("preferences.pushNotifications.$pathKey", sharedPreferences.getBoolean(key, false)).subscribe({ }, RxErrorHandler.handleEmptyError()))
+            lifecycleScope.launchCatching {
+                userRepository.updateUser("preferences.pushNotifications.$pathKey", sharedPreferences.getBoolean(key, false))
+            }
         }
     }
 }

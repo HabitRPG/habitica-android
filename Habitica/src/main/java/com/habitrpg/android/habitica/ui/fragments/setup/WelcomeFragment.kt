@@ -8,38 +8,52 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentWelcomeBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.subjects.PublishSubject
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
-    val nameValidEvents = PublishSubject.create<Boolean>()
+    var onNameValid: ((Boolean?) -> Unit)? = null
 
     @Inject
     lateinit var userRepository: UserRepository
 
     override var binding: FragmentWelcomeBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentWelcomeBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentWelcomeBinding {
         return FragmentWelcomeBinding.inflate(inflater, container, false)
     }
 
-    private val displayNameVerificationEvents = PublishSubject.create<String>()
-    private val usernameVerificationEvents = PublishSubject.create<String>()
+    private val displayNameVerificationEvents = MutableStateFlow<String?>(null)
+    private val usernameVerificationEvents = MutableStateFlow<String?>(null)
 
     private val checkmarkIcon: Drawable by lazy {
         context?.let {
-            BitmapDrawable(resources, HabiticaIconsHelper.imageOfCheckmark(ContextCompat.getColor(it, R.color.green_50), 1f))
+            BitmapDrawable(
+                resources,
+                HabiticaIconsHelper.imageOfCheckmark(
+                    ContextCompat.getColor(it, R.color.green_50),
+                    1f
+                )
+            )
         } ?: VectorDrawable()
     }
     private val alertIcon: Drawable by lazy {
@@ -59,55 +73,75 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
         binding?.displayNameEditText?.addTextChangedListener(
             OnChangeTextWatcher { p0, _, _, _ ->
-                displayNameVerificationEvents.onNext(p0.toString())
+                displayNameVerificationEvents.value = p0.toString()
             }
         )
         binding?.usernameEditText?.addTextChangedListener(
             OnChangeTextWatcher { p0, _, _, _ ->
-                usernameVerificationEvents.onNext(p0.toString())
+                usernameVerificationEvents.value = p0.toString()
             }
         )
 
-        compositeSubscription.add(
-            displayNameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
-                .map { it.length in 1..30 }
-                .subscribeWithErrorHandler {
+        lifecycleScope.launchCatching {
+            displayNameVerificationEvents
+                .map { it?.length in 1..30 }
+                .collect {
                     if (it) {
-                        binding?.displayNameEditText?.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
+                        binding?.displayNameEditText?.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            null,
+                            checkmarkIcon,
+                            null
+                        )
                         binding?.issuesTextView?.visibility = View.GONE
                     } else {
-                        binding?.displayNameEditText?.setCompoundDrawablesWithIntrinsicBounds(null, null, alertIcon, null)
+                        binding?.displayNameEditText?.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            null,
+                            alertIcon,
+                            null
+                        )
                         binding?.issuesTextView?.visibility = View.VISIBLE
-                        binding?.issuesTextView?.text = context?.getString(R.string.display_name_length_error)
+                        binding?.issuesTextView?.text =
+                            context?.getString(R.string.display_name_length_error)
                     }
                 }
-        )
-        compositeSubscription.add(
-            usernameVerificationEvents.toFlowable(BackpressureStrategy.DROP)
-                .filter { it.length in 1..30 }
-                .throttleLast(1, TimeUnit.SECONDS)
-                .flatMap { userRepository.verifyUsername(it) }
-                .subscribeWithErrorHandler {
-                    if (it.isUsable) {
-                        binding?.usernameEditText?.setCompoundDrawablesWithIntrinsicBounds(null, null, checkmarkIcon, null)
+        }
+        lifecycleScope.launchCatching {
+            usernameVerificationEvents
+                .filter { it?.length in 1..30 }
+                .filterNotNull()
+                .map { userRepository.verifyUsername(it) }
+                .collect {
+                    if (it?.isUsable == true) {
+                        binding?.usernameEditText?.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            null,
+                            checkmarkIcon,
+                            null
+                        )
                         binding?.issuesTextView?.visibility = View.GONE
                     } else {
-                        binding?.usernameEditText?.setCompoundDrawablesWithIntrinsicBounds(null, null, alertIcon, null)
+                        binding?.usernameEditText?.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            null,
+                            alertIcon,
+                            null
+                        )
                         binding?.issuesTextView?.visibility = View.VISIBLE
-                        binding?.issuesTextView?.text = it.issues.joinToString("\n")
+                        binding?.issuesTextView?.text = it?.issues?.joinToString("\n")
                     }
-                    nameValidEvents.onNext(it.isUsable)
+                    onNameValid?.invoke(it?.isUsable)
                 }
-        )
+        }
 
-        compositeSubscription.add(
-            userRepository.getUserFlowable().firstElement().subscribe {
-                binding?.displayNameEditText?.setText(it.profile?.name)
-                displayNameVerificationEvents.onNext(it.profile?.name ?: "")
-                binding?.usernameEditText?.setText(it.username)
-                usernameVerificationEvents.onNext(it.username ?: "")
-            }
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val user = userRepository.getUser().firstOrNull()
+            binding?.displayNameEditText?.setText(user?.profile?.name)
+            displayNameVerificationEvents.value = user?.profile?.name ?: ""
+            binding?.usernameEditText?.setText(user?.authentication?.localAuthentication?.username)
+            usernameVerificationEvents.value = user?.username ?: ""
+        }
     }
 
     override fun injectFragment(component: UserComponent) {

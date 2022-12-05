@@ -21,7 +21,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 implementation("io.realm.kotlin:library-base:1.0.2")
             }
         }
@@ -54,10 +54,11 @@ kotlin {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 33
     }
+    namespace = "com.habitrpg.shared.habitica"
 }

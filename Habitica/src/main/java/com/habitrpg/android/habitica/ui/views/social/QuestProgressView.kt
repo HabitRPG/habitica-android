@@ -19,21 +19,21 @@ import androidx.core.graphics.drawable.toBitmap
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestCollectBinding
 import com.habitrpg.android.habitica.databinding.QuestProgressBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.NPCBannerView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.setMarkdown
+import kotlinx.coroutines.MainScope
 
 class QuestProgressView : LinearLayout {
     private val binding = QuestProgressBinding.inflate(context.layoutInflater, this, true)
@@ -152,7 +152,6 @@ class QuestProgressView : LinearLayout {
         binding.questFlourishesImageView.loadImage("quest_" + quest.key + "_flourishes")
         val lightColor = quest.colors?.lightColor
         if (lightColor != null) {
-            binding.questDescriptionSection.separatorColor = lightColor
             binding.questImageSeparator.setBackgroundColor(lightColor)
 
             val gradientDrawable = GradientDrawable(
@@ -182,22 +181,17 @@ class QuestProgressView : LinearLayout {
             val iconView = ImageView(context)
             if (strike.wasHit) {
                 DataBindingUtils.loadImage(context, "rage_strike_${strike.key}") {
-                    Observable.just(it)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { drawable ->
-                                val bitmap = drawable.toBitmap()
-                                val displayDensity = resources.displayMetrics.density
-                                val width = bitmap.width * displayDensity
-                                val height = bitmap.height * displayDensity
-                                val scaledImage = Bitmap.createScaledBitmap(bitmap, width.toInt(), height.toInt(), false)
-                                iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
-                                iconView.setOnClickListener {
-                                    showActiveStrikeAlert(strike.key)
-                                }
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
+                    MainScope().launchCatching {
+                        val bitmap = it.toBitmap()
+                        val displayDensity = resources.displayMetrics.density
+                        val width = bitmap.width * displayDensity
+                        val height = bitmap.height * displayDensity
+                        val scaledImage = Bitmap.createScaledBitmap(bitmap, width.toInt(), height.toInt(), false)
+                        iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeActive(context, scaledImage))
+                        iconView.setOnClickListener {
+                            showActiveStrikeAlert(strike.key)
+                        }
+                    }
                 }
             } else {
                 iconView.setImageBitmap(HabiticaIconsHelper.imageOfRageStrikeInactive())

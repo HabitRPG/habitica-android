@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -11,8 +12,9 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.modules.AppModule
@@ -20,25 +22,32 @@ import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.common.habitica.helpers.EmptyItem
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.kotlin.Flowables
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
-class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -66,9 +75,7 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
         super.onViewCreated(view, savedInstanceState)
 
         challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userId)
-        challengeAdapter?.getOpenDetailFragmentFlowable()?.subscribe({ openDetailFragment(it) }, RxErrorHandler.handleEmptyError())
-            ?.let { compositeSubscription.add(it) }
-
+        challengeAdapter?.onOpenChallengeFragment = { openDetailFragment(it) }
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         if (viewUserChallengesOnly) {
@@ -77,22 +84,23 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
                 getString(R.string.empty_discover_description)
             )
         }
-        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
+        binding?.recyclerView?.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         binding?.recyclerView?.adapter = challengeAdapter
         if (!viewUserChallengesOnly) {
             binding?.recyclerView?.setBackgroundResource(R.color.content_background)
         }
 
-        compositeSubscription.add(
-            Flowables.combineLatest(socialRepository.getGroupFlowable(Group.TAVERN_ID), socialRepository.getUserGroups("guild")).subscribe(
-                {
-                    this.filterGroups = mutableListOf()
-                    filterGroups?.add(it.first)
-                    filterGroups?.addAll(it.second)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            socialRepository.getGroup(Group.TAVERN_ID)
+                .combine(socialRepository.getUserGroups("guild")) { tavern, guilds ->
+                    return@combine Pair(tavern, guilds)
+                }.collect {
+                this@ChallengeListFragment.filterGroups = mutableListOf()
+                it.first?.let { tavern -> filterGroups?.add(tavern) }
+                filterGroups?.addAll(it.second)
+            }
+        }
 
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -111,7 +119,11 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun openDetailFragment(challengeID: String) {
-        MainNavigationController.navigate(ChallengesOverviewFragmentDirections.openChallengeDetail(challengeID))
+        MainNavigationController.navigate(
+            ChallengesOverviewFragmentDirections.openChallengeDetail(
+                challengeID
+            )
+        )
     }
 
     override fun injectFragment(component: UserComponent) {
@@ -129,24 +141,20 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun loadLocalChallenges() {
-        val observable: Flowable<out List<Challenge>> = if (viewUserChallengesOnly) {
-            challengeRepository.getUserChallenges()
-        } else {
-            challengeRepository.getChallenges()
+        lifecycleScope.launchCatching {
+            val flow = if (viewUserChallengesOnly) {
+                challengeRepository.getUserChallenges()
+            } else {
+                challengeRepository.getChallenges()
+            }
+            flow.collect { challenges ->
+                if (challenges.isEmpty()) {
+                    retrieveChallengesPage()
+                }
+                this@ChallengeListFragment.challenges = challenges
+                challengeAdapter?.updateUnfilteredData(challenges)
+            }
         }
-
-        compositeSubscription.add(
-            observable.subscribe(
-                { challenges ->
-                    if (challenges.isEmpty()) {
-                        retrieveChallengesPage()
-                    }
-                    this.challenges = challenges
-                    challengeAdapter?.updateUnfilteredData(challenges)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
     }
 
     internal fun retrieveChallengesPage(forced: Boolean = false) {
@@ -154,19 +162,15 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             return
         }
         setRefreshing(true)
-        compositeSubscription.add(
-            challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly).doOnComplete {
-                setRefreshing(false)
-            }.subscribe(
-                {
-                    if (it.size < 10) {
-                        loadedAllData = true
-                    }
-                    nextPageToLoad += 1
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launchCatching {
+            val challenges =
+                challengeRepository.retrieveChallenges(nextPageToLoad, viewUserChallengesOnly)
+            setRefreshing(false)
+            if ((challenges?.size ?: 0) < 10) {
+                loadedAllData = true
+            }
+            nextPageToLoad += 1
+        }
     }
 
     internal fun showFilterDialog() {
@@ -174,7 +178,8 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
             ChallengeFilterDialogHolder.showDialog(
                 it,
                 filterGroups ?: emptyList(),
-                filterOptions) {
+                filterOptions
+            ) {
                 changeFilter(it)
             }
         }

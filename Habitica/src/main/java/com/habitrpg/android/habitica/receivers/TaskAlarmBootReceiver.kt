@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import com.habitrpg.android.habitica.HabiticaBaseApplication
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +25,7 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
             return
         }
         HabiticaBaseApplication.userComponent?.inject(this)
-        MainScope().launch(Dispatchers.Main) {
+        MainScope().launch(ExceptionHandler.coroutine()) {
             taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
         }
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")

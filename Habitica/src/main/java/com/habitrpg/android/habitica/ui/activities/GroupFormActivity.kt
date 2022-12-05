@@ -28,7 +28,7 @@ class GroupFormActivity : BaseActivity() {
         return R.layout.activity_group_form
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGroupFormBinding.inflate(layoutInflater)
         return binding.root
     }

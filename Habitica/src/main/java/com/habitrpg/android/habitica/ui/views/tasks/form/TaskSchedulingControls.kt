@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.databinding.TaskFormTaskSchedulingBinding
 import com.habitrpg.android.habitica.models.tasks.Days
 import com.habitrpg.android.habitica.ui.adapter.SimpleSpinnerAdapter
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -287,10 +288,10 @@ class TaskSchedulingControls @JvmOverloads constructor(
             if (isActive) {
                 button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle_selected)
                 button.background.mutate().setTint(tintColor)
-                button.setTextColor(ContextCompat.getColor(context, R.color.white))
+                button.setTextColor(context.getThemeColor(R.attr.colorTintedBackground))
             } else {
                 button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle)
-                button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                button.setTextColor(context.getThemeColor(R.attr.colorPrimaryDark))
             }
             button.setOnClickListener {
                 setWeekdayActive(weekdayCode, !isActive)
@@ -320,14 +321,14 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun styleButtonAsActive(button: TextView) {
-        button.setTextColor(ContextCompat.getColor(context, R.color.white))
+        button.setTextColor(context.getThemeColor(R.attr.colorTintedBackground))
         button.background.mutate().setTint(tintColor)
         button.contentDescription = toContentDescription(button.text, true)
     }
 
     private fun styleButtonAsInactive(button: TextView) {
-        button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-        button.background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
+        button.setTextColor(context.getThemeColor(R.attr.colorPrimaryDark))
+        button.background.mutate().setTint(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
         button.contentDescription = toContentDescription(button.text, false)
     }
 

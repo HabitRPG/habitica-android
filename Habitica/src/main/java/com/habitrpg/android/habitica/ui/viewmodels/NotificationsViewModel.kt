@@ -2,12 +2,14 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.models.Notification
@@ -19,11 +21,12 @@ import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.PartyInvite
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.functions.BiFunction
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class NotificationsViewModel : BaseViewModel() {
@@ -49,15 +52,13 @@ open class NotificationsViewModel : BaseViewModel() {
 
     private var party: UserParty? = null
 
-    private val customNotifications: BehaviorSubject<List<Notification>> = BehaviorSubject.create()
+    private val customNotifications = MutableStateFlow<List<Notification>>(emptyList())
 
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
 
     init {
-        customNotifications.onNext(emptyList())
-
         userViewModel.user.observeForever {
             if (it == null) return@observeForever
             party = it.party
@@ -70,42 +71,35 @@ open class NotificationsViewModel : BaseViewModel() {
                 notification.data = data
                 notifications.add(notification)
             }
-            customNotifications.onNext(notifications)
+            customNotifications.value = notifications
         }
     }
 
-    fun getNotifications(): Flowable<List<Notification>> {
+    fun getNotifications(): Flow<List<Notification>> {
         val serverNotifications = notificationsManager.getNotifications()
             .map { filterSupportedTypes(it) }
 
-        return Flowable.combineLatest(
-            serverNotifications,
-            customNotifications.toFlowable(BackpressureStrategy.LATEST),
-            BiFunction {
-                    serverNotificationsList, customNotificationsList ->
-                if (serverNotificationsList.firstOrNull { notification -> notification.type == Notification.Type.NEW_STUFF.type } != null) {
-                    return@BiFunction serverNotificationsList + customNotificationsList.filter { notification -> notification.type != Notification.Type.NEW_STUFF.type }
-                }
-                return@BiFunction serverNotificationsList + customNotificationsList
+        return serverNotifications.combine(customNotifications) { serverNotificationsList, customNotificationsList ->
+            if (serverNotificationsList.firstOrNull { notification -> notification.type == Notification.Type.NEW_STUFF.type } != null) {
+                return@combine serverNotificationsList + customNotificationsList.filter { notification -> notification.type != Notification.Type.NEW_STUFF.type }
             }
-        )
-            .map { it.sortedBy { notification -> notification.priority } }
-            .observeOn(AndroidSchedulers.mainThread())
+            return@combine serverNotificationsList + customNotificationsList
+        }.map { it.sortedBy { notification -> notification.priority } }
     }
 
-    fun getNotificationCount(): Flowable<Int> {
+    fun getNotificationCount(): Flow<Int> {
         return getNotifications()
             .map { it.count() }
             .distinctUntilChanged()
     }
 
-    fun allNotificationsSeen(): Flowable<Boolean> {
+    fun allNotificationsSeen(): Flow<Boolean> {
         return getNotifications()
             .map { it.all { notification -> notification.seen != false } }
             .distinctUntilChanged()
     }
 
-    fun getHasPartyNotification(): Flowable<Boolean> {
+    fun getHasPartyNotification(): Flow<Boolean> {
         return getNotifications()
             .map {
                 it.find { notification ->
@@ -116,7 +110,7 @@ open class NotificationsViewModel : BaseViewModel() {
             .distinctUntilChanged()
     }
 
-    fun refreshNotifications(): Flowable<*> {
+    suspend fun refreshNotifications(): User? {
         return userRepository.retrieveUser(withTasks = false, forced = true)
     }
 
@@ -195,17 +189,14 @@ open class NotificationsViewModel : BaseViewModel() {
     fun dismissNotification(notification: Notification) {
         if (isCustomNotification(notification)) {
             if (isCustomNewStuffNotification(notification)) {
-                customNotifications.onNext(
-                    customNotifications.value?.filterNot { it.id == notification.id } ?: listOf()
-                )
+                customNotifications.value = customNotifications.value.filterNot { it.id == notification.id }
             }
             return
         }
 
-        disposable.add(
+        viewModelScope.launchCatching {
             userRepository.readNotification(notification.id)
-                .subscribe({}, RxErrorHandler.handleEmptyError())
-        )
+        }
     }
 
     fun dismissAllNotifications(notifications: List<Notification>) {
@@ -228,10 +219,9 @@ open class NotificationsViewModel : BaseViewModel() {
         val notificationIds = HashMap<String, List<String>>()
         notificationIds["notificationIds"] = dismissableIds
 
-        disposable.add(
+        viewModelScope.launchCatching {
             userRepository.readNotifications(notificationIds)
-                .subscribe({}, RxErrorHandler.handleEmptyError())
-        )
+        }
     }
 
     fun markNotificationsAsSeen(notifications: List<Notification>) {
@@ -247,10 +237,9 @@ open class NotificationsViewModel : BaseViewModel() {
         val notificationIds = HashMap<String, List<String>>()
         notificationIds["notificationIds"] = unseenIds
 
-        disposable.add(
+        viewModelScope.launchCatching {
             userRepository.seeNotifications(notificationIds)
-                .subscribe({}, RxErrorHandler.handleEmptyError())
-        )
+        }
     }
 
     private fun findNotification(id: String): Notification? {
@@ -327,7 +316,9 @@ open class NotificationsViewModel : BaseViewModel() {
             Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> acceptTaskApproval(notification)
         }
         if (isCustomNotification(notification)) {
-            disposable.add(userRepository.retrieveUser(false).subscribe())
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.retrieveUser()
+            }
         } else {
             dismissNotification(notification)
         }
@@ -354,61 +345,43 @@ open class NotificationsViewModel : BaseViewModel() {
 
     private fun acceptGroupInvitation(groupId: String?) {
         groupId?.let {
-            disposable.add(
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 socialRepository.joinGroup(it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(
-                        {
-                            refreshNotifications()
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+                refreshUser()
+            }
         }
     }
 
     fun rejectGroupInvite(groupId: String?) {
         groupId?.let {
-            disposable.add(
+            viewModelScope.launchCatching {
                 socialRepository.rejectGroupInvite(it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(
-                        {
-                            refreshNotifications()
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+                refreshUser()
+            }
         }
     }
 
     private fun acceptQuestInvitation() {
         party?.id?.let {
-            disposable.add(
+            viewModelScope.launchCatching {
                 socialRepository.acceptQuest(null, it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(
-                        {
-                            refreshNotifications()
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+                refreshUser()
+            }
         }
     }
 
     private fun rejectQuestInvitation() {
         party?.id?.let {
-            disposable.add(
+            viewModelScope.launchCatching {
                 socialRepository.rejectQuest(null, it)
-                    .flatMap { userRepository.retrieveUser(false, forced = true) }
-                    .subscribe(
-                        {
-                            refreshNotifications()
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+                refreshUser()
+            }
+        }
+    }
+
+    private fun refreshUser() {
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            refreshNotifications()
         }
     }
 

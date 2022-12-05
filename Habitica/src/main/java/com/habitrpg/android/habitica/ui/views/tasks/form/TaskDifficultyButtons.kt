@@ -1,102 +1,130 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
-import android.content.Context
-import android.graphics.Typeface
-import android.util.AttributeSet
-import android.view.View
-import android.view.accessibility.AccessibilityEvent
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Space
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.view.children
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.asDrawable
-import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.nameRes
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 
-class TaskDifficultyButtons @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
-
-    var tintColor: Int = ContextCompat.getColor(context, R.color.brand_300)
-    var textTintColor: Int? = null
-    var selectedDifficulty: Float = 1f
-        set(value) {
-            field = value
-            removeAllViews()
-            addAllButtons()
-            selectedButton.sendAccessibilityEvent(AccessibilityEvent.CONTENT_CHANGE_TYPE_CONTENT_DESCRIPTION)
-        }
-    private lateinit var selectedButton: View
-
-    override fun setEnabled(isEnabled: Boolean) {
-        super.setEnabled(isEnabled)
-        for (child in this.children) {
-            child.isEnabled = isEnabled
-        }
+@Composable
+fun TaskDifficultySelector(
+    selected: TaskDifficulty,
+    onSelect: (TaskDifficulty) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier.fillMaxWidth()) {
+        for (difficulty in TaskDifficulty.values())
+            TaskDifficultySelection(
+                value = difficulty,
+                selected = selected == difficulty,
+                icon = HabiticaIconsHelper.imageOfTaskDifficultyStars(
+                    colorResource(R.color.white).toArgb(), difficulty.value, true
+                ).asImageBitmap(),
+                text = stringResource(difficulty.nameRes),
+                onSelect = onSelect
+            )
     }
+}
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        removeAllViews()
-        addAllButtons()
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+private fun TaskDifficultySelection(
+    value: TaskDifficulty,
+    selected: Boolean,
+    icon: ImageBitmap,
+    text: String,
+    onSelect: (TaskDifficulty) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val selectedState = updateTransition(selected)
+    val iconColor = selectedState.animateColor {
+        val context = LocalContext.current
+        if (it) Color(context.getThemeColor(R.attr.colorTintedBackground)) else MaterialTheme.colors.primary
     }
-
-    private fun addAllButtons() {
-        val lastDifficulty = TaskDifficulty.values().last()
-        for (difficulty in TaskDifficulty.values()) {
-            val button = createButton(difficulty)
-            addView(button)
-            if (difficulty != lastDifficulty) {
-                val space = Space(context)
-                val layoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT)
-                layoutParams.weight = 1f
-                space.layoutParams = layoutParams
-                addView(space)
+    val textColor = selectedState.animateColor {
+        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_secondary)
+    }
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp), modifier = modifier) {
+        Box(
+            contentAlignment = Alignment.Center, modifier = Modifier
+                .size(57.dp)
+                .background(
+                    Color(
+                        LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)
+                    ), MaterialTheme.shapes.medium
+                )
+                .clip(MaterialTheme.shapes.medium)
+                .clickable { onSelect(value) }
+        ) {
+            this@Column.AnimatedVisibility(
+                selected,
+                enter = scaleIn(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
+                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium))
+            ) {
+                Box(
+                    Modifier
+                        .size(57.dp)
+                        .background(MaterialTheme.colors.primary, MaterialTheme.shapes.medium)
+                )
             }
-            if (difficulty.value == selectedDifficulty) {
-                selectedButton = button
-            }
+            Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
         }
+        Text(
+            text,
+            fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
+            fontSize = 14.sp,
+            color = textColor.value
+        )
     }
+}
 
-    private fun createButton(difficulty: TaskDifficulty): View {
-        val view = inflate(R.layout.task_form_task_difficulty, false)
-        val isActive = selectedDifficulty == difficulty.value
-        var difficultyColor = ContextCompat.getColor(context, R.color.white)
-        if (isActive) {
-            view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(tintColor)
-            view.findViewById<TextView>(R.id.text_view).setTextColor(textTintColor ?: tintColor)
-            view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-        } else {
-            view.findViewById<ImageView>(R.id.image_view).background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
-            view.findViewById<TextView>(R.id.text_view).setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-            difficultyColor = ContextCompat.getColor(context, R.color.disabled_background)
-            view.findViewById<TextView>(R.id.text_view).typeface = Typeface.create("sans-serif", Typeface.NORMAL)
-        }
-        val drawable = HabiticaIconsHelper.imageOfTaskDifficultyStars(difficultyColor, difficulty.value, true).asDrawable(resources)
-        view.findViewById<ImageView>(R.id.image_view).setImageDrawable(drawable)
+private class DifficultyProvider : PreviewParameterProvider<TaskDifficulty> {
+    override val values = TaskDifficulty.values().asSequence()
+}
 
-        val buttonText = context.getText(difficulty.nameRes)
-        view.findViewById<TextView>(R.id.text_view).text = buttonText
-        view.contentDescription = toContentDescription(buttonText, isActive)
-
-        view.setOnClickListener {
-            selectedDifficulty = difficulty.value
-        }
-        return view
-    }
-
-    private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
-        val statusString = if (isActive) {
-            context.getString(R.string.selected)
-        } else context.getString(R.string.not_selected)
-        return "$buttonText, $statusString"
-    }
+@Preview
+@Composable
+private fun TaskDifficultySelectorPreview(@PreviewParameter(DifficultyProvider::class) difficulty: TaskDifficulty) {
+    val selected = remember { mutableStateOf(difficulty) }
+    TaskDifficultySelector(selected.value, { selected.value = it }, Modifier.width(300.dp))
 }

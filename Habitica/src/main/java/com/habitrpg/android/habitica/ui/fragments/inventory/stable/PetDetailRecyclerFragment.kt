@@ -11,8 +11,8 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -111,11 +111,11 @@ class PetDetailRecyclerFragment :
             }
         binding?.recyclerView?.layoutManager = layoutManager
         adapter.animalIngredientsRetriever = { animal, callback ->
-            lifecycleScope.launch {
-                val egg = inventoryRepository.getItemsFlowable(Egg::class.java, arrayOf(animal.animal))
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
                     .firstOrNull()?.firstOrNull() as? Egg
                 val potion =
-                    inventoryRepository.getItemsFlowable(HatchingPotion::class.java, arrayOf(animal.color))
+                    inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color))
                         .firstOrNull()?.firstOrNull() as? HatchingPotion
                 callback(Pair(egg, potion))
             }
@@ -124,23 +124,19 @@ class PetDetailRecyclerFragment :
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadItems()
 
-        compositeSubscription.add(
-            adapter.getEquipFlowable()
-                .flatMap { key -> inventoryRepository.equip("pet", key) }
-                .subscribe(
-                    {
-                        adapter.currentPet = it.currentPet
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        adapter.onEquip = {
+            lifecycleScope.launchCatching {
+                val items = inventoryRepository.equip("pet", it)
+                adapter.currentPet = items?.currentPet
+            }
+        }
         userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }
-        compositeSubscription.add(adapter.feedFlowable.subscribe({
+        adapter.onFeed = { pet, food ->
             showFeedingDialog(
-                it.first,
-                it.second
+                pet,
+                food
             )
-        }, RxErrorHandler.handleEmptyError()))
+        }
 
         view.post { setGridSpanCount(view.width) }
     }
@@ -171,7 +167,7 @@ class PetDetailRecyclerFragment :
 
     private fun loadItems() {
         if (animalType?.isNotEmpty() == true || animalGroup?.isNotEmpty() == true) {
-            lifecycleScope.launch {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 inventoryRepository.getOwnedMounts()
                     .map { ownedMounts ->
                         val mountMap = mutableMapOf<String, OwnedMount>()
@@ -179,11 +175,10 @@ class PetDetailRecyclerFragment :
                         return@map mountMap
                     }.collect { adapter.setOwnedMounts(it) }
             }
-            compositeSubscription.add(
-                inventoryRepository.getOwnedItems(true)
-                    .subscribe({ adapter.setOwnedItems(it) }, RxErrorHandler.handleEmptyError())
-            )
-            lifecycleScope.launch {
+            lifecycleScope.launchCatching {
+                inventoryRepository.getOwnedItems(true).collect { adapter.setOwnedItems(it) }
+            }
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val mounts = inventoryRepository.getMounts(
                     animalType,
                     animalGroup,
@@ -231,14 +226,14 @@ class PetDetailRecyclerFragment :
     private fun showFeedingDialog(pet: Pet, food: Food?) {
         if (food != null) {
             val context = activity ?: context ?: return
-            compositeSubscription.add(
-                feedPetUseCase.observable(
+            lifecycleScope.launchCatching {
+                feedPetUseCase.callInteractor(
                     FeedPetUseCase.RequestValues(
                         pet, food,
                         context
                     )
-                ).subscribeWithErrorHandler {}
-            )
+                )
+            }
             return
         }
         val fragment = ItemDialogFragment()
@@ -247,7 +242,6 @@ class PetDetailRecyclerFragment :
         fragment.isHatching = false
         fragment.itemType = "food"
         fragment.itemTypeText = getString(R.string.food)
-        fragment.parentSubscription = compositeSubscription
         parentFragmentManager.let { fragment.show(it, "feedDialog") }
     }
 
@@ -256,13 +250,9 @@ class PetDetailRecyclerFragment :
     }
 
     override fun onRefresh() {
-        compositeSubscription.add(
-            userRepository.retrieveUser(false, true).subscribe(
-                {
-                    binding?.refreshLayout?.isRefreshing = false
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(false, true)
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -20,9 +21,10 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
@@ -38,14 +40,11 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.lang.Integer.max
@@ -99,11 +98,19 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 shopItem.isTypeItem -> contentView = PurchaseDialogItemContent(context)
                 shopItem.isTypeQuest -> {
                     contentView = PurchaseDialogQuestContent(context)
-                    inventoryRepository.getQuestContent(shopItem.key).firstElement().subscribe({ contentView.setQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                    MainScope().launch(ExceptionHandler.coroutine()) {
+                        val content = inventoryRepository.getQuestContent(shopItem.key).firstOrNull()
+                        if (content != null) {
+                            contentView.setQuestContentItem(content)
+                        }
+                    }
                 }
                 shopItem.isTypeGear -> {
                     contentView = PurchaseDialogGearContent(context)
-                    inventoryRepository.getEquipment(shopItem.key).firstElement().subscribe({ contentView.setEquipment(it) }, RxErrorHandler.handleEmptyError())
+                    lifecycleScope.launchCatching {
+                        inventoryRepository.getEquipment(shopItem.key).firstOrNull()
+                            ?.let { contentView.setEquipment(it) }
+                    }
                     checkGearClass()
                 }
                 "gems" == shopItem.purchaseType -> contentView = PurchaseDialogGemsContent(context)
@@ -182,7 +189,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
         } else if (shopItem.event?.end != null) {
             limitedTextViewJob?.cancel()
-            limitedTextViewJob = GlobalScope.launch(Dispatchers.Main) {
+            limitedTextViewJob = MainScope().launch(Dispatchers.Main) {
                 limitedTextView.visibility = View.VISIBLE
                 while (shopItem.event?.end?.after(Date()) == true) {
                     limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
@@ -212,7 +219,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
     }
 
-    private val compositeSubscription: CompositeDisposable = CompositeDisposable()
     var shopIdentifier: String? = null
     private var user: User? = null
     var isPinned: Boolean = false
@@ -250,11 +256,17 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         priceLabel = buyButton.findViewById(R.id.priceLabel)
         priceLabel.animationDuration = 0L
         buyLabel = buyButton.findViewById(R.id.buy_label)
-        pinButton.setOnClickListener { inventoryRepository.togglePinnedItem(shopItem).subscribe({ isPinned = !this.isPinned }, RxErrorHandler.handleEmptyError()) }
+        pinButton.setOnClickListener {
+            lifecycleScope.launchCatching {
+                inventoryRepository.togglePinnedItem(shopItem)
+                isPinned = !isPinned
+            }
+        }
 
         shopItem = item
-
-        compositeSubscription.add(userRepository.getUserFlowable().subscribe({ this.setUser(it) }, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launchCatching {
+            userRepository.getUser().filterNotNull().collect { setUser(it) }
+        }
     }
 
     private fun setUser(user: User) {
@@ -298,13 +310,9 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         userRepository.close()
         inventoryRepository.close()
         limitedTextViewJob?.cancel()
-        if (!compositeSubscription.isDisposed) {
-            compositeSubscription.dispose()
-        }
         super.dismiss()
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun onBuyButtonClicked() {
         if (shopItem.isValid && !shopItem.locked) {
             val gemsLeft = if (shopItem.limitedNumberLeft != null) shopItem.limitedNumberLeft else 0
@@ -353,30 +361,31 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         )
         HapticFeedbackManager.tap(contentView)
         val snackbarText = arrayOf("")
-        val observable: Flowable<Any>
+        val observable: (suspend () -> Any?)
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
             observable = if (shopItem.purchaseType == "gear") {
-                inventoryRepository.purchaseMysterySet(shopItem.key).cast(Any::class.java)
+                { inventoryRepository.purchaseMysterySet(shopItem.key) }
             } else {
-                inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key).cast(Any::class.java)
+                { inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key) }
             }
         } else if (shopItem.purchaseType == "fortify") {
-            observable = userRepository.reroll().cast(Any::class.java)
+            observable = { userRepository.reroll() }
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
-            observable = inventoryRepository.purchaseQuest(shopItem.key).cast(Any::class.java)
+            observable = { inventoryRepository.purchaseQuest(shopItem.key) }
         } else if (shopItem.purchaseType == "debuffPotion") {
-            observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
+            observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds" || shopItem.purchaseType == "customizationSet") {
-            observable = userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}" ?: "", item.value).cast(Any::class.java)
+            observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}" ?: "", item.value) }
         } else if (shopItem.purchaseType == "debuffPotion") {
-            observable = userRepository.useSkill(shopItem.key, null).cast(Any::class.java)
+            observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "card") {
             purchaseCardAction?.invoke(shopItem)
             dismiss()
             return
         } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
-            observable = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity).map { buyResponse ->
-                if (shopItem.key == "armoire" && configManager.enableNewArmoire()) {
+            observable = {
+                val buyResponse = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity)
+                if (shopItem.key == "armoire" && configManager.enableNewArmoire() && buyResponse != null) {
                     MainNavigationController.navigate(
                         R.id.armoireActivity,
                         ArmoireActivityDirections.openArmoireActivity(
@@ -387,45 +396,32 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                         ).arguments
                     )
                 }
-                buyResponse
             }
         } else {
-            observable = inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity).cast(Any::class.java)
+            observable = { inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity) }
         }
-        val subscription = observable
-            .doOnNext {
-                val text = if (snackbarText[0].isNotEmpty()) {
-                    snackbarText[0]
-                } else {
-                    context.getString(R.string.successful_purchase, shopItem.text)
-                }
-                val rightTextColor = when (item.currency) {
-                    "gold" -> ContextCompat.getColor(context, R.color.text_yellow)
-                    "gems" -> ContextCompat.getColor(context, R.color.text_green)
-                    "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
-                    else -> 0
-                }
-                ((application?.currentActivity?.get() ?: getActivity() ?: ownerActivity) as? SnackbarActivity)?.showSnackbar(
-                    content = text,
-                    rightIcon = priceLabel.compoundDrawables[0],
-                    rightTextColor = rightTextColor,
-                    rightText = "-" + priceLabel.text
-                )
+        lifecycleScope.launchCatching {
+            val result = observable() ?: return@launchCatching
+            val text = snackbarText[0].ifEmpty {
+                context.getString(R.string.successful_purchase, shopItem.text)
             }
-            .flatMap { userRepository.retrieveUser(withTasks = false, forced = true) }
-            .flatMap { inventoryRepository.retrieveInAppRewards() }
-            .subscribe({
-                if (item.isTypeGear || item.currency == "hourglasses") {
-                    onGearPurchased?.invoke(item)
-                }
-            }) { throwable ->
-                if (throwable.javaClass.isAssignableFrom(retrofit2.HttpException::class.java)) {
-                    val error = throwable as retrofit2.HttpException
-                    if (error.code() == 401 && shopItem.currency == "gems") {
-                        MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                    }
-                }
+            val rightTextColor = when (item.currency) {
+                "gold" -> ContextCompat.getColor(context, R.color.text_yellow)
+                "gems" -> ContextCompat.getColor(context, R.color.text_green)
+                "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
+                else -> 0
             }
+            ((application?.currentActivity?.get() ?: getActivity() ?: ownerActivity) as? SnackbarActivity)?.showSnackbar(
+                content = text,
+                rightIcon = priceLabel.compoundDrawables[0],
+                rightTextColor = rightTextColor,
+                rightText = "-" + priceLabel.text
+            )
+            inventoryRepository.retrieveInAppRewards()
+            if (item.isTypeGear || item.currency == "hourglasses") {
+                onGearPurchased?.invoke(item)
+            }
+        }
     }
 
     private fun displayPurchaseConfirmationDialog(quantity: Int) {

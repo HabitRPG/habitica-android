@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
@@ -22,27 +22,28 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.functions.Action
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 abstract class BaseTaskViewHolder constructor(
     itemView: View,
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var openTaskFunc: ((Pair<Task, View>) -> Unit),
-    var brokenTaskFunc: ((Task) -> Unit)
+    var brokenTaskFunc: ((Task) -> Unit),
+    var assignedTextProvider: GroupPlanInfoProvider?
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     private val scope = MainScope()
+
     var task: Task? = null
     var movingFromPosition: Int? = null
-    var errorButtonClicked: Action? = null
+    var errorButtonClicked: (() -> Unit)? = null
+    var userID: String? = null
     var isLocked = false
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
+    protected val assignedTextView: TextView = itemView.findViewById(R.id.assigned_textview)
     protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
     protected val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
@@ -51,7 +52,7 @@ abstract class BaseTaskViewHolder constructor(
     private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
-    private val approvalRequiredTextView: TextView? = itemView.findViewById(R.id.approvalRequiredTextField)
+    private val approvalRequiredTextView: TextView = itemView.findViewById(R.id.approvalRequiredTextField)
     private val expandNotesButton: Button? = itemView.findViewById(R.id.expand_notes_button)
     private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
     private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
@@ -96,7 +97,7 @@ abstract class BaseTaskViewHolder constructor(
 
         titleTextView.setOnClickListener { onTouch(it, null) }
         notesTextView?.setOnClickListener { onTouch(it, null) }
-        errorIconView?.setOnClickListener { errorButtonClicked?.run() }
+        errorIconView?.setOnClickListener { errorButtonClicked?.invoke() }
 
         notesTextView?.movementMethod = LinkMovementMethod.getInstance()
         titleTextView.movementMethod = LinkMovementMethod.getInstance()
@@ -132,6 +133,15 @@ abstract class BaseTaskViewHolder constructor(
     }
 
     override fun bind(data: Task, position: Int, displayMode: String) {
+        bind(data, position, displayMode, null)
+    }
+
+    open fun bind(
+        data: Task,
+        position: Int,
+        displayMode: String,
+        ownerID: String?
+    ) {
         notesExpanded = false
         task = data
         itemView.setBackgroundColor(context.getThemeColor(R.attr.colorContentBackground))
@@ -155,17 +165,13 @@ abstract class BaseTaskViewHolder constructor(
             } else {
                 titleTextView.text = data.text
                 if (data.text.isNotEmpty()) {
-                    Single.just(data.text)
-                        .map { MarkdownParser.parseMarkdown(it) }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { parsedText ->
-                                data.parsedText = parsedText
-                                titleTextView.setParsedMarkdown(parsedText)
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
+                    scope.launch(Dispatchers.IO) {
+                        val parsedText = MarkdownParser.parseMarkdown(data.text)
+                        withContext(Dispatchers.Main) {
+                            data.parsedText = parsedText
+                            titleTextView.setParsedMarkdown(parsedText)
+                        }
+                    }
                 }
             }
             if (displayMode != "minimal") {
@@ -182,17 +188,13 @@ abstract class BaseTaskViewHolder constructor(
                             if (notes.isEmpty()) {
                                 return@let
                             }
-                            Single.just(notes)
-                                .map { MarkdownParser.parseMarkdown(it) }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(
-                                    { parsedNotes ->
-                                        data.parsedNotes = parsedNotes
-                                        notesTextView?.setParsedMarkdown(parsedNotes)
-                                    },
-                                    RxErrorHandler.handleEmptyError()
-                                )
+                            scope.launch(Dispatchers.IO) {
+                                val parsedNotes = MarkdownParser.parseMarkdown(notes)
+                                withContext(Dispatchers.Main) {
+                                    data.parsedNotes = parsedNotes
+                                    notesTextView?.setParsedMarkdown(parsedNotes)
+                                }
+                            }
                         }
                     }
                 }
@@ -226,7 +228,7 @@ abstract class BaseTaskViewHolder constructor(
             }
             configureSpecialTaskTextView(data)
 
-            iconViewTeam?.visibility = if (data.isGroupTask) View.VISIBLE else View.GONE
+            iconViewTeam?.visibility = if (data.isGroupTask && ownerID != data.group?.groupID) View.VISIBLE else View.GONE
 
             taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
         } else {
@@ -235,9 +237,16 @@ abstract class BaseTaskViewHolder constructor(
         }
 
         if (data.isPendingApproval) {
-            approvalRequiredTextView?.visibility = View.VISIBLE
+            approvalRequiredTextView.visibility = View.VISIBLE
         } else {
-            approvalRequiredTextView?.visibility = View.GONE
+            approvalRequiredTextView.visibility = View.GONE
+        }
+
+        if (data.group?.assignedUsers?.isNotEmpty() == true) {
+            assignedTextView.text = assignedTextProvider?.assignedTextForTask(context.resources, data.group?.assignedUsers ?: emptyList())
+            assignedTextView.visibility = View.VISIBLE
+        } else {
+            assignedTextView.visibility = View.GONE
         }
 
         syncingView?.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE

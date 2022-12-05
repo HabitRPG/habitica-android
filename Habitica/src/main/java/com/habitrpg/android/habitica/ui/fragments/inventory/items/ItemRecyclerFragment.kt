@@ -18,9 +18,9 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -28,7 +28,6 @@ import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
-import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
@@ -37,14 +36,13 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
-import io.reactivex.rxjava3.core.Flowable
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -142,50 +140,42 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 adapter = ItemRecyclerAdapter(context)
             }
             binding?.recyclerView?.adapter = adapter
-            adapter?.useSpecialEvents?.subscribeWithErrorHandler { onSpecialItemSelected(it) }?.let { compositeSubscription.add(it) }
-            adapter?.let { adapter ->
-                compositeSubscription.add(
-                    adapter.getSellItemFlowable()
-                        .flatMap { item -> inventoryRepository.sellItem(item) }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
-                )
-
-                compositeSubscription.add(
-                    adapter.getQuestInvitationFlowable()
-                        .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
-                        .flatMap { socialRepository.retrieveGroup("party") }
-                        .subscribe(
-                            {
-                                MainNavigationController.navigate(R.id.partyFragment)
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
-                )
-                compositeSubscription.add(
-                    adapter.getOpenMysteryItemFlowable()
-                        .flatMap { inventoryRepository.openMysteryItem(user) }
-                        .doOnNext {
-                            val activity = activity as? MainActivity
-                            if (activity != null) {
-                                val dialog = OpenedMysteryitemDialog(activity)
-                                dialog.isCelebratory = true
-                                dialog.setTitle(R.string.mystery_item_title)
-                                dialog.binding.iconView.loadImage("shop_${it.key}")
-                                dialog.binding.titleView.text = it.text
-                                dialog.binding.descriptionView.text = it.notes
-                                dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip("equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
-                                }
-                                dialog.addCloseButton()
-                                dialog.enqueue()
+            adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
+            adapter?.onSellItem = {
+                lifecycleScope.launchCatching {
+                    inventoryRepository.sellItem(it)
+                }
+            }
+            adapter?.onQuestInvitation = {
+                lifecycleScope.launchCatching {
+                    inventoryRepository.inviteToQuest(it)
+                    MainNavigationController.navigate(R.id.partyFragment)
+                }
+            }
+            adapter?.onOpenMysteryItem = {
+                lifecycleScope.launchCatching {
+                    val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
+                    val activity = activity as? MainActivity
+                    if (activity != null) {
+                        val dialog = OpenedMysteryitemDialog(activity)
+                        dialog.isCelebratory = true
+                        dialog.setTitle(R.string.mystery_item_title)
+                        dialog.binding.iconView.loadImage("shop_${it.key}")
+                        dialog.binding.titleView.text = item.text
+                        dialog.binding.descriptionView.text = item.notes
+                        dialog.addButton(R.string.equip, true) { _, _ ->
+                            lifecycleScope.launchCatching {
+                                inventoryRepository.equip("equipped", it.key)
                             }
                         }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
-                )
-                compositeSubscription.add(adapter.startHatchingEvents.subscribeWithErrorHandler { showHatchingDialog(it) })
-                compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
-                compositeSubscription.addAll(adapter.startNewPartyEvents.subscribeWithErrorHandler { createNewParty() })
+                        dialog.addCloseButton()
+                        dialog.enqueue()
+                    }
+                }
             }
+            adapter?.onStartHatching = { showHatchingDialog(it) }
+            adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
+            adapter?.onCreateNewParty = { createNewParty() }
         }
     }
 
@@ -200,7 +190,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
         fragment.isHatching = true
         fragment.isFeeding = false
-        fragment.parentSubscription = compositeSubscription
         parentFragmentManager.let { fragment.show(it, "hatchingDialog") }
     }
 
@@ -211,24 +200,22 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
     override fun onRefresh() {
         binding?.refreshLayout?.isRefreshing = true
-        compositeSubscription.add(
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.retrieveUser(true, true)
-                .doOnTerminate {
-                    binding?.refreshLayout?.isRefreshing = false
-                }.subscribe({ }, RxErrorHandler.handleEmptyError())
-        )
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         (activity as? BaseActivity)?.let {
-            compositeSubscription.add(
-                hatchPetUseCase.observable(
+            lifecycleScope.launchCatching {
+                hatchPetUseCase.callInteractor(
                     HatchPetUseCase.RequestValues(
                         potion, egg,
                         it
                     )
-                ).subscribeWithErrorHandler {}
-            )
+                )
+            }
         }
     }
 
@@ -237,34 +224,25 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         alert?.setTitle(R.string.quest_party_required_title)
         alert?.setMessage(R.string.quest_party_required_description)
         alert?.addButton(R.string.create_new_party, true, false) { _, _ ->
-            socialRepository.createGroup(
-                getString(R.string.usernames_party, user?.profile?.name),
-                "",
-                user?.id,
-                "party",
-                "",
-                false
-            )
-                .flatMap {
-                    userRepository.retrieveUser(false, true)
-                        .filter { it.hasParty }
-                        .flatMap { socialRepository.retrieveGroup("party") }
-                        .flatMap { group1 ->
-                            socialRepository.retrieveGroupMembers(
-                                group1.id,
-                                true
-                            )
-                        }
-                }
-                .subscribe(
-                    {
-                        MainNavigationController.navigate(
-                            R.id.partyFragment,
-                            bundleOf(Pair("partyID", user?.party?.id))
-                        )
-                    },
-                    RxErrorHandler.handleEmptyError()
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                val group = socialRepository.createGroup(
+                    getString(R.string.usernames_party, user?.profile?.name),
+                    "",
+                    user?.id,
+                    "party",
+                    "",
+                    false
                 )
+                val user = userRepository.retrieveUser(false, true)
+                if (user?.hasParty == true) {
+                    val party = socialRepository.retrieveGroup("party")
+                    socialRepository.retrievePartyMembers(party?.id ?: "", true)
+                    MainNavigationController.navigate(
+                        R.id.partyFragment,
+                        bundleOf(Pair("partyID", user.party?.id))
+                    )
+                }
+            }
         }
         alert?.addButton(R.string.close, false) { _, _ ->
             alert.dismiss()
@@ -282,14 +260,14 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             else -> Egg::class.java
         }
         itemType?.let { type ->
-            lifecycleScope.launch {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 inventoryRepository.getOwnedItems(type)
                     .onEach { items ->
                         adapter?.data = items
                     }
                     .map { items -> items.mapNotNull { it.key } }
                     .map {
-                        inventoryRepository.getItemsFlowable(itemClass, it.toTypedArray()).firstOrNull()
+                        inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
                     }
                     .collect {
                         val itemMap = mutableMapOf<String, Item>()
@@ -299,10 +277,10 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         adapter?.items = itemMap
                     }
             }
-            lifecycleScope.launch {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
             }
-            lifecycleScope.launch {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 inventoryRepository.getOwnedPets().map { ownedPets ->
                     val petMap = mutableMapOf<String, OwnedPet>()
                     ownedPets.forEach { petMap[it.key ?: ""] = it }
@@ -333,16 +311,10 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         if (specialItem == null || memberID == null) {
             return
         }
-
-        val observable: Flowable<SkillResponse> =
+        lifecycleScope.launchCatching {
             userRepository.useSkill(specialItem.key, specialItem.target, memberID)
-
-        compositeSubscription.add(
-            observable.subscribe(
-                { this.displaySpecialItemResult(specialItem) },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+            displaySpecialItemResult(specialItem)
+        }
     }
 
     private fun displaySpecialItemResult(specialItem: SpecialItem?) {

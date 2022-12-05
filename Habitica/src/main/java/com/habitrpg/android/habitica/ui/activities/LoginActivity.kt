@@ -41,7 +41,8 @@ import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
@@ -81,14 +82,15 @@ class LoginActivity : BaseActivity() {
                 showValidationError(getString(R.string.password_too_short, configManager.minimumPasswordLength()))
                 return@OnClickListener
             }
-            apiClient.registerUser(username, email, password, confirmPassword)
-                .subscribe(
-                    { handleAuthResponse(it) },
-                    {
-                        hideProgress()
-                        RxErrorHandler.reportError(it)
-                    }
-                )
+            lifecycleScope.launch(ExceptionHandler.coroutine {
+                hideProgress()
+                ExceptionHandler.reportError(it)
+            }) {
+                val response = apiClient.registerUser(username, email, password, confirmPassword)
+                if (response != null) {
+                    handleAuthResponse(response)
+                }
+            }
         } else {
             val username: String = binding.username.text.toString().trim { it <= ' ' }
             val password: String = binding.password.text.toString()
@@ -97,14 +99,15 @@ class LoginActivity : BaseActivity() {
                 return@OnClickListener
             }
             Log.d("LoginActivity", ": $username, $password")
-            apiClient.connectUser(username, password).subscribe(
-                { handleAuthResponse(it) },
-                {
-                    hideProgress()
-                    RxErrorHandler.reportError(it)
-                    Log.d("LoginActivity", ": ${it.message}", it)
+            lifecycleScope.launch(ExceptionHandler.coroutine {
+                hideProgress()
+                ExceptionHandler.reportError(it)
+            }) {
+                val response = apiClient.connectUser(username, password)
+                if (response != null) {
+                    handleAuthResponse(response)
                 }
-            )
+            }
         }
     }
 
@@ -113,7 +116,7 @@ class LoginActivity : BaseActivity() {
         return R.layout.activity_login
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -261,12 +264,12 @@ class LoginActivity : BaseActivity() {
         } catch (e: Exception) {
             // Wearable API is not available on this device.
         }
-        compositeSubscription.add(
-            userRepository.retrieveUser(true)
-                .subscribe({
-                    handleAuthResponse(it, response.newUser)
-                }, RxErrorHandler.handleEmptyError())
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val user = userRepository.retrieveUser(true)
+            if (user != null) {
+                handleAuthResponse(user, response.newUser)
+            }
+        }
     }
 
     private fun handleAuthResponse(user: User, isNew: Boolean) {
@@ -276,20 +279,15 @@ class LoginActivity : BaseActivity() {
         if (isRegistering) {
             FirebaseAnalytics.getInstance(this).logEvent("user_registered", null)
         }
-        compositeSubscription.add(
-            userRepository.retrieveUser(withTasks = true, forced = true)
-                .subscribe(
-                    {
-                        if (isNew) {
-                            this.startSetupActivity()
-                        } else {
-                            this.startMainActivity()
-                            AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
-                        }
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.retrieveUser(true, true)
+            if (isNew) {
+                startSetupActivity()
+            } else {
+                startMainActivity()
+                AmplitudeManager.sendEvent("login", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -455,7 +453,10 @@ class LoginActivity : BaseActivity() {
         alertDialog.setMessage(R.string.forgot_password_description)
         alertDialog.setAdditionalContentView(input)
         alertDialog.addButton(R.string.send, true) { _, _ ->
-            userRepository.sendPasswordResetEmail(input.text.toString()).subscribe({ showPasswordEmailConfirmation() }, RxErrorHandler.handleEmptyError())
+            lifecycleScope.launchCatching {
+                userRepository.sendPasswordResetEmail(input.text.toString())
+                showPasswordEmailConfirmation()
+            }
         }
         alertDialog.addCancelButton()
         alertDialog.show()

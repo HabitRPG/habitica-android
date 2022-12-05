@@ -5,22 +5,24 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DialogBulkAllocateBinding
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : AlertDialog(context) {
     private val binding = DialogBulkAllocateBinding.inflate(context.layoutInflater)
     @Inject
     lateinit var userRepository: UserRepository
-
-    var subscription: Disposable? = null
 
     private val allocatedPoints: Int
         get() {
@@ -56,35 +58,30 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
 
     private fun saveChanges() {
         getButton(BUTTON_POSITIVE).isEnabled = false
-        userRepository.bulkAllocatePoints(
-            binding.strengthSliderView.currentValue,
-            binding.intelligenceSliderView.currentValue,
-            binding.constitutionSliderView.currentValue,
-            binding.perceptionSliderView.currentValue
-        )
-            .subscribe(
-                {
-                    this.dismiss()
-                },
-                {
-                    RxErrorHandler.reportError(it)
-                    this.dismiss()
-                }
+        lifecycleScope.launchCatching {
+            userRepository.bulkAllocatePoints(
+                binding.strengthSliderView.currentValue,
+                binding.intelligenceSliderView.currentValue,
+                binding.constitutionSliderView.currentValue,
+                binding.perceptionSliderView.currentValue
             )
+            dismiss()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subscription = userRepository.getUserFlowable().subscribe(
-            {
-                pointsToAllocate = it.stats?.points ?: 0
-                binding.strengthSliderView.previousValue = it.stats?.strength ?: 0
-                binding.intelligenceSliderView.previousValue = it.stats?.intelligence ?: 0
-                binding.constitutionSliderView.previousValue = it.stats?.constitution ?: 0
-                binding.perceptionSliderView.previousValue = it.stats?.per ?: 0
-            },
-            RxErrorHandler.handleEmptyError()
-        )
+        MainScope().launch(ExceptionHandler.coroutine()) {
+            userRepository.getUser()
+                .filterNotNull()
+                .collect {
+                    pointsToAllocate = it.stats?.points ?: 0
+                    binding.strengthSliderView.previousValue = it.stats?.strength ?: 0
+                    binding.intelligenceSliderView.previousValue = it.stats?.intelligence ?: 0
+                    binding.constitutionSliderView.previousValue = it.stats?.constitution ?: 0
+                    binding.perceptionSliderView.previousValue = it.stats?.per ?: 0
+                }
+        }
 
         binding.strengthSliderView.allocateAction = {
             checkRedistribution(binding.strengthSliderView)
@@ -130,16 +127,11 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         firstSlider: StatsSliderView?,
         secondSlider: StatsSliderView?
     ): StatsSliderView? {
-        return if (firstSlider?.currentValue ?: 0 > secondSlider?.currentValue ?: 0) {
+        return if ((firstSlider?.currentValue ?: 0) > (secondSlider?.currentValue ?: 0)) {
             firstSlider
         } else {
             secondSlider
         }
-    }
-
-    override fun dismiss() {
-        subscription?.dispose()
-        super.dismiss()
     }
 
     @SuppressLint("SetTextI18n")

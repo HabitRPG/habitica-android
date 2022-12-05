@@ -8,7 +8,8 @@ import com.habitrpg.android.habitica.helpers.AprilFoolsHandler
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
-import io.reactivex.rxjava3.core.Flowable
+import io.realm.RealmList
+import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 class ContentRepositoryImpl<T : ContentLocalRepository>(
@@ -22,37 +23,36 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
     private var lastContentSync = 0L
     private var lastWorldStateSync = 0L
 
-    override fun retrieveContent(forced: Boolean): Flowable<ContentResult> {
+    override suspend fun retrieveContent(forced: Boolean): ContentResult? {
         val now = Date().time
-        return if (forced || now - this.lastContentSync > 300000) {
+        if (forced || now - this.lastContentSync > 300000) {
+            val content = apiClient.getContent() ?: return null
             lastContentSync = now
-            apiClient.content.doOnNext {
-                it.special.add(mysteryItem)
-                localRepository.saveContent(it)
-            }
-        } else {
-            Flowable.just(ContentResult())
+            content.special = RealmList()
+            content.special.add(mysteryItem)
+            localRepository.saveContent(content)
+            return content
         }
+        return null
     }
 
-    override fun retrieveWorldState(): Flowable<WorldState> {
+    override suspend fun retrieveWorldState(): WorldState? {
         val now = Date().time
-        return if (now - this.lastWorldStateSync > 3600000) {
+        if (now - this.lastWorldStateSync > 3600000) {
+            val state = apiClient.getWorldState() ?: return null
             lastWorldStateSync = now
-            apiClient.worldState.doOnNext {
-                localRepository.saveWorldState(it)
-                for (event in it.events) {
-                    if (event.aprilFools != null && event.isCurrentlyActive) {
-                        AprilFoolsHandler.handle(event.aprilFools, event.end)
-                    }
+            localRepository.save(state)
+            for (event in state.events) {
+                if (event.aprilFools != null && event.isCurrentlyActive) {
+                    AprilFoolsHandler.handle(event.aprilFools, event.end)
                 }
             }
-        } else {
-            Flowable.just(WorldState())
+            return state
         }
+        return null
     }
 
-    override fun getWorldState(): Flowable<WorldState> {
+    override fun getWorldState(): Flow<WorldState> {
         return localRepository.getWorldState()
     }
 }

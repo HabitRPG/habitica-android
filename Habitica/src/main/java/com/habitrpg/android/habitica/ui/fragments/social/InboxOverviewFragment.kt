@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -17,15 +18,17 @@ import com.habitrpg.android.habitica.databinding.DialogChooseMessageRecipientBin
 import com.habitrpg.android.habitica.databinding.FragmentInboxBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.InboxConversation
-import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.UsernameLabel
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.views.AvatarView
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
@@ -49,7 +52,9 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
-        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(null).subscribe({ }, RxErrorHandler.handleEmptyError()))
+        lifecycleScope.launchCatching {
+            socialRepository.markPrivateMessagesRead(null)
+        }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -67,14 +72,11 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
     }
 
     private fun loadMessages() {
-        compositeSubscription.add(
-            socialRepository.getInboxConversations().subscribe(
-                {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            socialRepository.getInboxConversations().collect {
                     setInboxMessages(it)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+                }
+        }
     }
 
     override fun onDestroy() {
@@ -116,18 +118,17 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
                 binding.errorTextView.visibility = View.GONE
                 binding.progressCircular.visibility = View.VISIBLE
                 val username = binding.uuidEditText.text?.toString() ?: ""
-                socialRepository.getMemberWithUsername(username)
-                    .subscribe(
-                        {
-                            alert.dismiss()
-                            openInboxMessages("", username)
-                            binding.progressCircular.visibility = View.GONE
-                        },
-                        {
-                            binding.errorTextView.visibility = View.VISIBLE
-                            binding.progressCircular.visibility = View.GONE
-                        }
-                    )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val member = socialRepository.retrieveMemberWithUsername(username)
+                    if (member != null) {
+                        alert.dismiss()
+                        openInboxMessages("", username)
+                        binding.progressCircular.visibility = View.GONE
+                    } else {
+                        binding.errorTextView.visibility = View.VISIBLE
+                        binding.progressCircular.visibility = View.GONE
+                    }
+                }
             }
             alert.addButton(getString(R.string.action_cancel), false) { _, _ ->
                 thisActivity.dismissKeyboard()
@@ -143,15 +144,10 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
     }
 
     private fun retrieveMessages() {
-        compositeSubscription.add(
-            this.socialRepository.retrieveInboxConversations()
-                .subscribe(
-                    {
-                        binding?.inboxRefreshLayout?.isRefreshing = false
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        lifecycleScope.launchCatching {
+            socialRepository.retrieveInboxConversations()
+            binding?.inboxRefreshLayout?.isRefreshing = false
+        }
     }
 
     override fun onRefresh() {

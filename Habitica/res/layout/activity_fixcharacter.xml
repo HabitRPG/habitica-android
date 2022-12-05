@@ -30,7 +30,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/outer_inset"
                         android:text="@string/fix_character_description"
-                        android:background="@color/window_background"
+                        android:background="?attr/colorWindowBackground"
                         android:layout_marginBottom="16dp"
                         />
                     <FrameLayout
@@ -73,7 +73,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_gravity="bottom"
-                        android:background="@color/content_background_offset"
+                        android:background="?attr/colorContentBackgroundOffset"
                         android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
@@ -115,7 +115,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/content_background_offset"
+                            android:background="?attr/colorContentBackgroundOffset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
@@ -157,7 +157,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/content_background_offset"
+                            android:background="?attr/colorContentBackgroundOffset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
@@ -199,7 +199,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/content_background_offset"
+                            android:background="?attr/colorContentBackgroundOffset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
@@ -241,7 +241,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/content_background_offset"
+                            android:background="?attr/colorContentBackgroundOffset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                     <FrameLayout
@@ -284,7 +284,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="2dp"
                             android:layout_gravity="bottom"
-                            android:background="@color/content_background_offset"
+                            android:background="?attr/colorContentBackgroundOffset"
                             android:layout_marginEnd="56dp"/>
                     </FrameLayout>
                 </LinearLayout>

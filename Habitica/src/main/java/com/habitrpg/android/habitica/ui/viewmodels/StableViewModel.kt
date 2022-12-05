@@ -11,7 +11,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.extensions.getTranslatedType
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Mount
@@ -58,7 +59,7 @@ class StableViewModel(private val application: Application?, private val itemTyp
     }
 
     private fun loadItems() {
-        viewModelScope.launch {
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
             val animals = if ("pets" == itemType) {
                 inventoryRepository.getPets().firstOrNull()
             } else {
@@ -78,11 +79,9 @@ class StableViewModel(private val application: Application?, private val itemTyp
             }.collect {
                 _items.value = mapAnimals(animals, it)
             }
-
-            viewModelScope.launch {
-
+            viewModelScope.launchCatching {
+                _ownedItems.value = inventoryRepository.getOwnedItems(true).firstOrNull()
             }
-            disposable.add(inventoryRepository.getOwnedItems(true).subscribe({ _ownedItems.value = it }, RxErrorHandler.handleEmptyError()))
             _mounts.value = if ("pets" == itemType) {
                 inventoryRepository.getMounts().firstOrNull() ?: emptyList()
             } else {
@@ -133,7 +132,7 @@ class StableViewModel(private val application: Application?, private val itemTyp
             val isOwned = when (itemType) {
                 "pets" -> {
                     val ownedPet = ownedAnimals[animal.key] as? OwnedPet
-                    ownedPet?.trained ?: 0 > 0
+                    (ownedPet?.trained ?: 0) > 0
                 }
                 "mounts" -> {
                     val ownedMount = ownedAnimals[animal.key] as? OwnedMount

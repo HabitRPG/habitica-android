@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk target_sdk
 
     defaultConfig {
-        minSdk 21
-        targetSdk 32
+        minSdk min_sdk
+        targetSdkVersion target_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -33,6 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    namespace 'com.habitrpg.common.habitica'
 }
 
 dependencies {

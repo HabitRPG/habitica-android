@@ -16,21 +16,24 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.views.AvatarView
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.helpers.setMarkdown
+import com.habitrpg.common.habitica.views.AvatarView
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -64,36 +67,36 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         binding?.refreshLayout?.setOnRefreshListener { this.refresh() }
 
         binding?.invitationsView?.acceptCall = {
-            socialRepository.joinGroup(it)
-                .flatMap { userRepository.retrieveUser(false) }
-                .subscribe(
-                    {
-                        parentFragmentManager.popBackStack()
-                        MainNavigationController.navigate(
-                            R.id.partyFragment,
-                            bundleOf(Pair("partyID", userViewModel.partyID))
-                        )
-                    },
-                    RxErrorHandler.handleEmptyError()
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                socialRepository.joinGroup(it)
+                userRepository.retrieveUser(false)
+                parentFragmentManager.popBackStack()
+                MainNavigationController.navigate(
+                    R.id.partyFragment,
+                    bundleOf(Pair("partyID", userViewModel.partyID))
                 )
+            }
         }
 
         binding?.invitationsView?.rejectCall = {
-            socialRepository.rejectGroupInvite(it).subscribe({ }, RxErrorHandler.handleEmptyError())
+            lifecycleScope.launchCatching {
+                socialRepository.rejectGroupInvite(it)
+            }
             binding?.invitationWrapper?.visibility = View.GONE
         }
 
-        binding?.invitationsView?.setLeader = { leader ->
-            compositeSubscription.add(
-                socialRepository.getMember(leader)
-                    .subscribe(
-                        {
-                            binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(it)
-                            binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, it.displayName, binding?.invitationsView?.groupName)
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
-            )
+        binding?.invitationsView?.setLeader = { leaderID ->
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                val leader = socialRepository.retrieveMember(leaderID) ?: return@launch
+                binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)
+                                ?.setAvatar(leader)
+                binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text =
+                                getString(
+                                    R.string.invitation_title,
+                                    leader.displayName,
+                                    binding?.invitationsView?.groupName
+                                )
+            }
         }
 
         binding?.usernameTextview?.setOnClickListener {
@@ -153,42 +156,38 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         if (it.resultCode == Activity.RESULT_OK) {
             val bundle = it.data?.extras
             if (bundle?.getString("groupType") == "party") {
-                socialRepository.createGroup(
-                    bundle.getString("name"),
-                    bundle.getString("description"),
-                    bundle.getString("leader"),
-                    "party",
-                    bundle.getString("privacy"),
-                    bundle.getBoolean("leaderCreateChallenge")
-                )
-                    .flatMap {
+                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                        val group = socialRepository.createGroup(
+                            bundle.getString("name"),
+                            bundle.getString("description"),
+                            bundle.getString("leader"),
+                            "party",
+                            bundle.getString("privacy"),
+                            bundle.getBoolean("leaderCreateChallenge")
+                        )
                         userRepository.retrieveUser(false)
+                        if (isAdded) {
+                            parentFragmentManager.popBackStack()
+                        }
+                        MainNavigationController.navigate(
+                            R.id.partyFragment,
+                            bundleOf(Pair("partyID", userViewModel.partyID))
+                        )
                     }
-                    .subscribe(
-                        {
-                            if (isAdded) {
-                                parentFragmentManager.popBackStack()
-                            }
-                            MainNavigationController.navigate(
-                                R.id.partyFragment,
-                                bundleOf(Pair("partyID", userViewModel.partyID))
-                            )
-                        },
-                        RxErrorHandler.handleEmptyError()
-                    )
             }
         }
     }
 
     private fun refresh() {
-        compositeSubscription.add(
-            userRepository.retrieveUser(false, forced = true)
-                .filter { it.hasParty }
-                .flatMap { socialRepository.retrieveGroup("party") }
-                .flatMap { group1 -> socialRepository.retrieveGroupMembers(group1.id, true) }
-                .doOnComplete { binding?.refreshLayout?.isRefreshing = false }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val user = userRepository.retrieveUser(false, true)
+            if (user?.hasParty == true) {
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val group = socialRepository.retrieveGroup("party")
+                    socialRepository.retrievePartyMembers(group?.id ?: "", true)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

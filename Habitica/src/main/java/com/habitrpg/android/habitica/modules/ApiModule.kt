@@ -14,7 +14,6 @@ import com.habitrpg.common.habitica.helpers.KeyHelper
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.ref.WeakReference
 import javax.inject.Singleton
@@ -66,7 +65,6 @@ open class ApiModule {
     fun providesMaintenanceApiService(gsonConverter: GsonConverterFactory): MaintenanceApiService {
         val adapter = Retrofit.Builder()
             .baseUrl("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(gsonConverter)
             .build()
         return adapter.create(MaintenanceApiService::class.java)

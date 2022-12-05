@@ -17,32 +17,34 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AppModule
-import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.setMarkdown
+import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
@@ -95,28 +97,27 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
         binding?.invitationsView?.acceptCall = {
             viewModel?.joinGroup(it) {
-                compositeSubscription.add(
-                    userRepository.retrieveUser(false)
-                        .subscribe { user ->
-                            parentFragmentManager.popBackStack()
-                            MainNavigationController.navigate(
-                                R.id.partyFragment,
-                                bundleOf(Pair("partyID", user.party?.id))
-                            )
-                        }
-                )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val user = userRepository.retrieveUser(false)
+                    parentFragmentManager.popBackStack()
+                    MainNavigationController.navigate(
+                        R.id.partyFragment,
+                        bundleOf(Pair("partyID", user?.party?.id))
+                    )
+                }
             }
         }
 
         binding?.invitationsView?.rejectCall = {
-            socialRepository.rejectGroupInvite(it)
-                .flatMap { userRepository.retrieveUser(false, true) }
-                .subscribe({ }, RxErrorHandler.handleEmptyError())
+            lifecycleScope.launchCatching {
+                socialRepository.rejectGroupInvite(it)
+                userRepository.retrieveUser(false, true)
+            }
         }
 
-        viewModel?.getGroupData()?.observe(viewLifecycleOwner, { updateParty(it) })
-        viewModel?.user?.observe(viewLifecycleOwner, { updateUser(it) })
-        viewModel?.getMembersData()?.observe(viewLifecycleOwner, { updateMembersList(it) })
+        viewModel?.getGroupData()?.observe(viewLifecycleOwner) { updateParty(it) }
+        viewModel?.user?.observe(viewLifecycleOwner) { updateUser(it) }
+        viewModel?.getMembersData()?.observe(viewLifecycleOwner) { updateMembersList(it) }
     }
 
     private fun refreshParty() {
@@ -141,8 +142,10 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questImageWrapper?.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) {
                 delay(500)
-                inventoryRepository.getQuestContent(party.quest?.key ?: "")
-                    .subscribe({ this@PartyDetailFragment.updateQuestContent(it) }, RxErrorHandler.handleEmptyError())
+                val content = inventoryRepository.getQuestContent(party.quest?.key ?: "").firstOrNull()
+                if (content != null) {
+                    updateQuestContent(content)
+                }
             }
         } else {
             binding?.newQuestButton?.visibility = View.VISIBLE
@@ -184,16 +187,17 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     val groupName = invitation.name
 
                     leaderID.let { id ->
-                        compositeSubscription.add(
-                            socialRepository.getMember(id)
-                                .subscribe(
-                                    { member ->
-                                        binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)?.setAvatar(member)
-                                        binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text = getString(R.string.invitation_title, member.displayName, groupName)
-                                    },
-                                    RxErrorHandler.handleEmptyError()
+                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                            val member = socialRepository.retrieveMember(id) ?: return@launch
+                            binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)
+                                ?.setAvatar(member)
+                            binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text =
+                                getString(
+                                    R.string.invitation_title,
+                                    member.displayName,
+                                    groupName
                                 )
-                        )
+                        }
                     }
 
                     view?.findViewById<Button>(R.id.accept_button)?.setOnClickListener {
@@ -263,7 +267,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val leaderID = viewModel?.leaderID
         members?.forEachIndexed { index, member ->
             val memberView = (
-                if (binding?.membersWrapper?.childCount ?: 0 > index) {
+                if ((binding?.membersWrapper?.childCount ?: 0) > index) {
                     binding?.membersWrapper?.getChildAt(index)
                 } else {
                     val view = binding?.membersWrapper?.inflate(R.layout.party_member, false)
@@ -299,18 +303,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
         val addMessageDialog = context?.let { HabiticaAlertDialog(it) }
         addMessageDialog?.addButton(android.R.string.ok, true) { _, _ ->
-            socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
-                .subscribe(
-                    {
-                        (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
-                            HabiticaSnackbar.showSnackbar(
-                                it1,
-                                String.format(getString(R.string.profile_message_sent_to), username), HabiticaSnackbar.SnackbarDisplayType.NORMAL
-                            )
-                        }
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                socialRepository.postPrivateMessage(userID, emojiEditText.text.toString())
+                (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
+                    HabiticaSnackbar.showSnackbar(
+                        it1,
+                        String.format(getString(R.string.profile_message_sent_to), username), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                    )
+                }
+            }
             activity?.dismissKeyboard()
         }
         addMessageDialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
@@ -321,18 +322,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     private fun showTransferOwnerShipDialog(userID: String, displayName: String) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.transfer, true) { _, _ ->
-            socialRepository.transferGroupOwnership(viewModel?.groupID ?: "", userID)
-                .subscribe(
-                    {
-                        (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
-                            HabiticaSnackbar.showSnackbar(
-                                it1,
-                                String.format(getString(R.string.transferred_ownership), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
-                            )
-                        }
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                socialRepository.transferGroupOwnership(viewModel?.groupID ?: "", userID)
+                (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
+                    HabiticaSnackbar.showSnackbar(
+                        it1,
+                        String.format(getString(R.string.transferred_ownership), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                    )
+                }
+            }
             activity?.dismissKeyboard()
         }
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
@@ -344,18 +342,15 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     private fun showRemoveMemberDialog(userID: String, displayName: String) {
         val dialog = context?.let { HabiticaAlertDialog(it) }
         dialog?.addButton(R.string.remove, true) { _, _ ->
-            socialRepository.removeMemberFromGroup(viewModel?.groupID ?: "", userID)
-                .subscribe(
-                    {
-                        (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
-                            HabiticaSnackbar.showSnackbar(
-                                it1,
-                                String.format(getString(R.string.removed_member), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
-                            )
-                        }
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                socialRepository.removeMemberFromGroup(viewModel?.groupID ?: "", userID)
+                (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
+                    HabiticaSnackbar.showSnackbar(
+                        it1,
+                        String.format(getString(R.string.removed_member), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                    )
+                }
+            }
             activity?.dismissKeyboard()
         }
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
@@ -373,12 +368,13 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     }
 
     private fun getGroupChallenges(): List<Challenge> {
-        var groupChallenges = mutableListOf<Challenge>()
-        userRepository.getUserFlowable().forEach {
-            it.challenges?.forEach {
-                challengeRepository.getChallenge(it.challengeID).forEach {
-                    if (it.groupId.equals(viewModel?.groupID)) {
-                        groupChallenges.add(it)
+        val groupChallenges = mutableListOf<Challenge>()
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect {
+                it?.challenges?.forEach { membership ->
+                    val challenge = challengeRepository.getChallenge(membership.challengeID).firstOrNull()
+                    if (challenge != null && challenge.groupId == viewModel?.groupID) {
+                        groupChallenges.add(challenge)
                     }
                 }
             }

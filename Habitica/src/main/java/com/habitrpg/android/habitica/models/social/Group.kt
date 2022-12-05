@@ -3,8 +3,6 @@ package com.habitrpg.android.habitica.models.social
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.inventory.Quest
-import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -28,13 +26,13 @@ open class Group : RealmObject(), BaseMainObject {
     var summary: String? = null
     var leaderID: String? = null
     var leaderName: String? = null
+    var managers: RealmList<String>? = null
     var name: String? = null
     var memberCount: Int = 0
     var type: String? = null
     var logo: String? = null
     var quest: Quest? = null
     var privacy: String? = null
-    var members: RealmList<User>? = null
     var challengeCount: Int = 0
     var leaderMessage: String? = null
     var leaderOnlyChallenges: Boolean = false
@@ -43,8 +41,6 @@ open class Group : RealmObject(), BaseMainObject {
 
     @Ignore
     var tasksOrder: TasksOrder? = null
-    @Ignore
-    var tasks: TaskList? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -56,6 +52,13 @@ open class Group : RealmObject(), BaseMainObject {
 
     override fun hashCode(): Int {
         return id.hashCode()
+    }
+
+    fun hasTaskEditPrivileges(userID: String): Boolean {
+        if (leaderID == userID) {
+            return true
+        }
+        return managers?.contains(userID) == true
     }
 
     companion object {

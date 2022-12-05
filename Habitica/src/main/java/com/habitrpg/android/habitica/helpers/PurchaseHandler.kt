@@ -25,26 +25,25 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
-import com.habitrpg.common.habitica.models.IAPGift
-import com.habitrpg.common.habitica.models.PurchaseValidationRequest
-import com.habitrpg.common.habitica.models.Transaction
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.core.Flowable
-import java.util.Date
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import com.habitrpg.common.habitica.models.IAPGift
+import com.habitrpg.common.habitica.models.PurchaseValidationRequest
+import com.habitrpg.common.habitica.models.Transaction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
+import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class PurchaseHandler(
     private val context: Context,
@@ -73,10 +72,13 @@ class PurchaseHandler(
                 val mostRecentSub = findMostRecentSubscription(purchases)
                 val plan = userViewModel.user.value?.purchased?.plan
                 for (purchase in purchases) {
-                    if (plan?.isActive == true && PurchaseTypes.allSubscriptionTypes.contains(purchase.skus.firstOrNull())) {
+                    if (plan?.isActive == true && PurchaseTypes.allSubscriptionTypes.contains(
+                            purchase.skus.firstOrNull()
+                        )
+                    ) {
                         if ((plan.additionalData?.data?.orderId == purchase.orderId &&
-                            ((plan.dateTerminated != null) == purchase.isAutoRenewing)) ||
-                                mostRecentSub?.orderId != purchase.orderId
+                                ((plan.dateTerminated != null) == purchase.isAutoRenewing)) ||
+                            mostRecentSub?.orderId != purchase.orderId
                         ) {
                             return
                         }
@@ -88,7 +90,7 @@ class PurchaseHandler(
                 return
             }
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                     for (purchase in purchases) {
                         consume(purchase)
                     }
@@ -139,8 +141,8 @@ class PurchaseHandler(
         billingClient.endConnection()
     }
 
-    fun queryPurchases(){
-        if (billingClientState == BillingClientState.READY){
+    fun queryPurchases() {
+        if (billingClientState == BillingClientState.READY) {
             billingClient.queryPurchasesAsync(
                 BillingClient.SkuType.SUBS,
                 this@PurchaseHandler
@@ -186,7 +188,13 @@ class PurchaseHandler(
         return skuDetailsResult.skuDetailsList
     }
 
-    fun purchase(activity: Activity, skuDetails: SkuDetails, recipient: String? = null) {
+    fun purchase(
+        activity: Activity,
+        skuDetails: SkuDetails,
+        recipient: String? = null,
+        isSaleGemPurchase: Boolean = false
+    ) {
+        this.isSaleGemPurchase = isSaleGemPurchase
         recipient?.let {
             addGift(skuDetails.sku, it)
         }
@@ -216,41 +224,50 @@ class PurchaseHandler(
         when {
             PurchaseTypes.allGemTypes.contains(sku) -> {
                 val validationRequest = buildValidationRequest(purchase)
-                apiClient.validatePurchase(validationRequest).subscribe({
-                    processedPurchase(purchase)
-                    val gift = removeGift(sku)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        consume(purchase)
+                MainScope().launchCatching {
+                    try {
+                        apiClient.validatePurchase(validationRequest)
+                        processedPurchase(purchase)
+                        val gift = removeGift(sku)
+                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                            consume(purchase)
+                        }
+                        displayConfirmationDialog(purchase, gift?.second)
+                    } catch (throwable: Throwable) {
+                        handleError(throwable, purchase)
                     }
-                    displayConfirmationDialog(purchase, gift?.second)
-                }) { throwable: Throwable ->
-                    handleError(throwable, purchase)
                 }
             }
             PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {
                 val validationRequest = buildValidationRequest(purchase)
-                apiClient.validateNoRenewSubscription(validationRequest).subscribe({
-                    processedPurchase(purchase)
-                    val gift = removeGift(sku)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        consume(purchase)
+                MainScope().launchCatching {
+                    try {
+                        apiClient.validateNoRenewSubscription(validationRequest)
+                        processedPurchase(purchase)
+                        val gift = removeGift(sku)
+                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                            consume(purchase)
+                        }
+                        displayConfirmationDialog(purchase, gift?.second)
+                    } catch (throwable: Throwable) {
+                        handleError(throwable, purchase)
                     }
-                    displayConfirmationDialog(purchase, gift?.second)
-                }) { throwable: Throwable ->
-                    handleError(throwable, purchase)
                 }
             }
             PurchaseTypes.allSubscriptionTypes.contains(sku) -> {
                 val validationRequest = buildValidationRequest(purchase)
-                apiClient.validateSubscription(validationRequest).subscribe({
-                    processedPurchase(purchase)
-                    analyticsManager.logEvent("user_subscribed", bundleOf(Pair("sku", sku)))
-                    CoroutineScope(Dispatchers.IO).launch {
-                        acknowledgePurchase(purchase)
+                MainScope().launchCatching {
+                    try {
+                        apiClient.validateSubscription(validationRequest)
+                        processedPurchase(purchase)
+                        analyticsManager.logEvent("user_subscribed", bundleOf(Pair("sku", sku)))
+                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                            acknowledgePurchase(purchase)
+                        }
+                        displayConfirmationDialog(purchase)
+                    } catch (throwable: Throwable) {
+                        handleError(throwable, purchase)
                     }
-                    displayConfirmationDialog(purchase)
-                }) { throwable: Throwable ->
-                    handleError(throwable, purchase)
                 }
             }
         }
@@ -268,7 +285,9 @@ class PurchaseHandler(
     }
 
     private fun processedPurchase(purchase: Purchase) {
-        userViewModel.userRepository.retrieveUser(false, true).subscribeWithErrorHandler {}
+        MainScope().launch(ExceptionHandler.coroutine()) {
+            userViewModel.userRepository.retrieveUser(false, true)
+        }
     }
 
     private fun buildValidationRequest(purchase: Purchase): PurchaseValidationRequest {
@@ -296,7 +315,7 @@ class PurchaseHandler(
                 if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                     processedPurchase(purchase)
                     removeGift(purchase.skus.firstOrNull())
-                    CoroutineScope(Dispatchers.IO).launch {
+                    CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                         consume(purchase)
                     }
                     return
@@ -318,7 +337,8 @@ class PurchaseHandler(
     }
 
     private fun findMostRecentSubscription(purchasesList: List<Purchase>): Purchase? {
-        val purchases = purchasesList.filter { it.isAcknowledged }.sortedByDescending { it.purchaseTime }
+        val purchases =
+            purchasesList.filter { it.isAcknowledged }.sortedByDescending { it.purchaseTime }
         var fallback: Purchase? = null
         // If there is a subscription that is still active, prioritise that. Otherwise return the most recent one.
         for (purchase in purchases) {
@@ -331,9 +351,9 @@ class PurchaseHandler(
         return fallback
     }
 
-    fun cancelSubscription(): Flowable<User> {
-        return apiClient.cancelSubscription()
-            .flatMap { userViewModel.userRepository.retrieveUser(false, true) }
+    suspend fun cancelSubscription(): User? {
+        apiClient.cancelSubscription()
+        return userViewModel.userRepository.retrieveUser(false, true)
     }
 
     private fun durationString(sku: String): String {
@@ -346,18 +366,31 @@ class PurchaseHandler(
         }
     }
 
+    private var isSaleGemPurchase = false
+
     private fun gemAmountString(sku: String): String {
-        return when (sku) {
-            PurchaseTypes.Purchase4Gems -> "4"
-            PurchaseTypes.Purchase21Gems -> "21"
-            PurchaseTypes.Purchase42Gems -> "42"
-            PurchaseTypes.Purchase84Gems -> "84"
-            else -> ""
+        if (isSaleGemPurchase) {
+            isSaleGemPurchase = false
+            return when (sku) {
+                PurchaseTypes.Purchase4Gems -> "5"
+                PurchaseTypes.Purchase21Gems -> "30"
+                PurchaseTypes.Purchase42Gems -> "60"
+                PurchaseTypes.Purchase84Gems -> "125"
+                else -> ""
+            }
+        } else {
+            return when (sku) {
+                PurchaseTypes.Purchase4Gems -> "4"
+                PurchaseTypes.Purchase21Gems -> "21"
+                PurchaseTypes.Purchase42Gems -> "42"
+                PurchaseTypes.Purchase84Gems -> "84"
+                else -> ""
+            }
         }
     }
 
     private fun displayConfirmationDialog(purchase: Purchase, giftedTo: String? = null) {
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
             val application = (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
             val sku = purchase.skus.firstOrNull() ?: return@launch
@@ -365,18 +398,29 @@ class PurchaseHandler(
             val message = when {
                 PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {
                     title = context.getString(R.string.gift_confirmation_title)
-                    context.getString(R.string.gift_confirmation_text_sub, giftedTo, durationString(sku))
+                    context.getString(
+                        R.string.gift_confirmation_text_sub,
+                        giftedTo,
+                        durationString(sku)
+                    )
                 }
                 PurchaseTypes.allSubscriptionTypes.contains(sku) -> {
                     if (sku == PurchaseTypes.Subscription1Month) {
                         context.getString(R.string.subscription_confirmation)
                     } else {
-                        context.getString(R.string.subscription_confirmation_multiple, durationString(sku))
+                        context.getString(
+                            R.string.subscription_confirmation_multiple,
+                            durationString(sku)
+                        )
                     }
                 }
                 PurchaseTypes.allGemTypes.contains(sku) && giftedTo != null -> {
                     title = context.getString(R.string.gift_confirmation_title)
-                    context.getString(R.string.gift_confirmation_text_gems_new, giftedTo, gemAmountString(sku))
+                    context.getString(
+                        R.string.gift_confirmation_text_gems_new,
+                        giftedTo,
+                        gemAmountString(sku)
+                    )
                 }
                 PurchaseTypes.allGemTypes.contains(sku) && giftedTo == null -> {
                     context.getString(R.string.gem_purchase_confirmation, gemAmountString(sku))

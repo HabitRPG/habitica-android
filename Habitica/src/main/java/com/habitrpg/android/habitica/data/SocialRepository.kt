@@ -10,114 +10,113 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Single
+import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialRepository : BaseRepository {
-    fun getPublicGuilds(): Flowable<out List<Group>>
+    fun getPublicGuilds(): Flow<List<Group>>
 
-    fun getUserGroups(type: String?): Flowable<out List<Group>>
-    fun retrieveGroupChat(groupId: String): Single<List<ChatMessage>>
-    fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>>
+    fun getUserGroups(type: String?): Flow<List<Group>>
+    suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>?
+    fun getGroupChat(groupId: String): Flow<out List<ChatMessage>>
 
-    fun markMessagesSeen(seenGroupId: String)
+    suspend fun markMessagesSeen(seenGroupId: String)
 
-    fun flagMessage(
+    suspend fun flagMessage(
         chatMessageID: String,
         additionalInfo: String,
         groupID: String? = null
-    ): Flowable<Void>
+    ): Void?
 
-    fun likeMessage(chatMessage: ChatMessage): Flowable<ChatMessage>
+    suspend fun likeMessage(chatMessage: ChatMessage): ChatMessage?
 
-    fun deleteMessage(chatMessage: ChatMessage): Flowable<Void>
+    suspend fun deleteMessage(chatMessage: ChatMessage): Void?
 
-    fun postGroupChat(
+    suspend fun postGroupChat(
         groupId: String,
         messageObject: HashMap<String, String>
-    ): Flowable<PostChatMessageResult>
+    ): PostChatMessageResult?
 
-    fun postGroupChat(groupId: String, message: String): Flowable<PostChatMessageResult>
+    suspend fun postGroupChat(groupId: String, message: String): PostChatMessageResult?
 
-    fun retrieveGroup(id: String): Flowable<Group>
+    suspend fun retrieveGroup(id: String): Group?
     fun getGroup(id: String?): Flow<Group?>
-    fun getGroupFlowable(id: String?): Flowable<Group>
 
-    fun leaveGroup(id: String?, keepChallenges: Boolean): Flowable<Group>
+    suspend fun leaveGroup(id: String?, keepChallenges: Boolean): Group?
 
-    fun joinGroup(id: String?): Flowable<Group>
+    suspend fun joinGroup(id: String?): Group?
 
-    fun createGroup(
+    suspend fun createGroup(
         name: String?,
         description: String?,
         leader: String?,
         type: String?,
         privacy: String?,
         leaderCreateChallenge: Boolean?
-    ): Flowable<Group>
+    ): Group?
 
-    fun updateGroup(
+    suspend fun updateGroup(
         group: Group?,
         name: String?,
         description: String?,
         leader: String?,
         leaderCreateChallenge: Boolean?
-    ): Flowable<Group>
+    ): Group?
 
-    fun retrieveGroups(type: String): Flowable<List<Group>>
-    fun getGroups(type: String): Flowable<out List<Group>>
+    suspend fun retrieveGroups(type: String): List<Group>?
+    fun getGroups(type: String): Flow<List<Group>>
 
-    fun getInboxMessages(replyToUserID: String?): Flowable<out List<ChatMessage>>
-    fun retrieveInboxMessages(uuid: String, page: Int): Flowable<List<ChatMessage>>
-    fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
-    fun getInboxConversations(): Flowable<out List<InboxConversation>>
-    fun postPrivateMessage(
+    fun getInboxMessages(replyToUserID: String?): Flow<RealmResults<ChatMessage>>
+    suspend fun retrieveInboxMessages(uuid: String, page: Int): List<ChatMessage>?
+    suspend fun retrieveInboxConversations(): List<InboxConversation>?
+    fun getInboxConversations(): Flow<RealmResults<InboxConversation>>
+    suspend fun postPrivateMessage(
         recipientId: String,
         messageObject: HashMap<String, String>
-    ): Flowable<List<ChatMessage>>
+    ): List<ChatMessage>?
 
-    fun postPrivateMessage(recipientId: String, message: String): Flowable<List<ChatMessage>>
+    suspend fun postPrivateMessage(recipientId: String, message: String): List<ChatMessage>?
 
-    fun getGroupMembers(id: String): Flow<List<Member>>
-    fun retrieveGroupMembers(id: String, includeAllPublicFields: Boolean): Flowable<List<Member>>
+    suspend fun getPartyMembers(id: String): Flow<List<Member>>
+    suspend fun getGroupMembers(id: String): Flow<List<Member>>
+    suspend fun retrievePartyMembers(id: String, includeAllPublicFields: Boolean): List<Member>?
 
-    fun inviteToGroup(id: String, inviteData: Map<String, Any>): Flowable<List<Void>>
+    suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>): List<Void>?
 
-    fun getMember(userId: String?): Flowable<Member>
-    fun getMemberWithUsername(username: String?): Flowable<Member>
+    suspend fun retrieveMember(userId: String?): Member?
+    suspend fun retrieveMemberWithUsername(username: String?): Member?
 
-    fun findUsernames(
+    suspend fun findUsernames(
         username: String,
         context: String? = null,
         id: String? = null
-    ): Flowable<List<FindUsernameResult>>
+    ): List<FindUsernameResult>?
 
-    fun markPrivateMessagesRead(user: User?): Flowable<Void>
+    suspend fun markPrivateMessagesRead(user: User?): Void?
 
     fun markSomePrivateMessagesAsRead(user: User?, messages: List<ChatMessage>)
 
-    fun transferGroupOwnership(groupID: String, userID: String): Flowable<Group>
-    fun removeMemberFromGroup(groupID: String, userID: String): Flowable<List<Member>>
+    suspend fun transferGroupOwnership(groupID: String, userID: String): Group?
+    suspend fun removeMemberFromGroup(groupID: String, userID: String): List<Member>?
 
-    fun acceptQuest(user: User?, partyId: String = "party"): Flowable<Void>
-    fun rejectQuest(user: User?, partyId: String = "party"): Flowable<Void>
+    suspend fun acceptQuest(user: User?, partyId: String = "party"): Void?
+    suspend fun rejectQuest(user: User?, partyId: String = "party"): Void?
 
-    fun leaveQuest(partyId: String): Flowable<Void>
+    suspend fun leaveQuest(partyId: String): Void?
 
-    fun cancelQuest(partyId: String): Flowable<Void>
+    suspend fun cancelQuest(partyId: String): Void?
 
-    fun abortQuest(partyId: String): Flowable<Quest>
+    suspend fun abortQuest(partyId: String): Quest?
 
-    fun rejectGroupInvite(groupId: String): Flowable<Void>
+    suspend fun rejectGroupInvite(groupId: String): Void?
 
-    fun forceStartQuest(party: Group): Flowable<Quest>
+    suspend fun forceStartQuest(party: Group): Quest?
 
-    fun getMemberAchievements(userId: String?): Flowable<List<Achievement>>
+    suspend fun getMemberAchievements(userId: String?): List<Achievement>?
 
-    fun transferGems(giftedID: String, amount: Int): Flowable<Void>
+    suspend fun transferGems(giftedID: String, amount: Int): Void?
 
-    fun getGroupMembership(id: String): Flowable<GroupMembership>
-    fun getGroupMemberships(): Flowable<out List<GroupMembership>>
-    fun blockMember(userID: String): Flowable<List<String>>
+    fun getGroupMembership(id: String): Flow<GroupMembership?>
+    fun getGroupMemberships(): Flow<List<GroupMembership>>
+    suspend fun blockMember(userID: String): List<String>?
 }

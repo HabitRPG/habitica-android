@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.habitrpg.android.habitica.R
@@ -14,7 +15,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSetupAvatarBinding
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.SetupActivity
@@ -56,8 +57,16 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
 
         this.adapter = CustomizationSetupAdapter()
         this.adapter?.userSize = this.user?.preferences?.size ?: "slim"
-        adapter?.updateUserEvents?.flatMap { userRepository.updateUser(it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
-        adapter?.equipGearEvents?.flatMap { inventoryRepository.equip("equipped", it) }?.subscribeWithErrorHandler {}?.let { compositeSubscription.add(it) }
+        adapter?.onUpdateUser = {
+            lifecycleScope.launchCatching {
+                userRepository.updateUser(it)
+            }
+        }
+        adapter?.onEquipGear = {
+            lifecycleScope.launchCatching {
+                inventoryRepository.equip("equipped", it)
+            }
+        }
 
         this.adapter?.user = this.user
         val layoutManager = LinearLayoutManager(activity)
@@ -185,7 +194,9 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         updateData["preferences.hair.bangs"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_HAIR, SetupCustomizationRepository.SUBCATEGORY_BANGS, user), false)
         updateData["preferences.hair.flower"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_FLOWER, user), true)
         updateData["preferences.chair"] = chooseRandomKey(customizationRepository.getCustomizations(SetupCustomizationRepository.CATEGORY_EXTRAS, SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR, user), true)
-        compositeSubscription.add(userRepository.updateUser(updateData).subscribeWithErrorHandler({}))
+        lifecycleScope.launchCatching {
+            userRepository.updateUser(updateData)
+        }
     }
 
     @Suppress("ReturnCount")

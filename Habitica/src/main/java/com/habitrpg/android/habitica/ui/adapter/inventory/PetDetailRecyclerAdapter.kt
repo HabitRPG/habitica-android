@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CanHatchItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -16,15 +15,15 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.Animations
 
 class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+    var onFeed: ((Pet, Food?) -> Unit)? = null
+    var onEquip: ((String) -> Unit)? = null
     private var existingMounts: List<Mount>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
@@ -34,8 +33,6 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             field = value
             notifyDataSetChanged()
         }
-    private val equipEvents = PublishSubject.create<String>()
-    private val feedEvents = PublishSubject.create<Pair<Pet, Food?>>()
     private var ownsSaddles: Boolean = false
 
     private var itemList: List<Any> = ArrayList()
@@ -44,12 +41,6 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         this.itemList = itemList
         this.notifyDataSetChanged()
     }
-
-    fun getEquipFlowable(): Flowable<String> {
-        return equipEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    var feedFlowable: Flowable<Pair<Pet, Food?>> = feedEvents.toFlowable(BackpressureStrategy.DROP)
 
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
 
@@ -74,7 +65,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         when (viewType) {
             1 -> SectionViewHolder(parent)
             2 -> CanHatchViewHolder(parent, animalIngredientsRetriever)
-            else -> PetViewHolder(parent, equipEvents, feedEvents, animalIngredientsRetriever)
+            else -> PetViewHolder(parent, onEquip, onFeed, animalIngredientsRetriever)
         }
 
     override fun onBindViewHolder(

@@ -13,20 +13,20 @@ import com.habitrpg.android.habitica.databinding.ChatItemBinding
 import com.habitrpg.android.habitica.databinding.TavernChatIntroItemBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
-import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 open class ChatRecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -41,7 +41,8 @@ class ChatRecyclerIntroViewHolder(itemView: View, replyToUUID: String) : ChatRec
         binding.sublineTextview.setOnClickListener { onOpenProfile?.invoke(replyToUUID) }
     }
 
-    fun bind(member: Member) {
+    fun bind(member: Member?) {
+        if (member == null) return
         binding.avatarView.setAvatar(member)
         binding.displayNameTextview.username = member.displayName
         binding.displayNameTextview.tier = member.contributor?.level ?: 0
@@ -184,17 +185,13 @@ class ChatRecyclerMessageViewHolder(
         binding.messageText.setParsedMarkdown(chatMessage?.parsedText)
         if (msg.parsedText == null) {
             binding.messageText.text = chatMessage?.text
-            Maybe.just(chatMessage?.text ?: "")
-                .map { MarkdownParser.parseMarkdown(it) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { parsedText ->
-                        chatMessage?.parsedText = parsedText
-                        binding.messageText.setParsedMarkdown(parsedText)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+            MainScope().launch(Dispatchers.IO) {
+                val parsedText = MarkdownParser.parseMarkdown(chatMessage?.text ?: "")
+                withContext(Dispatchers.Main) {
+                    chatMessage?.parsedText = parsedText
+                    binding.messageText.setParsedMarkdown(parsedText)
+                }
+            }
         }
 
         val username = user?.formattedUsername

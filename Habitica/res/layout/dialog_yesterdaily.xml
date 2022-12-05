@@ -6,4 +6,4 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@color/content_background"/>
+    android:background="?attr/colorContentBackground"/>

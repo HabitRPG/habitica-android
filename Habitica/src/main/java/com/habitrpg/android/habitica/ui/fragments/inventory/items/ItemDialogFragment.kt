@@ -14,9 +14,9 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -31,12 +31,11 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ItemRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseDialogFragment
-import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.EmptyItem
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -44,8 +43,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
-
-    var parentSubscription: CompositeDisposable? = null
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -183,67 +180,53 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 adapter?.feedingPet = this.feedingPet
             }
             binding?.recyclerView?.adapter = adapter
-
-            adapter?.let { adapter ->
-                compositeSubscription.add(
-                    adapter.getSellItemFlowable()
-                        .flatMap { item -> inventoryRepository.sellItem(item) }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
-                )
-
-                compositeSubscription.add(
-                    adapter.getQuestInvitationFlowable()
-                        .flatMap { quest -> inventoryRepository.inviteToQuest(quest) }
-                        .flatMap { socialRepository.retrieveGroup("party") }
-                        .subscribe(
-                            {
-                                if (isModal) {
-                                    dismiss()
-                                } else {
-                                    MainNavigationController.navigate(R.id.partyFragment)
-                                }
-                            },
-                            RxErrorHandler.handleEmptyError()
-                        )
-                )
-                compositeSubscription.add(
-                    adapter.getOpenMysteryItemFlowable()
-                        .flatMap { inventoryRepository.openMysteryItem(user) }
-                        .doOnNext {
-                            val activity = activity as? MainActivity
-                            if (activity != null) {
-                                val dialog = OpenedMysteryitemDialog(activity)
-                                dialog.isCelebratory = true
-                                dialog.setTitle(R.string.mystery_item_title)
-                                dialog.binding.iconView.loadImage("shop_${it.key}")
-                                dialog.binding.titleView.text = it.text
-                                dialog.binding.descriptionView.text = it.notes
-                                dialog.addButton(R.string.equip, true) { _, _ ->
-                                    inventoryRepository.equip("equipped", it.key ?: "").subscribe({}, RxErrorHandler.handleEmptyError())
-                                }
-                                dialog.addCloseButton()
-                                dialog.enqueue()
+            adapter?.onSellItem = {
+                lifecycleScope.launchCatching {
+                    inventoryRepository.sellItem(it)
+                }
+            }
+            adapter?.onQuestInvitation = {
+                lifecycleScope.launchCatching {
+                    inventoryRepository.inviteToQuest(it)
+                    MainNavigationController.navigate(R.id.partyFragment)
+                }
+            }
+            adapter?.onOpenMysteryItem = {
+                lifecycleScope.launchCatching {
+                    val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
+                    val activity = activity as? MainActivity
+                    if (activity != null) {
+                        val dialog = OpenedMysteryitemDialog(activity)
+                        dialog.isCelebratory = true
+                        dialog.setTitle(R.string.mystery_item_title)
+                        dialog.binding.iconView.loadImage("shop_${it.key}")
+                        dialog.binding.titleView.text = item.text
+                        dialog.binding.descriptionView.text = item.notes
+                        dialog.addButton(R.string.equip, true) { _, _ ->
+                            lifecycleScope.launchCatching {
+                                inventoryRepository.equip("equipped", it.key)
                             }
                         }
-                        .subscribe({ }, RxErrorHandler.handleEmptyError())
-                )
-                compositeSubscription.add(adapter.hatchPetEvents.subscribeWithErrorHandler { hatchPet(it.first, it.second) })
-                compositeSubscription.add(adapter.feedPetEvents.subscribeWithErrorHandler { feedPet(it) })
+                        dialog.addCloseButton()
+                        dialog.enqueue()
+                    }
+                }
             }
+            adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
         }
     }
 
     private fun feedPet(food: Food) {
         val pet = feedingPet ?: return
         val activity = activity ?: return
-        parentSubscription?.add(
-            feedPetUseCase.observable(
+        lifecycleScope.launchCatching {
+            feedPetUseCase.callInteractor(
                 FeedPetUseCase.RequestValues(
                     pet, food,
                     activity
                 )
-            ).subscribeWithErrorHandler {}
-        )
+            )
+        }
     }
 
     override fun onResume() {
@@ -265,14 +248,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
         dismiss()
         val activity = activity ?: return
-        parentSubscription?.add(
-            hatchPetUseCase.observable(
+        activity.lifecycleScope.launchCatching {
+            hatchPetUseCase.callInteractor(
                 HatchPetUseCase.RequestValues(
                     potion, egg,
                     activity
                 )
-            ).subscribeWithErrorHandler {}
-        )
+            )
+        }
     }
 
     private fun loadItems() {
@@ -285,7 +268,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             else -> Egg::class.java
         }
         itemType?.let { type ->
-                lifecycleScope.launch {
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     inventoryRepository.getOwnedItems(type)
                         .onEach { items ->
                             val filteredItems = if (isFeeding) {
@@ -296,7 +279,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                             adapter?.data = filteredItems
                         }
                         .map { items -> items.mapNotNull { it.key } }
-                        .map { inventoryRepository.getItemsFlowable(itemClass, it.toTypedArray()).firstOrNull() }
+                        .map { inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull() }
                         .collect {
                             val itemMap = mutableMapOf<String, Item>()
                             for (item in it ?: emptyList()) {
@@ -306,10 +289,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                         }
 
                 }
-                lifecycleScope.launch {
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
                 }
-                lifecycleScope.launch {
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     inventoryRepository.getOwnedPets().map { ownedPets ->
                         val petMap = mutableMapOf<String, OwnedPet>()
                         ownedPets.forEach { petMap[it.key ?: ""] = it }

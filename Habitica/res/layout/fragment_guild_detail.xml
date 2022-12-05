@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refreshLayout"
-    android:background="@color/window_background">
+    android:background="?attr/colorContentBackground">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -101,10 +101,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="?attr/colorContentBackground">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/content_background_offset" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -130,11 +126,6 @@
                         style="@style/HabiticaButton.Green"
                         android:layout_marginStart="@dimen/spacing_large"/>
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/content_background_offset" />
                 <LinearLayout
                     android:id="@+id/leader_wrapper"
                     android:layout_width="match_parent"
@@ -183,7 +174,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="@string/inn_description"
-                        android:layout_marginTop="@dimen/spacing_large" />
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:background="@drawable/layout_rounded_bg_window"
+                        android:padding="@dimen/spacing_large"/>
                 </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
                 <com.habitrpg.android.habitica.ui.views.CollapsibleSectionView
                     android:layout_width="match_parent"
@@ -195,14 +188,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="@string/inn_description"
-                        android:layout_marginTop="@dimen/spacing_large" />
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:background="@drawable/layout_rounded_bg_window"
+                        android:padding="@dimen/spacing_large" />
                 </com.habitrpg.android.habitica.ui.views.CollapsibleSectionView>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/content_background_offset"
-                    android:layout_marginTop="@dimen/spacing_medium"/>
             </LinearLayout>
             <Button
                 android:id="@+id/leave_button"

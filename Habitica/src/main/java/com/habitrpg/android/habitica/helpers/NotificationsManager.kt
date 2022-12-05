@@ -3,56 +3,50 @@ package com.habitrpg.android.habitica.helpers
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.android.habitica.models.tasks.Task
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.common.habitica.models.Notification
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import java.lang.ref.WeakReference
 import java.util.Date
 
 interface NotificationsManager {
-    val displayNotificationEvents: Flowable<Notification>
+    val displayNotificationEvents: Flow<Notification>
     var apiClient: WeakReference<ApiClient>?
 
     fun setNotifications(current: List<Notification>)
-    fun getNotifications(): Flowable<List<Notification>>
+    fun getNotifications(): Flow<List<Notification>>
     fun getNotification(id: String): Notification?
     fun dismissTaskNotification(context: Context, task: Task)
 }
 
 class MainNotificationsManager: NotificationsManager {
-    private val displayNotificationSubject = PublishSubject.create<Notification>()
 
     private val seenNotifications: MutableMap<String, Boolean>
     override var apiClient: WeakReference<ApiClient>? = null
-    private val notifications: BehaviorSubject<List<Notification>>
 
     private var lastNotificationHandling: Date? = null
-
-    override val displayNotificationEvents: Flowable<Notification>
-        get() {
-            return displayNotificationSubject.toFlowable(BackpressureStrategy.DROP)
-        }
+    val _notifications = MutableStateFlow<List<Notification>?>(null)
+    val _displaynotificationEvents = MutableStateFlow<Notification?>(null)
+    override val displayNotificationEvents: Flow<Notification> = _displaynotificationEvents.filterNotNull()
 
     init {
         this.seenNotifications = HashMap()
-        this.notifications = BehaviorSubject.create()
     }
 
     override fun setNotifications(current: List<Notification>) {
-        this.notifications.onNext(current)
+        _notifications.value = current
         this.handlePopupNotifications(current)
     }
 
-    override fun getNotifications(): Flowable<List<Notification>> {
-        return this.notifications.startWithArray(emptyList())
-            .toFlowable(BackpressureStrategy.LATEST)
+    override fun getNotifications(): Flow<List<Notification>> {
+        return _notifications.filterNotNull()
     }
 
     override fun getNotification(id: String): Notification? {
-        return this.notifications.value?.find { it.id == id }
+        return _notifications.value?.find { it.id == id }
     }
 
     override fun dismissTaskNotification(context: Context, task: Task) {
@@ -109,7 +103,7 @@ class MainNotificationsManager: NotificationsManager {
                 }
 
                 if (notificationDisplayed) {
-                    displayNotificationSubject.onNext(it)
+                    _displaynotificationEvents.value = it
                     this.seenNotifications[it.id] = true
                     readNotification(it)
                 }
@@ -119,7 +113,8 @@ class MainNotificationsManager: NotificationsManager {
     }
 
     private fun readNotification(notification: Notification) {
-        apiClient?.get()?.readNotification(notification.id)
-            ?.subscribe({ }, RxErrorHandler.handleEmptyError())
+        MainScope().launchCatching {
+            apiClient?.get()?.readNotification(notification.id)
+        }
     }
 }

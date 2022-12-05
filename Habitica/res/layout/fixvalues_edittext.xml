@@ -41,6 +41,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_gravity="bottom"
-        android:background="@color/content_background_offset"
+        android:background="?attr/colorContentBackgroundOffset"
         android:layout_marginEnd="56dp"/>
 </merge>

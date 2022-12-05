@@ -4,24 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.PagedList
 import androidx.paging.PositionalDataSource
 import androidx.paging.toLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.android.habitica.extensions.filterOptionalDoOnEmpty
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
-import com.habitrpg.common.habitica.extensions.Optional
-import com.habitrpg.common.habitica.extensions.asOptional
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.realm.kotlin.toFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.ceil
@@ -30,6 +34,9 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     @Inject
     lateinit var socialRepository: SocialRepository
 
+    protected var memberIDFlow = MutableStateFlow<String?>(null)
+    val memberIDState: StateFlow<String?> = memberIDFlow
+
     private val config = PagedList.Config.Builder()
         .setPageSize(10)
         .setEnablePlaceholders(false)
@@ -37,31 +44,19 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
 
     val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
     val messages: LiveData<PagedList<ChatMessage>> = dataSourceFactory.toLiveData(config)
-    private val member: MutableLiveData<Member?> by lazy {
-        MutableLiveData<Member?>()
-    }
+    private val member = memberIDFlow
+        .filterNotNull()
+        .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
+        .asLiveData()
     fun getMemberData(): LiveData<Member?> = member
 
-    private fun loadMemberFromLocal() {
-        disposable.add(
-            memberIDFlowable
-                .filterOptionalDoOnEmpty { member.value = null }
-                .flatMap { socialRepository.getMember(it) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ member.value = it }, RxErrorHandler.handleEmptyError())
-        )
-    }
-
-    protected var memberIDSubject = BehaviorSubject.create<Optional<String>>()
-    val memberIDFlowable: Flowable<Optional<String>> = memberIDSubject.toFlowable(BackpressureStrategy.BUFFER)
-
-    fun setMemberID(groupID: String) {
-        if (groupID == memberIDSubject.value?.value) return
-        memberIDSubject.onNext(groupID.asOptional())
+    fun setMemberID(memberID: String) {
+        if (memberID == memberIDState.value) return
+        memberIDFlow.value = memberID
     }
 
     val memberID: String?
-        get() = memberIDSubject.value?.value
+        get() = memberIDFlow.value
 
     override fun inject(component: UserComponent) {
         component.inject(this)
@@ -74,17 +69,13 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     init {
         if (recipientID?.isNotBlank() == true) {
             setMemberID(recipientID)
-            loadMemberFromLocal()
         } else if (recipientUsername?.isNotBlank() == true) {
-            socialRepository.getMemberWithUsername(recipientUsername).subscribe(
-                {
-                    setMemberID(it.id ?: "")
-                    member.value = it
-                    dataSourceFactory.updateRecipientID(memberIDSubject.value?.value)
-                    invalidateDataSource()
-                },
-                RxErrorHandler.handleEmptyError()
-            )
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
+                val member = socialRepository.retrieveMemberWithUsername(recipientUsername)
+                setMemberID(member?.id ?: "")
+                invalidateDataSource()
+                dataSourceFactory.updateRecipientID(memberID)
+            }
         }
     }
 }
@@ -104,17 +95,13 @@ class MessagesDataSource(
         MainScope().launch(Dispatchers.Main.immediate) {
             if (recipientID?.isNotBlank() != true) { return@launch }
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
-            socialRepository.retrieveInboxMessages(recipientID ?: "", page)
-                .subscribe(
-                    {
-                        if (it.size < 10) {
-                            lastFetchWasEnd = true
-                            callback.onResult(it)
-                        } else
-                            callback.onResult(it)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+            val messages = socialRepository.retrieveInboxMessages(recipientID ?: "", page) ?: return@launch
+            if (messages.size < 10) {
+                lastFetchWasEnd = true
+                callback.onResult(messages)
+            } else {
+                callback.onResult(messages)
+            }
         }
     }
 
@@ -123,29 +110,25 @@ class MessagesDataSource(
         MainScope().launch(Dispatchers.Main.immediate) {
             socialRepository.getInboxMessages(recipientID)
                 .map { socialRepository.getUnmanagedCopy(it) }
-                .firstElement()
-                .flatMapPublisher {
+                .take(1)
+                .flatMapLatest {
                     if (it.isEmpty()) {
-                        if (recipientID?.isNotBlank() != true) { return@flatMapPublisher Flowable.just(it) }
-                        socialRepository.retrieveInboxMessages(recipientID ?: "", 0)
-                            .doOnNext { messages ->
-                                if (messages.size < 10) {
-                                    lastFetchWasEnd = true
-                                }
-                            }
+                        if (recipientID?.isNotBlank() != true) { return@flatMapLatest flowOf(it) }
+                        val messages = socialRepository.retrieveInboxMessages(recipientID ?: "", 0) ?: return@flatMapLatest emptyFlow()
+                        if (messages.size < 10) {
+                            lastFetchWasEnd = true
+                        }
+                        flowOf(messages)
                     } else {
-                        Flowable.just(it)
+                        flowOf(it)
                     }
                 }
-                .subscribe(
-                    {
+                .collect {
                         if (it.size < 10 && footer != null)
                             callback.onResult(it.plusElement(footer!!), 0)
                         else
                             callback.onResult(it, 0)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
+                }
         }
     }
 }

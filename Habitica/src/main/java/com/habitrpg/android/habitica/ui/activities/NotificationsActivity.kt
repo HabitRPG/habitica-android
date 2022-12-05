@@ -13,15 +13,18 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
-import com.habitrpg.common.habitica.models.Notification
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.QuestContent
+import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
+import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.GroupTaskApprovedData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskNeedsWorkData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskRequiresApprovalData
@@ -31,7 +34,8 @@ import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
-import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
@@ -48,7 +52,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityNotificationsBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -62,15 +66,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
-        compositeSubscription.add(
-            viewModel.getNotifications().subscribe(
-                {
-                    this.setNotifications(it)
-                    viewModel.markNotificationsAsSeen(it)
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launchCatching {
+            viewModel.getNotifications().collect {
+                setNotifications(it)
+                viewModel.markNotificationsAsSeen(it)
+            }
+        }
 
         binding.notificationsRefreshLayout.setOnRefreshListener(this)
     }
@@ -90,14 +91,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     override fun onRefresh() {
         binding.notificationsRefreshLayout.isRefreshing = true
 
-        compositeSubscription.add(
-            viewModel.refreshNotifications().subscribe(
-                {
-                    binding.notificationsRefreshLayout.isRefreshing = false
-                },
-                RxErrorHandler.handleEmptyError()
-            )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            viewModel.refreshNotifications()
+            binding.notificationsRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun setNotifications(notifications: List<Notification>) {
@@ -314,16 +311,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         // hide view until we have loaded quest data and populated the values
         view?.visibility = View.GONE
 
-        compositeSubscription.add(
-            inventoryRepository.getQuestContent(data?.questKey ?: "")
-                .firstElement()
-                .subscribe(
-                    {
-                        updateQuestInvitationView(view, it)
-                    },
-                    RxErrorHandler.handleEmptyError()
-                )
-        )
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val questContent = inventoryRepository.getQuestContent(data?.questKey ?: "").firstOrNull()
+            if (questContent != null) {
+                updateQuestInvitationView(view, questContent)
+            }
+        }
 
         return view
     }

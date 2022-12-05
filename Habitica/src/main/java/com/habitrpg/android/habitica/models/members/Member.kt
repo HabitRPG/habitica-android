@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.models.members
 
 import com.google.gson.annotations.SerializedName
+import com.habitrpg.android.habitica.models.Assignable
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.Authentication
@@ -16,11 +17,11 @@ import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Member : RealmObject(), Avatar, BaseMainObject {
+open class Member : RealmObject(), Avatar, BaseMainObject, Assignable {
 
     @PrimaryKey
     @SerializedName("_id")
-    var id: String? = null
+    override var id: String? = null
     override var stats: Stats? = null
     var inbox: Inbox? = null
     override var preferences: MemberPreferences? = null
@@ -49,6 +50,12 @@ open class Member : RealmObject(), Avatar, BaseMainObject {
         get() = if (this.profile == null) {
             ""
         } else this.profile?.name ?: ""
+
+    override val identifiableName: String
+    get() = username ?: ""
+
+    override val avatar: Avatar
+    get() = this
 
     val petsFoundCount: Int
         get() = this.items?.pets?.size ?: 0

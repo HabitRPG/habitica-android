@@ -12,9 +12,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.adapter.DiffCallback
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 
 class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObject>) :
     DiffCallback<ChatMessage>(oldList, newList) {
@@ -39,11 +36,11 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
     private var expandedMessageId: String? = null
 
     var onMessageLike: ((ChatMessage) -> Unit)? = null
-    private val userLabelClickEvents = PublishSubject.create<String>()
-    private val deleteMessageEvents = PublishSubject.create<ChatMessage>()
-    private val flagMessageEvents = PublishSubject.create<ChatMessage>()
-    private val replyMessageEvents = PublishSubject.create<String>()
-    private val copyMessageEvents = PublishSubject.create<ChatMessage>()
+    var onOpenProfile: ((String) -> Unit)? = null
+    var onDeleteMessage: ((ChatMessage) -> Unit)? = null
+    var onFlagMessage: ((ChatMessage) -> Unit)? = null
+    var onReply: ((String) -> Unit)? = null
+    var onCopyMessage: ((ChatMessage) -> Unit)? = null
 
     override fun getDiffCallback(
         oldList: List<ChatMessage>,
@@ -83,38 +80,18 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
                 expandedMessageId == message.id
             )
             chatHolder.onShouldExpand = { expandMessage(message, position) }
-            chatHolder.onLikeMessage = { onMessageLike?.invoke(it) }
-            chatHolder.onOpenProfile = { userLabelClickEvents.onNext(it) }
-            chatHolder.onReply = { replyMessageEvents.onNext(it) }
-            chatHolder.onCopyMessage = { copyMessageEvents.onNext(it) }
-            chatHolder.onFlagMessage = { flagMessageEvents.onNext(it) }
-            chatHolder.onDeleteMessage = { deleteMessageEvents.onNext(it) }
+            chatHolder.onLikeMessage = onMessageLike
+            chatHolder.onOpenProfile = onOpenProfile
+            chatHolder.onReply = onReply
+            chatHolder.onCopyMessage = onCopyMessage
+            chatHolder.onFlagMessage = onFlagMessage
+            chatHolder.onDeleteMessage = onDeleteMessage
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         if (data.size <= position) return 0
         return if (data[position].isSystemMessage) 0 else 1
-    }
-
-    fun getUserLabelClickFlowable(): Flowable<String> {
-        return userLabelClickEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getFlagMessageClickFlowable(): Flowable<ChatMessage> {
-        return flagMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getDeleteMessageFlowable(): Flowable<ChatMessage> {
-        return deleteMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getReplyMessageEvents(): Flowable<String> {
-        return replyMessageEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
-    fun getCopyMessageFlowable(): Flowable<ChatMessage> {
-        return copyMessageEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     private fun expandMessage(message: ChatMessage, position: Int?) {

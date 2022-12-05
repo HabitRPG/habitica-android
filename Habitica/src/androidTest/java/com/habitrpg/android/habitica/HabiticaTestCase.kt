@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
-import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
@@ -14,9 +13,9 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
@@ -29,22 +28,23 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.common.habitica.api.HostConfig
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
-import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
+import org.junit.Before
 import java.io.InputStreamReader
 import java.lang.reflect.Type
 import kotlin.reflect.KCallable
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.javaField
-import org.junit.Before
 
 open class HabiticaTestCase : TestCase() {
     val gson = GSonFactoryCreator.createGson()
@@ -68,8 +68,7 @@ open class HabiticaTestCase : TestCase() {
     val hatchPetUseCase: HatchPetUseCase = mockk(relaxed = true)
     val feedPetUseCase: FeedPetUseCase = mockk(relaxed = true)
 
-    val userSubject = PublishSubject.create<User>()
-    val userEvents: Flowable<User> = userSubject.toFlowable(BackpressureStrategy.DROP)
+    val userState = MutableStateFlow<User?>(null)
     var user = User()
     lateinit var content: ContentResult
 
@@ -85,27 +84,27 @@ open class HabiticaTestCase : TestCase() {
         user = loadJsonFile("user", User::class.java)
         user.stats?.lvl = 20
         user.stats?.points = 30
-        every { userRepository.getUser() } returns userEvents
+        every { userRepository.getUser() } returns userState
         every { userViewModel.user } returns MutableLiveData<User?>(user)
-        mockkObject(RxErrorHandler)
-        every { RxErrorHandler.reportError(capture(errorSlot)) } answers {
+        mockkObject(ExceptionHandler)
+        every { ExceptionHandler.reportError(capture(errorSlot)) } answers {
             throw errorSlot.captured
         }
         every { socialRepository.getUnmanagedCopy(capture(unmanagedSlot)) } answers { unmanagedSlot.captured }
         content = loadJsonFile("content", ContentResult::class.java)
-        every { inventoryRepository.getPets() } returns Flowable.just(content.pets)
-        every { inventoryRepository.getMounts() } returns Flowable.just(content.mounts)
+        every { inventoryRepository.getPets() } returns flowOf(content.pets)
+        every { inventoryRepository.getMounts() } returns flowOf(content.mounts)
         every { inventoryRepository.getItemsFlowable(Food::class.java) } returns Flowable.just(content.food)
         every { inventoryRepository.getItemsFlowable(Egg::class.java) } returns Flowable.just(content.eggs)
         every { inventoryRepository.getItemsFlowable(HatchingPotion::class.java) } returns Flowable.just(content.hatchingPotions)
         every { inventoryRepository.getItemsFlowable(QuestContent::class.java) } returns Flowable.just(content.quests)
 
-        every { inventoryRepository.getItemsFlowable(Food::class.java, any()) } returns Flowable.just(content.food)
-        every { inventoryRepository.getItemsFlowable(Egg::class.java, any()) } answers {
-            Flowable.just(content.eggs)
+        every { inventoryRepository.getItems(Food::class.java, any()) } returns flowOf(content.food)
+        every { inventoryRepository.getItems(Egg::class.java, any()) } answers {
+            flowOf(content.eggs)
         }
-        every { inventoryRepository.getItemsFlowable(HatchingPotion::class.java, any()) } returns Flowable.just(content.hatchingPotions)
-        every { inventoryRepository.getItemsFlowable(QuestContent::class.java, any()) } returns Flowable.just(content.quests)
+        every { inventoryRepository.getItems(HatchingPotion::class.java, any()) } returns flowOf(content.hatchingPotions)
+        every { inventoryRepository.getItems(QuestContent::class.java, any()) } returns flowOf(content.quests)
     }
 
     internal fun <T> loadJsonFile(s: String, type: Type): T {

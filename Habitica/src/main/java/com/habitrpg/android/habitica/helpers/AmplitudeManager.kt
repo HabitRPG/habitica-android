@@ -1,9 +1,12 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.amplitude.api.Amplitude
+import android.content.Context
+import android.content.SharedPreferences
+import com.amplitude.android.Amplitude
+import com.amplitude.android.Configuration
+import com.amplitude.android.events.Identify
 import com.habitrpg.android.habitica.BuildConfig
-import org.json.JSONException
-import org.json.JSONObject
+import com.habitrpg.android.habitica.R
 
 object AmplitudeManager {
     var EVENT_CATEGORY_BEHAVIOUR = "behaviour"
@@ -13,6 +16,8 @@ object AmplitudeManager {
     var EVENT_HITTYPE_CREATE_WIDGET = "create"
     var EVENT_HITTYPE_REMOVE_WIDGET = "remove"
     var EVENT_HITTYPE_UPDATE_WIDGET = "update"
+
+    lateinit var amplitude: Amplitude
 
     @JvmOverloads
     fun sendEvent(
@@ -24,25 +29,41 @@ object AmplitudeManager {
         if (BuildConfig.DEBUG) {
             return
         }
-        val eventProperties = JSONObject()
-        try {
-            eventProperties.put("eventAction", eventAction)
-            eventProperties.put("eventCategory", eventCategory)
-            eventProperties.put("hitType", hitType)
-            eventProperties.put("status", "displayed")
-            if (additionalData != null) {
-                for ((key, value) in additionalData) {
-                    eventProperties.put(key, value)
-                }
+        val data = mutableMapOf<String, Any?>(
+            "eventAction" to eventAction,
+            "eventCategory" to eventCategory,
+            "hitType" to hitType,
+            "status" to "displayed"
+        )
+        if (additionalData != null) {
+            for ((key, value) in additionalData) {
+                data.put(key, value)
             }
-        } catch (exception: JSONException) {
         }
-        Amplitude.getInstance().logEvent(eventAction, eventProperties)
+        if (eventAction != null) {
+            amplitude.track(eventAction, data)
+        }
     }
 
     fun sendNavigationEvent(page: String) {
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = page
         sendEvent("navigated", EVENT_CATEGORY_NAVIGATION, EVENT_HITTYPE_PAGEVIEW, additionalData)
+    }
+
+    fun initialize(context: Context, sharedPrefs: SharedPreferences) {
+        amplitude = Amplitude(
+            Configuration(
+                context.getString(R.string.amplitude_app_id),
+                context
+            )
+        )
+
+        val identify = Identify()
+            .setOnce("androidStore", BuildConfig.STORE)
+        sharedPrefs.getString("launch_screen", "")?.let {
+            identify.set("launch_screen", it)
+        }
+        amplitude.identify(identify)
     }
 }

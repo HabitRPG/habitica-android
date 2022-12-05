@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -13,13 +12,13 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
+import com.habitrpg.shared.habitica.models.responses.TaskDirection
 
 class RewardsRecyclerViewAdapter(
     private var customRewards: List<Task>?,
-    private val layoutResource: Int
+    private val layoutResource: Int,
+    val viewModel: TasksViewModel
 ) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     override var user: User? = null
         set(value) {
@@ -30,22 +29,15 @@ class RewardsRecyclerViewAdapter(
             notifyDataSetChanged()
         }
     override var showAdventureGuide: Boolean = false
-    override var canScoreTasks = true
     private var inAppRewards: List<ShopItem>? = null
 
-    private val errorButtonEventsSubject: PublishSubject<String> = PublishSubject.create()
-    override val errorButtonEvents: Flowable<String> = errorButtonEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    private var taskScoreEventsSubject: PublishSubject<Pair<Task, TaskDirection>> = PublishSubject.create()
-    override val taskScoreEvents: Flowable<Pair<Task, TaskDirection>> = taskScoreEventsSubject.toFlowable(BackpressureStrategy.LATEST)
-    private var checklistItemScoreSubject: PublishSubject<Pair<Task, ChecklistItem>> = PublishSubject.create()
-    override val checklistItemScoreEvents: Flowable<Pair<Task, ChecklistItem>> = checklistItemScoreSubject.toFlowable(BackpressureStrategy.DROP)
-    private var taskOpenEventsSubject: PublishSubject<Pair<Task, View>> = PublishSubject.create()
-    override val taskOpenEvents: Flowable<Pair<Task, View>> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
-    private var brokenTaskEventsSubject: PublishSubject<Task> = PublishSubject.create()
-    override val brokenTaskEvents: Flowable<Task> = brokenTaskEventsSubject.toFlowable(BackpressureStrategy.DROP)
-    override val adventureGuideOpenEvents: Flowable<Boolean>? = null
-    private var purchaseCardSubject: PublishSubject<ShopItem> = PublishSubject.create()
-    val purchaseCardEvents: Flowable<ShopItem> = purchaseCardSubject.toFlowable(BackpressureStrategy.LATEST)
+    override var errorButtonEvents: ((String) -> Unit)? = null
+    override var taskScoreEvents: ((Task, TaskDirection) -> Unit)? = null
+    override var checklistItemScoreEvents: ((Task, ChecklistItem) -> Unit)? = null
+    override var taskOpenEvents: ((Task, View) -> Unit)? = null
+    override var brokenTaskEvents: ((Task) -> Unit)? = null
+    override var adventureGuideOpenEvents: ((Boolean) -> Unit)? = null
+    var purchaseCardEvents: ((ShopItem) -> Unit)? = null
 
     override var taskDisplayMode: String = "standard"
         set(value) {
@@ -77,14 +69,16 @@ class RewardsRecyclerViewAdapter(
                 getContentView(parent),
                 { task, direction ->
                     if (task.value <= (user?.stats?.gp ?: 0.0)) {
-                        taskScoreEventsSubject.onNext(Pair(task, direction))
+                        taskScoreEvents?.invoke(task, direction)
                     }
                 },
-                { task -> taskOpenEventsSubject.onNext(task) }
-            ) { task -> brokenTaskEventsSubject.onNext(task) }
+                { task -> taskOpenEvents?.invoke(task.first, task.second) }, {
+                        task ->
+                    brokenTaskEvents?.invoke(task)
+                }, viewModel)
         } else {
             val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
-            viewHolder.purchaseCardAction = { purchaseCardSubject.onNext(it) }
+            viewHolder.purchaseCardAction = { purchaseCardEvents?.invoke(it) }
             viewHolder
         }
     }
@@ -93,8 +87,8 @@ class RewardsRecyclerViewAdapter(
         if (customRewards != null && position < customRewardCount) {
             val reward = customRewards?.get(position) ?: return
             val gold = user?.stats?.gp ?: 0.0
-            (holder as? RewardViewHolder)?.isLocked = !canScoreTasks
-            (holder as? RewardViewHolder)?.bind(reward, position, reward.value <= gold, taskDisplayMode)
+            (holder as? RewardViewHolder)?.isLocked = !viewModel.canScoreTask(reward)
+            (holder as? RewardViewHolder)?.bind(reward, position, reward.value <= gold, taskDisplayMode, viewModel.ownerID.value)
         } else if (inAppRewards != null) {
             val item = inAppRewards?.get(position - customRewardCount) ?: return
             if (holder is ShopItemViewHolder) {
@@ -119,7 +113,9 @@ class RewardsRecyclerViewAdapter(
 
     override fun getItemCount(): Int {
         var rewardCount = customRewardCount
-        rewardCount += inAppRewardCount
+        if (viewModel.isPersonalBoard) {
+            rewardCount += inAppRewardCount
+        }
         return rewardCount
     }
 

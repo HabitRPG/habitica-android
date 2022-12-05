@@ -1,42 +1,48 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.text.format.DateUtils
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.RxErrorHandler
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
+import com.habitrpg.android.habitica.helpers.launchCatching
+import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.Case
 import io.realm.OrderedRealmCollection
 import io.realm.RealmQuery
 import io.realm.Sort
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
-class TasksViewModel : BaseViewModel() {
-    private var compositeSubscription: CompositeDisposable = CompositeDisposable()
-
+class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
 
     @Inject
     lateinit var taskRepository: TaskRepository
+
     @Inject
     lateinit var tagRepository: TagRepository
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -45,6 +51,7 @@ class TasksViewModel : BaseViewModel() {
     val ownerID: MutableLiveData<String?> by lazy {
         MutableLiveData()
     }
+    var teamPlans = mapOf<String, TeamPlan>()
     var initialPreferenceFilterSet: Boolean = false
 
     val isPersonalBoard: Boolean
@@ -58,10 +65,11 @@ class TasksViewModel : BaseViewModel() {
 
     init {
         if (appConfigManager.enableTeamBoards()) {
-            viewModelScope.launch {
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.getTeamPlans()
-                    .collect {
-                        owners = listOf(Pair(userViewModel.userID, userViewModel.displayName)) + it.map {
+                    .collect { plans ->
+                        teamPlans = plans.associateBy { it.id }
+                        owners = listOf(Pair(userViewModel.userID, userViewModel.displayName)) + plans.map {
                             Pair(
                                 it.id,
                                 it.summary
@@ -72,29 +80,23 @@ class TasksViewModel : BaseViewModel() {
                         }
                     }
             }
-            compositeSubscription.add(
-                userRepository.retrieveTeamPlans().subscribe({}, RxErrorHandler.handleEmptyError())
-            )
+            viewModelScope.launchCatching {
+                userRepository.retrieveTeamPlans()
+            }
         }
     }
 
     internal fun refreshData(onComplete: () -> Unit) {
-        if (isPersonalBoard) {
-            compositeSubscription.add(
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            if (isPersonalBoard) {
                 userRepository.retrieveUser(
                     withTasks = true,
                     forced = true
-                ).doOnTerminate {
-                    onComplete()
-                }.subscribe({ }, RxErrorHandler.handleEmptyError())
-            )
-        } else {
-            compositeSubscription.add(
+                )
+            } else {
                 userRepository.retrieveTeamPlan(ownerID.value ?: "")
-                    .doOnTerminate {
-                        onComplete()
-                    }.subscribe({ }, RxErrorHandler.handleEmptyError())
-            )
+            }
+            onComplete()
         }
     }
 
@@ -108,9 +110,18 @@ class TasksViewModel : BaseViewModel() {
         }
     }
 
-    fun scoreTask(task: Task, direction: TaskDirection, onResult: (TaskScoringResult, Int) -> Unit) {
-        compositeSubscription.add(
-            taskRepository.taskChecked(null, task.id ?: "", direction == TaskDirection.UP, false) { result ->
+    fun scoreTask(
+        task: Task,
+        direction: TaskDirection,
+        onResult: (TaskScoringResult, Int) -> Unit
+    ) {
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            taskRepository.taskChecked(
+                null,
+                task.id ?: "",
+                direction == TaskDirection.UP,
+                false
+            ) { result ->
                 onResult(result, task.value.toInt())
                 if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
                     AmplitudeManager.sendEvent(
@@ -122,15 +133,16 @@ class TasksViewModel : BaseViewModel() {
                         putLong("last_task_reporting", Date().time)
                     }
                 }
-            }.subscribe({}, RxErrorHandler.handleEmptyError())
-        )
+            }
+        }
     }
 
-    private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> = hashMapOf(
-        Pair(TaskType.HABIT, MutableLiveData()),
-        Pair(TaskType.DAILY, MutableLiveData()),
-        Pair(TaskType.TODO, MutableLiveData())
-    )
+    private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> =
+        hashMapOf(
+            Pair(TaskType.HABIT, MutableLiveData()),
+            Pair(TaskType.DAILY, MutableLiveData()),
+            Pair(TaskType.TODO, MutableLiveData())
+        )
 
     fun getFilterSet(type: TaskType): MutableLiveData<Triple<String?, String?, List<String>>>? {
         return filterSets[type]
@@ -276,10 +288,12 @@ class TasksViewModel : BaseViewModel() {
                     } else {
                         query.equalTo("completed", false)
                     }
-                    Task.FILTER_GRAY -> query = query.equalTo("completed", true).or().equalTo("isDue", false)
+                    Task.FILTER_GRAY -> query =
+                        query.equalTo("completed", true).or().equalTo("isDue", false)
                     Task.FILTER_WEAK -> query = query.lessThan("value", 1.0)
                     Task.FILTER_STRONG -> query = query.greaterThanOrEqualTo("value", 1.0)
-                    Task.FILTER_DATED -> query = query.isNotNull("dueDate").equalTo("completed", false).sort("dueDate")
+                    Task.FILTER_DATED -> query =
+                        query.isNotNull("dueDate").equalTo("completed", false).sort("dueDate")
                     Task.FILTER_COMPLETED -> query = query.equalTo("completed", true)
                 }
             }
@@ -288,5 +302,46 @@ class TasksViewModel : BaseViewModel() {
             }
         }
         return query
+    }
+
+    override fun canScoreTask(task: Task): Boolean {
+        if (!task.isGroupTask) {
+            return true
+        }
+        return task.isAssignedToUser(userViewModel.userID) || task.group?.assignedUsers?.isEmpty() != false
+    }
+
+    override suspend fun canEditTask(task: Task): Boolean {
+        if (!task.isGroupTask) {
+            return true
+        }
+        val groupID = task.group?.groupID ?: return true
+        val group = userRepository.getTeamPlan(groupID).firstOrNull()
+        return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
+    }
+
+    override suspend fun canAddTasks(): Boolean {
+        if (isPersonalBoard) {
+            return true
+        }
+        val groupID = ownerID.value ?: return true
+        val group = userRepository.getTeamPlan(groupID).firstOrNull()
+        return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
+    }
+
+    override fun assignedTextForTask(resources: Resources, assignedUsers: List<String>): String {
+        return if (assignedUsers.contains(userViewModel.userID)) {
+            if (assignedUsers.size == 1) {
+                resources.getString(R.string.you)
+            } else {
+                resources.getQuantityString(R.plurals.you_x_others, assignedUsers.size - 1, assignedUsers.size - 1)
+            }
+        } else {
+            if (assignedUsers.size == 1) {
+                userViewModel.currentTeamPlanMembers.value?.firstOrNull { it.id == assignedUsers.first() }?.displayName ?: ""
+            } else {
+                resources.getQuantityString(R.plurals.people, assignedUsers.size, assignedUsers.size)
+            }
+        }
     }
 }

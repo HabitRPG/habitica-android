@@ -1,9 +1,9 @@
 package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.FAQArticle
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface FAQRepository : BaseRepository {
-    fun getArticles(): Flowable<out List<FAQArticle>>
-    fun getArticle(position: Int): Flowable<FAQArticle>
+    fun getArticles(): Flow<List<FAQArticle>>
+    fun getArticle(position: Int): Flow<FAQArticle>
 }

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/content_background"
+        android:background="?attr/colorContentBackground"
         android:paddingTop="@dimen/spacing_large"
         android:paddingBottom="@dimen/spacing_large">
         <LinearLayout
@@ -166,7 +166,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/content_background_offset"/>
+        android:background="?attr/colorContentBackgroundOffset"/>
     <Button
         android:id="@+id/reset_tutorial_button"
         android:layout_width="match_parent"

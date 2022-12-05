@@ -25,7 +25,7 @@ class UserStatComputer {
         var stats: String? = null
     }
 
-    fun computeClassBonus(equipmentList: List<Equipment>, user: Avatar): List<StatsRow> {
+    fun computeClassBonus(equipmentList: List<Equipment>?, user: Avatar): List<StatsRow> {
         val skillRows = ArrayList<StatsRow>()
 
         var strAttributes = 0f
@@ -39,7 +39,7 @@ class UserStatComputer {
         var perClassBonus = 0f
 
         // Summarize stats and fill equipment table
-        for (i in equipmentList) {
+        for (i in equipmentList ?: emptyList()) {
             val strength = i.str
             val intelligence = i._int
             val constitution = i.con

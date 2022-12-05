@@ -162,7 +162,7 @@ class TaskFormActivityTest : ActivityTestCase() {
             device.activities.isCurrent(TaskFormActivity::class.java)
             textEditText.typeText("New Habit")
             KButton { withId(R.id.action_save) }.click()
-            verify(exactly = 1) { taskRepository.createTaskInBackground(any()) }
+            verify(exactly = 1) { taskRepository.createTaskInBackground(any(), assignChanges) }
         }
     }
 
@@ -184,7 +184,7 @@ class TaskFormActivityTest : ActivityTestCase() {
         screen {
             toolbar {
                 KView { withId(R.id.action_save) }.click()
-                verify(exactly = 1) { taskRepository.updateTaskInBackground(any()) }
+                verify(exactly = 1) { taskRepository.updateTaskInBackground(any(), assignChanges) }
             }
         }
     }
@@ -288,7 +288,7 @@ class TaskFormActivityTest : ActivityTestCase() {
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, TaskType.DAILY.value)
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id!!)
         every { taskRepository.getUnmanagedTask(any()) } returns Flowable.just(task)
-        justRun { taskRepository.updateTaskInBackground(capture(taskSlot)) }
+        justRun { taskRepository.updateTaskInBackground(capture(taskSlot), assignChanges) }
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -313,7 +313,7 @@ class TaskFormActivityTest : ActivityTestCase() {
                 typeText("3")
             }
             KButton { withId(R.id.action_save) }.click()
-            verify { taskRepository.updateTaskInBackground(any()) }
+            verify { taskRepository.updateTaskInBackground(any(), assignChanges) }
             assert(taskSlot.captured.everyX == 3)
             assert(taskSlot.captured.frequency == Frequency.WEEKLY)
         }
