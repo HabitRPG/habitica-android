@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -53,8 +54,10 @@ import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
+import com.habitrpg.android.habitica.ui.views.GroupPlanMemberList
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
+import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.yesterdailies.YesterdailyDialog
 import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
@@ -83,18 +86,25 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     @Inject
     internal lateinit var apiClient: ApiClient
+
     @Inject
     internal lateinit var soundManager: SoundManager
+
     @Inject
     internal lateinit var checkClassSelectionUseCase: CheckClassSelectionUseCase
+
     @Inject
     internal lateinit var displayItemDropUseCase: DisplayItemDropUseCase
+
     @Inject
     internal lateinit var notifyUserUseCase: NotifyUserUseCase
+
     @Inject
     internal lateinit var taskRepository: TaskRepository
+
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
 
@@ -171,7 +181,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
-        drawerFragment = supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
+        drawerFragment =
+            supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
         drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout, notificationsViewModel)
 
         drawerToggle = object : ActionBarDrawerToggle(
@@ -191,7 +202,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
                         isOpeningDrawer = true
                     } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
-                        window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
+                        window.updateStatusBarColor(
+                            getThemeColor(R.attr.headerBackgroundColor),
+                            true
+                        )
                         isOpeningDrawer = false
                     }
                 }
@@ -221,10 +235,23 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         supportActionBar?.setHomeButtonEnabled(true)
         setupNotifications()
         setupBottomnavigationLayoutListener()
-        
+
         binding.content.headerView.setContent {
             HabiticaTheme {
-                AppHeaderView(viewModel.userViewModel)
+                AppHeaderView(viewModel.userViewModel) {
+                    showAsBottomSheet { onClose ->
+                        GroupPlanMemberList(it, {
+                            onClose()
+                            FullProfileActivity.open(it)
+                        }, { member ->
+                            onClose()
+                            MainNavigationController.navigate(
+                                R.id.inboxMessageListFragment,
+                                bundleOf(Pair("username", member.username), Pair("userID", member.id))
+                            )
+                        })
+                    }
+                }
             }
         }
 
@@ -268,7 +295,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private fun setupBottomnavigationLayoutListener() {
         binding.content.bottomNavigation.viewTreeObserver.addOnGlobalLayoutListener {
             if (binding.content.bottomNavigation.visibility == View.VISIBLE) {
-                snackbarContainer.setPadding(0, 0, 0, binding.content.bottomNavigation.barHeight + 12.dpToPx(this))
+                snackbarContainer.setPadding(
+                    0,
+                    0,
+                    0,
+                    binding.content.bottomNavigation.barHeight + 12.dpToPx(this)
+                )
             } else {
                 snackbarContainer.setPadding(0, 0, 0, 0)
             }
@@ -310,10 +342,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         viewModel.onResume()
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navigationController = navHostFragment.navController
         MainNavigationController.setup(navigationController)
-        navigationController.addOnDestinationChangedListener { _, destination, arguments -> updateToolbarTitle(destination, arguments) }
+        navigationController.addOnDestinationChangedListener { _, destination, arguments ->
+            updateToolbarTitle(
+                destination,
+                arguments
+            )
+        }
 
         viewModel.requestNotificationPermission.observe(this) { requestNotificationPermission ->
             if (requestNotificationPermission && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
@@ -337,7 +375,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
         resumeFromActivity = false
 
-        if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen != intent.getLongExtra("notificationTimeStamp", 0)) {
+        if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen != intent.getLongExtra(
+                "notificationTimeStamp",
+                0
+            )
+        ) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
             val identifier = intent.getStringExtra("notificationIdentifier") ?: ""
             if (intent.hasExtra("sendAnalytics")) {
@@ -387,7 +429,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private fun updateWidget(widgetClass: Class<*>) {
         val intent = Intent(this, widgetClass)
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        val ids = AppWidgetManager.getInstance(application).getAppWidgetIds(ComponentName(application, widgetClass))
+        val ids = AppWidgetManager.getInstance(application)
+            .getAppWidgetIds(ComponentName(application, widgetClass))
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(intent)
     }
@@ -412,7 +455,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             val quest = user.party?.quest
             if (quest?.completed?.isNotBlank() == true) {
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    val questContent = inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "").firstOrNull()
+                    val questContent =
+                        inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "")
+                            .firstOrNull()
                     if (questContent != null) {
                         QuestCompletedDialog.showWithQuest(this@MainActivity, questContent)
                     }

@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.databinding.FragmentSkillsBinding
+import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.Skill
@@ -32,17 +32,17 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SkillsFragment : BaseMainFragment<FragmentSkillsBinding>() {
+class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
 
-    override var binding: FragmentSkillsBinding? = null
+    override var binding: FragmentRecyclerviewBinding? = null
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSkillsBinding {
-        return FragmentSkillsBinding.inflate(inflater, container, false)
+    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+        return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(

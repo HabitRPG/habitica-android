@@ -51,14 +51,16 @@ object AmplitudeManager {
         sendEvent("navigated", EVENT_CATEGORY_NAVIGATION, EVENT_HITTYPE_PAGEVIEW, additionalData)
     }
 
-    fun initialize(context: Context, sharedPrefs: SharedPreferences) {
+    fun initialize(context: Context) {
         amplitude = Amplitude(
             Configuration(
                 context.getString(R.string.amplitude_app_id),
                 context
             )
         )
+    }
 
+    fun identify(sharedPrefs: SharedPreferences) {
         val identify = Identify()
             .setOnce("androidStore", BuildConfig.STORE)
         sharedPrefs.getString("launch_screen", "")?.let {

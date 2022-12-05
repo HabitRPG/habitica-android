@@ -49,12 +49,12 @@
                         android:layout_marginEnd="8dp"
                         android:entries="@array/avatar_sizes"/>
                 </LinearLayout>
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarShirtView"
                     app:equipmentTitle="@string/avatar_shirt"/>
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarSkinView"
@@ -73,27 +73,27 @@
             android:divider="?android:listDivider"
             android:showDividers="middle"
             android:background="@drawable/layout_rounded_bg_window">
-            <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+            <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/avatarHairColorView"
                 app:equipmentTitle="@string/avatar_color" />
-            <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+            <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/avatarHairBaseView"
                 app:equipmentTitle="@string/avatar_style" />
-            <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+            <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/avatarHairBangsView"
                 app:equipmentTitle="@string/avatar_bangs" />
-            <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+            <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/avatarHairBeardView"
                 app:equipmentTitle="@string/avatar_beard" />
-            <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+            <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/avatarHairMustacheView"
@@ -112,34 +112,34 @@
                 android:divider="?android:listDivider"
                 android:showDividers="middle"
                 android:background="@drawable/layout_rounded_bg_window">
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatar_glasses_view"
                     app:equipmentTitle="@string/avatar_glasses"/>
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarChairView"
                     app:equipmentTitle="@string/avatar_wheelchair"/>
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatar_accent_view"
                     app:equipmentTitle="@string/avatar_accent" />
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatar_animal_ears_view"
                     android:visibility="gone"
                     app:equipmentTitle="@string/animal_ears"/>
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatar_animal_tail_view"
                     android:visibility="gone"
                     app:equipmentTitle="@string/animal_tail"/>
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatar_headband_view"
@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/layout_rounded_bg_window">
-                <com.habitrpg.android.habitica.ui.views.EquipmentItemRow
+                <com.habitrpg.android.habitica.ui.views.equipment.EquipmentItemRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/avatarBackgroundView"

@@ -1269,6 +1269,7 @@
     <string name="assign">Assign</string>
     <string name="edit_assignees">Edit assignees</string>
     <string name="assign_to">Assign to...</string>
+    <string name="promote_to_manager">Promote to Manager</string>
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
         <item quantity="one">You, %d other</item>

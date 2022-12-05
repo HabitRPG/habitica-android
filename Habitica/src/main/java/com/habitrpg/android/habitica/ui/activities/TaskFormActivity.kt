@@ -22,46 +22,11 @@ import android.view.WindowManager
 import android.widget.CheckBox
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
@@ -79,7 +44,6 @@ import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.launchCatching
-import com.habitrpg.android.habitica.models.Assignable
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -89,10 +53,10 @@ import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.TaskFormViewModel
-import com.habitrpg.android.habitica.ui.views.CompletedAt
-import com.habitrpg.android.habitica.ui.views.UserRow
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
+import com.habitrpg.android.habitica.ui.views.tasks.AssignSheet
+import com.habitrpg.android.habitica.ui.views.tasks.AssignedView
 import com.habitrpg.android.habitica.ui.views.tasks.form.HabitScoringSelector
 import com.habitrpg.android.habitica.ui.views.tasks.form.LabeledValue
 import com.habitrpg.android.habitica.ui.views.tasks.form.TaskDifficultySelector
@@ -863,7 +827,7 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun showAssignDialog() {
-        showAsBottomSheet {
+        showAsBottomSheet { onClose ->
             AssignSheet(
                 groupMembers,
                 assignedIDs,
@@ -873,7 +837,8 @@ class TaskFormActivity : BaseActivity() {
                     } else {
                         assignedIDs.add(it)
                     }
-                }
+                },
+                onClose
             )
         }
     }
@@ -899,154 +864,5 @@ private fun String.toIntCatchOverflow(): Int? {
         toInt()
     } catch (e: NumberFormatException) {
         0
-    }
-}
-
-@Composable
-fun AssignedView(
-    assigned: List<Assignable>,
-    completedAt: Map<String, Date>,
-    backgroundColor: Color,
-    color: Color,
-    onEditClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    showEditButton: Boolean = false
-) {
-    Column(modifier.fillMaxWidth()) {
-        val rowModifier = Modifier
-            .padding(vertical = 4.dp)
-            .background(
-                backgroundColor,
-                MaterialTheme.shapes.medium
-            )
-            .padding(15.dp, 12.dp)
-            .heightIn(min = 24.dp)
-            .fillMaxWidth()
-        for (assignable in assigned) {
-            UserRow(
-                username = assignable.identifiableName, modifier = rowModifier,
-                color = color,
-                extraContent = {
-                    completedAt[assignable.id]?.let { CompletedAt(completedAt = it) }
-                }
-            )
-        }
-        if (showEditButton) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                .clickable {
-                    onEditClick()
-                }
-                .padding(vertical = 4.dp)
-                .background(
-                    backgroundColor,
-                    MaterialTheme.shapes.medium
-                )
-                .padding(15.dp, 12.dp)
-                .heightIn(min = 24.dp)
-                .fillMaxWidth()) {
-                Image(
-                    painterResource(R.drawable.edit),
-                    null,
-                    colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
-                )
-                Text(
-                    stringResource(R.string.edit_assignees), color = color,
-                    modifier = Modifier.padding(start = 4.dp)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun AssignSheet(
-    members: List<Member>,
-    assignedMembers: List<String>,
-    onAssignClick: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(modifier) {
-        Box {
-            Text(
-                stringResource(R.string.assign_to),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = colorResource(R.color.gray_200),
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-            )
-            TextButton(
-                onClick = {
-
-                },
-                colors = ButtonDefaults.textButtonColors(),
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
-                Text(stringResource(R.string.done))
-            }
-        }
-        for (member in members) {
-            val isAssigned = assignedMembers.contains(member.id)
-            val transition = updateTransition(isAssigned, label = "isAssigned")
-            val rotation = transition.animateFloat(
-                label = "isAssigned",
-                transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessLow) }) {
-                if (it) 0f else 45f
-            }
-            val backgroundColor = transition.animateColor(
-                label = "isAssigned",
-                transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
-                if (it) MaterialTheme.colors.primary else colorResource(id = R.color.transparent)
-            }
-            val color = transition.animateColor(
-                label = "isAssigned",
-                transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
-                fadeIn(tween(10000))
-                colorResource(if (it) R.color.white else R.color.text_dimmed)
-            }
-            val borderColor = transition.animateColor(
-                label = "isAssigned",
-                transitionSpec = { tween(400, easing = FastOutLinearInEasing) }) {
-                fadeIn(tween(10000))
-                if (it) MaterialTheme.colors.primary else colorResource(id = R.color.text_dimmed)
-            }
-            UserRow(
-                username = member.displayName,
-                color = colorResource(R.color.text_primary),
-                extraContent = {
-                    Text(
-                        member.formattedUsername ?: "",
-                        color = colorResource(R.color.text_ternary)
-                    )
-                }, endContent = {
-                    Image(
-                        painterResource(R.drawable.ic_close_white_24dp),
-                        null,
-                        colorFilter = ColorFilter.tint(color.value),
-                        modifier = Modifier
-                            .rotate(rotation.value)
-                            .size(24.dp)
-                            .background(
-                                backgroundColor.value,
-                                CircleShape
-                            )
-                            .border(
-                                2.dp,
-                                borderColor.value,
-                                CircleShape
-                            )
-                            .padding(3.dp)
-                    )
-                }, modifier = Modifier
-                    .clickable {
-                        member.id?.let { onAssignClick(it) }
-                    }
-                    .padding(30.dp, 12.dp)
-                    .heightIn(min = 24.dp)
-                    .fillMaxWidth()
-            )
-        }
     }
 }

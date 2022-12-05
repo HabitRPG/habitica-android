@@ -7,6 +7,10 @@ import java.text.DecimalFormat
 
 object NumberAbbreviator {
 
+    fun abbreviate(context: Context?, number: Float, numberOfDecimals: Int = 2, minForAbbrevation: Int = 0): String {
+        return abbreviate(context, number.toDouble(), numberOfDecimals, minForAbbrevation)
+    }
+
     fun abbreviate(context: Context?, number: Double, numberOfDecimals: Int = 2, minForAbbrevation: Int = 0): String {
         var usedNumber = number
         var counter = 0
@@ -28,6 +32,7 @@ object NumberAbbreviator {
         2 -> context?.getString(R.string.million_abbrev) ?: "m"
         3 -> context?.getString(R.string.billion_abbrev) ?: "b"
         4 -> context?.getString(R.string.trillion_abbrev) ?: "t"
+        5 -> context?.getString(R.string.quadrillion_abbrev) ?: "q"
         else -> ""
     }
 }

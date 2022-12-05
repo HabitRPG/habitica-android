@@ -55,11 +55,18 @@ open class Group : RealmObject(), BaseMainObject {
     }
 
     fun hasTaskEditPrivileges(userID: String): Boolean {
-        if (leaderID == userID) {
+        if (isLeader(userID)) {
             return true
         }
-        return managers?.contains(userID) == true
+        return isManager(userID)
     }
+
+    fun canManageManagers(userID: String): Boolean {
+        return isLeader(userID)
+    }
+
+    fun isLeader(userID: String): Boolean = leaderID == userID
+    fun isManager(userID: String): Boolean = managers?.contains(userID) == true
 
     companion object {
         const val TAVERN_ID = "00000000-0000-4000-A000-000000000000"

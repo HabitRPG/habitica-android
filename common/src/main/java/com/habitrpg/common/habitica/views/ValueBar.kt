@@ -7,13 +7,10 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.ValueBarBinding
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.math.RoundingMode
 import java.text.NumberFormat
 
@@ -95,7 +92,6 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
             R.styleable.ValueBar,
             0, 0
         )
-        setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, !context.isUsingNightModeResources()) == true)
 
         binding.progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
         binding.progressBar.barPendingColor = attributes?.getColor(R.styleable.ValueBar_barPendingColor, 0) ?: 0
@@ -161,19 +157,6 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
 
     fun setValueText(valueText: String) {
         binding.valueTextView.text = valueText
-    }
-
-    fun setLightBackground(lightBackground: Boolean) {
-        val textColor: Int
-        /*if (lightBackground) {
-            textColor = ContextCompat.getColor(context, R.color.text_ternary)
-            binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
-        } else {
-            textColor = context.getThemeColor(R.attr.textColorPrimaryDark)
-            binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_header_bar)
-        }
-        binding.valueTextView.setTextColor(textColor)
-        binding.descriptionTextView.setTextColor(textColor)*/
     }
 
     var animationDuration = 500L

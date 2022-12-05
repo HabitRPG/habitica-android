@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
 import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
@@ -12,7 +13,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.google.android.material.composethemeadapter.createMdcTheme
+import com.habitrpg.android.habitica.R
+import com.habitrpg.common.habitica.extensions.getThemeColor
 
 @Composable
 fun HabiticaTheme(
@@ -113,6 +117,36 @@ val Typography.subtitle3
     )
 object HabiticaTheme {
     val typography: Typography
-    @Composable
-    get() = MaterialTheme.typography
+        @Composable
+        get() = MaterialTheme.typography
+
+
+    val shapes: Shapes
+        @Composable
+        get() = MaterialTheme.shapes
+
+    val colors: HabiticaColors
+        @Composable
+        get() {
+            val context = LocalContext.current
+            return HabiticaColors(
+                windowBackground = Color(context.getThemeColor(R.attr.colorWindowBackground)),
+                contentBackground = Color(context.getThemeColor(R.attr.colorContentBackground)),
+                contentBackgroundOffset = Color(context.getThemeColor(R.attr.colorContentBackgroundOffset)),
+                textPrimary = Color(context.getThemeColor(R.attr.textColorPrimary)),
+                textSecondary = Color(context.getThemeColor(R.attr.textColorSecondary)),
+                textTertiary = Color(context.getThemeColor(R.attr.colorTertiary)),
+                textDimmed = Color(ContextCompat.getColor(context, R.color.text_dimmed)),
+            )
+        }
 }
+
+class HabiticaColors(
+    val windowBackground: Color,
+    val contentBackground: Color,
+    val contentBackgroundOffset: Color,
+    val textPrimary: Color,
+    val textSecondary: Color,
+    val textTertiary: Color,
+    val textDimmed: Color
+)

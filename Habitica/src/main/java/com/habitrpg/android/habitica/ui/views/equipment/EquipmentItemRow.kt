@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.android.habitica.ui.views.equipment
 
 import android.content.Context
 import android.util.AttributeSet

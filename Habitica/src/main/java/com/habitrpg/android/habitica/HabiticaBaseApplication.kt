@@ -61,6 +61,12 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onCreate() {
         super.onCreate()
+        if (!BuildConfig.DEBUG) {
+            try {
+                AmplitudeManager.initialize(this)
+            } catch (ignored: Resources.NotFoundException) {
+            }
+        }
         registerActivityLifecycleCallbacks(this)
         setupRealm()
         setupDagger()
@@ -73,12 +79,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
-        if (!BuildConfig.DEBUG) {
-            try {
-                AmplitudeManager.initialize(this, sharedPrefs)
-            } catch (ignored: Resources.NotFoundException) {
-            }
-        }
+
         setupCoil()
 
         ExceptionHandler.init(analyticsManager)
