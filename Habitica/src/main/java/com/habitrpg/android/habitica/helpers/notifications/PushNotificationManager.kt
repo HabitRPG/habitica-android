@@ -2,6 +2,10 @@ package com.habitrpg.android.habitica.helpers.notifications
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
@@ -32,6 +36,18 @@ class PushNotificationManager(
 
     fun setUser(user: User) {
         this.user = user
+    }
+
+    /**
+     * New installs on Android 13 require
+     * Notification permissions be approved.
+     * Devices on Android 12L or lower with previously
+     * allowed notification permissions that update to 13
+     * will have notification permissions enabled by default.
+     */
+    fun notificationPermissionEnabled(): Boolean {
+        val notificationManager = NotificationManagerCompat.from(context)
+        return notificationManager.areNotificationsEnabled()
     }
 
     fun addPushDeviceUsingStoredToken() {

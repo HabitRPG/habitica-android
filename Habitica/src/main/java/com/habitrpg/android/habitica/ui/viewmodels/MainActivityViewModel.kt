@@ -1,7 +1,9 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.core.content.edit
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.MaintenanceApiService
@@ -61,6 +63,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                 putString("language", value)
             }
         }
+    var requestNotificationPermission = MutableLiveData(false)
 
     override fun onCleared() {
         taskRepository.close()
@@ -97,13 +100,26 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                     analyticsManager.setUserProperty("checkin_count", user.loginIncentives.toString())
                     analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
-                    pushNotificationManager.addPushDeviceUsingStoredToken()
+                    if (!pushNotificationManager.notificationPermissionEnabled() && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
+                        if (sharedPreferences.getBoolean("usePushNotifications", true)) {
+                            requestNotificationPermission.value = true
+                        }
+                    } else {
+                        pushNotificationManager.addPushDeviceUsingStoredToken()
+                    }
                 }
                 contentRepository.retrieveContent()
             }
             viewModelScope.launchCatching {
                 userRepository.retrieveTeamPlans()
             }
+        }
+    }
+
+    fun updateAllowPushNotifications(allowPushNotifications: Boolean) {
+        sharedPreferences.getBoolean("usePushNotifications", true)
+        sharedPreferences.edit {
+            putBoolean("usePushNotifications", allowPushNotifications)
         }
     }
 
