@@ -40,6 +40,10 @@ class SocialRepositoryImpl(
         return apiClient.blockMember(userID)
     }
 
+    override fun getMember(userID: String?): Flow<Member?> {
+        return localRepository.getMember(userID)
+    }
+
     override fun getGroupMembership(id: String) = localRepository.getGroupMembership(userID, id)
 
     override fun getGroupMemberships(): Flow<List<GroupMembership>> {

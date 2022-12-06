@@ -18,6 +18,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -42,23 +43,33 @@ import androidx.lifecycle.asLiveData
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.TaskDescriptionBuilder
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.views.CompletedAt
 import com.habitrpg.android.habitica.ui.views.UserRow
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TaskSummaryViewModel(val taskId: String) : BaseViewModel() {
     @Inject
     lateinit var taskRespository: TaskRepository
+    @Inject
+    lateinit var socialRepository: SocialRepository
+
     val task = taskRespository.getTask(taskId).asLiveData()
 
     override fun inject(component: UserComponent) {
         component.inject(this)
+    }
+
+    fun getMember(userID: String?): Flow<Member?> {
+        return socialRepository.getMember(userID)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -230,8 +241,9 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         modifier = titleModifier.padding(bottom = 4.dp)
                     )
                     for (item in task?.group?.assignedUsersDetail ?: emptyList()) {
+                        val member = viewModel.getMember(item.assignedUserID).collectAsState(null)
                         UserRow(
-                            item.assignedUsername ?: "", Modifier
+                            item.assignedUsername ?: "", member.value, Modifier
                                 .padding(vertical = 4.dp)
                                 .background(
                                     colorResource(

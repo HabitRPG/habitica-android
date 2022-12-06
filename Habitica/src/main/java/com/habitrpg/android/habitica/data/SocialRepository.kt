@@ -119,4 +119,5 @@ interface SocialRepository : BaseRepository {
     fun getGroupMembership(id: String): Flow<GroupMembership?>
     fun getGroupMemberships(): Flow<List<GroupMembership>>
     suspend fun blockMember(userID: String): List<String>?
+    fun getMember(userID: String?): Flow<Member?>
 }

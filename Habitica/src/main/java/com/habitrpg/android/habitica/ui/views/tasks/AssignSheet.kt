@@ -94,6 +94,7 @@ fun AssignSheet(
             }
             UserRow(
                 username = member.displayName,
+                avatar = member,
                 color = colorResource(R.color.text_primary),
                 extraContent = {
                     Text(

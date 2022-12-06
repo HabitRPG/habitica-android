@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import javax.inject.Inject
 
-class CheckClassSelectionUseCase @Inject constructor() : FlowUseCase<CheckClassSelectionUseCase.RequestValues, Unit>() {
+class CheckClassSelectionUseCase @Inject constructor() : UseCase<CheckClassSelectionUseCase.RequestValues, Unit>() {
 
     override suspend fun run(requestValues: RequestValues) {
         val user = requestValues.user
@@ -42,5 +42,5 @@ class CheckClassSelectionUseCase @Inject constructor() : FlowUseCase<CheckClassS
         val isInitialSelection: Boolean,
         val currentClass: String?,
         val activity: Activity
-    ) : FlowUseCase.RequestValues
+    ) : UseCase.RequestValues
 }

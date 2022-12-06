@@ -20,7 +20,7 @@ class LevelUpUseCase @Inject
 constructor(
     private val soundManager: SoundManager,
     private val checkClassSelectionUseCase: CheckClassSelectionUseCase
-) : FlowUseCase<LevelUpUseCase.RequestValues, Stats?>() {
+) : UseCase<LevelUpUseCase.RequestValues, Stats?>() {
 
     override suspend fun run(requestValues: RequestValues): Stats? {
         soundManager.loadAndPlayAudio(SoundManager.SoundLevelUp)
@@ -99,7 +99,7 @@ constructor(
         val level: Int?,
         val activity: BaseActivity,
         val snackbarTargetView: ViewGroup
-    ) : FlowUseCase.RequestValues {
+    ) : UseCase.RequestValues {
         val newLevel: Int = level ?: 0
     }
 }

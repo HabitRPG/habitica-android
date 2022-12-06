@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
@@ -44,7 +45,8 @@ fun LabeledBar(
     barColor: Color = HabiticaTheme.colors.windowBackground,
     value: Double,
     maxValue: Double,
-    displayCompact: Boolean,
+    displayCompact: Boolean = false,
+    barHeight: Dp = 8.dp,
     disabled: Boolean = false
 ) {
     val cleanedMaxVlaue = java.lang.Double.max(1.0, maxValue)
@@ -72,7 +74,7 @@ fun LabeledBar(
                 Modifier
                     .fillMaxWidth()
                     .clip(CircleShape)
-                    .height(8.dp),
+                    .height(barHeight),
                 backgroundColor = barColor,
                 color = color
             )

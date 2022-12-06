@@ -23,7 +23,7 @@ fun CurrencyText(
     decimals: Int = 2,
     minForAbbrevation: Int = 0
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         when (currency) {
             "gold" -> HabiticaIconsHelper.imageOfGold()
             "gems" -> HabiticaIconsHelper.imageOfGem()
@@ -39,8 +39,7 @@ fun CurrencyText(
                 else -> colorResource(R.color.text_primary)
             },
             fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = modifier
+            fontWeight = FontWeight.SemiBold
         )
     }
 }

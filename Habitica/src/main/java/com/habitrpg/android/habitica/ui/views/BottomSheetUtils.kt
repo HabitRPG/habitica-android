@@ -74,21 +74,24 @@ private fun BottomSheetWrapper(
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     var isSheetOpened by remember { mutableStateOf(false) }
 
+    val radius = 20.dp
     ModalBottomSheetLayout(
         sheetBackgroundColor = Color.Transparent,
         sheetState = modalBottomSheetState,
+        sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
         sheetContent = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
+                    .padding(horizontal = 4.dp)
                     .border(
                         2.dp,
                         colorResource(R.color.window_background),
-                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+                        RoundedCornerShape(topStart = radius, topEnd = radius)
                     )
                     .background(
                         MaterialTheme.colors.background,
-                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+                        RoundedCornerShape(topStart = radius, topEnd = radius)
                     )
                     .padding(vertical = 8.dp)
             ) {

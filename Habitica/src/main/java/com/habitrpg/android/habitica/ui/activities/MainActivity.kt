@@ -16,6 +16,9 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
@@ -240,7 +243,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             HabiticaTheme {
                 AppHeaderView(viewModel.userViewModel) {
                     showAsBottomSheet { onClose ->
-                        GroupPlanMemberList(it, {
+                        val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
+                        val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
+                        GroupPlanMemberList(members, group, {
                             onClose()
                             FullProfileActivity.open(it)
                         }, { member ->

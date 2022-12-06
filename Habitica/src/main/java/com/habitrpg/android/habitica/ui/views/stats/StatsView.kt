@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
@@ -122,7 +121,7 @@ fun StatsViewPreview() {
             levelValue = 10,
             equipmentValue = 5,
             buffValue = 4,
-            allocatedValue = 8,
+            allocatedValue = 20,
             canAllocate = true
         ) {}
     }

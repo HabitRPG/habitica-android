@@ -54,4 +54,5 @@ interface SocialLocalRepository : BaseLocalRepository {
         page: Int
     )
     fun saveInboxConversations(userID: String, conversations: List<InboxConversation>)
+    fun getMember(userID: String?): Flow<Member?>
 }

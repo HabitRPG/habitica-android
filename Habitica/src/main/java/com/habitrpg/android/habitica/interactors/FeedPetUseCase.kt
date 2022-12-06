@@ -20,7 +20,7 @@ import javax.inject.Inject
 class FeedPetUseCase @Inject
 constructor(
     private val inventoryRepository: InventoryRepository,
-) : FlowUseCase<FeedPetUseCase.RequestValues, FeedResponse?>() {
+) : UseCase<FeedPetUseCase.RequestValues, FeedResponse?>() {
     override suspend fun run(requestValues: FeedPetUseCase.RequestValues): FeedResponse? {
         val feedResponse = inventoryRepository.feedPet(requestValues.pet, requestValues.food)
         (requestValues.context as? SnackbarActivity)?.showSnackbar(content = feedResponse?.message)
@@ -77,5 +77,5 @@ constructor(
     }
 
     class RequestValues(val pet: Pet, val food: Food, val context: Context) :
-        FlowUseCase.RequestValues
+        UseCase.RequestValues
 }

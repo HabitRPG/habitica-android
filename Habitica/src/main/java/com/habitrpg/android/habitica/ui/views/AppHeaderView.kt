@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 
@@ -72,7 +71,7 @@ fun UserLevelText(user: User) {
 @Composable
 fun AppHeaderView(
     viewModel: MainUserViewModel,
-    onMemberRowClicked: (List<Member>) -> Unit
+    onMemberRowClicked: () -> Unit
 ) {
     val user by viewModel.user.observeAsState(null)
     val teamPlan by viewModel.currentTeamPlan.collectAsState(null)
@@ -181,7 +180,7 @@ fun AppHeaderView(
                                 colorResource(R.color.window_background)
                             )
                             .clickable {
-                                teamPlanMembers?.let { onMemberRowClicked(it) }
+                                onMemberRowClicked()
                             }
                     ) {
                         for (member in teamPlanMembers?.filter { it.id != user?.id }?.take(6) ?: emptyList()) {
@@ -205,11 +204,20 @@ fun AppHeaderView(
             ClassIcon(className = user?.stats?.habitClass, hasClass = user?.hasClass ?: false, modifier = Modifier.padding(4.dp))
             user?.let { UserLevelText(it) }
             Spacer(Modifier.weight(1f))
-            user?.hourglassCount?.toDouble()
-                ?.let { CurrencyText("hourglasses", it, modifier = Modifier.padding(end = 12.dp)) }
+            if (user?.isSubscribed == true) {
+                user?.hourglassCount?.toDouble()
+                    ?.let {
+                        CurrencyText(
+                            "hourglasses",
+                            it,
+                            modifier = Modifier.padding(end = 12.dp).clickable {
+                                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                            })
+                    }
+            }
             CurrencyText("gold", user?.stats?.gp ?: 0.0, modifier = Modifier.padding(end = 12.dp))
             CurrencyText("gems", user?.gemCount?.toDouble() ?: 0.0, modifier = Modifier.clickable {
-                MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
+                MainNavigationController.navigate(R.id.gemPurchaseActivity)
             })
         }
     }

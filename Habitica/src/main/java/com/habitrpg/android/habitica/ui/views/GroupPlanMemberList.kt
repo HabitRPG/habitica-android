@@ -14,18 +14,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -34,24 +31,52 @@ import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import kotlin.random.Random
 
 @Composable
 fun GroupPlanMemberList(
-    members: List<Member>,
+    members: List<Member>?,
+    group: Group?,
     onMemberClicked: (String) -> Unit,
     onMoreClicked: (Member) -> Unit
 ) {
     LazyColumn {
-        for (member in members) {
+        item {
+            Text(stringResource(R.string.member_list),
+            fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = HabiticaTheme.colors.textTertiary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(bottom = 20.dp)
+                )
+        }
+        for (member in members?.sortedWith(compareByDescending<Member> {
+            group?.isLeader(
+                it.id ?: ""
+            )
+        }.thenByDescending {
+            group?.isManager(
+                it.id ?: ""
+            )
+        }.thenBy { it.username }) ?: emptyList()) {
             item {
+                val role = if (group?.isLeader(member.id ?: "") == true) {
+                    stringResource(R.string.owner)
+                } else if (group?.isManager(member.id ?: "") == true) {
+                    stringResource(R.string.manager)
+                } else {
+                    stringResource(R.string.member)
+
+                }
                 MemberItem(
                     member,
+                    role,
                     onMemberClicked,
                     onMoreClicked,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
@@ -64,6 +89,7 @@ fun GroupPlanMemberList(
 @Composable
 fun MemberItem(
     member: Member,
+    role: String,
     onMemberClicked: (String) -> Unit,
     onMoreClicked: (Member) -> Unit,
     modifier: Modifier = Modifier
@@ -77,23 +103,14 @@ fun MemberItem(
                 member.id?.let { onMemberClicked(it) }
             }
     ) {
-        TextButton(
-            onClick = { onMoreClicked(member) }, modifier = Modifier
-                .size(32.dp)
-                .background(
-                    Color(LocalContext.current.getThemeColor(R.attr.colorAccent)),
-                    WobblyCircle
-                )
-                .align(Alignment.TopEnd)
-        ) {
-            Image(painterResource(R.drawable.menu_messages), null)
-        }
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(14.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(8.dp)
         ) {
-            ComposableAvatarView(avatar = member, modifier = Modifier.size(94.dp, 98.dp))
-            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.height(100.dp)) {
+            ComposableAvatarView(avatar = member, modifier = Modifier
+                .padding(6.dp)
+                .size(94.dp, 98.dp))
+            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.height(104.dp).padding(end = 6.dp)) {
                 Text(
                     member.displayName,
                     fontWeight = FontWeight.SemiBold,
@@ -101,17 +118,16 @@ fun MemberItem(
                     color = HabiticaTheme.colors.textPrimary
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         member.formattedUsername ?: "",
-                        color = HabiticaTheme.colors.textSecondary
+                        color = HabiticaTheme.colors.textTertiary
                     )
                     Spacer(
                         Modifier
                             .weight(1.0f)
-                            .background(Color.Red)
                     )
                     ClassIcon(
                         member.stats?.habitClass,
@@ -126,14 +142,16 @@ fun MemberItem(
                     barColor = HabiticaTheme.colors.contentBackgroundOffset,
                     value = member.stats?.hp ?: 0.0,
                     maxValue = (member.stats?.maxHealth ?: 0).toDouble(),
-                    displayCompact = true
+                    displayCompact = true,
+                    barHeight = 5.dp
                 )
                 LabeledBar(
                     color = colorResource(R.color.xpColor),
                     barColor = HabiticaTheme.colors.contentBackgroundOffset,
                     value = member.stats?.exp ?: 0.0,
                     maxValue = (member.stats?.toNextLevel ?: 0).toDouble(),
-                    displayCompact = true
+                    displayCompact = true,
+                    barHeight = 5.dp
                 )
                 if (member.hasClass) {
                     LabeledBar(
@@ -141,7 +159,8 @@ fun MemberItem(
                         barColor = HabiticaTheme.colors.contentBackgroundOffset,
                         value = member.stats?.mp ?: 0.0,
                         maxValue = (member.stats?.maxMP ?: 0).toDouble(),
-                        displayCompact = true
+                        displayCompact = true,
+                        barHeight = 5.dp
                     )
                 }
                 Row(horizontalArrangement = Arrangement.SpaceBetween) {
@@ -149,11 +168,12 @@ fun MemberItem(
                         stringResource(R.string.level_unabbreviated, member.stats?.lvl ?: 0),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal,
-                        color = HabiticaTheme.colors.textPrimary
+                        color = HabiticaTheme.colors.textTertiary
                     )
+                    Spacer(Modifier.weight(1f))
                     Text(
-                        "", fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
-                        color = HabiticaTheme.colors.textPrimary
+                        role, fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
+                        color = HabiticaTheme.colors.textSecondary
                     )
                 }
             }
@@ -197,5 +217,5 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 @Composable
 @Preview
 private fun Preview(@PreviewParameter(MemberProvider::class) member: Member) {
-    MemberItem(member = member, onMemberClicked = {}, onMoreClicked = {})
+    MemberItem(member = member, role = "Manager", onMemberClicked = {}, onMoreClicked = {})
 }

@@ -27,7 +27,7 @@ class NotifyUserUseCase @Inject
 constructor(
     private val levelUpUseCase: LevelUpUseCase,
     private val userRepository: UserRepository
-) : FlowUseCase<NotifyUserUseCase.RequestValues, Stats?>() {
+) : UseCase<NotifyUserUseCase.RequestValues, Stats?>() {
 
     override suspend fun run(requestValues: RequestValues): Stats? {
         if (requestValues.user == null) {
@@ -57,7 +57,7 @@ constructor(
         val questDamage: Double?,
         val hasLeveledUp: Boolean?,
         val level: Int?
-    ) : FlowUseCase.RequestValues
+    ) : UseCase.RequestValues
 
     companion object {
         val formatter = NumberFormat.getInstance().apply {

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class DisplayItemDropUseCase @Inject
 constructor(private val soundManager: SoundManager):
-    FlowUseCase<DisplayItemDropUseCase.RequestValues, Unit>() {
+    UseCase<DisplayItemDropUseCase.RequestValues, Unit>() {
 
     override suspend fun run(requestValues: RequestValues) {
         val data = requestValues.data
@@ -49,5 +49,5 @@ constructor(private val soundManager: SoundManager):
         val context: AppCompatActivity,
         val snackbarTargetView: ViewGroup,
         val showQuestItems: Boolean
-    ) : FlowUseCase.RequestValues
+    ) : UseCase.RequestValues
 }

@@ -102,6 +102,15 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
+    override fun getMember(userID: String?): Flow<Member?> {
+        return realm.where(Member::class.java)
+            .equalTo("id", userID)
+            .findAll()
+            .toFlow()
+            .filter { member -> member.isLoaded && member.isValid }
+            .map { member -> member.firstOrNull() }
+    }
+
     override fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>) {
         save(memberships)
         if (userID != null) {

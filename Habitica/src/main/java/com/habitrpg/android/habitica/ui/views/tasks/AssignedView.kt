@@ -46,7 +46,9 @@ fun AssignedView(
             .fillMaxWidth()
         for (assignable in assigned) {
             UserRow(
-                username = assignable.identifiableName, modifier = rowModifier,
+                username = assignable.identifiableName,
+                avatar = assignable.avatar,
+                modifier = rowModifier,
                 color = color,
                 extraContent = {
                     completedAt[assignable.id]?.let { CompletedAt(completedAt = it) }

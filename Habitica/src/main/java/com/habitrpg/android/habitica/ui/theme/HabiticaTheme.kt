@@ -135,7 +135,7 @@ object HabiticaTheme {
                 contentBackgroundOffset = Color(context.getThemeColor(R.attr.colorContentBackgroundOffset)),
                 textPrimary = Color(context.getThemeColor(R.attr.textColorPrimary)),
                 textSecondary = Color(context.getThemeColor(R.attr.textColorSecondary)),
-                textTertiary = Color(context.getThemeColor(R.attr.colorTertiary)),
+                textTertiary = Color(ContextCompat.getColor(context, R.color.text_ternary)),
                 textDimmed = Color(ContextCompat.getColor(context, R.color.text_dimmed)),
             )
         }

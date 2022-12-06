@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class HatchPetUseCase @Inject
 constructor(
-    private val inventoryRepository: InventoryRepository) : FlowUseCase<HatchPetUseCase.RequestValues, Items?>() {
+    private val inventoryRepository: InventoryRepository) : UseCase<HatchPetUseCase.RequestValues, Items?>() {
     override suspend fun run(requestValues: RequestValues): Items? {
         return inventoryRepository.hatchPet(requestValues.egg, requestValues.potion) {
             val petWrapper = View.inflate(requestValues.context, R.layout.pet_imageview, null) as? FrameLayout
@@ -52,5 +52,5 @@ constructor(
         }
     }
 
-    class RequestValues(val potion: HatchingPotion, val egg: Egg, val context: Context) : FlowUseCase.RequestValues
+    class RequestValues(val potion: HatchingPotion, val egg: Egg, val context: Context) : UseCase.RequestValues
 }
