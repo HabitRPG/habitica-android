@@ -97,7 +97,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldChecklists(onlineItems: List<ChecklistItem>) {
         val localItems = realm.where(ChecklistItem::class.java).findAll().createSnapshot()
         val itemsToDelete = localItems.filterNot { onlineItems.contains(it) }
-        executeTransaction {
+        realm.executeTransaction {
             for (item in itemsToDelete) {
                 item.deleteFromRealm()
             }
@@ -107,7 +107,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldReminders(onlineReminders: List<RemindersItem>) {
         val localReminders = realm.where(RemindersItem::class.java).findAll().createSnapshot()
         val itemsToDelete = localReminders.filterNot { onlineReminders.contains(it) }
-        executeTransaction {
+        realm.executeTransaction {
             for (item in itemsToDelete) {
                 item.deleteFromRealm()
             }

@@ -1268,7 +1268,7 @@
     <string name="completed_at">Completed at %s</string>
     <string name="assign">Assign</string>
     <string name="edit_assignees">Edit assignees</string>
-    <string name="assign_to">Assign to...</string>
+    <string name="assign_to">Assign to…</string>
     <string name="promote_to_manager">Promote to Manager</string>
     <string name="manager">Manager</string>
     <string name="member_list">Member List</string>
@@ -1278,7 +1278,7 @@
         <item quantity="other">You, %d others</item>
     </plurals>
     <plurals name="people">
-        <item quantity="one">%d Person</item>
-        <item quantity="other">%d People</item>
+        <item quantity="one">%d person</item>
+        <item quantity="other">%d people</item>
     </plurals>
 </resources>

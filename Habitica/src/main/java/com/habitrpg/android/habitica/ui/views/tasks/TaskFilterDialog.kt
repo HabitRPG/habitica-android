@@ -12,6 +12,7 @@ import android.widget.RadioGroup
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.lifecycleScope
@@ -31,7 +32,7 @@ import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.util.UUID
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, component: UserComponent?, private val showTags: Boolean) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
     lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
 
@@ -92,17 +93,21 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
             setActiveTags(null)
         }
 
-        binding.tagEditButton.setOnClickListener { editButtonClicked() }
-    }
-
-    override fun dismiss() {
-        super.dismiss()
+        if (showTags) {
+            binding.tagEditButton.setOnClickListener { editButtonClicked() }
+        } else {
+            binding.tagsList.isVisible = false
+            binding.tagsTitle.isVisible = false
+            binding.tagEditButton.isVisible = false
+        }
     }
 
     override fun show() {
-        lifecycleScope.launchCatching {
-            viewModel.tagRepository.getTags().collect {
-                setTags(it)
+        if (showTags) {
+            lifecycleScope.launchCatching {
+                viewModel.tagRepository.getTags().collect {
+                    setTags(it)
+                }
             }
         }
         super.show()

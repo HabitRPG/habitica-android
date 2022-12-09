@@ -192,7 +192,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     private fun showFilterDialog() {
         context?.let {
-            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
+            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent, viewModel.isPersonalBoard)
             dialog.viewModel = viewModel
 
             // There are some cases where these things might not be correctly set after the app resumes. This is just to catch that as best as possible

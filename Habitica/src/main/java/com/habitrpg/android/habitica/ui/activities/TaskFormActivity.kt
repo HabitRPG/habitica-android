@@ -30,6 +30,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -241,6 +242,9 @@ class TaskFormActivity : BaseActivity() {
                     groupMembers = it
                 }
             }
+
+            binding.tagsTitleView.isVisible = false
+            binding.tagsWrapper.isVisible = false
         } else {
             binding.assignTitleView.visibility = View.GONE
             binding.assignView.visibility = View.GONE

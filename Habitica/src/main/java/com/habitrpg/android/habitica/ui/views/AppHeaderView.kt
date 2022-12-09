@@ -153,7 +153,7 @@ fun AppHeaderView(
                                 .clickable {
                                     MainNavigationController.navigate(
                                         R.id.guildFragment,
-                                        bundleOf("groupID" to teamPlan?.id)
+                                        bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1)
                                     )
                                 }
                         ) {
@@ -168,11 +168,11 @@ fun AppHeaderView(
                     enter = slideInVertically { animHeight } + fadeIn(),
                     exit = slideOutVertically { animHeight } + fadeOut()) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterHorizontally),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 12.dp)
+                            .padding(top = 12.dp, start = 12.dp, end = 12.dp)
                             .height(40.dp)
                             .width(72.dp)
                             .clip(MaterialTheme.shapes.medium)
