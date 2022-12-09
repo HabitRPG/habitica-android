@@ -230,6 +230,11 @@ class ApiClientImpl(
                 return
             }
 
+            if (status == 401 && !hostConfig.hasAuthentication()) {
+                // if a request was accidentally made that needs authentication, before the user has logged in just ignore the error
+                return
+            }
+
             if (status in 400..499) {
                 if (res.displayMessage.isNotEmpty()) {
                     showConnectionProblemDialog("", res.displayMessage)

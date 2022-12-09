@@ -13,9 +13,7 @@ interface BaseLocalRepository {
     fun close()
 
     fun executeTransaction(transaction: (Realm) -> Unit)
-    fun executeTransactionAsync(transaction: (Realm) -> Unit)
     fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit)
-    fun <T : BaseMainObject> modifyWithRealm(obj: T, transaction: (Realm, T) -> Unit)
     fun <T : BaseObject> getLiveObject(obj: T): T?
 
     fun <T : BaseObject> getUnmanagedCopy(managedObject: T): T
@@ -23,8 +21,6 @@ interface BaseLocalRepository {
 
     fun <T : BaseObject> save(objects: List<T>)
     fun <T : BaseObject> save(`object`: T)
-    fun <T : BaseObject> saveSyncronous(`object`: T)
-    fun <T : BaseObject> saveSyncronous(objects: List<T>)
     fun <T : BaseMainObject> delete(obj: T)
 
     fun getLiveUser(id: String): User?

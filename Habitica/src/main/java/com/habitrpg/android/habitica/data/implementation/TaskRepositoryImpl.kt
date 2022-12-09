@@ -221,7 +221,7 @@ class TaskRepositoryImpl(
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
         }
-        localRepository.saveSyncronous(task)
+        localRepository.save(task)
 
         val savedTask = apiClient.createTask(task)
         savedTask?.dateCreated = Date()
@@ -231,7 +231,7 @@ class TaskRepositoryImpl(
         } else {
             task.hasErrored = true
             task.isSaving = false
-            localRepository.saveSyncronous(task)
+            localRepository.save(task)
         }
         return savedTask
     }
@@ -247,7 +247,7 @@ class TaskRepositoryImpl(
         val unmanagedTask = localRepository.getUnmanagedCopy(task)
         unmanagedTask.isSaving = true
         unmanagedTask.hasErrored = false
-        localRepository.saveSyncronous(unmanagedTask)
+        localRepository.save(unmanagedTask)
         val savedTask = apiClient.updateTask(id, unmanagedTask)
         savedTask?.position = task.position
         savedTask?.id = task.id
@@ -257,7 +257,7 @@ class TaskRepositoryImpl(
         } else {
             unmanagedTask.hasErrored = true
             unmanagedTask.isSaving = false
-            localRepository.saveSyncronous(unmanagedTask)
+            localRepository.save(unmanagedTask)
         }
         return savedTask
     }

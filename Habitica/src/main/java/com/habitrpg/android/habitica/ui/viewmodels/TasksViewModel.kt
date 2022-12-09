@@ -64,25 +64,23 @@ class TasksViewModel : BaseViewModel(), GroupPlanInfoProvider {
         }
 
     init {
-        if (appConfigManager.enableTeamBoards()) {
-            viewModelScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.getTeamPlans()
-                    .collect { plans ->
-                        teamPlans = plans.associateBy { it.id }
-                        owners = listOf(Pair(userViewModel.userID, userViewModel.displayName)) + plans.map {
-                            Pair(
-                                it.id,
-                                it.summary
-                            )
-                        }
-                        if (owners.size > 1 && canSwitchOwners.value != false) {
-                            canSwitchOwners.value = owners.size > 1
-                        }
+        viewModelScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.getTeamPlans()
+                .collect { plans ->
+                    teamPlans = plans.associateBy { it.id }
+                    owners = listOf(Pair(userViewModel.userID, userViewModel.displayName)) + plans.map {
+                        Pair(
+                            it.id,
+                            it.summary
+                        )
                     }
-            }
-            viewModelScope.launchCatching {
-                userRepository.retrieveTeamPlans()
-            }
+                    if (owners.size > 1 && canSwitchOwners.value != false) {
+                        canSwitchOwners.value = owners.size > 1
+                    }
+                }
+        }
+        viewModelScope.launchCatching {
+            userRepository.retrieveTeamPlans()
         }
     }
 

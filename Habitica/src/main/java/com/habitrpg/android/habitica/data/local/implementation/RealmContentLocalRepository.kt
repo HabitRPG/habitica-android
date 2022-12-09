@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ContentLocalRepository {
 
     override fun saveContent(contentResult: ContentResult) {
-        executeTransactionAsync { realm1 ->
+        executeTransaction { realm1 ->
             contentResult.potion?.let { realm1.insertOrUpdate(it) }
             contentResult.armoire?.let { realm1.insertOrUpdate(it) }
             contentResult.gear?.flat?.let { realm1.insertOrUpdate(it) }
