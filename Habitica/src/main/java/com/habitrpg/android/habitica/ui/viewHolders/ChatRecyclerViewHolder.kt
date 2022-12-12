@@ -209,6 +209,10 @@ class ChatRecyclerMessageViewHolder(
         } else {
             binding.buttonsWrapper.visibility = View.GONE
         }
+
+        if ((chatMessage?.flagCount ?: 0) > 0) {
+
+        }
     }
 
     private fun messageWasSent(): Boolean {

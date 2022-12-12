@@ -72,7 +72,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID) ?: return@launch
+            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID, true) ?: return@launch
             binding.avatarView.setAvatar(member)
             binding.displayNameTextView.username = member.profile?.name
             binding.displayNameTextView.tier = member.contributor?.level ?: 0

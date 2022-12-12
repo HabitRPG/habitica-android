@@ -44,6 +44,10 @@ class SocialRepositoryImpl(
         return localRepository.getMember(userID)
     }
 
+    override suspend fun updateMember(memberID: String, key: String, value: Any?): Member? {
+        return apiClient.updateMember(memberID, mapOf(key to value))
+    }
+
     override fun getGroupMembership(id: String) = localRepository.getGroupMembership(userID, id)
 
     override fun getGroupMemberships(): Flow<List<GroupMembership>> {
@@ -247,12 +251,16 @@ class SocialRepositoryImpl(
 
     override suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>) = apiClient.inviteToGroup(id, inviteData)
 
-    override suspend fun retrieveMember(userId: String?): Member? {
+    override suspend fun retrieveMember(userId: String?, fromHall: Boolean): Member? {
         return if (userId == null) {
             null
         } else {
             try {
-                apiClient.getMember(UUID.fromString(userId).toString())
+                if (fromHall) {
+                    apiClient.getHallMember(userId)
+                } else {
+                    apiClient.getMember(UUID.fromString(userId).toString())
+                }
             } catch (_: IllegalArgumentException) {
                 apiClient.getMemberWithUsername(userId)
             }
@@ -260,7 +268,7 @@ class SocialRepositoryImpl(
     }
 
     override suspend fun retrieveMemberWithUsername(username: String?): Member? {
-        return retrieveMember(username)
+        return retrieveMember(username, true)
     }
 
     override suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>? {

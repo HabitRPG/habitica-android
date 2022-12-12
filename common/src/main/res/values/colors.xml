@@ -24,7 +24,6 @@
     <color name="maroon_50">#C92B2B</color>
     <color name="maroon_10">#B01515</color>
     <color name="maroon_5">#7D0C0C</color>
-    <color name="maroon_1">#4C0001</color>
 
     <color name="red_700">#FFF6F7</color>
     <color name="red_600">#FCEEEF</color>
@@ -33,8 +32,6 @@
     <color name="red_50">#F74E52</color>
     <color name="red_10">#F23035</color>
     <color name="red_5">#BF262B</color>
-    <color name="red_1">#6c0406</color>
-
     <color name="orange_700">#FFF9F5</color>
     <color name="orange_600">#FCF3ED</color>
     <color name="orange_500">#ffc8a7</color>
@@ -90,11 +87,29 @@
 
     <color name="gray_1_30">#4D1A181D</color>
 
+    <color name="maroon_1">#4C0001</color>
+    <color name="red_1">#6c0406</color>
     <color name="blue_1">#033f5e</color>
     <color name="teal_1">#005158</color>
     <color name="green_1">#005737</color>
     <color name="yellow_1">#794b00</color>
     <color name="orange_1">#7f3300</color>
+
+    <color name="maroon_0">#3D2828</color>
+    <color name="red_0">#3D2828</color>
+    <color name="blue_0">#28373D</color>
+    <color name="teal_0">#283C3D</color>
+    <color name="green_0">#283D36</color>
+    <color name="yellow_0">#3D3528</color>
+    <color name="orange_0">#3D3028</color>
+
+    <color name="maroon_00">#261C1C</color>
+    <color name="red_00">#261C1C</color>
+    <color name="blue_00">#191D21</color>
+    <color name="teal_00">#1C2526</color>
+    <color name="green_00">#1C2622</color>
+    <color name="yellow_00">#26221C</color>
+    <color name="orange_00">#26201C</color>
 
     <color name="hpColor">@color/red_100</color>
     <color name="xpColor">@color/yellow_100</color>

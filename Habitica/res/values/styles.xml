@@ -106,8 +106,9 @@
         <item name="colorBoxStroke">@color/red_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/red_100</item>
-        <item name="colorTintedBackground">@color/red_1</item>
-        <item name="colorTintedBackgroundOffset">@color/red_5</item>
+        <item name="colorTintedBackground">@color/red_00</item>
+        <item name="colorTintedBackgroundOffset">@color/red_0</item>
+        <item name="colorPrimaryText">@color/red_600</item>
     </style>
 
     <style name="MainAppTheme.Maroon">
@@ -136,8 +137,9 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/maroon_100</item>
-        <item name="colorTintedBackground">@color/maroon_1</item>
-        <item name="colorTintedBackgroundOffset">@color/maroon_5</item>
+        <item name="colorTintedBackground">@color/maroon_00</item>
+        <item name="colorTintedBackgroundOffset">@color/maroon_0</item>
+        <item name="colorPrimaryText">@color/maroon_600</item>
     </style>
 
     <style name="MainAppTheme.Orange">
@@ -168,8 +170,9 @@
         <item name="colorBoxStroke">@color/orange_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/orange_100</item>
-        <item name="colorTintedBackground">@color/orange_1</item>
-        <item name="colorTintedBackgroundOffset">@color/orange_5</item>
+        <item name="colorTintedBackground">@color/orange_00</item>
+        <item name="colorTintedBackgroundOffset">@color/orange_0</item>
+        <item name="colorPrimaryText">@color/orange_600</item>
     </style>
 
     <style name="MainAppTheme.Yellow">
@@ -200,7 +203,9 @@
         <item name="colorBoxStroke">@color/yellow_5</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/yellow_100</item>
-        <item name="colorTintedBackground">@color/yellow_5</item>
+        <item name="colorTintedBackground">@color/yellow_00</item>
+        <item name="colorTintedBackgroundOffset">@color/yellow_0</item>
+        <item name="colorPrimaryText">@color/yellow_600</item>
     </style>
 
     <style name="MainAppTheme.Green">
@@ -231,8 +236,9 @@
         <item name="colorBoxStroke">@color/green_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/green_100</item>
-        <item name="colorTintedBackground">@color/green_1</item>
-        <item name="colorTintedBackgroundOffset">@color/green_5</item>
+        <item name="colorTintedBackground">@color/green_00</item>
+        <item name="colorTintedBackgroundOffset">@color/green_0</item>
+        <item name="colorPrimaryText">@color/green_600</item>
     </style>
 
     <style name="MainAppTheme.Teal">
@@ -263,8 +269,9 @@
         <item name="colorBoxStroke">@color/teal_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/teal_100</item>
-        <item name="colorTintedBackground">@color/teal_1</item>
-        <item name="colorTintedBackgroundOffset">@color/teal_5</item>
+        <item name="colorTintedBackground">@color/teal_00</item>
+        <item name="colorTintedBackgroundOffset">@color/teal_0</item>
+        <item name="colorPrimaryText">@color/teal_600</item>
     </style>
 
     <style name="MainAppTheme.Blue">
@@ -295,8 +302,9 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="colorBoxStroke">@color/blue_10</item>
         <item name="toolbarContentColor">@color/blue_100</item>
-        <item name="colorTintedBackground">@color/blue_1</item>
-        <item name="colorTintedBackgroundOffset">@color/blue_5</item>
+        <item name="colorTintedBackground">@color/blue_00</item>
+        <item name="colorTintedBackgroundOffset">@color/blue_0</item>
+        <item name="colorPrimaryText">@color/blue_600</item>
     </style>
 
     <style name="MyWidgetTheme">
@@ -858,7 +866,7 @@
 
     <style name="TaskFormTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <!-- reference our hint & error styles -->
-        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxBackgroundColor">?colorTintedBackground</item>
         <item name="boxStrokeColor">@color/color_box_stroke</item>
         <item name="boxStrokeWidth">2dp</item>
         <item name="boxStrokeWidthFocused">2dp</item>

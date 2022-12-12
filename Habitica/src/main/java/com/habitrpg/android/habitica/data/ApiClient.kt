@@ -272,4 +272,6 @@ interface ApiClient {
     suspend fun getTeamPlanTasks(teamID: String): TaskList?
     suspend fun assignToTask(taskId: String, ids: List<String>): Task?
     suspend fun unassignFromTask(taskId: String, userID: String): Task?
+    suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member?
+    suspend fun getHallMember(userId: String): Member?
 }

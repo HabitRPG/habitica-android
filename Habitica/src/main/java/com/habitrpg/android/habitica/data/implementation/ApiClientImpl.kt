@@ -63,6 +63,7 @@ import java.io.IOException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLException
@@ -253,6 +254,10 @@ class ApiClientImpl(
         }
     }
 
+    override suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member? {
+        return process { apiService.updateUser(memberID, updateData) }
+    }
+
     override fun getErrorResponse(throwable: HttpException): ErrorResponse {
         val errorResponse = throwable.response()?.errorBody() ?: return ErrorResponse()
         val errorConverter = converter
@@ -360,8 +365,15 @@ class ApiClientImpl(
         return process { apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
     }
 
+    val lastSubscribeCall: Date? = null
     override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? {
-        return process { apiService.validateSubscription(request) }
+        return if (lastSubscribeCall == null || Date().time - lastSubscribeCall.time > 60000) {
+            process { apiService.validateSubscription(request) }
+        } else null
+    }
+
+    override suspend fun getHallMember(userId: String): Member? {
+        return process { apiService.getHallMember(userId) }
     }
 
     override suspend fun validateNoRenewSubscription(request: PurchaseValidationRequest): Any? {

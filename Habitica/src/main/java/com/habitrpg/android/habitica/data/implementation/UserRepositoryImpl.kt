@@ -48,9 +48,7 @@ class UserRepositoryImpl(
     }
 
     private suspend fun updateUser(userID: String, key: String, value: Any): User? {
-        val updateData = HashMap<String, Any>()
-        updateData[key] = value
-        return updateUser(userID, updateData)
+        return updateUser(userID, mapOf(key to value))
     }
 
     override suspend fun updateUser(updateData: Map<String, Any>): User? {

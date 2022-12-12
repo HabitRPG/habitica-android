@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.extensions.getThemeColor
@@ -64,7 +63,7 @@ abstract class ChecklistedViewHolder(
         if (isLocked) {
             this.checkmarkView.visibility = View.GONE
             this.lockView.visibility = View.VISIBLE
-            lockView.drawable.setTint(ContextCompat.getColor(context, if (data.isDue == true || data.type == TaskType.TODO) data.darkestTaskColor else R.color.text_dimmed))
+            lockView.drawable.setTint(ContextCompat.getColor(context, if (data.isDue == true || data.type == TaskType.TODO) data.extraExtraDarkTaskColor else R.color.text_dimmed))
         } else {
             this.checkmarkView.visibility = if (completed) View.VISIBLE else View.GONE
             checkmarkView.drawable.setTint(ContextCompat.getColor(context, R.color.gray_400))
@@ -152,7 +151,7 @@ abstract class ChecklistedViewHolder(
                             checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.text_dimmed))
                             R.color.offset_background
                         } else {
-                            val color = if (context.isUsingNightModeResources()) task?.darkestTaskColor else task?.darkTaskColor
+                            val color = if (context.isUsingNightModeResources()) task?.extraExtraDarkTaskColor else task?.darkTaskColor
                             checkmark?.drawable?.setTint(ContextCompat.getColor(context, color ?: R.color.text_dimmed))
                             task?.extraLightTaskColor ?: R.color.offset_background
                         }

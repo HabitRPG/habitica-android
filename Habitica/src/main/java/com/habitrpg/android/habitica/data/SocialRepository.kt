@@ -83,7 +83,7 @@ interface SocialRepository : BaseRepository {
 
     suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>): List<Void>?
 
-    suspend fun retrieveMember(userId: String?): Member?
+    suspend fun retrieveMember(userId: String?, fromHall: Boolean = false): Member?
     suspend fun retrieveMemberWithUsername(username: String?): Member?
 
     suspend fun findUsernames(
@@ -120,4 +120,5 @@ interface SocialRepository : BaseRepository {
     fun getGroupMemberships(): Flow<List<GroupMembership>>
     suspend fun blockMember(userID: String): List<String>?
     fun getMember(userID: String?): Flow<Member?>
+    suspend fun updateMember(memberID: String, key: String, value: Any?): Member?
 }

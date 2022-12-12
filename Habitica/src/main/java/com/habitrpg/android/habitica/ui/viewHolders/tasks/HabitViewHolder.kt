@@ -45,7 +45,7 @@ class HabitViewHolder(
         if (data.up == true) {
             val plusIcon = if (isLocked) {
                 val icon = ContextCompat.getDrawable(context, R.drawable.task_lock)
-                icon?.setTint(ContextCompat.getColor(context, data.darkestTaskColor))
+                icon?.setTint(ContextCompat.getColor(context, data.extraExtraDarkTaskColor))
                 icon
             } else {
                 val icon = ContextCompat.getDrawable(context, R.drawable.habit_plus)
@@ -83,7 +83,7 @@ class HabitViewHolder(
             this.btnMinusWrapper.setBackgroundResource(data.lightTaskColor)
             val minusIcon = if (isLocked) {
                 val icon = ContextCompat.getDrawable(context, R.drawable.task_lock)
-                icon?.setTint(ContextCompat.getColor(context, data.darkestTaskColor))
+                icon?.setTint(ContextCompat.getColor(context, data.extraExtraDarkTaskColor))
                 icon
             } else {
                 val icon = ContextCompat.getDrawable(context, R.drawable.habit_minus)

@@ -32,6 +32,14 @@
             style="@style/CardContent.Compact"
             android:background="@drawable/layout_rounded_bg_content"
             android:padding="@dimen/spacing_medium">
+            <TextView
+                android:id="@+id/flag_count_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Flagged once, not hidden"
+                android:textColor="@color/text_red"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/spacing_small"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

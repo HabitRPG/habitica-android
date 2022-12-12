@@ -77,6 +77,26 @@
                         layout="@layout/avatar_with_bars"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:id="@+id/admin_status_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:visibility="gone">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status"
+                            style="@style/SubHeader1"/>
+                        <TextView
+                            android:id="@+id/admin_status_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="today"/>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/blurb_text_view"

@@ -25,8 +25,6 @@ import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
@@ -152,7 +150,6 @@ class TaskFormActivity : BaseActivity() {
 
         val taskId = bundle.getString(TASK_ID_KEY)
         groupID = bundle.getString(GROUP_ID_KEY)
-        forcedIsNight = false
         forcedTheme = if (taskId != null) {
             val taskValue = bundle.getDouble(TASK_VALUE_KEY)
             when {
@@ -227,10 +224,8 @@ class TaskFormActivity : BaseActivity() {
                     AssignedView(
                         groupMembers.filter { assignedIDs.contains(it.id) },
                         taskCompletedMap,
-                        task?.extraExtraLightTaskColor?.let { colorResource(it) } ?: Color(
-                            getThemeColor(R.attr.colorTintedBackgroundOffset)
-                        ),
-                        colorResource(task?.darkestTaskColor ?: R.color.text_primary),
+                        HabiticaTheme.colors.windowBackgroundFor(task),
+                        HabiticaTheme.colors.textPrimaryFor(task),
                         {
                             showAssignDialog()
                         },
@@ -262,7 +257,6 @@ class TaskFormActivity : BaseActivity() {
                     if (!task.isValid) return@launch
                     this@TaskFormActivity.task = task
                     initialTaskInstance = task
-                    // tintColor = ContextCompat.getColor(this, it.mediumTaskColor)
                     fillForm(task)
                     task.challengeID?.let { challengeID ->
                         lifecycleScope.launchCatching {

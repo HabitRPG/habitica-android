@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Shapes
@@ -8,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -16,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.google.android.material.composethemeadapter.createMdcTheme
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.extensions.getThemeColor
 
 @Composable
@@ -149,4 +152,23 @@ class HabiticaColors(
     val textSecondary: Color,
     val textTertiary: Color,
     val textDimmed: Color
-)
+) {
+    @Composable
+    fun textPrimaryFor(task: Task?): Color {
+        return colorResource((if (isSystemInDarkTheme()) task?.extraExtraLightTaskColor else task?.extraDarkTaskColor) ?: R.color.text_primary)
+    }
+    @Composable
+    fun primaryBackgroundFor(task: Task?): Color {
+        return colorResource((if (isSystemInDarkTheme()) task?.mediumTaskColor else task?.lightTaskColor) ?: R.color.brand_400)
+    }
+
+    @Composable
+    fun windowBackgroundFor(task: Task?): Color {
+        return (if (isSystemInDarkTheme()) task?.extraExtraDarkTaskColor else task?.extraExtraLightTaskColor)?.let { colorResource(it) } ?: windowBackground
+    }
+
+    @Composable
+    fun contentBackgroundFor(task: Task?): Color {
+        return (if (isSystemInDarkTheme()) task?.darkestTaskColor else task?.lightestTaskColor)?.let { colorResource(it) } ?: windowBackground
+    }
+}

@@ -6,6 +6,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.members.MemberFlags
 import com.habitrpg.android.habitica.models.members.MemberPreferences
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.Authentication
@@ -31,6 +32,10 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.id = id
         } else {
             member = realm.copyFromRealm(member)
+        }
+
+        if (obj.has("flags")) {
+            member.flags = context.deserialize(obj.get("flags"), MemberFlags::class.java)
         }
 
         if (obj.has("stats")) {

@@ -140,7 +140,7 @@ class YesterdailyDialog private constructor(
         if (task.completed) {
             checkmark?.drawable?.setTint(ContextCompat.getColor(context, R.color.gray_400))
         } else {
-            checkmark?.drawable?.setTint(ContextCompat.getColor(context, task.darkestTaskColor))
+            checkmark?.drawable?.setTint(ContextCompat.getColor(context, task.extraExtraDarkTaskColor))
         }
         checkmark?.visibility = if (item.completed) View.VISIBLE else View.GONE
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup

@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -112,16 +111,16 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
     val titleModifier = Modifier.padding(top = 30.dp)
     val textModifier = Modifier.padding(top = 4.dp)
     if (task != null) {
-        val darkestColor = colorResource(task?.darkestTaskColor ?: R.color.text_primary)
+        val darkestColor = HabiticaTheme.colors.textPrimaryFor(task)
         val systemUiController = rememberSystemUiController()
-        val statusBarColor = colorResource(task?.lightTaskColor ?: R.color.brand_400)
-        val lightestColor = colorResource(task?.lightestTaskColor ?: R.color.window_background)
+        val statusBarColor = HabiticaTheme.colors.primaryBackgroundFor(task)
+        val lightestColor = HabiticaTheme.colors.contentBackgroundFor(task)
         DisposableEffect(systemUiController) {
             systemUiController.setStatusBarColor(statusBarColor, darkIcons = true)
             systemUiController.setNavigationBarColor(lightestColor)
             onDispose {}
         }
-        Column(Modifier.background(colorResource(task?.lightTaskColor ?: R.color.brand_300))) {
+        Column(Modifier.background(statusBarColor)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(vertical = 2.dp)
@@ -137,9 +136,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         painterResource(R.drawable.arrow_back),
                         stringResource(R.string.action_back),
                         colorFilter = ColorFilter.tint(
-                            colorResource(
-                                task?.darkestTaskColor ?: R.color.white
-                            )
+                            darkestColor
                         )
                     )
                 }
@@ -221,9 +218,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
                                     .background(
-                                        colorResource(
-                                            task?.extraExtraLightTaskColor ?: R.color.gray_700
-                                        ),
+                                        HabiticaTheme.colors.windowBackgroundFor(task),
                                         MaterialTheme.shapes.medium
                                     )
                                     .padding(15.dp)
@@ -246,9 +241,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             item.assignedUsername ?: "", member.value, Modifier
                                 .padding(vertical = 4.dp)
                                 .background(
-                                    colorResource(
-                                        task?.extraExtraLightTaskColor ?: R.color.gray_700
-                                    ),
+                                    HabiticaTheme.colors.windowBackgroundFor(task),
                                     MaterialTheme.shapes.medium
                                 )
                                 .padding(15.dp, 12.dp)

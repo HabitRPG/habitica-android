@@ -19,6 +19,7 @@ open class Authentication : RealmObject(), BaseObject, AvatarAuthentication {
         return null
     }
 
+    var blocked: Boolean = false
     val hasPassword: Boolean
         get() = localAuthentication?.hasPassword == true
     @SerializedName("local")

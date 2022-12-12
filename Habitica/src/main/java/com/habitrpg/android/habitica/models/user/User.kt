@@ -19,7 +19,19 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import java.util.Date
 
+enum class Permission {
+    MODERATOR,
+    USER_SUPPORT
+}
+
 open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
+    fun hasPermission(permission: Permission): Boolean {
+        if (permissions?.fullAccess == true) return true
+        return when (permission) {
+            Permission.MODERATOR -> permissions?.moderator
+            Permission.USER_SUPPORT -> permissions?.userSupport
+        } == true
+    }
 
     override val realmClass: Class<User>
         get() = User::class.java
@@ -41,6 +53,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     override var balance: Double = 0.toDouble()
     override var stats: Stats? = null
     var inbox: Inbox? = null
+    internal var permissions: Permissions? = null
     override var preferences: Preferences? = null
     var profile: Profile? = null
     var party: UserParty? = null

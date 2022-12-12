@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.invitations.Invitations
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.social.UserParty
-import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import com.habitrpg.android.habitica.models.user.ABTest
 import com.habitrpg.android.habitica.models.user.Authentication
 import com.habitrpg.android.habitica.models.user.Backer
@@ -23,12 +22,14 @@ import com.habitrpg.android.habitica.models.user.Flags
 import com.habitrpg.android.habitica.models.user.Inbox
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.OwnedItem
+import com.habitrpg.android.habitica.models.user.Permissions
 import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Purchases
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserAchievement
+import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type
@@ -57,6 +58,9 @@ class UserDeserializer : JsonDeserializer<User> {
         }
         if (obj.has("inbox")) {
             user.inbox = context.deserialize(obj.get("inbox"), Inbox::class.java)
+        }
+        if (obj.has("permissions")) {
+            user.permissions = context.deserialize(obj.get("permissions"), Permissions::class.java)
         }
         if (obj.has("preferences")) {
             user.preferences = context.deserialize(obj.get("preferences"), Preferences::class.java)
