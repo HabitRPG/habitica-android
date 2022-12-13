@@ -6,9 +6,11 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.models.Notification
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.receiveAsFlow
 import java.lang.ref.WeakReference
 import java.util.Date
 
@@ -29,8 +31,8 @@ class MainNotificationsManager: NotificationsManager {
 
     private var lastNotificationHandling: Date? = null
     val _notifications = MutableStateFlow<List<Notification>?>(null)
-    val _displaynotificationEvents = MutableStateFlow<Notification?>(null)
-    override val displayNotificationEvents: Flow<Notification> = _displaynotificationEvents.filterNotNull()
+    val _displaynotificationEvents = Channel<Notification>()
+    override val displayNotificationEvents: Flow<Notification> = _displaynotificationEvents.receiveAsFlow().filterNotNull()
 
     init {
         this.seenNotifications = HashMap()
@@ -99,12 +101,11 @@ class MainNotificationsManager: NotificationsManager {
                     Notification.Type.ACHIEVEMENT_GENERIC.type -> true
                     Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> true
                     Notification.Type.LOGIN_INCENTIVE.type -> true
+                    Notification.Type.NEW_MYSTERY_ITEMS.type -> true
                     else -> false
                 }
 
                 if (notificationDisplayed) {
-                    _displaynotificationEvents.value = it
-                    this.seenNotifications[it.id] = true
                     readNotification(it)
                 }
             }
@@ -114,6 +115,8 @@ class MainNotificationsManager: NotificationsManager {
 
     private fun readNotification(notification: Notification) {
         MainScope().launchCatching {
+            _displaynotificationEvents.send(notification)
+            seenNotifications[notification.id] = true
             apiClient?.get()?.readNotification(notification.id)
         }
     }
