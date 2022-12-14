@@ -183,7 +183,7 @@ fun AppHeaderView(
                                 onMemberRowClicked()
                             }
                     ) {
-                        for (member in teamPlanMembers?.filter { it.id != user?.id }?.take(6) ?: emptyList()) {
+                        for (member in teamPlanMembers?.filter { it.id != user?.id }?.sortedBy { it.authentication?.timestamps?.lastLoggedIn }?.take(6) ?: emptyList()) {
                             Box(modifier = Modifier
                                 .clip(CircleShape)
                                 .size(26.dp)
