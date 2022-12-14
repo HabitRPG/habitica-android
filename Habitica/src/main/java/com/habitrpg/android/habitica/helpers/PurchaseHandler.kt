@@ -213,6 +213,8 @@ class PurchaseHandler(
         if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
             delay(500)
             consume(purchase, retries - 1)
+        } else  {
+            userViewModel.userRepository.retrieveUser(false, true)
         }
     }
 

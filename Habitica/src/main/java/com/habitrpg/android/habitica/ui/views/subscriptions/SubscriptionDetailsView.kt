@@ -7,11 +7,12 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -98,9 +99,21 @@ class SubscriptionDetailsView : LinearLayout {
 
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
-        plan.monthsUntilNextHourglass?.let { nextHourglass ->
-            val nextHourglassMonth = LocalDate.now().plusMonths(nextHourglass.toLong()).format(DateTimeFormatter.ofPattern("MMMM"))
-            nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
+        if (plan.isActive && plan.dateTerminated == null) {
+            plan.monthsUntilNextHourglass?.let { nextHourglass ->
+                val now = LocalDate.now()
+                val nextHourglassDate = LocalDate.now().plusMonths(nextHourglass.toLong())
+                val format = if (now.year != nextHourglassDate.year) {
+                    "MMMM YY"
+                } else {
+                    "MMMM"
+                }
+                val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
+                nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
+                binding.nextHourglassContainer.isVisible = true
+            }
+        } else {
+            binding.nextHourglassContainer.isVisible = false
         }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE
