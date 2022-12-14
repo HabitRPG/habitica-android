@@ -175,7 +175,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:text="@string/months_subscribed"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:fontFamily="sans-serif-medium"/>
 
             <TextView
@@ -221,7 +221,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="@string/monthly_gem_cap"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:fontFamily="sans-serif-medium" />
 
             <TextView
@@ -239,7 +239,7 @@
             android:id="@+id/next_hourglass_container"
             style="@style/subscriptionBox"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/months_subscribed_layout">
 
             <ImageView

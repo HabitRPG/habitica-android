@@ -54,12 +54,25 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
       else receive on third month (subtract 1 from total consecutive count)
      */
 
-    val monthsUntilNextHourglass: Int?
+    val subMonthCount: Int
+    get() {
+        return when (planId) {
+            "basic_earned" -> 1
+            "basic_3mo" -> 3
+            "basic_6mo" -> 6
+            "google_6mo" -> 6
+            "basic_12mo" -> 12
+            "group_plan_auto" -> 1
+            else -> 0
+        }
+    }
+
+    val monthsUntilNextHourglass: Int
         get() {
-            return if (consecutive?.offset == 0) {
-                (3 - (((consecutive?.count ?: 0)) % 3))
+            return if (subMonthCount > 0) {
+                (consecutive?.offset ?: 0) + 1
             } else {
-                consecutive?.offset
+                (3 - (((consecutive?.count ?: 0)) % 3))
             }
         }
 
