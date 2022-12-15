@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -358,11 +359,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             )
         }
 
-        viewModel.requestNotificationPermission.observe(this) { requestNotificationPermission ->
-            if (requestNotificationPermission) {
-                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-                viewModel.requestNotificationPermission.value = false
-            }
+        if (Build.VERSION.SDK_INT >= 33) {
+            observeNotificationPermission()
         }
 
         if (launchScreen == "/party") {
@@ -406,6 +404,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         if (binding.content.toolbarTitle.text?.isNotBlank() != true) {
             navigationController.currentDestination?.let { updateToolbarTitle(it, null) }
+        }
+    }
+
+    @RequiresApi(33)
+    fun observeNotificationPermission() {
+        viewModel.requestNotificationPermission.observe(this) { requestNotificationPermission ->
+            if (requestNotificationPermission) {
+                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                viewModel.requestNotificationPermission.value = false
+            }
         }
     }
 

@@ -219,7 +219,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications)
                 }
                 if (usePushNotifications) {
-                    if (!pushNotificationManager.notificationPermissionEnabled()) {
+                    if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
                         notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                     } else {
                         pushNotificationManager.addPushDeviceUsingStoredToken()
