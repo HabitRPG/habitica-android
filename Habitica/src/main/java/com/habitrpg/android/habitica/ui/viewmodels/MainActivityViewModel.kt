@@ -100,7 +100,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
                     analyticsManager.setUserProperty("checkin_count", user.loginIncentives.toString())
                     analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
-                    if (!pushNotificationManager.notificationPermissionEnabled() && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
+                    if (!pushNotificationManager.notificationPermissionEnabled()) {
                         if (sharedPreferences.getBoolean("usePushNotifications", true)) {
                             requestNotificationPermission.value = true
                         }

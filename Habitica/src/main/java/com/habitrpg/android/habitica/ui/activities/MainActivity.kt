@@ -359,7 +359,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
 
         viewModel.requestNotificationPermission.observe(this) { requestNotificationPermission ->
-            if (requestNotificationPermission && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
+            if (requestNotificationPermission) {
                 notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                 viewModel.requestNotificationPermission.value = false
             }
