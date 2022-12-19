@@ -1,8 +1,10 @@
 package com.habitrpg.android.habitica.ui.views
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ProgressIndicatorDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +25,10 @@ fun CurrencyText(
     decimals: Int = 2,
     minForAbbrevation: Int = 0
 ) {
+    val animatedValue = animateFloatAsState(
+        targetValue = value.toFloat(),
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
+    ).value
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         when (currency) {
             "gold" -> HabiticaIconsHelper.imageOfGold()
@@ -31,7 +37,7 @@ fun CurrencyText(
             else -> null
         }?.asImageBitmap()?.let { Image(it, null, Modifier.padding(end = 5.dp)) }
         Text(
-            NumberAbbreviator.abbreviate(null, value, decimals, minForAbbrevation),
+            NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbrevation),
             color = when (currency) {
                 "gold" -> colorResource(R.color.text_gold)
                 "gems" -> colorResource(R.color.text_green)

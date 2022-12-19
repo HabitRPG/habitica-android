@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorPrimaryOffset"
     android:orientation="vertical"
     tools:context="com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment">
 
     <LinearLayout
         android:id="@+id/menuHeaderView"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
+        android:minHeight="64dp"
         android:paddingStart="16dp"
         android:paddingEnd="1dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="?colorPrimaryOffset"
         android:baselineAligned="false">
 
         <com.habitrpg.android.habitica.ui.views.RoundedCornerLayout
@@ -154,7 +155,6 @@
                 tools:text="1"
                 tools:visibility="visible" />
         </RelativeLayout>
-
     </LinearLayout>
     <com.habitrpg.android.habitica.ui.views.social.QuestMenuView
         android:id="@+id/questMenuView"

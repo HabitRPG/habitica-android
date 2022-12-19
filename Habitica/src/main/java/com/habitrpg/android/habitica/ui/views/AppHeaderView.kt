@@ -106,6 +106,7 @@ fun AppHeaderView(
                             value = user?.stats?.exp ?: 0.0,
                             maxValue = user?.stats?.toNextLevel?.toDouble() ?: 0.0,
                             displayCompact = teamPlan != null,
+                            abbreviateValue = false,
                             modifier = Modifier.weight(1f)
                         )
                         if (user?.hasClass == true) {

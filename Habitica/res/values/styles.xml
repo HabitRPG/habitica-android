@@ -494,7 +494,7 @@
 
     <style name="SubscriptionListTitle" parent="GemPurchaseListItem">
         <item name="android:layout_gravity">left|center_vertical</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/font_family_medium</item>
+        <item name="android:fontFamily" >@string/font_family_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="paddingEnd">32dp</item>
     </style>
@@ -571,7 +571,7 @@
 
     <style name="subscriptionBoxText.Title">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+        <item name="android:fontFamily" >
             @string/font_family_medium
         </item>
         <item name="android:textColor">@color/text_primary</item>
@@ -580,7 +580,7 @@
 
     <style name="subscriptionBoxText.Subtitle">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+        <item name="android:fontFamily" >
             @string/font_family_regular
         </item>
         <item name="android:textColor">@color/text_primary</item>
@@ -588,7 +588,7 @@
 
     <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
         <item name="android:layout_marginBottom">24dp</item>
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">
+        <item name="android:fontFamily" >
             @string/font_family_condensed
         </item>
         <item name="android:textSize">14sp</item>

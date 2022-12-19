@@ -72,7 +72,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID, true) ?: return@launch
+            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID) ?: return@launch
             binding.avatarView.setAvatar(member)
             binding.displayNameTextView.username = member.profile?.name
             binding.displayNameTextView.tier = member.contributor?.level ?: 0
@@ -139,7 +139,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             if (id.isEmpty()) {
                 return
             }
-            PurchaseHandler.addGift(sku.sku, id)
+            PurchaseHandler.addGift(sku.sku, id, giftedUsername ?: id)
             purchaseHandler.purchase(this, sku)
         }
     }

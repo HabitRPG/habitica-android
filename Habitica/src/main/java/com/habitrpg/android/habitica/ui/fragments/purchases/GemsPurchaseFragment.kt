@@ -126,7 +126,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     private fun purchaseGems(view: GemPurchaseOptionsView?) {
         val identifier = view?.sku ?: return
-        activity?.let { purchaseHandler.purchase(it, identifier, null, isGemSaleHappening) }
+        activity?.let { purchaseHandler.purchase(it, identifier, null, null, isGemSaleHappening) }
     }
 
     private fun showGiftGemsDialog() {

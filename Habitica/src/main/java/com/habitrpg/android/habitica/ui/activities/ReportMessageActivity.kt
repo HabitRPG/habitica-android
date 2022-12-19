@@ -99,6 +99,7 @@ class ReportMessageActivity : BaseActivity() {
             lifecycleScope.launch(ExceptionHandler.coroutine {
                 isReporting = false
             }) {
+                socialRepository.flagMessage(messageID ?: "", binding.additionalInfoEdittext.text.toString(), groupID)
                 finish()
             }
         }

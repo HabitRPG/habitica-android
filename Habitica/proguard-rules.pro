@@ -21,7 +21,6 @@
 -keepattributes Signature
 -keepattributes *Annotation*
 -keepattributes Exceptions
--keep class sun.misc.Unsafe { *; }
 
 #retrolambda
 -dontwarn java.lang.invoke.*
@@ -33,18 +32,10 @@
    long consumerIndex;
 }
 
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
-
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
-}
 
 #OkHttp
 -keep class okhttp3.** { *; }
 -keep,includedescriptorclasses class okio.Source
--keep,includedescriptorclasses class okio.okio.Buffer
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
 
@@ -82,17 +73,6 @@
 -keep class com.crashlytics.** { *; }
 -dontwarn com.crashlytics.**
 
-#fresko
-# Keep our interfaces so they can be used by other ProGuard rules.
-# See http://sourceforge.net/p/proguard/bugs/466/
--keep,allowobfuscation @interface com.facebook.common.internal.DoNotStrip
-
-# Do not strip any method/class that is annotated with @DoNotStrip
--keep @com.facebook.common.internal.DoNotStrip class *
--keepclassmembers class * {
-    @com.facebook.common.internal.DoNotStrip *;
-}
-
 # Keep native methods
 -keepclassmembers class * {
     native <methods>;
@@ -102,10 +82,6 @@
 -keep class com.google.android.gms.ads.** { *; }
 #end amplitude
 
-#playservices
--keep class * extends java.util.ListResourceBundle {
-    protected Object[][] getContents();
-}
 
 -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
     public static final *** NULL;
@@ -138,9 +114,6 @@
 
 #keep all enums
 -keepclassmembers enum * { *; }
--keep class Type {
-    public *;
-}
 -keepclassmembers class * extends java.lang.Enum {
     <fields>;
     public static **[] values();

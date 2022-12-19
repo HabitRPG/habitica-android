@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:parentTag="android.widget.RelativeLayout"
-    android:background="?attr/colorWindowBackground">
+    tools:parentTag="android.widget.RelativeLayout">
     <LinearLayout
         android:id="@+id/contentWrapper"
         android:layout_width="wrap_content"

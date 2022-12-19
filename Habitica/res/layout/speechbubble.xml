@@ -3,8 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/transparent">
+              android:layout_height="wrap_content">
     <ImageView
             android:id="@+id/npc_image_view"
             android:layout_width="wrap_content"

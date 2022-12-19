@@ -96,22 +96,19 @@ class SubscriptionDetailsView : LinearLayout {
 
         binding.monthsSubscribedTextView.text = plan.consecutive?.count.toString()
 
-
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 
         if (plan.isActive && plan.dateTerminated == null) {
-            plan.monthsUntilNextHourglass?.let { nextHourglass ->
-                val now = LocalDate.now()
-                val nextHourglassDate = LocalDate.now().plusMonths(nextHourglass.toLong())
-                val format = if (now.year != nextHourglassDate.year) {
-                    "MM YYYY"
-                } else {
-                    "MMMM"
-                }
-                val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
-                nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
-                binding.nextHourglassContainer.isVisible = true
+            val now = LocalDate.now()
+            val nextHourglassDate = LocalDate.now().plusMonths(plan.monthsUntilNextHourglass.toLong())
+            val format = if (now.year != nextHourglassDate.year) {
+                "MM YYYY"
+            } else {
+                "MMMM"
             }
+            val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
+            nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
+            binding.nextHourglassContainer.isVisible = true
         } else {
             binding.nextHourglassContainer.isVisible = false
         }

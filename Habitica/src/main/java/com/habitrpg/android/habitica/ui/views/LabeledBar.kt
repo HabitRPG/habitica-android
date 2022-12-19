@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import java.text.NumberFormat
 
 @Composable
 fun LabeledBar(
@@ -47,14 +48,19 @@ fun LabeledBar(
     maxValue: Double,
     displayCompact: Boolean = false,
     barHeight: Dp = 8.dp,
-    disabled: Boolean = false
+    disabled: Boolean = false,
+    abbreviateValue: Boolean = true,
+    abbreviateMax: Boolean = true
 ) {
-    val cleanedMaxVlaue = java.lang.Double.max(1.0, maxValue)
+    val cleanedMaxValue = java.lang.Double.max(1.0, maxValue)
 
     val animatedValue = animateFloatAsState(
         targetValue = value.toFloat(),
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
     ).value
+    val formatter = NumberFormat.getNumberInstance()
+    formatter.minimumFractionDigits = 0
+    formatter.maximumFractionDigits = 2
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.alpha(if (disabled) 0.5f else 1.0f)
@@ -70,7 +76,7 @@ fun LabeledBar(
         }
         Column(modifier = Modifier.weight(1f)) {
             LinearProgressIndicator(
-                progress = (animatedValue / cleanedMaxVlaue).toFloat(),
+                progress = (animatedValue / cleanedMaxValue).toFloat(),
                 Modifier
                     .fillMaxWidth()
                     .clip(CircleShape)
@@ -84,8 +90,18 @@ fun LabeledBar(
                     modifier = Modifier.padding(top = 2.dp)
                 ) {
                     if (!disabled) {
+                        val currentValueText = if (abbreviateValue) NumberAbbreviator.abbreviate(
+                            LocalContext.current,
+                            animatedValue,
+                            0
+                        ) else formatter.format(animatedValue)
+                        val maxValueText = if (abbreviateMax) NumberAbbreviator.abbreviate(
+                            LocalContext.current,
+                            cleanedMaxValue,
+                            0
+                        ) else formatter.format(cleanedMaxValue)
                         Text(
-                            "${NumberAbbreviator.abbreviate(LocalContext.current, animatedValue)} / ${NumberAbbreviator.abbreviate(LocalContext.current, cleanedMaxVlaue)}",
+                            "$currentValueText / $maxValueText",
                             fontSize = 12.sp,
                             color = colorResource(R.color.text_ternary)
                         )
@@ -118,7 +134,18 @@ private fun Preview() {
             color = colorResource(R.color.xpColor),
             value = 100123.0,
             maxValue = 50000000000000.0,
-            displayCompact = false
+            displayCompact = false,
+            abbreviateValue = false
+        )
+        LabeledBar(
+            icon = HabiticaIconsHelper.imageOfExperience(),
+            label = stringResource(id = R.string.XP_default),
+            color = colorResource(R.color.xpColor),
+            value = 100123.0,
+            maxValue = 50000000000000.0,
+            displayCompact = false,
+            abbreviateValue = false,
+            abbreviateMax = false
         )
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfMagic(),

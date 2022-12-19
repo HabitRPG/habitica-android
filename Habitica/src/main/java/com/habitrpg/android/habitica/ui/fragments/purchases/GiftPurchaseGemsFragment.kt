@@ -88,7 +88,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
 
     private fun purchaseGems(sku: SkuDetails) {
         giftedMember?.id?.let {
-            activity?.let { it1 -> purchaseHandler?.purchase(it1, sku, it) }
+            activity?.let { it1 -> purchaseHandler?.purchase(it1, sku, it, giftedMember?.username) }
         }
     }
 }

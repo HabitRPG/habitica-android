@@ -18,6 +18,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     private val binding = RowShopitemBinding.bind(itemView)
     var shopIdentifier: String? = null
     private var item: ShopItem? = null
+    var onNeedsRefresh: (() -> Unit)? = null
 
     private var context: Context = itemView.context
 
@@ -100,6 +101,9 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             dialog.isPinned = isPinned
             dialog.purchaseCardAction = {
                 purchaseCardAction?.invoke(it)
+            }
+            dialog.onGearPurchased = {
+                onNeedsRefresh?.invoke()
             }
             dialog.show()
         }

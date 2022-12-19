@@ -132,7 +132,7 @@
             android:layout_gravity="center_vertical" />
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -141,106 +141,71 @@
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true"
             android:visibility="invisible" />
 
-        <RelativeLayout
-            android:id="@+id/months_subscribed_layout"
-            style="@style/subscriptionBox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="6dp"
-            android:layout_toStartOf="@id/divider">
-
-            <View
-                android:id="@+id/months_divider"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/months_subscribed_layout"
+                style="@style/subscriptionBox"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerHorizontal="true" />
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/monthsSubscribedTextView"
+                    style="@style/subscriptionBoxCompactNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:drawableStartCompat="@drawable/calendar_ic"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:gravity="center"
+                    tools:text="2" />
+                <TextView
+                    style="@style/subscriptionBoxCompactText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/months_subscribed"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-medium"/>
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/calendar_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="8dp"
-                android:layout_toStartOf="@id/months_divider"
-                android:src="@drawable/calendar_ic" />
-
-            <TextView
-                style="@style/subscriptionBoxCompactText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/calendar_icon"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"
-                android:text="@string/months_subscribed"
-                android:gravity="center"
-                android:fontFamily="sans-serif-medium"/>
-
-            <TextView
-                android:id="@+id/monthsSubscribedTextView"
-                style="@style/subscriptionBoxCompactNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                android:layout_toEndOf="@id/calendar_icon"
-                android:gravity="center"
-                tools:text="2" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            style="@style/subscriptionBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="6dp"
-            android:layout_toEndOf="@id/divider">
-
-            <View
-                android:id="@+id/gem_divider"
+            <LinearLayout
+                style="@style/subscriptionBox"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerInParent="true" />
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/gemCapTextView"
+                    style="@style/subscriptionBoxCompactNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:drawableStartCompat="@drawable/gem_ic"
+                    android:drawablePadding="@dimen/spacing_small"
+                    android:gravity="center"
+                    tools:text="2" />
+                <TextView
+                    style="@style/subscriptionBoxCompactText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/months_subscribed"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-medium"/>
+            </LinearLayout>
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/gem_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_toStartOf="@id/gem_divider"
-                android:src="@drawable/gem_ic" />
-
-
-            <TextView
-                style="@style/subscriptionBoxCompactText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/gem_icon"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="@string/monthly_gem_cap"
-                android:gravity="center"
-                android:fontFamily="sans-serif-medium" />
-
-            <TextView
-                android:id="@+id/gemCapTextView"
-                style="@style/subscriptionBoxCompactNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@id/gem_icon"
-                tools:text="50" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/next_hourglass_container"
             style="@style/subscriptionBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/months_subscribed_layout">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="60dp"
@@ -276,7 +241,7 @@
                 android:textColor="@color/text_secondary"/>
         </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"

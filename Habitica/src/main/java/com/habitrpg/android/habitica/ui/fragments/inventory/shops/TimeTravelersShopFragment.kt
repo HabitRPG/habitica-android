@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.models.shops.Shop
+import com.habitrpg.android.habitica.ui.views.CurrencyText
 
 class TimeTravelersShopFragment : ShopFragment() {
     override fun onCreateView(
@@ -18,9 +19,12 @@ class TimeTravelersShopFragment : ShopFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeCurrencyViews()
+    }
 
-        currencyView.goldVisibility = View.GONE
-        currencyView.gemVisibility = View.GONE
-        currencyView.hourglassVisibility = View.VISIBLE
+    override fun initializeCurrencyViews() {
+        currencyView.setContent {
+            hourglasses.value?.let { CurrencyText(currency = "hourglasses", value = it) }
+        }
     }
 }

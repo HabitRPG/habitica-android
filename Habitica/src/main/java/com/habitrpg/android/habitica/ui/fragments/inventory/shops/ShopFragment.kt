@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,12 +24,11 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.CurrencyViews
+import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import kotlinx.coroutines.flow.filter
@@ -34,14 +38,16 @@ import javax.inject.Inject
 
 open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>() {
 
-    internal val currencyView: CurrencyViews by lazy {
-        val view = CurrencyViews(context)
-        view
+    internal val currencyView: ComposeView by lazy {
+        return@lazy ComposeView(requireContext())
     }
 
     var adapter: ShopRecyclerAdapter? = null
     var shopIdentifier: String? = null
     var shop: Shop? = null
+    internal val hourglasses = mutableStateOf<Double?>(null)
+    private val gems = mutableStateOf<Double?>(null)
+    private val gold = mutableStateOf<Double?>(null)
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject
@@ -79,6 +85,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeCurrencyViews()
         toolbarAccessoryContainer?.addView(currencyView)
         binding?.recyclerView?.setBackgroundResource(R.color.content_background)
         binding?.recyclerView?.onRefresh = {
@@ -90,6 +97,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         adapter = binding?.recyclerView?.adapter as? ShopRecyclerAdapter
         if (adapter == null) {
             adapter = ShopRecyclerAdapter()
+            adapter?.onNeedsRefresh = {
+                loadShopInventory()
+                if (Shop.MARKET == shopIdentifier) {
+                    loadMarketGear()
+                }
+            }
             adapter?.context = context
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -102,7 +115,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             layoutManager = GridLayoutManager(context, 2)
             layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    return if (adapter?.getItemViewType(position) ?: 0 < 3) {
+                    return if ((adapter?.getItemViewType(position) ?: 0) < 3) {
                         layoutManager?.spanCount ?: 1
                     } else {
                         1
@@ -134,7 +147,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
         userViewModel.user.observe(viewLifecycleOwner) {
             adapter?.user = it
-            updateCurrencyView(it)
+            hourglasses.value = it?.hourglassCount?.toDouble() ?: 0.0
+            gems.value = it?.gemCount?.toDouble() ?: 0.0
+            gold.value = it?.stats?.gp ?: 0.0
         }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -149,9 +164,16 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
         view.post { setGridSpanCount(view.width) }
 
-        currencyView.hourglassVisibility = View.GONE
-
         context?.let { analyticsManager.logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
+    }
+
+    open fun initializeCurrencyViews() {
+        currencyView.setContent {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                gems.value?.let { CurrencyText(currency = "gems", value = it) }
+                gold.value?.let { CurrencyText(currency = "gold", value = it) }
+            }
+        }
     }
 
     private fun showClassChangeDialog(classIdentifier: String) {
@@ -294,11 +316,5 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     companion object {
         private const val SHOP_IDENTIFIER_KEY = "SHOP_IDENTIFIER_KEY"
-    }
-
-    private fun updateCurrencyView(user: User?) {
-        currencyView.gold = user?.stats?.gp ?: 0.0
-        currencyView.gems = user?.gemCount?.toDouble() ?: 0.0
-        currencyView.hourglasses = user?.hourglassCount?.toDouble() ?: 0.0
     }
 }

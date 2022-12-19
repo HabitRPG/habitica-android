@@ -604,9 +604,6 @@ class NavigationDrawerFragment : DialogFragment() {
     ) {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
-
-        // set a custom shadow that overlays the main content when the drawer opens
-        this.drawerLayout?.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // set UP the drawer's list view with items and click listener
 
         lifecycleScope.launchCatching {

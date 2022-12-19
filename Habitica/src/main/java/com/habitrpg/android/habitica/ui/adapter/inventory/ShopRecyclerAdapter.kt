@@ -21,6 +21,8 @@ import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
+    var onNeedsRefresh: (() -> Unit)? = null
+
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
     private var ownedItems: Map<String, OwnedItem> = HashMap()
@@ -93,6 +95,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 val view = parent.inflate(R.layout.row_shopitem)
                 val viewHolder = ShopItemViewHolder(view)
                 viewHolder.shopIdentifier = shopIdentifier
+                viewHolder
                 viewHolder
             }
         }

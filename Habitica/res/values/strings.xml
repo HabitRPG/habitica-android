@@ -740,8 +740,8 @@
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
     <string name="gift_confirmation_text_sub_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
-    <string name="gift_confirmation_text_sub">You sent %s a %s-month Habitica subscription.</string>
-    <string name="gift_confirmation_text_gems_new">You sent %s %s gems.</string>
+    <string name="gift_confirmation_text_sub">You sent @%s a %s-month Habitica subscription.</string>
+    <string name="gift_confirmation_text_gems_new">You sent @%s %s gems.</string>
     <string name="subscription_confirmation">You are now subscribed for 1 month</string>
     <string name="subscription_confirmation_multiple">You are now subscribed for %s months</string>
     <string name="gem_purchase_confirmation">You gained %s gems.</string>

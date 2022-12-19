@@ -12,6 +12,7 @@ object NumberAbbreviator {
     }
 
     fun abbreviate(context: Context?, number: Double, numberOfDecimals: Int = 2, minForAbbrevation: Int = 0): String {
+        val decimalCount = if (number > -1 && number < 1 && numberOfDecimals == 0) 1 else numberOfDecimals
         var usedNumber = number
         var counter = 0
         while (usedNumber >= 1000 && number >= minForAbbrevation) {
@@ -19,7 +20,7 @@ object NumberAbbreviator {
             usedNumber /= 1000
         }
         var pattern = "###"
-        if (numberOfDecimals > 0) {
+        if (decimalCount > 0) {
             pattern = ("$pattern.").padEnd(4 + numberOfDecimals, '#')
         }
         val formatter = DecimalFormat(pattern + abbreviationForCounter(context, counter).replace(".", ""))

@@ -192,11 +192,12 @@ class PurchaseHandler(
         activity: Activity,
         skuDetails: SkuDetails,
         recipient: String? = null,
+        recipientUsername: String? = null,
         isSaleGemPurchase: Boolean = false
     ) {
         this.isSaleGemPurchase = isSaleGemPurchase
         recipient?.let {
-            addGift(skuDetails.sku, it)
+            addGift(skuDetails.sku, it, recipientUsername ?: it)
         }
         val flowParams = BillingFlowParams.newBuilder()
             .setSkuDetails(skuDetails)
@@ -234,7 +235,7 @@ class PurchaseHandler(
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             consume(purchase)
                         }
-                        displayConfirmationDialog(purchase, gift?.second)
+                        displayConfirmationDialog(purchase, gift?.third)
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
@@ -250,7 +251,7 @@ class PurchaseHandler(
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             consume(purchase)
                         }
-                        displayConfirmationDialog(purchase, gift?.second)
+                        displayConfirmationDialog(purchase, gift?.third)
                     } catch (throwable: Throwable) {
                         handleError(throwable, purchase)
                     }
@@ -331,7 +332,7 @@ class PurchaseHandler(
         val result = withContext(Dispatchers.IO) {
             billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS)
         }
-        var fallback: Purchase? = null
+        val fallback: Purchase? = null
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             return findMostRecentSubscription(result.purchasesList)
         }
@@ -446,15 +447,15 @@ class PurchaseHandler(
 
     companion object {
         private const val PENDING_GIFTS_KEY = "PENDING_GIFTS_DATED"
-        private var pendingGifts: MutableMap<String, Pair<Date, String>> = HashMap()
+        private var pendingGifts: MutableMap<String, Triple<Date, String, String>> = HashMap()
         private var preferences: SharedPreferences? = null
 
-        fun addGift(sku: String, userID: String) {
-            pendingGifts[sku] = Pair(Date(), userID)
+        fun addGift(sku: String, userID: String, username: String) {
+            pendingGifts[sku] = Triple(Date(), userID, username)
             savePendingGifts()
         }
 
-        private fun removeGift(sku: String?): Pair<Date, String>? {
+        private fun removeGift(sku: String?): Triple<Date, String, String>? {
             val gift = pendingGifts.remove(sku)
             savePendingGifts()
             return gift

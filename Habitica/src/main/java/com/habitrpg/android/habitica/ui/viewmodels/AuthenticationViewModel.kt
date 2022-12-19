@@ -33,7 +33,8 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class AuthenticationViewModel() {
@@ -111,7 +112,7 @@ class AuthenticationViewModel() {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
         var newUser = false
-        MainScope().launchCatching({ throwable ->
+        CoroutineScope(Dispatchers.IO).launchCatching({ throwable ->
             if (recoverFromPlayServicesErrorResult == null) return@launchCatching
             throwable.cause?.let {
                 if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
