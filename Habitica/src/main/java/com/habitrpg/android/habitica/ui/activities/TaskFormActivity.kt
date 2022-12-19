@@ -42,6 +42,8 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.extensions.addZeroWidthSpace
+import com.habitrpg.android.habitica.extensions.removeZeroWidthSpace
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.launchCatching
@@ -509,12 +511,7 @@ class TaskFormActivity : BaseActivity() {
         }
         canSave = true
         binding.textEditText.setText(task.text)
-        val spannable: Spannable = SpannableString(task.notes)
-        Linkify.addLinks(spannable, Linkify.WEB_URLS)
-        //Append a zero-width space to the Spannable to allow clicking
-        //on the open spaces (and prevent links from opening)
-        val text: CharSequence = TextUtils.concat(spannable, "\u200B")
-        binding.notesEditText.setText(text)
+        binding.notesEditText.setText(task.notes?.addZeroWidthSpace())
         viewModel.taskDifficulty.value = TaskDifficulty.valueOf(task.priority)
         when (taskType) {
             TaskType.HABIT -> {
@@ -593,7 +590,7 @@ class TaskFormActivity : BaseActivity() {
         thisTask.dateCreated = Date()
 
         thisTask.text = binding.textEditText.text.toString()
-        thisTask.notes = binding.notesEditText.text.toString()
+        thisTask.notes = binding.notesEditText.text.toString().removeZeroWidthSpace()
         thisTask.priority = viewModel.taskDifficulty.value.value
         if (usesTaskAttributeStats) {
             thisTask.attribute = viewModel.selectedAttribute.value
