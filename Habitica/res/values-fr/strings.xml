@@ -220,8 +220,6 @@
     <string name="quests">Quêtes</string>
     <string name="pets">Familiers</string>
     <string name="mounts">Montures</string>
-    <string name="armoireEquipment">Vous avez trouvé %s dans l\'armoire enchantée</string>
-    <string name="armoireFood">Vous farfouillez dans l\'armoire enchantée et trouvez une %1$s %2$s. Qu\'est-ce que ça fait là \?</string>
     <string name="armoireExp">Vous luttez contre l\'armoire enchantée et gagnez de l\'expérience. Prends ça !</string>
     <string name="quest_items_found">Vous avez trouvé %d objets pour la quête</string>
     <string name="sell">Vendre (%d pièces d\'or)</string>

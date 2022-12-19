@@ -219,8 +219,6 @@
     <string name="quests">副本</string>
     <string name="pets">寵物</string>
     <string name="mounts">坐騎</string>
-    <string name="armoireEquipment">你在魔法衣櫥裡找到了%s</string>
-    <string name="armoireFood">你在神秘寶箱裡找到了%1$s %2$s。它是用來做什麼的？</string>
     <string name="armoireExp">你奮力打開神秘寶箱而且獲得經驗值！</string>
     <string name="sell">出售 (%d 金幣)</string>
     <string name="hatch_with_potion">用藥水孵化</string>

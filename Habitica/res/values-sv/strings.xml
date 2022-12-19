@@ -197,8 +197,6 @@
     <string name="quests">Uppdrag</string>
     <string name="pets">Husdjur</string>
     <string name="mounts">Riddjur</string>
-    <string name="armoireEquipment">Du hittade ovanlig utrustning i vapenskåpet: %s! Fantastiskt!</string>
-    <string name="armoireFood">Du krafsar runt i vapenskåpet och hittar %1$s %2$s. Vad gör den här?</string>
     <string name="armoireExp">Du brottas med vapenskåpet och får erfarenhet. Touché!</string>
     <string name="sell">Sälj (%d Guld)</string>
     <string name="hatch_with_potion">Kläck med kläckningsdryck</string>

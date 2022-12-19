@@ -221,8 +221,6 @@
     <string name="quests">Misiones</string>
     <string name="pets">Mascotas</string>
     <string name="mounts">Monturas</string>
-    <string name="armoireEquipment">¡Genial! Has encontrado %s en el Armario</string>
-    <string name="armoireFood">Rebuscando en el Armario, encuentras esto: %1$s %2$s. ¿Qué hace aquí?</string>
     <string name="armoireExp">Te peleas con el Armario y ganas experiencia. ¡Chúpate esa!</string>
     <string name="sell">Vender (%d de oro)</string>
     <string name="hatch_with_potion">Eclosionar con poción</string>

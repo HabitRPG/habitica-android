@@ -221,8 +221,6 @@
     <string name="quests">Missioni</string>
     <string name="pets">Animali</string>
     <string name="mounts">Cavalcature</string>
-    <string name="armoireEquipment">Hai trovato %s nell\'Armadio</string>
-    <string name="armoireFood">Frughi nell\'Armadio e trovi %1$s %2$s. Cosa ci fa qui dentro\?</string>
     <string name="armoireExp">Fai a botte con lo Scrigno e ottieni Esperienza. Prendi questo!</string>
     <string name="sell">Vendi (%d Oro)</string>
     <string name="hatch_with_potion">Schiudi con pozione</string>

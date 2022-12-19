@@ -36,9 +36,6 @@
         <attr name="gemDrawable" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="MaxHeightLinearLayout">
-        <attr name="maxHeightMultiplier" format="float" />
-    </declare-styleable>
     <declare-styleable name="SubscriptionOptionView">
         <attr name="recurringText" format="string" />
         <attr name="gemCapText" format="string" />

@@ -221,8 +221,6 @@
     <string name="quests">クエスト</string>
     <string name="pets">ペット</string>
     <string name="mounts">乗騎</string>
-    <string name="armoireEquipment">宝箱から%sを見つけました</string>
-    <string name="armoireFood">宝箱をひっかきまわして%1$s%2$sを見つけた。何でこんなとこに?</string>
     <string name="armoireExp">宝箱と格闘して経験値を増やした。どうぞっ!</string>
     <string name="sell">%d ゴールドで売る</string>
     <string name="hatch_with_potion">たまごがえしの薬を使う</string>

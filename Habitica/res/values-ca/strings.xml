@@ -179,8 +179,6 @@
     <string name="quests">Missions</string>
     <string name="pets">Mascotes</string>
     <string name="mounts">Montures</string>
-    <string name="armoireEquipment">Has trobat una peça d\'equipament rar a l\'Armari: %s! Genial!</string>
-    <string name="armoireFood">Rebusques a l\'Armari i trobes %1$s %2$s. Què fa això aquí?</string>
     <string name="armoireExp">Et baralles amb l\'Armari i ganes experiència. Va!</string>
     <string name="sell">Ven (%d Or)</string>
     <string name="hatch_with_potion">Eclosione-ho amb una poció</string>

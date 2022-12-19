@@ -197,8 +197,6 @@
     <string name="quests">Oppdrag</string>
     <string name="pets">Kjæledyr</string>
     <string name="mounts">Ridedyr</string>
-    <string name="armoireEquipment">Du fant et stykke skjeldent Utstyr i Kabinettet: %s! Kjempemessig!</string>
-    <string name="armoireFood">Du ransaker Kabinettet og finner %1$s %2$s. Hva gjør den her?</string>
     <string name="armoireExp">Du slåss med Kabinettet og får Erfaring. Ta den!</string>
     <string name="sell">Selg (%d Gull)</string>
     <string name="hatch_with_potion">Klekk med mikstur</string>

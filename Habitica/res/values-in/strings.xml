@@ -211,8 +211,6 @@
     <string name="quests">Misi</string>
     <string name="pets">Peliharaan</string>
     <string name="mounts">Tunggangan</string>
-    <string name="armoireEquipment">Kamu menemukan Perlengkapan langka di dalam Peti Harta Karun: %s! Keren!</string>
-    <string name="armoireFood">Kamu mengacak-acak Peti Harta Karun dan menemukan %2$s %1$s. Kenapa berada di dalam sini, ya?</string>
     <string name="armoireExp">Kamu bergulat dengan Peti Harta Karun dan mendapatkan Pengalaman. Rasakan itu!</string>
     <string name="sell">Jual (%d Emas)</string>
     <string name="hatch_with_potion">Tetaskan dengan ramuan</string>

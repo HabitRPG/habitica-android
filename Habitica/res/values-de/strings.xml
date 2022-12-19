@@ -221,8 +221,6 @@
     <string name="quests">Quests</string>
     <string name="pets">Haustiere</string>
     <string name="mounts">Reittiere</string>
-    <string name="armoireEquipment">Du hast %s im Schrank gefunden</string>
-    <string name="armoireFood">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
     <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
     <string name="sell">Verkaufen (%d Gold)</string>
     <string name="hatch_with_potion">Mit Elixier ausbrüten</string>

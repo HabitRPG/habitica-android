@@ -241,8 +241,6 @@
     <string name="use_animal">Dùng</string>
     <string name="invite_party">Lời mời Tổ đội</string>
     <string name="armoireExp">Bạn vật lộn với Rương đồ và nhận được Điểm kinh nghiệm. Lấy chúng!</string>
-    <string name="armoireFood">Bạn lục lọi trong Tủ Quần Áo và tìm thấy %1$s %2$s. Chuyện gì đang xảy xa ở đây\?</string>
-    <string name="armoireEquipment">Bạn tìm được %s trong Rương đồ</string>
     <string name="remaining_1hour">còn 1 giờ</string>
     <string name="remaining_hours">còn %d giờ</string>
     <string name="remaining_minutes">còn %d tháng</string>

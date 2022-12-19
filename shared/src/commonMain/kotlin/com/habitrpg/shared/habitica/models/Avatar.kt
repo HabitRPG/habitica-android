@@ -2,6 +2,7 @@ package com.habitrpg.shared.habitica.models
 
 
 interface Avatar {
+    val id: String?
     val balance: Double
     val authentication: AvatarAuthentication?
     val stats: AvatarStats?

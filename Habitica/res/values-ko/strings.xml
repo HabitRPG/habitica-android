@@ -211,8 +211,6 @@
     <string name="quests">퀘스트</string>
     <string name="pets">펫</string>
     <string name="mounts">탑승펫</string>
-    <string name="armoireEquipment">장롱에서 %s를(을) 찾았습니다</string>
-    <string name="armoireFood">장롱을 뒤지다가 %1$s %2$s 를(을) 발견했습니다. 왜 이게 여기 들어있지\?</string>
     <string name="armoireExp">장롱과 씨름하여 경험치를 얻었습니다. 맛 좀 봐라!</string>
     <string name="sell">팔기 (%d 골드)</string>
     <string name="hatch_with_potion">물약으로 알 부화</string>

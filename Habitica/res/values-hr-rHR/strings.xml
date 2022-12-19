@@ -221,8 +221,6 @@
     <string name="quests">Pustolovine</string>
     <string name="pets">Ljubimci</string>
     <string name="mounts">Jahače životinje</string>
-    <string name="armoireEquipment">Našao/la si komad rijetke Opreme u Ormaru: %s! Zakon!</string>
-    <string name="armoireFood">Pretražuješ po ormaru i nađeš %1$s %2$s. Što to radi tu?</string>
     <string name="armoireExp">Hrvaš se s ormarom i dobivaš na iskustvu. Neka mu!</string>
     <string name="sell">Prodaj(%d Zlatnika) </string>
     <string name="hatch_with_potion">Izlegni s napitkom</string>

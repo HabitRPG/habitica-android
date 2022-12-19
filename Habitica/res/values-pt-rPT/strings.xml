@@ -206,8 +206,6 @@
     <string name="quests">Missões</string>
     <string name="pets">Animais de Estimação</string>
     <string name="mounts">Montarias</string>
-    <string name="armoireEquipment">Encontraste uma peça rara de Equipamento no Armário Encantado: %s! Fenomenal!</string>
-    <string name="armoireFood">Vasculhas o Armário e encontras %1$s %2$s. Que é que isto está aqui a fazer?</string>
     <string name="armoireExp">Lutas com o Armário e ganhas experiência. Boa!</string>
     <string name="sell">Vender (%d Ouro)</string>
     <string name="hatch_with_potion">Nascimento com poção</string>

@@ -178,8 +178,6 @@
     <string name="quests">Quests</string>
     <string name="pets">Kæledyr</string>
     <string name="mounts">Ridedyr</string>
-    <string name="armoireEquipment">Du har fundet et stykke sjældent udstyr i Armoire: %s! Fedt!</string>
-    <string name="armoireFood">Du roder rundt i Armoire og finder %1$s %2$s. Hvad laver det her?</string>
     <string name="armoireExp">Du kæmper med Armoire og får Erfaring. Tag den!</string>
     <string name="sell">Sælg (%d Guld)</string>
     <string name="hatch_with_potion">Udrug med eliksir</string>

@@ -191,8 +191,6 @@
   <string name="quests">Misijos</string>
   <string name="pets">Maži Augintiniai</string>
   <string name="mounts">Suaugę Augintiniai</string>
-  <string name="armoireEquipment">Radai retos aprangos dalį Drabužinėje: %s! Nuostabu!</string>
-  <string name="armoireFood">Betyrinėjant Drabužinę randi %1$s %2$s. Ką tai čia veikia?</string>
   <string name="armoireExp">Besigrumiant su Drabužine, gauni patirties!</string>
     <string name="sell">Parduoti (%d Augso)</string>
   <string name="hatch_with_potion">Užauginti su eliksyru</string>

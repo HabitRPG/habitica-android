@@ -223,8 +223,6 @@
     <string name="quests">副本</string>
     <string name="pets">宠物</string>
     <string name="mounts">坐骑</string>
-    <string name="armoireEquipment">你在魔法衣橱里找到了%s</string>
-    <string name="armoireFood">你在魔法衣橱里找到了%1$s %2$s。它是用来做什么的？</string>
     <string name="armoireExp">你和大衣柜展开了殊死搏斗，并赢得了经验，尝尝这个吧！</string>
     <string name="sell">出售 (%d金币)</string>
     <string name="hatch_with_potion">用孵化药水孵化</string>

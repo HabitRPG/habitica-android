@@ -235,8 +235,6 @@
     <string name="hatch_with_potion">Висидіти з допомогою зілля</string>
     <string name="sell">Продати (%d золота)</string>
     <string name="armoireExp">Ви боретеся зі скринею і отримуєте досвід. Отримайте!</string>
-    <string name="armoireFood">Риючись в скрині, ви знаходите %1$s %2$s. Звідки це тут\?</string>
-    <string name="armoireEquipment">Ви знайшли в магічній скрині: %s</string>
     <string name="mounts">Скакуни</string>
     <string name="pets">Улюбленці</string>
     <string name="quests">Квести</string>

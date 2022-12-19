@@ -221,8 +221,6 @@
     <string name="quests">Queesten</string>
     <string name="pets">Huisdieren</string>
     <string name="mounts">Rijdieren</string>
-    <string name="armoireEquipment">Je hebt %s gevonden in het Kabinet</string>
-    <string name="armoireFood">Je rommelt wat rond in het Kabinet en vindt %1$s %2$s. Wat doet dat hier?</string>
     <string name="armoireExp">Je worstelt met het Kabinet en verdient Ervaring. Pak aan!</string>
     <string name="sell">Verkoop (%d Goud)</string>
     <string name="hatch_with_potion">Broed uit met toverdrank</string>

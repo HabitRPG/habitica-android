@@ -185,8 +185,6 @@
   <string name="quests">הרפתקאות</string>
   <string name="pets">חיות מחמד</string>
   <string name="mounts">חיות רכיבה</string>
-  <string name="armoireEquipment">מצאתם חתיכת ציוד נדיר בארמואר: %s! מגניב!</string>
-  <string name="armoireFood">אתם נוברים בארמואר ומוצאים %1$s %2$s. מה זה עושה פה?</string>
   <string name="armoireExp">אתם נאבקים בארמואר וצוברים ניסיון. קבלו!</string>
     <string name="sell">מיכרו (%d זהב)</string>
   <string name="hatch_with_potion">הבקיעו עם שיקוי</string>

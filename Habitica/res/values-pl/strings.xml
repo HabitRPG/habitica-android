@@ -214,8 +214,6 @@
     <string name="pets">Zwierzaki</string>
     <string name="mounts">Wierzchowce</string>
     <string name="quest_items_found">Znalazłeś %d przedmiot(y/ów) z zadania</string>
-    <string name="armoireEquipment">Znalazłeś element rzadkiego Ekwipunku w Skrzyni: %s! Super!</string>
-    <string name="armoireFood">Przeszukujesz Skrzynię i znajdujesz %1$s %2$s. Co to tam robi?</string>
     <string name="armoireExp">Mocujesz się ze Skrzynią i zyskujesz Doświadczenie. A masz!</string>
     <string name="sell">Sprzedaj (%d Złoto)</string>
     <string name="hatch_with_potion">Wykluj za pomocą mikstury</string>

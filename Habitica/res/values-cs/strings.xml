@@ -202,8 +202,6 @@
     <string name="quests">Úkoly</string>
     <string name="pets">Mazlíčci</string>
     <string name="mounts">Přepravní zvířata </string>
-    <string name="armoireEquipment">Našel jsi kousek vzácného vybavení v Airmoire: %s! Super!</string>
-    <string name="armoireFood">Prohrabeš Armoire a nalézáš %1$s %2$s. Co to tu dělá?</string>
     <string name="armoireExp">Biješ se s Airmoire a získáváš zkušenosti. Vem si je!</string>
     <string name="sell">Prodat (%dZlata)</string>
     <string name="hatch_with_potion">Vylíhnout pomocí lektvaru</string>

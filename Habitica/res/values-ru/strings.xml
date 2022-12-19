@@ -219,8 +219,6 @@
     <string name="quests">Квесты</string>
     <string name="pets">Питомцы</string>
     <string name="mounts">Скакуны</string>
-    <string name="armoireEquipment">Вы нашли в зачарованном сундуке: %s</string>
-    <string name="armoireFood">Копаясь в сундуке, вы находите %1$s %2$s. Откуда это здесь?</string>
     <string name="armoireExp">Вы сражаетесь с сундуком и набираете опыт. Получай!</string>
     <string name="sell">Продать (%d золота)</string>
     <string name="hatch_with_potion">Полить эликсиром</string>

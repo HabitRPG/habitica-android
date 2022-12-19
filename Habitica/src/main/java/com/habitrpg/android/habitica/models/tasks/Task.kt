@@ -81,8 +81,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     // todos
     @SerializedName("date")
     var dueDate: Date? = null
-    // used for buyable items
-    var specialTag: String? = ""
     @Ignore
     var parsedText: Spanned? = null
     @Ignore
@@ -451,7 +449,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         dest.writeLong(this.startDate?.time ?: -1)
         dest.writeParcelable(this.repeat, flags)
         dest.writeLong(this.dueDate?.time ?: -1)
-        dest.writeString(this.specialTag)
         dest.writeString(this.id)
         dest.writeInt(this.counterUp ?: 0)
         dest.writeInt(this.counterDown ?: 0)
@@ -489,7 +486,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         this.repeat = `in`.readParcelable(Days::class.java.classLoader)
         val tmpDuedate = `in`.readLong()
         this.dueDate = if (tmpDuedate == -1L) null else Date(tmpDuedate)
-        this.specialTag = `in`.readString()
         this.id = `in`.readString()
         this.counterUp = `in`.readInt()
         this.counterDown = `in`.readInt()

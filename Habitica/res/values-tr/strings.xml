@@ -221,8 +221,6 @@
     <string name="quests">Görevler</string>
     <string name="pets">Evcil Hayvanlar</string>
     <string name="mounts">Binekler</string>
-    <string name="armoireEquipment">Gardırop içerisinde nadir bir ekipman parçası buldun: %s!</string>
-    <string name="armoireFood">Gardırobun altını üstünü getirdin ve %1$s %2$s buldun. Onun burada ne işi var?</string>
     <string name="armoireExp">Gardırop ile güreştin ve Tecrübe kazandın. Al sana!</string>
     <string name="sell">Sat (%d Altın)</string>
     <string name="hatch_with_potion">İksir ile üret</string>

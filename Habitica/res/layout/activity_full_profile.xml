@@ -72,9 +72,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <include
+                    <androidx.compose.ui.platform.ComposeView
                         android:id="@+id/avatar_with_bars"
-                        layout="@layout/avatar_with_bars"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <LinearLayout

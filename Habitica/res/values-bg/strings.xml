@@ -221,8 +221,6 @@
     <string name="quests">Мисии</string>
     <string name="pets">Любимци</string>
     <string name="mounts">Превози</string>
-    <string name="armoireEquipment">Намерихте рядък предмет в гардероба: %s! Страхотно!</string>
-    <string name="armoireFood">Тършувате из гардероба и намирате %1$s %2$s. Какво ли прави това там?</string>
     <string name="armoireExp">Сборвате се с гардероба и получавате опит. Така му се пада!</string>
     <string name="sell">Продаване (%d злато)</string>
     <string name="hatch_with_potion">Излюпване с отвара</string>

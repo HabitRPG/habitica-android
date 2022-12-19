@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
-import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
@@ -9,7 +8,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RewardItemCardBinding
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.ui.ItemDetailDialog
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
@@ -30,9 +28,6 @@ class RewardViewHolder(
 ) {
     private val binding = RewardItemCardBinding.bind(itemView)
 
-    private val isItem: Boolean
-        get() = this.task?.specialTag == "item"
-
     init {
         binding.buyButton.setOnClickListener {
             buyReward()
@@ -40,31 +35,8 @@ class RewardViewHolder(
         binding.goldIcon.setImageBitmap(HabiticaIconsHelper.imageOfGold())
     }
 
-    override fun canContainMarkdown(): Boolean {
-        return !isItem
-    }
-
     private fun buyReward() {
         task?.let { scoreTaskFunc(it, TaskDirection.DOWN) }
-    }
-
-    override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
-        if (task?.isValid != true) {
-            return true
-        }
-        if (isItem) {
-            val dialog = ItemDetailDialog(context)
-            dialog.setTitle(task?.text)
-            dialog.setDescription(task?.notes ?: "")
-            dialog.setImage("shop_" + this.task?.id)
-            dialog.setCurrency("gold")
-            dialog.setValue(task?.value)
-            dialog.setBuyListener { _, _ -> this.buyReward() }
-            dialog.show()
-        } else {
-            super.onTouch(view, motionEvent)
-        }
-        return true
     }
 
     override fun setDisabled(openTaskDisabled: Boolean, taskActionsDisabled: Boolean) {

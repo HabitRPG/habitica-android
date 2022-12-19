@@ -197,8 +197,6 @@
     <string name="quests">Expediții</string>
     <string name="pets">Animale de Companie</string>
     <string name="mounts">Animale de Călărit</string>
-    <string name="armoireEquipment">Ai găsit o piesă rară de Echipament în Cufăr: %s! Super!</string>
-    <string name="armoireFood">Scotocești prin Cufăr și găsești %1$s %2$s. Ce caută asta aici?</string>
     <string name="armoireExp">Te lupți împotriva cufărului și primești Experiență. Ia-o!</string>
     <string name="sell">Vinde (%d Aur)</string>
     <string name="hatch_with_potion">Eclozează cu o poțiune</string>
