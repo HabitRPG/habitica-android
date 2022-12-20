@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.text.Spanned
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.removeZeroWidthSpace
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
@@ -355,10 +356,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     }
 
     fun isBeingEdited(task: Task): Boolean {
-
+        
         when {
             text != task.text -> return true
-            notes != task.notes -> return true
+            notes != task.notes?.removeZeroWidthSpace() -> return true
             reminders?.size != task.reminders?.size -> return true
             checklist?.size != task.checklist?.size -> return true
             reminders?.mapIndexed { index, remindersItem -> task.reminders?.get(index) != remindersItem }?.contains(true) == true -> return true

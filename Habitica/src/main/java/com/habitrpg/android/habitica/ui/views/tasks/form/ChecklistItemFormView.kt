@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormChecklistItemBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.addZeroWidthSpace
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
@@ -35,12 +36,9 @@ class ChecklistItemFormView @JvmOverloads constructor(
     var item: ChecklistItem = ChecklistItem()
         set(value) {
             field = value
-            val spannable: Spannable = SpannableString(item.text)
-            Linkify.addLinks(spannable, Linkify.WEB_URLS)
             //Append a zero-width space to the Spannable to allow clicking
             //on the open spaces (and prevent the link from opening)
-            val text: CharSequence = TextUtils.concat(spannable, "\u200B")
-            binding.editText.setText(text)
+            binding.editText.setText(item.text?.addZeroWidthSpace())
         }
 
     var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
