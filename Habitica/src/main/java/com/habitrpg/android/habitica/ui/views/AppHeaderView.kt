@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.res.Resources
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -105,9 +105,9 @@ fun AppHeaderView(
                         MainNavigationController.navigate(R.id.avatarOverviewFragment)
                     }
             )
-            Column(modifier = Modifier.height(100.dp)) {
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
-                    Column(modifier = Modifier.weight(1f)) {
+            val animationValue = animateFloatAsState(targetValue = if (teamPlan != null) 1f else 0f).value
+            Box(modifier = Modifier.height(100.dp)) {
+                    Column(Modifier.padding(bottom = (animationValue * 48f).dp, end = (animationValue * 80f).dp)) {
                         LabeledBar(
                             icon = HabiticaIconsHelper.imageOfHeartLightBg(),
                             label = stringResource(R.string.HP_default),
@@ -158,10 +158,11 @@ fun AppHeaderView(
                         }
                     }
                     val animWidth = with(LocalDensity.current) { 48.dp.roundToPx() }
-                    AnimatedVisibility(
+                androidx.compose.animation.AnimatedVisibility(
                         visible = teamPlan != null,
                         enter = slideInHorizontally { animWidth } + fadeIn(),
-                        exit = slideOutHorizontally { animWidth } + fadeOut()) {
+                        exit = slideOutHorizontally { animWidth } + fadeOut(),
+                    modifier = Modifier.align(Alignment.TopEnd)) {
                         Row(
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically,
@@ -184,12 +185,12 @@ fun AppHeaderView(
                                 colorResource(R.color.text_ternary)))
                         }
                     }
-                }
                 val animHeight = with(LocalDensity.current) { 40.dp.roundToPx() }
-                AnimatedVisibility(
+                androidx.compose.animation.AnimatedVisibility(
                     visible = teamPlan != null,
                     enter = slideInVertically { animHeight } + fadeIn(),
-                    exit = slideOutVertically { animHeight } + fadeOut()) {
+                    exit = slideOutVertically { animHeight } + fadeOut(),
+                modifier = Modifier.align(Alignment.BottomCenter)) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
                         verticalAlignment = Alignment.CenterVertically,
@@ -201,7 +202,7 @@ fun AppHeaderView(
                             .background(
                                 colorResource(R.color.window_background)
                             )
-                            .padding(top = 12.dp, start = 12.dp, end = 12.dp)
+                            .padding(start = 12.dp, end = 12.dp)
                             .clickable {
                                 onMemberRowClicked()
                             }
