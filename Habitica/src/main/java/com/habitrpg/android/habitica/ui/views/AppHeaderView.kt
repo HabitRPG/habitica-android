@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
+import android.content.res.Resources
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -26,9 +27,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,16 +37,27 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.models.TeamPlan
+import com.habitrpg.android.habitica.models.auth.LocalAuthentication
+import com.habitrpg.android.habitica.models.members.Member
+import com.habitrpg.android.habitica.models.user.Authentication
+import com.habitrpg.android.habitica.models.user.Profile
+import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.shared.habitica.models.Avatar
+import com.habitrpg.shared.habitica.models.AvatarStats
+import kotlin.random.Random
 
 @Composable
-fun UserLevelText(user: User) {
+fun UserLevelText(user: Avatar) {
     val text = if (user.hasClass) {
         stringResource(
             id = R.string.user_level_with_class,
@@ -68,14 +77,23 @@ fun UserLevelText(user: User) {
     )
 }
 
+fun AvatarStats.getTranslatedClassName(resources: Resources): String {
+        return when (habitClass) {
+            Stats.HEALER -> resources.getString(R.string.healer)
+            Stats.ROGUE -> resources.getString(R.string.rogue)
+            Stats.WARRIOR -> resources.getString(R.string.warrior)
+            Stats.MAGE -> resources.getString(R.string.mage)
+            else -> resources.getString(R.string.warrior)
+        }
+}
+
 @Composable
 fun AppHeaderView(
-    viewModel: MainUserViewModel,
+    user: Avatar?,
+    teamPlan: TeamPlan? = null,
+    teamPlanMembers: List<Member>? = null,
     onMemberRowClicked: () -> Unit
 ) {
-    val user by viewModel.user.observeAsState(null)
-    val teamPlan by viewModel.currentTeamPlan.collectAsState(null)
-    val teamPlanMembers by viewModel.currentTeamPlanMembers.observeAsState()
     Column {
         Row {
             ComposableAvatarView(
@@ -107,6 +125,7 @@ fun AppHeaderView(
                             maxValue = user?.stats?.toNextLevel?.toDouble() ?: 0.0,
                             displayCompact = teamPlan != null,
                             abbreviateValue = false,
+                            abbreviateMax = false,
                             modifier = Modifier.weight(1f)
                         )
                         if (user?.hasClass == true) {
@@ -114,10 +133,13 @@ fun AppHeaderView(
                                 icon = HabiticaIconsHelper.imageOfMagic(),
                                 label = stringResource(R.string.MP_default),
                                 color = colorResource(R.color.mpColor),
-                                value = user?.stats?.mp ?: 0.0,
-                                maxValue = user?.stats?.maxMP?.toDouble() ?: 0.0,
+                                value = user.stats?.mp ?: 0.0,
+                                maxValue = user.stats?.maxMP?.toDouble() ?: 0.0,
                                 displayCompact = teamPlan != null,
-                                modifier = Modifier.weight(1f)
+                                abbreviateValue = false,
+                                abbreviateMax = false,
+                                modifier = Modifier
+                                    .weight(1f)
                                     .clickable {
                                         MainNavigationController.navigate(R.id.skillsFragment)
                                     }
@@ -173,18 +195,18 @@ fun AppHeaderView(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 12.dp, start = 12.dp, end = 12.dp)
                             .height(40.dp)
                             .width(72.dp)
                             .clip(MaterialTheme.shapes.medium)
                             .background(
                                 colorResource(R.color.window_background)
                             )
+                            .padding(top = 12.dp, start = 12.dp, end = 12.dp)
                             .clickable {
                                 onMemberRowClicked()
                             }
                     ) {
-                        for (member in teamPlanMembers?.filter { it.id != user?.id }?.sortedBy { it.authentication?.timestamps?.lastLoggedIn }?.take(6) ?: emptyList()) {
+                        for (member in teamPlanMembers?.filter { it.id != user?.id }?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }?.take(6) ?: emptyList()) {
                             Box(modifier = Modifier
                                 .clip(CircleShape)
                                 .size(26.dp)
@@ -205,21 +227,52 @@ fun AppHeaderView(
             ClassIcon(className = user?.stats?.habitClass, hasClass = user?.hasClass ?: false, modifier = Modifier.padding(4.dp))
             user?.let { UserLevelText(it) }
             Spacer(Modifier.weight(1f))
-            if (user?.isSubscribed == true) {
-                user?.hourglassCount?.toDouble()
-                    ?.let {
-                        CurrencyText(
-                            "hourglasses",
-                            it,
-                            modifier = Modifier.padding(end = 12.dp).clickable {
-                                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
-                            })
-                    }
+            if (user is User && user.isSubscribed) {
+                CurrencyText(
+                    "hourglasses",
+                    user.hourglassCount.toDouble(),
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .clickable {
+                            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                        }, decimals = 0)
             }
-            CurrencyText("gold", user?.stats?.gp ?: 0.0, modifier = Modifier.padding(end = 12.dp))
+            CurrencyText("gold", user?.stats?.gp ?: 0.0, modifier = Modifier.padding(end = 12.dp), decimals = 0)
             CurrencyText("gems", user?.gemCount?.toDouble() ?: 0.0, modifier = Modifier.clickable {
                 MainNavigationController.navigate(R.id.gemPurchaseActivity)
-            })
+            }, decimals = 0)
         }
+    }
+}
+
+private class UserProvider : PreviewParameterProvider<User> {
+    override val values: Sequence<User>
+        get() {
+            val list = mutableListOf<User>()
+            val member = User()
+            member.profile = Profile()
+            member.profile?.name = "User"
+            member.authentication = Authentication()
+            member.authentication?.localAuthentication = LocalAuthentication()
+            member.authentication?.localAuthentication?.username = "username"
+            member.stats = Stats()
+            member.stats?.hp = Random.nextDouble()
+            member.stats?.maxHealth = 50
+            member.stats?.toNextLevel = Random.nextInt()
+            member.stats?.exp =
+                Random.nextDouble(until = (member.stats?.toNextLevel ?: 0).toDouble())
+            member.stats?.maxMP = Random.nextInt()
+            member.stats?.mp = Random.nextDouble(until = (member.stats?.maxMP ?: 0).toDouble())
+            member.stats?.lvl = Random.nextInt()
+            list.add(member)
+            return list.asSequence()
+        }
+}
+
+@Composable
+@Preview
+private fun Preview(@PreviewParameter(UserProvider::class) user: User) {
+    AppHeaderView(user) {
+
     }
 }

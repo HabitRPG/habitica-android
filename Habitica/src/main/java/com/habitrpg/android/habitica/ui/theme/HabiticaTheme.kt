@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import com.google.android.material.composethemeadapter.createMdcTheme
+import com.google.accompanist.themeadapter.material.createMdcTheme
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.extensions.getThemeColor
@@ -27,7 +27,7 @@ fun HabiticaTheme(
 ) {
     val context = LocalContext.current
     val layoutDirection = LocalLayoutDirection.current
-    val (colors, _, shapes) = createMdcTheme(
+    val (colors, _, _) = createMdcTheme(
         context = context,
         layoutDirection = layoutDirection,
         setTextColors = true

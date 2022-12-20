@@ -105,7 +105,7 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="colorBoxStroke">@color/red_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
-        <item name="toolbarContentColor">@color/red_100</item>
+        <item name="toolbarContentColor">@color/red_1</item>
         <item name="colorTintedBackground">@color/red_00</item>
         <item name="colorTintedBackgroundOffset">@color/red_0</item>
         <item name="colorPrimaryText">@color/red_600</item>
@@ -136,7 +136,7 @@
         <item name="barColor">@color/gray_1</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
-        <item name="toolbarContentColor">@color/maroon_100</item>
+        <item name="toolbarContentColor">@color/white</item>
         <item name="colorTintedBackground">@color/maroon_00</item>
         <item name="colorTintedBackgroundOffset">@color/maroon_0</item>
         <item name="colorPrimaryText">@color/maroon_600</item>
@@ -169,7 +169,7 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="colorBoxStroke">@color/orange_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
-        <item name="toolbarContentColor">@color/orange_100</item>
+        <item name="toolbarContentColor">@color/orange_1</item>
         <item name="colorTintedBackground">@color/orange_00</item>
         <item name="colorTintedBackgroundOffset">@color/orange_0</item>
         <item name="colorPrimaryText">@color/orange_600</item>
@@ -202,7 +202,7 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="colorBoxStroke">@color/yellow_5</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
-        <item name="toolbarContentColor">@color/yellow_100</item>
+        <item name="toolbarContentColor">@color/yellow_1</item>
         <item name="colorTintedBackground">@color/yellow_00</item>
         <item name="colorTintedBackgroundOffset">@color/yellow_0</item>
         <item name="colorPrimaryText">@color/yellow_600</item>
@@ -235,7 +235,7 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="colorBoxStroke">@color/green_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
-        <item name="toolbarContentColor">@color/green_100</item>
+        <item name="toolbarContentColor">@color/green_1</item>
         <item name="colorTintedBackground">@color/green_00</item>
         <item name="colorTintedBackgroundOffset">@color/green_0</item>
         <item name="colorPrimaryText">@color/green_600</item>
@@ -268,7 +268,7 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="colorBoxStroke">@color/teal_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
-        <item name="toolbarContentColor">@color/teal_100</item>
+        <item name="toolbarContentColor">@color/teal_1</item>
         <item name="colorTintedBackground">@color/teal_00</item>
         <item name="colorTintedBackgroundOffset">@color/teal_0</item>
         <item name="colorPrimaryText">@color/teal_600</item>
@@ -301,7 +301,7 @@
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="colorBoxStroke">@color/blue_10</item>
-        <item name="toolbarContentColor">@color/blue_100</item>
+        <item name="toolbarContentColor">@color/blue_1</item>
         <item name="colorTintedBackground">@color/blue_00</item>
         <item name="colorTintedBackgroundOffset">@color/blue_0</item>
         <item name="colorPrimaryText">@color/blue_600</item>
@@ -393,6 +393,7 @@
     <style name="Toolbar.Modern" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
         <item name="android:textColorPrimary">?attr/headerTextColor</item>
         <item name="textColorSecondary">?attr/headerTextColor</item>
+        <item name="textColorPrimary">?attr/toolbarContentColor</item>
         <item name="android:background">?attr/headerBackgroundColor</item>
         <item name="actionMenuTextColor">?attr/toolbarContentColor</item>
         <item name="android:actionMenuTextColor">?attr/toolbarContentColor</item>

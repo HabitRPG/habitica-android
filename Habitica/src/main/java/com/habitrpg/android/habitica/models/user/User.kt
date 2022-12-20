@@ -45,7 +45,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
 
     @PrimaryKey
     @SerializedName("_id")
-    var id: String? = null
+    override var id: String? = null
 
     @SerializedName("_v")
     override var versionNumber: Int = 0

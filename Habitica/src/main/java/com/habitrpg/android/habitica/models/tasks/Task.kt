@@ -255,7 +255,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                 this.value < 1 -> return R.color.yellow_0
                 this.value < 5 -> return R.color.green_0
                 this.value < 10 -> return R.color.teal_0
-                else -> R.color.blue_1
+                else -> R.color.blue_0
             }
         }
 
@@ -268,7 +268,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                 this.value < 1 -> return R.color.yellow_00
                 this.value < 5 -> return R.color.green_00
                 this.value < 10 -> return R.color.teal_00
-                else -> R.color.blue_1
+                else -> R.color.blue_00
             }
         }
 

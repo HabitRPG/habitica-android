@@ -39,7 +39,7 @@ fun SegmentedControl(
     onItemSelection: (selectedItemIndex: Int) -> Unit
 ) {
     val selectedIndex = remember { mutableStateOf(defaultSelectedItemIndex) }
-    val color = MaterialTheme.colors.primary
+    val color = MaterialTheme.colors.surface
     Row(
         modifier = Modifier
     ) {

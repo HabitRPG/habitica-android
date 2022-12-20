@@ -77,6 +77,7 @@ private fun BottomSheetWrapper(
     val radius = 20.dp
     ModalBottomSheetLayout(
         sheetBackgroundColor = Color.Transparent,
+        scrimColor = colorResource(R.color.content_background).copy(alpha = 0.3f),
         sheetState = modalBottomSheetState,
         sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
         sheetContent = {

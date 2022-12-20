@@ -23,12 +23,13 @@ fun CurrencyText(
     value: Double,
     modifier: Modifier = Modifier,
     decimals: Int = 2,
-    minForAbbrevation: Int = 0
+    minForAbbrevation: Int = 0,
+    animated: Boolean = true
 ) {
-    val animatedValue = animateFloatAsState(
+    val animatedValue = if (animated) animateFloatAsState(
         targetValue = value.toFloat(),
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
-    ).value
+    ).value else value.toFloat()
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         when (currency) {
             "gold" -> HabiticaIconsHelper.imageOfGold()

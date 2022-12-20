@@ -1,10 +1,9 @@
-New in 4.0.3:
--Habitica has a brand new WearOS app for smart watches!
--Reminders for tasks done the previous day will show again
--Group Plan subscribers can switch on displaying shared tasks from Settings
--Pet category labels show again
--Newly designed Backgrounds section
--Ability to filter, preview, and pin Backgrounds
--New bottom sheet designs in Items, Pets & Mounts, and Filters
--New Day Start Adjustment interface
--Improvements to payment and subscription handling
+New in 4.1:
+-You can view, complete, assign, and add tasks to your Group Plan’s shared task board!
+-Tap your name on a task screen to switch to different task boards
+-Subscription details will show extra months and when you’ll get your next Hourglass
+-More intuitive system notification settings
+-Audio will be controlled by media volume now
+-Task details are now tinted based on task health
+-Fixed a bug that caused tasks to shuffle around
+-Monthly Dailies should recur more consistently now

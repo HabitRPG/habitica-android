@@ -1286,6 +1286,7 @@
     <string name="unmute_user">Unmute User</string>
     <string name="status">Status</string>
     <string name="regular_access">Regular Access</string>
+    <string name="message_flagged">Message flagged %d times.</string>
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
         <item quantity="one">You, %d other</item>

@@ -225,9 +225,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 Shop.SEASONAL_SHOP -> {
                     shop1.categories.sortWith(
-                        compareBy<ShopCategory> { it.items.size != 1 }
-                            .thenBy { it.items.firstOrNull()?.currency != "gold" }
+                        compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
                             .thenByDescending { it.items.firstOrNull()?.event?.end }
+                            .thenBy { it.items.firstOrNull()?.locked }
                     )
                 }
             }

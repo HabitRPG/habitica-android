@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.models.user
 
-import android.content.res.Resources
 import com.google.gson.annotations.SerializedName
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.shared.habitica.models.AvatarStats
 import io.realm.RealmObject
@@ -49,16 +47,6 @@ open class Stats : RealmObject(), AvatarStats, BaseObject {
                 field = value
             }
         }
-
-    fun getTranslatedClassName(resources: Resources): String {
-        return when (habitClass) {
-            HEALER -> resources.getString(R.string.healer)
-            ROGUE -> resources.getString(R.string.rogue)
-            WARRIOR -> resources.getString(R.string.warrior)
-            MAGE -> resources.getString(R.string.mage)
-            else -> resources.getString(R.string.warrior)
-        }
-    }
 
     fun merge(stats: Stats?) {
         if (stats == null) {

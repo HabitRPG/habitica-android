@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,42 +45,35 @@ fun GroupPlanMemberList(
 ) {
     LazyColumn {
         item {
-            Text(stringResource(R.string.member_list),
-            fontSize = 16.sp,
+            Text(
+                stringResource(R.string.member_list),
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
                 color = HabiticaTheme.colors.textTertiary,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(bottom = 20.dp)
-                )
+            )
         }
-        for (member in members?.sortedWith(compareByDescending<Member> {
-            group?.isLeader(
-                it.id ?: ""
-            )
-        }.thenByDescending {
-            group?.isManager(
-                it.id ?: ""
-            )
-        }.thenBy { it.username }) ?: emptyList()) {
-            item {
-                val role = if (group?.isLeader(member.id ?: "") == true) {
-                    stringResource(R.string.owner)
-                } else if (group?.isManager(member.id ?: "") == true) {
-                    stringResource(R.string.manager)
-                } else {
-                    stringResource(R.string.member)
-
-                }
-                MemberItem(
-                    member,
-                    role,
-                    onMemberClicked,
-                    onMoreClicked,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
+        for (member in members?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }
+            ?: emptyList()) {
+        item {
+            val role = if (group?.isLeader(member.id ?: "") == true) {
+                stringResource(R.string.owner)
+            } else if (group?.isManager(member.id ?: "") == true) {
+                stringResource(R.string.manager)
+            } else {
+                stringResource(R.string.member)
             }
+            MemberItem(
+                member,
+                role,
+                onMemberClicked,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            )
         }
+    }
     }
 }
 
@@ -91,7 +82,6 @@ fun MemberItem(
     member: Member,
     role: String,
     onMemberClicked: (String) -> Unit,
-    onMoreClicked: (Member) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -107,10 +97,17 @@ fun MemberItem(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.padding(8.dp)
         ) {
-            ComposableAvatarView(avatar = member, modifier = Modifier
-                .padding(6.dp)
-                .size(94.dp, 98.dp))
-            Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.height(104.dp).padding(end = 6.dp)) {
+            ComposableAvatarView(
+                avatar = member, modifier = Modifier
+                    .padding(6.dp)
+                    .size(94.dp, 98.dp)
+            )
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .height(104.dp)
+                    .padding(end = 6.dp)
+            ) {
                 Text(
                     member.displayName,
                     fontWeight = FontWeight.SemiBold,
@@ -135,7 +132,12 @@ fun MemberItem(
                         modifier = Modifier.size(18.dp)
                     )
                     BuffIcon(member.stats?.isBuffed)
-                    CurrencyText(currency = "gold", value = member.stats?.gp ?: 0.0)
+                    CurrencyText(
+                        currency = "gold",
+                        value = (member.stats?.gp) ?: 0.0,
+                        decimals = 0,
+                        animated = false
+                    )
                 }
                 LabeledBar(
                     color = colorResource(R.color.hpColor),
@@ -143,7 +145,8 @@ fun MemberItem(
                     value = member.stats?.hp ?: 0.0,
                     maxValue = (member.stats?.maxHealth ?: 0).toDouble(),
                     displayCompact = true,
-                    barHeight = 5.dp
+                    barHeight = 5.dp,
+                    animated = false
                 )
                 LabeledBar(
                     color = colorResource(R.color.xpColor),
@@ -151,7 +154,8 @@ fun MemberItem(
                     value = member.stats?.exp ?: 0.0,
                     maxValue = (member.stats?.toNextLevel ?: 0).toDouble(),
                     displayCompact = true,
-                    barHeight = 5.dp
+                    barHeight = 5.dp,
+                    animated = false
                 )
                 if (member.hasClass) {
                     LabeledBar(
@@ -160,7 +164,8 @@ fun MemberItem(
                         value = member.stats?.mp ?: 0.0,
                         maxValue = (member.stats?.maxMP ?: 0).toDouble(),
                         displayCompact = true,
-                        barHeight = 5.dp
+                        barHeight = 5.dp,
+                        animated = false
                     )
                 }
                 Row(horizontalArrangement = Arrangement.SpaceBetween) {
@@ -178,13 +183,6 @@ fun MemberItem(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun BuffIcon(buffed: Boolean?, modifier: Modifier = Modifier) {
-    if (buffed == true) {
-        Image(HabiticaIconsHelper.imageOfBuffIcon().asImageBitmap(), null, modifier = modifier)
     }
 }
 
@@ -217,5 +215,5 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 @Composable
 @Preview
 private fun Preview(@PreviewParameter(MemberProvider::class) member: Member) {
-    MemberItem(member = member, role = "Manager", onMemberClicked = {}, onMoreClicked = {})
+    MemberItem(member = member, role = "Manager", onMemberClicked = {})
 }

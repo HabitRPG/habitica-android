@@ -113,7 +113,8 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
             verticalAlignment = Alignment.CenterVertically) {
             Text(
                 stringResource(R.string.avatar_size),
-                style = HabiticaTheme.typography.subtitle2
+                style = HabiticaTheme.typography.subtitle2,
+                color = HabiticaTheme.colors.textSecondary
             )
             Spacer(modifier = Modifier.weight(1f))
             SegmentedControl(items = listOf(stringResource(R.string.avatar_size_slim), stringResource(R.string.avatar_size_broad
@@ -127,11 +128,13 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
                 .padding(horizontal = 12.dp)
                 .padding(top = 15.dp),
             verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.equipped), style = HabiticaTheme.typography.subtitle2)
+            Text(stringResource(R.string.equipped), style = HabiticaTheme.typography.subtitle2,
+                color = HabiticaTheme.colors.textSecondary)
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 stringResource(R.string.equip_automatically),
-                style = HabiticaTheme.typography.body2
+                style = HabiticaTheme.typography.body2,
+                color = HabiticaTheme.colors.textPrimary
             )
             Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
                 userViewModel.updateUser("preferences.autoEquip", it)
@@ -148,12 +151,14 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
         ) {
             Text(
                 stringResource(R.string.costume),
-                style = HabiticaTheme.typography.subtitle2
+                style = HabiticaTheme.typography.subtitle2,
+                color = HabiticaTheme.colors.textSecondary
             )
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 stringResource(R.string.wear_costume),
-                style = HabiticaTheme.typography.body2
+                style = HabiticaTheme.typography.body2,
+                color = HabiticaTheme.colors.textPrimary
             )
             Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
                 userViewModel.updateUser("preferences.costume", it)

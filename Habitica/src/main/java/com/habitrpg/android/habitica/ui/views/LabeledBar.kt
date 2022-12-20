@@ -2,7 +2,8 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
@@ -16,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.ProgressIndicatorDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,14 +50,15 @@ fun LabeledBar(
     barHeight: Dp = 8.dp,
     disabled: Boolean = false,
     abbreviateValue: Boolean = true,
-    abbreviateMax: Boolean = true
+    abbreviateMax: Boolean = true,
+    animated: Boolean = true
 ) {
     val cleanedMaxValue = java.lang.Double.max(1.0, maxValue)
 
-    val animatedValue = animateFloatAsState(
-        targetValue = value.toFloat(),
-        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
-    ).value
+    val animatedValue = if (animated) animateIntAsState(
+        targetValue = value.toInt(),
+        animationSpec = spring()
+    ).value else value.toInt()
     val formatter = NumberFormat.getNumberInstance()
     formatter.minimumFractionDigits = 0
     formatter.maximumFractionDigits = 2
@@ -92,7 +93,7 @@ fun LabeledBar(
                     if (!disabled) {
                         val currentValueText = if (abbreviateValue) NumberAbbreviator.abbreviate(
                             LocalContext.current,
-                            animatedValue,
+                            animatedValue.toFloat(),
                             0
                         ) else formatter.format(animatedValue)
                         val maxValueText = if (abbreviateMax) NumberAbbreviator.abbreviate(

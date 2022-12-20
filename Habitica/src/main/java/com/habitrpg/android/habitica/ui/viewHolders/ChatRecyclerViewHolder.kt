@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatItemBinding
@@ -211,7 +212,15 @@ class ChatRecyclerMessageViewHolder(
         }
 
         if ((chatMessage?.flagCount ?: 0) > 0) {
-
+            binding.flagCountTextview.text = context.getString(R.string.message_flagged, (chatMessage?.flagCount ?: 0))
+            binding.flagCountTextview.isVisible = true
+            if (chatMessage?.flagCount == 1) {
+                binding.flagCountTextview.setTextColor(ContextCompat.getColor(context, R.color.text_orange))
+            } else {
+                binding.flagCountTextview.setTextColor(ContextCompat.getColor(context, R.color.text_red))
+            }
+        } else {
+            binding.flagCountTextview.isVisible = false
         }
     }
 

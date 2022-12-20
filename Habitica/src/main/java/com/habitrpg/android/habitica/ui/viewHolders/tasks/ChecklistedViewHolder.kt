@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -63,7 +64,9 @@ abstract class ChecklistedViewHolder(
         if (isLocked) {
             this.checkmarkView.visibility = View.GONE
             this.lockView.visibility = View.VISIBLE
-            lockView.drawable.setTint(ContextCompat.getColor(context, if (data.isDue == true || data.type == TaskType.TODO) data.extraExtraDarkTaskColor else R.color.text_dimmed))
+            val icon = AppCompatResources.getDrawable(context, R.drawable.task_lock)
+            icon?.setTint(ContextCompat.getColor(context, if (data.isDue == true || data.type == TaskType.TODO) data.extraExtraDarkTaskColor else R.color.text_dimmed))
+            lockView.setImageDrawable(icon)
         } else {
             this.checkmarkView.visibility = if (completed) View.VISIBLE else View.GONE
             checkmarkView.drawable.setTint(ContextCompat.getColor(context, R.color.gray_400))

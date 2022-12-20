@@ -242,7 +242,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
         binding.content.headerView.setContent {
             HabiticaTheme {
-                AppHeaderView(viewModel.userViewModel) {
+                val user by viewModel.user.observeAsState(null)
+                val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsState(null)
+                val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
+                AppHeaderView(user, teamPlan, teamPlanMembers) {
                     showAsBottomSheet { onClose ->
                         val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
                         val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()

@@ -171,7 +171,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/months_subscribed"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-medium"/>
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/text_secondary"/>
             </LinearLayout>
 
             <LinearLayout
@@ -194,9 +195,10 @@
                     style="@style/subscriptionBoxCompactText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/months_subscribed"
+                    android:text="@string/monthly_gem_cap"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-medium"/>
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/text_secondary"/>
             </LinearLayout>
         </LinearLayout>
 

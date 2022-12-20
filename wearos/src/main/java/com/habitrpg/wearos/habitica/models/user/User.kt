@@ -16,6 +16,7 @@ class User: Avatar {
     override val currentPet: String?
         get() = items?.currentPet
     override var sleep: Boolean = false
+    override var id: String? = null
     override var balance: Double = 0.0
     @Json(ignore = true)
     override var authentication: AvatarAuthentication? = null

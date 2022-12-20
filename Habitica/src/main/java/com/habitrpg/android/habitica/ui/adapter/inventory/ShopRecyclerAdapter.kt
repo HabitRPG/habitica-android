@@ -95,7 +95,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 val view = parent.inflate(R.layout.row_shopitem)
                 val viewHolder = ShopItemViewHolder(view)
                 viewHolder.shopIdentifier = shopIdentifier
-                viewHolder
+                viewHolder.onNeedsRefresh = onNeedsRefresh
                 viewHolder
             }
         }

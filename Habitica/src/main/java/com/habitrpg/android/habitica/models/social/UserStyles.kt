@@ -36,6 +36,8 @@ open class UserStyles : RealmObject(), Avatar {
         get() {
             return false
         }
+    override val id: String?
+        get() = null
     override var balance: Double = 0.0
     override var authentication: Authentication? = null
     override var stats: Stats? = null

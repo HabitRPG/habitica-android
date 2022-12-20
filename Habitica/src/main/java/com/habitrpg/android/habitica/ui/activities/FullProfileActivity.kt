@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuCompat
@@ -34,12 +36,12 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Permission
 import com.habitrpg.android.habitica.models.user.Stats
-import com.habitrpg.android.habitica.ui.AvatarWithBarsViewModel
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.setMarkdown
@@ -57,7 +59,7 @@ import kotlin.math.min
 class FullProfileActivity : BaseActivity() {
     private var blocks: List<String> = listOf()
     private var isModerator = false
-    private var member: Member? = null
+    private var member: MutableState<Member?> = mutableStateOf(null)
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -78,7 +80,6 @@ class FullProfileActivity : BaseActivity() {
     private var attributeDetailsHidden = true
     private val attributeRows = ArrayList<TableRow>()
     private val dateFormatter = SimpleDateFormat.getDateInstance()
-    private var avatarWithBars: AvatarWithBarsViewModel? = null
     private lateinit var binding: ActivityFullProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,17 +96,13 @@ class FullProfileActivity : BaseActivity() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             refresh()
         }
-        avatarWithBars = AvatarWithBarsViewModel(this, binding.avatarWithBars)
 
-        binding.avatarWithBars.root.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.transparent
-            )
-        )
-        binding.avatarWithBars.hpBar.barBackgroundColor = getThemeColor(R.attr.colorWindowBackground)
-        binding.avatarWithBars.xpBar.barBackgroundColor = getThemeColor(R.attr.colorWindowBackground)
-        binding.avatarWithBars.mpBar.barBackgroundColor = getThemeColor(R.attr.colorWindowBackground)
+        binding.avatarWithBars.setContent {
+            HabiticaTheme {
+                AppHeaderView(member.value) {
+                }
+            }
+        }
 
         attributeRows.clear()
         binding.attributesCardView.setOnClickListener { toggleAttributeDetails() }
@@ -137,7 +134,7 @@ class FullProfileActivity : BaseActivity() {
                         if (member != null) {
                             updateView(member)
                         }
-                        this@FullProfileActivity.member = member
+                        this@FullProfileActivity.member.value = member
                     }
                     invalidateOptionsMenu()
                 }
@@ -149,7 +146,7 @@ class FullProfileActivity : BaseActivity() {
             if (member != null) {
                 updateView(member)
             }
-            this@FullProfileActivity.member = member
+            this@FullProfileActivity.member.value = member
     }
 
     override fun onDestroy() {
@@ -169,17 +166,17 @@ class FullProfileActivity : BaseActivity() {
         }
         menu.setGroupVisible(R.id.admin_items, isModerator)
         if (isModerator) {
-            menu.findItem(R.id.ban_user)?.title = getString(if (member?.authentication?.blocked == true) {
+            menu.findItem(R.id.ban_user)?.title = getString(if (member.value?.authentication?.blocked == true) {
                 R.string.unban_user
             } else {
                 R.string.ban_user
             })
-            menu.findItem(R.id.shadow_mute_user)?.title = getString(if (member?.flags?.chatShadowMuted == true) {
+            menu.findItem(R.id.shadow_mute_user)?.title = getString(if (member.value?.flags?.chatShadowMuted == true) {
                 R.string.unshadowmute_user
             } else {
                 R.string.shadow_mute_user
             })
-            menu.findItem(R.id.mute_user)?.title = getString(if (member?.flags?.chatRevoked == true) {
+            menu.findItem(R.id.mute_user)?.title = getString(if (member.value?.flags?.chatRevoked == true) {
                 R.string.unmute_user
             } else {
                 R.string.mute_user
@@ -247,7 +244,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun muteUser() {
-        val isMuted = member?.flags?.chatRevoked == true
+        val isMuted = member.value?.flags?.chatRevoked == true
         val alert = HabiticaAlertDialog(this)
         if (isMuted) {
             alert.setTitle(R.string.mute_user_confirm)
@@ -256,7 +253,7 @@ class FullProfileActivity : BaseActivity() {
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member?.id?.let { socialRepository.updateMember(it, "flags.chatRevoked", !isMuted) }
+                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatRevoked", !isMuted) }
                 refresh()
                 invalidateOptionsMenu()
             }
@@ -265,7 +262,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun shadowMuteUser() {
-        val isBanned = member?.flags?.chatShadowMuted == true
+        val isBanned = member.value?.flags?.chatShadowMuted == true
         val alert = HabiticaAlertDialog(this)
         if (isBanned) {
             alert.setTitle(R.string.shadowmute_user_confirm)
@@ -274,7 +271,7 @@ class FullProfileActivity : BaseActivity() {
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member?.id?.let { socialRepository.updateMember(it, "flags.chatShadowMuted", !isBanned) }
+                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatShadowMuted", !isBanned) }
                 refresh()
                 invalidateOptionsMenu()
             }
@@ -283,7 +280,7 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun banUser() {
-        val isBanned = member?.authentication?.blocked == true
+        val isBanned = member.value?.authentication?.blocked == true
         val alert = HabiticaAlertDialog(this)
         if (isBanned) {
             alert.setTitle(R.string.ban_user_confirm)
@@ -292,7 +289,7 @@ class FullProfileActivity : BaseActivity() {
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member?.id?.let { socialRepository.updateMember(it, "auth.blocked", !isBanned) }
+                member.value?.id?.let { socialRepository.updateMember(it, "auth.blocked", !isBanned) }
                 refresh()
                 invalidateOptionsMenu()
             }
@@ -360,8 +357,6 @@ class FullProfileActivity : BaseActivity() {
             binding.lastLoginView.text = dateFormatter.format(it)
         }
         binding.totalCheckinsView.text = user.loginIncentives.toString()
-
-        avatarWithBars?.updateData(user)
 
         val status = mutableListOf<String>()
         if (user.authentication?.blocked == true) status.add("Banned")
