@@ -2,6 +2,7 @@
 <resources>
     <color name="brand">@color/brand_400</color>
     <color name="color_accent">@color/brand_400</color>
+    <color name="text_title">@color/white</color>
     <color name="text_primary">@color/gray_600</color>
     <color name="text_secondary">@color/gray_500</color>
     <color name="text_ternary">@color/gray_400</color>

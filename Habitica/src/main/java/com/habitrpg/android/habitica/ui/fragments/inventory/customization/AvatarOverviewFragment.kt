@@ -34,13 +34,15 @@ import com.habitrpg.android.habitica.ui.views.EquipmentOverviewView
 import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import javax.inject.Inject
 
-class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>(),
+open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>(),
     AdapterView.OnItemSelectedListener {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentComposeScrollingBinding? = null
+
+    protected var showCustomization = true
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -59,7 +61,9 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 HabiticaTheme {
-                    AvatarOverviewView(userViewModel, { type, category ->
+                    AvatarOverviewView(userViewModel,
+                        showCustomization, !showCustomization,
+                        { type, category ->
                         displayCustomizationFragment(type, category)
                     }, { type, equipped, isCostume ->
                         displayEquipmentFragment(type, equipped, isCostume)
@@ -101,6 +105,8 @@ class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>
 
 @Composable
 fun AvatarOverviewView(userViewModel: MainUserViewModel,
+    showCustomization: Boolean = true,
+    showEquipment: Boolean = true,
     onCustomizationTap: (String, String?) -> Unit,
     onEquipmentTap: (String, String?, Boolean) -> Unit
     ) {
@@ -109,65 +115,82 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
         Modifier
             .padding(horizontal = 8.dp)
             .padding(bottom = 16.dp)) {
-        Row(Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
-            verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                stringResource(R.string.avatar_size),
-                style = HabiticaTheme.typography.subtitle2,
-                color = HabiticaTheme.colors.textSecondary
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            SegmentedControl(items = listOf(stringResource(R.string.avatar_size_slim), stringResource(R.string.avatar_size_broad
-            )), defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1, onItemSelection = {
-                userViewModel.updateUser("preferences.size", if (it == 0) "slim" else "broad")
-            })
+        if (showCustomization) {
+            Row(
+                Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    stringResource(R.string.avatar_size),
+                    style = HabiticaTheme.typography.subtitle2,
+                    color = HabiticaTheme.colors.textSecondary
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                SegmentedControl(items = listOf(
+                    stringResource(R.string.avatar_size_slim), stringResource(
+                        R.string.avatar_size_broad
+                    )
+                ),
+                    defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1,
+                    onItemSelection = {
+                        userViewModel.updateUser(
+                            "preferences.size",
+                            if (it == 0) "slim" else "broad"
+                        )
+                    })
+            }
+            AvatarCustomizationOverviewView(user?.preferences, onCustomizationTap)
         }
-        AvatarCustomizationOverviewView(user?.preferences, onCustomizationTap)
-        Row(
-            Modifier
-                .padding(horizontal = 12.dp)
-                .padding(top = 15.dp),
-            verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.equipped), style = HabiticaTheme.typography.subtitle2,
-                color = HabiticaTheme.colors.textSecondary)
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                stringResource(R.string.equip_automatically),
-                style = HabiticaTheme.typography.body2,
-                color = HabiticaTheme.colors.textPrimary
-            )
-            Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
-                userViewModel.updateUser("preferences.autoEquip", it)
+        if (showEquipment) {
+            Row(
+                Modifier
+                    .padding(horizontal = 12.dp)
+                    .padding(top = 15.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    stringResource(R.string.equipped), style = HabiticaTheme.typography.subtitle2,
+                    color = HabiticaTheme.colors.textSecondary
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    stringResource(R.string.equip_automatically),
+                    style = HabiticaTheme.typography.body2,
+                    color = HabiticaTheme.colors.textPrimary
+                )
+                Switch(checked = user?.preferences?.autoEquip == true, onCheckedChange = {
+                    userViewModel.updateUser("preferences.autoEquip", it)
+                })
+            }
+            EquipmentOverviewView(user?.items?.gear?.equipped, { type, equipped ->
+                onEquipmentTap(type, equipped, false)
             })
-        }
-        EquipmentOverviewView(user?.items?.gear?.equipped, { type, equipped ->
-            onEquipmentTap(type, equipped, false)
-        })
-        Row(
-            Modifier
-                .padding(horizontal = 12.dp)
-                .padding(top = 15.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                stringResource(R.string.costume),
-                style = HabiticaTheme.typography.subtitle2,
-                color = HabiticaTheme.colors.textSecondary
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                stringResource(R.string.wear_costume),
-                style = HabiticaTheme.typography.body2,
-                color = HabiticaTheme.colors.textPrimary
-            )
-            Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
-                userViewModel.updateUser("preferences.costume", it)
-            })
-        }
-        AnimatedVisibility(visible = user?.preferences?.costume == true) {
-            EquipmentOverviewView(user?.items?.gear?.costume, { type, equipped ->
-                onEquipmentTap(type, equipped, true)
-            })
+            Row(
+                Modifier
+                    .padding(horizontal = 12.dp)
+                    .padding(top = 15.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    stringResource(R.string.costume),
+                    style = HabiticaTheme.typography.subtitle2,
+                    color = HabiticaTheme.colors.textSecondary
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    stringResource(R.string.wear_costume),
+                    style = HabiticaTheme.typography.body2,
+                    color = HabiticaTheme.colors.textPrimary
+                )
+                Switch(checked = user?.preferences?.costume == true, onCheckedChange = {
+                    userViewModel.updateUser("preferences.costume", it)
+                })
+            }
+            AnimatedVisibility(visible = user?.preferences?.costume == true) {
+                EquipmentOverviewView(user?.items?.gear?.costume, { type, equipped ->
+                    onEquipmentTap(type, equipped, true)
+                })
+            }
         }
     }
 }

@@ -212,7 +212,11 @@ class ChatRecyclerMessageViewHolder(
         }
 
         if ((chatMessage?.flagCount ?: 0) > 0) {
-            binding.flagCountTextview.text = context.getString(R.string.message_flagged, (chatMessage?.flagCount ?: 0))
+            binding.flagCountTextview.text = if (chatMessage?.flagCount == 10) {
+                context.getString(R.string.shadow_muted_hidden)
+            } else {
+                context.resources.getQuantityString(R.plurals.flagged_count, (chatMessage?.flagCount ?: 0))
+            }
             binding.flagCountTextview.isVisible = true
             if (chatMessage?.flagCount == 1) {
                 binding.flagCountTextview.setTextColor(ContextCompat.getColor(context, R.color.text_orange))

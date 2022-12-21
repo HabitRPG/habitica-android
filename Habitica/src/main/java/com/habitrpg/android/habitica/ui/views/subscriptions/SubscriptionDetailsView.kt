@@ -79,11 +79,26 @@ class SubscriptionDetailsView : LinearLayout {
         }
 
         when (plan.paymentMethod) {
-            "Amazon Payments" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_amazon)
-            "Apple" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_apple)
-            "Google" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
-            "PayPal" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_paypal)
-            "Stripe" -> binding.paymentProcessorImageView.setImageResource(R.drawable.payment_stripe)
+            "Amazon Payments" -> {
+                binding.paymentProcessorImageView.setImageResource(R.drawable.payment_amazon)
+                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.amazon)
+            }
+            "Apple" -> {
+                binding.paymentProcessorImageView.setImageResource(R.drawable.payment_apple)
+                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.apple_pay)
+            }
+            "Google" -> {
+                binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
+                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.google_pay)
+            }
+            "PayPal" -> {
+                binding.paymentProcessorImageView.setImageResource(R.drawable.payment_paypal)
+                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.paypal)
+            }
+            "Stripe" -> {
+                binding.paymentProcessorImageView.setImageResource(R.drawable.payment_stripe)
+                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.stripe_payment)
+            }
             else -> {
                 if (plan.isGiftedSub) {
                     binding.paymentProcessorImageView.setImageResource(R.drawable.payment_gift)

@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -420,6 +421,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     private fun updateBoardDisplay() {
         if (viewModel.ownerTitle.isNotBlank()) {
             activity?.title = viewModel.ownerTitle
+            MainNavigationController.updateLabel(R.id.tasksFragment, viewModel.ownerTitle.toString())
         }
         viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]
         lifecycleScope.launchCatching {

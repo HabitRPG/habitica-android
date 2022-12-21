@@ -82,7 +82,7 @@ private fun TaskDifficultySelection(
         if (it) Color(context.getThemeColor(R.attr.colorTintedBackground)) else MaterialTheme.colors.primary
     }
     val textColor = selectedState.animateColor {
-        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_secondary)
+        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_ternary)
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp), modifier = modifier) {
         Box(

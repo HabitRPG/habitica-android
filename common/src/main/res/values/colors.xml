@@ -95,6 +95,7 @@
     <color name="yellow_1">#794b00</color>
     <color name="orange_1">#7f3300</color>
 
+    <color name="brand_0">#30283D</color>
     <color name="maroon_0">#3D2828</color>
     <color name="red_0">#3D2828</color>
     <color name="blue_0">#28373D</color>
@@ -103,6 +104,7 @@
     <color name="yellow_0">#3D3528</color>
     <color name="orange_0">#3D3028</color>
 
+    <color name="brand_00">#201C26</color>
     <color name="maroon_00">#261C1C</color>
     <color name="red_00">#261C1C</color>
     <color name="blue_00">#191D21</color>
@@ -115,6 +117,7 @@
     <color name="xpColor">@color/yellow_100</color>
     <color name="mpColor">@color/blue_100</color>
 
+    <color name="text_title">@color/gray_50</color>
     <color name="text_primary">@color/gray_50</color>
     <color name="text_secondary">@color/gray_100</color>
     <color name="text_ternary">@color/gray_200</color>

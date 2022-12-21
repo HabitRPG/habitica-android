@@ -22,7 +22,7 @@ fun CurrencyText(
     currency: String,
     value: Double,
     modifier: Modifier = Modifier,
-    decimals: Int = 2,
+    decimals: Int = 0,
     minForAbbrevation: Int = 0,
     animated: Boolean = true
 ) {

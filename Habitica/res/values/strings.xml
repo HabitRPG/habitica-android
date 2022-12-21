@@ -1287,6 +1287,12 @@
     <string name="status">Status</string>
     <string name="regular_access">Regular Access</string>
     <string name="message_flagged">Message flagged %d times.</string>
+    <string name="amazon">Amazon</string>
+    <string name="apple_pay">Apple Pay</string>
+    <string name="google_pay">Google Pay</string>
+    <string name="paypal">PayPal</string>
+    <string name="stripe_payment">Stripe</string>
+    <string name="shadow_muted_hidden">Shadow muted, hidden</string>
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
         <item quantity="one">You, %d other</item>

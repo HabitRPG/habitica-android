@@ -84,7 +84,7 @@ private fun HabitScoringSelection(
         if (it) Color(context.getThemeColor(R.attr.colorTintedBackground)) else colorResource(R.color.text_dimmed)
     }
     val textColor = selectedState.animateColor {
-        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_secondary)
+        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_ternary)
     }
     val borderColor = selectedState.animateColor {
         if (it) MaterialTheme.colors.primary else colorResource(R.color.text_dimmed)

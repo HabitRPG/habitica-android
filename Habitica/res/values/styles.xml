@@ -58,23 +58,23 @@
         <item name="colorBoxStroke">@color/brand_50</item>
         <item name="headerBackgroundColor">?attr/colorContentBackground</item>
         <item name="headerOffsetColor">?attr/colorWindowBackground</item>
-        <item name="headerTextColor">@color/text_primary</item>
+        <item name="headerTextColor">@color/text_title</item>
     </style>
 
     <style name="MainAppTheme" parent="AppTheme">
     </style>
 
     <style name="MainAppTheme.Dark">
-        <item name="colorPrimary">@color/gray_500</item>
+        <item name="colorPrimary">@color/brand_400</item>
         <item name="barColor">@color/gray_1</item>
-        <item name="colorBoxStroke">@color/gray_10</item>
+        <item name="colorBoxStroke">@color/brand_50</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
-    </style>
-
-    <style name="MainAppTheme.TaskForm">
         <item name="toolbarContentColor">@color/white</item>
-        <item name="headerTextColor">@color/white</item>
+        <item name="colorTintedBackground">@color/brand_00</item>
+        <item name="colorTintedBackgroundOffset">@color/brand_0</item>
+        <item name="colorPrimaryText">@color/brand_600</item>
+        <item name="colorPrimaryDark">@color/brand_400</item>
     </style>
 
 
@@ -400,6 +400,17 @@
         <item name="android:itemTextAppearance">@style/menu_item_color</item>
     </style>
 
+    <style name="ToolbarTitleStyle" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
+        <item name="titleTextAppearance">@style/ToolbarTitle</item>
+    </style>
+
+    <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
+        <item name="android:textColor">?headerTextColor</item>
+    </style>
+
     <style name="menu_item_color">
         <item name="android:textColor">@color/text_primary</item>
     </style>
@@ -606,8 +617,9 @@
 
     <style name="subscriptionBoxCompactTitle">
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:fontFamily">sans-serif-black</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="subscriptionBoxCompactNumber">

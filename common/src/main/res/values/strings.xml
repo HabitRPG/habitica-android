@@ -65,6 +65,10 @@
         <item quantity="one">%d Reward</item>
         <item quantity="other">%d Rewards</item>
     </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">Flagged %d tim2</item>
+        <item quantity="other">Flagged %d times, hidden</item>
+    </plurals>
     <string name="create_task_title">Create a Task</string>
     <string name="complete_task_title">Complete a Task</string>
     <string name="create_task">Create %s</string>

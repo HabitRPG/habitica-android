@@ -65,6 +65,7 @@ class HabiticaBottomNavigationView @JvmOverloads constructor(
         set(value) {
             if (field == value) return
             field = value
+            binding.addButton.isEnabled = value
             val animator = ObjectAnimator.ofFloat(0f, 1.0f)
             if (field) {
                 binding.addButtonBackground.animate()

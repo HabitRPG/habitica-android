@@ -428,7 +428,14 @@ class NavigationDrawerFragment : DialogFragment() {
                 HabiticaDrawerItem(
                     R.id.avatarOverviewFragment,
                     SIDEBAR_AVATAR,
-                    context.getString(R.string.sidebar_avatar_equipment)
+                    context.getString(R.string.sidebar_avatar)
+                )
+            )
+            items.add(
+                HabiticaDrawerItem(
+                    R.id.equipmentOverviewFragment,
+                    SIDEBAR_EQUIPMENT,
+                    context.getString(R.string.sidebar_equipment)
                 )
             )
             items.add(

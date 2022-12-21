@@ -63,7 +63,7 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         android:layout_alignParentStart="true"
-                        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                        style="@style/ToolbarTitle"
                         tools:text="Habitica"
                         android:background="@drawable/teams_title_bg"
                         android:paddingHorizontal="@dimen/spacing_large"

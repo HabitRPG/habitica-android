@@ -26,6 +26,10 @@ object MainNavigationController {
         this.controllerReference = WeakReference(navController)
     }
 
+    fun updateLabel(destinationID: Int, label: String) {
+        navController?.findDestination(destinationID)?.label = label
+    }
+
     fun navigate(transactionId: Int, args: Bundle? = null) {
         if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()

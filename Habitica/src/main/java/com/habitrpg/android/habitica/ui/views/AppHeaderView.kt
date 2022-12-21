@@ -228,20 +228,33 @@ fun AppHeaderView(
             ClassIcon(className = user?.stats?.habitClass, hasClass = user?.hasClass ?: false, modifier = Modifier.padding(4.dp))
             user?.let { UserLevelText(it) }
             Spacer(Modifier.weight(1f))
-            if (user is User && user.isSubscribed) {
+            if (user is User) {
+                if (user.isSubscribed) {
+                    CurrencyText(
+                        "hourglasses",
+                        user.hourglassCount.toDouble(),
+                        modifier = Modifier
+                            .padding(end = 12.dp)
+                            .clickable {
+                                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                            }, decimals = 0
+                    )
+                }
                 CurrencyText(
-                    "hourglasses",
-                    user.hourglassCount.toDouble(),
-                    modifier = Modifier
-                        .padding(end = 12.dp)
-                        .clickable {
-                            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
-                        }, decimals = 0)
+                    "gold",
+                    user?.stats?.gp ?: 0.0,
+                    modifier = Modifier.padding(end = 12.dp),
+                    decimals = 0
+                )
+                CurrencyText(
+                    "gems",
+                    user?.gemCount?.toDouble() ?: 0.0,
+                    modifier = Modifier.clickable {
+                        MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                    },
+                    decimals = 0
+                )
             }
-            CurrencyText("gold", user?.stats?.gp ?: 0.0, modifier = Modifier.padding(end = 12.dp), decimals = 0)
-            CurrencyText("gems", user?.gemCount?.toDouble() ?: 0.0, modifier = Modifier.clickable {
-                MainNavigationController.navigate(R.id.gemPurchaseActivity)
-            }, decimals = 0)
         }
     }
 }

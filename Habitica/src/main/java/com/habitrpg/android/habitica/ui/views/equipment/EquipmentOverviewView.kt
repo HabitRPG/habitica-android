@@ -192,10 +192,16 @@ fun AvatarCustomizationOverviewView(
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             OverviewItem(
                 stringResource(R.string.avatar_wheelchair),
-                preferences?.chair?.let { if (it.startsWith("handleless")) "chair_$it" else it })
+                preferences?.chair?.let { if (it.startsWith("handleless")) "chair_$it" else it },
+                Modifier.clickable {
+                    onCustomizationTap("chair", null)
+                })
             OverviewItem(
                 stringResource(R.string.avatar_background),
-                preferences?.background.let { "background_$it" })
+                preferences?.background.let { "background_$it" },
+                Modifier.clickable {
+                    onCustomizationTap("background", null)
+                })
             Box(Modifier.size(70.dp))
             Box(Modifier.size(70.dp))
         }

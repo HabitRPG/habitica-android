@@ -127,7 +127,7 @@ class FullProfileActivity : BaseActivity() {
                     binding.blockedDisclaimerView.visibility =
                         if (isUserBlocked()) View.VISIBLE else View.GONE
 
-                    isModerator = it?.hasPermission(Permission.USER_SUPPORT) == true
+                    isModerator = it?.hasPermission(Permission.MODERATOR) == true
                     binding.adminStatusView.isVisible = isModerator
                     if (isModerator) {
                         val member = socialRepository.retrieveMember(userID, true)

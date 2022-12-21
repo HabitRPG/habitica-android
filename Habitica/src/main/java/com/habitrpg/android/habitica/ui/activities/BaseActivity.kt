@@ -158,7 +158,6 @@ abstract class BaseActivity : AppCompatActivity() {
                         "green" -> R.style.MainAppTheme_Green
                         "teal" -> R.style.MainAppTheme_Teal
                         "blue" -> R.style.MainAppTheme_Blue
-                        "taskform" -> R.style.MainAppTheme_TaskForm
                         else -> R.style.MainAppTheme
                     }
                 )

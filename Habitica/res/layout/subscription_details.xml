@@ -171,8 +171,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/months_subscribed"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/text_secondary"/>
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:textSize="12sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -197,8 +198,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/monthly_gem_cap"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/text_secondary"/>
+                    android:fontFamily="sans-serif"
+                    android:textStyle="bold"
+                    android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -210,18 +212,20 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="2dp"
+                android:scaleType="center"
                 android:src="@drawable/hourglass_fancy_left" />
 
             <ImageView
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="2dp"
+                android:scaleType="center"
                 android:src="@drawable/hourglass_fancy_right" />
 
             <TextView
@@ -239,7 +243,9 @@
                 android:layout_below="@id/next_hourglass_textview"
                 android:layout_centerHorizontal="true"
                 android:text="@string/next_hourglass"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textSize="12sp"
                 android:textColor="@color/text_secondary"/>
         </RelativeLayout>
 
