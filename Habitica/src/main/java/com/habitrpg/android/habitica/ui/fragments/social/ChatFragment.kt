@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.ChatMessage
@@ -32,17 +34,15 @@ import kotlin.time.toDuration
 
 class ChatFragment() : BaseFragment<FragmentChatBinding>() {
 
-    constructor(viewModel: GroupViewModel) : this() {
-        this.viewModel = viewModel
-    }
-
     override var binding: FragmentChatBinding? = null
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChatBinding {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
-    var viewModel: GroupViewModel? = null
+    val viewModel: GroupViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -72,13 +72,13 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             adapter.onFlagMessage = { this.showFlagConfirmationDialog(it) }
             adapter.onReply = { setReplyTo(it) }
             adapter.onCopyMessage = { this.copyMessageToClipboard(it) }
-            adapter.onMessageLike = { viewModel?.likeMessage(it) }
+            adapter.onMessageLike = { viewModel.likeMessage(it) }
         }
 
         binding?.chatBarView?.sendAction = { sendChatMessage(it) }
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
         binding?.chatBarView?.autocompleteContext = "party"
-        binding?.chatBarView?.groupID = viewModel?.getGroupData()?.value?.id
+        binding?.chatBarView?.groupID = viewModel.getGroupData().value?.id
 
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -94,15 +94,13 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             }
         })
 
-        viewModel?.chatmessages?.observe(viewLifecycleOwner, { setChatMessages(it) })
+        viewModel.chatmessages.observe(viewLifecycleOwner, { setChatMessages(it) })
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
-            viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
+            viewModel.updateUser("flags.communityGuidelinesAccepted", true)
         }
 
-        viewModel?.user?.observe(
-            viewLifecycleOwner
-        ) {
+        viewModel.user.observeOnce(viewLifecycleOwner) {
             chatAdapter?.user = it
             binding?.chatBarView?.hasAcceptedGuidelines =
                 it?.flags?.communityGuidelinesAccepted == true
@@ -125,7 +123,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun refresh() {
-        viewModel?.retrieveGroupChat {
+        viewModel.retrieveGroupChat {
             if (isScrolledToBottom || isFirstRefresh) {
                 binding?.recyclerView?.scrollToPosition(0)
             }
@@ -140,7 +138,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
 
     private fun markMessagesAsSeen() {
         if (navigatedOnceToFragment) {
-            viewModel?.markMessagesSeen()
+            viewModel.markMessagesSeen()
         }
     }
 
@@ -166,7 +164,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             dialog.setTitle(R.string.confirm_delete_tag_title)
             dialog.setMessage(R.string.confirm_delete_tag_message)
             dialog.addButton(R.string.yes, true, true) { _, _ ->
-                viewModel?.deleteMessage(chatMessage)
+                viewModel.deleteMessage(chatMessage)
             }
             dialog.show()
         }
@@ -176,13 +174,13 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.data = chatMessages
         binding?.chatBarView?.chatMessages = chatMessages
 
-        viewModel?.gotNewMessages = true
+        viewModel.gotNewMessages = true
 
         markMessagesAsSeen()
     }
 
     private fun sendChatMessage(chatText: String) {
-        viewModel?.postGroupChat(
+        viewModel.postGroupChat(
             chatText,
             { binding?.recyclerView?.scrollToPosition(0) }
         ) { binding?.chatBarView?.message = chatText }
