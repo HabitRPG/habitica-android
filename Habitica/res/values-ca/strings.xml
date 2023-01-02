@@ -32,35 +32,17 @@
     <string name="preference_push_your_quest_has_begun">La teva Missió ha començat</string>
     <string name="preference_push_invited_to_quest">Convidat a una Missió</string>
     <!--Adding tasks-->
-    <string name="action_edit">Editar</string>
-    <string name="action_cancel">Cancelar</string>
-    <string name="login_btn">Iniciar sessió</string>
-    <string name="register_btn">Registrar-se</string>
-    <string name="username">Nom d\'usuari</string>
-    <string name="email_username">Correu electrònic o nom d\'usuari</string>
-    <string name="password">Contrasenya </string>
-    <string name="emailAddress">Correu electrònic</string>
-    <string name="confirmpassword">Confirmar contrasenya </string>
-    <string name="logout">Tancar sessió </string>
-    <string name="logout_description">Tanca la sessió del teu compte</string>
-    <string name="LoginActivityName">Benvingut</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">No estàs connectat a internet.</string>
     <string name="internal_error_api">Sembla que hi ha un problema amb el servidor. Torna-ho a intentar més tard.</string>
     <string name="authentication_error_title">Error d\'autenticació 
 </string>
     <string name="authentication_error_body">El teu nom d\'usuari i/o contrasenya era incorrecte</string>
-    <string name="login_validation_error_title">Error de validació </string>
-    <string name="login_validation_error_fieldsmissing">Has d\'omplir tots els camps.</string>
     <string name="save_changes">Guardar</string>
     <string name="copy">Copiar</string>
     <string name="notes">Notes</string>
     <string name="difficulty">Dificultat</string>
     <string name="tags">Etiquetes</string>
-    <string name="trivial">Trivial</string>
-    <string name="easy">Fàcil</string>
-    <string name="medium">Mitjana</string>
-    <string name="hard">Difícil</string>
     <string name="start_date">Data d\'inici</string>
     <string name="positive_habit_form">Positiu ( + )</string>
     <string name="negative_habit_form">Negatiu ( - )</string>
@@ -86,10 +68,6 @@
     <string name="party">Grup</string>
     <string name="chat">Xat</string>
     <string name="members">Membres</string>
-    <string name="habits">Hàbits </string>
-    <string name="dailies">Tasques diàries</string>
-    <string name="todos">Tasques pendents</string>
-    <string name="rewards">Recompenses </string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="quest">Missió</string>
@@ -151,7 +129,6 @@
     <string name="guild">Gremi</string>
     <string name="leave">Abandonar</string>
     <string name="join">Unir-se</string>
-    <string name="gems">Gemmes</string>
     <string name="delete">Eliminar</string>
     <string name="name">Nom</string>
     <string name="description">Descripció</string>
@@ -179,8 +156,6 @@
     <string name="quests">Missions</string>
     <string name="pets">Mascotes</string>
     <string name="mounts">Montures</string>
-    <string name="armoireEquipment">Has trobat una peça d\'equipament rar a l\'Armari: %s! Genial!</string>
-    <string name="armoireFood">Rebusques a l\'Armari i trobes %1$s %2$s. Què fa això aquí?</string>
     <string name="armoireExp">Et baralles amb l\'Armari i ganes experiència. Va!</string>
     <string name="sell">Ven (%d Or)</string>
     <string name="hatch_with_potion">Eclosione-ho amb una poció</string>
@@ -196,7 +171,6 @@
     <string name="notification_pet_fed">Has alimentat el teu %s!</string>
     <string name="world_quest">Missió Mundial</string>
     <string name="empty_items">No tens cap %s</string>
-    <string name="user_level">Nivell %d</string>
     <string name="user_level_with_class">Nivell %1$d %2$s</string>
     <string name="warrior">Guerrer</string>
     <string name="rogue">Murri</string>
@@ -235,7 +209,6 @@
     <string name="timeTravelers">Viatgers del Temps</string>
     <string name="seasonalShop">Botiga Estacional</string>
     <string name="party_invite">Desbloquejar convidant a amics</string>
-    <string name="gold_plural">or</string>
     <string name="chat_message_copied">Missatge copiat al porta-retalls</string>
     <string name="edit_tag_btn_edit">Editar</string>
     <string name="confirm_delete_tag_title">Estàs segur?</string>
@@ -292,10 +265,6 @@
     <string name="subscription_status">Estat de la subscripció</string>
     <string name="challenge_leave_title">Abandonar Repte</string>
     <string name="my_challenges">Els meus Reptes</string>
-    <string name="daily">Tasca Diària</string>
-    <string name="habit">Hàbit</string>
-    <string name="reward">Recompensa</string>
-    <string name="todo">Tasca Pendent</string>
     <string name="official">Oficial</string>
     <string name="challenge">Repte</string>
     <string name="not_part_of_a_challenge">Ara mateix no formes part de cap Repte!</string>

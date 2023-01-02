@@ -1,19 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="sidebar_tasks">Zadaci</string>
-  <string name="sidebar_skills">Vještine</string>
-  <string name="sidebar_section_social">Društvo</string>
-  <string name="sidebar_inbox">Poruke</string>
-  <string name="sidebar_tavern">Krčma</string>
-  <string name="sidebar_party">Družina</string>
-  <string name="sidebar_guilds">Cehovi</string>
-  <string name="sidebar_challenges">Izazovi</string>
-  <string name="sidebar_section_inventory">Inventar</string>
-  <string name="sidebar_avatar">Avatar</string>
-  <string name="sidebar_equipment">Oprema</string>
-  <string name="sidebar_stable">Štala</string>
-  <string name="sidebar_news">Vijesti</string>
+    <string name="sidebar_tasks">Zadaci</string>
+    <string name="sidebar_skills">Vještine</string>
+    <string name="sidebar_section_social">Društvo</string>
+    <string name="sidebar_inbox">Poruke</string>
+    <string name="sidebar_tavern">Krčma</string>
+    <string name="sidebar_party">Družina</string>
+    <string name="sidebar_guilds">Cehovi</string>
+    <string name="sidebar_challenges">Izazovi</string>
+    <string name="sidebar_section_inventory">Inventar</string>
+    <string name="sidebar_avatar">Uređivanje Avatara</string>
+    <string name="sidebar_equipment">Oprema</string>
+    <string name="sidebar_stable">Ljubimci i jahače životinje</string>
+    <string name="sidebar_news">Vijesti</string>
     <string name="sidebar_about">O nama</string>
-  <string name="sidebar_shops">Dućani</string>
-  <string name="sidebar_stats">Statistika</string>
+    <string name="sidebar_shops">Dućani</string>
+    <string name="sidebar_stats">Statistika</string>
+    <string name="sidebar_gems">Kupi dragulje</string>
+    <string name="sidebar_subscription">Pretplata</string>
 </resources>

@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">Twoja misja się rozpoczęła</string>
     <string name="preference_push_invited_to_quest">Zaproszono Cię na misję</string>
     <!--Adding tasks-->
-    <string name="action_edit">Edytuj</string>
-    <string name="action_cancel">Anuluj</string>
-    <string name="login_btn">Logowanie</string>
-    <string name="register_btn">Rejestracja</string>
-    <string name="username">Nazwa użytkownika</string>
-    <string name="email_username">E-mail lub nazwa użytkownika</string>
-    <string name="password">Hasło</string>
-    <string name="emailAddress">Adres e-mail</string>
-    <string name="confirmpassword">Potwierdź hasło</string>
-    <string name="logout">Wyloguj</string>
-    <string name="logout_description">Wyloguj się</string>
-    <string name="LoginActivityName">Witaj</string>
-    <string name="about_title">O programie</string>
     <string name="about_libraries">Biblioteki</string>
     <string name="about_habitica_open_source">Habitica jest dostępna jako otwarte oprogramowanie na platformie Github</string>
     <string name="about_rate_our_app">Oceń aplikację</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">Utracono połączenie z serwerem</string>
     <string name="authentication_error_title">Błąd uwierzytelnienia</string>
-    <string name="login_validation_error_title">Błąd walidacji</string>
-    <string name="login_validation_error_fieldsmissing">Musisz wypełnić wszystkie pola.</string>
     <string name="save_changes">Zapisz</string>
     <string name="copy">Kopiuj</string>
     <string name="notes">Notatki</string>
     <string name="difficulty">Trudność</string>
     <string name="tags">Tagi</string>
-    <string name="trivial">Trywialny</string>
-    <string name="easy">Łatwy</string>
-    <string name="medium">Średni</string>
-    <string name="hard">Trudny</string>
     <string name="start_date">Data rozpoczęcia</string>
     <string name="positive_habit_form">Pozytywne ( + )</string>
     <string name="negative_habit_form">Negatywne ( - )</string>
@@ -102,10 +83,6 @@
     <string name="party">Drużyna</string>
     <string name="chat">Czat</string>
     <string name="members">Członkowie</string>
-    <string name="habits">Nawyki</string>
-    <string name="dailies">Codzienne</string>
-    <string name="todos">Do Zrobienia</string>
-    <string name="rewards">Nagrody</string>
     <string name="yes">Tak</string>
     <string name="no">Nie</string>
     <string name="quest">Misja</string>
@@ -183,7 +160,6 @@
     <string name="guild">Gildia</string>
     <string name="leave">Opuść</string>
     <string name="join">Dołącz</string>
-    <string name="gems">Klejnoty</string>
     <string name="delete">Usuń</string>
     <string name="name">Nazwa</string>
     <string name="description">Opis</string>
@@ -214,8 +190,6 @@
     <string name="pets">Zwierzaki</string>
     <string name="mounts">Wierzchowce</string>
     <string name="quest_items_found">Znalazłeś %d przedmiot(y/ów) z zadania</string>
-    <string name="armoireEquipment">Znalazłeś element rzadkiego Ekwipunku w Skrzyni: %s! Super!</string>
-    <string name="armoireFood">Przeszukujesz Skrzynię i znajdujesz %1$s %2$s. Co to tam robi?</string>
     <string name="armoireExp">Mocujesz się ze Skrzynią i zyskujesz Doświadczenie. A masz!</string>
     <string name="sell">Sprzedaj (%d Złoto)</string>
     <string name="hatch_with_potion">Wykluj za pomocą mikstury</string>
@@ -233,12 +207,10 @@
     <string name="world_quest">Zadanie ogólnoświatowe</string>
     <string name="inn_description">Potrzebujesz przerwy\? Zamelduj się w Karczmie Daniela, aby wstrzymać niektóre z cięższych elementów Habitiki.
 \n
-\n • Pominięte Codzienne nie zadadzą Ci obrażeń.
+\n • Twoje pominięte Codzienne nie zadadzą Ci obrażeń(bossowie nadal zadadzą Ci obrażenia za pominięte Codzienne innych członków drużyny).
 \n • Zadania nie stracą serii ani nie osłabią się w kolorze
-\n • Bossowie nie zadadzą Ci obrażeń za pominięte Codzienne
 \n • Twoje obrażenia dla bossa albo misje zbierackie zostaną jako oczekujące do końca dnia</string>
     <string name="empty_items">Nie posiadasz %s</string>
-    <string name="user_level">poz %d</string>
     <string name="user_level_with_class">poz %1$d %2$s</string>
     <string name="warrior">Wojownik</string>
     <string name="rogue">Łotrzyk</string>
@@ -282,7 +254,6 @@
     <string name="login_incentive">Odblokuj regularnie odwiedzając Habitikę</string>
     <string name="create_account">Odblokuj tworząc konto</string>
     <string name="successful_purchase">Kupiono %1$s</string>
-    <string name="gold_plural">złoto</string>
     <string name="chat_message_copied">Wiadomość skopiowana do schowka</string>
     <string name="edit_tag_btn_edit">Edytuj</string>
     <string name="confirm_delete_tag_title">Na pewno\?</string>
@@ -304,7 +275,7 @@
     <string name="google_services_missing">Nie znaleziono usługi Google Play.</string>
     <string name="gem_purchase_toolbartitle">Zamów</string>
     <string name="gem_purchase_title">Kupując klejnoty, wspierasz deweloperów Habitiki i pozwalasz projektowi istnieć</string>
-    <string name="gem_purchase_subtitle">Klejnoty pozwalają dokupić ekstra dodatki do konta, na przykład:</string>
+    <string name="gem_purchase_subtitle">Klejnoty pozwalają dokupić ekstra dodatki do konta</string>
     <string name="gem_purchase_listitem1">Świetne kostiumy dla awatara</string>
     <string name="gem_purchase_listitem2">Genialne tła</string>
     <string name="gem_purchase_listitem3">Zadania, w których nagrodą są jaja</string>
@@ -358,10 +329,6 @@
     <string name="remove_tasks">Usuń</string>
     <string name="keep_tasks">Zachowaj</string>
     <string name="my_challenges">Moje wyzwania</string>
-    <string name="daily">Codzienny </string>
-    <string name="habit">Nawyk</string>
-    <string name="reward">Nagroda</string>
-    <string name="todo">Do Zrobienia</string>
     <string name="official">Oficjalne</string>
     <string name="challenge">Wyzwanie</string>
     <string name="not_part_of_a_challenge">Obecnie nie uczestniczysz w żadnym wyzwaniu!</string>
@@ -384,7 +351,6 @@
     <string name="owned">Posiadane</string>
     <string name="not_owned">Nieposiadane</string>
     <string name="login_btn_fb">Zaloguj z Facebookiem</string>
-    <string name="login_btn_google">Zaloguj z Google</string>
     <string name="action_back">Wróć</string>
     <string name="randomize">Losowy</string>
     <string name="avatar_extras">Dodatki</string>
@@ -432,7 +398,7 @@
     <string name="welcome_back">Witaj ponownie</string>
     <string name="yesterdaililes_prompt">Zaznacz wykonane wczoraj Codzienne:</string>
     <string name="start_day">Rozpocznij mój dzień</string>
-    <string name="leave_party_confirmation">Jesteś pewien, że chcesz opuścić drużynę ?</string>
+    <string name="leave_party_confirmation">Jesteś pewien, że chcesz opuścić tę drużynę \?</string>
     <string name="pending">Oczekujące</string>
     <string name="accepted">Zaakceptowane</string>
     <string name="declined">Odrzucone</string>
@@ -474,12 +440,11 @@
     <string name="come_back_soon">Wróć wkrótce!</string>
     <string name="level">Poziom</string>
     <string name="streak_label">21-dniowe serie</string>
-    <string name="stats">Statystyki</string>
     <string name="fix_character_description">Jeśli napotkałeś buga bądź popełniłeś błąd, który niesłusznie zmienił twoją postać, możesz ręcznie poprawić te wartości tutaj.</string>
     <string name="fix_character_values">Napraw wartości postaci</string>
     <string name="saving">Zapisywanie</string>
     <string name="forgot_password_title">Wyślij email z linkiem do zresetowania hasła</string>
-    <string name="forgot_password_description">Podaj adres email, którego użyłeś podczas rejestrowania swojego konta w Habitice.</string>
+    <string name="forgot_password_description">Podaj swoją nazwę użytkownika lub adres email, których użyłeś podczas rejestrowania swojego konta w Habitice.</string>
     <string name="ok">OK</string>
     <string name="profile">Profil</string>
     <string name="profile_summary">Edytuj Twój publiczny profil.</string>
@@ -603,7 +568,7 @@
     <string name="equipment_con">KON:</string>
     <string name="equipment_int">INT:</string>
     <string name="equipment_per">PER:</string>
-    <string name="warrior_description">Wojownicy zdobywają częstsze uderzenia krytyczne oraz zadają ciężkie obrażenia bossom. Graj jako Wojownik, jeżeli chcesz łatwo pokonywać potwory! Wojownik korzysta z wysokich punktów Siły.</string>
+    <string name="warrior_description">Wojownicy zdobywają częstsze uderzenia krytyczne oraz zadają ciężkie obrażenia bossom. Graj jako Wojownik, jeżeli chcesz łatwo pokonywać potwory! Wojownicy korzystają z wysokich punktów Siły.</string>
     <string name="daily_tip_5">Weź kilka głębokich oddechów, aby się dobrze skupić. Dasz radę!</string>
     <string name="daily_tip_8">Możesz zmienić trudność zadania, żeby uzyskać większe nagrody za trudniejsze zadania!</string>
     <string name="staff">Personel</string>
@@ -630,7 +595,7 @@
     <string name="timetravelers_closed_description">"Zdobądź jedną Mistyczną Klepsydrę za każde, pełne trzy miesiące subskrypcji, a następnie używaj je aby odblokować przedmioty z limitowanych edycji, chowańce i wierzchowce z przeszłości…  i przyszłości!"</string>
     <string name="subscribe_for_hourglasses">Subskrybuj w celu uzyskania Klepsydr</string>
     <string name="delete_oauth_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Wykorzystane lub wydane klejnoty nie będą zwrócone. Jeśli masz absolutną pewność, wpisz poniżej słowo DELETE.</string>
-    <string name="delete_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Wykorzystane lub wydane klejnoty nie będą zwrócone. Jeśli masz całkowitą pewność, wpisz do pola tekstowego poniżej swoje hasło.</string>
+    <string name="delete_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Nie otrzymasz zwrotu za posiadane lub wydane klejnoty. Jeśli masz całkowitą pewność, wpisz do pola tekstowego poniżej swoje hasło.</string>
     <string name="reset_account_description">OSTRZEŻENIE! Ta czynność resetuje wiele miejsc w Twoim koncie. Jest ona wysoce niezalecana, chociaż może okazać się przydatna zwłaszcza dla osób początkujących, których czas gry jest niewielki.
 \n
 \nStracisz wszystkie poziomy, całe złoto i punkty doświadczenia. Wszystkie Twoje zadania (z wyjątkiem tych z Wyzwań) zostaną na zawsze usunięte, razem z historią ich wypełnienia. Stracisz także wyposażenie, choć będziesz mógł je kupić ponownie, włączając w to przedmioty limitowane i tylko dla subskrybentów, które już posiadasz (aby odkupić wyposażenie przeznaczone dla konkretnej klasy, musisz do niej przynależeć). Zachowasz swoją klasę, chowańce i wierzchowce. Być może lepiej będzie jeśli użyjesz Kuli Odrodzenia – jest to bezpieczniejsze i zachowa wszystkie Twoje zadania oraz ekwipunek.</string>
@@ -670,7 +635,6 @@
     <string name="ago_weeks">%d tygodni temu</string>
     <string name="party_invite_short">Zaproś Znajomych</string>
     <string name="login_incentive_short">Odwiedzaj Habitica regularnie</string>
-    <string name="gold_capitalized">Złoto</string>
     <string name="create_account_short">stwórz konto</string>
     <string name="login_incentive_short_count">%d Wizyt</string>
     <string name="subscribe_listitem5">Podwój Łup</string>
@@ -725,8 +689,6 @@
     <string name="scheduling">Harmonogram</string>
     <string name="every">każdego</string>
     <string name="repeats">Sposób powtarzania</string>
-    <string name="weekly">Cotygodniowy</string>
-    <string name="monthly">Co miesiąc</string>
     <string name="assigned_stat">Przypisane Atrybuty</string>
     <string name="password_changed">Hasło zostało poprawnie zmienione</string>
     <string name="adjust_streak">Dostosuj Serię</string>
@@ -791,14 +753,32 @@
     <string name="cost">Koszt</string>
     <string name="joined_guild">Dołączyłeś do gildii</string>
     <string name="left_guild">Opuściłeś gildię</string>
-    <string name="leave_guild_confirmation">Czy chcesz opuścić gildię i zachować lub porzucić wyzwania\?</string>
+    <string name="leave_guild_confirmation">Czy jesteś pewny, że chcesz opuścić tę gildię\?</string>
     <string name="leave_guild">Opuść gildię</string>
     <string name="report_violation">Zgłoś naruszenie</string>
     <string name="i_agree_to_follow_the_guidelines">Zgadzam się stosować się do regulaminu</string>
     <string name="guild_summary">Opis gildii</string>
     <string name="setup_task_habit_2_notes">Lub usuń go z ekranu edycji</string>
-    <string name="are_you_sure">Na pewno\?</string>
     <string name="invite_to_party">Zaproś do drużyny</string>
     <string name="guild_bank">Bank gildii</string>
     <string name="guild_members">Członkowie gildii</string>
+    <string name="quest_party_required_title">Zanim zaczniesz Misję, musisz należeć do drużyny</string>
+    <string name="quest_party_required_description">Kiedy będziesz w drużynie, możesz zmierzyć się z Misją samodzielnie lub zaprosić znajomych do Misji!</string>
+    <string name="armoireEquipment_new">Znajdujesz rzadki ekwipunek w Skrzyni!</string>
+    <string name="armoireFood_new">Szperasz w Skrzyni i znajdujesz jedzenie. Co to tutaj robi\?</string>
+    <string name="sell_no_price">Sprzedaj</string>
+    <string name="create_new_party">Stwórz nową drużynę</string>
+    <string name="class_confirmation_price">Czy chcesz zmienić swoją klasę na %s za %d klejnotów\?</string>
+    <string name="next_hourglass">Następna klepsydra</string>
+    <string name="guild_challenges">Bierzesz udział w wyzwaniu gildii</string>
+    <string name="party_challenges">Bierzesz udział w wyzwaniu drużyny</string>
+    <string name="use_item">Użyj przedmiotu na członku drużyny</string>&gt;
+    <string name="leave_delete_tasks">Zrezygnuj i usuń Zadania</string>
+    <string name="rejoin_party">Nie będziesz w stanie dołączyć do tej drużyny ponownie, chyba że otrzymasz ponownie zaproszenie.</string>
+    <string name="reloaded_content">Odświeżono zawartość</string>
+    <string name="forgot_password_hint_example">np. habitrabbit lub gryphon@example.com</string>
+    <string name="won_achievement_description"><b>%s</b> wybrał(-a) Cię jako zwycięzcę! Twoja wygrana została zapisana w twoich Osiągnięciach.</string>
+    <string name="available_for">Dostępne dla %s</string>
+    <string name="unsaved_changes">Niezapisane zmiany</string>
+    <string name="discard_changes_to_task_message">Jesteś pewien, że chcesz porzucić zmiany w tym zadaniu\?</string>
 </resources>

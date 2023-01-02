@@ -32,34 +32,16 @@
     <string name="preference_push_your_quest_has_begun">Expediția ta a inceput</string>
     <string name="preference_push_invited_to_quest">Invitat în Expediție</string>
     <!--Adding tasks-->
-    <string name="action_edit">Editare</string>
-    <string name="action_cancel">Anulare</string>
-    <string name="login_btn">Autentificare</string>
-    <string name="register_btn">Inregistrare</string>
-    <string name="username">Nume Utilizator</string>
-    <string name="email_username">E-mail sau Nume Utilizator</string>
-    <string name="password">Parolă</string>
-    <string name="emailAddress">Adresa e-mail</string>
-    <string name="confirmpassword">Confrimare parolă</string>
-    <string name="logout">Deconectare</string>
-    <string name="logout_description">Deconectați-vă din cont</string>
-    <string name="LoginActivityName">Bun venit</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Nu sunteți conectat(ă) la internet.</string>
     <string name="internal_error_api">Se pare că există o problemă cu serverul. Încercați mai târziu.</string>
     <string name="authentication_error_title">Eroare de autentificare</string>
     <string name="authentication_error_body">Numele de utilizator și / sau parola dvs. au fost incorecte.</string>
-    <string name="login_validation_error_title">Eroare de validare</string>
-    <string name="login_validation_error_fieldsmissing">Trebuie să completați toate câmpurile.</string>
     <string name="save_changes">Salvează</string>
     <string name="copy">Copiază</string>
     <string name="notes">undefined</string>
     <string name="difficulty">Dificultate</string>
     <string name="tags">Etichete</string>
-    <string name="trivial">Banal</string>
-    <string name="easy">Ușor</string>
-    <string name="medium">Mediu</string>
-    <string name="hard">Greu</string>
     <string name="start_date">Data de început</string>
     <string name="positive_habit_form">Pozitiv ( + )</string>
     <string name="negative_habit_form">Negativ ( - )</string>
@@ -91,10 +73,6 @@
     <string name="party">Ceată</string>
     <string name="chat">Chat</string>
     <string name="members">Membri</string>
-    <string name="habits">Obiceiuri</string>
-    <string name="dailies">Sarcini Zilnice</string>
-    <string name="todos">De-Făcut</string>
-    <string name="rewards">Recompense</string>
     <string name="yes">Da</string>
     <string name="no">Nu</string>
     <string name="quest">Expediție</string>
@@ -167,7 +145,6 @@
     <string name="guild">Breaslă</string>
     <string name="leave">Părăsește</string>
     <string name="join">Alătură-te</string>
-    <string name="gems">Nestemate</string>
     <string name="delete">Șterge</string>
     <string name="name">Nume</string>
     <string name="description">Descriere</string>
@@ -197,8 +174,6 @@
     <string name="quests">Expediții</string>
     <string name="pets">Animale de Companie</string>
     <string name="mounts">Animale de Călărit</string>
-    <string name="armoireEquipment">Ai găsit o piesă rară de Echipament în Cufăr: %s! Super!</string>
-    <string name="armoireFood">Scotocești prin Cufăr și găsești %1$s %2$s. Ce caută asta aici?</string>
     <string name="armoireExp">Te lupți împotriva cufărului și primești Experiență. Ia-o!</string>
     <string name="sell">Vinde (%d Aur)</string>
     <string name="hatch_with_potion">Eclozează cu o poțiune</string>
@@ -221,7 +196,6 @@
 • Căpcăunii nu-ți vor aduce prejudicii pentru Cotidienele ratate\n
 • Deteriorarea Căpcăunilor tăi și obiectele din expedițiile de colecție vor rămâne iminente până ieși din Han</string>
     <string name="empty_items">Nu ai deloc %s</string>
-    <string name="user_level">Nvl %d</string>
     <string name="user_level_with_class">Nvl %1$d%2$s</string>
     <string name="warrior">Luptător</string>
     <string name="rogue">Bandit</string>
@@ -265,7 +239,6 @@
     <string name="login_incentive">Deblochează logându-te în Habitica regulat</string>
     <string name="create_account">Deblochează creând un cont nou</string>
     <string name="successful_purchase">Ai cumpărat %1$s</string>
-    <string name="gold_plural">aur</string>
     <string name="chat_message_copied">Mesaj copiat în Clipboard</string>
     <string name="edit_tag_btn_edit">Editează</string>
     <string name="confirm_delete_tag_title">Ești sigur(ă)?</string>
@@ -325,10 +298,6 @@
     <string name="remove_tasks">Elimină</string>
     <string name="keep_tasks">Păstrează</string>
     <string name="my_challenges">Provocările mele</string>
-    <string name="daily">Zilnic</string>
-    <string name="habit">Obicei</string>
-    <string name="reward">Recompensă</string>
-    <string name="todo">De-Făcut</string>
     <string name="official">Oficial</string>
     <string name="challenge">Provocare</string>
     <string name="not_part_of_a_challenge">Nu faci parte din nicio Provocare acum!</string>
@@ -352,7 +321,6 @@
     <string name="owned">Deținut</string>
     <string name="not_owned">Nedeținut</string>
     <string name="login_btn_fb">Logare cu Facebook</string>
-    <string name="login_btn_google">Logare cu Google</string>
     <string name="action_back">Înapoi</string>
     <string name="randomize">Randomizează</string>
     <string name="avatar_extras">Extra</string>
@@ -451,7 +419,6 @@
     <string name="come_back_soon">Revino în curând!</string>
     <string name="level">Nivel</string>
     <string name="streak_label">Șiruri de 21 de Zile</string>
-    <string name="stats">Statistici</string>
     <string name="fix_character_description">Dacă ai întâlnit o eroare sau ai făcut o greșeală care ți-a modificat pe nedrept personajul, poți corecta manual acest lucru aici. </string>
     <string name="fix_character_values">Corectează Valorile Personajului</string>
     <string name="saving">Se salvează</string>

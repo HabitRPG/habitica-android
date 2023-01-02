@@ -32,34 +32,16 @@
     <string name="preference_push_your_quest_has_begun">A küldetésed elkezdődött.</string>
     <string name="preference_push_invited_to_quest">Meghívva egy küldetésre</string>
     <!--Adding tasks-->
-    <string name="action_edit">Szerkesztés</string>
-    <string name="action_cancel">Mégse</string>
-    <string name="login_btn">Bejelentkezés</string>
-    <string name="register_btn">Regisztráció</string>
-    <string name="username">Felhasználónév</string>
-    <string name="email_username">E-mail vagy felhasználónév</string>
-    <string name="password">Jelszó</string>
-    <string name="emailAddress">E-mail cím</string>
-    <string name="confirmpassword">Jelszó megerősítése</string>
-    <string name="logout">Kijelentkezés</string>
-    <string name="logout_description">Kijelentkezés a fiókodból</string>
-    <string name="LoginActivityName">Üdvözlünk</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Nem kapcsolódtál az internethez.</string>
     <string name="internal_error_api">Valamilyen probléma van a szerverrel. Próbáld újra később!</string>
     <string name="authentication_error_title">Hitelesítési hiba</string>
     <string name="authentication_error_body">A felhasználónév és/vagy a jelszó hibás.</string>
-    <string name="login_validation_error_title">Érvényesítési hiba</string>
-    <string name="login_validation_error_fieldsmissing">Minden mezőt ki kell töltened.</string>
     <string name="save_changes">Mentés</string>
     <string name="copy">Másolás</string>
     <string name="notes">Jegyzetek</string>
     <string name="difficulty">Nehézség</string>
     <string name="tags">Címkék</string>
-    <string name="trivial">Triviális</string>
-    <string name="easy">Könnyű</string>
-    <string name="medium">Közepes</string>
-    <string name="hard">Nehéz</string>
     <string name="start_date">Kezdés dátuma</string>
     <string name="positive_habit_form">Pozitív ( + )</string>
     <string name="negative_habit_form">Negatív ( - )</string>
@@ -95,10 +77,6 @@
     <string name="party">Csapat</string>
     <string name="chat">Beszélgetés</string>
     <string name="members">Tagok</string>
-    <string name="habits">Szokások</string>
-    <string name="dailies">Napi feladatok</string>
-    <string name="todos">Tennivalók</string>
-    <string name="rewards">Jutalmak</string>
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
     <string name="quest">Küldetés</string>
@@ -144,7 +122,6 @@
     <string name="guild">Egyesületek</string>
     <string name="leave">KIlépés</string>
     <string name="join">Csatlakozás</string>
-    <string name="gems">Drágakövek</string>
     <string name="delete">Törlés</string>
     <string name="name">Név</string>
     <string name="description">Leírás</string>
@@ -173,7 +150,6 @@
     <string name="feed">Etetés</string>
     <string name="close">Bezárás</string>
     <string name="share">Megosztás</string>
-    <string name="user_level">%d. szint</string>
     <string name="warrior">Harcos</string>
     <string name="rogue">Tolvaj</string>
     <string name="mage">Mágus</string>
@@ -190,7 +166,6 @@
     <string name="confirm">Megerősítés</string>
     <string name="market">Piac</string>
     <string name="timeTravelers">Időutazók</string>
-    <string name="gold_plural">arany</string>
     <string name="edit_tag_btn_edit">Szerkesztés</string>
     <string name="confirm_delete_tag_title">Biztos vagy benne?</string>
     <string name="confirm_delete_tag_message">Biztos, hogy törölni akarod?</string>
@@ -220,10 +195,6 @@
     <string name="remove_tasks">Eltávolítás</string>
     <string name="keep_tasks">Megtartás</string>
     <string name="my_challenges">Kihívásaim</string>
-    <string name="daily">Napi feladat</string>
-    <string name="habit">Szokás</string>
-    <string name="reward">Jutalom</string>
-    <string name="todo">Teendő</string>
     <string name="official">Hivatalos</string>
     <string name="challenge">Kihívás</string>
     <string name="not_part_of_a_challenge">Jelenleg nem veszel részt egy kihívásban sem.</string>
@@ -234,7 +205,6 @@
     <string name="all">Mind</string>
     <string name="owned">Saját</string>
     <string name="login_btn_fb">Bejelentkezés Facebookkal</string>
-    <string name="login_btn_google">Bejelentkezés Google-vel</string>
     <string name="action_back">Vissza</string>
     <string name="randomize">Véletlenszerű</string>
     <string name="avatar_extras">Extrák</string>

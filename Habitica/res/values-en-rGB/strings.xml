@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">Your Quest has Begun</string>
     <string name="preference_push_invited_to_quest">Invited to Quest</string>
     <!--Adding tasks-->
-    <string name="action_edit">Edit</string>
-    <string name="action_cancel">Cancel</string>
-    <string name="login_btn">Log in</string>
-    <string name="register_btn">Register</string>
-    <string name="username">Username</string>
-    <string name="email_username">Email or Username</string>
-    <string name="password">Password</string>
-    <string name="emailAddress">Email address</string>
-    <string name="confirmpassword">Confirm password</string>
-    <string name="logout">Log out</string>
-    <string name="logout_description">Log out of your account</string>
-    <string name="LoginActivityName">Welcome</string>
-    <string name="about_title">About</string>
     <string name="about_libraries">Libraries</string>
     <string name="about_habitica_open_source">Habitica is available as open source software on Github</string>
     <string name="about_rate_our_app">Rate our App</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">Server connection lost</string>
     <string name="authentication_error_title">Authentication Error</string>
-    <string name="login_validation_error_title">Validation Error</string>
-    <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
     <string name="save_changes">Save</string>
     <string name="copy">Copy</string>
     <string name="notes">Notes</string>
     <string name="difficulty">Difficulty</string>
     <string name="tags">Tags</string>
-    <string name="trivial">Trivial</string>
-    <string name="easy">Easy</string>
-    <string name="medium">Medium</string>
-    <string name="hard">Hard</string>
     <string name="start_date">Start Date</string>
     <string name="positive_habit_form">Positive ( + )</string>
     <string name="negative_habit_form">Negative ( - )</string>
@@ -100,10 +81,6 @@
     <string name="party">Party</string>
     <string name="chat">Chat</string>
     <string name="members">Members</string>
-    <string name="habits">Habits</string>
-    <string name="dailies">Dailies</string>
-    <string name="todos">To Do\'s</string>
-    <string name="rewards">Rewards</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="quest">Quest</string>
@@ -181,7 +158,6 @@
     <string name="guild">Guild</string>
     <string name="leave">Leave</string>
     <string name="join">Join</string>
-    <string name="gems">Gems</string>
     <string name="delete">Delete</string>
     <string name="name">Name</string>
     <string name="description">Description</string>
@@ -210,8 +186,6 @@
     <string name="quests">Quests</string>
     <string name="pets">Pets</string>
     <string name="mounts">Mounts</string>
-    <string name="armoireEquipment">You found %s in the Armoire</string>
-    <string name="armoireFood">You rummage in the Armoire and find %1$s %2$s. What\'s that doing in here?</string>
     <string name="armoireExp">You wrestle with the Armoire and gain Experience. Take that!</string>
     <string name="sell">Sell (%d Gold)</string>
     <string name="hatch_with_potion">Hatch with potion</string>
@@ -227,7 +201,6 @@
     <string name="notification_pet_fed">You fed your %s!</string>
     <string name="world_quest">World Quest</string>
     <string name="empty_items">You don\'t have any %s</string>
-    <string name="user_level">Lvl %d</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
     <string name="warrior">Warrior</string>
     <string name="rogue">Rogue</string>
@@ -267,7 +240,6 @@
     <string name="seasonalShop">Seasonal Shop</string>
     <string name="party_invite">Unlock by inviting friends</string>
     <string name="successful_purchase">Purchased %1$s</string>
-    <string name="gold_plural">gold</string>
     <string name="chat_message_copied">Message copied to Clipboard</string>
     <string name="edit_tag_btn_edit">Edit</string>
     <string name="confirm_delete_tag_title">Are you sure?</string>
@@ -345,10 +317,6 @@
     <string name="remove_tasks">Remove</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
-    <string name="daily">Daily</string>
-    <string name="habit">Habit</string>
-    <string name="reward">Reward</string>
-    <string name="todo">To Do</string>
     <string name="official">Official</string>
     <string name="challenge">Challenge</string>
     <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
@@ -371,7 +339,6 @@
     <string name="owned">Owned</string>
     <string name="not_owned">Not owned</string>
     <string name="login_btn_fb">Log in with Facebook</string>
-    <string name="login_btn_google">Log in with Google</string>
     <string name="action_back">Back</string>
     <string name="randomize">Randomise</string>
     <string name="avatar_extras">Extras</string>
@@ -511,7 +478,6 @@
     <string name="come_back_soon">Come back soon!</string>
     <string name="level">Level</string>
     <string name="streak_label">21-Day Streaks</string>
-    <string name="stats">Stats</string>
     <string name="fix_character_description">If you’ve encountered a bug or made a mistake that unfairly changed your character, you can manually correct those values here.</string>
     <string name="fix_character_values">Fix Character Values</string>
     <string name="saving">Saving</string>
@@ -749,7 +715,6 @@
     <string name="preference_push_party_activity">Party Activity</string>
     <string name="search_hint">Search tasks</string>
     <string name="search">Search</string>
-    <string name="repeat_daily">Daily</string>
     <string name="complete">Complete</string>
     <string name="reject">Reject</string>
     <string name="accept">Accept</string>
@@ -792,8 +757,6 @@
     <string name="app_theme">App Theme</string>
     <string name="share_challenge_with">Share Challenge with</string>
     <string name="details">Details</string>
-    <string name="create_task">Create %s</string>
-    <string name="new_task">New Task</string>
     <string name="confirm_deletion">Confirm deletion</string>
     <string name="switch_to_grid_view">Switch to grid view</string>
     <string name="switch_to_list_view">Switch to list view</string>
@@ -808,7 +771,6 @@
     <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
     <string name="not_now">Not right now</string>
     <string name="delete_task">Delete Task</string>
-    <string name="are_you_sure">Are you sure\?</string>
     <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
     <string name="x_class">%s Class</string>
     <string name="become_x">Become a %s</string>
@@ -824,8 +786,6 @@
     <string name="scheduling">Scheduling</string>
     <string name="every">Every</string>
     <string name="repeats">Repeats</string>
-    <string name="weekly">Weekly</string>
-    <string name="monthly">Monthly</string>
     <string name="assigned_stat">Assigned Stat</string>
     <string name="password_changed">Password successfully changed</string>
     <string name="adjust_streak">Adjust Streak</string>
@@ -942,7 +902,6 @@
     <string name="hourglasses_description">Mystic Hourglasses are an extremely rare form of currency you can only receive for subscribing to Habitica for three consecutive months or more. They are used in the Time Traveler’s shop to buy past gear sets, pets, mounts, animated backgrounds, or even special quests.
 \n
 \nYou can receive up to four Mystic Hourglasses a year. The time they are rewarded is based on your subscription renewal schedule. They are sent out on the first day of a new month after your last subscription payment that qualified you for an hourglass. See the [Subscription] page for more details.</string>
-    <string name="mystic_hourglasses">Mystic Hourglasses</string>
     <string name="subscriber_currency">Subscriber Currency</string>
     <string name="game_mechanics">Game Mechanics</string>
     <string name="common_questions">Common Questions</string>
@@ -1003,7 +962,6 @@
     <string name="level_unabbreviated">Level %d</string>
     <string name="delete_reminder">Delete Reminder</string>
     <string name="number_responded">%1$d/%2$d Responded</string>
-    <string name="gold_capitalized">Gold</string>
     <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
     <string name="not_selected">Not selected</string>
     <string name="selected">Selected</string>
@@ -1070,8 +1028,6 @@
     <string name="purchase_equipment_title">Purchase Equipment</string>
     <string name="feedPet_title">Feed a pet</string>
     <string name="hatch_pet_title">Hatch a new pet</string>
-    <string name="complete_task_title">Complete a Task</string>
-    <string name="create_task_title">Create a Task</string>
     <string name="percent_completed">%d%% Complete</string>
     <string name="lets_get_started">Let\'s get started</string>
     <string name="your_progress">Your Progress</string>

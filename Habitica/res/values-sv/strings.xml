@@ -32,34 +32,16 @@
     <string name="preference_push_your_quest_has_begun">Ditt uppdrag har påbörjats</string>
     <string name="preference_push_invited_to_quest">Inbjudan till uppdrag</string>
     <!--Adding tasks-->
-    <string name="action_edit">Redigera</string>
-    <string name="action_cancel">Avbryt</string>
-    <string name="login_btn">Logga in</string>
-    <string name="register_btn">Registrera dig</string>
-    <string name="username">Användarnamn</string>
-    <string name="email_username">E-postadress eller användarnamn</string>
-    <string name="password">Lösenord</string>
-    <string name="emailAddress">E-postadress</string>
-    <string name="confirmpassword">Godkänn lösenord</string>
-    <string name="logout">Logga ut</string>
-    <string name="logout_description">Logga ut från ditt konto</string>
-    <string name="LoginActivityName">Välkommen</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Du är inte ansluten till internet.</string>
     <string name="internal_error_api">Det verkar vara ett problem med servern. Försök igen senare.</string>
     <string name="authentication_error_title">Autentiseringsfel</string>
     <string name="authentication_error_body">Ditt användarnamn och/eller lösenord var fel.</string>
-    <string name="login_validation_error_title">Validationsfel</string>
-    <string name="login_validation_error_fieldsmissing">Du måste fylla i alla fält.</string>
     <string name="save_changes">Spara</string>
     <string name="copy">Kopiera</string>
     <string name="notes">Anteckningar</string>
     <string name="difficulty">Svårighetsgrad</string>
     <string name="tags">Taggar</string>
-    <string name="trivial">Trivial</string>
-    <string name="easy">Lätt</string>
-    <string name="medium">Medium</string>
-    <string name="hard">Svår</string>
     <string name="start_date">Startdatum</string>
     <string name="positive_habit_form">Positiv ( + )</string>
     <string name="negative_habit_form">Negativ ( - )</string>
@@ -91,10 +73,6 @@
     <string name="party">Sällskap</string>
     <string name="chat">Chatt</string>
     <string name="members">Medlemmar</string>
-    <string name="habits">Vanor</string>
-    <string name="dailies">Dagliga uppgifter</string>
-    <string name="todos">Att Göras</string>
-    <string name="rewards">Belöningar</string>
     <string name="yes">Ja</string>
     <string name="no">Nej</string>
     <string name="quest">Uppdrag</string>
@@ -167,7 +145,6 @@
     <string name="guild">Gille</string>
     <string name="leave">Lämna</string>
     <string name="join">Gå med</string>
-    <string name="gems">Juveler</string>
     <string name="delete">Radera</string>
     <string name="name">Namn</string>
     <string name="description">Beskrivning</string>
@@ -197,8 +174,6 @@
     <string name="quests">Uppdrag</string>
     <string name="pets">Husdjur</string>
     <string name="mounts">Riddjur</string>
-    <string name="armoireEquipment">Du hittade ovanlig utrustning i vapenskåpet: %s! Fantastiskt!</string>
-    <string name="armoireFood">Du krafsar runt i vapenskåpet och hittar %1$s %2$s. Vad gör den här?</string>
     <string name="armoireExp">Du brottas med vapenskåpet och får erfarenhet. Touché!</string>
     <string name="sell">Sälj (%d Guld)</string>
     <string name="hatch_with_potion">Kläck med kläckningsdryck</string>
@@ -215,7 +190,6 @@
     <string name="notification_purchase_reward">Du köpte en belöning</string>
     <string name="world_quest">Världsuppdrag</string>
     <string name="empty_items">Du har inga %s</string>
-    <string name="user_level">Lvl %d</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
     <string name="warrior">Krigare</string>
     <string name="rogue">Smygare</string>
@@ -259,7 +233,6 @@
     <string name="login_incentive">Lås upp genom att logga in på Habitica regelbundet</string>
     <string name="create_account">Lås upp genom att skapa ett konto</string>
     <string name="successful_purchase">Köpt %1$s</string>
-    <string name="gold_plural">guld</string>
     <string name="chat_message_copied">Meddelandet kopierades till anslagstavlan</string>
     <string name="edit_tag_btn_edit">Ändra</string>
     <string name="confirm_delete_tag_title">Är du säker?</string>
@@ -319,10 +292,6 @@
     <string name="remove_tasks">Ta bort</string>
     <string name="keep_tasks">Behåll</string>
     <string name="my_challenges">Mina utmaningar</string>
-    <string name="daily">Daglig</string>
-    <string name="habit">Vana</string>
-    <string name="reward">Belöning</string>
-    <string name="todo">To-Do</string>
     <string name="official">Officiell</string>
     <string name="challenge">Utmaning</string>
     <string name="not_part_of_a_challenge">Du är inte med i några utmaningar!</string>
@@ -344,7 +313,6 @@
     <string name="owned">Äger</string>
     <string name="not_owned">Äger inte</string>
     <string name="login_btn_fb">Logga in med Facebook</string>
-    <string name="login_btn_google">Logga in med Google</string>
     <string name="action_back">Bakåt</string>
     <string name="randomize">Slumpa</string>
     <string name="avatar_extras">Extra</string>
@@ -438,7 +406,6 @@
     <string name="want_to_subscribe">Jag vill Prenumerera</string>
     <string name="come_back_soon">Kom tillbaka snart!</string>
     <string name="level">Nivå</string>
-    <string name="stats">Statistik</string>
     <string name="fix_character_values">Fixa Karaktärvärden</string>
     <string name="saving">Sparar</string>
     <string name="forgot_password_title">Maila en Lösenordsåterställnings-länk</string>
@@ -533,7 +500,6 @@
     <string name="new_password">Nya Lösenord</string>
     <string name="create_party">Skapa Sällskap</string>
     <string name="about_libraries">Biblioteker</string>
-    <string name="about_title">Om</string>
     <string name="g1g1_info_2">Hur det funkar</string>
     <string name="g1g1_info_3">Begränsningar</string>
     <string name="locked">Låst</string>
@@ -576,7 +542,6 @@
     <string name="subscribe_listitem2">Mystiskt Timglas</string>
     <string name="subscribe_listitem3">Månatlig Mystiska Föremål</string>
     <string name="subscribe_listitem1">Guld för Juveler</string>
-    <string name="gold_capitalized">Guld</string>
     <string name="user_level_with_class_unabbreviated">Nivå %1$d %2$s</string>
     <string name="remaining_1hour">1h kvar</string>
     <string name="remaining_hours">%dh kvar</string>
@@ -611,7 +576,6 @@
     <string name="years">År</string>
     <string name="weeks">Veckor</string>
     <string name="days">Dagar</string>
-    <string name="monthly">Månatlig</string>
     <string name="old_password">Gamla Lösenord</string>
     <string name="create">Skapa</string>
     <string name="new_subscriber_item">Du har ny <b>Mystiska Föremål</b></string>
@@ -630,7 +594,6 @@
     <string name="fedPetTitle">Mat en Husdjur</string>
     <string name="hatchedPetTitle">Kläckte en Husdjur</string>
     <string name="hatch">Kläck</string>
-    <string name="create_task">Skapa %s</string>
     <string name="habitica_questions">Habitica Frågor</string>
     <string name="equipment_str">STY:</string>
     <string name="equipment_con">TÅL:</string>
@@ -640,7 +603,6 @@
     <string name="hatch_pet_again">Kläck Husdjur igen</string>
     <string name="purchase_equipment_title">Köp Utrustning</string>
     <string name="gift_gems">Ge Juveler</string>
-    <string name="weekly">Veckolig</string>
     <string name="two_handed">Två-Handar</string>
     <string name="setup_task_join_habitica">Gå med i Habitica (Bocka av mig!)</string>
     <string name="limitations">Begränsningar</string>
