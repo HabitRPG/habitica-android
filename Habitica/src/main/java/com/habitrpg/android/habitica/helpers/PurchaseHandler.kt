@@ -11,15 +11,17 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesResponseListener
 import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.billingclient.api.SkuDetails
-import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryProductDetailsParams.Product
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
+import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
-import com.android.billingclient.api.querySkuDetails
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
@@ -66,14 +68,14 @@ class PurchaseHandler(
         processPurchases(result, purchases)
     }
 
-    private fun processPurchases(result: BillingResult, purchases: MutableList<Purchase>) {
+    private fun processPurchases(result: BillingResult, purchases: List<Purchase>) {
         when (result.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 val mostRecentSub = findMostRecentSubscription(purchases)
                 val plan = userViewModel.user.value?.purchased?.plan
                 for (purchase in purchases) {
                     if (plan?.isActive == true && PurchaseTypes.allSubscriptionTypes.contains(
-                            purchase.skus.firstOrNull()
+                            purchase.products.firstOrNull()
                         )
                     ) {
                         if ((plan.additionalData?.data?.orderId == purchase.orderId &&
@@ -125,7 +127,9 @@ class PurchaseHandler(
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     billingClientState = BillingClientState.READY
-                    queryPurchases()
+                    MainScope().launchCatching {
+                        queryPurchases()
+                    }
                 } else {
                     billingClientState = BillingClientState.UNAVAILABLE
                 }
@@ -141,66 +145,73 @@ class PurchaseHandler(
         billingClient.endConnection()
     }
 
-    fun queryPurchases() {
+    suspend fun queryPurchases() {
         if (billingClientState == BillingClientState.READY) {
-            billingClient.queryPurchasesAsync(
-                BillingClient.SkuType.SUBS,
-                this@PurchaseHandler
+            val subResponse = billingClient.queryPurchasesAsync(
+                QueryPurchasesParams.newBuilder()
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build()
             )
-            billingClient.queryPurchasesAsync(
-                BillingClient.SkuType.INAPP,
-                this@PurchaseHandler
+            processPurchases(subResponse.billingResult, subResponse.purchasesList)
+            val iapResponse = billingClient.queryPurchasesAsync(
+                QueryPurchasesParams.newBuilder()
+                    .setProductType(BillingClient.ProductType.INAPP)
+                    .build()
             )
+            processPurchases(iapResponse.billingResult, iapResponse.purchasesList)
         }
     }
 
     suspend fun getAllGemSKUs() =
-        getSKUs(BillingClient.SkuType.INAPP, PurchaseTypes.allGemTypes)
+        getSKUs(BillingClient.ProductType.INAPP, PurchaseTypes.allGemTypes)
 
     suspend fun getAllSubscriptionProducts() =
-        getSKUs(BillingClient.SkuType.SUBS, PurchaseTypes.allSubscriptionTypes)
+        getSKUs(BillingClient.ProductType.SUBS, PurchaseTypes.allSubscriptionTypes)
 
     suspend fun getAllGiftSubscriptionProducts() =
-        getSKUs(BillingClient.SkuType.INAPP, PurchaseTypes.allSubscriptionNoRenewTypes)
+        getSKUs(BillingClient.ProductType.INAPP, PurchaseTypes.allSubscriptionNoRenewTypes)
 
     suspend fun getInAppPurchaseSKU(identifier: String) =
-        getSKU(BillingClient.SkuType.INAPP, identifier)
+        getSKU(BillingClient.ProductType.INAPP, identifier)
 
-    private suspend fun getSKUs(type: String, identifiers: List<String>): List<SkuDetails> {
-        return loadInventory(type, identifiers) ?: emptyList()
-    }
+    private suspend fun getSKUs(type: String, identifiers: List<String>) =
+        loadInventory(type, identifiers) ?: emptyList()
 
-    private suspend fun getSKU(type: String, identifier: String): SkuDetails? {
+    private suspend fun getSKU(type: String, identifier: String): ProductDetails? {
         val inventory = loadInventory(type, listOf(identifier))
         return inventory?.firstOrNull()
     }
 
-    private suspend fun loadInventory(type: String, skus: List<String>): List<SkuDetails>? {
+    private suspend fun loadInventory(type: String, skus: List<String>): List<ProductDetails>? {
         retryUntil { billingClientState.canMaybePurchase && billingClient.isReady }
-        val params = SkuDetailsParams
+        val params = QueryProductDetailsParams
             .newBuilder()
-            .setSkusList(skus)
-            .setType(type)
+            .setProductList(skus.map {
+                Product.newBuilder().setProductId(it).setProductType(type).build()
+            })
             .build()
         val skuDetailsResult = withContext(Dispatchers.IO) {
-            billingClient.querySkuDetails(params)
+            billingClient.queryProductDetails(params)
         }
-        return skuDetailsResult.skuDetailsList
+        return skuDetailsResult.productDetailsList
     }
 
     fun purchase(
         activity: Activity,
-        skuDetails: SkuDetails,
+        skuDetails: ProductDetails,
         recipient: String? = null,
         recipientUsername: String? = null,
         isSaleGemPurchase: Boolean = false
     ) {
         this.isSaleGemPurchase = isSaleGemPurchase
         recipient?.let {
-            addGift(skuDetails.sku, it, recipientUsername ?: it)
+            addGift(skuDetails.productId, it, recipientUsername ?: it)
         }
         val flowParams = BillingFlowParams.newBuilder()
-            .setSkuDetails(skuDetails)
+            .setProductDetailsParamsList(listOf(skuDetails).map {
+                BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(skuDetails)
+                    .build()
+            })
             .build()
         billingClient.launchBillingFlow(activity, flowParams)
     }
@@ -214,7 +225,7 @@ class PurchaseHandler(
         if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
             delay(500)
             consume(purchase, retries - 1)
-        } else  {
+        } else {
             userViewModel.userRepository.retrieveUser(false, true)
         }
     }
@@ -223,7 +234,7 @@ class PurchaseHandler(
         if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED) {
             return
         }
-        val sku = purchase.skus.firstOrNull()
+        val sku = purchase.products.firstOrNull()
         when {
             sku == PurchaseTypes.JubilentGrphatrice -> {
                 val validationRequest = buildValidationRequest(purchase)
@@ -311,7 +322,7 @@ class PurchaseHandler(
 
     private fun buildValidationRequest(purchase: Purchase): PurchaseValidationRequest {
         val validationRequest = PurchaseValidationRequest()
-        validationRequest.sku = purchase.skus.firstOrNull()
+        validationRequest.sku = purchase.products.firstOrNull()
         validationRequest.transaction = Transaction()
         validationRequest.transaction?.receipt = purchase.originalJson
         validationRequest.transaction?.signature = purchase.signature
@@ -333,7 +344,7 @@ class PurchaseHandler(
                 val res = apiClient.getErrorResponse(throwable)
                 if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                     processedPurchase(purchase)
-                    removeGift(purchase.skus.firstOrNull())
+                    removeGift(purchase.products.firstOrNull())
                     CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                         consume(purchase)
                     }
@@ -346,7 +357,8 @@ class PurchaseHandler(
 
     suspend fun checkForSubscription(): Purchase? {
         val result = withContext(Dispatchers.IO) {
-            billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS)
+            val params = QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
+            billingClient.queryPurchasesAsync(params)
         }
         val fallback: Purchase? = null
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
@@ -412,7 +424,7 @@ class PurchaseHandler(
         CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
             val application = (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
-            val sku = purchase.skus.firstOrNull() ?: return@launch
+            val sku = purchase.products.firstOrNull() ?: return@launch
             var title = context.getString(R.string.successful_purchase_generic)
             val message = when {
                 PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {
