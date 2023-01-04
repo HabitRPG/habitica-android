@@ -23,6 +23,7 @@ import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -45,10 +46,15 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import coil.compose.AsyncImage
+import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.PurchaseHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -59,6 +65,13 @@ import javax.inject.Inject
 class BirthdayActivity : BaseActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
+    @Inject
+    lateinit var purchaseHandler: PurchaseHandler
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
+
+    private val price = mutableStateOf("")
+    private var gryphatriceProductDetails: ProductDetails? = null
 
     override fun getLayoutResId(): Int? = null
 
@@ -67,7 +80,19 @@ class BirthdayActivity : BaseActivity() {
         setContent {
             HabiticaTheme {
                 val user = userViewModel.user.observeAsState()
-                BirthdayActivityView(user.value)
+                BirthdayActivityView(user.value, price.value, {
+                    gryphatriceProductDetails?.let {
+                        purchaseHandler.purchase(this, it)
+                    }
+                }, {
+                    lifecycleScope.launchCatching {
+                        inventoryRepository.purchaseItem("", "Jubilent-Gryphatrice", 1)
+                    }
+                }, {
+                    lifecycleScope.launchCatching {
+                        inventoryRepository.equip("pets", "Jubilent-Gryphatrice")
+                    }
+                })
             }
         }
     }
@@ -109,7 +134,7 @@ fun BirthdayTitle(text: String) {
 }
 
 @Composable
-fun BirthdayActivityView(user: User?) {
+fun BirthdayActivityView(user: User?, price: String, onPurchaseClick: () -> Unit, onGemPurchaseClick: () -> Unit, onEquipClick: () -> Unit) {
     val activity = LocalContext.current as? Activity
     val textColor = Color.White
     val specialTextColor = colorResource(R.color.yellow_50)
@@ -227,7 +252,7 @@ fun BirthdayActivityView(user: User?) {
                 Text(buildAnnotatedString {
                     append("Buy for ")
                     withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                        append("")
+                        append(price)
                     }
                     append(" or ")
                     withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
@@ -237,7 +262,9 @@ fun BirthdayActivityView(user: User?) {
                 HabiticaButton(
                     Color.White,
                     colorResource(R.color.brand_200),
-                    {},
+                    {
+                    onPurchaseClick()
+                    },
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
                     Text(stringResource(R.string.buy_for_x, ""))
@@ -245,7 +272,9 @@ fun BirthdayActivityView(user: User?) {
                 HabiticaButton(
                     Color.White,
                     colorResource(R.color.brand_200),
-                    {},
+                    {
+                    onGemPurchaseClick()
+                    },
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -266,7 +295,9 @@ fun BirthdayActivityView(user: User?) {
             HabiticaButton(
                 Color.White,
                 colorResource(R.color.brand_200),
-                {},
+                {
+                    onEquipClick()
+                },
                 modifier = Modifier.padding(top = 20.dp)
             ) {
                 Text(stringResource(R.string.visit_the_market))
@@ -361,5 +392,7 @@ fun HabiticaButton(
 @Preview(device = Devices.PIXEL_4)
 @Composable
 private fun Preview() {
-    BirthdayActivityView(null)
+    BirthdayActivityView(null, "", {
+
+    }, {}, {})
 }

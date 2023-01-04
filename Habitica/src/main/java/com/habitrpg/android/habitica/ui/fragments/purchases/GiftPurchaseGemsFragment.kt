@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemPurchaseBinding
@@ -59,7 +59,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
             val skus = purchaseHandler?.getAllGemSKUs()
             withContext(Dispatchers.Main) {
                 for (sku in skus ?: emptyList()) {
-                    updateButtonLabel(sku, sku.price)
+                    updateButtonLabel(sku, sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
                 }
             }
         }
@@ -69,8 +69,8 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         this.purchaseHandler = handler
     }
 
-    private fun updateButtonLabel(sku: SkuDetails, price: String) {
-        val matchingView: GemPurchaseOptionsView? = when (sku.sku) {
+    private fun updateButtonLabel(sku: ProductDetails, price: String) {
+        val matchingView: GemPurchaseOptionsView? = when (sku.productId) {
             PurchaseTypes.Purchase4Gems -> binding?.gems4View
             PurchaseTypes.Purchase21Gems -> binding?.gems21View
             PurchaseTypes.Purchase42Gems -> binding?.gems42View
@@ -86,7 +86,7 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         }
     }
 
-    private fun purchaseGems(sku: SkuDetails) {
+    private fun purchaseGems(sku: ProductDetails) {
         giftedMember?.id?.let {
             activity?.let { it1 -> purchaseHandler?.purchase(it1, sku, it, giftedMember?.username) }
         }

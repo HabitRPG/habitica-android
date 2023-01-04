@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -67,7 +66,7 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
                 val sku = purchaseHandler.getInAppPurchaseSKU(gemSku)
                     ?: return@launch
                 withContext(Dispatchers.Main) {
-                    purchaseButton?.text = sku.price
+                    purchaseButton?.text = sku.oneTimePurchaseOfferDetails?.formattedPrice
                     contentView.findViewById<ProgressBar>(R.id.loading_indicator).isVisible = false
                     purchaseButton.isVisible = true
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -54,8 +54,8 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
-    private var selectedSubscriptionSku: SkuDetails? = null
-    private var skus: List<SkuDetails> = emptyList()
+    private var selectedSubscriptionSku: ProductDetails? = null
+    private var skus: List<ProductDetails> = emptyList()
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
@@ -108,7 +108,9 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override fun onResume() {
         super.onResume()
-        purchaseHandler.queryPurchases()
+        lifecycleScope.launchCatching {
+            purchaseHandler.queryPurchases()
+        }
         refresh()
         loadInventory()
     }
@@ -131,27 +133,27 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             skus = subscriptions
             withContext(Dispatchers.Main) {
                 for (sku in subscriptions) {
-                    updateButtonLabel(sku, sku.price)
+                    updateButtonLabel(sku, sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice ?: "")
                 }
-                subscriptions.minByOrNull { it.priceAmountMicros }?.let { selectSubscription(it) }
+                subscriptions.minByOrNull { it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros ?: 0 }?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
         }
     }
 
-    private fun updateButtonLabel(sku: SkuDetails, price: String) {
+    private fun updateButtonLabel(sku: ProductDetails, price: String) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
             matchingView.setPriceText(price)
-            matchingView.sku = sku.sku
+            matchingView.sku = sku.productId
             matchingView.setOnPurchaseClickListener {
                 selectSubscription(sku)
             }
         }
     }
 
-    private fun selectSubscription(sku: SkuDetails) {
+    private fun selectSubscription(sku: ProductDetails) {
         if (this.selectedSubscriptionSku != null) {
             val oldButton = buttonForSku(this.selectedSubscriptionSku)
             oldButton?.setIsSelected(false)
@@ -164,8 +166,8 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         }
     }
 
-    private fun buttonForSku(sku: SkuDetails?): SubscriptionOptionView? {
-        return buttonForSku(sku?.sku)
+    private fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
+        return buttonForSku(sku?.productId)
     }
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {

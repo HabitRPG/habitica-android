@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.SkuDetails
+import androidx.lifecycle.lifecycleScope
+import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
@@ -18,6 +19,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.promotions.PromoType
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
@@ -95,7 +97,9 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override fun onResume() {
         super.onResume()
-        purchaseHandler.queryPurchases()
+        lifecycleScope.launchCatching {
+            purchaseHandler.queryPurchases()
+        }
         loadInventory()
     }
 
@@ -110,8 +114,8 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         }
     }
 
-    private fun updateButtonLabel(sku: SkuDetails) {
-        val matchingView: GemPurchaseOptionsView? = when (sku.sku) {
+    private fun updateButtonLabel(sku: ProductDetails) {
+        val matchingView: GemPurchaseOptionsView? = when (sku.productId) {
             PurchaseTypes.Purchase4Gems -> binding?.gems4View
             PurchaseTypes.Purchase21Gems -> binding?.gems21View
             PurchaseTypes.Purchase42Gems -> binding?.gems42View
@@ -119,7 +123,7 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
             else -> return
         }
         if (matchingView != null) {
-            matchingView.setPurchaseButtonText(sku.price)
+            matchingView.setPurchaseButtonText(sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
             matchingView.sku = sku
         }
     }

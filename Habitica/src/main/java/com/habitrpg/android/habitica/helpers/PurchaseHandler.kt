@@ -162,6 +162,8 @@ class PurchaseHandler(
         }
     }
 
+    suspend fun getGryphatriceSKU() = getSKU(BillingClient.ProductType.INAPP, PurchaseTypes.JubilentGrphatrice)
+
     suspend fun getAllGemSKUs() =
         getSKUs(BillingClient.ProductType.INAPP, PurchaseTypes.allGemTypes)
 
@@ -357,7 +359,9 @@ class PurchaseHandler(
 
     suspend fun checkForSubscription(): Purchase? {
         val result = withContext(Dispatchers.IO) {
-            val params = QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
+            val params =
+                QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS)
+                    .build()
             billingClient.queryPurchasesAsync(params)
         }
         val fallback: Purchase? = null

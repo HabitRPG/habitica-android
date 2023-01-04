@@ -213,13 +213,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 }
             }
             adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
+            adapter?.onFeedPet = { food -> feedPet(food) }
         }
     }
 
     private fun feedPet(food: Food) {
         val pet = feedingPet ?: return
         val activity = activity ?: return
-        lifecycleScope.launchCatching {
+        activity.lifecycleScope.launchCatching {
             feedPetUseCase.callInteractor(
                 FeedPetUseCase.RequestValues(
                     pet, food,

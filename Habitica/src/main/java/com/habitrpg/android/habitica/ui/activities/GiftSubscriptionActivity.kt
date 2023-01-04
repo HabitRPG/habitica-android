@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
-import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -35,8 +35,8 @@ class GiftSubscriptionActivity : PurchaseActivity() {
     private var giftedUsername: String? = null
     private var giftedUserID: String? = null
 
-    private var selectedSubscriptionSku: SkuDetails? = null
-    private var skus: List<SkuDetails> = emptyList()
+    private var selectedSubscriptionSku: ProductDetails? = null
+    private var skus: List<ProductDetails> = emptyList()
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_gift_subscription
@@ -97,20 +97,20 @@ class GiftSubscriptionActivity : PurchaseActivity() {
                 for (sku in skus) {
                     updateButtonLabel(sku)
                 }
-                skus.minByOrNull { it.priceAmountMicros }?.let { selectSubscription(it) }
+                skus.minByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }?.let { selectSubscription(it) }
             }
         }
     }
-    private fun updateButtonLabel(sku: SkuDetails) {
+    private fun updateButtonLabel(sku: ProductDetails) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
-            matchingView.setPriceText(sku.price)
-            matchingView.sku = sku.sku
+            matchingView.setPriceText(sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
+            matchingView.sku = sku.productId
             matchingView.setOnPurchaseClickListener { selectSubscription(sku) }
         }
     }
 
-    private fun selectSubscription(sku: SkuDetails) {
+    private fun selectSubscription(sku: ProductDetails) {
         for (thisSku in skus) {
             buttonForSku(thisSku)?.setIsSelected(false)
         }
@@ -120,8 +120,8 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         binding.subscriptionButton.isEnabled = true
     }
 
-    private fun buttonForSku(sku: SkuDetails?): SubscriptionOptionView? {
-        return buttonForSku(sku?.sku)
+    private fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
+        return buttonForSku(sku?.productId)
     }
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
@@ -134,12 +134,12 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         }
     }
 
-    private fun purchaseSubscription(sku: SkuDetails) {
+    private fun purchaseSubscription(sku: ProductDetails) {
         giftedUserID?.let { id ->
             if (id.isEmpty()) {
                 return
             }
-            PurchaseHandler.addGift(sku.sku, id, giftedUsername ?: id)
+            PurchaseHandler.addGift(sku.productId, id, giftedUsername ?: id)
             purchaseHandler.purchase(this, sku)
         }
     }
