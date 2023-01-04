@@ -220,7 +220,7 @@ class AccountPreferenceFragment :
         if (it.resultCode == Activity.RESULT_OK) {
             viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
             activity?.let { it1 ->
-                viewModel.handleGoogleLoginResult(it1, recoverFromPlayServicesErrorResult) { _, _ ->
+                viewModel.handleGoogleLoginResult(it1, recoverFromPlayServicesErrorResult) { _ ->
                     displayAuthenticationSuccess(getString(R.string.google))
                 }
             }
@@ -246,7 +246,7 @@ class AccountPreferenceFragment :
     ) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
             activity?.let { it1 ->
-                viewModel.handleGoogleLoginResult(it1, null) { _, _ ->
+                viewModel.handleGoogleLoginResult(it1, null) { _ ->
                     displayAuthenticationSuccess(getString(R.string.google))
                 }
             }

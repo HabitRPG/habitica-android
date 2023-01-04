@@ -3,12 +3,15 @@ package com.habitrpg.android.habitica.ui.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
+import com.habitrpg.android.habitica.ui.viewHolders.ComposableViewHolder
+import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
@@ -89,6 +92,11 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                     }
                 }
             }
+            getItemViewType(position) == 6 -> {
+                (holder.itemView as? ComposeView)?.setContent {
+                    BirthdayBanner()
+                }
+            }
         }
     }
 
@@ -122,6 +130,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 )
                 PromoMenuViewHolder(promoView)
             }
+            6 -> ComposableViewHolder(ComposeView(parent.context))
             1 -> SectionHeaderViewHolder(parent.inflate(R.layout.drawer_main_section_header))
             else -> DrawerItemViewHolder(parent.inflate(R.layout.drawer_main_item))
         }

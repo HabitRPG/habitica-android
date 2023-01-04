@@ -20,6 +20,17 @@ import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 @Composable
 fun CurrencyText(
     currency: String,
+    value: Int,
+    modifier: Modifier = Modifier,
+    decimals: Int = 0,
+    minForAbbrevation: Int = 0,
+    animated: Boolean = true
+) {
+    CurrencyText(currency = currency, value = value.toDouble(), modifier, decimals, minForAbbrevation, animated)
+}
+@Composable
+fun CurrencyText(
+    currency: String,
     value: Double,
     modifier: Modifier = Modifier,
     decimals: Int = 0,

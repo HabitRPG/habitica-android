@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -27,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -53,14 +55,18 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.views.CompletedAt
+import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.UserRow
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.flow.Flow
+import java.text.DateFormat
+import java.util.Date
 import javax.inject.Inject
 
 class TaskSummaryViewModel(val taskId: String) : BaseViewModel() {
     @Inject
     lateinit var taskRespository: TaskRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -117,7 +123,9 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
 
     if (task != null) {
         val darkestColor = HabiticaTheme.colors.textPrimaryFor(task)
-        val topTextColor = if ((task?.value ?: 0.0) >= -20) colorResource(task?.extraDarkTaskColor ?: R.color.white) else Color.White
+        val topTextColor = if ((task?.value ?: 0.0) >= -20) colorResource(
+            task?.extraDarkTaskColor ?: R.color.white
+        ) else Color.White
         val systemUiController = rememberSystemUiController()
         val statusBarColor = HabiticaTheme.colors.primaryBackgroundFor(task)
         val lightestColor = HabiticaTheme.colors.contentBackgroundFor(task)
@@ -204,11 +212,40 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                         fontWeight = FontWeight.Medium,
                         modifier = titleModifier
                     )
-                    Text(task?.let { taskDescriptionBuilder.describe(it) }!!.makeBoldComposable(),
+                    Text(
+                        task?.let { taskDescriptionBuilder.describe(it) }!!.makeBoldComposable(),
                         fontSize = 16.sp,
                         color = darkestColor,
                         fontWeight = FontWeight.Normal,
-                        modifier = textModifier)
+                        modifier = textModifier
+                    )
+                }
+                if (task?.type == TaskType.REWARD) {
+                    Text(
+                        stringResource(R.string.cost),
+                        fontSize = 16.sp,
+                        color = darkestColor,
+                        fontWeight = FontWeight.Medium,
+                        modifier = titleModifier.padding(bottom = 4.dp)
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier
+                            .padding(vertical = 4.dp)
+                            .background(
+                                HabiticaTheme.colors.windowBackgroundFor(task),
+                                MaterialTheme.shapes.medium
+                            )
+                            .padding(15.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Image(HabiticaIconsHelper.imageOfGold().asImageBitmap(), null)
+                        Text("${task?.value}",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = darkestColor
+                        )
+                    }
                 }
                 if (task?.checklist?.isNotEmpty() == true) {
                     task?.checklist?.let { checklist ->
@@ -263,8 +300,22 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             }) else null
                         )
                     }
-                    task?.group?.assignedUsersDetail?.find { it.assignedUserID == viewModel.userViewModel.userID }?.let {
-                        Text("", )
+                    task?.group?.assignedUsersDetail?.find { it.assignedUserID == viewModel.userViewModel.userID }
+                        ?.let {
+                            Text("")
+                        }
+                    task?.group?.assignedDetailsFor(viewModel.userViewModel.userID)?.let {
+                        val formatter = DateFormat.getDateInstance(DateFormat.SHORT)
+                        Text(
+                            stringResource(
+                                R.string.assigned_to_you_by,
+                                it.assigningUsername ?: "",
+                                formatter.format(it.assignedDate ?: Date())
+                            ),
+                            fontSize = 14.sp,
+                            color = HabiticaTheme.colors.textSecondaryFor(task),
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp)
+                        )
                     }
                 }
             }

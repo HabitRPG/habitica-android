@@ -2,9 +2,6 @@ package com.habitrpg.android.habitica.helpers.notifications
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import com.google.firebase.messaging.FirebaseMessaging
@@ -73,13 +70,11 @@ class PushNotificationManager(
         }
     }
 
-    fun removePushDeviceUsingStoredToken() {
+    suspend fun removePushDeviceUsingStoredToken() {
         if (this.refreshedToken.isEmpty() || !userHasPushDevice()) {
             return
         }
-        MainScope().launchCatching {
             apiClient.deletePushDevice(refreshedToken)
-        }
     }
 
     private fun userHasPushDevice(): Boolean {

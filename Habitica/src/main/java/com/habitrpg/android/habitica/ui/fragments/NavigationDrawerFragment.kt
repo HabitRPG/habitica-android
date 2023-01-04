@@ -546,6 +546,12 @@ class NavigationDrawerFragment : DialogFragment() {
             item.itemViewType = 2
             items.add(item)
         }
+
+        if (configManager.isBirthday()) {
+            val birthdayItem = HabiticaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
+            birthdayItem.itemViewType = 6
+            items.add(0, birthdayItem)
+        }
         adapter.updateItems(items)
     }
 
@@ -805,6 +811,7 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_GEMS = "gems"
         const val SIDEBAR_SUBSCRIPTION = "subscription"
         const val SIDEBAR_SUBSCRIPTION_PROMO = "subscriptionpromo"
+        const val SIDEBAR_BIRTHDAY = "birthday"
         const val SIDEBAR_PROMO = "promo"
         const val SIDEBAR_ABOUT_HEADER = "about_header"
         const val SIDEBAR_NEWS = "news"

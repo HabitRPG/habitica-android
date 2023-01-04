@@ -131,6 +131,7 @@ class FullProfileActivity : BaseActivity() {
                     binding.adminStatusView.isVisible = isModerator
                     if (isModerator) {
                         val member = socialRepository.retrieveMember(userID, true)
+                        member?.stats = this@FullProfileActivity.member.value?.stats
                         if (member != null) {
                             updateView(member)
                         }

@@ -104,8 +104,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     var isCreating: Boolean = false
     var yesterDaily: Boolean = true
 
-    private var daysOfMonthString: String? = null
-    private var weeksOfMonthString: String? = null
+    var daysOfMonthString: String? = null
+    var weeksOfMonthString: String? = null
 
     @Ignore
     private var daysOfMonth: List<Int>? = null
@@ -243,6 +243,19 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                 this.value < 5 -> return R.color.green_1
                 this.value < 10 -> return R.color.teal_1
                 else -> R.color.blue_1
+            }
+        }
+
+    val lowSaturationTaskColor: Int
+        get() {
+            return when {
+                this.value < -20 -> return R.color.maroon_sub_text
+                this.value < -10 -> return R.color.red_sub_text
+                this.value < -1 -> return R.color.orange_sub_text
+                this.value < 1 -> return R.color.yellow_sub_text
+                this.value < 5 -> return R.color.green_sub_text
+                this.value < 10 -> return R.color.teal_sub_text
+                else -> R.color.blue_sub_text
             }
         }
 

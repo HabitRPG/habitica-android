@@ -41,6 +41,8 @@
         <item name="colorWindowBackground">@color/window_background</item>
         <item name="colorTintedBackground">@color/brand_800</item>
         <item name="colorTintedBackgroundOffset">@color/brand_700</item>
+        <item name="textColorTintedSecondary">@color/brand_sub_text</item>
+        <item name="textColorTintedPrimary">@color/brand_100</item>
 
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
@@ -70,11 +72,14 @@
         <item name="colorBoxStroke">@color/brand_50</item>
         <item name="colorPrimaryOffset">@color/gray_10</item>
         <item name="textColorPrimaryDark">@color/gray_200</item>
+        <item name="colorPrimaryDistinct">@color/white</item>
         <item name="toolbarContentColor">@color/white</item>
         <item name="colorTintedBackground">@color/brand_00</item>
         <item name="colorTintedBackgroundOffset">@color/brand_0</item>
+        <item name="textColorTintedSecondary">@color/brand_500</item>
         <item name="colorPrimaryText">@color/brand_600</item>
         <item name="colorPrimaryDark">@color/brand_400</item>
+        <item name="textColorTintedPrimary">@color/brand_700</item>
     </style>
 
 
@@ -98,6 +103,8 @@
         <item name="colorPrimaryText">@color/red_1</item>
         <item name="colorTintedBackground">@color/red_700</item>
         <item name="colorTintedBackgroundOffset">@color/red_600</item>
+        <item name="textColorTintedSecondary">@color/red_sub_text</item>
+        <item name="textColorTintedPrimary">@color/red_100</item>
     </style>
 
     <style name="MainAppTheme.Red.Dark">
@@ -109,6 +116,8 @@
         <item name="colorTintedBackground">@color/red_00</item>
         <item name="colorTintedBackgroundOffset">@color/red_0</item>
         <item name="colorPrimaryText">@color/red_600</item>
+        <item name="textColorTintedSecondary">@color/red_500</item>
+        <item name="textColorTintedPrimary">@color/red_600</item>
     </style>
 
     <style name="MainAppTheme.Maroon">
@@ -130,6 +139,8 @@
         <item name="colorPrimaryText">@color/maroon_1</item>
         <item name="colorTintedBackground">@color/maroon_700</item>
         <item name="colorTintedBackgroundOffset">@color/maroon_600</item>
+        <item name="textColorTintedSecondary">@color/maroon_sub_text</item>
+        <item name="textColorTintedPrimary">@color/maroon_100</item>
     </style>
 
     <style name="MainAppTheme.Maroon.Dark">
@@ -140,6 +151,8 @@
         <item name="colorTintedBackground">@color/maroon_00</item>
         <item name="colorTintedBackgroundOffset">@color/maroon_0</item>
         <item name="colorPrimaryText">@color/maroon_600</item>
+        <item name="textColorTintedSecondary">@color/maroon_500</item>
+        <item name="textColorTintedPrimary">@color/maroon_600</item>
     </style>
 
     <style name="MainAppTheme.Orange">
@@ -162,6 +175,8 @@
         <item name="colorPrimaryText">@color/orange_1</item>
         <item name="colorTintedBackground">@color/orange_700</item>
         <item name="colorTintedBackgroundOffset">@color/orange_600</item>
+        <item name="textColorTintedSecondary">@color/orange_sub_text</item>
+        <item name="textColorTintedPrimary">@color/orange_100</item>
     </style>
 
     <style name="MainAppTheme.Orange.Dark">
@@ -173,6 +188,8 @@
         <item name="colorTintedBackground">@color/orange_00</item>
         <item name="colorTintedBackgroundOffset">@color/orange_0</item>
         <item name="colorPrimaryText">@color/orange_600</item>
+        <item name="textColorTintedSecondary">@color/orange_500</item>
+        <item name="textColorTintedPrimary">@color/orange_600</item>
     </style>
 
     <style name="MainAppTheme.Yellow">
@@ -181,7 +198,7 @@
         <item name="colorAccent">@color/yellow_100</item>
         <item name="android:colorPrimary">@color/yellow_10</item>
         <item name="android:colorPrimaryDark">@color/yellow_5</item>
-        <item name="android:colorAccent">@color/yellow_100</item>
+        <item name="android:colorAccent">@color/yellow_50</item>
         <item name="colorBoxStroke">@color/yellow_5</item>
         <item name="colorPrimaryOffset">@color/yellow_50</item>
         <item name="colorPrimaryDistinct">@color/yellow_500</item>
@@ -195,6 +212,8 @@
         <item name="colorPrimaryText">@color/yellow_1</item>
         <item name="colorTintedBackground">@color/yellow_700</item>
         <item name="colorTintedBackgroundOffset">@color/yellow_600</item>
+        <item name="textColorTintedSecondary">@color/yellow_sub_text</item>
+        <item name="textColorTintedPrimary">@color/yellow_10</item>
     </style>
 
     <style name="MainAppTheme.Yellow.Dark">
@@ -206,6 +225,8 @@
         <item name="colorTintedBackground">@color/yellow_00</item>
         <item name="colorTintedBackgroundOffset">@color/yellow_0</item>
         <item name="colorPrimaryText">@color/yellow_600</item>
+        <item name="textColorTintedSecondary">@color/yellow_500</item>
+        <item name="textColorTintedPrimary">@color/yellow_600</item>
     </style>
 
     <style name="MainAppTheme.Green">
@@ -228,6 +249,8 @@
         <item name="colorPrimaryText">@color/green_1</item>
         <item name="colorTintedBackground">@color/green_700</item>
         <item name="colorTintedBackgroundOffset">@color/green_600</item>
+        <item name="textColorTintedSecondary">@color/green_sub_text</item>
+        <item name="textColorTintedPrimary">@color/green_100</item>
     </style>
 
     <style name="MainAppTheme.Green.Dark">
@@ -239,6 +262,8 @@
         <item name="colorTintedBackground">@color/green_00</item>
         <item name="colorTintedBackgroundOffset">@color/green_0</item>
         <item name="colorPrimaryText">@color/green_600</item>
+        <item name="textColorTintedSecondary">@color/green_500</item>
+        <item name="textColorTintedPrimary">@color/green_600</item>
     </style>
 
     <style name="MainAppTheme.Teal">
@@ -261,6 +286,8 @@
         <item name="colorPrimaryText">@color/teal_1</item>
         <item name="colorTintedBackground">@color/teal_700</item>
         <item name="colorTintedBackgroundOffset">@color/teal_600</item>
+        <item name="textColorTintedSecondary">@color/teal_sub_text</item>
+        <item name="textColorTintedPrimary">@color/teal_100</item>
     </style>
 
     <style name="MainAppTheme.Teal.Dark">
@@ -272,6 +299,8 @@
         <item name="colorTintedBackground">@color/teal_00</item>
         <item name="colorTintedBackgroundOffset">@color/teal_0</item>
         <item name="colorPrimaryText">@color/teal_600</item>
+        <item name="textColorTintedSecondary">@color/teal_500</item>
+        <item name="textColorTintedPrimary">@color/teal_600</item>
     </style>
 
     <style name="MainAppTheme.Blue">
@@ -294,6 +323,8 @@
         <item name="colorPrimaryText">@color/blue_1</item>
         <item name="colorTintedBackground">@color/blue_700</item>
         <item name="colorTintedBackgroundOffset">@color/blue_600</item>
+        <item name="textColorTintedSecondary">@color/blue_sub_text</item>
+        <item name="textColorTintedPrimary">@color/blue_100</item>
     </style>
 
     <style name="MainAppTheme.Blue.Dark">
@@ -305,6 +336,8 @@
         <item name="colorTintedBackground">@color/blue_00</item>
         <item name="colorTintedBackgroundOffset">@color/blue_0</item>
         <item name="colorPrimaryText">@color/blue_600</item>
+        <item name="textColorTintedSecondary">@color/blue_500</item>
+        <item name="textColorTintedPrimary">@color/blue_600</item>
     </style>
 
     <style name="MyWidgetTheme">
@@ -920,7 +953,7 @@
 
     <style name="TaskFormSectionheader">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?colorPrimaryDark</item>
+        <item name="android:textColor">?textColorTintedPrimary</item>
         <item name="android:layout_marginTop">@dimen/spacing_large</item>
         <item name="android:layout_marginBottom">@dimen/spacing_medium</item>
         <item name="android:accessibilityHeading">true</item>

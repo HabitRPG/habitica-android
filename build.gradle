@@ -23,7 +23,7 @@ buildscript {
         navigation_version = '2.5.3'
         okhttp_version = '4.10.0'
         play_wearables_version = '18.0.0'
-        play_auth_version = '20.3.0'
+        play_auth_version = '20.4.0'
         preferences_version = '1.2.0'
         realm_version = '1.0.2'
         retrofit_version = '2.9.0'

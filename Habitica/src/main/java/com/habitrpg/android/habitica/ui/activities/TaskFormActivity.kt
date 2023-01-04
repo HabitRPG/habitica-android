@@ -4,15 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.TextUtils
 import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -25,10 +24,12 @@ import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.toMutableStateList
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.view.isVisible
+import androidx.core.view.iterator
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -50,6 +51,7 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -169,6 +171,9 @@ class TaskFormActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        if (forcedTheme == "taskform" || forcedTheme == "maroon") {
+            ToolbarColorHelper.colorizeToolbar(binding.toolbar, this, ContextCompat.getColor(this, R.color.white))
+        }
         tintColor = getThemeColor(R.attr.taskFormTint)
         val upperTintColor =
             if (forcedTheme == "taskform") getThemeColor(R.attr.taskFormTint) else getThemeColor(R.attr.colorAccent)
@@ -388,6 +393,13 @@ class TaskFormActivity : BaseActivity() {
             menuInflater.inflate(R.menu.menu_task_edit, menu)
         }
         menu.findItem(R.id.action_save).isEnabled = canSave
+        if (forcedTheme == "taskform" || forcedTheme == "maroon") {
+            menu.iterator().forEach {
+                val spannable = SpannableString(it.title)
+                spannable.setSpan(ForegroundColorSpan(Color.WHITE), 0, spannable.length, 0)
+                it.title = spannable
+            }
+        }
         return true
     }
 

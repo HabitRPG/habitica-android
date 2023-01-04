@@ -56,29 +56,31 @@ dependencies {
     implementation "com.android.billingclient:billing-ktx:5.1.0"
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
+    implementation("io.coil-kt:coil-compose:$coil_version")
+
     //Analytics
     implementation "com.amplitude:analytics-android:$amplitude_version"
 
     //Tests
     testImplementation 'io.kotest:kotest-runner-junit5:5.3.0'
-    testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'io.mockk:mockk:1.12.3'
-    testImplementation 'io.mockk:mockk-android:1.12.3'
+    testImplementation 'androidx.test:core:1.5.0'
+    testImplementation 'io.mockk:mockk:1.13.3'
+    testImplementation 'io.mockk:mockk-android:1.13.3'
     testImplementation 'io.kotest:kotest-assertions-core:5.3.0'
     testImplementation 'io.kotest:kotest-framework-datatest:5.3.0'
     androidTestImplementation ('com.kaspersky.android-components:kaspresso:1.4.1') {
         exclude module: "protobuf-lite"
     }
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
-    debugImplementation 'androidx.fragment:fragment-testing:1.5.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test:runner:1.5.1'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.5.5'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test:core-ktx:1.4.0'
+    androidTestImplementation 'androidx.test:core-ktx:1.5.0'
     androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.4'
-    androidTestImplementation 'io.mockk:mockk-android:1.12.3'
+    androidTestImplementation 'io.mockk:mockk-android:1.13.3'
     androidTestImplementation 'io.kotest:kotest-assertions-core:5.3.0'
-    androidTestUtil("androidx.test:orchestrator:1.4.1")
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
@@ -91,7 +93,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.android.gms:play-services-ads:21.3.0'
+    implementation 'com.google.android.gms:play-services-ads:21.4.0'
     implementation "com.google.android.gms:play-services-auth:$play_auth_version"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "com.google.android.gms:play-services-wearable:$play_wearables_version"

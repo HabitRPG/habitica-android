@@ -79,15 +79,15 @@ private fun HabitScoringSelection(
     modifier: Modifier = Modifier
 ) {
     val selectedState = updateTransition(selected)
+    val context = LocalContext.current
     val iconColor = selectedState.animateColor {
-        val context = LocalContext.current
         if (it) Color(context.getThemeColor(R.attr.colorTintedBackground)) else colorResource(R.color.text_dimmed)
     }
     val textColor = selectedState.animateColor {
-        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_ternary)
+        if (it) MaterialTheme.colors.primary else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     val borderColor = selectedState.animateColor {
-        if (it) MaterialTheme.colors.primary else colorResource(R.color.text_dimmed)
+        if (it) MaterialTheme.colors.primary else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier) {
         Box(

@@ -211,14 +211,15 @@ class ChatRecyclerMessageViewHolder(
             binding.buttonsWrapper.visibility = View.GONE
         }
 
-        if ((chatMessage?.flagCount ?: 0) > 0) {
-            binding.flagCountTextview.text = if (chatMessage?.flagCount == 10) {
+        val flagCount = (chatMessage?.flagCount ?: 0)
+        if (flagCount > 0) {
+            binding.flagCountTextview.text = if (flagCount == 10) {
                 context.getString(R.string.shadow_muted_hidden)
             } else {
-                context.resources.getQuantityString(R.plurals.flagged_count, (chatMessage?.flagCount ?: 0))
+                context.resources.getQuantityString(R.plurals.flagged_count, flagCount, flagCount)
             }
             binding.flagCountTextview.isVisible = true
-            if (chatMessage?.flagCount == 1) {
+            if (flagCount == 1) {
                 binding.flagCountTextview.setTextColor(ContextCompat.getColor(context, R.color.text_orange))
             } else {
                 binding.flagCountTextview.setTextColor(ContextCompat.getColor(context, R.color.text_red))

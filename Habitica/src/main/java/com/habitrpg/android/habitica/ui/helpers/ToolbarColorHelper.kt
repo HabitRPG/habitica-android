@@ -26,8 +26,8 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.android.habitica.extensions.waitForLayout
+import com.habitrpg.common.habitica.extensions.getThemeColor
 
 /**
  * Helper class that iterates through Toolbar views, and sets dynamically icons and texts color
@@ -42,10 +42,12 @@ object ToolbarColorHelper {
     fun colorizeToolbar(
         toolbar: Toolbar,
         activity: Activity?,
+        iconColor: Int? = null,
+        backgroundColor: Int? = null
     ) {
         if (activity == null) return
-        toolbar.setBackgroundColor(activity.getThemeColor(R.attr.headerBackgroundColor))
-        val toolbarIconsColor = activity.getThemeColor(R.attr.headerTextColor)
+        toolbar.setBackgroundColor(backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor))
+        val toolbarIconsColor = iconColor ?: activity.getThemeColor(R.attr.headerTextColor)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             activity.window.statusBarColor = activity.getThemeColor(R.attr.colorPrimaryDark)
         }

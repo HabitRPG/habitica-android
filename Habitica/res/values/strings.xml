@@ -60,6 +60,8 @@
     <string name="start_date">Start Date</string>
     <string name="positive_habit_form">Positive</string>
     <string name="negative_habit_form">Negative</string>
+    <string name="positive_sentence">positive</string>
+    <string name="negative_sentence">negative</string>
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="selected">Selected</string>
@@ -739,8 +741,8 @@
     <string name="gift_gems_subtitle">Choose the gem packet you’d like to gift below!</string>
     <string name="server">Server</string>
     <string name="gift_confirmation_title">Your gift was sent!</string>
-    <string name="gift_confirmation_text_sub_g1g1">You sent %s a %s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
-    <string name="gift_confirmation_text_sub">You sent @%s a %s-month Habitica subscription.</string>
+    <string name="gift_confirmation_text_sub_g1g1">You sent %1$s a %2$s-month Habitica subscription and the same subscription was applied to your account for our Gift One Get One promotion!</string>
+    <string name="gift_confirmation_text_sub">You sent @%1$s a %2$s-month Habitica subscription.</string>
     <string name="gift_confirmation_text_gems_new">You sent @%s %s gems.</string>
     <string name="subscription_confirmation">You are now subscribed for 1 month</string>
     <string name="subscription_confirmation_multiple">You are now subscribed for %s months</string>
@@ -1048,11 +1050,11 @@
     <string name="view_onboarding_tasks">View Onboarding Tasks</string>
     <string name="suggest_pet_hatch_missing_egg">You still need a %s Egg to hatch this pet</string>
     <string name="suggest_pet_hatch_missing_potion">You still need a %s Potion to hatch this pet</string>
-    <string name="suggest_pet_hatch_missing_both">You need a %s and %s Potion to hatch this pet</string>
+    <string name="suggest_pet_hatch_missing_both">You need a %1$s and %2$s Potion to hatch this pet</string>
     <string name="suggest_pet_hatch_again_missing_egg">You still need a %s Egg to hatch this pet again</string>
     <string name="suggest_pet_hatch_again_missing_potion">You still need a %s Potion to hatch this pet again</string>
-    <string name="suggest_pet_hatch_again_missing_both">You need a %s and %s Potion to hatch this pet again</string>
-    <string name="can_hatch_pet">Combine your %s Egg and %s Potion to hatch this pet!</string>
+    <string name="suggest_pet_hatch_again_missing_both">You need a %1$s and %2$s Potion to hatch this pet again</string>
+    <string name="can_hatch_pet">Combine your %1$s Egg and %2$s Potion to hatch this pet!</string>
     <string name="hatch_pet">Hatch Pet</string>
     <string name="unhatched_pet">Unhatched Pet</string>
     <string name="hatch_pet_again">Hatch Pet again</string>
@@ -1081,7 +1083,7 @@
     <string name="pms_disabled">Private Messages are disabled</string>
     <string name="pms_disabled_description">You can still send messages, but no one can send them to you. You can enable again from Settings.</string>
     <string name="usually_x_gems">Usually %d Gems</string>
-    <string name="x_to_y">%s to %s</string>
+    <string name="x_to_y">%1$s to %2$s</string>
     <string name="how_it_works">How it works</string>
     <string name="limitations">Limitations</string>
     <string name="fall_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
@@ -1259,10 +1261,10 @@
     <string name="copy_shared_tasks">Copy shared tasks</string>
     <string name="group_plan_settings">Group Plan Settings</string>
     <string name="task_summary">Task Summary</string>
-    <string name="habit_summary_description">This is a **%s** Habit that is **%s**.</string>
-    <string name="todo_summary_description_duedate">This is a **%s** Task that is due **%s**.</string>
-    <string name="todo_summary_description">This is a **%s** Task that does not have a due date.</string>
-    <string name="daily_summary_description">This is a **%s** Task that repeats **%s**.</string>
+    <string name="habit_summary_description">This is a **%1$s** Habit that is **%2$s**.</string>
+    <string name="todo_summary_description_duedate">This is a **%1$s** Task that is due **%2$s**.</string>
+    <string name="todo_summary_description">This is a **%1$s** Task that does not have a due date.</string>
+    <string name="daily_summary_description">This is a **%1$s** Task that repeats **%2$s%3$s**.</string>
     <string name="positive_and_negative">positive and negative</string>
     <string name="assigned_to">Assigned to</string>
     <string name="completed_at">Completed at %s</string>
@@ -1293,6 +1295,36 @@
     <string name="paypal">PayPal</string>
     <string name="stripe_payment">Stripe</string>
     <string name="shadow_muted_hidden">Shadow muted, hidden</string>
+    <string name="assigned_to_you_by">Assigned to you by @%1$s on %2$s</string>
+    <string name="never">never</string>
+    <string name="on_x">on %s</string>
+    <string name="on_weekdays">on weekdays</string>
+    <string name="on_weekends">on weekends</string>
+    <string name="on_every_day_of_week">on every day of the week</string>
+    <string name="x_and_y">%1$s and %2$s</string>
+    <string name="on_the_x">on the %s</string>
+    <string name="first">first</string>
+    <string name="on_the_x_of_month">on the %1$s %2$s of the month</string>
+    <string name="second">second</string>
+    <string name="third">third</string>
+    <string name="fourth">fourth</string>
+    <string name="fifth">fifth</string>
+    <string name="animated_gryphatrice_pet">Animated Gryphatrice Pet</string>
+    <string name="birthday_title_description">Celebrate Habitica’s 10th birthday with gifts and exclusive items below!</string>
+    <string name="limited_edition">Limited Edition</string>
+    <string name="gryphatrice_description">The rare, mystical Gryphatrice joins the birthday bash! Don’t miss your chance to own this exclusive animated Pet.</string>
+    <string name="thanks_for_support">Thanks for your support!</string>
+    <string name="plenty_of_potions">Plenty of Potions</string>
+    <string name="for_for_free">For for Free</string>
+    <string name="buy_for_x">Buy for %s</string>
+    <string name="buy_for">Buy for</string>
+    <string name="plenty_of_potions_description">We’re bringing back 10 of the community’s favorite Magic Hatching Potions. Head over to the Market to fill out your collection!</string>
+    <string name="for_for_free_description">To keep the party going, we’ll be giving away Party Robes, 20 Gems, and a limited edition Cape set and Background!</string>
+    <string name="birthday_limitations">This is a limited time event that starts on January 23rd at 8:00 AM ET (13:00 UTC) and will end February 1st at 8:00 PM ET (01:00 UTC). The Limited Edition Gryphatrice and ten Magic Hatching Potions will be available to buy during this time. The other Gifts will be automatically delivered to all accounts active in the previous 30 days.</string>
+    <string name="visit_the_market">Visit the Market</string>
+    <string name="exclusive_items_await">Exclusive items and gifts await</string>
+    <string name="ends_in_x">Ends in %s</string>
+    <string name="see_more">See More</string>
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
         <item quantity="one">You, %d other</item>
@@ -1301,5 +1333,25 @@
     <plurals name="people">
         <item quantity="one">%d person</item>
         <item quantity="other">%d people</item>
+    </plurals>
+    <plurals name="repeat_daily">
+        <item quantity="one">every day</item>
+        <item quantity="two">every other day</item>
+        <item quantity="other">every %d days</item>
+    </plurals>
+    <plurals name="repeat_weekly">
+        <item quantity="one">every week</item>
+        <item quantity="two">every other week</item>
+        <item quantity="other">every %d weeks</item>
+    </plurals>
+    <plurals name="repeat_monthly">
+        <item quantity="one">every month</item>
+        <item quantity="two">every other month</item>
+        <item quantity="other">every %d months</item>
+    </plurals>
+    <plurals name="repeat_yearly">
+        <item quantity="one">every year</item>
+        <item quantity="two">every other year</item>
+        <item quantity="other">every %d years</item>
     </plurals>
 </resources>

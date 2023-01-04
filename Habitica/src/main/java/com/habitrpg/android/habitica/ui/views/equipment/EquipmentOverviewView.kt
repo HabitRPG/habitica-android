@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.android.habitica.ui.views.equipment
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.theme.caption2
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 @Composable
 fun OverviewItem(
@@ -36,7 +37,7 @@ fun OverviewItem(
     modifier: Modifier = Modifier,
     isTwoHanded: Boolean = false
 ) {
-    val hasIcon = iconName?.isNotBlank() == true
+    val hasIcon = iconName?.isNotBlank() == true && iconName != "shirt_"
     Column(
         horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier
             .width(70.dp)
@@ -121,7 +122,9 @@ fun EquipmentOverviewView(
 @Composable
 fun AvatarCustomizationOverviewView(
     preferences: Preferences?,
+    outfit: Outfit?,
     onCustomizationTap: (String, String?) -> Unit,
+    onAvatarEquipmentTap: (String, String?) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -135,25 +138,25 @@ fun AvatarCustomizationOverviewView(
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             OverviewItem(
                 stringResource(R.string.avatar_shirt),
-                preferences?.shirt.let { "${preferences?.size}_shirt$it" }, Modifier.clickable {
+                preferences?.shirt.let { "icon_${preferences?.size}_shirt_$it" }, Modifier.clickable {
                     onCustomizationTap("shirt", null)
                 })
             OverviewItem(
                 stringResource(R.string.avatar_skin),
-                preferences?.skin.let { "skin_$it" },
+                preferences?.skin.let { "icon_skin_$it" },
                 Modifier.clickable {
                     onCustomizationTap("skin", null)
                 })
             OverviewItem(
                 stringResource(R.string.avatar_hair_color),
-                if (preferences?.hair?.color != null && preferences.hair?.color != "") "hair_bangs_1_" + preferences.hair?.color else "",
+                if (preferences?.hair?.color != null && preferences.hair?.color != "") "icon_hair_bangs_1_" + preferences.hair?.color else "",
                 Modifier.clickable {
                     onCustomizationTap("hair", "color")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_hair_bangs),
-                if (preferences?.hair?.bangs != null && preferences.hair?.bangs != 0) "hair_bangs_" + preferences.hair?.bangs + "_" + preferences.hair?.color else "",
+                if (preferences?.hair?.bangs != null && preferences.hair?.bangs != 0) "icon_hair_bangs_" + preferences.hair?.bangs + "_" + preferences.hair?.color else "",
                 Modifier.clickable {
                     onCustomizationTap("hair", "bangs")
                 }
@@ -162,28 +165,28 @@ fun AvatarCustomizationOverviewView(
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             OverviewItem(
                 stringResource(R.string.avatar_style),
-                if (preferences?.hair?.base != null && preferences.hair?.base != 0) "hair_base_" + preferences.hair?.base + "_" + preferences.hair?.color else "",
+                if (preferences?.hair?.base != null && preferences.hair?.base != 0) "icon_hair_base_" + preferences.hair?.base + "_" + preferences.hair?.color else "",
                 Modifier.clickable {
                     onCustomizationTap("hair", "base")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_mustache),
-                if (preferences?.hair?.mustache != null && preferences.hair?.mustache != 0) "hair_mustache_" + preferences.hair?.mustache + "_" + preferences.hair?.color else "",
+                if (preferences?.hair?.mustache != null && preferences.hair?.mustache != 0) "icon_hair_mustache_" + preferences.hair?.mustache + "_" + preferences.hair?.color else "",
                 Modifier.clickable {
                     onCustomizationTap("hair", "mustache")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_beard),
-                if (preferences?.hair?.beard != null && preferences.hair?.beard != 0) "hair_beard_" + preferences.hair?.beard + "_" + preferences.hair?.color else "",
+                if (preferences?.hair?.beard != null && preferences.hair?.beard != 0) "icon_hair_beard_" + preferences.hair?.beard + "_" + preferences.hair?.color else "",
                 Modifier.clickable {
                     onCustomizationTap("hair", "beard")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_flower),
-                if (preferences?.hair?.flower != null && preferences.hair?.flower != 0) "hair_flower_" + preferences.hair?.flower else "",
+                if (preferences?.hair?.flower != null && preferences.hair?.flower != 0) "icon_hair_flower_" + preferences.hair?.flower else "",
                 Modifier.clickable {
                     onCustomizationTap("hair", "flower")
                 }
@@ -192,18 +195,30 @@ fun AvatarCustomizationOverviewView(
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             OverviewItem(
                 stringResource(R.string.avatar_wheelchair),
-                preferences?.chair?.let { if (it.startsWith("handleless")) "chair_$it" else it },
+                preferences?.chair?.let { if (it.startsWith("handleless")) "icon_chair_$it" else "icon_$it" },
                 Modifier.clickable {
                     onCustomizationTap("chair", null)
                 })
             OverviewItem(
                 stringResource(R.string.avatar_background),
-                preferences?.background.let { "background_$it" },
+                preferences?.background.let { "icon_background_$it" },
                 Modifier.clickable {
                     onCustomizationTap("background", null)
                 })
-            Box(Modifier.size(70.dp))
-            Box(Modifier.size(70.dp))
+            OverviewItem(
+                stringResource(R.string.animal_ears),
+                outfit?.headAccessory.let { "shop_$it" },
+                Modifier.clickable {
+                    onAvatarEquipmentTap("headAccessory", "animal")
+                }
+            )
+            OverviewItem(
+                stringResource(R.string.animal_tail),
+                outfit?.back.let { "shop_$it" },
+                Modifier.clickable {
+                    onAvatarEquipmentTap("back", "animal")
+                }
+            )
         }
     }
 }
@@ -218,6 +233,6 @@ fun EquipmentOverviewItemPreview() {
             OverviewItem("Armor", null)
         }
         EquipmentOverviewView(null, { _, _ -> })
-        AvatarCustomizationOverviewView(null, { _, _ -> })
+        AvatarCustomizationOverviewView(null, null, { _, _ -> }, { _, _ -> })
     }
 }

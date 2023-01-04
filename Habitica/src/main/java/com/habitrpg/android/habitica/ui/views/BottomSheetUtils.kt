@@ -17,6 +17,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +31,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import kotlinx.coroutines.launch
@@ -73,6 +75,13 @@ private fun BottomSheetWrapper(
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     var isSheetOpened by remember { mutableStateOf(false) }
+
+    val systemUiController = rememberSystemUiController()
+    val statusBarColor = colorResource(R.color.content_background).copy(alpha = 0.3f)
+    DisposableEffect(systemUiController) {
+        systemUiController.setStatusBarColor(statusBarColor, darkIcons = true)
+        onDispose {}
+    }
 
     val radius = 20.dp
     ModalBottomSheetLayout(

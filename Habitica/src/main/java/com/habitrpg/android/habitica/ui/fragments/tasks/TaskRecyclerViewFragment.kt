@@ -137,19 +137,19 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
 
         recyclerAdapter?.errorButtonEvents = {
-                lifecycleScope.launchCatching {
-                    taskRepository.syncErroredTasks()
-                }
+            lifecycleScope.launchCatching {
+                taskRepository.syncErroredTasks()
             }
+        }
         recyclerAdapter?.taskOpenEvents = { task, view ->
             openTaskForm(task)
         }
         recyclerAdapter?.taskScoreEvents = { task, direction ->
-                playSound(direction)
-                context?.let { it1 -> notificationsManager.dismissTaskNotification(it1, task) }
+            playSound(direction)
+            context?.let { it1 -> notificationsManager.dismissTaskNotification(it1, task) }
             scoreTask(task, direction)
-            }
-        recyclerAdapter?.checklistItemScoreEvents =  { task, item ->
+        }
+        recyclerAdapter?.checklistItemScoreEvents = { task, item ->
             scoreChecklistItem(task, item)
         }
         recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
@@ -165,6 +165,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
         }
         lifecycleScope.launch {
             viewModel.userViewModel.user.asFlow()
+                .onEach { recyclerAdapter?.user = it }
                 .map { it?.preferences?.tasks?.mirrorGroupTasks }
                 .distinctUntilChanged()
                 .collect {
@@ -364,6 +365,7 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                     recyclerAdapter?.user = it
                 }
         }
+        setPreferenceTaskFilters()
     }
 
     private fun updateTaskSubscription(ownerID: String?) {
@@ -419,215 +421,215 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 }
                 dialog.setExtraCloseButtonVisibility(View.VISIBLE)
                 dialog.show()
-        }
-    }
-}
-
-private fun setEmptyLabels() {
-    binding?.recyclerView?.emptyItem = if (viewModel.filterCount(taskType) > 0) {
-        when (this.taskType) {
-            TaskType.HABIT -> {
-                EmptyItem(
-                    getString(R.string.empty_title_habits_filtered),
-                    getString(R.string.empty_description_habits_filtered),
-                    R.drawable.icon_habits
-                )
-            }
-            TaskType.DAILY -> {
-                EmptyItem(
-                    getString(R.string.empty_title_dailies_filtered),
-                    getString(R.string.empty_description_dailies_filtered),
-                    R.drawable.icon_dailies
-                )
-            }
-            TaskType.TODO -> {
-                EmptyItem(
-                    getString(R.string.empty_title_todos_filtered),
-                    getString(R.string.empty_description_todos_filtered),
-                    R.drawable.icon_todos
-                )
-            }
-            TaskType.REWARD -> {
-                EmptyItem(
-                    getString(R.string.empty_title_rewards_filtered),
-                    null,
-                    R.drawable.icon_rewards
-                )
-            }
-            else -> EmptyItem("")
-        }
-    } else {
-        when (this.taskType) {
-            TaskType.HABIT -> {
-                EmptyItem(
-                    getString(R.string.empty_title_habits),
-                    getString(R.string.empty_description_habits),
-                    R.drawable.icon_habits
-                )
-            }
-            TaskType.DAILY -> {
-                EmptyItem(
-                    getString(R.string.empty_title_dailies),
-                    getString(R.string.empty_description_dailies),
-                    R.drawable.icon_dailies
-                )
-            }
-            TaskType.TODO -> {
-                EmptyItem(
-                    getString(R.string.empty_title_todos),
-                    getString(R.string.empty_description_todos),
-                    R.drawable.icon_todos
-                )
-            }
-            TaskType.REWARD -> {
-                EmptyItem(
-                    getString(R.string.empty_title_rewards),
-                    null,
-                    R.drawable.icon_rewards
-                )
-            }
-            else -> EmptyItem("")
-        }
-    }
-}
-
-private fun scoreTask(task: Task, direction: TaskDirection) {
-    viewModel.scoreTask(task, direction) { result, value ->
-        handleTaskResult(result, value)
-    }
-}
-
-override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    outState.putString(CLASS_TYPE_KEY, this.taskType.value)
-}
-
-override val displayedClassName: String?
-    get() = this.taskType.value + super.displayedClassName
-
-override fun onRefresh() {
-    binding?.refreshLayout?.isRefreshing = true
-    viewModel.refreshData {
-        binding?.refreshLayout?.isRefreshing = false
-    }
-}
-
-override fun onResume() {
-    super.onResume()
-    context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
-    setInnerAdapter()
-}
-
-fun setActiveFilter(activeFilter: String) {
-    viewModel.setActiveFilter(taskType, activeFilter)
-    recyclerAdapter?.filter()
-
-    setEmptyLabels()
-
-    if (activeFilter == Task.FILTER_COMPLETED) {
-        lifecycleScope.launchCatching {
-            taskRepository.retrieveCompletedTodos()
-        }
-    }
-}
-
-private fun setPreferenceTaskFilters() {
-    (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
-        if (it != null) {
-            when (taskType) {
-                TaskType.TODO -> viewModel.setActiveFilter(
-                    TaskType.TODO,
-                    Task.FILTER_ACTIVE
-                )
-                TaskType.DAILY -> {
-                    if (!viewModel.initialPreferenceFilterSet) {
-                        viewModel.initialPreferenceFilterSet = true
-                        if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
-                            viewModel.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
-                        }
-                    }
-                }
-                else -> {}
             }
         }
     }
-}
 
-private fun openTaskForm(task: Task) {
-    if (Date().time - (TasksFragment.lastTaskFormOpen?.time
-            ?: 0) < 2000 || !task.isValid
-    ) {
-        return
-    }
-
-    val bundle = Bundle()
-    bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type?.value)
-    bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
-    bundle.putString(TaskFormActivity.GROUP_ID_KEY, task.group?.groupID)
-    bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
-
-    lifecycleScope.launchCatching {
-        val id = if (viewModel.canEditTask(task)) {
-            R.id.taskFormActivity
-        } else {
-            R.id.taskSummaryActivity
-        }
-        withContext(Dispatchers.Main) {
-            MainNavigationController.navigate(id, bundle)
-        }
-    }
-    TasksFragment.lastTaskFormOpen = Date()
-}
-
-companion object {
-    private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
-
-    fun newInstance(context: Context?, classType: TaskType): TaskRecyclerViewFragment {
-        val fragment = TaskRecyclerViewFragment()
-        fragment.taskType = classType
-        var tutorialTexts: List<String>? = null
-        if (context != null) {
-            when (fragment.taskType) {
+    private fun setEmptyLabels() {
+        binding?.recyclerView?.emptyItem = if (viewModel.filterCount(taskType) > 0) {
+            when (this.taskType) {
                 TaskType.HABIT -> {
-                    fragment.tutorialStepIdentifier = "habits"
-                    tutorialTexts = listOf(
-                        context.getString(R.string.tutorial_overview),
-                        context.getString(R.string.tutorial_habits_1),
-                        context.getString(R.string.tutorial_habits_2),
-                        context.getString(R.string.tutorial_habits_3),
-                        context.getString(R.string.tutorial_habits_4)
+                    EmptyItem(
+                        getString(R.string.empty_title_habits_filtered),
+                        getString(R.string.empty_description_habits_filtered),
+                        R.drawable.icon_habits
                     )
                 }
                 TaskType.DAILY -> {
-                    fragment.tutorialStepIdentifier = "dailies"
-                    tutorialTexts = listOf(
-                        context.getString(R.string.tutorial_dailies_1),
-                        context.getString(R.string.tutorial_dailies_2)
+                    EmptyItem(
+                        getString(R.string.empty_title_dailies_filtered),
+                        getString(R.string.empty_description_dailies_filtered),
+                        R.drawable.icon_dailies
                     )
                 }
                 TaskType.TODO -> {
-                    fragment.tutorialStepIdentifier = "todos"
-                    tutorialTexts = listOf(
-                        context.getString(R.string.tutorial_todos_1),
-                        context.getString(R.string.tutorial_todos_2)
+                    EmptyItem(
+                        getString(R.string.empty_title_todos_filtered),
+                        getString(R.string.empty_description_todos_filtered),
+                        R.drawable.icon_todos
                     )
                 }
                 TaskType.REWARD -> {
-                    fragment.tutorialStepIdentifier = "rewards"
-                    tutorialTexts = listOf(
-                        context.getString(R.string.tutorial_rewards_1),
-                        context.getString(R.string.tutorial_rewards_2)
+                    EmptyItem(
+                        getString(R.string.empty_title_rewards_filtered),
+                        null,
+                        R.drawable.icon_rewards
                     )
+                }
+                else -> EmptyItem("")
+            }
+        } else {
+            when (this.taskType) {
+                TaskType.HABIT -> {
+                    EmptyItem(
+                        getString(R.string.empty_title_habits),
+                        getString(R.string.empty_description_habits),
+                        R.drawable.icon_habits
+                    )
+                }
+                TaskType.DAILY -> {
+                    EmptyItem(
+                        getString(R.string.empty_title_dailies),
+                        getString(R.string.empty_description_dailies),
+                        R.drawable.icon_dailies
+                    )
+                }
+                TaskType.TODO -> {
+                    EmptyItem(
+                        getString(R.string.empty_title_todos),
+                        getString(R.string.empty_description_todos),
+                        R.drawable.icon_todos
+                    )
+                }
+                TaskType.REWARD -> {
+                    EmptyItem(
+                        getString(R.string.empty_title_rewards),
+                        null,
+                        R.drawable.icon_rewards
+                    )
+                }
+                else -> EmptyItem("")
+            }
+        }
+    }
+
+    private fun scoreTask(task: Task, direction: TaskDirection) {
+        viewModel.scoreTask(task, direction) { result, value ->
+            handleTaskResult(result, value)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(CLASS_TYPE_KEY, this.taskType.value)
+    }
+
+    override val displayedClassName: String?
+        get() = this.taskType.value + super.displayedClassName
+
+    override fun onRefresh() {
+        binding?.refreshLayout?.isRefreshing = true
+        viewModel.refreshData {
+            binding?.refreshLayout?.isRefreshing = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        context?.let { recyclerAdapter?.taskDisplayMode = configManager.taskDisplayMode(it) }
+        setInnerAdapter()
+    }
+
+    fun setActiveFilter(activeFilter: String) {
+        viewModel.setActiveFilter(taskType, activeFilter)
+        recyclerAdapter?.filter()
+
+        setEmptyLabels()
+
+        if (activeFilter == Task.FILTER_COMPLETED) {
+            lifecycleScope.launchCatching {
+                taskRepository.retrieveCompletedTodos()
+            }
+        }
+    }
+
+    private fun setPreferenceTaskFilters() {
+        (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
+            if (it != null) {
+                when (taskType) {
+                    TaskType.TODO -> viewModel.setActiveFilter(
+                        TaskType.TODO,
+                        Task.FILTER_ACTIVE
+                    )
+                    TaskType.DAILY -> {
+                        if (!viewModel.initialPreferenceFilterSet) {
+                            viewModel.initialPreferenceFilterSet = true
+                            if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
+                                viewModel.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
+                            }
+                        }
+                    }
+                    else -> {}
                 }
             }
         }
-
-        if (tutorialTexts != null) {
-            fragment.tutorialTexts = ArrayList(tutorialTexts)
-        }
-        fragment.tutorialCanBeDeferred = false
-
-        return fragment
     }
-}
+
+    private fun openTaskForm(task: Task) {
+        if (Date().time - (TasksFragment.lastTaskFormOpen?.time
+                ?: 0) < 2000 || !task.isValid
+        ) {
+            return
+        }
+
+        val bundle = Bundle()
+        bundle.putString(TaskFormActivity.TASK_TYPE_KEY, task.type?.value)
+        bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id)
+        bundle.putString(TaskFormActivity.GROUP_ID_KEY, task.group?.groupID)
+        bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
+
+        lifecycleScope.launchCatching {
+            val id = if (viewModel.canEditTask(task)) {
+                R.id.taskFormActivity
+            } else {
+                R.id.taskSummaryActivity
+            }
+            withContext(Dispatchers.Main) {
+                MainNavigationController.navigate(id, bundle)
+            }
+        }
+        TasksFragment.lastTaskFormOpen = Date()
+    }
+
+    companion object {
+        private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
+
+        fun newInstance(context: Context?, classType: TaskType): TaskRecyclerViewFragment {
+            val fragment = TaskRecyclerViewFragment()
+            fragment.taskType = classType
+            var tutorialTexts: List<String>? = null
+            if (context != null) {
+                when (fragment.taskType) {
+                    TaskType.HABIT -> {
+                        fragment.tutorialStepIdentifier = "habits"
+                        tutorialTexts = listOf(
+                            context.getString(R.string.tutorial_overview),
+                            context.getString(R.string.tutorial_habits_1),
+                            context.getString(R.string.tutorial_habits_2),
+                            context.getString(R.string.tutorial_habits_3),
+                            context.getString(R.string.tutorial_habits_4)
+                        )
+                    }
+                    TaskType.DAILY -> {
+                        fragment.tutorialStepIdentifier = "dailies"
+                        tutorialTexts = listOf(
+                            context.getString(R.string.tutorial_dailies_1),
+                            context.getString(R.string.tutorial_dailies_2)
+                        )
+                    }
+                    TaskType.TODO -> {
+                        fragment.tutorialStepIdentifier = "todos"
+                        tutorialTexts = listOf(
+                            context.getString(R.string.tutorial_todos_1),
+                            context.getString(R.string.tutorial_todos_2)
+                        )
+                    }
+                    TaskType.REWARD -> {
+                        fragment.tutorialStepIdentifier = "rewards"
+                        tutorialTexts = listOf(
+                            context.getString(R.string.tutorial_rewards_1),
+                            context.getString(R.string.tutorial_rewards_2)
+                        )
+                    }
+                }
+            }
+
+            if (tutorialTexts != null) {
+                fragment.tutorialTexts = ArrayList(tutorialTexts)
+            }
+            fragment.tutorialCanBeDeferred = false
+
+            return fragment
+        }
+    }
 }

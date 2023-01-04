@@ -139,6 +139,7 @@ object HabiticaTheme {
                 textPrimary = Color(context.getThemeColor(R.attr.textColorPrimary)),
                 textSecondary = Color(context.getThemeColor(R.attr.textColorSecondary)),
                 textTertiary = Color(ContextCompat.getColor(context, R.color.text_ternary)),
+                textQuad = Color(ContextCompat.getColor(context, R.color.text_quad)),
                 textDimmed = Color(ContextCompat.getColor(context, R.color.text_dimmed)),
             )
         }
@@ -151,12 +152,19 @@ class HabiticaColors(
     val textPrimary: Color,
     val textSecondary: Color,
     val textTertiary: Color,
+    val textQuad: Color,
     val textDimmed: Color
 ) {
     @Composable
     fun textPrimaryFor(task: Task?): Color {
         return colorResource((if (isSystemInDarkTheme()) task?.extraExtraLightTaskColor else task?.extraDarkTaskColor) ?: R.color.text_primary)
     }
+
+    @Composable
+    fun textSecondaryFor(task: Task?): Color {
+        return colorResource((if (isSystemInDarkTheme()) task?.extraLightTaskColor else task?.lowSaturationTaskColor) ?: R.color.brand_sub_text)
+    }
+
     @Composable
     fun primaryBackgroundFor(task: Task?): Color {
         return colorResource((if (isSystemInDarkTheme()) task?.mediumTaskColor else task?.lightTaskColor) ?: R.color.brand_400)

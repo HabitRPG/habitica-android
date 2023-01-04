@@ -81,6 +81,12 @@
             tools:ignore="UnusedAttribute">
         </activity>
         <activity
+            android:name=".ui.activities.BirthdayActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="unspecified"
+            tools:ignore="UnusedAttribute">
+        </activity>
+        <activity
             android:name=".ui.activities.NotificationsActivity"
             android:parentActivityName=".ui.activities.MainActivity"
             android:label="@string/notifications"

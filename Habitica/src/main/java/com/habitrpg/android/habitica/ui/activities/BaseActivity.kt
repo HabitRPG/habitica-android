@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.extensions.forceLocale
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.NotificationsManager
@@ -251,14 +252,4 @@ abstract class BaseActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out)
         startActivity(intent)
     }
-}
-
-private fun Resources.forceLocale(activity: BaseActivity, locale: Locale) {
-    Locale.setDefault(locale)
-    val configuration = Configuration()
-    configuration.setLocale(locale)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        activity.createConfigurationContext(configuration)
-    }
-    updateConfiguration(configuration, displayMetrics)
 }

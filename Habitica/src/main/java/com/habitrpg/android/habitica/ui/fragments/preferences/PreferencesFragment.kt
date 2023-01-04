@@ -225,7 +225,9 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
                 } else {
-                    pushNotificationManager.removePushDeviceUsingStoredToken()
+                    lifecycleScope.launchCatching {
+                        pushNotificationManager.removePushDeviceUsingStoredToken()
+                    }
                 }
             }
             "useEmails" -> {

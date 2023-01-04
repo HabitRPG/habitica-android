@@ -123,6 +123,20 @@
         <action
             android:id="@+id/openEquipmentDetail"
             app:destination="@id/equipmentDetailFragment" />
+        <action
+            android:id="@+id/openAvatarEquipment"
+            app:destination="@id/avatarEquipmentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/avatarEquipmentFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment"
+        android:label="@string/sidebar_avatar" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/equipmentOverviewFragment"
@@ -225,6 +239,12 @@
             android:name="username"
             app:argType="string"
             app:nullable="true" />
+    </activity>
+    <activity
+        android:id="@+id/birthdayActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.BirthdayActivity"
+        android:label="@string/gem_purchase_toolbartitle" >
+        <deepLink app:uri="habitica.com/birthday" />
     </activity>
     <fragment
         android:id="@+id/newsFragment"

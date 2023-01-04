@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.receivers.TaskAlarmBootReceiver;
 import com.habitrpg.android.habitica.receivers.TaskReceiver;
 import com.habitrpg.android.habitica.ui.activities.AdventureGuideActivity;
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivity;
+import com.habitrpg.android.habitica.ui.activities.BirthdayActivity;
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity;
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity;
 import com.habitrpg.android.habitica.ui.activities.DeathActivity;
@@ -53,6 +54,7 @@ import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment;
 import com.habitrpg.android.habitica.ui.fragments.PromoWebFragment;
 import com.habitrpg.android.habitica.ui.fragments.StatsFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment;
+import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarOverviewFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment;
@@ -370,4 +372,8 @@ public interface UserComponent {
     void inject(@NotNull TaskSummaryViewModel taskSummaryViewModel);
 
     void inject(@NotNull TaskFormViewModel taskFormViewModel);
+
+    void inject(@NotNull AvatarEquipmentFragment avatarEquipmentFragment);
+
+    void inject(@NotNull BirthdayActivity birthdayActivity);
 }

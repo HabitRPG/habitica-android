@@ -2,6 +2,7 @@ package com.habitrpg.wearos.habitica.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +19,10 @@ import kotlin.time.toDuration
 @AndroidEntryPoint
 class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     override val viewModel: SplashViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -51,7 +56,6 @@ class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
             }
         }
     }
-
 
     override fun onStop() {
         messageClient.removeListener(viewModel)

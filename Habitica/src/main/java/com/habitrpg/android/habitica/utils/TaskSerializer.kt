@@ -40,14 +40,14 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         return intList
     }
 
-    private fun getMonthlyDays(e: JsonElement, task: Task) {
-        val weeksOfMonth = e.asJsonObject.getAsJsonArray("weeksOfMonth")
+    private fun getMonthlyDays(e: JsonObject, task: Task) {
+        val weeksOfMonth = e.getAsJsonArray("weeksOfMonth")
         if (weeksOfMonth != null && weeksOfMonth.size() > 0) {
             task.setWeeksOfMonth(getIntListFromJsonArray(weeksOfMonth))
         }
 
-        val daysOfMonth = e.asJsonObject.getAsJsonArray("daysOfMonth")
-        if (weeksOfMonth != null && weeksOfMonth.size() > 0) {
+        val daysOfMonth = e.getAsJsonArray("daysOfMonth")
+        if (daysOfMonth != null && daysOfMonth.size() > 0) {
             task.setDaysOfMonth(getIntListFromJsonArray(daysOfMonth))
         }
     }
@@ -134,7 +134,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             task.group = group
         }
         // Work around since Realm does not support Arrays of ints
-        getMonthlyDays(json, task)
+        getMonthlyDays(obj, task)
 
         // Workaround, since gson doesn't call setter methods
         task.id = obj.getAsString("_id")

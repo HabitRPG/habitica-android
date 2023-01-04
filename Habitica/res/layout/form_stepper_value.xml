@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:background="@color/transparent"
-        android:textColor="?colorPrimaryDark"
+        android:textColor="?textColorTintedPrimary"
         android:textSize="16sp"
         tools:text="100.0"
         android:inputType="numberDecimal"

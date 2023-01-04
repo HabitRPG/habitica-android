@@ -36,6 +36,8 @@
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
                     android:background="?attr/colorContentBackground"
+                    android:theme="@style/Toolbar.Modern"
+                    style="@style/ToolbarTitleStyle"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/PopupTheme" />
             </com.google.android.material.appbar.AppBarLayout>

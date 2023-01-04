@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentManager
@@ -26,7 +27,6 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
 import com.habitrpg.android.habitica.helpers.launchCatching
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.api.HostConfig
@@ -107,12 +107,13 @@ class AuthenticationViewModel() {
     fun handleGoogleLoginResult(
         activity: Activity,
         recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
-        onSuccess: (User, Boolean) -> Unit
+        onSuccess: (Boolean) -> Unit
     ) {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
         var newUser = false
         CoroutineScope(Dispatchers.IO).launchCatching({ throwable ->
+            Log.e("Auth", throwable.localizedMessage, throwable)
             if (recoverFromPlayServicesErrorResult == null) return@launchCatching
             throwable.cause?.let {
                 if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
@@ -128,8 +129,7 @@ class AuthenticationViewModel() {
             val response = apiClient.connectSocial("google", googleEmail ?: "", token) ?: return@launchCatching
             newUser = response.newUser
             handleAuthResponse(response)
-            val user = userRepository.retrieveUser(true, true) ?: return@launchCatching
-            onSuccess(user, newUser)
+            onSuccess(newUser)
         }
     }
 

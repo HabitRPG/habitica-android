@@ -19,6 +19,9 @@ open class GroupAssignedDetails: RealmObject(), BaseObject {
 
 @RealmClass(embedded = true)
 open class TaskGroupPlan : RealmObject(), BaseObject {
+    fun assignedDetailsFor(userID: String): GroupAssignedDetails? {
+        return assignedUsersDetail.firstOrNull { it.assignedUserID == userID }
+    }
 
     @SerializedName("id")
     var groupID: String? = null

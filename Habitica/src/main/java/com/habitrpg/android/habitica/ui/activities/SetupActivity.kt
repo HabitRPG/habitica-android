@@ -30,7 +30,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
-import com.habitrpg.common.habitica.api.HostConfig
 import com.viewpagerindicator.IconPagerAdapter
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -43,8 +42,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     @Inject
     lateinit var apiClient: ApiClient
-    @Inject
-    lateinit var hostConfig: HostConfig
     @Inject
     lateinit var inventoryRepository: InventoryRepository
     @Inject

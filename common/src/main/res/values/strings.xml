@@ -16,6 +16,10 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="trivial_sentence">trivial</string>
+    <string name="easy_sentence">easy</string>
+    <string name="medium_sentence">medium</string>
+    <string name="hard_sentence">hard</string>
     <string name="habits">Habits</string>
     <string name="dailies">Dailies</string>
     <string name="todos">To Do\'s</string>

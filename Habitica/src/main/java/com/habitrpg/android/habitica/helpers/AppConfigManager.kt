@@ -140,11 +140,6 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
         return Gson().fromJson(remoteConfig.getString("knownIssues"), type)
     }
 
-    fun enableTeamBoards(): Boolean {
-        return true
-        return remoteConfig.getBoolean("enableTeamBoards")
-    }
-
     fun enableArmoireAds(): Boolean {
         return remoteConfig.getBoolean("enableArmoireAds")
     }
@@ -159,5 +154,9 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
 
     fun enableNewArmoire(): Boolean {
         return remoteConfig.getBoolean("enableNewArmoire")
+    }
+
+    fun isBirthday(): Boolean {
+        return BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == AppTestingLevel.STAFF.name
     }
 }

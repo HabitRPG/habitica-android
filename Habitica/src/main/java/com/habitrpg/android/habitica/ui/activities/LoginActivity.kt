@@ -15,7 +15,6 @@ import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
@@ -43,7 +42,6 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
-import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.viewmodels.AuthenticationViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -70,43 +68,59 @@ class LoginActivity : BaseActivity() {
     private val loginClick = View.OnClickListener {
         binding.PBAsyncTask.visibility = View.VISIBLE
         if (isRegistering) {
-            val username: String = binding.username.text.toString().trim { it <= ' ' }
-            val email: String = binding.email.text.toString().trim { it <= ' ' }
-            val password: String = binding.password.text.toString()
-            val confirmPassword: String = binding.confirmPassword.text.toString()
-            if (username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
-                showValidationError(R.string.login_validation_error_fieldsmissing)
-                return@OnClickListener
-            }
-            if (password.length < configManager.minimumPasswordLength()) {
-                showValidationError(getString(R.string.password_too_short, configManager.minimumPasswordLength()))
-                return@OnClickListener
-            }
-            lifecycleScope.launch(ExceptionHandler.coroutine {
-                hideProgress()
-                ExceptionHandler.reportError(it)
-            }) {
-                val response = apiClient.registerUser(username, email, password, confirmPassword)
-                if (response != null) {
-                    handleAuthResponse(response)
-                }
-            }
+            registerWithPassword()
         } else {
-            val username: String = binding.username.text.toString().trim { it <= ' ' }
-            val password: String = binding.password.text.toString()
-            if (username.isEmpty() || password.isEmpty()) {
-                showValidationError(R.string.login_validation_error_fieldsmissing)
-                return@OnClickListener
-            }
-            Log.d("LoginActivity", ": $username, $password")
-            lifecycleScope.launch(ExceptionHandler.coroutine {
+            loginWithPassword()
+        }
+    }
+
+    private fun loginWithPassword() {
+        val username: String = binding.username.text.toString().trim { it <= ' ' }
+        val password: String = binding.password.text.toString()
+        if (username.isEmpty() || password.isEmpty()) {
+            showValidationError(R.string.login_validation_error_fieldsmissing)
+            return
+        }
+        lifecycleScope.launch(ExceptionHandler.coroutine {
+            hideProgress()
+            ExceptionHandler.reportError(it)
+        }) {
+            val response = apiClient.connectUser(username, password)
+            if (response != null) {
+                handleAuthResponse(response)
+            } else {
                 hideProgress()
-                ExceptionHandler.reportError(it)
-            }) {
-                val response = apiClient.connectUser(username, password)
-                if (response != null) {
-                    handleAuthResponse(response)
-                }
+            }
+        }
+    }
+
+    private fun registerWithPassword() {
+        val username: String = binding.username.text.toString().trim { it <= ' ' }
+        val email: String = binding.email.text.toString().trim { it <= ' ' }
+        val password: String = binding.password.text.toString()
+        val confirmPassword: String = binding.confirmPassword.text.toString()
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()) {
+            showValidationError(R.string.login_validation_error_fieldsmissing)
+            return
+        }
+        if (password.length < configManager.minimumPasswordLength()) {
+            showValidationError(
+                getString(
+                    R.string.password_too_short,
+                    configManager.minimumPasswordLength()
+                )
+            )
+            return
+        }
+        lifecycleScope.launch(ExceptionHandler.coroutine {
+            hideProgress()
+            ExceptionHandler.reportError(it)
+        }) {
+            val response = apiClient.registerUser(username, email, password, confirmPassword)
+            if (response != null) {
+                handleAuthResponse(response)
+            } else {
+                hideProgress()
             }
         }
     }
@@ -264,15 +278,10 @@ class LoginActivity : BaseActivity() {
         } catch (e: Exception) {
             // Wearable API is not available on this device.
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val user = userRepository.retrieveUser(true)
-            if (user != null) {
-                handleAuthResponse(user, response.newUser)
-            }
-        }
+        handleAuthResponse(response.newUser)
     }
 
-    private fun handleAuthResponse(user: User, isNew: Boolean) {
+    private fun handleAuthResponse(isNew: Boolean) {
         hideProgress()
         dismissKeyboard()
 
@@ -319,8 +328,8 @@ class LoginActivity : BaseActivity() {
     private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) { user, isNew ->
-                handleAuthResponse(user, isNew)
+            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) { isNew ->
+                handleAuthResponse(isNew)
             }
         }
     }
@@ -329,8 +338,8 @@ class LoginActivity : BaseActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode != Activity.RESULT_CANCELED) {
-            viewModel.handleGoogleLoginResult(this, null) { user, isNew ->
-                handleAuthResponse(user, isNew)
+            viewModel.handleGoogleLoginResult(this, null) { isNew ->
+                handleAuthResponse(isNew)
             }
         }
     }

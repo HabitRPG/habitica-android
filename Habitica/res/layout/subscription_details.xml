@@ -257,8 +257,8 @@
         android:layout_marginTop="4dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:text="@string/subscribers_mythic_hourglasses" />
 
     <ImageView

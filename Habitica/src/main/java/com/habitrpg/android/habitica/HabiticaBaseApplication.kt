@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
@@ -41,6 +42,7 @@ import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import kotlinx.coroutines.MainScope
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -250,26 +252,28 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
 
         fun logout(context: Context) {
-            getInstance(context)?.pushNotificationManager?.removePushDeviceUsingStoredToken()
-            val realm = Realm.getDefaultInstance()
-            getInstance(context)?.deleteDatabase(realm.path)
-            realm.close()
-            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val useReminder = preferences.getBoolean("use_reminder", false)
-            val reminderTime = preferences.getString("reminder_time", "19:00")
-            val lightMode = preferences.getString("theme_mode", "system")
-            val launchScreen = preferences.getString("launch_screen", "")
-            preferences.edit {
-                clear()
-                putBoolean("use_reminder", useReminder)
-                putString("reminder_time", reminderTime)
-                putString("theme_mode", lightMode)
-                putString("launch_screen", launchScreen)
+            MainScope().launchCatching {
+                getInstance(context)?.pushNotificationManager?.removePushDeviceUsingStoredToken()
+                val realm = Realm.getDefaultInstance()
+                getInstance(context)?.deleteDatabase(realm.path)
+                realm.close()
+                val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+                val useReminder = preferences.getBoolean("use_reminder", false)
+                val reminderTime = preferences.getString("reminder_time", "19:00")
+                val lightMode = preferences.getString("theme_mode", "system")
+                val launchScreen = preferences.getString("launch_screen", "")
+                preferences.edit {
+                    clear()
+                    putBoolean("use_reminder", useReminder)
+                    putString("reminder_time", reminderTime)
+                    putString("theme_mode", lightMode)
+                    putString("launch_screen", launchScreen)
+                }
+                reloadUserComponent()
+                getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
+                Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
+                startActivity(LoginActivity::class.java, context)
             }
-            reloadUserComponent()
-            getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
-            Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
-            startActivity(LoginActivity::class.java, context)
         }
 
         fun reloadUserComponent() {

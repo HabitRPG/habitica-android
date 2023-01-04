@@ -29,9 +29,9 @@ import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.AvatarCustomizationOverviewView
-import com.habitrpg.android.habitica.ui.views.EquipmentOverviewView
 import com.habitrpg.android.habitica.ui.views.SegmentedControl
+import com.habitrpg.android.habitica.ui.views.equipment.AvatarCustomizationOverviewView
+import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 import javax.inject.Inject
 
 open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>(),
@@ -65,7 +65,9 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
                         showCustomization, !showCustomization,
                         { type, category ->
                         displayCustomizationFragment(type, category)
-                    }, { type, equipped, isCostume ->
+                    }, { type, category ->
+                            displayAvatarEquipmentFragment(type, category)
+                        },  { type, equipped, isCostume ->
                         displayEquipmentFragment(type, equipped, isCostume)
                     })
                 }
@@ -85,6 +87,10 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
                 category ?: ""
             )
         )
+    }
+
+    private fun displayAvatarEquipmentFragment(type: String, category: String?) {
+        MainNavigationController.navigate(AvatarOverviewFragmentDirections.openAvatarEquipment(type, category ?: ""))
     }
 
     private fun displayEquipmentFragment(type: String, equipped: String?, isCostume: Boolean = false) {
@@ -108,6 +114,7 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
     showCustomization: Boolean = true,
     showEquipment: Boolean = true,
     onCustomizationTap: (String, String?) -> Unit,
+    onAvatarEquipmentTap: (String, String?) -> Unit,
     onEquipmentTap: (String, String?, Boolean) -> Unit
     ) {
     val user by userViewModel.user.observeAsState()
@@ -139,7 +146,7 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
                         )
                     })
             }
-            AvatarCustomizationOverviewView(user?.preferences, onCustomizationTap)
+            AvatarCustomizationOverviewView(user?.preferences, user?.items?.gear?.equipped, onCustomizationTap, onAvatarEquipmentTap)
         }
         if (showEquipment) {
             Row(
