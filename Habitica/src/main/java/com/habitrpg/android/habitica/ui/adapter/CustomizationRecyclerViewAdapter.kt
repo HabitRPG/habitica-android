@@ -216,12 +216,14 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 return
             }
 
-            if (customization?.type == "background" && avatar != null){
+            if (customization?.type == "background"){
                 val alert = HabiticaAlertDialog(context = itemView.context)
                 val purchasedCustomizationView: View = LayoutInflater.from(itemView.context).inflate(R.layout.purchased_equip_dialog, null)
                 val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
-                layerMap[AvatarView.LayerType.BACKGROUND] = customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName }
-                purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatar(avatar!!, layerMap)
+                avatar?.let { avatar ->
+                    layerMap[AvatarView.LayerType.BACKGROUND] = customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName }
+                    purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatar(avatar, layerMap)
+                }
                 alert.setAdditionalContentView(purchasedCustomizationView)
                 alert.setTitle(customization?.text)
                 alert.setMessage(customization?.notes)

@@ -198,7 +198,7 @@ class TaskRepositoryImpl(
         val task = apiClient.scoreChecklistItem(taskId, itemId)
         val updatedItem: ChecklistItem? = task?.checklist?.lastOrNull { itemId == it.id }
         if (updatedItem != null) {
-            localRepository.modify(updatedItem) { liveItem -> liveItem.completed = !liveItem.completed }
+            localRepository.save(updatedItem)
         }
         return task
     }

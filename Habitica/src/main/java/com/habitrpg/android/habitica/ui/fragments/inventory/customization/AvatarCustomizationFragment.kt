@@ -70,7 +70,7 @@ class AvatarCustomizationFragment :
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
     internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(activity, ROW)
 
-    private val currentFilter = MutableStateFlow<CustomizationFilter>(CustomizationFilter(false, type != "background"))
+    private val currentFilter = MutableStateFlow(CustomizationFilter(false, type != "background"))
     private val ownedCustomizations = MutableStateFlow<List<OwnedCustomization>>(emptyList())
 
     override fun onCreateView(
@@ -146,7 +146,7 @@ class AvatarCustomizationFragment :
     }
 
     private fun updateFilterIcon() {
-        if (currentFilter.value?.isFiltering != true) {
+        if (currentFilter.value.isFiltering != true) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)

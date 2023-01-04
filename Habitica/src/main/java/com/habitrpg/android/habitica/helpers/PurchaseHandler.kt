@@ -154,7 +154,7 @@ class PurchaseHandler(
         }
     }
 
-    suspend fun getAllGemSKUs(): List<SkuDetails> =
+    suspend fun getAllGemSKUs() =
         getSKUs(BillingClient.SkuType.INAPP, PurchaseTypes.allGemTypes)
 
     suspend fun getAllSubscriptionProducts() =
@@ -225,6 +225,22 @@ class PurchaseHandler(
         }
         val sku = purchase.skus.firstOrNull()
         when {
+            sku == PurchaseTypes.JubilentGrphatrice -> {
+                val validationRequest = buildValidationRequest(purchase)
+                MainScope().launchCatching {
+                    try {
+                        apiClient.validatePurchase(validationRequest)
+                        processedPurchase(purchase)
+                        val gift = removeGift(sku)
+                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                            consume(purchase)
+                        }
+                        displayGryphatriceConfirmationDialog(purchase, gift?.third)
+                    } catch (throwable: Throwable) {
+                        handleError(throwable, purchase)
+                    }
+                }
+            }
             PurchaseTypes.allGemTypes.contains(sku) -> {
                 val validationRequest = buildValidationRequest(purchase)
                 MainScope().launchCatching {
@@ -434,6 +450,31 @@ class PurchaseHandler(
                 val alert = HabiticaAlertDialog(activity)
                 alert.setTitle(title)
                 message?.let { alert.setMessage(it) }
+                alert.addOkButton { dialog, _ ->
+                    dialog.dismiss()
+                    if (activity is PurchaseActivity) {
+                        activity.finish()
+                    }
+                }
+                alert.enqueue()
+            }
+        }
+    }
+
+    private fun displayGryphatriceConfirmationDialog(purchase: Purchase, giftedTo: String? = null) {
+        CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
+            val application = (context as? HabiticaBaseApplication)
+                ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
+            val title = context.getString(R.string.successful_purchase_generic)
+            val message = if (giftedTo != null) {
+                context.getString(R.string.jubilent_gryphatrice_confirmation_gift)
+            } else {
+                context.getString(R.string.jubilent_gryphatrice_confirmation)
+            }
+            application.currentActivity?.get()?.let { activity ->
+                val alert = HabiticaAlertDialog(activity)
+                alert.setTitle(title)
+                alert.setMessage(message)
                 alert.addOkButton { dialog, _ ->
                     dialog.dismiss()
                     if (activity is PurchaseActivity) {
