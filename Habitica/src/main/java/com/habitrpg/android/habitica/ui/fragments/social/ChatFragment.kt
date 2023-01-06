@@ -104,7 +104,8 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
         viewModel?.chatmessages?.observe(viewLifecycleOwner, { setChatMessages(it) })
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
-            viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
+            viewModel.updateUser("flags.communityGuidelinesAccepted", true)
+            binding?.chatBarView?.hasAcceptedGuidelines = true
         }
 
         viewModel?.user?.observe(
