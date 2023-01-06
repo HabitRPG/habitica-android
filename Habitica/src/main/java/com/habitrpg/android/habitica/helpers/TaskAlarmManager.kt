@@ -105,10 +105,7 @@ class TaskAlarmManager(
             return
         }
 
-        val time = Date.from(zonedTime)
-        val cal = Calendar.getInstance()
-        cal.time = time
-
+        val timeEpochMilli = zonedTime?.toEpochMilli() ?: return
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
         intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.text)
@@ -134,7 +131,7 @@ class TaskAlarmManager(
             withImmutableFlag(PendingIntent.FLAG_CANCEL_CURRENT)
         )
 
-        setAlarm(context, cal.timeInMillis, sender)
+        setAlarm(context, timeEpochMilli, sender)
     }
 
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {

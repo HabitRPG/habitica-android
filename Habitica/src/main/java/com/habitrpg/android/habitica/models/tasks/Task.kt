@@ -270,11 +270,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             //set a updated reminder with nextDate
             return if (nextDue?.firstOrNull() != null && (!isDisplayedActive || remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true)) {
                 val nextDate = LocalDateTime.ofInstant(nextDue?.firstOrNull()?.toInstant(), ZoneId.systemDefault())
-                val currentDateTime = LocalDateTime.now()
                 val nextDueCalendar: LocalDateTime = LocalDateTime.of(
-                    currentDateTime.year,
-                    currentDateTime.month,  // Add one to adjust from zero-based counting.
-                    currentDateTime.dayOfMonth,
+                    nextDate.year,
+                    nextDate.month,  // Add one to adjust from zero-based counting.
+                    nextDate.dayOfMonth,
                     nextDate.hour,
                     nextDate.minute
                 )
