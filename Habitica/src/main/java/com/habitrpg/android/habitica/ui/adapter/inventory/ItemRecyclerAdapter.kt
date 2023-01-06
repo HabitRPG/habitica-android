@@ -121,7 +121,13 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             val disabled = if (isHatching) {
                     !this.canHatch
                 } else false
-            val imageName = getImageName(item)
+
+
+            val imageName = if (item != null) {
+                getImageName(item = item) }
+            else {
+                getImageName(ownedItem = ownedItem)
+            }
             binding.imageView.loadImage(imageName)
 
             var alpha = 1.0f
@@ -134,7 +140,8 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
         }
 
         private fun getImageName(
-            item: Item?,
+            item: Item? = null,
+            ownedItem: OwnedItem? = null
         ): String {
             return if (item is QuestContent) {
                 "inventory_quest_scroll_" + item.key
@@ -162,8 +169,13 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
                 menu.setTitle(item?.text)
-                menu.setImage(getImageName(item))
-                if (item !is QuestContent && item !is SpecialItem) {
+                val imageName = if (item != null) {
+                    getImageName(item = item) }
+                else {
+                    getImageName(ownedItem = ownedItem)
+                }
+                menu.setImage(imageName)
+                if (item !is QuestContent && item !is SpecialItem && ownedItem?.itemType != "special") {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.sell_no_price), true, "gold", item?.value?.toDouble() ?: 0.0))
                 }
                 if (item is Egg) {
@@ -181,13 +193,15 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && (ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
-                    } else if ((ownedItem?.numberOwned ?: 0) > 0) {
+                    }
+                } else if (ownedItem?.itemType == "special") {
+                    if ((ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
                     }
                 }
                 menu.setSelectionRunnable { index ->
                     item?.let { selectedItem ->
-                        if (!(selectedItem is QuestContent || selectedItem is SpecialItem) && index == 0) {
+                        if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") && index == 0) {
                             ownedItem?.let { selectedOwnedItem -> sellItemEvents.onNext(selectedOwnedItem) }
                             return@let
                         }
