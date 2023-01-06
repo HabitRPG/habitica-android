@@ -121,5 +121,18 @@
         <key>enableSpellAds</key>
         <value>false</value>
     </entry>
+
+    <entry>
+        <key>hideTavern</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>hideGuilds</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>hideChallenges</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

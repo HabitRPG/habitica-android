@@ -13,7 +13,6 @@ class DetailDialog(context: Context) : HabiticaAlertDialog(context) {
             if (value == null) return
 
             val contentView = PurchaseDialogQuestContent(context)
-            contentView.setQuestContent(value)
             contentView.setQuestContentItem(value)
             setAdditionalContentView(contentView)
         }

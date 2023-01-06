@@ -156,6 +156,16 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
         return remoteConfig.getBoolean("enableNewArmoire")
     }
 
+    fun hideTavern(): Boolean {
+        return remoteConfig.getBoolean("hideTavern")
+    }
+    fun hideGuilds(): Boolean {
+        return remoteConfig.getBoolean("hideGuilds")
+    }
+    fun hideChallenges(): Boolean {
+        return remoteConfig.getBoolean("hideChallenges")
+    }
+
     fun isBirthday(): Boolean {
         return BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == AppTestingLevel.STAFF.name
     }

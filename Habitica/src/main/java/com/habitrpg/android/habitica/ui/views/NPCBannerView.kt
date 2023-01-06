@@ -50,7 +50,7 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
             val drawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(it.toBitmap(), width, height, false))
             drawable.tileModeX = Shader.TileMode.REPEAT
             MainScope().launch {
-                binding.backgroundView.background = it
+                binding.backgroundView.background = drawable
             }
         }
     }

@@ -15,23 +15,28 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.launchCatching
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import com.habitrpg.android.habitica.ui.views.equipment.AvatarCustomizationOverviewView
 import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>(),
@@ -39,10 +44,15 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+    @Inject
+    lateinit var inventoryRepository: InventoryRepository
 
     override var binding: FragmentComposeScrollingBinding? = null
 
     protected var showCustomization = true
+
+    private val battleGearWeapon = mutableStateOf<Equipment?>(null)
+    private val costumeWeapon = mutableStateOf<Equipment?>(null)
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -63,6 +73,7 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
                 HabiticaTheme {
                     AvatarOverviewView(userViewModel,
                         showCustomization, !showCustomization,
+                        battleGearWeapon.value?.twoHanded == true, costumeWeapon.value?.twoHanded == true,
                         { type, category ->
                         displayCustomizationFragment(type, category)
                     }, { type, category ->
@@ -73,6 +84,22 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
                 }
             }
         }
+
+        userViewModel.user.map { Pair(it?.items?.gear?.equipped?.weapon, it?.items?.gear?.costume?.weapon) }
+            .observe(viewLifecycleOwner) {
+                lifecycleScope.launchCatching {
+                    battleGearWeapon.value = it.first?.let { key ->
+                        inventoryRepository.getEquipment(
+                            key
+                        ).firstOrNull()
+                    }
+                    costumeWeapon.value = it.second?.let { key ->
+                        inventoryRepository.getEquipment(
+                            key
+                        ).firstOrNull()
+                    }
+                }
+            }
         return view
     }
 
@@ -113,6 +140,8 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
 fun AvatarOverviewView(userViewModel: MainUserViewModel,
     showCustomization: Boolean = true,
     showEquipment: Boolean = true,
+    battleGearTwoHanded: Boolean = false,
+    costumeTwoHanded: Boolean = false,
     onCustomizationTap: (String, String?) -> Unit,
     onAvatarEquipmentTap: (String, String?) -> Unit,
     onEquipmentTap: (String, String?, Boolean) -> Unit
@@ -169,7 +198,7 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
                     userViewModel.updateUser("preferences.autoEquip", it)
                 })
             }
-            EquipmentOverviewView(user?.items?.gear?.equipped, { type, equipped ->
+            EquipmentOverviewView(user?.items?.gear?.equipped, battleGearTwoHanded, { type, equipped ->
                 onEquipmentTap(type, equipped, false)
             })
             Row(
@@ -194,7 +223,7 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
                 })
             }
             AnimatedVisibility(visible = user?.preferences?.costume == true) {
-                EquipmentOverviewView(user?.items?.gear?.costume, { type, equipped ->
+                EquipmentOverviewView(user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
                     onEquipmentTap(type, equipped, true)
                 })
             }

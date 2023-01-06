@@ -9,11 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentQuestBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
 class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(context) {
@@ -23,7 +24,9 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
     override val titleTextView: TextView
         get() = binding.titleTextView
 
-    fun setQuestContent(questContent: QuestContent) {
+    override fun setQuestContentItem(questContent: QuestContent) {
+        super.setQuestContentItem(questContent)
+        binding.notesTextView.setText(questContent.notes.fromHtml(), TextView.BufferType.SPANNABLE)
         binding.rageMeterView.visibility = View.GONE
         if (questContent.isBossQuest) {
             binding.questTypeTextView.setText(R.string.boss_quest)
@@ -64,7 +67,7 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
                 binding.ownerRewardsList.visibility = View.GONE
             }
 
-            if (questContent.drop?.exp ?: 0 > 0) {
+            if ((questContent.drop?.exp ?: 0) > 0) {
                 val view = inflater?.inflate(R.layout.row_quest_reward_imageview, binding.rewardsList, false) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
@@ -74,7 +77,7 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
                 binding.rewardsList.addView(view)
             }
 
-            if (questContent.drop?.gp ?: 0 > 0) {
+            if ((questContent.drop?.gp ?: 0) > 0) {
                 val view = inflater?.inflate(R.layout.row_quest_reward_imageview, binding.rewardsList, false) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER

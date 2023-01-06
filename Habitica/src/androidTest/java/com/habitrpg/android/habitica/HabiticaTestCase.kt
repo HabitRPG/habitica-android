@@ -35,7 +35,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
-import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Before
@@ -94,10 +93,10 @@ open class HabiticaTestCase : TestCase() {
         content = loadJsonFile("content", ContentResult::class.java)
         every { inventoryRepository.getPets() } returns flowOf(content.pets)
         every { inventoryRepository.getMounts() } returns flowOf(content.mounts)
-        every { inventoryRepository.getItemsFlowable(Food::class.java) } returns Flowable.just(content.food)
-        every { inventoryRepository.getItemsFlowable(Egg::class.java) } returns Flowable.just(content.eggs)
-        every { inventoryRepository.getItemsFlowable(HatchingPotion::class.java) } returns Flowable.just(content.hatchingPotions)
-        every { inventoryRepository.getItemsFlowable(QuestContent::class.java) } returns Flowable.just(content.quests)
+        every { inventoryRepository.getItems(Food::class.java) } returns flowOf(content.food)
+        every { inventoryRepository.getItems(Egg::class.java) } returns flowOf(content.eggs)
+        every { inventoryRepository.getItems(HatchingPotion::class.java) } returns flowOf(content.hatchingPotions)
+        every { inventoryRepository.getItems(QuestContent::class.java) } returns flowOf(content.quests)
 
         every { inventoryRepository.getItems(Food::class.java, any()) } returns flowOf(content.food)
         every { inventoryRepository.getItems(Egg::class.java, any()) } answers {

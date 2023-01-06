@@ -466,7 +466,6 @@ class NavigationDrawerFragment : DialogFragment() {
                     context.getString(R.string.sidebar_subscription)
                 )
             )
-
             items.add(
                 HabiticaDrawerItem(
                     0,
@@ -482,27 +481,33 @@ class NavigationDrawerFragment : DialogFragment() {
                     context.getString(R.string.sidebar_party)
                 )
             )
-            items.add(
-                HabiticaDrawerItem(
-                    R.id.tavernFragment,
-                    SIDEBAR_TAVERN,
-                    context.getString(R.string.sidebar_tavern)
+            if (!configManager.hideTavern()) {
+                items.add(
+                    HabiticaDrawerItem(
+                        R.id.tavernFragment,
+                        SIDEBAR_TAVERN,
+                        context.getString(R.string.sidebar_tavern)
+                    )
                 )
-            )
-            items.add(
-                HabiticaDrawerItem(
-                    R.id.guildOverviewFragment,
-                    SIDEBAR_GUILDS,
-                    context.getString(R.string.sidebar_guilds)
+            }
+            if (!configManager.hideGuilds()) {
+                items.add(
+                    HabiticaDrawerItem(
+                        R.id.guildOverviewFragment,
+                        SIDEBAR_GUILDS,
+                        context.getString(R.string.sidebar_guilds)
+                    )
                 )
-            )
-            items.add(
-                HabiticaDrawerItem(
-                    R.id.challengesOverviewFragment,
-                    SIDEBAR_CHALLENGES,
-                    context.getString(R.string.sidebar_challenges)
+            }
+            if (!configManager.hideChallenges()) {
+                items.add(
+                    HabiticaDrawerItem(
+                        R.id.challengesOverviewFragment,
+                        SIDEBAR_CHALLENGES,
+                        context.getString(R.string.sidebar_challenges)
+                    )
                 )
-            )
+            }
 
             items.add(
                 HabiticaDrawerItem(

@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.helpers
 
 object PurchaseTypes {
-    const val JubilentGrphatrice = "com.habitrpg.android.habitica.iap.gryphatrice"
+    const val JubilantGrphatrice = "com.habitrpg.android.habitica.iap.gryphatrice"
     const val Purchase4Gems = "com.habitrpg.android.habitica.iap.4gems"
     const val Purchase21Gems = "com.habitrpg.android.habitica.iap.21gems"
     const val Purchase42Gems = "com.habitrpg.android.habitica.iap.42gems"

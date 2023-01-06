@@ -1325,8 +1325,8 @@
     <string name="exclusive_items_await">Exclusive items and gifts await</string>
     <string name="ends_in_x">Ends in %s</string>
     <string name="see_more">See More</string>
-    <string name="jubilent_gryphatrice_confirmation">You purchased the Jubilent Gryphatrice!</string>
-    <string name="jubilent_gryphatrice_confirmation_gift">You gifted the Jubilent Gryphatrice!</string>
+    <string name="jubilant_gryphatrice_confirmation">You purchased the Jubilant Gryphatrice!</string>
+    <string name="jubilant_gryphatrice_confirmation_gift">You gifted the Jubilant Gryphatrice!</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

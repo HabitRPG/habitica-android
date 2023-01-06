@@ -86,11 +86,11 @@ class BirthdayActivity : BaseActivity() {
                     }
                 }, {
                     lifecycleScope.launchCatching {
-                        inventoryRepository.purchaseItem("", "Jubilent-Gryphatrice", 1)
+                        inventoryRepository.purchaseItem("", "Gryphatrice-Jubilant", 1)
                     }
                 }, {
                     lifecycleScope.launchCatching {
-                        inventoryRepository.equip("pets", "Jubilent-Gryphatrice")
+                        inventoryRepository.equip("pets", "Gryphatrice-Jubilant")
                     }
                 })
             }

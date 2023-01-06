@@ -37,7 +37,7 @@ fun OverviewItem(
     modifier: Modifier = Modifier,
     isTwoHanded: Boolean = false
 ) {
-    val hasIcon = iconName?.isNotBlank() == true && iconName != "shirt_"
+    val hasIcon = isTwoHanded || (iconName?.isNotBlank() == true && iconName != "shirt_" && !iconName.endsWith("_none") && !iconName.endsWith("_base_0"))
     Column(
         horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier
             .width(70.dp)
@@ -46,24 +46,24 @@ fun OverviewItem(
             Modifier
                 .size(70.dp)
                 .clip(MaterialTheme.shapes.small)
-                .background(colorResource(if (hasIcon) R.color.gray_700 else R.color.gray_10)),
+                .background(colorResource(if (hasIcon) R.color.content_background else R.color.content_background_offset)),
             contentAlignment = Alignment.Center
         ) {
             if (isTwoHanded) {
                 Image(painterResource(R.drawable.equipment_two_handed), null)
             } else if (hasIcon) {
                 PixelArtView(
-                    imageName = iconName, Modifier
+                    imageName = iconName, modifier = Modifier
                         .size(70.dp)
                 )
             } else {
-                Image(painterResource(R.drawable.equipment_nothing_equipped), null)
+                Image(painterResource(R.drawable.empty_slot), null)
             }
         }
         Text(
             text,
             style = HabiticaTheme.typography.caption2,
-            color = colorResource(R.color.gray_400),
+            color = colorResource(R.color.text_ternary),
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 4.dp)
         )
@@ -73,6 +73,7 @@ fun OverviewItem(
 @Composable
 fun EquipmentOverviewView(
     outfit: Outfit?,
+    isUsingTwohanded: Boolean,
     onEquipmentTap: (String, String?) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -81,39 +82,39 @@ fun EquipmentOverviewView(
         modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
-            .background(colorResource(R.color.gray_50))
+            .background(colorResource(R.color.offset_background))
             .padding(12.dp)
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-            OverviewItem(stringResource(R.string.outfit_weapon), outfit?.weapon.let { "shop_$it" }, Modifier.clickable {
-                onEquipmentTap("weapon", null)
+            OverviewItem(stringResource(R.string.outfit_weapon), outfit?.weapon.let { "shop_$it" }, modifier = Modifier.clickable {
+                onEquipmentTap("weapon", outfit?.weapon)
             })
-            OverviewItem(stringResource(R.string.outfit_shield), outfit?.shield.let { "shop_$it" }, Modifier.clickable {
-                onEquipmentTap("shield", null)
+            OverviewItem(stringResource(R.string.outfit_shield), outfit?.shield.let { "shop_$it" }, modifier = Modifier.clickable {
+                onEquipmentTap("shield", outfit?.shield)
+            }, isUsingTwohanded)
+            OverviewItem(stringResource(R.string.outfit_head), outfit?.head.let { "shop_$it" }, modifier = Modifier.clickable {
+                onEquipmentTap("head", outfit?.head)
             })
-            OverviewItem(stringResource(R.string.outfit_head), outfit?.head.let { "shop_$it" }, Modifier.clickable {
-                onEquipmentTap("head", null)
-            })
-            OverviewItem(stringResource(R.string.outfit_armor), outfit?.armor.let { "shop_$it" }, Modifier.clickable {
-                onEquipmentTap("armor", null)
+            OverviewItem(stringResource(R.string.outfit_armor), outfit?.armor.let { "shop_$it" }, modifier = Modifier.clickable {
+                onEquipmentTap("armor", outfit?.armor)
             })
         }
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             OverviewItem(
                 stringResource(R.string.outfit_headAccessory),
-                outfit?.headAccessory.let { "shop_$it" }, Modifier.clickable {
-                    onEquipmentTap("headAccessory", null)
+                outfit?.headAccessory.let { "shop_$it" }, modifier = Modifier.clickable {
+                    onEquipmentTap("headAccessory", outfit?.headAccessory)
                 })
-            OverviewItem(stringResource(R.string.outfit_body), outfit?.body.let { "shop_$it" }, Modifier.clickable {
-                onEquipmentTap("body", null)
+            OverviewItem(stringResource(R.string.outfit_body), outfit?.body.let { "shop_$it" }, modifier = Modifier.clickable {
+                onEquipmentTap("body", outfit?.body)
             })
-            OverviewItem(stringResource(R.string.outfit_back), outfit?.back.let { "shop_$it" }, Modifier.clickable {
-                onEquipmentTap("back", null)
+            OverviewItem(stringResource(R.string.outfit_back), outfit?.back.let { "shop_$it" }, modifier = Modifier.clickable {
+                onEquipmentTap("back", outfit?.back)
             })
             OverviewItem(
                 stringResource(R.string.outfit_eyewear),
-                outfit?.eyeWear.let { "shop_$it" }, Modifier.clickable {
-                    onEquipmentTap("eyewear", null)
+                outfit?.eyeWear.let { "shop_$it" }, modifier = Modifier.clickable {
+                    onEquipmentTap("eyewear", outfit?.eyeWear)
                 })
         }
     }
@@ -132,32 +133,32 @@ fun AvatarCustomizationOverviewView(
         modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
-            .background(colorResource(R.color.gray_50))
+            .background(colorResource(R.color.offset_background))
             .padding(12.dp)
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             OverviewItem(
                 stringResource(R.string.avatar_shirt),
-                preferences?.shirt.let { "icon_${preferences?.size}_shirt_$it" }, Modifier.clickable {
+                preferences?.shirt.let { "icon_${preferences?.size}_shirt_$it" }, modifier = Modifier.clickable {
                     onCustomizationTap("shirt", null)
                 })
             OverviewItem(
                 stringResource(R.string.avatar_skin),
                 preferences?.skin.let { "icon_skin_$it" },
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("skin", null)
                 })
             OverviewItem(
                 stringResource(R.string.avatar_hair_color),
                 if (preferences?.hair?.color != null && preferences.hair?.color != "") "icon_hair_bangs_1_" + preferences.hair?.color else "",
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("hair", "color")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_hair_bangs),
                 if (preferences?.hair?.bangs != null && preferences.hair?.bangs != 0) "icon_hair_bangs_" + preferences.hair?.bangs + "_" + preferences.hair?.color else "",
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("hair", "bangs")
                 }
             )
@@ -166,28 +167,28 @@ fun AvatarCustomizationOverviewView(
             OverviewItem(
                 stringResource(R.string.avatar_style),
                 if (preferences?.hair?.base != null && preferences.hair?.base != 0) "icon_hair_base_" + preferences.hair?.base + "_" + preferences.hair?.color else "",
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("hair", "base")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_mustache),
                 if (preferences?.hair?.mustache != null && preferences.hair?.mustache != 0) "icon_hair_mustache_" + preferences.hair?.mustache + "_" + preferences.hair?.color else "",
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("hair", "mustache")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_beard),
                 if (preferences?.hair?.beard != null && preferences.hair?.beard != 0) "icon_hair_beard_" + preferences.hair?.beard + "_" + preferences.hair?.color else "",
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("hair", "beard")
                 }
             )
             OverviewItem(
                 stringResource(R.string.avatar_flower),
                 if (preferences?.hair?.flower != null && preferences.hair?.flower != 0) "icon_hair_flower_" + preferences.hair?.flower else "",
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("hair", "flower")
                 }
             )
@@ -196,26 +197,26 @@ fun AvatarCustomizationOverviewView(
             OverviewItem(
                 stringResource(R.string.avatar_wheelchair),
                 preferences?.chair?.let { if (it.startsWith("handleless")) "icon_chair_$it" else "icon_$it" },
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("chair", null)
                 })
             OverviewItem(
                 stringResource(R.string.avatar_background),
                 preferences?.background.let { "icon_background_$it" },
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onCustomizationTap("background", null)
                 })
             OverviewItem(
                 stringResource(R.string.animal_ears),
                 outfit?.headAccessory.let { "shop_$it" },
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onAvatarEquipmentTap("headAccessory", "animal")
                 }
             )
             OverviewItem(
                 stringResource(R.string.animal_tail),
                 outfit?.back.let { "shop_$it" },
-                Modifier.clickable {
+                modifier = Modifier.clickable {
                     onAvatarEquipmentTap("back", "animal")
                 }
             )
@@ -232,7 +233,7 @@ fun EquipmentOverviewItemPreview() {
             OverviewItem("Off-Hand", null, isTwoHanded = true)
             OverviewItem("Armor", null)
         }
-        EquipmentOverviewView(null, { _, _ -> })
+        EquipmentOverviewView(null, false, { _, _ -> })
         AvatarCustomizationOverviewView(null, null, { _, _ -> }, { _, _ -> })
     }
 }
