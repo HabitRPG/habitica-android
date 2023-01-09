@@ -67,14 +67,14 @@ class SubscriptionDetailsView : LinearLayout {
         }
 
         if ((plan.extraMonths ?: 0) > 0) {
-            binding.subscriptionCreditWrapper.visibility = View.VISIBLE
+            binding.subscriptionCreditCard.visibility = View.VISIBLE
             if (plan.extraMonths == 1) {
-                binding.subscriptionCreditTextView.text = resources.getString(R.string.one_month)
+                binding.subscriptionCreditTextView.text = resources.getString(R.string.subscription_credit_canceling, 1)
             } else {
-                binding.subscriptionCreditTextView.text = resources.getString(R.string.x_months, plan.extraMonths)
+                binding.subscriptionCreditTextView.text = resources.getString(R.string.subscription_credit_canceling, plan.extraMonths)
             }
         } else {
-            binding.subscriptionCreditWrapper.visibility = View.GONE
+            binding.subscriptionCreditCard.visibility = View.GONE
         }
 
         when (plan.paymentMethod) {
@@ -93,11 +93,8 @@ class SubscriptionDetailsView : LinearLayout {
             }
         }
 
-        if (plan.consecutive?.count == 1) {
-            binding.monthsSubscribedTextView.text = resources.getString(R.string.one_month)
-        } else {
-            binding.monthsSubscribedTextView.text = resources.getString(R.string.x_months, plan.consecutive?.count ?: 0)
-        }
+        binding.monthsSubscribedTextView.text = plan.consecutive?.count.toString()
+
 
         binding.gemCapTextView.text = plan.totalNumberOfGems.toString()
 

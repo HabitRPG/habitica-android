@@ -829,7 +829,7 @@
     <string name="resubscribe_description">Muốn tiếp tục những lợi ích của bạn\? Bạn có thể bắt đầu một Gói đăng ký mới trước khi cái này kết thúc để giữ những lợi ích của bạn được hoạt động.</string>
     <string name="resubscribe">Đăng ký lại</string>
     <string name="renew_subscription">Làm mới Gói đăng ký</string>
-    <string name="thanks_for_subscribing">Cảm ơn vì đăng ký</string>
+    <string name="thanks_for_supporting">Cảm ơn vì đăng ký</string>
     <string name="subscribe_options_title">Chọn độ dài Gói đăng ký mà thích hợp với bạn</string>
     <string name="ending_on">Kết thúc vào %s</string>
     <string name="not_recurring">Không lặp lại</string>

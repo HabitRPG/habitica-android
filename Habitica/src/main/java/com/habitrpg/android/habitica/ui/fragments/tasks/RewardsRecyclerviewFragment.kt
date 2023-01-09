@@ -13,8 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.subscribeWithErrorHandler
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.coroutines.launch
 
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
@@ -35,7 +34,9 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        compositeSubscription.add(inventoryRepository.retrieveInAppRewards().subscribe({ }, ExceptionHandler.rx()))
+        lifecycleScope.launchCatching {
+            inventoryRepository.retrieveInAppRewards()
+        }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -59,25 +60,19 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         if (showCustomRewards) {
-            compositeSubscription.add(
-                inventoryRepository.getInAppRewards().subscribe(
-                    {
-                        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
-                    },
-                    ExceptionHandler.rx()
-                )
-            )
+            lifecycleScope.launchCatching {
+                inventoryRepository.getInAppRewards().collect {
+                    (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
+                }
+            }
         }
 
-        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents?.subscribe(
-            {
+        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents = {
                 selectedCard = it
                 val intent = Intent(activity, SkillMemberActivity::class.java)
                 cardSelectedResult.launch(intent)
-            },
-            ExceptionHandler.rx()
-        )?.let { compositeSubscription.add(it) }
-        recyclerAdapter?.brokenTaskEvents?.subscribeWithErrorHandler { showBrokenChallengeDialog(it) }?.let { compositeSubscription.add(it) }
+            }
+        recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
 
         viewModel.user.observe(viewLifecycleOwner) {
             (recyclerAdapter as? RewardsRecyclerViewAdapter)?.user = it
@@ -97,13 +92,9 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         binding?.refreshLayout?.isRefreshing = true
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.retrieveUser(withTasks = true, forced = true)
-        }
-        compositeSubscription.add(
             inventoryRepository.retrieveInAppRewards()
-                .doOnTerminate {
-                    binding?.refreshLayout?.isRefreshing = false
-                }.subscribe({ }, ExceptionHandler.rx())
-        )
+            binding?.refreshLayout?.isRefreshing = false
+        }
     }
 
     private fun setGridSpanCount(width: Int) {
@@ -122,21 +113,19 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     private val cardSelectedResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
-            userRepository.useSkill(
-                selectedCard?.key ?: "",
-                "member",
-                it.data?.getStringExtra("member_id") ?: ""
-            )
-                .subscribeWithErrorHandler(
-                    Consumer {
-                        val activity = (activity as? MainActivity) ?: return@Consumer
-                        HabiticaSnackbar.showSnackbar(
-                            activity.snackbarContainer,
-                            context?.getString(R.string.sent_card, selectedCard?.text),
-                            HabiticaSnackbar.SnackbarDisplayType.BLUE
-                        )
-                    }
+            lifecycleScope.launchCatching {
+                userRepository.useSkill(
+                    selectedCard?.key ?: "",
+                    "member",
+                    it.data?.getStringExtra("member_id") ?: ""
                 )
+                val activity = (activity as? MainActivity) ?: return@launchCatching
+                HabiticaSnackbar.showSnackbar(
+                    activity.snackbarContainer,
+                    context?.getString(R.string.sent_card, selectedCard?.text),
+                    HabiticaSnackbar.SnackbarDisplayType.BLUE
+                )
+            }
         }
     }
 

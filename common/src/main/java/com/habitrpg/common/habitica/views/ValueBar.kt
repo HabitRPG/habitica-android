@@ -7,13 +7,10 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.getThemeColor
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.ValueBarBinding
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.math.RoundingMode
 import java.text.NumberFormat
 
@@ -95,7 +92,6 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
             R.styleable.ValueBar,
             0, 0
         )
-        setLightBackground(attributes?.getBoolean(R.styleable.ValueBar_lightBackground, !context.isUsingNightModeResources()) == true)
 
         binding.progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0
         binding.progressBar.barPendingColor = attributes?.getColor(R.styleable.ValueBar_barPendingColor, 0) ?: 0
@@ -163,19 +159,6 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
         binding.valueTextView.text = valueText
     }
 
-    fun setLightBackground(lightBackground: Boolean) {
-        val textColor: Int
-        /*if (lightBackground) {
-            textColor = ContextCompat.getColor(context, R.color.text_ternary)
-            binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_light_gray)
-        } else {
-            textColor = context.getThemeColor(R.attr.textColorPrimaryDark)
-            binding.progressBar.setBackgroundResource(R.drawable.layout_rounded_bg_header_bar)
-        }
-        binding.valueTextView.setTextColor(textColor)
-        binding.descriptionTextView.setTextColor(textColor)*/
-    }
-
     var animationDuration = 500L
     var animationDelay = 0L
 
@@ -184,11 +167,16 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
             if (animationDuration == 0L || binding.valueTextView.text.isEmpty()) {
                 currentValue = value
             } else {
-                val animator = ValueAnimator.ofInt(currentValue.toInt(), value.toInt())
+                val animator = if (0 < value && value < 1) {
+                    // Show floating points in animation only if the value is between 0 to 1
+                    ValueAnimator.ofFloat(currentValue.toFloat(), value.toFloat())
+                } else {
+                    ValueAnimator.ofInt(currentValue.toInt(), value.toInt())
+                }
                 animator.duration = animationDuration
                 animator.startDelay = animationDelay
                 animator.addUpdateListener {
-                    currentValue = (it.animatedValue as Int).toDouble()
+                    currentValue = (it.animatedValue as? Int)?.toDouble() ?: (it.animatedValue as Float).toDouble()
                     updateBar()
                 }
                 animator.start()

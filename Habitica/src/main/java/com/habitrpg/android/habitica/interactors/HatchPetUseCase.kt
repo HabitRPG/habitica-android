@@ -7,24 +7,21 @@ import android.view.View
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.executors.PostExecutionThread
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.MainScope
 import javax.inject.Inject
 
 class HatchPetUseCase @Inject
 constructor(
-    private val inventoryRepository: InventoryRepository,
-    postExecutionThread: PostExecutionThread
-) : UseCase<HatchPetUseCase.RequestValues, Items>(postExecutionThread) {
-    override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Items> {
+    private val inventoryRepository: InventoryRepository) : UseCase<HatchPetUseCase.RequestValues, Items?>() {
+    override suspend fun run(requestValues: RequestValues): Items? {
         return inventoryRepository.hatchPet(requestValues.egg, requestValues.potion) {
             val petWrapper = View.inflate(requestValues.context, R.layout.pet_imageview, null) as? FrameLayout
             val petImageView = petWrapper?.findViewById(R.id.pet_imageview) as? PixelArtView
@@ -36,8 +33,9 @@ constructor(
             dialog.setTitle(requestValues.context.getString(R.string.hatched_pet_title, potionName, eggName))
             dialog.setAdditionalContentView(petWrapper)
             dialog.addButton(R.string.equip, true) { _, _ ->
-                inventoryRepository.equip("pet", requestValues.egg.key + "-" + requestValues.potion.key)
-                    .subscribe({}, ExceptionHandler.rx())
+                MainScope().launchCatching {
+                    inventoryRepository.equip("pet", requestValues.egg.key + "-" + requestValues.potion.key)
+                }
             }
             dialog.addButton(R.string.share, false) { hatchingDialog, _ ->
                 val message = requestValues.context.getString(R.string.share_hatched, potionName, eggName)

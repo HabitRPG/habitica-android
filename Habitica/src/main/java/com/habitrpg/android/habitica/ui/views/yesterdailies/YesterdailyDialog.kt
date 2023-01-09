@@ -9,26 +9,31 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import java.util.Calendar
 import java.util.Date
-import java.util.concurrent.TimeUnit
 import kotlin.math.abs
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class YesterdailyDialog private constructor(
     context: Context,
@@ -83,7 +88,7 @@ class YesterdailyDialog private constructor(
             }
         }
         lastCronRun = Date()
-        GlobalScope.launch(ExceptionHandler.coroutine()) {
+        MainScope().launch(ExceptionHandler.coroutine()) {
             userRepository.runCron(completedTasks)
         }
         displayedDialog = null
@@ -141,12 +146,12 @@ class YesterdailyDialog private constructor(
         val checkboxHolder = checklistView.findViewById<View>(R.id.checkBoxHolder) as? ViewGroup
         checkboxHolder?.setOnClickListener { _ ->
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, ExceptionHandler.rx())
+            scoreChecklistItem(task, item)
             configureChecklistView(checklistView, task, item)
         }
         checklistView.setOnClickListener {
             item.completed = !item.completed
-            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "").subscribe({ }, ExceptionHandler.rx())
+            scoreChecklistItem(task, item)
             configureChecklistView(checklistView, task, item)
         }
         checkboxHolder?.setBackgroundResource(
@@ -175,6 +180,15 @@ class YesterdailyDialog private constructor(
         )
     }
 
+    private fun scoreChecklistItem(
+        task: Task,
+        item: ChecklistItem
+    ) {
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
+        }
+    }
+
     private fun configureTaskView(taskView: View, task: Task) {
         val completed = !task.isDisplayedActive
         val checkmark = taskView.findViewById<ImageView>(R.id.checkmark)
@@ -183,7 +197,7 @@ class YesterdailyDialog private constructor(
         val checkboxBackground = taskView.findViewById<View>(R.id.checkbox_background)
         checkmark?.visibility = if (completed) View.VISIBLE else View.GONE
         if (completed) {
-            checkboxHolder.setBackgroundResource(R.color.window_background)
+            checkboxHolder.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
             checkboxBackground.setBackgroundResource(R.drawable.daily_checked)
         } else {
             checkboxHolder.setBackgroundResource(task.lightTaskColor)
@@ -210,77 +224,57 @@ class YesterdailyDialog private constructor(
             taskRepository: TaskRepository
         ) {
             if (userRepository != null && userId != null) {
-                Observable.just("")
-                    .delay(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                    .filter { !userRepository.isClosed }
-                    .flatMapMaybe { userRepository.getUserFlowable().firstElement() }
-                    .filter { it.needsCron }
-                    .flatMapMaybe {
-                        val cal = Calendar.getInstance()
-                        cal.add(Calendar.DATE, -1)
-                        taskRepository.retrieveDailiesFromDate(cal.time).firstElement()
+                MainScope().launchCatching {
+                    delay(500.toDuration(DurationUnit.MILLISECONDS))
+                    if (userRepository.isClosed) {
+                        return@launchCatching
                     }
-                    .map {
-                        it.tasks.values.filter { task ->
-                            return@filter task.type == TaskType.DAILY && task.isDue == true && !task.completed && task.yesterDaily
-                        }
+                    val user = userRepository.getUser().firstOrNull()
+                    if (user?.needsCron != true) {
+                        return@launchCatching
                     }
-                    .retry(1)
-                    .throttleFirst(2, TimeUnit.SECONDS)
-                    .filter {
-                        if (displayedDialog?.get()?.isShowing == true) {
-                            return@filter false
-                        }
+                    val cal = Calendar.getInstance()
+                    cal.add(Calendar.DATE, -1)
+                    val tasks = taskRepository.retrieveDailiesFromDate(cal.time)?.tasks?.values?.filter { task ->
+                        return@filter task.type == TaskType.DAILY && task.isDue == true && !task.completed && task.yesterDaily && !task.isGroupTask
+                    }
+                    if (displayedDialog?.get()?.isShowing == true) {
+                        return@launchCatching
+                    }
 
-                        if (abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
-                            return@filter false
-                        }
-                        return@filter true
+                    if (abs((lastCronRun?.time ?: 0) - Date().time) < 60 * 60 * 1000L) {
+                        return@launchCatching
                     }
-                    .firstElement()
-                    .map {
-                        it.filter { !it.isGroupTask }
-                    }
-                    .zipWith(
-                        taskRepository.getTasksFlowable(TaskType.DAILY, null, emptyArray())
-                            .firstElement()
-                            .map {
-                                val taskMap = mutableMapOf<String, Int>()
-                                it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
-                                taskMap
-                            }
-                    ) { yesterdayTasks, dailies ->
-                        yesterdayTasks.sortedBy { dailies[it.id ?: ""] }
-                    }
-                    .subscribe(
-                        { tasks ->
-                            val additionalData = HashMap<String, Any>()
-                            additionalData["task count"] = tasks.size
-                            AmplitudeManager.sendEvent(
-                                "show cron",
-                                AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                                AmplitudeManager.EVENT_HITTYPE_EVENT,
-                                additionalData
-                            )
+                    val dailies = taskRepository.getTasks(TaskType.DAILY, null, emptyArray()).map {
+                            val taskMap = mutableMapOf<String, Int>()
+                            it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
+                            taskMap
+                        }.firstOrNull()
+                    val sortedTasks = tasks?.sortedBy { dailies?.get(it.id ?: "") }
 
-                            if (tasks.isNotEmpty()) {
-                                displayedDialog = WeakReference(
-                                    showDialog(
-                                        activity,
-                                        userRepository,
-                                        taskRepository,
-                                        tasks
-                                    )
-                                )
-                            } else {
-                                lastCronRun = Date()
-                                GlobalScope.launch(ExceptionHandler.coroutine()) {
-                                    userRepository.runCron()
-                                }
-                            }
-                        },
-                        ExceptionHandler.rx()
+                    val additionalData = HashMap<String, Any>()
+                    additionalData["task count"] = sortedTasks?.size ?: 0
+                    AmplitudeManager.sendEvent(
+                        "show cron",
+                        AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
+                        AmplitudeManager.EVENT_HITTYPE_EVENT,
+                        additionalData
                     )
+
+                    if (sortedTasks?.isNotEmpty() == true) {
+                        displayedDialog = WeakReference(
+                            showDialog(
+                                activity,
+                                userRepository,
+                                taskRepository,
+                                sortedTasks
+                            )
+                        )
+                    } else {
+                        lastCronRun = Date()
+                        userRepository.runCron()
+                    }
+                }
             }
         }
 

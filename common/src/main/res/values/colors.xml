@@ -12,10 +12,13 @@
     <color name="brand_400">#925CF3</color>
     <color name="brand_500">#bda8ff</color>
     <color name="brand_600">#D5C8FF</color>
-    <color name="brand_700">#ede7f6</color>
+    <color name="brand_700">#F4F0FC</color>
+    <color name="brand_800">#FAF7FF</color>
     <color name="brand">@color/brand_100</color>
 
     <!--  HabitRPG task color -->
+    <color name="maroon_700">#FFF5F5</color>
+    <color name="maroon_600">#FCEDED</color>
     <color name="maroon_500">#f19595</color>
     <color name="maroon_100">#DE3F3F</color>
     <color name="maroon_50">#C92B2B</color>
@@ -23,6 +26,8 @@
     <color name="maroon_5">#7D0C0C</color>
     <color name="maroon_1">#4C0001</color>
 
+    <color name="red_700">#FFF6F7</color>
+    <color name="red_600">#FCEEEF</color>
     <color name="red_500">#ffb6b8</color>
     <color name="red_100">#FF6165</color>
     <color name="red_50">#F74E52</color>
@@ -30,30 +35,40 @@
     <color name="red_5">#BF262B</color>
     <color name="red_1">#6c0406</color>
 
+    <color name="orange_700">#FFF9F5</color>
+    <color name="orange_600">#FCF3ED</color>
     <color name="orange_500">#ffc8a7</color>
     <color name="orange_100">#FF944C</color>
     <color name="orange_50">#FA8537</color>
     <color name="orange_10">#F47825</color>
     <color name="orange_5">#A85219</color>
 
+    <color name="yellow_700">#FFFCF6</color>
+    <color name="yellow_600">#FCF3E5</color>
     <color name="yellow_500">#fedead</color>
     <color name="yellow_100">#FFBE5D</color>
     <color name="yellow_50">#FFB445</color>
     <color name="yellow_10">#FFA624</color>
     <color name="yellow_5">#EE9109</color>
 
+    <color name="green_700">#F7FFFC</color>
+    <color name="green_600">#EDFAF6</color>
     <color name="green_500">#77f4c7</color>
     <color name="green_100">#24CC8F</color>
     <color name="green_50">#20B780</color>
     <color name="green_10">#1CA372</color>
     <color name="green_5">#168059</color>
 
+    <color name="teal_700">#F5FEFF</color>
+    <color name="teal_600">#EDFBFC</color>
     <color name="teal_500">#8eedf6</color>
     <color name="teal_100">#3BCAD7</color>
     <color name="teal_50">#34B5C1</color>
     <color name="teal_10">#26A0AB</color>
     <color name="teal_5">#1A7078</color>
 
+    <color name="blue_700">#FAFDFF</color>
+    <color name="blue_600">#EEF5F9</color>
     <color name="blue_500">#a9dcf6</color>
     <color name="blue_100">#50B5E9</color>
     <color name="blue_50">#46A7D9</color>

@@ -7,13 +7,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -25,17 +27,12 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.Disposable
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class ChatFragment() : BaseFragment<FragmentChatBinding>() {
-
-    constructor(viewModel: GroupViewModel) : this() {
-        this.viewModel = viewModel
-    }
 
     override var binding: FragmentChatBinding? = null
 
@@ -43,7 +40,9 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
-    var viewModel: GroupViewModel? = null
+    val viewModel: GroupViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
+    )
 
     @Inject
     lateinit var configManager: AppConfigManager
@@ -52,7 +51,6 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
     private var isFirstRefresh = true
-    private var refreshDisposable: Disposable? = null
     var autocompleteContext: String = ""
 
     override fun injectFragment(component: UserComponent) {
@@ -69,23 +67,18 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
 
         chatAdapter = ChatRecyclerViewAdapter(null, true)
         chatAdapter?.let { adapter ->
-            compositeSubscription.add(
-                adapter.getUserLabelClickFlowable().subscribe(
-                    { userId -> FullProfileActivity.open(userId) },
-                    ExceptionHandler.rx()
-                )
-            )
-            compositeSubscription.add(adapter.getDeleteMessageFlowable().subscribe({ this.showDeleteConfirmationDialog(it) }, ExceptionHandler.rx()))
-            compositeSubscription.add(adapter.getFlagMessageClickFlowable().subscribe({ this.showFlagConfirmationDialog(it) }, ExceptionHandler.rx()))
-            compositeSubscription.add(adapter.getReplyMessageEvents().subscribe({ setReplyTo(it) }, ExceptionHandler.rx()))
-            compositeSubscription.add(adapter.getCopyMessageFlowable().subscribe({ this.copyMessageToClipboard(it) }, ExceptionHandler.rx()))
-            adapter.onMessageLike = { viewModel?.likeMessage(it) }
+            adapter.onOpenProfile = { userId -> FullProfileActivity.open(userId) }
+            adapter.onDeleteMessage = { this.showDeleteConfirmationDialog(it) }
+            adapter.onFlagMessage = { this.showFlagConfirmationDialog(it) }
+            adapter.onReply = { setReplyTo(it) }
+            adapter.onCopyMessage = { this.copyMessageToClipboard(it) }
+            adapter.onMessageLike = { viewModel.likeMessage(it) }
         }
 
         binding?.chatBarView?.sendAction = { sendChatMessage(it) }
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
         binding?.chatBarView?.autocompleteContext = "party"
-        binding?.chatBarView?.groupID = viewModel?.getGroupData()?.value?.id
+        binding?.chatBarView?.groupID = viewModel.getGroupData().value?.id
 
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -101,55 +94,24 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             }
         })
 
-        viewModel?.chatmessages?.observe(viewLifecycleOwner, { setChatMessages(it) })
+        viewModel.chatmessages.observe(viewLifecycleOwner, { setChatMessages(it) })
 
         binding?.chatBarView?.onCommunityGuidelinesAccepted = {
-            viewModel?.updateUser("flags.communityGuidelinesAccepted", true)
+            viewModel.updateUser("flags.communityGuidelinesAccepted", true)
+            binding?.chatBarView?.hasAcceptedGuidelines = true
         }
 
-        viewModel?.user?.observe(
-            viewLifecycleOwner,
-            {
-                chatAdapter?.user = it
-                binding?.chatBarView?.hasAcceptedGuidelines = it?.flags?.communityGuidelinesAccepted == true
+        viewModel.user.observeOnce(viewLifecycleOwner) {
+            chatAdapter?.user = it
+            binding?.chatBarView?.hasAcceptedGuidelines =
+                it?.flags?.communityGuidelinesAccepted == true
+        }
+
+        lifecycleScope.launchWhenResumed {
+            while (true) {
+                refresh()
+                delay(30.toDuration(DurationUnit.SECONDS))
             }
-        )
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stopAutoRefreshing()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startAutoRefreshing()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        stopAutoRefreshing()
-    }
-
-    private fun startAutoRefreshing() {
-        if (refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
-        }
-        refreshDisposable = Observable.interval(30, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    refresh()
-                },
-                ExceptionHandler.rx()
-            )
-        refresh()
-    }
-
-    private fun stopAutoRefreshing() {
-        if (refreshDisposable?.isDisposed != true) {
-            refreshDisposable?.dispose()
-            refreshDisposable = null
         }
     }
 
@@ -162,7 +124,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
     }
 
     private fun refresh() {
-        viewModel?.retrieveGroupChat {
+        viewModel.retrieveGroupChat {
             if (isScrolledToBottom || isFirstRefresh) {
                 binding?.recyclerView?.scrollToPosition(0)
             }
@@ -177,7 +139,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
 
     private fun markMessagesAsSeen() {
         if (navigatedOnceToFragment) {
-            viewModel?.markMessagesSeen()
+            viewModel.markMessagesSeen()
         }
     }
 
@@ -203,7 +165,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
             dialog.setTitle(R.string.confirm_delete_tag_title)
             dialog.setMessage(R.string.confirm_delete_tag_message)
             dialog.addButton(R.string.yes, true, true) { _, _ ->
-                viewModel?.deleteMessage(chatMessage)
+                viewModel.deleteMessage(chatMessage)
             }
             dialog.show()
         }
@@ -213,13 +175,13 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.data = chatMessages
         binding?.chatBarView?.chatMessages = chatMessages
 
-        viewModel?.gotNewMessages = true
+        viewModel.gotNewMessages = true
 
         markMessagesAsSeen()
     }
 
     private fun sendChatMessage(chatText: String) {
-        viewModel?.postGroupChat(
+        viewModel.postGroupChat(
             chatText,
             { binding?.recyclerView?.scrollToPosition(0) }
         ) { binding?.chatBarView?.message = chatText }

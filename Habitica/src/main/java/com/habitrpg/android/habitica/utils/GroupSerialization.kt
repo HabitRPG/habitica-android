@@ -62,6 +62,14 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
                 }
             }
         }
+        if (obj.has("managers")) {
+            group.managers = RealmList()
+            for (manager in obj.getAsJsonObject("managers").entrySet()) {
+                if (manager.value.asBoolean) {
+                    group.managers?.add(manager.key)
+                }
+            }
+        }
         if (obj.has("quest")) {
             group.quest = context.deserialize(obj.get("quest"), object : TypeToken<Quest>() {}.type)
             group.quest?.id = group.id

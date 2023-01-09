@@ -30,7 +30,7 @@ open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
                 } else {
                     "chair_" + field!!
                 }
-            } else null
+            } else "chair_none"
         }
     var language: String? = null
     var sound: String? = null

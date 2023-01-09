@@ -1,19 +1,18 @@
 package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.BaseLocalRepository
-import com.habitrpg.android.habitica.extensions.filterMap
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.user.User
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
+import io.realm.RealmModel
 import io.realm.RealmObject
 import io.realm.kotlin.deleteFromRealm
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class RealmBaseLocalRepository internal constructor(override var realm: Realm) : BaseLocalRepository {
 
@@ -25,16 +24,9 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
     }
 
     override fun executeTransaction(transaction: (Realm) -> Unit) {
-        if (isClosed) { return }
-        realm.executeTransaction {
-            transaction(it)
-        }
-    }
-
-    override fun executeTransactionAsync(transaction: (Realm) -> Unit) {
-        if (isClosed) { return }
-        realm.executeTransactionAsync {
-            transaction(it)
+        pendingSaves.add(transaction)
+        if (isSaving.compareAndSet(false, true)) {
+            process()
         }
     }
 
@@ -51,46 +43,64 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         return realm.copyFromRealm(list)
     }
 
-    override fun <T : BaseObject> save(`object`: T) {
+    companion object {
+        private var isSaving = AtomicBoolean(false)
+        private var pendingSaves = mutableListOf<Any>()
+    }
+
+    private fun <T: RealmModel> copy(realm: Realm, obj: T) {
+        try {
+            realm.insertOrUpdate(obj)
+        } catch (_: java.lang.IllegalArgumentException) {
+        }
+    }
+
+    private fun process() {
         if (isClosed) { return }
-        realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(`object`) }
+        realm.executeTransaction {
+            while (pendingSaves.isNotEmpty()) {
+                val pending = pendingSaves.removeFirst()
+                @Suppress("UNCHECKED_CAST")
+                if (pending is RealmModel) {
+                    copy(it, pending)
+                } else if (pending as? List<BaseObject> != null) {
+                    it.insertOrUpdate(pending)
+                } else if (pending is Function0<*>) {
+                    pending.invoke()
+                } else if (pending as? Function1<Realm, *> != null) {
+                    pending.invoke(it)
+                }
+            }
+            isSaving.set(false)
+        }
+    }
+
+    override fun <T : BaseObject> save(obj: T) {
+        pendingSaves.add(obj)
+        if (isSaving.compareAndSet(false, true)) {
+            process()
+        }
     }
 
     override fun <T : BaseObject> save(objects: List<T>) {
-        if (isClosed) { return }
-        realm.executeTransactionAsync { realm1 -> realm1.insertOrUpdate(objects) }
-    }
-
-    override fun <T : BaseObject> saveSyncronous(`object`: T) {
-        if (isClosed) { return }
-        realm.executeTransaction { realm1 -> realm1.insertOrUpdate(`object`) }
-    }
-
-    override fun <T : BaseObject> saveSyncronous(objects: List<T>) {
-        if (isClosed) { return }
-        realm.executeTransaction { realm1 -> realm1.insertOrUpdate(objects) }
+        pendingSaves.add(objects)
+        if (isSaving.compareAndSet(false, true)) {
+            process()
+        }
     }
 
     override fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
         if (isClosed) { return }
         val liveObject = getLiveObject(obj) ?: return
-        realm.executeTransaction {
+        executeTransaction {
             transaction(liveObject)
-        }
-    }
-
-    override fun <T : BaseMainObject> modifyWithRealm(obj: T, transaction: (Realm, T) -> Unit) {
-        if (isClosed) { return }
-        val liveObject = getLiveObject(obj) ?: return
-        realm.executeTransaction {
-            transaction(it, liveObject)
         }
     }
 
     override fun <T : BaseMainObject> delete(obj: T) {
         if (isClosed) { return }
         val liveObject = getLiveObject(obj) ?: return
-        realm.executeTransaction {
+        executeTransaction {
             liveObject.deleteFromRealm()
         }
     }
@@ -114,16 +124,5 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
                 .toFlow()
             .filter { it.isLoaded && it.isValid && !it.isEmpty() }
             .map { it.firstOrNull() }
-    }
-
-    fun queryUserFlowable(userID: String): Flowable<User> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(User::class.java)
-                .equalTo("id", userID)
-                .findAll()
-                .asFlowable()
-        )
-            .filter { it.isLoaded && it.isValid && !it.isEmpty() }
-            .filterMap { it.first() }
     }
 }

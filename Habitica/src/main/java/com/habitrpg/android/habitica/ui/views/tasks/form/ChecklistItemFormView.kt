@@ -1,6 +1,11 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -13,10 +18,11 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormChecklistItemBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
+import com.habitrpg.android.habitica.extensions.addZeroWidthSpace
+import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 
 class ChecklistItemFormView @JvmOverloads constructor(
     context: Context,
@@ -30,7 +36,9 @@ class ChecklistItemFormView @JvmOverloads constructor(
     var item: ChecklistItem = ChecklistItem()
         set(value) {
             field = value
-            binding.editText.setText(item.text)
+            //Append a zero-width space to the Spannable to allow clicking
+            //on the open spaces (and prevent the link from opening)
+            binding.editText.setText(item.text?.addZeroWidthSpace())
         }
 
     var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
@@ -77,7 +85,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
     init {
         minimumHeight = 38.dpToPx(context)
         background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_task_form)
-        background.mutate().setTint(ContextCompat.getColor(context, R.color.taskform_gray))
+        background.mutate().setTint(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
         gravity = Gravity.CENTER_VERTICAL
 
         binding.button.setOnClickListener {
@@ -89,6 +97,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
         // a plus button we set it as 'unimportant for accessibility' so it can't be focused.
         binding.button.contentDescription = context.getString(R.string.delete_checklist_entry)
         binding.button.drawable.mutate().setTint(tintColor)
+        binding.editText.movementMethod = LinkMovementMethod.getInstance()
 
         binding.editText.addTextChangedListener(
             OnChangeTextWatcher { s, _, _, _ ->

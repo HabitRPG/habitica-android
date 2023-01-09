@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
@@ -20,8 +19,6 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
     lateinit var userViewModel: MainUserViewModel
 
     internal open var user: User? = null
-
-    internal val compositeSubscription = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +31,6 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     override fun onDestroy() {
         userRepository.close()
-        compositeSubscription.dispose()
         super.onDestroy()
     }
 

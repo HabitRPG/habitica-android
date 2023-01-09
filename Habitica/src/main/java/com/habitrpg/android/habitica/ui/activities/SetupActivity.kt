@@ -25,13 +25,13 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivitySetupBinding
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
 import com.habitrpg.common.habitica.api.HostConfig
 import com.viewpagerindicator.IconPagerAdapter
-import io.reactivex.rxjava3.core.BackpressureStrategy
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
@@ -64,7 +64,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         return R.layout.activity_setup
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivitySetupBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -84,10 +84,9 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         val currentDeviceLanguage = Locale.getDefault().language
         for (language in resources.getStringArray(R.array.LanguageValues)) {
             if (language == currentDeviceLanguage) {
-                compositeSubscription.add(
+                lifecycleScope.launchCatching {
                     apiClient.registrationLanguage(currentDeviceLanguage)
-                        .subscribe({ }, ExceptionHandler.rx())
-                )
+                }
             }
         }
 
@@ -141,7 +140,9 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             this.completedSetup = true
             createdTasks = true
             newTasks?.let {
-                this.taskRepository.createTasks(it).subscribe({ onUserReceived(user) }, ExceptionHandler.rx())
+                lifecycleScope.launchCatching {
+                    taskRepository.createTasks(it)
+                }
             }
         } else if (binding.viewPager.currentItem == 0) {
 
@@ -209,17 +210,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
 
-            compositeSubscription.add(
-                userRepository.updateUser("flags.welcomed", true).subscribe(
-                    {
-                        if (!compositeSubscription.isDisposed) {
-                            compositeSubscription.dispose()
-                        }
-                        startMainActivity()
-                    },
-                    ExceptionHandler.rx()
-                )
-            )
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.updateUser("flags.welcomed", true)
+                startMainActivity()
+            }
             return
         }
         this.user = user
@@ -238,11 +232,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun confirmNames(displayName: String, username: String) {
-        compositeSubscription.add(
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser("profile.name", displayName)
-                .flatMap { userRepository.updateLoginName(username).toFlowable() }
-                .subscribe({ }, ExceptionHandler.rx())
-        )
+            userRepository.updateLoginName(username)
+        }
     }
 
     private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
@@ -266,9 +259,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 else -> {
                     val fragment = WelcomeFragment()
                     welcomeFragment = fragment
-                    welcomeFragment?.nameValidEvents?.toFlowable(BackpressureStrategy.DROP)?.subscribe {
-                        setNextButtonEnabled(it)
-                    }
+                    welcomeFragment?.onNameValid = { setNextButtonEnabled(it == true) }
                     fragment
                 }
             }
@@ -289,9 +280,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 }
                 is WelcomeFragment -> {
                     welcomeFragment = item
-                    item.nameValidEvents.toFlowable(BackpressureStrategy.DROP).subscribe {
-                        setNextButtonEnabled(it)
-                    }
+                    item.onNameValid = { setNextButtonEnabled(it == true) }
                 }
             }
             return item

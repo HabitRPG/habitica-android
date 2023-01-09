@@ -6,20 +6,19 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialLocalRepository : BaseLocalRepository {
-    fun getPublicGuilds(): Flowable<out List<Group>>
+    fun getPublicGuilds(): Flow<List<Group>>
 
     fun getUserGroups(userID: String, type: String?): Flow<List<Group>>
-    fun getGroups(type: String): Flowable<out List<Group>>
+    fun getGroups(type: String): Flow<List<Group>>
 
     fun getGroup(id: String): Flow<Group?>
     fun saveGroup(group: Group)
 
-    fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>>
+    fun getGroupChat(groupId: String): Flow<List<ChatMessage>>
 
     fun deleteMessage(id: String)
 
@@ -41,7 +40,7 @@ interface SocialLocalRepository : BaseLocalRepository {
     fun doesGroupExist(id: String): Boolean
     fun updateMembership(userId: String, id: String, isMember: Boolean)
     fun getGroupMembership(userId: String, id: String): Flow<GroupMembership?>
-    fun getGroupMemberships(userId: String): Flowable<out List<GroupMembership>>
+    fun getGroupMemberships(userId: String): Flow<List<GroupMembership>>
     fun rejectGroupInvitation(userID: String, groupID: String)
 
     fun getInboxMessages(userId: String, replyToUserID: String?): Flow<RealmResults<ChatMessage>>
@@ -55,4 +54,5 @@ interface SocialLocalRepository : BaseLocalRepository {
         page: Int
     )
     fun saveInboxConversations(userID: String, conversations: List<InboxConversation>)
+    fun getMember(userID: String?): Flow<Member?>
 }

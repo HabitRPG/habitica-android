@@ -10,6 +10,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HabitButtonWidgetProvider : BaseWidgetProvider() {
@@ -72,8 +75,12 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
             val ids = intArrayOf(appWidgetId)
 
             if (taskId != null) {
-                userRepository.getUserFlowable().firstElement().flatMap { user -> taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null) }
-                    .subscribe({ taskDirectionData -> showToastForTaskDirection(context, taskDirectionData) }, ExceptionHandler.rx(), { this.onUpdate(context, mgr, ids) })
+                MainScope().launch(ExceptionHandler.coroutine()) {
+                    val user = userRepository.getUser().firstOrNull()
+                    val response = taskRepository.taskChecked(user, taskId, TaskDirection.UP.text == direction, false, null)
+                    showToastForTaskDirection(context, response)
+                    this@HabitButtonWidgetProvider.onUpdate(context, mgr, ids)
+                }
             }
         }
         super.onReceive(context, intent)

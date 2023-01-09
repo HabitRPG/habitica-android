@@ -4,19 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.functions.Consumer
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment() {
 
@@ -29,8 +30,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
     var tutorialStepIdentifier: String? = null
     protected var tutorialCanBeDeferred = true
     var tutorialTexts: MutableList<String> = ArrayList()
-
-    protected var compositeSubscription: CompositeDisposable = CompositeDisposable()
 
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
@@ -49,8 +48,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        compositeSubscription = CompositeDisposable()
-
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = this.javaClass.simpleName
         AmplitudeManager.sendEvent("navigate", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_PAGEVIEW, additionalData)
@@ -68,31 +65,25 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
 
     private fun showTutorialIfNeeded() {
         if (view != null) {
-            if (this.tutorialStepIdentifier != null) {
-                compositeSubscription.add(
-                    tutorialRepository.getTutorialStep(this.tutorialStepIdentifier ?: "").firstElement()
-                        .delay(1, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            Consumer { step ->
-                                if (step.isValid && step.isManaged && step.shouldDisplay) {
-                                    val mainActivity = activity as? MainActivity ?: return@Consumer
-                                    mainActivity.displayTutorialStep(step, tutorialTexts, tutorialCanBeDeferred)
-                                }
-                            },
-                            ExceptionHandler.rx()
+            tutorialStepIdentifier?.let { identifier ->
+                lifecycleScope.launchCatching {
+                    val step = tutorialRepository.getTutorialStep(identifier).firstOrNull()
+                    delay(1.toDuration(DurationUnit.SECONDS))
+                    if (step?.isValid == true && step.isManaged && step.shouldDisplay) {
+                        val mainActivity = activity as? MainActivity ?: return@launchCatching
+                        mainActivity.displayTutorialStep(
+                            step,
+                            tutorialTexts,
+                            tutorialCanBeDeferred
                         )
-                )
+                    }
+                }
             }
         }
     }
 
     override fun onDestroyView() {
         binding = null
-        if (!compositeSubscription.isDisposed) {
-            compositeSubscription.dispose()
-        }
-
         super.onDestroyView()
     }
 

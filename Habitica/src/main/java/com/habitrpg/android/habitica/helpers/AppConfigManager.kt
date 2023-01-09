@@ -12,18 +12,22 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import kotlinx.coroutines.MainScope
 
 class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.common.habitica.helpers.AppConfigManager() {
 
     private var worldState: WorldState? = null
 
     init {
-        contentRepository?.getWorldState()?.subscribe(
-            {
-                worldState = it
-            },
-            ExceptionHandler.rx()
-        )
+        try {
+            MainScope().launchCatching {
+                contentRepository?.getWorldState()?.collect {
+                        worldState = it
+                    }
+            }
+        } catch (_: java.lang.IllegalStateException) {
+            // pass
+        }
     }
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()

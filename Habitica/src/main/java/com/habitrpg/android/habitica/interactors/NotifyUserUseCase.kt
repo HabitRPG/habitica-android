@@ -13,47 +13,37 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.executors.PostExecutionThread
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
-import com.habitrpg.shared.habitica.extensions.round
-import io.reactivex.rxjava3.core.Flowable
+import java.text.NumberFormat
 import javax.inject.Inject
 import kotlin.math.abs
 
 class NotifyUserUseCase @Inject
 constructor(
-    postExecutionThread: PostExecutionThread,
     private val levelUpUseCase: LevelUpUseCase,
     private val userRepository: UserRepository
-) : UseCase<NotifyUserUseCase.RequestValues, Stats>(postExecutionThread) {
+) : UseCase<NotifyUserUseCase.RequestValues, Stats?>() {
 
-    override fun buildUseCaseObservable(requestValues: RequestValues): Flowable<Stats> {
-        return Flowable.defer {
-            if (requestValues.user == null) {
-                return@defer Flowable.empty<Stats>()
-            }
-            val stats = requestValues.user.stats
-
-            val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
-            val view = pair.first
-            val type = pair.second
-            if (view != null && type != null) {
-                HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
-            }
-            if (requestValues.hasLeveledUp == true) {
-                return@defer levelUpUseCase.observable(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context, requestValues.snackbarTargetView))
-                    // TODO: .flatMap { userRepository.retrieveUser(true) }
-                    .flatMap { userRepository.getUserFlowable().firstElement().toFlowable() }
-                    .map { it.stats }
-            } else {
-                return@defer Flowable.just(stats)
-            }
+    override suspend fun run(requestValues: RequestValues): Stats? {
+        if (requestValues.user == null) {
+            return null
         }
+        val pair = getNotificationAndAddStatsToUser(requestValues.context, requestValues.xp, requestValues.hp, requestValues.gold, requestValues.mp, requestValues.questDamage, requestValues.user)
+        val view = pair.first
+        val type = pair.second
+        if (view != null && type != null) {
+            HabiticaSnackbar.showSnackbar(requestValues.snackbarTargetView, null, null, view, type)
+        }
+        if (requestValues.hasLeveledUp == true) {
+            levelUpUseCase.callInteractor(LevelUpUseCase.RequestValues(requestValues.user, requestValues.level, requestValues.context, requestValues.snackbarTargetView))
+            userRepository.retrieveUser(true)
+        }
+        return requestValues.user.stats
     }
 
     class RequestValues(
@@ -70,6 +60,10 @@ constructor(
     ) : UseCase.RequestValues
 
     companion object {
+        val formatter = NumberFormat.getInstance().apply {
+            this.minimumFractionDigits = 0
+            this.maximumFractionDigits = 2
+        }
 
         fun getNotificationAndAddStatsToUser(
             context: Context,
@@ -125,14 +119,22 @@ constructor(
             val iconDrawable = BitmapDrawable(context.resources, icon)
             textView.setCompoundDrawablesWithIntrinsicBounds(iconDrawable, null, null, null)
             val text: String = if (value > 0) {
-                " + " + abs(value.round(2)).toString()
+                " + " + formatter.format(abs(value))
             } else {
-                " - " + abs(value.round(2)).toString()
+                " - " + formatter.format(abs(value))
             }
             textView.text = text
             textView.gravity = Gravity.CENTER_VERTICAL
             textView.setTextColor(ContextCompat.getColor(context, R.color.white))
             return textView
+        }
+
+        private fun formatValue(value: Double): String {
+            return if (value >= 0) {
+                " + " + formatter.format(abs(value))
+            } else {
+                " - " + formatter.format(abs(value))
+            }
         }
 
         fun getNotificationAndAddStatsToUserAsText(
@@ -144,24 +146,23 @@ constructor(
             val builder = SpannableStringBuilder()
             var displayType = SnackbarDisplayType.NORMAL
 
-            if ((xp ?: 0.0) > 0) {
-                builder.append(" + ").append(xp?.round(2).toString()).append(" Exp")
+            if (xp != null && xp != 0.0) {
+                builder.append(formatValue(xp)).append(" Exp")
             }
-            if (hp != 0.0) {
-                displayType = SnackbarDisplayType.FAILURE
-                builder.append(" - ").append(abs(hp?.round(2) ?: 0.0).toString()).append(" Health")
-            }
-            if (gold != 0.0) {
-                if ((gold ?: 0.0) > 0) {
-                    builder.append(" + ").append(gold?.round(2).toString())
-                } else if ((gold ?: 0.0) < 0) {
+            if (hp != null && hp != 0.0) {
+                if (hp < 0) {
                     displayType = SnackbarDisplayType.FAILURE
-                    builder.append(" - ").append(abs(gold?.round(2) ?: 0.0).toString())
                 }
-                builder.append(" Gold")
+                builder.append(formatValue(hp)).append(" Health")
             }
-            if ((mp ?: 0.0) > 0) {
-                builder.append(" + ").append(mp?.round(2).toString()).append(" Mana")
+            if (gold != null && gold != 0.0) {
+                if (gold < 0) {
+                    displayType = SnackbarDisplayType.FAILURE
+                }
+                builder.append(formatValue(gold)).append(" Gold")
+            }
+            if (mp != null && mp != 0.0) {
+                builder.append(formatValue(mp)).append(" Exp").append(" Mana")
             }
 
             return Pair(builder, displayType)

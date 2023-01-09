@@ -9,15 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -37,11 +33,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
     var adapter: SkillTasksRecyclerViewAdapter = SkillTasksRecyclerViewAdapter()
     internal var layoutManager: LinearLayoutManager? = null
 
-    private val taskSelectionEvents = PublishSubject.create<Task>()
-
-    fun getTaskSelectionEvents(): Flowable<Task> {
-        return taskSelectionEvents.toFlowable(BackpressureStrategy.DROP)
-    }
+    var onTaskSelection: ((Task) -> Unit)? = null
 
     override fun injectFragment(component: UserComponent) {
         component.inject(this)
@@ -54,14 +46,7 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         binding?.recyclerView?.layoutManager = layoutManager
 
         adapter = SkillTasksRecyclerViewAdapter()
-        compositeSubscription.add(
-            adapter.getTaskSelectionEvents().subscribe(
-                {
-                    taskSelectionEvents.onNext(it)
-                },
-                ExceptionHandler.rx()
-            )
-        )
+        adapter.onTaskSelection = { onTaskSelection?.invoke(it) }
         binding?.recyclerView?.adapter = adapter
 
         val additionalGroupIDs = userViewModel.mirrorGroupTasks.toTypedArray()

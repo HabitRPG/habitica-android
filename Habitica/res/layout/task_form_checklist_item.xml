@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/layout_rounded_bg_task_form"
-    android:minHeight="38dp"
+    android:minHeight="40dp"
     android:gravity="center_vertical"
     android:paddingStart="@dimen/spacing_medium"
     android:paddingEnd="@dimen/spacing_medium"

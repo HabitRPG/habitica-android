@@ -2,31 +2,32 @@ package com.habitrpg.android.habitica.data.local.implementation
 
 import com.habitrpg.android.habitica.data.local.TutorialLocalRepository
 import com.habitrpg.android.habitica.models.TutorialStep
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
 class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TutorialLocalRepository {
 
-    override fun getTutorialStep(key: String): Flowable<TutorialStep> {
-        if (realm.isClosed) return Flowable.empty()
-        return RxJavaBridge.toV3Flowable(
-            realm.where(TutorialStep::class.java).equalTo("identifier", key)
+    override fun getTutorialStep(key: String): Flow<TutorialStep> {
+        if (realm.isClosed) return emptyFlow()
+        return realm.where(TutorialStep::class.java).equalTo("identifier", key)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
                 .map { steps -> steps.first() }
-        )
+            .filterNotNull()
     }
 
-    override fun getTutorialSteps(keys: List<String>): Flowable<out List<TutorialStep>> {
-        if (realm.isClosed) return Flowable.empty()
-        return RxJavaBridge.toV3Flowable(
-            realm.where(TutorialStep::class.java)
+    override fun getTutorialSteps(keys: List<String>): Flow<out List<TutorialStep>> {
+        if (realm.isClosed) return emptyFlow()
+        return realm.where(TutorialStep::class.java)
                 .`in`("identifier", keys.toTypedArray())
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 }

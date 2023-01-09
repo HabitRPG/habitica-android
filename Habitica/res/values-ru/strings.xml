@@ -911,7 +911,7 @@
     <string name="usually_x_gems">Обычно %d самоцветов</string>
     <string name="resubscribe">Подписаться снова</string>
     <string name="renew_subscription">Обновить подписку</string>
-    <string name="thanks_for_subscribing">Благодарим за подписку</string>
+    <string name="thanks_for_supporting">Благодарим за подписку</string>
     <string name="gifted">Подарено</string>
     <string name="number_responded">Ответ от %1$d/%2$d</string>
     <string name="ending_on">Заканчивается %s</string>

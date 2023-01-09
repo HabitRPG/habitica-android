@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PromoMenuBinding
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class PromoMenuView @JvmOverloads constructor(
@@ -26,7 +27,7 @@ class PromoMenuView @JvmOverloads constructor(
     var binding: PromoMenuBinding = PromoMenuBinding.inflate(context.layoutInflater, this)
 
     init {
-        setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+        setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
         clipToPadding = false
         clipChildren = false
         clipToOutline = false

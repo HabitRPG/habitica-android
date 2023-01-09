@@ -19,7 +19,7 @@
             android:shape="rectangle"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <solid android:color="@color/content_background" />
+            <solid android:color="?attr/colorContentBackground" />
             <corners android:radius="6dp" />
         </shape>
         <ripple android:color="@color/white" />

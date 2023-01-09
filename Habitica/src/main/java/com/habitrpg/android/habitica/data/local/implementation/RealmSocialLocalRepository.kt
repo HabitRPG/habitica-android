@@ -9,8 +9,6 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.models.user.User
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
 import io.realm.Sort
 import io.realm.kotlin.toFlow
@@ -30,13 +28,11 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             .filter { it.isLoaded && it.isNotEmpty() }
             .map { it.first() }
 
-    override fun getGroupMemberships(userId: String): Flowable<out List<GroupMembership>> = RxJavaBridge.toV3Flowable(
-        realm.where(GroupMembership::class.java)
+    override fun getGroupMemberships(userId: String): Flow<List<GroupMembership>> = realm.where(GroupMembership::class.java)
             .equalTo("userID", userId)
             .findAll()
-            .asFlowable()
+            .toFlow()
             .filter { it.isLoaded }
-    )
 
     override fun updateMembership(userId: String, id: String, isMember: Boolean) {
         if (isMember) {
@@ -52,7 +48,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun saveGroup(group: Group) {
-        saveSyncronous(group)
+        save(group)
         if (group.quest == null) {
             val existingQuest = realm.where(Quest::class.java).equalTo("id", group.id).findFirst()
             executeTransaction {
@@ -106,6 +102,15 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
+    override fun getMember(userID: String?): Flow<Member?> {
+        return realm.where(Member::class.java)
+            .equalTo("id", userID)
+            .findAll()
+            .toFlow()
+            .filter { member -> member.isLoaded && member.isValid }
+            .map { member -> member.firstOrNull() }
+    }
+
     override fun saveGroupMemberships(userID: String?, memberships: List<GroupMembership>) {
         save(memberships)
         if (userID != null) {
@@ -123,16 +128,14 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun getPublicGuilds(): Flowable<out List<Group>> = RxJavaBridge.toV3Flowable(
-        realm.where(Group::class.java)
+    override fun getPublicGuilds() = realm.where(Group::class.java)
             .equalTo("type", "guild")
             .equalTo("privacy", "public")
             .notEqualTo("id", Group.TAVERN_ID)
             .sort("memberCount", Sort.DESCENDING)
             .findAll()
-            .asFlowable()
+            .toFlow()
             .filter { it.isLoaded }
-    )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserGroups(userID: String, type: String?) = realm.where(GroupMembership::class.java)
@@ -155,14 +158,12 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 .toFlow()
         }
 
-    override fun getGroups(type: String): Flowable<out List<Group>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(Group::class.java)
+    override fun getGroups(type: String): Flow<List<Group>> {
+        return realm.where(Group::class.java)
                 .equalTo("type", type)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
     override fun getGroup(id: String): Flow<Group?> {
@@ -174,15 +175,13 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
             .map { groups -> groups.first() }
     }
 
-    override fun getGroupChat(groupId: String): Flowable<out List<ChatMessage>> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(ChatMessage::class.java)
+    override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> {
+        return realm.where(ChatMessage::class.java)
                 .equalTo("groupId", groupId)
                 .sort("timestamp", Sort.DESCENDING)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded }
-        )
     }
 
     override fun deleteMessage(id: String) {
@@ -229,7 +228,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun savePartyMembers(groupId: String?, members: List<Member>) {
-        saveSyncronous(members)
+        save(members)
         if (groupId != null) {
             val existingMembers = realm.where(Member::class.java).equalTo("party.id", groupId).findAll()
             val membersToRemove = ArrayList<Member>()

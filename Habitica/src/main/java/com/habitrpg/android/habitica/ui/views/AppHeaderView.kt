@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
-import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -17,6 +15,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,9 +23,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.ProgressIndicatorDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -35,9 +32,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
@@ -51,9 +46,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.common.habitica.helpers.NumberAbbreviator
-import java.math.RoundingMode
-import java.text.NumberFormat
 
 @Composable
 fun UserLevelText(user: User) {
@@ -77,38 +69,9 @@ fun UserLevelText(user: User) {
 }
 
 @Composable
-fun CurrencyText(
-    currency: String,
-    value: Double,
-    modifier: Modifier = Modifier,
-    decimals: Int = 2,
-    minForAbbrevation: Int = 0
-) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        when (currency) {
-            "gold" -> HabiticaIconsHelper.imageOfGold()
-            "gems" -> HabiticaIconsHelper.imageOfGem()
-            "hourglasses" -> HabiticaIconsHelper.imageOfHourglass()
-            else -> null
-        }?.asImageBitmap()?.let { Image(it, null, Modifier.padding(end = 5.dp)) }
-        Text(
-            NumberAbbreviator.abbreviate(null, value, decimals, minForAbbrevation),
-            color = when (currency) {
-                "gold" -> colorResource(R.color.text_gold)
-                "gems" -> colorResource(R.color.text_green)
-                "hourglasses" -> colorResource(R.color.text_brand)
-                else -> colorResource(R.color.text_primary)
-            },
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = modifier
-        )
-    }
-}
-
-@Composable
 fun AppHeaderView(
     viewModel: MainUserViewModel,
+    onMemberRowClicked: () -> Unit
 ) {
     val user by viewModel.user.observeAsState(null)
     val teamPlan by viewModel.currentTeamPlan.collectAsState(null)
@@ -120,6 +83,9 @@ fun AppHeaderView(
                 Modifier
                     .size(110.dp, 100.dp)
                     .padding(end = 16.dp)
+                    .clickable {
+                        MainNavigationController.navigate(R.id.avatarOverviewFragment)
+                    }
             )
             Column(modifier = Modifier.height(100.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
@@ -151,6 +117,20 @@ fun AppHeaderView(
                                 maxValue = user?.stats?.maxMP?.toDouble() ?: 0.0,
                                 displayCompact = teamPlan != null,
                                 modifier = Modifier.weight(1f)
+                                    .clickable {
+                                        MainNavigationController.navigate(R.id.skillsFragment)
+                                    }
+                            )
+                        } else if ((user?.stats?.lvl ?: 0) < 10) {
+                            LabeledBar(
+                                icon = HabiticaIconsHelper.imageOfMagic(),
+                                label = stringResource(R.string.unlock_level, 10),
+                                color = colorResource(R.color.mpColor),
+                                value = 0.0,
+                                maxValue = 1.0,
+                                displayCompact = teamPlan != null,
+                                disabled = true,
+                                modifier = Modifier.weight(1f)
                             )
                         }
                     }
@@ -166,14 +146,14 @@ fun AppHeaderView(
                                 .padding(start = 12.dp)
                                 .width(72.dp)
                                 .height(48.dp)
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(MaterialTheme.shapes.medium)
                                 .background(
                                     colorResource(R.color.window_background)
                                 )
                                 .clickable {
                                     MainNavigationController.navigate(
                                         R.id.guildFragment,
-                                        bundleOf("groupID" to teamPlan?.id)
+                                        bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1)
                                     )
                                 }
                         ) {
@@ -188,22 +168,19 @@ fun AppHeaderView(
                     enter = slideInVertically { animHeight } + fadeIn(),
                     exit = slideOutVertically { animHeight } + fadeOut()) {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(14.dp, Alignment.CenterHorizontally),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 12.dp)
+                            .padding(top = 12.dp, start = 12.dp, end = 12.dp)
                             .height(40.dp)
                             .width(72.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                            .clip(MaterialTheme.shapes.medium)
                             .background(
                                 colorResource(R.color.window_background)
                             )
                             .clickable {
-                                MainNavigationController.navigate(
-                                    R.id.guildFragment,
-                                    bundleOf("groupID" to teamPlan?.id)
-                                )
+                                onMemberRowClicked()
                             }
                     ) {
                         for (member in teamPlanMembers?.filter { it.id != user?.id }?.take(6) ?: emptyList()) {
@@ -223,79 +200,25 @@ fun AppHeaderView(
                 }
             }
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            if (user?.hasClass == true) {
-                val icon = when (user?.stats?.habitClass) {
-                    "warrior" -> HabiticaIconsHelper.imageOfWarriorLightBg().asImageBitmap()
-                    "wizard" -> HabiticaIconsHelper.imageOfMageLightBg().asImageBitmap()
-                    "healer" -> HabiticaIconsHelper.imageOfHealerLightBg().asImageBitmap()
-                    "rogue" -> HabiticaIconsHelper.imageOfRogueLightBg().asImageBitmap()
-                    else -> null
-                }
-                if (icon != null) {
-                    Image(bitmap = icon, "", modifier = Modifier.padding(end = 4.dp))
-                }
-            }
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.defaultMinSize(minHeight = 28.dp)) {
+            ClassIcon(className = user?.stats?.habitClass, hasClass = user?.hasClass ?: false, modifier = Modifier.padding(4.dp))
             user?.let { UserLevelText(it) }
             Spacer(Modifier.weight(1f))
-            user?.hourglassCount?.toDouble()
-                ?.let { CurrencyText("hourglasses", it, modifier = Modifier.padding(end = 12.dp)) }
-            CurrencyText("gold", user?.stats?.gp ?: 0.0, modifier = Modifier.padding(end = 12.dp))
-            CurrencyText("gems", user?.gemCount?.toDouble() ?: 0.0)
-        }
-    }
-}
-
-@Composable
-fun LabeledBar(
-    icon: Bitmap,
-    label: String,
-    color: Color,
-    value: Double,
-    maxValue: Double,
-    displayCompact: Boolean,
-    modifier: Modifier = Modifier
-) {
-    val formatter = NumberFormat.getInstance()
-    formatter.maximumFractionDigits = 1
-    formatter.roundingMode = RoundingMode.UP
-    formatter.isGroupingUsed = true
-
-    val animatedValue = animateFloatAsState(
-        targetValue = value.toFloat(),
-        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
-    ).value
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
-        AnimatedVisibility(
-            visible = !displayCompact,
-            enter = slideInHorizontally { -18 },
-            exit = slideOutHorizontally { -18 }) {
-            Image(icon.asImageBitmap(), null, modifier = Modifier.padding(end = 8.dp))
-        }
-        Column(modifier = Modifier.weight(1f)) {
-            LinearProgressIndicator(
-                progress = (animatedValue / maxValue).toFloat(),
-                Modifier
-                    .fillMaxWidth()
-                    .clip(CircleShape)
-                    .height(8.dp),
-                backgroundColor = colorResource(R.color.window_background),
-                color = color
-            )
-            AnimatedVisibility(visible = !displayCompact) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(top = 2.dp)
-                ) {
-                    Text(
-                        "${formatter.format(animatedValue)} / ${formatter.format(maxValue)}",
-                        fontSize = 12.sp,
-                        color = colorResource(R.color.text_ternary)
-                    )
-                    Spacer(Modifier.weight(1f))
-                    Text(label, fontSize = 12.sp, color = colorResource(R.color.text_ternary))
-                }
+            if (user?.isSubscribed == true) {
+                user?.hourglassCount?.toDouble()
+                    ?.let {
+                        CurrencyText(
+                            "hourglasses",
+                            it,
+                            modifier = Modifier.padding(end = 12.dp).clickable {
+                                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                            })
+                    }
             }
+            CurrencyText("gold", user?.stats?.gp ?: 0.0, modifier = Modifier.padding(end = 12.dp))
+            CurrencyText("gems", user?.gemCount?.toDouble() ?: 0.0, modifier = Modifier.clickable {
+                MainNavigationController.navigate(R.id.gemPurchaseActivity)
+            })
         }
     }
 }

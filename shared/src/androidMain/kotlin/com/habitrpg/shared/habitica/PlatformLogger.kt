@@ -14,6 +14,10 @@ actual class PlatformLogger actual constructor() {
         Log.i(tag, message)
     }
 
+    actual fun logWarning(tag: String, message: String) {
+        Log.w(tag, message)
+    }
+
     actual fun logError(tag: String, message: String) {
         Log.e(tag, message)
     }

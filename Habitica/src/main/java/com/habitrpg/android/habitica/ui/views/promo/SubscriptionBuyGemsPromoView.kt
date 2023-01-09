@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.extensions.getThemeColor
 
 class SubscriptionBuyGemsPromoView @JvmOverloads constructor(
     context: Context,
@@ -18,7 +19,7 @@ class SubscriptionBuyGemsPromoView @JvmOverloads constructor(
 
     init {
         inflate(R.layout.promo_subscription_buy_gems, true)
-        setBackgroundColor(ContextCompat.getColor(context, R.color.window_background))
+        setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
         clipToPadding = false
         clipChildren = false
         clipToOutline = false

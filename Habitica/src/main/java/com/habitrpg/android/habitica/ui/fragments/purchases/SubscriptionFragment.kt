@@ -18,9 +18,10 @@ import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -88,15 +89,19 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }
 
-        compositeSubscription.add(
-            inventoryRepository.getLatestMysteryItem().subscribe(
-                {
-                    binding?.subBenefitsMysteryItemIcon?.loadImage("shop_set_mystery_${it.key?.split("_")?.last()}")
-                    binding?.subBenefitsMysteryItemText?.text = context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-                },
-                ExceptionHandler.rx()
-            )
-        )
+        lifecycleScope.launchCatching {
+            inventoryRepository.getLatestMysteryItem().collect {
+                    binding?.subBenefitsMysteryItemIcon?.loadImage(
+                        "shop_set_mystery_${
+                            it.key?.split(
+                                "_"
+                            )?.last()
+                        }"
+                    )
+                    binding?.subBenefitsMysteryItemText?.text =
+                        context?.getString(R.string.subscribe_listitem3_description_new, it.text)
+                }
+        }
 
         AmplitudeManager.sendNavigationEvent("subscription screen")
     }

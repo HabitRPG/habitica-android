@@ -4,14 +4,14 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.data.local.FAQLocalRepository
 import com.habitrpg.android.habitica.models.FAQArticle
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 class FAQRepositoryImpl(localRepository: FAQLocalRepository, apiClient: ApiClient, userID: String) : BaseRepositoryImpl<FAQLocalRepository>(localRepository, apiClient, userID), FAQRepository {
-    override fun getArticle(position: Int): Flowable<FAQArticle> {
+    override fun getArticle(position: Int): Flow<FAQArticle> {
         return localRepository.getArticle(position)
     }
 
-    override fun getArticles(): Flowable<out List<FAQArticle>> {
+    override fun getArticles(): Flow<List<FAQArticle>> {
         return localRepository.articles
     }
 }

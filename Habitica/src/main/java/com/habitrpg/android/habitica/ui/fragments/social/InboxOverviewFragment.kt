@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -51,7 +52,9 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         savedInstanceState: Bundle?
     ): View? {
         this.hidesToolbar = true
-        compositeSubscription.add(this.socialRepository.markPrivateMessagesRead(null).subscribe({ }, ExceptionHandler.rx()))
+        lifecycleScope.launchCatching {
+            socialRepository.markPrivateMessagesRead(null)
+        }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -141,15 +144,10 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
     }
 
     private fun retrieveMessages() {
-        compositeSubscription.add(
-            this.socialRepository.retrieveInboxConversations()
-                .subscribe(
-                    {
-                        binding?.inboxRefreshLayout?.isRefreshing = false
-                    },
-                    ExceptionHandler.rx()
-                )
-        )
+        lifecycleScope.launchCatching {
+            socialRepository.retrieveInboxConversations()
+            binding?.inboxRefreshLayout?.isRefreshing = false
+        }
     }
 
     override fun onRefresh() {

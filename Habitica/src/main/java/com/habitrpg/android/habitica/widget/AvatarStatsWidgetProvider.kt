@@ -11,7 +11,7 @@ import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -19,6 +19,9 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.HealthFormatter
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.common.habitica.views.AvatarView
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
@@ -52,10 +55,12 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         avatarView.layoutParams = layoutParams
 
         this.setUp()
-        userRepository.getUserFlowable().subscribe({
-            user = it
-            updateData()
-        }, ExceptionHandler.rx())
+        MainScope().launchCatching {
+            userRepository.getUser().collect {
+                user = it
+                updateData()
+            }
+        }
     }
 
     override fun onUpdate(
@@ -79,10 +84,11 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         this.context = context
 
         if (user == null) {
-            userRepository.getUserFlowable().firstElement().subscribe({
-                user = it
+            MainScope().launch {
+                val user = userRepository.getUser().firstOrNull() ?: return@launch
+                this@AvatarStatsWidgetProvider.user = user
                 updateData(appWidgetIds)
-            }, ExceptionHandler.rx())
+            }
         } else {
             updateData()
         }

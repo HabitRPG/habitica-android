@@ -874,7 +874,7 @@
     <string name="gifted">Telah diberikan</string>
     <string name="resubscribe">Berlangganan Kembali</string>
     <string name="renew_subscription">Memperbarui Berlangganan</string>
-    <string name="thanks_for_subscribing">Terima kasih telah berlangganan</string>
+    <string name="thanks_for_supporting">Terima kasih telah berlangganan</string>
     <string name="subscribe_options_title">Pilih masa Berlangganan yang kamu inginkan</string>
     <string name="ending_on">Berakhir pada %s</string>
     <string name="not_recurring">Tidak Berulang</string>
