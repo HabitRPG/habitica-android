@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">你的副本開始了</string>
     <string name="preference_push_invited_to_quest">邀請參加副本</string>
     <!--Adding tasks-->
-    <string name="action_edit">編輯</string>
-    <string name="action_cancel">取消</string>
-    <string name="login_btn">登入</string>
-    <string name="register_btn">註冊</string>
-    <string name="username">用戶名</string>
-    <string name="email_username">電子郵件或用戶名</string>
-    <string name="password">密碼</string>
-    <string name="emailAddress">電子郵件地址</string>
-    <string name="confirmpassword">確認密碼</string>
-    <string name="logout">登出</string>
-    <string name="logout_description">從你的帳號登出</string>
-    <string name="LoginActivityName">歡迎</string>
-    <string name="about_title">關於</string>
     <string name="about_libraries">資源庫</string>
     <string name="about_habitica_open_source">Habitica 是一個發佈在 Github 上的開源軟體</string>
     <string name="about_rate_our_app">評價我們的應用程式</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">服務器連接丟失</string>
     <string name="authentication_error_title">認證錯誤</string>
-    <string name="login_validation_error_title">驗證錯誤</string>
-    <string name="login_validation_error_fieldsmissing">請填寫所有內容。</string>
     <string name="save_changes">儲存</string>
     <string name="copy">複製</string>
     <string name="notes">注釋</string>
     <string name="difficulty">難度</string>
     <string name="tags">標籤</string>
-    <string name="trivial">瑣事</string>
-    <string name="easy">簡單</string>
-    <string name="medium">中等</string>
-    <string name="hard">困難</string>
     <string name="start_date">開始日期</string>
     <string name="positive_habit_form">正面的 ( + )</string>
     <string name="negative_habit_form">負面的 ( - )</string>
@@ -100,10 +81,6 @@
     <string name="party">隊伍</string>
     <string name="chat">聊天</string>
     <string name="members">成員</string>
-    <string name="habits">習慣</string>
-    <string name="dailies">每日任務</string>
-    <string name="todos">待辦事項</string>
-    <string name="rewards">獎勵</string>
     <string name="yes">是的</string>
     <string name="no">不</string>
     <string name="quest">副本</string>
@@ -183,7 +160,6 @@
     <string name="guild">公會</string>
     <string name="leave">離開</string>
     <string name="join">加入</string>
-    <string name="gems">寶石</string>
     <string name="delete">刪除</string>
     <string name="name">名稱</string>
     <string name="description">描述</string>
@@ -235,14 +211,12 @@
     <string name="notification_pet_fed">你餵食了你的%s！</string>
     <string name="notification_purchase_reward">你購買了一個獎勵</string>
     <string name="world_quest">世界副本</string>
-    <string name="inn_description">需要休息一會兒？在 Daniel 的酒館客棧登記住宿將暫停一些 Habitica 中比較艱難的遊戲機制：
+    <string name="inn_description">需要休息？進入Daniel的客棧停下來喘口氣吧：
 \n
-\n • 未完成的每日任務不會對你造成傷害
-\n • 任務不會中斷連擊或改變顏色
-\n • Boss 不會因為你未完成的任務造成傷害
-\n • 您對 boss 造成的傷害或收藏的副本物品將維持直到退房離開</string>
+\n • 未完成的每日任務不會造成傷害
+\n • 你的任務連擊和習慣計數器不會重置
+\n • 你對boss的傷害和副本收集物將保持不變，直到你離開客棧</string>
     <string name="empty_items">你沒有任何%s</string>
-    <string name="user_level">等級 %d</string>
     <string name="user_level_with_class">等級 %1$d %2$s</string>
     <string name="warrior">戰士</string>
     <string name="rogue">盜賊</string>
@@ -286,7 +260,6 @@
     <string name="login_incentive">透過定期登入解鎖</string>
     <string name="create_account">透過創建帳號解鎖</string>
     <string name="successful_purchase">成功購入%1$s</string>
-    <string name="gold_plural">金幣</string>
     <string name="chat_message_copied">訊息已複製到剪貼板</string>
     <string name="edit_tag_btn_edit">編輯</string>
     <string name="confirm_delete_tag_title">你確定嗎？</string>
@@ -308,7 +281,7 @@
     <string name="google_services_missing">找不到 Google play 服務。</string>
     <string name="gem_purchase_toolbartitle">購買</string>
     <string name="gem_purchase_title">購買鑽石可以支持開發人員並幫助 Habitica 繼續營運</string>
-    <string name="gem_purchase_subtitle">你可以通過寶石給你的賬戶購買更多有趣的額外物品，包括：</string>
+    <string name="gem_purchase_subtitle">寶石可以讓您替您的帳戶購買一些有趣的額外配件</string>
     <string name="gem_purchase_listitem1">為您的角色穿上酷炫的服飾</string>
     <string name="gem_purchase_listitem2">超讚的背景</string>
     <string name="gem_purchase_listitem3">有寵物蛋獎勵的副本</string>
@@ -362,10 +335,6 @@
     <string name="remove_tasks">刪除</string>
     <string name="keep_tasks">保留</string>
     <string name="my_challenges">我的挑戰</string>
-    <string name="daily">每日任務</string>
-    <string name="habit">習慣</string>
-    <string name="reward">獎勵</string>
-    <string name="todo">待辦事項</string>
     <string name="official">官方的</string>
     <string name="challenge">挑戰</string>
     <string name="not_part_of_a_challenge">你現在沒有加入任何挑戰！</string>
@@ -389,7 +358,6 @@
     <string name="owned">已擁有</string>
     <string name="not_owned">尚未擁有</string>
     <string name="login_btn_fb">透過 Facebook 帳號登入</string>
-    <string name="login_btn_google">透過 Google 帳號登入</string>
     <string name="action_back">返回</string>
     <string name="randomize">隨機</string>
     <string name="avatar_extras">額外收益</string>
@@ -472,11 +440,9 @@
     <string name="int_abbrv">智力</string>
     <string name="con_abbrv">體質</string>
     <string name="reset_account">重置帳號</string>
-    <string name="reset_account_description">警告！這會重置你帳號的許多數值。強烈不建議你這麼做，不過，在短暫地試玩一段時間後，進行重置或許會有所幫助。
-\n
-\n您將會失去所有的等級、金幣以及經驗值。您所有的任務 (除了那些來自挑戰除外) 將會被永久刪除，且您將會失去所有相關的歷史數據。您將會失去所有的裝備，但您可透過購買將他們買回來，包含所有您已經擁有的限定版裝備或訂閱者專屬的神秘裝備 (但您需要相同的職業才能重從新購買職業限定的裝備)。您將會保留現有的職業、已擁有的寵物及坐騎。您可能會較喜歡使用重生球來代替，它是一個比較安全的方法，同時它可以保留您的任務及裝備。</string>
+    <string name="reset_account_description">您將會失去所有的等級、金幣以及經驗值。您所有的任務及其相關的歷史數據將被刪除（挑戰任務將保留）。您將會失去所有的裝備，但您可透過購買將他們買回來，包含所有您已經擁有的限定版裝備或訂閱者專屬的神秘裝備 (但您需要相同的職業才能重從新購買職業限定的裝備)。您將會保留現有的職業、已擁有的寵物及坐騎。要確認重置，請在下方輸入RESET。</string>
     <string name="delete_account">刪除帳號</string>
-    <string name="delete_account_description">這會永久地刪除你的帳號，並且永遠也無法恢復！已有的金錢和花掉的寶石無法被退費。如果你非常確定，在下面的文本框中輸入你的密碼。</string>
+    <string name="delete_account_description">這會永久地刪除你的帳號，並且永遠也無法恢復！已有的金錢和花掉的寶石無法被退費。如果你非常確定，請在下面的文本框輸入你的密碼。</string>
     <string name="reset_account_confirmation">重置我的帳號</string>
     <string name="delete_account_confirmation">刪除我的帳號</string>
     <string name="danger_zone">危險區域</string>
@@ -494,7 +460,6 @@
     <string name="come_back_soon">稍後再來！</string>
     <string name="level">等級</string>
     <string name="streak_label">21 天連擊</string>
-    <string name="stats">統計</string>
     <string name="fix_character_description">如果您遇到 Bug 或不小心變更到您的角色，您可以在這裡手動更正這些值。</string>
     <string name="fix_character_values">修正角色數值</string>
     <string name="saving">儲存中</string>
@@ -610,7 +575,7 @@
     <string name="welcome_text">哦，你一定是新來的。我是 Justin，你在 Habitica 的嚮導。
 \n
 \n開始之前，我們該怎麽稱呼您？你可隨意修改預設值，等你都填好後，我們就可以開始創建你的個人形象！</string>
-    <string name="delete_oauth_account_description">這個操作會永久刪除你的賬戶，無法恢復！剩餘或者已經消費的寶石都無法退款，如果你已經下定決心，點擊下方的刪除按鈕。</string>
+    <string name="delete_oauth_account_description">這個操作會永久刪除你的賬戶，無法恢復！剩餘或者已經消費的寶石都無法退款，如果你不容置疑，在下方文本框寫“DELETE”。</string>
     <string name="change_username">修改使用者名稱</string>
     <string name="join_party_description">把下方的用戶名給一個隊伍成員，這樣他們就能邀請你加入了</string>
     <string name="tavern_description_world_boss">噢我親愛的老夥計，不用擔心下面的怪物，這裏仍然是一個安全的避風港，來聊聊天吧。</string>
@@ -764,8 +729,6 @@
     <string name="app_theme">應用主題</string>
     <string name="share_challenge_with">分享挑戰與</string>
     <string name="details">細節</string>
-    <string name="create_task">創建%s</string>
-    <string name="new_task">新任務</string>
     <string name="confirm_deletion">確認刪除</string>
     <string name="switch_to_grid_view">切換到網格視圖</string>
     <string name="switch_to_list_view">切換到列表視圖</string>
@@ -806,7 +769,6 @@
     <string name="accept">接受</string>
     <string name="reject">拒絕</string>
     <string name="complete">完成</string>
-    <string name="repeat_daily">每日</string>
     <string name="search">搜索</string>
     <string name="search_hint">搜索任務</string>
     <string name="preference_push_party_activity">隊伍活動</string>
@@ -817,7 +779,6 @@
     <string name="levelup_detail_10">選擇適合你的遊戲風格的職業並解鎖特殊技能和裝甲，以幫助你的旅途</string>
     <string name="not_now">不是現在</string>
     <string name="delete_task">刪除任務</string>
-    <string name="are_you_sure">你確定嗎？</string>
     <string name="invite_to_party">邀請加入隊伍</string>
     <string name="guild_bank">公會銀行</string>
     <string name="guild_members">公會成員</string>
@@ -902,8 +863,6 @@
     <string name="scheduling">排程</string>
     <string name="every">每個</string>
     <string name="repeats">重複</string>
-    <string name="weekly">每週</string>
-    <string name="monthly">每月</string>
     <string name="assigned_stat">指定屬性</string>
     <string name="password_changed">成功變更密碼</string>
     <string name="adjust_streak">修正連擊數</string>
@@ -975,7 +934,6 @@
     <string name="common_questions">常見問題</string>
     <string name="game_mechanics">遊戲機制</string>
     <string name="subscriber_currency">訂閱者貨幣</string>
-    <string name="mystic_hourglasses">神秘沙漏</string>
     <string name="hourglasses_description">神秘沙漏是一種極為罕見的貨幣。你只能在連續三個月或更長時間內訂閱Habitica才能獲得它。它們在時空旅行者的商店中用於購買過去的裝備、寵物、坐騎、動畫背景，甚至是特殊副本。 
 \n 
 \n一年最多可以收到四個神秘沙漏。獲得獎勵的時間取決於你的訂閱續訂時間表。它們會在你的最後一次訂閱付款（使你有資格獲得沙漏）之後的新月的第一天發送。有關更多詳細信息，請參見[訂閱]頁面。</string>
@@ -1005,7 +963,6 @@
     <string name="level_unabbreviated">%d級</string>
     <string name="delete_reminder">刪除提醒</string>
     <string name="number_responded">%1$d/%2$d已回應</string>
-    <string name="gold_capitalized">金幣</string>
     <string name="user_level_with_class_unabbreviated">%1$d級%2$s</string>
     <string name="not_selected">未選中</string>
     <string name="selected">已選擇</string>
@@ -1069,8 +1026,6 @@
     <string name="purchase_equipment_title">買裝備</string>
     <string name="feedPet_title">餵一隻寵物</string>
     <string name="hatch_pet_title">孵化一隻新寵物</string>
-    <string name="complete_task_title">完成一個任務</string>
-    <string name="create_task_title">創建一個任務</string>
     <string name="percent_completed">%d%%已完成</string>
     <string name="lets_get_started">我們開始吧</string>
     <string name="your_progress">你的進展</string>
@@ -1092,9 +1047,7 @@
     <string name="leave_delete_tasks">退出挑戰，並刪除挑戰任務</string>
     <string name="subscribe_listitem3_description">現在訂閱即可立即獲得一份限量套裝和每個月獲得新的物品！</string>
     <string name="quest_items_found">您已尋找到 %d 個副本項目</string>
-    <string name="retry">重試</string>
     <string name="daily_item_checkbox">每日核取方塊</string>
-    <string name="failed">讀取失敗</string>
     <string name="limitations">侷限</string>
     <string name="something_new">新</string>
     <string name="launch_screen">啟動頁面</string>
@@ -1174,4 +1127,106 @@
     <string name="adjust_counter">修正計數器</string>
     <string name="reset_counter">重設計數器</string>
     <string name="go_to_survey">去填寫問卷</string>
+    <string name="discard_changes_to_task_message">您確定您想要捨棄變更至此任務？</string>
+    <string name="add">新增</string>
+    <string name="disconnect">中斷連結</string>
+    <string name="add_password">新增密碼</string>
+    <string name="about_me">關於我</string>
+    <string name="public_profile">公開資訊</string>
+    <string name="my_account">我的帳戶</string>
+    <string name="sale_ends_in">促銷將結束於%s</string>
+    <string name="account_info">帳戶資訊</string>
+    <string name="not_connected">尚未連結</string>
+    <string name="login_methods">登入方式</string>
+    <string name="password_added">密碼已儲存</string>
+    <string name="add_email_and_password">新增電子郵件和密碼</string>
+    <string name="password_not_matching">密碼需要被鍵入正確兩次</string>
+    <string name="email_invalid">無效的電子郵件位址</string>
+    <string name="discard">捨棄</string>
+    <string name="switch_class">變換職業</string>
+    <string name="successful_purchase_generic">購物成功</string>
+    <string name="usernames_party">%s的隊伍</string>
+    <string name="apitoken_summary">複製金鑰. 請注意，這是密碼!</string>
+    <string name="removed_social_auth">已斷開連結 %s</string>
+    <string name="copied_to_clipboard">已複製%s到剪貼簿</string>
+    <string name="added_social_auth">已添加%s認證</string>
+    <string name="connect">連結</string>
+    <string name="entertainment">娛樂</string>
+    <string name="finance">金融</string>
+    <string name="self_improvement">自我成長</string>
+    <string name="group_plan_settings">團隊計劃設定</string>
+    <string name="copy_shared_tasks">複製共同任務</string>
+    <string name="quest_party_required_title">挑戰副本前需要先加入隊伍</string>
+    <string name="quest_party_required_description">加入隊伍後，你可以單獨挑戰副本或邀請朋友共同挑戰!</string>
+    <string name="sell_no_price">出售</string>
+    <string name="create_new_party">新增隊伍</string>
+    <string name="next_hourglass">下一個沙漏</string>
+    <string name="use_item">在隊員上使用物品</string>&gt;
+    <string name="unsaved_changes">未儲存變更</string>
+    <string name="reset_account_title">你確定需要重置\?</string>
+    <string name="confirm_reset">確定重置</string>
+    <string name="forgot_password_hint_example">例子：habitrabbit or gryphon@example.com</string>
+    <string name="gift_confirmation_text_gems_new">你送了%s%s寶石。</string>
+    <string name="subscription_confirmation_multiple">你已訂閱了%s個月</string>
+    <string name="subscription_confirmation">你已訂閱1個月</string>
+    <string name="gem_purchase_confirmation">你獲得了%s寶石。</string>
+    <string name="caused_damage">你對頭目做成了傷害</string>
+    <string name="are_you_sure_you_want_to_delete">你確定刪除？</string>
+    <string name="febuary">二月</string>
+    <string name="march">三月</string>
+    <string name="april">四月</string>
+    <string name="may">五月</string>
+    <string name="june">六月</string>
+    <string name="july">七月</string>
+    <string name="august">八月</string>
+    <string name="september">九月</string>
+    <string name="october">十月</string>
+    <string name="november">十一月</string>
+    <string name="december">十二月</string>
+    <string name="class_confirmation_price">更改你的職業成為%s需要%d的寶石，確認更改\?</string>
+    <string name="armoireEquipment_new">你在衣櫥裏找到了一個稀有裝備！</string>
+    <string name="starting_objectives">新手任務</string>
+    <string name="damage_pending">%.01f即將造成的傷害</string>
+    <string name="armoireFood_new">你在衣櫥搜查，然後找到了食物。那爲什麼在這裏？</string>
+    <string name="adventure_guide_description_new">完成這些任務，即可贏得&lt;b&gt;5項成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;！</string>
+    <string name="survey_title">Habitica 用戶問卷</string>
+    <string name="survey_menu_description">填寫這個問卷來幫助我們成長以及獲得一個成就！</string>
+    <string name="locked_equipment_shop_dialog">你必須購買這個系列的前置物品來解鎖</string>
+    <string name="empty_title">這裡沒有任何東西</string>
+    <string name="empty_discover_description">去發現界面找到一些來加入！</string>
+    <string name="x_remaining">%s剩餘</string>
+    <string name="onboarding_objectives">新手任務</string>
+    <string name="compact">凝練</string>
+    <string name="armoire_drop_rates">寶箱掉落物品機率</string>
+    <string name="armoire">神秘寶箱</string>
+    <string name="new_pieces_added_every_month">每個月會有新裝備</string>
+    <string name="watch_ad">看廣告</string>
+    <string name="available_in">%s內可使用</string>
+    <string name="watch_ad_to_open">看廣告再打開一次</string>
+    <string name="watch_ad_to_revive">看廣告復活</string>
+    <string name="enchanted_armoire_drop_rates">神秘寶箱掉落物品機率</string>
+    <string name="armoire_rate_equipment_description">每個月會有新的裝備。如果你已擁有所有裝備，就會獲得食物或經驗（50/50機率）。</string>
+    <string name="armoire_rate_equipment_title">60%裝備</string>
+    <string name="armoire_rate_food_title">20%食物</string>
+    <string name="armoire_rate_experience_title">20%經驗值</string>
+    <string name="armoire_rate_experience_description">獲得的數量在10-50之間，是隨機的</string>
+    <string name="task_list_mode">任務列表模式</string>
+    <string name="equipment_remaining">剩餘裝備：%d</string>
+    <string name="armoire_rate_food_description">你會獲得十種食物裡的其中一種。在特別活動時，正常食物會變成相對應的蛋糕或糖果。</string>
+    <string name="purchased">已購買</string>
+    <string name="show_me">讓我看</string>
+    <string name="background_filters">背景濾鏡</string>
+    <string name="newest">最新</string>
+    <string name="oldest">最舊</string>
+    <string name="january">1月</string>
+    <string name="buy_set">購買套裝</string>
+    <string name="tutorial_reset_confirmation">你的教程被重置了</string>
+    <string name="you_ran_out_of_health">你的生命值已經見底！</string>
+    <string name="faint_broken_equipment">爛了的裝備可以從獎勵從新買回來</string>
+    <string name="account_reset">帳號重置</string>
+    <string name="display">顯示</string>
+    <string name="unable_to_delete">無法刪除</string>
+    <string name="delete_account_subscription_active">在訂閱時，你無法刪除你的帳號。請先取消訂閱。</string>
+    <string name="cds_subtitle">調整你的日子什麼時候切換到默認的午夜。</string>
+    <string name="death_description">但是你可以通過你的努力把它們贏回來！加油--你可以的。</string>
 </resources>

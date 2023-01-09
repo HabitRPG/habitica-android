@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">A Sua Missão Começou</string>
     <string name="preference_push_invited_to_quest">Convidado para a Missão</string>
     <!--Adding tasks-->
-    <string name="action_edit">Editar</string>
-    <string name="action_cancel">Cancelar</string>
-    <string name="login_btn">Iniciar Sessão</string>
-    <string name="register_btn">Registar</string>
-    <string name="username">Nome de utilizador</string>
-    <string name="email_username">E-mail ou Nome de Utilizador</string>
-    <string name="password">Palavra-passe</string>
-    <string name="emailAddress">Endereço de e-mail</string>
-    <string name="confirmpassword">Confirmar palavra-passe</string>
-    <string name="logout">Terminar Sessão</string>
-    <string name="logout_description">Termine a sessão da sua conta</string>
-    <string name="LoginActivityName">Bem-vindo</string>
-    <string name="about_title">Sobre</string>
     <string name="about_libraries">Bibliotecas</string>
     <string name="about_habitica_open_source">O Habitica está disponível como software de código aberto no GitHub</string>
     <string name="about_rate_our_app">Classifique a nossa Aplicação</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">Parece que existe um problema com o servidor. Tente novamente mais tarde. Conexão perdida</string>
     <string name="authentication_error_title">Erro de Autenticação</string>
-    <string name="login_validation_error_title">Erro de Validação</string>
-    <string name="login_validation_error_fieldsmissing">Tem de preencher todos os campos.</string>
     <string name="save_changes">Guardar</string>
     <string name="copy">Copiar</string>
     <string name="notes">Notas</string>
     <string name="difficulty">Dificuldade</string>
     <string name="tags">Etiquetas</string>
-    <string name="trivial">Trivial</string>
-    <string name="easy">Fácil</string>
-    <string name="medium">Média</string>
-    <string name="hard">Difícil</string>
     <string name="start_date">Data de Início</string>
     <string name="positive_habit_form">Positivo ( + )</string>
     <string name="negative_habit_form">Negativo ( - )</string>
@@ -100,10 +81,6 @@
     <string name="party">Equipa</string>
     <string name="chat">Conversar</string>
     <string name="members">Membros</string>
-    <string name="habits">Hábitos</string>
-    <string name="dailies">Tarefas Diárias</string>
-    <string name="todos">Afazeres</string>
-    <string name="rewards">Recompensas</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="quest">Missão</string>
@@ -175,7 +152,6 @@
     <string name="guild">Guilda</string>
     <string name="leave">Sair</string>
     <string name="join">Aderir</string>
-    <string name="gems">Gemas</string>
     <string name="delete">Eliminar</string>
     <string name="name">Nome</string>
     <string name="description">Descrição</string>
@@ -222,7 +198,6 @@
     <string name="notification_purchase_reward">Comprou uma recompensa</string>
     <string name="world_quest">Missão Mundial</string>
     <string name="empty_items">Não tem quaisquer %s</string>
-    <string name="user_level">Nível %d</string>
     <string name="user_level_with_class">Nível %1$d %2$s</string>
     <string name="warrior">Guerreiro</string>
     <string name="rogue">Bandido</string>
@@ -260,7 +235,6 @@
     <string name="seasonalShop">Loja Sazonal</string>
     <string name="party_invite">Desbloqueie ao Convidar amigos</string>
     <string name="successful_purchase">Comprou %1$s</string>
-    <string name="gold_plural">ouro</string>
     <string name="chat_message_copied">Mensagem copiada para a Área de Transferência</string>
     <string name="edit_tag_btn_edit">Editar</string>
     <string name="confirm_delete_tag_title">Tem certeza?</string>
@@ -282,7 +256,7 @@
     <string name="google_services_missing">Os serviços Google play não pode ser achado.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">Ao comprar gemas apoia os programadores e ajuda a manter o Habitica em funcionamento</string>
-    <string name="gem_purchase_subtitle">As gemas permitem-te comprar extras divertidos para a tua conta, incluindo:</string>
+    <string name="gem_purchase_subtitle">As gemas permitem-te comprar extras divertidos para a tua conta.</string>
     <string name="gem_purchase_listitem1">Disfarces divertidos para o teu avatar</string>
     <string name="gem_purchase_listitem2">Fundos de Ecrã fantásticos</string>
     <string name="gem_purchase_listitem3">Missões que recompensam com ovos de animal</string>
@@ -323,10 +297,6 @@
     <string name="remove_tasks">Remover</string>
     <string name="keep_tasks">Manter</string>
     <string name="my_challenges">Os Meus Desafios</string>
-    <string name="daily">Diariamente</string>
-    <string name="habit">Hábito</string>
-    <string name="reward">Prémio</string>
-    <string name="todo">Tarefa</string>
     <string name="official">Oficial</string>
     <string name="challenge">Desafio</string>
     <string name="not_part_of_a_challenge">De momento, não faz parte de qualquer desafio!</string>
@@ -345,7 +315,6 @@
     <string name="all">Tudo</string>
     <string name="none">Nenhum</string>
     <string name="login_btn_fb">Iniciar Sessão com Facebook</string>
-    <string name="login_btn_google">Iniciar Sessão com Google</string>
     <string name="action_back">Anterior</string>
     <string name="randomize">Aleatorizar</string>
     <string name="avatar_extras">Extras</string>
@@ -393,7 +362,7 @@
 \n • Tarefas não perdem listras ou decaem em cores
 \n • Chefes não causam dano por suas diárias perdidas
 \n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
-    <string name="warrior_description">Guerreiros obtêm mais Golpes Críticos e inflingem maior dano aos Monstros. Joga como Guerreiro se quiseres derrotar Monstros mais facilmente! Guerreiros beneficiam de uma elevada estatística de Força.</string>
+    <string name="warrior_description">Guerreiros obtêm mais Golpes Críticos e infligem maior dano aos Monstros. Joga como Guerreiro se quiseres derrotar Monstros mais facilmente! Guerreiros beneficiam de uma elevada estatística de Força.</string>
     <string name="opting_out_progress">Optando por</string>
     <string name="class_changed_description">Você tem um novo Battle Gear padrão que pode ser alterado em Equipamento!</string>
     <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
@@ -474,7 +443,6 @@
     <string name="subscribe_listitem3">Itens Misteriosos Mensais</string>
     <string name="subscribe_prompt">Torne-se um subscrito para receber benefícios exclusivos!</string>
     <string name="subscribe_title">Subscrições ajudam os desenvolvedores e também a manter o Habitica a funcionar</string>
-    <string name="gold_capitalized">Ouro</string>
     <string name="create_account_short">Criar uma conta</string>
     <string name="login_incentive_short_count">%d Check-ins</string>
     <string name="login_incentive_short">Entre em Habitica regularmente</string>
@@ -635,7 +603,6 @@
     <string name="saving">Guardando</string>
     <string name="fix_character_values">Corrigir valores do personagem</string>
     <string name="fix_character_description">Se encontraste um bug ou fizeste um erro que mudou o teu personagem injustamente, podes corrigir esses valores manualmente aqui.</string>
-    <string name="stats">Condições</string>
     <string name="streak_label">Combo de 21 dias</string>
     <string name="level">Nível</string>
     <string name="come_back_soon">Volta rápido!</string>
@@ -718,4 +685,37 @@
     <string name="points_to_allocate">%d Pontos para Distribuir</string>
     <string name="distribute_class">Distribuir baseado na classe</string>
     <string name="distribute_evenly">Distribuir igualmente</string>
+    <string name="allocated">Alocado</string>
+    <string name="distribute_task">Distribuir baseando-se na atividade da tarefa</string>
+    <string name="collapse_notes">Mostrar menos</string>
+    <string name="is_open">Aberto</string>
+    <string name="moderator">Moderador</string>
+    <string name="expand_notes">Ver mais</string>
+    <string name="available_for">Disponível por %s</string>
+    <string name="leave_delete_tasks">Sair e Eliminar Tarefas</string>
+    <string name="reloaded_content">Conteúdo recarregado</string>
+    <string name="party_challenges">Estás a participar num Desafio de Equipa</string>
+    <string name="leave_party_challenges_confirmation">Queres continuar a participar no Desafio ao deixar a Equipa\?</string>
+    <string name="rejoin_party">Não vais conseguir voltar a juntar-te a esta equipa a menos que te convidem.</string>
+    <string name="quest_abort_message">Tens a certeza de que queres cancelar esta Jornada\? Todo o progresso vai ser perdido. A Jornada será devolvida ao inventário do respectivo dono.</string>
+    <string name="guild_challenges">Estás a participar num Desafio de Guilda</string>
+    <string name="delete_oauth_account_description">Contas eliminadas são permanentes e não podem ser restauradas. O valor das gemas não pode ser devolvido. Se continuas a querer apagar a tua conta, escreve DELETE em baixo.</string>
+    <string name="classless">Sem classe</string>
+    <string name="class_equipment_shop_dialog">Este item só está disponível para uma classe específica.
+\nPodes mudar a tua classe nas definições.</string>
+    <string name="class_gear_disclaimer">Só podes comprar equipamento para a tua classe atual</string>
+    <string name="daily_tip_2">Podes mudar a frequência com que cada Diária se repete. Mesmo tarefas infrequentes podem ser agendadas.</string>
+    <string name="daily_tip_5">Respira profundamente algumas vezes para te ajudar a concentrar. Tu consegues!</string>
+    <string name="daily_tip_7">Tenta afixar itens do Mercado às tuas Recompensas para ajudar a motivar-te a ganhá-las!</string>
+    <string name="daily_tip_9">Se estás com dificuldades, tenta dividir as tuas tarefas em partes mais pequenas.</string>
+    <string name="daily_tip_6">Tenta definir um temporizador para dez minutos e ver o quanto consegues fazer com esse tempo!</string>
+    <string name="strike_description_title">O que é um Ataque de Raiva\?</string>
+    <string name="daily_tip_8">Podes alterar a dificuldade da tua tarefa para seres mais recompensado por tarefas difíceis!</string>
+    <string name="equipment_empty">Já tens todo o equipamento! Mais vai ser lançado durante as Grandes Galas, perto dos solstícios e equinócios.</string>
+    <string name="quest_items_found">Encontraste %d itens da jornada</string>
+    <string name="discard">Descartar</string>
+    <string name="class_confirmation_price">Queres mudar a tua classe para %s por %d gemas\?</string>
+    <string name="use_item">Usar item em membro de equipa</string>&gt;
+    <string name="unsaved_changes">Alterações não gravadas</string>
+    <string name="discard_changes_to_task_message">Tens a certeza de que queres descartar as alterações nesta tarefa\?</string>
 </resources>

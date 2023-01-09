@@ -32,34 +32,16 @@
     <string name="preference_push_your_quest_has_begun">Tvoje výprava začala</string>
     <string name="preference_push_invited_to_quest">Pozván na výpravu</string>
     <!--Adding tasks-->
-    <string name="action_edit">Upravit</string>
-    <string name="action_cancel">Zrušit</string>
-    <string name="login_btn">Přihlásit</string>
-    <string name="register_btn">Registrovat</string>
-    <string name="username">Uživatelské jméno</string>
-    <string name="email_username">Email nebo uživatelské jméno</string>
-    <string name="password">Heslo</string>
-    <string name="emailAddress">Emailová adresa</string>
-    <string name="confirmpassword">Heslo ještě jednou</string>
-    <string name="logout">Odhlásit</string>
-    <string name="logout_description">Odhlásit se z tvého účtu</string>
-    <string name="LoginActivityName">Vítej</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Nejste připojeni k internetu.</string>
     <string name="internal_error_api">Bylo přerušeno spojení se serverem</string>
     <string name="authentication_error_title">Chyba přihlášení</string>
     <string name="authentication_error_body">Vaše přihlašovací jméno a/nebo heslo jsou nesprávné.</string>
-    <string name="login_validation_error_title">Chyba ověření</string>
-    <string name="login_validation_error_fieldsmissing">Musíte vyplnit všechna pole.</string>
     <string name="save_changes">Uložit</string>
     <string name="copy">Zkopírovat</string>
     <string name="notes">Poznámky</string>
     <string name="difficulty">Obtížnost</string>
     <string name="tags">Štítky</string>
-    <string name="trivial">Velmi lehké</string>
-    <string name="easy">Lehké</string>
-    <string name="medium">Středně těžké</string>
-    <string name="hard">Těžké</string>
     <string name="start_date">Počáteční datum</string>
     <string name="positive_habit_form">Kladné ( + )</string>
     <string name="negative_habit_form">Záporné ( - )</string>
@@ -93,10 +75,6 @@
     <string name="party">Skupina</string>
     <string name="chat">Chat</string>
     <string name="members">Členové</string>
-    <string name="habits">Zvyky</string>
-    <string name="dailies">Každodenní</string>
-    <string name="todos">Úkoly</string>
-    <string name="rewards">Odměny</string>
     <string name="yes">Ano</string>
     <string name="no">Ne</string>
     <string name="quest">Skupinový cíl</string>
@@ -168,7 +146,6 @@
     <string name="guild">Cech</string>
     <string name="leave">Odejít</string>
     <string name="join">Připojit se</string>
-    <string name="gems">Drahokamy</string>
     <string name="delete">Smazat</string>
     <string name="name">Jméno</string>
     <string name="description">Popis</string>
@@ -223,7 +200,6 @@
 • Bosové ti neublíží za nesplněný denní úkol\n
 • Tvé zranění bosse nebo sběr předmětů pro výpravu zůstane pozdrženo do odhlášení</string>
     <string name="empty_items">Nemáš žádné %s</string>
-    <string name="user_level">Úroveň %d</string>
     <string name="user_level_with_class">Úroveň %1$d%2$s</string>
     <string name="warrior">Bojovník </string>
     <string name="rogue">Zloděj</string>
@@ -267,7 +243,6 @@
     <string name="login_incentive">Odemkni pravidelným přihlašováním se do appky Habitica</string>
     <string name="create_account">Odemkni vytvořením účtu</string>
     <string name="successful_purchase">Koupeno %1$s</string>
-    <string name="gold_plural">Zlato</string>
     <string name="chat_message_copied">Zpráva zkopírována do schránky</string>
     <string name="edit_tag_btn_edit">Upravit</string>
     <string name="confirm_delete_tag_title">Jsi si jist?</string>
@@ -326,10 +301,6 @@
     <string name="remove_tasks">Odstranit</string>
     <string name="keep_tasks">Ponechat</string>
     <string name="my_challenges">Moje výzvy</string>
-    <string name="daily">Denně</string>
-    <string name="habit">Zvyk</string>
-    <string name="reward">Odměna</string>
-    <string name="todo">Úkol</string>
     <string name="official">Oficiální</string>
     <string name="challenge">Výzva</string>
     <string name="inbox">Zprávy</string>
@@ -350,7 +321,6 @@
     <string name="owned">Vlastněno</string>
     <string name="not_owned">Nevlastněno</string>
     <string name="login_btn_fb">Přihlásit se pomocí Facebooku</string>
-    <string name="login_btn_google">Přihlásit se pomocí Google</string>
     <string name="action_back">Zpět</string>
     <string name="randomize">Náhodně</string>
     <string name="avatar_extras">Další</string>
@@ -375,7 +345,6 @@
     <string name="about_bugreport">Nahlásit chybu</string>
     <string name="about_source_code">Zdrojový kód</string>
     <string name="about_rate_our_app">Ohodnoť naši aplikaci</string>
-    <string name="about_title">O aplikaci</string>
     <string name="about_give_us_feedback">Pošli nám zpětnou vazbu!</string>
     <string name="ago_weeks">před %d týdny</string>
     <string name="ago_days">před %d dny</string>
@@ -426,7 +395,6 @@
     <string name="leave_delete_tasks">Odpojit se &amp; odstranit úkoly</string>
     <string name="remaining_1hour">Zbývá 1 hodina</string>
     <string name="gem_purchase_listitem3">Úkoly, které vás odmění vajíčky zvířátek</string>
-    <string name="gold_capitalized">Zlato</string>
     <string name="party_invite_short">Pozvat přátele</string>
     <string name="login_incentive_short">přihlašuj se do Habitica pravidelně</string>
     <string name="due">Do</string>

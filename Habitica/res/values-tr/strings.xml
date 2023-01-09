@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">Görevin Başladı</string>
     <string name="preference_push_invited_to_quest">Göreve Davet Edildin</string>
     <!--Adding tasks-->
-    <string name="action_edit">Düzenle</string>
-    <string name="action_cancel">İptal et</string>
-    <string name="login_btn">Giriş yap</string>
-    <string name="register_btn">Kayıt ol</string>
-    <string name="username">Kullanıcı adı</string>
-    <string name="email_username">E-posta veya Kullanıcı adı</string>
-    <string name="password">Şifre</string>
-    <string name="emailAddress">E-posta adresi</string>
-    <string name="confirmpassword">Şifreni onayla</string>
-    <string name="logout">Çıkış yap</string>
-    <string name="logout_description">Hesabından çıkış yap</string>
-    <string name="LoginActivityName">Hoş Geldin</string>
-    <string name="about_title">Hakkında</string>
     <string name="about_libraries">Kütüphaneler</string>
     <string name="about_habitica_open_source">Habitica Github üzerinde açık kaynak olarak mevcuttur</string>
     <string name="about_rate_our_app">Uygulamamızı Değerlendir</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">Sunucu ile ilgili bir hata var gibi görünüyor. Daha sonra tekrar dene</string>
     <string name="authentication_error_title">Kimlik doğrulama hatası</string>
-    <string name="login_validation_error_title">Doğrulama Hatası</string>
-    <string name="login_validation_error_fieldsmissing">Tüm alanları doldurmanız gerekiyor.</string>
     <string name="save_changes">Kaydet</string>
     <string name="copy">Kopyala</string>
     <string name="notes">Notlar</string>
     <string name="difficulty">Zorluk</string>
     <string name="tags">Etiketler</string>
-    <string name="trivial">Önemsiz</string>
-    <string name="easy">Kolay</string>
-    <string name="medium">Orta</string>
-    <string name="hard">Zor</string>
     <string name="start_date">Başlangıç Tarihi</string>
     <string name="positive_habit_form">Olumlu (+)</string>
     <string name="negative_habit_form">Olumsuz ( - )</string>
@@ -104,10 +85,6 @@
     <string name="party">Takım</string>
     <string name="chat">Sohbet</string>
     <string name="members">Üyeler</string>
-    <string name="habits">Alışkanlıklar</string>
-    <string name="dailies">Günlük İşler</string>
-    <string name="todos">Görevler</string>
-    <string name="rewards">Ödüller</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <string name="quest">Görev</string>
@@ -185,7 +162,6 @@
     <string name="guild">Lonca</string>
     <string name="leave">Ayrıl</string>
     <string name="join">Katıl</string>
-    <string name="gems">Elmaslar</string>
     <string name="delete">Sil</string>
     <string name="name">Ad</string>
     <string name="description">Tanım</string>
@@ -244,7 +220,6 @@
 \n • Canavarlar tamamlanmamış günlük işler için saldırmaz
 \n • Canavarlara vereceğin zarar ya da topladığın görev eşyaları Handan ayrılana kadar beklemede kalır</string>
     <string name="empty_items">Hiç %s\'e sahip değilsin</string>
-    <string name="user_level">Svy %d</string>
     <string name="user_level_with_class">Svy %1$d - %2$s</string>
     <string name="warrior">Savaşçı</string>
     <string name="rogue">Düzenbaz</string>
@@ -290,7 +265,6 @@
     <string name="login_incentive">Habitica\'ya düzenli girerek kilidini aç</string>
     <string name="create_account">Habitica\'ya katılarak kilidini aç</string>
     <string name="successful_purchase">%1$s satın alındı</string>
-    <string name="gold_plural">altın</string>
     <string name="chat_message_copied">Mesaj Panoya kopyalandı</string>
     <string name="edit_tag_btn_edit">Düzenle</string>
     <string name="confirm_delete_tag_title">Emin misin?</string>
@@ -348,7 +322,7 @@
     <string name="subscribe6month_gemcap">35 Elmas limiti</string>
     <string name="subscribe12month_gemcap">45 Elmas limiti</string>
     <string name="subscription_hourglasses">+%d Mistik Kum Saati</string>
-    <string name="payment_method">Ödeme yolu</string>
+    <string name="payment_method">Ödeme yöntemi</string>
     <string name="subscription">Abonelik</string>
     <string name="active">Etkin</string>
     <string name="cancel_subscription">Aboneliği İptal Et</string>
@@ -372,10 +346,6 @@
     <string name="remove_tasks">Sil</string>
     <string name="keep_tasks">Tut</string>
     <string name="my_challenges">Benim Mücadelelerim</string>
-    <string name="daily">Günlük İş</string>
-    <string name="habit">Alışkanlık</string>
-    <string name="reward">Ödül</string>
-    <string name="todo">Yapılacak İş</string>
     <string name="official">Resmi</string>
     <string name="challenge">Mücadele</string>
     <string name="not_part_of_a_challenge">Henüz herhangi bir Mücadele katılımcısı değilsin!</string>
@@ -399,7 +369,6 @@
     <string name="owned">Sahip olunan</string>
     <string name="not_owned">Sahip olunmayan</string>
     <string name="login_btn_fb">Facebook ile giriş yap</string>
-    <string name="login_btn_google">Google ile giriş yap</string>
     <string name="action_back">Geri</string>
     <string name="welcome_text">Ah, burada yeni olmalısın. Ben Justin, Habitica\'daki rehberin olacağım.
 \n
@@ -505,7 +474,6 @@
     <string name="come_back_soon">Yakında yine gel!</string>
     <string name="level">Seviye</string>
     <string name="streak_label">21 Gün Tamamlama Serileri</string>
-    <string name="stats">Nitelikler</string>
     <string name="fix_character_description">Eğer bir programlama hatası ile karşılaşırsan veya karakterini adaletsizce etkileyen bir yanlışlık yaparsan, değerleri buradan el ile düzeltebilirsin.</string>
     <string name="fix_character_values">Karakter değerlerini düzelt</string>
     <string name="saving">Kaydediliyor</string>
@@ -689,7 +657,7 @@
     <string name="invited_to_public_guild"><![CDATA[<b>%1$s</b> adlı Loncaya davet edildin]]></string>
     <string name="invited_to_quest"><![CDATA[<b>%1$s</b> Görevine davet edildin]]></string>
     <string name="ago_weeks">%d hafta önce</string>
-    <string name="ago_1week">1 hafta önce</string>
+    <string name="ago_1week">1h önce</string>
     <string name="ago_months">%d ay önce</string>
     <string name="skill_progress_title">Yetenek Kullanımı</string>
     <string name="not_selected">Seçilmedi</string>
@@ -703,7 +671,6 @@
     <string name="subscribe_listitem5_description">2 kat eşya düşürme oranı ile daha çok Habitica eşyası keşfet.</string>
     <string name="subscribe_listitem3_description_new">Şimdi abone olarak %s\'ı elde edebilir ve her ay yeni eşyalar kazanabilirsin!</string>
     <string name="subscribe_listitem5">İki kat eşya düşürme</string>
-    <string name="gold_capitalized">Altın</string>
     <string name="create_account_short">hesap oluştur</string>
     <string name="login_incentive_short">Habitica\'ya düzenli olarak giriş yap</string>
     <string name="party_invite_short">Arkadaşlarını davet et</string>
@@ -727,8 +694,6 @@
     <string name="scheduling">Planlama</string>
     <string name="every">Her</string>
     <string name="repeats">Tekrar</string>
-    <string name="weekly">Haftalık</string>
-    <string name="monthly">Aylık</string>
     <string name="password_changed">Şifre başarıyla değiştirildi</string>
     <string name="new_password_repeat">Yeni Şifreyi Tekrarla</string>
     <string name="new_password">Yeni Şifre</string>
@@ -756,7 +721,6 @@
     <string name="login_btn_apple">Apple Hesabı ile Giriş Yap</string>
     <string name="special_items">Özel eşyalar</string>
     <string name="leave_keep_tasks">Ayrıl &amp; Görevleri Koru</string>
-    <string name="create_task_title">Bir Görev Oluştur</string>
     <string name="percent_completed">%d%% Tamamlandı</string>
     <string name="lets_get_started">Haydi başlayalım</string>
     <string name="your_progress">Senin İlerlemen</string>
@@ -770,7 +734,6 @@
     <string name="wacky">Tuhaf</string>
     <string name="habitica_questions">Habitica Soruları</string>
     <string name="clear_cache">Önbelleği Temizleme</string>
-    <string name="mystic_hourglasses">Gizemli Kum Saatleri</string>
     <string name="premium_currency">Premium Para Birimi</string>
     <string name="currency">Para birimi</string>
     <string name="game_mechanics">Oyun Mekanikleri</string>
@@ -800,8 +763,6 @@
     <string name="app_theme">Uygulama Teması</string>
     <string name="share_challenge_with">Mücadeleyi şunun ile paylaş</string>
     <string name="details">Detaylar</string>
-    <string name="create_task">%s oluştur</string>
-    <string name="new_task">Yeni Görev</string>
     <string name="confirm_deletion">Silmeyi onayla</string>
     <string name="switch_to_grid_view">Izgara görünümüne geç</string>
     <string name="switch_to_list_view">Liste görünümüne geç</string>
@@ -813,7 +774,6 @@
     <string name="pin">Sabitle</string>
     <string name="delete_reminder">Anımsatıcıyı Sil</string>
     <string name="delete_task">Görevi Sil</string>
-    <string name="are_you_sure">Emin misin\?</string>
     <string name="guild_bank">Lonca Bankası</string>
     <string name="guild_members">Lonca Üyeleri</string>
     <string name="guild_summary">Lonca Özeti</string>
@@ -848,7 +808,6 @@
     <string name="invitation_title">%s seni %s grubuna katılman için davet etti</string>
     <string name="gems_to_gift">Hediye edilecek taşlar</string>
     <string name="from_balance">Bakiyeden Gönder</string>
-    <string name="repeat_daily">Günlük</string>
     <string name="partyOnDescription">Takımın 4 üyeye ulaştı!</string>
     <string name="levelup_detail_10">Oyun tarzına uygun bir sınıf seç ve yolculuğunda sana yardımcı olacak özel becerilerin ve zırhların kilidini aç</string>
     <string name="levelup_title_10">Sınıf Sisteminin kilidi açıldı!</string>
@@ -895,7 +854,6 @@
     <string name="purchasedEquipmentTitle">Satın Alınan Ekipman</string>
     <string name="completedTaskTitle">Bir yapılacak iş tamamlandı</string>
     <string name="createdTaskTitle">İlk yapılacak işini oluşturdun</string>
-    <string name="complete_task_title">Bir Görevi Tamamla</string>
     <string name="stat_description">Tüm Habitica karakterleri, Habitica\'nın oynanış özelliklerini etkileyen dört istatistiğe sahiptir.
 \n
 \n**Kuvvet (STR)** kritik vuruşları etkiler ve bir Görev Patronuna verilen hasarı artırır. Savaşçılar ve Haydutlar, sınıf ekipmanlarından STR kazanır.
@@ -1127,7 +1085,6 @@
     <string name="leave_guild_challenges_confirmation">Loncadan ayrılırken Mücadeleye katılmaya devam etmek istiyor musunuz?</string>
     <string name="leave_party_challenges_confirmation">Takımdan ayrılırken Mücadeleye katılmaya devam etmek istiyor musunuz?</string>
     <string name="action_end_challenge">Mücadeleyi Bitir</string>
-    <string name="failed">Yükleme başarısız</string>
     <string name="survey_menu_description">Büyümemize ve bir başarı elde etmemize yardımcı olmak için bu 5 dakikalık anketi doldurun!</string>
     <string name="finish">Bitir</string>
     <string name="fortify_shop">Güçlendirme İksiri</string>
@@ -1159,7 +1116,6 @@
     <string name="public_profile">Açık profil</string>
     <string name="reloaded_content">İçerik Yeniden Yüklendi</string>
     <string name="reset_counter">Sayacı Sıfırla</string>
-    <string name="retry">Yeniden dene</string>
     <string name="fortify_shop_description">Tüm görevleri nötr değere (sarı renk) döndürün ve kaybolan tüm sağlığı geri getirin</string>
     <string name="sale_ends_in">İndirim %s içinde sona eriyor</string>
     <string name="limited_potions_available">Sezonluk ürünler mevcut</string>

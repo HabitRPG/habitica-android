@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -224,8 +225,13 @@ class TaskAlarmManager(
             } else {
                 try {
                     alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
-                } catch (e: SecurityException) {
-                    alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
+                } catch (ex: Exception) {
+                    when(ex) {
+                        is IllegalStateException, is SecurityException -> {
+                            alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
+                        }
+                        else -> throw ex
+                    }
                 }
             }
         }

@@ -141,8 +141,12 @@ class ArmoireActivity : BaseActivity() {
         val gold = gold?.toInt()
         if (hasAnimatedChanges) return
         if (gold != null) {
+            /**
+             * We are adding 100 as the gold is already "deducted" before the animation starts,
+             * and animating to show the current user's gold amount.
+             */
+            binding.goldView.value = (gold + 100).toDouble()
             binding.goldView.value = (gold).toDouble()
-            binding.goldView.value = (gold - 100).toDouble()
         }
 
         val container = binding.confettiAnchor

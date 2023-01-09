@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">Мисията Ви започна</string>
     <string name="preference_push_invited_to_quest">Получихте покана за мисия</string>
     <!--Adding tasks-->
-    <string name="action_edit">Редактиране</string>
-    <string name="action_cancel">Отказ</string>
-    <string name="login_btn">Вход</string>
-    <string name="register_btn">Регистрация</string>
-    <string name="username">Потребителско име</string>
-    <string name="email_username">Е-поща или потребителско име</string>
-    <string name="password">Парола</string>
-    <string name="emailAddress">Е-поща</string>
-    <string name="confirmpassword">Потвърдете паролата</string>
-    <string name="logout">Изход</string>
-    <string name="logout_description">Излизане от Вашия профил</string>
-    <string name="LoginActivityName">Добре дошли</string>
-    <string name="about_title">Относно</string>
     <string name="about_libraries">Библиотеки</string>
     <string name="about_habitica_open_source">Хабитика е софтуер с отворен код, който е наличен в Github</string>
     <string name="about_rate_our_app">Оценете приложението</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">Изглежда има проблем със сървъра. Опитайте отново по-късно.</string>
     <string name="authentication_error_title">Грешка при удостоверяване</string>
-    <string name="login_validation_error_title">Грешка при проверяването</string>
-    <string name="login_validation_error_fieldsmissing">Трябва да попълните всички полета.</string>
     <string name="save_changes">Запазване</string>
     <string name="copy">Копиране</string>
     <string name="notes">Бележки</string>
     <string name="difficulty">Трудност</string>
     <string name="tags">Етикети</string>
-    <string name="trivial">Елементарно</string>
-    <string name="easy">Лесно</string>
-    <string name="medium">Средно</string>
-    <string name="hard">Трудно</string>
     <string name="start_date">Начална дата</string>
     <string name="positive_habit_form">Положителен ( + )</string>
     <string name="negative_habit_form">Отрицателен ( - )</string>
@@ -104,10 +85,6 @@
     <string name="party">Група</string>
     <string name="chat">Чат</string>
     <string name="members">Членове</string>
-    <string name="habits">Навици</string>
-    <string name="dailies">Ежедн</string>
-    <string name="todos">Задачи</string>
-    <string name="rewards">Награди</string>
     <string name="yes">Да</string>
     <string name="no">Не</string>
     <string name="quest">Мисия</string>
@@ -185,7 +162,6 @@
     <string name="guild">Гилдия</string>
     <string name="leave">Напускане</string>
     <string name="join">Присъединяване</string>
-    <string name="gems">Диаманти</string>
     <string name="delete">Изтриване</string>
     <string name="name">Име</string>
     <string name="description">Описание</string>
@@ -244,7 +220,6 @@
 \n • Главатарите няма да Ви нанасят щети заради пропуснатите ежедневни задачи; 
 \n • Щетите Ви срещу главатар и предметите от събираческите мисии ще Ви чакат докато излезете от странноприемницата</string>
     <string name="empty_items">Нямате %s</string>
-    <string name="user_level">Ниво %d</string>
     <string name="user_level_with_class">Ниво %1$d %2$s</string>
     <string name="warrior">Воин</string>
     <string name="rogue">Мошеник</string>
@@ -290,7 +265,6 @@
     <string name="login_incentive">Отключете като се вписвате редовно в Хабитика</string>
     <string name="create_account">Отключете като си създадете профил</string>
     <string name="successful_purchase">Закупено: %1$s</string>
-    <string name="gold_plural">злато</string>
     <string name="chat_message_copied">Съобщението е копирано</string>
     <string name="edit_tag_btn_edit">Редактиране</string>
     <string name="confirm_delete_tag_title">Сигурен/на ли сте?</string>
@@ -373,10 +347,6 @@
     <string name="remove_tasks">Премахване</string>
     <string name="keep_tasks">Задържане</string>
     <string name="my_challenges">Моите предизвикателства</string>
-    <string name="daily">Ежедневно</string>
-    <string name="habit">Навик</string>
-    <string name="reward">Награда</string>
-    <string name="todo">Задача</string>
     <string name="official">Официално</string>
     <string name="challenge">Предизвикателство</string>
     <string name="not_part_of_a_challenge">В момента не участвате в предизвикателство!</string>
@@ -400,7 +370,6 @@
     <string name="owned">Притежавани</string>
     <string name="not_owned">Непритежавани</string>
     <string name="login_btn_fb">Влизане с Фейсбук</string>
-    <string name="login_btn_google">Влизане с Гугъл</string>
     <string name="action_back">Назад</string>
     <string name="welcome_text">О, сигурно сте нов тук. Аз съм Джъстин и ще бъда Вашият съветник в Хабитика.\n\nПърво, как да Ви наричам? Можете спокойно да промените това, което съм избрал. Когато сте готови, можем да преминем към създаването на герой!</string>
     <string name="randomize">Разбъркване</string>
@@ -504,7 +473,6 @@
     <string name="come_back_soon">Върнете се скоро!</string>
     <string name="level">Ниво</string>
     <string name="streak_label">21-дневни серии</string>
-    <string name="stats">Показатели</string>
     <string name="fix_character_description">Ако сте се сблъскали с проблем или сте направили грешка, която е променила героя Ви несправедливо, можете да промените стойностите си ръчно от тук.</string>
     <string name="fix_character_values">Поправка на стойностите на героя</string>
     <string name="saving">Запазване</string>

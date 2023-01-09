@@ -12,7 +12,7 @@
     <string name="SP_APIToken_summary">Token API-mu</string>
     <string name="Language_title">Bahasa</string>
     <string name="Language_summary">Ganti bahasa dalam Habitica</string>
-    <string name="PS_contact_title">Kontak saya</string>
+    <string name="PS_contact_title">Hubungi saya</string>
     <string name="pref_account_header">Akun</string>
     <string name="pref_first_day_of_the_week_title">Hari Pertama dalam Minggu</string>
     <string name="pref_first_day_of_the_week_summary">Hari pertama dalam minggu di semua kalender</string>
@@ -32,39 +32,20 @@
     <string name="preference_push_your_quest_has_begun">Misimu telah Dimulai</string>
     <string name="preference_push_invited_to_quest">Diundang ke dalam Misi</string>
     <!--Adding tasks-->
-    <string name="action_edit">Sunting</string>
-    <string name="action_cancel">Batal</string>
-    <string name="login_btn">Masuk</string>
-    <string name="register_btn">Daftar</string>
-    <string name="username">Nama Pengguna</string>
-    <string name="email_username">Email atau Nama Pengguna</string>
-    <string name="password">Kata Sandi</string>
-    <string name="emailAddress">Alamat Email</string>
-    <string name="confirmpassword">Konfirmasi kata sandi</string>
-    <string name="logout">Keluar</string>
-    <string name="logout_description">Keluar dari akunmu</string>
-    <string name="LoginActivityName">Selamat Datang</string>
-    <string name="about_title">Tentang Kami</string>
-    <string name="about_libraries">Pustaka</string>
+    <string name="about_libraries">Perpustakaan</string>
     <string name="about_habitica_open_source">Habitica tersedia sebagai perangkat lunak open source pada Github</string>
-    <string name="about_rate_our_app">Nilai Aplikasi kami</string>
+    <string name="about_rate_our_app">Nilai aplikasi kami</string>
     <string name="about_give_us_feedback">Kirimkan kami Feedback!</string>
     <string name="about_bugreport">Laporkan Gangguan</string>
-    <string name="about_source_code">Kode</string>
+    <string name="about_source_code">Kode sumber</string>
     <!--Network Errors-->
     <string name="internal_error_api">Jaringan server terputus</string>
     <string name="authentication_error_title">Autentikasi Gagal</string>
-    <string name="login_validation_error_title">Validasi Gagal</string>
-    <string name="login_validation_error_fieldsmissing">Kamu harus mengisi semua kolom.</string>
     <string name="save_changes">Simpan</string>
     <string name="copy">Salin</string>
     <string name="notes">Catatan</string>
     <string name="difficulty">Tingkat Kesulitan</string>
     <string name="tags">Label</string>
-    <string name="trivial">Sepele</string>
-    <string name="easy">Mudah</string>
-    <string name="medium">Sedang</string>
-    <string name="hard">Susah</string>
     <string name="start_date">Tanggal Mulai</string>
     <string name="positive_habit_form">Positif (+)</string>
     <string name="negative_habit_form">Negatif (-)</string>
@@ -89,7 +70,7 @@
     <string name="faint_header">Kamu kehabisan Nyawa!</string>
     <string name="faint_button">Isi ulang Nyawa &amp; Ulang Lagi</string>
     <string name="filter">Filter</string>
-    <string name="used_skill_without_mana">Kamu menggunakan %1$s</string>
+    <string name="used_skill_without_mana">Kamu menggunakan %1$s.</string>
     <string name="new_checklist_item">Item ceklist baru</string>
     <string name="unlock_lvl_11">Buka pada lvl 11</string>
     <string name="forgot_pw_btn">Lupa Kata Sandi</string>
@@ -100,10 +81,6 @@
     <string name="party">Party</string>
     <string name="chat">Obrolan</string>
     <string name="members">Anggota</string>
-    <string name="habits">Kebiasaan</string>
-    <string name="dailies">Keseharian</string>
-    <string name="todos">To Do</string>
-    <string name="rewards">Hadiah</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
     <string name="quest">Misi</string>
@@ -139,7 +116,7 @@
     <string name="intro_1_description">Ini saatnya untuk bersenang-senang sambil benar-benar menyelesaikan urusan-urusanmu. Bergabunglah dengan lebih dari %s orang yang memperbaiki aspek hidup mereka satu demi satu.</string>
     <string name="intro_2_subtitle">Berkembang di dalam game</string>
     <string name="intro_2_title">Berkembang di kehidupan nyata</string>
-    <string name="intro_2_description">Buka fitur dalam game dengan mengerjakan tugasmu di dunia nyata. Dapatkan baju, peliharaan, dan banyak lagi sebagai hadiahmu mencapai tujuan!</string>
+    <string name="intro_2_description">Buka fitur dalam game dengan mengerjakan tugasmu di dunia nyata. Dapatkan baju, peliharaan, dan banyak lagi sebagai hadiahmu mencapai tujuan.</string>
     <string name="intro_3_subtitle">Bertarung dengan monster</string>
     <string name="intro_3_title">Menjadi lebih sosial</string>
     <string name="intro_3_description">Tetaplah berusaha meraih tujuan dengan bantuan teman-teman. Dukung satu sama lain dalam hidup dan bertarunglah sekaligus meningkatkan kehidupan bersama-sama!</string>
@@ -181,7 +158,6 @@
     <string name="guild">Guild</string>
     <string name="leave">Tinggalkan</string>
     <string name="join">Gabung</string>
-    <string name="gems">Permata</string>
     <string name="delete">Hapus</string>
     <string name="name">Nama </string>
     <string name="description">Deskripsi</string>
@@ -201,7 +177,7 @@
     <string name="outfit_weapon">Senjata</string>
     <string name="wear_costume">Gunakan Kostum</string>
     <string name="equipped">Digunakan</string>
-    <string name="quest_cancel_message">Apakah kamu yakin kamu ingin membatalkan misi ini? Semua undangan yang disetujui akan hilang. Pemilik misi akan mendapatkan gulungan misi kembali.</string>
+    <string name="quest_cancel_message">Apakah anda yakin anda ingin membatalkan misi ini\? Dengan Membatalkan Misi maka semua undangan yang diterima dan tertunda akan dibatalkan. Gulungan Misi akan dikembalikan ke dalam inventori Pemilik.</string>
     <string name="quest_begin_message">Apakah kamu yakin? Hanya %1$d dari %2$d anggota Party-mu yang sudah ikut misi ini! Misi dimulai secara otomatis ketika semua pemain telah ikut atau menolak undangannya.</string>
     <string name="today">Hari Ini</string>
     <string name="sidebar_items">Item</string>
@@ -220,26 +196,25 @@
     <string name="use_animal">Gunakan</string>
     <string name="feed">Beri makan</string>
     <string name="hatch_with">Tetaskan dengan %s</string>
-    <string name="hatched_pet_title">Kamu menetaskan seekor %1$s %2$s</string>
+    <string name="hatched_pet_title">Kamu menetaskan seekor %1$s %2$s!</string>
     <string name="close">Tutup</string>
     <string name="share">Bagikan</string>
     <string name="notification_pet_fed">Kamu memberi makan %s!</string>
     <string name="notification_purchase_reward">Kamu membeli sebuah hadiah</string>
     <string name="world_quest">Misi Dunia</string>
-    <string name="inn_description">Perlu istirahat? Masuk ke dalam Penginapan Daniel untuk sementara menghentikan mekanika game Habitica yang lebih susah:\n\n
-• Keseharian yang terlewat tidak akan menyakitimu\n
-• Tugas tidak akan putus runtunannya atau berkurang warnanya\n
-• Boss tidak akan menyerangmu untuk Keseharian yang terlewat\n
-• Damage-mu kepada Boss atau item misi mengumpulkanmu akan tetap menunggu hingga kamu keluar</string>
+    <string name="inn_description">Perlu istirahat\? Masuk ke dalam Penginapan Daniel untuk sementara menghentikan mekanika game Habitica yang lebih susah:
+\n
+\n • Keseharianmu yang terlewat tidak akan menyakitimu (bos akan tetap menyerang menyakitimu kalau anggota Party lain melewatkan Kesehariannya)
+\n • Runtunan tugas dan hitungan Habit tidak akan hilang
+\n • Damage-mu kepada Boss atau item misi yang terkumpul statusnya akan tetap tertunda hingga kamu keluar dari Penginapan</string>
     <string name="empty_items">Kamu tidak memiliki %s</string>
-    <string name="user_level">Lvl %d</string>
-    <string name="user_level_with_class">Lvl %1$d %2$s</string>
-    <string name="warrior">Warrior</string>
-    <string name="rogue">Rogue</string>
-    <string name="mage">Mage</string>
-    <string name="healer">Healer</string>
-    <string name="mage_description">Penyihir belajar dengan cepat, mendapatkan Pengalaman dan Level lebih cepat daripada kelas lainnya. Mereka juga mendapatkan Mana yang besar dengan menggunakan kemampuan spesial. Mainkan penyihir jika kamu menyukai aspek taktis dari permainan Kebiasaan, atau jika kamu begitu termotivasi dengan meningkatkan level dan membuka fitur baru!</string>
-    <string name="rogue_description">Perampok senang mengumpulkan kekayaan, mendapatkan banyak Emas daripada yang lainnya, dan mahir menemukan item acak. Kemampuan Bersembunyi mereka yang terkenal membuat mereka mampu menghindari konsekuensi dari Keseharian yang terlewat. Mainkan Perampok jika kamu termotivasi dengan Hadiah dan Pencapaian, juga mendapatkan banyak barang jarahan dan lencana!</string>
+    <string name="user_level_with_class">Level %1$d %2$s</string>
+    <string name="warrior">Prajurit</string>
+    <string name="rogue">Perampok</string>
+    <string name="mage">Penyihir</string>
+    <string name="healer">Penyembuh</string>
+    <string name="mage_description">Penyihir mempelajari Kemampuan yang dapat menghancurkan Boss dan mendapatkan Pengalaman dan Level yanf lebih cepat. Mainkan penyihir jika kamu termotivasi dengan naik level dengan cepat! Penyihir memiliki kelebihan dengan stat Kecerdasan yang tinggi.</string>
+    <string name="rogue_description">Perampok mempelajari kemampuan yang membuat mereka dan party-nya mendapatkan banyak Koin Emas dan item acak. Mainkan Perampok jika kamu menginginkan banyak item dan Koin Emas! Perampok memiliki kelebihan stat Persepsi yang tinggi.</string>
     <string name="healer_description">Penyembuh mempelajari Skill yang dapat menyembuhkan dan melindungi diri sendiri dan Party. Bermain sebagai Penyembuh jika kamu menikmati peran menolong orang lain atau menghindari kerusakan! Penyembuh memiliki keuntungan dari stat Ketahanan yang tinggi.</string>
     <string name="select_class">Pilih Profesi</string>
     <string name="opt_out_class">Matikan Fitur</string>
@@ -262,10 +237,10 @@
     <string name="email">Email</string>
     <string name="share_using">Bagikan dengan</string>
     <string name="share_levelup">Aku mencapai level %d di Habitica dengan memperbaiki kebiasaanku di kehidupan nyata!</string>
-    <string name="share_hatched">Saya menetaskan peliharaan seekor %2$s %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya! </string>
+    <string name="share_hatched">Saya menetaskan peliharaan seekor %2$s %1$s di #Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
     <string name="share_raised">Saya baru mendapatkan tunggangan seekor %1$s di Habitica dengan menyelesaikan tugas kehidupan-nyata saya!</string>
     <string name="open_in_store">Buka di Play Store</string>
-    <string name="change_class_confirmation">Apa kamu yakin untuk mengubah kelas? Ini akan membutuhkan 3 permata.</string>
+    <string name="change_class_confirmation">Apa kamu yakin untuk mengubah pekerjaanmu\? Ini akan membutuhkan 3 permata.</string>
     <string name="change_class_equipment_warning">Peringatan: Kamu tidak akan dapat membeli perlengkapan untuk profesi %s. </string>
     <string name="confirm">Yakin</string>
     <string name="market">Pasar</string>
@@ -276,7 +251,6 @@
     <string name="login_incentive">Buka dengan cara login ke Habitica secara teratur</string>
     <string name="create_account">Buka dengan membuat sebuah akun</string>
     <string name="successful_purchase">%1$s telah dibeli</string>
-    <string name="gold_plural">Koin Emas</string>
     <string name="chat_message_copied">Pesan telah tersalin di Papan pencatat</string>
     <string name="edit_tag_btn_edit">Rubah</string>
     <string name="confirm_delete_tag_title">Kamu yakin?</string>
@@ -298,7 +272,7 @@
     <string name="google_services_missing">Google play services tidak dapat ditemukan.</string>
     <string name="gem_purchase_toolbartitle">Bayar</string>
     <string name="gem_purchase_title">Membeli gem dapat mendukung pengembang dan menjaga Habitica tetap berjalan</string>
-    <string name="gem_purchase_subtitle">Permata membuatmu dapat membeli tambahan yang menyenangkan untuk akunmu, termasuk:</string>
+    <string name="gem_purchase_subtitle">Permata membuatmu dapat membeli tambahan yang menyenangkan untuk akunmu</string>
     <string name="gem_purchase_listitem1">Kostum keren untuk avatarmu</string>
     <string name="gem_purchase_listitem2">Latar belakang yang keren</string>
     <string name="gem_purchase_listitem3">Misi yang memberikanmu hadiah telur</string>
@@ -317,7 +291,7 @@
     <string name="has_reminder">Memiliki Pengingat</string>
     <string name="has_tag">Memiliki Label</string>
     <string name="subscribe_title">Berlangganan mendukung para pengembang dan membantu menjaga Habitica terus berjalan</string>
-    <string name="subscribe_prompt">Jadilah seorang pelanggan dan kamu akan mendapat keuntungan berikut:</string>
+    <string name="subscribe_prompt">Jadilah seorang pelanggan untuk mendapatkan keuntungan eksklusif!</string>
     <string name="subscribe_listitem1">Beli permata dengan koin emas</string>
     <string name="subscribe_listitem2">Item bulanan eksklusif</string>
     <string name="subscribe_listitem3">Simpan lebih banyak riwayat masukan</string>
@@ -325,10 +299,10 @@
     <string name="subscriptions">Langganan</string>
     <string name="subscription_duration">Berulang setiap %s</string>
     <string name="subscribe">Berlangganan</string>
-    <string name="subscribe_listitem1_description">Alexander sang Saudagar akan menjual permata kepadamu masing-masing seharga 20 koin emas!\n\nPengiriman bulanannya dibatasi di 25 Permata per bulan, tapi bisa meningkat berdasarkan lama berlangganan-mu. \n\nBatasnya meningkat sebanyak 5 Permata setiap tiga bulan berturut-turut kamu berlangganan, hingga batas maksimal 50 Permata per bulan!</string>
-    <string name="subscribe_listitem2_description">Setiap bulan kamu akan menerima sebuah item kosmetik unik untuk avatarmu!\n\nPlus, setiap tiga bulan berturut-turut kamu berlangganan, sang Penjelajah Waktu Misterius akan memberimu akses kepada item kosmetik bersejarah (atau futuristik!).</string>
-    <string name="subscribe_listitem3_description">Buat To Do yang telah diselesaikan dan riwayat tugas tersedia lebih lama.</string>
-    <string name="subscribe_listitem4_description">Dua kali lipat batas drop akan mengizinkanmu mendapat lebih banyak item untuk tugas yang terselesaikan setiap hari, membantumu melengkapi istalmu lebih cepat!</string>
+    <string name="subscribe_listitem1_description">Kamu dapat membeli Permata dari Market dengan harga satuan 20 Koin Emas!</string>
+    <string name="subscribe_listitem2_description">Dapatkan Jam Pasir Mistik untuk membeli item di Toko Penjelajah Waktu!</string>
+    <string name="subscribe_listitem3_description">Langganan sekarang untuk memperoleh perlengkapan eksklusif sekarang juga dan menerima item-item baru setiap bulan!</string>
+    <string name="subscribe_listitem4_description">Terima peliharaan Jackalope Ungu Kerajaan ketika kamu menjadi pelanggan baru.</string>
     <string name="subscription_hourglasses">+%d Jam Pasir Mistis</string>
     <string name="payment_method">Metode Pembayaran</string>
     <string name="subscription">Langganan</string>
@@ -343,21 +317,17 @@
     <string name="monthly_gem_cap">Batas permata bulanan</string>
     <string name="inactive">Tidak aktif</string>
     <string name="one_month">1 Bulan</string>
-    <string name="months">%d Bulan</string>
+    <string name="months">Bulan</string>
     <string name="month">bulan</string>
     <string name="three_months">3 bulan</string>
     <string name="six_months">6 bulan</string>
     <string name="twelve_months">12 bulan</string>
-    <string name="subscribe_prompt_thanks">Dengan Berlangganan kamu menerima keuntungan bermanfaat berikut:</string>
+    <string name="subscribe_prompt_thanks">Kamu mendapatkan keuntungan berikut ini dengan menjadi seorang Pelanggan</string>
     <string name="subscription_status">Status Langganan</string>
     <string name="challenge_leave_title">Tinggalkan Tantangan</string>
     <string name="remove_tasks">Hapus</string>
     <string name="keep_tasks">Simpan</string>
     <string name="my_challenges">Tantangan Saya</string>
-    <string name="daily">Harian</string>
-    <string name="habit">Kebiasaan</string>
-    <string name="reward">Hadiah</string>
-    <string name="todo">To Do</string>
     <string name="official">Resmi</string>
     <string name="challenge">Tantangan</string>
     <string name="not_part_of_a_challenge">Kamu tidak mengambil bagian dalam Tantangan apapun saat ini!</string>
@@ -381,7 +351,6 @@
     <string name="owned">Dimiliki</string>
     <string name="not_owned">Tidak Dimiliki</string>
     <string name="login_btn_fb">Login dengan Facebook</string>
-    <string name="login_btn_google">Login dengan Google</string>
     <string name="action_back">Kembali</string>
     <string name="randomize">Sembarang</string>
     <string name="avatar_extras">Tambahan</string>
@@ -406,7 +375,7 @@
     <string name="empty_description_todos">To Do adalah tugas yang hanya perlu diselesaikan sekali. Tambahkan ceklis kepada To Do-mu untuk meningkatkan harganya.</string>
     <string name="empty_title_rewards">Kamu tidak punya Hadiah apapun</string>
     <string name="reset_walkthrough">Ulang Panduan Justin</string>
-    <string name="read_community_guidelines">Tolong baca Pedoman Komunitas kami sebelum posting</string>
+    <string name="read_community_guidelines">Tolong baca <u>Pedoman Komunitas</u> kami sebelum posting</string>
     <string name="maintenance">Perbaikan</string>
     <string name="reload_content">Muat Ulang Isi</string>
     <string name="dailyDueDefaultView">Atur Keseharian secara otomatis di tab \'harus dikerjakan\'</string>
@@ -457,7 +426,7 @@
     <string name="con_abbrv">Tahan</string>
     <string name="reset_account">Reset Akun</string>
     <string name="delete_account">Hapus Akun</string>
-    <string name="delete_account_description">Apakah kamu yakin? Ini akan menghapus akunmu untuk selamanya, dan tidak akan bisa dikembalikan! Kamu perlu mendaftarkan akun baru untuk menggunakan Habitica lagi. Permata di bank atau yang telah digunakan tidak akan diuangkan kembali. Jika kamu sepenuhnya yakin, ketik kata sandimu di kotak teks di bawah.</string>
+    <string name="delete_account_description">Ini akan menghapus akunmu selamanya dan tidak akan pernah bisa dikembalikan! Permata yang tersimpan atau sudah dibelanjakan tidak bisa dikembalikan. Jika kamu sangat yakin, ketik kata sandi kamu di kotak teks berikut ini.</string>
     <string name="reset_account_confirmation">Reset Akunku</string>
     <string name="delete_account_confirmation">Hapus Akunku</string>
     <string name="danger_zone">Zona Berbahaya</string>
@@ -475,12 +444,11 @@
     <string name="come_back_soon">Datang kembali nanti!</string>
     <string name="level">Level</string>
     <string name="streak_label">Rentetan 21 Hari</string>
-    <string name="stats">Status</string>
     <string name="fix_character_description">Jika kamu menemukan sebuah gangguan atau melakukan kesalahan yang mengubah karaktermu secara tidak adil, kamu bisa memperbaiki angka-angka tersebut secara manual di sini.</string>
     <string name="fix_character_values">Atur Angka Karakter</string>
     <string name="saving">Menyimpan</string>
     <string name="forgot_password_title">Email sebuah Tautan Mengatur Ulang Kata Sandi</string>
-    <string name="forgot_password_description">Masukan alamat email yang kamu gunakan untuk mendaftarkan akun Habitica-mu.</string>
+    <string name="forgot_password_description">Masukan username atau alamat email yang kamu gunakan untuk mendaftarkan akun Habitica-mu.</string>
     <string name="forgot_password_confirmation">Jika kami punya data email-mu, instruksi untuk mengatur kata sandi baru telah dikirim ke email-mu.</string>
     <string name="ok">OK</string>
     <string name="profile">Profil</string>
@@ -641,16 +609,13 @@
     <string name="subscribe_listitem5_description">Temukan lebih banyak item di Habitica dengan bonus 2x daily drop cap.</string>
     <string name="subscribe_listitem3_description_new">Berlangganan sekarang untuk mendapatkan %s dan item baru lainnya setiap bulan!</string>
     <string name="subscribe_listitem5">Melipatgandakan Barang</string>
-    <string name="gold_capitalized">Emas</string>
     <string name="create_account_short">membuat akun</string>
     <string name="login_incentive_short_count">Checkin yang ke-%d</string>
     <string name="login_incentive_short">Masuk ke Habitica secara teratur</string>
     <string name="party_invite_short">Mengundang Teman</string>
     <string name="login_incentive_count">Terbuka setelah mengecek Habitica %d kali.</string>
-    <string name="warrior_description">Warrior memberikan pukulan kritikal lebih banyak dan memiliki daya rusak yang besar terhadap Boss. Bermainlah sebagai Warrior jika kamu ingin mengalahkan monster dengan mudah! Warrior memiliki nilai plus dari stat Kekuatan yang tinggi.</string>
-    <string name="reset_account_description">PERINGATAN! Melakukan hal ini akan me-reset banyak bagian dari akunmu. Melakukan ini sangat tidak disarankan, tapi beberapa orang berpikir ini bagus saat di awal-awal setelah bermain di situs dalam waktu sebentar.
-\n
-\nKamu akan kehilangan seluruh levelmu, emas, dan poin experience. Semua tugasmu (kecuali yang berasal dari tantangan) akan dihapus permanen dan kamu akan kehilangan seluruh data historisnya. Kamu akan kehilangan seluruh perlengkapanmu tapi kamu masih dapat membelinya kembali, termasuk seluruh perlengkapan edisi terbatas atau item Misteri berlangganan yang telah kamu miliki (kamu akan membutuhkan kelas yang sesuai untuk membeli perlengkapan spesifik-kelas). Kamu masih akan menyimpan kelasmu saat ini dan peliharaan juga tunggangan. Kamu mungkin akan membutuhkan Batu Kelahiran Kembali, yang mana adalah pilihan yang jauh lebih aman dan tetap menyimpan seluruh perlengkapan dan tugasmu.</string>
+    <string name="warrior_description">Prajurit memberikan pukulan kritikal lebih banyak dan daya rusak yang besar terhadap Boss. Bermainlah sebagai Prajurit jika kamu ingin mengalahkan monster dengan mudah! Prajurit memiliki nilai plus dari stat Kekuatan yang tinggi.</string>
+    <string name="reset_account_description">Kamu akan kehilangan seluruh level, Koin Emas, dan poin pengalamanmu. Semua tugasmu dan data riwayatnya akan terhapus (tugas dari Tantangan tetap tersimpan). Kamu akan kehilangan seluruh perlengkapanmu, termasuk perlengkapan edisi terbatas dan perlengkapan berlangganan, tapi kamu masih dapat membelinya kembali (kamu perlu berada di pekerjaan yang sesuai untuk membeli perlengkapan spesifik untuk suatu perlengkapan). Kamu akan tetap memiliki pekerjaanmu saat ini, peliharaan, serta tungganganmu. Untuk konfirmasi, ketik RESET di kolom di bawah ini.</string>
     <string name="available_for">Tersedia untuk %s</string>
     <string name="reloaded_content">Memuat kembali Isi</string>
     <string name="rejoin_party">Kamu tidak dapat kembali bergabung dengan party ini kecuali diundang.</string>
@@ -688,7 +653,7 @@
     <string name="join_party_description">Berikan anggota Party nama pengguna di bawah dan mereka akan mengirimkanmu undangan</string>
     <string name="tiers_descriptions">Nama pengguna yang diwarnai yang kamu lihat memperlihatkan tingkatan kontributor orang tersebut. Semakin tinggi tingkatannya, semakin banyak kontribusi yang dilakukan terhadap habitica melalui seni, koding, komunitas, dan lainnya!</string>
     <string name="insufficientGoldTitle">Emas tidak mencukupi</string>
-    <string name="delete_oauth_account_description">Akun yang terhapus bersifat permanen dan tidak dapat dipulihkan. Permata tidak dapat dikembalikan. Kalau kamu tetap ingin menghapusnya, ketik DELETE dibawah.</string>
+    <string name="delete_oauth_account_description">Ini akan menghapus akunmu selamanya dan tidak akan pernah bisa dikembalikan! Permata yang tersimpan atau dibelanjakan tidak akan dikembalikan. Jika kamu benar-benar yakin, ketik DELETE ke kotak teks berikut ini.</string>
     <string name="daily_tip_3">Kamu dapat menjadwalkan pengingat untuk Harian tertentu juga.</string>
     <string name="confirm_username_description">Mengonfirmasi nama penggunamu akan memperbolehkan orang lain untuk mengundang, mentions dan saling bertukar pesan.Kamu dapat mengubah nama penggunamu melalui Pengaturan kapan saja.</string>
     <string name="usernamePromptDisclaimer">Nama pengguna harus sesuai dengan <a href="https://habitica.com/static/terms">Syarat Layanan</a> dan <a href="https://habitica.com/static/community-guidelines">Pedoman Komunitas</a>. Jika kamu sebelumnya belum membuat nama masuk, nama penggunamu akan dibuat otomatis.</string>
@@ -712,7 +677,7 @@
     <string name="setup_task_join_habitica">Bergabung dengan Habitica (Centang aku!)</string>
     <string name="verification_pet">Salah satu dari Peliharaan Veteran akan menunggumu setelah kamu selesai mengonfirmasi!</string>
     <string name="enter_recipient_username">Masukkan @ nama pengguna Penerima</string>
-    <string name="usernamePromptWiki">"Jika kamu ingin mempelajari lebih lanjut terkait pergantian ini,  "<a href="https://habitica.fandom.com/wiki/Player_Names">kunjungi wiki kami.</a></string>
+    <string name="usernamePromptWiki">Jika kamu ingin mempelajari lebih lanjut terkait pergantian ini, <a href="https://habitica.fandom.com/wiki/Player_Names">kunjungi wiki kami.</a></string>
     <string name="usernamePromptBody">Nama Masuk adalah nama pengguna unik saat ini yang dapat terlihat disamping layar namamu dan digunakan untuk undangan, mengobrol dengan @mentions, dan bertukar pesan.</string>
     <string name="usernamePromptTitle">Ini waktunya untuk membuat nama penggunamu!</string>
     <string name="two_handed">Kedua Tangan</string>
@@ -726,14 +691,14 @@
     <string name="collapse_notes">Tunjukkan Lebih Sedikit</string>
     <string name="expand_notes">Baca Lebih Lanjut</string>
     <string name="staff">Staf</string>
-    <string name="moderator">Mod</string>
+    <string name="moderator">Moderator</string>
     <string name="daily_tip_9">Jika kamu mengalami kesulitan, cobalah memecah tugasmu menjadi bagian-bagian kecil.</string>
     <string name="daily_tip_8">Kamu dapat mengubah tingkat kesulitan tugasmu agar kamu mendapat hadiah yang lebih banyak untuk tugas yang sulit!</string>
     <string name="daily_tip_7">Cobalah mem-pin item dari Pasar ke Penghargaanmu untuk memotivasimu mendapatkan mereka!</string>
     <string name="daily_tip_6">Cobalah untuk mengatur timer selama 10 menit dan lihatlah seberapa banyak yang kamu bisa kerjakan!</string>
     <string name="daily_tip_5">Tarik nafas dalam-dalam membantumu untuk fokus. Kamu pasti bisa!</string>
     <string name="daily_tip_4">Sesekali evaluasi kembalilah tugasmu agar kamu tetap di jalur yang benar.</string>
-    <string name="support_bug_title">Kami secara konsisten berusaha agar app kami lebih baik berdasarkan feedback dari pemain namun terkadang beberapa bug muncul. . .</string>
+    <string name="support_bug_title">Kami secara konsisten berusaha agar aplikasi kami lebih baik berdasarkan feedback dari pemain namun terkadang beberapa bug muncul…</string>
     <string name="contact_us">Hubungi Kami</string>
     <string name="resubscribe_description">Masih ingin melanjutkan keuntunganmu\? Kamu dapat memulai berlangganan baru sebelum masa berlangganan ini selesai agar keuntunganmu tetap aktif.</string>
     <string name="remove_member_confirm">Apakah kamu yakin ingin mengeluarkan %s dari grup\?</string>
@@ -754,8 +719,6 @@
     <string name="scheduling">Penjadwalan</string>
     <string name="every">Setiap</string>
     <string name="repeats">Berulang</string>
-    <string name="weekly">Mingguan</string>
-    <string name="monthly">Bulanan</string>
     <string name="assigned_stat">Menempatkan Stat</string>
     <string name="password_changed">Kata Sandi telah diperbarui</string>
     <string name="adjust_streak">Mengatur Beruntutan</string>
@@ -774,7 +737,7 @@
     <string name="new_subscriber_item">Kamu memiliki <b>Item Misteri</b> baru</string>
     <string name="unallocated_stats_points">Kamu memiliki <b>%1$s Poin Stat yang belum dialokasikan</b></string>
     <string name="new_msg_party">Party-mu, <b>%1$s</b>, ada postingan baru</string>
-    <string name="new_msg_guild"><b>%1Ss</b> ada postingan baru</string>
+    <string name="new_msg_guild">Ada postingan baru di <b>%1$s</b></string>
     <string name="new_bailey_update">Update Bailey Baru!</string>
     <string name="dismiss_all">Hilangkan Semua</string>
     <string name="no_notifications_text">Peri notifikasi memberimu tepuk tangan yang sangat meriah! Selamat!</string>
@@ -787,7 +750,7 @@
     <string name="gift_one_get_one_detailed_description">Selama promosi ini aktif, kamu akan mendapatkan berlangganan yang sama secara otomatis setelah kamu memberikannya.</string>
     <string name="gift_one_get_one">Berikan satu ,Dapatkan satu!</string>
     <string name="gift_title">Kepada siapa ingin kamu hadiahkan\?</string>
-    <string name="gift_one_get_one_description">Berikan berlangganan dan dapatkan berlangganan secara gratis selama event berlangsung</string>
+    <string name="gift_one_get_one_description">Even beri satu berlangganan gratis satu berlangganan sedang berlangsung!</string>
     <string name="gift_subscription">Hadiahkan Berlangganan</string>
     <string name="subscribe_gift_description">Ingin memberikan keuntungan pada orang lain\?</string>
     <string name="guild_members">Anggota Guild</string>
@@ -802,7 +765,7 @@
     <string name="rejoin_guild">Kamu dapat bergabung kembali dengan guild ini melalui halaman Telusuri Guild</string>
     <string name="leave_guild">Meninggalkan Guild</string>
     <string name="trillion_abbrev">t</string>
-    <string name="report_violation">Melaporkan %s atas pelanggaran:</string>
+    <string name="report_violation">Laporkan pelanggaran</string>
     <string name="mystery_sets">Set Misteri</string>
     <string name="reason_for_report">Alasan pelaporan (opsional)</string>
     <string name="report_message_title">Melaporkan %s atas pelanggaran:</string>
@@ -824,13 +787,12 @@
     <string name="profile_send_message">Mengirimkan
 \nPesan</string>
     <string name="gift_gems">Memberikan Permata</string>
-    <string name="see_other_options">Lihat Opsi lainnya</string>
+    <string name="see_other_options">Lihat opsi lainnya</string>
     <string name="promo_subscription_buy_gems_description">Jadilah Berlangganan untuk membeli Permata dengan emas, mendapatkan item misteri bulanan, meningkatkan drop caps dan masih banyak lagi!</string>
     <string name="promo_subscription_buy_gems_prompt">Butuh Permata\?</string>
     <string name="preference_push_party_activity">Aktifitas Party</string>
     <string name="search_hint">Mencari tugas</string>
     <string name="search">Cari</string>
-    <string name="repeat_daily">Harian</string>
     <string name="complete">Selesai</string>
     <string name="reject">Menolak</string>
     <string name="accept">Menerima</string>
@@ -872,8 +834,6 @@
     <string name="app_theme">Tema App</string>
     <string name="share_challenge_with">Membagikan Tantangan kepada</string>
     <string name="details">Detail</string>
-    <string name="create_task">Membuat %s</string>
-    <string name="new_task">Tugas Baru</string>
     <string name="switch_to_grid_view">Berpindah ke grid view</string>
     <string name="switch_to_list_view">Berpindah ke list view</string>
     <string name="special_achievements">Pencapaian Spesial</string>
@@ -881,14 +841,13 @@
     <string name="basic_achievements">Pencapaian Dasar</string>
     <string name="sidebar_achievements">Pencapaian</string>
     <string name="take_me_back">Bawa aku Kembali</string>
-    <string name="unpin">Unpin</string>
+    <string name="unpin">Hapus pin</string>
     <string name="pin">Pin</string>
-    <string name="levelup_title_10">Sistem Kelas Terbuka</string>
+    <string name="levelup_title_10">Sistem Pekerjaan Terbuka!</string>
     <string name="levelup_detail_10">Pilihlah kelas yang sesuai dengan gaya permainanmu dan buka kemampuan khusus dan baju pelindung untuk membantumu di perjalanan</string>
     <string name="not_now">Tidak sekarang</string>
     <string name="delete_reminder">Menghapus Pengingat</string>
     <string name="delete_task">Menghapus Tugas</string>
-    <string name="are_you_sure">Apakah kamu yakin\?</string>
     <string name="invite_to_party">Mengundang ke Party</string>
     <string name="guild_bank">Bank Guild</string>
     <string name="i_agree_to_follow_the_guidelines">Saya setuju untuk mengikuti pedoman</string>
@@ -967,4 +926,10 @@
     <string name="limited_event">Event terbatas</string>
     <string name="g1g1_info_3_text">Promo ini hanya berlaku jika kamu telah menghadiahkan pada Habitican lain. Jika kamu atau penerima hadiah telah berlangganan, maka hadiah berlangganan akan ditambahkan pada kredit yang hanya akan digunakan setelah masa berlangganan saat ini selesai atau dibatalkan.</string>
     <string name="g1g1_info_3">Batasan</string>
+    <string name="quest_party_required_title">Kamu harus berada di dalam suatu Party sebelum memulai Misi</string>
+    <string name="usernames_party">Party-nya %s</string>
+    <string name="discard">Buang</string>
+    <string name="how_best_habitica">Tidak tahu cara terbaik menggunakan Habitica\?</string>
+    <string name="stats_currency">Stats &amp; Mata Uang</string>
+    <string name="health_points">Poin Health</string>
 </resources>

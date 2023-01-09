@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="tutorial_overview">Itt vagyunk! Kitöltöttem neked néhány feladatot az érdeklődésed alapján. Próbálj meg hozzá adni néhány sajátot. Bármilyen feladatot szerkeszthet a címre kattintva.</string>
+    <string name="tutorial_habits_1">Kezdjünk a Szokásokkal. Ezek lehetnek pozitív Szokások, amelyeken javítani szeretnél, vagy negatív szokások, amelyekről szeretnél leszokni.</string>
+    <string name="tutorial_habits_4">Próbáld ki! A többi feladattípust az alsó navigációs sávon fedezheted fel.</string>
+    <string name="tutorial_dailies_2">Legyen óvatos – ha kihagysz egyet, az avatarod egyik napról a másikra sebzést szenved el. Ezek folyamatos ellenőrzése bőkezű jutalmat hoz!</string>
+</resources>

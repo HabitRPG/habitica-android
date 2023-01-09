@@ -32,33 +32,16 @@
     <string name="preference_push_your_quest_has_begun">Quest của bạn đã Bắt đầu</string>
     <string name="preference_push_invited_to_quest">Đã mời tham gia Quest</string>
     <!--Adding tasks-->
-    <string name="action_edit">Chỉnh sửa</string>
-    <string name="action_cancel">Hủy</string>
-    <string name="login_btn">Đăng nhập</string>
-    <string name="register_btn">Đăng ký</string>
-    <string name="username">Tên tài khoản</string>
-    <string name="email_username">Email hoặc Tên tài khoản</string>
-    <string name="password">Mật khẩu</string>
-    <string name="emailAddress">Địa chỉ email</string>
-    <string name="confirmpassword">Xác nhận mật khẩu</string>
-    <string name="logout">Đăng xuất</string>
-    <string name="logout_description">Thoát tài khoản của bạn</string>
-    <string name="LoginActivityName">Chào Mừng</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Không có kết nối Internet.</string>
     <string name="internal_error_api">Mất kết nối với máy chủ</string>
     <string name="authentication_error_title">Lỗi Ủy quyền</string>
     <string name="authentication_error_body">Sai Tên tài khoản và/hoặc Mật khẩu.</string>
-    <string name="login_validation_error_title">Lỗi xác thực</string>
     <string name="save_changes">Lưu</string>
     <string name="copy">Sao chép</string>
     <string name="notes">Ghi chú</string>
     <string name="difficulty">Độ khó</string>
     <string name="tags">Thẻ/Nhãn</string>
-    <string name="trivial">Không đáng kể</string>
-    <string name="easy">Dễ</string>
-    <string name="medium">Trung bình</string>
-    <string name="hard">Khó</string>
     <string name="start_date">Ngày bắt đầu</string>
     <string name="positive_habit_form">Tích cực ( + )</string>
     <string name="negative_habit_form">Tiêu cực ( - )</string>
@@ -90,10 +73,6 @@
     <string name="party">Party</string>
     <string name="chat">Chat</string>
     <string name="members">Thành viên</string>
-    <string name="habits">Thói Quen</string>
-    <string name="dailies"> Công Việc Hằng Ngày</string>
-    <string name="todos">Việc Cần Làm</string>
-    <string name="rewards">Phần Thưởng</string>
     <string name="yes">Có</string>
     <string name="no">Không</string>
     <string name="quest">Nhiệm vụ</string>
@@ -144,7 +123,6 @@
     <string name="guild">Bang hội</string>
     <string name="leave">Rời</string>
     <string name="join">Tham gia</string>
-    <string name="gems">Đá Quý</string>
     <string name="delete">Xóa</string>
     <string name="name">Tên</string>
     <string name="description">Mô tả</string>
@@ -169,14 +147,12 @@
     <string name="hatched_pet_title">Bạn đã ấp một con %2$s %1$s!</string>
     <!--QR Strings-->
     <!--Login Incentives-->
-    <string name="login_validation_error_fieldsmissing">Bạn phải điền vào tất cả các mục.</string>
     <string name="about_source_code">Mã nguồn</string>
     <string name="about_bugreport">Báo cáo lỗi</string>
     <string name="about_give_us_feedback">Gửi phản hồi cho chúng tôi!</string>
     <string name="about_rate_our_app">Đánh giá ứng dụng</string>
     <string name="about_habitica_open_source">Habitica là phần mềm mã nguồn mở trên Github</string>
     <string name="about_libraries">Thư viện</string>
-    <string name="about_title">Về chúng tôi</string>
     <string name="reminder_title">Nhớ đánh dấu những công việc của bạn nhé</string>
     <string name="faint_penalty_body">Bạn đã mất một Cấp độ, Vàng, và một mảnh Trang bị, nhưng bạn có thể kiếm lại tất cả chúng bằng cách làm việc chăm chỉ! Chúc may mắn - bạn sẽ làm được.</string>
     <string name="onwards">Tiến lên!</string>
@@ -224,7 +200,6 @@
     <string name="rogue">Đạo tặc</string>
     <string name="warrior">Chiến binh</string>
     <string name="user_level_with_class">Cấp %1$d %2$s</string>
-    <string name="user_level">Cấp %d</string>
     <string name="empty_items">Bạn không có bất kì %s nào</string>
     <string name="inn_description">Cần nghỉ ngơi\? Vào Quán trọ của Daniel để dừng một số cơ chế khó của Habitica:
 \n
@@ -329,7 +304,6 @@
     <string name="confirm_delete_tag_title">Bạn chắc chứ\?</string>
     <string name="edit_tag_btn_edit">Chỉnh sửa</string>
     <string name="chat_message_copied">Tin nhắn đã được sao chép tới Bảng dán</string>
-    <string name="gold_plural">vàng</string>
     <string name="gem_purchase_listitem4">Khả năng thay đổi chức nghiệp của bạn trước cấp độ 100</string>
     <string name="gem_purchase_listitem3">Những Nhiệm vụ thưởng cho bạn trứng thú cưng</string>
     <string name="gem_purchase_listitem2">Hình nền tuyệt vời</string>
@@ -416,10 +390,6 @@
     <string name="not_part_of_a_challenge">Bây giờ bạn chưa tham gia Thử thách nào cả!</string>
     <string name="challenge">Thử thách</string>
     <string name="official">Chính thức</string>
-    <string name="todo">Việc cần làm</string>
-    <string name="reward">Phần thưởng</string>
-    <string name="habit">Thói quen</string>
-    <string name="daily">Việc hằng ngày</string>
     <string name="gray">Chưa cần làm</string>
     <string name="strong">Mạnh</string>
     <string name="weak">Yếu</string>
@@ -438,7 +408,6 @@
     <string name="register_btn_google">Đăng ký bằng Google</string>
     <string name="register_btn_fb">Đăng ký bằng Facebook</string>
     <string name="login_btn_apple">Đăng nhập bằng Apple</string>
-    <string name="login_btn_google">Đăng nhập bằng Google</string>
     <string name="login_btn_fb">Đăng nhập bằng Facebook</string>
     <string name="not_owned">Không sở hữu</string>
     <string name="owned">Đã sở hữu</string>
@@ -572,7 +541,6 @@
     <string name="saving">Đang lưu</string>
     <string name="fix_character_values">Sửa giá trị Nhân vật</string>
     <string name="fix_character_description">Nếu bạn thấy một lỗi hoặc tạo một sai lầm mà thay đổi nhân vật của bạn không công bằng, bạn có thể sửa những giá trị đó bằng tay ở đây.</string>
-    <string name="stats">Chỉ số</string>
     <string name="streak_label">Chuỗi 21 ngày liên tục</string>
     <string name="level">Cấp độ</string>
     <string name="come_back_soon">Quay trở lại sớm nhé!</string>
@@ -699,8 +667,6 @@
     <string name="scheduling">Lên lịch</string>
     <string name="every">Mỗi</string>
     <string name="repeats">Lặp lại</string>
-    <string name="weekly">Hàng tuần</string>
-    <string name="monthly">Hàng tháng</string>
     <string name="assigned_stat">Chỉ số đã được phân bổ</string>
     <string name="password_changed">Mật khẩu đã thay đổi thành công</string>
     <string name="adjust_streak">Điều chỉnh Chuỗi liên tục</string>
@@ -789,8 +755,6 @@
     <string name="app_theme">Chủ đề Ứng dụng</string>
     <string name="share_challenge_with">Chia sẻ Thử thách với</string>
     <string name="details">Chi tiết</string>
-    <string name="create_task">Tạo %s</string>
-    <string name="new_task">Công việc mới</string>
     <string name="confirm_deletion">Xác nhận sự xóa bỏ</string>
     <string name="switch_to_grid_view">Chuyển sang dạng ô</string>
     <string name="switch_to_list_view">Chuyển sang dạng danh sách</string>
@@ -805,7 +769,6 @@
     <string name="levelup_detail_10">Chọn Chức nghiệp phù hợp với phong cách chơi của bạn và mở khóa những Kĩ năng đặc biệt và trang bị giúp bạn trên hành trình của mình</string>
     <string name="not_now">Không phải bây giờ</string>
     <string name="delete_task">Xóa Công việc</string>
-    <string name="are_you_sure">Bạn chắc chứ\?</string>
     <string name="invite_to_party">Mời vào Tổ đội</string>
     <string name="guild_bank">Quỹ Bang hội</string>
     <string name="guild_members">Thành viên Bang hội</string>
@@ -905,7 +868,6 @@
     <string name="preference_push_party_activity">Hoạt động Tổ đội</string>
     <string name="search_hint">Tìm kiếm công việc</string>
     <string name="search">Tìm kiếm</string>
-    <string name="repeat_daily">Việc hằng ngày</string>
     <string name="complete">Hoàn thành</string>
     <string name="reject">Từ chối</string>
     <string name="accept">Đồng ý</string>
@@ -932,7 +894,6 @@
     <string name="level_unabbreviated">Cấp độ %d</string>
     <string name="delete_reminder">Xóa Nhắc nhở</string>
     <string name="number_responded">%1$d/%2$d Phản hồi</string>
-    <string name="gold_capitalized">Vàng</string>
     <string name="user_level_with_class_unabbreviated">Cấp độ %1$d %2$s</string>
     <string name="not_selected">Không chọn</string>
     <string name="selected">Đã chọn</string>
@@ -979,7 +940,6 @@
     <string name="hourglasses_description">Đồng hồ Cát bí ẩn là một dạng tiền tệ vô cùng hiếm mà bạn chỉ có thể nhận được cho việc đăng ký Habitica ba tháng liền hoặc nhiều hơn. Chúng được dùng trong cửa hàng của Nhà du hành thời gian để mua những bộ trang bị, thú cưng, thú cưỡi, hình nền động, hay thậm chí là những Nhiệm vụ đặc biệt.
 \n
 \nBạn có thể nhận được tối đa bốn Đồng hồ Cát bí ẩn mỗi năm. Thời gian chúng được thưởng dựa vào lịch làm mới lại Gói đăng ký của bạn. Chúng được gửi vào ngày đầu tiên của tháng mới sau lần thanh toán Gói đăng ký cuối cùng mà bạn đủ điều kiện để nhận một cái. Xem thêm trang [Gói đăng ký] để thêm nhiều thông tin chi tiết.</string>
-    <string name="mystic_hourglasses">Đồng hồ cát bí ẩn</string>
     <string name="subscriber_currency">Đơn vị tiền tệ của Người đăng ký</string>
     <string name="game_mechanics">Cơ chế trò chơi</string>
     <string name="common_questions">Câu hỏi thường gặp</string>
@@ -1067,8 +1027,6 @@
     <string name="purchase_equipment_title">Mua Trang bị</string>
     <string name="feedPet_title">Cho ăn một thú cưng</string>
     <string name="hatch_pet_title">Ấp một thú cưng mới</string>
-    <string name="complete_task_title">Hoàn thành một Công việc</string>
-    <string name="create_task_title">Tạo một Công việc</string>
     <string name="percent_completed">Hoàn thành %d%%</string>
     <string name="lets_get_started">Bắt đầu nào</string>
     <string name="your_progress">Tiến trình của bạn</string>
