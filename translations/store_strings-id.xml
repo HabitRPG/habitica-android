@@ -1,9 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="store_title">Buat Tugasmu Menjadi Game</string>
-  <string name="store_short_description">Perlakukan hidupmu seperti permainan untuk tetap termotivasi dan terorganisir!</string>
-  <string name="store_description">Perlakukan hidupmu seperti permainan agar tetap termotivasi dan terorganisir! Habitica membantumu untuk bersenang-senang dalam mencapai tujuan.
-Masukkan Kebiasaan, sasaran Harian dan To Do kamu, lalu buat avatarmu sendiri. Centang tugas-tugas untuk naik level dan buka fitur-fitur seperti baju, peliharaan, kemampuan, dan bahkan misi! Bertarung dengan monster bersama teman-teman supaya saling menyemangati, dan gunakan koin emas yang kamu punya untuk membeli hadiah di dalam game, seperti perlengkapan perang, atau hadiah yang kamu buat sendiri, misalnya menonton satu episode siaran TV kesukaanmu. Fleksibel, sosial, menyenangkan, Habitica sempurna untuk memotivasimu mencapai apapun.
-Kalau kamu punya pertanyaan maupun saran, silakan kirim ke mobile@habitica.com! Dan jika kamu menyukai aplikasi kami, kami akan sangat menghargai ulasanmu.
-</string>
+    <string name="store_title">Buat Tugasmu Menjadi Game</string>
+    <string name="store_short_description">Buat hidupmu menjadi sebuah permainan agar tetap termotivasi dan terorganisir!</string>
+    <string name="store_description">Perlakukan hidupmu seperti permainan agar tetap termotivasi dan terorganisir! Habitica membantumu untuk bersenang-senang dalam mencapai tujuan. Masukkan Kebiasaan, sasaran Harian dan To Do kamu, lalu buat avatarmu sendiri. Centang tugas-tugas untuk naik level dan buka fitur-fitur seperti perlengkapan, peliharaan, kemampuan, dan bahkan misi! Bertarung dengan monster bersama teman-teman supaya saling menyemangati, dan gunakan koin emas yang kamu punya untuk membeli hadiah di dalam game, seperti perlengkapan perang, atau hadiah yang kamu buat sendiri, misalnya menonton satu episode siaran TV kesukaanmu. Fleksibel, sosial, menyenangkan, Habitica sempurna untuk memotivasimu mencapai apapun. Kalau kamu punya pertanyaan maupun saran, silakan kirim ke mobile@habitica.com! Dan jika kamu menyukai aplikasi ini, kami akan sangat menghargai ulasanmu.</string>
 </resources>

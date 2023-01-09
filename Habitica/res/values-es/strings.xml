@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">Tu misión ha comenzado</string>
     <string name="preference_push_invited_to_quest">Has sido invitado a una misión</string>
     <!--Adding tasks-->
-    <string name="action_edit">Editar</string>
-    <string name="action_cancel">Cancelar</string>
-    <string name="login_btn">Iniciar sesión</string>
-    <string name="register_btn">Registrarse</string>
-    <string name="username">Nombre de usuario</string>
-    <string name="email_username">Correo electrónico o nombre de usuario</string>
-    <string name="password">Contraseña</string>
-    <string name="emailAddress">Correo electrónico</string>
-    <string name="confirmpassword">Confirma la contraseña</string>
-    <string name="logout">Cerrar sesión</string>
-    <string name="logout_description">Cierra la sesión de tu cuenta</string>
-    <string name="LoginActivityName">Te damos la bienvenida</string>
-    <string name="about_title">Información</string>
     <string name="about_libraries">Bibliotecas</string>
     <string name="about_habitica_open_source">Habitica está disponible como software de código abierto en Github</string>
     <string name="about_rate_our_app">Califica nuestra aplicación</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">Se ha perdido la conexión con el servidor</string>
     <string name="authentication_error_title">Error de autenticación</string>
-    <string name="login_validation_error_title">Error de validación</string>
-    <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
     <string name="save_changes">Guardar</string>
     <string name="copy">Copiar</string>
     <string name="notes">Notas</string>
     <string name="difficulty">Dificultad</string>
     <string name="tags">Etiquetas</string>
-    <string name="trivial">Trivial</string>
-    <string name="easy">Fácil</string>
-    <string name="medium">Intermedia</string>
-    <string name="hard">Difícil</string>
     <string name="start_date">Fecha de inicio</string>
     <string name="positive_habit_form">Positivo ( + )</string>
     <string name="negative_habit_form">Negativo ( - )</string>
@@ -104,10 +85,6 @@
     <string name="party">Equipo</string>
     <string name="chat">Conversación</string>
     <string name="members">Miembros</string>
-    <string name="habits">Hábitos</string>
-    <string name="dailies">Tareas diarias</string>
-    <string name="todos">Tareas pendientes</string>
-    <string name="rewards">Recompensas</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="quest">Misión</string>
@@ -185,7 +162,6 @@
     <string name="guild">Gremio</string>
     <string name="leave">Abandonar</string>
     <string name="join">Unirse</string>
-    <string name="gems">Gemas</string>
     <string name="delete">Borrar</string>
     <string name="name">Nombre</string>
     <string name="description">Descripción</string>
@@ -221,8 +197,6 @@
     <string name="quests">Misiones</string>
     <string name="pets">Mascotas</string>
     <string name="mounts">Monturas</string>
-    <string name="armoireEquipment">¡Genial! Has encontrado %s en el Armario</string>
-    <string name="armoireFood">Rebuscando en el Armario, encuentras esto: %1$s %2$s. ¿Qué hace aquí?</string>
     <string name="armoireExp">Te peleas con el Armario y ganas experiencia. ¡Chúpate esa!</string>
     <string name="sell">Vender (%d de oro)</string>
     <string name="hatch_with_potion">Eclosionar con poción</string>
@@ -246,7 +220,6 @@
 \n • Los jefes no harán daño por tus Tareas Diarias perdidas
 \n • El daño que inflija el jefe o los objetos de una misión de recolección permanecerán pendientes hasta que salgas</string>
     <string name="empty_items">No tienes %s</string>
-    <string name="user_level">Nivel %d</string>
     <string name="user_level_with_class">Nivel %1$d %2$s</string>
     <string name="warrior">Guerrero</string>
     <string name="rogue">Pícaro</string>
@@ -292,7 +265,6 @@
     <string name="login_incentive">Desbloquear iniciando sesión en Habitica regularmente</string>
     <string name="create_account">Desbloquear creando una cuenta</string>
     <string name="successful_purchase">Has comprado %1$s</string>
-    <string name="gold_plural">oro</string>
     <string name="chat_message_copied">Mensaje copiado al portapapeles</string>
     <string name="edit_tag_btn_edit">Editar</string>
     <string name="confirm_delete_tag_title">¿Seguro?</string>
@@ -314,7 +286,7 @@
     <string name="google_services_missing">No pudieron encontrarse los servidores de Google Play.</string>
     <string name="gem_purchase_toolbartitle">Comprar</string>
     <string name="gem_purchase_title">Comprar gemas apoya a los desarrolladores y ayuda a mantener Habitica en funcionamiento</string>
-    <string name="gem_purchase_subtitle">Las gemas te permiten comprar divertidos extras para tu cuenta, incluyendo:</string>
+    <string name="gem_purchase_subtitle">Las gemas te permiten comprar divertidos extras para tu cuenta</string>
     <string name="gem_purchase_listitem1">Disfraces geniales para tu personaje</string>
     <string name="gem_purchase_listitem2">Fondos increíbles</string>
     <string name="gem_purchase_listitem3">Misiones que te recompensan con huevos de mascota</string>
@@ -376,10 +348,6 @@
     <string name="remove_tasks">Eliminar</string>
     <string name="keep_tasks">Mantener</string>
     <string name="my_challenges">Mis Desafíos</string>
-    <string name="daily">Tarea diaria</string>
-    <string name="habit">Hábito</string>
-    <string name="reward">Recompensa</string>
-    <string name="todo">Tarea Pendiente</string>
     <string name="official">Oficial</string>
     <string name="challenge">Desafío</string>
     <string name="not_part_of_a_challenge">¡Ahora mismo no formas parte de ningún Desafío!</string>
@@ -403,7 +371,6 @@
     <string name="owned">Poseído</string>
     <string name="not_owned">No poseído</string>
     <string name="login_btn_fb">Iniciar sesión con Facebook</string>
-    <string name="login_btn_google">Iniciar sesión con Google</string>
     <string name="action_back">Atrás</string>
     <string name="welcome_text">Oh, debes ser nuevo aquí. Soy Justin, seré tu guía en Habitica.\n\nPara empezar, ¿cómo debemos llamarte? Siéntete libre de cambiar el nombre que he elegido. Cuando estés listo, ¡Vamos a crear tu avatar!</string>
     <string name="randomize">Aleatorizar</string>
@@ -510,7 +477,6 @@
     <string name="come_back_soon">¡Vuelve pronto!</string>
     <string name="level">Nivel</string>
     <string name="streak_label">Racha de 21 Días</string>
-    <string name="stats">Atributos</string>
     <string name="fix_character_description">Si has encontrado un error o has cometido un error que cambió a tu personaje injustamente, puedes corregir manualmente esos valores aquí.</string>
     <string name="fix_character_values">Arreglar Valores del Personaje</string>
     <string name="saving">Guardando</string>
@@ -715,7 +681,6 @@
     <string name="subscribe_listitem5_description">Encuentra aun más objetos en Habitica con un bonus 2x de límite de botín diario.</string>
     <string name="subscribe_listitem3_description_new">¡Suscríbete ahora para obtener este %s y recibir objetos nuevos cada mes!</string>
     <string name="subscribe_listitem5">Duplicar el botín</string>
-    <string name="gold_capitalized">Oro</string>
     <string name="create_account_short">Crear una cuenta</string>
     <string name="login_incentive_short_count">%d conexiones</string>
     <string name="login_incentive_short">Conéctate regularmente a Habitica</string>
@@ -750,7 +715,6 @@
     <string name="promo_subscription_buy_gems_prompt">¿Necesitas gemas\?</string>
     <string name="search_hint">Buscar tareas</string>
     <string name="search">Buscar</string>
-    <string name="repeat_daily">Diario</string>
     <string name="complete">Completo</string>
     <string name="reject">Rechazar</string>
     <string name="accept">Aceptar</string>
@@ -787,7 +751,6 @@
     <string name="app_theme">Tema de la app</string>
     <string name="share_challenge_with">Compartir desafío con</string>
     <string name="details">Detalles</string>
-    <string name="new_task">Nueva tarea</string>
     <string name="confirm_deletion">Confirmar eliminación</string>
     <string name="switch_to_grid_view">Cambiar a vista de cuadrícula</string>
     <string name="switch_to_list_view">Cambiar a vista de lista</string>
@@ -799,7 +762,6 @@
     <string name="levelup_detail_10">Elige una clase que se ajuste a tu estilo de juego y desbloquea habilidades especiales y equipamiento para ayudar con tu viaje</string>
     <string name="delete_reminder">Eliminar recordatorio</string>
     <string name="delete_task">Eliminar tarea</string>
-    <string name="are_you_sure">¿Estás seguro\?</string>
     <string name="invite_to_party">Invitar al equipo</string>
     <string name="guild_bank">Banco del gremio</string>
     <string name="guild_members">Miembros del gremio</string>
@@ -815,7 +777,6 @@
     <string name="guild_description">Descripción del gremio</string>
     <string name="mystery_sets">Conjuntos misteriosos</string>
     <string name="new_reminder">Nuevo recordatorio</string>
-    <string name="weekly">Semanal</string>
     <string name="password_changed">Contraseña cambiada satisfactoriamente</string>
     <string name="new_password_repeat">Confirmar nueva contraseña</string>
     <string name="new_password">Nueva contraseña</string>
@@ -836,7 +797,6 @@
     <string name="x_months">%d Meses</string>
     <string name="inbox_messages_title_nosender">Tienes %d mensajes nuevos</string>
     <string name="inbox_messages_title">Recibiste %1$d mensajes de %2$s</string>
-    <string name="create_task">Crear %s</string>
     <string name="take_me_back">Quiero regresar</string>
     <string name="not_now">Ahora no</string>
     <string name="setup_task_habit_1">Añade una tarea a Habitica</string>
@@ -851,7 +811,6 @@
     <string name="days">Días</string>
     <string name="every">Cada</string>
     <string name="repeats">Repite</string>
-    <string name="monthly">Mensual</string>
     <string name="adjust_streak">Ajustar racha</string>
     <string name="gift_confirmation_text_sub">Regalaste una suscripción de Habitica de %s-meses a %s.</string>
     <string name="gift_confirmation_text_sub_g1g1">Regalaste una suscripción de %s-meses a %s y se aplicó la misma suscripción a tu cuenta por nuestra promoción de Regala Una Llévate Una Gratis!</string>
@@ -1056,16 +1015,13 @@
     <string name="purchase_amount_error">No puedes comprar esa cantidad.</string>
     <string name="read_more">Leer más</string>
     <string name="buy_all">Comprar todo</string>
-    <string name="create_task_title">Crea una tarea</string>
     <string name="common_questions">Preguntas frecuentes</string>
     <string name="habitica_questions">Preguntas de Habitica</string>
     <string name="party_challenges">Estás participando en un desafío de equipo</string>
     <string name="month_reminder_title">¿Necesitas un cambio de rutina\?</string>
     <string name="manual_sync_restart">Sincronización manual o reinicio</string>
-    <string name="mystic_hourglasses">Relojes de arena místicos</string>
     <string name="leave_party_challenges_confirmation">¿Quieres seguir participando en el desafío cuando dejes el equipo\?</string>
     <string name="wacky">Chiflado</string>
-    <string name="complete_task_title">Completa una tarea</string>
     <string name="your_progress">Tu progreso</string>
     <string name="guild_challenges">Estás participando en un desafío del gremio</string>
     <string name="hatch_pet_title">Eclosiona una nueva mascota</string>
@@ -1138,7 +1094,6 @@
     <string name="something_new">Nuevo</string>
     <string name="survey_menu_description">¡Rellena este formulario de 5 minutos para ayudarnos a crecer y obtén por ello un logro!</string>
     <string name="three_months_one_time">Suscripción única de 3 meses</string>
-    <string name="retry">Reintentar</string>
     <string name="onboardingCompleteDescription">Si quieres conseguir más, echa un ojo a los logros disponibles y ¡comienza a coleccionarlos!</string>
     <string name="action_end_challenge">Terminar desafío</string>
     <string name="submit_feedback">Enviar comentarios</string>
@@ -1172,10 +1127,19 @@
     <string name="hatch">Eclosiona</string>
     <string name="invitation_title_no_leader">Has sido invitado a unirte a un equipo</string>
     <string name="survey_title">Formulario para usuarios de Habitica</string>
-    <string name="failed">Error al cargar</string>
     <string name="create_task_description">Añade una tarea de algo que te gustaría conseguir hacer esta semana</string>
     <string name="fedPetDescription">Cada mascota tiene una comida favorita específica. ¡Experimenta para descubrir cuál es la que hace crecer más rápido a tu mascota!</string>
     <string name="login_disclaimer">Al registrarte, estás confirmando que has leído y estás de acuerdo con las <a href="https://habitica.com/static/terms">términos de servicio</a> y la <a href="https://habitica.com/static/privacy">política de privacidad.</a></string>
     <string name="empty_discover_description">¡Dirígete al submenú \"Gremios &gt; Descubre Gremios\" para encontrar uno del que formar parte!</string>
     <string name="x_remaining">%s restante</string>
+    <string name="discard_changes_to_task_message">¿Está seguro de descartar los cambios de esta tarea\?</string>
+    <string name="subscription_confirmation">Ahora estás suscrito por 1 mes</string>
+    <string name="discard">Descartar</string>
+    <string name="class_confirmation_price">¿Quieres cambaria tu clase de %s por %d gemas\?</string>
+    <string name="use_item">Usa el objeto en un miebro del grupo</string>&gt;
+    <string name="unsaved_changes">Cambios sin guardar</string>
+    <string name="gift_confirmation_text_gems_new">Usted envió %s %s gemas.</string>
+    <string name="subscription_confirmation_multiple">Ahora estás suscrito por %s meses</string>
+    <string name="gem_purchase_confirmation">Ganaste %s gemas.</string>
+    <string name="usernames_party">Equipo de %s</string>
 </resources>

@@ -1,9 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="store_title">Razigraj svoje zadatke</string>
-  <string name="store_short_description">Pretvori život u igru da ostanše motiviran/a i organiziran/a!</string>
-  <string name="store_description">Pretvori život u igru da ostanše motiviran/a i organiziran/a! Habitica ti jednostavno omogućuje da se zabaviš i istovremeno ostvaruješ svoje ciljeve.
-Unesi svoje Navike, svoje Svakodnevne ciljeve i svoj popis Zadataka i potom stvori svoj osobni avatar. Križaj zadatke kako bi unaprijedio/la svog avatara i otključao/la mogućnosti poput oklopa, ljubimaca, vještina, pa čak i pustolovina! Bori se protiv čudovišta s prijateljima kako biste ostali odgovorni i troši svoje zlatnike na nagrade u igri poput opreme, ili pak na prilagođene nagrade poput gledanja epizode svoje omiljene TV serije. Fleksibilna, društvena i zabavna, Habitica je savršen način da se motiviraš za postizanje bilo čega.
-Ako imaš ikakva pitanja, slobodno nam se javi na mobile@habitica.com! I ako uživaš u našoj aplikaciji, stvarno bi znam značilo ako bi nam ostavio/la ocjenu.
-</string>
+    <string name="store_title">Razigraj svoje zadatke</string>
+    <string name="store_short_description">Pretvori život u igru da ostaneš motiviran/a i organiziran/a!</string>
+    <string name="store_description">Pretvori život u igru da ostaneš motiviran/a i organiziran/a! Habitica ti jednostavno omogućuje da se zabaviš i istovremeno ostvaruješ svoje ciljeve. Unesi svoje Navike, svoje Svakodnevne ciljeve i svoj popis Zadataka, a potom stvori svoj osobni avatar. Križaj zadatke kako bi unaprijedio/la svog avatara i otključao/la mogućnosti poput oklopa, ljubimaca, vještina, pa čak i pustolovina! Bori se protiv čudovišta s prijateljima kako biste ostali odgovorni i troši svoje zlatnike na nagrade u igri poput opreme, ili pak na prilagođene nagrade poput gledanja epizode svoje omiljene TV serije. Fleksibilna, društvena i zabavna, Habitica je savršen način da se motiviraš za postizanje bilo čega. Ako imaš ikakva pitanja, slobodno nam se javi na mobile@habitica.com! I ako uživaš u našoj aplikaciji, stvarno bi znam značilo ako bi nam ostavio/la ocjenu.</string>
 </resources>

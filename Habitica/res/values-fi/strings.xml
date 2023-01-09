@@ -29,34 +29,16 @@
     <string name="preference_push_your_quest_has_begun">Seikkailusi on alkanut</string>
     <string name="preference_push_invited_to_quest">Kutsuttu seikkailulle</string>
     <!--Adding tasks-->
-    <string name="action_edit">Muokkaa</string>
-    <string name="action_cancel">Peruuta</string>
-    <string name="login_btn">Kirjaudu</string>
-    <string name="register_btn">Rekisteröidy</string>
-    <string name="username">Käyttäjänimi</string>
-    <string name="email_username">Sähköposti tai käyttäjänimi</string>
-    <string name="password">Salasana</string>
-    <string name="emailAddress">Sähköpostiosoite</string>
-    <string name="confirmpassword">Vahvista salasana</string>
-    <string name="logout">Kirjaudu ulos</string>
-    <string name="logout_description">Kirjaudu ulos tililtäsi</string>
-    <string name="LoginActivityName">Tervetuloa</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Internetyhteytesi ei toimi.</string>
     <string name="internal_error_api">Yhteys palvelimeen katkennut</string>
     <string name="authentication_error_title">Tunnistautumisvirhe</string>
     <string name="authentication_error_body">Käyttäjänimesi ja/tai salasanasi oli väärin.</string>
-    <string name="login_validation_error_title">Validointivirhe</string>
-    <string name="login_validation_error_fieldsmissing">Sinun tulee täyttää kaikki kohdat.</string>
     <string name="save_changes">Tallenna</string>
     <string name="copy">Kopioi</string>
     <string name="notes">Huomiot</string>
     <string name="difficulty">Vaikeustaso</string>
     <string name="tags">Tägit</string>
-    <string name="trivial">Triviaali</string>
-    <string name="easy">Helppo</string>
-    <string name="medium">Keskivaikea</string>
-    <string name="hard">Vaikea</string>
     <string name="start_date">Alkamispäivämäärä</string>
     <string name="positive_habit_form">Positiivinen</string>
     <string name="negative_habit_form">Negatiivinen</string>
@@ -82,9 +64,6 @@
     <string name="party">Ryhmä</string>
     <string name="chat">Chat</string>
     <string name="members">Osallistujat</string>
-    <string name="habits">Tavat</string>
-    <string name="dailies">Päivittäiset tehtävät</string>
-    <string name="rewards">Palkinnot</string>
     <string name="yes">Kyllä</string>
     <string name="no">Ei</string>
     <string name="quest">Seikkailu</string>
@@ -145,7 +124,6 @@
     <string name="guild">Kilta</string>
     <string name="leave">Poistu</string>
     <string name="join">Liity</string>
-    <string name="gems">Jalokivet</string>
     <string name="delete">Poista</string>
     <string name="name">Nimi</string>
     <string name="description">Kuvaus</string>
@@ -193,7 +171,6 @@
     <string name="confirm">Vahvista</string>
     <string name="market">Kauppa</string>
     <string name="timeTravelers">Aikamatkailijat</string>
-    <string name="gold_plural">kulta</string>
     <string name="chat_message_copied">Kopioitu leikepöydälle</string>
     <!--QR Strings-->
     <string name="support_habitica">Tue Habitica-palvelua</string>
@@ -203,7 +180,6 @@
     <!--Login Incentives-->
     <string name="ago_1Minute">1m sitten</string>
     <string name="onwards">Eteenpäin!</string>
-    <string name="about_title">Tietoa</string>
     <string name="reward_dialog_buy">Osta</string>
     <string name="on">Päällä</string>
     <string name="off">Pois</string>

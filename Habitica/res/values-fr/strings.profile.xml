@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="profile_pets_and_mounts">Familiers &amp; montures</string>
     <string name="profile_pets_found">Familiers trouvés</string>
@@ -10,5 +10,4 @@
     <string name="profile_class_bonus">Bonus de classe :</string>
     <string name="profile_allocated">Points alloués :</string>
     <string name="profile_achievements">Succès</string>
-
 </resources>
