@@ -197,7 +197,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             val alert = context?.let { HabiticaAlertDialog(it) }
             alert?.setTitle(R.string.push_notification_system_settings_title)
             alert?.setMessage(R.string.push_notification_system_settings_description)
-            alert?.addButton(R.string.settings, true, false) { _, _ ->
+            alert?.addButton(R.string.open_settings, true, false) { _, _ ->
                 val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, context?.applicationContext?.packageName)

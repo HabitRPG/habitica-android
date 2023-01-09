@@ -111,29 +111,6 @@ class TaskFormActivity : BaseActivity() {
 
     private var challenge: Challenge? = null
 
-    private val notificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) {
-            pushNotificationManager.addPushDeviceUsingStoredToken()
-        } else {
-            //If user denies notification settings originally - they must manually enable it through notification settings.
-            val alert = HabiticaAlertDialog(this)
-            alert.setTitle(R.string.push_notification_system_settings_title)
-            alert.setMessage(R.string.push_notification_system_settings_description)
-            alert.addButton(R.string.settings, true, false) { _, _ ->
-                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, applicationContext?.packageName)
-                startActivity(notifSettingIntent)
-            }
-            alert.addButton(R.string.cancel, false) { _, _ ->
-                alert.dismiss()
-            }
-            alert.show()
-        }
-    }
-
     private var isCreating = true
     private var isChallengeTask = false
     private var usesTaskAttributeStats = false
@@ -765,9 +742,6 @@ class TaskFormActivity : BaseActivity() {
     private fun checkIfShowNotifLayout() {
         if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
             binding.notificationsDisabledLayout.visibility = View.VISIBLE
-            binding.enableNotifsButton.setOnClickListener {
-                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-            }
         } else {
             binding.notificationsDisabledLayout.visibility = View.GONE
         }
