@@ -101,8 +101,6 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             val disabled = if (isHatching) {
                     !this.canHatch
                 } else false
-
-
             val imageName = if (item != null) {
                 getImageName(item = item) }
             else {
@@ -123,24 +121,29 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             item: Item? = null,
             ownedItem: OwnedItem? = null
         ): String {
-            return if (item is QuestContent) {
-                "inventory_quest_scroll_" + item.key
-            } else if (item is SpecialItem) {
-                if (item.key == "inventory_present") {
+            if (ownedItem != null && ownedItem.itemType == "special") {
+                return "shop_" + ownedItem.key
+            }
+
+            return when (item) {
+                is QuestContent -> {
+                    "inventory_quest_scroll_" + item.key
+                }
+                is SpecialItem -> {
+                    //Mystery Item (Inventory Present)
                     val sdf = SimpleDateFormat("MM", Locale.getDefault())
                     val month = sdf.format(Date())
                     "inventory_present_$month"
-                } else {
-                    "shop_" + item.key
                 }
-            } else {
-                val type = when (item?.type) {
-                    "eggs" -> "Egg"
-                    "food" -> "Food"
-                    "hatchingPotions" -> "HatchingPotion"
-                    else -> ""
+                else -> {
+                    val type = when (item?.type) {
+                        "eggs" -> "Egg"
+                        "food" -> "Food"
+                        "hatchingPotions" -> "HatchingPotion"
+                        else -> ""
+                    }
+                    "Pet_" + type + "_" + item?.key
                 }
-                "Pet_" + type + "_" + item?.key
             }
         }
 
