@@ -5,26 +5,20 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.CheckBoxPreference
-import androidx.preference.ListPreference
-import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceScreen
+import androidx.preference.*
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
-import com.habitrpg.android.habitica.helpers.SoundManager
-import com.habitrpg.android.habitica.helpers.TaskAlarmManager
-import com.habitrpg.android.habitica.helpers.launchCatching
+import com.habitrpg.android.habitica.helpers.*
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
@@ -39,7 +33,7 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.Locale
+import java.util.*
 import javax.inject.Inject
 
 class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -195,7 +189,26 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { granted -> if (granted) { pushNotificationManager.addPushDeviceUsingStoredToken() } }
+    ) { granted ->
+        if (granted) {
+            pushNotificationManager.addPushDeviceUsingStoredToken()
+        } else {
+            //If user denies notification settings originally - they must manually enable it through notification settings.
+            val alert = context?.let { HabiticaAlertDialog(it) }
+            alert?.setTitle(R.string.push_notification_system_settings_title)
+            alert?.setMessage(R.string.push_notification_system_settings_description)
+            alert?.addButton(R.string.settings, true, false) { _, _ ->
+                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, context?.applicationContext?.packageName)
+                startActivity(notifSettingIntent)
+            }
+            alert?.addButton(R.string.cancel, false) { _, _ ->
+                alert.dismiss()
+            }
+            alert?.show()
+        }
+    }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
@@ -379,7 +392,11 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val usePushNotifications = !(user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false)
         pushNotificationsPreference?.isEnabled = usePushNotifications
         usePushPreference?.isChecked = usePushNotifications
-
+        if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33 && !usePushNotifications) {
+            usePushPreference?.summary = getString(R.string.push_notification_system_settings_description)
+        } else {
+            usePushPreference?.summary = ""
+        }
         val useEmailPreference = findPreference("useEmails") as? CheckBoxPreference
         emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
         val useEmailNotifications = !(user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false)

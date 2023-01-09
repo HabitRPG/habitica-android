@@ -27,6 +27,9 @@
 
     <string name="pref_push_notifications_checkbox">Use Push Notifications</string>
     <string name="push_notifications">Push Notifications</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="push_notification_system_settings_description">System Push Notifications for Habitica are disabled - you won\'t receive push notifications until they are enabled</string>
+    <string name="push_notification_system_settings_title">Push Notifications</string>
     <string name="push_notifications_sum">Set your push notifications settings</string>
     <string name="preference_push_you_won_challenge">You won a Challenge!</string>
     <string name="preference_push_received_a_private_message">Received a Private Message</string>
