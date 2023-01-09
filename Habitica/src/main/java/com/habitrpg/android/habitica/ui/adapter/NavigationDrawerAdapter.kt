@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.ui.menu.HabiticaDrawerItem
 import com.habitrpg.android.habitica.ui.viewHolders.ComposableViewHolder
@@ -50,6 +51,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
     var promoClosedSubject: ((String) -> Unit)? = null
 
     var activePromo: HabiticaPromotion? = null
+    var currentEvent: WorldStateEvent? = null
 
     fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
         items.find { it.identifier == identifier }
@@ -93,8 +95,10 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 }
             }
             getItemViewType(position) == 6 -> {
-                (holder.itemView as? ComposeView)?.setContent {
-                    BirthdayBanner()
+                currentEvent?.end?.let {
+                    (holder.itemView as? ComposeView)?.setContent {
+                        BirthdayBanner(it)
+                    }
                 }
             }
         }

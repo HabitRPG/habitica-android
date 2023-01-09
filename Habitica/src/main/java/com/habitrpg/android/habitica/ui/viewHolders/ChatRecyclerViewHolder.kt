@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.android.habitica.models.user.Permission
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -212,7 +213,7 @@ class ChatRecyclerMessageViewHolder(
         }
 
         val flagCount = (chatMessage?.flagCount ?: 0)
-        if (flagCount > 0) {
+        if (flagCount > 0 && user?.hasPermission(Permission.MODERATOR) == true) {
             binding.flagCountTextview.text = if (flagCount == 10) {
                 context.getString(R.string.shadow_muted_hidden)
             } else {

@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -70,7 +71,7 @@ class AvatarCustomizationFragment :
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
     internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(activity, ROW)
 
-    private val currentFilter = MutableStateFlow(CustomizationFilter(false, type != "background"))
+    private val currentFilter = MutableStateFlow(CustomizationFilter(false, type == "background"))
     private val ownedCustomizations = MutableStateFlow<List<OwnedCustomization>>(emptyList())
 
     override fun onCreateView(
@@ -81,7 +82,7 @@ class AvatarCustomizationFragment :
         showsBackButton = true
             adapter.onCustomizationSelected = { customization ->
                 lifecycleScope.launchCatching {
-                    if (customization.type == "background") {
+                    if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
                         userRepository.unlockPath(customization)
                         userRepository.retrieveUser(false, true, true)
                     } else {
@@ -130,6 +131,12 @@ class AvatarCustomizationFragment :
         binding?.recyclerView?.doOnLayout {
             adapter.columnCount = it.width / (80.dpToPx(context))
         }
+
+        lifecycleScope.launchCatching {
+            currentFilter.collect {
+                Log.e("NewFilter", it.toString())
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -146,7 +153,7 @@ class AvatarCustomizationFragment :
     }
 
     private fun updateFilterIcon() {
-        if (currentFilter.value.isFiltering != true) {
+        if (!currentFilter.value.isFiltering) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)
@@ -277,14 +284,15 @@ class AvatarCustomizationFragment :
     }
 
     fun showFilterDialog() {
-        val filter = currentFilter.value ?: CustomizationFilter()
+        val filter = currentFilter.value
         val context = context ?: return
         val dialog = HabiticaBottomSheetDialog(context)
         val binding = BottomSheetBackgroundsFilterBinding.inflate(layoutInflater)
         binding.showMeWrapper.check(if (filter.onlyPurchased) R.id.show_purchased_button else R.id.show_all_button)
         binding.showMeWrapper.setOnCheckedChangeListener { _, checkedId ->
-            filter.onlyPurchased = checkedId == R.id.show_purchased_button
-            currentFilter.value = filter
+            val newFilter = filter.copy()
+            newFilter.onlyPurchased = checkedId == R.id.show_purchased_button
+            currentFilter.value = newFilter
         }
         binding.clearButton.setOnClickListener {
             currentFilter.value = CustomizationFilter(false, type != "background")
@@ -293,8 +301,9 @@ class AvatarCustomizationFragment :
         if (type == "background") {
             binding.sortByWrapper.check(if (filter.ascending) R.id.oldest_button else R.id.newest_button)
             binding.sortByWrapper.setOnCheckedChangeListener { _, checkedId ->
-                filter.ascending = checkedId == R.id.oldest_button
-                currentFilter.value = filter
+                val newFilter = filter.copy()
+                newFilter.ascending = checkedId == R.id.oldest_button
+                currentFilter.value = newFilter
             }
             configureMonthFilterButton(binding.januaryButton, 1, filter)
             configureMonthFilterButton(binding.febuaryButton, 2, filter)
@@ -324,14 +333,15 @@ class AvatarCustomizationFragment :
         button.isChecked = filter.months.contains(identifier)
         button.text
         button.setOnCheckedChangeListener { _, isChecked ->
-            if (!isChecked && filter.months.contains(identifier)) {
+            val newFilter = filter.copy()
+            if (!isChecked && newFilter.months.contains(identifier)) {
                 button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
-                filter.months.remove(identifier)
-            } else if (isChecked && !filter.months.contains(identifier)) {
+                newFilter.months.remove(identifier)
+            } else if (isChecked && !newFilter.months.contains(identifier)) {
                 button.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-                filter.months.add(identifier)
+                newFilter.months.add(identifier)
             }
-            currentFilter.value = filter
+            currentFilter.value = newFilter
         }
     }
 }

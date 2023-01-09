@@ -60,5 +60,11 @@ android {
         minSdk = 21
         targetSdk = 33
     }
+
+    buildTypes {
+        release {
+        }
+    }
+
     namespace = "com.habitrpg.shared.habitica"
 }

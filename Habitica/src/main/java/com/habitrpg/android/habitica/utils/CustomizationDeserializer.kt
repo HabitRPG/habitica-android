@@ -177,6 +177,12 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
             customization.identifier = key
         }
         when (setName) {
+            "eventBackgrounds" -> {
+                customization.customizationSetName = "EVENT BACKGROUNDS"
+                customization.price = 0
+                customization.setPrice = 0
+                customization.isBuyable = false
+            }
             "incentiveBackgrounds" -> {
                 customization.customizationSetName = "PLAIN BACKGROUND SET"
                 customization.price = 0

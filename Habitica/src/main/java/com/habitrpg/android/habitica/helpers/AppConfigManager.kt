@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.models.WorldState
+import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
 import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
@@ -166,7 +167,8 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
         return remoteConfig.getBoolean("hideChallenges")
     }
 
-    fun isBirthday(): Boolean {
-        return BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == AppTestingLevel.STAFF.name
+    fun getBirthdayEvent(): WorldStateEvent? {
+        val events = ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
+        return events.firstOrNull { it?.eventKey == "birthday10" }
     }
 }

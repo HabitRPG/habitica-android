@@ -179,7 +179,7 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+            //applicationIdSuffix ".debug"
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -187,7 +187,8 @@ android {
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
             testCoverageEnabled = false
-            resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
+            //resValue "string", "content_provider", "com.habitrpg.android.habitica.debug.fileprovider"
+            resValue "string", "content_provider", "com.habitrpg.android.habitica.fileprovider"
             resValue "string", "app_name", "Habitica Debug"
         }
         debugIAP {

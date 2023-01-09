@@ -552,7 +552,7 @@ class NavigationDrawerFragment : DialogFragment() {
             items.add(item)
         }
 
-        if (configManager.isBirthday()) {
+        configManager.getBirthdayEvent()?.let {
             val birthdayItem = HabiticaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
             birthdayItem.itemViewType = 6
             items.add(0, birthdayItem)

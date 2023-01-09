@@ -672,6 +672,10 @@ class TaskFormActivity : BaseActivity() {
             "assign" to mutableListOf<String>(),
             "unassign" to mutableListOf<String>()
         )
+        if (groupID != null && thisTask.group?.groupID == null) {
+            thisTask.group = TaskGroupPlan()
+            thisTask.group?.groupID = groupID
+        }
         if (thisTask.isGroupTask) {
             for (id in assignedIDs) {
                 if (thisTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == id } == null) {

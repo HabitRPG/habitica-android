@@ -23,10 +23,10 @@ fun CurrencyText(
     value: Int,
     modifier: Modifier = Modifier,
     decimals: Int = 0,
-    minForAbbrevation: Int = 0,
+    minForAbbreviation: Int = 0,
     animated: Boolean = true
 ) {
-    CurrencyText(currency = currency, value = value.toDouble(), modifier, decimals, minForAbbrevation, animated)
+    CurrencyText(currency = currency, value = value.toDouble(), modifier, decimals, minForAbbreviation, animated)
 }
 @Composable
 fun CurrencyText(
@@ -34,7 +34,7 @@ fun CurrencyText(
     value: Double,
     modifier: Modifier = Modifier,
     decimals: Int = 0,
-    minForAbbrevation: Int = 0,
+    minForAbbreviation: Int = 0,
     animated: Boolean = true
 ) {
     val animatedValue = if (animated) animateFloatAsState(
@@ -49,7 +49,7 @@ fun CurrencyText(
             else -> null
         }?.asImageBitmap()?.let { Image(it, null, Modifier.padding(end = 5.dp)) }
         Text(
-            NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbrevation),
+            NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbreviation),
             color = when (currency) {
                 "gold" -> colorResource(R.color.text_gold)
                 "gems" -> colorResource(R.color.text_green)

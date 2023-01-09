@@ -244,7 +244,8 @@ fun AppHeaderView(
                     "gold",
                     user?.stats?.gp ?: 0.0,
                     modifier = Modifier.padding(end = 12.dp),
-                    decimals = 0
+                    decimals = 0,
+                    minForAbbreviation = 10000
                 )
                 CurrencyText(
                     "gems",
