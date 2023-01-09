@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.runtime.mutableStateListOf
@@ -43,6 +44,7 @@ import com.habitrpg.android.habitica.extensions.removeZeroWidthSpace
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.launchCatching
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -90,6 +92,9 @@ class TaskFormActivity : BaseActivity() {
 
     @Inject
     lateinit var taskAlarmManager: TaskAlarmManager
+
+    @Inject
+    lateinit var pushNotificationManager: PushNotificationManager
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
@@ -346,6 +351,11 @@ class TaskFormActivity : BaseActivity() {
         configureForm()
     }
 
+    override fun onResume() {
+        checkIfShowNotifLayout()
+        super.onResume()
+    }
+
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
         super.loadTheme(sharedPreferences, forced)
         val upperTintColor =
@@ -544,6 +554,7 @@ class TaskFormActivity : BaseActivity() {
             task.checklist?.let { binding.checklistContainer.checklistItems = it }
             binding.remindersContainer.taskType = taskType
             task.reminders?.let { binding.remindersContainer.reminders = it }
+            checkIfShowNotifLayout()
         }
         task.attribute?.let { viewModel.selectedAttribute.value = it }
 
@@ -608,8 +619,10 @@ class TaskFormActivity : BaseActivity() {
             thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak =
                 binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            checkIfShowNotifLayout()
         } else if (taskType == TaskType.TODO) {
             thisTask.dueDate = binding.taskSchedulingControls.dueDate
+            checkIfShowNotifLayout()
         } else if (taskType == TaskType.REWARD) {
             thisTask.value = binding.rewardValue.value
         }
@@ -723,6 +736,14 @@ class TaskFormActivity : BaseActivity() {
         }
         alert.addCancelButton()
         alert.show()
+    }
+
+    private fun checkIfShowNotifLayout() {
+        if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
+            binding.notificationsDisabledLayout.visibility = View.VISIBLE
+        } else {
+            binding.notificationsDisabledLayout.visibility = View.GONE
+        }
     }
 
     private fun showChallengeDeleteTask() {

@@ -32,34 +32,16 @@
     <string name="preference_push_your_quest_has_begun">Ditt Oppdrag har Begynt</string>
     <string name="preference_push_invited_to_quest">Invitert til et Oppdrag</string>
     <!--Adding tasks-->
-    <string name="action_edit">Rediger</string>
-    <string name="action_cancel">Avbryt</string>
-    <string name="login_btn">Logg inn</string>
-    <string name="register_btn">Registrer deg</string>
-    <string name="username">Brukernavn</string>
-    <string name="email_username">Epost eller Brukernavn</string>
-    <string name="password">Passord</string>
-    <string name="emailAddress">Epost adresse</string>
-    <string name="confirmpassword">Bekreft passord</string>
-    <string name="logout">Logg ut</string>
-    <string name="logout_description">Logg ut av din brukerkonto</string>
-    <string name="LoginActivityName">Velkommen</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Du er ikke koblet til internett.</string>
     <string name="internal_error_api">Det ser ut som om det er et problem med serveren. Prøv igjen senere.</string>
     <string name="authentication_error_title">Autentiseringsfeil</string>
     <string name="authentication_error_body">Ditt Brukernavn og/eller Passord er feil</string>
-    <string name="login_validation_error_title">Verifiseringsfeil</string>
-    <string name="login_validation_error_fieldsmissing">Du må fylle ut alle feltene.</string>
     <string name="save_changes">Lagre</string>
     <string name="copy">Kopier</string>
     <string name="notes">Notater</string>
     <string name="difficulty">Vanskelighetsgrad</string>
     <string name="tags">Merkelapper</string>
-    <string name="trivial">Triviell</string>
-    <string name="easy">Lett</string>
-    <string name="medium">Middels</string>
-    <string name="hard">Vanskelig</string>
     <string name="start_date">Startdato</string>
     <string name="positive_habit_form">Positiv ( + )</string>
     <string name="negative_habit_form">Negativ ( - )</string>
@@ -91,10 +73,6 @@
     <string name="party">Klan</string>
     <string name="chat">Chat</string>
     <string name="members">Medlemmer</string>
-    <string name="habits">Vaner</string>
-    <string name="dailies">Daglige Gjøremål</string>
-    <string name="todos">Gjøremål</string>
-    <string name="rewards">Belønninger</string>
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
     <string name="quest">Oppdrag</string>
@@ -167,7 +145,6 @@
     <string name="guild">Laug</string>
     <string name="leave">Forlat</string>
     <string name="join">Bli med</string>
-    <string name="gems">Juveler</string>
     <string name="delete">Slett</string>
     <string name="name">Navn</string>
     <string name="description">Beskrivelse</string>
@@ -197,8 +174,6 @@
     <string name="quests">Oppdrag</string>
     <string name="pets">Kjæledyr</string>
     <string name="mounts">Ridedyr</string>
-    <string name="armoireEquipment">Du fant et stykke skjeldent Utstyr i Kabinettet: %s! Kjempemessig!</string>
-    <string name="armoireFood">Du ransaker Kabinettet og finner %1$s %2$s. Hva gjør den her?</string>
     <string name="armoireExp">Du slåss med Kabinettet og får Erfaring. Ta den!</string>
     <string name="sell">Selg (%d Gull)</string>
     <string name="hatch_with_potion">Klekk med mikstur</string>
@@ -215,7 +190,6 @@
     <string name="notification_purchase_reward">Du kjøpte en premie</string>
     <string name="world_quest">Verdensoppdrag</string>
     <string name="empty_items">Du har ingen %s</string>
-    <string name="user_level">Nivå %d</string>
     <string name="user_level_with_class">Nivå %1$d %2$s</string>
     <string name="warrior">Kriger</string>
     <string name="rogue">Røver</string>
@@ -257,7 +231,6 @@
     <string name="login_incentive">Lås opp ved å logge inn i Habitica ofte.</string>
     <string name="create_account">Lås opp ved å lage en konto.</string>
     <string name="successful_purchase">Kjøpte %1$s</string>
-    <string name="gold_plural">gull</string>
     <string name="chat_message_copied">Melding kopiert til utklippstavlen</string>
     <string name="edit_tag_btn_edit">Rediger</string>
     <string name="confirm_delete_tag_title">Er du sikker?</string>
@@ -317,10 +290,6 @@
     <string name="remove_tasks">Fjern</string>
     <string name="keep_tasks">Behold</string>
     <string name="my_challenges">Mine Utfordringer</string>
-    <string name="daily">Daglig</string>
-    <string name="habit">Vane</string>
-    <string name="reward">Belønning</string>
-    <string name="todo">Gjøremål</string>
     <string name="official">Offisiell</string>
     <string name="challenge">Utfordring</string>
     <string name="not_part_of_a_challenge">Du er ikke del av noen Utfordringer akkurat nå!</string>
@@ -343,7 +312,6 @@
     <string name="owned">Eid</string>
     <string name="not_owned">Ikke eid</string>
     <string name="login_btn_fb">Logg inn med Facebook</string>
-    <string name="login_btn_google">Logg inn med Google</string>
     <string name="action_back">Tilbake</string>
     <string name="randomize">Randomiser</string>
     <string name="avatar_extras">Ekstras</string>
@@ -436,7 +404,6 @@
     <string name="come_back_soon">Kom tilbake snart!</string>
     <string name="level">Nivå</string>
     <string name="streak_label">21-dags gjennomføringskjeder</string>
-    <string name="stats">Statistikk</string>
     <string name="saving">Lagrer</string>
     <string name="forgot_password_description">Skriv inn e-post adressen du brukte for å registrere din Habitica-konto.</string>
     <string name="ok">OK</string>

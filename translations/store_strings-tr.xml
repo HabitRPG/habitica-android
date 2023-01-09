@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="store_title">İşlerini Oyunlaştır</string>
-  <string name="store_short_description">Hayatını motive ve düzenli kalmak için oyun gibi düzenle!</string>
-  <string name="store_description">Motive ve organize olmak için hayatınızı oyunlaştırın! Habitica, amaçlarınızı ve görevlerinizi gerçekleştirirken eğlenmenizi sağlar. 
+    <string name="store_title">Görevlerini Oyunlaştır</string>
+    <string name="store_short_description">Hayatını motive ve düzenli kalmak için oyun gibi düzenle!</string>
+    <string name="store_description">Motive ve organize olmak için hayatınızı oyunlaştırın! Habitica, amaçlarınızı ve görevlerinizi gerçekleştirirken eğlenmenizi sağlar. 
 Alışkanlıklarınızı, günlük hedeflerinizi ve yapılacaklar listenizi girin, kendi karakterinizi oluşturun. Karakterinizi özelleştirmek için zırh, evcil hayvan, beceri ve hatta görevler gibi özellikleri açmak için hedeflerinizi tamamlayın! Arkadaşlarınızla beraber canavarlarla savaşarak sorumluluklarınızı yerine getirin, altınlarınızı ekipman gibi oyun içi ödüller veya en sevdiğiniz TV şovunun bir bölümünü izlemek gibi özel ödüller için harcayın. Rahat, sosyal ve eğlenceli olan Habitica, kendinizi herhangi bir şeyi başarmak için motive etmenin mükemmel bir yolu.
 Herhangi bir sorunuz varsa, mobile@habitica.com adresine geri bildirim göndermekten çekinmeyin! Ve uygulamanızdan hoşlanıyorsanız, bize bir inceleme bırakırsanız memnun oluruz.
 </string>

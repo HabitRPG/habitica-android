@@ -9,16 +9,6 @@
     <string name="pref_reminder_checkbox">Актываваць напамін</string>
     <string name="pref_reminder_picker">Наладзіць час напаміну</string>
     <!--Adding tasks-->
-    <string name="action_edit">Рэдагаваць</string>
-    <string name="action_cancel">Адмяніць</string>
-    <string name="login_btn">Падлучыцца</string>
-    <string name="register_btn">Зарэгістравацца</string>
-    <string name="username">Імя карыстальніка</string>
-    <string name="email_username">Электронная пошта ці імя карыстальніка</string>
-    <string name="password">Пароль</string>
-    <string name="emailAddress">Электронная пошта</string>
-    <string name="confirmpassword">Пацьвердзіць пароль</string>
-    <string name="logout">Выйсьці</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Вы не падлучаныя да інтэрнэту.</string>
     <string name="authentication_error_body">Ваша імя карыстальніка і/альбо пароль былі ўведзеныя не правільна.</string>
@@ -33,9 +23,6 @@
     <string name="faint_subtitle">Не адчайвайцеся!</string>
     <string name="chat">Чат</string>
     <string name="members">Удзельнікі</string>
-    <string name="habits">Звычкі</string>
-    <string name="dailies">Штодзённыя заданьні</string>
-    <string name="rewards">Узнагароды</string>
     <string name="yes">Так</string>
     <string name="no">Не</string>
     <string name="quest">Квэст</string>
@@ -69,7 +56,6 @@
     <string name="guild">Гільдыя</string>
     <string name="leave">Выйсьці</string>
     <string name="join">Далучыцца</string>
-    <string name="gems">Каштоўныя камяні</string>
     <string name="delete">Выдаліць</string>
     <string name="name">Імя</string>
     <string name="description">Апісаньне</string>

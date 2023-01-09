@@ -7,8 +7,7 @@
     <string name="profile_send_message_to">Pošalji poruku %s</string>
     <string name="profile_message_sent_to">Poruka poslana %s</string>
     <string name="profile_level">Level:</string>
-    <string name="profile_class_bonus">Bonus klase</string>
+    <string name="profile_class_bonus">Bonus klase:</string>
     <string name="profile_allocated">Raspodijeljeno:</string>
     <string name="profile_achievements">Postignuća</string>
-
 </resources>

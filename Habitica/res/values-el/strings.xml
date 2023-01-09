@@ -32,34 +32,16 @@
     <string name="preference_push_your_quest_has_begun">Η Αποστολή σου ξεκίνησε</string>
     <string name="preference_push_invited_to_quest">Πρόσκληση σε Αποστολή</string>
     <!--Adding tasks-->
-    <string name="action_edit">Επεξεργασία</string>
-    <string name="action_cancel">Ακύρωση</string>
-    <string name="login_btn">Είσοδος</string>
-    <string name="register_btn">Εγγραφή</string>
-    <string name="username">Όνομα Χρήστη</string>
-    <string name="email_username">Email ή Όνομα Χρήστη</string>
-    <string name="password">Κωδικός</string>
-    <string name="emailAddress">Διεύθυνση email</string>
-    <string name="confirmpassword">Επιβεβαίωσε τον κωδικό</string>
-    <string name="logout">Αποσύνδεση</string>
-    <string name="logout_description">Αποσυνδέσου από το λογαριασμό σου</string>
-    <string name="LoginActivityName">Καλώς ήρθες</string>
     <!--Network Errors-->
     <string name="network_error_no_network_body">Δεν είσαι συνδεδεμένος στο Διαδίκτυο</string>
     <string name="internal_error_api">Φαίνεται να υπάρχει πρόβλημα με τον διακομιστή. Προσπάθησε αργότερα.</string>
     <string name="authentication_error_title">Σφάλμα Πιστοποίησης</string>
     <string name="authentication_error_body">Το Όνομα Χρήστη ή/και ο Κωδικός είναι εσφαλμένα.</string>
-    <string name="login_validation_error_title">Σφάλμα Επικύρωσης</string>
-    <string name="login_validation_error_fieldsmissing">Πρέπει να γεμίσεις όλα τα πεδία.</string>
     <string name="save_changes">Αποθήκευση</string>
     <string name="copy">Αντιγραφή</string>
     <string name="notes">Σημειώσεις</string>
     <string name="difficulty">Δυσκολία</string>
     <string name="tags">Ετικέτες</string>
-    <string name="trivial">Ασήμαντο</string>
-    <string name="easy">Εύκολο</string>
-    <string name="medium">Μέτριο</string>
-    <string name="hard">Δύσκολο</string>
     <string name="start_date">Ημέρα Έναρξης</string>
     <string name="positive_habit_form">Θετικό (+)</string>
     <string name="negative_habit_form">Αρνητικό (-)</string>
@@ -92,8 +74,6 @@
     <string name="party">Ομάδα</string>
     <string name="chat">Συνομιλία</string>
     <string name="members">Μέλη</string>
-    <string name="habits">Συνήθειες</string>
-    <string name="rewards">Ανταμοιβές</string>
     <string name="yes">Ναι</string>
     <string name="no">Όχι</string>
     <string name="quest">Αποστολή</string>
@@ -142,7 +122,6 @@
     <string name="public_guilds">Δημόσιες Συντεχνίες</string>
     <string name="guild">Συντεχνία</string>
     <string name="leave">Αποχώρηση</string>
-    <string name="gems">Πετράδια</string>
     <string name="delete">Διαγραφή</string>
     <string name="name">Όνομα</string>
     <string name="description">Περιγραφή</string>
@@ -191,7 +170,6 @@
     <string name="notification_pet_fed">Τάισες το %s σου!</string>
     <string name="notification_purchase_reward">Αγόρασες μια ανταμοιβή</string>
     <string name="empty_items">Δεν έχεις %s</string>
-    <string name="user_level">Επίπεδο %d</string>
     <string name="user_level_with_class">Επίπεδο %1$d %2$s</string>
     <string name="warrior">Πολεμιστής</string>
     <string name="rogue">Αγύρτης</string>
@@ -226,7 +204,6 @@
     <string name="login_incentive">Ξεκλειδώνει με το να εισέρχεσαι στο Habitica τακτικά</string>
     <string name="create_account">Ξεκλειδώνει με τη δημιουργία λογαριασμού</string>
     <string name="successful_purchase">%1$s Αγοράστηκε</string>
-    <string name="gold_plural">Χρυσάφι</string>
     <string name="edit_tag_btn_edit">Επεξεργασία</string>
     <string name="confirm_delete_tag_title">Είσαι σίγουρος;</string>
     <string name="confirm_delete_tag_message">Θες πραγματικά να διαγραφείς?</string>
@@ -257,8 +234,6 @@
     <string name="six_months">6 μήνες</string>
     <string name="twelve_months">12 μήνες</string>
     <string name="my_challenges">Οι Προκλήσεις μου</string>
-    <string name="habit">Συνήθεια</string>
-    <string name="reward">Ανταμοιβή</string>
     <string name="official">Επίσημο</string>
     <string name="inbox">Μηνύματα</string>
     <string name="gem_shop">Πετράδι</string>
@@ -295,7 +270,6 @@
     <string name="insufficientGems">Χρειάζεσαι περισσότερα Πετράδια για να αγοράσεις αυτό το αντικείμενο!</string>
     <string name="purchase_gems">Αγορά Πετραδιών</string>
     <string name="level">Επίπεδο</string>
-    <string name="stats">Στατιστικά</string>
     <string name="fix_character_description">Αν έπεσες σε κάποιο σφάλμα ή έκανες κάποιο λάθος και άλλαξε άδικα ο χαρακτήρας σου, μπορείς να διορθώσεις χειροκίνητα τις τιμές εδώ.</string>
     <string name="fix_character_values">Επιδιόρθωση Τιμών Χαρακτήρων</string>
     <string name="forgot_password_title">Αποστολή με email μιας διεύθυνσης αλλαγής κωδικού.</string>

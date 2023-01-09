@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">Deine Quest hat begonnen</string>
     <string name="preference_push_invited_to_quest">Zur Quest eingeladen</string>
     <!--Adding tasks-->
-    <string name="action_edit">Bearbeiten</string>
-    <string name="action_cancel">Abbrechen</string>
-    <string name="login_btn">Login</string>
-    <string name="register_btn">Registrieren</string>
-    <string name="username">Benutzername</string>
-    <string name="email_username">E-Mail oder Benutzername</string>
-    <string name="password">Passwort</string>
-    <string name="emailAddress">E-Mail-Adresse</string>
-    <string name="confirmpassword">Passwort bestätigen</string>
-    <string name="logout">Ausloggen</string>
-    <string name="logout_description">Logge Dich aus</string>
-    <string name="LoginActivityName">Willkommen</string>
-    <string name="about_title">Über</string>
     <string name="about_libraries">Bibliotheken</string>
     <string name="about_habitica_open_source">Habitica ist als Open-Source-Software auf GitHub verfügbar</string>
     <string name="about_rate_our_app">Bewerte unsere App</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">Die Verbindung zum Server ist abgebrochen</string>
     <string name="authentication_error_title">Authentifikationsfehler</string>
-    <string name="login_validation_error_title">Validierungsfehler</string>
-    <string name="login_validation_error_fieldsmissing">Bitte fülle alle Felder aus.</string>
     <string name="save_changes">Speichern</string>
     <string name="copy">Kopieren</string>
     <string name="notes">Notizen</string>
     <string name="difficulty">Schwierigkeit</string>
     <string name="tags">Tags</string>
-    <string name="trivial">Trivial</string>
-    <string name="easy">Einfach</string>
-    <string name="medium">Mittel</string>
-    <string name="hard">Schwer</string>
     <string name="start_date">Starttermin</string>
     <string name="positive_habit_form">Positiv ( + )</string>
     <string name="negative_habit_form">Negativ ( - )</string>
@@ -104,10 +85,6 @@
     <string name="party">Party</string>
     <string name="chat">Chat</string>
     <string name="members">Mitglieder</string>
-    <string name="habits">Gewohnheiten</string>
-    <string name="dailies">Tagesaufgaben</string>
-    <string name="todos">To Do\'s</string>
-    <string name="rewards">Belohnungen</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="quest">Quest</string>
@@ -185,7 +162,6 @@
     <string name="guild">Gilde</string>
     <string name="leave">Verlassen</string>
     <string name="join">Beitreten</string>
-    <string name="gems">Edelsteine</string>
     <string name="delete">Löschen</string>
     <string name="name">Name</string>
     <string name="description">Beschreibung</string>
@@ -221,8 +197,6 @@
     <string name="quests">Quests</string>
     <string name="pets">Haustiere</string>
     <string name="mounts">Reittiere</string>
-    <string name="armoireEquipment">Du hast %s im Schrank gefunden</string>
-    <string name="armoireFood">Du wühlst im Schrank herum und findest %1$s %2$s. Was macht das denn hier?</string>
     <string name="armoireExp">Du ringst mit dem verzauberten Schrank und gewinnst Erfahrung. Nimm das!</string>
     <string name="sell">Verkaufen (%d Gold)</string>
     <string name="hatch_with_potion">Mit Elixier ausbrüten</string>
@@ -241,12 +215,10 @@
     <string name="world_quest">Weltenquest</string>
     <string name="inn_description">Brauchst Du eine Pause\? Kehre in Daniels Gasthaus ein, um ein paar von Habiticas schwierigeren Spielmechaniken zu pausieren:
 \n
-\n • Verpasste Tagesaufgaben fügen Dir keinen Schaden zu
-\n • Aufgaben fallen nicht aus ihrer Strähne und verschlechtern sich nicht in der Farbe
-\n • Bossgegner verursachen keinen Schaden für Deine verpassten Tagesaufgaben
-\n • Deine Schadens- oder Sammelquest-Gegenstände bleiben bis zum Checkout im unerledigten Zustand</string>
+\n• Deine verpassten Tagesaufgaben fügen Dir keinen Schaden zu (Bosse fügen Dir aber weiterhin Schaden zu, wenn andere Partymitglieder nicht alle ihre Tagesaufgaben erledigen)
+\n• Deine Aufgaben-Strähnen und Gewohnheits-Zähler werden nicht zurückgesetzt
+\n• Dein Schadensfortschritt oder Deine Sammelquest-Gegenstände bleiben ausständig, bis Du aus dem Gasthaus auscheckst</string>
     <string name="empty_items">Du hast kein/e %s</string>
-    <string name="user_level">Lvl %d</string>
     <string name="user_level_with_class">Lvl %1$d %2$s</string>
     <string name="warrior">Krieger</string>
     <string name="rogue">Schurke</string>
@@ -292,7 +264,6 @@
     <string name="login_incentive">Freischalten durch regelmäßiges Einloggen bei Habitica</string>
     <string name="create_account">Freischalten durch die Erstellung eines Kontos</string>
     <string name="successful_purchase">%1$s gekauft</string>
-    <string name="gold_plural">Gold</string>
     <string name="chat_message_copied">Nachricht in Zwischenablage kopiert</string>
     <string name="edit_tag_btn_edit">Bearbeiten</string>
     <string name="confirm_delete_tag_title">Bist Du sicher?</string>
@@ -314,7 +285,7 @@
     <string name="google_services_missing">Google Play Dienste konnten nicht gefunden werden.</string>
     <string name="gem_purchase_toolbartitle">Kaufen</string>
     <string name="gem_purchase_title">Das Erwerben von Edelsteinen unterstützt die Entwickler und hilft Habitica am Laufen zu halten</string>
-    <string name="gem_purchase_subtitle">Edelsteine erlauben es Dir, tolle Extras für Dein Konto zu erwerben, inklusive:</string>
+    <string name="gem_purchase_subtitle">Edelsteine erlauben es Dir, tolle Extras für Dein Konto zu erwerben</string>
     <string name="gem_purchase_listitem1">Coole Kostüme für Deinen Avatar</string>
     <string name="gem_purchase_listitem2">Fantastische Hintergründe</string>
     <string name="gem_purchase_listitem3">Quest, welche Dich mit Haustiereiern belohnt</string>
@@ -372,10 +343,6 @@
     <string name="remove_tasks">Entfernen</string>
     <string name="keep_tasks">Behalten</string>
     <string name="my_challenges">Meine Herausforderungen</string>
-    <string name="daily">Tagesaufgabe</string>
-    <string name="habit">Gewohnheit</string>
-    <string name="reward">Belohnung</string>
-    <string name="todo">To Do</string>
     <string name="official">Offiziell</string>
     <string name="challenge">Herausforderung</string>
     <string name="not_part_of_a_challenge">Du nimmst im Moment an keiner Herausforderung teil!</string>
@@ -399,7 +366,6 @@
     <string name="owned">Im Besitz</string>
     <string name="not_owned">Nicht im Besitz</string>
     <string name="login_btn_fb">Mit Facebook-Konto einloggen</string>
-    <string name="login_btn_google">Mit Google-Konto einloggen</string>
     <string name="action_back">Zurück</string>
     <string name="welcome_text">Oh, Du musst neu hier sein. Ich bin Justin, der Stadtführer von Habitica.
 \n
@@ -487,11 +453,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="int_abbrv">INT</string>
     <string name="con_abbrv">CON</string>
     <string name="reset_account">Konto zurücksetzen</string>
-    <string name="reset_account_description">WARNUNG! Das setzt viele Teile Deines Kontos zurück. Vom Zurücksetzen des Kontos wird stark abgeraten, aber manche Leute finden diese Funktion zu Beginn hilfreich, wenn sie erst kurze Zeit auf der Webseite gespielt haben.
-\n
-\nDu verlierst alle Deine Levels, Gold und Erfahrungspunkte. Alle Deine Aufgaben (außer denjenigen aus Herausforderungen) werden dauerhaft gelöscht und Du verlierst alle historischen Daten dazu. Du verlierst Deine komplette Ausrüstung, hast aber die Möglichkeit, alles wieder zurückzukaufen, inklusive Ausrüstung aus der limitierten Ausgabe oder Mysteriösen Gegenständen für Abonnenten, die Dir bereits gehören (Du musst der passenden Klasse angehören, um klassenspezifische Ausrüstung zurückzukaufen). Eventuell ziehst Du es vor, stattdessen eine Sphäre der Wiedergeburt zu benutzen, das ist eine viel sicherere Option und erhält Deine Aufgaben und Deine Ausrüstung.</string>
+    <string name="reset_account_description">Du verlierst alle Deine Levels, Gold und Erfahrungspunkte. Alle Deine Aufgaben und deren Historie werden gelöscht (Herausforderungsaufgaben bleiben). Du verlierst die komplette Ausrüstung, inklusive Ausrüstung aus der limitierten Ausgabe oder Gegenstände für Abonnenten, hast aber die Möglichkeit, alles wieder zurückzukaufen (Du musst der passenden Klasse angehören, um klassenspezifische Ausrüstung zurückzukaufen). Du behältst Deine aktuelle Klasse sowie Haus- und Reittiere. Um das Zurücksetzen zu bestätigen, tippe unten ZURÜCKSETZEN ein.</string>
     <string name="delete_account">Konto löschen</string>
-    <string name="delete_account_description">Dies wird Dein Konto für immer löschen, und es kann nicht wiederhergestellt werden! Vorhandene oder ausgegebene Edelsteine werden nicht zurückerstattet. Wenn Du Dir absolut sicher bist, tippe Dein Passwort in das Textfeld ein.</string>
+    <string name="delete_account_description">Dies wird Dein Konto für immer löschen, und es kann nicht wiederhergestellt werden! Vorhandene oder ausgegebene Edelsteine werden nicht zurückerstattet. Wenn Du Dir absolut sicher bist, tippe Dein Passwort unten in das Textfeld ein.</string>
     <string name="reset_account_confirmation">Konto zurücksetzen</string>
     <string name="delete_account_confirmation">Mein Konto löschen</string>
     <string name="danger_zone">Gefahrenzone</string>
@@ -510,12 +474,11 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="come_back_soon">Komm bald zurück!</string>
     <string name="level">Level</string>
     <string name="streak_label">21-Tage-Strähnen</string>
-    <string name="stats">Statuswerte</string>
     <string name="fix_character_description">Für den Fall, dass Du einen Bug gefunden oder Fehler gemacht hast, der Deinen Charakter auf unfaire Art und Weise betroffen hat, kannst Du hier diese Werte manuell korrigieren.</string>
     <string name="fix_character_values">Charakterwerte reparieren</string>
     <string name="saving">Speichert</string>
     <string name="forgot_password_title">Einen Passwort-Rücksetz-Link per E-Mail senden</string>
-    <string name="forgot_password_description">Gib die E-Mail-Adresse an, mit der Du Dich bei Habitica registriert hast.</string>
+    <string name="forgot_password_description">Gib Deinen Benutzernamen oder die E-Mail-Adresse an, mit der Du Dich bei Habitica registriert hast.</string>
     <string name="forgot_password_confirmation">Wenn Deine E-Mail-Adresse bei uns gespeichert ist, sind Informationen, wie Du ein neues Passwort setzt, an Deine Adresse unterwegs.</string>
     <string name="ok">OK</string>
     <string name="profile">Profil</string>
@@ -772,7 +735,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="preference_push_party_activity">Party-Aktivität</string>
     <string name="search_hint">Aufgaben suchen</string>
     <string name="search">Suchen</string>
-    <string name="repeat_daily">Täglich</string>
     <string name="complete">Erledigen</string>
     <string name="reject">Ablehnen</string>
     <string name="accept">Akzeptieren</string>
@@ -816,8 +778,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="app_theme">App Musik</string>
     <string name="share_challenge_with">Herausforderung teilen mit</string>
     <string name="details">Details</string>
-    <string name="create_task">%s erstellen</string>
-    <string name="new_task">Neue Aufgabe</string>
     <string name="confirm_deletion">Löschen bestätigen</string>
     <string name="switch_to_grid_view">Zur Kachelansicht wechseln</string>
     <string name="switch_to_list_view">Zur Listenansicht wechseln</string>
@@ -832,9 +792,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="levelup_detail_10">Wähle eine Klasse, die zu Deinem Spielstil passt, und schalte spezielle Fähigkeiten und Ausrüstung frei, die Dir auf Deiner Reise helfen</string>
     <string name="not_now">Jetzt nicht</string>
     <string name="delete_task">Aufgabe löschen</string>
-    <string name="are_you_sure">Bist Du sicher\?</string>
     <string name="invite_to_party">In Party einladen</string>
-    <string name="guild_bank">Gilden-Bank</string>
+    <string name="guild_bank">Gildenbankkonto</string>
     <string name="guild_members">Gilden-Mitlgieder</string>
     <string name="guild_summary">Gilden-Zusammenfassung</string>
     <string name="setup_task_habit_2_notes">Oder lösche es über die Bearbeiten-Ansicht</string>
@@ -870,8 +829,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="scheduling">Planung</string>
     <string name="every">Alle</string>
     <string name="repeats">Wiederholt sich</string>
-    <string name="weekly">Wöchentlich</string>
-    <string name="monthly">Monatlich</string>
     <string name="assigned_stat">Statuswert zugewiesen</string>
     <string name="password_changed">Passwort erfolgreich geändert</string>
     <string name="adjust_streak">Strähne anpassen</string>
@@ -930,7 +887,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="wacky">Durchgeknallt</string>
     <string name="update_app">App aktualisieren</string>
     <string name="clear_cache">Cache leeren</string>
-    <string name="mystic_hourglasses">Mystische Sanduhren</string>
     <string name="game_mechanics">Spielmechanismen</string>
     <string name="common_questions">Übliche Fragen</string>
     <string name="currency">Zahlungsmittel</string>
@@ -946,7 +902,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="using_habitica">Habitica nutzen</string>
     <string name="level_unabbreviated">Level %d</string>
     <string name="delete_reminder">Erinnerung löschen</string>
-    <string name="gold_capitalized">Gold</string>
     <string name="user_level_with_class_unabbreviated">Level %1$d %2$s</string>
     <string name="selected">Ausgewählt</string>
     <string name="off">Aus</string>
@@ -1052,8 +1007,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="create_task_description">Füge eine Aufgabe hinzu, für etwas, das Du diese Woche erreichen willst</string>
     <string name="purchase_equipment_title">Erwerbe Ausrüstung</string>
     <string name="feedPet_title">Füttere ein Haustier</string>
-    <string name="complete_task_title">Erledige eine Aufgabe</string>
-    <string name="create_task_title">Erstelle eine Aufgabe</string>
     <string name="percent_completed">%d%% Abgeschlossen</string>
     <string name="lets_get_started">Los geht\'s</string>
     <string name="your_progress">Dein Fortschritt</string>
@@ -1166,7 +1119,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="caused_damage">Du hast dem Boss Schaden hinzugefügt</string>
     <string name="avatar_style">Stil</string>
     <string name="daily_item_checkbox">Tägliches Kontrollkästchen</string>
-    <string name="retry">Wiederholen</string>
     <string name="empty_title">Hier ist noch nichts</string>
     <string name="todo_item_checkbox">To-Do Kontrollkästchen</string>
     <string name="empty_challenge_list">Du bist kein Mitglied einer Herausforderung.</string>
@@ -1176,11 +1128,141 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="terms_of_service">Nutzungsbedingungen</string>
     <string name="open_shop">Offener Laden</string>
-    <string name="failed">Laden fehlgeschlagen</string>
     <string name="survey_menu_description">Fülle diese 5 Minuten Umfrage aus, um uns beim Wachsen zu helfen und eine Errungenschaft zu erhalten!</string>
     <string name="empty_equipment_description">Du hast noch keine Ausrüstung für diesen Typen. Du kannst Ausrüstung vom Markt mit dem Gold, das du verdient hast, kaufen.</string>
     <string name="damage_pending">ausstehend %.01f dmg</string>
     <string name="x_remaining">%s verbleibend</string>
     <string name="reset_counter">Zähler zurücksetzen</string>
     <string name="adjust_counter">Zähler anpassen</string>
+    <string name="apitoken_summary">Token kopieren. Bitte sei vorsichtig, das ist ein Passwort!</string>
+    <string name="password_added">Passwort gespeichert</string>
+    <string name="public_profile">Öffentliches Profil</string>
+    <string name="about_me">Über mich</string>
+    <string name="account_info">Konto-Informationen</string>
+    <string name="disconnect">Verbindung trennen</string>
+    <string name="not_connected">Nicht verbunden</string>
+    <string name="add_password">Füge ein Passwort hinzu</string>
+    <string name="connect">Verbinden</string>
+    <string name="add">Hinzufügen</string>
+    <string name="add_email_and_password">E-Mail und Passwort hinzufügen</string>
+    <string name="password_not_matching">Das Passwort muss zweimal richtig eingegeben werden</string>
+    <string name="email_invalid">Ungültige E-Mail-Adresse</string>
+    <string name="discard">Verwerfen</string>
+    <string name="class_confirmation_price">Möchtest Du Deine Klasse in %s ändern für %d Edelsteine\?</string>
+    <string name="use_item">Wende Gegenstand auf Party Mitglied an</string>&gt;
+    <string name="unsaved_changes">Ungesicherte Änderungen</string>
+    <string name="discard_changes_to_task_message">Bist Du sicher, dass Du die Änderungen an dieser Aufgabe verwerfen möchtest\?</string>
+    <string name="gem_purchase_confirmation">Du hast %s Edelsteine erhalten.</string>
+    <string name="gift_confirmation_text_gems_new">Du hast %s %s Edelsteine geschickt.</string>
+    <string name="sale_ends_in">Angebot endet in %s</string>
+    <string name="my_account">Mein Konto</string>
+    <string name="added_social_auth">%s Authentifizierung hinzugefügt</string>
+    <string name="login_methods">Anmelde-Optionen</string>
+    <string name="copied_to_clipboard">%s in die Zwischenablage kopiert</string>
+    <string name="subscription_confirmation">Du hast Habitica für 1 Monat abonniert</string>
+    <string name="subscription_confirmation_multiple">Du hast Habitica für %s Monate abonniert</string>
+    <string name="successful_purchase_generic">Erfolgreicher Kauf</string>
+    <string name="switch_class">Klasse wechseln</string>
+    <string name="minimal">Minimal</string>
+    <string name="removed_social_auth">%s entfernt</string>
+    <string name="adventure_guide_description_new">Erreiche diese Ziele und Du wirst &lt;b&gt;5 Erfolge&lt;/b&gt; und &lt;font color=#EE9109&gt;&lt;b&gt;100 Gold&lt;/b&gt;&lt;/font&gt; erhalten, wenn Du fertig bist!</string>
+    <string name="compact">Kompakt</string>
+    <string name="starting_objectives">Anfangsziele</string>
+    <string name="onboarding_objectives">Anfangsziele</string>
+    <string name="task_list_mode">Aufgabenlisten-Modus</string>
+    <string name="quest_party_required_title">Du musst in einer Party sein, um eine Quest starten zu können</string>
+    <string name="quest_party_required_description">Sobald Du in einer Party bist, kannst Du Quests alleine bestreiten oder Freunde einladen, um mit ihnen Quests zu bestreiten!</string>
+    <string name="armoireEquipment_new">Du findest einen seltenen Ausrüstungsgegenstand im Schrank!</string>
+    <string name="armoireFood_new">Du stöberst im Schrank und findest Futter. Was hat das denn hier verloren\?</string>
+    <string name="sell_no_price">Verkaufen</string>
+    <string name="create_new_party">Neue Party erstellen</string>
+    <string name="next_hourglass">Nächste Sanduhr</string>
+    <string name="reset_account_title">Bist Du sicher, dass Du zurücksetzen möchtest\?</string>
+    <string name="confirm_reset">Zurücksetzen bestätigen</string>
+    <string name="forgot_password_hint_example">z.B. habitrabbit oder gryphon@example.com</string>
+    <string name="are_you_sure_you_want_to_delete">Bist Du sicher, dass Du löschen möchtest\?</string>
+    <string name="armoire">Schrank</string>
+    <string name="equipment_remaining">Ausrüstungsgegenstände verbleibend: %d</string>
+    <string name="new_pieces_added_every_month">Neue Ausrüstungsgegenstände jeden Monat</string>
+    <string name="watch_ad">Werbeanzeige ansehen</string>
+    <string name="available_in">Verfügbar in %s</string>
+    <string name="watch_ad_to_open">Werbeanzeige ansehen, um erneut zu öffnen</string>
+    <string name="watch_ad_to_revive">Werbeanzeige ansehen, um wiederzubeleben</string>
+    <string name="armoire_rate_equipment_title">60% Ausrüstungsgegenstand</string>
+    <string name="armoire_rate_experience_title">20% Erfahrungspunkte</string>
+    <string name="armoire_rate_experience_description">Die erhaltene Menge ist zufällig und liegt zwischen 10 und 50</string>
+    <string name="purchased">Gekauft</string>
+    <string name="show_me">Zeig es mir</string>
+    <string name="background_filters">Hintergrundfilter</string>
+    <string name="newest">Neueste</string>
+    <string name="oldest">Älteste</string>
+    <string name="sort_by">Sortieren nach</string>
+    <string name="january">Januar</string>
+    <string name="febuary">Februar</string>
+    <string name="march">März</string>
+    <string name="april">April</string>
+    <string name="may">Mai</string>
+    <string name="june">Juni</string>
+    <string name="july">Juli</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">Oktober</string>
+    <string name="november">November</string>
+    <string name="december">Dezember</string>
+    <string name="incorrect_password">Das Passwort war nicht korrekt</string>
+    <string name="buy_set">Set kaufen</string>
+    <string name="tutorial_reset_confirmation">Deine Einführung wurde zurückgesetzt</string>
+    <string name="death_description">Aber Du kannst sie alle mit harter Arbeit zurückerlangen! Viel Erfolg - Du wirst das schaffen.</string>
+    <string name="faint_broken_equipment">Zerstörte Ausrüstungsgegenstände können im Belohnungen-Bereich zurückgekauft werden</string>
+    <string name="faint_loss_description">Du fällst zurück auf Level <b>%d</b>, verlierst <b>%d</b> Gold und <b>ein Ausrüstungsgegenstand</b> wird zerstört…</string>
+    <string name="account_reset">Account zurücksetzen</string>
+    <string name="avatar_skin_customization">Avatar Haut Anpassung</string>
+    <string name="avatar_beard_customization">Avatar Bart Anpassung</string>
+    <string name="avatar_hair_color_customization">Avatar Haarfarbe Anpassung</string>
+    <string name="avatar_hair_style_customization">Avatar Frisur Anpassung</string>
+    <string name="display">Anzeige</string>
+    <string name="facial_hair_notes">Dieses Set enthält alle Bärte und Schnurrbärte</string>
+    <string name="unable_to_delete">Kann nicht gelöscht werden</string>
+    <string name="delete_account_subscription_active">Du kannst Deinen Account nicht löschen, solange Du ein aktives Abonnement hast. Bitte storniere zunächst das Abonnement.</string>
+    <string name="go_to_subscription">Gehe zu Abonnement</string>
+    <string name="mor_gems_title">Du benötigst mehr Edelsteine, um dies zu kaufen!</string>
+    <string name="gems_support">Der Erwerb von Edelsteinen unterstützt unser kleines Team von Habitica</string>
+    <string name="month_released">Veröffentlicht im Monat</string>
+    <string name="usernames_party">Party von %s</string>
+    <string name="group_plan_settings">Gruppenplan-Einstellungen</string>
+    <string name="armoire_rate_food_title">20% Futter</string>
+    <string name="day_start_adjustment">Tagesstart Anpassung</string>
+    <string name="you_ran_out_of_health">Dir ist die Gesundheit ausgegangen!</string>
+    <string name="avatar_shirt_customization">Avatar Oberteil Anpassung</string>
+    <string name="avatar_mustache_customization">Avatar Schnurrbart Anpassung</string>
+    <string name="habitica_official">Habitica Offiziell</string>
+    <string name="academics">Wissenschaftliches</string>
+    <string name="creativity">Kreativität</string>
+    <string name="entertainment">Unterhaltung</string>
+    <string name="hobbies_occupations">Hobbies &amp; Tätigkeiten</string>
+    <string name="advocacy_causes">Fürsprachen &amp; Anliegen</string>
+    <string name="finance">Finanzen</string>
+    <string name="health_fitness">Gesundheit &amp; Fitness</string>
+    <string name="location_based">Ortsbasiert</string>
+    <string name="mental_health">Mentale Gesundheit &amp; Selbstfürsorge</string>
+    <string name="getting_organized">Alles über Organisation</string>
+    <string name="self_improvement">Selbstverbesserung</string>
+    <string name="spirituality">Spiritualität</string>
+    <string name="time_management">Zeitmanagement &amp; Verantwortlichkeit</string>
+    <string name="armoire_rate_equipment_description">Neue Ausrüstungsgegentände werden jeden Monat hinzugefügt. Besitzt Du alle Ausrüstungsgegenstände, erhältst du Futter oder Erfahrungspunkte, 50/50 Wahrscheinlichkeit.</string>
+    <string name="armoire_rate_food_description">Du erhältst einen der zehn Typen von Futter. Während besoderer Events werden die normalen Futtertypen durch ihre Kuchen- oder Süßigkeitenäquivalente ersetzt.</string>
+    <string name="avatar_bangs_customization">Avatar Pony Anpassung</string>
+    <string name="copy_shared_tasks">Kopiere geteilte Aufgaben</string>
+    <string name="copy_tasks_description">Zeige zugewiesene und offene Aufgaben auf Deinen persönlichen Aufgabenlisten</string>
+    <string name="cds_subtitle">Stelle ein, wann Dein Tag über die Standardzeit von Mitternacht hinaus umschaltet.</string>
+    <string name="armoire_drop_rates">Schrank-Beute-Verteilung</string>
+    <string name="enchanted_armoire_drop_rates">Verzauberter-Schrank-Beute-Verteilung</string>
+    <plurals name="people">
+        <item quantity="one">%d Person</item>
+        <item quantity="other">%d Personen</item>
+    </plurals>
+    <plurals name="you_x_others">
+        <item quantity="one">Du</item>
+        <item quantity="other">Du und %d andere</item>
+    </plurals>
 </resources>

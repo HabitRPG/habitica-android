@@ -32,19 +32,6 @@
     <string name="preference_push_your_quest_has_begun">クエストが始まりました</string>
     <string name="preference_push_invited_to_quest">クエストに招待されました</string>
     <!--Adding tasks-->
-    <string name="action_edit">編集</string>
-    <string name="action_cancel">戻る</string>
-    <string name="login_btn">ログイン</string>
-    <string name="register_btn">登録する</string>
-    <string name="username">ユーザー名</string>
-    <string name="email_username">メールアドレスまたはユーザー名</string>
-    <string name="password">パスワード</string>
-    <string name="emailAddress">メールアドレス</string>
-    <string name="confirmpassword">パスワード ( 確認 )</string>
-    <string name="logout">ログアウト</string>
-    <string name="logout_description">ログアウトする</string>
-    <string name="LoginActivityName">ようこそ</string>
-    <string name="about_title">Habiticaについて</string>
     <string name="about_libraries">ライブラリー</string>
     <string name="about_habitica_open_source">Habiticaは Github にてオープンソース・ソフトウェアとして開発されています</string>
     <string name="about_rate_our_app">このアプリをレビュー</string>
@@ -54,17 +41,11 @@
     <!--Network Errors-->
     <string name="internal_error_api">サーバーに接続できません</string>
     <string name="authentication_error_title">認証エラー</string>
-    <string name="login_validation_error_title">確認エラー</string>
-    <string name="login_validation_error_fieldsmissing">全ての入力欄に入力してください。</string>
     <string name="save_changes">保存</string>
     <string name="copy">コピー</string>
     <string name="notes">メモ</string>
     <string name="difficulty">難易度</string>
     <string name="tags">タグ</string>
-    <string name="trivial">ちょろい</string>
-    <string name="easy">かんたん</string>
-    <string name="medium">ふつう</string>
-    <string name="hard">むずかしい</string>
     <string name="start_date">開始日</string>
     <string name="positive_habit_form">いい ( + )</string>
     <string name="negative_habit_form">悪い ( - )</string>
@@ -104,10 +85,6 @@
     <string name="party">パーティー</string>
     <string name="chat">チャット</string>
     <string name="members">メンバー</string>
-    <string name="habits">習慣</string>
-    <string name="dailies">日課</string>
-    <string name="todos">To Do</string>
-    <string name="rewards">ごほうび</string>
     <string name="yes">はい</string>
     <string name="no">いいえ</string>
     <string name="quest">クエスト</string>
@@ -185,7 +162,6 @@
     <string name="guild">ギルド</string>
     <string name="leave">やめる</string>
     <string name="join">参加する</string>
-    <string name="gems">ジェム</string>
     <string name="delete">削除</string>
     <string name="name">名前</string>
     <string name="description">詳細</string>
@@ -221,8 +197,6 @@
     <string name="quests">クエスト</string>
     <string name="pets">ペット</string>
     <string name="mounts">乗騎</string>
-    <string name="armoireEquipment">宝箱から%sを見つけました</string>
-    <string name="armoireFood">宝箱をひっかきまわして%1$s%2$sを見つけた。何でこんなとこに?</string>
     <string name="armoireExp">宝箱と格闘して経験値を増やした。どうぞっ!</string>
     <string name="sell">%d ゴールドで売る</string>
     <string name="hatch_with_potion">たまごがえしの薬を使う</string>
@@ -239,14 +213,12 @@
     <string name="notification_pet_fed">%sにえさをやった!</string>
     <string name="notification_purchase_reward">ごほうびを購入しました</string>
     <string name="world_quest">ワールドクエスト</string>
-    <string name="inn_description">休息が必要ですか？　Danielのロッジにチェックインして、Habiticaにおける手ごわいゲーム要素を停止させましょう。：
+    <string name="inn_description">休息が必要ですか？Danielのロッジにチェックインして、Habiticaにおける手ごわいゲーム要素を停止させましょう。
 \n
-\n ・日課をこなさなくてもダメージを受けなくなります
-\n ・タスクの連続実行は変更されなくなり、色も変わらなくなります
-\n ・日課をこなさなくてもボスからのダメージを受けなくなります
-\n ・チェックアウトするまで、ボスダメージや収集クエストアイテムは保留されたままになります</string>
+\n ・日課をこなさなくてもダメージを受けなくなります（パーティーメンバーが日課を逃した際のボスからのダメージは受け続けます）
+\n ・タスクの連続実行はリセットされません
+\n ・チェックアウトするまで、ボスへのダメージや収集したアイテムは保留されたままになります</string>
     <string name="empty_items">%sはありません</string>
-    <string name="user_level">レベル %d</string>
     <string name="user_level_with_class">レベル %1$d %2$s</string>
     <string name="warrior">戦士</string>
     <string name="rogue">盗賊</string>
@@ -277,9 +249,9 @@
     <string name="add_invites">招待の追加</string>
     <string name="email">メール</string>
     <string name="share_using">共有 ( シェア )：</string>
-    <string name="share_levelup">現実で習慣を改善して、#Habitica でレベル%dになりました！</string>
-    <string name="share_hatched">現実でのタスクをこなして、#Habitica で%1$s%2$s のペットをかえしました！</string>
-    <string name="share_raised">現実でタスクをこなして、#Habitica で%1$s の乗騎を手に入れました！</string>
+    <string name="share_levelup">現実で習慣を改善して、 #Habitica でレベル%dになりました！</string>
+    <string name="share_hatched">現実でのタスクをこなして、 #Habitica で %1$s%2$s のペットをかえしました！</string>
+    <string name="share_raised">現実でタスクをこなして、 #Habitica で%1$s の乗騎を手に入れました！</string>
     <string name="open_in_store">Play ストアで開く</string>
     <string name="change_class_confirmation">クラスを変更します。いいですか？3 ジェムかかります。</string>
     <string name="change_class_equipment_warning">注意： %s クラスの装備を買うことはできなくなります。</string>
@@ -292,7 +264,6 @@
     <string name="login_incentive">Habiticaに連続でログインするとアンロック</string>
     <string name="create_account">アカウントを作成するとアンロック</string>
     <string name="successful_purchase">%1$sを購入しました</string>
-    <string name="gold_plural">ゴールド</string>
     <string name="chat_message_copied">メッセージをクリップボードにコピーしました</string>
     <string name="edit_tag_btn_edit">編集</string>
     <string name="confirm_delete_tag_title">よろしいですか?</string>
@@ -314,7 +285,7 @@
     <string name="google_services_missing">Google Play サービスが見つかりません。</string>
     <string name="gem_purchase_toolbartitle">購入</string>
     <string name="gem_purchase_title">ジェムを購入することで、開発者を支援し、Habiticaの運営を維持する手助けができます</string>
-    <string name="gem_purchase_subtitle">ジェムがあれば、あなたのアカウントでこのような楽しいおまけを買えます：</string>
+    <string name="gem_purchase_subtitle">ジェムがあればあなたのアカウント楽しいおまけを買えます</string>
     <string name="gem_purchase_listitem1">アバター用のクールなファッション</string>
     <string name="gem_purchase_listitem2">すんごい背景</string>
     <string name="gem_purchase_listitem3">ペットのたまごを獲得できるクエスト</string>
@@ -374,10 +345,6 @@
     <string name="remove_tasks">削除する</string>
     <string name="keep_tasks">残す</string>
     <string name="my_challenges">マイチャレンジ</string>
-    <string name="daily">日課</string>
-    <string name="habit">習慣</string>
-    <string name="reward">ごほうび</string>
-    <string name="todo">To Do</string>
     <string name="official">Habitica公式</string>
     <string name="challenge">チャレンジ</string>
     <string name="not_part_of_a_challenge">今参加しているチャレンジはありません！</string>
@@ -401,7 +368,6 @@
     <string name="owned">所持</string>
     <string name="not_owned">非所持</string>
     <string name="login_btn_fb">Facebookでログイン</string>
-    <string name="login_btn_google">Googleでログイン</string>
     <string name="action_back">戻る</string>
     <string name="welcome_text">やあ、新人さんだね。僕はJustin。Habiticaの案内役だよ。
 \n
@@ -414,8 +380,8 @@
     <string name="avatar_hair_ponytail">ポニーテール</string>
     <string name="avatar_glasses">メガネ</string>
     <string name="avatar_wheelchair">車いす</string>
-    <string name="weak">ザコ敵</string>
-    <string name="strong">強敵</string>
+    <string name="weak">苦手</string>
+    <string name="strong">得意</string>
     <string name="gray">無効</string>
     <string name="dated">予定</string>
     <string name="completed">完了</string>
@@ -487,9 +453,7 @@
     <string name="int_abbrv">知能</string>
     <string name="con_abbrv">体質</string>
     <string name="reset_account">アカウントをリセット</string>
-    <string name="reset_account_description">【注意！】この操作はあなたのアカウントの多くの部分をリセットします。リセットは大変やる気を削ぐことですが、短時間だけサイトを遊んだ始めたばかりの段階にはリセットが役立つこともあります。
-\n
-\nすべてのレベル、ゴールド、経験値を失います。すべてのタスク（チャレンジ関連のものを除く）は完全に削除され、履歴データもすべて削除されます。すべての装備を失いますが、現在あなたがもっている限定装備や有料会員向けのミステリーアイテムなども含めて、すべて買い戻すことができます（クラス固有の装備を再度購入するには、該当するクラスにならなくてはいけません）。現在のクラスとペットと乗騎は維持されます。代わりに「転生のオーブ」を使う方が、タスクと所持品も維持されるため、リセットするより安心です。</string>
+    <string name="reset_account_description">すべてのレベル、ゴールド、経験値が失われます。すべてのタスクとその履歴データは削除されます（チャレンジタスクは残ります）。限定装備や有料会員向け装備を含むすべての装備を失いますが、買い戻すことは可能です（クラス固有の装備を買い戻すには、正しいクラスになる必要があります）。現在のクラスとペットと乗騎は維持されます。リセットを続行するには、下に「RESET」と入力してください。</string>
     <string name="delete_account">アカウントを削除</string>
     <string name="delete_account_description">この操作であなたのアカウントは完全に削除され、決して復元はできません！貯めているジェム、使ったジェムは、返金できません。本当にアカウントを削除するなら、下のテキストボックスにパスワードを入力してください。</string>
     <string name="reset_account_confirmation">アカウントをリセット</string>
@@ -509,12 +473,11 @@
     <string name="come_back_soon">間もなく再開！</string>
     <string name="level">レベル</string>
     <string name="streak_label">21日連続実行</string>
-    <string name="stats">ステータス</string>
     <string name="fix_character_description">もしバグや間違いによってあなたのキャラクターが変更されてしまったら、ここから手動で値を修正することができます。</string>
     <string name="fix_character_values">キャラクターの能力値を修正する</string>
     <string name="saving">保存</string>
     <string name="forgot_password_title">パスワードリセット用のURLをメールする</string>
-    <string name="forgot_password_description">Habiticaアカウント登録時に使用したメールアドレスを入力して下さい。</string>
+    <string name="forgot_password_description">ユーザー名、またはHabiticaアカウント登録時に使用したメールアドレスを入力してください。</string>
     <string name="forgot_password_confirmation">もしメールアドレスが登録されていれば、新しいパスワードの設定方法がメールで送信されます。</string>
     <string name="ok">OK</string>
     <string name="profile">プロフィール</string>
@@ -587,7 +550,7 @@
     <string name="stable_owner_long">猛獣使いのMatt</string>
     <string name="hide_boss_art">ボス画像を隠す</string>
     <string name="active_world_boss">活動中のワールドボス</string>
-    <string name="no_party_description">仲間たちと一緒に、または各自で、クエストに挑戦しましょう。モンスターと戦ったり、チャレンジを作ったり…… そして、パーティーを通じてあなた自身を責任ある状態にし続けてみましょう。</string>
+    <string name="no_party_description">ひとりで、あるいは仲間と一緒にクエストに挑戦しましょう。モンスターと戦い、チャレンジを作り、パーティーによって自分の責任感を維持することができます。</string>
     <string name="no_party_title">パーティーに参加してHabiticaをプレイする</string>
     <string name="join_party_description">下の方に見えるユーザー名をパーティーメンバーに伝えましょう。そうすると彼らはあなたに招待を送ることができます</string>
     <string name="join_party_title">パーティーに参加したいですか？</string>
@@ -673,7 +636,7 @@
     <string name="due">期限</string>
     <string name="opting_out_progress">選ばない</string>
     <string name="subscription_duration_norenew">%sの間</string>
-    <string name="delete_oauth_account_description">この操作であなたのアカウントは完全に削除され、決して復元はできません！貯めているジェム、使ったジェムは、返金できません。本当にアカウントを削除するなら、下のテキストボックスに DELETE と入力してください。</string>
+    <string name="delete_oauth_account_description">この操作であなたのアカウントは完全に削除され、決して復元はできません！貯めているジェム、使ったジェムは、返金できません。本当にアカウントを削除するなら、下のテキストボックスに 「DELETE」と入力してください。</string>
     <string name="gift_one_get_one_detailed_description">このプロモーションが開催されている間は、プレゼントを送った後に自動的に同じ期間のプランが無料で適用されます。</string>
     <string name="damage_paused">ダメージを一時停止する</string>
     <string name="preference_push_important_announcements">大切なお知らせ</string>
@@ -731,8 +694,6 @@
     <string name="empty_description_todos_filtered">現在のフィルターでは表示できるTo Doがありません。</string>
     <string name="empty_description_dailies_filtered">現在のフィルターでは表示できる日課がありません。</string>
     <string name="streak">連続実行</string>
-    <string name="weekly">毎週</string>
-    <string name="monthly">毎月</string>
     <string name="gift_confirmation_text_sub">%sに%sヶ月分のHabitica有料プランを送りました。</string>
     <string name="gift_gems_subtitle">下から贈りたいジェムの量を選びましょう！</string>
     <string name="join_party_description_guild">友達に下のユーザー名を教えるか、%sに行って未来の仲間たちに出会いましょう！</string>
@@ -749,7 +710,6 @@
     <string name="off">オフ</string>
     <string name="on">オン</string>
     <string name="every">くり返しの間隔</string>
-    <string name="gold_capitalized">ゴールド</string>
     <string name="user_level_with_class_unabbreviated">レベル %1$d %2$s</string>
     <string name="weeks">週</string>
     <string name="repeats">くり返し</string>
@@ -772,7 +732,6 @@
     <string name="seasonal_achievements">季節の実績</string>
     <string name="basic_achievements">基本の実績</string>
     <string name="sidebar_achievements">実績</string>
-    <string name="new_task">新しいタスク</string>
     <string name="delete_task">タスクを削除する</string>
     <string name="guild_members">ギルドメンバー</string>
     <string name="scheduling">スケジュール設定</string>
@@ -791,7 +750,6 @@
     <string name="read_more">つづきを読む</string>
     <string name="still_questions">まだ疑問が解決しませんか？</string>
     <string name="clear_cache">キャッシュをクリアしてください</string>
-    <string name="mystic_hourglasses">神秘の砂時計</string>
     <string name="game_mechanics">ゲームの仕組み</string>
     <string name="common_questions">よくある質問</string>
     <string name="mana_points">マナ</string>
@@ -808,7 +766,6 @@
     <string name="preference_push_party_activity">パーティーの活動</string>
     <string name="search_hint">タスクを検索する</string>
     <string name="search">検索</string>
-    <string name="repeat_daily">毎日</string>
     <string name="complete">完了</string>
     <string name="joinedGuildTitle">ギルドに参加しました</string>
     <string name="beastMasterTitle">獣使い</string>
@@ -832,7 +789,6 @@
     <string name="levelup_detail_10">あなたのプレイスタイルにあったクラス（職業）を選んで、あなたの冒険を補助するスペシャルスキルや装備を手に入れましょう</string>
     <string name="not_now">後で</string>
     <string name="delete_reminder">リマインダーを削除する</string>
-    <string name="are_you_sure">よろしいですか？</string>
     <string name="invite_to_party">パーティーに招待する</string>
     <string name="guild_summary">ギルドの概要</string>
     <string name="guild_bank">ギルド口座</string>
@@ -857,7 +813,6 @@
     <string name="sent_card">%sを送りました</string>
     <string name="share_challenge_with">チャレンジをシェアする</string>
     <string name="details">詳細</string>
-    <string name="create_task">%sの作成</string>
     <string name="confirm_deletion">削除を承認する</string>
     <string name="take_me_back">戻る</string>
     <string name="setup_task_habit_2_notes">または編集画面から削除しましょう</string>
@@ -1011,7 +966,6 @@
 \n
 \nあなたは神秘の砂時計を年に4つ受け取れます。入手のタイミングは有料会員の更新スケジュールに基づいています。砂時計を入手できる期間の有料プランを支払うと、その翌月の最初の日に配布されます。詳しくは「有料プラン」のページをご覧ください。</string>
     <string name="subscription_credit">有料プランの有効期間</string>
-    <string name="create_task_title">タスクの作成</string>
     <string name="percent_completed">%d%%完了</string>
     <string name="pet_ownership_fraction">%1$d / %2$d</string>
     <string name="leave_keep_tasks">やめる、タスクはこのまま</string>
@@ -1032,7 +986,6 @@
     <string name="hatchedPetDescription">集めるペットはたくさんいるので、お気に入りが見つかるでしょう。あなたがえさをあげれば成長するかも……</string>
     <string name="feedPet_title">ペットにえさをやる</string>
     <string name="hatch_pet_title">ペットをかえす</string>
-    <string name="complete_task_title">タスクを完了する</string>
     <string name="delete_x_tasks">%dのタスクを削除する</string>
     <string name="keep_x_tasks">%dのタスクを残す</string>
     <string name="broken_challenge_description">このタスクは%dチャレンジの一部です。このチャレンジは終了しました。残ったタスクをどうしますか？</string>
@@ -1079,10 +1032,10 @@
     <string name="first_drop_title">新しいアイテムを見つけました！</string>
     <string name="go_to_items">「アイテム」へ</string>
     <string name="spooky_promo_info_prompt">ジェムのセールが今年の秋の大祭に出没するために戻ってきました！いつもよりもジェムを多く手に入れるラストチャンスです。キャンペーンの間にジェムをストックしておきましょう！</string>
-    <string name="spooky_promo_info_instructions">9月22日から30日の間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
+    <string name="spooky_promo_info_instructions">%sから%sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
     <string name="view_gem_bundles">ジェムセットを見る</string>
     <string name="fall_promo_info_prompt">秋の大祭も最高潮で、はじめてのジェムのセールを皆さんにお知らせするのに最高のタイミングだと我々は考えました！このセールでは、いつもと同じ値段で、いつもよりも多くのジェムが購入できます。</string>
-    <string name="fall_promo_info_instructions">9月22日から30日の間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
+    <string name="fall_promo_info_instructions">%sから%sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
     <string name="limitations">制限事項</string>
     <string name="how_it_works">機能説明</string>
     <string name="x_to_y">%sから%sへ</string>
@@ -1166,8 +1119,6 @@
     <string name="quest_leave_message_nostart">本当にクエストを抜けますか？一度抜けると同じクエストには参加できません。</string>
     <string name="quest_leave_message">進行中のクエストを抜けます。よろしいですか？あなたのクエストの成果はすべて失われます。</string>
     <string name="empty_title">まだ何もありません</string>
-    <string name="failed">読み込みに失敗しました</string>
-    <string name="retry">再試行</string>
     <string name="locked_equipment_shop_dialog">この続きをアンロックするには、一つ前のアイテムを購入してください</string>
     <string name="survey_menu_description">5分でできるこの調査に協力してHabiticaの成長を手伝ってください。実績がもらえます！</string>
     <string name="survey_title">Habiticaプレイヤー調査</string>
@@ -1181,4 +1132,133 @@
     <string name="adjust_counter">回数を修正</string>
     <string name="reset_counter">カウンターをリセット</string>
     <string name="x_remaining">残り%s</string>
+    <string name="discard">捨てる</string>
+    <string name="class_confirmation_price">クラスを%sに%dジェムで変更しますか？</string>
+    <string name="use_item">パーティーメンバーにアイテムを使う</string>&gt;
+    <string name="unsaved_changes">保存されていない変更</string>
+    <string name="discard_changes_to_task_message">このタスクへの変更を保存せずに終了しますか？</string>
+    <string name="gift_confirmation_text_gems_new">%s %s のジェムを贈りました。</string>
+    <string name="subscription_confirmation">1ヶ月の有料会員です</string>
+    <string name="sale_ends_in">セールは%sに終了</string>
+    <string name="not_connected">未接続</string>
+    <string name="add_password">パスワードを追加</string>
+    <string name="connect">接続</string>
+    <string name="my_account">マイアカウント</string>
+    <string name="public_profile">公開プロフィール</string>
+    <string name="about_me">私について</string>
+    <string name="account_info">アカウント情報</string>
+    <string name="login_methods">ログイン方法</string>
+    <string name="disconnect">接続を切る</string>
+    <string name="subscription_confirmation_multiple">%s ヶ月間の有料会員です</string>
+    <string name="gem_purchase_confirmation">%sのジェムを手に入れました。</string>
+    <string name="adventure_guide_description_new">これらの目標を達成して、&lt;b&gt;5つの実績バッジ&lt;/b&gt;と&lt;font color=#EE9109&gt;&lt;b&gt;100ゴールド&lt;/b&gt;&lt;/font&gt;をゲットしましょう！</string>
+    <string name="add">追加</string>
+    <string name="password_not_matching">正しいパスワードを2回入力する必要があります</string>
+    <string name="apitoken_summary">トークンをコピーする。これはパスワードなので慎重に扱ってください！</string>
+    <string name="added_social_auth">%sとの連携を追加</string>
+    <string name="copied_to_clipboard">%sをクリップボードにコピーしました</string>
+    <string name="removed_social_auth">%sとの連携を解除</string>
+    <string name="password_added">パスワードを保存しました</string>
+    <string name="add_email_and_password">メールアドレスとパスワードを追加</string>
+    <string name="email_invalid">メールアドレスが無効です</string>
+    <string name="switch_class">クラスの変更</string>
+    <string name="task_list_mode">タスク一覧モード</string>
+    <string name="successful_purchase_generic">購入に成功しました</string>
+    <string name="starting_objectives">最初の目標</string>
+    <string name="onboarding_objectives">最初の目標</string>
+    <string name="compact">縮小</string>
+    <string name="minimal">ミニマム</string>
+    <string name="usernames_party">%sのパーティー</string>
+    <string name="quest_party_required_title">クエストを開始する前にパーティーに参加する必要があります</string>
+    <string name="quest_party_required_description">パーティーに入れば、ひとりでクエストに挑戦したり、仲間を招待して一緒にクエストに挑戦したりできます！</string>
+    <string name="new_pieces_added_every_month">毎月新しい作品が追加されます</string>
+    <string name="armoire_rate_equipment_description">毎月、新しい装備品が追加されます。すべての装備品を所持している場合、50%/50%の確率で「食べ物」または「経験値」を獲得できます。</string>
+    <string name="armoire_rate_food_description">10種類の食べ物のうち1つを受け取れます。特別なイベント時には、通常の食べ物がケーキやお菓子に変わります。</string>
+    <string name="cds_subtitle">デフォルトの0時時間をすぎた時間に1日が切り替わるように調整できます。</string>
+    <string name="avatar_hair_color_customization">ヘアカラーのカスタマイズ</string>
+    <string name="delete_account_subscription_active">有効な有料プランがある間は、アカウントを削除することはできません。先に有料プランを解約してください。</string>
+    <string name="gems_support">ジェムの購入により、Habiticaの少人数な運営チームを支援できます</string>
+    <string name="armoireEquipment_new">金庫の中から珍しい装備を発見！</string>
+    <string name="armoireFood_new">タンスを探したら、食べ物があった。これは何だろう？</string>
+    <string name="sell_no_price">売る</string>
+    <string name="create_new_party">新しいパーティーを作る</string>
+    <string name="next_hourglass">次の神秘の砂時計</string>
+    <string name="reset_account_title">本当にリセットしますか？</string>
+    <string name="confirm_reset">リセットする</string>
+    <string name="forgot_password_hint_example">例：habitrabbit または gryphon@example.com</string>
+    <string name="are_you_sure_you_want_to_delete">本当に削除しますか？</string>
+    <string name="armoire_drop_rates">ワードローブのドロップ率</string>
+    <string name="armoire">ワードローブ</string>
+    <string name="watch_ad">広告を見る</string>
+    <string name="available_in">%s で入手可能</string>
+    <string name="watch_ad_to_open">もう一度開くために広告を見る</string>
+    <string name="watch_ad_to_revive">復活するために広告を見る</string>
+    <string name="enchanted_armoire_drop_rates">エンチャントされたワードローブのドロップ率</string>
+    <string name="armoire_rate_experience_description">獲得量は10～50の間でランダムに変化します</string>
+    <string name="purchased">購入済み</string>
+    <string name="show_me">見る</string>
+    <string name="background_filters">背景フィルター</string>
+    <string name="newest">最新</string>
+    <string name="oldest">最古</string>
+    <string name="sort_by">ソート</string>
+    <string name="january">1月</string>
+    <string name="febuary">2月</string>
+    <string name="march">3月</string>
+    <string name="april">4月</string>
+    <string name="may">5月</string>
+    <string name="june">6月</string>
+    <string name="july">7月</string>
+    <string name="august">8月</string>
+    <string name="september">9月</string>
+    <string name="october">10月</string>
+    <string name="november">11月</string>
+    <string name="december">12月</string>
+    <string name="day_start_adjustment">一日の始まりの時間の調整</string>
+    <string name="buy_set">セット購入</string>
+    <string name="tutorial_reset_confirmation">チュートリアルがリセットされました</string>
+    <string name="you_ran_out_of_health">体力がなくなりました！</string>
+    <string name="death_description">でも、頑張れば全部取り戻せるよ！がんばれ！きっとうまくいく。</string>
+    <string name="account_reset">アカウントのリセット</string>
+    <string name="avatar_shirt_customization">シャツのカスタマイズ</string>
+    <string name="avatar_skin_customization">スキンのカスタマイズ</string>
+    <string name="avatar_bangs_customization">前髪のカスタマイズ</string>
+    <string name="avatar_hair_style_customization">ヘアスタイルのカスタマイズ</string>
+    <string name="display">ディスプレイ</string>
+    <string name="facial_hair_notes">このセットには、すべてのあごひげと口ひげが含まれています</string>
+    <string name="avatar_beard_customization">あごひげのカスタマイズ</string>
+    <string name="avatar_mustache_customization">くちひげのカスタマイズ</string>
+    <string name="unable_to_delete">削除不可</string>
+    <string name="go_to_subscription">有料プランに行く</string>
+    <string name="mor_gems_title">これを買うにはもっとジェムが必要です！</string>
+    <string name="month_released">発売月</string>
+    <string name="incorrect_password">パスワードが正しくありません</string>
+    <string name="habitica_official">Habitica公式</string>
+    <string name="creativity">創造性</string>
+    <string name="entertainment">エンターテイメント</string>
+    <string name="finance">金融・経済</string>
+    <string name="health_fitness">健康・フィットネス</string>
+    <string name="self_improvement">自己改善</string>
+    <string name="time_management">時間管理・アカウンタビリティ</string>
+    <string name="equipment_remaining">残りの装備: %d</string>
+    <string name="faint_broken_equipment">壊れた装備はごほうびから買い戻すことができます</string>
+    <string name="armoire_rate_experience_title">20% 経験値</string>
+    <string name="armoire_rate_food_title">20% の食べ物</string>
+    <string name="faint_loss_description">レベル <b>%d</b> に下がり、<b>%d</b> ゴールドを失い、<b>歯車</b> が壊れます…</string>
+    <string name="armoire_rate_equipment_title">60% 装備品</string>
+    <string name="academics">学術分野</string>
+    <string name="advocacy_causes">主義主張</string>
+    <string name="location_based">国・地域別</string>
+    <string name="copy_shared_tasks">共有タスクをコピー</string>
+    <string name="mental_health">メンタルヘルス・セルフケア</string>
+    <string name="hobbies_occupations">趣味・仕事</string>
+    <string name="getting_organized">整理整頓</string>
+    <string name="spirituality">精神性</string>
+    <string name="copy_tasks_description">割り当てられたタスクと未完了のタスクを個人のタスク リストに表示する</string>
+    <string name="group_plan_settings">グループプランの設定</string>
+    <plurals name="people">
+        <item quantity="other">%d 人</item>
+    </plurals>
+    <plurals name="you_x_others">
+        <item quantity="other">あなたと他 %d</item>
+    </plurals>
 </resources>
