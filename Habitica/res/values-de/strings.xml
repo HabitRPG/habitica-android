@@ -696,7 +696,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="resubscribe_description">Willst Du weiter Deine Vorteile genießen\? Du kannst ein neues Abonnement abschließen, bevor dieses ausläuft, um Deine Vorteile zu behalten.</string>
     <string name="resubscribe">Erneut abonnieren</string>
     <string name="renew_subscription">Abonnement erneuern</string>
-    <string name="thanks_for_subscribing">Danke für das Abonnieren</string>
+    <string name="thanks_for_supporting">Danke für das Abonnieren</string>
     <string name="subscribe_options_title">Wähle die Abonnementlänge, die für Dich passt</string>
     <string name="ending_on">Endet am %s</string>
     <string name="not_recurring">Einmalig</string>

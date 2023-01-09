@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/header_bar_spacing"
                 app:barForegroundColor="@color/background_red"
-                app:barBackgroundColor="@color/window_background"
+                app:barBackgroundColor="?attr/colorWindowBackground"
                 app:description="@string/HP_default"/>
 
             <com.habitrpg.common.habitica.views.ValueBar
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/header_bar_spacing"
                 app:barForegroundColor="@color/background_yellow"
-                app:barBackgroundColor="@color/window_background"
+                app:barBackgroundColor="?attr/colorWindowBackground"
                 app:description="@string/XP_default"/>
 
             <com.habitrpg.common.habitica.views.ValueBar
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:barForegroundColor="@color/background_blue"
-                app:barBackgroundColor="@color/window_background"
+                app:barBackgroundColor="?attr/colorWindowBackground"
                 app:description="@string/MP_default"/>
 
         </LinearLayout>

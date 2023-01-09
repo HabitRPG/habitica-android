@@ -5,14 +5,17 @@ import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.social.Group
-import hu.akarnokd.rxjava3.bridge.RxJavaBridge
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.Realm
+import io.realm.kotlin.toFlow
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
 open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ContentLocalRepository {
 
     override fun saveContent(contentResult: ContentResult) {
-        executeTransactionAsync { realm1 ->
+        executeTransaction { realm1 ->
             contentResult.potion?.let { realm1.insertOrUpdate(it) }
             contentResult.armoire?.let { realm1.insertOrUpdate(it) }
             contentResult.gear?.flat?.let { realm1.insertOrUpdate(it) }
@@ -34,14 +37,13 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
         }
     }
 
-    override fun getWorldState(): Flowable<WorldState> {
-        return RxJavaBridge.toV3Flowable(
-            realm.where(WorldState::class.java)
+    override fun getWorldState(): Flow<WorldState> {
+        return realm.where(WorldState::class.java)
                 .findAll()
-                .asFlowable()
+                .toFlow()
                 .filter { it.isLoaded && it.size > 0 }
                 .map { it.first() }
-        )
+            .filterNotNull()
     }
 
     override fun saveWorldState(worldState: WorldState) {

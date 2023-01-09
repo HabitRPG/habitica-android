@@ -10,8 +10,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
-import io.reactivex.rxjava3.core.Flowable
-import retrofit2.HttpException
+import kotlinx.coroutines.flow.Flow
 
 class ChallengeRepositoryImpl(
     localRepository: ChallengeLocalRepository,
@@ -19,47 +18,42 @@ class ChallengeRepositoryImpl(
     userID: String
 ) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
 
-    override fun isChallengeMember(challengeID: String): Flowable<Boolean> {
+    override fun isChallengeMember(challengeID: String): Flow<Boolean> {
         return localRepository.isChallengeMember(userID, challengeID)
     }
 
-    override fun getChallengepMembership(id: String): Flowable<ChallengeMembership> {
+    override fun getChallengepMembership(id: String): Flow<ChallengeMembership> {
         return localRepository.getChallengeMembership(userID, id)
     }
 
-    override fun getChallengeMemberships(): Flowable<out List<ChallengeMembership>> {
+    override fun getChallengeMemberships(): Flow<List<ChallengeMembership>> {
         return localRepository.getChallengeMemberships(userID)
     }
 
-    override fun getChallenge(challengeId: String): Flowable<Challenge> {
+    override fun getChallenge(challengeId: String): Flow<Challenge> {
         return localRepository.getChallenge(challengeId)
     }
 
-    override fun getChallengeTasks(challengeId: String): Flowable<out List<Task>> {
+    override fun getChallengeTasks(challengeId: String): Flow<List<Task>> {
         return localRepository.getTasks(challengeId)
     }
 
-    override fun retrieveChallenge(challengeID: String): Flowable<Challenge> {
-        return apiClient.getChallenge(challengeID).doOnNext {
-            localRepository.save(it)
-        }
-            .doOnError {
-                if (it is HttpException && it.code() == 404) {
-                    localRepository.getChallenge(challengeID).firstElement().subscribe { challenge ->
-                        localRepository.delete(challenge)
-                    }
-                }
-            }
+    override suspend fun retrieveChallenge(challengeID: String): Challenge? {
+        val challenge = apiClient.getChallenge(challengeID) ?: return null
+        localRepository.save(challenge)
+        return challenge
     }
 
-    override fun retrieveChallengeTasks(challengeID: String): Flowable<TaskList> {
-        return apiClient.getChallengeTasks(challengeID).doOnNext { tasks ->
+    override suspend fun retrieveChallengeTasks(challengeID: String): TaskList? {
+        val tasks = apiClient.getChallengeTasks(challengeID)
+        if (tasks != null) {
             val taskList = tasks.tasks.values.toList()
             taskList.forEach {
                 it.userId = challengeID
             }
             localRepository.save(taskList)
         }
+        return tasks
     }
 
     private fun getTaskOrders(taskList: List<Task>): TasksOrder {
@@ -81,75 +75,81 @@ class ChallengeRepositoryImpl(
         return tasksOrder
     }
 
-    private fun addChallengeTasks(challenge: Challenge, addedTaskList: List<Task>): Flowable<Challenge> {
-        return when {
-            addedTaskList.count() == 1 -> apiClient.createChallengeTask(challenge.id ?: "", addedTaskList[0]).map { challenge }
-            addedTaskList.count() > 1 -> apiClient.createChallengeTasks(challenge.id ?: "", addedTaskList).map { challenge }
-            else -> Flowable.just(challenge)
+    private  suspend fun addChallengeTasks(challenge: Challenge, addedTaskList: List<Task>) {
+        when {
+            addedTaskList.count() == 1 -> apiClient.createChallengeTask(challenge.id ?: "", addedTaskList[0])
+            addedTaskList.count() > 1 -> apiClient.createChallengeTasks(challenge.id ?: "", addedTaskList)
         }
     }
 
-    override fun createChallenge(challenge: Challenge, taskList: List<Task>): Flowable<Challenge> {
+    override suspend fun createChallenge(challenge: Challenge, taskList: List<Task>): Challenge? {
         challenge.tasksOrder = getTaskOrders(taskList)
 
-        return apiClient.createChallenge(challenge).flatMap {
-            addChallengeTasks(it, taskList)
+        val createdChallenge = apiClient.createChallenge(challenge)
+        if (createdChallenge != null) {
+            addChallengeTasks(createdChallenge, taskList)
         }
+        return createdChallenge
     }
 
-    override fun updateChallenge(
+    override suspend fun updateChallenge(
         challenge: Challenge,
         fullTaskList: List<Task>,
         addedTaskList: List<Task>,
         updatedTaskList: List<Task>,
         removedTaskList: List<String>
-    ): Flowable<Challenge> {
-
-        var flowable: Flowable<*> = Flowable.just("")
-
+    ): Challenge? {
         updatedTaskList
             .map { localRepository.getUnmanagedCopy(it) }
             .forEach { task ->
-                flowable = flowable.flatMap { apiClient.updateTask(task.id ?: "", task) }
+                apiClient.updateTask(task.id ?: "", task)
             }
 
         removedTaskList.forEach { task ->
-            flowable = flowable.flatMap { apiClient.deleteTask(task) }
+            apiClient.deleteTask(task)
         }
         if (addedTaskList.isNotEmpty()) {
-            flowable = flowable.flatMap { addChallengeTasks(challenge, addedTaskList) }
+            addChallengeTasks(challenge, addedTaskList)
         }
 
         challenge.tasksOrder = getTaskOrders(fullTaskList)
 
-        return flowable.flatMap { apiClient.updateChallenge(challenge) }
-            .doOnNext { localRepository.save(challenge) }
+        val updatedChallenges = apiClient.updateChallenge(challenge)
+        if (updatedChallenges != null) {
+            localRepository.save(updatedChallenges)
+        }
+        return updatedChallenges
     }
 
-    override fun deleteChallenge(challengeId: String): Flowable<Void> {
+    override suspend fun deleteChallenge(challengeId: String): Void? {
         return apiClient.deleteChallenge(challengeId)
     }
 
-    override fun getChallenges(): Flowable<out List<Challenge>> {
+    override fun getChallenges(): Flow<List<Challenge>> {
         return localRepository.challenges
     }
 
-    override fun getUserChallenges(userId: String?): Flowable<out List<Challenge>> {
+    override fun getUserChallenges(userId: String?): Flow<List<Challenge>> {
         return localRepository.getUserChallenges(userId ?: userID)
     }
 
-    override fun retrieveChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>> {
-        return apiClient.getUserChallenges(page, memberOnly)
-            .doOnNext { localRepository.saveChallenges(it, page == 0, memberOnly, userID) }
+    override suspend fun retrieveChallenges(page: Int, memberOnly: Boolean): List<Challenge>? {
+        val challenges = apiClient.getUserChallenges(page, memberOnly)
+        if (challenges != null) {
+            localRepository.saveChallenges(challenges, page == 0, memberOnly, userID)
+        }
+        return challenges
     }
 
-    override fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void> {
-        return apiClient.leaveChallenge(challenge.id ?: "", LeaveChallengeBody(keepTasks))
-            .doOnNext { localRepository.setParticipating(userID, challenge.id ?: "", false) }
+    override suspend fun leaveChallenge(challenge: Challenge, keepTasks: String): Void? {
+        apiClient.leaveChallenge(challenge.id ?: "", LeaveChallengeBody(keepTasks))
+        localRepository.setParticipating(userID, challenge.id ?: "", false)
+        return null
     }
 
-    override fun joinChallenge(challenge: Challenge): Flowable<Challenge> {
-        return apiClient.joinChallenge(challenge.id ?: "")
-            .doOnNext { localRepository.setParticipating(userID, challenge.id ?: "", true) }
+    override suspend fun joinChallenge(challenge: Challenge): Challenge? {
+        val returnedChallenge = apiClient.joinChallenge(challenge.id ?: "") ?: return null
+        localRepository.setParticipating(userID, returnedChallenge.id ?: "", true)
+        return returnedChallenge
     }
 }

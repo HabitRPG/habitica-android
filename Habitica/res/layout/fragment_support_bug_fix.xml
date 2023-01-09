@@ -6,7 +6,7 @@
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/content_background"
+    android:background="?attr/colorContentBackground"
     android:layout_marginBottom="@dimen/spacing_large">
     <TextView
         android:layout_width="match_parent"

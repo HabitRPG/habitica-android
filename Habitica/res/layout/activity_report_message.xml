@@ -28,7 +28,7 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/Toolbar"
                 app:title=""
-                android:background="@color/content_background"
+                android:background="?attr/colorContentBackground"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:titleTextColor="@color/text_primary"
                 app:theme="@style/ReportMessageToolbar"

@@ -687,7 +687,7 @@
     <string name="party_invite_short">Invitar amigos</string>
     <string name="login_incentive_count">Desbloqueado al conectarse en Habitica %d veces.</string>
     <string name="user_level_with_class_unabbreviated">Nivel %1$d %2$s</string>
-    <string name="thanks_for_subscribing">Gracias por suscribirte</string>
+    <string name="thanks_for_supporting">Gracias por suscribirte</string>
     <string name="subscribe_options_title">Elige el tiempo de suscripción que mejor funcione para tí</string>
     <string name="cancelled">Cancelado</string>
     <string name="send_invites">Enviar invitaciones</string>

@@ -12,9 +12,7 @@ import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.EmojiParser
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+
 import io.realm.OrderedRealmCollection
 
 class ChallengesListViewAdapter(
@@ -24,7 +22,7 @@ class ChallengesListViewAdapter(
     private var unfilteredData: List<Challenge>? = null
     private var challengeMemberships: List<ChallengeMembership>? = null
 
-    private val openChallengeFragmentEvents = PublishSubject.create<String>()
+    var onOpenChallengeFragment: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
         return ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
@@ -36,7 +34,7 @@ class ChallengesListViewAdapter(
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {
                     challenge.id?.let {
-                        openChallengeFragmentEvents.onNext(it)
+                        onOpenChallengeFragment?.invoke(it)
                     }
                 }
             }
@@ -74,10 +72,6 @@ class ChallengesListViewAdapter(
         query?.let {
             data = it.findAll()
         }
-    }
-
-    fun getOpenDetailFragmentFlowable(): Flowable<String> {
-        return openChallengeFragmentEvents.toFlowable(BackpressureStrategy.DROP)
     }
 
     class ChallengeViewHolder internal constructor(

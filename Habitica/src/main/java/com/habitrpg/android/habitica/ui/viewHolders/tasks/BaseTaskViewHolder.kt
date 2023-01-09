@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.views.EllipsisTextView
@@ -23,13 +22,10 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.setParsedMarkdown
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.functions.Action
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 abstract class BaseTaskViewHolder constructor(
     itemView: View,
@@ -42,7 +38,8 @@ abstract class BaseTaskViewHolder constructor(
 
     var task: Task? = null
     var movingFromPosition: Int? = null
-    var errorButtonClicked: Action? = null
+    var errorButtonClicked: (() -> Unit)? = null
+    var userID: String? = null
     var isLocked = false
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
@@ -100,7 +97,7 @@ abstract class BaseTaskViewHolder constructor(
 
         titleTextView.setOnClickListener { onTouch(it, null) }
         notesTextView?.setOnClickListener { onTouch(it, null) }
-        errorIconView?.setOnClickListener { errorButtonClicked?.run() }
+        errorIconView?.setOnClickListener { errorButtonClicked?.invoke() }
 
         notesTextView?.movementMethod = LinkMovementMethod.getInstance()
         titleTextView.movementMethod = LinkMovementMethod.getInstance()
@@ -168,17 +165,13 @@ abstract class BaseTaskViewHolder constructor(
             } else {
                 titleTextView.text = data.text
                 if (data.text.isNotEmpty()) {
-                    Single.just(data.text)
-                        .map { MarkdownParser.parseMarkdown(it) }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { parsedText ->
-                                data.parsedText = parsedText
-                                titleTextView.setParsedMarkdown(parsedText)
-                            },
-                            ExceptionHandler.rx()
-                        )
+                    scope.launch(Dispatchers.IO) {
+                        val parsedText = MarkdownParser.parseMarkdown(data.text)
+                        withContext(Dispatchers.Main) {
+                            data.parsedText = parsedText
+                            titleTextView.setParsedMarkdown(parsedText)
+                        }
+                    }
                 }
             }
             if (displayMode != "minimal") {
@@ -195,17 +188,13 @@ abstract class BaseTaskViewHolder constructor(
                             if (notes.isEmpty()) {
                                 return@let
                             }
-                            Single.just(notes)
-                                .map { MarkdownParser.parseMarkdown(it) }
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(
-                                    { parsedNotes ->
-                                        data.parsedNotes = parsedNotes
-                                        notesTextView?.setParsedMarkdown(parsedNotes)
-                                    },
-                                    ExceptionHandler.rx()
-                                )
+                            scope.launch(Dispatchers.IO) {
+                                val parsedNotes = MarkdownParser.parseMarkdown(notes)
+                                withContext(Dispatchers.Main) {
+                                    data.parsedNotes = parsedNotes
+                                    notesTextView?.setParsedMarkdown(parsedNotes)
+                                }
+                            }
                         }
                     }
                 }

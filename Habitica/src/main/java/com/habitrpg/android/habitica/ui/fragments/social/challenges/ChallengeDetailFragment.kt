@@ -22,6 +22,7 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -38,7 +39,8 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -94,24 +96,19 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         }
 
         challengeID?.let { id ->
-            compositeSubscription.add(
+            lifecycleScope.launchCatching {
                 challengeRepository.getChallenge(id)
-                    .doOnNext {
-                        set(it)
-                    }
                     .map {
-                        return@map (it.leaderId ?: "")
+                        set(it)
+                        (it.leaderId ?: "")
                     }
-                    .filter { it.isNotEmpty() }
-                    .subscribe({
-                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                            set(socialRepository.retrieveMember(it))
-                        }
-                        }, ExceptionHandler.rx())
-            )
-            compositeSubscription.add(
-                challengeRepository.getChallengeTasks(id).subscribe(
-                    { taskList ->
+                    .distinctUntilChanged()
+                    .collect {
+                        set(socialRepository.retrieveMember(it))
+                    }
+            }
+            lifecycleScope.launchCatching {
+                challengeRepository.getChallengeTasks(id).collect { taskList ->
                         binding?.taskGroupLayout?.removeAllViewsInLayout()
 
                         val todos = ArrayList<Task>()
@@ -144,29 +141,22 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                         if (rewards.size > 0) {
                             addRewards(rewards)
                         }
-                    },
-                    ExceptionHandler.rx()
-                )
-            )
+                    }
+            }
 
-            compositeSubscription.add(
-                challengeRepository.isChallengeMember(id).subscribe(
-                    { isMember ->
-                        setJoined(isMember)
-                    },
-                    ExceptionHandler.rx()
-                )
-            )
+            lifecycleScope.launchCatching {
+                challengeRepository.isChallengeMember(id).collect { isMember ->
+                    setJoined(isMember)
+                }
+            }
         }
 
         binding?.joinButton?.setOnClickListener {
             challenge?.let { challenge ->
-                challengeRepository.joinChallenge(challenge)
-                    .subscribe({
-                               lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                                   userRepository.retrieveUser(true)
-                               }
-                    }, ExceptionHandler.rx())
+                lifecycleScope.launchCatching {
+                    challengeRepository.joinChallenge(challenge)
+                    userRepository.retrieveUser(true)
+                }
             }
         }
         binding?.leaveButton?.setOnClickListener { showChallengeLeaveDialog() }
@@ -230,14 +220,15 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
 
     private fun refresh() {
         challengeID?.let { id ->
-            challengeRepository.retrieveChallenge(id)
-                .flatMap { challengeRepository.retrieveChallengeTasks(id) }
-                .subscribe({ }, {
-                    if (it is HttpException && it.code() == 404) {
-                        MainNavigationController.navigateBack()
-                    }
-                    ExceptionHandler.reportError(it)
-                })
+            lifecycleScope.launchCatching({
+                if (it is HttpException && it.code() == 404) {
+                    MainNavigationController.navigateBack()
+                }
+                ExceptionHandler.reportError(it)
+            }) {
+                challengeRepository.retrieveChallenge(id)
+                challengeRepository.retrieveChallengeTasks(id)
+            }
         }
     }
 
@@ -342,11 +333,15 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         alert.setMessage(this.getString(R.string.challenge_leave_description))
         alert.addButton(R.string.leave_keep_tasks, true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "keep-all").subscribe({}, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                challengeRepository.leaveChallenge(challenge, "keep-all")
+            }
         }
         alert.addButton(R.string.leave_delete_tasks, isPrimary = false, isDestructive = true) { _, _ ->
             val challenge = challenge ?: return@addButton
-            challengeRepository.leaveChallenge(challenge, "remove-all").subscribe({}, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                challengeRepository.leaveChallenge(challenge, "remove-all")
+            }
         }
         alert.setExtraCloseButtonVisibility(View.VISIBLE)
         alert.show()

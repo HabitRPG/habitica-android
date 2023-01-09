@@ -866,7 +866,7 @@
     <string name="resubscribe_description">혜택을 계속 받고 싶으신가요\? 이번 구독기간이 끝나기 전에 새로 시작하시면 현재 받고 계신 혜택을 계속 유지시킬 수 있습니다.</string>
     <string name="resubscribe">재구독</string>
     <string name="renew_subscription">구독 갱신</string>
-    <string name="thanks_for_subscribing">구독해주셔서 감사합니다</string>
+    <string name="thanks_for_supporting">구독해주셔서 감사합니다</string>
     <string name="subscribe_options_title">원하시는 구독 기간을 정하세요</string>
     <string name="ending_on">%s 에 종료</string>
     <string name="not_recurring">자동 반복 안됨</string>

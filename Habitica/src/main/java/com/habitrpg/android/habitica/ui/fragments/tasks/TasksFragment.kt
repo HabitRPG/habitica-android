@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.HabiticaBaseApplication
@@ -25,7 +26,7 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -115,7 +116,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
         binding?.viewPager?.currentItem = binding?.viewPager?.currentItem ?: 0
         bottomNavigation?.listener = this
-        bottomNavigation?.canAddTasks = viewModel.isPersonalBoard
+        lifecycleScope.launchCatching {
+            bottomNavigation?.canAddTasks = viewModel.canAddTasks()
+        }
 
         activity?.binding?.content?.toolbarTitle?.setOnClickListener {
             viewModel.cycleOwnerIDs()
@@ -189,7 +192,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     private fun showFilterDialog() {
         context?.let {
-            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent)
+            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent, viewModel.isPersonalBoard)
             dialog.viewModel = viewModel
 
             // There are some cases where these things might not be correctly set after the app resumes. This is just to catch that as best as possible
@@ -257,9 +260,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         if (bottomNavigation == null) {
             return
         }
-        compositeSubscription.add(
-            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards")).subscribe(
-                { tutorialSteps ->
+        lifecycleScope.launchCatching {
+            tutorialRepository.getTutorialSteps(listOf("habits", "dailies", "todos", "rewards"))
+                .collect { tutorialSteps ->
                     val activeTutorialFragments = ArrayList<TaskType>()
                     for (step in tutorialSteps) {
                         var id = -1
@@ -291,7 +294,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                         }
                     }
                     if (activeTutorialFragments.size == 1) {
-                        val fragment = viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
+                        val fragment =
+                            viewFragmentsDictionary?.get(indexForTaskType(activeTutorialFragments[0]))
                         if (fragment?.tutorialTexts != null && context != null) {
                             val finalText = context?.getString(R.string.tutorial_tasks_complete)
                             if (!fragment.tutorialTexts.contains(finalText) && finalText != null) {
@@ -299,10 +303,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                             }
                         }
                     }
-                },
-                ExceptionHandler.rx()
-            )
-        )
+                }
+        }
     }
     // endregion
 
@@ -324,6 +326,9 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type.value)
+        if (!viewModel.isPersonalBoard) {
+            bundle.putString(TaskFormActivity.GROUP_ID_KEY, viewModel.ownerID.value)
+        }
         bundle.putStringArrayList(TaskFormActivity.SELECTED_TAGS_KEY, ArrayList(viewModel.tags))
 
         val intent = Intent(activity, TaskFormActivity::class.java)
@@ -417,7 +422,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             activity?.title = viewModel.ownerTitle
         }
         viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]
-        val isPersonalBoard = viewModel.isPersonalBoard
-        bottomNavigation?.canAddTasks = isPersonalBoard
+        lifecycleScope.launchCatching {
+            bottomNavigation?.canAddTasks = viewModel.canAddTasks()
+        }
     }
 }

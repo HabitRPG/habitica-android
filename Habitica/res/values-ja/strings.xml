@@ -852,7 +852,7 @@
     <string name="resubscribe_description">特典を受け続けたいですか？この有料プランの有効期限が切れる前に新しい有料プランをはじめることで、特典を有効に受け続けられます。</string>
     <string name="resubscribe">有料プランの再開</string>
     <string name="renew_subscription">有料プランを再開する</string>
-    <string name="thanks_for_subscribing">有料プランにご加入いただきありがとうございます</string>
+    <string name="thanks_for_supporting">有料プランにご加入いただきありがとうございます</string>
     <string name="subscribe_options_title">有料プランの期間をあなたのご都合に合わせて選びましょう</string>
     <string name="ending_on">%sに止める</string>
     <string name="not_recurring">くり返さない</string>

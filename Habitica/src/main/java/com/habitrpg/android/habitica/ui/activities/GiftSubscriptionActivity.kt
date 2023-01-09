@@ -46,7 +46,7 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         component?.inject(this)
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGiftSubscriptionBinding.inflate(layoutInflater)
         return binding.root
     }

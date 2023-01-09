@@ -55,8 +55,8 @@
                 app:shimmer_repeat_delay="4000"
                 app:shimmer_duration="200"
                 app:shimmer_base_color="@color/text_dimmed"
-                app:shimmer_highlight_color="@color/content_background"
-                app:shimmer_highlight_alpha="0.8">
+                app:shimmer_highlight_color="?attr/colorContentBackground"
+                app:shimmer_highlight_alpha="0.4">
             <com.habitrpg.common.habitica.views.PixelArtView
                 android:id="@+id/pet_view"
                 android:layout_width="@dimen/gear_image_size"

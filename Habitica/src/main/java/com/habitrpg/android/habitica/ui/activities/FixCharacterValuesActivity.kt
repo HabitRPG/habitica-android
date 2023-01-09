@@ -27,7 +27,7 @@ class FixCharacterValuesActivity : BaseActivity() {
 
     override fun getLayoutResId(): Int = R.layout.activity_fixcharacter
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityFixcharacterBinding.inflate(layoutInflater)
         return binding.root
     }

@@ -69,13 +69,13 @@ class DailyViewHolder(
         super.bind(data, position, displayMode, ownerID)
     }
 
-    override fun shouldDisplayAsActive(newTask: Task?): Boolean {
-        return newTask?.isDisplayedActive ?: false
+    override fun shouldDisplayAsActive(task: Task?, userID: String?): Boolean {
+        return task?.isDisplayedActiveForUser(userID) ?: false
     }
 
     override fun configureSpecialTaskTextView(task: Task) {
         super.configureSpecialTaskTextView(task)
-        if ((task.streak ?: 0) > 0) {
+        if ((task.streak ?: 0) > 0 && !task.isGroupTask) {
             this.streakTextView.text = task.streak.toString()
             this.streakTextView.visibility = View.VISIBLE
             this.streakIconView.visibility = View.VISIBLE

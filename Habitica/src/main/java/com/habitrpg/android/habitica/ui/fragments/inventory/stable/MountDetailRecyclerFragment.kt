@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedMount
@@ -97,13 +98,12 @@ class MountDetailRecyclerFragment :
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             this.loadItems()
 
-            adapter?.getEquipFlowable()?.flatMap { key -> inventoryRepository.equip("mount", key) }
-                ?.subscribe(
-                    {
-                        adapter?.currentMount = it.currentMount
-                    },
-                    ExceptionHandler.rx()
-                )?.let { compositeSubscription.add(it) }
+            adapter?.onEquip = {
+                lifecycleScope.launchCatching {
+                    val items = inventoryRepository.equip("mount", it)
+                    adapter?.currentMount = items?.currentMount
+                }
+            }
         }
         userViewModel.user.observe(viewLifecycleOwner) { adapter?.currentMount = it?.currentMount }
 

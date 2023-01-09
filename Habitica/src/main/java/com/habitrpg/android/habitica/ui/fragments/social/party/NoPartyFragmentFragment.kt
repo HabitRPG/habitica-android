@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -78,7 +79,9 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         }
 
         binding?.invitationsView?.rejectCall = {
-            socialRepository.rejectGroupInvite(it).subscribe({ }, ExceptionHandler.rx())
+            lifecycleScope.launchCatching {
+                socialRepository.rejectGroupInvite(it)
+            }
             binding?.invitationWrapper?.visibility = View.GONE
         }
 

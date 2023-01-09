@@ -9,12 +9,11 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.MountOverviewItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Mount
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 
-class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject<String>) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)), View.OnClickListener {
+class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)), View.OnClickListener {
     private var binding: MountOverviewItemBinding = MountOverviewItemBinding.bind(itemView)
     private var owned: Boolean = false
     var animal: Mount? = null
@@ -60,7 +59,7 @@ class MountViewHolder(parent: ViewGroup, private val equipEvents: PublishSubject
         val labelId = if (hasCurrentMount) R.string.unequip else R.string.equip
         menu.addMenuItem(BottomSheetMenuItem(resources.getString(labelId)))
         menu.setSelectionRunnable {
-            animal?.let { equipEvents.onNext(it.key ?: "") }
+            animal?.let { onEquip?.invoke(it.key ?: "") }
         }
         menu.show()
     }

@@ -40,7 +40,7 @@ class DeathActivity: BaseActivity() {
         component?.inject(this)
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityDeathBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -57,11 +57,10 @@ class DeathActivity: BaseActivity() {
                     return@AdHandler
                 }
                 Log.d("AdHandler", "Reviving user")
-                compositeSubscription.add(
-                        userRepository.updateUser("stats.hp", 1).subscribe({
-                                                                           finish()
-                        }, ExceptionHandler.rx())
-                )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    userRepository.updateUser("stats.hp", 1)
+                    finish()
+                }
             }
             handler.prepare {
                 if (it && binding.adButton.state == AdButton.State.LOADING) {

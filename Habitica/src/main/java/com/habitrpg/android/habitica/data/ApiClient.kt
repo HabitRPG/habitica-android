@@ -27,7 +27,6 @@ import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
@@ -36,8 +35,6 @@ import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import com.habitrpg.shared.habitica.models.responses.Status
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.VerifyUsernameResponse
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.FlowableTransformer
 import retrofit2.HttpException
 
 interface ApiClient {
@@ -52,93 +49,92 @@ interface ApiClient {
 
     /* challenges api */
 
-    fun getUserChallenges(page: Int, memberOnly: Boolean): Flowable<List<Challenge>>
+    suspend fun getUserChallenges(page: Int, memberOnly: Boolean): List<Challenge>?
 
     suspend fun getWorldState(): WorldState?
-    fun setLanguageCode(languageCode: String)
+    var languageCode: String?
     suspend fun getContent(language: String? = null): ContentResult?
 
-    fun updateUser(updateDictionary: Map<String, Any>): Flowable<User>
+    suspend fun updateUser(updateDictionary: Map<String, Any>): User?
 
-    fun registrationLanguage(registrationLanguage: String): Flowable<User>
+    suspend fun registrationLanguage(registrationLanguage: String): User?
 
-    fun retrieveInAppRewards(): Flowable<List<ShopItem>>
-    fun retrieveOldGear(): Flowable<List<ShopItem>>
+    suspend fun retrieveInAppRewards(): List<ShopItem>?
 
-    fun equipItem(type: String, itemKey: String): Flowable<Items>
+    suspend fun equipItem(type: String, itemKey: String): Items?
 
-    fun buyItem(itemKey: String, purchaseQuantity: Int): Flowable<BuyResponse>
+    suspend fun buyItem(itemKey: String, purchaseQuantity: Int): BuyResponse?
 
-    fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Flowable<Void>
+    suspend fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Void?
 
-    fun purchaseHourglassItem(type: String, itemKey: String): Flowable<Void>
+    suspend fun purchaseHourglassItem(type: String, itemKey: String): Void?
 
-    fun purchaseMysterySet(itemKey: String): Flowable<Void>
+    suspend fun purchaseMysterySet(itemKey: String): Void?
 
-    fun purchaseQuest(key: String): Flowable<Void>
-    fun purchaseSpecialSpell(key: String): Flowable<Void>
-    fun validateSubscription(request: PurchaseValidationRequest): Flowable<Any>
-    fun validateNoRenewSubscription(request: PurchaseValidationRequest): Flowable<Any>
+    suspend fun purchaseQuest(key: String): Void?
+    suspend fun purchaseSpecialSpell(key: String): Void?
+    suspend fun validateSubscription(request: PurchaseValidationRequest): Any?
+    suspend fun validateNoRenewSubscription(request: PurchaseValidationRequest): Any?
     suspend fun cancelSubscription(): Void?
 
-    fun sellItem(itemType: String, itemKey: String): Flowable<User>
+    suspend fun sellItem(itemType: String, itemKey: String): User?
 
-    fun feedPet(petKey: String, foodKey: String): Flowable<FeedResponse>
+    suspend fun feedPet(petKey: String, foodKey: String): FeedResponse?
 
-    fun hatchPet(eggKey: String, hatchingPotionKey: String): Flowable<Items>
-    fun getTasks(type: String): Flowable<TaskList>
-    fun getTasks(type: String, dueDate: String): Flowable<TaskList>
+    suspend fun hatchPet(eggKey: String, hatchingPotionKey: String): Items?
+    suspend fun getTasks(type: String): TaskList?
+    suspend fun getTasks(type: String, dueDate: String): TaskList?
 
-    fun unlockPath(path: String): Flowable<UnlockResponse>
+    suspend fun unlockPath(path: String): UnlockResponse?
 
-    fun getTask(id: String): Flowable<Task>
+    suspend fun getTask(id: String): Task?
 
-    fun postTaskDirection(id: String, direction: String): Flowable<TaskDirectionData>
-    fun bulkScoreTasks(data: List<Map<String, String>>): Flowable<BulkTaskScoringData>
+    suspend fun postTaskDirection(id: String, direction: String): TaskDirectionData?
+    suspend fun bulkScoreTasks(data: List<Map<String, String>>): BulkTaskScoringData?
 
-    fun postTaskNewPosition(id: String, position: Int): Flowable<List<String>>
+    suspend fun postTaskNewPosition(id: String, position: Int): List<String>?
 
-    fun scoreChecklistItem(taskId: String, itemId: String): Flowable<Task>
+    suspend fun scoreChecklistItem(taskId: String, itemId: String): Task?
 
-    fun createTask(item: Task): Flowable<Task>
+    suspend fun createTask(item: Task): Task?
 
-    fun createTasks(tasks: List<Task>): Flowable<List<Task>>
+    suspend fun createTasks(tasks: List<Task>): List<Task>?
 
-    fun updateTask(id: String, item: Task): Flowable<Task>
+    suspend fun updateTask(id: String, item: Task): Task?
 
-    fun deleteTask(id: String): Flowable<Void>
+    suspend fun deleteTask(id: String): Void?
 
-    fun createTag(tag: Tag): Flowable<Tag>
+    suspend fun createTag(tag: Tag): Tag?
 
-    fun updateTag(id: String, tag: Tag): Flowable<Tag>
+    suspend fun updateTag(id: String, tag: Tag): Tag?
 
-    fun deleteTag(id: String): Flowable<Void>
+    suspend fun deleteTag(id: String): Void?
 
-    fun registerUser(username: String, email: String, password: String, confirmPassword: String): Flowable<UserAuthResponse>
+    suspend fun registerUser(username: String, email: String, password: String, confirmPassword: String): UserAuthResponse?
 
-    fun connectUser(username: String, password: String): Flowable<UserAuthResponse>
+    suspend fun connectUser(username: String, password: String): UserAuthResponse?
 
-    fun connectSocial(network: String, userId: String, accessToken: String): Flowable<UserAuthResponse>
-    fun disconnectSocial(network: String): Flowable<Void>
+    suspend fun connectSocial(network: String, userId: String, accessToken: String): UserAuthResponse?
+    suspend fun disconnectSocial(network: String): Void?
 
-    fun loginApple(authToken: String): Flowable<UserAuthResponse>
+    suspend fun loginApple(authToken: String): UserAuthResponse?
 
     suspend fun sleep(): Boolean?
     suspend fun revive(): User?
 
-    fun useSkill(skillName: String, targetType: String, targetId: String): Flowable<SkillResponse>
+    suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse?
 
-    fun useSkill(skillName: String, targetType: String): Flowable<SkillResponse>
+    suspend fun useSkill(skillName: String, targetType: String): SkillResponse?
 
     suspend fun changeClass(className: String?): User?
 
     suspend fun disableClasses(): User?
 
-    fun markPrivateMessagesRead(): Flowable<Void>
+    suspend fun markPrivateMessagesRead(): Void?
 
     /* Group API */
 
-    fun listGroups(type: String): Flowable<List<Group>>
+    suspend fun listGroups(type: String): List<Group>?
 
     suspend fun getGroup(groupId: String): Group?
 
@@ -152,83 +148,83 @@ interface ApiClient {
 
     suspend fun leaveGroup(groupId: String, keepChallenges: String): Void?
 
-    fun postGroupChat(groupId: String, message: Map<String, String>): Flowable<PostChatMessageResult>
+    suspend fun postGroupChat(groupId: String, message: Map<String, String>): PostChatMessageResult?
 
-    fun deleteMessage(groupId: String, messageId: String): Flowable<Void>
-    fun deleteInboxMessage(id: String): Flowable<Void>
+    suspend fun deleteMessage(groupId: String, messageId: String): Void?
+    suspend fun deleteInboxMessage(id: String): Void?
 
     suspend fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?): List<Member>?
 
     suspend fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?, lastId: String): List<Member>?
 
     // Like returns the full chat list
-    fun likeMessage(groupId: String, mid: String): Flowable<ChatMessage>
+    suspend fun likeMessage(groupId: String, mid: String): ChatMessage?
 
-    fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Flowable<Void>
-    fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Flowable<Void>
+    suspend fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Void?
+    suspend fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Void?
 
-    fun seenMessages(groupId: String): Flowable<Void>
+    suspend fun seenMessages(groupId: String): Void?
 
-    fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): Flowable<List<Void>>
+    suspend fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): List<Void>?
 
-    fun rejectGroupInvite(groupId: String): Flowable<Void>
+    suspend fun rejectGroupInvite(groupId: String): Void?
 
-    fun acceptQuest(groupId: String): Flowable<Void>
+    suspend fun acceptQuest(groupId: String): Void?
 
-    fun rejectQuest(groupId: String): Flowable<Void>
+    suspend fun rejectQuest(groupId: String): Void?
 
-    fun cancelQuest(groupId: String): Flowable<Void>
+    suspend fun cancelQuest(groupId: String): Void?
 
-    fun forceStartQuest(groupId: String, group: Group): Flowable<Quest>
+    suspend fun forceStartQuest(groupId: String, group: Group): Quest?
 
-    fun inviteToQuest(groupId: String, questKey: String): Flowable<Quest>
+    suspend fun inviteToQuest(groupId: String, questKey: String): Quest?
 
-    fun abortQuest(groupId: String): Flowable<Quest>
+    suspend fun abortQuest(groupId: String): Quest?
 
-    fun leaveQuest(groupId: String): Flowable<Void>
+    suspend fun leaveQuest(groupId: String): Void?
 
-    fun validatePurchase(request: PurchaseValidationRequest): Flowable<PurchaseValidationResult>
+    suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult?
 
-    fun changeCustomDayStart(updateObject: Map<String, Any>): Flowable<User>
+    suspend fun changeCustomDayStart(updateObject: Map<String, Any>): User?
 
     // Members URL
     suspend fun getMember(memberId: String): Member?
     suspend fun getMemberWithUsername(username: String): Member?
 
-    fun getMemberAchievements(memberId: String): Flowable<List<Achievement>>
+    suspend fun getMemberAchievements(memberId: String): List<Achievement>?
 
     suspend fun postPrivateMessage(messageDetails: Map<String, String>): PostChatMessageResult?
 
-    fun retrieveShopIventory(identifier: String): Flowable<Shop>
+    suspend fun retrieveShopIventory(identifier: String): Shop?
 
     // Push notifications
-    fun addPushDevice(pushDeviceData: Map<String, String>): Flowable<List<Void>>
+    suspend fun addPushDevice(pushDeviceData: Map<String, String>): List<Void>?
 
-    fun deletePushDevice(regId: String): Flowable<List<Void>>
+    suspend fun deletePushDevice(regId: String): List<Void>?
 
-    fun getChallengeTasks(challengeId: String): Flowable<TaskList>
+    suspend fun getChallengeTasks(challengeId: String): TaskList?
 
-    fun getChallenge(challengeId: String): Flowable<Challenge>
+    suspend fun getChallenge(challengeId: String): Challenge?
 
-    fun joinChallenge(challengeId: String): Flowable<Challenge>
+    suspend fun joinChallenge(challengeId: String): Challenge?
 
-    fun leaveChallenge(challengeId: String, body: LeaveChallengeBody): Flowable<Void>
+    suspend fun leaveChallenge(challengeId: String, body: LeaveChallengeBody): Void?
 
-    fun createChallenge(challenge: Challenge): Flowable<Challenge>
+    suspend fun createChallenge(challenge: Challenge): Challenge?
 
-    fun createChallengeTasks(challengeId: String, tasks: List<Task>): Flowable<List<Task>>
-    fun createChallengeTask(challengeId: String, task: Task): Flowable<Task>
-    fun updateChallenge(challenge: Challenge): Flowable<Challenge>
-    fun deleteChallenge(challengeId: String): Flowable<Void>
+    suspend fun createChallengeTasks(challengeId: String, tasks: List<Task>): List<Task>?
+    suspend fun createChallengeTask(challengeId: String, task: Task): Task?
+    suspend fun updateChallenge(challenge: Challenge): Challenge?
+    suspend fun deleteChallenge(challengeId: String): Void?
 
     // DEBUG: These calls only work on a local development server
 
-    fun debugAddTenGems(): Flowable<Void>
+    suspend fun debugAddTenGems(): Void?
 
     // Notifications
-    fun readNotification(notificationId: String): Flowable<List<Any>>
-    fun readNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
-    fun seeNotifications(notificationIds: Map<String, List<String>>): Flowable<List<Any>>
+    suspend fun readNotification(notificationId: String): List<Any>?
+    suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>?
+    suspend fun seeNotifications(notificationIds: Map<String, List<String>>): List<Any>?
 
     fun getErrorResponse(throwable: HttpException): ErrorResponse
 
@@ -238,42 +234,42 @@ interface ApiClient {
 
     suspend fun retrieveUser(withTasks: Boolean = false): User?
     suspend fun retrieveInboxMessages(uuid: String, page: Int): List<ChatMessage>?
-    fun retrieveInboxConversations(): Flowable<List<InboxConversation>>
+    suspend fun retrieveInboxConversations(): List<InboxConversation>?
 
-    fun <T : Any> configureApiCallObserver(): FlowableTransformer<HabitResponse<T>, T>
+    suspend fun openMysteryItem(): Equipment?
 
-    fun openMysteryItem(): Flowable<Equipment>
-
-    fun runCron(): Flowable<Void>
+    suspend fun runCron(): Void?
 
     suspend fun reroll(): User?
 
-    fun resetAccount(): Flowable<Void>
-    fun deleteAccount(password: String): Flowable<Void>
+    suspend fun resetAccount(): Void?
+    suspend fun deleteAccount(password: String): Void?
 
-    fun togglePinnedItem(pinType: String, path: String): Flowable<Void>
+    suspend fun togglePinnedItem(pinType: String, path: String): Void?
 
-    fun sendPasswordResetEmail(email: String): Flowable<Void>
+    suspend fun sendPasswordResetEmail(email: String): Void?
 
-    fun updateLoginName(newLoginName: String, password: String): Flowable<Void>
-    fun updateUsername(newLoginName: String): Flowable<Void>
+    suspend fun updateLoginName(newLoginName: String, password: String): Void?
+    suspend fun updateUsername(newLoginName: String): Void?
 
-    fun updateEmail(newEmail: String, password: String): Flowable<Void>
+    suspend fun updateEmail(newEmail: String, password: String): Void?
 
-    fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Flowable<Void>
+    suspend fun updatePassword(oldPassword: String, newPassword: String, newPasswordConfirmation: String): Void?
 
-    fun allocatePoint(stat: String): Flowable<Stats>
+    suspend fun allocatePoint(stat: String): Stats?
 
-    fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Flowable<Stats>
+    suspend fun bulkAllocatePoints(strength: Int, intelligence: Int, constitution: Int, perception: Int): Stats?
 
-    fun retrieveMarketGear(): Flowable<Shop>
-    fun verifyUsername(username: String): Flowable<VerifyUsernameResponse>
+    suspend fun retrieveMarketGear(): Shop?
+    suspend fun verifyUsername(username: String): VerifyUsernameResponse?
     fun updateServerUrl(newAddress: String?)
-    fun findUsernames(username: String, context: String?, id: String?): Flowable<List<FindUsernameResult>>
+    suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>?
 
-    fun transferGems(giftedID: String, amount: Int): Flowable<Void>
-    fun unlinkAllTasks(challengeID: String?, keepOption: String): Flowable<Void>
-    fun blockMember(userID: String): Flowable<List<String>>
-    fun getTeamPlans(): Flowable<List<TeamPlan>>
+    suspend fun transferGems(giftedID: String, amount: Int): Void?
+    suspend fun unlinkAllTasks(challengeID: String?, keepOption: String): Void?
+    suspend fun blockMember(userID: String): List<String>?
+    suspend fun getTeamPlans(): List<TeamPlan>?
     suspend fun getTeamPlanTasks(teamID: String): TaskList?
+    suspend fun assignToTask(taskId: String, ids: List<String>): Task?
+    suspend fun unassignFromTask(taskId: String, userID: String): Task?
 }

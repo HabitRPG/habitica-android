@@ -18,7 +18,7 @@ import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
@@ -26,6 +26,8 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
@@ -49,7 +51,7 @@ class ArmoireActivity : BaseActivity() {
         component?.inject(this)
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityArmoireBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -80,22 +82,20 @@ class ArmoireActivity : BaseActivity() {
                 Log.d("AdHandler", "Giving Armoire")
                 val user = userViewModel.user.value ?: return@AdHandler
                 val currentGold = user.stats?.gp ?: return@AdHandler
-                compositeSubscription.add(
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     userRepository.updateUser("stats.gp", currentGold + 100)
-                        .flatMap { inventoryRepository.buyItem(user, "armoire", 100.0, 1) }
-                        .subscribe({
-                            configure(
-                                it.armoire["type"] ?: "",
-                                it.armoire["dropKey"] ?: "",
-                                it.armoire["dropText"] ?: "",
-                                it.armoire["value"] ?: ""
-                            )
-                            binding.adButton.state = AdButton.State.UNAVAILABLE
-                            binding.adButton.visibility = View.INVISIBLE
-                            hasAnimatedChanges = false
-                            gold = null
-                        }, ExceptionHandler.rx())
-                )
+                    val buyResponse = inventoryRepository.buyItem(user, "armoire", 100.0, 1) ?: return@launch
+                    configure(
+                        buyResponse.armoire["type"] ?: "",
+                        buyResponse.armoire["dropKey"] ?: "",
+                        buyResponse.armoire["dropText"] ?: "",
+                        buyResponse.armoire["value"] ?: ""
+                    )
+                    binding.adButton.state = AdButton.State.UNAVAILABLE
+                    binding.adButton.visibility = View.INVISIBLE
+                    hasAnimatedChanges = false
+                    gold = null
+                }
             }
             handler.prepare {
                 if (it && binding.adButton.state == AdButton.State.LOADING) {
@@ -117,7 +117,9 @@ class ArmoireActivity : BaseActivity() {
             finish()
         }
         binding.equipButton.setOnClickListener {
-            equipmentKey?.let { it1 -> inventoryRepository.equip("equipped", it1).subscribe({}, ExceptionHandler.rx()) }
+            equipmentKey?.let { it1 ->
+                MainScope().launchCatching { inventoryRepository.equip("equipped", it1) }
+            }
             finish()
         }
         binding.dropRateButton.setOnClickListener {

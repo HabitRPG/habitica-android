@@ -13,16 +13,15 @@ import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 
 class PetViewHolder(
     parent: ViewGroup,
-    private val equipEvents: PublishSubject<String>,
-    private val feedEvents: PublishSubject<Pair<Pet, Food?>>,
+    private val onEquip: ((String) -> Unit)?,
+    private val onFeed: ((Pet, Food?) -> Unit)?,
     private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)),
     View.OnClickListener {
@@ -130,16 +129,16 @@ class PetViewHolder(
             when (index) {
                 0 -> {
                     animal?.let {
-                        equipEvents.onNext(it.key ?: "")
+                        onEquip?.invoke(it.key ?: "")
                     }
                 }
                 1 -> {
-                    feedEvents.onNext(Pair(pet, null))
+                    onFeed?.invoke(pet, null)
                 }
                 2 -> {
                     val saddle = Food()
                     saddle.key = "Saddle"
-                    feedEvents.onNext(Pair(pet, saddle))
+                    onFeed?.invoke(pet, saddle)
                 }
             }
         }

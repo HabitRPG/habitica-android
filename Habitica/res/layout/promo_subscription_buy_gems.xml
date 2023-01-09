@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:parentTag="android.widget.RelativeLayout"
-    android:background="@color/window_background">
+    android:background="?attr/colorWindowBackground">
 <LinearLayout
     android:id="@+id/contentWrapper"
     android:layout_width="wrap_content"

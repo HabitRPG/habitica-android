@@ -17,9 +17,6 @@ import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.TodoViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
 
 class ChallengeTasksRecyclerViewAdapter(
     viewModel: TasksViewModel,
@@ -30,13 +27,11 @@ class ChallengeTasksRecyclerViewAdapter(
     private val taskActionsDisabled: Boolean
 ) : BaseTasksRecyclerViewAdapter<BindableViewHolder<Task>>(TaskType.HABIT, viewModel, layoutResource, newContext, userID) {
 
-    private val addItemSubject = PublishSubject.create<Task>()
-
     val taskList: MutableList<Task>
         get() = content?.map { t -> t }?.toMutableList() ?: mutableListOf()
 
-    private var taskOpenEventsSubject = PublishSubject.create<Task>()
-    val taskOpenEvents: Flowable<Task> = taskOpenEventsSubject.toFlowable(BackpressureStrategy.LATEST)
+    var onAddItem: ((Task) -> Unit)? = null
+    var onTaskOpen: ((Task) -> Unit)? = null
 
     override fun injectThis(component: UserComponent) {
         component.inject(this)
@@ -50,12 +45,8 @@ class ChallengeTasksRecyclerViewAdapter(
             TaskType.DAILY -> TYPE_DAILY
             TaskType.TODO -> TYPE_TODO
             TaskType.REWARD -> TYPE_REWARD
-            else -> if (addItemSubject.hasObservers() && task?.id == "addtask") TYPE_ADD_ITEM else TYPE_HEADER
+            else -> if (task?.id == "addtask") TYPE_ADD_ITEM else TYPE_HEADER
         }
-    }
-
-    fun addItemObservable(): Flowable<Task> {
-        return addItemSubject.toFlowable(BackpressureStrategy.BUFFER)
     }
 
     fun addTaskUnder(taskToAdd: Task, taskAbove: Task?): Int {
@@ -70,18 +61,18 @@ class ChallengeTasksRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder<Task> {
         val viewHolder: BindableViewHolder<Task> = when (viewType) {
             TYPE_HABIT -> HabitViewHolder(getContentView(parent, R.layout.habit_item_card), { _, _ -> }, { }, { task ->
-                taskOpenEventsSubject.onNext(task)
+                onTaskOpen?.invoke(task)
             }, null)
             TYPE_DAILY -> DailyViewHolder(getContentView(parent, R.layout.daily_item_card), { _, _ -> }, { _, _ -> }, { }, { task ->
-                taskOpenEventsSubject.onNext(task)
+                onTaskOpen?.invoke(task)
             }, null)
             TYPE_TODO -> TodoViewHolder(getContentView(parent, R.layout.todo_item_card), { _, _ -> }, { _, _ -> }, { }, { task ->
-                taskOpenEventsSubject.onNext(task)
+                onTaskOpen?.invoke(task)
             }, null)
             TYPE_REWARD -> RewardViewHolder(getContentView(parent, R.layout.reward_item_card), { _, _ -> }, { }, { task ->
-                taskOpenEventsSubject.onNext(task)
+                onTaskOpen?.invoke(task)
             }, null)
-            TYPE_ADD_ITEM -> AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), addItemSubject)
+            TYPE_ADD_ITEM -> AddItemViewHolder(getContentView(parent, R.layout.challenge_add_task_item), onAddItem)
             else -> DividerViewHolder(getContentView(parent, R.layout.challenge_task_divider))
         }
 
@@ -113,7 +104,7 @@ class ChallengeTasksRecyclerViewAdapter(
 
     inner class AddItemViewHolder internal constructor(
         itemView: View,
-        private val callback: PublishSubject<Task>
+        private val callback: ((Task) -> Unit)?
     ) : BindableViewHolder<Task>(itemView) {
 
         private val addBtn: Button = itemView.findViewById(R.id.btn_add_task)
@@ -121,7 +112,7 @@ class ChallengeTasksRecyclerViewAdapter(
 
         init {
             addBtn.isClickable = true
-            addBtn.setOnClickListener { newTask?.let { callback.onNext(it) } }
+            addBtn.setOnClickListener { newTask?.let { callback?.invoke(it) } }
         }
 
         override fun bind(

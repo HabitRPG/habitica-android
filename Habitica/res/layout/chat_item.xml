@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:background="@color/content_background"
+    android:background="?attr/colorContentBackground"
     android:paddingStart="@dimen/chat_horizontal_inset"
     android:paddingEnd="@dimen/chat_horizontal_inset"
     android:paddingTop="@dimen/spacing_small"

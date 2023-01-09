@@ -917,7 +917,7 @@
     <string name="resubscribe_description">Faydalardan yararlanmaya devam etmek ister misin\? Faydalarını etkin tutmak için bu abonelik bitmeden yeni bir abonelik başlatabilirsin.</string>
     <string name="renew_subscription">Aboneliği Yenile</string>
     <string name="resubscribe">Yeniden abone ol</string>
-    <string name="thanks_for_subscribing">Abone olduğun için teşekkürler</string>
+    <string name="thanks_for_supporting">Abone olduğun için teşekkürler</string>
     <string name="not_recurring">Yinelenmiyor</string>
     <string name="cancelled">İptal Edildi</string>
     <string name="send_invites">Davet Gönder</string>

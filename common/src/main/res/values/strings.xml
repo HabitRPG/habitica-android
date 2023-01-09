@@ -4,6 +4,7 @@
     <string name="million_abbrev">m</string>
     <string name="billion_abbrev">b</string>
     <string name="trillion_abbrev">t</string>
+    <string name="quadrillion_abbrev">q</string>
     <string name="gems">Gems</string>
     <string name="gold_plural">gold</string>
     <string name="gold_capitalized">Gold</string>

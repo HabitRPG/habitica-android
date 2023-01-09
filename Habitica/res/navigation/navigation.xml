@@ -4,16 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/tasksFragment">
-
-    <fragment
-        android:id="@+id/equipmentOverviewFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentOverviewFragment"
-        android:label="@string/sidebar_equipment" >
-        <deepLink app:uri="habitica.com/inventory/equipment" />
-        <action
-            android:id="@+id/openEquipmentDetail"
-            app:destination="@id/equipmentDetailFragment" />
-    </fragment>
     <fragment
         android:id="@+id/equipmentDetailFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.equipment.EquipmentDetailFragment"
@@ -44,6 +34,16 @@
         <deepLink app:uri="habitica.com/tasks" />
         <deepLink app:uri="habitica.com" />
     </fragment>
+    <activity
+        android:id="@+id/taskFormActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.TaskFormActivity">
+
+    </activity>
+    <activity
+        android:id="@+id/taskSummaryActivity"
+        android:name="com.habitrpg.android.habitica.ui.activities.TaskSummaryActivity">
+
+    </activity>
     <fragment
         android:id="@+id/partyFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment"
@@ -121,8 +121,8 @@
             android:id="@+id/openAvatarDetail"
             app:destination="@id/avatarCustomizationFragment" />
         <action
-            android:id="@+id/openAvatarEquipment"
-            app:destination="@id/avatarEquipmentFragment" />
+            android:id="@+id/openEquipmentDetail"
+            app:destination="@id/equipmentDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemsFragment"
@@ -290,17 +290,6 @@
     <fragment
         android:id="@+id/avatarCustomizationFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment"
-        android:label="@string/sidebar_avatar" >
-        <argument
-            android:name="type"
-            app:argType="string" />
-        <argument
-            android:name="category"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/avatarEquipmentFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarEquipmentFragment"
         android:label="@string/sidebar_avatar" >
         <argument
             android:name="type"

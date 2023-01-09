@@ -49,7 +49,7 @@ class GiftGemsActivity : PurchaseActivity() {
         return R.layout.activity_gift_gems
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGiftGemsBinding.inflate(layoutInflater)
         return binding.root
     }

@@ -118,7 +118,7 @@ class HabitViewHolder(
         }
 
         val streakString = task?.streakString
-        if (streakString?.isNotEmpty() == true) {
+        if (streakString?.isNotEmpty() == true && task?.isGroupTask != true) {
             streakTextView.text = streakString
             streakTextView.visibility = View.VISIBLE
             streakIconView.visibility = View.VISIBLE

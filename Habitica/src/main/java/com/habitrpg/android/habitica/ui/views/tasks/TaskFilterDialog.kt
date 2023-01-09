@@ -12,31 +12,29 @@ import android.widget.RadioGroup
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.TextViewCompat
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
 import com.habitrpg.android.habitica.databinding.EditTagItemBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.Disposable
 import java.util.UUID
 import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, component: UserComponent?, private val showTags: Boolean) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
     lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
-
-    var tagDisposale: Disposable? = null
 
     @Inject
     lateinit var repository: TagRepository
@@ -95,18 +93,23 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
             setActiveTags(null)
         }
 
-        binding.tagEditButton.setOnClickListener { editButtonClicked() }
-    }
-
-    override fun dismiss() {
-        tagDisposale?.dispose()
-        super.dismiss()
+        if (showTags) {
+            binding.tagEditButton.setOnClickListener { editButtonClicked() }
+        } else {
+            binding.tagsList.isVisible = false
+            binding.tagsTitle.isVisible = false
+            binding.tagEditButton.isVisible = false
+        }
     }
 
     override fun show() {
-        tagDisposale = viewModel.tagRepository.getTags().subscribe({
-            setTags(it)
-        }, ExceptionHandler.rx())
+        if (showTags) {
+            lifecycleScope.launchCatching {
+                viewModel.tagRepository.getTags().collect {
+                    setTags(it)
+                }
+            }
+        }
         super.show()
         this.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
@@ -193,9 +196,12 @@ class TaskFilterDialog(context: Context, component: UserComponent?) : HabiticaBo
         createTagViews()
         binding.tagEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        repository.updateTags(editedTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> editedTags.remove(tag.id) }, ExceptionHandler.rx())
-        repository.createTags(createdTags.values).toObservable().flatMap { tags -> Observable.fromIterable(tags) }.subscribe({ tag -> createdTags.remove(tag.id) }, ExceptionHandler.rx())
-        repository.deleteTags(deletedTags).subscribe({ deletedTags.clear() }, ExceptionHandler.rx())
+        lifecycleScope.launchCatching {
+
+            repository.updateTags(editedTags.values).forEach { editedTags.remove(it.id) }
+            repository.createTags(createdTags.values).forEach { tag -> createdTags.remove(tag.id) }
+            repeat(repository.deleteTags(deletedTags).size) { deletedTags.clear() }
+        }
     }
 
     private fun createTagEditViews() {

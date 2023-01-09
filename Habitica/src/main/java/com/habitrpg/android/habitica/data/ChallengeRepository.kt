@@ -4,18 +4,18 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.Flow
 
 interface ChallengeRepository : BaseRepository {
 
-    fun retrieveChallenges(page: Int = 0, memberOnly: Boolean): Flowable<List<Challenge>>
-    fun getChallenges(): Flowable<out List<Challenge>>
-    fun getChallenge(challengeId: String): Flowable<Challenge>
-    fun getChallengeTasks(challengeId: String): Flowable<out List<Task>>
+    suspend fun retrieveChallenges(page: Int = 0, memberOnly: Boolean): List<Challenge>?
+    fun getChallenges(): Flow<List<Challenge>>
+    fun getChallenge(challengeId: String): Flow<Challenge>
+    fun getChallengeTasks(challengeId: String): Flow<List<Task>>
 
-    fun retrieveChallenge(challengeID: String): Flowable<Challenge>
-    fun retrieveChallengeTasks(challengeID: String): Flowable<TaskList>
-    fun createChallenge(challenge: Challenge, taskList: List<Task>): Flowable<Challenge>
+    suspend fun retrieveChallenge(challengeID: String): Challenge?
+    suspend fun retrieveChallengeTasks(challengeID: String): TaskList?
+    suspend fun createChallenge(challenge: Challenge, taskList: List<Task>): Challenge?
 
     /**
      *
@@ -26,22 +26,22 @@ interface ChallengeRepository : BaseRepository {
      * @param removedTaskList tasks that has be to be removed
      * @return Observable with the updated challenge
      */
-    fun updateChallenge(
+    suspend fun updateChallenge(
         challenge: Challenge,
         fullTaskList: List<Task>,
         addedTaskList: List<Task>,
         updatedTaskList: List<Task>,
         removedTaskList: List<String>
-    ): Flowable<Challenge>
+    ): Challenge?
 
-    fun deleteChallenge(challengeId: String): Flowable<Void>
-    fun getUserChallenges(userId: String? = null): Flowable<out List<Challenge>>
+    suspend fun deleteChallenge(challengeId: String): Void?
+    fun getUserChallenges(userId: String? = null): Flow<List<Challenge>>
 
-    fun leaveChallenge(challenge: Challenge, keepTasks: String): Flowable<Void>
+    suspend fun leaveChallenge(challenge: Challenge, keepTasks: String): Void?
 
-    fun joinChallenge(challenge: Challenge): Flowable<Challenge>
+    suspend fun joinChallenge(challenge: Challenge): Challenge?
 
-    fun getChallengepMembership(id: String): Flowable<ChallengeMembership>
-    fun getChallengeMemberships(): Flowable<out List<ChallengeMembership>>
-    fun isChallengeMember(challengeID: String): Flowable<Boolean>
+    fun getChallengepMembership(id: String): Flow<ChallengeMembership>
+    fun getChallengeMemberships(): Flow<List<ChallengeMembership>>
+    fun isChallengeMember(challengeID: String): Flow<Boolean>
 }

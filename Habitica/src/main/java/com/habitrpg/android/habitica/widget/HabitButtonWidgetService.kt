@@ -20,6 +20,9 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.min
 
@@ -42,9 +45,13 @@ class HabitButtonWidgetService : Service() {
         allWidgetIds = appWidgetManager?.getAppWidgetIds(thisWidget)
         makeTaskMapping()
 
-        for (taskid in this.taskMapping.keys) {
-            taskRepository.getUnmanagedTask(taskid).firstElement().subscribe({ this.updateData(it) }, ExceptionHandler.rx())
+        MainScope().launch(ExceptionHandler.coroutine()) {
+            for (taskid in taskMapping.keys) {
+                val task = taskRepository.getUnmanagedTask(taskid).firstOrNull()
+                updateData(task)
+            }
         }
+
 
         stopSelf()
 

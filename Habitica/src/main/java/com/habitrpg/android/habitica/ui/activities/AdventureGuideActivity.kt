@@ -16,8 +16,8 @@ import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
 import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.common.habitica.extensions.loadImage
 import javax.inject.Inject
 
 class AdventureGuideActivity : BaseActivity() {
@@ -33,7 +33,7 @@ class AdventureGuideActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityAdventureGuideBinding.inflate(layoutInflater)
         return binding.root
     }

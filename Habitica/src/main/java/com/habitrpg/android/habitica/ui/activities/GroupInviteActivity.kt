@@ -19,9 +19,9 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragme
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.time.DurationUnit
 
 class GroupInviteActivity : BaseActivity() {
 
@@ -38,7 +38,7 @@ class GroupInviteActivity : BaseActivity() {
         return R.layout.activity_party_invite
     }
 
-    override fun getContentView(): View {
+    override fun getContentView(layoutResId: Int?): View {
         binding = ActivityPartyInviteBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -70,7 +70,7 @@ class GroupInviteActivity : BaseActivity() {
                 dismissKeyboard()
                 if (fragments.size > binding.viewPager.currentItem && fragments[binding.viewPager.currentItem].values.isNotEmpty()) {
                     showSnackbar(binding.snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
-                    runDelayed(1, TimeUnit.SECONDS, this::finish)
+                    runDelayed(1, DurationUnit.SECONDS, this::finish)
                 } else {
                     finish()
                 }

@@ -180,7 +180,7 @@
         android:layout_height="wrap_content"
         app:title="@string/world_boss_description"
         app:identifier="questDescription"
-        app:color="@color/content_background">
+        app:color="?attr/colorContentBackground">
     <TextView
         android:id="@+id/questDescription"
         android:layout_width="match_parent"

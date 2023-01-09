@@ -18,11 +18,8 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.shared.habitica.models.Avatar
 import com.habitrpg.common.habitica.views.AvatarView
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import com.habitrpg.shared.habitica.models.Avatar
 import java.util.Date
 import java.util.EnumMap
 import kotlin.math.min
@@ -46,7 +43,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     var ownedCustomizations: List<String> = listOf()
     private var pinnedItemKeys: List<String> = ArrayList()
 
-    private val selectCustomizationEvents = PublishSubject.create<Customization>()
+    var onCustomizationSelected: ((Customization) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
@@ -152,10 +149,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         this.notifyDataSetChanged()
     }
 
-    fun getSelectCustomizationEvents(): Flowable<Customization> {
-        return selectCustomizationEvents.toFlowable(BackpressureStrategy.DROP)
-    }
-
     fun setPinnedItemKeys(pinnedItemKeys: List<String>) {
         this.pinnedItemKeys = pinnedItemKeys
         if (customizationList.size > 0) this.notifyDataSetChanged()
@@ -234,7 +227,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 alert.setMessage(customization?.notes)
                 alert.addButton(R.string.equip, true) { _, _ ->
                     customization?.let {
-                        selectCustomizationEvents.onNext(it)
+                        onCustomizationSelected?.invoke(it)
                     }
                 }
                 alert.addButton(R.string.close, false) { _, _ ->
@@ -243,7 +236,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 alert.show()
             } else {
                 customization?.let {
-                    selectCustomizationEvents.onNext(it)
+                    onCustomizationSelected?.invoke(it)
                 }
             }
         }

@@ -89,7 +89,6 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         for (childFragment in fragments) {
             if (childFragment is ChatFragment) {
                 chatFragment = childFragment
-                chatFragment?.viewModel = viewModel
             }
             if (childFragment is GuildDetailFragment) {
                 guildInformationFragment = childFragment
@@ -155,7 +154,6 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     }
                     1 -> {
                         chatFragment = ChatFragment()
-                        chatFragment?.viewModel = viewModel
                         fragment = chatFragment
                     }
                     else -> fragment = Fragment()

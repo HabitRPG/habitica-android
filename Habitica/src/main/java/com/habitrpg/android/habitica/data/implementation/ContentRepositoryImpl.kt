@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.helpers.AprilFoolsHandler
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
-import io.reactivex.rxjava3.core.Flowable
 import io.realm.RealmList
+import kotlinx.coroutines.flow.Flow
 import java.util.Date
 
 class ContentRepositoryImpl<T : ContentLocalRepository>(
@@ -52,7 +52,7 @@ class ContentRepositoryImpl<T : ContentLocalRepository>(
         return null
     }
 
-    override fun getWorldState(): Flowable<WorldState> {
+    override fun getWorldState(): Flow<WorldState> {
         return localRepository.getWorldState()
     }
 }
