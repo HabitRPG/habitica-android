@@ -196,7 +196,6 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     }
                     1 -> {
                         chatFragment = ChatFragment()
-                        chatFragment?.viewModel = viewModel
                         chatFragment
                     }
                     else -> Fragment()
