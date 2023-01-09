@@ -209,6 +209,37 @@
                     android:layout_height="wrap_content"
                     android:text="@string/reminders"
                     style="@style/TaskFormSectionheader"/>
+
+                <RelativeLayout
+                    android:id="@+id/notifications_disabled_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium">
+
+                    <TextView
+                        android:id="@+id/notifications_enabled_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="@dimen/spacing_medium"
+                        android:text="@string/push_notification_system_settings_description"
+                        android:textColor="@color/text_quad"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/enable_notifs_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/notifications_enabled_text"
+                        android:background="@color/transparent"
+                        android:insetBottom="0dp"
+                        android:insetTop="0dp"
+                        android:padding="0dp"
+                        android:text="@string/enable_notifications"
+                        android:textColor="@color/brand_300"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
                 <com.habitrpg.android.habitica.ui.views.tasks.form.ReminderContainer
                     android:id="@+id/reminders_container"
                     android:layout_width="match_parent"

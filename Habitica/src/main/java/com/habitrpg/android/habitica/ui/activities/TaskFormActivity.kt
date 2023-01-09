@@ -8,11 +8,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextUtils
+import android.provider.Settings
 import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -20,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.runtime.mutableStateListOf
@@ -47,6 +45,7 @@ import com.habitrpg.android.habitica.extensions.removeZeroWidthSpace
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.launchCatching
+import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -96,6 +95,9 @@ class TaskFormActivity : BaseActivity() {
     lateinit var taskAlarmManager: TaskAlarmManager
 
     @Inject
+    lateinit var pushNotificationManager: PushNotificationManager
+
+    @Inject
     lateinit var challengeRepository: ChallengeRepository
 
     @Inject
@@ -108,6 +110,29 @@ class TaskFormActivity : BaseActivity() {
     lateinit var socialRepository: SocialRepository
 
     private var challenge: Challenge? = null
+
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            pushNotificationManager.addPushDeviceUsingStoredToken()
+        } else {
+            //If user denies notification settings originally - they must manually enable it through notification settings.
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(R.string.push_notification_system_settings_title)
+            alert.setMessage(R.string.push_notification_system_settings_description)
+            alert.addButton(R.string.settings, true, false) { _, _ ->
+                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, applicationContext?.packageName)
+                startActivity(notifSettingIntent)
+            }
+            alert.addButton(R.string.cancel, false) { _, _ ->
+                alert.dismiss()
+            }
+            alert.show()
+        }
+    }
 
     private var isCreating = true
     private var isChallengeTask = false
@@ -350,6 +375,11 @@ class TaskFormActivity : BaseActivity() {
         configureForm()
     }
 
+    override fun onResume() {
+        checkIfShowNotifLayout()
+        super.onResume()
+    }
+
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
         super.loadTheme(sharedPreferences, forced)
         val upperTintColor =
@@ -548,6 +578,7 @@ class TaskFormActivity : BaseActivity() {
             task.checklist?.let { binding.checklistContainer.checklistItems = it }
             binding.remindersContainer.taskType = taskType
             task.reminders?.let { binding.remindersContainer.reminders = it }
+            checkIfShowNotifLayout()
         }
         task.attribute?.let { viewModel.selectedAttribute.value = it }
 
@@ -612,8 +643,10 @@ class TaskFormActivity : BaseActivity() {
             thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
             if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak =
                 binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            checkIfShowNotifLayout()
         } else if (taskType == TaskType.TODO) {
             thisTask.dueDate = binding.taskSchedulingControls.dueDate
+            checkIfShowNotifLayout()
         } else if (taskType == TaskType.REWARD) {
             thisTask.value = binding.rewardValue.value
         }
@@ -727,6 +760,17 @@ class TaskFormActivity : BaseActivity() {
         }
         alert.addCancelButton()
         alert.show()
+    }
+
+    private fun checkIfShowNotifLayout() {
+        if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
+            binding.notificationsDisabledLayout.visibility = View.VISIBLE
+            binding.enableNotifsButton.setOnClickListener {
+                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            binding.notificationsDisabledLayout.visibility = View.GONE
+        }
     }
 
     private fun showChallengeDeleteTask() {
