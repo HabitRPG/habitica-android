@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskFormChecklistItemBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.android.habitica.extensions.addZeroWidthSpace
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
@@ -36,9 +35,6 @@ class ChecklistItemFormView @JvmOverloads constructor(
     var item: ChecklistItem = ChecklistItem()
         set(value) {
             field = value
-            //Append a zero-width space to the Spannable to allow clicking
-            //on the open spaces (and prevent the link from opening)
-            binding.editText.setText(item.text?.addZeroWidthSpace())
         }
 
     var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
@@ -97,8 +93,6 @@ class ChecklistItemFormView @JvmOverloads constructor(
         // a plus button we set it as 'unimportant for accessibility' so it can't be focused.
         binding.button.contentDescription = context.getString(R.string.delete_checklist_entry)
         binding.button.drawable.mutate().setTint(tintColor)
-        binding.editText.movementMethod = LinkMovementMethod.getInstance()
-
         binding.editText.addTextChangedListener(
             OnChangeTextWatcher { s, _, _, _ ->
                 item.text = s.toString()
