@@ -140,15 +140,15 @@ class NavigationDrawerFragment : DialogFragment() {
             false
         initializeMenuItems()
 
-            adapter.itemSelectedEvents = {
-                    setSelection(it.transitionId, it.bundle, true)
+        adapter.itemSelectedEvents = {
+                setSelection(it.transitionId, it.bundle, true)
+            }
+        adapter.promoClosedSubject = {
+                sharedPreferences.edit {
+                    putBoolean("hide$it", true)
                 }
-            adapter.promoClosedSubject = {
-                    sharedPreferences.edit {
-                        putBoolean("hide$it", true)
-                    }
-                    updatePromo()
-                }
+                updatePromo()
+            }
 
         lifecycleScope.launchCatching {
             contentRepository.getWorldState()
@@ -166,6 +166,21 @@ class NavigationDrawerFragment : DialogFragment() {
                         ) else 1.toDuration(DurationUnit.MINUTES)
                     }) {
                         updateSeasonalMenuEntries(gearEvent, pair.second)
+                    }
+
+                    val event = pair.first.events.firstOrNull { it.eventKey == "birthday10" }
+                    val item = getItemWithIdentifier(SIDEBAR_BIRTHDAY)
+                    if (event != null && item == null) {
+                        adapter.currentEvent = event
+                        val birthdayItem = HabiticaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
+                        birthdayItem.itemViewType = 6
+                        val newItems = mutableListOf<HabiticaDrawerItem>()
+                        newItems.addAll(adapter.items)
+                        newItems.add(0, birthdayItem)
+                        adapter.updateItems(newItems)
+                    } else if (event == null && item != null) {
+                        item.isVisible = false
+                        adapter.updateItem(item)
                     }
                 }
         }
@@ -550,12 +565,6 @@ class NavigationDrawerFragment : DialogFragment() {
                 HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
             item.itemViewType = 2
             items.add(item)
-        }
-
-        configManager.getBirthdayEvent()?.let {
-            val birthdayItem = HabiticaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
-            birthdayItem.itemViewType = 6
-            items.add(0, birthdayItem)
         }
         adapter.updateItems(items)
     }

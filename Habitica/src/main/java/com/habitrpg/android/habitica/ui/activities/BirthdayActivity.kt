@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.app.Activity
 import android.os.Bundle
-import android.text.format.DateFormat
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -62,6 +61,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import kotlinx.coroutines.flow.map
+import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 
@@ -154,7 +154,7 @@ fun BirthdayTitle(text: String) {
 @Composable
 fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date, endDate: Date, onPurchaseClick: () -> Unit, onGemPurchaseClick: () -> Unit, onEquipClick: () -> Unit) {
     val activity = LocalContext.current as? Activity
-    val dateFormat = DateFormat.getDateFormat(activity)
+    val dateFormat = SimpleDateFormat("MMM dd", java.util.Locale.getDefault())
     val textColor = Color.White
     val specialTextColor = colorResource(R.color.yellow_50)
 

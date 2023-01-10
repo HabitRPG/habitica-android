@@ -1331,6 +1331,7 @@
     <string name="see_more">See More</string>
     <string name="jubilant_gryphatrice_confirmation">You purchased the Jubilant Gryphatrice!</string>
     <string name="jubilant_gryphatrice_confirmation_gift">You gifted the Jubilant Gryphatrice!</string>
+    <string name="open_settings">Open Settings</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

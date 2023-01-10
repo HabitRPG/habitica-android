@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseContentQuestBinding
-import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -26,7 +25,6 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
 
     override fun setQuestContentItem(questContent: QuestContent) {
         super.setQuestContentItem(questContent)
-        binding.notesTextView.setText(questContent.notes.fromHtml(), TextView.BufferType.SPANNABLE)
         binding.rageMeterView.visibility = View.GONE
         if (questContent.isBossQuest) {
             binding.questTypeTextView.setText(R.string.boss_quest)
