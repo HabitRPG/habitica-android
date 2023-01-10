@@ -334,6 +334,8 @@ class AvatarCustomizationFragment :
         button.text
         button.setOnCheckedChangeListener { _, isChecked ->
             val newFilter = filter.copy()
+            newFilter.months = mutableListOf()
+            newFilter.months.addAll(filter.months)
             if (!isChecked && newFilter.months.contains(identifier)) {
                 button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
                 newFilter.months.remove(identifier)
