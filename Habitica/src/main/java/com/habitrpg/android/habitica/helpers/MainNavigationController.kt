@@ -54,7 +54,14 @@ object MainNavigationController {
 
     fun navigate(uriString: String) {
         val uri = Uri.parse(uriString)
-        navigate(uri)
+        var builder = uri.buildUpon()
+        if (uri.scheme == null) {
+            builder = builder.scheme("https")
+        }
+        if (uri.host == null) {
+            builder = builder.authority("habitica.com")
+        }
+        navigate(builder.build())
     }
 
     fun navigate(uri: Uri) {

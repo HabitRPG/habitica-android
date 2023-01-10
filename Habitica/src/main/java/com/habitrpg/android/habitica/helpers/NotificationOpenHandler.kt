@@ -5,7 +5,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class NotificationOpenHandler {
@@ -13,7 +13,7 @@ class NotificationOpenHandler {
     companion object {
 
         fun handleOpenedByNotification(identifier: String, intent: Intent) {
-            GlobalScope.launch(context = Dispatchers.Main) {
+            MainScope().launch(context = Dispatchers.Main) {
                 when (identifier) {
                     PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
                     PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openPartyScreen()
@@ -27,6 +27,7 @@ class NotificationOpenHandler {
                     PushNotificationManager.G1G1_PROMO_KEY -> openGiftOneGetOneInfoScreen()
                     else -> {
                         intent.getStringExtra("openURL")?.let {
+
                             MainNavigationController.navigate(it)
                         }
                     }

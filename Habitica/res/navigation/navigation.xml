@@ -244,7 +244,7 @@
         android:id="@+id/birthdayActivity"
         android:name="com.habitrpg.android.habitica.ui.activities.BirthdayActivity"
         android:label="@string/gem_purchase_toolbartitle" >
-        <deepLink app:uri="habitica.com/birthday" />
+        <deepLink app:uri="habitica.com/promo/birthday" />
     </activity>
     <fragment
         android:id="@+id/newsFragment"
