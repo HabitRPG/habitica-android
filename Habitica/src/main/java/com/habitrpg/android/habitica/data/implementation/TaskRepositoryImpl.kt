@@ -223,7 +223,11 @@ class TaskRepositoryImpl(
         }
         localRepository.save(task)
 
-        val savedTask = apiClient.createTask(task)
+        val savedTask = if (task.isGroupTask) {
+            apiClient.createGroupTask(task.group?.groupID ?: "", task)
+        } else {
+            apiClient.createTask(task)
+        }
         savedTask?.dateCreated = Date()
         if (savedTask != null) {
             savedTask.tags = task.tags

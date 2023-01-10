@@ -138,6 +138,8 @@ interface ApiService {
 
     @POST("tasks/user")
     suspend fun createTask(@Body item: Task): HabitResponse<Task>
+    @POST("tasks/group/{groupId}")
+    suspend fun createGroupTask(@Path("groupId") groupId: String, @Body item: Task): HabitResponse<Task>
 
     @POST("tasks/user")
     suspend fun createTasks(@Body tasks: List<Task>): HabitResponse<List<Task>>

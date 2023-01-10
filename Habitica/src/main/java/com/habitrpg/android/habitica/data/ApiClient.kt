@@ -97,6 +97,7 @@ interface ApiClient {
     suspend fun scoreChecklistItem(taskId: String, itemId: String): Task?
 
     suspend fun createTask(item: Task): Task?
+    suspend fun createGroupTask(groupId: String, item: Task): Task?
 
     suspend fun createTasks(tasks: List<Task>): List<Task>?
 

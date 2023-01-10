@@ -447,6 +447,10 @@ class ApiClientImpl(
         return process { apiService.createTask(item) }
     }
 
+    override suspend fun createGroupTask(groupId: String, item: Task): Task? {
+        return process { apiService.createGroupTask(groupId, item) }
+    }
+
     override suspend fun createTasks(tasks: List<Task>): List<Task>? {
         return process { apiService.createTasks(tasks) }
     }
