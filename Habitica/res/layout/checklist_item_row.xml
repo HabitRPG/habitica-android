@@ -30,7 +30,7 @@
     <com.habitrpg.android.habitica.ui.views.EllipsisTextView
         android:id="@+id/checkedTextView"
         style="@style/Body2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:paddingStart="16dp"
