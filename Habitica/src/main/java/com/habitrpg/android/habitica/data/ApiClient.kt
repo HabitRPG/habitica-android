@@ -131,7 +131,7 @@ interface ApiClient {
 
     suspend fun disableClasses(): User?
 
-    suspend fun markPrivateMessagesRead(): Void?
+    suspend fun markPrivateMessagesRead()
 
     /* Group API */
 

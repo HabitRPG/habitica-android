@@ -426,11 +426,17 @@ class PurchaseHandler(
         }
     }
 
+    private val displayedConfirmations = mutableListOf<String>()
+
     private fun displayConfirmationDialog(purchase: Purchase, giftedTo: String? = null) {
-        CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
+        if (displayedConfirmations.contains(purchase.orderId)) {
+            return
+        }
+        displayedConfirmations.add(purchase.orderId)
+        CoroutineScope(Dispatchers.Main).launchCatching {
             val application = (context as? HabiticaBaseApplication)
-                ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
-            val sku = purchase.products.firstOrNull() ?: return@launch
+                ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launchCatching
+            val sku = purchase.products.firstOrNull() ?: return@launchCatching
             var title = context.getString(R.string.successful_purchase_generic)
             val message = when {
                 PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {

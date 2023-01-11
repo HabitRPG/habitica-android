@@ -52,6 +52,13 @@ fun AssignedView(
                 color = color,
                 extraContent = {
                     completedAt[assignable.id]?.let { CompletedAt(completedAt = it) }
+                },
+                endContent = {
+                    completedAt[assignable.id]?.let {
+                        if (showEditButton) {
+                            UndoTaskCompletion()
+                        }
+                    }
                 }
             )
         }
@@ -80,4 +87,8 @@ fun AssignedView(
             }
         }
     }
+}
+
+@Composable
+fun UndoTaskCompletion() {
 }

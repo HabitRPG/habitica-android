@@ -274,7 +274,7 @@ class SocialRepositoryImpl(
         return apiClient.findUsernames(username, context, id)
     }
 
-    override suspend fun markPrivateMessagesRead(user: User?): Void? {
+    override suspend fun markPrivateMessagesRead(user: User?) {
         if (user?.isManaged == true) {
             localRepository.modify(user) {
                 it.inbox?.hasUserSeenInbox = true

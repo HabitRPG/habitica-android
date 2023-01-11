@@ -200,7 +200,7 @@ interface ApiService {
     suspend fun disableClasses(): HabitResponse<User>
 
     @POST("user/mark-pms-read")
-    suspend fun markPrivateMessagesRead(): Void
+    suspend fun markPrivateMessagesRead(): Void?
 
     /* Group API */
 

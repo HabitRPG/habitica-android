@@ -33,7 +33,7 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import java.util.Date
 
 @Composable
-fun BirthdayBanner(endDate: Date) {
+fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
     var value by remember { mutableStateOf(0) }
 
     DisposableEffect(Unit) {
@@ -50,7 +50,7 @@ fun BirthdayBanner(endDate: Date) {
         }
     }
     Column(
-        Modifier
+        modifier
             .fillMaxWidth()
             .clickable {
                 MainNavigationController.navigate(R.id.birthdayActivity)

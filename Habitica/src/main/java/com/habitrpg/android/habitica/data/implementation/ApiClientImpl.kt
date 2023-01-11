@@ -499,8 +499,8 @@ class ApiClientImpl(
 
     override suspend fun disableClasses(): User? = process { apiService.disableClasses() }
 
-    override suspend fun markPrivateMessagesRead(): Void {
-        return apiService.markPrivateMessagesRead()
+    override suspend fun markPrivateMessagesRead() {
+        apiService.markPrivateMessagesRead()
     }
 
     override suspend fun listGroups(type: String): List<Group>? {

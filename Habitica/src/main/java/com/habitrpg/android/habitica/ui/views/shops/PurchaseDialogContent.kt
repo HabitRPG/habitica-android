@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.loadGif
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
@@ -29,7 +28,7 @@ abstract class PurchaseDialogContent @JvmOverloads constructor(
 
     open fun setItem(item: ShopItem) {
         if (item.path?.contains("timeTravelBackgrounds") == true) {
-            imageView.loadGif(item.imageName?.replace("icon_", ""))
+            imageView.loadImage(item.imageName?.replace("icon_", ""))
             val params = imageView.layoutParams
             params.height = 147.dpToPx(context)
             params.width = 140.dpToPx(context)

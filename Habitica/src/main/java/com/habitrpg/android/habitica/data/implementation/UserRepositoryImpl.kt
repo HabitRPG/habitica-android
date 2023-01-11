@@ -20,9 +20,11 @@ import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
@@ -65,7 +67,9 @@ class UserRepositoryImpl(
         if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
             val user = apiClient.retrieveUser(withTasks) ?: return null
             lastSync = Date()
-            localRepository.saveUser(user)
+            withContext(Dispatchers.Main) {
+                localRepository.saveUser(user)
+            }
             if (withTasks) {
                 val id = user.id
                 val tasksOrder = user.tasksOrder
