@@ -160,12 +160,12 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                         val dialog = OpenedMysteryitemDialog(activity)
                         dialog.isCelebratory = true
                         dialog.setTitle(R.string.mystery_item_title)
-                        dialog.binding.iconView.loadImage("shop_${it.key}")
+                        dialog.binding.iconView.loadImage("shop_${item.key}")
                         dialog.binding.titleView.text = item.text
                         dialog.binding.descriptionView.text = item.notes
                         dialog.addButton(R.string.equip, true) { _, _ ->
                             lifecycleScope.launchCatching {
-                                inventoryRepository.equip("equipped", it.key)
+                                item.key?.let { mysteryItem -> inventoryRepository.equip("equipped", mysteryItem) }
                             }
                         }
                         dialog.addCloseButton()
