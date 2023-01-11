@@ -5,28 +5,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGiftGemBalanceBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import javax.inject.Inject
 
 class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
 
     override var binding: FragmentGiftGemBalanceBinding? = null
 
     private var isGifting = false
+        set(value) {
+            field = value
+            binding?.giftButton?.isVisible = !isGifting
+            binding?.progressBar?.isVisible = isGifting
+        }
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGiftGemBalanceBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentGiftGemBalanceBinding {
         return FragmentGiftGemBalanceBinding.inflate(inflater, container, false)
     }
 
@@ -61,15 +74,29 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         if (isGifting) return
         isGifting = true
         try {
-            val amount = binding?.giftEditText?.text.toString().toInt()
+            val amount = binding?.giftEditText?.text.toString().strip().toInt()
             giftedMember?.id?.let {
-                lifecycleScope.launchCatching({
+                activity?.lifecycleScope?.launchCatching({
                     isGifting = false
                 }) {
                     socialRepository.transferGems(it, amount)
                     userRepository.retrieveUser(false)
+                    val dialog = context?.let { it1 -> HabiticaAlertDialog(it1) }
+                    dialog?.setTitle(R.string.gift_confirmation_title)
+                    dialog?.setMessage(
+                        getString(
+                            R.string.gift_confirmation_text_gems_new,
+                            giftedMember?.username,
+                            amount.toString()
+                        )
+                    )
+                    dialog?.addCloseButton { _, _ ->
+                        activity?.finish()
+                    }
+                    dialog?.show()
                 }
             }
-        } catch (ignored: NumberFormatException) {}
+        } catch (ignored: NumberFormatException) {
+        }
     }
 }

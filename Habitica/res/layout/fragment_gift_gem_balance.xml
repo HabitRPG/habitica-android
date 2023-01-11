@@ -75,5 +75,10 @@
             style="@style/HabiticaButton.Purple"
             android:layout_marginTop="@dimen/spacing_medium"
             android:text="@string/send_gift" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

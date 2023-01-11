@@ -211,7 +211,9 @@ class PurchaseHandler(
         }
         val flowParams = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(listOf(skuDetails).map {
-                BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(skuDetails)
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(skuDetails)
+                    .setOfferToken(skuDetails.subscriptionOfferDetails?.first()?.offerToken ?: "")
                     .build()
             })
             .build()

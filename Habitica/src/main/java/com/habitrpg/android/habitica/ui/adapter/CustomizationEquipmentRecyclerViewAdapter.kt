@@ -111,7 +111,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                 imageView.loadImage("shop_" + this.equipment?.key)
 
                 val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
-                priceLabel.text = if (equipment?.gearSet == "animal") {
+                priceLabel?.text = if (equipment?.gearSet == "animal") {
                     2.0
                 } else {
                     equipment?.value ?: 0

@@ -126,7 +126,6 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun getLayoutResId(): Int {
-        window.requestFeature(Window.FEATURE_ACTION_BAR)
         return R.layout.activity_login
     }
 
@@ -136,6 +135,7 @@ class LoginActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.requestFeature(Window.FEATURE_ACTION_BAR)
         super.onCreate(savedInstanceState)
         viewModel = AuthenticationViewModel()
         supportActionBar?.hide()

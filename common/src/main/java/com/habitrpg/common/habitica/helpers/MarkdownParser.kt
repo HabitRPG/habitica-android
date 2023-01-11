@@ -91,8 +91,12 @@ object MarkdownParser {
             return SpannableString("")
         }
         val hashCode = input.hashCode()
-        if (cache.containsKey(hashCode)) {
-            return cache[hashCode] ?: SpannableString(input)
+        try {
+            if (cache.containsKey(hashCode)) {
+                return cache[hashCode] ?: SpannableString(input)
+            }
+        } catch (_: NullPointerException) {
+            // Sometimes happens
         }
         val text = EmojiParser.parseEmojis(input) ?: input
         // Adding this space here bc for some reason some markdown is not rendered correctly when the whole string is supposed to be formatted
