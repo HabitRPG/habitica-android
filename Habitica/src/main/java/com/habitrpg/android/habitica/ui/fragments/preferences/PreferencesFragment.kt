@@ -191,6 +191,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
+            val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
+            usePushPreference?.isChecked = true
             pushNotificationManager.addPushDeviceUsingStoredToken()
         } else {
             //If user denies notification settings originally - they must manually enable it through notification settings.
@@ -226,13 +228,14 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 TaskAlarmManager.scheduleDailyReminder(context)
             }
             "usePushNotifications" -> {
+                val notifPermissionEnabled: Boolean = pushNotificationManager.notificationPermissionEnabled()
                 val usePushNotifications = sharedPreferences.getBoolean(key, true)
                 pushNotificationsPreference?.isEnabled = usePushNotifications
                 lifecycleScope.launchCatching {
                     userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications)
                 }
                 if (usePushNotifications) {
-                    if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
+                    if (!notifPermissionEnabled && Build.VERSION.SDK_INT >= 33) {
                         notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                     } else {
                         pushNotificationManager.addPushDeviceUsingStoredToken()
@@ -389,12 +392,13 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val inbox = user?.inbox
         disablePMsPreference?.isChecked = inbox?.optOut ?: true
 
+        val notifPermissionEnabled: Boolean = pushNotificationManager.notificationPermissionEnabled()
         val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
         val usePushNotifications = !(user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false)
         pushNotificationsPreference?.isEnabled = usePushNotifications
-        usePushPreference?.isChecked = usePushNotifications
-        if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33 && !usePushNotifications) {
+        usePushPreference?.isChecked = (usePushNotifications && notifPermissionEnabled)
+        if (!notifPermissionEnabled) {
             usePushPreference?.summary = getString(R.string.push_notification_system_settings_description)
         } else {
             usePushPreference?.summary = ""
