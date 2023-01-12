@@ -40,8 +40,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.extensions.addZeroWidthSpace
-import com.habitrpg.android.habitica.extensions.removeZeroWidthSpace
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.launchCatching
@@ -214,7 +212,6 @@ class TaskFormActivity : BaseActivity() {
         binding.notesEditText.onFocusChangeListener = View.OnFocusChangeListener { _, isFocused ->
             binding.notesInputLayout.alpha = if (isFocused) 0.8f else 0.6f
         }
-        binding.notesEditText.movementMethod = LinkMovementMethod.getInstance()
         binding.scrollView.setOnTouchListener { view, event ->
             userScrolled =
                 view == binding.scrollView && (event.action == MotionEvent.ACTION_SCROLL || event.action == MotionEvent.ACTION_MOVE)
@@ -403,9 +400,9 @@ class TaskFormActivity : BaseActivity() {
         menu.findItem(R.id.action_save).isEnabled = canSave
         if (forcedTheme == "taskform" || forcedTheme == "maroon") {
             menu.iterator().forEach {
-                val spannable = SpannableString(it.title)
-                spannable.setSpan(ForegroundColorSpan(Color.WHITE), 0, spannable.length, 0)
-                it.title = spannable
+//                val spannable = SpannableString(it.title)
+//                spannable.setSpan(ForegroundColorSpan(Color.WHITE), 0, spannable.length, 0)
+//                it.title = spannable
             }
         }
         return true
@@ -525,7 +522,7 @@ class TaskFormActivity : BaseActivity() {
         }
         canSave = true
         binding.textEditText.setText(task.text)
-        binding.notesEditText.setText(task.notes?.addZeroWidthSpace())
+        binding.notesEditText.setText(task.notes)
         viewModel.taskDifficulty.value = TaskDifficulty.valueOf(task.priority)
         when (taskType) {
             TaskType.HABIT -> {
@@ -605,7 +602,7 @@ class TaskFormActivity : BaseActivity() {
         thisTask.dateCreated = Date()
 
         thisTask.text = binding.textEditText.text.toString()
-        thisTask.notes = binding.notesEditText.text.toString().removeZeroWidthSpace()
+        thisTask.notes = binding.notesEditText.text.toString()
         thisTask.priority = viewModel.taskDifficulty.value.value
         if (usesTaskAttributeStats) {
             thisTask.attribute = viewModel.selectedAttribute.value

@@ -35,6 +35,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
     var item: ChecklistItem = ChecklistItem()
         set(value) {
             field = value
+            binding.editText.setText(item.text)
         }
 
     var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
