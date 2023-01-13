@@ -17,7 +17,7 @@ import io.github.kakaocup.kakao.text.KTextView
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -38,7 +38,7 @@ class PartyDetailFragmentTest : FragmentTestCase<PartyDetailFragment, FragmentPa
     override fun makeFragment() {
         val group = Group()
         group.name = "Group Name"
-        every { socialRepository.getGroup(any()) } returns Flowable.just(group)
+        every { socialRepository.getGroup(any()) } returns flowOf(group)
         viewModel = PartyViewModel(false)
         viewModel.socialRepository = socialRepository
         viewModel.userRepository = userRepository

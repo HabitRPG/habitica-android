@@ -1338,6 +1338,7 @@
     <string name="twenty_gems">20 Gems</string>
     <string name="background">Background</string>
     <string name="birthday_set">Birthday Set</string>
+    <string name="you_equipped_x">You equipped %s</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

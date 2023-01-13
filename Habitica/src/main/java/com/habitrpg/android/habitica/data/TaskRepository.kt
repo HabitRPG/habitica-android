@@ -68,4 +68,5 @@ interface TaskRepository : BaseRepository {
     fun getTasksForChallenge(challengeID: String?): Flow<List<Task>>
     suspend fun bulkScoreTasks(data: List<Map<String, String>>): BulkTaskScoringData?
     suspend fun markTaskNeedsWork(task: Task, userID: String)
+
 }

@@ -196,7 +196,9 @@ class TaskRepositoryImpl(
     override suspend fun markTaskNeedsWork(task: Task, userID: String) {
         val savedTask = apiClient.markTaskNeedsWork(task.id ?: "", userID)
         if (savedTask != null) {
+            savedTask.id = task.id
             savedTask.position = task.position
+            savedTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed = false
             localRepository.save(savedTask)
         }
     }

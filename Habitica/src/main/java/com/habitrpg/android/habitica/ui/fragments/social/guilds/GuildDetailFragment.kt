@@ -199,7 +199,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         binding?.guildSummary?.setMarkdown(guild?.summary)
         binding?.guildDescription?.setMarkdown(guild?.description)
 
-        binding?.inviteButton?.isVisible = guild?.isGroupPlan == true
+        binding?.inviteButton?.isVisible = guild?.isGroupPlan != true
     }
 
     companion object {
