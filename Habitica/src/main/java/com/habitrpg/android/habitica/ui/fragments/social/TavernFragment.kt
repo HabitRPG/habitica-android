@@ -91,7 +91,9 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         TavernDetailFragment()
                     }
                     1 -> {
-                        ChatFragment()
+                        val fragment = ChatFragment()
+                        fragment.viewModel = viewModel
+                        fragment
                     }
                     else -> Fragment()
                 }

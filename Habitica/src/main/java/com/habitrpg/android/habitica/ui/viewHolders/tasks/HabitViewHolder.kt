@@ -137,12 +137,16 @@ class HabitViewHolder(
 
     override fun onLeftActionTouched() {
         super.onLeftActionTouched()
-        onPlusButtonClicked()
+        if (!isLocked) {
+            onPlusButtonClicked()
+        }
     }
 
     override fun onRightActionTouched() {
         super.onRightActionTouched()
-        onMinusButtonClicked()
+        if (!isLocked) {
+            onMinusButtonClicked()
+        }
     }
 
     private fun onPlusButtonClicked() {

@@ -19,10 +19,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,7 +59,10 @@ import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -68,13 +71,17 @@ import javax.inject.Inject
 class BirthdayActivity : BaseActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
 
+    private val isPurchasing = mutableStateOf(false)
     private val price = mutableStateOf("")
     private val hasGryphatrice = mutableStateOf(false)
     private var gryphatriceProductDetails: ProductDetails? = null
@@ -86,20 +93,33 @@ class BirthdayActivity : BaseActivity() {
         val event = configManager.getBirthdayEvent()
         setContent {
             HabiticaTheme {
-                val user = userViewModel.user.observeAsState()
-                BirthdayActivityView(hasGryphatrice.value, price.value, event?.start ?: Date(), event?.end ?: Date(), {
-                    gryphatriceProductDetails?.let {
-                        purchaseHandler.purchase(this, it)
-                    }
-                }, {
-                    lifecycleScope.launchCatching {
-                        inventoryRepository.purchaseItem("", "Gryphatrice-Jubilant", 1)
-                    }
-                }, {
-                    lifecycleScope.launchCatching {
-                        inventoryRepository.equip("pets", "Gryphatrice-Jubilant")
-                    }
-                })
+                BirthdayActivityView(
+                    isPurchasing.value,
+                    hasGryphatrice.value,
+                    price.value,
+                    event?.start ?: Date(),
+                    event?.end ?: Date(),
+                    {
+                        gryphatriceProductDetails?.let {
+                            isPurchasing.value = true
+                            purchaseHandler.purchase(this, it)
+                        }
+                    },
+                    {
+                        lifecycleScope.launchCatching({
+                            isPurchasing.value = false
+                        }) {
+                            isPurchasing.value = true
+                            inventoryRepository.purchaseItem("pets", "Gryphatrice-Jubilant", 1)
+                            userRepository.retrieveUser(false, true)
+                            isPurchasing.value = false
+                        }
+                    },
+                    {
+                        lifecycleScope.launchCatching {
+                            inventoryRepository.equip("pet", "Gryphatrice-Jubilant")
+                        }
+                    })
             }
         }
 
@@ -111,6 +131,11 @@ class BirthdayActivity : BaseActivity() {
                 .collect {
                     hasGryphatrice.value = (it?.trained ?: 0) >= 5
                 }
+        }
+
+        lifecycleScope.launchCatching {
+            gryphatriceProductDetails = purchaseHandler.getGryphatriceSKU()
+            price.value = gryphatriceProductDetails?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
         }
     }
 
@@ -150,9 +175,17 @@ fun BirthdayTitle(text: String) {
     }
 }
 
-
 @Composable
-fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date, endDate: Date, onPurchaseClick: () -> Unit, onGemPurchaseClick: () -> Unit, onEquipClick: () -> Unit) {
+fun BirthdayActivityView(
+    isPurchasing: Boolean,
+    hasGryphatrice: Boolean,
+    price: String,
+    startDate: Date,
+    endDate: Date,
+    onPurchaseClick: () -> Unit,
+    onGemPurchaseClick: () -> Unit,
+    onEquipClick: () -> Unit
+) {
     val activity = LocalContext.current as? Activity
     val dateFormat = SimpleDateFormat("MMM dd", java.util.Locale.getDefault())
     val textColor = Color.White
@@ -192,8 +225,13 @@ fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date
         Column(
             horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                 .padding(horizontal = 20.dp)
-                .fillMaxWidth()) {
-            Image(painterResource(R.drawable.birthday_header), null, Modifier.padding(bottom = 8.dp))
+                .fillMaxWidth()
+        ) {
+            Image(
+                painterResource(R.drawable.birthday_header),
+                null,
+                Modifier.padding(bottom = 8.dp)
+            )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(painterResource(R.drawable.birthday_gifts), null)
                 Column(
@@ -207,7 +245,11 @@ fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        stringResource(R.string.x_to_y, dateFormat.format(startDate), dateFormat.format(endDate)),
+                        stringResource(
+                            R.string.x_to_y,
+                            dateFormat.format(startDate),
+                            dateFormat.format(endDate)
+                        ),
                         fontSize = 12.sp,
                         color = textColor,
                         fontWeight = FontWeight.Bold
@@ -266,6 +308,8 @@ fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date
                 ) {
                     Text(stringResource(R.string.equip))
                 }
+            } else if (isPurchasing) {
+                CircularProgressIndicator()
             } else {
                 Text(buildAnnotatedString {
                     append("Buy for ")
@@ -281,7 +325,7 @@ fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date
                     Color.White,
                     colorResource(R.color.brand_200),
                     {
-                    onPurchaseClick()
+                        onPurchaseClick()
                     },
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
@@ -291,7 +335,7 @@ fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date
                     Color.White,
                     colorResource(R.color.brand_200),
                     {
-                    onGemPurchaseClick()
+                        onGemPurchaseClick()
                     },
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
@@ -314,7 +358,11 @@ fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date
                 Color.White,
                 colorResource(R.color.brand_200),
                 {
-                    onEquipClick()
+                    MainScope().launchCatching {
+                        activity?.finish()
+                        delay(500)
+                        MainNavigationController.navigate(R.id.marketFragment)
+                    }
                 },
                 modifier = Modifier.padding(top = 20.dp)
             ) {
@@ -328,6 +376,42 @@ fun BirthdayActivityView(hasGryphatrice: Boolean, price: String, startDate: Date
                 textAlign = TextAlign.Center,
                 lineHeight = 20.sp
             )
+            Column(verticalArrangement = Arrangement.spacedBy(14.dp), modifier = Modifier.padding(vertical = 20.dp)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    FourFreeItem(
+                        day = 1,
+                        title = stringResource(R.string.a_party_robe),
+                        imageName = "",
+                        modifier = Modifier.weight(1f)
+                    )
+                    FourFreeItem(
+                        day = 1,
+                        title = stringResource(R.string.twenty_gems),
+                        imageName = "",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(14.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    FourFreeItem(
+                        day = 5,
+                        title = stringResource(R.string.birthday_set),
+                        imageName = "",
+                        modifier = Modifier.weight(1f)
+                    )
+                    FourFreeItem(
+                        day = 10,
+                        title = stringResource(R.string.background),
+                        imageName = "",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -369,19 +453,56 @@ fun PotionGrid() {
         "Peppermint",
         "Shimmer"
     ).windowed(4, 4, true)
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp), horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 20.dp)) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(top = 20.dp)
+    ) {
         for (potionGroup in potions) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 for (potion in potionGroup) {
                     Box(
                         Modifier
                             .size(68.dp)
-                            .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))) {
-                        AsyncImage(model = DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename("Pet_HatchingPotion_$potion"), null, Modifier.size(68.dp))
+                            .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))
+                    ) {
+                        AsyncImage(
+                            model = DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(
+                                "Pet_HatchingPotion_$potion"
+                            ), null, Modifier.size(68.dp)
+                        )
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun FourFreeItem(
+    day: Int,
+    title: String,
+    imageName: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier
+            .background(colorResource(R.color.brand_50), HabiticaTheme.shapes.medium)
+            .padding(16.dp)
+    ) {
+        Text(
+            stringResource(R.string.day_x, day).uppercase(),
+            color = colorResource(R.color.yellow_50),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold
+        )
+        PixelArtView(imageName,
+            Modifier
+                .size(121.dp, 84.dp)
+                .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium))
+        Text(title, color = Color.White, fontSize = 16.sp)
     }
 }
 
@@ -413,7 +534,7 @@ fun HabiticaButton(
 @Preview(device = Devices.PIXEL_4)
 @Composable
 private fun Preview() {
-    BirthdayActivityView(false, "", Date(), Date(), {
+    BirthdayActivityView(true, false, "", Date(), Date(), {
 
     }, {}, {})
 }

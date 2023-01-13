@@ -154,6 +154,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     }
                     1 -> {
                         chatFragment = ChatFragment()
+                        chatFragment?.viewModel = viewModel
                         fragment = chatFragment
                     }
                     else -> fragment = Fragment()

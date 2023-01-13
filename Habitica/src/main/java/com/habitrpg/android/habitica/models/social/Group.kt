@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.models.social
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.user.SubscriptionPlan
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -11,6 +12,10 @@ import io.realm.annotations.PrimaryKey
 
 open class Group : RealmObject(), BaseMainObject {
 
+    val isGroupPlan: Boolean
+    get() {
+        return purchased?.isActive == true
+    }
     override val realmClass: Class<Group>
         get() = Group::class.java
     override val primaryIdentifier: String?
@@ -38,6 +43,7 @@ open class Group : RealmObject(), BaseMainObject {
     var leaderOnlyChallenges: Boolean = false
     var leaderOnlyGetGems: Boolean = false
     var categories: RealmList<GroupCategory>? = null
+    var purchased: SubscriptionPlan? = null
 
     @Ignore
     var tasksOrder: TasksOrder? = null

@@ -1319,7 +1319,7 @@
     <string name="gryphatrice_description">The rare, mystical Gryphatrice joins the birthday bash! Don’t miss your chance to own this exclusive animated Pet.</string>
     <string name="thanks_for_support">Thanks for your support!</string>
     <string name="plenty_of_potions">Plenty of Potions</string>
-    <string name="for_for_free">For for Free</string>
+    <string name="for_for_free">Four for Free</string>
     <string name="buy_for_x">Buy for %s</string>
     <string name="buy_for">Buy for</string>
     <string name="plenty_of_potions_description">We’re bringing back 10 of the community’s favorite Magic Hatching Potions. Head over to the Market to fill out your collection!</string>
@@ -1332,6 +1332,12 @@
     <string name="jubilant_gryphatrice_confirmation">You purchased the Jubilant Gryphatrice!</string>
     <string name="jubilant_gryphatrice_confirmation_gift">You gifted the Jubilant Gryphatrice!</string>
     <string name="open_settings">Open Settings</string>
+    <string name="undo">Undo</string>
+    <string name="day_x">Day %d</string>
+    <string name="a_party_robe">A Party Robe</string>
+    <string name="twenty_gems">20 Gems</string>
+    <string name="background">Background</string>
+    <string name="birthday_set">Birthday Set</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

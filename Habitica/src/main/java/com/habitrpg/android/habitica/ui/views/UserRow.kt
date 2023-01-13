@@ -26,6 +26,7 @@ fun UserRow(
     username: String,
     avatar: Avatar?,
     modifier: Modifier = Modifier,
+    mainContentModifier: Modifier = Modifier,
     extraContent: @Composable (() -> Unit)? = null,
     endContent: @Composable (() -> Unit)? = null,
     color: Color? = null
@@ -46,7 +47,7 @@ fun UserRow(
             }
         }
 
-        Column {
+        Column(mainContentModifier) {
             Text(
                 "@$username",
                 fontSize = 16.sp,

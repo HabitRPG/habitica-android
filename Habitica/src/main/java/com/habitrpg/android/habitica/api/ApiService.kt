@@ -459,4 +459,7 @@ interface ApiService {
 
     @GET("hall/heroes/{memberID}")
     suspend fun getHallMember(@Path("memberID") memberID: String): HabitResponse<Member>
+
+    @POST("tasks/{taskID}/needs-work/{userID}")
+    suspend fun markTaskNeedsWork(@Path("taskID") taskID: String, @Path("userID")  userID: String): HabitResponse<Task>
 }

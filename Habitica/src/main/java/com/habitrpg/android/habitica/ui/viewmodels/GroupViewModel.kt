@@ -202,10 +202,13 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     }
 
     fun likeMessage(message: ChatMessage) {
-        val index = _chatMessages.value?.indexOf(message)
-        if (index == null || index < 0) return
         viewModelScope.launchCatching {
             val message = socialRepository.likeMessage(message)
+            val index = _chatMessages.value?.indexOfFirst { it.id == message?.id }
+            if (index == null || index < 0) {
+                retrieveGroupChat {  }
+                return@launchCatching
+            }
             val list = _chatMessages.value?.toMutableList()
             if (message != null) {
                 list?.set(index, message)
@@ -246,7 +249,10 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     }
 
     fun retrieveGroupChat(onComplete: () -> Unit) {
-        val groupID = groupID
+        var groupID = groupID
+        if (groupViewType == GroupViewType.PARTY) {
+            groupID = "party"
+        }
         if (groupID.isNullOrEmpty()) {
             onComplete()
             return

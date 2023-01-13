@@ -114,7 +114,7 @@
                 android:text="@string/gem_purchase_subtitle"
                 android:gravity="center"
                 android:textStyle="normal|bold"
-                android:textColor="?colorPrimary"
+                android:textColor="?colorPrimaryText"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginTop="23dp"
@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/gift_gems"
                 android:background="@color/transparent"
-                android:textColor="?colorAccent"
+                android:textColor="?colorPrimaryText"
                 android:textAllCaps="false"/>
             <TextView android:id="@+id/supportTextView"
                 android:layout_height="wrap_content"

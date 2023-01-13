@@ -104,7 +104,7 @@ class NavigationDrawerFragment : DialogFragment() {
         val context = context
         adapter = if (context != null) {
             NavigationDrawerAdapter(
-                context.getThemeColor(R.attr.colorPrimary),
+                context.getThemeColor(R.attr.colorPrimaryText),
                 context.getThemeColor(R.attr.colorPrimaryOffset)
             )
         } else {

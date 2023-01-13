@@ -18,6 +18,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
 
     @JvmField
     var planId: String? = null
+    var active: Boolean? = null
     var gemsBought: Int? = null
     var extraMonths: Int? = null
     var quantity: Int? = null
@@ -34,7 +35,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     val isActive: Boolean
         get() {
             val today = Date()
-            return customerId != null && (dateTerminated == null || dateTerminated!!.after(today))
+            return customerId != null && (dateTerminated == null || dateTerminated!!.after(today) || active == true)
         }
 
     val totalNumberOfGems: Int

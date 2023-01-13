@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -197,6 +198,8 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         binding?.guildBankText?.text = guild?.gemCount.toString()
         binding?.guildSummary?.setMarkdown(guild?.summary)
         binding?.guildDescription?.setMarkdown(guild?.description)
+
+        binding?.inviteButton?.isVisible = guild?.isGroupPlan == true
     }
 
     companion object {

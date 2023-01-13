@@ -606,12 +606,20 @@ class ApiClientImpl(
         return process { apiService.leaveQuest(groupId) }
     }
 
+    private val lastPurchaseValidation: Date? = null
     override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? {
-        return process { apiService.validatePurchase(request) }
+        // make sure a purchase attempt doesn't happen
+        return if (lastPurchaseValidation == null || Date().time - lastPurchaseValidation.time > 5000) {
+            return process { apiService.validatePurchase(request) }
+        } else null
     }
 
     override suspend fun changeCustomDayStart(updateObject: Map<String, Any>): User? {
         return process { apiService.changeCustomDayStart(updateObject) }
+    }
+
+    override suspend fun markTaskNeedsWork(taskID: String, userID: String): Task? {
+        return process { apiService.markTaskNeedsWork(taskID, userID) }
     }
 
     override suspend fun getMember(memberId: String) = processResponse(apiService.getMember(memberId))

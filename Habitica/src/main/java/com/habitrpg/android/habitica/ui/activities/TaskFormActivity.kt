@@ -19,7 +19,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.runtime.mutableStateListOf
@@ -235,6 +234,12 @@ class TaskFormActivity : BaseActivity() {
                         HabiticaTheme.colors.textPrimaryFor(task),
                         {
                             showAssignDialog()
+                        },
+                        {
+                            taskCompletedMap.remove(it)
+                            lifecycleScope.launchCatching {
+                                task?.let { it1 -> taskRepository.markTaskNeedsWork(it1, it) }
+                            }
                         },
                         showEditButton = true
                     )
