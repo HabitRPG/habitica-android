@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.util.Log
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -40,7 +41,8 @@ class ExceptionHandler {
                     !HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     !retrofit2.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     !EOFException::class.java.isAssignableFrom(throwable.javaClass) &&
-                    throwable !is ConnectionShutdownException
+                    throwable !is ConnectionShutdownException &&
+                        throwable !is CancellationException
                 ) {
                     instance.analyticsManager?.logException(throwable)
                 }

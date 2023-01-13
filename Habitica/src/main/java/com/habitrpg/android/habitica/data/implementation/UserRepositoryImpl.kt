@@ -166,7 +166,11 @@ class UserRepositoryImpl(
         runCron(ArrayList())
     }
 
-    override suspend fun readNotification(id: String) = apiClient.readNotification(id)
+    private var lastReadNotification: String? = null
+    override suspend fun readNotification(id: String): List<Any>? {
+        if (lastReadNotification == id) return null
+        return apiClient.readNotification(id)
+    }
     override fun getUserQuestStatus(): Flow<UserQuestStatus> {
         return localRepository.getUserQuestStatus(userID)
     }

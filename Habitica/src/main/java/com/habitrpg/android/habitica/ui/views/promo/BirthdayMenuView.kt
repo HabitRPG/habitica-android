@@ -6,12 +6,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -21,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import java.util.Date
 
 @Composable
@@ -57,22 +62,49 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
             }
     ) {
         Column(Modifier.fillMaxWidth()) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterVertically),
+            Box(
+                contentAlignment = Alignment.CenterStart,
                 modifier = Modifier
                     .height(67.dp)
                     .fillMaxWidth()
                     .background(colorResource(R.color.brand_100))
-                    .padding(start = 10.dp)) {
-                Image(
-                    painterResource(R.drawable.birthday_menu_text), null
-                )
-                Text(
-                    stringResource(R.string.exclusive_items_await),
-                    color = colorResource(R.color.yellow_100),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
+            ) {
+                Row(Modifier
+                    .align(Alignment.CenterEnd)) {
+                    Image(
+                        painterResource(R.drawable.birthday_menu_gems),
+                        null,
+                        modifier = Modifier
+                            .align(Alignment.Top)
+                            .offset((40).dp)
+                    )
+                    PixelArtView(
+                        imageName = "stable_Pet-Gryphatrice-Jubilant",
+                        Modifier
+                            .requiredSize(104.dp)
+                            .scale(-1f, 1f)
+                            .offset((-30).dp)
+                    )
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(
+                        2.dp,
+                        Alignment.CenterVertically
+                    ),
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                ) {
+                    Image(
+                        painterResource(R.drawable.birthday_menu_text), null
+                    )
+                    Text(
+                        stringResource(R.string.exclusive_items_await),
+                        color = colorResource(R.color.yellow_100),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(start = 2.dp)
+                    )
+                }
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -83,7 +115,10 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
                     .padding(horizontal = 10.dp)
             ) {
                 Text(
-                    stringResource(R.string.ends_in_x, endDate.getShortRemainingString()).uppercase(),
+                    stringResource(
+                        R.string.ends_in_x,
+                        endDate.getShortRemainingString()
+                    ).uppercase(),
                     color = colorResource(R.color.yellow_50),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold

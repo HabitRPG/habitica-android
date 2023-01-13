@@ -298,12 +298,13 @@ fun BirthdayActivityView(
                 )
                 BirthdayTitle(stringResource(id = R.string.animated_gryphatrice_pet))
                 Box(
-                    Modifier
-                        .size(161.dp, 129.dp)
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
                         .padding(vertical = 20.dp)
+                        .size(161.dp, 129.dp)
                         .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))
                 ) {
-
+                    PixelArtView(imageName = "stable_Pet-Gryphatrice-Jubilant", Modifier.size(104.dp))
                 }
                 Text(
                     stringResource(R.string.limited_edition).toUpperCase(Locale.current),
@@ -334,7 +335,7 @@ fun BirthdayActivityView(
                         },
                         modifier = Modifier.padding(top = 20.dp)
                     ) {
-                        Text(stringResource(R.string.equip))
+                        Text(stringResource(R.string.equip), fontSize = 18.sp)
                     }
                 } else if (isPurchasing) {
                     CircularProgressIndicator()
@@ -357,7 +358,7 @@ fun BirthdayActivityView(
                         },
                         modifier = Modifier.padding(top = 20.dp)
                     ) {
-                        Text(stringResource(R.string.buy_for_x, price))
+                        Text(stringResource(R.string.buy_for_x, price), fontSize = 18.sp)
                     }
                     HabiticaButton(
                         Color.White,
@@ -367,9 +368,9 @@ fun BirthdayActivityView(
                         },
                         modifier = Modifier.padding(top = 20.dp)
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(stringResource(R.string.buy_for))
-                            CurrencyText(currency = "gems", value = 60)
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text(stringResource(R.string.buy_for), fontSize = 18.sp)
+                            CurrencyText(currency = "gems", value = 60, fontSize = 18.sp)
                         }
                     }
                 }
@@ -394,7 +395,7 @@ fun BirthdayActivityView(
                     },
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
-                    Text(stringResource(R.string.visit_the_market))
+                    Text(stringResource(R.string.visit_the_market), fontSize = 18.sp)
                 }
                 BirthdayTitle(stringResource(id = R.string.for_for_free))
                 Text(
@@ -415,13 +416,13 @@ fun BirthdayActivityView(
                         FourFreeItem(
                             day = 1,
                             title = stringResource(R.string.a_party_robe),
-                            imageName = "",
+                            imageName = "birthday10_robes",
                             modifier = Modifier.weight(1f)
                         )
                         FourFreeItem(
                             day = 1,
                             title = stringResource(R.string.twenty_gems),
-                            imageName = "",
+                            imageName = "birthday10_gems",
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -432,13 +433,13 @@ fun BirthdayActivityView(
                         FourFreeItem(
                             day = 5,
                             title = stringResource(R.string.birthday_set),
-                            imageName = "",
+                            imageName = "birthday10_hero",
                             modifier = Modifier.weight(1f)
                         )
                         FourFreeItem(
                             day = 10,
                             title = stringResource(R.string.background),
-                            imageName = "",
+                            imageName = "birthday10_background",
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -530,10 +531,17 @@ fun FourFreeItem(
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold
         )
-        PixelArtView(imageName,
-            Modifier
-                .size(121.dp, 84.dp)
-                .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium))
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+            .size(121.dp, 84.dp)
+            .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium)) {
+            PixelArtView(imageName,
+                Modifier
+                    .size(68.dp)
+            )
+        }
+
         Text(title, color = Color.White, fontSize = 16.sp)
     }
 }

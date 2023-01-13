@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
@@ -33,6 +32,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.common.habitica.extensions.getThemeColor
 
 data class LabeledValue<V>(val label: String, val value: V)
@@ -76,9 +76,6 @@ private fun <V> TaskFormSelection(
     modifier: Modifier = Modifier
 ) {
     val selectedState = updateTransition(selected)
-    val textColor = selectedState.animateColor {
-        if (it) Color(LocalContext.current.getThemeColor(R.attr.colorTintedBackground)) else MaterialTheme.colors.primary
-    }
     Box(
         contentAlignment = Alignment.Center, modifier = modifier
             .background(
@@ -97,7 +94,7 @@ private fun <V> TaskFormSelection(
         ) {
             Box(
                 Modifier
-                    .background(MaterialTheme.colors.primary, MaterialTheme.shapes.medium)
+                    .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
                     .matchParentSize()
             )
         }
@@ -105,7 +102,7 @@ private fun <V> TaskFormSelection(
             text,
             fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
             fontSize = 16.sp,
-            color = textColor.value,
+            color = HabiticaTheme.colors.tintedUiDetails,
             modifier = Modifier.padding(15.dp)
         )
     }

@@ -4,14 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.text.SpannableString
-import android.text.method.LinkMovementMethod
-import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -502,7 +498,7 @@ class TaskFormActivity : BaseActivity() {
             val view = CheckBox(this)
             view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
             view.text = tag.name
-            view.setTextColor(getThemeColor(R.attr.colorPrimaryDark))
+            view.setTextColor(getThemeColor(R.attr.tintedUiDetails))
             if (preselectedTags?.contains(tag.id) == true) {
                 view.isChecked = true
             }

@@ -40,9 +40,12 @@
         <item name="colorContentBackgroundOffset">@color/content_background_offset</item>
         <item name="colorWindowBackground">@color/window_background</item>
         <item name="colorTintedBackground">@color/brand_800</item>
-        <item name="colorTintedBackgroundOffset">@color/brand_700</item>
+        <item name="colorTintedBackgroundOffset">@color/brand_50012</item>
         <item name="textColorTintedSecondary">@color/brand_sub_text</item>
         <item name="textColorTintedPrimary">@color/brand_100</item>
+        <item name="tintedUiMain">@color/brand_500</item>
+        <item name="tintedUiSub">@color/brand_400</item>
+        <item name="tintedUiDetails">@color/brand_100</item>
 
         <item name="popupMenuStyle">@style/PopupTheme</item>
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
@@ -79,7 +82,7 @@
         <item name="textColorTintedSecondary">@color/brand_500</item>
         <item name="colorPrimaryText">@color/brand_600</item>
         <item name="colorPrimaryDark">@color/brand_400</item>
-        <item name="textColorTintedPrimary">@color/brand_700</item>
+        <item name="textColorTintedPrimary">@color/brand_800</item>
     </style>
 
 
@@ -102,9 +105,12 @@
         <item name="toolbarContentColor">@color/red_1</item>
         <item name="colorPrimaryText">@color/red_1</item>
         <item name="colorTintedBackground">@color/red_700</item>
-        <item name="colorTintedBackgroundOffset">@color/red_600</item>
+        <item name="colorTintedBackgroundOffset">@color/red_50012</item>
         <item name="textColorTintedSecondary">@color/red_sub_text</item>
-        <item name="textColorTintedPrimary">@color/red_100</item>
+        <item name="textColorTintedPrimary">@color/red_1</item>
+        <item name="tintedUiMain">@color/red_400</item>
+        <item name="tintedUiSub">@color/red_10</item>
+        <item name="tintedUiDetails">@color/red_1</item>
     </style>
 
     <style name="MainAppTheme.Red.Dark">
@@ -114,10 +120,9 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/red_1</item>
         <item name="colorTintedBackground">@color/red_00</item>
-        <item name="colorTintedBackgroundOffset">@color/red_0</item>
         <item name="colorPrimaryText">@color/red_600</item>
         <item name="textColorTintedSecondary">@color/red_500</item>
-        <item name="textColorTintedPrimary">@color/red_600</item>
+        <item name="textColorTintedPrimary">@color/red_700</item>
     </style>
 
     <style name="MainAppTheme.Maroon">
@@ -138,9 +143,12 @@
         <item name="taskFormTint">@color/maroon_50</item>
         <item name="colorPrimaryText">@color/maroon_1</item>
         <item name="colorTintedBackground">@color/maroon_700</item>
-        <item name="colorTintedBackgroundOffset">@color/maroon_600</item>
+        <item name="colorTintedBackgroundOffset">@color/maroon_50012</item>
         <item name="textColorTintedSecondary">@color/maroon_sub_text</item>
-        <item name="textColorTintedPrimary">@color/maroon_100</item>
+        <item name="textColorTintedPrimary">@color/maroon_1</item>
+        <item name="tintedUiMain">@color/maroon_400</item>
+        <item name="tintedUiSub">@color/maroon_10</item>
+        <item name="tintedUiDetails">@color/maroon_1</item>
     </style>
 
     <style name="MainAppTheme.Maroon.Dark">
@@ -149,10 +157,9 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/white</item>
         <item name="colorTintedBackground">@color/maroon_00</item>
-        <item name="colorTintedBackgroundOffset">@color/maroon_0</item>
         <item name="colorPrimaryText">@color/maroon_600</item>
         <item name="textColorTintedSecondary">@color/maroon_500</item>
-        <item name="textColorTintedPrimary">@color/maroon_600</item>
+        <item name="textColorTintedPrimary">@color/maroon_700</item>
     </style>
 
     <style name="MainAppTheme.Orange">
@@ -174,9 +181,12 @@
         <item name="toolbarContentColor">@color/orange_1</item>
         <item name="colorPrimaryText">@color/orange_1</item>
         <item name="colorTintedBackground">@color/orange_700</item>
-        <item name="colorTintedBackgroundOffset">@color/orange_600</item>
+        <item name="colorTintedBackgroundOffset">@color/orange_50012</item>
         <item name="textColorTintedSecondary">@color/orange_sub_text</item>
-        <item name="textColorTintedPrimary">@color/orange_100</item>
+        <item name="textColorTintedPrimary">@color/orange_1</item>
+        <item name="tintedUiMain">@color/orange_400</item>
+        <item name="tintedUiSub">@color/orange_10</item>
+        <item name="tintedUiDetails">@color/orange_1</item>
     </style>
 
     <style name="MainAppTheme.Orange.Dark">
@@ -186,10 +196,9 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/orange_1</item>
         <item name="colorTintedBackground">@color/orange_00</item>
-        <item name="colorTintedBackgroundOffset">@color/orange_0</item>
         <item name="colorPrimaryText">@color/orange_600</item>
         <item name="textColorTintedSecondary">@color/orange_500</item>
-        <item name="textColorTintedPrimary">@color/orange_600</item>
+        <item name="textColorTintedPrimary">@color/orange_700</item>
     </style>
 
     <style name="MainAppTheme.Yellow">
@@ -211,9 +220,12 @@
         <item name="toolbarContentColor">@color/yellow_1</item>
         <item name="colorPrimaryText">@color/yellow_1</item>
         <item name="colorTintedBackground">@color/yellow_700</item>
-        <item name="colorTintedBackgroundOffset">@color/yellow_600</item>
+        <item name="colorTintedBackgroundOffset">@color/yellow_50012</item>
         <item name="textColorTintedSecondary">@color/yellow_sub_text</item>
-        <item name="textColorTintedPrimary">@color/yellow_10</item>
+        <item name="textColorTintedPrimary">@color/yellow_1</item>
+        <item name="tintedUiMain">@color/yellow_400</item>
+        <item name="tintedUiSub">@color/yellow_10</item>
+        <item name="tintedUiDetails">@color/yellow_1</item>
     </style>
 
     <style name="MainAppTheme.Yellow.Dark">
@@ -223,10 +235,9 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/yellow_1</item>
         <item name="colorTintedBackground">@color/yellow_00</item>
-        <item name="colorTintedBackgroundOffset">@color/yellow_0</item>
         <item name="colorPrimaryText">@color/yellow_600</item>
         <item name="textColorTintedSecondary">@color/yellow_500</item>
-        <item name="textColorTintedPrimary">@color/yellow_600</item>
+        <item name="textColorTintedPrimary">@color/yellow_700</item>
     </style>
 
     <style name="MainAppTheme.Green">
@@ -248,9 +259,12 @@
         <item name="toolbarContentColor">@color/green_1</item>
         <item name="colorPrimaryText">@color/green_1</item>
         <item name="colorTintedBackground">@color/green_700</item>
-        <item name="colorTintedBackgroundOffset">@color/green_600</item>
+        <item name="colorTintedBackgroundOffset">@color/green_50012</item>
         <item name="textColorTintedSecondary">@color/green_sub_text</item>
-        <item name="textColorTintedPrimary">@color/green_100</item>
+        <item name="textColorTintedPrimary">@color/green_1</item>
+        <item name="tintedUiMain">@color/green_400</item>
+        <item name="tintedUiSub">@color/green_10</item>
+        <item name="tintedUiDetails">@color/green_1</item>
     </style>
 
     <style name="MainAppTheme.Green.Dark">
@@ -260,10 +274,9 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/green_1</item>
         <item name="colorTintedBackground">@color/green_00</item>
-        <item name="colorTintedBackgroundOffset">@color/green_0</item>
         <item name="colorPrimaryText">@color/green_600</item>
         <item name="textColorTintedSecondary">@color/green_500</item>
-        <item name="textColorTintedPrimary">@color/green_600</item>
+        <item name="textColorTintedPrimary">@color/green_700</item>
     </style>
 
     <style name="MainAppTheme.Teal">
@@ -285,9 +298,12 @@
         <item name="toolbarContentColor">@color/teal_1</item>
         <item name="colorPrimaryText">@color/teal_1</item>
         <item name="colorTintedBackground">@color/teal_700</item>
-        <item name="colorTintedBackgroundOffset">@color/teal_600</item>
+        <item name="colorTintedBackgroundOffset">@color/teal_50012</item>
         <item name="textColorTintedSecondary">@color/teal_sub_text</item>
-        <item name="textColorTintedPrimary">@color/teal_100</item>
+        <item name="textColorTintedPrimary">@color/teal_1</item>
+        <item name="tintedUiMain">@color/teal_400</item>
+        <item name="tintedUiSub">@color/teal_10</item>
+        <item name="tintedUiDetails">@color/teal_1</item>
     </style>
 
     <style name="MainAppTheme.Teal.Dark">
@@ -297,10 +313,9 @@
         <item name="textColorPrimaryDark">@color/gray_200</item>
         <item name="toolbarContentColor">@color/teal_1</item>
         <item name="colorTintedBackground">@color/teal_00</item>
-        <item name="colorTintedBackgroundOffset">@color/teal_0</item>
         <item name="colorPrimaryText">@color/teal_600</item>
         <item name="textColorTintedSecondary">@color/teal_500</item>
-        <item name="textColorTintedPrimary">@color/teal_600</item>
+        <item name="textColorTintedPrimary">@color/teal_700</item>
     </style>
 
     <style name="MainAppTheme.Blue">
@@ -322,9 +337,12 @@
         <item name="toolbarContentColor">@color/blue_1</item>
         <item name="colorPrimaryText">@color/blue_1</item>
         <item name="colorTintedBackground">@color/blue_700</item>
-        <item name="colorTintedBackgroundOffset">@color/blue_600</item>
+        <item name="colorTintedBackgroundOffset">@color/blue_50012</item>
         <item name="textColorTintedSecondary">@color/blue_sub_text</item>
-        <item name="textColorTintedPrimary">@color/blue_100</item>
+        <item name="textColorTintedPrimary">@color/blue_1</item>
+        <item name="tintedUiMain">@color/blue_400</item>
+        <item name="tintedUiSub">@color/blue_10</item>
+        <item name="tintedUiDetails">@color/blue_1</item>
     </style>
 
     <style name="MainAppTheme.Blue.Dark">
@@ -334,10 +352,9 @@
         <item name="colorBoxStroke">@color/blue_10</item>
         <item name="toolbarContentColor">@color/blue_1</item>
         <item name="colorTintedBackground">@color/blue_00</item>
-        <item name="colorTintedBackgroundOffset">@color/blue_0</item>
         <item name="colorPrimaryText">@color/blue_600</item>
         <item name="textColorTintedSecondary">@color/blue_500</item>
-        <item name="textColorTintedPrimary">@color/blue_600</item>
+        <item name="textColorTintedPrimary">@color/blue_700</item>
     </style>
 
     <style name="MyWidgetTheme">

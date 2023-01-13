@@ -62,7 +62,7 @@ class ReminderItemFormView @JvmOverloads constructor(
 
     var firstDayOfWeek: Int? = null
 
-    var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
+    var tintColor: Int = context.getThemeColor(R.attr.tintedUiSub)
     var valueChangedListener: ((Date) -> Unit)? = null
     var animDuration = 0L
     var isAddButton: Boolean = true

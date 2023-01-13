@@ -1,11 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import android.content.Context
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextUtils
-import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -38,7 +33,7 @@ class ChecklistItemFormView @JvmOverloads constructor(
             binding.editText.setText(item.text)
         }
 
-    var tintColor: Int = context.getThemeColor(R.attr.taskFormTint)
+    var tintColor: Int = context.getThemeColor(R.attr.tintedUiSub)
     var textChangedListener: ((String) -> Unit)? = null
     var animDuration = 0L
     var isAddButton: Boolean = true

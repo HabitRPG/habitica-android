@@ -150,6 +150,8 @@ object DataBindingUtils {
         tempMap["quest_solarSystem"] = "gif"
         tempMap["quest_virtualpet"] = "gif"
         tempMap["Pet_HatchingPotion_VirtualPet"] = "gif"
+        tempMap["Pet-Gryphatrice-Jubilant"] = "gif"
+        tempMap["stable_Pet-Gryphatrice-Jubilant"] = "gif"
         FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
 
         val tempNameMap = HashMap<String, String>()

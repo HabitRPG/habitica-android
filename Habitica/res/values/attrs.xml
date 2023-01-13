@@ -17,6 +17,9 @@
     <attr name="colorPrimaryText" format="color" />
     <attr name="colorBoxStroke" format="color" />
     <attr name="taskFormTint" format="color" />
+    <attr name="tintedUiMain" format="color" />
+    <attr name="tintedUiSub" format="color" />
+    <attr name="tintedUiDetails" format="color" />
     <attr name="textColorSecondaryDark" format="color" />
     <attr name="statsColor" format="color" />
     <attr name="statsTitle" format="string" />

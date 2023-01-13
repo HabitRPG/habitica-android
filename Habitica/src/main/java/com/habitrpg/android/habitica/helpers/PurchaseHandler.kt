@@ -247,7 +247,7 @@ class PurchaseHandler(
                         apiClient.validatePurchase(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
                         displayGryphatriceConfirmationDialog(purchase, gift?.third)
@@ -263,7 +263,7 @@ class PurchaseHandler(
                         apiClient.validatePurchase(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
                         displayConfirmationDialog(purchase, gift?.third)
@@ -279,7 +279,7 @@ class PurchaseHandler(
                         apiClient.validateNoRenewSubscription(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
                         displayConfirmationDialog(purchase, gift?.third)
@@ -486,7 +486,7 @@ class PurchaseHandler(
     }
 
     private fun displayGryphatriceConfirmationDialog(purchase: Purchase, giftedTo: String? = null) {
-        CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
+        MainScope().launch(ExceptionHandler.coroutine()) {
             val application = (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
             val title = context.getString(R.string.successful_purchase_generic)

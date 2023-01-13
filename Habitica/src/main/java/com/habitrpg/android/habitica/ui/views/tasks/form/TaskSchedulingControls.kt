@@ -288,7 +288,7 @@ class TaskSchedulingControls @JvmOverloads constructor(
             if (isActive) {
                 button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle_selected)
                 button.background.mutate().setTint(tintColor)
-                button.setTextColor(context.getThemeColor(R.attr.colorTintedBackground))
+                button.setTextColor(context.getThemeColor(R.attr.tintedUiMain))
             } else {
                 button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle)
                 button.setTextColor(context.getThemeColor(R.attr.colorPrimaryDark))

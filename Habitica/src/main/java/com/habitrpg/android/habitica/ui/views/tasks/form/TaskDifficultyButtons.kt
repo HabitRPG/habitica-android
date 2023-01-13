@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.nameRes
@@ -78,11 +79,8 @@ private fun TaskDifficultySelection(
 ) {
     val selectedState = updateTransition(selected)
     val context = LocalContext.current
-    val iconColor = selectedState.animateColor {
-        if (it) Color(context.getThemeColor(R.attr.colorTintedBackground)) else MaterialTheme.colors.primary
-    }
     val textColor = selectedState.animateColor {
-        if (it) MaterialTheme.colors.primary else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
+        if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp), modifier = modifier) {
         Box(
@@ -104,10 +102,10 @@ private fun TaskDifficultySelection(
                 Box(
                     Modifier
                         .size(57.dp)
-                        .background(MaterialTheme.colors.primary, MaterialTheme.shapes.medium)
+                        .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
                 )
             }
-            Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
+            Image(icon, null, colorFilter = ColorFilter.tint(HabiticaTheme.colors.tintedUiDetails))
         }
         Text(
             text,
