@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/dismiss_tutorial"
+                android:textColor="?textColorTintedSecondary"
                 android:theme="@style/DialogButton"/>
 
             <Button
@@ -57,6 +58,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:text="@string/complete_tutorial"
+                android:textColor="?textColorTintedSecondary"
                 android:theme="@style/DialogButton" />
         </LinearLayout>
     </LinearLayout>

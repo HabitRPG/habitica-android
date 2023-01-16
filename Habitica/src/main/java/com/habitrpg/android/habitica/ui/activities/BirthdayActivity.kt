@@ -38,6 +38,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -61,6 +62,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
@@ -69,10 +71,12 @@ import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
@@ -90,10 +94,12 @@ class BirthdayActivity : BaseActivity() {
     @Inject
     lateinit var configManager: AppConfigManager
 
-    val scaffoldState: ScaffoldState = ScaffoldState(DrawerState(DrawerValue.Closed), SnackbarHostState())
+    val scaffoldState: ScaffoldState =
+        ScaffoldState(DrawerState(DrawerValue.Closed), SnackbarHostState())
     private val isPurchasing = mutableStateOf(false)
     private val price = mutableStateOf("")
     private val hasGryphatrice = mutableStateOf(false)
+    private val hasEquipped = mutableStateOf(false)
     private var gryphatriceProductDetails: ProductDetails? = null
 
     override fun getLayoutResId(): Int? = null
@@ -107,6 +113,7 @@ class BirthdayActivity : BaseActivity() {
                     scaffoldState,
                     isPurchasing.value,
                     hasGryphatrice.value,
+                    hasEquipped.value,
                     price.value,
                     event?.start ?: Date(),
                     event?.end ?: Date(),
@@ -121,15 +128,30 @@ class BirthdayActivity : BaseActivity() {
                             isPurchasing.value = false
                         }) {
                             isPurchasing.value = true
-                            inventoryRepository.purchaseItem("pets", "Gryphatrice-Jubilant", 1)
-                            userRepository.retrieveUser(false, true)
-                            isPurchasing.value = false
+                            val dialog = HabiticaAlertDialog(this@BirthdayActivity)
+                            dialog.setTitle(
+                                getString(
+                                    R.string.purchase_gryphatrice_confirmation,
+                                    60
+                                )
+                            )
+                            dialog.addButton(
+                                getString(R.string.buy_for_x, "60 Gems"),
+                                true
+                            ) { _, _ ->
+                                lifecycleScope.launchCatching {
+                                    purchaseWithGems()
+                                }
+                            }
+                            dialog.addCloseButton { _, _ ->
+                                isPurchasing.value = false
+                            }
+                            purchaseWithGems()
                         }
                     }
                 ) {
                     lifecycleScope.launchCatching {
                         inventoryRepository.equip("pet", "Gryphatrice-Jubilant")
-                        scaffoldState.snackbarHostState.showSnackbar(getString(R.string.you_equipped_x, getString(R.string.animated_gryphatrice_pet)))
                     }
                 }
             }
@@ -145,10 +167,21 @@ class BirthdayActivity : BaseActivity() {
                 }
         }
 
+        userViewModel.user.observe(this) {
+            hasEquipped.value = it?.items?.currentPet == "Gryphatrice-Jubilant"
+        }
+
         lifecycleScope.launchCatching {
             gryphatriceProductDetails = purchaseHandler.getGryphatriceSKU()
-            price.value = gryphatriceProductDetails?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+            price.value =
+                gryphatriceProductDetails?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
         }
+    }
+
+    private suspend fun purchaseWithGems() {
+        inventoryRepository.purchaseItem("pets", "Gryphatrice-Jubilant", 1)
+        userRepository.retrieveUser(false, true)
+        isPurchasing.value = false
     }
 
     override fun injectActivity(component: UserComponent?) {
@@ -192,6 +225,7 @@ fun BirthdayActivityView(
     scaffoldState: ScaffoldState,
     isPurchasing: Boolean,
     hasGryphatrice: Boolean,
+    hasEquipped: Boolean,
     price: String,
     startDate: Date,
     endDate: Date,
@@ -201,6 +235,8 @@ fun BirthdayActivityView(
 ) {
     val activity = LocalContext.current as? Activity
     val dateFormat = SimpleDateFormat("MMM dd", java.util.Locale.getDefault())
+    val complexDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL)
+
     val textColor = Color.White
     val specialTextColor = colorResource(R.color.yellow_50)
 
@@ -304,7 +340,10 @@ fun BirthdayActivityView(
                         .size(161.dp, 129.dp)
                         .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))
                 ) {
-                    PixelArtView(imageName = "stable_Pet-Gryphatrice-Jubilant", Modifier.size(104.dp))
+                    PixelArtView(
+                        imageName = "stable_Pet-Gryphatrice-Jubilant",
+                        Modifier.size(104.dp)
+                    )
                 }
                 Text(
                     stringResource(R.string.limited_edition).toUpperCase(Locale.current),
@@ -335,7 +374,10 @@ fun BirthdayActivityView(
                         },
                         modifier = Modifier.padding(top = 20.dp)
                     ) {
-                        Text(stringResource(R.string.equip), fontSize = 18.sp)
+                        Text(
+                            stringResource(if (hasEquipped) R.string.unequip else R.string.equip),
+                            fontSize = 18.sp
+                        )
                     }
                 } else if (isPurchasing) {
                     CircularProgressIndicator()
@@ -368,7 +410,10 @@ fun BirthdayActivityView(
                         },
                         modifier = Modifier.padding(top = 20.dp)
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
                             Text(stringResource(R.string.buy_for), fontSize = 18.sp)
                             CurrencyText(currency = "gems", value = 60, fontSize = 18.sp)
                         }
@@ -422,7 +467,7 @@ fun BirthdayActivityView(
                         FourFreeItem(
                             day = 1,
                             title = stringResource(R.string.twenty_gems),
-                            imageName = "birthday10_gems",
+                            image = painterResource(R.drawable.birthday_gems),
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -461,7 +506,11 @@ fun BirthdayActivityView(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    stringResource(R.string.birthday_limitations),
+                    stringResource(
+                        R.string.birthday_limitations,
+                        complexDateFormat.format(startDate),
+                        complexDateFormat.format(endDate)
+                    ),
                     fontSize = 14.sp,
                     color = colorResource(R.color.brand_600),
                     lineHeight = 20.sp,
@@ -515,8 +564,9 @@ fun PotionGrid() {
 fun FourFreeItem(
     day: Int,
     title: String,
-    imageName: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    imageName: String? = null,
+    image: Painter? = null
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -534,12 +584,18 @@ fun FourFreeItem(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-            .size(121.dp, 84.dp)
-            .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium)) {
-            PixelArtView(imageName,
-                Modifier
-                    .size(68.dp)
-            )
+                .size(121.dp, 84.dp)
+                .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium)
+        ) {
+            if (image != null) {
+                Image(image, null)
+            } else {
+                PixelArtView(
+                    imageName,
+                    Modifier
+                        .size(84.dp)
+                )
+            }
         }
 
         Text(title, color = Color.White, fontSize = 16.sp)
@@ -576,6 +632,6 @@ fun HabiticaButton(
 @Composable
 private fun Preview() {
     val scaffoldState = rememberScaffoldState()
-    BirthdayActivityView(scaffoldState, true, false, "", Date(), Date(), {
+    BirthdayActivityView(scaffoldState, true, false, false, "", Date(), Date(), {
     }, {}) {}
 }

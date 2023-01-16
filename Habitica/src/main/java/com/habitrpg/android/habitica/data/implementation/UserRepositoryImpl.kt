@@ -108,7 +108,7 @@ class UserRepositoryImpl(
     override suspend fun sleep(user: User): User {
         val newValue = !(user.preferences?.sleep ?: false)
         localRepository.modify(user) { it.preferences?.sleep = newValue }
-        if (apiClient.sleep() != true) {
+        if (apiClient.sleep() == null) {
             localRepository.modify(user) { it.preferences?.sleep = !newValue }
         }
         return user

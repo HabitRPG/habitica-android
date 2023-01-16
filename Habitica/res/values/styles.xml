@@ -474,7 +474,7 @@
 
     <style name="DialogButton" parent="android:Widget.Button">
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">@color/brand_100</item>
+        <item name="android:textColor">?colorAccent</item>
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
