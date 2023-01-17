@@ -46,7 +46,7 @@ fun OverviewItem(
             Modifier
                 .size(70.dp)
                 .clip(MaterialTheme.shapes.small)
-                .background(colorResource(if (hasIcon) R.color.content_background else R.color.content_background_offset)),
+                .background(HabiticaTheme.colors.pixelArtBackground(hasIcon)),
             contentAlignment = Alignment.Center
         ) {
             if (isTwoHanded) {
@@ -55,6 +55,7 @@ fun OverviewItem(
                 PixelArtView(
                     imageName = iconName, modifier = Modifier
                         .size(70.dp)
+
                 )
             } else {
                 Image(painterResource(R.drawable.empty_slot), null)
@@ -82,7 +83,7 @@ fun EquipmentOverviewView(
         modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
-            .background(colorResource(R.color.offset_background))
+            .background(colorResource(R.color.equipment_column_background))
             .padding(12.dp)
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
@@ -133,7 +134,7 @@ fun AvatarCustomizationOverviewView(
         modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.medium)
-            .background(colorResource(R.color.offset_background))
+            .background(colorResource(R.color.equipment_column_background))
             .padding(12.dp)
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
@@ -228,7 +229,8 @@ fun AvatarCustomizationOverviewView(
 @Composable
 fun EquipmentOverviewItemPreview() {
     Column(Modifier.width(320.dp)) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(modifier = Modifier.background(colorResource(id = R.color.equipment_overview_background)),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OverviewItem("Main-Hand", "shop_weapon_warrior_1")
             OverviewItem("Off-Hand", null, isTwoHanded = true)
             OverviewItem("Armor", null)
