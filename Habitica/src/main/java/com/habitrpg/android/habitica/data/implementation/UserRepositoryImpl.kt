@@ -169,6 +169,7 @@ class UserRepositoryImpl(
     private var lastReadNotification: String? = null
     override suspend fun readNotification(id: String): List<Any>? {
         if (lastReadNotification == id) return null
+        lastReadNotification = id
         return apiClient.readNotification(id)
     }
     override fun getUserQuestStatus(): Flow<UserQuestStatus> {

@@ -146,7 +146,7 @@ class BirthdayActivity : BaseActivity() {
                             dialog.addCloseButton { _, _ ->
                                 isPurchasing.value = false
                             }
-                            purchaseWithGems()
+                            dialog.show()
                         }
                     }
                 ) {
