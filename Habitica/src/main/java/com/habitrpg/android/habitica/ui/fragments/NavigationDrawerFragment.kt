@@ -178,9 +178,11 @@ class NavigationDrawerFragment : DialogFragment() {
                         newItems.addAll(adapter.items)
                         newItems.add(0, birthdayItem)
                         adapter.updateItems(newItems)
+                        (activity as? MainActivity)?.showBirthdayIcon = true
                     } else if (event == null && item != null) {
                         item.isVisible = false
                         adapter.updateItem(item)
+                        (activity as? MainActivity)?.showBirthdayIcon = true
                     }
                 }
         }

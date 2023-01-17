@@ -10,7 +10,6 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -124,6 +122,21 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var sideAvatarView: AvatarView? = null
     private var drawerFragment: NavigationDrawerFragment? = null
     var drawerToggle: ActionBarDrawerToggle? = null
+    var showBirthdayIcon = false
+    var showBackButton: Boolean? = null
+        set(value) {
+            if (field == value) return
+            if (value == true && showBirthdayIcon) {
+                drawerToggle?.isDrawerIndicatorEnabled = false
+                drawerToggle?.setHomeAsUpIndicator(R.drawable.arrow_back)
+            } else if (value == false && showBirthdayIcon) {
+                drawerToggle?.isDrawerIndicatorEnabled = false
+                drawerToggle?.setHomeAsUpIndicator(R.drawable.icon_birthday)
+            } else {
+                drawerToggle?.isDrawerIndicatorEnabled = value != true
+            }
+            field = value
+        }
     private var resumeFromActivity = false
     private var userQuestStatus = UserQuestStatus.NO_QUEST
     private var lastNotificationOpen: Long? = null
@@ -335,7 +348,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         return if (binding.root.parent is DrawerLayout && drawerToggle?.onOptionsItemSelected(item) == true) {
             true
         } else if (item.itemId == android.R.id.home) {
-            if (drawerToggle?.isDrawerIndicatorEnabled == true) {
+            if (showBackButton != true) {
                 drawerFragment?.toggleDrawer()
             } else {
                 MainNavigationController.navigateBack()

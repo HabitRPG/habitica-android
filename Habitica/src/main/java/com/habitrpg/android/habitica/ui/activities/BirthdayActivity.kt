@@ -72,6 +72,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -127,6 +128,11 @@ class BirthdayActivity : BaseActivity() {
                         lifecycleScope.launchCatching({
                             isPurchasing.value = false
                         }) {
+                            if ((userViewModel.user.value?.gemCount ?: 0) < 60) {
+                                val dialog = InsufficientGemsDialog(this@BirthdayActivity, 3)
+                                dialog.show()
+                                return@launchCatching
+                            }
                             isPurchasing.value = true
                             val dialog = HabiticaAlertDialog(this@BirthdayActivity)
                             dialog.setTitle(
