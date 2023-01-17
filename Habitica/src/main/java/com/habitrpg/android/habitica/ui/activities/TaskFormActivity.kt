@@ -498,7 +498,7 @@ class TaskFormActivity : BaseActivity() {
             val view = CheckBox(this)
             view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
             view.text = tag.name
-            view.setTextColor(getThemeColor(R.attr.tintedUiDetails))
+            view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
             if (preselectedTags?.contains(tag.id) == true) {
                 view.isChecked = true
             }

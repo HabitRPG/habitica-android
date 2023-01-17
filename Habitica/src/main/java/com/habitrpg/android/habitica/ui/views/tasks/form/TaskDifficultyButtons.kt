@@ -105,7 +105,7 @@ private fun TaskDifficultySelection(
                         .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
                 )
             }
-            Image(icon, null, colorFilter = ColorFilter.tint(HabiticaTheme.colors.tintedUiDetails))
+            Image(icon, null, colorFilter = ColorFilter.tint(textColor.value))
         }
         Text(
             text,
