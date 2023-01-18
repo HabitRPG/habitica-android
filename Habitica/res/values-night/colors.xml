@@ -32,6 +32,7 @@
     <color name="account_dialog_bars">@color/gray_1</color>
     <color name="habit_inactive_gray">@color/gray_10</color>
     <color name="equipment_overview_background">@color/gray_10</color>
+    <color name="equipment_column_background">@color/gray_10</color>
     <color name="inverted_background">@color/gray_10</color>
     <color name="inverted_background_offset">@color/gray_50</color>
     <color name="background_red">@color/red_50</color>
