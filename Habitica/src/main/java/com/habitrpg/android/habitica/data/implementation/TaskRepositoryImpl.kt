@@ -198,7 +198,10 @@ class TaskRepositoryImpl(
         if (savedTask != null) {
             savedTask.id = task.id
             savedTask.position = task.position
-            savedTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed = false
+            savedTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.let {
+                it.completed = false
+                it.completedDate = null
+            }
             localRepository.save(savedTask)
         }
     }

@@ -38,7 +38,11 @@ class UserRepositoryImpl(
     private val analyticsManager: AnalyticsManager
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
-    private var lastSync: Date? = null
+    companion object {
+        private var lastReadNotification: String? = null
+        private var lastSync: Date? = null
+    }
+
 
     override fun getUser(): Flow<User?> = getUser(userID)
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
@@ -64,7 +68,7 @@ class UserRepositoryImpl(
     @Suppress("ReturnCount")
     override suspend fun retrieveUser(withTasks: Boolean, forced: Boolean, overrideExisting: Boolean): User? {
         // Only retrieve again after 3 minutes or it's forced.
-        if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
+        if (forced || lastSync == null || Date().time - (lastSync?.time ?: 0) > 180000) {
             val user = apiClient.retrieveUser(withTasks) ?: return null
             lastSync = Date()
             withContext(Dispatchers.Main) {
@@ -154,11 +158,12 @@ class UserRepositoryImpl(
     override suspend fun unlockPath(path: String, price: Int): UnlockResponse? {
         val unlockResponse = apiClient.unlockPath(path) ?: return null
         val user = localRepository.getUser(userID).firstOrNull() ?: return unlockResponse
-        user.preferences = unlockResponse.preferences
-        user.purchased = unlockResponse.purchased
-        user.items = unlockResponse.items
-        user.balance = user.balance - (price / 4.0)
-        localRepository.saveUser(user, false)
+        localRepository.modify(user) { liveUser ->
+            liveUser.preferences = unlockResponse.preferences
+            liveUser.purchased = unlockResponse.purchased
+            liveUser.items = unlockResponse.items
+            liveUser.balance = liveUser.balance - (price / 4.0)
+        }
         return unlockResponse
     }
 
@@ -166,7 +171,6 @@ class UserRepositoryImpl(
         runCron(ArrayList())
     }
 
-    private var lastReadNotification: String? = null
     override suspend fun readNotification(id: String): List<Any>? {
         if (lastReadNotification == id) return null
         lastReadNotification = id

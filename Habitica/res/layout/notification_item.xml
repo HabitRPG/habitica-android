@@ -9,7 +9,7 @@
     android:paddingEnd="20dp"
     android:paddingBottom="10dp">
 
-    <ImageView
+    <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/notification_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

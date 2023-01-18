@@ -93,7 +93,7 @@ fun AssignedView(
                 Image(
                     painterResource(R.drawable.edit),
                     null,
-                    colorFilter = ColorFilter.tint(MaterialTheme.colors.primary)
+                    colorFilter = ColorFilter.tint(color)
                 )
                 Text(
                     stringResource(R.string.edit_assignees), color = color,

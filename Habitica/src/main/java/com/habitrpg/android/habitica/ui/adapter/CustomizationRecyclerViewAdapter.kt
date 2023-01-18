@@ -110,7 +110,8 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         var lastSet = CustomizationSet()
         val today = Date()
         for (customization in newCustomizationList) {
-            val isUsable = customization.isUsable(ownedCustomizations.contains(customization.id))
+            val isOwned = ownedCustomizations.contains(customization.id)
+            val isUsable = customization.isUsable(isOwned)
             if (customization.availableFrom != null || customization.availableUntil != null) {
                 if (((customization.availableFrom?.compareTo(today)
                         ?: 0) > 0 || (customization.availableUntil?.compareTo(today)
@@ -119,7 +120,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                     continue
                 }
             }
-            if ((customization.identifier?.contains("HabitversaryBash") == true || customization.identifier?.contains("birthday") == true) && !isUsable) {
+            if (customization.identifier?.contains("birthday_bash") == true && !isOwned) {
                 continue
             }
             if (customization.customizationSet != null && customization.customizationSet != lastSet.identifier) {
