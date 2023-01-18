@@ -423,7 +423,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                 else -> false
             }
         } else if (type == TaskType.TODO) {
-            return dueDate != task.dueDate
+            return (dueDate != task.dueDate && task.dueDate != null)
         } else if (type == TaskType.REWARD) {
             return value != task.value
         } else {
