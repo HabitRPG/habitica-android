@@ -287,11 +287,10 @@ class TaskSchedulingControls @JvmOverloads constructor(
             button.tag = weekdayCode
             if (isActive) {
                 button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle_selected)
-                button.background.mutate().setTint(tintColor)
-                button.setTextColor(context.getThemeColor(R.attr.tintedUiMain))
+                button.setTextColor(context.getThemeColor(R.attr.tintedUiDetails))
             } else {
                 button.background = ContextCompat.getDrawable(context, R.drawable.habit_scoring_circle)
-                button.setTextColor(context.getThemeColor(R.attr.colorPrimaryDark))
+                button.setTextColor(context.getThemeColor(R.attr.textColorTintedSecondary))
             }
             button.setOnClickListener {
                 setWeekdayActive(weekdayCode, !isActive)

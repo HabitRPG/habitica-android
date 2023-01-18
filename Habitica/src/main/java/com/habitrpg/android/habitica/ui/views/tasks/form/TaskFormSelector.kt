@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
@@ -76,6 +77,10 @@ private fun <V> TaskFormSelection(
     modifier: Modifier = Modifier
 ) {
     val selectedState = updateTransition(selected)
+    val context = LocalContext.current
+    val textColor = selectedState.animateColor {
+        if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
+    }
     Box(
         contentAlignment = Alignment.Center, modifier = modifier
             .background(
@@ -102,7 +107,7 @@ private fun <V> TaskFormSelection(
             text,
             fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
             fontSize = 16.sp,
-            color = HabiticaTheme.colors.tintedUiDetails,
+            color = textColor.value,
             modifier = Modifier.padding(15.dp)
         )
     }

@@ -184,6 +184,7 @@
                             android:id="@+id/habit_adjust_positive_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/transparent"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                     <Space
@@ -200,6 +201,7 @@
                             android:id="@+id/habit_adjust_negative_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/transparent"
                             android:inputType="number"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
