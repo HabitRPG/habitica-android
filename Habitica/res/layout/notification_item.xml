@@ -11,10 +11,11 @@
 
     <com.habitrpg.common.habitica.views.PixelArtView
         android:id="@+id/notification_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="20dp"
         android:background="@color/transparent"
+        android:layout_gravity="center_vertical"
         android:visibility="gone" />
 
     <TextView

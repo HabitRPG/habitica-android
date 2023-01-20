@@ -53,8 +53,7 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .clickable {
                 MainNavigationController.navigate(R.id.birthdayActivity)
-            }
-    ) {
+            }) {
         Column(Modifier.fillMaxWidth()) {
             Box(
                 contentAlignment = Alignment.CenterStart,
@@ -63,8 +62,9 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .background(colorResource(R.color.brand_100))
             ) {
-                Row(Modifier
-                    .align(Alignment.CenterEnd)) {
+                Row(
+                    Modifier.align(Alignment.CenterEnd)
+                ) {
                     Image(
                         painterResource(R.drawable.birthday_menu_gems),
                         null,
@@ -82,11 +82,8 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
                 }
                 Column(
                     verticalArrangement = Arrangement.spacedBy(
-                        2.dp,
-                        Alignment.CenterVertically
-                    ),
-                    modifier = Modifier
-                        .padding(start = 8.dp)
+                        2.dp, Alignment.CenterVertically
+                    ), modifier = Modifier.padding(start = 8.dp)
                 ) {
                     Image(
                         painterResource(R.drawable.birthday_menu_text), null
@@ -128,15 +125,20 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
 }
 
 @Composable
+private fun buildString(
+    value: Int, endDate: Date, formatString: Int
+): String {
+    return stringResource(
+        formatString, endDate.getShortRemainingString()
+    ).uppercase()
+}
+
+@Composable
 fun TimeRemainingText(
-    endDate: Date,
-    formatString: Int,
-    color: Color,
-    fontSize: TextUnit,
-    fontWeight: FontWeight
+    endDate: Date, formatString: Int, color: Color, fontSize: TextUnit, fontWeight: FontWeight
 ) {
     var value by remember { mutableStateOf(0) }
-    LaunchedEffect(Unit) {
+    LaunchedEffect(value) {
         val diff = endDate.time - Date().time
         if (diff.milliseconds > 1.hours) {
             delay(1.minutes)
@@ -148,10 +150,7 @@ fun TimeRemainingText(
         value += 1
     }
     Text(
-        stringResource(
-            formatString,
-            endDate.getShortRemainingString()
-        ).uppercase(),
+        buildString(value = value, endDate = endDate, formatString = formatString),
         color = color,
         fontSize = fontSize,
         fontWeight = fontWeight

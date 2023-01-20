@@ -168,7 +168,7 @@ class NavigationDrawerFragment : DialogFragment() {
                         updateSeasonalMenuEntries(gearEvent, pair.second)
                     }
 
-                    val event = pair.first.events.firstOrNull { it.eventKey == "birthday10" }
+                    val event = configManager.getBirthdayEvent()
                     val item = getItemWithIdentifier(SIDEBAR_BIRTHDAY)
                     if (event != null && item == null) {
                         adapter.currentEvent = event
@@ -182,7 +182,7 @@ class NavigationDrawerFragment : DialogFragment() {
                     } else if (event == null && item != null) {
                         item.isVisible = false
                         adapter.updateItem(item)
-                        (activity as? MainActivity)?.showBirthdayIcon = true
+                        (activity as? MainActivity)?.showBirthdayIcon = false
                     }
                 }
         }
