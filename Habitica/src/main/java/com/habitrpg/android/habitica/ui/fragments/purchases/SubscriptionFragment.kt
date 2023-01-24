@@ -145,8 +145,8 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         component.inject(this)
     }
 
-    fun loadInventory() {
-        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+    private fun loadInventory() {
+        CoroutineScope(Dispatchers.IO).launchCatching {
             val subscriptions = purchaseHandler.getAllSubscriptionProducts()
             skus = subscriptions
             withContext(Dispatchers.Main) {
