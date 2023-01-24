@@ -139,7 +139,6 @@ abstract class ChecklistedViewHolder(
                             val parsedText = MarkdownParser.parseMarkdown(item.text ?: "")
                             withContext(Dispatchers.Main) {
                                 textView?.setParsedMarkdown(parsedText)
-                                textView?.movementMethod = LinkMovementMethod.getInstance()
                             }
                         }
                     }

@@ -1,5 +1,6 @@
 package com.habitrpg.common.habitica.helpers
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -170,7 +171,9 @@ private fun handleUrlClicks(context: Context, url: String) {
         }
     }
     val intent = Intent(Intent.ACTION_VIEW, webpage)
-    if (intent.resolveActivity(context.packageManager) != null) {
+    try {
         context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        // No application can handle the link
     }
 }
