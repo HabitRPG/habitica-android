@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
+        android:textColor="?textColorTintedSecondary"
         android:text="@string/new_reminder"
         android:textSize="14sp"/>
 </merge>

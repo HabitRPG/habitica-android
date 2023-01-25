@@ -4,11 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -16,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.runtime.mutableStateListOf
@@ -38,7 +42,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -428,9 +431,9 @@ class TaskFormActivity : BaseActivity() {
         menu.findItem(R.id.action_save).isEnabled = canSave
         if (forcedTheme == "taskform" || forcedTheme == "maroon") {
             menu.iterator().forEach {
-//                val spannable = SpannableString(it.title)
-//                spannable.setSpan(ForegroundColorSpan(Color.WHITE), 0, spannable.length, 0)
-//                it.title = spannable
+                val spannable = SpannableString(it.title)
+                spannable.setSpan(ForegroundColorSpan(Color.WHITE), 0, spannable.length, 0)
+                it.title = spannable
             }
         }
         return true

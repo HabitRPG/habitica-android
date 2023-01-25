@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start_date"
-            android:textColor="@color/text_quad"
+            android:textColor="?textColorTintedSecondary"
             android:textSize="12sp" />
         <TextView
             android:id="@+id/start_date_textview"
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/repeats"
-                android:textColor="@color/text_quad"
+                android:textColor="?textColorTintedSecondary"
                 android:textSize="12sp"
                 android:labelFor="@+id/repeats_every_spinner"/>
 
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/every"
-                android:textColor="@color/text_quad"
+                android:textColor="?textColorTintedSecondary"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -147,7 +147,7 @@
         android:id="@+id/summary_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_quad"
+        android:textColor="?textColorTintedSecondary"
         android:textSize="12sp"
         android:layout_marginTop="@dimen/spacing_medium"/>
 </merge>

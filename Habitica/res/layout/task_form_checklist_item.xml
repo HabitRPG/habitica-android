@@ -28,6 +28,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
+        android:textColorHint="?textColorTintedSecondary"
         android:hint="@string/new_checklist_item"
         android:textSize="14sp"/>
     <ImageView

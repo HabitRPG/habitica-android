@@ -129,6 +129,7 @@ class ReminderItemFormView @JvmOverloads constructor(
         }
         binding.textView.labelFor = binding.button.id
     }
+
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         valueChangedListener?.let {
             val zonedDateTime = (item.getZonedDateTime() ?: ZonedDateTime.now())
