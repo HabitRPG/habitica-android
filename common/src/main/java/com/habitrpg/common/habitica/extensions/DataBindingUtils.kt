@@ -20,7 +20,8 @@ import java.util.Collections
 import java.util.Date
 
 fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
-    if (imageName != null) {
+    val shouldLoadImage = DataBindingUtils.existsAsImage(imageName)
+    if (shouldLoadImage && imageName != null) {
         val fullname = DataBindingUtils.getFullFilename(imageName, imageFormat)
         if (tag == fullname) {
             return
@@ -39,11 +40,14 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
                 }
             }
         }
+    } else {
+        tag = null
+        setImageDrawable(null)
+        bitmap = null
     }
 }
 
 object DataBindingUtils {
-
     fun loadImage(context: Context, imageName: String, imageResult: (Drawable) -> Unit) {
         loadImage(context, imageName, null, imageResult)
     }
@@ -82,6 +86,16 @@ object DataBindingUtils {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
         drawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
         view.background = drawable
+    }
+
+    fun existsAsImage(imageName: String?): Boolean {
+        if (imageName == null) {
+            return false
+        }
+        if (imageName == "shop_") {
+            return false
+        }
+        return true
     }
 
     class LayoutWeightAnimation(internal var view: View, internal var targetWeight: Float) : Animation() {
