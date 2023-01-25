@@ -108,9 +108,9 @@ object ToolbarColorHelper {
             if (outViews.isEmpty()) {
                 return@waitForLayout
             }
-            val overflowViewParent = outViews[0].parent as ActionMenuView
-            overflowViewParent.overflowIcon?.setTint(color)
-            overflowViewParent.overflowIcon?.setTintMode(PorterDuff.Mode.SRC_ATOP)
+            val overflowViewParent = outViews[0].parent as? ActionMenuView
+            overflowViewParent?.overflowIcon?.setTint(color)
+            overflowViewParent?.overflowIcon?.setTintMode(PorterDuff.Mode.SRC_ATOP)
         }
     }
 }

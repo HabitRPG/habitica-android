@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.internal.http2.ConnectionShutdownException
+import okhttp3.internal.http2.StreamResetException
 import retrofit2.HttpException
 import java.io.EOFException
 import java.io.IOException
@@ -42,7 +43,9 @@ class ExceptionHandler {
                     !retrofit2.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
                     !EOFException::class.java.isAssignableFrom(throwable.javaClass) &&
                     throwable !is ConnectionShutdownException &&
-                        throwable !is CancellationException
+                        throwable !is CancellationException &&
+                        throwable !is StreamResetException &&
+                        throwable !is ConnectionShutdownException
                 ) {
                     instance.analyticsManager?.logException(throwable)
                 }

@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.TutorialStep
+import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class TutorialView(
     context: Context,
@@ -69,12 +69,16 @@ class TutorialView(
 
     private fun completeButtonClicked() {
         onReaction.onTutorialCompleted(step)
-        (parent as? ViewGroup)?.removeView(this)
+        post {
+            (parent as? ViewGroup)?.removeView(this)
+        }
     }
 
     private fun dismissButtonClicked() {
         onReaction.onTutorialDeferred(step)
-        (parent as? ViewGroup)?.removeView(this)
+        post {
+            (parent as? ViewGroup)?.removeView(this)
+        }
     }
 
     private fun backgroundClicked() {
