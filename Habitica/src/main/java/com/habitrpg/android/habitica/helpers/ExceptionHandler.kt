@@ -12,6 +12,8 @@ import okhttp3.internal.http2.StreamResetException
 import retrofit2.HttpException
 import java.io.EOFException
 import java.io.IOException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class ExceptionHandler {
     private var analyticsManager: AnalyticsManager? = null
@@ -38,14 +40,9 @@ class ExceptionHandler {
                 } catch (ignored: Exception) {
                 }
             } else {
-                if (!IOException::class.java.isAssignableFrom(throwable.javaClass) &&
-                    !HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
-                    !retrofit2.HttpException::class.java.isAssignableFrom(throwable.javaClass) &&
-                    !EOFException::class.java.isAssignableFrom(throwable.javaClass) &&
-                    throwable !is ConnectionShutdownException &&
-                        throwable !is CancellationException &&
-                        throwable !is StreamResetException &&
-                        throwable !is ConnectionShutdownException
+                if (throwable !is IOException &&
+                    throwable !is HttpException &&
+                    throwable !is CancellationException
                 ) {
                     instance.analyticsManager?.logException(throwable)
                 }
