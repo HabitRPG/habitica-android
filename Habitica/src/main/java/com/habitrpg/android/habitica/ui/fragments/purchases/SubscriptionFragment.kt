@@ -78,6 +78,12 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.subscribeButton?.setOnClickListener { purchaseSubscription() }
 
+        lifecycleScope.launchCatching {
+            userRepository.getUser().collect { user ->
+                user?.let { setUser(it) }
+            }
+        }
+
         val promo = appConfigManager.activePromo()
         if (promo != null) {
             binding?.let {
@@ -135,8 +141,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun refresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val user = userRepository.retrieveUser(true)
-            user?.let { setUser(it) }
+            userRepository.retrieveUser(false, true)
             binding?.refreshLayout?.isRefreshing = false
         }
     }
@@ -213,6 +218,10 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     private fun updateSubscriptionInfo() {
+        if (hasLoadedSubscriptionOptions) {
+            binding?.subscriptionOptions?.visibility = View.VISIBLE
+            binding?.loadingIndicator?.visibility = View.GONE
+        }
         if (user != null) {
             val isSubscribed = user?.isSubscribed ?: false
 
@@ -240,7 +249,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 if (!hasLoadedSubscriptionOptions) {
                     return
                 }
-                binding?.subscriptionOptions?.visibility = View.VISIBLE
                 binding?.subscriptionDetails?.visibility = View.GONE
                 binding?.subscribeBenefitsTitle?.setText(R.string.subscribe_prompt)
             }
