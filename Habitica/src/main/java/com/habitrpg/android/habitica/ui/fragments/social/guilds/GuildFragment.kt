@@ -127,11 +127,8 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 this.displayEditForm()
                 return true
             }
-            R.id.action_reload -> {
-                viewModel.retrieveGroup { }
-                return true
-            }
             R.id.menu_guild_refresh -> {
+                viewModel.retrieveGroupChat {  }
                 viewModel.retrieveGroup { }
                 return true
             }
