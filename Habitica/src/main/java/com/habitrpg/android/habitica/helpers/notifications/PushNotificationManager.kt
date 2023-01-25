@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.MainScope
 import java.io.IOException
+import java.util.concurrent.ExecutionException
 
 class PushNotificationManager(
     var apiClient: ApiClient,
@@ -58,6 +59,8 @@ class PushNotificationManager(
                     addRefreshToken()
                 } catch (_: IOException) {
                     // This can happen during google test runs
+                } catch (_: ExecutionException) {
+                    // catchy catch
                 }
             }
         }
