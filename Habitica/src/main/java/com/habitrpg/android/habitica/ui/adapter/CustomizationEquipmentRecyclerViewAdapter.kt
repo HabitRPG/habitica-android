@@ -103,7 +103,12 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
         }
 
         override fun onClick(v: View) {
-            if (equipment?.owned != true && (equipment?.value ?: 0.0) > 0.0) {
+            val itemValue = if (equipment?.gearSet == "animal") {
+                2.0
+            } else {
+                equipment?.value
+            }
+            if (equipment?.owned != true && (itemValue ?: 0.0) > 0.0) {
                 val dialogContent = LinearLayout(itemView.context)
                 DialogPurchaseCustomizationBinding.inflate(LayoutInflater.from(itemView.context), dialogContent)
 
@@ -111,11 +116,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                 imageView.loadImage("shop_" + this.equipment?.key)
 
                 val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
-                priceLabel?.text = if (equipment?.gearSet == "animal") {
-                    2.0
-                } else {
-                    equipment?.value ?: 0
-                }.toString()
+                priceLabel?.text = itemValue.toString()
 
                 (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(
                     HabiticaIconsHelper.imageOfGem())
@@ -123,7 +124,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                 val dialog = HabiticaAlertDialog(itemView.context)
                 dialog.addButton(R.string.purchase_button, true) { _, _ ->
                     gemBalance?.let {
-                        if ((equipment?.value ?: 0.0) > it) {
+                        if ((itemValue ?: 0.0) > it) {
                             MainNavigationController.navigate(
                                 R.id.gemPurchaseActivity,
                                 bundleOf(Pair("openSubscription", false))
