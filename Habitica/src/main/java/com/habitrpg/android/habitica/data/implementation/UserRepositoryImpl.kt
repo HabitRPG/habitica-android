@@ -305,6 +305,7 @@ class UserRepositoryImpl(
             taskRepository.bulkScoreTasks(scoringList)
         }
         apiClient.runCron()
+        retrieveUser(true, true)
     }
 
     override suspend fun useCustomization(type: String, category: String?, identifier: String): User? {
