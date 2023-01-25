@@ -57,7 +57,10 @@ class AvatarEquipmentFragment :
             }
         }
         adapter.onUnlock = { equipment ->
-            lifecycleScope.launchCatching {  }
+            lifecycleScope.launchCatching {
+                inventoryRepository.purchaseItem("gear", equipment.key ?: "", 1)
+                userRepository.retrieveUser(forced = true)
+            }
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
