@@ -266,8 +266,8 @@ class SocialRepositoryImpl(
         }
     }
 
-    override suspend fun retrieveMemberWithUsername(username: String?): Member? {
-        return retrieveMember(username, true)
+    override suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member? {
+        return retrieveMember(username, fromHall)
     }
 
     override suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>? {
