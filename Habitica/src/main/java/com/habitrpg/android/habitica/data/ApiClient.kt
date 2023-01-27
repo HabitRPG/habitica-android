@@ -97,6 +97,7 @@ interface ApiClient {
     suspend fun scoreChecklistItem(taskId: String, itemId: String): Task?
 
     suspend fun createTask(item: Task): Task?
+    suspend fun createGroupTask(groupId: String, item: Task): Task?
 
     suspend fun createTasks(tasks: List<Task>): List<Task>?
 
@@ -130,7 +131,7 @@ interface ApiClient {
 
     suspend fun disableClasses(): User?
 
-    suspend fun markPrivateMessagesRead(): Void?
+    suspend fun markPrivateMessagesRead()
 
     /* Group API */
 
@@ -274,4 +275,5 @@ interface ApiClient {
     suspend fun unassignFromTask(taskId: String, userID: String): Task?
     suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member?
     suspend fun getHallMember(userId: String): Member?
+    suspend fun markTaskNeedsWork(taskID: String, userID: String): Task?
 }

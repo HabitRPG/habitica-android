@@ -15,7 +15,7 @@ import io.github.kakaocup.kakao.text.KTextView
 import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.Matcher
 import org.junit.Test
 
@@ -40,8 +40,8 @@ class StableScreen : Screen<StableScreen>() {
 
 internal class StableRecyclerFragmentTest : FragmentTestCase<StableRecyclerFragment, FragmentRecyclerviewBinding, StableScreen>(false) {
     override fun makeFragment() {
-        every { inventoryRepository.getOwnedPets() } returns Flowable.just(user.items?.pets!!)
-        every { inventoryRepository.getOwnedMounts() } returns Flowable.just(user.items?.mounts!!)
+        every { inventoryRepository.getOwnedPets() } returns flowOf(user.items?.pets!!)
+        every { inventoryRepository.getOwnedMounts() } returns flowOf(user.items?.mounts!!)
         fragment = spyk()
         fragment.shouldInitializeComponent = false
         fragment.itemType = "pets"

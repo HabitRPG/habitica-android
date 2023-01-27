@@ -47,7 +47,8 @@ abstract class TaskListFactory internal constructor(
             return
         }
         CoroutineScope(Dispatchers.Main + job).launch(ExceptionHandler.coroutine()) {
-            val tasks = taskRepository.getTasks(taskType, null, emptyArray()).firstOrNull()?.filter { task ->
+            val mirroredTasks = userRepository.getUser().firstOrNull()?.preferences?.tasks?.mirrorGroupTasks?.toTypedArray()
+            val tasks = taskRepository.getTasks(taskType, null, mirroredTasks ?: emptyArray()).firstOrNull()?.filter { task ->
                 task.type == TaskType.TODO && !task.completed || task.isDisplayedActive
             } ?: return@launch
             taskList = taskRepository.getTaskCopies(tasks)

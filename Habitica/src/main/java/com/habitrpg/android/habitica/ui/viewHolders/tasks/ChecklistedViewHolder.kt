@@ -207,7 +207,7 @@ abstract class ChecklistedViewHolder(
 
     override fun onLeftActionTouched() {
         super.onLeftActionTouched()
-        if (task?.isValid == true) {
+        if (task?.isValid == true && !isLocked) {
             onCheckedChanged(!(task?.completed(userID) ?: false))
         }
     }

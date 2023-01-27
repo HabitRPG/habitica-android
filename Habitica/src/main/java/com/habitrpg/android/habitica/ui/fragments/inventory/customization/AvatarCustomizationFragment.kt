@@ -71,7 +71,7 @@ class AvatarCustomizationFragment :
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
     internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(activity, ROW)
 
-    private val currentFilter = MutableStateFlow(CustomizationFilter(false, type == "background"))
+    private val currentFilter = MutableStateFlow(CustomizationFilter(false, true))
     private val ownedCustomizations = MutableStateFlow<List<OwnedCustomization>>(emptyList())
 
     override fun onCreateView(
@@ -112,6 +112,7 @@ class AvatarCustomizationFragment :
             if (args.category.isNotEmpty()) {
                 category = args.category
             }
+            currentFilter.value.ascending = type != "background"
         }
         adapter.customizationType = type
         binding?.refreshLayout?.setOnRefreshListener(this)
@@ -334,6 +335,8 @@ class AvatarCustomizationFragment :
         button.text
         button.setOnCheckedChangeListener { _, isChecked ->
             val newFilter = filter.copy()
+            newFilter.months = mutableListOf()
+            newFilter.months.addAll(currentFilter.value.months)
             if (!isChecked && newFilter.months.contains(identifier)) {
                 button.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
                 newFilter.months.remove(identifier)

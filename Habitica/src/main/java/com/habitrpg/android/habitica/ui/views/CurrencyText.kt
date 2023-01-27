@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
@@ -22,17 +23,19 @@ fun CurrencyText(
     currency: String,
     value: Int,
     modifier: Modifier = Modifier,
+    fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
     animated: Boolean = true
 ) {
-    CurrencyText(currency = currency, value = value.toDouble(), modifier, decimals, minForAbbreviation, animated)
+    CurrencyText(currency = currency, value = value.toDouble(), modifier, fontSize, decimals, minForAbbreviation, animated)
 }
 @Composable
 fun CurrencyText(
     currency: String,
     value: Double,
     modifier: Modifier = Modifier,
+    fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
     animated: Boolean = true
@@ -56,7 +59,7 @@ fun CurrencyText(
                 "hourglasses" -> colorResource(R.color.text_brand)
                 else -> colorResource(R.color.text_primary)
             },
-            fontSize = 12.sp,
+            fontSize = fontSize,
             fontWeight = FontWeight.SemiBold
         )
     }

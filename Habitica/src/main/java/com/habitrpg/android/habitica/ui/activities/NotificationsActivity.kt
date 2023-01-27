@@ -24,16 +24,19 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
+import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.GroupTaskApprovedData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskNeedsWorkData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskRequiresApprovalData
 import com.habitrpg.common.habitica.models.notifications.GuildInvitationData
+import com.habitrpg.common.habitica.models.notifications.ItemReceivedData
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
+import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -134,6 +137,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
                 Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
                 Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
+                Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
                 else -> null
             }
 
@@ -162,6 +166,15 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return createDismissableNotificationItem(
             notification,
             fromHtml(getString(stringId, data?.group?.name))
+        )
+    }
+
+    private fun createItemReceivedNotification(notification: Notification): View? {
+        val data = notification.data as? ItemReceivedData
+        return createDismissableNotificationItem(
+            notification,
+            fromHtml("<b>" + data?.title + "</b><br>" + data?.text),
+            imageName = data?.icon
         )
     }
 
@@ -206,7 +219,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             notification,
             fromHtml(message),
             null,
-            R.color.yellow_5
+            textColor = R.color.yellow_5
         )
     }
 
@@ -218,7 +231,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             notification,
             fromHtml(message),
             null,
-            R.color.green_10
+            textColor = R.color.green_10
         )
     }
 
@@ -252,6 +265,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         notification: Notification,
         messageText: CharSequence,
         imageResourceId: Int? = null,
+        imageName: String? = null,
         textColor: Int? = null
     ): View? {
         val item = inflater?.inflate(R.layout.notification_item, binding.notificationItems, false)
@@ -273,6 +287,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         if (imageResourceId != null) {
             val notificationImage = item?.findViewById(R.id.notification_image) as? ImageView
             notificationImage?.setImageResource(imageResourceId)
+            notificationImage?.visibility = View.VISIBLE
+        }
+
+        if (imageName != null) {
+            val notificationImage = item?.findViewById(R.id.notification_image) as? PixelArtView
+            notificationImage?.loadImage(imageName)
             notificationImage?.visibility = View.VISIBLE
         }
 

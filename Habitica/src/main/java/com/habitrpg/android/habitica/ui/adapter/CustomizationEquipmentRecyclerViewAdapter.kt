@@ -21,7 +21,7 @@ import com.habitrpg.common.habitica.views.PixelArtView
 
 class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
-    var gemBalance: Int = 0
+    var gemBalance: Int? = null
     var equipmentList: MutableList<Equipment> =
         ArrayList()
         set(value) {
@@ -111,7 +111,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                 imageView.loadImage("shop_" + this.equipment?.key)
 
                 val priceLabel = dialogContent.findViewById<TextView>(R.id.priceLabel)
-                priceLabel.text = if (equipment?.gearSet == "animal") {
+                priceLabel?.text = if (equipment?.gearSet == "animal") {
                     2.0
                 } else {
                     equipment?.value ?: 0
@@ -122,9 +122,14 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
                 val dialog = HabiticaAlertDialog(itemView.context)
                 dialog.addButton(R.string.purchase_button, true) { _, _ ->
-                    if ((equipment?.value ?: 0.0) > gemBalance) {
-                        MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false)))
-                        return@addButton
+                    gemBalance?.let {
+                        if ((equipment?.value ?: 0.0) > it) {
+                            MainNavigationController.navigate(
+                                R.id.gemPurchaseActivity,
+                                bundleOf(Pair("openSubscription", false))
+                            )
+                            return@addButton
+                        }
                     }
 
                     equipment?.let {

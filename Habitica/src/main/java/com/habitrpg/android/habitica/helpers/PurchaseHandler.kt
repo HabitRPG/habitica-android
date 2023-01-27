@@ -211,7 +211,9 @@ class PurchaseHandler(
         }
         val flowParams = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(listOf(skuDetails).map {
-                BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(skuDetails)
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(skuDetails)
+                    .setOfferToken(skuDetails.subscriptionOfferDetails?.first()?.offerToken ?: "")
                     .build()
             })
             .build()
@@ -245,7 +247,7 @@ class PurchaseHandler(
                         apiClient.validatePurchase(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
                         displayGryphatriceConfirmationDialog(purchase, gift?.third)
@@ -261,7 +263,7 @@ class PurchaseHandler(
                         apiClient.validatePurchase(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
                         displayConfirmationDialog(purchase, gift?.third)
@@ -277,7 +279,7 @@ class PurchaseHandler(
                         apiClient.validateNoRenewSubscription(validationRequest)
                         processedPurchase(purchase)
                         val gift = removeGift(sku)
-                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                        withContext(Dispatchers.IO) {
                             consume(purchase)
                         }
                         displayConfirmationDialog(purchase, gift?.third)
@@ -424,11 +426,17 @@ class PurchaseHandler(
         }
     }
 
+    private val displayedConfirmations = mutableListOf<String>()
+
     private fun displayConfirmationDialog(purchase: Purchase, giftedTo: String? = null) {
-        CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
+        if (displayedConfirmations.contains(purchase.orderId)) {
+            return
+        }
+        displayedConfirmations.add(purchase.orderId)
+        CoroutineScope(Dispatchers.Main).launchCatching {
             val application = (context as? HabiticaBaseApplication)
-                ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
-            val sku = purchase.products.firstOrNull() ?: return@launch
+                ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launchCatching
+            val sku = purchase.products.firstOrNull() ?: return@launchCatching
             var title = context.getString(R.string.successful_purchase_generic)
             val message = when {
                 PurchaseTypes.allSubscriptionNoRenewTypes.contains(sku) -> {
@@ -478,7 +486,7 @@ class PurchaseHandler(
     }
 
     private fun displayGryphatriceConfirmationDialog(purchase: Purchase, giftedTo: String? = null) {
-        CoroutineScope(Dispatchers.Main).launch(ExceptionHandler.coroutine()) {
+        MainScope().launch(ExceptionHandler.coroutine()) {
             val application = (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launch
             val title = context.getString(R.string.successful_purchase_generic)

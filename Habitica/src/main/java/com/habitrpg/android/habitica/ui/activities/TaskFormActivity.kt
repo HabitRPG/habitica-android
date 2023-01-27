@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -17,7 +16,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.compose.runtime.mutableStateListOf
@@ -255,6 +253,12 @@ class TaskFormActivity : BaseActivity() {
                         HabiticaTheme.colors.textPrimaryFor(task),
                         {
                             showAssignDialog()
+                        },
+                        {
+                            taskCompletedMap.remove(it)
+                            lifecycleScope.launchCatching {
+                                task?.let { it1 -> taskRepository.markTaskNeedsWork(it1, it) }
+                            }
                         },
                         showEditButton = true
                     )
@@ -517,7 +521,7 @@ class TaskFormActivity : BaseActivity() {
             val view = CheckBox(this)
             view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
             view.text = tag.name
-            view.setTextColor(getThemeColor(R.attr.colorPrimaryDark))
+            view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
             if (preselectedTags?.contains(tag.id) == true) {
                 view.isChecked = true
             }

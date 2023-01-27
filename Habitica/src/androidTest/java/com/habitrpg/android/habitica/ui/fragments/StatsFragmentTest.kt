@@ -10,10 +10,11 @@ import com.habitrpg.shared.habitica.models.tasks.Attribute
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.screen.Screen
 import io.github.kakaocup.kakao.text.KButton
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.flowOf
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -63,9 +64,9 @@ class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, 
     fun setUpUser() {
         user.stats?.lvl = 20
         user.stats?.points = 30
-        userState.onNext(user)
+        userState.value = user
 
-        every { inventoryRepository.getEquipment(listOf()) } returns Flowable.just(listOf())
+        every { inventoryRepository.getEquipment(listOf()) } returns flowOf(listOf())
     }
 
     @Test
@@ -96,13 +97,13 @@ class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, 
     fun allocatesOnClick() {
         screen {
             strengthAllocateButton.click()
-            verify { userRepository.allocatePoint(Attribute.STRENGTH) }
+            coVerify { userRepository.allocatePoint(Attribute.STRENGTH) }
             intelligenceAllocateButton.click()
-            verify { userRepository.allocatePoint(Attribute.INTELLIGENCE) }
+            coVerify { userRepository.allocatePoint(Attribute.INTELLIGENCE) }
             constitutionAllocateButton.click()
-            verify { userRepository.allocatePoint(Attribute.CONSTITUTION) }
+            coVerify { userRepository.allocatePoint(Attribute.CONSTITUTION) }
             perceptionAllocateButton.click()
-            verify { userRepository.allocatePoint(Attribute.PERCEPTION) }
+            coVerify { userRepository.allocatePoint(Attribute.PERCEPTION) }
         }
     }
 }

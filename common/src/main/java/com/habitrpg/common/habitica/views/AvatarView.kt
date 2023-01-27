@@ -7,6 +7,7 @@ import android.graphics.Matrix
 import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
+import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -170,6 +171,9 @@ class AvatarView : FrameLayout {
                         result.isFilterBitmap = false
                         super.onSuccess(result)
                         imageView.setImageDrawable(result)
+                        if (result is Animatable) {
+                            result.start()
+                        }
                         val bounds = getLayerBounds(layerKey, layerName, result)
                         imageView.imageMatrix = avatarMatrix
                         val layoutParams = imageView.layoutParams as? LayoutParams
@@ -288,7 +292,7 @@ class AvatarView : FrameLayout {
 
         val hair = prefs.hair
         if (!hasVisualBuffs) {
-            if (!TextUtils.isEmpty(prefs.chair)) {
+            if (prefs.chair?.isNotBlank() == true && prefs.chair != "chair_none") {
                 layerMap[LayerType.CHAIR] = prefs.chair
             }
 
@@ -491,12 +495,12 @@ class AvatarView : FrameLayout {
         SKIN,
         SHIRT,
         ARMOR,
-        BODY,
         HEAD_0,
         HAIR_BASE,
         HAIR_BANGS,
         HAIR_MUSTACHE,
         HAIR_BEARD,
+        BODY,
         EYEWEAR,
         VISUAL_BUFF,
         HEAD,

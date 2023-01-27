@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.MainNavDirections
@@ -32,7 +31,7 @@ import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class ChatFragment() : BaseFragment<FragmentChatBinding>() {
+class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override var binding: FragmentChatBinding? = null
 
@@ -40,9 +39,7 @@ class ChatFragment() : BaseFragment<FragmentChatBinding>() {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
-    val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
-    )
+    lateinit var viewModel: GroupViewModel
 
     @Inject
     lateinit var configManager: AppConfigManager

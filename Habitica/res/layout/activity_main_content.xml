@@ -95,7 +95,8 @@
             app:layout_anchorGravity="bottom"
             app:layout_collapseMode="pin"
             app:tabGravity="fill"
-            app:tabIndicatorColor="?colorPrimary"
+            app:tabIndicatorColor="?textColorPrimary"
+            app:tabSelectedTextColor="?textColorPrimary"
             app:tabMode="fixed" />
         <FrameLayout
             android:id="@+id/connection_issue_view"

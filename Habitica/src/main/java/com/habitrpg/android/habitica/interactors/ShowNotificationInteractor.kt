@@ -104,6 +104,7 @@ class ShowNotificationInteractor(
             }
 
             lifecycleScope.launch(context = Dispatchers.Main) {
+                if (activity.isFinishing) return@launch
                 val alert = HabiticaAlertDialog(activity)
                 alert.setAdditionalContentView(view)
                 alert.setTitle(title)

@@ -2,6 +2,7 @@ package com.habitrpg.common.habitica.extensions
 
 import android.content.Context
 import android.graphics.PorterDuff
+import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.animation.Animation
@@ -13,7 +14,6 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.R
-import com.habitrpg.common.habitica.extensions.DataBindingUtils.BASE_IMAGE_URL
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.Collections
@@ -26,27 +26,19 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
             return
         }
         tag = fullname
-        bitmap = null
+        setImageDrawable(null)
         DataBindingUtils.loadImage(context, imageName, imageFormat) {
             if (tag == fullname) {
-                bitmap = it.toBitmap()
+                if (fullname.endsWith("gif")) {
+                    setImageDrawable(it)
+                    if (it is Animatable) {
+                        it.start()
+                    }
+                } else {
+                    bitmap = it.toBitmap()
+                }
             }
         }
-    }
-}
-
-fun PixelArtView.loadGif(
-    imageName: String?,
-    builder: ImageRequest.Builder.() -> Unit = {}
-) {
-    if (imageName != null) {
-        val fullname = BASE_IMAGE_URL + DataBindingUtils.getFullFilename(imageName)
-        val request = ImageRequest.Builder(context)
-            .data(fullname)
-            .target(this)
-            .apply(builder)
-            .build()
-        context.imageLoader.enqueue(request)
     }
 }
 
@@ -158,6 +150,8 @@ object DataBindingUtils {
         tempMap["quest_solarSystem"] = "gif"
         tempMap["quest_virtualpet"] = "gif"
         tempMap["Pet_HatchingPotion_VirtualPet"] = "gif"
+        tempMap["Pet-Gryphatrice-Jubilant"] = "gif"
+        tempMap["stable_Pet-Gryphatrice-Jubilant"] = "gif"
         FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
 
         val tempNameMap = HashMap<String, String>()

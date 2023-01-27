@@ -89,11 +89,10 @@ class SocialRepositoryImpl(
             return null
         }
         val liked = chatMessage.userLikesMessage(userID)
-        if (chatMessage.isManaged) {
-            localRepository.likeMessage(chatMessage, userID, !liked)
-        }
+        localRepository.likeMessage(chatMessage, userID, !liked)
         val message = apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
         message?.groupId = chatMessage.groupId
+        message?.let { localRepository.save(it) }
         return null
     }
 
@@ -275,7 +274,7 @@ class SocialRepositoryImpl(
         return apiClient.findUsernames(username, context, id)
     }
 
-    override suspend fun markPrivateMessagesRead(user: User?): Void? {
+    override suspend fun markPrivateMessagesRead(user: User?) {
         if (user?.isManaged == true) {
             localRepository.modify(user) {
                 it.inbox?.hasUserSeenInbox = true

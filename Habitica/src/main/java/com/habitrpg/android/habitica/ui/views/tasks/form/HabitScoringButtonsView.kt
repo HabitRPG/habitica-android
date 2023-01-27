@@ -32,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.common.habitica.extensions.getThemeColor
 
 @Composable
@@ -80,14 +80,15 @@ private fun HabitScoringSelection(
 ) {
     val selectedState = updateTransition(selected)
     val context = LocalContext.current
+
+    val borderColor = selectedState.animateColor {
+        if (it) HabiticaTheme.colors.tintedUiMain else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
+    }
     val iconColor = selectedState.animateColor {
-        if (it) Color(context.getThemeColor(R.attr.colorTintedBackground)) else colorResource(R.color.text_dimmed)
+        if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     val textColor = selectedState.animateColor {
-        if (it) MaterialTheme.colors.primary else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
-    }
-    val borderColor = selectedState.animateColor {
-        if (it) MaterialTheme.colors.primary else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
+        if (it) Color(context.getThemeColor(R.attr.textColorTintedPrimary)) else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier) {
         Box(
@@ -107,7 +108,7 @@ private fun HabitScoringSelection(
                 Box(
                     Modifier
                         .size(32.dp)
-                        .background(MaterialTheme.colors.primary, CircleShape)
+                        .background(HabiticaTheme.colors.tintedUiMain, CircleShape)
                 )
             }
             Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))

@@ -216,7 +216,7 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 liveMessage?.likeCount = liveMessage?.likes?.size ?: 0
             }
         } else {
-            liveMessage?.likes?.filter { userId == it.id }?.forEach { like ->
+            liveMessage?.likes?.filter { userId == it.id && it.isManaged }?.forEach { like ->
                 executeTransaction {
                     like.deleteFromRealm()
                 }

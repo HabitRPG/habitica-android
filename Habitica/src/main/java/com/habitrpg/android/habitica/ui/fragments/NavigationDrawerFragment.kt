@@ -104,7 +104,7 @@ class NavigationDrawerFragment : DialogFragment() {
         val context = context
         adapter = if (context != null) {
             NavigationDrawerAdapter(
-                context.getThemeColor(R.attr.colorPrimary),
+                context.getThemeColor(R.attr.colorPrimaryText),
                 context.getThemeColor(R.attr.colorPrimaryOffset)
             )
         } else {
@@ -140,15 +140,15 @@ class NavigationDrawerFragment : DialogFragment() {
             false
         initializeMenuItems()
 
-            adapter.itemSelectedEvents = {
-                    setSelection(it.transitionId, it.bundle, true)
+        adapter.itemSelectedEvents = {
+                setSelection(it.transitionId, it.bundle, true)
+            }
+        adapter.promoClosedSubject = {
+                sharedPreferences.edit {
+                    putBoolean("hide$it", true)
                 }
-            adapter.promoClosedSubject = {
-                    sharedPreferences.edit {
-                        putBoolean("hide$it", true)
-                    }
-                    updatePromo()
-                }
+                updatePromo()
+            }
 
         lifecycleScope.launchCatching {
             contentRepository.getWorldState()
@@ -166,6 +166,23 @@ class NavigationDrawerFragment : DialogFragment() {
                         ) else 1.toDuration(DurationUnit.MINUTES)
                     }) {
                         updateSeasonalMenuEntries(gearEvent, pair.second)
+                    }
+
+                    val event = configManager.getBirthdayEvent()
+                    val item = getItemWithIdentifier(SIDEBAR_BIRTHDAY)
+                    if (event != null && item == null) {
+                        adapter.currentEvent = event
+                        val birthdayItem = HabiticaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
+                        birthdayItem.itemViewType = 6
+                        val newItems = mutableListOf<HabiticaDrawerItem>()
+                        newItems.addAll(adapter.items)
+                        newItems.add(0, birthdayItem)
+                        adapter.updateItems(newItems)
+                        (activity as? MainActivity)?.showBirthdayIcon = true
+                    } else if (event == null && item != null) {
+                        item.isVisible = false
+                        adapter.updateItem(item)
+                        (activity as? MainActivity)?.showBirthdayIcon = false
                     }
                 }
         }
@@ -550,12 +567,6 @@ class NavigationDrawerFragment : DialogFragment() {
                 HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_SUBSCRIPTION_PROMO)
             item.itemViewType = 2
             items.add(item)
-        }
-
-        configManager.getBirthdayEvent()?.let {
-            val birthdayItem = HabiticaDrawerItem(R.id.birthdayActivity, SIDEBAR_BIRTHDAY)
-            birthdayItem.itemViewType = 6
-            items.add(0, birthdayItem)
         }
         adapter.updateItems(items)
     }

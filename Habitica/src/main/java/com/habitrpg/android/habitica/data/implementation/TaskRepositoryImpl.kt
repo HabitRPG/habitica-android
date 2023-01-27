@@ -147,6 +147,16 @@ class TaskRepositoryImpl(
                         bgTask.counterDown = (bgTask.counterDown ?: 0) + 1
                     }
                 }
+
+                if (bgTask.isGroupTask) {
+                    val entry = bgTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == user.id }
+                    entry?.completed = up
+                    if (up) {
+                        entry?.completedDate = Date()
+                    } else {
+                        entry?.completedDate = null
+                    }
+                }
             }
             res._tmp?.drop?.key?.let { key ->
                 val type = when (res._tmp?.drop?.type?.lowercase(Locale.US)) {
@@ -180,6 +190,19 @@ class TaskRepositoryImpl(
                 bgUser.party?.quest?.progress?.up
                     ?: 0F
                 ) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
+        }
+    }
+
+    override suspend fun markTaskNeedsWork(task: Task, userID: String) {
+        val savedTask = apiClient.markTaskNeedsWork(task.id ?: "", userID)
+        if (savedTask != null) {
+            savedTask.id = task.id
+            savedTask.position = task.position
+            savedTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.let {
+                it.completed = false
+                it.completedDate = null
+            }
+            localRepository.save(savedTask)
         }
     }
 
@@ -223,7 +246,11 @@ class TaskRepositoryImpl(
         }
         localRepository.save(task)
 
-        val savedTask = apiClient.createTask(task)
+        val savedTask = if (task.isGroupTask) {
+            apiClient.createGroupTask(task.group?.groupID ?: "", task)
+        } else {
+            apiClient.createTask(task)
+        }
         savedTask?.dateCreated = Date()
         if (savedTask != null) {
             savedTask.tags = task.tags
@@ -315,7 +342,7 @@ class TaskRepositoryImpl(
             val savedTask = apiClient.assignToTask(taskID, assignments) ?: return@let
             savedTask.id = task.id
             savedTask.position = task.position
-            localRepository.save(task)
+            localRepository.save(savedTask)
         }
 
         assignChanges["unassign"]?.let { unassignments ->
@@ -326,7 +353,7 @@ class TaskRepositoryImpl(
             if (savedTask != null) {
                 savedTask.id = task.id
                 savedTask.position = task.position
-                localRepository.save(task)
+                localRepository.save(savedTask)
             }
         }
     }

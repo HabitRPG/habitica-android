@@ -138,6 +138,8 @@ interface ApiService {
 
     @POST("tasks/user")
     suspend fun createTask(@Body item: Task): HabitResponse<Task>
+    @POST("tasks/group/{groupId}")
+    suspend fun createGroupTask(@Path("groupId") groupId: String, @Body item: Task): HabitResponse<Task>
 
     @POST("tasks/user")
     suspend fun createTasks(@Body tasks: List<Task>): HabitResponse<List<Task>>
@@ -198,7 +200,7 @@ interface ApiService {
     suspend fun disableClasses(): HabitResponse<User>
 
     @POST("user/mark-pms-read")
-    suspend fun markPrivateMessagesRead(): Void
+    suspend fun markPrivateMessagesRead(): Void?
 
     /* Group API */
 
@@ -457,4 +459,7 @@ interface ApiService {
 
     @GET("hall/heroes/{memberID}")
     suspend fun getHallMember(@Path("memberID") memberID: String): HabitResponse<Member>
+
+    @POST("tasks/{taskID}/needs-work/{userID}")
+    suspend fun markTaskNeedsWork(@Path("taskID") taskID: String, @Path("userID")  userID: String): HabitResponse<Task>
 }

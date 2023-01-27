@@ -16,6 +16,7 @@ import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.GroupTaskRequiresApprovalData
 import com.habitrpg.common.habitica.models.notifications.GuildInvitationData
 import com.habitrpg.common.habitica.models.notifications.GuildInvite
+import com.habitrpg.common.habitica.models.notifications.ItemReceivedData
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
@@ -41,7 +42,8 @@ open class NotificationsViewModel : BaseViewModel() {
         Notification.Type.NEW_MYSTERY_ITEMS.type,
         Notification.Type.GROUP_TASK_NEEDS_WORK.type,
         Notification.Type.GROUP_TASK_APPROVED.type,
-        Notification.Type.UNALLOCATED_STATS_POINTS.type
+        Notification.Type.UNALLOCATED_STATS_POINTS.type,
+        Notification.Type.ITEM_RECEIVED.type
     )
 
     private val actionableNotificationTypes = listOf(
@@ -262,6 +264,19 @@ open class NotificationsViewModel : BaseViewModel() {
             // Group tasks should go to Group tasks view if that is added to this app at some point
             Notification.Type.GROUP_TASK_APPROVED.type -> navController.navigate(R.id.tasksFragment)
             Notification.Type.GROUP_TASK_NEEDS_WORK.type -> navController.navigate(R.id.tasksFragment)
+            Notification.Type.ITEM_RECEIVED.type -> clickItemReceivedNotification(notification, navController)
+        }
+    }
+
+    private fun clickItemReceivedNotification(
+        notification: Notification,
+        navController: MainNavigationController
+    ) {
+        val data = notification.data as? ItemReceivedData
+        when (data?.destination) {
+            "equipment" -> navController.navigate(R.id.equipmentOverviewFragment)
+            "customization" -> navController.navigate(R.id.avatarCustomizationFragment)
+            else -> navController.navigate(R.id.itemsFragment)
         }
     }
 

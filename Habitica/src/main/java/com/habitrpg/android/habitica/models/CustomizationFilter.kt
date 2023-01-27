@@ -9,4 +9,18 @@ data class CustomizationFilter(
         get() {
             return onlyPurchased || months.isNotEmpty()
         }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is CustomizationFilter) {
+            return onlyPurchased == other.onlyPurchased && ascending == other.ascending && months.size == other.months.size && months.containsAll(other.months)
+        }
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        var result = onlyPurchased.hashCode()
+        result = 31 * result + ascending.hashCode()
+        result = 31 * result + months.hashCode()
+        return result
+    }
 }

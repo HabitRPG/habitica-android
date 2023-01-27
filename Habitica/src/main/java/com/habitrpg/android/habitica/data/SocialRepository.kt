@@ -18,7 +18,7 @@ interface SocialRepository : BaseRepository {
 
     fun getUserGroups(type: String?): Flow<List<Group>>
     suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>?
-    fun getGroupChat(groupId: String): Flow<out List<ChatMessage>>
+    fun getGroupChat(groupId: String): Flow<List<ChatMessage>>
 
     suspend fun markMessagesSeen(seenGroupId: String)
 
@@ -92,7 +92,7 @@ interface SocialRepository : BaseRepository {
         id: String? = null
     ): List<FindUsernameResult>?
 
-    suspend fun markPrivateMessagesRead(user: User?): Void?
+    suspend fun markPrivateMessagesRead(user: User?)
 
     fun markSomePrivateMessagesAsRead(user: User?, messages: List<ChatMessage>)
 

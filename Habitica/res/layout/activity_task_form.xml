@@ -177,13 +177,14 @@
                         android:id="@+id/habit_adjust_positive_input_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:boxBackgroundColor="?attr/colorTintedBackgroundOffset"
+                        android:background="@drawable/task_form_control_bg"
                         android:hint="@string/positive_habit_form"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/habit_adjust_positive_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/transparent"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
                     <Space
@@ -194,12 +195,13 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/negative_habit_form"
-                        app:boxBackgroundColor="?attr/colorTintedBackgroundOffset"
+                        android:background="@drawable/task_form_control_bg"
                         android:layout_weight="1">
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/habit_adjust_negative_streak_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/transparent"
                             android:inputType="number"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>

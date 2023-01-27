@@ -7,6 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
@@ -26,7 +31,9 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.layoutInflater
@@ -85,6 +92,17 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             }
         } else {
             binding?.promoBanner?.visibility = View.GONE
+        }
+
+        val birthdayEventEnd = appConfigManager.getBirthdayEvent()?.end
+        if (birthdayEventEnd != null) {
+            binding?.promoComposeView?.setContent {
+                HabiticaTheme {
+                    BirthdayBanner(endDate = birthdayEventEnd, Modifier.padding(horizontal = 20.dp).clip(HabiticaTheme.shapes.medium)
+                        .padding(bottom = 10.dp))
+                }
+            }
+            binding?.promoComposeView?.isVisible = true
         }
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }

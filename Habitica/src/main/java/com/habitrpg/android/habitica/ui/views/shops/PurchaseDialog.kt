@@ -401,9 +401,13 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
             observable = { inventoryRepository.purchaseItem(shopItem.purchaseType, shopItem.key, quantity) }
         }
         lifecycleScope.launchCatching {
-            val result = observable() ?: return@launchCatching
-            val text = snackbarText[0].ifEmpty {
-                context.getString(R.string.successful_purchase, shopItem.text)
+            observable()
+            val text = snackbarText[0].ifBlank {
+                if (shopItem.text?.isNotBlank() == true) {
+                    context.getString(R.string.successful_purchase, shopItem.text)
+                } else {
+                    context.getString(R.string.purchased)
+                }
             }
             val rightTextColor = when (item.currency) {
                 "gold" -> ContextCompat.getColor(context, R.color.text_yellow)
@@ -418,6 +422,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 rightText = "-" + priceLabel.text
             )
             inventoryRepository.retrieveInAppRewards()
+            userRepository.retrieveUser()
             if (item.isTypeGear || item.currency == "hourglasses") {
                 onGearPurchased?.invoke(item)
             }

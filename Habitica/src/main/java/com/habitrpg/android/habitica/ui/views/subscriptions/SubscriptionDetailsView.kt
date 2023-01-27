@@ -50,14 +50,19 @@ class SubscriptionDetailsView : LinearLayout {
         var duration: String? = null
 
         if (plan.planId != null && plan.dateTerminated == null) {
-            if (plan.planId == SubscriptionPlan.PLANID_BASIC || plan.planId == SubscriptionPlan.PLANID_BASICEARNED) {
-                duration = resources.getString(R.string.month)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC3MONTH) {
-                duration = resources.getString(R.string.three_months)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC6MONTH || plan.planId == SubscriptionPlan.PLANID_GOOGLE6MONTH) {
-                duration = resources.getString(R.string.six_months)
-            } else if (plan.planId == SubscriptionPlan.PLANID_BASIC12MONTH) {
-                duration = resources.getString(R.string.twelve_months)
+            when (plan.planId) {
+                SubscriptionPlan.PLANID_BASIC, SubscriptionPlan.PLANID_BASICEARNED -> {
+                    duration = resources.getString(R.string.month)
+                }
+                SubscriptionPlan.PLANID_BASIC3MONTH -> {
+                    duration = resources.getString(R.string.three_months)
+                }
+                SubscriptionPlan.PLANID_BASIC6MONTH, SubscriptionPlan.PLANID_GOOGLE6MONTH -> {
+                    duration = resources.getString(R.string.six_months)
+                }
+                SubscriptionPlan.PLANID_BASIC12MONTH -> {
+                    duration = resources.getString(R.string.twelve_months)
+                }
             }
         }
 

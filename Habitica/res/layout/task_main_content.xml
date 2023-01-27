@@ -12,17 +12,37 @@
     android:paddingBottom="@dimen/task_top_bottom_padding"
     android:layout_marginEnd="@dimen/task_text_padding"
     android:layout_marginStart="@dimen/task_text_padding">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
         android:id="@+id/assigned_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Caption4"
+        style="@style/Caption3"
         android:text="@string/pending_approval"
         android:textColor="@color/text_ternary"
         android:drawableStart="@drawable/assign"
         android:drawablePadding="@dimen/spacing_small"
         android:layout_marginBottom="2dp"
         />
+        <TextView
+            android:id="@+id/completed_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Caption4"
+            android:text="@string/pending_approval"
+            android:textColor="@color/text_ternary"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableStart="@drawable/completed"
+            android:drawableTint="@color/text_ternary"
+            android:paddingVertical="1dp"
+            android:paddingHorizontal="6dp"
+            android:background="@drawable/pill_bg_gray"
+            android:layout_marginStart="10dp"
+            />
+    </LinearLayout>
         <com.habitrpg.android.habitica.ui.views.EllipsisTextView
             android:id="@+id/checkedTextView"
             style="@style/Subheader3"

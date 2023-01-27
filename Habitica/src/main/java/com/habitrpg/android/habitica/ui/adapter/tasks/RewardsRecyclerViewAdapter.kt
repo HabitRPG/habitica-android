@@ -100,7 +100,7 @@ class RewardsRecyclerViewAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (customRewards != null && position < customRewardCount) {
+        return if ((customRewards != null && position < customRewardCount) || (customRewardCount == 0 && inAppRewardCount == 0)) {
             VIEWTYPE_CUSTOM_REWARD
         } else {
             VIEWTYPE_IN_APP_REWARD
@@ -139,6 +139,6 @@ class RewardsRecyclerViewAdapter(
 
     companion object {
         private const val VIEWTYPE_CUSTOM_REWARD = 0
-        private const val VIEWTYPE_IN_APP_REWARD = 2
+        private const val VIEWTYPE_IN_APP_REWARD = 3
     }
 }

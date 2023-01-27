@@ -189,7 +189,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 menu.setSelectionRunnable { index ->
                     item?.let { selectedItem ->
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") && index == 0) {
-                            ownedItem?.let { selectedOwnedItem -> sellItemEvents.onNext(selectedOwnedItem) }
+                            ownedItem?.let { selectedOwnedItem -> onSellItem?.invoke(selectedOwnedItem) }
                             return@let
                         }
                         when (selectedItem) {

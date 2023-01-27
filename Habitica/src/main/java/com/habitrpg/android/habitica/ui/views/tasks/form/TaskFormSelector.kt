@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.common.habitica.extensions.getThemeColor
 
 data class LabeledValue<V>(val label: String, val value: V)
@@ -76,8 +77,9 @@ private fun <V> TaskFormSelection(
     modifier: Modifier = Modifier
 ) {
     val selectedState = updateTransition(selected)
+    val context = LocalContext.current
     val textColor = selectedState.animateColor {
-        if (it) Color(LocalContext.current.getThemeColor(R.attr.colorTintedBackground)) else MaterialTheme.colors.primary
+        if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     Box(
         contentAlignment = Alignment.Center, modifier = modifier
@@ -97,7 +99,7 @@ private fun <V> TaskFormSelection(
         ) {
             Box(
                 Modifier
-                    .background(MaterialTheme.colors.primary, MaterialTheme.shapes.medium)
+                    .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
                     .matchParentSize()
             )
         }

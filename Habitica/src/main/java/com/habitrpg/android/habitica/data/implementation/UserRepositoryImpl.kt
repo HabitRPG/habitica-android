@@ -20,9 +20,11 @@ import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.proxy.AnalyticsManager
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
@@ -36,7 +38,11 @@ class UserRepositoryImpl(
     private val analyticsManager: AnalyticsManager
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
 
-    private var lastSync: Date? = null
+    companion object {
+        private var lastReadNotification: String? = null
+        private var lastSync: Date? = null
+    }
+
 
     override fun getUser(): Flow<User?> = getUser(userID)
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
@@ -62,10 +68,12 @@ class UserRepositoryImpl(
     @Suppress("ReturnCount")
     override suspend fun retrieveUser(withTasks: Boolean, forced: Boolean, overrideExisting: Boolean): User? {
         // Only retrieve again after 3 minutes or it's forced.
-        if (forced || this.lastSync == null || Date().time - (this.lastSync?.time ?: 0) > 180000) {
+        if (forced || lastSync == null || Date().time - (lastSync?.time ?: 0) > 180000) {
             val user = apiClient.retrieveUser(withTasks) ?: return null
             lastSync = Date()
-            localRepository.saveUser(user)
+            withContext(Dispatchers.Main) {
+                localRepository.saveUser(user)
+            }
             if (withTasks) {
                 val id = user.id
                 val tasksOrder = user.tasksOrder
@@ -104,7 +112,7 @@ class UserRepositoryImpl(
     override suspend fun sleep(user: User): User {
         val newValue = !(user.preferences?.sleep ?: false)
         localRepository.modify(user) { it.preferences?.sleep = newValue }
-        if (apiClient.sleep() != true) {
+        if (apiClient.sleep() == null) {
             localRepository.modify(user) { it.preferences?.sleep = !newValue }
         }
         return user
@@ -150,11 +158,12 @@ class UserRepositoryImpl(
     override suspend fun unlockPath(path: String, price: Int): UnlockResponse? {
         val unlockResponse = apiClient.unlockPath(path) ?: return null
         val user = localRepository.getUser(userID).firstOrNull() ?: return unlockResponse
-        user.preferences = unlockResponse.preferences
-        user.purchased = unlockResponse.purchased
-        user.items = unlockResponse.items
-        user.balance = user.balance - (price / 4.0)
-        localRepository.saveUser(user, false)
+        localRepository.modify(user) { liveUser ->
+            liveUser.preferences = unlockResponse.preferences
+            liveUser.purchased = unlockResponse.purchased
+            liveUser.items = unlockResponse.items
+            liveUser.balance = liveUser.balance - (price / 4.0)
+        }
         return unlockResponse
     }
 
@@ -162,7 +171,11 @@ class UserRepositoryImpl(
         runCron(ArrayList())
     }
 
-    override suspend fun readNotification(id: String) = apiClient.readNotification(id)
+    override suspend fun readNotification(id: String): List<Any>? {
+        if (lastReadNotification == id) return null
+        lastReadNotification = id
+        return apiClient.readNotification(id)
+    }
     override fun getUserQuestStatus(): Flow<UserQuestStatus> {
         return localRepository.getUserQuestStatus(userID)
     }

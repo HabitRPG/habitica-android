@@ -44,6 +44,7 @@ abstract class BaseTaskViewHolder constructor(
     protected var context: Context
     private val mainTaskWrapper: ViewGroup = itemView.findViewById(R.id.main_task_wrapper)
     protected val assignedTextView: TextView = itemView.findViewById(R.id.assigned_textview)
+    protected val completedCountTextView: TextView = itemView.findViewById(R.id.completed_textview)
     protected val titleTextView: EllipsisTextView = itemView.findViewById(R.id.checkedTextView)
     protected val notesTextView: EllipsisTextView? = itemView.findViewById(R.id.notesTextView)
     protected val calendarIconView: ImageView? = itemView.findViewById(R.id.iconViewCalendar)
@@ -247,6 +248,14 @@ abstract class BaseTaskViewHolder constructor(
             assignedTextView.visibility = View.VISIBLE
         } else {
             assignedTextView.visibility = View.GONE
+        }
+
+        val completedCount = data.group?.assignedUsersDetail?.filter { it.completed }?.size ?: 0
+        if (completedCount > 0) {
+            completedCountTextView.text = "$completedCount/${data?.group?.assignedUsersDetail?.size}"
+            completedCountTextView.visibility = View.VISIBLE
+        } else {
+            completedCountTextView.visibility = View.GONE
         }
 
         syncingView?.visibility = if (task?.isSaving == true) View.VISIBLE else View.GONE
