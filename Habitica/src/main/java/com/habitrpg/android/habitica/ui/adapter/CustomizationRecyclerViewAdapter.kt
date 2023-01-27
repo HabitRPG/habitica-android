@@ -168,8 +168,9 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             this.customization = customization
 
             if (customization.type == "background" && customization.identifier == "") {
-                binding.imageView.setImageResource(R.drawable.no_background)
                 binding.imageView.bitmap = null
+                binding.imageView.tag = null
+                binding.imageView.setImageResource(R.drawable.no_background)
             } else {
                 binding.imageView.loadImage(customization.getIconName(userSize, hairColor))
             }

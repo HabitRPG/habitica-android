@@ -332,11 +332,16 @@ class UserRepositoryImpl(
                 }
             }
         }
-        var updatePath = "preferences.$type"
-        if (category != null) {
-            updatePath = "$updatePath.$category"
+        if (type == "background") {
+            apiClient.unlockPath("background.$identifier")
+            return retrieveUser(false, true)
+        } else {
+            var updatePath = "preferences.$type"
+            if (category != null) {
+                updatePath = "$updatePath.$category"
+            }
+            return updateUser(updatePath, identifier)
         }
-        return updateUser(updatePath, identifier)
     }
 
     override suspend fun retrieveAchievements(): List<Achievement>? {

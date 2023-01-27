@@ -82,7 +82,9 @@ class AvatarCustomizationFragment :
         showsBackButton = true
             adapter.onCustomizationSelected = { customization ->
                 lifecycleScope.launchCatching {
-                    if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
+                    if (customization.identifier?.isNotBlank() != true) {
+                        userRepository.useCustomization(customization.type ?: "", customization.category, activeCustomization ?: "")
+                    } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
                         userRepository.unlockPath(customization)
                         userRepository.retrieveUser(false, true, true)
                     } else {

@@ -1,12 +1,9 @@
-New in 4.1:
--You can view, complete, assign, and add tasks to your Group Plan's shared task board!
+New in 4.1.2:
+-Fixed equipping a blank background, buying animal ears/tails, and the task create button in light mode
+-You can view, complete, assign, and add tasks to your Group Plan’s shared task board!
 -Tap your name on a task screen to switch to different task boards
--Task details are now tinted based on task health
+-More intuitive system notification settings
 -New Avatar Customization interface
 -Audio will be controlled by media volume now
+-Task details are now tinted based on task health
 -Fixed a bug that caused tasks to shuffle around
--Monthly Dailies should recur more consistently now
--More intuitive system notification settings
--Improved link support
--More special event support
-
