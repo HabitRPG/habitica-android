@@ -81,7 +81,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     override fun onResume() {
         super.onResume()
-        activity?.drawerToggle?.isDrawerIndicatorEnabled = !showsBackButton
+        activity?.showBackButton = showsBackButton
         activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

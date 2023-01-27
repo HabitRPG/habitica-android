@@ -62,6 +62,9 @@ class ReminderContainer @JvmOverloads constructor(
             field = value
         }
 
+    var showNotifPermission: ((Boolean) -> Unit)? = null
+    var shouldShowNotifPermission = false
+
     init {
         orientation = VERTICAL
 
@@ -81,6 +84,7 @@ class ReminderContainer @JvmOverloads constructor(
                 addReminderViewAt(-1)
                 view.animDuration = 300
                 view.isAddButton = false
+                if (shouldShowNotifPermission) { showNotifPermission?.invoke(true) }
             }
         }
         val indexToUse = if (index < 0) {

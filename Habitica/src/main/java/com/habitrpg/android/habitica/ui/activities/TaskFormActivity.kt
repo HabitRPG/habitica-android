@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -107,6 +108,29 @@ class TaskFormActivity : BaseActivity() {
     lateinit var socialRepository: SocialRepository
 
     private var challenge: Challenge? = null
+
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            pushNotificationManager.addPushDeviceUsingStoredToken()
+        } else {
+            //If user denies notification settings originally - they must manually enable it through notification settings.
+            val alert = HabiticaAlertDialog(this)
+            alert.setTitle(R.string.push_notification_system_settings_title)
+            alert.setMessage(R.string.push_notification_system_settings_description)
+            alert.addButton(R.string.settings, true, false) { _, _ ->
+                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, applicationContext?.packageName)
+                startActivity(notifSettingIntent)
+            }
+            alert.addButton(R.string.cancel, false) { _, _ ->
+                alert.dismiss()
+            }
+            alert.show()
+        }
+    }
 
     private var isCreating = true
     private var isChallengeTask = false
@@ -499,7 +523,7 @@ class TaskFormActivity : BaseActivity() {
             val view = CheckBox(this)
             view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
             view.text = tag.name
-            view.setTextColor(getThemeColor(R.attr.tintedUiDetails))
+            view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
             if (preselectedTags?.contains(tag.id) == true) {
                 view.isChecked = true
             }
@@ -754,7 +778,14 @@ class TaskFormActivity : BaseActivity() {
     private fun checkIfShowNotifLayout() {
         if (!pushNotificationManager.notificationPermissionEnabled() && Build.VERSION.SDK_INT >= 33) {
             binding.notificationsDisabledLayout.visibility = View.VISIBLE
+            binding.remindersContainer.shouldShowNotifPermission = true
+            binding.remindersContainer.showNotifPermission = { show ->
+                if (show) {
+                    notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
         } else {
+            binding.remindersContainer.shouldShowNotifPermission = false
             binding.notificationsDisabledLayout.visibility = View.GONE
         }
     }

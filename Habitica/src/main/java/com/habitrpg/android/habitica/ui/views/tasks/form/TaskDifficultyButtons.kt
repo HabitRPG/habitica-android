@@ -79,8 +79,11 @@ private fun TaskDifficultySelection(
 ) {
     val selectedState = updateTransition(selected)
     val context = LocalContext.current
-    val textColor = selectedState.animateColor {
+    val iconColor = selectedState.animateColor {
         if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
+    }
+    val textColor = selectedState.animateColor {
+        if (it) Color(context.getThemeColor(R.attr.textColorTintedPrimary)) else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp), modifier = modifier) {
         Box(
@@ -105,7 +108,7 @@ private fun TaskDifficultySelection(
                         .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
                 )
             }
-            Image(icon, null, colorFilter = ColorFilter.tint(HabiticaTheme.colors.tintedUiDetails))
+            Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
         }
         Text(
             text,

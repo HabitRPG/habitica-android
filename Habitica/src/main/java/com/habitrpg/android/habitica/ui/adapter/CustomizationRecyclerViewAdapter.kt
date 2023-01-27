@@ -110,17 +110,18 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         var lastSet = CustomizationSet()
         val today = Date()
         for (customization in newCustomizationList) {
+            val isOwned = ownedCustomizations.contains(customization.id)
+            val isUsable = customization.isUsable(isOwned)
             if (customization.availableFrom != null || customization.availableUntil != null) {
                 if (((customization.availableFrom?.compareTo(today)
                         ?: 0) > 0 || (customization.availableUntil?.compareTo(today)
-                        ?: 0) < 0) && !customization.isUsable(
-                        ownedCustomizations.contains(
-                            customization.id
-                        )
-                    )
+                        ?: 0) < 0) && !isUsable
                 ) {
                     continue
                 }
+            }
+            if (customization.identifier?.contains("birthday_bash") == true && !isOwned) {
+                continue
             }
             if (customization.customizationSet != null && customization.customizationSet != lastSet.identifier) {
                 if (lastSet.hasPurchasable && lastSet.price > 0) {
@@ -136,7 +137,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             }
             customizationList.add(customization)
             lastSet.customizations.add(customization)
-            if (customization.isUsable(ownedCustomizations.contains(customization.id)) && lastSet.hasPurchasable) {
+            if (isUsable && lastSet.hasPurchasable) {
                 lastSet.ownedCustomizations.add(customization)
                 if (!lastSet.isSetDeal()) {
                     lastSet.hasPurchasable = false

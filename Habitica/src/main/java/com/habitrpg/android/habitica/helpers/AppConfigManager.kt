@@ -14,6 +14,7 @@ import com.habitrpg.android.habitica.models.promotions.HabiticaWebPromotion
 import com.habitrpg.android.habitica.models.promotions.getHabiticaPromotionFromKey
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import kotlinx.coroutines.MainScope
+import java.util.Date
 
 class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.common.habitica.helpers.AppConfigManager() {
 
@@ -169,6 +170,6 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
 
     fun getBirthdayEvent(): WorldStateEvent? {
         val events = ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
-        return events.firstOrNull { it?.eventKey == "birthday10" }
+        return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
     }
 }

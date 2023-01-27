@@ -35,8 +35,12 @@
             android:text="@string/pending_approval"
             android:textColor="@color/text_ternary"
             android:drawablePadding="@dimen/spacing_small"
-            android:padding="2dp"
+            android:drawableStart="@drawable/completed"
+            android:drawableTint="@color/text_ternary"
+            android:paddingVertical="1dp"
+            android:paddingHorizontal="6dp"
             android:background="@drawable/pill_bg_gray"
+            android:layout_marginStart="10dp"
             />
     </LinearLayout>
         <com.habitrpg.android.habitica.ui.views.EllipsisTextView

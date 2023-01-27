@@ -144,6 +144,7 @@ object HabiticaTheme {
                 tintedUiMain = Color(context.getThemeColor(R.attr.tintedUiMain)),
                 tintedUiSub = Color(context.getThemeColor(R.attr.tintedUiSub)),
                 tintedUiDetails = Color(context.getThemeColor(R.attr.tintedUiDetails)),
+                pixelArtBackground = Color(context.getThemeColor(R.attr.colorContentBackground))
             )
         }
 }
@@ -159,7 +160,8 @@ class HabiticaColors(
     val textDimmed: Color,
     val tintedUiMain: Color,
     val tintedUiSub: Color,
-    val tintedUiDetails: Color
+    val tintedUiDetails: Color,
+    val pixelArtBackground: Color
 ) {
     @Composable
     fun textPrimaryFor(task: Task?): Color {
@@ -184,5 +186,14 @@ class HabiticaColors(
     @Composable
     fun contentBackgroundFor(task: Task?): Color {
         return (if (isSystemInDarkTheme()) task?.darkestTaskColor else task?.lightestTaskColor)?.let { colorResource(it) } ?: windowBackground
+    }
+
+    @Composable
+    fun pixelArtBackground(hasIcon: Boolean): Color {
+        return if (isSystemInDarkTheme()) {
+            colorResource(if (hasIcon) R.color.gray_200 else R.color.gray_5)
+        } else {
+            colorResource(if (hasIcon) R.color.content_background else R.color.content_background_offset)
+        }
     }
 }

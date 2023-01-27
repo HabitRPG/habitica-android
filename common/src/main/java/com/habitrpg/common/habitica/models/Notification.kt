@@ -7,6 +7,7 @@ import com.habitrpg.common.habitica.models.notifications.GroupTaskApprovedData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskNeedsWorkData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskRequiresApprovalData
 import com.habitrpg.common.habitica.models.notifications.GuildInvitationData
+import com.habitrpg.common.habitica.models.notifications.ItemReceivedData
 import com.habitrpg.common.habitica.models.notifications.LoginIncentiveData
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
@@ -27,6 +28,7 @@ class Notification {
         GROUP_TASK_REQUIRES_APPROVAL("GROUP_TASK_REQUIRES_APPROVAL"),
         UNALLOCATED_STATS_POINTS("UNALLOCATED_STATS_POINTS"),
         WON_CHALLENGE("WON_CHALLENGE"),
+        ITEM_RECEIVED("ITEM_RECEIVED"),
 
         // Achievements
         ACHIEVEMENT_PARTY_UP("ACHIEVEMENT_PARTY_UP"),
@@ -93,6 +95,7 @@ class Notification {
             Type.FIRST_DROP.type -> FirstDropData::class.java
             Type.ACHIEVEMENT_GENERIC.type -> AchievementData::class.java
             Type.WON_CHALLENGE.type -> ChallengeWonData::class.java
+            Type.ITEM_RECEIVED.type -> ItemReceivedData::class.java
 
             Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> AchievementData::class.java
             Type.ACHIEVEMENT_BACK_TO_BASICS.type -> AchievementData::class.java
