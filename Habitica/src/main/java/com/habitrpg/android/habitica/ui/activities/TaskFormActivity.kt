@@ -67,6 +67,7 @@ import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.realm.RealmList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -259,7 +260,7 @@ class TaskFormActivity : BaseActivity() {
         when {
             taskId != null -> {
                 isCreating = false
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                lifecycleScope.launch(Dispatchers.Main) {
                     val task =
                         taskRepository.getUnmanagedTask(taskId).firstOrNull() ?: return@launch
                     if (!task.isValid) return@launch
