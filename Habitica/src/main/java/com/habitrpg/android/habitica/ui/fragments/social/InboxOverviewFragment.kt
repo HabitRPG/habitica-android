@@ -119,7 +119,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
                 binding.progressCircular.visibility = View.VISIBLE
                 val username = binding.uuidEditText.text?.toString() ?: ""
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    val member = socialRepository.retrieveMemberWithUsername(username)
+                    val member = socialRepository.retrieveMemberWithUsername(username, false)
                     if (member != null) {
                         alert.dismiss()
                         openInboxMessages("", username)

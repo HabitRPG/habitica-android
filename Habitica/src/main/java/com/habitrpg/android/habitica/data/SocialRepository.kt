@@ -84,7 +84,7 @@ interface SocialRepository : BaseRepository {
     suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>): List<Void>?
 
     suspend fun retrieveMember(userId: String?, fromHall: Boolean = false): Member?
-    suspend fun retrieveMemberWithUsername(username: String?): Member?
+    suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member?
 
     suspend fun findUsernames(
         username: String,
