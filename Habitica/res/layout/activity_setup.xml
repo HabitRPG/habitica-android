@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.habitrpg.android.habitica.ui.views.FadingViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottomBar" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <RelativeLayout
         android:id="@+id/bottomBar"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:background="@color/background_brand"
         android:gravity="center_vertical"
         android:elevation="8dp">
+        <com.viewpagerindicator.IconPageIndicator
+            android:id="@+id/view_pager_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,8 +29,7 @@
             android:drawableStart="@drawable/back_arrow_disabled"
             android:background="@color/transparent"
             android:drawablePadding="12dp"
-            android:textColor="@color/white"
-            android:layout_alignParentStart="true"/>
+            android:textColor="@color/white"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,11 +40,5 @@
             android:drawableEnd="@drawable/forward_arrow_enabled"
             android:background="@color/transparent"
             android:layout_alignParentEnd="true"/>
-
-        <com.viewpagerindicator.IconPageIndicator
-            android:id="@+id/view_pager_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

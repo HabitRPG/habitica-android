@@ -159,7 +159,7 @@ class UserRepositoryImpl(
         val unlockResponse = apiClient.unlockPath(path) ?: return null
         val user = localRepository.getUser(userID).firstOrNull() ?: return unlockResponse
         localRepository.modify(user) { liveUser ->
-            liveUser.preferences = unlockResponse.preferences
+            unlockResponse.preferences?.let { liveUser.preferences = it }
             liveUser.purchased = unlockResponse.purchased
             liveUser.items = unlockResponse.items
             liveUser.balance = liveUser.balance - (price / 4.0)

@@ -81,6 +81,6 @@ object MainNavigationController {
     }
 
     fun navigateBack() {
-        navController?.popBackStack()
+        navController?.navigateUp()
     }
 }
