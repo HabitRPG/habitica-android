@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">тис.</string>
+    <string name="million_abbrev">млн</string>
+    <string name="billion_abbrev">млрд</string>
+    <string name="trillion_abbrev">трлн</string>
+    <string name="mystic_hourglasses">Містичні пісочні годинники</string>
+    <string name="repeat_daily">Щоденно</string>
+    <string name="monthly">Щомісяця</string>
+    <string name="weekly">Щотижня</string>
+    <string name="daily">Щоденно</string>
+    <string name="settings">Налаштування</string>
+    <string name="user_level_long">Рівень %d</string>
+    <string name="action_edit">Редагувати</string>
+    <string name="action_cancel">Скасувати</string>
+    <string name="about_title">Про нас</string>
+    <string name="are_you_sure">Ви впевнені\?</string>
+</resources>

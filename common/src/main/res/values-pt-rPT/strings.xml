@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="mystic_hourglasses">Ampulhetas místicas</string>
+    <string name="repeat_daily">Diariamente</string>
+    <string name="monthly">Mensalmente</string>
+    <string name="weekly">Semanalmente</string>
+    <string name="daily">Diariamente</string>
+    <string name="stats">Atributos</string>
+    <string name="settings">Definições</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_cancel">Cancelar Convite</string>
+    <string name="about_title">Sobre</string>
+    <string name="are_you_sure">Tem certeza\?</string>
+    <string name="task">Tarefa</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="gems">Gemas</string>
+    <string name="gold_plural">ouro</string>
+    <string name="gold_capitalized">Ouro</string>
+    <string name="trivial">Trivial</string>
+    <string name="easy">Fácil</string>
+    <string name="medium">Média</string>
+    <string name="hard">Difícil</string>
+    <string name="habits">Hábitos</string>
+    <string name="dailies">Tarefas Diárias</string>
+    <string name="todos">Afazeres</string>
+    <string name="rewards">Recompensas</string>
+    <string name="habit">Hábito</string>
+    <string name="reward">Prémio</string>
+    <string name="todo">Tarefa</string>
+    <string name="new_task">Nova Tarefa</string>
+    <string name="user_level">Nível %d</string>
+    <string name="user_level_long">Nível %d</string>
+    <string name="login_btn">Iniciar Sessão</string>
+    <string name="register_btn">Registar</string>
+    <string name="username">Nome de utilizador</string>
+    <string name="password">Palavra-passe</string>
+    <string name="emailAddress">Endereço de e-mail</string>
+    <string name="confirmpassword">Confirmar palavra-passe</string>
+    <string name="login_btn_google">Entre com sua conta Google</string>
+    <string name="logout">Terminar Sessão</string>
+    <string name="logout_description">Termine a sessão da sua conta</string>
+    <string name="LoginActivityName">Bem-vindo</string>
+    <string name="login_validation_error_title">Erro de Validação</string>
+    <string name="login_validation_error_fieldsmissing">Tem de preencher todos os campos.</string>
+    <plurals name="x_rewards">
+        <item quantity="one">Adicionar uma Recompensa</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="create_task_title">Cria uma tarefa</string>
+    <string name="complete_task_title">Completa uma Tarefa</string>
+    <string name="create_task">Criar %s</string>
+</resources>

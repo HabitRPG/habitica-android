@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="mystic_hourglasses">Mystiskt Timglas</string>
+    <string name="repeat_daily">Dagligen</string>
+    <string name="monthly">Månadsvis</string>
+    <string name="weekly">Veckovis</string>
+    <string name="daily">Dagligen</string>
+    <string name="settings">Inställningar</string>
+    <string name="user_level_long">Nivå %d</string>
+    <string name="action_edit">Ändra</string>
+    <string name="action_cancel">Avbryt</string>
+    <string name="about_title">Om</string>
+    <string name="are_you_sure">Är du säker\?</string>
+</resources>

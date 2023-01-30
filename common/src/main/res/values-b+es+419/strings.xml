@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">M</string>
+    <string name="billion_abbrev">B</string>
+    <string name="trillion_abbrev">T</string>
+    <string name="mystic_hourglasses">Relojes de Arena Místicos</string>
+    <string name="repeat_daily">Diariamente</string>
+    <string name="monthly">Mensualmente</string>
+    <string name="weekly">Semanalmente</string>
+    <string name="daily">Diariamente</string>
+    <string name="settings">Ajustes</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="about_title">Acerca de</string>
+    <string name="are_you_sure">¿Estás seguro\?</string>
+</resources>

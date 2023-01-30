@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="are_you_sure">Bạn chắc chứ\?</string>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">tỷ</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="mystic_hourglasses">Đồng Hồ Cát Bí Ẩn</string>
+    <string name="repeat_daily">Mỗi ngày</string>
+    <string name="monthly">Mỗi tháng</string>
+    <string name="weekly">Mỗi tuần</string>
+    <string name="daily">Mỗi ngày</string>
+    <string name="settings">Cài Đặt</string>
+    <string name="user_level_long">Cấp độ %d</string>
+    <string name="action_edit">Chỉnh sửa</string>
+    <string name="action_cancel">Hủy lời mời</string>
+    <string name="about_title">Về chúng tôi</string>
+</resources>

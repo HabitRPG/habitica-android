@@ -473,7 +473,7 @@
     <string name="forgot_password_title">Ссылка сброса почты и пароля</string>
     <string name="forgot_password_description">Введите ваше имя пользователя или электронную почту, которые вы использовали для регистрации вашего аккаунта Habitica.</string>
     <string name="forgot_password_confirmation">Если у вас указана ваша электронная почта в профиле, то инструкции по настройке нового пароля отправлены на ваш адрес электронной почты.</string>
-    <string name="ok">OK</string>
+    <string name="ok">ОК</string>
     <string name="profile">Профиль</string>
     <string name="profile_summary">Редактировать ваш профиль.</string>
     <string name="display_name">Отображаемое имя</string>
@@ -1259,5 +1259,11 @@
         <item quantity="few">%d человека</item>
         <item quantity="many">%d человек</item>
         <item quantity="other">%d человек</item>
+    </plurals>
+    <plurals name="you_x_others">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
     </plurals>
 </resources>

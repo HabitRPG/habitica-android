@@ -596,7 +596,6 @@
     <string name="cancelled">Cancelado</string>
     <string name="ending_on">Termina en %s</string>
     <string name="subscribe_options_title">Selecciona el tiempo de Suscripción que mejor funcione para ti</string>
-    <string name="thanks_for_subscribing">Gracias por suscribirte</string>
     <string name="renew_subscription">Renovar Suscripción</string>
     <string name="resubscribe">Resuscribirse</string>
     <string name="delete_account">Eliminar Cuenta</string>

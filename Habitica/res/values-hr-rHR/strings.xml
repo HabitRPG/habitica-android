@@ -937,7 +937,6 @@
     <string name="inbox_messages_title">%1$d novih poruka od %2$s</string>
     <string name="remove_member">Ukloni Člana</string>
     <string name="transferred_ownership">Vodstvo preneseno Članu %s</string>
-    <string name="thanks_for_subscribing">Hvala na pretplati</string>
     <string name="gifted">Poklonjeno</string>
     <string name="member_group_plan">Član Grupnog plana</string>
     <string name="event">Događanje</string>

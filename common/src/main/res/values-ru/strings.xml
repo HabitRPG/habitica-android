@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">тыс</string>
+    <string name="million_abbrev">млн</string>
+    <string name="billion_abbrev">млрд</string>
+    <string name="trillion_abbrev">трлн</string>
+    <string name="mystic_hourglasses">Мистические песочные часы</string>
+    <string name="repeat_daily">Ежедневно</string>
+    <string name="monthly">Ежемесячно</string>
+    <string name="weekly">Еженедельно</string>
+    <string name="daily">Ежедневно</string>
+    <string name="settings">Настройки</string>
+    <string name="user_level_long">Уровень %d</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_cancel">Отменить</string>
+    <string name="about_title">О себе</string>
+    <string name="are_you_sure">Вы уверены\?</string>
+    <string name="gems">Самоцветы</string>
+    <string name="gold_capitalized">Золото</string>
+    <string name="trivial">Пустяк</string>
+    <string name="easy">Легко</string>
+    <string name="medium">Нормально</string>
+    <string name="hard">Сложно</string>
+    <string name="habits">Привычки</string>
+    <string name="dailies">Ежедневные дела</string>
+    <string name="todos">Задачи</string>
+    <string name="rewards">Награды</string>
+    <string name="habit">Привычка</string>
+    <string name="gold_plural">золото</string>
+    <string name="reward">Награда</string>
+    <string name="todo">Задача</string>
+    <string name="stats">Характеристики</string>
+    <string name="new_task">Новое задание</string>
+    <string name="avatar">Аватар</string>
+    <string name="user_level">Ур. %d</string>
+    <string name="login_btn">Вход</string>
+    <string name="register_btn">Регистрация</string>
+    <string name="username">Имя пользователя</string>
+    <string name="email_username">Электронная почта/Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="emailAddress">Электронная почта</string>
+    <string name="login_btn_google">Войти через Google</string>
+    <string name="logout">Выйти</string>
+    <string name="logout_description">Выйти из аккаунта</string>
+    <string name="LoginActivityName">Добро пожаловать</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d привычка</item>
+        <item quantity="few">%d привычки</item>
+        <item quantity="many">%d привычек</item>
+        <item quantity="other">%d привычек</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Ежедневное дело</item>
+        <item quantity="few">%d Ежедневных дела</item>
+        <item quantity="many">%d Ежедневных дел</item>
+        <item quantity="other">%d Ежедневных дел</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Задача</item>
+        <item quantity="few">%d Задачи</item>
+        <item quantity="many">%d Задач</item>
+        <item quantity="other">%d Задач</item>
+    </plurals>
+    <string name="create_task_title">Создать задание</string>
+    <string name="complete_task_title">Выполнить задание</string>
+    <string name="create_task">Создать %s</string>
+    <string name="new_task_x">Новый %s</string>
+    <string name="save_task_x">Сохранить %s</string>
+    <string name="task">Задание</string>
+    <string name="failed">Не удалось загрузить</string>
+    <string name="retry">Попробовать ещё</string>
+    <string name="confirmpassword">Подтвердите пароль</string>
+    <string name="login_validation_error_fieldsmissing">Необходимо заполнить все поля.</string>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Награда</item>
+        <item quantity="few">%d Награды</item>
+        <item quantity="many">%d Наград</item>
+        <item quantity="other">%d Наград</item>
+    </plurals>
+    <string name="login_validation_error_title">Ошибка проверки</string>
+</resources>

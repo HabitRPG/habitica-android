@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">千</string>
+    <string name="million_abbrev">百万</string>
+    <string name="billion_abbrev">十亿</string>
+    <string name="trillion_abbrev">兆</string>
+    <string name="mystic_hourglasses">神秘沙漏</string>
+    <string name="repeat_daily">每日</string>
+    <string name="monthly">每月</string>
+    <string name="weekly">每周</string>
+    <string name="daily">每日</string>
+    <string name="settings">设置</string>
+    <string name="user_level_long">%d级</string>
+    <string name="action_edit">编辑</string>
+    <string name="action_cancel">取消</string>
+    <string name="about_title">关于</string>
+    <string name="are_you_sure">你确定吗？</string>
+</resources>

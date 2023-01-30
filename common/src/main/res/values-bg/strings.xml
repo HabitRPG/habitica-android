@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_title">Относно</string>
+    <string name="are_you_sure">Сигурен/на ли сте\?</string>
+    <string name="thousand_abbrev">хил.</string>
+    <string name="million_abbrev">млн.</string>
+    <string name="billion_abbrev">млд.</string>
+    <string name="repeat_daily">Ежедневно</string>
+    <string name="monthly">Ежемесечно</string>
+    <string name="weekly">Ежеседмично</string>
+    <string name="daily">Ежедневно</string>
+    <string name="settings">Настройки</string>
+    <string name="action_edit">Редактиране</string>
+    <string name="action_cancel">Отказ</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">mld</string>
+    <string name="repeat_daily">Zilnic</string>
+    <string name="monthly">Lunar</string>
+    <string name="weekly">Săptămânal</string>
+    <string name="daily">Zilnic</string>
+    <string name="settings">Setari</string>
+    <string name="action_edit">Editează</string>
+    <string name="about_title">Despre</string>
+    <string name="are_you_sure">Ești sigur(ă)\?</string>
+</resources>

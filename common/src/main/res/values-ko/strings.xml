@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="x_rewards">
+        <item quantity="other">보상 추가</item>
+    </plurals>
+    <string name="create_task_title">과제 만들기</string>
+    <string name="complete_task_title">과제 끝내기</string>
+    <string name="create_task">%s 생성하기</string>
+    <string name="are_you_sure">확실합니까\?</string>
+    <string name="task">과제</string>
+    <string name="retry">재도전</string>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="gems">보석</string>
+    <string name="gold_plural">골드</string>
+    <string name="gold_capitalized">골드</string>
+    <string name="mystic_hourglasses">신비한 모래시계</string>
+    <string name="repeat_daily">일일 과제</string>
+    <string name="monthly">Monthly</string>
+    <string name="weekly">Weekly</string>
+    <string name="trivial">사소함</string>
+    <string name="easy">쉬움</string>
+    <string name="medium">보통</string>
+    <string name="hard">어려움</string>
+    <string name="habits">습관</string>
+    <string name="dailies">일일 과제 목록</string>
+    <string name="todos">해야 할 일</string>
+    <string name="rewards">보상</string>
+    <string name="daily">일일 과제</string>
+    <string name="habit">습관</string>
+    <string name="reward">보상</string>
+    <string name="todo">해야 할 일</string>
+    <string name="stats">상태</string>
+    <string name="settings">설정</string>
+    <string name="new_task">새 과제</string>
+    <string name="avatar">아바타</string>
+    <string name="user_level">Lvl %d</string>
+    <string name="user_level_long">%d 레벨</string>
+    <string name="action_edit">수정</string>
+    <string name="action_cancel">취소</string>
+    <string name="login_btn">로그인</string>
+    <string name="register_btn">등록</string>
+    <string name="username">아이디</string>
+    <string name="password">암호</string>
+    <string name="emailAddress">이메일 주소</string>
+    <string name="confirmpassword">암호 확인</string>
+    <string name="login_btn_google">구글 계정으로 가입</string>
+    <string name="logout">로그아웃</string>
+    <string name="logout_description">계정에서 로그아웃하기</string>
+    <string name="LoginActivityName">환영합니다</string>
+    <string name="about_title">더보기</string>
+    <string name="login_validation_error_title">검증 오류</string>
+    <string name="login_validation_error_fieldsmissing">모든 항목을 채워주셔야 합니다.</string>
+    <string name="failed">불러오기에 실패하였습니다</string>
+</resources>
