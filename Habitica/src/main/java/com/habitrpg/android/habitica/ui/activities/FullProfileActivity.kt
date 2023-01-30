@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.content.ClipData
-import android.content.ClipboardManager
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -69,6 +69,8 @@ class FullProfileActivity : BaseActivity() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+    @Inject
+    lateinit var sharedPrefs: SharedPreferences
 
     private var userID = ""
     private var username: String? = null
@@ -160,6 +162,9 @@ class FullProfileActivity : BaseActivity() {
         inflater.inflate(R.menu.menu_full_profile, menu)
         MenuCompat.setGroupDividerEnabled(menu, true)
         val item = menu.findItem(R.id.block_user)
+
+        if (isMyProfile()) item.isVisible = false
+
         if (isUserBlocked()) {
             item?.title = getString(R.string.unblock_user)
         } else {
@@ -184,6 +189,10 @@ class FullProfileActivity : BaseActivity() {
             })
         }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun isMyProfile(): Boolean {
+        return sharedPrefs.getString("UserID", "") == userID
     }
 
     private fun isUserBlocked(): Boolean {
@@ -713,4 +722,5 @@ class FullProfileActivity : BaseActivity() {
     }
 
 // endregion
+    // endregion
 }
