@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.content.Context
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
