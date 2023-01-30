@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">mln.</string>
+    <string name="billion_abbrev">mld.</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="mystic_hourglasses">Mystieke Zandlopers</string>
+    <string name="repeat_daily">Dagelijks</string>
+    <string name="monthly">Maandelijks</string>
+    <string name="weekly">Wekelijks</string>
+    <string name="daily">Dagelijks</string>
+    <string name="settings">Instellingen</string>
+    <string name="user_level_long">Niveau %d</string>
+    <string name="action_edit">Bewerk</string>
+    <string name="action_cancel">Annuleren</string>
+    <string name="about_title">Over</string>
+    <string name="are_you_sure">Weet je het zeker\?</string>
+</resources>

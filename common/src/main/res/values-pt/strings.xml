@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gems">Gemas</string>
+    <string name="gold_capitalized">Ouro</string>
+    <string name="login_btn_google">Iniciar a sessão com Google</string>
+    <string name="about_title">Sobre</string>
+    <string name="create_task_title">Crie uma Tarefa</string>
+    <string name="complete_task_title">Complete uma Tarefa</string>
+    <string name="new_task_x">Novo %@</string>
+    <string name="are_you_sure">Tem a certeza\?</string>
+    <string name="task">Tarefas</string>
+    <string name="mystic_hourglasses">Ampulheta Mística</string>
+    <string name="repeat_daily">Tarefa Diária</string>
+    <string name="monthly">Mensalmente</string>
+    <string name="weekly">Semanalmente</string>
+    <string name="trivial">Comum</string>
+    <string name="easy">Fácil</string>
+    <string name="medium">Médio</string>
+    <string name="hard">Difícil</string>
+    <string name="habits">Hábitos</string>
+    <string name="dailies">Tarefas Diárias</string>
+    <string name="todos">Afazeres</string>
+    <string name="rewards">Recomepnsas</string>
+    <string name="daily">Tarefa Diária</string>
+    <string name="habit">Hábito</string>
+    <string name="reward">Recompensa</string>
+    <string name="todo">Afazeres</string>
+    <string name="stats">Estatísticas</string>
+    <string name="settings">Definições</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level_long">Nível %d</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="login_btn">Iniciar Sessão</string>
+    <string name="register_btn">Registar</string>
+    <string name="username">Nome de Utilizador</string>
+    <string name="password">Palavra-passe</string>
+    <string name="confirmpassword">Confirmar Palavra-passe</string>
+</resources>

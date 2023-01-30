@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">mo</string>
+    <string name="billion_abbrev">ma</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="mystic_hourglasses">Sabliers mystiques</string>
+    <string name="repeat_daily">Quotidiennement</string>
+    <string name="monthly">Mensuellement</string>
+    <string name="weekly">Hebdomadairement</string>
+    <string name="daily">Quotidiennement</string>
+    <string name="todo">tâche à faire</string>
+    <string name="stats">Stats</string>
+    <string name="settings">Paramètres</string>
+    <string name="user_level_long">Niveau %d</string>
+    <string name="action_edit">Modifier</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="about_title">À propos</string>
+    <string name="are_you_sure">Confirmez-vous \?</string>
+    <string name="task">tâche</string>
+</resources>

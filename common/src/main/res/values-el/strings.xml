@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="are_you_sure">Είσαι σίγουρος;</string>
+    <string name="repeat_daily">Ημερήσια</string>
+    <string name="monthly">Μηνιαία</string>
+    <string name="weekly">Εβδομαδιαία</string>
+    <string name="daily">Ημερήσια</string>
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="action_edit">Επεξεργασία</string>
+    <string name="action_cancel">Ακύρωση</string>
+    <string name="about_title">Σχετικά</string>
+</resources>

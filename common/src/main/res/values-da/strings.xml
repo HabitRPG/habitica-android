@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repeat_daily">Daglig</string>
+    <string name="monthly">Månedlig</string>
+    <string name="weekly">Ugentlig</string>
+    <string name="daily">Daglig</string>
+    <string name="settings">Indstillinger</string>
+    <string name="action_edit">Ret</string>
+    <string name="are_you_sure">Er du sikker\?</string>
+</resources>

@@ -895,7 +895,7 @@
     <string name="preference_push_joined_guild_mention">\@Mentions di Guild yang diikuti</string>
     <string name="gems_to_gift">Permata untuk dihadiahkan</string>
     <string name="gift_gems_balance_subtitle">Masukkan berapa banyak Permata yang ingin kamu berikan dibawah atau geser tabs untuk membeli Permata untuk diberikan</string>
-    <string name="overview">Overview</string>
+    <string name="overview">Tinjauan</string>
     <string name="send_bug_prompt">Kirimkan masalah bug kepada kami dan kami akan menghubungimu kembali!</string>
     <string name="common_fixes">Perbaikan Umum</string>
     <string name="lets_go">Ayo</string>
@@ -932,4 +932,31 @@
     <string name="how_best_habitica">Tidak tahu cara terbaik menggunakan Habitica\?</string>
     <string name="stats_currency">Stats &amp; Mata Uang</string>
     <string name="health_points">Poin Health</string>
+    <string name="experience_points">Poin Pengalaman</string>
+    <string name="health_description">Ini menunjukkan nyawa karakter kamu. Lupa mengerjakan keseharian atau melakukan kebiasaan buruk akan **mengurangi Nyawa**.
+\n
+\n**Pulihkan Nyawa** dengan naik level, menggunakan Ramuan Penyembuh, atau dengan kemampuan penyembuh. 
+\n
+\nJika **Nyawa kamu sampai 0** kamu akan kehilangan satu level, semua Koin Emas, dan sebuah perlengkapan. Perlengkapan yang hilang bisa dibeli lagi nanti.</string>
+    <string name="experience_description">Poin Pengalaman / EXP merepresentasikan progressmu dan mempebolehkanmu untuk naik level. Kamu pada intinya akan **mendapatkan EXP** dengan menyelesaikan tugas atau misi, namun ada beberapa kelas yang dapat memberikan EXP.
+\n
+\nTugas dengan kesulitan yang lebih tinggi, atau yang diwarnai merah akan memberikanmu **EXP lebih banyak**. **Stat Kecerdasan** yang kamu miliki juga berpengaruh pada pemerolehan EXP.</string>
+    <string name="gold_description">Koin Emas adalah **mata uang utama** dalam Habitica dan dapat kamu gunakan untuk membeli perlengkapan, misi, items, atau bahkan hadiah custom yang kamu buat sendiri.
+\n
+\n**Koin Emas diperoleh** dengan cara menyelesaikan tugas atau misi, atau melalui beberapa skill Kelas. **Stat Persepsi (Perception)** yang lebih tinggi membuatmu memperoleh Emas lebih banyak.
+\n
+\nJika kamu berlangganan Habitica, maka kamu bahkan dapat menggunakan Koin Emas untuk membeli Permata yang jumlahnya bergantung dengan seberapa lama kamu telah berlangganan.</string>
+    <string name="mana_points">Poin Mana</string>
+    <string name="mana_description">Poin Mana (MP) akan terbuka dengan sistem kelas pada level 10 dan membuatmu dapat **menggunakan Kemampuan** setelah kamu mempelajarinya pada level 11.
+\n
+\nBeberapa **MP terisi** setiap pergantian hari, tetapi kamu dapat memperoleh lebih banyak lagi dengan menyelesaikan tugas atau menggunakan Kemampuan Penyihir.</string>
+    <string name="stat_allocation">Alokasi Stat</string>
+    <string name="standard">Standar</string>
+    <string name="premium_currency">Mata Uang Premium</string>
+    <string name="currency">Mata Uang</string>
+    <string name="quest_party_required_description">Ketika sudah berada dalam Party, kamu dapat melakukan Misi seorang diri ataupun mengundang teman untuk melakukan Misi bersama!</string>
+    <string name="armoireEquipment_new">Kamu menemukan sebuah Perlengkapan langka dari dalam Peti!</string>
+    <string name="armoireFood_new">Kamu mengobrak-abrik isi Peti dan menemukan makanan. Kenapa bisa ada di sini\?</string>
+    <string name="sell_no_price">Jual</string>
+    <string name="create_new_party">Buat party baru</string>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repeat_daily">Naponta</string>
+    <string name="monthly">Havonta</string>
+    <string name="weekly">Hetente</string>
+    <string name="daily">Naponta</string>
+    <string name="settings">Beállítások</string>
+    <string name="action_edit">Szerkesztés</string>
+    <string name="are_you_sure">Biztos vagy benne\?</string>
+</resources>

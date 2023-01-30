@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">mi</string>
+    <string name="billion_abbrev">bi</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="gems">Gemas</string>
+    <string name="gold_capitalized">Ouro</string>
+    <string name="mystic_hourglasses">Ampulhetas Místicas</string>
+    <string name="repeat_daily">Diária</string>
+    <string name="monthly">Mensal</string>
+    <string name="weekly">Semanal</string>
+    <string name="daily">Diária</string>
+    <string name="habit">Hábito</string>
+    <string name="reward">Recompensa</string>
+    <string name="todo">Afazer</string>
+    <string name="stats">Atributos</string>
+    <string name="settings">Configurações</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level_long">Nível %d</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="about_title">Sobre</string>
+    <string name="are_you_sure">Você tem certeza\?</string>
+    <string name="task">Tarefa</string>
+    <string name="gold_plural">ouro</string>
+    <string name="trivial">Trivial</string>
+    <string name="easy">Fácil</string>
+    <string name="medium">Média</string>
+    <string name="hard">Difícil</string>
+    <string name="habits">Hábitos</string>
+    <string name="dailies">Diárias</string>
+    <string name="todos">Afazeres</string>
+    <string name="rewards">Recompensas</string>
+    <string name="new_task">Nova Tarefa</string>
+    <string name="user_level">Nível %d</string>
+    <string name="login_btn">Login</string>
+    <string name="register_btn">Registre-se</string>
+    <string name="username">Nome de usuário</string>
+    <string name="email_username">E-mail / Nome de usuário</string>
+    <string name="password">Senha</string>
+    <string name="emailAddress">Endereço de e-mail</string>
+    <string name="confirmpassword">Confirmar senha</string>
+    <string name="login_btn_google">Logar com Google</string>
+    <string name="logout">Sair</string>
+    <string name="logout_description">Sair da sua conta</string>
+    <string name="LoginActivityName">Boas-vindas</string>
+    <string name="login_validation_error_title">Erro de validação</string>
+    <string name="login_validation_error_fieldsmissing">Você precisa preencher todos os campos.</string>
+    <plurals name="x_rewards">
+        <item quantity="one">Adicionar Recompensa</item>
+        <item quantity="other"/>
+    </plurals>
+    <string name="create_task_title">Criar uma Tarefa</string>
+    <string name="complete_task_title">Completar uma Tarefa</string>
+    <string name="create_task">Criar %s</string>
+    <string name="new_task_x">Novo %@</string>
+    <string name="failed">Erro ao carregar</string>
+    <string name="retry">Tentar novamente</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Hábito</item>
+        <item quantity="other">%d Hábitos</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Diário</item>
+        <item quantity="other">%d Diários</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Afazer</item>
+        <item quantity="other">%d Afazeres</item>
+    </plurals>
+    <string name="save_task_x">Salvar %s</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">M</string>
+    <string name="repeat_daily">Denně</string>
+    <string name="monthly">Měsíčně</string>
+    <string name="weekly">Týdně</string>
+    <string name="daily">Denně</string>
+    <string name="settings">Nastavení</string>
+    <string name="action_edit">Upravit</string>
+    <string name="action_cancel">Zrušit pozvání</string>
+    <string name="are_you_sure">Jsi si jist\?</string>
+</resources>

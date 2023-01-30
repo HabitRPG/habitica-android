@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">bin</string>
+    <string name="million_abbrev">milyon</string>
+    <string name="billion_abbrev">milyar</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="mystic_hourglasses">Mistik Kum Saati</string>
+    <string name="repeat_daily">Günlük</string>
+    <string name="monthly">Aylık</string>
+    <string name="weekly">Haftalık</string>
+    <string name="daily">Günlük</string>
+    <string name="settings">Ayarlar</string>
+    <string name="user_level_long">Düzey %d</string>
+    <string name="action_edit">Düzenle</string>
+    <string name="action_cancel">İptal</string>
+    <string name="about_title">Hakkında</string>
+    <string name="are_you_sure">Emin misin\?</string>
+</resources>

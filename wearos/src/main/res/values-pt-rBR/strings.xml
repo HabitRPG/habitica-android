@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="syncing_account">Sincronizando Conta do Telefone</string>
+    <string name="how_did_you_do">Como você foi\?</string>
+    <string name="you_found">Você encontrou…</string>
+    <string name="one_quest_item">1 Item de Missão</string>
+    <string name="x_quest_item">%d Itens de Missão</string>
+    <string name="x_and_y">%1$s e %2$s</string>
+    <string name="some_x">algum %s</string>
+    <string name="edit_on_phone">Editar no Celular</string>
+    <string name="sign_in_description">Criar listas de Tarefas e acompanhar o progresso com seu avatar gamificado</string>
+    <string name="sign_in">Entrar</string>
+    <string name="sign_in_on_phone">Entrar no Celular</string>
+    <string name="create_account">Criar Conta</string>
+    <string name="sign_in_password">Entrar com senha</string>
+    <string name="continue_text">Continuar</string>
+    <string name="you_ran_out_of_hp">Você ficou sem Vida</string>
+    <string name="faint_description">Você perdeu um Nível, Experiência e Ouro. Não desista!</string>
+    <string name="day_start">Início do dia</string>
+    <string name="rya_description">Existem Diários incompletos de ontem</string>
+    <string name="review_dailies">Rever Diários</string>
+    <string name="check_on_phone">Checar no celular</string>
+    <string name="checklist_disclaimer">Lista de Tarefas Disponível no celular</string>
+    <string name="start_new_day">Começar novo dia</string>
+    <string name="check_off_yesterday">Marque qualquer que você completou ontem:</string>
+    <string name="task_type">Tipo de Tarefa</string>
+    <string name="task_title_hint">Título da Tarefa…</string>
+    <string name="save">Salvar</string>
+    <string name="sync_data">Sincronizar Dados</string>
+    <string name="hide_task_rewards">Esconder Recompensas de Tarefas</string>
+    <string name="version_info">Versão %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">Sair do Habitica\?</string>
+    <string name="no_tasks">Criar um %s para adicionar a essa lista</string>
+    <string name="an_egg">um Ovo</string>
+    <string name="a_potion">uma Poção</string>
+    <string name="some_food">Alguma Comida</string>
+    <string name="continue_on_your_phone">Continuar no seu celular</string>
+    <string name="all_done_today">Tudo feito por hoje!</string>
+    <string name="disconnected">Desconectado</string>
+    <string name="levelup_description">Você subiu de nível por todo seu trabalho duro!</string>
+    <string name="starting_your_day">Começando seu Dia...</string>
+    <string name="ok">OK</string>
+    <string name="other_options">Outras Opções</string>
+</resources>

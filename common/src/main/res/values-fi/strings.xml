@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repeat_daily">Päivittäin</string>
+    <string name="monthly">Kuukausittainen</string>
+    <string name="weekly">Viikottainen</string>
+    <string name="daily">Päivittäin</string>
+    <string name="settings">Asetukset</string>
+    <string name="action_cancel">Peruuta</string>
+</resources>

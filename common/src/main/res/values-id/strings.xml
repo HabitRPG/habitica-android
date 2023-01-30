@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">rb</string>
+    <string name="million_abbrev">jt</string>
+    <string name="billion_abbrev">mil</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="gems">Permata</string>
+    <string name="gold_plural">Koin Emas</string>
+    <string name="gold_capitalized">Emas</string>
+    <string name="mystic_hourglasses">Jam Pasir Mistik</string>
+    <string name="repeat_daily">Sehari-hari</string>
+    <string name="monthly">Bulanan</string>
+    <string name="weekly">Mingguan</string>
+    <string name="trivial">Trivial</string>
+    <string name="easy">Mudah</string>
+    <string name="medium">Sedang</string>
+    <string name="hard">Susah</string>
+    <string name="habits">Kebiasaan</string>
+    <string name="dailies">Keseharian</string>
+    <string name="todos">To Do</string>
+    <string name="rewards">Hadiah</string>
+    <string name="daily">Sehari-hari</string>
+    <string name="habit">Kebiasaan</string>
+    <string name="reward">Hadiah</string>
+    <string name="todo">To Do</string>
+    <string name="stats">Status</string>
+    <string name="settings">Pengaturan</string>
+    <string name="new_task">Tugas Baru</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level">Lvl %d</string>
+    <string name="user_level_long">Level %d</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_cancel">Batalkan Undangan</string>
+    <string name="login_btn">Masuk</string>
+    <string name="register_btn">Daftar</string>
+    <string name="username">Nama Pengguna</string>
+    <string name="password">Kata sandi</string>
+    <string name="emailAddress">Alamat Email</string>
+    <string name="confirmpassword">Konfirmasi kata sandi</string>
+    <string name="login_btn_google">Masuk melalui Google</string>
+    <string name="logout">Keluar</string>
+    <string name="logout_description">Keluar dari akunmu</string>
+    <string name="LoginActivityName">Selamat Datang</string>
+    <string name="about_title">Tentang</string>
+    <string name="login_validation_error_title">Validasi Gagal</string>
+    <string name="login_validation_error_fieldsmissing">Kamu harus mengisi semua kolom.</string>
+    <plurals name="x_rewards">
+        <item quantity="other">Tambah Hadiah</item>
+    </plurals>
+    <string name="create_task_title">Membuat Tugas</string>
+    <string name="complete_task_title">Menyelesaikan Tugas</string>
+    <string name="create_task">Membuat %s</string>
+    <string name="are_you_sure">Apakah kamu yakin\?</string>
+    <string name="task">Tugas</string>
+</resources>
