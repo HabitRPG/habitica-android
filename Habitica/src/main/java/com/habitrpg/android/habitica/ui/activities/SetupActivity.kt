@@ -31,10 +31,13 @@ import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
 import com.viewpagerindicator.IconPagerAdapter
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
@@ -66,10 +69,13 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         return binding.root
     }
 
+    @OptIn(FlowPreview::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.getUser().collect { onUserReceived(it) }
+            userRepository.getUser()
+                .debounce(500.milliseconds)
+                .collect { onUserReceived(it) }
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.retrieveUser(true, true)
@@ -142,7 +148,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 }
             }
         } else if (binding.viewPager.currentItem == 0) {
-
             confirmNames(welcomeFragment?.displayName ?: "", welcomeFragment?.username ?: "")
 
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -201,13 +206,15 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onPageScrollStateChanged(state: Int) = Unit
 
+
+    private var hasCompleted = false
     private fun onUserReceived(user: User?) {
-        if (completedSetup) {
+        if (completedSetup && !hasCompleted) {
             val additionalData = HashMap<String, Any>()
             additionalData["status"] = "completed"
             AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
-
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            hasCompleted = true
+            lifecycleScope.launchCatching {
                 userRepository.updateUser("flags.welcomed", true)
                 startMainActivity()
             }
