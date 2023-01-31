@@ -151,6 +151,11 @@ class TaskFormActivity : BaseActivity() {
 
     private var isDiscardCancelled: Boolean = false
     private var canSave: Boolean = false
+        set(value) {
+            if (field == value) return
+            field = value
+            invalidateOptionsMenu()
+        }
 
     private var tintColor: Int = 0
         set(value) {
@@ -449,9 +454,6 @@ class TaskFormActivity : BaseActivity() {
 
     private fun checkCanSave() {
         val newCanSave = binding.textEditText.text?.isNotBlank() == true
-        if (newCanSave != canSave) {
-            invalidateOptionsMenu()
-        }
         canSave = newCanSave
     }
 

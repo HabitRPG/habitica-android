@@ -422,7 +422,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 rightText = "-" + priceLabel.text
             )
             inventoryRepository.retrieveInAppRewards()
-            userRepository.retrieveUser()
+            userRepository.retrieveUser(forced = true)
             if (item.isTypeGear || item.currency == "hourglasses") {
                 onGearPurchased?.invoke(item)
             }
