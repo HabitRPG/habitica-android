@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.fragments.social
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -212,7 +213,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
         clipMan?.setPrimaryClip(messageText)
         val activity = getActivity() as? MainActivity
-        if (activity != null) {
+        if (activity != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
         }
     }

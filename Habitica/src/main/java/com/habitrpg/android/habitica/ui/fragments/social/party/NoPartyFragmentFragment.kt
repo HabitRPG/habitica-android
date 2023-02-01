@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -104,7 +105,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             val clip = ClipData.newPlainText(context?.getString(R.string.username), userViewModel.username)
             clipboard?.setPrimaryClip(clip)
             val activity = activity
-            if (activity != null) {
+            if (activity != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
                 HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
             }
         }

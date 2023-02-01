@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.SharedPreferences
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.Menu
@@ -211,11 +212,13 @@ class FullProfileActivity : BaseActivity() {
                     this.getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
                 val clip = ClipData.newPlainText(username, username)
                 clipboard?.setPrimaryClip(clip)
-                HabiticaSnackbar.showSnackbar(
-                    this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
-                    String.format(getString(R.string.username_copied), userDisplayName),
-                    SnackbarDisplayType.NORMAL
-                )
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+                    HabiticaSnackbar.showSnackbar(
+                        this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
+                        String.format(getString(R.string.username_copied), userDisplayName),
+                        SnackbarDisplayType.NORMAL
+                    )
+                }
                 true
             }
             R.id.copy_userid -> {
@@ -223,11 +226,13 @@ class FullProfileActivity : BaseActivity() {
                     this.getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
                 val clip = ClipData.newPlainText(userID, userID)
                 clipboard?.setPrimaryClip(clip)
-                HabiticaSnackbar.showSnackbar(
-                    this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
-                    String.format(getString(R.string.id_copied), userDisplayName),
-                    SnackbarDisplayType.NORMAL
-                )
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+                    HabiticaSnackbar.showSnackbar(
+                        this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
+                        String.format(getString(R.string.id_copied), userDisplayName),
+                        SnackbarDisplayType.NORMAL
+                    )
+                }
                 true
             }
             R.id.block_user -> {

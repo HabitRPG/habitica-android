@@ -6,6 +6,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -500,10 +501,12 @@ class AccountPreferenceFragment :
     private fun copyValue(name: String, value: CharSequence?) {
         val clipboard: ClipboardManager? = context?.let { getSystemService(it, ClipboardManager::class.java) }
         clipboard?.setPrimaryClip(ClipData.newPlainText(name, value))
-        (activity as? SnackbarActivity)?.showSnackbar(
-            content = context?.getString(R.string.copied_to_clipboard, name),
-            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
-        )
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            (activity as? SnackbarActivity)?.showSnackbar(
+                content = context?.getString(R.string.copied_to_clipboard, name),
+                displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+            )
+        }
     }
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
