@@ -11,8 +11,6 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.MainScope
-import java.io.IOException
-import java.util.concurrent.ExecutionException
 
 class PushNotificationManager(
     var apiClient: ApiClient,
@@ -53,15 +51,17 @@ class PushNotificationManager(
         if (refreshedToken.isNotBlank()) {
             addRefreshToken()
         } else {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener {
-                try {
-                    refreshedToken = it.result
-                    addRefreshToken()
-                } catch (_: IOException) {
-                    // This can happen during google test runs
-                } catch (_: ExecutionException) {
-                    // catchy catch
+            try {
+                FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                    try {
+                        refreshedToken = it.result
+                        addRefreshToken()
+                    } catch (_: Exception) {
+                        // catchy catch
+                    }
                 }
+            } catch (_: Exception) {
+                // catchy catch
             }
         }
     }

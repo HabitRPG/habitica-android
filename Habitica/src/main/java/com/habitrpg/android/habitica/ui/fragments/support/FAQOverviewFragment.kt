@@ -80,6 +80,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         lifecycleScope.launchCatching {
             faqRepository.getArticles().collect {
                 val context = context ?: return@collect
+                if (binding?.faqLinearLayout == null) return@collect
                 for (article in it) {
                     val binding = SupportFaqItemBinding.inflate(
                         context.layoutInflater,
