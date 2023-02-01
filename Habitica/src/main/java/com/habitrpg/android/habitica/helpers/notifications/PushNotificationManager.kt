@@ -11,6 +11,7 @@ import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.MainScope
+import java.io.IOException
 
 class PushNotificationManager(
     var apiClient: ApiClient,
@@ -56,8 +57,10 @@ class PushNotificationManager(
                     try {
                         refreshedToken = it.result
                         addRefreshToken()
-                    } catch (_: Exception) {
-                        // catchy catch
+                    } catch (_: IOException) {
+                        // catchy catch-catch
+                    } catch (_: Exception){
+                        // catchy catch-catch-cat, I'm out of breath.
                     }
                 }
             } catch (_: Exception) {
