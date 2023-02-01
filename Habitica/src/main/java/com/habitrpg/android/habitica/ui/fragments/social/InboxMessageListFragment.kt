@@ -11,7 +11,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -226,16 +225,17 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {
         val context = context
         if (context != null) {
-            AlertDialog.Builder(context)
-                .setTitle(R.string.confirm_delete_tag_title)
-                .setMessage(R.string.confirm_delete_tag_message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(R.string.yes) { _, _ ->
-                    lifecycleScope.launchCatching {
-                        socialRepository.deleteMessage(chatMessage)
-                    }
+            val dialog = HabiticaAlertDialog(context)
+            dialog.setTitle(R.string.confirm_delete_tag_title)
+                dialog.setMessage(R.string.confirm_delete_tag_message)
+            dialog.addButton(R.string.yes, true, true) { _, _ ->
+                lifecycleScope.launchCatching {
+                    socialRepository.deleteMessage(chatMessage)
+                    viewModel.invalidateDataSource()
                 }
-                .setNegativeButton(R.string.no, null).show()
+            }
+            dialog.addButton(R.string.no, false)
+            dialog.show()
         }
     }
 
