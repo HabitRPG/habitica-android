@@ -9,6 +9,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
+import android.util.Log
 import android.widget.TextView
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.handleUrlClicks
@@ -28,7 +29,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Integer.min
 import java.lang.NullPointerException
+import kotlin.system.measureNanoTime
+import kotlin.system.measureTimeMillis
 
 object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
@@ -124,8 +128,11 @@ object MarkdownParser {
     }
 
     fun hasCached(input: String?): Boolean {
+        if (input == null) {
+            return false
+        }
         return try {
-            cache.containsKey(input?.hashCode())
+            cache.containsKey(input.hashCode())
         } catch (_: NullPointerException) {
             false
         }
@@ -139,6 +146,11 @@ object MarkdownParser {
      */
     fun parseCompiled(input: CharSequence): String? {
         return EmojiParser.convertToCheatCode(input.toString())
+    }
+
+    private val markdownRegex = ".*[\\*#_\\[].*".toRegex()
+    fun containsMarkdown(text: String): Boolean {
+        return text.matches(markdownRegex)
     }
 }
 

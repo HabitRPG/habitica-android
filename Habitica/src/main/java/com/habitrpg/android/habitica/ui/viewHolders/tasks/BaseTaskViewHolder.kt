@@ -53,11 +53,13 @@ abstract class BaseTaskViewHolder constructor(
     private val iconViewChallenge: ImageView? = itemView.findViewById(R.id.iconviewChallenge)
     private val iconViewReminder: ImageView? = itemView.findViewById(R.id.iconviewReminder)
     private val taskIconWrapper: LinearLayout? = itemView.findViewById(R.id.taskIconWrapper)
-    private val approvalRequiredTextView: TextView = itemView.findViewById(R.id.approvalRequiredTextField)
+    private val approvalRequiredTextView: TextView =
+        itemView.findViewById(R.id.approvalRequiredTextField)
     private val expandNotesButton: Button? = itemView.findViewById(R.id.expand_notes_button)
     private val syncingView: ProgressBar? = itemView.findViewById(R.id.syncing_view)
     private val errorIconView: ImageButton? = itemView.findViewById(R.id.error_icon)
-    protected val taskGray: Int = ContextCompat.getColor(itemView.context, R.color.offset_background)
+    protected val taskGray: Int =
+        ContextCompat.getColor(itemView.context, R.color.offset_background)
     protected val streakIconView: ImageView = itemView.findViewById(R.id.iconViewStreak)
     protected val streakTextView: TextView = itemView.findViewById(R.id.streakTextView)
     protected val reminderTextView: TextView = itemView.findViewById(R.id.reminder_textview)
@@ -115,7 +117,8 @@ abstract class BaseTaskViewHolder constructor(
                     if (ellipses && notesTextView.maxLines != 3) {
                         notesTextView.maxLines = 3
                     }
-                    expandNotesButton?.visibility = if (ellipses || notesExpanded) View.VISIBLE else View.GONE
+                    expandNotesButton?.visibility =
+                        if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                 }
             }
         })
@@ -158,78 +161,58 @@ abstract class BaseTaskViewHolder constructor(
             notesTextView?.visibility = View.GONE
         }
 
-        if (canContainMarkdown()) {
-            if (data.parsedText != null) {
-                titleTextView.setParsedMarkdown(data.parsedText)
-            } else if (MarkdownParser.hasCached(data.text)) {
-                titleTextView.setParsedMarkdown(MarkdownParser.parseMarkdown(data.text))
-            } else {
-                titleTextView.text = data.text
-                if (data.text.isNotEmpty()) {
-                    scope.launch(Dispatchers.IO) {
-                        val parsedText = MarkdownParser.parseMarkdown(data.text)
-                        withContext(Dispatchers.Main) {
-                            data.parsedText = parsedText
-                            titleTextView.setParsedMarkdown(parsedText)
-                        }
-                    }
+        titleTextView.text = data.text
+        scope.launch(Dispatchers.IO) {
+            if (data.text.isNotEmpty() && MarkdownParser.containsMarkdown(data.text)) {
+                val parsedText = MarkdownParser.parseMarkdown(data.text)
+                withContext(Dispatchers.Main) {
+                    data.parsedText = parsedText
+                    titleTextView.setParsedMarkdown(parsedText)
                 }
             }
-            if (displayMode != "minimal") {
-                when {
-                    data.parsedNotes != null -> {
-                        notesTextView?.setParsedMarkdown(data.parsedNotes)
+        }
+        if (displayMode != "minimal") {
+            notesTextView?.text = data.notes
+            data.notes?.let { notes ->
+                scope.launch(Dispatchers.IO) {
+                    if (notes.isEmpty() || !MarkdownParser.containsMarkdown(notes)) {
+                        return@launch
                     }
-                    MarkdownParser.hasCached(data.notes) -> {
-                        notesTextView?.setParsedMarkdown(MarkdownParser.parseMarkdown(data.notes))
-                    }
-                    else -> {
-                        notesTextView?.text = data.notes
-                        data.notes?.let { notes ->
-                            if (notes.isEmpty()) {
-                                return@let
-                            }
-                            scope.launch(Dispatchers.IO) {
-                                val parsedNotes = MarkdownParser.parseMarkdown(notes)
-                                withContext(Dispatchers.Main) {
-                                    data.parsedNotes = parsedNotes
-                                    notesTextView?.setParsedMarkdown(parsedNotes)
-                                }
-                            }
-                        }
+                    val parsedNotes = MarkdownParser.parseMarkdown(notes)
+                    withContext(Dispatchers.Main) {
+                        data.parsedNotes = parsedNotes
+                        notesTextView?.setParsedMarkdown(parsedNotes)
                     }
                 }
-            } else {
-                notesTextView?.visibility = View.GONE
             }
         } else {
-            titleTextView.text = data.text
-            if (displayMode != "minimal") {
-                notesTextView?.text = data.notes
-            } else {
-                notesTextView?.visibility = View.GONE
-            }
+            notesTextView?.visibility = View.GONE
         }
         titleTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
 
         if (displayMode == "standard") {
-            iconViewReminder?.visibility = if ((data.reminders?.size ?: 0) > 0) View.VISIBLE else View.GONE
+            iconViewReminder?.visibility =
+                if ((data.reminders?.size ?: 0) > 0) View.VISIBLE else View.GONE
 
-            iconViewChallenge?.visibility = if (task?.challengeID != null) View.VISIBLE else View.GONE
+            iconViewChallenge?.visibility =
+                if (task?.challengeID != null) View.VISIBLE else View.GONE
             if (task?.challengeID != null) {
                 if (task?.challengeBroken?.isNotBlank() == true) {
                     iconViewChallenge?.alpha = 1.0f
-                    iconViewChallenge?.imageTintList = ContextCompat.getColorStateList(context, R.color.white)
+                    iconViewChallenge?.imageTintList =
+                        ContextCompat.getColorStateList(context, R.color.white)
                     iconViewChallenge?.setImageResource(R.drawable.task_broken_megaphone)
                 } else {
                     iconViewChallenge?.alpha = 0.3f
-                    iconViewChallenge?.imageTintList = ContextCompat.getColorStateList(context, R.color.text_ternary)
+                    iconViewChallenge?.imageTintList =
+                        ContextCompat.getColorStateList(context, R.color.text_ternary)
                     iconViewChallenge?.setImageResource(R.drawable.task_megaphone)
                 }
             }
             configureSpecialTaskTextView(data)
 
-            iconViewTeam?.visibility = if (data.isGroupTask && ownerID != data.group?.groupID) View.VISIBLE else View.GONE
+            iconViewTeam?.visibility =
+                if (data.isGroupTask && ownerID != data.group?.groupID) View.VISIBLE else View.GONE
 
             taskIconWrapper?.visibility = if (taskIconWrapperIsVisible) View.VISIBLE else View.GONE
         } else {
@@ -244,7 +227,10 @@ abstract class BaseTaskViewHolder constructor(
         }
 
         if (data.group?.assignedUsers?.isNotEmpty() == true) {
-            assignedTextView.text = assignedTextProvider?.assignedTextForTask(context.resources, data.group?.assignedUsers ?: emptyList())
+            assignedTextView.text = assignedTextProvider?.assignedTextForTask(
+                context.resources,
+                data.group?.assignedUsers ?: emptyList()
+            )
             assignedTextView.visibility = View.VISIBLE
         } else {
             assignedTextView.visibility = View.GONE
@@ -252,7 +238,8 @@ abstract class BaseTaskViewHolder constructor(
 
         val completedCount = data.group?.assignedUsersDetail?.filter { it.completed }?.size ?: 0
         if (completedCount > 0) {
-            completedCountTextView.text = "$completedCount/${data?.group?.assignedUsersDetail?.size}"
+            completedCountTextView.text =
+                "$completedCount/${data?.group?.assignedUsersDetail?.size}"
             completedCountTextView.visibility = View.VISIBLE
         } else {
             completedCountTextView.visibility = View.GONE
@@ -307,10 +294,6 @@ abstract class BaseTaskViewHolder constructor(
             }
         }
         task?.let { openTaskFunc(Pair(it, mainTaskWrapper)) }
-        return true
-    }
-
-    open fun canContainMarkdown(): Boolean {
         return true
     }
 
