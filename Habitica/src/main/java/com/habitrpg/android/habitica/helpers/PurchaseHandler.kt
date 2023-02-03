@@ -75,7 +75,7 @@ class PurchaseHandler(
                             purchase.products.firstOrNull()
                         )
                     ) {
-                        if ((plan.additionalData?.data?.orderId == purchase.orderId && ((plan.dateTerminated != null) == purchase.isAutoRenewing)) || mostRecentSub?.orderId != purchase.orderId) {
+                        if (((plan.dateTerminated != null) == purchase.isAutoRenewing) || mostRecentSub?.orderId != purchase.orderId) {
                             return
                         }
                     }
@@ -123,7 +123,8 @@ class PurchaseHandler(
     fun startListening() {
         if (billingClient.connectionState == BillingClient.ConnectionState.CONNECTING
             || billingClient.connectionState == BillingClient.ConnectionState.CONNECTED
-            || billingClientState == BillingClientState.UNAVAILABLE) {
+            || billingClientState == BillingClientState.UNAVAILABLE
+        ) {
             // Don't connect again if it's already connected
             return
         }
@@ -209,8 +210,8 @@ class PurchaseHandler(
             billingClientState.canMaybePurchase && billingClient.isReady
         }
         val params = QueryProductDetailsParams.newBuilder().setProductList(skus.map {
-                Product.newBuilder().setProductId(it).setProductType(type).build()
-            }).build()
+            Product.newBuilder().setProductId(it).setProductType(type).build()
+        }).build()
         val skuDetailsResult = withContext(Dispatchers.IO) {
             billingClient.queryProductDetails(params)
         }
@@ -230,11 +231,11 @@ class PurchaseHandler(
         }
         val flowParams =
             BillingFlowParams.newBuilder().setProductDetailsParamsList(listOf(skuDetails).map {
-                    BillingFlowParams.ProductDetailsParams.newBuilder()
-                        .setProductDetails(skuDetails).setOfferToken(
-                            skuDetails.subscriptionOfferDetails?.first()?.offerToken ?: ""
-                        ).build()
-                }).build()
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(skuDetails).setOfferToken(
+                        skuDetails.subscriptionOfferDetails?.first()?.offerToken ?: ""
+                    ).build()
+            }).build()
         billingClient.launchBillingFlow(activity, flowParams)
     }
 

@@ -45,9 +45,6 @@ import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
-    if (endDate.before(Date())) {
-        return
-    }
     Column(
         modifier
             .fillMaxWidth()

@@ -2,7 +2,7 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -55,10 +55,10 @@ fun LabeledBar(
 ) {
     val cleanedMaxValue = java.lang.Double.max(1.0, maxValue)
 
-    val animatedValue = if (animated) animateIntAsState(
-        targetValue = value.toInt(),
+    val animatedValue = if (animated) animateFloatAsState(
+        targetValue = value.toFloat(),
         animationSpec = spring()
-    ).value else value.toInt()
+    ).value else value.toFloat()
     val formatter = NumberFormat.getNumberInstance()
     formatter.minimumFractionDigits = 0
     formatter.maximumFractionDigits = 2
@@ -93,7 +93,7 @@ fun LabeledBar(
                     if (!disabled) {
                         val currentValueText = if (abbreviateValue) NumberAbbreviator.abbreviate(
                             LocalContext.current,
-                            animatedValue.toFloat(),
+                            animatedValue,
                             0
                         ) else formatter.format(animatedValue)
                         val maxValueText = if (abbreviateMax) NumberAbbreviator.abbreviate(

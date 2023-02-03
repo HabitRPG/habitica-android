@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.views.promo.PromoMenuViewHolder
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoView
 import com.habitrpg.android.habitica.ui.views.promo.SubscriptionBuyGemsPromoViewHolder
 import com.habitrpg.common.habitica.extensions.dpToPx
+import java.util.Date
 
 class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -64,7 +65,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
     fun updateItem(item: HabiticaDrawerItem) {
         val position = getItemPosition(item.identifier)
         items[position] = item
-        notifyDataSetChanged()
+        val visiblePosition = getVisibleItemPosition(item.identifier)
+        notifyItemChanged(visiblePosition)
     }
 
     fun updateItems(newItems: List<HabiticaDrawerItem>) {
@@ -97,6 +99,9 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
             getItemViewType(position) == 6 -> {
                 currentEvent?.end?.let {
                     (holder.itemView as? ComposeView)?.setContent {
+                        if (it.before(Date())) {
+                            return@setContent
+                        }
                         BirthdayBanner(it)
                     }
                 }
@@ -105,6 +110,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
     }
 
     private fun getItem(position: Int) = items.filter { it.isVisible }[position]
+
 
     override fun getItemCount(): Int = items.count { it.isVisible }
 
