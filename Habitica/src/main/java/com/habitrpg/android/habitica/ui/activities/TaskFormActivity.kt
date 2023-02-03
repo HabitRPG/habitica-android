@@ -43,7 +43,6 @@ import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
-import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.android.habitica.models.members.Member
@@ -216,7 +215,7 @@ class TaskFormActivity : BaseActivity() {
         taskType = TaskType.from(bundle.getString(TASK_TYPE_KEY)) ?: TaskType.HABIT
         preselectedTags = bundle.getStringArrayList(SELECTED_TAGS_KEY)
 
-        lifecycleScope.launchCatching {
+        lifecycleScope.launch(Dispatchers.Main) {
             tagRepository.getTags()
                 .map { tagRepository.getUnmanagedCopy(it) }
                 .collect {
@@ -266,7 +265,7 @@ class TaskFormActivity : BaseActivity() {
                         },
                         {
                             taskCompletedMap.remove(it)
-                            lifecycleScope.launchCatching {
+                            lifecycleScope.launch(Dispatchers.Main) {
                                 task?.let { it1 -> taskRepository.markTaskNeedsWork(it1, it) }
                             }
                         },
@@ -275,7 +274,7 @@ class TaskFormActivity : BaseActivity() {
                 }
             }
 
-            lifecycleScope.launchCatching {
+            lifecycleScope.launch(Dispatchers.Main) {
                 socialRepository.getGroupMembers(groupID ?: "").collect {
                     groupMembers = it
                 }
@@ -300,9 +299,8 @@ class TaskFormActivity : BaseActivity() {
                     initialTaskInstance = task
                     fillForm(task)
                     task.challengeID?.let { challengeID ->
-                        lifecycleScope.launchCatching {
-                            val challenge = challengeRepository.retrieveChallenge(challengeID)
-                                ?: return@launchCatching
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            val challenge = challengeRepository.retrieveChallenge(challengeID) ?: return@launch
                             this@TaskFormActivity.challenge = challenge
                             binding.challengeNameView.text =
                                 getString(R.string.challenge_task_name, challenge.name)
@@ -770,7 +768,7 @@ class TaskFormActivity : BaseActivity() {
         alert.addButton(R.string.delete_task, true) { _, _ ->
             if (task?.isValid != true) return@addButton
             task?.id?.let {
-                lifecycleScope.launchCatching {
+                lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.deleteTask(it)
                 }
             }
@@ -796,9 +794,9 @@ class TaskFormActivity : BaseActivity() {
     }
 
     private fun showChallengeDeleteTask() {
-        lifecycleScope.launchCatching {
+        lifecycleScope.launch(Dispatchers.Main) {
             val tasks = taskRepository.getTasksForChallenge(task?.challengeID).firstOrNull()
-                ?: return@launchCatching
+                ?: return@launch
             val taskCount = tasks.size
             val alert = HabiticaAlertDialog(this@TaskFormActivity)
             alert.setTitle(getString(R.string.delete_challenge_task_title))
@@ -815,7 +813,7 @@ class TaskFormActivity : BaseActivity() {
                 isDestructive = true
             ) { _, _ ->
                 challenge?.let {
-                    lifecycleScope.launchCatching {
+                    lifecycleScope.launch(Dispatchers.Main) {
                         challengeRepository.leaveChallenge(it, "keep-all")
                         taskRepository.deleteTask(task?.id ?: "")
                         userRepository.retrieveUser(true, true)
@@ -828,7 +826,7 @@ class TaskFormActivity : BaseActivity() {
                 isDestructive = true
             ) { _, _ ->
                 challenge?.let {
-                    lifecycleScope.launchCatching {
+                    lifecycleScope.launch(Dispatchers.Main) {
                         challengeRepository.leaveChallenge(it, "remove-all")
                         userRepository.retrieveUser(true, true)
                     }
@@ -844,9 +842,9 @@ class TaskFormActivity : BaseActivity() {
         if (!task.isValid) {
             return
         }
-        lifecycleScope.launchCatching {
+        lifecycleScope.launch(Dispatchers.Main) {
             val tasks = taskRepository.getTasksForChallenge(task.challengeID).firstOrNull()
-                ?: return@launchCatching
+                ?: return@launch
             val taskCount = tasks.size
             val dialog = HabiticaAlertDialog(this@TaskFormActivity)
             dialog.setTitle(R.string.broken_challenge)
@@ -860,7 +858,7 @@ class TaskFormActivity : BaseActivity() {
                 getString(R.string.keep_x_tasks, taskCount),
                 true
             ) { _, _ ->
-                lifecycleScope.launchCatching {
+                lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
                     userRepository.retrieveUser(true, true)
                 }
@@ -870,8 +868,7 @@ class TaskFormActivity : BaseActivity() {
                 false,
                 true
             ) { _, _ ->
-                lifecycleScope.launchCatching {
-
+                lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
                     userRepository.retrieveUser(true, true)
                 }
