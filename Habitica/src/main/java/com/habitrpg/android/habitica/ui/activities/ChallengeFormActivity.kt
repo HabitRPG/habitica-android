@@ -386,7 +386,7 @@ class ChallengeFormActivity : BaseActivity() {
         taskList.add(addReward)
 
         challengeTasks.setTasks(taskList)
-        challengeTasks.onTaskOpen = { t ->
+        challengeTasks.onAddItem = { t ->
             when (t.text) {
                 addHabit.text -> openNewTaskActivity(TaskType.HABIT, null)
                 addDaily.text -> openNewTaskActivity(TaskType.DAILY, null)
