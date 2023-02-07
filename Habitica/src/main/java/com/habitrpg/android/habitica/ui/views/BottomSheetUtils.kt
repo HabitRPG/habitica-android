@@ -77,9 +77,9 @@ private fun BottomSheetWrapper(
     var isSheetOpened by remember { mutableStateOf(false) }
 
     val systemUiController = rememberSystemUiController()
-    val statusBarColor = colorResource(R.color.content_background).copy(alpha = 0.3f)
+    val statusBarColor = colorResource(R.color.content_background)
     DisposableEffect(systemUiController) {
-        systemUiController.setStatusBarColor(statusBarColor, darkIcons = true)
+        systemUiController.setStatusBarColor(statusBarColor.copy(alpha = 0.3f), darkIcons = true)
         onDispose {}
     }
 
@@ -132,7 +132,10 @@ private fun BottomSheetWrapper(
         when (modalBottomSheetState.currentValue) {
             ModalBottomSheetValue.Hidden -> {
                 when {
-                    isSheetOpened -> parent.removeView(composeView)
+                    isSheetOpened -> {
+                        systemUiController.setStatusBarColor(statusBarColor, darkIcons = false)
+                        parent.removeView(composeView)
+                    }
                     else -> {
                         isSheetOpened = true
                         modalBottomSheetState.show()
