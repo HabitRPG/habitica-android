@@ -221,6 +221,7 @@
         <item>https://habitrpg-beta.herokuapp.com</item>
         <item>https://habitrpg-gamma.herokuapp.com</item>
         <item>https://habitrpg-delta.herokuapp.com</item>
+        <item>https://habitica-subs.herokuapp.com</item>
     </string-array>
 
     <string-array name="task_list_modes">
