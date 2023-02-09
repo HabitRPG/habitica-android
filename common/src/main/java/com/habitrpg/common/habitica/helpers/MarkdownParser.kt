@@ -148,7 +148,7 @@ object MarkdownParser {
         return EmojiParser.convertToCheatCode(input.toString())
     }
 
-    private val markdownRegex = ".*[\\*#_\\[].*".toRegex()
+    private val markdownRegex = ".*[*#_\\[`~].*".toRegex()
     fun containsMarkdown(text: String): Boolean {
         return text.matches(markdownRegex)
     }
