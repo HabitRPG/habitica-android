@@ -37,10 +37,17 @@ class UserTest : WordSpec({
             user.hasClass shouldBe false
         }
 
+        "false if user is below level 10" {
+            user.flags?.classSelected = true
+            user.stats?.habitClass = Stats.ROGUE
+            user.stats?.lvl = 9
+            user.hasClass shouldBe false
+        }
+
         "true if class was selected and not disabled" {
             user.flags?.classSelected = true
-            user.preferences?.disableClasses = false
             user.stats?.habitClass = Stats.ROGUE
+            user.stats?.lvl = 10
             user.hasClass shouldBe true
         }
     }

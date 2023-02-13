@@ -20,7 +20,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -264,16 +263,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     showAsBottomSheet { onClose ->
                         val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
                         val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
-                        GroupPlanMemberList(members, group, {
+                        GroupPlanMemberList(members, group) {
                             onClose()
                             FullProfileActivity.open(it)
-                        }, { member ->
-                            onClose()
-                            MainNavigationController.navigate(
-                                R.id.inboxMessageListFragment,
-                                bundleOf(Pair("username", member.username), Pair("userID", member.id))
-                            )
-                        })
+                        }
                     }
                 }
             }

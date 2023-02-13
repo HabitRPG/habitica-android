@@ -163,6 +163,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     fun leaveGroup(
         groupChallenges: List<Challenge>,
         keepChallenges: Boolean = true,
+        function: (() -> Unit)? = null
     ) {
         if (!keepChallenges) {
             viewModelScope.launchCatching {
@@ -174,6 +175,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             socialRepository.leaveGroup(groupID ?: "", keepChallenges)
             userRepository.retrieveUser(withTasks = false, forced = true)
+            function?.invoke()
         }
     }
 

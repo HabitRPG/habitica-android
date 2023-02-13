@@ -38,6 +38,37 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     namespace 'com.habitrpg.common.habitica'
+
+    flavorDimensions "buildType"
+
+    productFlavors {
+        dev {
+            dimension "buildType"
+        }
+
+        staff {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"staff\""
+        }
+
+        partners {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"partners\""
+        }
+
+        alpha {
+            dimension "buildType"
+            buildConfigField "String", "TESTING_LEVEL", "\"alpha\""
+        }
+
+        beta {
+            buildConfigField "String", "TESTING_LEVEL", "\"beta\""
+        }
+
+        prod {
+            buildConfigField "String", "TESTING_LEVEL", "\"production\""
+        }
+    }
 }
 
 dependencies {
@@ -57,11 +88,21 @@ dependencies {
     implementation("io.coil-kt:coil:$coil_version")
     implementation("io.coil-kt:coil-gif:$coil_version")
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "io.mockk:mockk-android:$mockk_version"
+    testImplementation "io.kotest:kotest-runner-junit5:$kotest_version"
+    testImplementation "io.kotest:kotest-assertions-core:$kotest_version"
+    testImplementation "io.kotest:kotest-framework-datatest:$kotest_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation project(':shared')
+}
+
+android.testOptions {
+    unitTests.all {
+        it.useJUnitPlatform()
+    }
 }
 
 // Add Habitica Properties to buildConfigField

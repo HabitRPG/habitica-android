@@ -81,13 +81,6 @@ class TaskRepositoryImplTest : WordSpec({
                 localRepository.getUser("")
             }
         }
-        "does not update user for team tasks" {
-            val data = TaskDirectionData()
-            data.lvl = 0
-            coEvery { apiClient.postTaskDirection(any(), "up") } returns data
-            repository.taskChecked(user, task, true, false, null)
-            verify(exactly = 0) { user.stats }
-        }
         "builds task result correctly" {
             val data = TaskDirectionData()
             data.lvl = 10

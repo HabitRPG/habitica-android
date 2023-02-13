@@ -23,6 +23,6 @@ sealed class NetworkResult<out T : Any> {
     val isError: Boolean
         get() = this is Error
 
-    data class Success<out T : Any>(val data: T, val isFresh: Boolean) : NetworkResult<T>()
-    data class Error(val exception: Exception, val isFresh: Boolean) : NetworkResult<Nothing>()
+    data class Success<out T : Any>(val data: T, internal val isFresh: Boolean) : NetworkResult<T>()
+    data class Error(val exception: Exception, internal val isFresh: Boolean) : NetworkResult<Nothing>()
 }

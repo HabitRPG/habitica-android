@@ -17,6 +17,7 @@ import com.habitrpg.wearos.habitica.ui.adapters.HubAdapter
 import com.habitrpg.wearos.habitica.ui.viewmodels.MainViewModel
 import com.habitrpg.wearos.habitica.util.HabiticaScrollingLayoutCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -111,12 +112,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 openSettingsActivity()
             }
         )
-        viewModel.user.observe(this) { user ->
-            adapter.title = user.profile?.name ?: ""
-            val index = adapter.data.indexOfFirst { it.identifier == "stats" }
-            adapter.data[index].detailText = getString(R.string.user_level, user.stats?.lvl ?: 0)
-            adapter.notifyItemChanged(index + 1)
+        lifecycleScope.launch {
+            viewModel.user
+                .filterNotNull()
+                .collect { user ->
+                adapter.title = user.profile?.name ?: ""
+                val index = adapter.data.indexOfFirst { it.identifier == "stats" }
+                adapter.data[index].detailText = getString(R.string.user_level, user.stats?.lvl ?: 0)
+                adapter.notifyItemChanged(index + 1)
+            }
         }
+
         viewModel.taskCounts.observe(this) {
             adapter.data.forEach { menuItem ->
                 if (it.containsKey(menuItem.identifier)) {

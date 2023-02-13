@@ -40,7 +40,8 @@ import kotlin.random.Random
 fun GroupPlanMemberList(
     members: List<Member>?,
     group: Group?,
-    onMemberClicked: (String) -> Unit) {
+    onMemberClicked: (String) -> Unit
+) {
     LazyColumn {
         item {
             Text(

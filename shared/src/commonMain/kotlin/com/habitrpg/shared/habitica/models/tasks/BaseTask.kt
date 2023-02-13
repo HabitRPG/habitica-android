@@ -1,7 +1,6 @@
 package com.habitrpg.shared.habitica.models.tasks
 
 interface BaseTask {
-
     val completed: Boolean
     var type: TaskType?
     var isDue: Boolean?

@@ -28,5 +28,5 @@ class MainViewModel @Inject constructor(
     }
 
     val taskCounts = taskRepository.getActiveTaskCounts().asLiveData()
-    val user = userRepository.getUser().asLiveData()
+    val user = userRepository.getUser()
 }

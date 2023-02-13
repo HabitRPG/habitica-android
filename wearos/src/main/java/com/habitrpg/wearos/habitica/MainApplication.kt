@@ -20,6 +20,7 @@ import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,6 +41,7 @@ class MainApplication : Application() {
 
         MainScope().launch {
             userRepository.getUser()
+                .filterNotNull()
                 .onEach {
                     if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
                         val intent = Intent(this@MainApplication, FaintActivity::class.java)

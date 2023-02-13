@@ -6,10 +6,13 @@ import android.view.Gravity
 import android.view.ViewOutlineProvider
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.databinding.ActivityAvatarBinding
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.wearos.habitica.ui.viewmodels.AvatarViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import java.lang.Integer.max
 import kotlin.math.roundToInt
 
@@ -21,8 +24,10 @@ class AvatarActivity : BaseActivity<ActivityAvatarBinding, AvatarViewModel>() {
         binding = ActivityAvatarBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
-        viewModel.user.observe(this) {
-            binding.avatarView.setAvatar(it)
+        lifecycleScope.launch {
+            viewModel.user.filterNotNull().collect {
+                binding.avatarView.setAvatar(it)
+            }
         }
     }
 

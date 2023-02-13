@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
-import com.habitrpg.android.habitica.extensions.fromHtml
+import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.shops.Shop

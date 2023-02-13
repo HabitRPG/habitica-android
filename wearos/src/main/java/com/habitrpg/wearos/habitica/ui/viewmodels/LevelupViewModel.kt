@@ -17,6 +17,6 @@ class LevelupViewModel @Inject constructor(
     appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     val level = userRepository.getUser()
-        .map { it.stats?.lvl }
+        .map { it?.stats?.lvl }
         .asLiveData()
 }
