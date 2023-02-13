@@ -41,17 +41,17 @@ class MainApplication : Application() {
         MainScope().launch {
             userRepository.getUser()
                 .onEach {
-                if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
-                    val intent = Intent(this@MainApplication, FaintActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name && BaseActivity.currentActivityClassName != LoginActivity::class.java.name) {
-                    val intent = Intent(this@MainApplication, RYAActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                }
+                    if (it.isDead && BaseActivity.currentActivityClassName == MainActivity::class.java.name) {
+                        val intent = Intent(this@MainApplication, FaintActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    } else if (it.needsCron && BaseActivity.currentActivityClassName != RYAActivity::class.java.name && BaseActivity.currentActivityClassName != LoginActivity::class.java.name) {
+                        val intent = Intent(this@MainApplication, RYAActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }
                     delay(1.toDuration(DurationUnit.SECONDS))
-            }.collect()
+                }.collect()
         }
 
         logLaunch()

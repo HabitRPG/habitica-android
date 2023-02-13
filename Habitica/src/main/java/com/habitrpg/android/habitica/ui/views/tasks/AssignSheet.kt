@@ -93,8 +93,9 @@ fun AssignSheetRow(
                 color = colorResource(R.color.text_ternary)
             )
         }, endContent = {
-            IsAssignedIndicator(isAssigned = isAssigned)
-        }, modifier = modifier
+        IsAssignedIndicator(isAssigned = isAssigned)
+    },
+        modifier = modifier
             .clickable {
                 member.id?.let { onAssignClick(it) }
             }
@@ -112,22 +113,26 @@ private fun IsAssignedIndicator(
     val transition = updateTransition(isAssigned, label = "isAssigned")
     val rotation = transition.animateFloat(
         label = "isAssigned",
-        transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow) }) {
+        transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow) }
+    ) {
         if (it) 0f else 135f
     }
     val backgroundColor = transition.animateColor(
         label = "isAssigned",
-        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }) {
+        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }
+    ) {
         if (it) MaterialTheme.colors.primary else colorResource(id = R.color.transparent)
     }
     val color = transition.animateColor(
         label = "isAssigned",
-        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }) {
+        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }
+    ) {
         colorResource(if (it) R.color.white else R.color.text_dimmed)
     }
     val borderColor = transition.animateColor(
         label = "isAssigned",
-        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }) {
+        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }
+    ) {
         if (it) MaterialTheme.colors.primary else colorResource(id = R.color.text_dimmed)
     }
     Image(

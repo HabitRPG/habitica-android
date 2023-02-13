@@ -4,10 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -40,7 +38,6 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import kotlinx.coroutines.launch
 import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -96,12 +93,12 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         lifecycleScope.launchCatching {
             notificationsManager.displayNotificationEvents.collect {
-                    if (ShowNotificationInteractor(this@BaseActivity, lifecycleScope).handleNotification(it)) {
-                        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                            userRepository.retrieveUser(false, true)
-                        }
+                if (ShowNotificationInteractor(this@BaseActivity, lifecycleScope).handleNotification(it)) {
+                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                        userRepository.retrieveUser(false, true)
                     }
                 }
+            }
         }
     }
 

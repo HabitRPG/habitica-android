@@ -22,7 +22,8 @@ class RYAViewModel @Inject constructor(
     userRepository: UserRepository,
     taskRepository: TaskRepository,
     val sharedPreferences: SharedPreferences,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     var hasRunCron: Boolean = false
     val tasks = MutableLiveData<List<Task>>()
@@ -53,7 +54,7 @@ class RYAViewModel @Inject constructor(
     }
 
     fun runCron(function: (Boolean) -> Unit) {
-        //Clear shared pref values for saved to-do tasks
+        // Clear shared pref values for saved to-do tasks
         sharedPreferences.edit { putString("to_do_tasks", null) }
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             appStateManager.startLoading()

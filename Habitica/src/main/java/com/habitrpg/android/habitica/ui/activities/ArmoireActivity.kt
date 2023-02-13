@@ -214,7 +214,7 @@ class ArmoireActivity : BaseActivity() {
             }
             else -> {
                 @SuppressLint("SetTextI18n")
-                binding.titleView.text = "+${value} ${binding.titleView.text}"
+                binding.titleView.text = "+$value ${binding.titleView.text}"
                 binding.subtitleView.text = getString(R.string.armoireExp)
                 binding.iconView.setImageResource(R.drawable.armoire_experience)
                 val layoutParams = RelativeLayout.LayoutParams(108.dpToPx(this), 122.dpToPx(this))

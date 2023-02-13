@@ -11,8 +11,8 @@ import androidx.test.filters.LargeTest
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.github.kakaocup.kakao.common.assertions.BaseAssertions
 import io.github.kakaocup.kakao.common.matchers.ChildCountMatcher
@@ -31,12 +31,12 @@ import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
 import io.reactivex.rxjava3.core.Flowable
-import java.util.Date
-import java.util.UUID
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.Date
+import java.util.UUID
 
 class TaskFormScreen : Screen<TaskFormScreen>() {
     val toolbar = KToolbar { withId(R.id.toolbar) }

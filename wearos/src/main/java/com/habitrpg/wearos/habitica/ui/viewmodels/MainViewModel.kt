@@ -15,7 +15,8 @@ import kotlin.time.toDuration
 class MainViewModel @Inject constructor(
     userRepository: UserRepository,
     taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     private var lastUserFetch = 0L
     fun periodicUserRefresh() {

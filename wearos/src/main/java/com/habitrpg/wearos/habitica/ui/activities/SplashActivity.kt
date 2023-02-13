@@ -17,7 +17,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 @AndroidEntryPoint
-class SplashActivity: BaseActivity<ActivitySplashBinding, SplashViewModel>() {
+class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     override val viewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

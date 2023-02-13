@@ -7,13 +7,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import okhttp3.internal.http2.ConnectionShutdownException
-import okhttp3.internal.http2.StreamResetException
 import retrofit2.HttpException
-import java.io.EOFException
 import java.io.IOException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 
 class ExceptionHandler {
     private var analyticsManager: AnalyticsManager? = null
@@ -52,7 +47,12 @@ class ExceptionHandler {
 }
 
 fun CoroutineScope.launchCatching(errorHandler: ((Throwable) -> Unit)? = null, function: suspend CoroutineScope.() -> Unit) {
-    launch((ExceptionHandler.coroutine {
-        errorHandler?.invoke(it)
-    }), block = function)
+    launch(
+        (
+            ExceptionHandler.coroutine {
+                errorHandler?.invoke(it)
+            }
+            ),
+        block = function
+    )
 }

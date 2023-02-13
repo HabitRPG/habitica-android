@@ -141,14 +141,14 @@ class NavigationDrawerFragment : DialogFragment() {
         initializeMenuItems()
 
         adapter.itemSelectedEvents = {
-                setSelection(it.transitionId, it.bundle, true)
-            }
+            setSelection(it.transitionId, it.bundle, true)
+        }
         adapter.promoClosedSubject = {
-                sharedPreferences.edit {
-                    putBoolean("hide$it", true)
-                }
-                updatePromo()
+            sharedPreferences.edit {
+                putBoolean("hide$it", true)
             }
+            updatePromo()
+        }
 
         lifecycleScope.launchCatching {
             contentRepository.getWorldState()
@@ -285,8 +285,10 @@ class NavigationDrawerFragment : DialogFragment() {
             if (!user.hasClass && !hasSpecialItems) {
                 item.isVisible = false
             } else {
-                if ((user.stats?.lvl
-                        ?: 0) < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)
+                if ((
+                    user.stats?.lvl
+                        ?: 0
+                    ) < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)
                 ) {
                     item.pillText = getString(R.string.unlock_lvl_11)
                 } else {

@@ -9,16 +9,23 @@ import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.*
+import androidx.preference.CheckBoxPreference
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
+import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.*
+import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.TaskAlarmManager
+import com.habitrpg.android.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
@@ -33,7 +40,7 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -195,7 +202,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             usePushPreference?.isChecked = true
             pushNotificationManager.addPushDeviceUsingStoredToken()
         } else {
-            //If user denies notification settings originally - they must manually enable it through notification settings.
+            // If user denies notification settings originally - they must manually enable it through notification settings.
             val alert = context?.let { HabiticaAlertDialog(it) }
             alert?.setTitle(R.string.push_notification_system_settings_title)
             alert?.setMessage(R.string.push_notification_system_settings_description)
@@ -335,10 +342,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
-                if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
-                    TimePreferenceDialogFragment.newInstance(this, preference.getKey())
-                        .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
-                }
+            if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
+                TimePreferenceDialogFragment.newInstance(this, preference.getKey())
+                    .show(parentFragmentManager, TimePreferenceDialogFragment.TAG)
+            }
         } else {
             super.onDisplayPreferenceDialog(preference)
         }

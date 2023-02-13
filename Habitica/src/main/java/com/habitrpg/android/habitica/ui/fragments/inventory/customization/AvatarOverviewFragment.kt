@@ -39,7 +39,8 @@ import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
-open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBinding>(),
+open class AvatarOverviewFragment :
+    BaseMainFragment<FragmentComposeScrollingBinding>(),
     AdapterView.OnItemSelectedListener {
 
     @Inject
@@ -71,16 +72,18 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 HabiticaTheme {
-                    AvatarOverviewView(userViewModel,
+                    AvatarOverviewView(
+                        userViewModel,
                         showCustomization, !showCustomization,
                         battleGearWeapon.value?.twoHanded == true, costumeWeapon.value?.twoHanded == true,
                         { type, category ->
-                        displayCustomizationFragment(type, category)
-                    }, { type, category ->
-                            displayAvatarEquipmentFragment(type, category)
-                        },  { type, equipped, isCostume ->
+                            displayCustomizationFragment(type, category)
+                        }, { type, category ->
+                        displayAvatarEquipmentFragment(type, category)
+                    }, { type, equipped, isCostume ->
                         displayEquipmentFragment(type, equipped, isCostume)
-                    })
+                    }
+                    )
                 }
             }
         }
@@ -137,7 +140,8 @@ open class AvatarOverviewFragment : BaseMainFragment<FragmentComposeScrollingBin
 }
 
 @Composable
-fun AvatarOverviewView(userViewModel: MainUserViewModel,
+fun AvatarOverviewView(
+    userViewModel: MainUserViewModel,
     showCustomization: Boolean = true,
     showEquipment: Boolean = true,
     battleGearTwoHanded: Boolean = false,
@@ -145,12 +149,13 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
     onCustomizationTap: (String, String?) -> Unit,
     onAvatarEquipmentTap: (String, String?) -> Unit,
     onEquipmentTap: (String, String?, Boolean) -> Unit
-    ) {
+) {
     val user by userViewModel.user.observeAsState()
     Column(
         Modifier
             .padding(horizontal = 8.dp)
-            .padding(bottom = 16.dp)) {
+            .padding(bottom = 16.dp)
+    ) {
         if (showCustomization) {
             Row(
                 Modifier.padding(horizontal = 12.dp, vertical = 15.dp),
@@ -162,18 +167,21 @@ fun AvatarOverviewView(userViewModel: MainUserViewModel,
                     color = HabiticaTheme.colors.textSecondary
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                SegmentedControl(items = listOf(
-                    stringResource(R.string.avatar_size_slim), stringResource(
-                        R.string.avatar_size_broad
-                    )
-                ),
+                SegmentedControl(
+                    items = listOf(
+                        stringResource(R.string.avatar_size_slim),
+                        stringResource(
+                            R.string.avatar_size_broad
+                        )
+                    ),
                     defaultSelectedItemIndex = if (user?.preferences?.size == "slim") 0 else 1,
                     onItemSelection = {
                         userViewModel.updateUser(
                             "preferences.size",
                             if (it == 0) "slim" else "broad"
                         )
-                    })
+                    }
+                )
             }
             AvatarCustomizationOverviewView(user?.preferences, user?.items?.gear?.equipped, onCustomizationTap, onAvatarEquipmentTap)
         }

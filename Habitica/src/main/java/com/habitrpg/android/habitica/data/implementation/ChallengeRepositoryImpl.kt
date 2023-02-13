@@ -75,7 +75,7 @@ class ChallengeRepositoryImpl(
         return tasksOrder
     }
 
-    private  suspend fun addChallengeTasks(challenge: Challenge, addedTaskList: List<Task>) {
+    private suspend fun addChallengeTasks(challenge: Challenge, addedTaskList: List<Task>) {
         when {
             addedTaskList.count() == 1 -> apiClient.createChallengeTask(challenge.id ?: "", addedTaskList[0])
             addedTaskList.count() > 1 -> apiClient.createChallengeTasks(challenge.id ?: "", addedTaskList)

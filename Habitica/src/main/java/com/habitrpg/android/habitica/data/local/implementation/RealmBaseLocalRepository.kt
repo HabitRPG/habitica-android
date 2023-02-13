@@ -48,7 +48,7 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
         private var pendingSaves = mutableListOf<Any>()
     }
 
-    private fun <T: RealmModel> copy(realm: Realm, obj: T) {
+    private fun <T : RealmModel> copy(realm: Realm, obj: T) {
         try {
             realm.insertOrUpdate(obj)
         } catch (_: java.lang.IllegalArgumentException) {
@@ -119,9 +119,9 @@ abstract class RealmBaseLocalRepository internal constructor(override var realm:
 
     fun queryUser(userID: String): Flow<User?> {
         return realm.where(User::class.java)
-                .equalTo("id", userID)
-                .findAll()
-                .toFlow()
+            .equalTo("id", userID)
+            .findAll()
+            .toFlow()
             .filter { it.isLoaded && it.isValid && !it.isEmpty() }
             .map { it.firstOrNull() }
     }

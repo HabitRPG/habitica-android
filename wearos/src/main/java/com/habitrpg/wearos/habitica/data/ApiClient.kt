@@ -36,7 +36,7 @@ class ApiClient @Inject constructor(
     private val context: Context
 ) {
     val userID: String
-    get() = hostConfig.userID
+        get() = hostConfig.userID
     private lateinit var retrofitAdapter: Retrofit
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
@@ -104,10 +104,12 @@ class ApiClient @Inject constructor(
                     cacheControl.noCache()
                         .noStore()
                 }
-                val response = chain.proceed(request.newBuilder().header(
-                    "Cache-Control",
-                    cacheControl.build().toString()
-                ).build())
+                val response = chain.proceed(
+                    request.newBuilder().header(
+                        "Cache-Control",
+                        cacheControl.build().toString()
+                    ).build()
+                )
                 val responseBuilder = response.newBuilder()
                 responseBuilder.header("was-cached", (response.networkResponse == null).toString())
                 if (request.method == "GET") {
@@ -115,9 +117,11 @@ class ApiClient @Inject constructor(
                     if (response.code == 504 || (userID != null && userID != hostConfig.userID)) {
                         // Cache miss. Network might be down, but retry call without cache to be sure.
                         response.close()
-                        chain.proceed(request.newBuilder()
-                            .header("Cache-Control", "no-cache")
-                            .build())
+                        chain.proceed(
+                            request.newBuilder()
+                                .header("Cache-Control", "no-cache")
+                                .build()
+                        )
                     } else {
                         responseBuilder
                             .header("Cache-Control", request.header("Cache-Control") ?: "")
@@ -170,7 +174,7 @@ class ApiClient @Inject constructor(
     private val adapter: JsonAdapter<ErrorResponse>? = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory()).build().adapter(ErrorResponse::class.java).lenient()
 
-    private suspend fun <T: Any> process(call: suspend () -> Response<WearableHabitResponse<T>>): NetworkResult<T> {
+    private suspend fun <T : Any> process(call: suspend () -> Response<WearableHabitResponse<T>>): NetworkResult<T> {
         val response: Response<WearableHabitResponse<T>> = call.invoke()
 
         val wasCached = response.headers()["was-cached"] == "true"
@@ -185,7 +189,6 @@ class ApiClient @Inject constructor(
                     throw(java.lang.Exception(errorResponse?.message))
                 }
                 throw(java.lang.Exception(response.message()))
-
             }
         } else {
             val body = response.body()
@@ -216,10 +219,10 @@ class ApiClient @Inject constructor(
     suspend fun runCron() = process { apiService.runCron() }
 
     suspend fun getTasks(forced: Boolean = false) = if (forced) {
-            process { apiService.getTasksForced() }
-        } else {
-            process { apiService.getTasks() }
-        }
+        process { apiService.getTasksForced() }
+    } else {
+        process { apiService.getTasks() }
+    }
     suspend fun scoreTask(id: String, direction: String) =
         process { apiService.scoreTask(id, direction) }
 

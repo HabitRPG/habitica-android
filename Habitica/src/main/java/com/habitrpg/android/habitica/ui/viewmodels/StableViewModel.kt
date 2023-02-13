@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class StableViewModel(private val application: Application?, private val itemType: String?): BaseViewModel() {
+class StableViewModel(private val application: Application?, private val itemType: String?) : BaseViewModel() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
@@ -34,7 +34,6 @@ class StableViewModel(private val application: Application?, private val itemTyp
     override fun inject(component: UserComponent) {
         component.inject(this)
     }
-
 
     private val _items: MutableLiveData<List<Any>> = MutableLiveData()
     val items: LiveData<List<Any>> = _items

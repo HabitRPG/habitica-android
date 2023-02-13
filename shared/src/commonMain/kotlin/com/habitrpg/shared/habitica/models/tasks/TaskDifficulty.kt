@@ -8,7 +8,7 @@ enum class TaskDifficulty(val value: Float) {
 
     companion object {
         fun valueOf(float: Float): TaskDifficulty {
-            return when(float) {
+            return when (float) {
                 0.1f -> TRIVIAL
                 1.0f -> EASY
                 1.5f -> MEDIUM

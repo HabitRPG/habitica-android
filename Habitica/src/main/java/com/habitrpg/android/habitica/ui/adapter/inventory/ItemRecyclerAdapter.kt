@@ -99,11 +99,11 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
             binding.ownedTextView.text = ownedItem.numberOwned.toString()
 
             val disabled = if (isHatching) {
-                    !this.canHatch
-                } else false
+                !this.canHatch
+            } else false
             val imageName = if (item != null) {
-                getImageName(item = item) }
-            else {
+                getImageName(item = item)
+            } else {
                 getImageName(ownedItem = ownedItem)
             }
             binding.imageView.loadImage(imageName)
@@ -130,7 +130,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     "inventory_quest_scroll_" + item.key
                 }
                 is SpecialItem -> {
-                    //Mystery Item (Inventory Present)
+                    // Mystery Item (Inventory Present)
                     val sdf = SimpleDateFormat("MM", Locale.getDefault())
                     val month = sdf.format(Date())
                     "inventory_present_$month"
@@ -153,8 +153,8 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 val menu = BottomSheetMenu(context)
                 menu.setTitle(item?.text)
                 val imageName = if (item != null) {
-                    getImageName(item = item) }
-                else {
+                    getImageName(item = item)
+                } else {
                     getImageName(ownedItem = ownedItem)
                 }
                 menu.setImage(imageName)

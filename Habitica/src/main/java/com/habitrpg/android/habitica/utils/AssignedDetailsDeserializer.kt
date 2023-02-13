@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.models.tasks.GroupAssignedDetails
 import io.realm.RealmList
 import java.lang.reflect.Type
 
-class AssignedDetailsDeserializer: JsonDeserializer<RealmList<GroupAssignedDetails?>> {
+class AssignedDetailsDeserializer : JsonDeserializer<RealmList<GroupAssignedDetails?>> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
@@ -21,7 +21,7 @@ class AssignedDetailsDeserializer: JsonDeserializer<RealmList<GroupAssignedDetai
         } else {
             val jsonObject = json.asJsonObject
             jsonObject.keySet().forEach {
-                val details= context?.deserialize<GroupAssignedDetails>(jsonObject[it], GroupAssignedDetails::class.java)
+                val details = context?.deserialize<GroupAssignedDetails>(jsonObject[it], GroupAssignedDetails::class.java)
                 details?.assignedUserID = it
                 list.add(details)
             }

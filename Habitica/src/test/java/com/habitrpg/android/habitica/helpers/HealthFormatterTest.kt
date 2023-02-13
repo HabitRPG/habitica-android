@@ -2,8 +2,8 @@ package com.habitrpg.android.habitica.helpers
 
 import com.habitrpg.common.habitica.helpers.HealthFormatter
 import io.kotest.matchers.shouldBe
-import java.util.Locale
 import org.junit.jupiter.api.Test
+import java.util.Locale
 
 class HealthFormatterTest {
     @Test

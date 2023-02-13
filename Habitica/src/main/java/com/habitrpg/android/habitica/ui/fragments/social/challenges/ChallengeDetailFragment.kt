@@ -109,39 +109,39 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
             }
             lifecycleScope.launchCatching {
                 challengeRepository.getChallengeTasks(id).collect { taskList ->
-                        binding?.taskGroupLayout?.removeAllViewsInLayout()
+                    binding?.taskGroupLayout?.removeAllViewsInLayout()
 
-                        val todos = ArrayList<Task>()
-                        val habits = ArrayList<Task>()
-                        val dailies = ArrayList<Task>()
-                        val rewards = ArrayList<Task>()
+                    val todos = ArrayList<Task>()
+                    val habits = ArrayList<Task>()
+                    val dailies = ArrayList<Task>()
+                    val rewards = ArrayList<Task>()
 
-                        for (entry in taskList) {
-                            val type = entry.type ?: continue
-                            when (type) {
-                                TaskType.TODO -> todos.add(entry)
-                                TaskType.HABIT -> habits.add(entry)
-                                TaskType.DAILY -> dailies.add(entry)
-                                TaskType.REWARD -> rewards.add(entry)
-                            }
-                        }
-
-                        if (habits.size > 0) {
-                            addHabits(habits)
-                        }
-
-                        if (dailies.size > 0) {
-                            addDailys(dailies)
-                        }
-
-                        if (todos.size > 0) {
-                            addTodos(todos)
-                        }
-
-                        if (rewards.size > 0) {
-                            addRewards(rewards)
+                    for (entry in taskList) {
+                        val type = entry.type ?: continue
+                        when (type) {
+                            TaskType.TODO -> todos.add(entry)
+                            TaskType.HABIT -> habits.add(entry)
+                            TaskType.DAILY -> dailies.add(entry)
+                            TaskType.REWARD -> rewards.add(entry)
                         }
                     }
+
+                    if (habits.size > 0) {
+                        addHabits(habits)
+                    }
+
+                    if (dailies.size > 0) {
+                        addDailys(dailies)
+                    }
+
+                    if (todos.size > 0) {
+                        addTodos(todos)
+                    }
+
+                    if (rewards.size > 0) {
+                        addRewards(rewards)
+                    }
+                }
             }
 
             lifecycleScope.launchCatching {

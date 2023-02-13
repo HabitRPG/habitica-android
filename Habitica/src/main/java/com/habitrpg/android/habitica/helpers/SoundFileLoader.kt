@@ -27,39 +27,39 @@ class SoundFileLoader(private val context: Context) {
     @SuppressLint("SetWorldReadable", "ReturnCount")
     suspend fun download(files: List<SoundFile>): List<SoundFile> {
         return files.map { audioFile ->
-                withContext(Dispatchers.IO) {
-                    val file = File(getFullAudioFilePath(audioFile))
-                    if (file.exists() && file.length() > 5000) {
-                        // Important, or else the MediaPlayer can't access this file
-                        file.setReadable(true, false)
-                        audioFile.file = file
-                        return@withContext audioFile
-                    }
-                    val request = Request.Builder().url(audioFile.webUrl).build()
-
-                    val response: Response
-                    try {
-                        response = client.newCall(request).execute()
-                        if (!response.isSuccessful) {
-                            throw IOException()
-                        }
-                    } catch (io: IOException) {
-                        return@withContext audioFile
-                    }
-
-                    try {
-                        val sink = file.sink().buffer()
-                        sink.writeAll(response.body!!.source())
-                        sink.flush()
-                        sink.close()
-                    } catch (io: IOException) {
-                        return@withContext audioFile
-                    }
-
+            withContext(Dispatchers.IO) {
+                val file = File(getFullAudioFilePath(audioFile))
+                if (file.exists() && file.length() > 5000) {
+                    // Important, or else the MediaPlayer can't access this file
                     file.setReadable(true, false)
                     audioFile.file = file
                     return@withContext audioFile
                 }
+                val request = Request.Builder().url(audioFile.webUrl).build()
+
+                val response: Response
+                try {
+                    response = client.newCall(request).execute()
+                    if (!response.isSuccessful) {
+                        throw IOException()
+                    }
+                } catch (io: IOException) {
+                    return@withContext audioFile
+                }
+
+                try {
+                    val sink = file.sink().buffer()
+                    sink.writeAll(response.body!!.source())
+                    sink.flush()
+                    sink.close()
+                } catch (io: IOException) {
+                    return@withContext audioFile
+                }
+
+                file.setReadable(true, false)
+                audioFile.file = file
+                return@withContext audioFile
+            }
         }
     }
 

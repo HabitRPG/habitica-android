@@ -94,11 +94,13 @@ class TaskDescriptionBuilder(private val context: Context) {
                     ""
                 }
             }
-            Frequency.YEARLY -> " " + context.getString(R.string.on_x,
+            Frequency.YEARLY -> " " + context.getString(
+                R.string.on_x,
                 task.startDate?.let {
                     val flags = DateUtils.FORMAT_SHOW_DATE + DateUtils.FORMAT_NO_YEAR
                     DateUtils.formatDateTime(context, it.time, flags)
-                } ?: "")
+                } ?: ""
+            )
             else -> ""
         }
     }

@@ -68,10 +68,10 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         }
 
         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.purchaseCardEvents = {
-                selectedCard = it
-                val intent = Intent(activity, SkillMemberActivity::class.java)
-                cardSelectedResult.launch(intent)
-            }
+            selectedCard = it
+            val intent = Intent(activity, SkillMemberActivity::class.java)
+            cardSelectedResult.launch(intent)
+        }
         recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
 
         viewModel.user.observe(viewLifecycleOwner) {

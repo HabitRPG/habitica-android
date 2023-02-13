@@ -8,7 +8,8 @@ import androidx.core.widget.NestedScrollView
 import com.habitrpg.common.habitica.extensions.dpToPx
 
 class HabiticaScrollView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : NestedScrollView(context, attrs) {
 
     override fun onAttachedToWindow() {
@@ -30,7 +31,7 @@ class HabiticaScrollView @JvmOverloads constructor(
                     horizontalPadding,
                     verticalPadding,
                     horizontalPadding,
-                    verticalPadding*2
+                    verticalPadding * 2
                 )
         }
     }

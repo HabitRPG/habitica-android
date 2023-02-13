@@ -50,7 +50,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                 emptyBinding.disconnected.root.isVisible = !appStateManager.isAppConnected.value
                 emptyBinding.header.textView.text = getTitle(viewModel.taskCount.value)
                 emptyBinding.descriptionView.text = getString(
-                    R.string.no_tasks, getString(
+                    R.string.no_tasks,
+                    getString(
                         when (viewModel.taskType) {
                             TaskType.HABIT -> R.string.habit
                             TaskType.DAILY -> R.string.daily
@@ -92,9 +93,11 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
     }
 
     private fun openTaskDetailActivity(task: Task) {
-        startActivity(Intent(this, TaskDetailActivity::class.java).apply {
-            putExtra("task_id", task.id)
-        })
+        startActivity(
+            Intent(this, TaskDetailActivity::class.java).apply {
+                putExtra("task_id", task.id)
+            }
+        )
     }
 
     private var taskToScore: Task? = null
@@ -126,7 +129,8 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                         HabitDirectionActivity::class.java
                     ).apply {
                         putExtra("task_id", task.id)
-                    })
+                    }
+                )
                 return
             } else if (task.up != true && task.down != true) {
                 return
@@ -148,9 +152,11 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
     }
 
     private fun openTaskFormActivity() {
-        startActivity(Intent(this, TaskFormActivity::class.java).apply {
-            putExtra("task_type", viewModel.taskType?.value)
-        })
+        startActivity(
+            Intent(this, TaskFormActivity::class.java).apply {
+                putExtra("task_type", viewModel.taskType?.value)
+            }
+        )
         overridePendingTransition(R.anim.scale_up, 0)
     }
 

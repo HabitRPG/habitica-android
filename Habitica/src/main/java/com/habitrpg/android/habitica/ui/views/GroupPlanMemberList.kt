@@ -40,9 +40,7 @@ import kotlin.random.Random
 fun GroupPlanMemberList(
     members: List<Member>?,
     group: Group?,
-    onMemberClicked: (String) -> Unit,
-    onMoreClicked: (Member) -> Unit
-) {
+    onMemberClicked: (String) -> Unit) {
     LazyColumn {
         item {
             Text(
@@ -56,24 +54,26 @@ fun GroupPlanMemberList(
                     .padding(bottom = 20.dp)
             )
         }
-        for (member in members?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }
-            ?: emptyList()) {
-        item {
-            val role = if (group?.isLeader(member.id ?: "") == true) {
-                stringResource(R.string.owner)
-            } else if (group?.isManager(member.id ?: "") == true) {
-                stringResource(R.string.manager)
-            } else {
-                stringResource(R.string.member)
+        for (
+            member in members?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }
+                ?: emptyList()
+        ) {
+            item {
+                val role = if (group?.isLeader(member.id ?: "") == true) {
+                    stringResource(R.string.owner)
+                } else if (group?.isManager(member.id ?: "") == true) {
+                    stringResource(R.string.manager)
+                } else {
+                    stringResource(R.string.member)
+                }
+                MemberItem(
+                    member,
+                    role,
+                    onMemberClicked,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                )
             }
-            MemberItem(
-                member,
-                role,
-                onMemberClicked,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-            )
         }
-    }
     }
 }
 
@@ -98,7 +98,8 @@ fun MemberItem(
             modifier = Modifier.padding(8.dp)
         ) {
             ComposableAvatarView(
-                avatar = member, modifier = Modifier
+                avatar = member,
+                modifier = Modifier
                     .padding(6.dp)
                     .size(94.dp, 98.dp)
             )
@@ -196,7 +197,7 @@ private class MemberProvider : PreviewParameterProvider<Member> {
                 member.profile?.name = "User $x"
                 member.authentication = Authentication()
                 member.authentication?.localAuthentication = LocalAuthentication()
-                member.authentication?.localAuthentication?.username = "user${x}"
+                member.authentication?.localAuthentication?.username = "user$x"
                 member.stats = Stats()
                 member.stats?.hp = Random.nextDouble()
                 member.stats?.maxHealth = 50

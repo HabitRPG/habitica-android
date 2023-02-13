@@ -43,13 +43,12 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             field = value
             notifyDataSetChanged()
         }
-   var onEquip: ((String) -> Unit)? = null
+    var onEquip: ((String) -> Unit)? = null
     private var existingMounts: List<Mount>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
     private var ownsSaddles: Boolean = false
     private var itemList: List<Any> = ArrayList()
-
 
     private fun canRaiseToMount(pet: Pet): Boolean {
         if (pet.type == "special") return false

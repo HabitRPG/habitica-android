@@ -8,9 +8,9 @@ import com.habitrpg.android.habitica.databinding.ProfileAchievementItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
+import com.habitrpg.common.habitica.extensions.loadImage
 
 class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

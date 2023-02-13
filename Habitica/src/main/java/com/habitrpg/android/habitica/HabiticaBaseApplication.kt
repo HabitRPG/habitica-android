@@ -81,7 +81,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
-
         setupCoil()
 
         ExceptionHandler.init(analyticsManager)

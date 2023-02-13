@@ -99,9 +99,9 @@ class TaskAlarmManager(
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
         val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
         val zonedTime = remindersItem?.getLocalZonedDateTimeInstant()
-        if (remindersItem == null
-            || (reminderItemTask.type == TaskType.DAILY && zonedTime?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null)
-            || (reminderItemTask.type == TaskType.TODO && zonedTime?.isBefore(now) == true)
+        if (remindersItem == null ||
+            (reminderItemTask.type == TaskType.DAILY && zonedTime?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null) ||
+            (reminderItemTask.type == TaskType.TODO && zonedTime?.isBefore(now) == true)
         ) {
             return
         }
@@ -226,7 +226,7 @@ class TaskAlarmManager(
                 try {
                     alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
                 } catch (ex: Exception) {
-                    when(ex) {
+                    when (ex) {
                         is IllegalStateException, is SecurityException -> {
                             alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
                         }

@@ -14,7 +14,7 @@ import java.lang.Integer.max
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class AvatarActivity: BaseActivity<ActivityAvatarBinding, AvatarViewModel>() {
+class AvatarActivity : BaseActivity<ActivityAvatarBinding, AvatarViewModel>() {
     override val viewModel: AvatarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

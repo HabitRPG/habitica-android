@@ -7,7 +7,7 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.models.user.MenuItem
 import com.habitrpg.wearos.habitica.ui.viewHolders.HubViewHolder
 
-class HubAdapter: BaseAdapter<MenuItem>() {
+class HubAdapter : BaseAdapter<MenuItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = parent.context.layoutInflater
         return if (viewType == 1) {
@@ -27,4 +27,3 @@ class HubAdapter: BaseAdapter<MenuItem>() {
 
     override fun getItemViewType(position: Int) = if (position == 0) TYPE_HEADER else 1
 }
-

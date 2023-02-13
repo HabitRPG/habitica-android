@@ -30,7 +30,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class RealmInventoryLocalRepository(realm: Realm) : RealmContentLocalRepository(realm),
+class RealmInventoryLocalRepository(realm: Realm) :
+    RealmContentLocalRepository(realm),
     InventoryLocalRepository {
     override fun getQuestContent(keys: List<String>): Flow<List<QuestContent>> {
         return realm.where(QuestContent::class.java)

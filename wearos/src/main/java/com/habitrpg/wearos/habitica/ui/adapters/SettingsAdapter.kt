@@ -16,7 +16,7 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.FooterViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.SpacerViewHolder
 
-class SettingsAdapter: BaseAdapter<SettingsItem>() {
+class SettingsAdapter : BaseAdapter<SettingsItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> FooterViewHolder(RowFooterBinding.inflate(parent.context.layoutInflater, parent, false).root)

@@ -87,7 +87,7 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: ktlint
+        arguments: ktlintCheck
 
   detekt:
     runs-on: ubuntu-latest

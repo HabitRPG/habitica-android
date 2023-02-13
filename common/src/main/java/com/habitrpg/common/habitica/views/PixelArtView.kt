@@ -41,9 +41,11 @@ class PixelArtView @JvmOverloads constructor(
         val smallestSide = min(width, height)
 
         val factor = min(
-            (if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
-                smallestSide / (targetWidth / 3)
-            } else 1),
+            (
+                if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
+                    smallestSide / (targetWidth / 3)
+                } else 1
+                ),
             if (smallestSide > 0 && targetHeight > 0 && smallestSide != targetHeight) {
                 smallestSide / (targetHeight / 3)
             } else 1

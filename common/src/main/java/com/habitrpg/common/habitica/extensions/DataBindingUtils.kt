@@ -30,13 +30,14 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
         setImageDrawable(null)
         DataBindingUtils.loadImage(context, imageName, imageFormat) {
             if (tag == fullname) {
-                if (fullname.endsWith("gif")) {
+                bitmap = if (fullname.endsWith("gif")) {
                     setImageDrawable(it)
                     if (it is Animatable) {
                         it.start()
                     }
+                    null
                 } else {
-                    bitmap = it.toBitmap()
+                    it.toBitmap()
                 }
             }
         }

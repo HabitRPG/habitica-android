@@ -4,7 +4,7 @@ import com.habitrpg.shared.habitica.models.AvatarPreferences
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class Preferences: AvatarPreferences {
+class Preferences : AvatarPreferences {
     override var hair: Hair? = null
     override var costume: Boolean = false
     override var sleep: Boolean = false

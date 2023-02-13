@@ -38,12 +38,14 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(userRepository: UserRepository,
+class LoginViewModel @Inject constructor(
+    userRepository: UserRepository,
     taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     private val keyHelper: KeyHelper?,
     val sharedPreferences: SharedPreferences,
-    val apiClient: ApiClient, appStateManager: AppStateManager
+    val apiClient: ApiClient,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     lateinit var onLoginCompleted: () -> Unit
 

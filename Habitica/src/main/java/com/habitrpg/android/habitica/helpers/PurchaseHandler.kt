@@ -121,9 +121,9 @@ class PurchaseHandler(
     }
 
     fun startListening() {
-        if (billingClient.connectionState == BillingClient.ConnectionState.CONNECTING
-            || billingClient.connectionState == BillingClient.ConnectionState.CONNECTED
-            || billingClientState == BillingClientState.UNAVAILABLE
+        if (billingClient.connectionState == BillingClient.ConnectionState.CONNECTING ||
+            billingClient.connectionState == BillingClient.ConnectionState.CONNECTED ||
+            billingClientState == BillingClientState.UNAVAILABLE
         ) {
             // Don't connect again if it's already connected
             return
@@ -209,9 +209,11 @@ class PurchaseHandler(
             }
             billingClientState.canMaybePurchase && billingClient.isReady
         }
-        val params = QueryProductDetailsParams.newBuilder().setProductList(skus.map {
-            Product.newBuilder().setProductId(it).setProductType(type).build()
-        }).build()
+        val params = QueryProductDetailsParams.newBuilder().setProductList(
+            skus.map {
+                Product.newBuilder().setProductId(it).setProductType(type).build()
+            }
+        ).build()
         val skuDetailsResult = withContext(Dispatchers.IO) {
             billingClient.queryProductDetails(params)
         }
@@ -230,12 +232,14 @@ class PurchaseHandler(
             addGift(skuDetails.productId, it, recipientUsername ?: it)
         }
         val flowParams =
-            BillingFlowParams.newBuilder().setProductDetailsParamsList(listOf(skuDetails).map {
-                BillingFlowParams.ProductDetailsParams.newBuilder()
-                    .setProductDetails(skuDetails).setOfferToken(
-                        skuDetails.subscriptionOfferDetails?.first()?.offerToken ?: ""
-                    ).build()
-            }).build()
+            BillingFlowParams.newBuilder().setProductDetailsParamsList(
+                listOf(skuDetails).map {
+                    BillingFlowParams.ProductDetailsParams.newBuilder()
+                        .setProductDetails(skuDetails).setOfferToken(
+                            skuDetails.subscriptionOfferDetails?.first()?.offerToken ?: ""
+                        ).build()
+                }
+            ).build()
         billingClient.launchBillingFlow(activity, flowParams)
     }
 
@@ -555,9 +559,11 @@ class PurchaseHandler(
 }
 
 suspend fun retryUntil(
-    times: Int = Int.MAX_VALUE, initialDelay: Long = 100, // 0.1 second
+    times: Int = Int.MAX_VALUE,
+    initialDelay: Long = 100, // 0.1 second
     maxDelay: Long = 1000, // 1 second
-    factor: Double = 2.0, block: suspend () -> Boolean
+    factor: Double = 2.0,
+    block: suspend () -> Boolean
 ) {
     var currentDelay = initialDelay
     repeat(times - 1) {

@@ -166,7 +166,7 @@ open class ShopItem : RealmObject(), BaseObject {
             item.notes = customization.notes
             item.value = customization.price ?: 0
             item.path = customization.path
-            item.unlockPath  = customization.unlockPath
+            item.unlockPath = customization.unlockPath
             item.pinType = customization.type
             if (customization.type == "background") {
                 item.purchaseType = "background"

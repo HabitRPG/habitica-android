@@ -9,11 +9,11 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestMenuViewBinding
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import java.util.Locale
 
 class QuestMenuView : LinearLayout {

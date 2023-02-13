@@ -103,9 +103,9 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             binding?.recyclerView?.adapter = chatAdapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             chatAdapter?.let { adapter ->
-                    adapter.onOpenProfile = {
-                            FullProfileActivity.open(it)
-                        }
+                adapter.onOpenProfile = {
+                    FullProfileActivity.open(it)
+                }
                 adapter.onDeleteMessage = { showDeleteConfirmationDialog(it) }
                 adapter.onFlagMessage = { showFlagConfirmationDialog(it) }
                 adapter.onCopyMessage = { copyMessageToClipboard(it) }
@@ -116,7 +116,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
             markMessagesAsRead(it)
             chatAdapter?.submitList(it)
         }
-
 
         binding?.chatBarView?.sendAction = { sendMessage(it) }
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
@@ -183,17 +182,19 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     private fun sendMessage(chatText: String) {
         viewModel.memberID?.let { userID ->
-            lifecycleScope.launch(ExceptionHandler.coroutine { error ->
-                ExceptionHandler.reportError(error)
-                binding?.let {
-                    val alert = HabiticaAlertDialog(it.chatBarView.context)
-                    alert.setTitle("You cannot reply to this conversation")
-                    alert.setMessage("This user is unable to receive your private message")
-                    alert.addOkButton()
-                    alert.show()
+            lifecycleScope.launch(
+                ExceptionHandler.coroutine { error ->
+                    ExceptionHandler.reportError(error)
+                    binding?.let {
+                        val alert = HabiticaAlertDialog(it.chatBarView.context)
+                        alert.setTitle("You cannot reply to this conversation")
+                        alert.setMessage("This user is unable to receive your private message")
+                        alert.addOkButton()
+                        alert.show()
+                    }
+                    binding?.chatBarView?.message = chatText
                 }
-                binding?.chatBarView?.message = chatText
-            }) {
+            ) {
                 socialRepository.postPrivateMessage(userID, chatText)
                 delay(200.toDuration(DurationUnit.MILLISECONDS))
                 viewModel.invalidateDataSource()
@@ -227,7 +228,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         if (context != null) {
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.confirm_delete_tag_title)
-                dialog.setMessage(R.string.confirm_delete_tag_message)
+            dialog.setMessage(R.string.confirm_delete_tag_message)
             dialog.addButton(R.string.yes, true, true) { _, _ ->
                 lifecycleScope.launchCatching {
                     socialRepository.deleteMessage(chatMessage)

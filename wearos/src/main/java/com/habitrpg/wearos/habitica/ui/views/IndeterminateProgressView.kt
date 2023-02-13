@@ -15,7 +15,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.dpToPx
 
 class IndeterminateProgressView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     var progressBarWidth = 6f.dpToPx(context)

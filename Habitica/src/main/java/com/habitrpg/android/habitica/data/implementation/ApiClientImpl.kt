@@ -74,7 +74,7 @@ class ApiClientImpl(
     private val analyticsManager: AnalyticsManager,
     private val notificationsManager: NotificationsManager,
     private val context: Context
-): ApiClient {
+) : ApiClient {
 
     private lateinit var retrofitAdapter: Retrofit
 
@@ -325,7 +325,7 @@ class ApiClientImpl(
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }
 
     override suspend fun getContent(language: String?): ContentResult? {
-        return process {  apiService.getContent(language ?: this.languageCode) }
+        return process { apiService.getContent(language ?: this.languageCode) }
     }
 
     override suspend fun updateUser(updateDictionary: Map<String, Any>): User? {
@@ -479,11 +479,11 @@ class ApiClientImpl(
 
     override suspend fun revive(): User? = process { apiService.revive() }
 
-    suspend override fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse? {
+    override suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType, targetId) }
     }
 
-    suspend override fun useSkill(skillName: String, targetType: String): SkillResponse? {
+    override suspend fun useSkill(skillName: String, targetType: String): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType) }
     }
 

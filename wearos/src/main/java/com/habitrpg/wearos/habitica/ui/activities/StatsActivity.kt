@@ -49,7 +49,6 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
 
         binding.mpBar.setPercentageValues(1f, 100f)
         binding.mpBar.animateProgress()
-
     }
 
     private fun setStatViews() {
@@ -102,5 +101,3 @@ class StatsActivity : BaseActivity<ActivityStatsBinding, StatsViewModel>() {
         }
     }
 }
-
-

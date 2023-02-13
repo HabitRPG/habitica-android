@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.databinding.WidgetConfigureAddTaskBinding
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 
 class AddTaskWidgetActivity : AppCompatActivity() {
 

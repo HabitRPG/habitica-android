@@ -19,8 +19,8 @@ fun String.fromHtml(): CharSequence {
 fun String.addZeroWidthSpace(): CharSequence {
     val spannable: Spannable = SpannableString(this)
     Linkify.addLinks(spannable, Linkify.WEB_URLS)
-    //Append a zero-width space to the Spannable to allow clicking
-    //on the open spaces (and prevent the link from opening)
+    // Append a zero-width space to the Spannable to allow clicking
+    // on the open spaces (and prevent the link from opening)
     return TextUtils.concat(spannable, "\u200B")
 }
 

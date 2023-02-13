@@ -8,7 +8,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
-import java.util.*
+import java.util.Locale
 
 class NumberAbbreviatorTest : StringSpec({
     val mockContext = mockk<Context>()

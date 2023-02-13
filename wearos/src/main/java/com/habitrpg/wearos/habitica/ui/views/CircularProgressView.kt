@@ -30,10 +30,10 @@ class CircularProgressView(
     private val offset = attributes?.getDimension(R.styleable.CircularProgressView_offset, 0f)?.toInt()
     private val backgroundArcColor = attributes?.getColor(R.styleable.CircularProgressView_backgroundArcColor, 0) ?: Color.GRAY
     private var fillArcColor = attributes?.getColor(R.styleable.CircularProgressView_arcFillColor, 0) ?: Color.GRAY
-    set(value) {
-        field = value
-        fillArcPaint.color = fillArcColor
-    }
+        set(value) {
+            field = value
+            fillArcPaint.color = fillArcColor
+        }
 
     private val parentArcPaint = Paint().apply {
         style = Paint.Style.STROKE
@@ -76,7 +76,6 @@ class CircularProgressView(
         )
     }
 
-
     private fun drawBackgroundArc(it: Canvas) {
         it.drawArc(ovalSpace, 0f, 360f, false, parentArcPaint)
     }
@@ -117,6 +116,5 @@ class CircularProgressView(
         const val PERCENTAGE_VALUE_HOLDER = "percentage"
     }
 
-    private fun getCurrentAngleToFill() = if(currentPercentage > 0) {(arcFullRotationDegree.toFloat() * (currentPercentage / percentageDivider))} else {1f}
+    private fun getCurrentAngleToFill() = if (currentPercentage > 0) { (arcFullRotationDegree.toFloat() * (currentPercentage / percentageDivider)) } else { 1f }
 }
-

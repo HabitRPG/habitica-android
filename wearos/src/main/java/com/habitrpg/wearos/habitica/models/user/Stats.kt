@@ -4,7 +4,7 @@ import com.habitrpg.shared.habitica.models.AvatarStats
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class Stats: AvatarStats {
+class Stats : AvatarStats {
     override val buffs: Buffs? = null
     override var habitClass: String? = null
     override var points: Int? = null

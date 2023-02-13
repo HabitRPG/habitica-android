@@ -8,9 +8,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FaintViewModel @Inject constructor(userRepository: UserRepository,
+class FaintViewModel @Inject constructor(
+    userRepository: UserRepository,
     taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     suspend fun revive() {
         userRepository.revive()

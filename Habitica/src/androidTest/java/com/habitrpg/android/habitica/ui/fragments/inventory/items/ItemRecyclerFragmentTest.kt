@@ -63,8 +63,8 @@ class ItemScreen : Screen<ItemScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-            itemType(::ItemItem)
-        })
+        itemType(::ItemItem)
+    })
 }
 
 internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment, FragmentRecyclerviewBinding, ItemScreen>(false) {

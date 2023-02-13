@@ -11,9 +11,9 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsSliderViewBinding
 import com.habitrpg.android.habitica.extensions.AfterChangeTextWatcher
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.extensions.styledAttributes
+import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     private val binding = StatsSliderViewBinding.inflate(context.layoutInflater, this)

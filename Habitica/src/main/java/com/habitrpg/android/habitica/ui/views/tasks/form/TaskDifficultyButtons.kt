@@ -87,12 +87,14 @@ private fun TaskDifficultySelection(
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp), modifier = modifier) {
         Box(
-            contentAlignment = Alignment.Center, modifier = Modifier
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
                 .size(57.dp)
                 .background(
                     Color(
                         LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)
-                    ), MaterialTheme.shapes.medium
+                    ),
+                    MaterialTheme.shapes.medium
                 )
                 .clip(MaterialTheme.shapes.medium)
                 .clickable { onSelect(value) }

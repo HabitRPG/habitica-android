@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
 import com.habitrpg.android.habitica.models.user.User
 
-
 class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R.layout.dialog_habitica_account) {
     private var _binding: DialogHabiticaAccountBinding? = null
     private val binding get() = _binding!!
@@ -46,7 +45,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
             "delete_account" -> setDeleteAccountViews()
         }
 
-        binding.backImagebutton.setOnClickListener{dismiss()}
+        binding.backImagebutton.setOnClickListener { dismiss() }
     }
 
     private fun setResetAccountViews() {
@@ -103,7 +102,8 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
                     if ((user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.delete_caps)) ||
-                        user?.authentication?.hasPassword == true) {
+                        user?.authentication?.hasPassword == true
+                    ) {
                         binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
                         binding.confirmActionTextview.alpha = 1.0f
                     }
@@ -127,7 +127,6 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
                     accountUpdateConfirmed?.deletionConfirmClicked(confirmationString)
                 }
             }
-
         }
     }
 
@@ -135,10 +134,8 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
         return R.style.HabiticaAccountDialogTheme
     }
 
-
     interface AccountUpdateConfirmed {
         fun resetConfirmedClicked()
         fun deletionConfirmClicked(confirmationString: String)
     }
 }
-

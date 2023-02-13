@@ -7,18 +7,18 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 class BulkTaskScoringData {
-    @Json(name="con")
+    @Json(name = "con")
     var constitution: Int? = null
-    @Json(name="str")
+    @Json(name = "str")
     var strength: Int? = null
-    @Json(name="per")
+    @Json(name = "per")
     var per: Int? = null
-    @Json(name="int")
+    @Json(name = "int")
     var intelligence: Int? = null
     var buffs: Buffs? = null
     var points: Int? = null
     var lvl: Int? = null
-    @Json(name="class")
+    @Json(name = "class")
     var habitClass: String? = null
     var gp: Double? = null
     var exp: Double? = null

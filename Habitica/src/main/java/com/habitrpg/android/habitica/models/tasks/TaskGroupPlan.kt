@@ -8,7 +8,7 @@ import io.realm.annotations.RealmClass
 import java.util.Date
 
 @RealmClass(embedded = true)
-open class GroupAssignedDetails: RealmObject(), BaseObject {
+open class GroupAssignedDetails : RealmObject(), BaseObject {
     var assignedDate: Date? = null
     var assignedUsername: String? = null
     var assignedUserID: String? = null

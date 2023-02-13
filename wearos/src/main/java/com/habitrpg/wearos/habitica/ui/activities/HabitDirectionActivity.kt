@@ -11,8 +11,8 @@ import com.habitrpg.wearos.habitica.ui.viewmodels.HabitDirectionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HabitDirectionActivity: BaseActivity<ActivityHabitDirectionBinding, HabitDirectionViewModel>() {
-        override val viewModel: HabitDirectionViewModel by viewModels()
+class HabitDirectionActivity : BaseActivity<ActivityHabitDirectionBinding, HabitDirectionViewModel>() {
+    override val viewModel: HabitDirectionViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityHabitDirectionBinding.inflate(layoutInflater)

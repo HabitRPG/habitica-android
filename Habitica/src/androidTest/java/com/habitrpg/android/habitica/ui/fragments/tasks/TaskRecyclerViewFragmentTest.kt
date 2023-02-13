@@ -7,8 +7,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
-import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.android.habitica.ui.fragments.FragmentTestCase
+import com.habitrpg.shared.habitica.models.tasks.TaskType
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.recycler.KRecyclerItem
 import io.github.kakaocup.kakao.recycler.KRecyclerView
@@ -30,8 +30,8 @@ class TaskListScreen : Screen<TaskListScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-            itemType(::TaskItem)
-        })
+        itemType(::TaskItem)
+    })
 }
 
 internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewFragment, FragmentRefreshRecyclerviewBinding, TaskListScreen>(false) {

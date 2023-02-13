@@ -12,7 +12,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 @AndroidEntryPoint
-class ConfirmationActivity:
+class ConfirmationActivity :
     BaseActivity<ActivityConfirmationBinding, ConfirmactionActivityViewModel>() {
     override val viewModel: ConfirmactionActivityViewModel by viewModels()
 

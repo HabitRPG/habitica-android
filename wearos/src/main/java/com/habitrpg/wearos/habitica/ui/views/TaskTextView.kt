@@ -15,10 +15,10 @@ import com.habitrpg.android.habitica.R
  */
 open class EllipsizedTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatTextView(context, attrs, defStyleAttr) {
     var ellipsis = getDefaultEllipsis().toString()
-    set(value) {
-        field = value
-        ellipsisSpannable = SpannableString(ellipsis)
-    }
+        set(value) {
+            field = value
+            ellipsisSpannable = SpannableString(ellipsis)
+        }
     var ellipsisColor = getDefaultEllipsisColor()
 
     private var ellipsisSpannable: SpannableString
@@ -69,5 +69,6 @@ open class EllipsizedTextView @JvmOverloads constructor(context: Context, attrs:
 }
 
 class TaskTextView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : EllipsizedTextView(context, attrs)

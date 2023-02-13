@@ -9,7 +9,6 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
-import android.util.Log
 import android.widget.TextView
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.extensions.handleUrlClicks
@@ -29,10 +28,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Integer.min
 import java.lang.NullPointerException
-import kotlin.system.measureNanoTime
-import kotlin.system.measureTimeMillis
 
 object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
@@ -177,7 +173,7 @@ private fun handleUrlClicks(context: Context, url: String) {
         Uri.parse("${context.getString(R.string.base_url)}$url")
     } else {
         if (Uri.parse(url).scheme == null) {
-            Uri.parse("http://$url");
+            Uri.parse("http://$url")
         } else {
             Uri.parse(url)
         }

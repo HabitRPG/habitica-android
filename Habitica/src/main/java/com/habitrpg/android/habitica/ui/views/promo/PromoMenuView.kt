@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PromoMenuBinding
 import com.habitrpg.common.habitica.extensions.getThemeColor

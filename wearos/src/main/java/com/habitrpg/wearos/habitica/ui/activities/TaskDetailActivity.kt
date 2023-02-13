@@ -32,7 +32,8 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
     private fun openEditFormOnPhone() {
         sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray())
         startActivity(
-            Intent(this, ContinuePhoneActivity::class.java))
+            Intent(this, ContinuePhoneActivity::class.java)
+        )
     }
 
     private fun subscribeUI() {

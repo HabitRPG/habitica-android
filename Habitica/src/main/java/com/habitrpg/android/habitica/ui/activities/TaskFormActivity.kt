@@ -117,7 +117,7 @@ class TaskFormActivity : BaseActivity() {
         if (granted) {
             pushNotificationManager.addPushDeviceUsingStoredToken()
         } else {
-            //If user denies notification settings originally - they must manually enable it through notification settings.
+            // If user denies notification settings originally - they must manually enable it through notification settings.
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(R.string.push_notification_system_settings_title)
             alert.setMessage(R.string.push_notification_system_settings_description)
@@ -340,7 +340,8 @@ class TaskFormActivity : BaseActivity() {
             HabiticaTheme {
                 TaskDifficultySelector(
                     viewModel.taskDifficulty.value,
-                    onSelect = { viewModel.taskDifficulty.value = it })
+                    onSelect = { viewModel.taskDifficulty.value = it }
+                )
             }
         }
 
@@ -351,32 +352,38 @@ class TaskFormActivity : BaseActivity() {
                         viewModel.habitScoringPositive.value,
                         viewModel.habitScoringNegative.value,
                         { viewModel.habitScoringPositive.value = !viewModel.habitScoringPositive.value },
-                        { viewModel.habitScoringNegative.value = !viewModel.habitScoringNegative.value })
+                        { viewModel.habitScoringNegative.value = !viewModel.habitScoringNegative.value }
+                    )
                 }
             }
 
             binding.habitResetStreakButtons.setContent {
                 HabiticaTheme {
                     TaskFormSelector(
-                        viewModel.habitResetOption.value, listOf(
+                        viewModel.habitResetOption.value,
+                        listOf(
                             LabeledValue(getString(R.string.repeat_daily), HabitResetOption.DAILY),
                             LabeledValue(getString(R.string.weekly), HabitResetOption.WEEKLY),
                             LabeledValue(getString(R.string.monthly), HabitResetOption.MONTHLY)
-                        ), { viewModel.habitResetOption.value = it }, columnSize = 3
+                        ),
+                        { viewModel.habitResetOption.value = it }, columnSize = 3
                     )
                 }
             }
         }
 
-
         binding.statsSelector.setContent {
             HabiticaTheme {
-                TaskFormSelector(viewModel.selectedAttribute.value, listOf(
-                    LabeledValue(getString(R.string.strength), Attribute.STRENGTH),
-                    LabeledValue(getString(R.string.constitution), Attribute.CONSTITUTION),
-                    LabeledValue(getString(R.string.intelligence), Attribute.INTELLIGENCE),
-                    LabeledValue(getString(R.string.perception), Attribute.PERCEPTION)
-                ), { viewModel.selectedAttribute.value = it })
+                TaskFormSelector(
+                    viewModel.selectedAttribute.value,
+                    listOf(
+                        LabeledValue(getString(R.string.strength), Attribute.STRENGTH),
+                        LabeledValue(getString(R.string.constitution), Attribute.CONSTITUTION),
+                        LabeledValue(getString(R.string.intelligence), Attribute.INTELLIGENCE),
+                        LabeledValue(getString(R.string.perception), Attribute.PERCEPTION)
+                    ),
+                    { viewModel.selectedAttribute.value = it }
+                )
             }
         }
 

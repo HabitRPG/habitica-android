@@ -269,37 +269,36 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             else -> Egg::class.java
         }
         itemType?.let { type ->
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    inventoryRepository.getOwnedItems(type)
-                        .onEach { items ->
-                            val filteredItems = if (isFeeding) {
-                                items.filter { it.key != "Saddle" }
-                            } else {
-                                items
-                            }
-                            adapter?.data = filteredItems
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                inventoryRepository.getOwnedItems(type)
+                    .onEach { items ->
+                        val filteredItems = if (isFeeding) {
+                            items.filter { it.key != "Saddle" }
+                        } else {
+                            items
                         }
-                        .map { items -> items.mapNotNull { it.key } }
-                        .map { inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull() }
-                        .collect {
-                            val itemMap = mutableMapOf<String, Item>()
-                            for (item in it ?: emptyList()) {
-                                itemMap[item.key] = item
-                            }
-                            adapter?.items = itemMap
+                        adapter?.data = filteredItems
+                    }
+                    .map { items -> items.mapNotNull { it.key } }
+                    .map { inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull() }
+                    .collect {
+                        val itemMap = mutableMapOf<String, Item>()
+                        for (item in it ?: emptyList()) {
+                            itemMap[item.key] = item
                         }
-
-                }
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
-                }
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    inventoryRepository.getOwnedPets().map { ownedPets ->
-                        val petMap = mutableMapOf<String, OwnedPet>()
-                        ownedPets.forEach { petMap[it.key ?: ""] = it }
-                        return@map petMap
-                    }.collect { adapter?.setOwnedPets(it) }
-                }
+                        adapter?.items = itemMap
+                    }
+            }
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                inventoryRepository.getPets().collect { adapter?.setExistingPets(it) }
+            }
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                inventoryRepository.getOwnedPets().map { ownedPets ->
+                    val petMap = mutableMapOf<String, OwnedPet>()
+                    ownedPets.forEach { petMap[it.key ?: ""] = it }
+                    return@map petMap
+                }.collect { adapter?.setOwnedPets(it) }
+            }
         }
     }
 

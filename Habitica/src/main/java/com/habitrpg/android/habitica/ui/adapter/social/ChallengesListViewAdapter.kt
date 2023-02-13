@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengeFilterOptions
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.helpers.EmojiParser
-
 import io.realm.OrderedRealmCollection
 
 class ChallengesListViewAdapter(

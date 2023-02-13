@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DisplayItemDropUseCase @Inject
-constructor(private val soundManager: SoundManager):
+constructor(private val soundManager: SoundManager) :
     UseCase<DisplayItemDropUseCase.RequestValues, Unit>() {
 
     override suspend fun run(requestValues: RequestValues) {

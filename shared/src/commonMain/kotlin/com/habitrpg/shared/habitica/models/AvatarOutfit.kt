@@ -10,7 +10,6 @@ interface AvatarOutfit {
     var eyeWear: String
     var headAccessory: String
 
-
     fun isAvailable(outfit: String): Boolean {
         return outfit.isNotBlank() && !outfit.endsWith("base_0")
     }

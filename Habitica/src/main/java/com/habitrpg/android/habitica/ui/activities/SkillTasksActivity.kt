@@ -60,7 +60,7 @@ class SkillTasksActivity : BaseActivity() {
                     else -> TaskType.TODO
                 }
                 fragment.onTaskSelection = {
-                        taskSelected(it)
+                    taskSelected(it)
                 }
                 viewFragmentsDictionary.put(position, fragment)
                 return fragment

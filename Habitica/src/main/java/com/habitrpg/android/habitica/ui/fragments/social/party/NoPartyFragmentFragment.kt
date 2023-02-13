@@ -90,13 +90,13 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val leader = socialRepository.retrieveMember(leaderID) ?: return@launch
                 binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)
-                                ?.setAvatar(leader)
+                    ?.setAvatar(leader)
                 binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text =
-                                getString(
-                                    R.string.invitation_title,
-                                    leader.displayName,
-                                    binding?.invitationsView?.groupName
-                                )
+                    getString(
+                        R.string.invitation_title,
+                        leader.displayName,
+                        binding?.invitationsView?.groupName
+                    )
             }
         }
 
@@ -157,24 +157,24 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         if (it.resultCode == Activity.RESULT_OK) {
             val bundle = it.data?.extras
             if (bundle?.getString("groupType") == "party") {
-                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                        val group = socialRepository.createGroup(
-                            bundle.getString("name"),
-                            bundle.getString("description"),
-                            bundle.getString("leader"),
-                            "party",
-                            bundle.getString("privacy"),
-                            bundle.getBoolean("leaderCreateChallenge")
-                        )
-                        userRepository.retrieveUser(false)
-                        if (isAdded) {
-                            parentFragmentManager.popBackStack()
-                        }
-                        MainNavigationController.navigate(
-                            R.id.partyFragment,
-                            bundleOf(Pair("partyID", userViewModel.partyID))
-                        )
+                lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                    val group = socialRepository.createGroup(
+                        bundle.getString("name"),
+                        bundle.getString("description"),
+                        bundle.getString("leader"),
+                        "party",
+                        bundle.getString("privacy"),
+                        bundle.getBoolean("leaderCreateChallenge")
+                    )
+                    userRepository.retrieveUser(false)
+                    if (isAdded) {
+                        parentFragmentManager.popBackStack()
                     }
+                    MainNavigationController.navigate(
+                        R.id.partyFragment,
+                        bundleOf(Pair("partyID", userViewModel.partyID))
+                    )
+                }
             }
         }
     }

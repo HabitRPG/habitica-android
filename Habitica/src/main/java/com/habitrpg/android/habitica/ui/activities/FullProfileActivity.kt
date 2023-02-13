@@ -147,11 +147,11 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private suspend fun refresh() {
-            val member = socialRepository.retrieveMember(userID)
-            if (member != null) {
-                updateView(member)
-            }
-            this@FullProfileActivity.member.value = member
+        val member = socialRepository.retrieveMember(userID)
+        if (member != null) {
+            updateView(member)
+        }
+        this@FullProfileActivity.member.value = member
     }
 
     override fun onDestroy() {
@@ -174,21 +174,27 @@ class FullProfileActivity : BaseActivity() {
         }
         menu.setGroupVisible(R.id.admin_items, isModerator)
         if (isModerator) {
-            menu.findItem(R.id.ban_user)?.title = getString(if (member.value?.authentication?.blocked == true) {
-                R.string.unban_user
-            } else {
-                R.string.ban_user
-            })
-            menu.findItem(R.id.shadow_mute_user)?.title = getString(if (member.value?.flags?.chatShadowMuted == true) {
-                R.string.unshadowmute_user
-            } else {
-                R.string.shadow_mute_user
-            })
-            menu.findItem(R.id.mute_user)?.title = getString(if (member.value?.flags?.chatRevoked == true) {
-                R.string.unmute_user
-            } else {
-                R.string.mute_user
-            })
+            menu.findItem(R.id.ban_user)?.title = getString(
+                if (member.value?.authentication?.blocked == true) {
+                    R.string.unban_user
+                } else {
+                    R.string.ban_user
+                }
+            )
+            menu.findItem(R.id.shadow_mute_user)?.title = getString(
+                if (member.value?.flags?.chatShadowMuted == true) {
+                    R.string.unshadowmute_user
+                } else {
+                    R.string.shadow_mute_user
+                }
+            )
+            menu.findItem(R.id.mute_user)?.title = getString(
+                if (member.value?.flags?.chatRevoked == true) {
+                    R.string.unmute_user
+                } else {
+                    R.string.mute_user
+                }
+            )
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -357,7 +363,7 @@ class FullProfileActivity : BaseActivity() {
         if (imageUrl == null || imageUrl.isEmpty()) {
             binding.profileImage.visibility = View.GONE
         } else {
-            //binding.profileImage.load(imageUrl)
+            // binding.profileImage.load(imageUrl)
         }
 
         val blurbText = profile.blurb

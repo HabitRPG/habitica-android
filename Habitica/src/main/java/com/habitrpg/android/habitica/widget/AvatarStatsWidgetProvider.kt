@@ -166,8 +166,10 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             remoteViews.setProgressBar(R.id.mp_bar, stats.maxMP ?: 0, stats.mp?.toInt() ?: 0, false)
             remoteViews.setViewVisibility(
                 R.id.mp_wrapper,
-                if (showManaBar[widgetId] != true || stats.habitClass == null || (stats.lvl
-                        ?: 0) < 10 || user.preferences?.disableClasses == true
+                if (showManaBar[widgetId] != true || stats.habitClass == null || (
+                    stats.lvl
+                        ?: 0
+                    ) < 10 || user.preferences?.disableClasses == true
                 ) View.GONE else View.VISIBLE
             )
 

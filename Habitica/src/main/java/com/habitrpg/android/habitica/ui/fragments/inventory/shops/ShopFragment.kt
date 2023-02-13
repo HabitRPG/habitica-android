@@ -276,7 +276,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         lifecycleScope.launchCatching {
             val shop = inventoryRepository.retrieveMarketGear()
             inventoryRepository.getOwnedEquipment()
-                        .map { equipment -> equipment.map { it.key } }
+                .map { equipment -> equipment.map { it.key } }
                 .collect { equipment ->
                     for (category in shop?.categories ?: emptyList()) {
                         val items = category.items.asSequence().filter {

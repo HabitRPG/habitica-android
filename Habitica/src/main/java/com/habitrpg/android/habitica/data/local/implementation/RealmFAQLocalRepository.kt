@@ -12,17 +12,17 @@ import kotlinx.coroutines.flow.map
 class RealmFAQLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), FAQLocalRepository {
     override fun getArticle(position: Int): Flow<FAQArticle> {
         return realm.where(FAQArticle::class.java)
-                .equalTo("position", position)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded && it.count() > 0 }
-                .map { it.firstOrNull() }
+            .equalTo("position", position)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded && it.count() > 0 }
+            .map { it.firstOrNull() }
             .filterNotNull()
     }
 
     override val articles: Flow<List<FAQArticle>>
         get() = realm.where(FAQArticle::class.java)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
 }

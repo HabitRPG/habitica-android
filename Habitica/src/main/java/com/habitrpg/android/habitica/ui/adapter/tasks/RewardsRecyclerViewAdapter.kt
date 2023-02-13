@@ -73,9 +73,10 @@ class RewardsRecyclerViewAdapter(
                     }
                 },
                 { task -> taskOpenEvents?.invoke(task.first, task.second) }, {
-                        task ->
-                    brokenTaskEvents?.invoke(task)
-                }, viewModel)
+                task ->
+                brokenTaskEvents?.invoke(task)
+            }, viewModel
+            )
         } else {
             val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
             viewHolder.purchaseCardAction = { purchaseCardEvents?.invoke(it) }

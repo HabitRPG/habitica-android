@@ -11,7 +11,6 @@ interface BaseTask {
 
     val isDisplayedActive: Boolean
         get() = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO) && !completed
-
 }
 
 val BaseTask.streakString: String?

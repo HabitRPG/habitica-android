@@ -40,7 +40,7 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
             if (url?.contains("/static/new-stuff") == true) {
                 view?.loadUrl(url)
             } else if (url != null) {
-                    MainNavigationController.navigate(url)
+                MainNavigationController.navigate(url)
             }
             return true
         }

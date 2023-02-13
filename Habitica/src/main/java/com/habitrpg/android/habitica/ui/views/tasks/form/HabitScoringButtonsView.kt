@@ -92,10 +92,12 @@ private fun HabitScoringSelection(
     }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(12.dp), modifier = modifier) {
         Box(
-            contentAlignment = Alignment.Center, modifier = Modifier
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
                 .padding(horizontal = 12.dp)
                 .size(34.dp)
-                .border(1.dp, borderColor.value, CircleShape
+                .border(
+                    1.dp, borderColor.value, CircleShape
                 )
                 .clip(CircleShape)
                 .clickable { onSelect() }
@@ -131,7 +133,8 @@ private fun Preview() {
         Modifier
             .background(MaterialTheme.colors.background)
             .width(300.dp)
-            .padding(8.dp)) {
+            .padding(8.dp)
+    ) {
         HabitScoringSelector(
             selectedUp.value, selectedDown.value,
             { selectedUp.value = !selectedUp.value },

@@ -9,14 +9,15 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.TaskRewardChipBinding
-import com.habitrpg.shared.habitica.extensions.round
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.shared.habitica.extensions.round
 import java.math.RoundingMode
 import java.text.NumberFormat
 
 class TaskRewardChip @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
     enum class Size {
         SMALL,
@@ -27,19 +28,22 @@ class TaskRewardChip @JvmOverloads constructor(
     val binding = TaskRewardChipBinding.inflate(context.layoutInflater, this)
 
     var size: Size = Size.MEDIUM
-    set(value) {
-        field = value
-        binding.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, when (field) {
-            Size.SMALL -> 14f
-            Size.MEDIUM -> 16f
-            Size.LARGE -> 20f
-        })
-        when (field) {
-            Size.SMALL -> setScaledPadding(context, 10, 9, 10, 9)
-            Size.MEDIUM -> setScaledPadding(context, 17, 9, 17, 9)
-            Size.LARGE -> setScaledPadding(context, 21, 12, 21, 12)
+        set(value) {
+            field = value
+            binding.textView.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                when (field) {
+                    Size.SMALL -> 14f
+                    Size.MEDIUM -> 16f
+                    Size.LARGE -> 20f
+                }
+            )
+            when (field) {
+                Size.SMALL -> setScaledPadding(context, 10, 9, 10, 9)
+                Size.MEDIUM -> setScaledPadding(context, 17, 9, 17, 9)
+                Size.LARGE -> setScaledPadding(context, 21, 12, 21, 12)
+            }
         }
-    }
 
     init {
         background = ContextCompat.getDrawable(context, R.drawable.row_background)

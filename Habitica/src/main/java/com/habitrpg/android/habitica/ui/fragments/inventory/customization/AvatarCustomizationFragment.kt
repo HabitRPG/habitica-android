@@ -80,22 +80,22 @@ class AvatarCustomizationFragment :
         savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
-            adapter.onCustomizationSelected = { customization ->
-                lifecycleScope.launchCatching {
-                    if (customization.identifier?.isNotBlank() != true) {
-                        userRepository.useCustomization(customization.type ?: "", customization.category, activeCustomization ?: "")
-                    } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
-                        userRepository.unlockPath(customization)
-                        userRepository.retrieveUser(false, true, true)
-                    } else {
-                        userRepository.useCustomization(
-                            customization.type ?: "",
-                            customization.category,
-                            customization.identifier ?: ""
-                        )
-                    }
+        adapter.onCustomizationSelected = { customization ->
+            lifecycleScope.launchCatching {
+                if (customization.identifier?.isNotBlank() != true) {
+                    userRepository.useCustomization(customization.type ?: "", customization.category, activeCustomization ?: "")
+                } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
+                    userRepository.unlockPath(customization)
+                    userRepository.retrieveUser(false, true, true)
+                } else {
+                    userRepository.useCustomization(
+                        customization.type ?: "",
+                        customization.category,
+                        customization.identifier ?: ""
+                    )
                 }
             }
+        }
 
         lifecycleScope.launchCatching {
             inventoryRepository.getInAppRewards()
@@ -195,31 +195,31 @@ class AvatarCustomizationFragment :
                 .combine(currentFilter) { customizations, filter -> Pair(customizations, filter) }
                 .combine(ownedCustomizations) { pair, ownedCustomizations -> Triple(pair.first, pair.second, ownedCustomizations) }
                 .collect { (customizations, filter, ownedCustomizations) ->
-                        adapter.ownedCustomizations =
-                            ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
-                        if (filter.isFiltering) {
-                            val displayedCustomizations = mutableListOf<Customization>()
-                            for (customization in customizations) {
-                                if (shouldSkip(filter, ownedCustomizations, customization)) continue
-                                displayedCustomizations.add(customization)
-                            }
-                            adapter.setCustomizations(
-                                if (!filter.ascending) {
-                                    displayedCustomizations.reversed()
-                                } else {
-                                    displayedCustomizations
-                                }
-                            )
-                        } else {
-                            adapter.setCustomizations(
-                                if (!filter.ascending) {
-                                    customizations.reversed()
-                                } else {
-                                    customizations
-                                }
-                            )
+                    adapter.ownedCustomizations =
+                        ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
+                    if (filter.isFiltering) {
+                        val displayedCustomizations = mutableListOf<Customization>()
+                        for (customization in customizations) {
+                            if (shouldSkip(filter, ownedCustomizations, customization)) continue
+                            displayedCustomizations.add(customization)
                         }
+                        adapter.setCustomizations(
+                            if (!filter.ascending) {
+                                displayedCustomizations.reversed()
+                            } else {
+                                displayedCustomizations
+                            }
+                        )
+                    } else {
+                        adapter.setCustomizations(
+                            if (!filter.ascending) {
+                                customizations.reversed()
+                            } else {
+                                customizations
+                            }
+                        )
                     }
+                }
         }
         if (type == "hair" && (category == "beard" || category == "mustache")) {
             val otherCategory = if (category == "mustache") "beard" else "mustache"

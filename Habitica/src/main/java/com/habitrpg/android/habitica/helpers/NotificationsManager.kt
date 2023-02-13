@@ -24,31 +24,31 @@ interface NotificationsManager {
     fun dismissTaskNotification(context: Context, task: Task)
 }
 
-class MainNotificationsManager: NotificationsManager {
+class MainNotificationsManager : NotificationsManager {
 
     private val seenNotifications: MutableMap<String, Boolean>
     override var apiClient: WeakReference<ApiClient>? = null
 
     private var lastNotificationHandling: Date? = null
-    val _notifications = MutableStateFlow<List<Notification>?>(null)
-    val _displaynotificationEvents = Channel<Notification>()
-    override val displayNotificationEvents: Flow<Notification> = _displaynotificationEvents.receiveAsFlow().filterNotNull()
+    private val notificationsFlow = MutableStateFlow<List<Notification>?>(null)
+    private val displayedNotificationEvents = Channel<Notification>()
+    override val displayNotificationEvents: Flow<Notification> = displayedNotificationEvents.receiveAsFlow().filterNotNull()
 
     init {
         this.seenNotifications = HashMap()
     }
 
     override fun setNotifications(current: List<Notification>) {
-        _notifications.value = current
+        notificationsFlow.value = current
         this.handlePopupNotifications(current)
     }
 
     override fun getNotifications(): Flow<List<Notification>> {
-        return _notifications.filterNotNull()
+        return notificationsFlow.filterNotNull()
     }
 
     override fun getNotification(id: String): Notification? {
-        return _notifications.value?.find { it.id == id }
+        return notificationsFlow.value?.find { it.id == id }
     }
 
     override fun dismissTaskNotification(context: Context, task: Task) {
@@ -92,7 +92,6 @@ class MainNotificationsManager: NotificationsManager {
                     Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -> true
                     Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> true
                     Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -> true
-                    Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> true
                     Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -> true
                     Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> true
                     Notification.Type.ACHIEVEMENT_SEEING_RED.type -> true
@@ -115,7 +114,7 @@ class MainNotificationsManager: NotificationsManager {
 
     private fun readNotification(notification: Notification) {
         MainScope().launchCatching {
-            _displaynotificationEvents.send(notification)
+            displayedNotificationEvents.send(notification)
             seenNotifications[notification.id] = true
             apiClient?.get()?.readNotification(notification.id)
         }

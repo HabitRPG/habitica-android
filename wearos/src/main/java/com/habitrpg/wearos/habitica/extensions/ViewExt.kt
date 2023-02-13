@@ -11,5 +11,3 @@ inline fun View.waitForLayout(crossinline f: View.() -> Unit) = with(viewTreeObs
         }
     })
 }
-
-

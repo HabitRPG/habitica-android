@@ -396,15 +396,15 @@ class ChallengeFormActivity : BaseActivity() {
         }
 
         binding.createChallengeTaskList.addOnItemTouchListener(object :
-            androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
-            override fun onInterceptTouchEvent(
-                rv: androidx.recyclerview.widget.RecyclerView,
-                e: MotionEvent
-            ): Boolean {
-                // Stop only scrolling.
-                return rv.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
-            }
-        })
+                androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
+                override fun onInterceptTouchEvent(
+                    rv: androidx.recyclerview.widget.RecyclerView,
+                    e: MotionEvent
+                ): Boolean {
+                    // Stop only scrolling.
+                    return rv.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
+                }
+            })
         binding.createChallengeTaskList.adapter = challengeTasks
         binding.createChallengeTaskList.layoutManager =
             androidx.recyclerview.widget.LinearLayoutManager(this)

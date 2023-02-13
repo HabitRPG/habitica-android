@@ -69,27 +69,32 @@ fun AssignedView(
                 endContent = {
                     completedAt[assignable.id]?.let {
                         if (showEditButton) {
-                            UndoTaskCompletion(Modifier.clickable {
-                                assignable.id?.let { it1 -> onUndoClick(it1) }
-                            })
+                            UndoTaskCompletion(
+                                Modifier.clickable {
+                                    assignable.id?.let { it1 -> onUndoClick(it1) }
+                                }
+                            )
                         }
                     }
                 }
             )
         }
         if (showEditButton) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-                .clickable {
-                    onEditClick()
-                }
-                .padding(vertical = 4.dp)
-                .background(
-                    backgroundColor,
-                    MaterialTheme.shapes.medium
-                )
-                .padding(15.dp, 12.dp)
-                .heightIn(min = 24.dp)
-                .fillMaxWidth()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .clickable {
+                        onEditClick()
+                    }
+                    .padding(vertical = 4.dp)
+                    .background(
+                        backgroundColor,
+                        MaterialTheme.shapes.medium
+                    )
+                    .padding(15.dp, 12.dp)
+                    .heightIn(min = 24.dp)
+                    .fillMaxWidth()
+            ) {
                 Image(
                     painterResource(R.drawable.edit),
                     null,

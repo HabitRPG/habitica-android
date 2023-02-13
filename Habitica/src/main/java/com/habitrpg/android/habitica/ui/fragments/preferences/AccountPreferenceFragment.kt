@@ -24,8 +24,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.launchCatching
@@ -41,6 +39,8 @@ import com.habitrpg.android.habitica.ui.views.ValidatingEditText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -48,7 +48,7 @@ import javax.inject.Inject
 class AccountPreferenceFragment :
     BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener,
-        AccountUpdateConfirmed {
+    AccountUpdateConfirmed {
     @Inject
     lateinit var hostConfig: HostConfig
     @Inject
@@ -334,7 +334,7 @@ class AccountPreferenceFragment :
                         user?.username ?: "",
                         email ?: "",
                         passwordEditText.text ?: "",
-                        passwordRepeatEditText?.text ?: ""
+                        passwordRepeatEditText.text ?: ""
                     )
                     (activity as? SnackbarActivity)?.showSnackbar(
                         content = context.getString(R.string.password_added),
@@ -454,10 +454,10 @@ class AccountPreferenceFragment :
             ExceptionHandler.reportError(throwable)
         }) {
             userRepository.deleteAccount(password)
-                dialog?.dismiss()
-                accountDialog.dismiss()
-                context?.let { HabiticaBaseApplication.logout(it) }
-                activity?.finish()
+            dialog?.dismiss()
+            accountDialog.dismiss()
+            context?.let { HabiticaBaseApplication.logout(it) }
+            activity?.finish()
         }
     }
 
@@ -471,7 +471,6 @@ class AccountPreferenceFragment :
         if (habiticaAccountDialog != null) {
             accountDialog = habiticaAccountDialog
         }
-
     }
 
     private fun showConfirmUsernameDialog() {
@@ -519,5 +518,4 @@ class AccountPreferenceFragment :
     override fun deletionConfirmClicked(confirmationString: String) {
         deleteAccount(confirmationString)
     }
-
 }

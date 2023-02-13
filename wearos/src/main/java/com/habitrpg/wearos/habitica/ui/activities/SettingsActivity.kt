@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.widget.WearableLinearLayoutManager
@@ -21,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>() {
+class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel>() {
     override val viewModel: SettingsViewModel by viewModels()
     private val adapter = SettingsAdapter()
 
@@ -51,7 +50,6 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
             val client = GoogleSignIn.getClient(this, gso)
             client.signOut()
         } catch (e: Exception) {
-
         }
 
         val intent = Intent(this, LoginActivity::class.java)
@@ -89,7 +87,7 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
                 getString(R.string.version_info, versionName, versionCode),
                 SettingsItem.Types.FOOTER,
                 null
-            ){
+            ) {
             }
         )
     }
@@ -127,6 +125,4 @@ class SettingsActivity: BaseActivity<ActivitySettingsBinding, SettingsViewModel>
         logoutDialog.setContentView(myLayout)
         logoutDialog.show()
     }
-
-
 }

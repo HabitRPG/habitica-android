@@ -21,7 +21,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
+class RealmUserLocalRepository(realm: Realm) :
+    RealmBaseLocalRepository(realm),
     UserLocalRepository {
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserQuestStatus(userID: String): Flow<UserQuestStatus> {
@@ -30,13 +31,13 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
             .map { it.party?.id ?: "" }
             .filter { it.isNotBlank() }
             .flatMapLatest {
-                    realm.where(Group::class.java)
-                        .equalTo("id", it)
-                        .findAll()
-                        .toFlow()
-                        .filter { groups -> groups.size > 0 }
-                        .map { it.firstOrNull() }
-                        .filterNotNull()
+                realm.where(Group::class.java)
+                    .equalTo("id", it)
+                    .findAll()
+                    .toFlow()
+                    .filter { groups -> groups.size > 0 }
+                    .map { it.firstOrNull() }
+                    .filterNotNull()
             }
             .map {
                 when {
@@ -127,22 +128,22 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
     override fun getTeamPlan(teamID: String): Flow<Group?> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(Group::class.java)
-                .equalTo("id", teamID)
-                .findAll()
-                .toFlow()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid }
-                .map { teams -> teams.firstOrNull() }
+            .equalTo("id", teamID)
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid }
+            .map { teams -> teams.firstOrNull() }
     }
 
     override fun getSkills(user: User): Flow<List<Skill>> {
         val habitClass =
             if (user.preferences?.disableClasses == true) "none" else user.stats?.habitClass
         return realm.where(Skill::class.java)
-                .equalTo("habitClass", habitClass)
-                .sort("lvl")
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .equalTo("habitClass", habitClass)
+            .sort("lvl")
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 
     override fun getSpecialItems(user: User): Flow<List<Skill>> {
@@ -154,9 +155,9 @@ class RealmUserLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm),
             }
         }
         return realm.where(Skill::class.java)
-                .`in`("key", ownedItems.toTypedArray())
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .`in`("key", ownedItems.toTypedArray())
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 }

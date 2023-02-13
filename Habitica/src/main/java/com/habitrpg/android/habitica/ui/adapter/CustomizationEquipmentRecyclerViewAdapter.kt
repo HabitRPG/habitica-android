@@ -25,9 +25,9 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
     var equipmentList: MutableList<Equipment> =
         ArrayList()
         set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+                field = value
+                notifyDataSetChanged()
+            }
     var activeEquipment: String? = null
         set(value) {
             field = value
@@ -119,7 +119,8 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                 priceLabel?.text = itemValue.toString()
 
                 (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(
-                    HabiticaIconsHelper.imageOfGem())
+                    HabiticaIconsHelper.imageOfGem()
+                )
 
                 val dialog = HabiticaAlertDialog(itemView.context)
                 dialog.addButton(R.string.purchase_button, true) { _, _ ->

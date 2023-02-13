@@ -229,7 +229,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         } else {
             context?.let { context ->
                 DataBindingUtils.loadImage(context, "quest_" + questContent.key) {
-                    if (binding?.questImageView?.drawable?.constantState != it.constantState || binding?.questImageView?.drawable == null){
+                    if (binding?.questImageView?.drawable?.constantState != it.constantState || binding?.questImageView?.drawable == null) {
                         binding?.questImageView?.setImageDrawable(it)
                     }
                     val params = binding?.questImageView?.layoutParams ?: return@loadImage

@@ -65,5 +65,4 @@ interface InventoryLocalRepository : ContentLocalRepository {
     fun getLiveObject(obj: OwnedItem): OwnedItem?
     fun getItems(itemClass: Class<out Item>): Flow<List<Item>>
     fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>>
-
 }

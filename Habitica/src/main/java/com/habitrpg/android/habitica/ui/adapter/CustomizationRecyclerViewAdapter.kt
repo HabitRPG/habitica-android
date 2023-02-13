@@ -113,9 +113,15 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
             val isOwned = ownedCustomizations.contains(customization.id)
             val isUsable = customization.isUsable(isOwned)
             if (customization.availableFrom != null || customization.availableUntil != null) {
-                if (((customization.availableFrom?.compareTo(today)
-                        ?: 0) > 0 || (customization.availableUntil?.compareTo(today)
-                        ?: 0) < 0) && !isUsable
+                if ((
+                    (
+                        customization.availableFrom?.compareTo(today)
+                            ?: 0
+                        ) > 0 || (
+                        customization.availableUntil?.compareTo(today)
+                            ?: 0
+                        ) < 0
+                    ) && !isUsable
                 ) {
                     continue
                 }
@@ -218,7 +224,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                 return
             }
 
-            if (customization?.type == "background"){
+            if (customization?.type == "background") {
                 val alert = HabiticaAlertDialog(context = itemView.context)
                 val purchasedCustomizationView: View = LayoutInflater.from(itemView.context).inflate(R.layout.purchased_equip_dialog, null)
                 val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
@@ -263,12 +269,12 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         var additionalSetItems: List<Customization>? = null
 
         var buttonWidth: Int
-        get() = binding.purchaseSetButton.width
-        set(value) {
-            val params = binding.purchaseSetButton.layoutParams
-            params.width = value
-            binding.purchaseSetButton.layoutParams = params
-        }
+            get() = binding.purchaseSetButton.width
+            set(value) {
+                val params = binding.purchaseSetButton.layoutParams
+                params.width = value
+                binding.purchaseSetButton.layoutParams = params
+            }
 
         init {
             binding.purchaseSetButton.setOnClickListener(this)

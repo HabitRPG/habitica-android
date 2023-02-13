@@ -21,8 +21,10 @@ import com.habitrpg.common.habitica.helpers.EmptyItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class GuildListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
-    SearchView.OnQueryTextListener, SearchView.OnCloseListener,
+class GuildListFragment :
+    BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+    SearchView.OnQueryTextListener,
+    SearchView.OnCloseListener,
     SwipeRefreshLayout.OnRefreshListener {
 
     @Inject

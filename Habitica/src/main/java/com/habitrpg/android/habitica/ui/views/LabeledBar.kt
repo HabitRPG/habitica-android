@@ -67,9 +67,11 @@ fun LabeledBar(
         modifier = modifier.alpha(if (disabled) 0.5f else 1.0f)
     ) {
         icon?.let {
-            AnimatedVisibility(visible = !displayCompact,
+            AnimatedVisibility(
+                visible = !displayCompact,
                 enter = slideInHorizontally { -18 },
-                exit = slideOutHorizontally { -18 }) {
+                exit = slideOutHorizontally { -18 }
+            ) {
                 Image(
                     it.asImageBitmap(), null, modifier = Modifier.padding(end = 8.dp)
                 )

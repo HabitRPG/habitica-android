@@ -198,7 +198,8 @@ class BirthdayActivity : BaseActivity() {
 @Composable
 fun BirthdayTitle(text: String) {
     Row(
-        verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp, bottom = 8.dp)
     ) {
@@ -259,7 +260,8 @@ fun BirthdayActivityView(
         scaffoldState = scaffoldState
     ) { padding ->
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
                 .background(
                     Brush.verticalGradient(
                         Pair(0.0f, colorResource(id = R.color.brand_300)),
@@ -291,7 +293,8 @@ fun BirthdayActivityView(
                 )
             }
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth()
             ) {
@@ -388,16 +391,19 @@ fun BirthdayActivityView(
                 } else if (isPurchasing) {
                     CircularProgressIndicator()
                 } else {
-                    Text(buildAnnotatedString {
-                        append("Buy for ")
-                        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append(price)
-                        }
-                        append(" or ")
-                        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append("60 Gems")
-                        }
-                    }, color = Color.White)
+                    Text(
+                        buildAnnotatedString {
+                            append("Buy for ")
+                            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                append(price)
+                            }
+                            append(" or ")
+                            withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                append("60 Gems")
+                            }
+                        },
+                        color = Color.White
+                    )
                     HabiticaButton(
                         Color.White,
                         colorResource(R.color.brand_200),
@@ -557,7 +563,8 @@ fun PotionGrid() {
                         AsyncImage(
                             model = DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(
                                 "Pet_HatchingPotion_$potion"
-                            ), null, Modifier.size(68.dp)
+                            ),
+                            null, Modifier.size(68.dp)
                         )
                     }
                 }
@@ -616,11 +623,14 @@ fun HabiticaButton(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    Box(contentAlignment = Alignment.Center, modifier = modifier
-        .background(background, HabiticaTheme.shapes.medium)
-        .clickable { onClick() }
-        .fillMaxWidth()
-        .padding(8.dp)) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .background(background, HabiticaTheme.shapes.medium)
+            .clickable { onClick() }
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
         ProvideTextStyle(
             value = TextStyle(
                 fontSize = 18.sp,

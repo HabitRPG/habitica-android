@@ -5,7 +5,8 @@ import com.habitrpg.shared.habitica.HParcelize
 import com.habitrpg.shared.habitica.models.AvatarStats
 
 @HParcelize
-data class TaskScoringResult(var hasDied: Boolean = false,
+data class TaskScoringResult(
+    var hasDied: Boolean = false,
     var drop: TaskDirectionDataDrop? = null,
     var experienceDelta: Double = 0.0,
     var healthDelta: Double = 0.0,
@@ -14,7 +15,8 @@ data class TaskScoringResult(var hasDied: Boolean = false,
     var hasLeveledUp: Boolean = false,
     var level: Int = 0,
     var questDamage: Double? = null,
-    var questItemsFound: Int? = null): HParcelable {
+    var questItemsFound: Int? = null
+) : HParcelable {
 
     constructor(data: TaskDirectionData, stats: AvatarStats?) : this(
         data.hp <= 0.0,

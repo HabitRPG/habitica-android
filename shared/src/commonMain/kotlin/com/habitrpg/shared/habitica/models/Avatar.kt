@@ -1,6 +1,5 @@
 package com.habitrpg.shared.habitica.models
 
-
 interface Avatar {
     val id: String?
     val balance: Double
@@ -28,10 +27,10 @@ interface Avatar {
 
     val hasClass: Boolean
         get() {
-            return preferences?.disableClasses != true
-                && flags?.classSelected != false
-                && stats?.habitClass?.isNotEmpty() == true
-                && (stats?.lvl ?: 0) >= 10
+            return preferences?.disableClasses != true &&
+                flags?.classSelected != false &&
+                stats?.habitClass?.isNotEmpty() == true &&
+                (stats?.lvl ?: 0) >= 10
         }
 
     val currentMount: String?

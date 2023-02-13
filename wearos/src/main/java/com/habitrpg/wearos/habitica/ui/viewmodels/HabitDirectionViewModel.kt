@@ -14,7 +14,8 @@ class HabitDirectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     userRepository: UserRepository,
     taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     val taskID = savedStateHandle.get<String>("task_id")
     val task = taskRepository.getTask(taskID).asLiveData()

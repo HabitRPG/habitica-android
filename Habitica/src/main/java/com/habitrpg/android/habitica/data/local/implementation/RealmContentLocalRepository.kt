@@ -39,10 +39,10 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
 
     override fun getWorldState(): Flow<WorldState> {
         return realm.where(WorldState::class.java)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded && it.size > 0 }
-                .map { it.first() }
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded && it.size > 0 }
+            .map { it.first() }
             .filterNotNull()
     }
 

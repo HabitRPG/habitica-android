@@ -53,21 +53,25 @@ fun StatsViewComposable(
     Column(
         Modifier
             .background(colorResource(R.color.window_background))
-            .clip(MaterialTheme.shapes.large)) {
+            .clip(MaterialTheme.shapes.large)
+    ) {
         Row(
             Modifier
                 .height(43.dp)
                 .fillMaxWidth()
                 .background(statColor)
                 .padding(horizontal = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically) {
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(statText, color = colorResource(R.color.white))
             Text("${levelValue + equipmentValue + buffValue + allocatedValue}", color = colorResource(R.color.white))
         }
-        Row(Modifier.height(61.dp),
+        Row(
+            Modifier.height(61.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically ) {
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally) {
                 Text(text = "$levelValue", fontSize = 20.sp)
                 Text(text = stringResource(R.string.level), color = colorResource(R.color.text_quad), fontSize = 12.sp)
@@ -80,21 +84,26 @@ fun StatsViewComposable(
                 Text(text = "$buffValue", fontSize = 20.sp)
                 Text(text = stringResource(R.string.buffs), color = colorResource(R.color.text_quad), fontSize = 12.sp)
             }
-            Column(modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .background(colorResource(if (canAllocate) R.color.offset_background_30 else R.color.window_background)), verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .background(colorResource(if (canAllocate) R.color.offset_background_30 else R.color.window_background)),
+                verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally
+            ) {
                 Text(text = "$allocatedValue", fontSize = 20.sp, color = if (canAllocate) statColor else colorResource(R.color.text_primary))
                 Text(text = stringResource(R.string.allocated), color = if (canAllocate) statColor else colorResource(R.color.text_quad), fontSize = 12.sp)
             }
             AnimatedVisibility(visible = canAllocate) {
-                TextButton(onClick = allocateAction,
+                TextButton(
+                    onClick = allocateAction,
                     Modifier
                         .width(48.dp)
                         .fillMaxHeight()
                         .background(
                             colorResource(id = R.color.offset_background_30)
-                        )) {
+                        )
+                ) {
                     Image(HabiticaIconsHelper.imageOfAttributeAllocateButton().asImageBitmap(), null)
                 }
             }

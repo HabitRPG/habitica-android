@@ -94,11 +94,11 @@ fun HabiticaTheme(
 val Typography.caption1
     get() = caption
 val Typography.caption2
-get() = TextStyle(
-    fontWeight = FontWeight.Medium,
-    fontSize = 12.sp,
-    letterSpacing = 0.4.sp
-)
+    get() = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        letterSpacing = 0.4.sp
+    )
 val Typography.caption3
     get() = TextStyle(
         fontWeight = FontWeight.Medium,
@@ -122,7 +122,6 @@ object HabiticaTheme {
     val typography: Typography
         @Composable
         get() = MaterialTheme.typography
-
 
     val shapes: Shapes
         @Composable

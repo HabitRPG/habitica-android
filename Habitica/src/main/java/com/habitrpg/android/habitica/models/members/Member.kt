@@ -52,10 +52,10 @@ open class Member : RealmObject(), Avatar, BaseMainObject, Assignable {
         } else this.profile?.name ?: ""
 
     override val identifiableName: String
-    get() = username ?: ""
+        get() = username ?: ""
 
     override val avatar: Avatar
-    get() = this
+        get() = this
 
     val petsFoundCount: Int
         get() = this.items?.pets?.size ?: 0

@@ -59,7 +59,7 @@ class PushNotificationManager(
                         addRefreshToken()
                     } catch (_: IOException) {
                         // catchy catch-catch
-                    } catch (_: Exception){
+                    } catch (_: Exception) {
                         // catchy catch-catch-cat, I'm out of breath.
                     }
                 }
@@ -85,7 +85,7 @@ class PushNotificationManager(
         if (this.refreshedToken.isEmpty() || !userHasPushDevice()) {
             return
         }
-            apiClient.deletePushDevice(refreshedToken)
+        apiClient.deletePushDevice(refreshedToken)
     }
 
     private fun userHasPushDevice(): Boolean {
@@ -133,7 +133,8 @@ class PushNotificationManager(
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
 
             val notificationFactory = HabiticaLocalNotificationFactory()
-            val notification = notificationFactory.build(remoteMessageIdentifier,
+            val notification = notificationFactory.build(
+                remoteMessageIdentifier,
                 context
             )
             if (pushNotificationManager?.userIsSubscribedToNotificationType(remoteMessageIdentifier) != false) {

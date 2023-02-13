@@ -240,7 +240,8 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                             .fillMaxWidth()
                     ) {
                         Image(HabiticaIconsHelper.imageOfGold().asImageBitmap(), null)
-                        Text("${task?.value}",
+                        Text(
+                            "${task?.value}",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
                             color = darkestColor
@@ -285,7 +286,8 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                     for (item in task?.group?.assignedUsersDetail ?: emptyList()) {
                         val member = viewModel.getMember(item.assignedUserID).collectAsState(null)
                         UserRow(
-                            item.assignedUsername ?: "", member.value, Modifier
+                            item.assignedUsername ?: "", member.value,
+                            Modifier
                                 .padding(vertical = 4.dp)
                                 .background(
                                     HabiticaTheme.colors.windowBackgroundFor(task),
@@ -295,9 +297,11 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 .heightIn(min = 24.dp)
                                 .fillMaxWidth(),
                             color = darkestColor,
-                            extraContent = if (item.completed) ({
-                                CompletedAt(item.completedDate)
-                            }) else null
+                            extraContent = if (item.completed) (
+                                {
+                                    CompletedAt(item.completedDate)
+                                }
+                                ) else null
                         )
                     }
                     task?.group?.assignedUsersDetail?.find { it.assignedUserID == viewModel.userViewModel.userID }

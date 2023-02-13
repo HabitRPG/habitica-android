@@ -56,17 +56,17 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
      */
 
     val subMonthCount: Int
-    get() {
-        return when (planId) {
-            "basic_earned" -> 1
-            "basic_3mo" -> 3
-            "basic_6mo" -> 6
-            "google_6mo" -> 6
-            "basic_12mo" -> 12
-            "group_plan_auto" -> 1
-            else -> 0
+        get() {
+            return when (planId) {
+                "basic_earned" -> 1
+                "basic_3mo" -> 3
+                "basic_6mo" -> 6
+                "google_6mo" -> 6
+                "basic_12mo" -> 12
+                "group_plan_auto" -> 1
+                else -> 0
+            }
         }
-    }
 
     val monthsUntilNextHourglass: Int
         get() {

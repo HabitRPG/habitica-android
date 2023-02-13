@@ -11,9 +11,9 @@ import com.habitrpg.android.habitica.databinding.AchievementSectionHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
+import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
-import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 
 class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

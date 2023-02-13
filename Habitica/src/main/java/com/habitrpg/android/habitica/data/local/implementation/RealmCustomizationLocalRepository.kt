@@ -30,9 +30,9 @@ class RealmCustomizationLocalRepository(realm: Realm) : RealmContentLocalReposit
                 .endGroup()
         }
         return query
-                .sort("customizationSet")
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .sort("customizationSet")
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 }

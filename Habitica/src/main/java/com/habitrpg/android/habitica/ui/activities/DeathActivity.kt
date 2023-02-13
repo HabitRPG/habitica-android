@@ -24,7 +24,7 @@ import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DeathActivity: BaseActivity() {
+class DeathActivity : BaseActivity() {
     private lateinit var binding: ActivityDeathBinding
 
     @Inject
@@ -109,9 +109,8 @@ class DeathActivity: BaseActivity() {
             .setScaleRange(0.5f, 0.8f)
             .setSpeedRange(0.01f, 0.03f)
             .setFadeOut(4000, AccelerateInterpolator())
-            .setSpeedModuleAndAngleRange(0.01f, 0.03f, startAngle, startAngle+80)
-            .emit(binding.root.width / 2, positionArray[1] + (binding.heartView.height/2), 3, 6000)
-
+            .setSpeedModuleAndAngleRange(0.01f, 0.03f, startAngle, startAngle + 80)
+            .emit(binding.root.width / 2, positionArray[1] + (binding.heartView.height / 2), 3, 6000)
     }
 
     override fun onBackPressed() {

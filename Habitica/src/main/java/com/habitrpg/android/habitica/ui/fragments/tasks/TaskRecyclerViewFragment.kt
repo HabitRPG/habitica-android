@@ -63,7 +63,8 @@ import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
 
-open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+open class TaskRecyclerViewFragment :
+    BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     private var taskFlowJob: Job? = null
     val viewModel: TasksViewModel by viewModels({ requireParentFragment() })
@@ -274,8 +275,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
             ): Int {
-                return if ((recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
-                        ?: 0) != 0
+                return if ((
+                    recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
+                        ?: 0
+                    ) != 0
                 ) {
                     makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
                 } else {
@@ -316,11 +319,13 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
                         newPosition = if ((newPosition + 1) >= (recyclerAdapter?.data?.size ?: 0)) {
                             recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
                         } else {
-                            (recyclerAdapter?.data?.get(newPosition + 1)?.position
-                                ?: newPosition) - 1
+                            (
+                                recyclerAdapter?.data?.get(newPosition + 1)?.position
+                                    ?: newPosition
+                                ) - 1
                         }
                     }
-                    //Factor in if adventure guide is shown.
+                    // Factor in if adventure guide is shown.
                     if (recyclerAdapter?.showAdventureGuide == true) {
                         newPosition = newPosition - 1
                     }
@@ -556,8 +561,10 @@ open class TaskRecyclerViewFragment : BaseFragment<FragmentRefreshRecyclerviewBi
     }
 
     private fun openTaskForm(task: Task) {
-        if (Date().time - (TasksFragment.lastTaskFormOpen?.time
-                ?: 0) < 2000 || !task.isValid
+        if (Date().time - (
+            TasksFragment.lastTaskFormOpen?.time
+                ?: 0
+            ) < 2000 || !task.isValid
         ) {
             return
         }

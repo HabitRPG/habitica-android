@@ -18,61 +18,61 @@ import kotlinx.coroutines.flow.map
 class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ChallengeLocalRepository {
 
     override fun isChallengeMember(userID: String, challengeID: String): Flow<Boolean> = realm.where(ChallengeMembership::class.java)
-            .equalTo("userID", userID)
-            .equalTo("challengeID", challengeID)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        .equalTo("userID", userID)
+        .equalTo("challengeID", challengeID)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
         .map { it.count() > 0 }
 
     override fun getChallengeMembership(userId: String, id: String) = realm.where(ChallengeMembership::class.java)
-            .equalTo("userID", userId)
-            .equalTo("challengeID", id)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
-            .map { it.first() }
+        .equalTo("userID", userId)
+        .equalTo("challengeID", id)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
+        .map { it.first() }
         .filterNotNull()
 
     override fun getChallengeMemberships(userId: String) = realm.where(ChallengeMembership::class.java)
-            .equalTo("userID", userId)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        .equalTo("userID", userId)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
 
     override fun getChallenge(id: String): Flow<Challenge> {
         return realm.where(Challenge::class.java)
-                .equalTo("id", id)
-                .findAll()
-                .toFlow()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-                .map { it.first() }
+            .equalTo("id", id)
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .map { it.first() }
             .filterNotNull()
     }
 
     override fun getTasks(challengeID: String): Flow<List<Task>> {
         return realm.where(Task::class.java)
-                .equalTo("userId", challengeID)
-                .findAll()
-                .toFlow()
-                .filter { realmObject -> realmObject.isLoaded }
+            .equalTo("userId", challengeID)
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded }
     }
 
     override val challenges: Flow<List<Challenge>>
         get() = realm.where(Challenge::class.java)
-                .isNotNull("name")
-                .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .isNotNull("name")
+            .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserChallenges(userId: String): Flow<List<Challenge>> {
         return realm.where(ChallengeMembership::class.java)
-                .equalTo("userID", userId)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .equalTo("userID", userId)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
             .flatMapLatest { it ->
                 val ids = it.map {
                     return@map it.challengeID

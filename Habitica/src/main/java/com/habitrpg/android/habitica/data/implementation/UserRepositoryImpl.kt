@@ -43,7 +43,6 @@ class UserRepositoryImpl(
         private var lastSync: Date? = null
     }
 
-
     override fun getUser(): Flow<User?> = getUser(userID)
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
 
@@ -126,7 +125,7 @@ class UserRepositoryImpl(
         val response = apiClient.useSkill(key, target ?: "", taskId) ?: return null
         val user = getLiveUser() ?: return response
         response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-        response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+        response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
         response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
         response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
         response.user?.let { mergeUser(user, it) }
@@ -137,7 +136,7 @@ class UserRepositoryImpl(
         val response = apiClient.useSkill(key, target ?: "") ?: return null
         val user = getLiveUser() ?: return response
         response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
-        response.expDiff =(response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
+        response.expDiff = (response.user?.stats?.exp ?: 0.0) - (user.stats?.exp ?: 0.0)
         response.goldDiff = (response.user?.stats?.gp ?: 0.0) - (user.stats?.gp ?: 0.0)
         response.damage = (response.user?.party?.quest?.progress?.up ?: 0.0f) - (user.party?.quest?.progress?.up ?: 0.0f)
         response.user?.let { mergeUser(user, it) }

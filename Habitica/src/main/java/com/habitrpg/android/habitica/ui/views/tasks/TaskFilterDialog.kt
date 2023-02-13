@@ -62,7 +62,6 @@ class TaskFilterDialog(context: Context, component: UserComponent?, private val 
                     binding.thirdTaskFilter.setText(R.string.completed)
                 }
                 TaskType.REWARD -> {
-
                 }
             }
             setActiveFilter(viewModel.getActiveFilter(value))

@@ -78,13 +78,13 @@ fun UserLevelText(user: Avatar) {
 }
 
 fun AvatarStats.getTranslatedClassName(resources: Resources): String {
-        return when (habitClass) {
-            Stats.HEALER -> resources.getString(R.string.healer)
-            Stats.ROGUE -> resources.getString(R.string.rogue)
-            Stats.WARRIOR -> resources.getString(R.string.warrior)
-            Stats.MAGE -> resources.getString(R.string.mage)
-            else -> resources.getString(R.string.warrior)
-        }
+    return when (habitClass) {
+        Stats.HEALER -> resources.getString(R.string.healer)
+        Stats.ROGUE -> resources.getString(R.string.rogue)
+        Stats.WARRIOR -> resources.getString(R.string.warrior)
+        Stats.MAGE -> resources.getString(R.string.mage)
+        else -> resources.getString(R.string.warrior)
+    }
 }
 
 @Composable
@@ -107,90 +107,96 @@ fun AppHeaderView(
             )
             val animationValue = animateFloatAsState(targetValue = if (teamPlan != null) 1f else 0f).value
             Box(modifier = Modifier.height(100.dp)) {
-                    Column(Modifier.padding(bottom = (animationValue * 48f).dp, end = (animationValue * 80f).dp)) {
+                Column(Modifier.padding(bottom = (animationValue * 48f).dp, end = (animationValue * 80f).dp)) {
+                    LabeledBar(
+                        icon = HabiticaIconsHelper.imageOfHeartLightBg(),
+                        label = stringResource(R.string.HP_default),
+                        color = colorResource(R.color.hpColor),
+                        value = user?.stats?.hp ?: 0.0,
+                        maxValue = user?.stats?.maxHealth?.toDouble() ?: 0.0,
+                        displayCompact = teamPlan != null,
+                        modifier = Modifier.weight(1f)
+                    )
+                    LabeledBar(
+                        icon = HabiticaIconsHelper.imageOfExperience(),
+                        label = stringResource(R.string.XP_default),
+                        color = colorResource(R.color.xpColor),
+                        value = user?.stats?.exp ?: 0.0,
+                        maxValue = user?.stats?.toNextLevel?.toDouble() ?: 0.0,
+                        displayCompact = teamPlan != null,
+                        abbreviateValue = false,
+                        abbreviateMax = false,
+                        modifier = Modifier.weight(1f)
+                    )
+                    if (user?.hasClass == true) {
                         LabeledBar(
-                            icon = HabiticaIconsHelper.imageOfHeartLightBg(),
-                            label = stringResource(R.string.HP_default),
-                            color = colorResource(R.color.hpColor),
-                            value = user?.stats?.hp ?: 0.0,
-                            maxValue = user?.stats?.maxHealth?.toDouble() ?: 0.0,
-                            displayCompact = teamPlan != null,
-                            modifier = Modifier.weight(1f)
-                        )
-                        LabeledBar(
-                            icon = HabiticaIconsHelper.imageOfExperience(),
-                            label = stringResource(R.string.XP_default),
-                            color = colorResource(R.color.xpColor),
-                            value = user?.stats?.exp ?: 0.0,
-                            maxValue = user?.stats?.toNextLevel?.toDouble() ?: 0.0,
+                            icon = HabiticaIconsHelper.imageOfMagic(),
+                            label = stringResource(R.string.MP_default),
+                            color = colorResource(R.color.mpColor),
+                            value = user.stats?.mp ?: 0.0,
+                            maxValue = user.stats?.maxMP?.toDouble() ?: 0.0,
                             displayCompact = teamPlan != null,
                             abbreviateValue = false,
                             abbreviateMax = false,
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable {
+                                    MainNavigationController.navigate(R.id.skillsFragment)
+                                }
+                        )
+                    } else if ((user?.stats?.lvl ?: 0) < 10) {
+                        LabeledBar(
+                            icon = HabiticaIconsHelper.imageOfMagic(),
+                            label = stringResource(R.string.unlock_level, 10),
+                            color = colorResource(R.color.mpColor),
+                            value = 0.0,
+                            maxValue = 1.0,
+                            displayCompact = teamPlan != null,
+                            disabled = true,
                             modifier = Modifier.weight(1f)
                         )
-                        if (user?.hasClass == true) {
-                            LabeledBar(
-                                icon = HabiticaIconsHelper.imageOfMagic(),
-                                label = stringResource(R.string.MP_default),
-                                color = colorResource(R.color.mpColor),
-                                value = user.stats?.mp ?: 0.0,
-                                maxValue = user.stats?.maxMP?.toDouble() ?: 0.0,
-                                displayCompact = teamPlan != null,
-                                abbreviateValue = false,
-                                abbreviateMax = false,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clickable {
-                                        MainNavigationController.navigate(R.id.skillsFragment)
-                                    }
-                            )
-                        } else if ((user?.stats?.lvl ?: 0) < 10) {
-                            LabeledBar(
-                                icon = HabiticaIconsHelper.imageOfMagic(),
-                                label = stringResource(R.string.unlock_level, 10),
-                                color = colorResource(R.color.mpColor),
-                                value = 0.0,
-                                maxValue = 1.0,
-                                displayCompact = teamPlan != null,
-                                disabled = true,
-                                modifier = Modifier.weight(1f)
-                            )
-                        }
                     }
-                    val animWidth = with(LocalDensity.current) { 48.dp.roundToPx() }
+                }
+                val animWidth = with(LocalDensity.current) { 48.dp.roundToPx() }
                 androidx.compose.animation.AnimatedVisibility(
-                        visible = teamPlan != null,
-                        enter = slideInHorizontally { animWidth } + fadeIn(),
-                        exit = slideOutHorizontally { animWidth } + fadeOut(),
-                    modifier = Modifier.align(Alignment.TopEnd)) {
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .padding(start = 12.dp)
-                                .width(72.dp)
-                                .height(48.dp)
-                                .clip(MaterialTheme.shapes.medium)
-                                .background(
-                                    colorResource(R.color.window_background)
+                    visible = teamPlan != null,
+                    enter = slideInHorizontally { animWidth } + fadeIn(),
+                    exit = slideOutHorizontally { animWidth } + fadeOut(),
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(start = 12.dp)
+                            .width(72.dp)
+                            .height(48.dp)
+                            .clip(MaterialTheme.shapes.medium)
+                            .background(
+                                colorResource(R.color.window_background)
+                            )
+                            .clickable {
+                                MainNavigationController.navigate(
+                                    R.id.guildFragment,
+                                    bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1)
                                 )
-                                .clickable {
-                                    MainNavigationController.navigate(
-                                        R.id.guildFragment,
-                                        bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1)
-                                    )
-                                }
-                        ) {
-                            Image(painterResource(R.drawable.icon_chat), null, colorFilter = ColorFilter.tint(
-                                colorResource(R.color.text_ternary)))
-                        }
+                            }
+                    ) {
+                        Image(
+                            painterResource(R.drawable.icon_chat), null,
+                            colorFilter = ColorFilter.tint(
+                                colorResource(R.color.text_ternary)
+                            )
+                        )
                     }
+                }
                 val animHeight = with(LocalDensity.current) { 40.dp.roundToPx() }
                 androidx.compose.animation.AnimatedVisibility(
                     visible = teamPlan != null,
                     enter = slideInVertically { animHeight } + fadeIn(),
                     exit = slideOutVertically { animHeight } + fadeOut(),
-                modifier = Modifier.align(Alignment.BottomCenter)) {
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
                         verticalAlignment = Alignment.CenterVertically,
@@ -208,10 +214,12 @@ fun AppHeaderView(
                             }
                     ) {
                         for (member in teamPlanMembers?.filter { it.id != user?.id }?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }?.take(6) ?: emptyList()) {
-                            Box(modifier = Modifier
-                                .clip(CircleShape)
-                                .size(26.dp)
-                                .padding(end = 6.dp, top = 4.dp)) {
+                            Box(
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .size(26.dp)
+                                    .padding(end = 6.dp, top = 4.dp)
+                            ) {
                                 ComposableAvatarView(
                                     avatar = member,
                                     Modifier
@@ -237,7 +245,8 @@ fun AppHeaderView(
                             .padding(end = 12.dp)
                             .clickable {
                                 MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
-                            }, decimals = 0
+                            },
+                        decimals = 0
                     )
                 }
                 CurrencyText(
@@ -288,6 +297,5 @@ private class UserProvider : PreviewParameterProvider<User> {
 @Preview
 private fun Preview(@PreviewParameter(UserProvider::class) user: User) {
     AppHeaderView(user) {
-
     }
 }

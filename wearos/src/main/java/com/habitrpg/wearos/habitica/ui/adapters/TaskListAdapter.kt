@@ -10,7 +10,7 @@ import com.habitrpg.wearos.habitica.ui.viewHolders.tasks.TaskViewHolder
 
 open class TaskListAdapter : BaseAdapter<Any>() {
     var onTaskScore: ((Task) -> Unit)? = null
-    var onTaskTapped:((Task) -> Unit)? = null
+    var onTaskTapped: ((Task) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_HEADER) {
@@ -31,7 +31,7 @@ open class TaskListAdapter : BaseAdapter<Any>() {
             holder.itemView.setOnClickListener {
                 onTaskTapped?.invoke(item)
             }
-        } else if (holder is HeaderTaskViewHolder){
+        } else if (holder is HeaderTaskViewHolder) {
             if (position == 0) {
                 holder.bind(title, data.firstOrNull() is String, isDisconnected)
                 holder.itemView.setOnClickListener {
@@ -50,7 +50,7 @@ open class TaskListAdapter : BaseAdapter<Any>() {
             TYPE_HEADER
         } else {
             val item = data[position - 1]
-            if (item is Task)  1 else TYPE_HEADER
+            if (item is Task) 1 else TYPE_HEADER
         }
     }
 }

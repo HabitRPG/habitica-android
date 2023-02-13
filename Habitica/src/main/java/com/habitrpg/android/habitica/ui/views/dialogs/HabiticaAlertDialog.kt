@@ -248,7 +248,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             params
         } else {
             LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 48.dpToPx(context))
-        }   
+        }
         buttonView.layoutParams = layoutParams
         buttonView.elevation = 10f
 

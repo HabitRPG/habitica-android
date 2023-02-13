@@ -116,11 +116,13 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
 
     fun retrieveGroup(function: (() -> Unit)?) {
         if (groupID?.isNotEmpty() == true) {
-            viewModelScope.launch(ExceptionHandler.coroutine {
-                if (it is HttpException && it.code() == 404) {
-                    MainNavigationController.navigateBack()
+            viewModelScope.launch(
+                ExceptionHandler.coroutine {
+                    if (it is HttpException && it.code() == 404) {
+                        MainNavigationController.navigateBack()
+                    }
                 }
-            }) {
+            ) {
                 val group = socialRepository.retrieveGroup(groupID ?: "")
                 if (groupViewType == GroupViewType.PARTY) {
                     socialRepository.retrievePartyMembers(group?.id ?: "", true)
@@ -161,7 +163,6 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     fun leaveGroup(
         groupChallenges: List<Challenge>,
         keepChallenges: Boolean = true,
-        function: (() -> Unit)? = null
     ) {
         if (!keepChallenges) {
             viewModelScope.launchCatching {
@@ -206,7 +207,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
             val message = socialRepository.likeMessage(message)
             val index = _chatMessages.value?.indexOfFirst { it.id == message?.id }
             if (index == null || index < 0) {
-                retrieveGroupChat {  }
+                retrieveGroupChat { }
                 return@launchCatching
             }
             val list = _chatMessages.value?.toMutableList()
@@ -222,21 +223,25 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         val list = _chatMessages.value?.toMutableList()
         list?.remove(chatMessage)
         _chatMessages.postValue(list)
-        viewModelScope.launch(ExceptionHandler.coroutine {
-            list?.add(oldIndex, chatMessage)
-            _chatMessages.postValue(list)
-            ExceptionHandler.reportError(it)
-        }) {
+        viewModelScope.launch(
+            ExceptionHandler.coroutine {
+                list?.add(oldIndex, chatMessage)
+                _chatMessages.postValue(list)
+                ExceptionHandler.reportError(it)
+            }
+        ) {
             socialRepository.deleteMessage(chatMessage)
         }
     }
 
     fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {
         groupID?.let { groupID ->
-            viewModelScope.launch(ExceptionHandler.coroutine {
-                ExceptionHandler.reportError(it)
-                onError()
-            }) {
+            viewModelScope.launch(
+                ExceptionHandler.coroutine {
+                    ExceptionHandler.reportError(it)
+                    onError()
+                }
+            ) {
                 val response = socialRepository.postGroupChat(groupID, chatText)
                 val list = _chatMessages.value?.toMutableList()
                 if (response != null) {

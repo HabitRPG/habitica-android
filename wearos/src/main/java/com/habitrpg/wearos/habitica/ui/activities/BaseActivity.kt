@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivity() {
+abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActivity() {
     @Inject
     lateinit var appStateManager: AppStateManager
 
@@ -94,10 +94,12 @@ abstract class BaseActivity<B: ViewBinding, VM: BaseViewModel> : ComponentActivi
 
     internal fun openRemoteActivity(url: String, keepActive: Boolean = false) {
         sendMessage("open_activity", url, null)
-        startActivity(Intent(this, ContinuePhoneActivity::class.java)
-            .apply {
-                putExtra("keep_active", keepActive)
-            })
+        startActivity(
+            Intent(this, ContinuePhoneActivity::class.java)
+                .apply {
+                    putExtra("keep_active", keepActive)
+                }
+        )
     }
 
     internal fun sendMessage(

@@ -13,12 +13,13 @@ class TodosRecyclerViewAdapter(layoutResource: Int, viewModel: TasksViewModel) :
                 getContentView(parent), { task, direction -> taskScoreEvents?.invoke(task, direction) },
                 { task, item -> checklistItemScoreEvents?.invoke(task, item) },
                 {
-                        task ->
+                    task ->
                     taskOpenEvents?.invoke(task.first, task.second)
                 }, {
-                        task ->
-                    brokenTaskEvents?.invoke(task)
-                }, viewModel)
+                task ->
+                brokenTaskEvents?.invoke(task)
+            }, viewModel
+            )
         } else {
             super.onCreateViewHolder(parent, viewType)
         }

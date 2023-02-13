@@ -32,7 +32,8 @@ class TaskListViewModel @Inject constructor(
     userRepository: UserRepository,
     val sharedPreferences: SharedPreferences,
     moshi: Moshi,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     var type: Type = Types.newParameterizedType(
         MutableList::class.java,
@@ -47,7 +48,7 @@ class TaskListViewModel @Inject constructor(
     }
     val tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT)
         .map {
-            when(taskType) {
+            when (taskType) {
                 TaskType.DAILY -> mapDaily(it)
                 TaskType.TODO -> mapTodos(it)
                 else -> map(it)
@@ -64,15 +65,17 @@ class TaskListViewModel @Inject constructor(
                 completedToDos.remove(task)
             }
         }
-        viewModelScope.launch(exceptionBuilder.userFacing(this) {
-            if (taskType == TaskType.TODO) {
-                if (direction == TaskDirection.UP) {
-                    completedToDos.remove(task)
-                } else {
-                    completedToDos.add(task)
+        viewModelScope.launch(
+            exceptionBuilder.userFacing(this) {
+                if (taskType == TaskType.TODO) {
+                    if (direction == TaskDirection.UP) {
+                        completedToDos.remove(task)
+                    } else {
+                        completedToDos.add(task)
+                    }
                 }
             }
-        }) {
+        ) {
             val result = taskRepository.scoreTask(
                 userRepository.getUser().first(),
                 task,
@@ -94,7 +97,7 @@ class TaskListViewModel @Inject constructor(
 
     private fun mapDaily(tasks: List<Task>): MutableList<Any> {
         val taskList: MutableList<Any> = tasks.filter { it.isDue == true || it.type == TaskType.TODO }.sortedBy { it.completed }.toMutableList()
-        val firstCompletedIndex = taskList.indexOfFirst { it is Task &&  it.completed }
+        val firstCompletedIndex = taskList.indexOfFirst { it is Task && it.completed }
         if (firstCompletedIndex >= 0) {
             // since this is the index of the first completed task, this is also the number of incomplete tasks
             taskCount.value = firstCompletedIndex
@@ -126,5 +129,4 @@ class TaskListViewModel @Inject constructor(
             putString("to_do_tasks", moshiAdapter.toJson(completedToDos))
         }
     }
-
 }

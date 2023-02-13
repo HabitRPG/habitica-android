@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FaintActivity: BaseActivity<ActivityFaintBinding, FaintViewModel>() {
+class FaintActivity : BaseActivity<ActivityFaintBinding, FaintViewModel>() {
     override val viewModel: FaintViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +20,12 @@ class FaintActivity: BaseActivity<ActivityFaintBinding, FaintViewModel>() {
         binding.continueButton.setOnClickListener {
             binding.continueButton.isEnabled = false
             startAnimatingProgress()
-            lifecycleScope.launch(CoroutineExceptionHandler { _, _ ->
-                stopAnimatingProgress()
-                binding.continueButton.isEnabled = true
-            }) {
+            lifecycleScope.launch(
+                CoroutineExceptionHandler { _, _ ->
+                    stopAnimatingProgress()
+                    binding.continueButton.isEnabled = true
+                }
+            ) {
                 viewModel.revive()
                 finish()
             }

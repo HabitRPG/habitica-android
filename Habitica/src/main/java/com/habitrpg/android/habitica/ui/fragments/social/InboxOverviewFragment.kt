@@ -74,8 +74,8 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
     private fun loadMessages() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             socialRepository.getInboxConversations().collect {
-                    setInboxMessages(it)
-                }
+                setInboxMessages(it)
+            }
         }
     }
 

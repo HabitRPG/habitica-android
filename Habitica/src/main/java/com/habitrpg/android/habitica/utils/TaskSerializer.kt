@@ -194,7 +194,6 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                 obj.addProperty("completed", task.completed)
             }
             else -> {
-
             }
         }
 

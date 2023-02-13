@@ -306,17 +306,17 @@ class SocialRepositoryImpl(
 
     override suspend fun acceptQuest(user: User?, partyId: String): Void? {
         apiClient.acceptQuest(partyId)
-            user?.let {
-                localRepository.updateRSVPNeeded(it, false)
-            }
+        user?.let {
+            localRepository.updateRSVPNeeded(it, false)
+        }
         return null
     }
 
     override suspend fun rejectQuest(user: User?, partyId: String): Void? {
         apiClient.rejectQuest(partyId)
-            user?.let {
-                localRepository.updateRSVPNeeded(it, false)
-            }
+        user?.let {
+            localRepository.updateRSVPNeeded(it, false)
+        }
         return null
     }
 

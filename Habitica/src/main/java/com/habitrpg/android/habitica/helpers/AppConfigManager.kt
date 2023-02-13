@@ -16,7 +16,7 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import kotlinx.coroutines.MainScope
 import java.util.Date
 
-class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.common.habitica.helpers.AppConfigManager() {
+class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.common.habitica.helpers.AppConfigManager() {
 
     private var worldState: WorldState? = null
 
@@ -24,8 +24,8 @@ class AppConfigManager(contentRepository: ContentRepository?): com.habitrpg.comm
         try {
             MainScope().launchCatching {
                 contentRepository?.getWorldState()?.collect {
-                        worldState = it
-                    }
+                    worldState = it
+                }
             }
         } catch (_: java.lang.IllegalStateException) {
             // pass

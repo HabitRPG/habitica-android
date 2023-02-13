@@ -8,11 +8,12 @@ import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.RecyclerViewStateAdapter
 
 class RecyclerViewEmptySupport @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : RecyclerView(context, attrs) {
     var onRefresh: (() -> Unit)?
-    get() = emptyAdapter.onRefresh
-    set(value) { emptyAdapter.onRefresh = value }
+        get() = emptyAdapter.onRefresh
+        set(value) { emptyAdapter.onRefresh = value }
 
     var state: RecyclerViewState = RecyclerViewState.LOADING
         set(value) {

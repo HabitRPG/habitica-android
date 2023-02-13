@@ -39,7 +39,7 @@ class FailedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 }
 
-class HolderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+class HolderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -50,7 +50,9 @@ class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             ContextCompat.getColor(
                 itemView.context,
                 R.color.text_dimmed
-            ), android.graphics.PorterDuff.Mode.MULTIPLY)
+            ),
+            android.graphics.PorterDuff.Mode.MULTIPLY
+        )
         emptyItem?.iconResource?.let { binding.emptyIconView.setImageResource(it) }
         binding.emptyViewTitle.text = emptyItem?.title
         binding.emptyViewDescription.text = emptyItem?.text
@@ -93,7 +95,7 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
                 object : RecyclerView.ViewHolder(view) {}
             }
             1 -> FailedViewHolder(parent.inflate(R.layout.failed_item))
-            else ->if (emptyViewBuilder != null) {
+            else -> if (emptyViewBuilder != null) {
                 HolderViewHolder(emptyViewBuilder?.invoke() ?: View(parent.context))
             } else {
                 EmptyViewHolder(parent.inflate(R.layout.empty_item))
@@ -122,4 +124,3 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
         }
     }
 }
-

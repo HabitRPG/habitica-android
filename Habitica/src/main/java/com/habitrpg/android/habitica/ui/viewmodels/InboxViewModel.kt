@@ -34,7 +34,7 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    protected var memberIDFlow = MutableStateFlow<String?>(null)
+    private var memberIDFlow = MutableStateFlow<String?>(null)
     val memberIDState: StateFlow<String?> = memberIDFlow
 
     private val config = PagedList.Config.Builder()
@@ -124,10 +124,10 @@ class MessagesDataSource(
                     }
                 }
                 .collect {
-                        if (it.size < 10 && footer != null)
-                            callback.onResult(it.plusElement(footer!!), 0)
-                        else
-                            callback.onResult(it, 0)
+                    if (it.size < 10 && footer != null)
+                        callback.onResult(it.plusElement(footer!!), 0)
+                    else
+                        callback.onResult(it, 0)
                 }
         }
     }

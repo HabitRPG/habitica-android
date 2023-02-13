@@ -52,7 +52,6 @@ class HabitButtonWidgetService : Service() {
             }
         }
 
-
         stopSelf()
 
         return START_STICKY

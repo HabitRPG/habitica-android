@@ -8,19 +8,19 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.wearos.habitica.ui.viewHolders.HeaderViewHolder
 import com.habitrpg.wearos.habitica.ui.viewHolders.SpacerViewHolder
 
-abstract class BaseAdapter<D: Any> : RecyclerView.Adapter<RecyclerView.ViewHolder >() {
+abstract class BaseAdapter<D : Any> : RecyclerView.Adapter<RecyclerView.ViewHolder >() {
     var title: String = ""
-    set(value) {
-        val previous = field
-        field = value
-        notifyItemChanged(0)
-    }
+        set(value) {
+            val previous = field
+            field = value
+            notifyItemChanged(0)
+        }
     var onRefresh: (() -> Unit)? = null
     var isDisconnected = false
-    set(value) {
-        field = value
-        notifyItemChanged(0)
-    }
+        set(value) {
+            field = value
+            notifyItemChanged(0)
+        }
 
     var data: List<D> = listOf()
         set(value) {

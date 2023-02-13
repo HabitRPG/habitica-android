@@ -102,7 +102,7 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
         }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) { socialRepository.retrieveGroup(Group.TAVERN_ID) }
-        
+
         user?.let { binding?.questProgressView?.configure(it) }
     }
 

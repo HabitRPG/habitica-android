@@ -26,13 +26,15 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
             updateTaskTypeButton(binding.todoButton, TaskType.TODO)
             updateTaskTypeButton(binding.dailyButton, TaskType.DAILY)
             updateTaskTypeButton(binding.habitButton, TaskType.HABIT)
-            val typeName = getString(when(value) {
-                TaskType.HABIT -> R.string.habit
-                TaskType.DAILY -> R.string.daily
-                TaskType.TODO -> R.string.todo
-                TaskType.REWARD -> R.string.reward
-                else -> R.string.task
-            })
+            val typeName = getString(
+                when (value) {
+                    TaskType.HABIT -> R.string.habit
+                    TaskType.DAILY -> R.string.daily
+                    TaskType.TODO -> R.string.todo
+                    TaskType.REWARD -> R.string.reward
+                    else -> R.string.task
+                }
+            )
             binding.confirmationTitle.text = getString(R.string.new_task_x, typeName)
             binding.saveButton.setChipText(getString(R.string.save_task_x, typeName))
         }
@@ -60,20 +62,24 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
 
         binding.saveButton.setOnClickListener {
             binding.saveButton.isEnabled = false
-            lifecycleScope.launch(CoroutineExceptionHandler { _, _ ->
-                binding.saveButton.isEnabled = true
-                binding.editTaskWrapper.isVisible = true
-                binding.taskConfirmationWrapper.isVisible = false
-            }) {
+            lifecycleScope.launch(
+                CoroutineExceptionHandler { _, _ ->
+                    binding.saveButton.isEnabled = true
+                    binding.editTaskWrapper.isVisible = true
+                    binding.taskConfirmationWrapper.isVisible = false
+                }
+            ) {
                 viewModel.saveTask(binding.editText.text, taskType)
                 val data = Intent()
                 data.putExtra("task_type", taskType?.value)
                 setResult(Activity.RESULT_OK, data)
                 finish()
 
-                parent.startActivity(Intent(parent, TaskListActivity::class.java).apply {
-                    putExtra("task_type", taskType?.value)
-                })
+                parent.startActivity(
+                    Intent(parent, TaskListActivity::class.java).apply {
+                        putExtra("task_type", taskType?.value)
+                    }
+                )
             }
         }
         if (intent.extras?.containsKey("task_type") == true) {

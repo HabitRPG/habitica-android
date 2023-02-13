@@ -23,9 +23,11 @@ object NumberAbbreviator {
         if (decimalCount > 0) {
             pattern = ("$pattern.").padEnd(4 + decimalCount, '#')
         }
-        val formatter = DecimalFormat(pattern + abbreviationForCounter(context, counter)
-            .replace(".", "")
-            .replace(",", ""))
+        val formatter = DecimalFormat(
+            pattern + abbreviationForCounter(context, counter)
+                .replace(".", "")
+                .replace(",", "")
+        )
         formatter.roundingMode = RoundingMode.FLOOR
         return formatter.format(usedNumber)
     }

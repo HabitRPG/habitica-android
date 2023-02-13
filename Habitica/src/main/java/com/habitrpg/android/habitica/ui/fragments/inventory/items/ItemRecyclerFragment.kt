@@ -225,7 +225,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         alert?.setMessage(R.string.quest_party_required_description)
         alert?.addButton(R.string.create_new_party, true, false) { _, _ ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                val group = socialRepository.createGroup(
+                socialRepository.createGroup(
                     getString(R.string.usernames_party, user?.profile?.name),
                     "",
                     user?.id,

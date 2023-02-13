@@ -15,7 +15,7 @@ import com.habitrpg.wearos.habitica.ui.viewmodels.InputViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class InputActivity: BaseActivity<ActivityInputBinding, InputViewModel>() {
+class InputActivity : BaseActivity<ActivityInputBinding, InputViewModel>() {
     override val viewModel: InputViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

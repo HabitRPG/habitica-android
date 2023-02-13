@@ -10,7 +10,7 @@ class UserRepository @Inject constructor(
     private val localRepository: UserLocalRepository
 ) {
     val userID: String
-    get() = apiClient.userID
+        get() = apiClient.userID
     val hasAuthentication: Boolean
         get() = apiClient.hasAuthentication()
 

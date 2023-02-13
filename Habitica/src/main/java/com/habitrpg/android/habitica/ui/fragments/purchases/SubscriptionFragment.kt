@@ -104,8 +104,11 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         if (birthdayEventEnd != null) {
             binding?.promoComposeView?.setContent {
                 HabiticaTheme {
-                    BirthdayBanner(endDate = birthdayEventEnd, Modifier.padding(horizontal = 20.dp).clip(HabiticaTheme.shapes.medium)
-                        .padding(bottom = 10.dp))
+                    BirthdayBanner(
+                        endDate = birthdayEventEnd,
+                        Modifier.padding(horizontal = 20.dp).clip(HabiticaTheme.shapes.medium)
+                            .padding(bottom = 10.dp)
+                    )
                 }
             }
             binding?.promoComposeView?.isVisible = true
@@ -115,16 +118,16 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         lifecycleScope.launchCatching {
             inventoryRepository.getLatestMysteryItem().collect {
-                    binding?.subBenefitsMysteryItemIcon?.loadImage(
-                        "shop_set_mystery_${
-                            it.key?.split(
-                                "_"
-                            )?.last()
-                        }"
-                    )
-                    binding?.subBenefitsMysteryItemText?.text =
-                        context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-                }
+                binding?.subBenefitsMysteryItemIcon?.loadImage(
+                    "shop_set_mystery_${
+                    it.key?.split(
+                        "_"
+                    )?.last()
+                    }"
+                )
+                binding?.subBenefitsMysteryItemText?.text =
+                    context?.getString(R.string.subscribe_listitem3_description_new, it.text)
+            }
         }
 
         AmplitudeManager.sendNavigationEvent("subscription screen")

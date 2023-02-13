@@ -111,7 +111,6 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
 
     private fun getItem(position: Int) = items.filter { it.isVisible }[position]
 
-
     override fun getItemCount(): Int = items.count { it.isVisible }
 
     override fun getItemViewType(position: Int): Int {

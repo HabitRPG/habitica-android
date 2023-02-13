@@ -12,7 +12,8 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import kotlin.math.min
 
 class HabiticaProgressBar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
     val binding = ProgressBarBinding.inflate(context.layoutInflater, this)
 

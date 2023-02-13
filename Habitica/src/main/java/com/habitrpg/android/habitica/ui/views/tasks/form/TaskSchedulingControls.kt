@@ -113,14 +113,14 @@ class TaskSchedulingControls @JvmOverloads constructor(
         }
 
     var firstDayOfWeek: Int = -1
-    set(value) {
-        field = value
-        if (value >= 0) {
-            val codes = (1..7).toList()
-            Collections.rotate(codes, -firstDayOfWeek+1)
-            weekdayOrder = codes
+        set(value) {
+            field = value
+            if (value >= 0) {
+                val codes = (1..7).toList()
+                Collections.rotate(codes, -firstDayOfWeek + 1)
+                weekdayOrder = codes
+            }
         }
-    }
 
     private val weekdays: Array<String> by lazy {
         DateFormatSymbols().weekdays

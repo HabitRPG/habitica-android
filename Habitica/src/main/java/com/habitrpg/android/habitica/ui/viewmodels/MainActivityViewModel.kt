@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.content.SharedPreferences
-import android.os.Build
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

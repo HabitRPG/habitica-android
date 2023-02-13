@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.R
 @io.realm.annotations.RealmClass(embedded = true)
 open class Days() : io.realm.RealmObject(), Parcelable {
     val isEveryDay: Boolean
-    get() = m && t && w && th && f && s && su
+        get() = m && t && w && th && f && s && su
     val isOnlyWeekdays: Boolean
         get() = m && t && w && th && f && !s && !su
     val isOnlyWeekends: Boolean

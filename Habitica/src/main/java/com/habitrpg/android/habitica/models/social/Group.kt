@@ -13,9 +13,9 @@ import io.realm.annotations.PrimaryKey
 open class Group : RealmObject(), BaseMainObject {
 
     val isGroupPlan: Boolean
-    get() {
-        return purchased?.isActive == true
-    }
+        get() {
+            return purchased?.isActive == true
+        }
     override val realmClass: Class<Group>
         get() = Group::class.java
     override val primaryIdentifier: String?

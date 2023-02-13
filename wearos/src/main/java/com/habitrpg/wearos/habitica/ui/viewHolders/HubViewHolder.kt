@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowHubBinding
 import com.habitrpg.wearos.habitica.models.user.MenuItem
 
-class HubViewHolder(itemView: View): BindableViewHolder<MenuItem>(itemView) {
+class HubViewHolder(itemView: View) : BindableViewHolder<MenuItem>(itemView) {
     val binding = RowHubBinding.bind(itemView)
 
     override fun bind(data: MenuItem) {

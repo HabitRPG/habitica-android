@@ -64,7 +64,6 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.resetTutorial()
                 activity?.showSnackbar(null, null, getString(R.string.tutorial_reset_confirmation), displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
-
             }
         }
     }

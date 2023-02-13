@@ -115,7 +115,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             adapter.title = user.profile?.name ?: ""
             val index = adapter.data.indexOfFirst { it.identifier == "stats" }
             adapter.data[index].detailText = getString(R.string.user_level, user.stats?.lvl ?: 0)
-            adapter.notifyItemChanged(index+1)
+            adapter.notifyItemChanged(index + 1)
         }
         viewModel.taskCounts.observe(this) {
             adapter.data.forEach { menuItem ->
@@ -152,7 +152,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun openAvatarActivity() {
         startActivity(Intent(this, AvatarActivity::class.java))
     }
-
 
     private fun openStatsActivity() {
         startActivity(Intent(this, StatsActivity::class.java))

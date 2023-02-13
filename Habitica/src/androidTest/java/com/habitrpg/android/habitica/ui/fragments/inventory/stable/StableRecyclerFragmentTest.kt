@@ -33,9 +33,9 @@ class StableScreen : Screen<StableScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-            itemType(::SectionItem)
-            itemType(::PetItem)
-        })
+        itemType(::SectionItem)
+        itemType(::PetItem)
+    })
 }
 
 internal class StableRecyclerFragmentTest : FragmentTestCase<StableRecyclerFragment, FragmentRecyclerviewBinding, StableScreen>(false) {

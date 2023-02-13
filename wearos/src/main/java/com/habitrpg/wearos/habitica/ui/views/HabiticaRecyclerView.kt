@@ -10,7 +10,8 @@ import com.habitrpg.common.habitica.helpers.RecyclerViewStateAdapter
 import com.habitrpg.wearos.habitica.ui.adapters.BaseAdapter
 
 class HabiticaRecyclerView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : WearableRecyclerView(context, attrs) {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -76,9 +77,9 @@ class HabiticaRecyclerView @JvmOverloads constructor(
         state = if (actualAdapter != null && !isInitial) {
             val emptyViewVisible = if (actualAdapter is BaseAdapter<*>) {
                 (actualAdapter as? BaseAdapter<*>)?.hasData() != true
-        } else {
-            actualAdapter?.itemCount == 0
-        }
+            } else {
+                actualAdapter?.itemCount == 0
+            }
             if (emptyViewVisible) {
                 RecyclerViewState.EMPTY
             } else {

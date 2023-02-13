@@ -97,9 +97,11 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.getAchievements().combine(userRepository.getQuestAchievements()) { achievements, questAchievements ->
                 return@combine Pair(achievements, questAchievements)
-            }.combine(userRepository.getQuestAchievements()
-                .map { it.mapNotNull { achievement -> achievement.questKey } }
-                .map { inventoryRepository.getQuestContent(it).firstOrNull() }) { achievements, content ->
+            }.combine(
+                userRepository.getQuestAchievements()
+                    .map { it.mapNotNull { achievement -> achievement.questKey } }
+                    .map { inventoryRepository.getQuestContent(it).firstOrNull() }
+            ) { achievements, content ->
                 Pair(achievements, content)
             }.collect {
                 val achievements = it.first.first

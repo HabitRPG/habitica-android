@@ -206,7 +206,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     override fun onPageScrollStateChanged(state: Int) = Unit
 
-
     private var hasCompleted = false
     private fun onUserReceived(user: User?) {
         if (completedSetup && !hasCompleted) {

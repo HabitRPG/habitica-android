@@ -82,11 +82,13 @@ private fun <V> TaskFormSelection(
         if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
     }
     Box(
-        contentAlignment = Alignment.Center, modifier = modifier
+        contentAlignment = Alignment.Center,
+        modifier = modifier
             .background(
                 Color(
                     LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)
-                ), MaterialTheme.shapes.medium
+                ),
+                MaterialTheme.shapes.medium
             )
             .clip(MaterialTheme.shapes.medium)
             .clickable { onSelect(value) }

@@ -20,7 +20,7 @@ object MainNavigationController {
         get() { return controllerReference?.get() }
 
     val isReady: Boolean
-    get() = controllerReference?.get() != null
+        get() = controllerReference?.get() != null
 
     fun setup(navController: NavController) {
         this.controllerReference = WeakReference(navController)

@@ -14,7 +14,8 @@ import javax.inject.Inject
 class TaskFormViewModel @Inject constructor(
     userRepository: UserRepository,
     taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     suspend fun saveTask(text: CharSequence?, taskType: TaskType?) {
         if (text?.isNotBlank() != true || taskType == null) {

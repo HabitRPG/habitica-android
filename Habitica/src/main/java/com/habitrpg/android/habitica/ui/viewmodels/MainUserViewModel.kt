@@ -36,7 +36,7 @@ class MainUserViewModel(private val providedUserID: String, val userRepository: 
     val isUserInParty: Boolean
         get() = user.value?.hasParty == true
     val mirrorGroupTasks: List<String>
-    get() = user.value?.preferences?.tasks?.mirrorGroupTasks ?: emptyList()
+        get() = user.value?.preferences?.tasks?.mirrorGroupTasks ?: emptyList()
 
     val user: LiveData<User?> = userRepository.getUser().asLiveData()
     var currentTeamPlan: MutableStateFlow<TeamPlan?> = MutableStateFlow(null)

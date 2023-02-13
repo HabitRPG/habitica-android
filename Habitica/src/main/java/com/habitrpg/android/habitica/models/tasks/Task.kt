@@ -96,7 +96,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                 .equals(ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault()).toLocalDate())
         }
 
-
     // Needed for offline creating/updating
     var isSaving: Boolean = false
     var hasErrored: Boolean = false
@@ -307,14 +306,14 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
             val nextDate = nextDue?.firstOrNull()
 
-            //If task !isDisplayedActive or if isDisplayedActive but reminder passed,
-            //set a updated reminder with nextDate
+            // If task !isDisplayedActive or if isDisplayedActive but reminder passed,
+            // set a updated reminder with nextDate
             return if (nextDate != null && (!isDisplayedActive || remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true)) {
                 val nextDueCalendar = GregorianCalendar()
                 nextDueCalendar.time = nextDate
                 parse(oldTime)
                     ?.withYear(nextDueCalendar.get(Calendar.YEAR))
-                    ?.withMonth(nextDueCalendar.get(Calendar.MONTH) + 1) //+1 to handle Gregorian Calendar month range from 0-11
+                    ?.withMonth(nextDueCalendar.get(Calendar.MONTH) + 1) // +1 to handle Gregorian Calendar month range from 0-11
                     ?.withDayOfMonth(nextDueCalendar.get(Calendar.DAY_OF_MONTH))
             } else {
                 return parse(oldTime)
@@ -392,7 +391,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     }
 
     fun isBeingEdited(task: Task): Boolean {
-        
+
         when {
             text != task.text -> return true
             notes != task.notes -> return true

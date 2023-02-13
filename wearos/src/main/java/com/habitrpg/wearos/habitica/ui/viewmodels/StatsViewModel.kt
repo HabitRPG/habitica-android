@@ -14,9 +14,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class StatsViewModel @Inject constructor(userRepository: UserRepository,
+class StatsViewModel @Inject constructor(
+    userRepository: UserRepository,
     taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
     fun retrieveUser() {
         viewModelScope.launch(exceptionBuilder.silent()) {
@@ -26,11 +28,10 @@ class StatsViewModel @Inject constructor(userRepository: UserRepository,
 
     var user: LiveData<User> = userRepository.getUser()
         .distinctUntilChanged { old, new ->
-            val oldStats = old.stats ?: return@distinctUntilChanged  false
-            val newStats = new.stats ?: return@distinctUntilChanged  false
+            val oldStats = old.stats ?: return@distinctUntilChanged false
+            val newStats = new.stats ?: return@distinctUntilChanged false
             return@distinctUntilChanged (oldStats.hp ?: 0.0) + (oldStats.exp ?: 0.0) + (oldStats.exp ?: 0.0) ==
                 (newStats.hp ?: 0.0) + (newStats.exp ?: 0.0) + (newStats.exp ?: 0.0)
         }
         .asLiveData()
-
 }

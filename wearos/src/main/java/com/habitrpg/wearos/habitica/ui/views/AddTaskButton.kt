@@ -16,7 +16,8 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class AddTaskButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
     val binding = ButtonAddTaskBinding.inflate(context.layoutInflater, this)
 
@@ -54,7 +55,7 @@ class AddTaskButton @JvmOverloads constructor(
         super.onLayout(changed, left, top, right, bottom)
         val totalWidth = right - left
         val width = totalWidth / 1.2375f
-        rect.left = (totalWidth - width)/2
+        rect.left = (totalWidth - width) / 2
         rect.right = rect.left + width
         rect.bottom = width / 1.8f
         invalidate()

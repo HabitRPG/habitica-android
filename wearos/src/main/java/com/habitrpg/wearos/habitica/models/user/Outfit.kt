@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class Outfit: AvatarOutfit {
+class Outfit : AvatarOutfit {
     override var armor: String = ""
     override var back: String = ""
     override var body: String = ""

@@ -46,5 +46,4 @@ class StatValueView @JvmOverloads constructor(
         }
         animator.start()
     }
-
 }

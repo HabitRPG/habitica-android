@@ -59,7 +59,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
         updateTabLayoutVisibility()
         updateToolbarInteractivity()
-        
+
         if (hidesToolbar) {
             hideToolbar()
             disableToolbarScrolling()

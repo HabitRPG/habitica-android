@@ -16,18 +16,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(userRepository: UserRepository,
+class SplashViewModel @Inject constructor(
+    userRepository: UserRepository,
     taskRepository: TaskRepository,
     exceptionBuilder: ExceptionHandlerBuilder,
     val apiClient: ApiClient,
     val sharedPreferences: SharedPreferences,
-    val keyHelper: KeyHelper?, appStateManager: AppStateManager
+    val keyHelper: KeyHelper?,
+    appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager), MessageClient.OnMessageReceivedListener {
     lateinit var onLoginCompleted: (Boolean) -> Unit
     val hasAuthentication: Boolean
-    get() {
-        return apiClient.hasAuthentication()
-    }
+        get() {
+            return apiClient.hasAuthentication()
+        }
 
     override fun onMessageReceived(event: MessageEvent) {
         when (event.path) {
@@ -36,9 +38,11 @@ class SplashViewModel @Inject constructor(userRepository: UserRepository,
     }
 
     private fun authDataReceived(event: MessageEvent) {
-        viewModelScope.launch(exceptionBuilder.silent {
-            onLoginCompleted(false)
-        }) {
+        viewModelScope.launch(
+            exceptionBuilder.silent {
+                onLoginCompleted(false)
+            }
+        ) {
             val (userID, apiKey) = String(event.data).split(":")
             try {
                 if (userID.isBlank() || apiKey.isBlank()) {

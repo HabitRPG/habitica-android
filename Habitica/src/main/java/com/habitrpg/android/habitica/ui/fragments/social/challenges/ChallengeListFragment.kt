@@ -27,7 +27,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
-class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>(),
+class ChallengeListFragment :
+    BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -96,10 +97,10 @@ class ChallengeListFragment : BaseFragment<FragmentRefreshRecyclerviewBinding>()
                 .combine(socialRepository.getUserGroups("guild")) { tavern, guilds ->
                     return@combine Pair(tavern, guilds)
                 }.collect {
-                this@ChallengeListFragment.filterGroups = mutableListOf()
-                it.first?.let { tavern -> filterGroups?.add(tavern) }
-                filterGroups?.addAll(it.second)
-            }
+                    this@ChallengeListFragment.filterGroups = mutableListOf()
+                    it.first?.let { tavern -> filterGroups?.add(tavern) }
+                    filterGroups?.addAll(it.second)
+                }
         }
 
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()

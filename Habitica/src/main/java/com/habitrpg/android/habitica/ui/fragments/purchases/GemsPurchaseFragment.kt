@@ -103,8 +103,11 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
         if (birthdayEventEnd != null) {
             binding?.promoComposeView?.setContent {
                 HabiticaTheme {
-                    BirthdayBanner(endDate = birthdayEventEnd, Modifier.padding(horizontal = 20.dp).clip(HabiticaTheme.shapes.medium)
-                        .padding(bottom = 20.dp))
+                    BirthdayBanner(
+                        endDate = birthdayEventEnd,
+                        Modifier.padding(horizontal = 20.dp).clip(HabiticaTheme.shapes.medium)
+                            .padding(bottom = 20.dp)
+                    )
                 }
             }
             binding?.promoComposeView?.isVisible = true

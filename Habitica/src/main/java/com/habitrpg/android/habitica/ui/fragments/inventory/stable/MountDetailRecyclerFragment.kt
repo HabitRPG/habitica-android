@@ -138,7 +138,7 @@ class MountDetailRecyclerFragment :
         if (animalType != null || animalGroup != null) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val mounts = inventoryRepository.getMounts(animalType, animalGroup, animalColor).firstOrNull() ?: emptyList()
-                inventoryRepository.getOwnedMounts().map {  ownedMounts ->
+                inventoryRepository.getOwnedMounts().map { ownedMounts ->
                     val mountMap = mutableMapOf<String, OwnedMount>()
                     ownedMounts.forEach { mountMap[it.key ?: ""] = it }
                     return@map mountMap

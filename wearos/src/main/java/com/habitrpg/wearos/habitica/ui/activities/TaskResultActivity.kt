@@ -52,16 +52,20 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
 
     override fun onDestroy() {
         if (viewModel.hasLeveledUp) {
-            startActivity(Intent(this, LevelupActivity::class.java)
-                .apply {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                })
+            startActivity(
+                Intent(this, LevelupActivity::class.java)
+                    .apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+            )
             overridePendingTransition(R.anim.scale_in, R.anim.move_away)
         } else if (viewModel.hasDied) {
-            startActivity(Intent(this, FaintActivity::class.java)
-                .apply {
-                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                })
+            startActivity(
+                Intent(this, FaintActivity::class.java)
+                    .apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+            )
             overridePendingTransition(R.anim.scale_in, R.anim.move_away)
         }
         super.onDestroy()
@@ -187,12 +191,14 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             if (viewModel.result?.drop?.key != null) {
                 val type = viewModel.result?.drop?.type
                 val key = viewModel.result?.drop?.key
-                elements.add(when (type) {
-                    "Food" -> getString(R.string.some_food)
-                    "Egg" -> getString(R.string.an_egg)
-                    "HatchingPotion" -> getString(R.string.a_potion)
-                    else -> getString(R.string.some_x, type)
-                })
+                elements.add(
+                    when (type) {
+                        "Food" -> getString(R.string.some_food)
+                        "Egg" -> getString(R.string.an_egg)
+                        "HatchingPotion" -> getString(R.string.a_potion)
+                        else -> getString(R.string.some_x, type)
+                    }
+                )
                 dropBinding.imageView.loadImage("Pet_" + type + "_" + key)
             }
             dropBinding.textView.text = when (elements.size) {

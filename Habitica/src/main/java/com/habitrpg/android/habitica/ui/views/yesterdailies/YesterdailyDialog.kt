@@ -246,10 +246,10 @@ class YesterdailyDialog private constructor(
                         return@launchCatching
                     }
                     val dailies = taskRepository.getTasks(TaskType.DAILY, null, emptyArray()).map {
-                            val taskMap = mutableMapOf<String, Int>()
-                            it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
-                            taskMap
-                        }.firstOrNull()
+                        val taskMap = mutableMapOf<String, Int>()
+                        it.forEachIndexed { index, task -> taskMap[task.id ?: ""] = index }
+                        taskMap
+                    }.firstOrNull()
                     val sortedTasks = tasks?.sortedBy { dailies?.get(it.id ?: "") }
 
                     val additionalData = HashMap<String, Any>()

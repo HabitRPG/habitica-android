@@ -4,7 +4,7 @@ import com.habitrpg.shared.habitica.models.AvatarBuffs
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class Buffs: AvatarBuffs {
+class Buffs : AvatarBuffs {
     override var con: Float? = null
     override var str: Float? = null
     override var per: Float? = null

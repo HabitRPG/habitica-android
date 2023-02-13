@@ -6,7 +6,7 @@ import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 
-class TaskFormViewModel: BaseViewModel() {
+class TaskFormViewModel : BaseViewModel() {
     override fun inject(component: UserComponent) {
         component.inject(this)
     }

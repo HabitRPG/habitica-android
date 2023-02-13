@@ -21,7 +21,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.spyk
-import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Test
 
@@ -29,9 +28,9 @@ class PetDetailScreen : Screen<PetDetailScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-            itemType(::SectionItem)
-            itemType(::PetItem)
-        })
+        itemType(::SectionItem)
+        itemType(::PetItem)
+    })
 }
 
 internal class PetDetailRecyclerFragmentTest :

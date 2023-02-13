@@ -13,7 +13,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.dpToPx
 
 class HabitDirectionPickerButton @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
     private var drawFromTop: Boolean
     private var drawable: BitmapDrawable?

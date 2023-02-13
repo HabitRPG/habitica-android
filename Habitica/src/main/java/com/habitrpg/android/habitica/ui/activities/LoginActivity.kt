@@ -81,10 +81,12 @@ class LoginActivity : BaseActivity() {
             showValidationError(R.string.login_validation_error_fieldsmissing)
             return
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine {
-            hideProgress()
-            ExceptionHandler.reportError(it)
-        }) {
+        lifecycleScope.launch(
+            ExceptionHandler.coroutine {
+                hideProgress()
+                ExceptionHandler.reportError(it)
+            }
+        ) {
             val response = apiClient.connectUser(username, password)
             if (response != null) {
                 handleAuthResponse(response)
@@ -112,10 +114,12 @@ class LoginActivity : BaseActivity() {
             )
             return
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine {
-            hideProgress()
-            ExceptionHandler.reportError(it)
-        }) {
+        lifecycleScope.launch(
+            ExceptionHandler.coroutine {
+                hideProgress()
+                ExceptionHandler.reportError(it)
+            }
+        ) {
             val response = apiClient.registerUser(username, email, password, confirmPassword)
             if (response != null) {
                 handleAuthResponse(response)

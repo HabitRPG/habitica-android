@@ -218,7 +218,6 @@ class PetDetailRecyclerFragment :
                         }
                         adapter.setItemList(items)
                     }
-
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.app.Activity
-import android.util.Log
 import android.view.ViewGroup
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -71,7 +70,6 @@ private fun BottomSheetWrapper(
     composeView: ComposeView,
     content: @Composable (() -> Unit) -> Unit
 ) {
-    val TAG = parent::class.java.simpleName
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     var isSheetOpened by remember { mutableStateOf(false) }
@@ -143,7 +141,6 @@ private fun BottomSheetWrapper(
                 }
             }
             else -> {
-                Log.i(TAG, "Bottom sheet ${modalBottomSheetState.currentValue} state")
             }
         }
     }

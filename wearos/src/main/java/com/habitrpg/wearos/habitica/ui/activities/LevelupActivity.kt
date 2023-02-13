@@ -17,7 +17,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LevelupActivity: BaseActivity<ActivityLevelupBinding, LevelupViewModel>() {
+class LevelupActivity : BaseActivity<ActivityLevelupBinding, LevelupViewModel>() {
     override val viewModel: LevelupViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +26,12 @@ class LevelupActivity: BaseActivity<ActivityLevelupBinding, LevelupViewModel>() 
         binding.continueButton.setOnClickListener {
             binding.continueButton.isEnabled = false
             startAnimatingProgress()
-            lifecycleScope.launch(CoroutineExceptionHandler { _, _ ->
-                stopAnimatingProgress()
-                binding.continueButton.isEnabled = true
-            }) {
+            lifecycleScope.launch(
+                CoroutineExceptionHandler { _, _ ->
+                    stopAnimatingProgress()
+                    binding.continueButton.isEnabled = true
+                }
+            ) {
                 finish()
             }
         }

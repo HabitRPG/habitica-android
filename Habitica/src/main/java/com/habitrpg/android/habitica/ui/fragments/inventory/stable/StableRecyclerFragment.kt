@@ -172,8 +172,6 @@ class StableRecyclerFragment :
         }
     }
 
-
-
     companion object {
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
         private const val HEADER_VIEW_TYPE = 0

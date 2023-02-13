@@ -15,19 +15,19 @@ class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(real
     override fun getTutorialStep(key: String): Flow<TutorialStep> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(TutorialStep::class.java).equalTo("identifier", key)
-                .findAll()
-                .toFlow()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
-                .map { steps -> steps.first() }
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isValid && realmObject.isNotEmpty() }
+            .map { steps -> steps.first() }
             .filterNotNull()
     }
 
     override fun getTutorialSteps(keys: List<String>): Flow<out List<TutorialStep>> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(TutorialStep::class.java)
-                .`in`("identifier", keys.toTypedArray())
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .`in`("identifier", keys.toTypedArray())
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 }

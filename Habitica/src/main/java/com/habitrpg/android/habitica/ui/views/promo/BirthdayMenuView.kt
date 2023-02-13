@@ -50,7 +50,8 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .clickable {
                 MainNavigationController.navigate(R.id.birthdayActivity)
-            }) {
+            }
+    ) {
         Column(Modifier.fillMaxWidth()) {
             Box(
                 contentAlignment = Alignment.CenterStart,
@@ -80,7 +81,8 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(
                         2.dp, Alignment.CenterVertically
-                    ), modifier = Modifier.padding(start = 8.dp)
+                    ),
+                    modifier = Modifier.padding(start = 8.dp)
                 ) {
                     Image(
                         painterResource(R.drawable.birthday_menu_text), null
@@ -123,7 +125,9 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
 
 @Composable
 private fun buildString(
-    value: Int, endDate: Date, formatString: Int
+    value: Int,
+    endDate: Date,
+    formatString: Int
 ): String {
     return stringResource(
         formatString, endDate.getShortRemainingString()
@@ -132,7 +136,11 @@ private fun buildString(
 
 @Composable
 fun TimeRemainingText(
-    endDate: Date, formatString: Int, color: Color, fontSize: TextUnit, fontWeight: FontWeight
+    endDate: Date,
+    formatString: Int,
+    color: Color,
+    fontSize: TextUnit,
+    fontWeight: FontWeight
 ) {
     var value by remember { mutableStateOf(0) }
     LaunchedEffect(value) {

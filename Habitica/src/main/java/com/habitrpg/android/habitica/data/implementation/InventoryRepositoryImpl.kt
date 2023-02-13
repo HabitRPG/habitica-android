@@ -48,7 +48,7 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun retrieveInAppRewards(): List<ShopItem>? {
-        val rewards =  apiClient.retrieveInAppRewards()
+        val rewards = apiClient.retrieveInAppRewards()
         if (rewards != null) {
             localRepository.saveInAppRewards(rewards)
         }

@@ -56,10 +56,10 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun getTasks(userId: String): Flow<List<Task>> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(Task::class.java).equalTo("userId", userId)
-                .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 
     override fun saveTasks(ownerID: String, tasksOrder: TasksOrder, tasks: TaskList) {
@@ -218,10 +218,10 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTaskAtPosition(taskType: String, position: Int): Flow<Task> {
         return realm.where(Task::class.java).equalTo("typeValue", taskType).equalTo("position", position)
-                .findAll()
-                .toFlow()
-                .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
-                .map { it.first() }
+            .findAll()
+            .toFlow()
+            .filter { realmObject -> realmObject.isLoaded && realmObject.isNotEmpty() }
+            .map { it.first() }
             .filterNotNull()
     }
 
@@ -244,12 +244,12 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getErroredTasks(userID: String): Flow<List<Task>> {
         return realm.where(Task::class.java)
-                .equalTo("userId", userID)
-                .equalTo("hasErrored", true)
-                .sort("position")
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .equalTo("userId", userID)
+            .equalTo("hasErrored", true)
+            .sort("position")
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 
     override fun getUser(userID: String): Flow<User> {
@@ -264,10 +264,10 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTasksForChallenge(challengeID: String?, userID: String?): Flow<List<Task>> {
         return realm.where(Task::class.java)
-                .equalTo("challengeID", challengeID)
-                .equalTo("userId", userID)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .equalTo("challengeID", challengeID)
+            .equalTo("userId", userID)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 }

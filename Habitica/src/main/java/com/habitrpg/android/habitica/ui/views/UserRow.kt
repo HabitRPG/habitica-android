@@ -32,11 +32,13 @@ fun UserRow(
     color: Color? = null
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxWidth()) {
-        Box(modifier = Modifier
-            .padding(end = 12.dp)
-            .clip(CircleShape)
-            .size(40.dp)
-            .padding(end = 12.dp, top = if (avatar?.currentMount?.isNotBlank() == true) 24.dp else 12.dp)) {
+        Box(
+            modifier = Modifier
+                .padding(end = 12.dp)
+                .clip(CircleShape)
+                .size(40.dp)
+                .padding(end = 12.dp, top = if (avatar?.currentMount?.isNotBlank() == true) 24.dp else 12.dp)
+        ) {
             if (avatar != null) {
                 ComposableAvatarView(
                     avatar = avatar,

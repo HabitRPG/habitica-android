@@ -35,7 +35,7 @@ fun SegmentedControl(
     defaultSelectedItemIndex: Int = 0,
     useFixedWidth: Boolean = false,
     itemWidth: Dp = 120.dp,
-    cornerRadius : Int = 10,
+    cornerRadius: Int = 10,
     onItemSelection: (selectedItemIndex: Int) -> Unit
 ) {
     val selectedIndex = remember { mutableStateOf(defaultSelectedItemIndex) }
@@ -104,7 +104,8 @@ fun SegmentedControl(
                     )
                 },
                 border = BorderStroke(
-                    1.dp, if (selectedIndex.value == index) {
+                    1.dp,
+                    if (selectedIndex.value == index) {
                         color
                     } else {
                         color.copy(alpha = 0.75f)

@@ -14,7 +14,8 @@ import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.models.PlayerTier
 
 class UsernameLabel @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
     private val textView = TextView(context)

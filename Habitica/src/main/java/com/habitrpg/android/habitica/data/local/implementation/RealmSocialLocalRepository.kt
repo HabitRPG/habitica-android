@@ -21,18 +21,18 @@ import kotlinx.coroutines.flow.map
 class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), SocialLocalRepository {
 
     override fun getGroupMembership(userId: String, id: String) = realm.where(GroupMembership::class.java)
-            .equalTo("userID", userId)
-            .equalTo("groupID", id)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded && it.isNotEmpty() }
-            .map { it.first() }
+        .equalTo("userID", userId)
+        .equalTo("groupID", id)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded && it.isNotEmpty() }
+        .map { it.first() }
 
     override fun getGroupMemberships(userId: String): Flow<List<GroupMembership>> = realm.where(GroupMembership::class.java)
-            .equalTo("userID", userId)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        .equalTo("userID", userId)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
 
     override fun updateMembership(userId: String, id: String, isMember: Boolean) {
         if (isMember) {
@@ -129,19 +129,19 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun getPublicGuilds() = realm.where(Group::class.java)
-            .equalTo("type", "guild")
-            .equalTo("privacy", "public")
-            .notEqualTo("id", Group.TAVERN_ID)
-            .sort("memberCount", Sort.DESCENDING)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        .equalTo("type", "guild")
+        .equalTo("privacy", "public")
+        .notEqualTo("id", Group.TAVERN_ID)
+        .sort("memberCount", Sort.DESCENDING)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserGroups(userID: String, type: String?) = realm.where(GroupMembership::class.java)
-            .equalTo("userID", userID)
-            .findAll()
-            .toFlow()
+        .equalTo("userID", userID)
+        .findAll()
+        .toFlow()
         .filter { it.isLoaded }
         .flatMapLatest { memberships ->
             realm.where(Group::class.java)
@@ -160,10 +160,10 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 
     override fun getGroups(type: String): Flow<List<Group>> {
         return realm.where(Group::class.java)
-                .equalTo("type", type)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .equalTo("type", type)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 
     override fun getGroup(id: String): Flow<Group?> {
@@ -177,11 +177,11 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
 
     override fun getGroupChat(groupId: String): Flow<List<ChatMessage>> {
         return realm.where(ChatMessage::class.java)
-                .equalTo("groupId", groupId)
-                .sort("timestamp", Sort.DESCENDING)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+            .equalTo("groupId", groupId)
+            .sort("timestamp", Sort.DESCENDING)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
     }
 
     override fun deleteMessage(id: String) {
@@ -190,9 +190,9 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun getPartyMembers(partyId: String) = realm.where(Member::class.java)
-                .equalTo("party.id", partyId)
-                .findAll()
-            .toFlow()
+        .equalTo("party.id", partyId)
+        .findAll()
+        .toFlow()
 
     override fun getGroupMembers(groupID: String) = realm.where(GroupMembership::class.java)
         .equalTo("groupID", groupID)
@@ -291,18 +291,18 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun getInboxMessages(userId: String, replyToUserID: String?) = realm.where(ChatMessage::class.java)
-                .equalTo("isInboxMessage", true)
-                .equalTo("uuid", replyToUserID)
-                .equalTo("userID", userId)
-                .sort("timestamp", Sort.DESCENDING)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+        .equalTo("isInboxMessage", true)
+        .equalTo("uuid", replyToUserID)
+        .equalTo("userID", userId)
+        .sort("timestamp", Sort.DESCENDING)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
 
     override fun getInboxConversation(userId: String) = realm.where(InboxConversation::class.java)
-                .equalTo("userID", userId)
-                .sort("timestamp", Sort.DESCENDING)
-                .findAll()
-                .toFlow()
-                .filter { it.isLoaded }
+        .equalTo("userID", userId)
+        .sort("timestamp", Sort.DESCENDING)
+        .findAll()
+        .toFlow()
+        .filter { it.isLoaded }
 }

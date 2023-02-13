@@ -4,7 +4,7 @@ import com.habitrpg.shared.habitica.models.AvatarItems
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class Items: AvatarItems {
+class Items : AvatarItems {
     override var gear: Gear? = null
 
     override var currentMount: String? = null

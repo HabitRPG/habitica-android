@@ -15,9 +15,9 @@ import org.json.JSONException
 import java.util.Date
 
 @JsonClass(generateAdapter = true)
-open class Task constructor(): Parcelable, BaseTask {
+open class Task constructor() : Parcelable, BaseTask {
 
-    @Json(name="_id")
+    @Json(name = "_id")
     var id: String? = null
     var userId: String = ""
     var priority: Float = 0.0f
@@ -52,7 +52,7 @@ open class Task constructor(): Parcelable, BaseTask {
     var startDate: Date? = null
     var repeat: Days? = null
     // todos
-    @Json(name="date")
+    @Json(name = "date")
     var dueDate: Date? = null
 
     @Json(ignore = true)
@@ -212,8 +212,7 @@ open class Task constructor(): Parcelable, BaseTask {
         dest.writeInt(this.counterDown ?: 0)
     }
 
-
-    protected constructor(`in`: Parcel): this() {
+    protected constructor(`in`: Parcel) : this() {
         this.userId = `in`.readString() ?: ""
         this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
         this.text = `in`.readString() ?: ""

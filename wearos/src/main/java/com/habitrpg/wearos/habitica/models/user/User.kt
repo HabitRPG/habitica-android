@@ -7,10 +7,10 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class User: Avatar {
+class User : Avatar {
     val tasksOrder: TasksOrder? = null
     val isDead: Boolean
-    get() = (stats?.hp ?: 0.0) <= 0.0
+        get() = (stats?.hp ?: 0.0) <= 0.0
     override val currentMount: String?
         get() = items?.currentMount
     override val currentPet: String?

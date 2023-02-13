@@ -12,7 +12,8 @@ import javax.inject.Inject
 class AvatarViewModel @Inject constructor(
     userRepository: UserRepository,
     taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder, appStateManager: AppStateManager
+    exceptionBuilder: ExceptionHandlerBuilder,
+    appStateManager: AppStateManager
 ) : BaseViewModel(
     userRepository,
     taskRepository,
