@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.TextView
 import com.habitrpg.android.habitica.databinding.DialogAchievementDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.models.Achievement
+import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 

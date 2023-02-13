@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityDeathBinding
-import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
@@ -19,6 +18,7 @@ import com.habitrpg.android.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
+import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
 import kotlinx.coroutines.launch

@@ -116,11 +116,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             viewModel.user
                 .filterNotNull()
                 .collect { user ->
-                adapter.title = user.profile?.name ?: ""
-                val index = adapter.data.indexOfFirst { it.identifier == "stats" }
-                adapter.data[index].detailText = getString(R.string.user_level, user.stats?.lvl ?: 0)
-                adapter.notifyItemChanged(index + 1)
-            }
+                    adapter.title = user.profile?.name ?: ""
+                    val index = adapter.data.indexOfFirst { it.identifier == "stats" }
+                    adapter.data[index].detailText = getString(R.string.user_level, user.stats?.lvl ?: 0)
+                    adapter.notifyItemChanged(index + 1)
+                }
         }
 
         viewModel.taskCounts.observe(this) {

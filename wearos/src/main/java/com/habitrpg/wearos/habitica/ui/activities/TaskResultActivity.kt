@@ -12,9 +12,9 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityTaskResultBinding
 import com.habitrpg.android.habitica.databinding.TaskRewardDropBinding
-import com.habitrpg.common.habitica.extensions.localizedCapitalize
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensions.localizedCapitalize
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.wearos.habitica.ui.viewmodels.TaskResultViewModel
 import com.habitrpg.wearos.habitica.ui.views.TaskRewardChip
