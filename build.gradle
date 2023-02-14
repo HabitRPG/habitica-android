@@ -62,6 +62,22 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    tasks.withType(Test) {
+        testLogging {
+            events "passed", "skipped", "failed", "standardError"
+            outputs.upToDateWhen {false}
+
+            afterSuite { desc, result ->
+                if (!desc.parent) { // will match the outermost suite
+                    def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+                    def startItem = '|  ', endItem = '  |'
+                    def repeatLength = startItem.length() + output.length() + endItem.length()
+                    println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+                }
+            }
+        }
+    }
 }
 
 Properties props = new Properties()
@@ -110,4 +126,8 @@ tasks.named("detekt").configure {
         sarif.required.set(true)
         sarif.outputLocation.set(file("build/reports/detekt.sarif"))
     }
+}
+
+task allUnitTests(type: GradleBuild) {
+    tasks = [':Habitica:testProdDebugUnitTest', ':wearos:testProdDebugUnitTest', ':common:testProdDebugUnitTest', ':shared:testDebugUnitTest']
 }

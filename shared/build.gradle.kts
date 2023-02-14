@@ -29,7 +29,7 @@ kotlin {
             }
         }
         val androidMain by getting
-        val androidTest by getting
+        val androidUnitTest by getting
         val iosMain by getting
         val iosTest by getting
     }

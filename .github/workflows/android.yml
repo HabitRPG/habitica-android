@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
@@ -23,14 +23,14 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: assembleProdDebug -PdisablePreDex
+        arguments: assembleProdDebug -PdisablePreDex --scan
 
   unit-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
@@ -42,7 +42,7 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: testProdDebugUnitTest
+        arguments: testProdDebugUnitTest --scan
 
 #  ui-test:
 #    runs-on: macos-latest
@@ -73,9 +73,9 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
@@ -87,14 +87,14 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: ktlintCheck
+        arguments: ktlintCheck --scan
 
   detekt:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '11'
         distribution: 'adopt'
@@ -106,9 +106,9 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: detekt
+        arguments: detekt --scan
     - name: Upload SARIF to Github using the upload-sarif action
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       if: ${{ always() }}
       with:
         sarif_file: build/reports/detekt.sarif
