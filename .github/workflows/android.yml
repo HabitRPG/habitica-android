@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 11
@@ -21,7 +21,7 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: assembleProdDebug -PdisablePreDex
+        arguments: assembleProdDebug -PdisablePreDex --no-daemon
 
   unit-test:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: testProdDebugUnitTest
+        arguments: testProdDebugUnitTest --no-daemon
 
 #  ui-test:
 #    runs-on: macos-latest
