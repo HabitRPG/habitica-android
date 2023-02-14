@@ -1,28 +1,36 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.habitrpg.android.habitica.BaseAnnotationTestCase
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.UserStatComputer.AttributeRow
 import com.habitrpg.android.habitica.helpers.UserStatComputer.EquipmentRow
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.Stats
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import java.util.ArrayList
 
-class UserStatComputerTest : BaseAnnotationTestCase() {
-    private val userStatComputer: UserStatComputer = UserStatComputer()
-    private val user: Member = Member()
-    private val equipment: Equipment
-    private val equipmentList: MutableList<Equipment>
-    private val key: String
-    private val text: String
-    private val str = 1
-    private val intStat = 2
-    private val per = 3
-    private val con = 4
-    @Test
-    fun shouldReturnCorrectEquipmentRow() {
+class UserStatComputerTest : StringSpec({
+    val userStatComputer = UserStatComputer()
+    val user = Member()
+    user.stats = Stats()
+    val equipment = Equipment()
+    val equipmentList: MutableList<Equipment> = ArrayList()
+    val key = "example-key"
+    val text = "example-text"
+    val str = 1
+    val intStat = 2
+    val per = 3
+    val con = 4
+
+    equipment.key = key
+    equipment.text = text
+    equipment.str = str
+    equipment._int = intStat
+    equipment.per = per
+    equipment.con = con
+    equipmentList.add(equipment)
+
+    "should return correct equipment row" {
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
         val equipmentRow = statsRows[0] as EquipmentRow
         key shouldBe equipmentRow.gearKey
@@ -30,8 +38,7 @@ class UserStatComputerTest : BaseAnnotationTestCase() {
         "STR 1, INT 2, CON 4, PER 3" shouldBe equipmentRow.stats
     }
 
-    @Test
-    fun shouldReturnClassBonusRowWhenClassMatches() {
+    "should return class bonus for rogue" {
         user.stats!!.habitClass = Stats.ROGUE
         equipment.klass = Stats.ROGUE
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
@@ -45,8 +52,7 @@ class UserStatComputerTest : BaseAnnotationTestCase() {
         attributeRow.summary shouldBe false
     }
 
-    @Test
-    fun shouldReturnClassBonusForHealer() {
+    "should return class bonus for healer" {
         user.stats!!.habitClass = Stats.HEALER
         equipment.klass = Stats.HEALER
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
@@ -57,8 +63,7 @@ class UserStatComputerTest : BaseAnnotationTestCase() {
         (per * 0.0f).toDouble() shouldBe attributeRow.perVal.toDouble()
     }
 
-    @Test
-    fun shouldReturnClassBonusForWarrior() {
+    "should return class bonus for warrior" {
         user.stats!!.habitClass = Stats.WARRIOR
         equipment.klass = Stats.WARRIOR
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
@@ -69,8 +74,7 @@ class UserStatComputerTest : BaseAnnotationTestCase() {
         (per * 0.0f).toDouble() shouldBe attributeRow.perVal.toDouble()
     }
 
-    @Test
-    fun shouldReturnClassBonusForMage() {
+    "should return class bonus for mage" {
         user.stats!!.habitClass = Stats.MAGE
         equipment.klass = Stats.MAGE
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
@@ -81,8 +85,7 @@ class UserStatComputerTest : BaseAnnotationTestCase() {
         (per * 0.5f).toDouble() shouldBe attributeRow.perVal.toDouble()
     }
 
-    @Test
-    fun ShouldReturnClassBonusRowWhenSpecialClassMatches() {
+    "should return class bonus when special class matches" {
         user.stats!!.habitClass = Stats.ROGUE
         equipment.klass = ""
         equipment.specialClass = Stats.ROGUE
@@ -97,8 +100,7 @@ class UserStatComputerTest : BaseAnnotationTestCase() {
         attributeRow.summary shouldBe false
     }
 
-    @Test
-    fun shouldNotReturnClassBonusWhenClassDoesNotMatch() {
+    "should not return class bonus when it does not match" {
         user.stats?.habitClass = Stats.ROGUE
         equipment.klass = ""
         equipment.specialClass = ""
@@ -112,20 +114,4 @@ class UserStatComputerTest : BaseAnnotationTestCase() {
         attributeRow.roundDown shouldBe false
         attributeRow.summary shouldBe false
     }
-
-    init {
-        val stats = Stats()
-        user.stats = stats
-        key = "example-key"
-        text = "example-text"
-        equipment = Equipment()
-        equipment.key = key
-        equipment.text = text
-        equipment.str = str
-        equipment._int = intStat
-        equipment.per = per
-        equipment.con = con
-        equipmentList = ArrayList()
-        equipmentList.add(equipment)
-    }
-}
+})

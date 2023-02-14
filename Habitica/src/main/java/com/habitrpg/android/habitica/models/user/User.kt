@@ -105,7 +105,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
 
     val hasParty: Boolean
         get() {
-            return (this.party?.id?.length ?: 0) > 0
+            return this.party?.id?.isNotBlank() == true
         }
 
     val isSubscribed: Boolean

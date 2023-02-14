@@ -10,6 +10,7 @@ class UserTest : WordSpec({
     val user = User()
     beforeEach {
         user.preferences = Preferences()
+        user.items = Items()
         user.stats = Stats()
         user.flags = Flags()
         user.party = UserParty()
@@ -52,7 +53,7 @@ class UserTest : WordSpec({
         }
     }
 
-    "Onboarding Achievements" should {
+    "onboardingAchievements" should {
         beforeEach {
             user.achievements = RealmList()
             for (key in User.ONBOARDING_ACHIEVEMENT_KEYS) {
@@ -66,7 +67,7 @@ class UserTest : WordSpec({
         }
 
         "hasCompletedOnboarding should be false if not all onboarding achievements are completed" {
-            user.onboardingAchievements.get(2).earned = true
+            user.onboardingAchievements[2].earned = true
             user.hasCompletedOnboarding shouldBe false
         }
     }
@@ -84,6 +85,63 @@ class UserTest : WordSpec({
 
         "false if user has invalid party" {
             user.hasParty shouldBe false
+        }
+    }
+
+    "petsFoundCount" should {
+        "return sum of all pets" {
+            val pets = RealmList<OwnedPet>()
+            pets.add(OwnedPet())
+            pets.add(OwnedPet())
+            pets.add(OwnedPet())
+            pets.add(OwnedPet())
+            pets.add(OwnedPet())
+            user.items!!.pets = pets
+            user.petsFoundCount shouldBe 5
+        }
+
+        "return zero on no pets collection" {
+            user.items?.pets shouldBe null
+            user.petsFoundCount shouldBe 0
+        }
+    }
+
+    "mountsFoundCount" should {
+        "return sum of all pets" {
+            val mounts = RealmList<OwnedMount>()
+            mounts.add(OwnedMount())
+            mounts.add(OwnedMount())
+            mounts.add(OwnedMount())
+            mounts.add(OwnedMount())
+            mounts.add(OwnedMount())
+            user.items!!.mounts = mounts
+            user.mountsTamedCount shouldBe 5
+        }
+
+        "return zero on no pets collection" {
+            user.items?.mounts shouldBe null
+            user.mountsTamedCount shouldBe 0
+        }
+    }
+
+    "hasPermission" should {
+        beforeEach {
+            user.permissions = Permissions()
+        }
+        "return true for admin access" {
+            user.permissions?.fullAccess = true
+            user.hasPermission(Permission.USER_SUPPORT) shouldBe true
+            user.hasPermission(Permission.MODERATOR) shouldBe true
+        }
+
+        "return true if has matching access" {
+            user.permissions?.userSupport = true
+            user.hasPermission(Permission.USER_SUPPORT) shouldBe true
+        }
+
+        "return false if does not have matching access" {
+            user.permissions?.moderator = false
+            user.hasPermission(Permission.MODERATOR) shouldBe false
         }
     }
 })

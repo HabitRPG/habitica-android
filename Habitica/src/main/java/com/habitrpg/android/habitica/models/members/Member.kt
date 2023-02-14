@@ -47,9 +47,7 @@ open class Member : RealmObject(), Avatar, BaseMainObject, Assignable {
     var loginIncentives: Int = 0
 
     val displayName: String
-        get() = if (this.profile == null) {
-            ""
-        } else this.profile?.name ?: ""
+        get() = this.profile?.name ?: ""
 
     override val identifiableName: String
         get() = username ?: ""

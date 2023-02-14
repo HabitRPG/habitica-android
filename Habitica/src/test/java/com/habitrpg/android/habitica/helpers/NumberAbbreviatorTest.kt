@@ -20,35 +20,41 @@ class NumberAbbreviatorTest : StringSpec({
         every { mockContext.getString(R.string.trillion_abbrev) } returns "t"
     }
 
-    "doesn't abbreviate small numbers" {
+    "should not abbreviate small numbers" {
         abbreviate(mockContext, 215.0, 2) shouldBe "215"
         abbreviate(mockContext, 2.05, 2) shouldBe "2.05"
     }
 
-    "it abbreviates thousands" {
+    "should abbreviate thousands" {
         abbreviate(mockContext, 1550.0, 2) shouldBe "1.55k"
     }
 
-    "it abbreviates millions" {
+    "should abbreviate millions" {
         abbreviate(mockContext, 9990000.0, 2) shouldBe "9.99m"
     }
 
-    "it abbreviates billions" {
+    "should abbreviate billions" {
         abbreviate(mockContext, 1990000000.0, 2) shouldBe "1.99b"
     }
 
-    "it abbreviates trillions" {
+    "should abbreviate trillions" {
         abbreviate(mockContext, 1990000000000.0, 2) shouldBe "1.99t"
     }
 
-    "it abbreviates thousands without additional decimals" {
+    "should abbreviate thousands without additional decimals" {
         abbreviate(mockContext, 1000.0, 2) shouldBe "1k"
         abbreviate(mockContext, 1500.0, 2) shouldBe "1.5k"
         abbreviate(mockContext, 1500.0, 0) shouldBe "1k"
     }
 
-    "it rounds correctly" {
+    "should round correctly" {
         abbreviate(mockContext, 9999.0, 2) shouldBe "9.99k"
+    }
+
+    "should force decimals for numbers between -1 and 1" {
+        abbreviate(mockContext, 0.5, 0) shouldBe "0.5"
+        abbreviate(mockContext, 0.3248, 0) shouldBe "0.32"
+        abbreviate(mockContext, -0.99, 0) shouldBe "-0.99"
     }
 
     afterEach { clearMocks(mockContext) }
