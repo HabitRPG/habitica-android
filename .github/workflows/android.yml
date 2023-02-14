@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 11
@@ -19,11 +19,11 @@ jobs:
     - name: Prepare
       run: ./.github/prepare-workflow
     - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: assembleProdDebug -PdisablePreDex --scan
+        arguments: assembleProdDebug -PdisablePreDex
 
   unit-test:
     runs-on: ubuntu-latest
@@ -38,11 +38,11 @@ jobs:
     - name: Prepare
       run: ./.github/prepare-workflow
     - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: testProdDebugUnitTest --scan
+        arguments: testProdDebugUnitTest
 
 #  ui-test:
 #    runs-on: macos-latest
@@ -83,11 +83,11 @@ jobs:
     - name: Prepare
       run: ./.github/prepare-workflow
     - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: ktlintCheck --scan
+        arguments: ktlintCheck
 
   detekt:
     runs-on: ubuntu-latest
@@ -102,11 +102,11 @@ jobs:
     - name: Prepare
       run: ./.github/prepare-workflow
     - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: detekt --scan
+        arguments: detekt
     - name: Upload SARIF to Github using the upload-sarif action
       uses: github/codeql-action/upload-sarif@v2
       if: ${{ always() }}
