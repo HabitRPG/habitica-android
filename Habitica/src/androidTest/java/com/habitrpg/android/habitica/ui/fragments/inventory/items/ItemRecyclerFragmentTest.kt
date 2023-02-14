@@ -22,12 +22,13 @@ import io.github.kakaocup.kakao.text.KTextView
 import io.kotest.matchers.shouldBe
 import io.mockk.CapturingSlot
 import io.mockk.clearMocks
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.spyk
-import io.mockk.verify
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.isA
 import org.junit.Test
@@ -70,10 +71,10 @@ class ItemScreen : Screen<ItemScreen>() {
 internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment, FragmentRecyclerviewBinding, ItemScreen>(false) {
     override fun makeFragment() {
         every { inventoryRepository.getOwnedItems("eggs") } answers {
-            Flowable.just(user.items?.eggs!!.filter { it.numberOwned > 0 })
+            flowOf(user.items?.eggs!!.filter { it.numberOwned > 0 })
         }
         every { inventoryRepository.getOwnedItems("hatchingPotions") } answers {
-            Flowable.just(user.items?.hatchingPotions!!.filter { it.numberOwned > 0 })
+            flowOf(user.items?.hatchingPotions!!.filter { it.numberOwned > 0 })
         }
         fragment = spyk()
         fragment.shouldInitializeComponent = false
@@ -113,10 +114,10 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
         every { inventoryRepository.getOwnedItems("food") } answers {
             var items = user.items?.food!!.filter { it.numberOwned > 0 }
             items = (items + items).sortedBy { it.key }
-            Flowable.just(items)
+            flowOf(items)
         }
         every { inventoryRepository.getItems(Food::class.java, any()) } answers {
-            Flowable.just((content.eggs + content.eggs).sortedBy { it.key })
+            flowOf((content.eggs + content.eggs).sortedBy { it.key })
         }
         fragment.itemType = "food"
         val foundItems = mutableListOf<CharSequence?>()
@@ -134,7 +135,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     @Test
     fun canHatchPetWithEggs() {
         val slot = CapturingSlot<HatchPetUseCase.RequestValues>()
-        every { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
+        coEvery { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
         fragment.itemType = "eggs"
         launchFragment()
         screen {
@@ -142,7 +143,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
                 childWith<ItemItem> { withDescendant { withText("Wolf") } }.click()
                 KView { withText(R.string.hatch_with_potion) }.click()
                 KView { withText("Shade") }.click()
-                verify { hatchPetUseCase.callInteractor(any()) }
+                coVerify { hatchPetUseCase.callInteractor(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
             }
@@ -152,7 +153,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     @Test
     fun canHatchPetWithPotions() {
         val slot = CapturingSlot<HatchPetUseCase.RequestValues>()
-        every { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
+        coEvery { hatchPetUseCase.callInteractor(capture(slot)) } returns mockk(relaxed = true)
         fragment.itemType = "hatchingPotions"
         launchFragment()
         screen {
@@ -160,7 +161,7 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
                 childWith<ItemItem> { withDescendant { withText("Shade") } }.click()
                 KView { withText(R.string.hatch_egg) }.click()
                 KView { withText("Wolf") }.click()
-                verify { hatchPetUseCase.callInteractor(any()) }
+                coVerify { hatchPetUseCase.callInteractor(any()) }
                 slot.captured.egg.key shouldBe "Wolf"
                 slot.captured.potion.key shouldBe "Shade"
             }
@@ -170,19 +171,19 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
     @Test
     fun canSellItems() {
         val slot = CapturingSlot<OwnedItem>()
-        every { inventoryRepository.sellItem(capture(slot)) } returns mockk(relaxed = true)
+        coEvery { inventoryRepository.sellItem(capture(slot)) } returns mockk(relaxed = true)
         fragment.itemType = "eggs"
         launchFragment()
         screen {
             recycler {
                 childWith<ItemItem> { withDescendant { withText("Cactus") } }.click()
                 KView { withText("Sell (3 Gold)") }.click()
-                verify { inventoryRepository.sellItem(any()) }
+                coVerify { inventoryRepository.sellItem(any()) }
                 slot.captured.key shouldBe "Cactus"
 
                 childWith<ItemItem> { withDescendant { withText("Panda Cub") } }.click()
                 KView { withText("Sell (3 Gold)") }.click()
-                verify { inventoryRepository.sellItem(any()) }
+                coVerify { inventoryRepository.sellItem(any()) }
                 slot.captured.key shouldBe "PandaCub"
             }
         }

@@ -14,10 +14,11 @@ import io.github.kakaocup.kakao.recycler.KRecyclerItem
 import io.github.kakaocup.kakao.recycler.KRecyclerView
 import io.github.kakaocup.kakao.screen.Screen
 import io.github.kakaocup.kakao.text.KTextView
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.spyk
-import io.mockk.verify
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.Matcher
 import org.junit.Test
 
@@ -54,7 +55,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
 
     @Test
     fun displaysHabits() {
-        every { taskRepository.getTasks(TaskType.HABIT, any()) } returns Flowable.just(tasks.filter { it.type == TaskType.HABIT })
+        every { taskRepository.getTasks(TaskType.HABIT, any(), emptyArray()) } returns flowOf(tasks.filter { it.type == TaskType.HABIT })
         fragment.taskType = TaskType.HABIT
         launchFragment()
         screen {
@@ -73,7 +74,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
 
     @Test
     fun displaysDailies() {
-        every { taskRepository.getTasks(TaskType.DAILY, any()) } returns Flowable.just(tasks.filter { it.type == TaskType.DAILY })
+        every { taskRepository.getTasks(TaskType.DAILY, any(), emptyArray()) } returns flowOf(tasks.filter { it.type == TaskType.DAILY })
         fragment.taskType = TaskType.DAILY
         launchFragment()
         screen {
@@ -88,7 +89,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
 
     @Test
     fun displaysTodos() {
-        every { taskRepository.getTasks(TaskType.TODO, any()) } returns Flowable.just(tasks.filter { it.type == TaskType.TODO })
+        every { taskRepository.getTasks(TaskType.TODO, any(), emptyArray()) } returns flowOf(tasks.filter { it.type == TaskType.TODO })
         fragment.taskType = TaskType.TODO
         launchFragment()
         screen {
@@ -179,7 +180,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     @Test
     fun scoreHabitUp() {
         val habits = tasks.filter { it.type == TaskType.HABIT }
-        every { taskRepository.getTasks(TaskType.HABIT, any()) } returns Flowable.just(habits)
+        every { taskRepository.getTasks(TaskType.HABIT, any(), emptyArray()) } returns flowOf(habits)
         fragment.taskType = TaskType.HABIT
         launchFragment()
         screen {
@@ -190,7 +191,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
                     KView(this.parent) {
                         withId(R.id.btnPlus)
                     }.click()
-                    verify(exactly = 1) { taskRepository.taskChecked(any(), habits.first().id!!, true, false, any()) }
+                    coVerify(exactly = 1) { taskRepository.taskChecked(any(), habits.first().id!!, true, false, any()) }
                 }
             }
         }
@@ -200,7 +201,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     fun scoreHabitDown() {
         val habits = tasks.filter { it.type == TaskType.HABIT }
         val firstHabit = habits.first()
-        every { taskRepository.getTasks(TaskType.HABIT, any()) } returns Flowable.just(habits)
+        every { taskRepository.getTasks(TaskType.HABIT, any(), emptyArray()) } returns flowOf(habits)
         fragment.taskType = TaskType.HABIT
         launchFragment()
         screen {
@@ -211,7 +212,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
                     KView(this.parent) {
                         withId(R.id.btnMinus)
                     }.click()
-                    verify(exactly = 1) { taskRepository.taskChecked(any(), firstHabit.id!!, false, false, any()) }
+                    coVerify(exactly = 1) { taskRepository.taskChecked(any(), firstHabit.id!!, false, false, any()) }
                 }
             }
         }
@@ -220,7 +221,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     @Test
     fun completeDaily() {
         val dailies = tasks.filter { it.type == TaskType.DAILY }
-        every { taskRepository.getTasks(TaskType.DAILY, any()) } returns Flowable.just(dailies)
+        every { taskRepository.getTasks(TaskType.DAILY, any(), emptyArray()) } returns flowOf(dailies)
         fragment.taskType = TaskType.DAILY
         launchFragment()
         screen {
@@ -230,13 +231,13 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
                     KView(this.parent) {
                         withId(R.id.checkBoxHolder)
                     }.click()
-                    verify(exactly = 1) { taskRepository.taskChecked(any(), dailies.first().id!!, true, false, any()) }
+                    coVerify(exactly = 1) { taskRepository.taskChecked(any(), dailies.first().id!!, true, false, any()) }
                 }
                 childAt<TaskItem>(1) {
                     KView(this.parent) {
                         withId(R.id.checkBoxHolder)
                     }.click()
-                    verify(exactly = 1) { taskRepository.taskChecked(any(), dailies[1].id!!, false, false, any()) }
+                    coVerify(exactly = 1) { taskRepository.taskChecked(any(), dailies[1].id!!, false, false, any()) }
                 }
             }
         }
@@ -245,7 +246,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     @Test
     fun completeTodo() {
         val todos = tasks.filter { it.type == TaskType.TODO }
-        every { taskRepository.getTasks(TaskType.TODO, any()) } returns Flowable.just(todos)
+        coEvery { taskRepository.getTasks(TaskType.TODO, any(), emptyArray()) } returns flowOf(todos)
         fragment.taskType = TaskType.TODO
         launchFragment()
         screen {
@@ -255,7 +256,7 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
                     KView(this.parent) {
                         withId(R.id.checkBoxHolder)
                     }.click()
-                    verify(exactly = 1) { taskRepository.taskChecked(any(), todos.first().id!!, true, false, any()) }
+                    coVerify(exactly = 1) { taskRepository.taskChecked(any(), todos.first().id!!, true, false, any()) }
                 }
             }
         }

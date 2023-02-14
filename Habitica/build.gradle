@@ -76,6 +76,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
     androidTestImplementation "io.kotest:kotest-assertions-core:$kotest_version"
+    androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+
     androidTestUtil("androidx.test:orchestrator:1.4.2")
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
@@ -284,6 +286,10 @@ android {
         abortOnError false
         disable 'MissingTranslation', 'InvalidPackage'
         enable 'LogConditional', 'IconExpectedSize', 'MissingRegistered', 'TypographyQuotes'
+    }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
     }
 }
 
