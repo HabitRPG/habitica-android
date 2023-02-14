@@ -65,7 +65,7 @@
 -keep class io.realm.internal.Keep
 -keep @io.realm.internal.Keep class *
 -dontwarn javax.**
--dontwarn io.realm.**
+-keep io.realm.**
 
 #crashlytic
 -keepattributes SourceFile,LineNumberTable
