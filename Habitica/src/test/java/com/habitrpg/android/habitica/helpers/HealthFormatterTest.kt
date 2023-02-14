@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import java.util.Locale
 
-class HealthFormatterTest: StringSpec({
+class HealthFormatterTest : StringSpec({
     "should round values greater than 1" {
         49.0 shouldBe HealthFormatter.format(49.9)
         9.0 shouldBe HealthFormatter.format(9.9999)
@@ -18,7 +18,7 @@ class HealthFormatterTest: StringSpec({
         "1" shouldBe HealthFormatter.formatToString(1.0001, Locale.US)
     }
 
-    "should round values between 0 and 1 up"{
+    "should round values between 0 and 1 up" {
         1.0 shouldBe HealthFormatter.format(0.99)
         0.2 shouldBe HealthFormatter.format(0.11)
         0.1 shouldBe HealthFormatter.format(0.0001)

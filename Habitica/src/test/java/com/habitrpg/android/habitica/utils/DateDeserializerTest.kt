@@ -9,7 +9,7 @@ import io.kotest.matchers.shouldBe
 import java.lang.reflect.Type
 import java.util.Date
 
-class DateDeserializerTest: WordSpec({
+class DateDeserializerTest : WordSpec({
     val deserializer = DateDeserializer()
     val deserializationContext = object : JsonDeserializationContext {
         override fun <T> deserialize(json: JsonElement, typeOfT: Type): T? {

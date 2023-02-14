@@ -105,6 +105,4 @@ class SubscriptionPlanTest : WordSpec({
             plan.monthsUntilNextHourglass shouldBe 12
         }
     }
-
-
 })
