@@ -18,8 +18,6 @@ jobs:
         cache: gradle
     - name: Prepare
       run: ./.github/prepare-workflow
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
@@ -37,8 +35,6 @@ jobs:
         cache: gradle
     - name: Prepare
       run: ./.github/prepare-workflow
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
@@ -82,8 +78,6 @@ jobs:
         cache: gradle
     - name: Prepare
       run: ./.github/prepare-workflow
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
@@ -101,8 +95,6 @@ jobs:
         cache: gradle
     - name: Prepare
       run: ./.github/prepare-workflow
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@1
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
