@@ -7,9 +7,6 @@ import com.google.gson.JsonParseException
 import com.habitrpg.android.habitica.models.Skill
 import java.lang.reflect.Type
 
-/**
- * Created by viirus on 25/11/15.
- */
 class SkillDeserializer : JsonDeserializer<List<Skill>> {
 
     @Throws(JsonParseException::class)

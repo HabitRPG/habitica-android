@@ -11,7 +11,7 @@ import com.habitrpg.android.habitica.api.MaintenanceApiService
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.databinding.ActivityMaintenanceBinding
-import com.habitrpg.android.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import javax.inject.Inject
 

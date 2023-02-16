@@ -7,6 +7,8 @@ plugins {
     id 'com.google.firebase.crashlytics'
     id 'androidx.navigation.safeargs'
     id 'com.google.firebase.firebase-perf'
+
+    id 'jacoco-report-aggregation'
 }
 
 apply plugin: 'kotlin-android'
@@ -16,7 +18,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     google()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 
     maven { url "https://jitpack.io" }
 }

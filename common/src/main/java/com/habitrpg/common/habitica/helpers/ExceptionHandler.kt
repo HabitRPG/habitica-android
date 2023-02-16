@@ -1,13 +1,12 @@
-package com.habitrpg.android.habitica.helpers
+package com.habitrpg.common.habitica.helpers
 
 import android.util.Log
-import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import coil.network.HttpException
+import com.habitrpg.common.habitica.BuildConfig
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import java.io.IOException
 
 class ExceptionHandler {
@@ -17,7 +16,7 @@ class ExceptionHandler {
 
         private var instance = ExceptionHandler()
 
-        fun init(analyticsManager: AnalyticsManager) {
+        fun init(analyticsManager: AnalyticsManager? = null) {
             instance.analyticsManager = analyticsManager
         }
 

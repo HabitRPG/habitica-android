@@ -43,7 +43,7 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRep
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.UserScope
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import dagger.Module
 import dagger.Provides

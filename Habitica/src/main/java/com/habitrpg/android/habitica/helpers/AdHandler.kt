@@ -18,7 +18,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.util.Date

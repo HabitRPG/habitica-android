@@ -3,8 +3,8 @@ package com.habitrpg.android.habitica.ui.viewmodels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
-import com.habitrpg.android.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest

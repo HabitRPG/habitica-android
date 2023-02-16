@@ -6,25 +6,13 @@ import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSerializationContext
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
-import java.lang.reflect.Type
+import io.mockk.mockk
 import java.util.Date
 
 class DateDeserializerTest : WordSpec({
     val deserializer = DateDeserializer()
-    val deserializationContext = object : JsonDeserializationContext {
-        override fun <T> deserialize(json: JsonElement, typeOfT: Type): T? {
-            return null
-        }
-    }
-    val serializationContext = object : JsonSerializationContext {
-        override fun serialize(src: Any): JsonElement? {
-            return null
-        }
-
-        override fun serialize(src: Any, typeOfSrc: Type): JsonElement? {
-            return null
-        }
-    }
+    val deserializationContext: JsonDeserializationContext = mockk(relaxed = true)
+    val serializationContext: JsonSerializationContext = mockk(relaxed = true)
     val referenceTimestamp: Long = 1443445200000
 
     "deserialize" should {

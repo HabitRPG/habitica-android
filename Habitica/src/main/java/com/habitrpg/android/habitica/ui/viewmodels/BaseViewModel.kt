@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import kotlinx.coroutines.launch
 import javax.inject.Inject

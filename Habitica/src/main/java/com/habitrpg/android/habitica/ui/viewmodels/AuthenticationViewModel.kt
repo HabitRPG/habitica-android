@@ -26,8 +26,8 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
-import com.habitrpg.android.habitica.helpers.launchCatching
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.KeyHelper

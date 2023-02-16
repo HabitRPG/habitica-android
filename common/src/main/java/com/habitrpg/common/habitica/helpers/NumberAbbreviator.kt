@@ -4,6 +4,7 @@ import android.content.Context
 import com.habitrpg.common.habitica.R
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import kotlin.math.abs
 
 object NumberAbbreviator {
 
@@ -13,15 +14,19 @@ object NumberAbbreviator {
 
     fun abbreviate(context: Context?, number: Double, numberOfDecimals: Int = 2, minForAbbrevation: Int = 0): String {
         val decimalCount = if (number != 0.0 && number > -1 && number < 1 && numberOfDecimals == 0) 2 else numberOfDecimals
-        var usedNumber = number
+        val absNumber = abs(number)
+        var usedNumber = absNumber
         var counter = 0
-        while (usedNumber >= 1000 && number >= minForAbbrevation) {
+        while (usedNumber >= 1000 && absNumber >= minForAbbrevation) {
             counter++
             usedNumber /= 1000
         }
         var pattern = "###"
         if (decimalCount > 0) {
             pattern = ("$pattern.").padEnd(4 + decimalCount, '#')
+        }
+        if (number < 0) {
+            pattern = "-$pattern"
         }
         val formatter = DecimalFormat(
             pattern + abbreviationForCounter(context, counter)

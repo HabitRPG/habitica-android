@@ -17,7 +17,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
-import com.habitrpg.android.habitica.proxy.AnalyticsManager
+import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import kotlinx.coroutines.Dispatchers

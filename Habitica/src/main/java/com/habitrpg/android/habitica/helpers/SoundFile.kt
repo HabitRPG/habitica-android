@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.helpers
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import java.io.File
 
 class SoundFile(val theme: String, private val fileName: String) {
