@@ -1,18 +1,12 @@
 package com.habitrpg.android.habitica.utils
 
-import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonElement
 import com.google.gson.JsonPrimitive
-import com.google.gson.JsonSerializationContext
-import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.mockk
 import java.util.Date
 
-class DateDeserializerTest : WordSpec({
+class DateDeserializerTest : SerializerSpec({
     val deserializer = DateDeserializer()
-    val deserializationContext: JsonDeserializationContext = mockk(relaxed = true)
-    val serializationContext: JsonSerializationContext = mockk(relaxed = true)
     val referenceTimestamp: Long = 1443445200000
 
     "deserialize" should {

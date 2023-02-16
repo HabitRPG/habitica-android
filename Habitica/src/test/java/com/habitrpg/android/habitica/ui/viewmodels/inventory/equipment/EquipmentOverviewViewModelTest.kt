@@ -47,7 +47,5 @@ class EquipmentOverviewViewModelTest : WordSpec({
         }
     }
 
-    "getGear" should { }
-
     afterEach { clearMocks(mainUserViewmodel.user) }
 })
