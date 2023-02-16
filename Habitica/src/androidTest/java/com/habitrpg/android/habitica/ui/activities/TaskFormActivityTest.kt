@@ -24,13 +24,14 @@ import io.github.kakaocup.kakao.spinner.KSpinner
 import io.github.kakaocup.kakao.spinner.KSpinnerItem
 import io.github.kakaocup.kakao.text.KButton
 import io.github.kakaocup.kakao.toolbar.KToolbar
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify
-import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.flow.flowOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -162,7 +163,7 @@ class TaskFormActivityTest : ActivityTestCase() {
             device.activities.isCurrent(TaskFormActivity::class.java)
             textEditText.typeText("New Habit")
             KButton { withId(R.id.action_save) }.click()
-            verify(exactly = 1) { taskRepository.createTaskInBackground(any(), assignChanges) }
+            verify(exactly = 1) { taskRepository.createTaskInBackground(any(), emptyMap()) }
         }
     }
 
@@ -176,7 +177,7 @@ class TaskFormActivityTest : ActivityTestCase() {
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, TaskType.HABIT.value)
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id!!)
-        every { taskRepository.getUnmanagedTask(any()) } returns Flowable.just(task)
+        every { taskRepository.getUnmanagedTask(any()) } returns flowOf(task)
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -184,7 +185,7 @@ class TaskFormActivityTest : ActivityTestCase() {
         screen {
             toolbar {
                 KView { withId(R.id.action_save) }.click()
-                verify(exactly = 1) { taskRepository.updateTaskInBackground(any(), assignChanges) }
+                verify(exactly = 1) { taskRepository.updateTaskInBackground(any(), emptyMap()) }
             }
         }
     }
@@ -200,7 +201,7 @@ class TaskFormActivityTest : ActivityTestCase() {
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, TaskType.DAILY.value)
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, TaskType.DAILY.value)
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id!!)
-        every { taskRepository.getUnmanagedTask(any()) } returns Flowable.just(task)
+        every { taskRepository.getUnmanagedTask(any()) } returns flowOf(task)
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -209,7 +210,7 @@ class TaskFormActivityTest : ActivityTestCase() {
             device.activities.isCurrent(TaskFormActivity::class.java)
             KButton { withId(R.id.action_delete) }.click()
             KButton { withText(R.string.delete_task) }.click()
-            verify(exactly = 1) { taskRepository.deleteTask(task.id!!) }
+            coVerify(exactly = 1) { taskRepository.deleteTask(task.id!!) }
         }
     }
 
@@ -287,8 +288,8 @@ class TaskFormActivityTest : ActivityTestCase() {
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, TaskType.DAILY.value)
         bundle.putString(TaskFormActivity.TASK_ID_KEY, task.id!!)
-        every { taskRepository.getUnmanagedTask(any()) } returns Flowable.just(task)
-        justRun { taskRepository.updateTaskInBackground(capture(taskSlot), assignChanges) }
+        every { taskRepository.getUnmanagedTask(any()) } returns flowOf(task)
+        justRun { taskRepository.updateTaskInBackground(capture(taskSlot), emptyMap()) }
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), TaskFormActivity::class.java)
         intent.putExtras(bundle)
@@ -313,7 +314,7 @@ class TaskFormActivityTest : ActivityTestCase() {
                 typeText("3")
             }
             KButton { withId(R.id.action_save) }.click()
-            verify { taskRepository.updateTaskInBackground(any(), assignChanges) }
+            verify { taskRepository.updateTaskInBackground(any(), emptyMap()) }
             assert(taskSlot.captured.everyX == 3)
             assert(taskSlot.captured.frequency == Frequency.WEEKLY)
         }

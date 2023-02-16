@@ -41,10 +41,10 @@ jobs:
         arguments: testProdDebugUnitTest
 
 #  ui-test:
-#    runs-on: macos-latest
+#    runs-on: ubuntu-latest
 #    strategy:
 #      matrix:
-#        api-level: [24, 26, 28, 29, 30, 31]
+#        api-level: [28, 29, 30, 31, 32]
 #    steps:
 #    - uses: actions/checkout@v2
 #    - name: set up JDK 11
@@ -55,8 +55,6 @@ jobs:
 #        cache: gradle
 #    - name: Prepare
 #      run: ./.github/prepare-workflow
-#    - name: Validate Gradle wrapper
-#      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 #    - name: run tests
 #      uses: reactivecircus/android-emulator-runner@v2
 #      with:

@@ -63,7 +63,8 @@
     <color name="hair_black">#313131</color>
     <color name="reward_buy_button_bg">#4cfedead</color>
     <color name="reward_buy_button_text">#D9784A00</color>
-    <color name="ic_launcher_background">#331960</color>
+    <color name="ic_launcher_background">#5A2CC8</color>
+    <color name="ic_launcher_foreground_color">#E0D3FF</color>
     <color name="scrollbarThumb">@color/content_background_offset</color>
     <color name="setup_background">@color/window_background</color>
     <color name="setup_label_background">@color/offset_background_30</color>

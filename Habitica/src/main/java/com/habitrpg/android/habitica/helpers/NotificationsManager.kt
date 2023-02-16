@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.Notification
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.Channel

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.proxy
+package com.habitrpg.common.habitica.helpers
 
 import android.os.Bundle
 
