@@ -61,7 +61,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         val obj = json as? JsonObject ?: return task
         task.text = obj.getAsString("text")
         task.notes = obj.getAsString("notes")
-        task.userId = obj.getAsString("userId")
+        task.ownerID = obj.getAsString("userId")
         task.value = obj.get("value")?.asDouble ?: 0.0
         task.type = TaskType.from(obj.getAsString("type")) ?: TaskType.HABIT
         task.frequency = Frequency.from(obj.getAsString("frequency"))

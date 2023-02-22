@@ -49,7 +49,7 @@ class ChallengeRepositoryImpl(
         if (tasks != null) {
             val taskList = tasks.tasks.values.toList()
             taskList.forEach {
-                it.userId = challengeID
+                it.ownerID = challengeID
             }
             localRepository.save(taskList)
         }

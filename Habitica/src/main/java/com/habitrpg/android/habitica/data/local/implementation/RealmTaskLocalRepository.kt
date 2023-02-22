@@ -34,21 +34,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     ): RealmResults<Task> {
         return realm.where(Task::class.java)
             .equalTo("typeValue", taskType.value)
-            .beginGroup()
-            .equalTo("userId", ownerID)
-            .or()
-            .beginGroup()
-            .`in`("group.groupID", includedGroupIDs)
-            .and()
-            .beginGroup()
-            .contains("group.assignedUsers", ownerID)
-            .or()
-            .isEmpty("group.assignedUsers")
-            .endGroup()
-            .endGroup()
-            .or()
-            .equalTo("group.groupID", ownerID)
-            .endGroup()
+            .equalTo("ownerID", ownerID)
             .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
     }
@@ -77,8 +63,8 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
         val allChecklistItems = ArrayList<ChecklistItem>()
         val allReminders = ArrayList<RemindersItem>()
         sortedTasks.forEach {
-            if (it.userId.isBlank() && it.group?.groupID?.isNotBlank() != true) {
-                it.userId = ownerID
+            if (it.ownerID.isBlank()) {
+                it.ownerID = ownerID
             }
             it.checklist?.let { it1 -> allChecklistItems.addAll(it1) }
             it.reminders?.let { it1 -> allReminders.addAll(it1) }
@@ -132,11 +118,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     private fun removeOldTasks(ownerID: String, onlineTaskList: List<Task>) {
         if (realm.isClosed) return
         val localTasks = realm.where(Task::class.java)
-            .beginGroup()
-            .equalTo("userId", ownerID)
-            .or()
-            .equalTo("group.groupID", ownerID)
-            .endGroup()
+            .equalTo("ownerID", ownerID)
             .beginGroup()
             .beginGroup()
             .equalTo("typeValue", TaskType.TODO.value)
@@ -157,7 +139,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     private fun removeCompletedTodos(userID: String, onlineTaskList: MutableCollection<Task>) {
         val localTasks = realm.where(Task::class.java)
-            .equalTo("userId", userID)
+            .equalTo("ownerID", userID)
             .equalTo("typeValue", TaskType.TODO.value)
             .equalTo("completed", true)
             .findAll()
@@ -244,7 +226,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getErroredTasks(userID: String): Flow<List<Task>> {
         return realm.where(Task::class.java)
-            .equalTo("userId", userID)
+            .equalTo("ownerID", userID)
             .equalTo("hasErrored", true)
             .sort("position")
             .findAll()
@@ -265,7 +247,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
     override fun getTasksForChallenge(challengeID: String?, userID: String?): Flow<List<Task>> {
         return realm.where(Task::class.java)
             .equalTo("challengeID", challengeID)
-            .equalTo("userId", userID)
+            .equalTo("ownerID", userID)
             .findAll()
             .toFlow()
             .filter { it.isLoaded }

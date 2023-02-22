@@ -5,9 +5,9 @@ import android.os.Parcelable
 import android.text.Spanned
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.BaseTask
@@ -38,9 +38,19 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         get() = "id"
 
     @PrimaryKey
+    var combinedID: String? = null
+
     @SerializedName("_id")
     var id: String? = null
-    var userId: String = ""
+        set(value) {
+            field = value
+            combinedID = id + ownerID
+        }
+    var ownerID: String = ""
+        set(value) {
+            field = value
+            combinedID = id + ownerID
+        }
     var priority: Float = 0.0f
     var text: String = ""
     var notes: String? = null
@@ -437,7 +447,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     override fun describeContents(): Int = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(this.userId)
+        dest.writeString(this.ownerID)
         dest.writeValue(this.priority)
         dest.writeString(this.text)
         dest.writeString(this.notes)
@@ -468,7 +478,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     constructor()
 
     protected constructor(`in`: Parcel) {
-        this.userId = `in`.readString() ?: ""
+        this.ownerID = `in`.readString() ?: ""
         this.priority = `in`.readValue(Float::class.java.classLoader) as? Float ?: 0f
         this.text = `in`.readString() ?: ""
         this.notes = `in`.readString()
