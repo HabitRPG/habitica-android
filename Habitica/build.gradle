@@ -129,8 +129,7 @@ dependencies {
 }
 
 android {
-    compileSdkVersion target_sdk
-    buildToolsVersion '33.0.2'
+    compileSdk target_sdk
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -170,7 +169,7 @@ android {
     signingConfigs {
         release
     }
-    flavorDimensions "buildType"
+    flavorDimensions.add("buildType")
 
     buildTypes {
         debug {
@@ -330,7 +329,7 @@ if (HRPG_PROPS_FILE.canRead()) {
     HRPG_PROPS.load(new FileInputStream(HRPG_PROPS_FILE))
 
     if (HRPG_PROPS != null) {
-        android.buildTypes.all { buildType ->
+        android.buildTypes.configureEach { buildType ->
             HRPG_PROPS.any { property ->
                 buildType.buildConfigField "String", property.key, "\"${property.value}\""
             }
@@ -349,7 +348,7 @@ if (HRPG_RES_FILE.canRead()) {
     HRPG_RES.load(new FileInputStream(HRPG_RES_FILE))
 
     if (HRPG_RES != null) {
-        android.buildTypes.all { buildType ->
+        android.buildTypes.configureEach { buildType ->
             HRPG_RES.any { property ->
                 buildType.resValue "string", property.key, "\"${property.value}\""
             }
@@ -361,14 +360,14 @@ if (HRPG_RES_FILE.canRead()) {
     throw new MissingResourceException('habitica.resources not found')
 }
 
-tasks.whenTaskAdded { task ->
+tasks.configureEach { task ->
     if (task.name == "lint") {
         task.enabled = false
     }
 }
 
 gradle.projectsEvaluated {
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.compilerArgs << "-Xmaxerrs" << "500"
     }
 }

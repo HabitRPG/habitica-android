@@ -1,4 +1,4 @@
-kNew in 4.1.6:
+New in 4.1.6:
 -Fixed various issues with: Challenge task creation, Markdown appearance, animated potion sprites, Google Sign in, reminder scheduling, Group Tasks
 -You can view, complete, assign, and add tasks to your Group Plan's shared task board!
 -Tap your name on a task screen to switch to different task boards

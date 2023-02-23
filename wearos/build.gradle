@@ -51,7 +51,7 @@ android {
         }
     }
 
-    flavorDimensions "buildType"
+    flavorDimensions.add("buildType")
 
     productFlavors {
         dev {
@@ -169,7 +169,7 @@ if (HRPG_PROPS_FILE.canRead()) {
     HRPG_PROPS.load(new FileInputStream(HRPG_PROPS_FILE))
 
     if (HRPG_PROPS != null) {
-        android.buildTypes.all { buildType ->
+        android.buildTypes.configureEach { buildType ->
             HRPG_PROPS.any { property ->
                 buildType.buildConfigField "String", property.key, "\"${property.value}\""
             }

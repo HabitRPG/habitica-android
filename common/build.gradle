@@ -39,7 +39,7 @@ android {
     }
     namespace 'com.habitrpg.common.habitica'
 
-    flavorDimensions "buildType"
+    flavorDimensions.add("buildType")
 
     productFlavors {
         dev {

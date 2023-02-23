@@ -240,7 +240,11 @@ class TaskRepositoryImpl(
         task.isSaving = true
         task.isCreating = true
         task.hasErrored = false
-        task.ownerID = userID
+        task.ownerID = if (task.isGroupTask) {
+            task.group?.groupID ?: ""
+        } else {
+            userID
+        }
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
         }
