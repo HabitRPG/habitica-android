@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -220,11 +219,10 @@ class TaskAlarmManager(
                 return
             }
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
-            } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //For SDK >= Android 12, allows batching of reminders
                 try {
-                    alarmManager?.setAlarmClock(AlarmClockInfo(time, pendingIntent), pendingIntent)
+                    alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
                 } catch (ex: Exception) {
                     when (ex) {
                         is IllegalStateException, is SecurityException -> {
@@ -233,6 +231,8 @@ class TaskAlarmManager(
                         else -> throw ex
                     }
                 }
+            } else {
+                alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
             }
         }
     }
