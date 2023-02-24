@@ -6,7 +6,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentManager
@@ -26,11 +25,11 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
 import com.habitrpg.android.habitica.helpers.SignInWithAppleService
-import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
 import kotlinx.coroutines.CoroutineScope
@@ -113,16 +112,13 @@ class AuthenticationViewModel() {
         val scopes = "oauth2:$scopesString"
         var newUser = false
         CoroutineScope(Dispatchers.IO).launchCatching({ throwable ->
-            Log.e("Auth", throwable.localizedMessage, throwable)
             if (recoverFromPlayServicesErrorResult == null) return@launchCatching
-            throwable.cause?.let {
-                if (GoogleAuthException::class.java.isAssignableFrom(it.javaClass)) {
-                    handleGoogleAuthException(
-                        throwable.cause as GoogleAuthException,
-                        activity,
-                        recoverFromPlayServicesErrorResult
-                    )
-                }
+            if (throwable is GoogleAuthException) {
+                handleGoogleAuthException(
+                    throwable,
+                    activity,
+                    recoverFromPlayServicesErrorResult
+                )
             }
         }) {
             val token = GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes)
