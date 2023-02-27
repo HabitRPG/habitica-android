@@ -22,16 +22,14 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTasks(taskType: TaskType, userID: String, includedGroupIDs: Array<String>): Flow<List<Task>> {
         if (realm.isClosed) return emptyFlow()
-        return findTasks(taskType, userID, includedGroupIDs)
+        return findTasks(taskType, userID)
             .toFlow()
             .filter { it.isLoaded }
     }
 
     private fun findTasks(
         taskType: TaskType,
-        ownerID: String,
-        includedGroupIDs: Array<String>
-    ): RealmResults<Task> {
+        ownerID: String): RealmResults<Task> {
         return realm.where(Task::class.java)
             .equalTo("typeValue", taskType.value)
             .equalTo("ownerID", ownerID)
