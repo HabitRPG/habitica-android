@@ -187,6 +187,13 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     }
                 }
                 menu.setSelectionRunnable { index ->
+                    if (item == null && ownedItem != null) {
+                        //Special items that are not Mystery Item
+                        val specialItem = SpecialItem()
+                        ownedItem?.key?.let { key -> specialItem.key = key }
+                        onUseSpecialItem?.invoke(specialItem)
+                        return@setSelectionRunnable
+                    }
                     item?.let { selectedItem ->
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") && index == 0) {
                             ownedItem?.let { selectedOwnedItem -> onSellItem?.invoke(selectedOwnedItem) }
@@ -209,9 +216,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                                 }
                             }
                             is SpecialItem ->
-                                if (item?.key != "inventory_present") {
-                                    onUseSpecialItem?.invoke(selectedItem)
-                                } else {
+                                if (item?.key == "inventory_present") {
                                     onOpenMysteryItem?.invoke(selectedItem)
                                 }
                         }
