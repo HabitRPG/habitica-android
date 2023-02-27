@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
@@ -16,6 +15,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.FirstDropDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.WonChallengeDialog
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.AchievementData
 import com.habitrpg.common.habitica.models.notifications.ChallengeWonData

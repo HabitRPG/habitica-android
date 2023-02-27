@@ -35,9 +35,9 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
+import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult

@@ -11,7 +11,6 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
-import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -21,6 +20,7 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
 import java.util.Locale
 import javax.inject.Inject

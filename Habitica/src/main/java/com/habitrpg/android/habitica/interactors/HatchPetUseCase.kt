@@ -7,13 +7,13 @@ import android.view.View
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.PixelArtView
 import kotlinx.coroutines.MainScope
 import javax.inject.Inject

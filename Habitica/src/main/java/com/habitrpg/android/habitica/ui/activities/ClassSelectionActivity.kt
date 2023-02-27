@@ -13,7 +13,6 @@ import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
@@ -23,6 +22,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

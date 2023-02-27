@@ -12,9 +12,9 @@ import androidx.paging.PositionalDataSource
 import androidx.paging.toLiveData
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope

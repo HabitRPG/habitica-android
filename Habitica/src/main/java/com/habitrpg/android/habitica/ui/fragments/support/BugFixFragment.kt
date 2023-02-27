@@ -15,13 +15,13 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
 import com.habitrpg.android.habitica.databinding.KnownIssueBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.jaredrummler.android.device.DeviceName
 import kotlinx.coroutines.launch
 import javax.inject.Inject

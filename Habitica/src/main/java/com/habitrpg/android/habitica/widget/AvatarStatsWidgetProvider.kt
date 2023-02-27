@@ -11,13 +11,13 @@ import android.widget.RemoteViews
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
-import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.helpers.HealthFormatter
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull

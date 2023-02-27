@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.data.implementation.ApiClientImpl
 import com.habitrpg.android.habitica.data.implementation.ApiClientImpl.Companion.createGsonFactory
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.api.HostConfig
+import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import dagger.Module
 import dagger.Provides

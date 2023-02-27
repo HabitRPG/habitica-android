@@ -3,9 +3,9 @@ package com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
+import com.habitrpg.common.habitica.helpers.launchCatching
 import javax.inject.Inject
 
 class EquipmentOverviewViewModel : BaseViewModel() {

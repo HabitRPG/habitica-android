@@ -5,8 +5,8 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import io.realm.Realm
 import io.realm.RealmList
 import java.lang.reflect.Type

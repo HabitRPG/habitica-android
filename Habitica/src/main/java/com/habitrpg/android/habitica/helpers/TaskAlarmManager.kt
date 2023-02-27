@@ -220,7 +220,7 @@ class TaskAlarmManager(
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                //For SDK >= Android 12, allows batching of reminders
+                // For SDK >= Android 12, allows batching of reminders
                 try {
                     alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
                 } catch (ex: Exception) {

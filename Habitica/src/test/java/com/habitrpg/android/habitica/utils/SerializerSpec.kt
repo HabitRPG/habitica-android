@@ -6,7 +6,8 @@ import io.kotest.core.spec.DslDrivenSpec
 import io.kotest.core.spec.style.scopes.WordSpecRootScope
 import io.mockk.mockk
 
-open class SerializerSpec(body: SerializerSpec.() -> Unit = {}): DslDrivenSpec(),
+open class SerializerSpec(body: SerializerSpec.() -> Unit = {}) :
+    DslDrivenSpec(),
     WordSpecRootScope {
     val deserializationContext: JsonDeserializationContext = mockk(relaxed = true)
     val serializationContext: JsonSerializationContext = mockk(relaxed = true)
