@@ -258,6 +258,8 @@ class TaskRepositoryImpl(
         savedTask?.dateCreated = Date()
         if (savedTask != null) {
             savedTask.tags = task.tags
+            task.isSaving = false
+            localRepository.save(task)
             localRepository.save(savedTask)
         } else {
             task.hasErrored = true
