@@ -141,11 +141,6 @@ class PetDetailRecyclerFragment :
         view.post { setGridSpanCount(view.width) }
     }
 
-    override fun onResume() {
-        super.onResume()
-        activity?.title = animalType
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(ANIMAL_TYPE_KEY, this.animalType)
