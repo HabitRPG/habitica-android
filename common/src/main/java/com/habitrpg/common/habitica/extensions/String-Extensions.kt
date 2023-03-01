@@ -5,7 +5,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.util.Linkify
-import java.util.Locale
+import java.util.*
 
 fun String.fromHtml(): CharSequence {
     return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -31,3 +31,12 @@ fun String.removeZeroWidthSpace(): String {
 fun String.localizedCapitalize(): String {
     return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 }
+
+fun String.spaceBetweenCapitals(): String {
+    return this.replace("(.)([A-Z0-9]\\w)".toRegex(), "$1 $2")
+}
+
+fun String.localizedCapitalizeWithSpaces(): String {
+    return this.localizedCapitalize().spaceBetweenCapitals()
+}
+
