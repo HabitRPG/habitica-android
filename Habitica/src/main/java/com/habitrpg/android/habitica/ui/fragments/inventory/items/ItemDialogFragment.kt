@@ -273,7 +273,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 inventoryRepository.getOwnedItems(type)
                     .onEach { items ->
                         val filteredItems = if (isFeeding) {
-                            items.filter { it.key != "Saddle" }
+                            items.filter { it.key != "Saddle" }.distinctBy { it.key }
                         } else {
                             items
                         }
