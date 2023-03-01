@@ -275,7 +275,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                         val filteredItems = if (isFeeding) {
                             items.filter { it.key != "Saddle" }.distinctBy { it.key }
                         } else {
-                            items
+                            items.distinctBy { it.key }
                         }
                         adapter?.data = filteredItems
                     }
