@@ -631,7 +631,7 @@
     <string name="classless">Classless</string>
     <string name="class_equipment_shop_dialog">This item is only available to a specific class.\nYou can change your class from Settings.</string>
     <string name="class_gear_disclaimer">You can only purchase gear for your current class</string>
-    <string name="tavern_description">Welcome to the Inn! Pull up a chair to chat, or take a break from your tasks.</string>
+    <string name="tavern_description">Welcome to the Inn! Pull up a chair to chat.</string>
     <string name="check_into_inn">Check into Inn</string>
     <string name="community_guidelines">Community Guidelines</string>
     <string name="view_community_guidelines">View Community Guidelines</string>
@@ -1340,6 +1340,25 @@
     <string name="birthday_set">Birthday Set</string>
     <string name="you_equipped_x">You equipped %s</string>
     <string name="purchase_gryphatrice_confirmation">Purchase the Jubilant Gryphatrice for %d Gems?</string>
+    <string name="find_new_member">Find a Member</string>
+    <string name="find_more_members">Find more members</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="resume_damage">Resume Damage</string>
+    <string name="resume_damage_1_title">Your missed Dailies won\'t damage you</string>
+    <string name="resume_damage_1_description">Bosses will still do damage caused by other\nParty member\'s missed Dailies</string>
+    <string name="resume_damage_2_title">Your streaks and counters will reset</string>
+    <string name="resume_damage_2_description">Missing a Daily will reset your streak and Habit counters will reset normally</string>
+    <string name="resume_damage_3_title">Your Quest progress will apply again</string>
+    <string name="resume_damage_3_description">Any pending damage or collection items will apply on your next day reset</string>
+    <string name="pause_damage_summary">Damage is currently active. Learn more.</string>
+    <string name="resume_damage_summary">Damage is currently paused.</string>
+    <string name="pause_damage">Pause Damage</string>
+    <string name="pause_damage_1_title">"Your missed Dailies won’t damage you "</string>
+    <string name="pause_damage_1_description">Bosses will still do damage caused by other Party member’s missed Dailies</string>
+    <string name="pause_damage_2_title">Your streaks and counters will not reset</string>
+    <string name="pause_damage_2_description">Daily streaks and Habit counters will only count up while this is on</string>
+    <string name="pause_damage_3_title">Your Quest progress will stay pending</string>
+    <string name="pause_damage_3_description">Damage to a boss or found collection items will be stored until you resume damage</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -9,6 +9,19 @@ import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -28,12 +41,15 @@ import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManag
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.prefs.TimePreference
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
+import com.habitrpg.android.habitica.ui.activities.HabiticaButton
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
+import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
@@ -43,32 +59,37 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
-class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class PreferencesFragment : BasePreferencesFragment(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    lateinit var contentRepository: ContentRepository
-    @Inject
-    lateinit var soundManager: SoundManager
-    @Inject
-    lateinit var pushNotificationManager: PushNotificationManager
-    @Inject
-    lateinit var configManager: AppConfigManager
-    @Inject
-    lateinit var apiClient: ApiClient
+    lateinit var contentRepository : ContentRepository
 
-    private var timePreference: TimePreference? = null
-    private var pushNotificationsPreference: PreferenceScreen? = null
-    private var emailNotificationsPreference: PreferenceScreen? = null
-    private var classSelectionPreference: Preference? = null
-    private var serverUrlPreference: ListPreference? = null
-    private var taskListPreference: ListPreference? = null
+    @Inject
+    lateinit var soundManager : SoundManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    @Inject
+    lateinit var pushNotificationManager : PushNotificationManager
+
+    @Inject
+    lateinit var configManager : AppConfigManager
+
+    @Inject
+    lateinit var apiClient : ApiClient
+
+    private var timePreference : TimePreference? = null
+    private var pushNotificationsPreference : PreferenceScreen? = null
+    private var emailNotificationsPreference : PreferenceScreen? = null
+    private var classSelectionPreference : Preference? = null
+    private var serverUrlPreference : ListPreference? = null
+    private var taskListPreference : ListPreference? = null
+
+    override fun onCreate(savedInstanceState : Bundle?) {
         HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
 
@@ -89,7 +110,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         serverUrlPreference = findPreference("server_url") as? ListPreference
         serverUrlPreference?.isVisible = false
-        serverUrlPreference?.summary = preferenceManager.sharedPreferences?.getString("server_url", "")
+        serverUrlPreference?.summary =
+            preferenceManager.sharedPreferences?.getString("server_url", "")
 
         val themePreference = findPreference("theme_name") as? ListPreference
         themePreference?.summary = themePreference?.entry ?: "Default"
@@ -118,11 +140,23 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         super.onPause()
     }
 
-    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+    override fun onPreferenceTreeClick(preference : Preference) : Boolean {
         when (preference.key) {
             "logout" -> {
                 logout()
             }
+
+            "pause_damage" -> {
+                showAsBottomSheet {dismiss ->
+                    PauseResumeDamageView(user?.preferences?.sleep ?: true, {
+                        lifecycleScope.launchCatching {
+                            user?.let { it -> userRepository.sleep(it) }
+                            dismiss()
+                        }
+                    })
+                }
+            }
+
             "choose_class" -> {
                 val bundle = Bundle()
                 bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
@@ -153,6 +187,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 }
                 return true
             }
+
             "reload_content" -> {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloading_content)
@@ -163,7 +198,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         return super.onPreferenceTreeClick(preference)
     }
 
-    private fun reloadContent(withConfirmation: Boolean) {
+    private fun reloadContent(withConfirmation : Boolean) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             contentRepository.retrieveContent(true)
             if (withConfirmation) {
@@ -188,11 +223,12 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
     }
 
-    private val classSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(true, true)
+    private val classSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.retrieveUser(true, true)
+            }
         }
-    }
 
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -207,7 +243,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
             alert?.setTitle(R.string.push_notification_system_settings_title)
             alert?.setMessage(R.string.push_notification_system_settings_description)
             alert?.addButton(R.string.open_settings, true, false) { _, _ ->
-                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                val notifSettingIntent : Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, context?.applicationContext?.packageName)
                 startActivity(notifSettingIntent)
@@ -219,7 +255,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+    override fun onSharedPreferenceChanged(sharedPreferences : SharedPreferences, key : String?) {
         when (key) {
             "use_reminder" -> {
                 val useReminder = sharedPreferences.getBoolean(key, false)
@@ -230,16 +266,22 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     TaskAlarmManager.removeDailyReminder(context)
                 }
             }
+
             "reminder_time" -> {
                 TaskAlarmManager.removeDailyReminder(context)
                 TaskAlarmManager.scheduleDailyReminder(context)
             }
+
             "usePushNotifications" -> {
-                val notifPermissionEnabled: Boolean = pushNotificationManager.notificationPermissionEnabled()
+                val notifPermissionEnabled : Boolean =
+                    pushNotificationManager.notificationPermissionEnabled()
                 val usePushNotifications = sharedPreferences.getBoolean(key, true)
                 pushNotificationsPreference?.isEnabled = usePushNotifications
                 lifecycleScope.launchCatching {
-                    userRepository.updateUser("preferences.pushNotifications.unsubscribeFromAll", !usePushNotifications)
+                    userRepository.updateUser(
+                        "preferences.pushNotifications.unsubscribeFromAll",
+                        !usePushNotifications
+                    )
                 }
                 if (usePushNotifications) {
                     if (!notifPermissionEnabled && Build.VERSION.SDK_INT >= 33) {
@@ -253,13 +295,18 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     }
                 }
             }
+
             "useEmails" -> {
                 val useEmailNotifications = sharedPreferences.getBoolean(key, true)
                 emailNotificationsPreference?.isEnabled = useEmailNotifications
                 lifecycleScope.launchCatching {
-                    userRepository.updateUser("preferences.emailNotifications.unsubscribeFromAll", !useEmailNotifications)
+                    userRepository.updateUser(
+                        "preferences.emailNotifications.unsubscribeFromAll",
+                        !useEmailNotifications
+                    )
                 }
             }
+
             "cds_time" -> {
                 val timeval = sharedPreferences.getString("cds_time", "0") ?: "0"
                 val hour = Integer.parseInt(timeval)
@@ -269,6 +316,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference?.entry
             }
+
             "language" -> {
                 val languageHelper = LanguageHelper(sharedPreferences.getString(key, "en"))
 
@@ -276,7 +324,10 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 val configuration = Configuration()
                 configuration.setLocale(languageHelper.locale)
                 @Suppress("DEPRECATION")
-                activity?.resources?.updateConfiguration(configuration, activity?.resources?.displayMetrics)
+                activity?.resources?.updateConfiguration(
+                    configuration,
+                    activity?.resources?.displayMetrics
+                )
 
                 if (user?.preferences?.language == languageHelper.languageCode) {
                     return
@@ -289,6 +340,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                 this.startActivity(intent)
                 activity?.finishAffinity()
             }
+
             "audioTheme" -> {
                 val newAudioTheme = sharedPreferences.getString(key, "off")
                 if (newAudioTheme != null) {
@@ -299,32 +351,39 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     soundManager.preloadAllFiles()
                 }
             }
+
             "theme_name" -> {
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
+
             "theme_mode" -> {
                 val activity = activity as? PrefsActivity ?: return
                 activity.reload()
             }
+
             "dailyDueDefaultView" -> lifecycleScope.launchCatching {
                 userRepository.updateUser(
                     "preferences.dailyDueDefaultView",
                     sharedPreferences.getBoolean(key, false)
                 )
             }
+
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
             }
+
             "task_display" -> {
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference?.entry
             }
+
             "FirstDayOfTheWeek" -> {
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference?.entry
             }
+
             "disablePMs" -> {
                 val isDisabled = sharedPreferences.getBoolean("disablePMs", false)
                 if (user?.inbox?.optOut != isDisabled) {
@@ -333,6 +392,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     }
                 }
             }
+
             "launch_screen" -> {
                 val preference = findPreference<ListPreference>(key)
                 preference?.summary = preference?.entry ?: "Habits"
@@ -340,7 +400,7 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
     }
 
-    override fun onDisplayPreferenceDialog(preference: Preference) {
+    override fun onDisplayPreferenceDialog(preference : Preference) {
         if (preference is TimePreference) {
             if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
                 TimePreferenceDialogFragment.newInstance(this, preference.getKey())
@@ -351,8 +411,25 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         }
     }
 
-    override fun setUser(user: User?) {
+    override fun setUser(user : User?) {
         super.setUser(user)
+
+        val pauseDamagePreference = findPreference<Preference>("pause_damage")
+        pauseDamagePreference?.title = getString(
+            if (user?.preferences?.sleep == true) {
+                R.string.resume_damage
+            } else {
+                R.string.pause_damage
+            }
+        )
+        pauseDamagePreference?.summary = getString(
+            if (user?.preferences?.sleep == true) {
+                R.string.resume_damage_summary
+            } else {
+                R.string.pause_damage_summary
+            }
+        )
+
         if (10 <= (user?.stats?.lvl ?: 0)) {
             if (user?.flags?.classSelected == true) {
                 if (user.preferences?.disableClasses == true) {
@@ -371,7 +448,8 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         val cdsTimePreference = findPreference("cds_time") as? ListPreference
         cdsTimePreference?.value = user?.preferences?.dayStart.toString()
         cdsTimePreference?.summary = cdsTimePreference?.entry
-        val dailyDueDefault = findPreference<Preference>("dailyDueDefaultView") as? CheckBoxPreference
+        val dailyDueDefault =
+            findPreference<Preference>("dailyDueDefaultView") as? CheckBoxPreference
         dailyDueDefault?.isChecked = user?.preferences?.dailyDueDefaultView == true
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language
@@ -391,28 +469,34 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
 
         if (user?.party?.id?.isNotBlank() != true) {
             val launchScreenPreference = findPreference<ListPreference>("launch_screen")
-            launchScreenPreference?.entries = resources.getStringArray(R.array.launch_screen_types).dropLast(1).toTypedArray()
-            launchScreenPreference?.entryValues = resources.getStringArray(R.array.launch_screen_values).dropLast(1).toTypedArray()
+            launchScreenPreference?.entries =
+                resources.getStringArray(R.array.launch_screen_types).dropLast(1).toTypedArray()
+            launchScreenPreference?.entryValues =
+                resources.getStringArray(R.array.launch_screen_values).dropLast(1).toTypedArray()
         }
 
         val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference
         val inbox = user?.inbox
         disablePMsPreference?.isChecked = inbox?.optOut ?: true
 
-        val notifPermissionEnabled: Boolean = pushNotificationManager.notificationPermissionEnabled()
+        val notifPermissionEnabled : Boolean =
+            pushNotificationManager.notificationPermissionEnabled()
         val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen
-        val usePushNotifications = !(user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false)
+        val usePushNotifications =
+            !(user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false)
         pushNotificationsPreference?.isEnabled = usePushNotifications
         usePushPreference?.isChecked = (usePushNotifications && notifPermissionEnabled)
         if (!notifPermissionEnabled) {
-            usePushPreference?.summary = getString(R.string.push_notification_system_settings_description)
+            usePushPreference?.summary =
+                getString(R.string.push_notification_system_settings_description)
         } else {
             usePushPreference?.summary = ""
         }
         val useEmailPreference = findPreference("useEmails") as? CheckBoxPreference
         emailNotificationsPreference = findPreference("emailNotifications") as? PreferenceScreen
-        val useEmailNotifications = !(user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false)
+        val useEmailNotifications =
+            !(user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false)
         emailNotificationsPreference?.isEnabled = useEmailNotifications
         useEmailPreference?.isChecked = useEmailNotifications
 
@@ -433,23 +517,27 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
                     newPreference.title = getString(R.string.copy_shared_tasks)
                     newPreference.summary = team.summary
                     newPreference.key = "copy_tasks-${team.id}"
-                    newPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
-                        val currentIds = user?.preferences?.tasks?.mirrorGroupTasks?.toMutableList() ?: mutableListOf()
-                        if (newValue == true && !currentIds.contains(team.id)) {
-                            currentIds.add(team.id)
-                        } else if (newValue == false && currentIds.contains(team.id)) {
-                            currentIds.remove(team.id)
+                    newPreference.onPreferenceChangeListener =
+                        Preference.OnPreferenceChangeListener { _, newValue ->
+                            val currentIds =
+                                user?.preferences?.tasks?.mirrorGroupTasks?.toMutableList()
+                                    ?: mutableListOf()
+                            if (newValue == true && !currentIds.contains(team.id)) {
+                                currentIds.add(team.id)
+                            } else if (newValue == false && currentIds.contains(team.id)) {
+                                currentIds.remove(team.id)
+                            }
+                            lifecycleScope.launchCatching {
+                                userRepository.updateUser(
+                                    "preferences.tasks.mirrorGroupTasks",
+                                    currentIds
+                                )
+                            }
+                            true
                         }
-                        lifecycleScope.launchCatching {
-                            userRepository.updateUser(
-                                "preferences.tasks.mirrorGroupTasks",
-                                currentIds
-                            )
-                        }
-                        true
-                    }
                     groupCategory?.addPreference(newPreference)
-                    newPreference.isChecked = user?.preferences?.tasks?.mirrorGroupTasks?.contains(team.id) == true
+                    newPreference.isChecked =
+                        user?.preferences?.tasks?.mirrorGroupTasks?.contains(team.id) == true
                 }
             }
             if (footer != null) {
@@ -460,6 +548,122 @@ class PreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnShare
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
             taskListPreference?.isVisible = true
+        }
+    }
+}
+
+@Composable
+fun PauseResumeDamageView(
+    isPaused : Boolean,
+    onClick : () -> Unit,
+    modifier : Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.Start,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        if (isPaused) {
+            Text(
+                stringResource(R.string.resume_damage),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(bottom = 18.dp)
+                    .fillMaxWidth()
+            )
+            Text(
+                stringResource(R.string.resume_damage_1_title),
+                color = HabiticaTheme.colors.textPrimary,
+                fontSize = 16.sp
+            )
+            Text(
+                stringResource(R.string.resume_damage_1_description),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Text(
+                stringResource(R.string.resume_damage_2_title),
+                color = HabiticaTheme.colors.textPrimary,
+                fontSize = 16.sp
+            )
+            Text(
+                stringResource(R.string.resume_damage_2_description),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Text(
+                stringResource(R.string.resume_damage_3_title),
+                color = HabiticaTheme.colors.textPrimary,
+                fontSize = 16.sp
+            )
+            Text(
+                stringResource(R.string.resume_damage_3_description),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 18.dp)
+            )
+            HabiticaButton(
+                background = colorResource(R.color.yellow_100),
+                color = colorResource(R.color.yellow_1),
+                onClick = { onClick() }) {
+                Text(stringResource(R.string.resume_damage))
+            }
+        } else {
+            Text(
+                stringResource(R.string.pause_damage),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(bottom = 18.dp)
+                    .fillMaxWidth()
+            )
+            Text(
+                stringResource(R.string.pause_damage_1_title),
+                color = HabiticaTheme.colors.textPrimary,
+                fontSize = 16.sp
+            )
+            Text(
+                stringResource(R.string.pause_damage_1_description),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Text(
+                stringResource(R.string.pause_damage_2_title),
+                color = HabiticaTheme.colors.textPrimary,
+                fontSize = 16.sp
+            )
+            Text(
+                stringResource(R.string.pause_damage_2_description),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Text(
+                stringResource(R.string.pause_damage_3_title),
+                color = HabiticaTheme.colors.textPrimary,
+                fontSize = 16.sp
+            )
+            Text(
+                stringResource(R.string.pause_damage_3_description),
+                color = HabiticaTheme.colors.textSecondary,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 18.dp)
+            )
+            HabiticaButton(
+                background = colorResource(R.color.yellow_100),
+                color = colorResource(R.color.yellow_1),
+                onClick = { onClick() }) {
+                Text(stringResource(R.string.pause_damage))
+            }
         }
     }
 }

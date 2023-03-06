@@ -5,18 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shop_header_background"
+        android:clipChildren="true"
+        android:clipToOutline="true"
+        android:layout_marginTop="8dp">
     <com.habitrpg.android.habitica.ui.views.NPCBannerView
         android:id="@+id/npcBannerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/shop_scene_height"
-        android:paddingStart="-8dp"
-        android:paddingEnd="-8dp"/>
-
-    <View
+        tools:background="@color/black" />
+    </FrameLayout>
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:layout_marginTop="97dp"
-        android:background="@drawable/gradient_white"/>
+        android:layout_height="18dp"
+        android:layout_marginTop="114dp"
+        android:src="@drawable/npc_gradient_banner"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/namePlate"
@@ -27,7 +34,7 @@
         android:gravity="center_vertical"
         android:textColor="@color/white"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="83dp"
+        android:layout_marginTop="105dp"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/descriptionView"
@@ -35,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="144dp"
         android:layout_marginBottom="4dp"
         style="@style/Body1"
         tools:text="Welcome to the Market! Stock up on new gear or buy rare eggs and potions. Check in periodically for new stock." />

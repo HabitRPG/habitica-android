@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="brand_sub_text">@color/brand_500</color>
+    <color name="brand">@color/brand_400</color>
+    <color name="text_title">@color/white</color>
+    <color name="text_primary">@color/gray_700</color>
+    <color name="text_secondary">@color/gray_500</color>
+    <color name="text_ternary">@color/gray_400</color>
+    <color name="text_quad">@color/gray_300</color>
+    <color name="text_dimmed">@color/gray_200</color>
+    <color name="text_inverted">@color/gray_10</color>
+    <color name="text_brand">@color/brand_600</color>
+    <color name="text_brand_neon">@color/brand_500</color>
+    <color name="text_red">@color/red_100</color>
+    <color name="text_orange">@color/orange_100</color>
+    <color name="text_yellow">@color/yellow_100</color>
+    <color name="text_green">@color/green_100</color>
+    <color name="text_blue">@color/blue_100</color>
+    <color name="text_teal">@color/teal_100</color>
 </resources>

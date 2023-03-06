@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/npc_gradient"
+    android:tileMode="repeat"
+    android:tileModeX="repeat"
+    android:tint="@color/content_background"
+    android:tintMode="multiply">
+
+</bitmap>

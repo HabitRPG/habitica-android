@@ -29,11 +29,11 @@
         <item name="colorSecondaryVariant">@color/brand</item>
 
         <item name="textColorPrimary">@color/text_primary</item>
-        <item name="textColorSecondary">@color/text_secondary</item>
+        <item name="textColorSecondary">@color/text_ternary</item>
         <item name="textColorPrimaryDark">@color/brand_600</item>
         <item name="textColorSecondaryDark">@color/brand_500</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
-        <item name="android:textColorSecondary">@color/text_ternary</item>te
+        <item name="android:textColorSecondary">@color/text_ternary</item>
         <item name="barColor">@color/brand_300</item>
 
         <item name="colorContentBackground">@color/content_background</item>

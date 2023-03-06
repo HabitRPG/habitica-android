@@ -115,7 +115,10 @@
                     android:layout="@layout/preference_child_summary_danger" />
             </PreferenceCategory>
         </PreferenceScreen>
-
+        <Preference
+            android:key="pause_damage"
+            tools:title="@string/tavern_inn_rest"
+            android:layout="@layout/preference_child_summary"/>
         <Preference
             android:key="choose_class"
             tools:title="Change Class"
