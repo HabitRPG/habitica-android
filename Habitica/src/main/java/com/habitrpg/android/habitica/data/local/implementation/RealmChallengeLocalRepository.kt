@@ -52,7 +52,7 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
 
     override fun getTasks(challengeID: String): Flow<List<Task>> {
         return realm.where(Task::class.java)
-            .equalTo("userId", challengeID)
+            .equalTo("ownerID", challengeID)
             .findAll()
             .toFlow()
             .filter { realmObject -> realmObject.isLoaded }
