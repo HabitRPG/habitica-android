@@ -48,7 +48,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
-    private var isFirstRefresh = true
+    var isRefreshing = true
     var autocompleteContext: String = ""
 
     override fun injectFragment(component: UserComponent) {
@@ -123,10 +123,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private fun refresh() {
         viewModel.retrieveGroupChat {
-            if (isScrolledToBottom || isFirstRefresh) {
+            if (isScrolledToBottom || isRefreshing) {
                 binding?.recyclerView?.scrollToPosition(0)
             }
-            isFirstRefresh = false
+            isRefreshing = false
         }
     }
 
