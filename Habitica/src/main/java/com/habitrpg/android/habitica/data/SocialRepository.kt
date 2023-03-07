@@ -121,4 +121,5 @@ interface SocialRepository : BaseRepository {
     suspend fun blockMember(userID: String): List<String>?
     fun getMember(userID: String?): Flow<Member?>
     suspend fun updateMember(memberID: String, key: String, value: Any?): Member?
+    suspend fun retrievePartySeekingUsers(): List<Member>?
 }

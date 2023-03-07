@@ -68,6 +68,11 @@
         android:label="@string/sidebar_party">
     </fragment>
     <fragment
+        android:id="@+id/partyInvitationFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.party.PartyInvitePagerFragment"
+        android:label="@string/sidebar_party">
+    </fragment>
+    <fragment
         android:id="@+id/questDetailFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.QuestDetailFragment">
         <deepLink app:uri="habitica.com/party/quest" />

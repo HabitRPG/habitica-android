@@ -191,6 +191,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/members"
                         style="@style/SegmentTitle"/>
+                    <Button
+                        android:id="@+id/find_new_member"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/find_new_member"
+                        style="@style/HabiticaButton.Gray"/>
                     <LinearLayout
                         android:id="@+id/members_wrapper"
                         android:layout_width="match_parent"

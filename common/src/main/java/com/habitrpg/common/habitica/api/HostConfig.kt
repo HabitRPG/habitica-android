@@ -31,7 +31,7 @@ class HostConfig {
             }
         } else {
             val address = sharedPreferences.getString("server_url", null)
-            if (address != null && address.isNotEmpty()) {
+            if (!address.isNullOrEmpty()) {
                 this.address = address
             } else {
                 this.address = context.getString(com.habitrpg.common.habitica.R.string.base_url)

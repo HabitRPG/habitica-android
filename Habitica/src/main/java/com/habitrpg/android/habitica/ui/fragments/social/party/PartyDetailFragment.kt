@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.components.UserComponent
@@ -93,6 +94,9 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         binding?.questDetailButton?.setOnClickListener { questDetailButtonClicked() }
         binding?.leaveButton?.setOnClickListener { leaveParty() }
 
+        binding?.findNewMember?.setOnClickListener {
+            MainNavigationController.navigate(R.id.partyInvitationFragment)
+        }
         binding?.invitationsView?.setLeader = null
 
         binding?.invitationsView?.acceptCall = {
@@ -153,6 +157,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questImageWrapper?.visibility = View.GONE
             binding?.questProgressView?.visibility = View.GONE
         }
+
+        binding?.findNewMember?.isVisible = viewModel?.isLeader == true
     }
 
     private fun updateUser(user: User?) {

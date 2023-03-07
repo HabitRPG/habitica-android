@@ -276,4 +276,5 @@ interface ApiClient {
     suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member?
     suspend fun getHallMember(userId: String): Member?
     suspend fun markTaskNeedsWork(taskID: String, userID: String): Task?
+    suspend fun retrievePartySeekingUsers() : List<Member>?
 }

@@ -48,6 +48,10 @@ class SocialRepositoryImpl(
         return apiClient.updateMember(memberID, mapOf(key to value))
     }
 
+    override suspend fun retrievePartySeekingUsers() : List<Member>? {
+        return apiClient.retrievePartySeekingUsers()
+    }
+
     override fun getGroupMembership(id: String) = localRepository.getGroupMembership(userID, id)
 
     override fun getGroupMemberships(): Flow<List<GroupMembership>> {

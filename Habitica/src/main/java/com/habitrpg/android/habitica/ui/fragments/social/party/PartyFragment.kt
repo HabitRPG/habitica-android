@@ -56,11 +56,10 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(
-            viewLifecycleOwner,
-            {
-                updateGroupUI(it)
-            }
-        )
+            viewLifecycleOwner
+        ) {
+            updateGroupUI(it)
+        }
 
         binding?.viewPager?.currentItem = 0
 

@@ -96,6 +96,9 @@ import com.habitrpg.android.habitica.ui.fragments.social.party.NoPartyFragmentFr
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyFragment;
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInvitePagerFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartySeekingFragment;
+import com.habitrpg.android.habitica.ui.fragments.social.party.PartySeekingViewModel;
 import com.habitrpg.android.habitica.ui.fragments.support.BugFixFragment;
 import com.habitrpg.android.habitica.ui.fragments.support.FAQDetailFragment;
 import com.habitrpg.android.habitica.ui.fragments.support.FAQOverviewFragment;
@@ -376,4 +379,10 @@ public interface UserComponent {
     void inject(@NotNull AvatarEquipmentFragment avatarEquipmentFragment);
 
     void inject(@NotNull BirthdayActivity birthdayActivity);
+
+    void inject(@NotNull PartySeekingFragment partySeekingFragment);
+
+    void inject(@NotNull PartySeekingViewModel partySeekingViewModel);
+
+    void inject(@NotNull PartyInvitePagerFragment partyInvitePagerFragment);
 }
