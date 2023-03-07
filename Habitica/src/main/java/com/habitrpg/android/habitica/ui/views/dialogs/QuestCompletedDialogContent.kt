@@ -62,7 +62,7 @@ class QuestCompletedDialogContent : LinearLayout {
                 binding.ownerRewardsList.visibility = View.GONE
             }
 
-            if (questContent.drop?.exp ?: 0 > 0) {
+            if ((questContent.drop?.exp ?: 0) > 0) {
                 val view = inflater?.inflate(R.layout.row_quest_reward_imageview, binding.rewardsList, false) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
@@ -72,7 +72,7 @@ class QuestCompletedDialogContent : LinearLayout {
                 binding.rewardsList.addView(view)
             }
 
-            if (questContent.drop?.gp ?: 0 > 0) {
+            if ((questContent.drop?.gp ?: 0) > 0) {
                 val view = inflater?.inflate(R.layout.row_quest_reward_imageview, binding.rewardsList, false) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER

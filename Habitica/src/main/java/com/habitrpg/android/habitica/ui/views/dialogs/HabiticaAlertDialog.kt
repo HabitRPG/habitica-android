@@ -13,15 +13,14 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.DialogHabiticaBaseBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.android.habitica.ui.views.login.LockableScrollView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.plattysoft.leonids.ParticleSystem
@@ -38,17 +37,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             updateButtonLayout()
         }
     var isCelebratory: Boolean = false
-    private val view: RelativeLayout = LayoutInflater.from(context).inflate(R.layout.dialog_habitica_base, null) as RelativeLayout
-    private val dialogWrapper: LinearLayout
-    internal val dialogContainer: LinearLayout
-    private var titleTextView: TextView
-    private var messageTextView: TextView
-    internal var contentView: ViewGroup
-    private var scrollingSeparator: View
-    internal var scrollView: LockableScrollView
-    protected var buttonsWrapper: LinearLayout
-    private var noticeTextView: TextView
-    private var closeButton: Button
+    private val binding = DialogHabiticaBaseBinding.inflate(LayoutInflater.from(context))
+    val scrollView
+        get() = binding.mainScrollView
+    val contentView
+        get() = binding.contentView
 
     internal var additionalContentView: View? = null
 
@@ -70,35 +63,25 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     var dialogWidth = 320
         set(value) {
             field = value
-            val layoutParams = dialogWrapper.layoutParams
+            val layoutParams = binding.dialogWrapper.layoutParams
             layoutParams.width = value
-            dialogWrapper.layoutParams = layoutParams
+            binding.dialogWrapper.layoutParams = layoutParams
         }
 
     init {
-        setView(view)
-        dialogWrapper = view.findViewById(R.id.dialog_wrapper)
-        dialogContainer = view.findViewById(R.id.dialog_container)
-        titleTextView = view.findViewById(R.id.titleTextView)
-        messageTextView = view.findViewById(R.id.messageTextView)
-        contentView = view.findViewById(R.id.content_view)
-        scrollingSeparator = view.findViewById(R.id.scrolling_separator)
-        scrollView = view.findViewById(R.id.main_scroll_view)
-        buttonsWrapper = view.findViewById(R.id.buttons_wrapper)
-        noticeTextView = view.findViewById(R.id.notice_text_view)
-        closeButton = view.findViewById(R.id.close_button)
-        closeButton.setOnClickListener { dismiss() }
-        dialogContainer.clipChildren = true
-        dialogContainer.clipToOutline = true
+        setView(binding.root)
+        binding.closeButton.setOnClickListener { dismiss() }
+        binding.dialogContainer.clipChildren = true
+        binding.dialogContainer.clipToOutline = true
     }
 
     override fun setTitle(title: CharSequence?) {
         if ((title?.length ?: 0) > 0) {
-            titleTextView.visibility = View.VISIBLE
+            binding.titleTextView.visibility = View.VISIBLE
         } else {
-            titleTextView.visibility = View.GONE
+            binding.titleTextView.visibility = View.GONE
         }
-        titleTextView.text = title
+        binding.titleTextView.text = title
     }
 
     override fun setTitle(titleId: Int) {
@@ -107,12 +90,12 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
     override fun setMessage(message: CharSequence?) {
         if ((message?.length ?: 0) > 0) {
-            messageTextView.visibility = View.VISIBLE
+            binding.messageTextView.visibility = View.VISIBLE
         } else {
-            messageTextView.visibility = View.GONE
+            binding.messageTextView.visibility = View.GONE
         }
-        messageTextView.text = message
-        messageTextView.movementMethod = ScrollingMovementMethod()
+        binding.messageTextView.text = message
+        binding.messageTextView.movementMethod = ScrollingMovementMethod()
     }
 
     fun setMessage(messageId: Int) {
@@ -121,11 +104,11 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
 
     fun setNotice(notice: CharSequence?) {
         if ((notice?.length ?: 0) > 0) {
-            noticeTextView.visibility = View.VISIBLE
+            binding.noticeTextView.visibility = View.VISIBLE
         } else {
-            noticeTextView.visibility = View.GONE
+            binding.noticeTextView.visibility = View.GONE
         }
-        noticeTextView.text = notice
+        binding.noticeTextView.text = notice
     }
 
     fun setNotice(noticeID: Int) {
@@ -133,52 +116,52 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
 
     fun setCustomHeaderView(customHeader: View) {
-        dialogContainer.addView(customHeader, 0)
-        dialogContainer.setPadding(0, 0, 0, dialogContainer.paddingBottom)
+        binding.dialogContainer.addView(customHeader, 0)
+        binding.dialogContainer.setPadding(0, 0, 0, binding.dialogContainer.paddingBottom)
     }
 
     fun setAdditionalContentView(layoutResID: Int) {
         val inflater = context.layoutInflater
-        setAdditionalContentView(inflater.inflate(layoutResID, view, false))
+        setAdditionalContentView(inflater.inflate(layoutResID, binding.root, false))
     }
 
     fun setAdditionalContentView(view: View?) {
-        this.view.removeView(additionalContentView)
+        binding.root.removeView(additionalContentView)
         additionalContentView = view
-        this.contentView.addView(view)
+        binding.contentView.addView(view)
         val layoutParams = view?.layoutParams
         layoutParams?.width = ViewGroup.LayoutParams.MATCH_PARENT
         layoutParams?.height = ViewGroup.LayoutParams.WRAP_CONTENT
         view?.layoutParams = layoutParams
-        contentView.forceLayout()
+        binding.contentView.forceLayout()
     }
 
     fun setAdditionalContentSidePadding(padding: Int) {
-        contentView.setPadding(padding, 0, padding, contentView.paddingBottom)
-        messageTextView.setPadding(padding, messageTextView.paddingTop, padding, messageTextView.paddingBottom)
+        binding.contentView.setPadding(padding, 0, padding, binding.contentView.paddingBottom)
+        binding.messageTextView.setPadding(padding, binding.messageTextView.paddingTop, padding, binding.messageTextView.paddingBottom)
     }
 
     fun setExtraCloseButtonVisibility(visibility: Int) {
-        closeButton.visibility = visibility
+        binding.closeButton.visibility = visibility
     }
 
     private fun updateButtonLayout() {
         if (isScrollingLayout || buttonAxis == LinearLayout.HORIZONTAL) {
-            scrollingSeparator.visibility = View.VISIBLE
-            buttonsWrapper.orientation = LinearLayout.HORIZONTAL
+            binding.scrollingSeparator.visibility = View.VISIBLE
+            binding.buttonsWrapper.orientation = LinearLayout.HORIZONTAL
             val padding = 16.dpToPx(context)
-            buttonsWrapper.setPadding(padding, padding, padding, 0)
-            dialogContainer.setPadding(0, dialogContainer.paddingTop, 0, padding)
-            contentView.setPadding(contentView.paddingStart, 0, contentView.paddingEnd, 30.dpToPx(context))
+            binding.buttonsWrapper.setPadding(padding, padding, padding, 0)
+            binding.dialogContainer.setPadding(0, binding.dialogContainer.paddingTop, 0, padding)
+            binding.contentView.setPadding(binding.contentView.paddingStart, 0, binding.contentView.paddingEnd, 30.dpToPx(context))
         } else {
-            scrollingSeparator.visibility = View.GONE
-            buttonsWrapper.orientation = LinearLayout.VERTICAL
-            contentView.setPadding(contentView.paddingStart, 0, contentView.paddingEnd, 0)
+            binding.scrollingSeparator.visibility = View.GONE
+            binding.buttonsWrapper.orientation = LinearLayout.VERTICAL
+            binding.contentView.setPadding(binding.contentView.paddingStart, 0, binding.contentView.paddingEnd, 0)
             val sidePadding = context.resources.getDimension(R.dimen.alert_side_padding).toInt()
-            buttonsWrapper.setPadding(20.dpToPx(context), sidePadding, sidePadding, 0)
-            dialogContainer.setPadding(0, dialogContainer.paddingTop, 0, 24.dpToPx(context))
+            binding.buttonsWrapper.setPadding(20.dpToPx(context), sidePadding, sidePadding, 0)
+            binding.dialogContainer.setPadding(0, binding.dialogContainer.paddingTop, 0, 24.dpToPx(context))
         }
-        buttonsWrapper.children.forEach { configureButtonLayoutParams(it) }
+        binding.buttonsWrapper.children.forEach { configureButtonLayoutParams(it) }
     }
 
     fun getContentView(): View? = additionalContentView
@@ -202,12 +185,12 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     ): Button {
         val button: Button = if (isPrimary) {
             if (isDestructive) {
-                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
+                binding.buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
             } else {
-                buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as? Button
+                binding.buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as? Button
             }
         } else {
-            val button = buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as? Button
+            val button = binding.buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as? Button
             if (isDestructive) {
                 button?.setTextColor(ContextCompat.getColor(context, R.color.text_red))
             }
@@ -223,7 +206,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         function: ((HabiticaAlertDialog, Int) -> Unit)? = null
     ): View {
         val weakThis = WeakReference(this)
-        val buttonIndex = buttonsWrapper.childCount
+        val buttonIndex = binding.buttonsWrapper.childCount
         buttonView.setOnClickListener {
             weakThis.get()?.let { it1 ->
                 if (function != null) {
@@ -235,7 +218,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             }
         }
         configureButtonLayoutParams(buttonView)
-        buttonsWrapper.addView(buttonView)
+        binding.buttonsWrapper.addView(buttonView)
         // for some reason the padding gets lost somewhere.
         buttonView.setPadding(24.dpToPx(context), 0, 24.dpToPx(context), 0)
         return buttonView
@@ -276,32 +259,32 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         super.onStart()
 
         if (isCelebratory) {
-            titleTextView.post {
-                val confettiContainer = view.findViewById<RelativeLayout>(R.id.confetti_container)
+            binding.titleTextView.post {
+                val confettiContainer = binding.root.findViewById<RelativeLayout>(R.id.confetti_container)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_blue), 6000)
                     .setAcceleration(0.00010f, 90)
                     .setRotationSpeed(144f)
                     .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
                     .setFadeOut(200, AccelerateInterpolator())
-                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .emitWithGravity(binding.titleTextView, Gravity.BOTTOM, 10, 2000)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_red), 6000)
                     .setAcceleration(0.00010f, 90)
                     .setRotationSpeed(144f)
                     .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
                     .setFadeOut(200, AccelerateInterpolator())
-                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .emitWithGravity(binding.titleTextView, Gravity.BOTTOM, 10, 2000)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_yellow), 6000)
                     .setAcceleration(0.00010f, 90)
                     .setRotationSpeed(144f)
                     .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
                     .setFadeOut(200, AccelerateInterpolator())
-                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .emitWithGravity(binding.titleTextView, Gravity.BOTTOM, 10, 2000)
                 ParticleSystem(confettiContainer, 40, ContextCompat.getDrawable(context, R.drawable.confetti_purple), 6000)
                     .setAcceleration(0.00010f, 90)
                     .setRotationSpeed(144f)
                     .setSpeedByComponentsRange(-0.15f, 0.15f, -0.1f, -0.4f)
                     .setFadeOut(200, AccelerateInterpolator())
-                    .emitWithGravity(titleTextView, Gravity.BOTTOM, 10, 2000)
+                    .emitWithGravity(binding.titleTextView, Gravity.BOTTOM, 10, 2000)
             }
         }
     }

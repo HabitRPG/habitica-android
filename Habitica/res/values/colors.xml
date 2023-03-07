@@ -97,6 +97,7 @@
     <color name="background_blue">@color/blue_100</color>
     <color name="background_teal">@color/teal_100</color>
     <color name="background_brand">@color/brand_300</color>
+    <color name="background_brand_30">#4D6033B5</color>
 
     <color name="checkbox_fill">#50ffffff</color>
     <color name="checkbox_fill_inactive">#99FFFFFF</color>

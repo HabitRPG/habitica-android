@@ -79,7 +79,7 @@ class StableViewModel(private val application: Application?, private val itemTyp
                 _items.value = mapAnimals(animals, it)
             }
             viewModelScope.launchCatching {
-                _ownedItems.value = inventoryRepository.getOwnedItems(true).firstOrNull()
+                _ownedItems.value = inventoryRepository.getOwnedItems(true).firstOrNull() ?: emptyMap()
             }
             _mounts.value = if ("pets" == itemType) {
                 inventoryRepository.getMounts().firstOrNull() ?: emptyList()

@@ -250,7 +250,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         pinTextView = customHeader.findViewById(R.id.pin_text)
 
         addCloseButton()
-        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, buttonsWrapper, false), autoDismiss = false) { _, _ ->
+        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null), autoDismiss = false) { _, _ ->
             onBuyButtonClicked()
         }
         priceLabel = buyButton.findViewById(R.id.priceLabel)
@@ -359,7 +359,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
                 Pair("key", shopItem.key)
             )
         )
-        HapticFeedbackManager.tap(contentView)
+        HapticFeedbackManager.tap(buyButton)
         val snackbarText = arrayOf("")
         val observable: (suspend () -> Any?)
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {

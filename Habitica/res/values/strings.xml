@@ -1359,6 +1359,9 @@
     <string name="pause_damage_2_description">Daily streaks and Habit counters will only count up while this is on</string>
     <string name="pause_damage_3_title">Your Quest progress will stay pending</string>
     <string name="pause_damage_3_description">Damage to a boss or found collection items will be stored until you resume damage</string>
+    <string name="list">List</string>
+    <string name="by_invite">By Invite</string>
+    <string name="habiticans_looking_party">Here’s a list of Habiticans looking to join a Party</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

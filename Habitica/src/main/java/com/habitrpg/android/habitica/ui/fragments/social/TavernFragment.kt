@@ -41,8 +41,6 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
-        this.tutorialStepIdentifier = "tavern"
-        this.tutorialTexts = listOf(getString(R.string.tutorial_tavern))
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }

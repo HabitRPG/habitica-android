@@ -515,7 +515,7 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowBackground">@color/background_brand</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 

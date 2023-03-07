@@ -26,6 +26,7 @@
     <color name="background_blue">@color/blue_50</color>
     <color name="background_teal">@color/teal_50</color>
     <color name="background_brand">@color/brand_200</color>
+    <color name="background_brand_30">#4D4f2a93</color>
 
     <color name="checkbox_fill">#40000000</color>
     <color name="checkbox_fill_inactive">#80000000</color>

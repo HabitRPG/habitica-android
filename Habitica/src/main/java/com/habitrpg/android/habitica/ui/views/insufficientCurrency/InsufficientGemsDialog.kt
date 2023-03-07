@@ -46,7 +46,6 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
         addButton(R.string.see_other_options, true) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }
         addCloseButton()
         contentView.setPadding(0, 0, 0, 0)
-        dialogContainer.setPadding(0, 0, 0, dialogContainer.paddingBottom)
     }
 
     override fun onAttachedToWindow() {

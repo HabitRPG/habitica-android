@@ -24,7 +24,7 @@ abstract class InsufficientCurrencyDialog(context: Context) : HabiticaAlertDialo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(getLayoutID(), contentView, false)
+        val view = inflater.inflate(getLayoutID(), null)
         setAdditionalContentView(view)
 
         imageView = view.findViewById(R.id.imageView)
