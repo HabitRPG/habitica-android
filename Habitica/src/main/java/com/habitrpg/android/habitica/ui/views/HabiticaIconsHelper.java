@@ -187,15 +187,6 @@ public class HabiticaIconsHelper {
         return imageOfHeartLarge;
     }
 
-    public static Bitmap imageOfDifficultyStars(float difficulty) {
-        Bitmap imageOfDifficultyStars = Bitmap.createBitmap(scaleSize(48), scaleSize(12), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfDifficultyStars);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawDifficultyStars(canvas, difficulty);
-
-        return imageOfDifficultyStars;
-    }
-
     private static Bitmap imageOfStarSmall = null;
     public static Bitmap imageOfStarSmall() {
         if (imageOfStarSmall != null)
@@ -327,7 +318,6 @@ public class HabiticaIconsHelper {
         return imageOfItemIndicatorLocked;
     }
 
-    private static Bitmap imageOfItemIndicatorLockedDark = null;
     public static Bitmap imageOfItemIndicatorLockedDark(boolean isLimited) {
         int size = scaleSize(28);
         Bitmap imageOfItemIndicatorLockedDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
@@ -385,20 +375,6 @@ public class HabiticaIconsHelper {
         return imageOfWarriorLightBg;
     }
 
-    private static Bitmap imageOfWarriorDarkBg = null;
-    public static Bitmap imageOfWarriorDarkBg() {
-        if (imageOfWarriorDarkBg != null)
-            return imageOfWarriorDarkBg;
-
-        int size = scaleSize(32);
-        imageOfWarriorDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfWarriorDarkBg);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawWarriorDarkBg(canvas);
-
-        return imageOfWarriorDarkBg;
-    }
-
     private static Bitmap imageOfRogueLightBg = null;
     public static Bitmap imageOfRogueLightBg() {
         if (imageOfRogueLightBg != null)
@@ -413,20 +389,6 @@ public class HabiticaIconsHelper {
         return imageOfRogueLightBg;
     }
 
-    private static Bitmap imageOfRogueDarkBg = null;
-    public static Bitmap imageOfRogueDarkBg() {
-        if (imageOfRogueDarkBg != null)
-            return imageOfRogueDarkBg;
-
-        int size = scaleSize(32);
-        imageOfRogueDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfRogueDarkBg);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawRogueDarkBg(canvas);
-
-        return imageOfRogueDarkBg;
-    }
-
     private static Bitmap imageOfHealerLightBg = null;
     public static Bitmap imageOfHealerLightBg() {
         if (imageOfHealerLightBg != null)
@@ -439,34 +401,6 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawHealerLightBg(canvas);
 
         return imageOfHealerLightBg;
-    }
-
-    private static Bitmap imageOfHealerDarkBg = null;
-    public static Bitmap imageOfHealerDarkBg() {
-        if (imageOfHealerDarkBg != null)
-            return imageOfHealerDarkBg;
-
-        int size = scaleSize(32);
-        imageOfHealerDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfHealerDarkBg);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawHealerDarkBg(canvas);
-
-        return imageOfHealerDarkBg;
-    }
-
-    private static Bitmap imageOfMageDarkBg = null;
-    public static Bitmap imageOfMageDarkBg() {
-        if (imageOfMageDarkBg != null)
-            return imageOfMageDarkBg;
-
-        int size = scaleSize(32);
-        imageOfMageDarkBg = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfMageDarkBg);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawMageDarkBg(canvas);
-
-        return imageOfMageDarkBg;
     }
 
     private static Bitmap imageOfMageLightBg = null;
@@ -559,16 +493,6 @@ public class HabiticaIconsHelper {
         return imageOfContributorBadge;
     }
 
-    public static Bitmap imageOfChatLikeIcon(boolean wasLiked) {
-        int size = scaleSize(12);
-        Bitmap imageOfChatLikeIcon = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfChatLikeIcon);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawChatLikeIcon(canvas, wasLiked);
-
-        return imageOfChatLikeIcon;
-    }
-
     private static Bitmap imageOfDamage = null;
     public static Bitmap imageOfDamage() {
         if (imageOfDamage != null)
@@ -591,16 +515,6 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawCaret(canvas, caretColor, pointsUp);
 
         return imageOfCaret;
-    }
-
-    public static Bitmap imageOfQuestBackground(int bossColorDark, int bossColorMedium, int bossColorLight) {
-        int size = scaleSize(21);
-        Bitmap imageOfQuestBackground = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfQuestBackground);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawQuestBackground(canvas, new RectF(0f, 0f, size, size), bossColorDark, bossColorMedium, bossColorLight);
-
-        return imageOfQuestBackground;
     }
 
     private static Bitmap imageOfRageStrikeInactive = null;
@@ -772,20 +686,6 @@ public class HabiticaIconsHelper {
         return imageOfBuffIcon;
     }
 
-    private static Bitmap imageOfBuffIconDark = null;
-    public static Bitmap imageOfBuffIconDark() {
-        if (imageOfBuffIconDark != null)
-            return imageOfBuffIconDark;
-
-        int size = scaleSize(15);
-        imageOfBuffIconDark = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfBuffIconDark);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawBuffIcon(canvas);
-
-        return imageOfBuffIconDark;
-    }
-
     public static Bitmap imageOfTaskDifficultyStars(int taskTintColor, float difficulty, boolean isActive) {
         int size = scaleSize(36);
         Bitmap imageOfTaskDifficultyStars = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
@@ -794,26 +694,6 @@ public class HabiticaIconsHelper {
         HabiticaIcons.drawTaskDifficultyStars(canvas, taskTintColor, difficulty, isActive);
 
         return imageOfTaskDifficultyStars;
-    }
-
-    public static Bitmap imageOfHabitControlPlus(int taskTintColor, boolean isActive) {
-        int size = scaleSize(34);
-        Bitmap imageOfHabitControlPlus = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfHabitControlPlus);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawHabitControlPlus(canvas, taskTintColor, isActive);
-
-        return imageOfHabitControlPlus;
-    }
-
-    public static Bitmap imageOfHabitControlMinus(int taskTintColor, boolean isActive) {
-        int size = scaleSize(34);
-        Bitmap imageOfHabitControlMinus = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfHabitControlMinus);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawHabitControlMinus(canvas, taskTintColor, isActive);
-
-        return imageOfHabitControlMinus;
     }
 
     public static Bitmap imageOfStats() {
@@ -827,29 +707,11 @@ public class HabiticaIconsHelper {
         return imageOfHabitControlMinus;
     }
 
-    public static Bitmap imageOfFallGemPromoBG(int redGemColor, int greenGemColor, int blueGemColor, int purpleGemColor) {
-        Bitmap imageOfFallGemPromoBG = Bitmap.createBitmap(scaleSize(132), scaleSize(35), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfFallGemPromoBG);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawFallGemPromoBG(canvas, redGemColor, greenGemColor, blueGemColor, purpleGemColor);
-
-        return imageOfFallGemPromoBG;
-    }
-
-    public static Bitmap imageOfSpookyGemPromoBG() {
-        Bitmap imageOfSpookyGemPromoBG = Bitmap.createBitmap(scaleSize(132), scaleSize(35), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(imageOfSpookyGemPromoBG);
-        canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawSpookyGemPromoBG(canvas);
-
-        return imageOfSpookyGemPromoBG;
-    }
-
-    public static Bitmap imageOfGuildCrest(Context context, boolean isOwner, boolean isPublic, float memberCount, String memberCountLabel) {
+    public static Bitmap imageOfGuildCrest(boolean isOwner, boolean isPublic, float memberCount, String memberCountLabel) {
         Bitmap imageOfGuildCrest = Bitmap.createBitmap(scaleSize(40), scaleSize(38), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfGuildCrest);
         canvas.scale(displayDensity, displayDensity);
-        HabiticaIcons.drawGuildCrest(canvas, context, isOwner, isPublic, memberCount, memberCountLabel);
+        HabiticaIcons.drawGuildCrest(canvas, isOwner, isPublic, memberCount, memberCountLabel);
 
         return imageOfGuildCrest;
     }
