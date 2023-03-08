@@ -13,17 +13,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
 import com.habitrpg.android.habitica.ui.adapter.tasks.RewardsRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
 
     private var showCustomRewards: Boolean = true
@@ -71,6 +75,14 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             selectedCard = it
             val intent = Intent(activity, SkillMemberActivity::class.java)
             cardSelectedResult.launch(intent)
+        }
+        (recyclerAdapter as? RewardsRecyclerViewAdapter)?.onShowPurchaseDialog = { item, isPinned ->
+            val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
+            dialog.isPinned = isPinned
+            dialog.onGearPurchased = {
+                viewModel.refreshData {  }
+            }
+            dialog.show()
         }
         recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
 

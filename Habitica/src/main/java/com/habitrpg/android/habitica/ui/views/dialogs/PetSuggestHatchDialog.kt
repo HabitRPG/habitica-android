@@ -7,7 +7,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.lifecycleScope
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
@@ -36,7 +35,6 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         inflater?.let { binding = DialogPetSuggestHatchBinding.inflate(it) }
         setAdditionalContentView(binding.root)
-        HabiticaBaseApplication.userComponent?.inject(this)
         binding.shimmerView.startShimmer()
     }
 

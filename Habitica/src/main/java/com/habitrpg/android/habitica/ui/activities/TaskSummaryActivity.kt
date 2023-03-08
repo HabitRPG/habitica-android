@@ -38,68 +38,51 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.TaskDescriptionBuilder
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CompletedAt
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.UserRow
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import java.text.DateFormat
 import java.util.Date
-import javax.inject.Inject
 
-class TaskSummaryViewModel(val taskId: String) : BaseViewModel() {
-    @Inject
-    lateinit var taskRespository: TaskRepository
+class TaskSummaryViewModel(
+    userRepository : UserRepository,
+    userViewModel : MainUserViewModel,
+    val taskRepository : TaskRepository,
+    val socialRepository : SocialRepository
+) : BaseViewModel(userRepository, userViewModel) {
+    val taskID : String = ""
 
-    @Inject
-    lateinit var socialRepository: SocialRepository
+    val task = taskRepository.getTask(taskID).asLiveData()
 
-    val task = taskRespository.getTask(taskId).asLiveData()
-
-    override fun inject(component: UserComponent) {
-        component.inject(this)
-    }
-
-    fun getMember(userID: String?): Flow<Member?> {
+    fun getMember(userID : String?) : Flow<Member?> {
         return socialRepository.getMember(userID)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val taskID: String) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return TaskSummaryViewModel(taskID) as T
-        }
     }
 }
 
+@AndroidEntryPoint
 class TaskSummaryActivity : BaseActivity() {
-    override fun getLayoutResId(): Int? = null
+    override fun getLayoutResId() : Int? = null
 
-    private val viewModel: TaskSummaryViewModel by viewModels {
-        TaskSummaryViewModel.Factory(
-            intent.extras?.getString(
-                TaskFormActivity.TASK_ID_KEY
-            ) ?: ""
-        )
-    }
+    private val viewModel : TaskSummaryViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             HabiticaTheme {
@@ -107,14 +90,10 @@ class TaskSummaryActivity : BaseActivity() {
             }
         }
     }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
-    }
 }
 
 @Composable
-fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
+fun TaskSummaryView(viewModel : TaskSummaryViewModel) {
     val taskDescriptionBuilder = TaskDescriptionBuilder(LocalContext.current)
     val task by viewModel.task.observeAsState()
     val titleModifier = Modifier.padding(top = 30.dp)
@@ -327,7 +306,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
     }
 }
 
-private fun String.makeBoldComposable(): AnnotatedString {
+private fun String.makeBoldComposable() : AnnotatedString {
     return buildAnnotatedString {
         var isBold = false
         for (segment in split("**")) {
@@ -337,10 +316,4 @@ private fun String.makeBoldComposable(): AnnotatedString {
             isBold = !isBold
         }
     }
-}
-
-@Preview
-@Composable
-private fun TaskSummaryViewPreview() {
-    TaskSummaryView(TaskSummaryViewModel(""))
 }

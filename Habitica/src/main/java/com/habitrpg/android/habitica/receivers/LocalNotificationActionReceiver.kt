@@ -8,7 +8,6 @@ import android.text.Spannable
 import android.widget.Toast
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -18,10 +17,12 @@ import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LocalNotificationActionReceiver : BroadcastReceiver() {
     @Inject
     lateinit var userRepository: UserRepository
@@ -46,7 +47,6 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     private var intent: Intent? = null
 
     override fun onReceive(context: Context, intent: Intent) {
-        HabiticaBaseApplication.userComponent?.inject(this)
         this.intent = intent
         this.context = context
         handleLocalNotificationAction(intent.action)

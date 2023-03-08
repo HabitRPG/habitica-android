@@ -37,7 +37,7 @@ class AutocompleteAdapter(
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
-                if (constraint != null && constraint.isNotEmpty()) {
+                if (!constraint.isNullOrEmpty()) {
                     if (constraint[0] == '@' && constraint.length >= 3 && socialRepository != null && remoteAutocomplete) {
                         if (Date().time - lastAutocomplete > 2000) {
                             lastAutocomplete = Date().time

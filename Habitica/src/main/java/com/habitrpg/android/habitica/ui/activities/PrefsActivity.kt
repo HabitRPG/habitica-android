@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.ui.fragments.preferences.AccountPreferenceFragment
 import com.habitrpg.android.habitica.ui.fragments.preferences.EmailNotificationsPreferencesFragment
 import com.habitrpg.android.habitica.ui.fragments.preferences.PreferencesFragment
 import com.habitrpg.android.habitica.ui.fragments.preferences.PushNotificationsPreferencesFragment
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback, SnackbarActivity {
 
     override fun getLayoutResId(): Int = R.layout.activity_prefs
@@ -24,10 +25,6 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, PreferencesFragment())
             .commit()
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

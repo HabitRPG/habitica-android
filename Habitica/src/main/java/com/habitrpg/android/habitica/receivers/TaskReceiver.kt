@@ -10,7 +10,6 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
@@ -21,11 +20,13 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TaskReceiver : BroadcastReceiver() {
 
     @Inject
@@ -36,7 +37,6 @@ class TaskReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")
-        HabiticaBaseApplication.userComponent?.inject(this)
         val extras = intent.extras
         if (extras != null) {
             val taskId = extras.getString(TaskAlarmManager.TASK_ID_INTENT_KEY)

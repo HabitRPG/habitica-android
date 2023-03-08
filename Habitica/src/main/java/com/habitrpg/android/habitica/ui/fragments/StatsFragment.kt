@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
@@ -23,10 +21,12 @@ import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.Attribute
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 import kotlin.math.min
 
+@AndroidEntryPoint
 class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     override var binding: FragmentStatsBinding? = null
@@ -156,7 +156,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     private fun showBulkAllocateDialog() {
         context?.let { context ->
-            val dialog = BulkAllocateStatsDialog(context, HabiticaBaseApplication.userComponent)
+            val dialog = BulkAllocateStatsDialog(context, userRepository)
             dialog.show()
         }
     }
@@ -245,9 +245,6 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         binding?.numberOfPointsTextView?.setScaledPadding(context, 18, 4, 18, 4)
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun updateStats(user: User) {
         val outfit = user.items?.gear?.equipped

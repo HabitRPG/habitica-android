@@ -22,6 +22,7 @@ import com.habitrpg.common.habitica.extensions.fromHtml
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var onNeedsRefresh: (() -> Unit)? = null
+    var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
@@ -96,6 +97,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 val viewHolder = ShopItemViewHolder(view)
                 viewHolder.shopIdentifier = shopIdentifier
                 viewHolder.onNeedsRefresh = onNeedsRefresh
+                viewHolder.onShowPurchaseDialog = onShowPurchaseDialog
                 viewHolder
             }
         }

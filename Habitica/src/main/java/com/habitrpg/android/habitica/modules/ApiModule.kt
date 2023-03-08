@@ -13,11 +13,15 @@ import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.ref.WeakReference
 import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
 open class ApiModule {
     @Provides
@@ -25,7 +29,7 @@ open class ApiModule {
     fun providesHostConfig(
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
-        context: Context
+        @ApplicationContext context: Context
     ): HostConfig {
         return HostConfig(sharedPreferences, keyHelper, context)
     }
@@ -48,7 +52,7 @@ open class ApiModule {
         hostConfig: HostConfig,
         analyticsManager: AnalyticsManager,
         notificationsManager: NotificationsManager,
-        context: Context
+        @ApplicationContext context: Context
     ): ApiClient {
         val apiClient = ApiClientImpl(
             gsonConverter,

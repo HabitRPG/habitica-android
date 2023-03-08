@@ -18,7 +18,6 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
 import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
@@ -36,28 +35,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
-class AuthenticationViewModel() {
-    @Inject
-    internal lateinit var apiClient: ApiClient
-    @Inject
-    internal lateinit var userRepository: UserRepository
-    @Inject
-    internal lateinit var sharedPrefs: SharedPreferences
-    @Inject
-    internal lateinit var hostConfig: HostConfig
-    @Inject
-    internal lateinit var analyticsManager: AnalyticsManager
-    @Inject
-    @JvmField
-    var keyHelper: KeyHelper? = null
+class AuthenticationViewModel @Inject constructor(
+    val apiClient : ApiClient,
+    val userRepository : UserRepository,
+    val sharedPrefs : SharedPreferences,
+    val hostConfig : HostConfig,
+    val analyticsManager : AnalyticsManager,
+    private val keyHelper : KeyHelper?
+) {
+    var googleEmail : String? = null
 
-    var googleEmail: String? = null
-
-    init {
-        HabiticaBaseApplication.userComponent?.inject(this)
-    }
-
-    fun connectApple(fragmentManager: FragmentManager, onSuccess: (UserAuthResponse) -> Unit) {
+    fun connectApple(fragmentManager : FragmentManager, onSuccess : (UserAuthResponse) -> Unit) {
         val configuration = SignInWithAppleConfiguration(
             clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
             redirectUri = "${hostConfig.address}/api/v4/user/auth/apple",
@@ -74,6 +62,7 @@ class AuthenticationViewModel() {
                     response.newUser = result.newUser
                     onSuccess(response)
                 }
+
                 else -> {
                 }
             }
@@ -81,8 +70,8 @@ class AuthenticationViewModel() {
     }
 
     fun handleGoogleLogin(
-        activity: Activity,
-        pickAccountResult: ActivityResultLauncher<Intent>
+        activity : Activity,
+        pickAccountResult : ActivityResultLauncher<Intent>
     ) {
         if (!checkPlayServices(activity)) {
             return
@@ -94,7 +83,7 @@ class AuthenticationViewModel() {
         )
         try {
             pickAccountResult.launch(intent)
-        } catch (e: ActivityNotFoundException) {
+        } catch (e : ActivityNotFoundException) {
             val alert = HabiticaAlertDialog(activity)
             alert.setTitle(R.string.authentication_error_title)
             alert.setMessage(R.string.google_services_missing)
@@ -104,9 +93,9 @@ class AuthenticationViewModel() {
     }
 
     fun handleGoogleLoginResult(
-        activity: Activity,
-        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
-        onSuccess: (Boolean) -> Unit
+        activity : Activity,
+        recoverFromPlayServicesErrorResult : ActivityResultLauncher<Intent>?,
+        onSuccess : (Boolean) -> Unit
     ) {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
@@ -122,7 +111,8 @@ class AuthenticationViewModel() {
             }
         }) {
             val token = GoogleAuthUtil.getToken(activity, googleEmail ?: "", scopes)
-            val response = apiClient.connectSocial("google", googleEmail ?: "", token) ?: return@launchCatching
+            val response =
+                apiClient.connectSocial("google", googleEmail ?: "", token) ?: return@launchCatching
             newUser = response.newUser
             handleAuthResponse(response)
             onSuccess(newUser)
@@ -130,9 +120,9 @@ class AuthenticationViewModel() {
     }
 
     private fun handleGoogleAuthException(
-        e: Exception,
-        activity: Activity,
-        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>
+        e : Exception,
+        activity : Activity,
+        recoverFromPlayServicesErrorResult : ActivityResultLauncher<Intent>
     ) {
         if (e is GooglePlayServicesAvailabilityException) {
             GoogleApiAvailability.getInstance()
@@ -154,7 +144,7 @@ class AuthenticationViewModel() {
         }
     }
 
-    private fun checkPlayServices(activity: Activity): Boolean {
+    private fun checkPlayServices(activity : Activity) : Boolean {
         val googleAPI = GoogleApiAvailability.getInstance()
         val result = googleAPI.isGooglePlayServicesAvailable(activity)
         if (result != ConnectionResult.SUCCESS) {
@@ -170,29 +160,28 @@ class AuthenticationViewModel() {
         return true
     }
 
-    fun handleAuthResponse(userAuthResponse: UserAuthResponse) {
+    fun handleAuthResponse(userAuthResponse : UserAuthResponse) {
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             analyticsManager.logException(e)
         }
-
-        HabiticaBaseApplication.reloadUserComponent()
     }
 
     @Throws(Exception::class)
-    private fun saveTokens(api: String, user: String) {
+    private fun saveTokens(api : String, user : String) {
         this.apiClient.updateAuthenticationCredentials(user, api)
         sharedPrefs.edit {
             putString("UserID", user)
-            val encryptedKey = if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                try {
-                    keyHelper?.encrypt(api)
-                } catch (e: Exception) {
-                    null
-                }
-            } else null
-            if (encryptedKey?.length ?: 0 > 5) {
+            val encryptedKey =
+                if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    try {
+                        keyHelper.encrypt(api)
+                    } catch (e : Exception) {
+                        null
+                    }
+                } else null
+            if ((encryptedKey?.length ?: 0) > 5) {
                 putString(user, encryptedKey)
             } else {
                 // Something might have gone wrong with encryption, so fall back to this.

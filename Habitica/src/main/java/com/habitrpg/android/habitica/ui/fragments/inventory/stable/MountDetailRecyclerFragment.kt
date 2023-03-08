@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
@@ -25,7 +24,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MountDetailRecyclerFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
@@ -61,9 +62,6 @@ class MountDetailRecyclerFragment :
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showsBackButton = true
@@ -79,7 +77,7 @@ class MountDetailRecyclerFragment :
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
+        layoutManager = androidx.recyclerview.widget.GridLayoutManager(mainActivity, 4)
         layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {

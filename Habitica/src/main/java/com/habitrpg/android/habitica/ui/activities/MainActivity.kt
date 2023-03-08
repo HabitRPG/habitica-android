@@ -30,7 +30,6 @@ import com.google.android.gms.wearable.Wearable
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -72,6 +71,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -84,6 +84,7 @@ import kotlin.time.toDuration
 
 var mainActivityCreatedAt: Date? = null
 
+@AndroidEntryPoint
 open class MainActivity : BaseActivity(), SnackbarActivity {
     private var launchScreen: String? = null
 
@@ -348,10 +349,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
             true
         } else super.onOptionsItemSelected(item)
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onResume() {

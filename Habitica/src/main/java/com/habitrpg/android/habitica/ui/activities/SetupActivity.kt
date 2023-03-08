@@ -18,7 +18,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
@@ -31,6 +30,7 @@ import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.viewpagerindicator.IconPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
@@ -39,6 +39,7 @@ import java.util.Locale
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
+@AndroidEntryPoint
 class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     private lateinit var binding: ActivitySetupBinding
@@ -106,10 +107,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
         binding.previousButton.setOnClickListener { previousClicked() }
         binding.nextButton.setOnClickListener { nextClicked() }
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onDestroy() {

@@ -44,7 +44,9 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AccountPreferenceFragment :
     BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener,
@@ -53,8 +55,8 @@ class AccountPreferenceFragment :
     lateinit var hostConfig: HostConfig
     @Inject
     lateinit var apiClient: ApiClient
-
-    private lateinit var viewModel: AuthenticationViewModel
+    @Inject
+    lateinit var viewModel: AuthenticationViewModel
     private lateinit var accountDialog: HabiticaAccountDialog
 
     override var user: User? = null
@@ -64,9 +66,7 @@ class AccountPreferenceFragment :
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
-        viewModel = AuthenticationViewModel()
         findPreference<Preference>("confirm_username")?.isVisible = user?.flags?.verifiedUsername == false
     }
 
@@ -277,7 +277,7 @@ class AccountPreferenceFragment :
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.change_password)
-            dialog.addButton(R.string.change, true, false, false) { dialog, _ ->
+            dialog.addButton(R.string.change, true, false, false) { d, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
                 passwordEditText?.showErrorIfNecessary()
                 passwordRepeatEditText?.showErrorIfNecessary()
@@ -293,7 +293,7 @@ class AccountPreferenceFragment :
                         displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                     )
                 }
-                dialog.dismiss()
+                d.dismiss()
             }
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)

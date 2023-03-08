@@ -42,18 +42,21 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmTutorialLoca
 import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.android.habitica.helpers.UserScope
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 import javax.inject.Named
 
+@InstallIn(SingletonComponent::class)
 @Module
 class UserRepositoryModule {
     @Provides
-    fun providesSetupCustomizationRepository(context: Context?): SetupCustomizationRepository {
+    fun providesSetupCustomizationRepository(@ApplicationContext context: Context?): SetupCustomizationRepository {
         return SetupCustomizationRepositoryImpl(context!!)
     }
 
@@ -63,7 +66,6 @@ class UserRepositoryModule {
     }
 
     @Provides
-    @UserScope
     fun providesTaskRepository(
         localRepository: TaskLocalRepository,
         apiClient: ApiClient,
@@ -148,9 +150,7 @@ class UserRepositoryModule {
 
     @Provides
     fun providesInventoryLocalRepository(
-        realm: Realm?,
-        context: Context?
-    ): InventoryLocalRepository {
+        realm: Realm?): InventoryLocalRepository {
         return RealmInventoryLocalRepository(realm!!)
     }
 
@@ -207,9 +207,8 @@ class UserRepositoryModule {
     }
 
     @Provides
-    @UserScope
     fun providesPurchaseHandler(
-        context: Context,
+        @ApplicationContext context: Context,
         analyticsManager: AnalyticsManager,
         apiClient: ApiClient,
         userViewModel: MainUserViewModel

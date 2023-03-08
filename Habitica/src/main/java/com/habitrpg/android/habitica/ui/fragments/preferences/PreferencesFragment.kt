@@ -54,11 +54,13 @@ import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class PreferencesFragment : BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -83,11 +85,6 @@ class PreferencesFragment : BasePreferencesFragment(),
     private var classSelectionPreference : Preference? = null
     private var serverUrlPreference : ListPreference? = null
     private var taskListPreference : ListPreference? = null
-
-    override fun onCreate(savedInstanceState : Bundle?) {
-        HabiticaBaseApplication.userComponent?.inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)

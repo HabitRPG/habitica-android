@@ -43,7 +43,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     override var binding: FragmentSubscriptionBinding? = null
@@ -149,9 +151,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun loadInventory() {
         CoroutineScope(Dispatchers.IO).launchCatching {

@@ -139,7 +139,7 @@ private fun IsAssignedIndicator(
         painterResource(R.drawable.ic_close_white_24dp),
         null,
         colorFilter = ColorFilter.tint(color.value),
-        modifier = Modifier
+        modifier = modifier
             .rotate(rotation.value)
             .size(24.dp)
             .background(

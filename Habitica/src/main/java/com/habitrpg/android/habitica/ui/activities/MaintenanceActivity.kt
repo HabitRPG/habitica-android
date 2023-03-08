@@ -8,13 +8,14 @@ import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.MaintenanceApiService
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.databinding.ActivityMaintenanceBinding
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MaintenanceActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMaintenanceBinding
@@ -56,10 +57,6 @@ class MaintenanceActivity : BaseActivity() {
         }
 
         binding.playStoreButton.setOnClickListener { openInPlayStore() }
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onResume() {

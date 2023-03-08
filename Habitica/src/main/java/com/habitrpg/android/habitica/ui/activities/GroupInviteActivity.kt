@@ -10,19 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityPartyInviteBinding
-import com.habitrpg.android.habitica.extensions.runDelayed
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.social.party.PartyInviteFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
-import kotlin.time.DurationUnit
 
+@AndroidEntryPoint
 class GroupInviteActivity : BaseActivity() {
 
     private lateinit var binding: ActivityPartyInviteBinding
@@ -53,10 +50,6 @@ class GroupInviteActivity : BaseActivity() {
         setViewPagerAdapter()
     }
 
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_party_invite, menu)
         return super.onCreateOptionsMenu(menu)
@@ -68,12 +61,6 @@ class GroupInviteActivity : BaseActivity() {
             R.id.action_send_invites -> {
                 setResult(Activity.RESULT_OK, createResultIntent())
                 dismissKeyboard()
-                if (fragments.size > binding.viewPager.currentItem && fragments[binding.viewPager.currentItem].values.isNotEmpty()) {
-                    showSnackbar(binding.snackbarView, "Invite Sent!", HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
-                    runDelayed(1, DurationUnit.SECONDS, this::finish)
-                } else {
-                    finish()
-                }
                 true
             }
             android.R.id.home -> {
@@ -87,13 +74,6 @@ class GroupInviteActivity : BaseActivity() {
     private fun createResultIntent(): Intent {
         val intent = Intent()
         if (fragments.size == 0) return intent
-        for (fragment in fragments) {
-            if (fragment.isEmailInvite) {
-                intent.putExtra(EMAILS_KEY, fragment.values)
-            } else {
-                intent.putExtra(USER_IDS_KEY, fragment.values)
-            }
-        }
         return intent
     }
 
@@ -103,7 +83,6 @@ class GroupInviteActivity : BaseActivity() {
         val statePagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
             override fun createFragment(position: Int): Fragment {
                 val fragment = PartyInviteFragment()
-                fragment.isEmailInvite = position == 1
                 fragments.add(fragment)
                 return fragment
             }

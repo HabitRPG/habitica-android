@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.MaintenanceApiService
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -21,41 +21,33 @@ import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.kotlin.isValid
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
-class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
-    @Inject
-    internal lateinit var hostConfig: HostConfig
-    @Inject
-    internal lateinit var pushNotificationManager: PushNotificationManager
-    @Inject
-    internal lateinit var sharedPreferences: SharedPreferences
-    @Inject
-    internal lateinit var contentRepository: ContentRepository
-    @Inject
-    internal lateinit var taskRepository: TaskRepository
-    @Inject
-    internal lateinit var inventoryRepository: InventoryRepository
-    @Inject
-    internal lateinit var taskAlarmManager: TaskAlarmManager
-    @Inject
-    internal lateinit var analyticsManager: AnalyticsManager
-    @Inject
-    internal lateinit var maintenanceService: MaintenanceApiService
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(
+    userRepository : UserRepository,
+    userViewModel : MainUserViewModel,
+    val hostConfig : HostConfig,
+    val pushNotificationManager : PushNotificationManager,
+    val sharedPreferences : SharedPreferences,
+    val contentRepository : ContentRepository,
+    val taskRepository : TaskRepository,
+    val inventoryRepository : InventoryRepository,
+    val taskAlarmManager : TaskAlarmManager,
+    val analyticsManager : AnalyticsManager,
+    val maintenanceService : MaintenanceApiService
+) : BaseViewModel(userRepository, userViewModel), TutorialView.OnTutorialReaction {
 
-    override fun inject(component: UserComponent) {
-        component.inject(this)
-    }
-
-    val isAuthenticated: Boolean
+    val isAuthenticated : Boolean
         get() = hostConfig.hasAuthentication()
-    val launchScreen: String?
+    val launchScreen : String?
         get() = sharedPreferences.getString("launch_screen", "")
-    var preferenceLanguage: String?
+    var preferenceLanguage : String?
         get() = sharedPreferences.getString("language", "en")
         set(value) {
             sharedPreferences.edit {
@@ -74,9 +66,14 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
     fun onCreate() {
         try {
             viewModelScope.launch(ExceptionHandler.coroutine()) {
-                taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
+                taskAlarmManager.scheduleAllSavedAlarms(
+                    sharedPreferences.getBoolean(
+                        "preventDailyReminder",
+                        false
+                    )
+                )
             }
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             analyticsManager.logException(e)
         }
     }
@@ -89,14 +86,23 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
         }
     }
 
-    fun retrieveUser(forced: Boolean = false) {
+    fun retrieveUser(forced : Boolean = false) {
         if (hostConfig.hasAuthentication()) {
             viewModelScope.launch(ExceptionHandler.coroutine()) {
                 contentRepository.retrieveWorldState()
                 userRepository.retrieveUser(true, forced)?.let { user ->
-                    analyticsManager.setUserProperty("has_party", if (user.party?.id?.isNotEmpty() == true) "true" else "false")
-                    analyticsManager.setUserProperty("is_subscribed", if (user.isSubscribed) "true" else "false")
-                    analyticsManager.setUserProperty("checkin_count", user.loginIncentives.toString())
+                    analyticsManager.setUserProperty(
+                        "has_party",
+                        if (user.party?.id?.isNotEmpty() == true) "true" else "false"
+                    )
+                    analyticsManager.setUserProperty(
+                        "is_subscribed",
+                        if (user.isSubscribed) "true" else "false"
+                    )
+                    analyticsManager.setUserProperty(
+                        "checkin_count",
+                        user.loginIncentives.toString()
+                    )
                     analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
                     if (!pushNotificationManager.notificationPermissionEnabled()) {
@@ -115,23 +121,23 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
         }
     }
 
-    fun updateAllowPushNotifications(allowPushNotifications: Boolean) {
+    fun updateAllowPushNotifications(allowPushNotifications : Boolean) {
         sharedPreferences.getBoolean("usePushNotifications", true)
         sharedPreferences.edit {
             putBoolean("usePushNotifications", allowPushNotifications)
         }
     }
 
-    override fun onTutorialCompleted(step: TutorialStep) {
+    override fun onTutorialCompleted(step : TutorialStep) {
         updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
         logTutorialStatus(step, true)
     }
 
-    override fun onTutorialDeferred(step: TutorialStep) {
+    override fun onTutorialDeferred(step : TutorialStep) {
         taskRepository.modify(step) { it.displayedOn = Date() }
     }
 
-    fun logTutorialStatus(step: TutorialStep, complete: Boolean) {
+    fun logTutorialStatus(step : TutorialStep, complete : Boolean) {
         val additionalData = HashMap<String, Any>()
         additionalData["eventLabel"] = step.identifier + "-android"
         additionalData["eventValue"] = step.identifier ?: ""
@@ -144,7 +150,7 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
         )
     }
 
-    fun ifNeedsMaintenance(onResult: ((MaintenanceResponse) -> Unit)) {
+    fun ifNeedsMaintenance(onResult : ((MaintenanceResponse) -> Unit)) {
         viewModelScope.launchCatching {
             val maintenanceResponse = maintenanceService.getMaintenanceStatus()
             if (maintenanceResponse?.activeMaintenance == null) {
@@ -155,10 +161,10 @@ class MainActivityViewModel : BaseViewModel(), TutorialView.OnTutorialReaction {
     }
 
     fun getToolbarTitle(
-        id: Int,
-        label: CharSequence?,
-        eggType: String?,
-        onSuccess: ((CharSequence?) -> Unit)
+        id : Int,
+        label : CharSequence?,
+        eggType : String?,
+        onSuccess : ((CharSequence?) -> Unit)
     ) {
         if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
             viewModelScope.launchCatching {

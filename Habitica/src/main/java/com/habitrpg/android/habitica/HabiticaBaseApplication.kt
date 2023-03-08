@@ -23,14 +23,10 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.habitrpg.android.habitica.components.AppComponent
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
-import com.habitrpg.android.habitica.modules.UserModule
-import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -40,13 +36,14 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.coroutines.MainScope
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-// contains all HabiticaApplicationLogic except dagger componentInitialisation
+@HiltAndroidApp
 abstract class HabiticaBaseApplication : Application(), Application.ActivityLifecycleCallbacks {
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
@@ -71,7 +68,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
         registerActivityLifecycleCallbacks(this)
         setupRealm()
-        setupDagger()
         setLocale()
         setupRemoteConfig()
         setupNotifications()
@@ -149,14 +145,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             }
         }
     }
-
-    private fun setupDagger() {
-        component = initDagger()
-        reloadUserComponent()
-        component?.inject(this)
-    }
-
-    protected abstract fun initDagger(): AppComponent
 
     override fun openOrCreateDatabase(
         name: String,
@@ -240,12 +228,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     }
 
     companion object {
-
-        var component: AppComponent? = null
-            private set
-
-        var userComponent: UserComponent? = null
-
         fun getInstance(context: Context): HabiticaBaseApplication? {
             return context.applicationContext as? HabiticaBaseApplication
         }
@@ -268,15 +250,10 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                     putString("theme_mode", lightMode)
                     putString("launch_screen", launchScreen)
                 }
-                reloadUserComponent()
                 getInstance(context)?.lazyApiHelper?.updateAuthenticationCredentials(null, null)
                 Wearable.getCapabilityClient(context).removeLocalCapability("provide_auth")
                 startActivity(LoginActivity::class.java, context)
             }
-        }
-
-        fun reloadUserComponent() {
-            userComponent = component?.plus(UserModule(), UserRepositoryModule())
         }
 
         private fun startActivity(activityClass: Class<*>, context: Context) {

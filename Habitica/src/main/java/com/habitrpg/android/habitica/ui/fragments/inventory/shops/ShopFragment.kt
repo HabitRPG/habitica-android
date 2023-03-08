@@ -13,7 +13,6 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
@@ -28,6 +27,7 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -102,6 +102,18 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 if (Shop.MARKET == shopIdentifier) {
                     loadMarketGear()
                 }
+            }
+            adapter?.onShowPurchaseDialog = { item, isPinned ->
+                val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
+                dialog.shopIdentifier = shopIdentifier
+                dialog.isPinned = isPinned
+                dialog.onGearPurchased = {
+                    loadShopInventory()
+                    if (Shop.MARKET == shopIdentifier) {
+                        loadMarketGear()
+                    }
+                }
+                dialog.show()
             }
             adapter?.context = context
             binding?.recyclerView?.adapter = adapter
@@ -291,9 +303,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

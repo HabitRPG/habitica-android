@@ -20,7 +20,6 @@ import com.google.android.flexbox.FlexDirection.ROW
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
@@ -28,6 +27,7 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter
@@ -36,16 +36,19 @@ import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AvatarCustomizationFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
@@ -69,7 +72,7 @@ class AvatarCustomizationFragment :
     private var activeCustomization: String? = null
 
     internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
-    internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(activity, ROW)
+    internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(mainActivity, ROW)
 
     private val currentFilter = MutableStateFlow(CustomizationFilter(false, true))
     private val ownedCustomizations = MutableStateFlow<List<OwnedCustomization>>(emptyList())
@@ -96,6 +99,10 @@ class AvatarCustomizationFragment :
                 }
             }
         }
+        adapter.onShowPurchaseDialog = { item ->
+            val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
+            dialog.show()
+        }
 
         lifecycleScope.launchCatching {
             inventoryRepository.getInAppRewards()
@@ -118,7 +125,7 @@ class AvatarCustomizationFragment :
         }
         adapter.customizationType = type
         binding?.refreshLayout?.setOnRefreshListener(this)
-        layoutManager = FlexboxLayoutManager(activity, ROW)
+        layoutManager = FlexboxLayoutManager(mainActivity, ROW)
         layoutManager.justifyContent = JustifyContent.CENTER
         layoutManager.alignItems = AlignItems.FLEX_START
         binding?.recyclerView?.layoutManager = layoutManager
@@ -184,9 +191,6 @@ class AvatarCustomizationFragment :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun loadCustomizations() {
         val type = this.type ?: return

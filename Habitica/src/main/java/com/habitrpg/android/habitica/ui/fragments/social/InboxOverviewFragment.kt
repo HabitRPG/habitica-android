@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.DialogChooseMessageRecipientBinding
 import com.habitrpg.android.habitica.databinding.FragmentInboxBinding
@@ -30,7 +29,9 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
@@ -85,7 +86,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        this.activity?.menuInflater?.inflate(R.menu.inbox, menu)
+        this.mainActivity?.menuInflater?.inflate(R.menu.inbox, menu)
         val item = menu.findItem(R.id.send_message)
         tintMenuIcon(item)
         super.onCreateOptionsMenu(menu, inflater)
@@ -102,11 +103,11 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
     }
 
     private fun openNewMessageDialog() {
-        if (BuildConfig.DEBUG && this.activity == null) {
+        if (BuildConfig.DEBUG && this.mainActivity == null) {
             error("Assertion failed")
         }
         val binding = DialogChooseMessageRecipientBinding.inflate(layoutInflater)
-        this.activity?.let { thisActivity ->
+        this.mainActivity?.let { thisActivity ->
             val alert = HabiticaAlertDialog(thisActivity)
             alert.setTitle(getString(R.string.choose_recipient_title))
             alert.addButton(
@@ -139,9 +140,6 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun retrieveMessages() {
         lifecycleScope.launchCatching {

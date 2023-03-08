@@ -4,16 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.UserComponent
-import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import javax.inject.Inject
 
 abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
     var taskType: TaskType,
@@ -22,20 +17,13 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
     newContext: Context,
     private val userID: String?
 ) : BaseRecyclerViewAdapter<Task, VH>() {
-    @Inject
-    lateinit var analyticsManager: AnalyticsManager
-    @Inject
-    lateinit var taskRepository: TaskRepository
     protected var content: MutableList<Task>? = null
     protected var filteredContent: MutableList<Task>? = null
     internal var context: Context = newContext.applicationContext
 
     init {
         this.filteredContent = ArrayList()
-        HabiticaBaseApplication.userComponent?.let { injectThis(it) }
     }
-
-    protected abstract fun injectThis(component: UserComponent)
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = filteredContent?.get(position)

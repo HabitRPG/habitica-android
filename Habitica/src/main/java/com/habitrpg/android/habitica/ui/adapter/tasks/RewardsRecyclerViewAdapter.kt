@@ -38,6 +38,7 @@ class RewardsRecyclerViewAdapter(
     override var brokenTaskEvents: ((Task) -> Unit)? = null
     override var adventureGuideOpenEvents: ((Boolean) -> Unit)? = null
     var purchaseCardEvents: ((ShopItem) -> Unit)? = null
+    var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
     override var taskDisplayMode: String = "standard"
         set(value) {
@@ -80,6 +81,7 @@ class RewardsRecyclerViewAdapter(
         } else {
             val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
             viewHolder.purchaseCardAction = { purchaseCardEvents?.invoke(it) }
+            viewHolder.onShowPurchaseDialog = onShowPurchaseDialog
             viewHolder
         }
     }

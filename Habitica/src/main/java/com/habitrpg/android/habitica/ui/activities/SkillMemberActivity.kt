@@ -7,19 +7,20 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivitySkillMembersBinding
 import com.habitrpg.android.habitica.ui.adapter.social.PartyMemberRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SkillMemberActivity : BaseActivity() {
     private lateinit var binding: ActivitySkillMembersBinding
     private var viewAdapter: PartyMemberRecyclerViewAdapter? = null
@@ -31,10 +32,6 @@ class SkillMemberActivity : BaseActivity() {
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_skill_members
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun getContentView(layoutResId: Int?): View {

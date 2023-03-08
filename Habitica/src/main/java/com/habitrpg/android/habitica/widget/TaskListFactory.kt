@@ -6,7 +6,6 @@ import android.content.Intent
 import android.text.SpannableStringBuilder
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -19,22 +18,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 abstract class TaskListFactory internal constructor(
     val context: Context,
     intent: Intent,
     private val taskType: TaskType,
     private val listItemResId: Int,
-    private val listItemTextResId: Int
+    private val listItemTextResId: Int,
+    val taskRepository: TaskRepository,
+    val userRepository: UserRepository
 ) : RemoteViewsService.RemoteViewsFactory {
     private val job = SupervisorJob()
 
     private val widgetId: Int = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 0)
-    @Inject
-    lateinit var taskRepository: TaskRepository
-    @Inject
-    lateinit var userRepository: UserRepository
     private var taskList: List<Task> = ArrayList()
     private var reloadData: Boolean = false
 
@@ -43,9 +39,6 @@ abstract class TaskListFactory internal constructor(
     }
 
     private fun loadData() {
-        if (!this::taskRepository.isInitialized) {
-            return
-        }
         CoroutineScope(Dispatchers.Main + job).launch(ExceptionHandler.coroutine()) {
             val mirroredTasks = userRepository.getUser().firstOrNull()?.preferences?.tasks?.mirrorGroupTasks?.toTypedArray()
             val tasks = taskRepository.getTasks(taskType, null, mirroredTasks ?: emptyArray()).firstOrNull()?.filter { task ->
@@ -58,7 +51,6 @@ abstract class TaskListFactory internal constructor(
     }
 
     override fun onCreate() {
-        HabiticaBaseApplication.userComponent?.inject(this)
         this.loadData()
     }
     override fun onDestroy() { /* no-op */ }

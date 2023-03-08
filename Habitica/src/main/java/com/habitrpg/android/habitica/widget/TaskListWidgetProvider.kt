@@ -7,18 +7,19 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.RemoteViews
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.extensions.withMutableFlag
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
     @Inject
@@ -30,15 +31,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
     protected abstract val titleResId: Int
 
-    private fun setUp() {
-        if (!hasInjected) {
-            hasInjected = true
-            HabiticaBaseApplication.userComponent?.inject(this)
-        }
-    }
-
     override fun onReceive(context: Context, intent: Intent) {
-        setUp()
         if (intent.action == DAILY_ACTION) {
             val appWidgetId = intent.getIntExtra(
                 AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -64,7 +57,6 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        setUp()
         val thisWidget = ComponentName(context, providerClass)
         val allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
 

@@ -6,19 +6,15 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ChatBarViewBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import javax.inject.Inject
 
 class ChatBarView : LinearLayout {
 
@@ -33,12 +29,6 @@ class ChatBarView : LinearLayout {
             }
         }
     var onCommunityGuidelinesAccepted: (() -> Unit)? = null
-
-    @Inject
-    lateinit var socialRepository: SocialRepository
-
-    @Inject
-    lateinit var appConfigManager: AppConfigManager
 
     private val binding = ChatBarViewBinding.inflate(context.layoutInflater, this)
 
@@ -67,20 +57,19 @@ class ChatBarView : LinearLayout {
         set(value) = binding.chatEditText.setText(value, TextView.BufferType.EDITABLE)
 
     constructor(context: Context) : super(context) {
-        setupView(context)
+        setupView()
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        setupView(context)
+        setupView()
     }
 
-    private var autocompleteAdapter: AutocompleteAdapter? = null
+    var autocompleteAdapter: AutocompleteAdapter? = null
 
-    private fun setupView(context: Context) {
+    private fun setupView() {
         orientation = VERTICAL
         this.setBackgroundResource(R.color.content_background)
 
-        HabiticaBaseApplication.userComponent?.inject(this)
 
         binding.chatEditText.addTextChangedListener(
             OnChangeTextWatcher { _, _, _, _ ->
@@ -91,7 +80,6 @@ class ChatBarView : LinearLayout {
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
 
-        autocompleteAdapter = AutocompleteAdapter(context, socialRepository, autocompleteContext, groupID, appConfigManager.enableUsernameAutocomplete())
         binding.chatEditText.setAdapter(autocompleteAdapter)
         binding.chatEditText.threshold = 2
 

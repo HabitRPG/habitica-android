@@ -14,13 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.shops.Shop
@@ -49,18 +47,10 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.lang.Integer.max
 import java.util.Date
-import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class PurchaseDialog(context: Context, component: UserComponent?, val item: ShopItem) : HabiticaAlertDialog(context) {
-
-    @Inject
-    lateinit var userRepository: UserRepository
-    @Inject
-    lateinit var inventoryRepository: InventoryRepository
-    @Inject
-    lateinit var configManager: AppConfigManager
+class PurchaseDialog(context: Context, private val userRepository : UserRepository, private val inventoryRepository : InventoryRepository, val item: ShopItem) : HabiticaAlertDialog(context) {
 
     private val customHeader: View by lazy {
         LayoutInflater.from(context).inflate(R.layout.dialog_purchase_shopitem_header, null)
@@ -238,8 +228,6 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         }
 
     init {
-        component?.inject(this)
-
         forceScrollableLayout = true
 
         setCustomHeaderView(customHeader)
@@ -375,7 +363,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "customization" || shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds" || shopItem.purchaseType == "customizationSet") {
-            observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}" ?: "", item.value) }
+            observable = { userRepository.unlockPath(item.unlockPath ?: "${item.pinType}.${item.key}", item.value) }
         } else if (shopItem.purchaseType == "debuffPotion") {
             observable = { userRepository.useSkill(shopItem.key, null) }
         } else if (shopItem.purchaseType == "card") {
@@ -385,7 +373,7 @@ class PurchaseDialog(context: Context, component: UserComponent?, val item: Shop
         } else if ("gold" == shopItem.currency && "gem" != shopItem.key) {
             observable = {
                 val buyResponse = inventoryRepository.buyItem(user, shopItem.key, shopItem.value.toDouble(), quantity)
-                if (shopItem.key == "armoire" && configManager.enableNewArmoire() && buyResponse != null) {
+                if (shopItem.key == "armoire" && buyResponse != null) {
                     MainNavigationController.navigate(
                         R.id.armoireActivity,
                         ArmoireActivityDirections.openArmoireActivity(

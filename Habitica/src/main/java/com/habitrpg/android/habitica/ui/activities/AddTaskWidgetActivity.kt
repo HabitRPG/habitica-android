@@ -10,7 +10,9 @@ import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.databinding.WidgetConfigureAddTaskBinding
 import com.habitrpg.android.habitica.widget.AddTaskWidgetProvider
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddTaskWidgetActivity : AppCompatActivity() {
 
     private var widgetId: Int = 0

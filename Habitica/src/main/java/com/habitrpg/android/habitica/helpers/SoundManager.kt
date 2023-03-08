@@ -1,21 +1,13 @@
 package com.habitrpg.android.habitica.helpers
 
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
 import javax.inject.Inject
 
-class SoundManager {
-
-    @Inject
-    lateinit var soundFileLoader: SoundFileLoader
+class SoundManager @Inject constructor(var soundFileLoader: SoundFileLoader) {
     var soundTheme: String = SoundThemeOff
 
     private val loadedSoundFiles: MutableMap<String, SoundFile> = HashMap()
-
-    init {
-        HabiticaBaseApplication.userComponent?.inject(this)
-    }
 
     fun preloadAllFiles() {
         loadedSoundFiles.clear()

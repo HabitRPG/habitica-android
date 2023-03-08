@@ -247,7 +247,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         super.dismiss()
     }
 
-    fun getActivity(): Activity? {
+    open fun getActivity(): Activity? {
         var thisContext = context
         while (thisContext as? ContextThemeWrapper != null && thisContext as? Activity == null) {
             thisContext = thisContext.baseContext

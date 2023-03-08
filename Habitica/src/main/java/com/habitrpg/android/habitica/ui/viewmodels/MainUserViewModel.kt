@@ -16,8 +16,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainUserViewModel(private val providedUserID: String, val userRepository: UserRepository, val socialRepository: SocialRepository) {
+class MainUserViewModel @Inject constructor(private val providedUserID: String, val userRepository: UserRepository, val socialRepository: SocialRepository) {
 
     val formattedUsername: CharSequence?
         get() = user.value?.formattedUsername

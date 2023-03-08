@@ -239,7 +239,7 @@ abstract class BaseTaskViewHolder constructor(
         val completedCount = data.group?.assignedUsersDetail?.filter { it.completed }?.size ?: 0
         if (completedCount > 0) {
             completedCountTextView.text =
-                "$completedCount/${data?.group?.assignedUsersDetail?.size}"
+                "$completedCount/${data.group?.assignedUsersDetail?.size}"
             completedCountTextView.visibility = View.VISIBLE
         } else {
             completedCountTextView.visibility = View.GONE

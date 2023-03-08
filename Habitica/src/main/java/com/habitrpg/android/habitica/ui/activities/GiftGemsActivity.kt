@@ -8,7 +8,6 @@ import androidx.navigation.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftGemsBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -18,10 +17,12 @@ import com.habitrpg.android.habitica.ui.fragments.purchases.GiftBalanceGemsFragm
 import com.habitrpg.android.habitica.ui.fragments.purchases.GiftPurchaseGemsFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class GiftGemsActivity : PurchaseActivity() {
 
     private lateinit var binding: ActivityGiftGemsBinding
@@ -52,10 +53,6 @@ class GiftGemsActivity : PurchaseActivity() {
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityGiftGemsBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

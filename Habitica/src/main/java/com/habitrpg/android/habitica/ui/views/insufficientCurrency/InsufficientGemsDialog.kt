@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -40,7 +39,6 @@ class InsufficientGemsDialog(context: Context, var gemPrice: Int) : Insufficient
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
         textView.setText(R.string.insufficientGems)
         addButton(R.string.see_other_options, true) { _, _ -> MainNavigationController.navigate(R.id.gemPurchaseActivity, bundleOf(Pair("openSubscription", false))) }

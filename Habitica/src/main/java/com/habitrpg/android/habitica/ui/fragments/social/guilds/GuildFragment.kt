@@ -17,7 +17,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
@@ -25,7 +24,9 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     internal val viewModel: GroupViewModel by viewModels()
@@ -48,9 +49,6 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showsBackButton = true
@@ -58,7 +56,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
         viewModel.groupViewType = GroupViewType.GUILD
         viewModel.getGroupData().observe(viewLifecycleOwner) { setGroup(it) }
-        viewModel.getIsMemberData().observe(viewLifecycleOwner) { activity?.invalidateOptionsMenu() }
+        viewModel.getIsMemberData().observe(viewLifecycleOwner) { mainActivity?.invalidateOptionsMenu() }
 
         arguments?.let {
             val args = GuildFragmentArgs.fromBundle(it)
@@ -98,15 +96,15 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (this.activity != null) {
+        if (this.mainActivity != null) {
             if (viewModel.isMember) {
                 if (viewModel.isLeader) {
-                    this.activity?.menuInflater?.inflate(R.menu.guild_admin, menu)
+                    this.mainActivity?.menuInflater?.inflate(R.menu.guild_admin, menu)
                 } else {
-                    this.activity?.menuInflater?.inflate(R.menu.guild_member, menu)
+                    this.mainActivity?.menuInflater?.inflate(R.menu.guild_member, menu)
                 }
             } else {
-                this.activity?.menuInflater?.inflate(R.menu.guild_nonmember, menu)
+                this.mainActivity?.menuInflater?.inflate(R.menu.guild_nonmember, menu)
             }
         }
         super.onCreateOptionsMenu(menu, inflater)
@@ -206,7 +204,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         bundle.putString("leader", guild?.leaderID)
         bundle.putBoolean("leaderOnlyChallenges", guild?.leaderOnlyChallenges ?: true)
 
-        val intent = Intent(activity, GroupFormActivity::class.java)
+        val intent = Intent(mainActivity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         groupFormResult.launch(intent)
@@ -220,7 +218,7 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     }
 
     private fun setGroup(group: Group?) {
-        this.activity?.invalidateOptionsMenu()
+        this.mainActivity?.invalidateOptionsMenu()
 
         if (viewModel.isPublicGuild) {
             chatFragment?.autocompleteContext = "publicGuild"

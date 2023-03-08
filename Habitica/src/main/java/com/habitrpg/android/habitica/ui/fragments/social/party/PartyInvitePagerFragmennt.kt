@@ -8,10 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override var binding : FragmentViewpagerBinding? = null
@@ -38,10 +39,6 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
         setViewPagerAdapter()
         binding?.viewPager?.currentItem = 0
-    }
-
-    override fun injectFragment(component : UserComponent) {
-        component.inject(this)
     }
 
     private fun setViewPagerAdapter() {

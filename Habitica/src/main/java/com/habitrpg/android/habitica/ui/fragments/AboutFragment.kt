@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -21,7 +20,9 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.plattysoft.leonids.ParticleSystem
 import javax.inject.Inject
 import javax.inject.Named
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
@@ -30,9 +31,6 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private val privacyPolicyLink = "https://habitica.com/static/privacy"
     private val termsLink = "https://habitica.com/static/terms"
@@ -85,7 +83,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     private val versionName: String by lazy {
         try {
             @Suppress("DEPRECATION")
-            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionName ?: ""
+            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionName ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
         }
@@ -94,7 +92,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionCode ?: 0
+            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionCode ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0
         }
@@ -132,8 +130,8 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
         val context = context ?: return
         FirebaseAnalytics.getInstance(context).logEvent("found_easter_egg", null)
         DataBindingUtils.loadImage(context, "Pet-Sabretooth-Base") { bitmap ->
-            activity?.runOnUiThread {
-                activity?.let {
+            mainActivity?.runOnUiThread {
+                mainActivity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                         .setAcceleration(0.00013f, 90)
                         .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
@@ -144,8 +142,8 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
             }
         }
         DataBindingUtils.loadImage(context, "Pet-Sabretooth-Golden") { bitmap ->
-            activity?.runOnUiThread {
-                activity?.let {
+            mainActivity?.runOnUiThread {
+                mainActivity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                         .setAcceleration(0.00013f, 90)
                         .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)
@@ -156,8 +154,8 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
             }
         }
         DataBindingUtils.loadImage(context, "Pet-Sabretooth-Red") { bitmap ->
-            activity?.runOnUiThread {
-                activity?.let {
+            mainActivity?.runOnUiThread {
+                mainActivity?.let {
                     ParticleSystem(it, 50, bitmap, 3000)
                         .setAcceleration(0.00013f, 90)
                         .setSpeedByComponentsRange(-0.08f, 0.08f, 0.05f, 0.1f)

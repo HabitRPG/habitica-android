@@ -251,14 +251,14 @@ fun AppHeaderView(
                 }
                 CurrencyText(
                     "gold",
-                    user?.stats?.gp ?: 0.0,
+                    user.stats?.gp ?: 0.0,
                     modifier = Modifier.padding(end = 12.dp),
                     decimals = 0,
                     minForAbbreviation = 10000
                 )
                 CurrencyText(
                     "gems",
-                    user?.gemCount?.toDouble() ?: 0.0,
+                    user.gemCount?.toDouble() ?: 0.0,
                     modifier = Modifier.clickable {
                         MainNavigationController.navigate(R.id.gemPurchaseActivity)
                     },

@@ -32,7 +32,6 @@ import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
@@ -46,13 +45,14 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity() {
 
-    private lateinit var viewModel: AuthenticationViewModel
     private lateinit var binding: ActivityLoginBinding
 
     @Inject
@@ -61,6 +61,8 @@ class LoginActivity : BaseActivity() {
     lateinit var sharedPrefs: SharedPreferences
     @Inject
     lateinit var configManager: AppConfigManager
+    @Inject
+    lateinit var viewModel : AuthenticationViewModel
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
@@ -141,7 +143,6 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         window.requestFeature(Window.FEATURE_ACTION_BAR)
         super.onCreate(savedInstanceState)
-        viewModel = AuthenticationViewModel()
         supportActionBar?.hide()
         // Set default values to avoid null-responses when requesting unedited settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences_fragment, false)
@@ -187,10 +188,6 @@ class LoginActivity : BaseActivity() {
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     private fun resetLayout() {

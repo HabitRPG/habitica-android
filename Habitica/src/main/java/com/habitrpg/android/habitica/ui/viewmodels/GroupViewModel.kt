@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.members.Member
@@ -17,7 +17,9 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.kotlin.toFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -28,28 +30,26 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
 
-enum class GroupViewType(internal val order: String) {
+enum class GroupViewType(internal val order : String) {
     PARTY("party"),
     GUILD("guild"),
     TAVERN("tavern")
 }
 
-open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initializeComponent) {
-    constructor() : this(true)
-
-    @Inject
-    lateinit var challengeRepository: ChallengeRepository
-
-    @Inject
-    lateinit var socialRepository: SocialRepository
-
-    @Inject
-    lateinit var notificationsManager: NotificationsManager
+@OptIn(ExperimentalCoroutinesApi::class)
+@HiltViewModel
+open class GroupViewModel @Inject constructor(
+    userRepository : UserRepository,
+    userViewModel : MainUserViewModel,
+    val challengeRepository : ChallengeRepository,
+    val socialRepository : SocialRepository,
+    val notificationsManager : NotificationsManager
+) : BaseViewModel(userRepository, userViewModel) {
 
     protected val groupIDState = MutableStateFlow<String?>(null)
-    val groupIDFlow: Flow<String?> = groupIDState
+    val groupIDFlow : Flow<String?> = groupIDState
 
-    var groupViewType: GroupViewType? = null
+    var groupViewType : GroupViewType? = null
 
     private val groupFlow = groupIDFlow
         .filterNotNull()
@@ -67,25 +67,21 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         .map { it != null }
     private val isMemberData = isMemberFlow.asLiveData()
 
-    private val _chatMessages: MutableLiveData<List<ChatMessage>> by lazy {
+    private val _chatMessages : MutableLiveData<List<ChatMessage>> by lazy {
         MutableLiveData<List<ChatMessage>>(listOf())
     }
-    val chatmessages: LiveData<List<ChatMessage>> by lazy {
+    val chatmessages : LiveData<List<ChatMessage>> by lazy {
         _chatMessages
     }
 
-    var gotNewMessages: Boolean = false
-
-    override fun inject(component: UserComponent) {
-        component.inject(this)
-    }
+    var gotNewMessages : Boolean = false
 
     override fun onCleared() {
         socialRepository.close()
         super.onCleared()
     }
 
-    fun setGroupID(groupID: String) {
+    fun setGroupID(groupID : String) {
         if (groupID == groupIDState.value) return
         groupIDState.value = groupID
 
@@ -99,22 +95,22 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    val groupID: String?
+    val groupID : String?
         get() = groupIDState.value
-    val isMember: Boolean
+    val isMember : Boolean
         get() = isMemberData.value ?: false
-    val leaderID: String?
+    val leaderID : String?
         get() = group.value?.leaderID
-    val isLeader: Boolean
+    val isLeader : Boolean
         get() = user.value?.id == leaderID
-    val isPublicGuild: Boolean
+    val isPublicGuild : Boolean
         get() = group.value?.privacy == "public"
 
-    fun getGroupData(): LiveData<Group?> = group
-    fun getLeaderData(): LiveData<Member?> = leader
-    fun getIsMemberData(): LiveData<Boolean> = isMemberData
+    fun getGroupData() : LiveData<Group?> = group
+    fun getLeaderData() : LiveData<Member?> = leader
+    fun getIsMemberData() : LiveData<Boolean> = isMemberData
 
-    fun retrieveGroup(function: (() -> Unit)?) {
+    fun retrieveGroup(function : (() -> Unit)?) {
         if (groupID?.isNotEmpty() == true) {
             viewModelScope.launch(
                 ExceptionHandler.coroutine {
@@ -132,13 +128,13 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun inviteToGroup(inviteData: HashMap<String, Any>) {
+    fun inviteToGroup(inviteData : HashMap<String, Any>) {
         viewModelScope.launchCatching {
             socialRepository.inviteToGroup(group.value?.id ?: "", inviteData)
         }
     }
 
-    fun updateOrCreateGroup(bundle: Bundle?) {
+    fun updateOrCreateGroup(bundle : Bundle?) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             if (group.value == null) {
                 socialRepository.createGroup(
@@ -161,9 +157,9 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
     }
 
     fun leaveGroup(
-        groupChallenges: List<Challenge>,
-        keepChallenges: Boolean = true,
-        function: (() -> Unit)? = null
+        groupChallenges : List<Challenge>,
+        keepChallenges : Boolean = true,
+        function : (() -> Unit)? = null
     ) {
         if (!keepChallenges) {
             viewModelScope.launchCatching {
@@ -179,14 +175,14 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun joinGroup(id: String? = null, function: (() -> Unit)? = null) {
+    fun joinGroup(id : String? = null, function : (() -> Unit)? = null) {
         viewModelScope.launchCatching {
             socialRepository.joinGroup(id ?: groupID)
             function?.invoke()
         }
     }
 
-    fun rejectGroupInvite(id: String? = null) {
+    fun rejectGroupInvite(id : String? = null) {
         groupID?.let {
             viewModelScope.launchCatching {
                 socialRepository.rejectGroupInvite(id ?: it)
@@ -204,7 +200,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun likeMessage(message: ChatMessage) {
+    fun likeMessage(message : ChatMessage) {
         viewModelScope.launchCatching {
             val message = socialRepository.likeMessage(message)
             val index = _chatMessages.value?.indexOfFirst { it.id == message?.id }
@@ -220,7 +216,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun deleteMessage(chatMessage: ChatMessage) {
+    fun deleteMessage(chatMessage : ChatMessage) {
         val oldIndex = _chatMessages.value?.indexOf(chatMessage) ?: return
         val list = _chatMessages.value?.toMutableList()
         list?.remove(chatMessage)
@@ -236,7 +232,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {
+    fun postGroupChat(chatText : String, onComplete : () -> Unit, onError : () -> Unit) {
         groupID?.let { groupID ->
             viewModelScope.launch(
                 ExceptionHandler.coroutine {
@@ -255,7 +251,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun retrieveGroupChat(onComplete: () -> Unit) {
+    fun retrieveGroupChat(onComplete : () -> Unit) {
         var groupID = groupID
         if (groupViewType == GroupViewType.PARTY) {
             groupID = "party"
@@ -271,7 +267,7 @@ open class GroupViewModel(initializeComponent: Boolean) : BaseViewModel(initiali
         }
     }
 
-    fun updateGroup(bundle: Bundle?) {
+    fun updateGroup(bundle : Bundle?) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             socialRepository.updateGroup(
                 group.value,

@@ -99,7 +99,6 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
             val formattedNumber = NumberAbbreviator.abbreviate(itemView.context, guild.memberCount.toDouble(), number)
             binding.guildBadgeView.setImageBitmap(
                 HabiticaIconsHelper.imageOfGuildCrest(
-                    itemView.context,
                     false,
                     false,
                     guild.memberCount.toFloat(),

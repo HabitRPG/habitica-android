@@ -14,7 +14,9 @@ import androidx.fragment.app.DialogFragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
 import com.habitrpg.android.habitica.models.user.User
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R.layout.dialog_habitica_account) {
     private var _binding: DialogHabiticaAccountBinding? = null
     private val binding get() = _binding!!

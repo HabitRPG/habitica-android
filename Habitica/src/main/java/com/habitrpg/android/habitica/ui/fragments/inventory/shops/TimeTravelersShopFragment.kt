@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.ui.views.CurrencyText
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TimeTravelersShopFragment : ShopFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,

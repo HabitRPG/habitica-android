@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.models.user.User
@@ -21,7 +20,9 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AvatarEquipmentFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
@@ -42,7 +43,7 @@ class AvatarEquipmentFragment :
     private var activeEquipment: String? = null
 
     internal var adapter: CustomizationEquipmentRecyclerViewAdapter = CustomizationEquipmentRecyclerViewAdapter()
-    internal var layoutManager: GridLayoutManager = GridLayoutManager(activity, 2)
+    internal var layoutManager: GridLayoutManager = GridLayoutManager(mainActivity, 2)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,7 +78,7 @@ class AvatarEquipmentFragment :
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
         setGridSpanCount(view.width)
-        val layoutManager = GridLayoutManager(activity, 4)
+        val layoutManager = GridLayoutManager(mainActivity, 4)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter.getItemViewType(position) == 0) {
@@ -97,9 +98,6 @@ class AvatarEquipmentFragment :
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun loadEquipment() {
         val type = this.type ?: return

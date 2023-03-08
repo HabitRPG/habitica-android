@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityAdventureGuideBinding
 import com.habitrpg.android.habitica.databinding.AdventureGuideItemBinding
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
@@ -18,8 +17,10 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class AdventureGuideActivity : BaseActivity() {
     private lateinit var binding: ActivityAdventureGuideBinding
 
@@ -36,10 +37,6 @@ class AdventureGuideActivity : BaseActivity() {
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityAdventureGuideBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

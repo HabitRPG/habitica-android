@@ -20,9 +20,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
+import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
@@ -35,10 +34,16 @@ import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 import java.util.WeakHashMap
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
+    @Inject
+    lateinit var tagRepository : TagRepository
+
     internal val viewModel: TasksViewModel by viewModels()
     override var binding: FragmentViewpagerBinding? = null
 
@@ -121,7 +126,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             bottomNavigation?.canAddTasks = viewModel.canAddTasks()
         }
 
-        activity?.binding?.content?.toolbarTitle?.setOnClickListener {
+        mainActivity?.binding?.content?.toolbarTitle?.setOnClickListener {
             viewModel.cycleOwnerIDs()
         }
     }
@@ -133,9 +138,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         super.onPause()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -193,11 +195,11 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     private fun showFilterDialog() {
         context?.let {
-            val dialog = TaskFilterDialog(it, HabiticaBaseApplication.userComponent, viewModel.isPersonalBoard)
+            val dialog = TaskFilterDialog(it, tagRepository, viewModel.isPersonalBoard)
             dialog.viewModel = viewModel
 
             // There are some cases where these things might not be correctly set after the app resumes. This is just to catch that as best as possible
-            val navigation = bottomNavigation ?: activity?.binding?.content?.bottomNavigation
+            val navigation = bottomNavigation ?: mainActivity?.binding?.content?.bottomNavigation
             val taskType = navigation?.activeTaskType ?: activeFragment?.taskType
 
             dialog.setOnDismissListener { updateFilterIcon() }
@@ -332,7 +334,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
         bundle.putStringArrayList(TaskFormActivity.SELECTED_TAGS_KEY, ArrayList(viewModel.tags))
 
-        val intent = Intent(activity, TaskFormActivity::class.java)
+        val intent = Intent(mainActivity, TaskFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         if (this.isAdded) {
@@ -420,7 +422,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     private fun updateBoardDisplay() {
         if (viewModel.ownerTitle.isNotBlank()) {
-            activity?.title = viewModel.ownerTitle
+            mainActivity?.title = viewModel.ownerTitle
             MainNavigationController.updateLabel(R.id.tasksFragment, viewModel.ownerTitle.toString())
         }
         viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]

@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
 import com.habitrpg.android.habitica.databinding.KnownIssueBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -23,10 +22,12 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.jaredrummler.android.device.DeviceName
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
+@AndroidEntryPoint
 class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     private var deviceInfo: DeviceName.DeviceInfo? = null
     override var binding: FragmentSupportBugFixBinding? = null
@@ -46,9 +47,6 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,7 +86,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     private val versionName: String by lazy {
         try {
-            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionName
+            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionName
                 ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
@@ -98,7 +96,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            activity?.packageManager?.getPackageInfo(activity?.packageName ?: "", 0)?.versionCode
+            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionCode
                 ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0
@@ -145,7 +143,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
         bodyOfEmail += "%0D%0ADetails:%0D%0A%0D%0A"
 
-        activity?.let {
+        mainActivity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             val mailto = "mailto:" + appConfigManager.supportEmail() +
                 "?subject=" + Uri.encode(subject) +

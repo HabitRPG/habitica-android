@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.DialogChallengeDetailTaskGroupBinding
@@ -43,7 +42,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
 
     @Inject
@@ -63,9 +64,6 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     var challenge: Challenge? = null
     private var isCreator = false
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -248,7 +246,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         binding?.creatorLabel?.tier = creator.contributor?.level ?: 0
         binding?.creatorLabel?.username = creator.displayName
         isCreator = creator.id == userViewModel.userID
-        this.activity?.invalidateOptionsMenu()
+        this.mainActivity?.invalidateOptionsMenu()
     }
 
     private fun setJoined(joined: Boolean) {

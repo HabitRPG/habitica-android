@@ -16,7 +16,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     @Inject
     lateinit var taskRepository: TaskRepository
@@ -35,9 +37,6 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
 
     var onTaskSelection: ((Task) -> Unit)? = null
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

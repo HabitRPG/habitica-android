@@ -22,7 +22,6 @@ import androidx.core.view.MenuCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -48,6 +47,7 @@ import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.views.PixelArtView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -58,6 +58,7 @@ import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.math.min
 
+@AndroidEntryPoint
 class FullProfileActivity : BaseActivity() {
     private var blocks: List<String> = listOf()
     private var isModerator = false
@@ -715,10 +716,6 @@ class FullProfileActivity : BaseActivity() {
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityFullProfileBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     companion object {

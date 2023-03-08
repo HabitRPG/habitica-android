@@ -17,7 +17,6 @@ import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
 import com.habitrpg.android.habitica.databinding.EditTagItemBinding
@@ -30,14 +29,10 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.util.UUID
-import javax.inject.Inject
 
-class TaskFilterDialog(context: Context, component: UserComponent?, private val showTags: Boolean) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, private val repository: TagRepository, private val showTags: Boolean) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
     lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
-
-    @Inject
-    lateinit var repository: TagRepository
 
     var taskType: TaskType = TaskType.HABIT
         set(value) {
@@ -76,7 +71,6 @@ class TaskFilterDialog(context: Context, component: UserComponent?, private val 
     private var isEditing: Boolean = false
 
     init {
-        component?.inject(this)
         addIcon = ContextCompat.getDrawable(context, R.drawable.ic_add_purple_300_36dp)
 
         setTitle(R.string.filters)

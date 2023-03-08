@@ -7,7 +7,6 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityDeathBinding
 import com.habitrpg.android.habitica.extensions.observeOnce
@@ -21,9 +20,11 @@ import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.plattysoft.leonids.ParticleSystem
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class DeathActivity : BaseActivity() {
     private lateinit var binding: ActivityDeathBinding
 
@@ -35,10 +36,6 @@ class DeathActivity : BaseActivity() {
     lateinit var userViewModel: MainUserViewModel
 
     override fun getLayoutResId(): Int = R.layout.activity_armoire
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
-    }
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityDeathBinding.inflate(layoutInflater)

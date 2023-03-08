@@ -5,12 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityGroupFormBinding
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.common.habitica.helpers.MarkdownParser
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GroupFormActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGroupFormBinding
@@ -63,10 +64,6 @@ class GroupFormActivity : BaseActivity() {
         binding.saveButton.setOnClickListener {
             finishActivitySuccessfuly()
         }
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     private fun fillForm() {

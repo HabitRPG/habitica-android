@@ -1168,6 +1168,7 @@
     <string name="apple" translatable="false">Apple</string>
     <string name="not_connected">Not connected</string>
     <string name="add_password">Add password</string>
+    <string name="not_set" tools:override="true">Not Set</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="add">Add</string>

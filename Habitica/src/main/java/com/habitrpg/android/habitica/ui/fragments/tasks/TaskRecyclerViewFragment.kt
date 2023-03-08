@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -50,6 +49,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -63,6 +63,7 @@ import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
 
+@AndroidEntryPoint
 open class TaskRecyclerViewFragment :
     BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
@@ -142,7 +143,7 @@ open class TaskRecyclerViewFragment :
                 taskRepository.syncErroredTasks()
             }
         }
-        recyclerAdapter?.taskOpenEvents = { task, view ->
+        recyclerAdapter?.taskOpenEvents = { task, _ ->
             openTaskForm(task)
         }
         recyclerAdapter?.taskScoreEvents = { task, direction ->
@@ -230,9 +231,6 @@ open class TaskRecyclerViewFragment :
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

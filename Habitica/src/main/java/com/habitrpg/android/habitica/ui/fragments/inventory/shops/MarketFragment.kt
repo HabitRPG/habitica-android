@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.models.shops.Shop
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MarketFragment : ShopFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,

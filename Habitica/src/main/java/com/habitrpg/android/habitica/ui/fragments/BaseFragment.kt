@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
-import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
@@ -38,17 +36,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
-    fun initializeComponent() {
-        if (!shouldInitializeComponent) return
-        HabiticaBaseApplication.userComponent?.let {
-            injectFragment(it)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        initializeComponent()
-        super.onCreate(savedInstanceState)
-    }
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
@@ -60,8 +47,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         binding = createBinding(inflater, container)
         return binding?.root
     }
-
-    abstract fun injectFragment(component: UserComponent)
 
     override fun onResume() {
         super.onResume()

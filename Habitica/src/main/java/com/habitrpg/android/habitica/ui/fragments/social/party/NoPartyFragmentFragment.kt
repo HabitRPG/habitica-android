@@ -20,7 +20,6 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -37,7 +36,9 @@ import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
     @Inject
@@ -104,7 +105,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
             val clip = ClipData.newPlainText(context?.getString(R.string.username), userViewModel.username)
             clipboard?.setPrimaryClip(clip)
-            val activity = activity
+            val activity = mainActivity
             if (activity != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
                 HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
             }
@@ -114,7 +115,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             val bundle = Bundle()
             bundle.putString("groupType", "party")
             bundle.putString("leader", userViewModel.userID)
-            val intent = Intent(activity, GroupFormActivity::class.java)
+            val intent = Intent(mainActivity, GroupFormActivity::class.java)
             intent.putExtras(bundle)
             intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             groupFormResult.launch(intent)
@@ -197,9 +198,6 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     companion object {
 

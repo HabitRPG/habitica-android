@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -20,7 +19,9 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
     override var binding: FragmentSupportMainBinding? = null
 
@@ -63,7 +64,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         binding?.resetTutorialButton?.setOnClickListener {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.resetTutorial()
-                activity?.showSnackbar(null, null, getString(R.string.tutorial_reset_confirmation), displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                mainActivity?.showSnackbar(null, null, getString(R.string.tutorial_reset_confirmation), displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
             }
         }
     }
@@ -73,7 +74,4 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 }

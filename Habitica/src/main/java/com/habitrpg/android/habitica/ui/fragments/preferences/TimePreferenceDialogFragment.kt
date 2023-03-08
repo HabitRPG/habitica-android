@@ -9,7 +9,9 @@ import androidx.preference.PreferenceDialogFragmentCompat
 import androidx.preference.PreferenceFragmentCompat
 import com.habitrpg.android.habitica.prefs.TimePreference
 import java.util.Locale
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
     lateinit var picker: TimePicker

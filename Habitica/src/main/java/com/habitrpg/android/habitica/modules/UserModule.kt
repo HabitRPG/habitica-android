@@ -7,18 +7,20 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
-import com.habitrpg.android.habitica.helpers.UserScope
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 
+@InstallIn(SingletonComponent::class)
 @Module
 class UserModule {
     @Provides
-    @UserScope
     fun providesTaskAlarmManager(
-        context: Context,
+        @ApplicationContext context: Context,
         taskRepository: TaskRepository,
         @Named(NAMED_USER_ID) userId: String
     ): TaskAlarmManager {
@@ -27,7 +29,6 @@ class UserModule {
 
     @Provides
     @Named(NAMED_USER_ID)
-    @UserScope
     fun providesUserID(sharedPreferences: SharedPreferences): String {
         return if (BuildConfig.DEBUG && BuildConfig.TEST_USER_ID.isNotEmpty()) {
             BuildConfig.TEST_USER_ID
@@ -37,7 +38,6 @@ class UserModule {
     }
 
     @Provides
-    @UserScope
     fun providesUserViewModel(
         @Named(NAMED_USER_ID) userID: String,
         userRepository: UserRepository,

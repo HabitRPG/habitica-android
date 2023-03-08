@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -34,13 +32,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.userComponent?.let {
-            injectFragment(it)
-        }
-        super.onCreate(savedInstanceState)
-    }
-
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     override fun onCreateView(
@@ -55,8 +46,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
         binding = createBinding(inflater, container)
         return binding?.root
     }
-
-    abstract fun injectFragment(component: UserComponent)
 
     override fun onResume() {
         super.onResume()

@@ -36,7 +36,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
 
     @Inject
@@ -171,9 +173,6 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
         (binding?.playerTiersView?.parent as? ViewGroup)?.invalidate()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     companion object {
 

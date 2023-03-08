@@ -15,7 +15,6 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
@@ -37,10 +36,12 @@ import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
 import com.habitrpg.common.habitica.views.PixelArtView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivityNotificationsBinding
@@ -77,10 +78,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
 
         binding.notificationsRefreshLayout.setOnRefreshListener(this)
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -12,16 +12,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityReportMessageBinding
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.setMarkdown
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ReportMessageActivity : BaseActivity() {
 
     private lateinit var binding: ActivityReportMessageBinding
@@ -37,10 +38,6 @@ class ReportMessageActivity : BaseActivity() {
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_report_message
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun getContentView(layoutResId: Int?): View {

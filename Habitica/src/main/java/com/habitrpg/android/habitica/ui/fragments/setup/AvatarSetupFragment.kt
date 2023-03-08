@@ -24,7 +24,9 @@ import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
 import com.habitrpg.common.habitica.helpers.launchCatching
 import java.util.Random
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
 
     @Inject
@@ -113,9 +115,6 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
         }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun loadCustomizations() {
         val user = this.user ?: return

@@ -74,6 +74,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -82,6 +83,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class BirthdayActivity : BaseActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
@@ -188,10 +190,6 @@ class BirthdayActivity : BaseActivity() {
         inventoryRepository.purchaseItem("pets", "Gryphatrice-Jubilant", 1)
         userRepository.retrieveUser(false, true)
         isPurchasing.value = false
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 }
 

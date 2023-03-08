@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.extensions.getTranslatedType
@@ -31,7 +30,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PetDetailRecyclerFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
@@ -77,9 +78,6 @@ class PetDetailRecyclerFragment :
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showsBackButton = true
@@ -143,7 +141,7 @@ class PetDetailRecyclerFragment :
 
     override fun onResume() {
         super.onResume()
-        activity?.title = animalType
+        mainActivity?.title = animalType
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -224,7 +222,7 @@ class PetDetailRecyclerFragment :
 
     private fun showFeedingDialog(pet: Pet, food: Food?) {
         if (food != null) {
-            val context = activity ?: context ?: return
+            val context = mainActivity ?: context ?: return
             lifecycleScope.launchCatching {
                 feedPetUseCase.callInteractor(
                     FeedPetUseCase.RequestValues(

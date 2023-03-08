@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentPromoInfoBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     override var binding: FragmentPromoInfoBinding? = null
@@ -20,9 +21,6 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
     @Inject
     lateinit var configManager: AppConfigManager
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +39,6 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     override fun onResume() {
         super.onResume()
-        activity?.title = ""
+        mainActivity?.title = ""
     }
 }

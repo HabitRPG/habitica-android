@@ -24,8 +24,8 @@ open class HabiticaBottomSheetDialog(context: Context) : BottomSheetDialog(conte
         super.setContentView(wrapperBinding.root)
     }
 
-    override fun setContentView(layoutResId: Int) {
-        layoutInflater.inflate(layoutResId, wrapperBinding.container)
+    override fun setContentView(layoutResID: Int) {
+        layoutInflater.inflate(layoutResID, wrapperBinding.container)
         super.setContentView(wrapperBinding.root)
     }
 }

@@ -26,7 +26,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChallengeListFragment :
     BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
@@ -127,9 +129,6 @@ class ChallengeListFragment :
         )
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onRefresh() {
         nextPageToLoad = 0

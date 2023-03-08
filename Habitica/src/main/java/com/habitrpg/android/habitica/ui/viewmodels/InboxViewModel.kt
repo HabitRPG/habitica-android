@@ -2,19 +2,18 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.PagedList
 import androidx.paging.PositionalDataSource
 import androidx.paging.toLiveData
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -30,9 +29,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.ceil
 
-class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseViewModel() {
-    @Inject
-    lateinit var socialRepository: SocialRepository
+@HiltViewModel
+class InboxViewModel @Inject constructor(
+    userRepository : UserRepository,
+    userViewModel : MainUserViewModel,
+    val socialRepository : SocialRepository) : BaseViewModel(userRepository, userViewModel) {
+    val recipientID: String? = null
+    val recipientUsername: String? = null
 
     private var memberIDFlow = MutableStateFlow<String?>(null)
     val memberIDState: StateFlow<String?> = memberIDFlow
@@ -57,10 +60,6 @@ class InboxViewModel(recipientID: String?, recipientUsername: String?) : BaseVie
 
     val memberID: String?
         get() = memberIDFlow.value
-
-    override fun inject(component: UserComponent) {
-        component.inject(this)
-    }
 
     fun invalidateDataSource() {
         dataSourceFactory.sourceLiveData.value?.invalidate()
@@ -151,15 +150,5 @@ class MessagesDataSourceFactory(
         latestSource = MessagesDataSource(socialRepository, recipientID, footer)
         sourceLiveData.postValue(latestSource)
         return latestSource
-    }
-}
-
-class InboxViewModelFactory(
-    private val recipientID: String?,
-    private val recipientUsername: String?
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return InboxViewModel(recipientID, recipientUsername) as T
     }
 }

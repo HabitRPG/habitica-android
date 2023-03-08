@@ -4,19 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.ui.fragments.purchases.GemsPurchaseFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GemPurchaseActivity : PurchaseActivity() {
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_gem_purchase
     }
 
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

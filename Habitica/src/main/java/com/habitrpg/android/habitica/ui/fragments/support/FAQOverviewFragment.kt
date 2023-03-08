@@ -20,7 +20,9 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     override var binding: FragmentFaqOverviewBinding? = null
@@ -79,9 +81,6 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun loadArticles() {
         lifecycleScope.launchCatching {

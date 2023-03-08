@@ -8,11 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.StableViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override var binding: FragmentViewpagerBinding? = null
@@ -40,9 +41,6 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         setViewPagerAdapter()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
@@ -80,8 +78,8 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private fun getPageTitle(position: Int): String {
         return when (position) {
-            0 -> activity?.getString(R.string.pets)
-            1 -> activity?.getString(R.string.mounts)
+            0 -> mainActivity?.getString(R.string.pets)
+            1 -> mainActivity?.getString(R.string.mounts)
             else -> ""
         } ?: ""
     }

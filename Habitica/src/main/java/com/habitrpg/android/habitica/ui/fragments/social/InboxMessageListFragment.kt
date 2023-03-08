@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
@@ -29,18 +28,19 @@ import com.habitrpg.android.habitica.ui.adapter.social.InboxAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel
-import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModelFactory
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
+@AndroidEntryPoint
 class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>() {
 
     override var binding: FragmentInboxMessageListBinding? = null
@@ -58,9 +58,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private var chatRoomUser: String? = null
     private var replyToUserUUID: String? = null
 
-    private val viewModel: InboxViewModel by viewModels(factoryProducer = {
-        InboxViewModelFactory(replyToUserUUID, chatRoomUser)
-    })
+    private val viewModel: InboxViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,7 +89,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 apiClient.getMemberWithUsername(chatRoomUser ?: "")
             }
             setReceivingUser(member?.username, member?.id)
-            activity?.title = member?.displayName
+            mainActivity?.title = member?.displayName
             chatAdapter = InboxAdapter(viewModel.user.value, member)
             chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -150,7 +148,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        this.activity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
+        this.mainActivity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -164,9 +162,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         return super.onOptionsItemSelected(item)
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun markMessagesAsRead(messages: List<ChatMessage>) {
         socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
@@ -205,7 +200,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String?) {
         this.chatRoomUser = chatRoomUser
         this.replyToUserUUID = replyToUserUUID
-        activity?.title = chatRoomUser
+        mainActivity?.title = chatRoomUser
     }
 
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {

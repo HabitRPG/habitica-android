@@ -23,7 +23,9 @@ import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener {
 
     @Inject
@@ -54,9 +56,6 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
         setViewPagerAdapter()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

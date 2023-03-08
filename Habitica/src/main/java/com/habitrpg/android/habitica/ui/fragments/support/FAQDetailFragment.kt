@@ -13,7 +13,9 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
     @Inject
     lateinit var faqRepository: FAQRepository
@@ -55,7 +57,4 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
         binding?.answerTextView?.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 }

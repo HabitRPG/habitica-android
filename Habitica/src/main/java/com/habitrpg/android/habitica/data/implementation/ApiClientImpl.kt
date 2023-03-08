@@ -102,7 +102,6 @@ class ApiClientImpl(
     private var hadError = false
 
     init {
-        HabiticaBaseApplication.userComponent?.inject(this)
         analyticsManager.setUserIdentifier(this.hostConfig.userID)
         buildRetrofit()
     }

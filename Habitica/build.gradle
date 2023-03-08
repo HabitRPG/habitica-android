@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
@@ -34,8 +35,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     //Dependency Injection
-    implementation "com.google.dagger:dagger:$daggerhilt_version"
-    kapt "com.google.dagger:dagger-compiler:$daggerhilt_version"
+    implementation "com.google.dagger:hilt-android:$daggerhilt_version"
+    kapt "com.google.dagger:hilt-compiler:$daggerhilt_version"
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
     //App Compatibility and Material Design
     implementation "androidx.appcompat:appcompat:$appcompat_version"

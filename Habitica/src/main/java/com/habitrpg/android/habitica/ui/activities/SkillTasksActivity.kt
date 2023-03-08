@@ -10,16 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivitySkillTasksBinding
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewFragment
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
+@AndroidEntryPoint
 class SkillTasksActivity : BaseActivity() {
     private lateinit var binding: ActivitySkillTasksBinding
 
@@ -43,10 +44,6 @@ class SkillTasksActivity : BaseActivity() {
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivitySkillTasksBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     private fun loadTaskLists() {

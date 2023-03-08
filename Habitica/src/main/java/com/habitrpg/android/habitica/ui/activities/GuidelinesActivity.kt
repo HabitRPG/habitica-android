@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.setMarkdown
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -16,12 +16,9 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 
+@AndroidEntryPoint
 class GuidelinesActivity : BaseActivity() {
     override fun getLayoutResId(): Int = R.layout.activity_guidelines
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

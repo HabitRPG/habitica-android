@@ -49,7 +49,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     var viewModel: PartyViewModel? = null
@@ -75,9 +77,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userId: String
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onDestroyView() {
         inventoryRepository.close()

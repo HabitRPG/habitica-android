@@ -21,7 +21,9 @@ import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     @Inject
@@ -66,9 +68,6 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

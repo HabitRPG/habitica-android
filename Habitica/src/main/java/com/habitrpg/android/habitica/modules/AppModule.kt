@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.modules
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
@@ -9,13 +8,15 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.SoundFileLoader
-import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.helpers.KeyHelper.Companion.getInstance
 import com.habitrpg.shared.habitica.HLogger
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import java.io.IOException
 import java.security.KeyStore
 import java.security.KeyStoreException
@@ -23,17 +24,12 @@ import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateException
 import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
-class AppModule(private val application: Application) {
+class AppModule {
     @Provides
     @Singleton
-    fun providesContext(): Context {
-        return application
-    }
-
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(context: Context): SharedPreferences {
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 
@@ -57,7 +53,7 @@ class AppModule(private val application: Application) {
 
     @Provides
     fun provideKeyHelper(
-        context: Context,
+        @ApplicationContext context: Context,
         sharedPreferences: SharedPreferences,
         keyStore: KeyStore?
     ): KeyHelper? {
@@ -67,19 +63,13 @@ class AppModule(private val application: Application) {
     }
 
     @Provides
-    fun providesResources(context: Context): Resources {
+    fun providesResources(@ApplicationContext context: Context): Resources {
         return context.resources
     }
 
     @Provides
-    fun providesSoundFileLoader(context: Context): SoundFileLoader {
+    fun providesSoundFileLoader(@ApplicationContext context: Context): SoundFileLoader {
         return SoundFileLoader(context)
-    }
-
-    @Provides
-    @Singleton
-    fun providesSoundManager(): SoundManager {
-        return SoundManager()
     }
 
     @Provides
@@ -87,7 +77,7 @@ class AppModule(private val application: Application) {
     fun pushNotificationManager(
         apiClient: ApiClient,
         sharedPreferences: SharedPreferences,
-        context: Context
+        @ApplicationContext context: Context
     ): PushNotificationManager {
         return PushNotificationManager(apiClient, sharedPreferences, context)
     }

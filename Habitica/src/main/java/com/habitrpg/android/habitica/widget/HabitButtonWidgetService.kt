@@ -12,7 +12,6 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
@@ -20,16 +19,20 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.min
 
+@AndroidEntryPoint
 class HabitButtonWidgetService : Service() {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     @Inject
+    @ApplicationContext
     lateinit var context: Context
     @Inject
     lateinit var taskRepository: TaskRepository
@@ -39,7 +42,6 @@ class HabitButtonWidgetService : Service() {
     private var allWidgetIds: IntArray? = null
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        HabiticaBaseApplication.userComponent?.inject(this)
         this.appWidgetManager = AppWidgetManager.getInstance(this)
         val thisWidget = ComponentName(this, HabitButtonWidgetProvider::class.java)
         allWidgetIds = appWidgetManager?.getAppWidgetIds(thisWidget)

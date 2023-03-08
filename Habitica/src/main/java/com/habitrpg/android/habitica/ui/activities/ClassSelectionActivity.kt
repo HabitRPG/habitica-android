@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
@@ -23,9 +22,11 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ClassSelectionActivity : BaseActivity() {
 
     @Inject
@@ -150,10 +151,6 @@ class ClassSelectionActivity : BaseActivity() {
         binding.warriorAvatarView.setAvatar(warrior)
         val warriorIcon = BitmapDrawable(resources, HabiticaIconsHelper.imageOfWarriorLightBg())
         binding.warriorButton.setCompoundDrawablesWithIntrinsicBounds(warriorIcon, null, null, null)
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     private fun makeUser(preferences: Preferences, outfit: Outfit): User {

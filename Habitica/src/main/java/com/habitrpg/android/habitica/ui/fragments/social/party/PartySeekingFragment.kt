@@ -25,27 +25,28 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.SocialRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-class PartySeekingViewModel: BaseViewModel() {
+@HiltViewModel
+class PartySeekingViewModel @Inject constructor(
+    userRepository : UserRepository,
+    userViewModel : MainUserViewModel,
+    val socialRepository : SocialRepository
+): BaseViewModel(userRepository, userViewModel) {
     val isRefreshing = mutableStateOf(false)
 
-    @Inject
-    lateinit var socialRepository: SocialRepository
-
     val seekingUsers = mutableStateOf<List<Member>>(emptyList())
-
-    override fun inject(component : UserComponent) {
-        component.inject(this)
-    }
 
     init {
         retrieveUsers()
@@ -60,6 +61,7 @@ class PartySeekingViewModel: BaseViewModel() {
     }
 }
 
+@AndroidEntryPoint
 class PartySeekingFragment: BaseFragment<FragmentComposeBinding>() {
     val viewModel: PartySeekingViewModel by viewModels()
 
@@ -69,10 +71,6 @@ class PartySeekingFragment: BaseFragment<FragmentComposeBinding>() {
         container : ViewGroup?
     ) : FragmentComposeBinding {
         return FragmentComposeBinding.inflate(inflater)
-    }
-
-    override fun injectFragment(component : UserComponent) {
-        component.inject(this)
     }
 
     override fun onCreateView(

@@ -35,11 +35,11 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     protected var showsBackButton: Boolean = false
 
-    open val activity get() = getActivity() as? MainActivity
-    val tabLayout get() = activity?.binding?.content?.detailTabs
-    val collapsingToolbar get() = activity?.binding?.content?.toolbar
-    val toolbarAccessoryContainer get() = activity?.binding?.content?.toolbarAccessoryContainer
-    val bottomNavigation get() = activity?.binding?.content?.bottomNavigation
+    open val mainActivity get() = getActivity() as? MainActivity
+    val tabLayout get() = mainActivity?.binding?.content?.detailTabs
+    val collapsingToolbar get() = mainActivity?.binding?.content?.toolbar
+    val toolbarAccessoryContainer get() = mainActivity?.binding?.content?.toolbarAccessoryContainer
+    val bottomNavigation get() = mainActivity?.binding?.content?.bottomNavigation
     var usesTabLayout: Boolean = false
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
@@ -81,24 +81,24 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     override fun onResume() {
         super.onResume()
-        activity?.showBackButton = showsBackButton
-        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mainActivity?.showBackButton = showsBackButton
+        mainActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        activity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, activity) }
+        mainActivity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, mainActivity) }
         updateToolbarInteractivity()
     }
 
     var isTitleInteractive = false
 
     open fun updateToolbarInteractivity() {
-        activity?.binding?.content?.toolbarTitle?.background?.alpha = if (isTitleInteractive) 255 else 0
+        mainActivity?.binding?.content?.toolbarTitle?.background?.alpha = if (isTitleInteractive) 255 else 0
         if (isTitleInteractive) {
-            activity?.binding?.content?.toolbarTitle?.setScaledPadding(context, 16, 4, 16, 4)
+            mainActivity?.binding?.content?.toolbarTitle?.setScaledPadding(context, 16, 4, 16, 4)
         } else {
-            activity?.binding?.content?.toolbarTitle?.setPadding(0)
+            mainActivity?.binding?.content?.toolbarTitle?.setPadding(0)
         }
     }
 
@@ -118,11 +118,11 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     }
 
     private fun hideToolbar() {
-        activity?.binding?.content?.headerView?.visibility = View.GONE
+        mainActivity?.binding?.content?.headerView?.visibility = View.GONE
     }
 
     private fun showToolbar() {
-        activity?.binding?.content?.headerView?.visibility = View.VISIBLE
+        mainActivity?.binding?.content?.headerView?.visibility = View.VISIBLE
     }
 
     private fun disableToolbarScrolling() {

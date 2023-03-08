@@ -1,16 +1,11 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
-import com.habitrpg.android.habitica.extensions.getTranslatedType
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Mount
@@ -21,19 +16,20 @@ import com.habitrpg.android.habitica.models.user.OwnedObject
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class StableViewModel(private val application: Application?, private val itemType: String?) : BaseViewModel() {
+@HiltViewModel
+class StableViewModel @Inject constructor(
+    userRepository : UserRepository,
+    userViewModel : MainUserViewModel,
+    val inventoryRepository : InventoryRepository
+) : BaseViewModel(userRepository, userViewModel) {
 
-    @Inject
-    lateinit var inventoryRepository: InventoryRepository
-
-    override fun inject(component: UserComponent) {
-        component.inject(this)
-    }
+    private val itemType = ""
 
     private val _items: MutableLiveData<List<Any>> = MutableLiveData()
     val items: LiveData<List<Any>> = _items
@@ -119,14 +115,14 @@ class StableViewModel(private val application: Application?, private val itemTyp
                 if (items.size > 0 && items[items.size - 1].javaClass == StableSection::class.java) {
                     items.removeAt(items.size - 1)
                 }
-                val title = if (itemType == "pets") {
+                /*val title = if (itemType == "pets") {
                     application?.getString(R.string.pet_category, animal.getTranslatedType(application))
                 } else {
                     application?.getString(R.string.mount_category, animal.getTranslatedType(application))
                 }
                 val section = StableSection(animal.type, title ?: "")
                 items.add(section)
-                lastSection = section
+                lastSection = section*/
             }
             val isOwned = when (itemType) {
                 "pets" -> {
@@ -153,15 +149,5 @@ class StableViewModel(private val application: Application?, private val itemTyp
         items.add(0, "header")
         items.removeAll { it is StableSection && (it.key as? String) == "special" && it.ownedCount == 0 }
         return items
-    }
-}
-
-class StableViewModelFactory(
-    private val application: Application?,
-    private val itemType: String?
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return StableViewModel(application, itemType) as T
     }
 }

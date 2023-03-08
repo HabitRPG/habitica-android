@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.adapter.tasks.BaseTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.viewHolders.BindableViewHolder
@@ -32,10 +31,6 @@ class ChallengeTasksRecyclerViewAdapter(
 
     var onAddItem: ((Task) -> Unit)? = null
     var onTaskOpen: ((Task) -> Unit)? = null
-
-    override fun injectThis(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun getItemViewType(position: Int): Int {
         val task = this.filteredContent?.get(position)
@@ -86,13 +81,13 @@ class ChallengeTasksRecyclerViewAdapter(
      */
     fun replaceTask(task: Task): Boolean {
         var i = 0
-        while (i < this.content?.size ?: 0) {
+        while (i < (this.content?.size ?: 0)) {
             if (content?.get(i)?.id == task.id) {
                 break
             }
             ++i
         }
-        if (i < content?.size ?: 0) {
+        if (i < (content?.size ?: 0)) {
             content?.set(i, task)
 
             filter()

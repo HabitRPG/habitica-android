@@ -9,7 +9,6 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.WidgetConfigureHabitButtonBinding
 import com.habitrpg.android.habitica.modules.AppModule
@@ -17,6 +16,7 @@ import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
+@AndroidEntryPoint
 class HabitButtonWidgetActivity : BaseActivity() {
     private val job = SupervisorJob()
 
@@ -45,10 +46,6 @@ class HabitButtonWidgetActivity : BaseActivity() {
     override fun getContentView(layoutResId: Int?): View {
         binding = WidgetConfigureHabitButtonBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

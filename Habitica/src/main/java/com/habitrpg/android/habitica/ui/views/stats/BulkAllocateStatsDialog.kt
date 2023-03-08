@@ -7,7 +7,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.DialogBulkAllocateBinding
 import com.habitrpg.common.habitica.extensions.getThemeColor
@@ -17,12 +16,9 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : AlertDialog(context) {
+class BulkAllocateStatsDialog(context: Context, private val userRepository: UserRepository) : AlertDialog(context) {
     private val binding = DialogBulkAllocateBinding.inflate(context.layoutInflater)
-    @Inject
-    lateinit var userRepository: UserRepository
 
     private val allocatedPoints: Int
         get() {
@@ -45,8 +41,6 @@ class BulkAllocateStatsDialog(context: Context, component: UserComponent?) : Ale
         }
 
     init {
-        component?.inject(this)
-
         setView(binding.root)
         this.setButton(BUTTON_POSITIVE, context.getString(R.string.save)) { _, _ ->
             saveChanges()

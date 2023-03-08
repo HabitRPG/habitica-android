@@ -12,7 +12,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentGuildDetailBinding
@@ -25,18 +24,19 @@ import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
-import com.habitrpg.android.habitica.ui.views.HabiticaIcons
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
     @Inject
@@ -187,13 +187,10 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         (this.activity as? MainActivity)?.showSnackbar(title = getString(R.string.left_guild))
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun updateGuild(guild: Group?) {
         binding?.titleView?.text = guild?.name
-        binding?.guildMembersIcon?.setImageBitmap(HabiticaIcons.imageOfGuildCrestMedium((guild?.memberCount ?: 0).toFloat()))
+        binding?.guildMembersIcon?.setImageBitmap(HabiticaIconsHelper.imageOfGuildCrestMedium((guild?.memberCount ?: 0).toFloat()))
         binding?.guildMembersText?.text = guild?.memberCount.toString()
         binding?.guildBankText?.text = guild?.gemCount.toString()
         binding?.guildSummary?.setMarkdown(guild?.summary)

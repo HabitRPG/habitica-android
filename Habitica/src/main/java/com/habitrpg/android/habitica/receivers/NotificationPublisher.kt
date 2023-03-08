@@ -10,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -19,6 +18,7 @@ import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import java.util.Calendar
@@ -27,6 +27,7 @@ import java.util.Random
 import javax.inject.Inject
 
 // https://gist.github.com/BrandonSmith/6679223
+@AndroidEntryPoint
 class NotificationPublisher : BroadcastReceiver() {
 
     @Inject
@@ -43,8 +44,7 @@ class NotificationPublisher : BroadcastReceiver() {
         this.context = context
         if (!wasInjected) {
             wasInjected = true
-            HabiticaBaseApplication.userComponent?.inject(this)
-        }
+            }
 
         var wasInactive = false
         // Show special notification if user hasn't logged in for a week

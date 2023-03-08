@@ -18,7 +18,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatCheckedTextView
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityCreateChallengeBinding
@@ -39,6 +38,7 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
@@ -46,6 +46,7 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChallengeFormActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCreateChallengeBinding
@@ -116,10 +117,6 @@ class ChallengeFormActivity : BaseActivity() {
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_create_challenge
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -224,11 +221,11 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = intent
         val bundle = intent.extras
 
-        ChallengeTasksRecyclerViewAdapter(
+        /*ChallengeTasksRecyclerViewAdapter(
             TasksViewModel(), 0, this, "",
             openTaskDisabled = false,
             taskActionsDisabled = true
-        ).also { challengeTasks = it }
+        ).also { challengeTasks = it }*/
         challengeTasks.onTaskOpen = {
             if (it.isValid) {
                 openNewTaskActivity(it.type, it)

@@ -8,10 +8,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override var binding: FragmentViewpagerBinding? = null
@@ -48,9 +49,6 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
@@ -91,11 +89,11 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private fun getPageTitle(position: Int): String {
         return when (position) {
-            0 -> activity?.getString(R.string.eggs)
-            1 -> activity?.getString(R.string.hatching_potions)
-            2 -> activity?.getString(R.string.food)
-            3 -> activity?.getString(R.string.quests)
-            4 -> activity?.getString(R.string.special)
+            0 -> mainActivity?.getString(R.string.eggs)
+            1 -> mainActivity?.getString(R.string.hatching_potions)
+            2 -> mainActivity?.getString(R.string.food)
+            3 -> mainActivity?.getString(R.string.quests)
+            4 -> mainActivity?.getString(R.string.special)
             else -> ""
         } ?: ""
     }

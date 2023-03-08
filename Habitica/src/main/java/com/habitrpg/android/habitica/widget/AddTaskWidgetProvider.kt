@@ -7,7 +7,9 @@ import android.widget.RemoteViews
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddTaskWidgetProvider : BaseWidgetProvider() {
 
     override fun layoutResourceId(): Int {

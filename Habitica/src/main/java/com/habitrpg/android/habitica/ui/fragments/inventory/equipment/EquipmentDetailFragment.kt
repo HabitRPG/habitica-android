@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -21,7 +20,9 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EquipmentDetailFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
@@ -80,7 +81,7 @@ class EquipmentDetailFragment :
         this.adapter.type = this.type
 
         binding?.recyclerView?.adapter = this.adapter
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(activity)
+        binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity)
         binding?.recyclerView?.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -96,9 +97,6 @@ class EquipmentDetailFragment :
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onRefresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {

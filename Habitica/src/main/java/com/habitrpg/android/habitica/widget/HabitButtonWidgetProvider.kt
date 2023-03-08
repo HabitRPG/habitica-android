@@ -5,26 +5,20 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class HabitButtonWidgetProvider : BaseWidgetProvider() {
     @Inject
     lateinit var taskRepository: TaskRepository
-
-    private fun setUp() {
-        if (!hasInjected) {
-            hasInjected = true
-            HabiticaBaseApplication.userComponent?.inject(this)
-        }
-    }
 
     override fun layoutResourceId(): Int {
         return R.layout.widget_habit_button
@@ -36,7 +30,6 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        setUp()
         val thisWidget = ComponentName(
             context,
             HabitButtonWidgetProvider::class.java
@@ -62,7 +55,6 @@ class HabitButtonWidgetProvider : BaseWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        setUp()
         if (intent.action == HABIT_ACTION) {
             val mgr = AppWidgetManager.getInstance(context)
             val appWidgetId = intent.getIntExtra(

@@ -5,11 +5,9 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.loadImage
@@ -19,6 +17,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     var shopIdentifier: String? = null
     private var item: ShopItem? = null
     var onNeedsRefresh: (() -> Unit)? = null
+    var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
     private var context: Context = itemView.context
 
@@ -95,17 +94,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     override fun onClick(view: View) {
         val item = item
         if (item != null && item.isValid) {
-
-            val dialog = PurchaseDialog(context, HabiticaBaseApplication.userComponent, item)
-            dialog.shopIdentifier = shopIdentifier
-            dialog.isPinned = isPinned
-            dialog.purchaseCardAction = {
-                purchaseCardAction?.invoke(it)
-            }
-            dialog.onGearPurchased = {
-                onNeedsRefresh?.invoke()
-            }
-            dialog.show()
+            onShowPurchaseDialog?.invoke(item, isPinned)
         }
     }
 

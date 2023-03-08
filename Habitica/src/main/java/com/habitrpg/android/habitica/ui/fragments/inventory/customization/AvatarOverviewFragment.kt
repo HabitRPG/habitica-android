@@ -106,9 +106,6 @@ open class AvatarOverviewFragment :
         return view
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun displayCustomizationFragment(type: String, category: String?) {
         MainNavigationController.navigate(

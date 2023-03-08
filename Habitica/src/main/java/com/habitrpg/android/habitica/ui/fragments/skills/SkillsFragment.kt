@@ -11,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.responses.SkillResponse
@@ -31,7 +30,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     internal var adapter: SkillsRecyclerViewAdapter? = null
     private var selectedSkill: Skill? = null
@@ -58,16 +59,13 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             user?.let { checkUserLoadSkills(it) }
         }
-        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mainActivity)
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
     }
@@ -98,12 +96,12 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         when {
             "special" == skill.habitClass -> {
                 selectedSkill = skill
-                val intent = Intent(activity, SkillMemberActivity::class.java)
+                val intent = Intent(mainActivity, SkillMemberActivity::class.java)
                 memberSelectionResult.launch(intent)
             }
             skill.target == "task" -> {
                 selectedSkill = skill
-                val intent = Intent(activity, SkillTasksActivity::class.java)
+                val intent = Intent(mainActivity, SkillTasksActivity::class.java)
                 taskSelectionResult.launch(intent)
             }
             else -> useSkill(skill)
@@ -113,7 +111,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
         if (!isAdded) return
         adapter?.mana = response.user?.stats?.mp ?: 0.0
-        val activity = activity ?: return
+        val activity = mainActivity ?: return
         if ("special" == usedSkill?.habitClass) {
             showSnackbar(activity.snackbarContainer, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
         } else {

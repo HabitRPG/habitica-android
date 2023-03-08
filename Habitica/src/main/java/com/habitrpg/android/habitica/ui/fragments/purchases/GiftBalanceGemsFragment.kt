@@ -18,7 +18,9 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.launchCatching
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
 
     @Inject
@@ -60,9 +62,6 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         binding?.usernameTextview?.text = it.formattedUsername
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

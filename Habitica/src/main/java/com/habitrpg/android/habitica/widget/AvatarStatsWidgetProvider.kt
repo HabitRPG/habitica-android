@@ -8,7 +8,6 @@ import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RemoteViews
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.models.user.User
@@ -19,10 +18,12 @@ import com.habitrpg.common.habitica.helpers.HealthFormatter
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.AvatarView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AvatarStatsWidgetProvider : BaseWidgetProvider() {
 
     private lateinit var avatarView: AvatarView
@@ -36,13 +37,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         return R.layout.widget_avatar_stats
     }
 
-    private fun setUp() {
-        if (!hasInjected) {
-            hasInjected = true
-            HabiticaBaseApplication.userComponent?.inject(this)
-        }
-    }
-
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         avatarView = AvatarView(
@@ -54,7 +48,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
         val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
         avatarView.layoutParams = layoutParams
 
-        this.setUp()
         MainScope().launchCatching {
             userRepository.getUser().collect {
                 user = it
@@ -79,7 +72,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
             avatarView.layoutParams = layoutParams
         }
-        this.setUp()
         this.appWidgetManager = appWidgetManager
         this.context = context
 

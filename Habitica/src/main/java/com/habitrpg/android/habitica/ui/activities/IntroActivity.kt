@@ -13,15 +13,16 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.databinding.ActivityIntroBinding
 import com.habitrpg.android.habitica.ui.fragments.setup.IntroFragment
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.viewpagerindicator.IconPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private lateinit var binding: ActivityIntroBinding
@@ -52,10 +53,6 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     private fun setupIntro() {

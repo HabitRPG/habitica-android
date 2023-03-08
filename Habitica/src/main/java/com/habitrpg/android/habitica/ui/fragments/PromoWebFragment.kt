@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
 import com.habitrpg.android.habitica.modules.AppModule
 import javax.inject.Inject
 import javax.inject.Named
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
     @field:[Inject Named(AppModule.NAMED_USER_ID)]
     lateinit var userID: String
@@ -47,7 +49,4 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
         }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 }

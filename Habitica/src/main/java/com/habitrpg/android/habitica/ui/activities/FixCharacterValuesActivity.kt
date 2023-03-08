@@ -8,15 +8,16 @@ import android.view.View
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.ActivityFixcharacterBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class FixCharacterValuesActivity : BaseActivity() {
 
     private lateinit var binding: ActivityFixcharacterBinding
@@ -29,10 +30,6 @@ class FixCharacterValuesActivity : BaseActivity() {
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityFixcharacterBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

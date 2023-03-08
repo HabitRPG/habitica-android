@@ -16,7 +16,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
@@ -25,7 +24,9 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private var detailFragment: PartyDetailFragment? = null
@@ -80,9 +81,6 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
         viewModel.retrieveGroup {}
     }
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private fun updateGroupUI(group: Group?) {
         viewPagerAdapter?.notifyDataSetChanged()
@@ -94,7 +92,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             tabLayout?.visibility = View.VISIBLE
         }
 
-        this.activity?.invalidateOptionsMenu()
+        this.mainActivity?.invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -112,7 +110,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_invite_item -> {
-                val intent = Intent(activity, GroupInviteActivity::class.java)
+                val intent = Intent(mainActivity, GroupInviteActivity::class.java)
                 intent.putExtra("groupType", "party")
                 sendInvitesResult.launch(intent)
                 return true
@@ -145,7 +143,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         bundle.putString("leader", group?.leaderID)
         bundle.putBoolean("leaderCreateChallenge", group?.leaderOnlyChallenges ?: false)
 
-        val intent = Intent(activity, GroupFormActivity::class.java)
+        val intent = Intent(mainActivity, GroupFormActivity::class.java)
         intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         groupFormResult.launch(intent)

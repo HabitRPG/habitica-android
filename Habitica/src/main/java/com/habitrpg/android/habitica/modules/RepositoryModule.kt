@@ -8,8 +8,12 @@ import com.habitrpg.android.habitica.data.local.ContentLocalRepository
 import com.habitrpg.android.habitica.data.local.implementation.RealmContentLocalRepository
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 
+@InstallIn(SingletonComponent::class)
 @Module
 open class RepositoryModule {
     @Provides
@@ -26,7 +30,7 @@ open class RepositoryModule {
     fun providesContentRepository(
         contentLocalRepository: ContentLocalRepository,
         apiClient: ApiClient,
-        context: Context
+        @ApplicationContext context: Context
     ): ContentRepository {
         return ContentRepositoryImpl(
             contentLocalRepository,

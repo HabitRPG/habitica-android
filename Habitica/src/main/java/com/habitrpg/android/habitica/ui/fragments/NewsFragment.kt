@@ -11,12 +11,13 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override var binding: FragmentNewsBinding? = null
@@ -71,9 +72,6 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
         binding?.newsWebview?.loadUrl("$address/static/new-stuff")
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onResume() {
         super.onResume()

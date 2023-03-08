@@ -11,7 +11,6 @@ import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.helpers.AdHandler
@@ -26,11 +25,13 @@ import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ArmoireActivity : BaseActivity() {
 
     private var equipmentKey: String? = null
@@ -46,10 +47,6 @@ class ArmoireActivity : BaseActivity() {
     lateinit var userViewModel: MainUserViewModel
 
     override fun getLayoutResId(): Int = R.layout.activity_armoire
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
-    }
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityArmoireBinding.inflate(layoutInflater)

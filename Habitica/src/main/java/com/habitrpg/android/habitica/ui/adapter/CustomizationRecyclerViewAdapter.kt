@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionFooterBinding
@@ -15,7 +14,6 @@ import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.AvatarView
@@ -44,6 +42,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     private var pinnedItemKeys: List<String> = ArrayList()
 
     var onCustomizationSelected: ((Customization) -> Unit)? = null
+    var onShowPurchaseDialog: ((ShopItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
@@ -212,9 +211,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
                     dialog.show()
                 } else {
                     customization?.let {
-                        val dialog = PurchaseDialog(itemView.context, HabiticaBaseApplication.userComponent, ShopItem.fromCustomization(it, userSize, hairColor))
-                        if (it.type == "background") dialog.isPinned = pinnedItemKeys.contains(ShopItem.fromCustomization(it, userSize, hairColor).key)
-                        dialog.show()
+                        onShowPurchaseDialog?.invoke(ShopItem.fromCustomization(it, userSize, hairColor))
                     }
                 }
                 return
@@ -293,8 +290,7 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
 
         override fun onClick(v: View) {
             set?.let {
-                val dialog = PurchaseDialog(itemView.context, HabiticaBaseApplication.userComponent, ShopItem.fromCustomizationSet(it, additionalSetItems, userSize, hairColor))
-                dialog.show()
+                onShowPurchaseDialog?.invoke(ShopItem.fromCustomizationSet(it, additionalSetItems, userSize, hairColor))
             }
         }
     }

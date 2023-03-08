@@ -1,22 +1,17 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
 import android.content.SharedPreferences
-import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private var isInitialSet: Boolean = true
     private var isSettingUser: Boolean = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        HabiticaBaseApplication.userComponent?.inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onResume() {
         super.onResume()

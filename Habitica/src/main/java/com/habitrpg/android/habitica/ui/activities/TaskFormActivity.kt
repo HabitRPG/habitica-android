@@ -69,6 +69,7 @@ import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.HabitResetOption
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import io.realm.RealmList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
@@ -77,6 +78,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class TaskFormActivity : BaseActivity() {
 
     private val viewModel: TaskFormViewModel by viewModels()
@@ -170,10 +172,6 @@ class TaskFormActivity : BaseActivity() {
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
         return binding.root
-    }
-
-    override fun injectActivity(component: UserComponent?) {
-        component?.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

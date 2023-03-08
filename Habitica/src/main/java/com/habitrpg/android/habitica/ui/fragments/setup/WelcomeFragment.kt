@@ -25,7 +25,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     var onNameValid: ((Boolean?) -> Unit)? = null
@@ -144,7 +146,4 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         }
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 }

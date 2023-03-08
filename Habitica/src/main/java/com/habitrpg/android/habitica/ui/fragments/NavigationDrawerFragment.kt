@@ -19,7 +19,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -59,7 +58,9 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NavigationDrawerFragment : DialogFragment() {
 
     private var binding: DrawerMainBinding? = null
@@ -110,7 +111,6 @@ class NavigationDrawerFragment : DialogFragment() {
         } else {
             NavigationDrawerAdapter(0, 0)
         }
-        HabiticaBaseApplication.userComponent?.inject(this)
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {

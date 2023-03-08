@@ -38,7 +38,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     @Inject
@@ -307,7 +309,4 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         builder.show()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 }

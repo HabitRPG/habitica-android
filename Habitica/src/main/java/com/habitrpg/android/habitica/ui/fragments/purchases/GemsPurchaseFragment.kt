@@ -40,7 +40,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     override var binding: FragmentGemPurchaseBinding? = null
@@ -56,9 +58,6 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     private var isGemSaleHappening = false
 

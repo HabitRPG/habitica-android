@@ -20,7 +20,9 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     @Inject
@@ -60,9 +62,6 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         super.onDestroy()
     }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_tavern, menu)

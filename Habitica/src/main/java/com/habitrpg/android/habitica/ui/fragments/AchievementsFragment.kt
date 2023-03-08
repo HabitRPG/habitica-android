@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
 import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
@@ -25,7 +24,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -48,9 +49,6 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
             adapter.notifyDataSetChanged()
         }
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +74,7 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val layoutManager = GridLayoutManager(activity, 2)
+        val layoutManager = GridLayoutManager(mainActivity, 2)
         binding?.recyclerView?.layoutManager = layoutManager
         binding?.recyclerView?.adapter = adapter
         adapter.useGridLayout = useGridLayout
@@ -164,7 +162,7 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == menuID) {
             useGridLayout = !useGridLayout
-            activity?.invalidateOptionsMenu()
+            mainActivity?.invalidateOptionsMenu()
         }
         return super.onOptionsItemSelected(item)
     }

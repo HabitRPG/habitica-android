@@ -20,7 +20,9 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GuildListFragment :
     BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     SearchView.OnQueryTextListener,
@@ -42,9 +44,6 @@ class GuildListFragment :
 
     private var viewAdapter = GuildListAdapter()
 
-    override fun injectFragment(component: UserComponent) {
-        component.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

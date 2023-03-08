@@ -20,9 +20,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.HabiticaApplication
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.forceLocale
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
@@ -87,7 +85,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         habiticaApplication
-        injectActivity(HabiticaBaseApplication.userComponent)
         getLayoutResId()?.let {
             setContentView(getContentView(it))
         }
@@ -177,8 +174,6 @@ abstract class BaseActivity : AppCompatActivity() {
             currentTheme = theme
         }
     }
-
-    protected abstract fun injectActivity(component: UserComponent?)
 
     protected fun setupToolbar(toolbar: Toolbar?) {
         this.toolbar = toolbar
