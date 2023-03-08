@@ -124,12 +124,15 @@ object DataBindingUtils {
     private var spriteSubstitutions: Map<String, String> = HashMap()
         get() {
             if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
-                field = AppConfigManager().spriteSubstitutions()["generic"] ?: HashMap()
+                val subs = configManager?.spriteSubstitutions()
+                field = subs?.get("generic") ?: subs?.get("pets") ?: HashMap()
                 lastSubstitutionCheck = Date()
             }
             return field
         }
     private var lastSubstitutionCheck: Date? = null
+
+    var configManager: AppConfigManager? = null
 
     init {
         val tempMap = HashMap<String, String>()

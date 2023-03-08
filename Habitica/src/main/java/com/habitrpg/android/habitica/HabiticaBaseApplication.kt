@@ -28,12 +28,14 @@ import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.UserModule
 import com.habitrpg.android.habitica.modules.UserRepositoryModule
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -56,6 +58,8 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     internal lateinit var analyticsManager: AnalyticsManager
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
+    @Inject
+    internal lateinit var appConfigManager : AppConfigManager
     /**
      * For better performance billing class should be used as singleton
      */
@@ -78,6 +82,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         setupAdHandler()
         HabiticaIconsHelper.init(this)
         MarkdownParser.setup(this)
+        DataBindingUtils.configManager = appConfigManager
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
