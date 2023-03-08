@@ -121,8 +121,6 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
 
-    implementation 'com.willowtreeapps:signinwithapplebutton:0.3'
-
     implementation project(':common')
     implementation project(':shared')
 

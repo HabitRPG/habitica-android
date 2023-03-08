@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.edit
-import androidx.fragment.app.FragmentManager
 import com.google.android.gms.auth.GoogleAuthException
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException
@@ -17,20 +16,16 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesUtil
 import com.google.android.gms.common.Scopes
-import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.SignInWithAppleResult
-import com.habitrpg.android.habitica.helpers.SignInWithAppleService
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
-import com.willowtreeapps.signinwithapplebutton.SignInWithAppleConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
@@ -44,30 +39,6 @@ class AuthenticationViewModel @Inject constructor(
     private val keyHelper : KeyHelper?
 ) {
     var googleEmail : String? = null
-
-    fun connectApple(fragmentManager : FragmentManager, onSuccess : (UserAuthResponse) -> Unit) {
-        val configuration = SignInWithAppleConfiguration(
-            clientId = BuildConfig.APPLE_AUTH_CLIENT_ID,
-            redirectUri = "${hostConfig.address}/api/v4/user/auth/apple",
-            scope = "name email"
-        )
-        val fragmentTag = "SignInWithAppleButton-SignInWebViewDialogFragment"
-
-        SignInWithAppleService(fragmentManager, fragmentTag, configuration) { result ->
-            when (result) {
-                is SignInWithAppleResult.Success -> {
-                    val response = UserAuthResponse()
-                    response.id = result.userID
-                    response.apiToken = result.apiKey
-                    response.newUser = result.newUser
-                    onSuccess(response)
-                }
-
-                else -> {
-                }
-            }
-        }.show()
-    }
 
     fun handleGoogleLogin(
         activity : Activity,

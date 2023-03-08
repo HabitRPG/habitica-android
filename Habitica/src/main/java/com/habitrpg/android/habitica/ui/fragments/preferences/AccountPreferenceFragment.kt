@@ -177,15 +177,6 @@ class AccountPreferenceFragment :
                     }
                 }
             }
-            "apple_auth" -> {
-                if (user?.authentication?.hasAppleAuth == true) {
-                    disconnect("apple", "Apple")
-                } else {
-                    viewModel.connectApple(parentFragmentManager) {
-                        viewModel.handleAuthResponse(it)
-                    }
-                }
-            }
             "facebook_auth" -> {
                 if (user?.authentication?.hasFacebookAuth == true) {
                     disconnect("facebook", "Facebook")

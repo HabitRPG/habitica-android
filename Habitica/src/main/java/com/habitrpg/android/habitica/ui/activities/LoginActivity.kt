@@ -170,11 +170,6 @@ class LoginActivity : BaseActivity() {
         binding.backButton.setOnClickListener { backButtonClicked() }
         binding.forgotPassword.setOnClickListener { onForgotPasswordClicked() }
         binding.googleLoginButton.setOnClickListener { viewModel.handleGoogleLogin(this, pickAccountResult) }
-        binding.appleLoginButton.setOnClickListener {
-            viewModel.connectApple(supportFragmentManager) {
-                handleAuthResponse(it)
-            }
-        }
     }
 
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
