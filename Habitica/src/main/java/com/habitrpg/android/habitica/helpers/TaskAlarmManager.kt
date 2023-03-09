@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import java.lang.IllegalStateException
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -219,20 +220,19 @@ class TaskAlarmManager(
                 return
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                // For SDK >= Android 12, allows batching of reminders
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
+            } else {
                 try {
-                    alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+                    alarmManager?.setAlarmClock(AlarmManager.AlarmClockInfo(time, pendingIntent), pendingIntent)
                 } catch (ex: Exception) {
-                    when (ex) {
+                    when(ex) {
                         is IllegalStateException, is SecurityException -> {
                             alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
                         }
                         else -> throw ex
                     }
                 }
-            } else {
-                alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
             }
         }
     }
