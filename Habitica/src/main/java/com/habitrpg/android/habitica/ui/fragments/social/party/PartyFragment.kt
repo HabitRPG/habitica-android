@@ -127,6 +127,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 return true
             }
             R.id.menu_guild_refresh -> {
+                chatFragment?.isRefreshing = true
                 viewModel.retrieveGroupChat { }
                 viewModel.retrieveGroup { }
                 return true
