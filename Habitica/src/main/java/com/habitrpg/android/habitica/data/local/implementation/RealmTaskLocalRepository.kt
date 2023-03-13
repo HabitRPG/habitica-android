@@ -39,7 +39,7 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     override fun getTasks(userId: String): Flow<List<Task>> {
         if (realm.isClosed) return emptyFlow()
-        return realm.where(Task::class.java).equalTo("userId", userId)
+        return realm.where(Task::class.java).equalTo("ownerID", userId)
             .sort("position", Sort.ASCENDING, "dateCreated", Sort.DESCENDING)
             .findAll()
             .toFlow()
