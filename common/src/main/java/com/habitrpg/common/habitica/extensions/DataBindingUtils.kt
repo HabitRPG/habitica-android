@@ -18,6 +18,8 @@ import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.Collections
 import java.util.Date
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
     val shouldLoadImage = DataBindingUtils.existsAsImage(imageName)
@@ -123,7 +125,7 @@ object DataBindingUtils {
 
     private var spriteSubstitutions: Map<String, String> = HashMap()
         get() {
-            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
+            if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 30.toDuration(DurationUnit.MINUTES).inWholeMilliseconds) {
                 field = AppConfigManager().spriteSubstitutions()["generic"] ?: HashMap()
                 lastSubstitutionCheck = Date()
             }
