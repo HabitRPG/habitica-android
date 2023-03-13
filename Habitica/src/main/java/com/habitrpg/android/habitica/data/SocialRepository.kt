@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.data
 
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.PostChatMessageResult
 import com.habitrpg.android.habitica.models.social.ChatMessage
@@ -81,7 +82,7 @@ interface SocialRepository : BaseRepository {
     suspend fun getGroupMembers(id: String): Flow<List<Member>>
     suspend fun retrievePartyMembers(id: String, includeAllPublicFields: Boolean): List<Member>?
 
-    suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>): List<Void>?
+    suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>): List<InviteResponse>?
 
     suspend fun retrieveMember(userId: String?, fromHall: Boolean = false): Member?
     suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member?

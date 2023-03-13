@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.BuyResponse
@@ -569,7 +570,7 @@ class ApiClientImpl(
         return process { apiService.seenMessages(groupId) }
     }
 
-    override suspend fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): List<Void>? {
+    override suspend fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): List<InviteResponse>? {
         return process { apiService.inviteToGroup(groupId, inviteData) }
     }
 

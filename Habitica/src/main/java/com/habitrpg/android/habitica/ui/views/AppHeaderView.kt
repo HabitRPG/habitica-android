@@ -53,7 +53,6 @@ import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.shared.habitica.models.Avatar
-import com.habitrpg.shared.habitica.models.AvatarStats
 import kotlin.random.Random
 
 @Composable
@@ -62,9 +61,10 @@ fun UserLevelText(user: Avatar) {
         stringResource(
             id = R.string.user_level_with_class,
             user.stats?.lvl ?: 0,
-            user.stats?.getTranslatedClassName(
-                LocalContext.current.resources
-            ) ?: ""
+            getTranslatedClassName(
+                LocalContext.current.resources,
+                user.stats?.habitClass
+            )
         )
     } else {
         stringResource(id = R.string.user_level, user.stats?.lvl ?: 0)
@@ -77,8 +77,8 @@ fun UserLevelText(user: Avatar) {
     )
 }
 
-fun AvatarStats.getTranslatedClassName(resources: Resources): String {
-    return when (habitClass) {
+fun getTranslatedClassName(resources: Resources, className: String?): String {
+    return when (className) {
         Stats.HEALER -> resources.getString(R.string.healer)
         Stats.ROGUE -> resources.getString(R.string.rogue)
         Stats.WARRIOR -> resources.getString(R.string.warrior)
@@ -258,7 +258,7 @@ fun AppHeaderView(
                 )
                 CurrencyText(
                     "gems",
-                    user.gemCount?.toDouble() ?: 0.0,
+                    user.gemCount.toDouble(),
                     modifier = Modifier.clickable {
                         MainNavigationController.navigate(R.id.gemPurchaseActivity)
                     },

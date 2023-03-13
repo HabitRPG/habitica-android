@@ -157,4 +157,5 @@
     <color name="text_green">@color/green_10</color>
     <color name="text_blue">@color/blue_10</color>
     <color name="text_teal">@color/teal_10</color>
+    <color name="divider_color">@color/gray_500</color>
 </resources>

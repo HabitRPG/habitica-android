@@ -28,4 +28,5 @@ open class MemberPreferences :
                 }
             } else null
         }
+    var language: String? = null
 }

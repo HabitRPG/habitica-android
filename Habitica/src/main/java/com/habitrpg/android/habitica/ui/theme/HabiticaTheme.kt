@@ -143,7 +143,11 @@ object HabiticaTheme {
                 tintedUiMain = Color(context.getThemeColor(R.attr.tintedUiMain)),
                 tintedUiSub = Color(context.getThemeColor(R.attr.tintedUiSub)),
                 tintedUiDetails = Color(context.getThemeColor(R.attr.tintedUiDetails)),
-                pixelArtBackground = Color(context.getThemeColor(R.attr.colorContentBackground))
+                pixelArtBackground = Color(context.getThemeColor(R.attr.colorContentBackground)),
+                errorBackground = Color(ContextCompat.getColor(context, R.color.background_red)),
+                errorColor = Color(ContextCompat.getColor(context, R.color.text_red)),
+                successBackground = Color(ContextCompat.getColor(context, R.color.background_green)),
+                successColor = Color(ContextCompat.getColor(context, R.color.text_green))
             )
         }
 }
@@ -160,8 +164,13 @@ class HabiticaColors(
     val tintedUiMain: Color,
     val tintedUiSub: Color,
     val tintedUiDetails: Color,
-    val pixelArtBackground: Color
+    val pixelArtBackground: Color,
+    val errorBackground : Color,
+    val errorColor : Color,
+    val successBackground : Color,
+    val successColor : Color
 ) {
+
     @Composable
     fun textPrimaryFor(task: Task?): Color {
         return colorResource((if (isSystemInDarkTheme()) task?.extraExtraLightTaskColor else task?.extraDarkTaskColor) ?: R.color.text_primary)

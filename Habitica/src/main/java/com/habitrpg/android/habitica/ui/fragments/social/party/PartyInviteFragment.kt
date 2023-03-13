@@ -4,15 +4,66 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.fragment.app.viewModels
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.LoadingButtonState
+import com.habitrpg.common.habitica.extensions.isValidEmail
+import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,13 +72,30 @@ class PartyInviteViewModel @Inject constructor(
     userViewModel : MainUserViewModel,
     val socialRepository : SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
+    val invites = mutableStateListOf("")
+
+    suspend fun sendInvites() : List<InviteResponse>? {
+        val inviteMap = mapOf<String, MutableList<String>>(
+            "emails" to mutableListOf(),
+            "uuids" to mutableListOf(),
+            "usernames" to mutableListOf()
+        )
+        for (invite in invites) {
+            if (invite.isValidEmail()) {
+                inviteMap["emails"]?.add(invite)
+            } else if (UUID.fromString(invite) != null) {
+                inviteMap["uuids"]?.add(invite)
+            } else if (invite.isNotBlank()) {
+                inviteMap["usernames"]?.add(invite)
+            }
+        }
+        return socialRepository.inviteToGroup("party", inviteMap)
+    }
 }
 
 @AndroidEntryPoint
 class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
-
-    @Inject
-    lateinit var configManager : AppConfigManager
+    val viewModel : PartyInviteViewModel by viewModels()
 
     override var binding : FragmentComposeBinding? = null
 
@@ -38,7 +106,117 @@ class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
         return FragmentComposeBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View? {
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        binding?.composeView?.setContent {
+            HabiticaTheme {
+                PartyInviteView(viewModel)
+            }
+        }
+        return view
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun PartyInviteView(
+    viewModel : PartyInviteViewModel
+) {
+    var inviteButtonState : LoadingButtonState by remember { mutableStateOf(LoadingButtonState.CONTENT) }
+    val scope = rememberCoroutineScope()
+    val scrollableState = rememberScrollState()
+    val invites = viewModel.invites
+
+    LazyColumn(
+        Modifier
+            .fillMaxWidth()
+            .padding(14.dp)
+            .scrollable(scrollableState, Orientation.Vertical)) {
+        item {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 22.dp, bottom = 14.dp)
+            ) {
+                Text(
+                    stringResource(R.string.invite_with_username_email),
+                    color = HabiticaTheme.colors.textPrimary,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    stringResource(R.string.habiticans_send_invite),
+                    color = HabiticaTheme.colors.textSecondary
+                )
+            }
+        }
+        items(invites.indices.toList()) { index ->
+            val invite = invites[index]
+            val transition = updateTransition(invites.size - 1 == index, label = "isLast")
+            val rotation = transition.animateFloat(
+                label = "isAssigned",
+                transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow) }
+            ) {
+                if (it) 135f else 0f
+            }
+            Row(verticalAlignment = Alignment.CenterVertically,  modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp, 4.dp)
+                .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.medium)
+                .padding(4.dp, 4.dp)
+                .animateItemPlacement()) {
+                Image(
+                    painterResource(R.drawable.ic_close_white_24dp),
+                    null,
+                    colorFilter = ColorFilter.tint(HabiticaTheme.colors.textPrimary),
+                    modifier = Modifier
+                        .rotate(rotation.value)
+                        .size(32.dp)
+                        .padding(3.dp)
+                )
+                TextField(
+                    value = invite, onValueChange = { value ->
+                        if (invites.size - 1 == index && invites[index].isBlank()) {
+                            viewModel.invites.add("")
+                        }
+                        viewModel.invites[index] = value
+                    },
+                    singleLine = true,
+                    placeholder = { Text(stringResource(R.string.username_or_email)) },
+                    colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent, focusedIndicatorColor = Color.Transparent),
+                    modifier = Modifier
+                        .onFocusChanged {
+                            if (!it.isFocused) {
+                                if (viewModel.invites[index].isBlank() && viewModel.invites.size - 1 != index && viewModel.invites.size > 1) {
+                                    viewModel.invites.removeAt(index)
+                                }
+                            }
+                        }
+                )
+            }
+        }
+        item {
+            InviteButton(
+                state = if (invites.isNotEmpty()) inviteButtonState else LoadingButtonState.DISABLED,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    inviteButtonState = LoadingButtonState.LOADING
+                    scope.launchCatching({
+                        inviteButtonState = LoadingButtonState.FAILED
+                    }) {
+                        val responses = viewModel.sendInvites()
+                        if (responses?.isNotEmpty() == true) {
+                            inviteButtonState = LoadingButtonState.SUCCESS
+                            viewModel.invites.clear()
+                        } else {
+                            inviteButtonState = LoadingButtonState.FAILED
+                        }
+                    }
+                })
+        }
     }
 }

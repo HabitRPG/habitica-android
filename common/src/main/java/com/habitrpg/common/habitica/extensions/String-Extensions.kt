@@ -5,6 +5,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.util.Linkify
+import android.util.Patterns
 import java.util.Locale
 
 fun String.fromHtml(): CharSequence {
@@ -31,3 +32,6 @@ fun String.removeZeroWidthSpace(): String {
 fun String.localizedCapitalize(): String {
     return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 }
+
+
+fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()

@@ -303,7 +303,7 @@ class AvatarView : FrameLayout {
                     layerMap[LayerType.BACK] = outfit.back
                 }
                 if (outfit.isAvailable(outfit.armor)) {
-                    layerMap[LayerType.ARMOR] = prefs.size + "_" + outfit.armor
+                    layerMap[LayerType.ARMOR] = (prefs.size ?: "broad") + "_" + outfit.armor
                 }
                 if (outfit.isAvailable(outfit.body)) {
                     layerMap[LayerType.BODY] = outfit.body
@@ -326,7 +326,7 @@ class AvatarView : FrameLayout {
             }
 
             layerMap[LayerType.SKIN] = "skin_" + prefs.skin + if (prefs.sleep) "_sleep" else ""
-            layerMap[LayerType.SHIRT] = prefs.size + "_shirt_" + prefs.shirt
+            layerMap[LayerType.SHIRT] = (prefs.size ?: "broad") + "_shirt_" + prefs.shirt
             layerMap[LayerType.HEAD_0] = "head_0"
 
             if (hair != null) {

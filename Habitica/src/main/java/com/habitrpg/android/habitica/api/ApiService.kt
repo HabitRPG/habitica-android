@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.inventory.Quest
+import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
 import com.habitrpg.android.habitica.models.responses.BuyResponse
@@ -265,7 +266,7 @@ interface ApiService {
     suspend fun seenMessages(@Path("gid") groupId: String): HabitResponse<Void>
 
     @POST("groups/{gid}/invite")
-    suspend fun inviteToGroup(@Path("gid") groupId: String, @Body inviteData: Map<String, Any>): HabitResponse<List<Void>>
+    suspend fun inviteToGroup(@Path("gid") groupId: String, @Body inviteData: Map<String, Any>): HabitResponse<List<InviteResponse>>
 
     @POST("groups/{gid}/reject-invite")
     suspend fun rejectGroupInvite(@Path("gid") groupId: String): HabitResponse<Void>
