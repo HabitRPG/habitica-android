@@ -682,7 +682,7 @@
     <string name="invited_to_quest">Bạn đã được mời tham gia vào Nhiệm vụ <b>%1$s</b></string>
     <string name="invited_to_public_guild">Bạn đã được mời tham gia vào Bang hội <b>%1$s</b></string>
     <string name="invited_to_private_guild">Bạn đã được mời tham gia vào Bang hội kín <b>%1$s</b></string>
-    <string name="invited_to_party_notification">Bạn đã được mời tham gia vào Tổ đội <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s bạn đã được mời tham gia vào Tổ đội <b>%2$s</b></string>
     <string name="new_subscriber_item">Bạn có <b>Vật phẩm Bí ẩn</b> mới</string>
     <string name="unallocated_stats_points">Bạn có <b>%1$s Điểm Chỉ số chưa phân bổ</b></string>
     <string name="new_msg_party">Tổ đội của bạn, <b>%1$s</b>, có bài viết mới</string>
