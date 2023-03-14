@@ -677,7 +677,7 @@
     <string name="years">Godina</string>
     <string name="x_class">%s Klasa</string>
     <string name="discard_changes_to_task_message">Jesi li siguran/la da želiš odbaciti promjene ovom zadatku\?</string>
-    <string name="invited_to_party_notification">Pozvan/a si da se pridružiš Družini <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s Pozvan/a si da se pridružiš Družini <b>%2$s</b></string>
     <string name="month_reminder_title">Trebaš li promjenu svakodnevnice\?</string>
     <string name="become_x">Postani %s</string>
     <string name="no_notifications_text">Vile obavijesti ti daju prodornu rundu pljeska! Svaka čast!</string>

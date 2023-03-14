@@ -652,7 +652,7 @@
     <string name="new_msg_party"><![CDATA[Votre équipe, <b>%1$s</b>, a de nouveaux messages]]></string>
     <string name="unallocated_stats_points"><![CDATA[Vous avez <b>%1$s points d\'attribut non alloués</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Vous avez de nouveaux <b>objets mystère</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Vous avez reçu une invitation à rejoindre l\'équipe <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<![CDATA[<font color=#925CF3>%1$s</font> vous avez reçu une invitation à rejoindre l\'équipe <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Vous avez reçu une invitation à rejoindre la guilde privée <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Vous avez reçu une invitation à rejoindre la guilde <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[On vous invite à rejoindre la quête <b>%1$s</b>]]></string>

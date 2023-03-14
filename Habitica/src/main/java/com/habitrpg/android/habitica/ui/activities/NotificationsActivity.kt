@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
@@ -39,6 +40,7 @@ import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -78,6 +80,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
 
         binding.notificationsRefreshLayout.setOnRefreshListener(this)
+    }
+
+    override fun injectActivity(component: UserComponent?) {
+        component?.inject(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -122,38 +128,28 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             createNotificationsHeaderView(notifications.count())
         )
 
-        //Currently retrieving the inviters username by user's id
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            notifications.filter { it.type == Notification.Type.PARTY_INVITATION.type }.forEach {
-                val item = createPartyInvitationNotification(it)
-                val inviteView = binding.notificationItems.findViewWithTag<View>(it.id)
-                if (item != null && inviteView == null) {
-                    item.tag = it.id
+            notifications.map {
+                val item: View? = when (it.type) {
+                    Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
+                    Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
+                    Notification.Type.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
+                    Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
+                    Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
+                    Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
+                    Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
+                    Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
+                    Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
+                    Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
+                    Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
+                    else -> null
+                }
+
+                if (item != null) {
                     binding.notificationItems.addView(item)
                 }
             }
         }
-
-        notifications.map {
-            val item: View? = when (it.type) {
-                Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
-                Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
-                Notification.Type.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
-                Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
-                Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
-                Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
-                Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
-                Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
-                Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
-                Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
-                else -> null
-            }
-
-            if (item != null) {
-                binding.notificationItems.addView(item)
-            }
-        }
-
 
     }
 
@@ -312,14 +308,21 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         return item
     }
-
+    
     private suspend fun createPartyInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
         val data = notification.data as? PartyInvitationData
-
-        return createActionableNotificationItem(
-            notification,
-            fromHtml(getString(R.string.invited_to_party_notification, data?.invitation?.name))
-        )
+        val inviterId = data?.invitation?.inviter
+        if (inviterId != null) {
+            val inviter = socialRepository.retrieveMember(inviterId, fromHall = false)
+            return@withContext createActionableNotificationItem(
+                notification,
+                fromHtml(getString(R.string.invited_to_party_notification, data.invitation?.name, inviter?.formattedUsername)),
+                openable = true,
+                inviterId
+            )
+        } else {
+            return@withContext null
+        }
     }
 
     private fun createGuildInvitationNotification(notification: Notification): View? {
@@ -384,17 +387,22 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     private fun createActionableNotificationItem(
         notification: Notification,
         messageText: CharSequence,
-        openable: Boolean = false
+        openable: Boolean = false,
+        inviterId: String? = null
     ): View? {
         val item = inflater?.inflate(R.layout.notification_item_actionable, binding.notificationItems, false)
 
         if (openable) {
             val container = item?.findViewById(R.id.notification_item) as? View
             container?.setOnClickListener {
-                val resultIntent = Intent()
-                resultIntent.putExtra("notificationId", notification.id)
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish()
+                if (inviterId != null) {
+                    FullProfileActivity.open(inviterId)
+                } else {
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("notificationId", notification.id)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+                }
             }
         }
 

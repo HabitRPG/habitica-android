@@ -651,7 +651,7 @@
     <string name="new_msg_party"><![CDATA[В команде <b>%1$s</b> есть новые сообщения]]></string>
     <string name="unallocated_stats_points"><![CDATA[Вы не распределили <b>%1$s очков</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[У вас новый <b>Таинственный предмет</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Вас пригласили в команду <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Вас пригласили в команду <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Вас пригласили присоединиться к частной гильдии <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Вас пригласили в гильдию <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Вас пригласили на квест <b>%1$s</b>]]></string>

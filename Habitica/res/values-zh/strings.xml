@@ -652,7 +652,7 @@
     <string name="new_msg_party"><![CDATA[您的队伍 <b>%1$s</b> 有新消息]]></string>
     <string name="unallocated_stats_points"><![CDATA[你有<b>%1$s没分配的属性点</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[你有新的<b>神秘物品</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[你被邀请加入队伍<b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> 你被邀请加入队伍<b>%2$s</b>]]></string>
     <string name="invited_to_private_guild">您收到邀请加入一个私人公会<b>%1$s</b></string>
     <string name="invited_to_public_guild">您收到了加入公会的邀请<b>%1$s</b></string>
     <string name="invited_to_quest">你被邀请加入副本<b>%1$s</b></string>

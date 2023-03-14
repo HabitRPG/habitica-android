@@ -773,7 +773,7 @@
     <string name="new_msg_party">Tu grupo, <b>%1$s</b>, tiene nuevos mensajes</string>
     <string name="unallocated_stats_points">Tienes <b>%1$s puntos de atributo sin asignar</b></string>
     <string name="new_subscriber_item">Tienes un nuevo <b>Objeto Misterioso</b></string>
-    <string name="invited_to_party_notification">Fuiste invitado a unirte al grupo <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s fuiste invitado a unirte al grupo <b>%2$s</b></string>
     <string name="invited_to_private_guild">Fuiste invitado a ser parte del gremio privado <b>%1$s</b></string>
     <string name="invited_to_public_guild">Fuiste invitado a ser parte del gremio <b>%1$s</b></string>
     <string name="invited_to_quest">Fuiste invitado a participar de la misión <b>%1$s</b></string>

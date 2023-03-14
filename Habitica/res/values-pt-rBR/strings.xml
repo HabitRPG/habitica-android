@@ -651,7 +651,7 @@
     <string name="new_msg_party">Seu Grupo, <b>%1$s</b>, tem novas publicações</string>
     <string name="unallocated_stats_points"><![CDATA[Você tem <b>%1$s</b> Pontos de Atributos não distribuidos]]></string>
     <string name="new_subscriber_item">Você possui novos <b>Itens Misteriosos</b></string>
-    <string name="invited_to_party_notification"><![CDATA[Você foi convidado para entrar em um Grupo <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Você foi convidado para entrar em um Grupo <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Você foi convidado para entrar em uma Guilda privada <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Você foi convidado para entrar em uma Guilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Você foi convidado para a Missão <b>%1$s</b>]]></string>

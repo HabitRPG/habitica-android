@@ -643,7 +643,7 @@
     <string name="new_msg_party"><![CDATA[La tua squadra, <b>%1$s</b>, ha nuovi messaggi]]></string>
     <string name="unallocated_stats_points"><![CDATA[Hai <b>%1$s Punti Statistica non allocati</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Hai dei nuovi <b>Oggetti Misteriosi</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Hai ricevuto un invito per unirti alla Squadra <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> hai ricevuto un invito per unirti alla Squadra <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Hai ricevuto un invito per unirti alla Gilda privata <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Hai ricevuto un invito per unirti alla Gilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Hai ricevuto un invito per la missione <b>%1$s</b>]]></string>

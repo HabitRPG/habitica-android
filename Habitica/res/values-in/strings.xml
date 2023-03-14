@@ -733,7 +733,7 @@
     <string name="invited_to_quest">Kamu telah diundang untuk melaksanakan Misi <b>%1$s</b></string>
     <string name="invited_to_public_guild">Kamu telah diundang untuk bergabung dengan Guild <b>%1$s</b></string>
     <string name="invited_to_private_guild">Kamu telah diundang untuk bergabung dengan Guild pribadi <b>%1$s</b></string>
-    <string name="invited_to_party_notification">Kamu telah diundang untuk bergabung dengan Party <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s Kamu telah diundang untuk bergabung dengan Party <b>%2$s</b></string>
     <string name="new_subscriber_item">Kamu memiliki <b>Item Misteri</b> baru</string>
     <string name="unallocated_stats_points">Kamu memiliki <b>%1$s Poin Stat yang belum dialokasikan</b></string>
     <string name="new_msg_party">Party-mu, <b>%1$s</b>, ada postingan baru</string>

@@ -652,7 +652,7 @@
     <string name="new_msg_party">あなたのパーティー、<b>%1$s</b>に新しい投稿があります</string>
     <string name="unallocated_stats_points"><![CDATA[<b>%1$sポイントが割り当てできます。</b>]]></string>
     <string name="new_subscriber_item">新しい<b>ミステリーアイテム</b></string>
-    <string name="invited_to_party_notification">パーティー「<b>%1$s</b>」に招待されました</string>
+    <string name="invited_to_party_notification">パーティー「<b>%1$s</b>」に招待されました %2$s</string>
     <string name="invited_to_private_guild">プライベートギルド「<b>%1$s</b>」に招待されました</string>
     <string name="invited_to_public_guild">「<b>%1$s</b>」ギルドに招待されました</string>
     <string name="invited_to_quest"><b>%1$s</b>クエストに招待されました</string>
