@@ -191,7 +191,10 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     if (item == null && ownedItem != null) {
                         //Special items that are not Mystery Item
                         val specialItem = SpecialItem()
-                        ownedItem?.key?.let { key -> specialItem.key = key }
+                        ownedItem?.key?.let { key ->
+                            specialItem.key = key
+                            specialItem.text = key.localizedCapitalizeWithSpaces()
+                        }
                         onUseSpecialItem?.invoke(specialItem)
                         return@setSelectionRunnable
                     }
