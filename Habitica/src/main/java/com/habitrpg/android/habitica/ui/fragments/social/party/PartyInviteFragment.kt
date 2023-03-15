@@ -17,6 +17,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -133,7 +134,7 @@ fun PartyInviteView(
 
     LazyColumn(
         Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(14.dp)
             .scrollable(scrollableState, Orientation.Vertical)) {
         item {
@@ -201,7 +202,7 @@ fun PartyInviteView(
         }
         item {
             InviteButton(
-                state = if (invites.isNotEmpty()) inviteButtonState else LoadingButtonState.DISABLED,
+                state = if (invites.any { it.isNotBlank() }) inviteButtonState else LoadingButtonState.DISABLED,
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     inviteButtonState = LoadingButtonState.LOADING

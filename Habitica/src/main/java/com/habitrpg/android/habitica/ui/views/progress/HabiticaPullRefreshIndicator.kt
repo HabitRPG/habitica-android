@@ -1,5 +1,8 @@
 package com.habitrpg.android.habitica.ui.views.progress
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -15,12 +18,16 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.pullRefreshIndicatorTransform
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import java.lang.Float.min
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -32,27 +39,41 @@ fun HabiticaPullRefreshIndicator(
     backgroundColor: Color = MaterialTheme.colors.surface,
     scale: Boolean = true
 ) {
-    if (isInitial && isRefreshing) {
+    AnimatedVisibility(visible = isInitial && isRefreshing,
+        enter = fadeIn(),
+        exit = fadeOut()) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             HabiticaCircularProgressView(Modifier)
         }
-    } else {
+    }
+    if (!isInitial) {
+        val showElevation by remember(isRefreshing, state) {
+            derivedStateOf { isRefreshing || state.progress > 0.5f }
+        }
         Surface(
             modifier = modifier
                 .pullRefreshIndicatorTransform(state, scale),
             shape = CircleShape,
             color = backgroundColor,
+            elevation = if (isRefreshing) 6.dp else (min(1f, state.progress * 2) * 6f).dp
         ) {
-            HabiticaCircularProgressView(
-                partialDisplay = if (isRefreshing) 1f else state.progress,
-                animate = isRefreshing,
-                indicatorSize = 40.dp,
-                strokeWidth = 5.dp,
-                modifier = Modifier
-                    .border(1.dp, HabiticaTheme.colors.windowBackground, CircleShape)
-                    .padding(4.dp)
-                    .background(MaterialTheme.colors.surface, CircleShape)
-            )
+
+            AnimatedVisibility(
+                visible = isRefreshing || state.progress > 0f,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                HabiticaCircularProgressView(
+                    partialDisplay = if (isRefreshing) 1f else state.progress,
+                    animate = isRefreshing,
+                    indicatorSize = 40.dp,
+                    strokeWidth = 6.dp,
+                    modifier = Modifier
+                        .border(1.dp, HabiticaTheme.colors.windowBackground, CircleShape)
+                        .padding(4.dp)
+                        .background(MaterialTheme.colors.surface, CircleShape)
+                )
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.progress
 
-import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.res.colorResource
@@ -35,7 +36,7 @@ fun HabiticaCircularProgressView(
     partialDisplay: Float = 1f,
     animate : Boolean = true,
     indicatorSize: Dp = 100.dp,
-    animationDuration: Int = 2000,
+    animationDuration: Int = 4000,
     strokeWidth: Dp = 8.dp
 ) {
     val rotateAnimation: State<Float>
@@ -44,11 +45,11 @@ fun HabiticaCircularProgressView(
 
         rotateAnimation = infiniteTransition.animateFloat(
             initialValue = 0f,
-            targetValue = 360f,
+            targetValue = 1080f,
             animationSpec = infiniteRepeatable(
                 animation = tween(
                     durationMillis = animationDuration,
-                    easing = LinearEasing
+                    easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f)
                 )
             )
         )
@@ -85,7 +86,7 @@ fun HabiticaCircularProgressView(
                 startAngle = (360f * partialDisplay),
                 sweepAngle = 360f - (360f * partialDisplay),
                 useCenter = true,
-                style = Stroke(width = strokeWidth.toPx()*1.4f, cap = StrokeCap.Square)
+                style = Stroke(width = strokeWidth.toPx()*1.4f, cap = StrokeCap.Square, join = StrokeJoin.Miter, miter = 2f)
             )
         }
     }
@@ -102,6 +103,7 @@ private fun Preview() {
         HabiticaCircularProgressView()
         HabiticaCircularProgressView(indicatorSize = 40.dp, strokeWidth = 5.dp)
         HabiticaCircularProgressView(partialDisplay = 0.3f, indicatorSize = 32.dp, strokeWidth = 4.dp)
+        HabiticaCircularProgressView(partialDisplay = 0.91f, indicatorSize = 32.dp, strokeWidth = 4.dp)
 
     }
 }

@@ -51,8 +51,8 @@ fun LoadingButton(
         ButtonDefaults.buttonColors(backgroundColor = HabiticaTheme.colors.errorBackground)
     } else if (state == LoadingButtonState.SUCCESS) {
         ButtonDefaults.outlinedButtonColors(
-            backgroundColor = HabiticaTheme.colors.successColor,
-            contentColor = HabiticaTheme.colors.successColor
+            backgroundColor = HabiticaTheme.colors.contentBackground,
+            contentColor = HabiticaTheme.colors.successBackground,
         )
     } else colors
     Button(
@@ -65,7 +65,7 @@ fun LoadingButton(
         state != LoadingButtonState.DISABLED,
         elevation = elevation,
         shape = shape,
-        border = border,
+        border = if (state == LoadingButtonState.SUCCESS) BorderStroke(3.dp, HabiticaTheme.colors.successBackground) else border,
         colors = buttonColors,
         contentPadding = contentPadding
     ) {

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -243,16 +244,16 @@ fun PartySeekingListItem(
         }
         val scope = rememberCoroutineScope()
         var inviteState : LoadingButtonState by remember { mutableStateOf(LoadingButtonState.CONTENT) }
-        InviteButton(state = inviteState, modifier = Modifier.fillMaxWidth(), onClick = {
+        InviteButton(state = inviteState, modifier = Modifier.fillMaxWidth().padding(top=8.dp), onClick = {
             scope.launchCatching({
                 inviteState = LoadingButtonState.FAILED
             }) {
                 inviteState = LoadingButtonState.LOADING
                 val response = onInvite(user)
-                if (response != null) {
-                    inviteState = LoadingButtonState.SUCCESS
+                inviteState = if (response != null) {
+                    LoadingButtonState.SUCCESS
                 } else {
-                    inviteState = LoadingButtonState.FAILED
+                    LoadingButtonState.FAILED
                 }
             }
         })
@@ -269,7 +270,9 @@ fun PartySeekingView(
     val refreshing by viewModel.isRefreshing
     val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.retrieveUsers() })
 
-    Box(modifier = modifier.pullRefresh(pullRefreshState)) {
+    Box(modifier = modifier
+        .fillMaxSize()
+        .pullRefresh(pullRefreshState)) {
         LazyColumn {
             item {
                 Column(
