@@ -715,7 +715,7 @@
     <string name="invited_to_quest"><b>%1$s</b> 퀘스트에 초대되었습니다</string>
     <string name="invited_to_public_guild"><b>%1$s</b> 길드에 초대되었습니다</string>
     <string name="invited_to_private_guild"><b>%1$s</b> 비공개 길드에 초대되었습니다</string>
-    <string name="invited_to_party_notification"><b>%1$s</b> 파티에 초대되었습니다</string>
+    <string name="invited_to_party_notification"><b>%1$s</b> 파티에 초대되었습니다 %2$s</string>
     <string name="new_subscriber_item">"새로운  "<b>미스터리 아이템</b>이 있습니다</string>
     <string name="unallocated_stats_points"><b>%1$s 개의 배분되지 않은 능력치 포인트</b>가 있습니다</string>
     <string name="new_msg_party"><b>%1$s</b> 파티창에 새로운 글이 올라왔습니다</string>
