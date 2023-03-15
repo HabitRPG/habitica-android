@@ -55,6 +55,7 @@ import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.LoadingButton
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
+import com.habitrpg.android.habitica.ui.views.progress.HabiticaPullRefreshIndicator
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -294,6 +295,6 @@ fun PartySeekingView(
                 }
             }
         }
-        PullRefreshIndicator(refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+        HabiticaPullRefreshIndicator(users.isEmpty(), refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
     }
 }
