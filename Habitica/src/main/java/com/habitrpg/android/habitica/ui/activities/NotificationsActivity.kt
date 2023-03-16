@@ -122,6 +122,18 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             createNotificationsHeaderView(notifications.count())
         )
 
+        //Currently retrieving the inviters username by user's id
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            notifications.filter { it.type == Notification.Type.PARTY_INVITATION.type }.forEach {
+                val item = createPartyInvitationNotification(it)
+                val inviteView = binding.notificationItems.findViewWithTag<View>(it.id)
+                if (item != null && inviteView == null) {
+                    item.tag = it.id
+                    binding.notificationItems.addView(item)
+                }
+            }
+        }
+
         notifications.map {
             val item: View? = when (it.type) {
                 Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
@@ -131,7 +143,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
                 Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
                 Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
-                Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
                 Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
                 Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
                 Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
@@ -142,6 +153,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 binding.notificationItems.addView(item)
             }
         }
+
+
     }
 
     private fun createNotificationsHeaderView(notificationCount: Int): View? {
@@ -300,7 +313,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return item
     }
 
-    private fun createPartyInvitationNotification(notification: Notification): View? {
+    private suspend fun createPartyInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
         val data = notification.data as? PartyInvitationData
 
         return createActionableNotificationItem(
