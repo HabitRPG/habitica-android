@@ -107,7 +107,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     }
 
     @Suppress("ReturnCount")
-    override fun onOpFtionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_invite_item -> {
                 val intent = Intent(mainActivity, GroupInviteActivity::class.java)
