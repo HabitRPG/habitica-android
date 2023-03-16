@@ -5,7 +5,6 @@ import androidx.lifecycle.asLiveData
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.TeamPlan
-import com.habitrpg.android.habitica.models.invitations.PartyInvite
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -21,8 +20,6 @@ class MainUserViewModel(private val providedUserID: String, val userRepository: 
 
     val formattedUsername: CharSequence?
         get() = user.value?.formattedUsername
-    val partyInvitations: List<PartyInvite>
-        get() = user.value?.invitations?.parties ?: emptyList()
     val userID: String
         get() = user.value?.id ?: providedUserID
     val username: CharSequence

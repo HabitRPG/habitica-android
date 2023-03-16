@@ -1,5 +1,5 @@
-New in 4.1.6:
--Fixed various issues with: Challenge task creation, Markdown appearance, animated potion sprites, Google Sign in, reminder scheduling, Group Tasks
+New in 4.1.8:
+-Fixed various for: item names, chat refreshing, shared task creation, and duplicate items
 -You can view, complete, assign, and add tasks to your Group Plan's shared task board!
 -Tap your name on a task screen to switch to different task boards
 -More intuitive system notification settings
