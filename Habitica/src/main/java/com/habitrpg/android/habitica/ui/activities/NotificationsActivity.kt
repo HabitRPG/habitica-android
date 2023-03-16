@@ -126,28 +126,38 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             createNotificationsHeaderView(notifications.count())
         )
 
+        //Currently retrieving the inviters username by user's id
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            notifications.map {
-                val item: View? = when (it.type) {
-                    Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
-                    Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
-                    Notification.Type.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
-                    Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
-                    Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
-                    Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
-                    Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
-                    Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
-                    Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
-                    Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
-                    Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
-                    else -> null
-                }
-
-                if (item != null) {
+            notifications.filter { it.type == Notification.Type.PARTY_INVITATION.type }.forEach {
+                val item = createPartyInvitationNotification(it)
+                val inviteView = binding.notificationItems.findViewWithTag<View>(it.id)
+                if (item != null && inviteView == null) {
+                    item.tag = it.id
                     binding.notificationItems.addView(item)
                 }
             }
         }
+
+        notifications.map {
+            val item: View? = when (it.type) {
+                Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
+                Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
+                Notification.Type.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
+                Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
+                Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
+                Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
+                Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
+                Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
+                Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
+                Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
+                else -> null
+            }
+
+            if (item != null) {
+                binding.notificationItems.addView(item)
+            }
+        }
+
 
     }
 
@@ -306,7 +316,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         return item
     }
-    
+
     private suspend fun createPartyInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
         val data = notification.data as? PartyInvitationData
         val inviterId = data?.invitation?.inviter
