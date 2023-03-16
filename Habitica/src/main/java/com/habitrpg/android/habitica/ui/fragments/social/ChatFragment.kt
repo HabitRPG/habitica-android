@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSna
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -124,7 +125,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private fun refresh() {
         viewModel.retrieveGroupChat {
             if (isScrolledToBottom || isRefreshing) {
-                binding?.recyclerView?.scrollToPosition(0)
+                lifecycleScope.launch {
+                    delay(500)
+                    binding?.recyclerView?.scrollToPosition(0)
+                }
             }
             isRefreshing = false
         }
