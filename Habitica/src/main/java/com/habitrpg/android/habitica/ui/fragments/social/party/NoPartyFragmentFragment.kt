@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
