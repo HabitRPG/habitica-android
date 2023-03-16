@@ -96,7 +96,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         binding?.findNewMember?.setOnClickListener {
             MainNavigationController.navigate(R.id.partyInvitationFragment)
         }
-        binding?.invitationsView?.setLeader = null
+        binding?.invitationsView?.getLeader = null
 
         binding?.invitationsView?.acceptCall = {
             viewModel?.joinGroup(it) {

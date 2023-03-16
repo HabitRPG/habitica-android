@@ -15,7 +15,7 @@ class NotificationOpenHandler {
         fun handleOpenedByNotification(identifier: String, intent: Intent) {
             MainScope().launch(context = Dispatchers.Main) {
                 when (identifier) {
-                    PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
+                    PushNotificationManager.PARTY_INVITE_PUSH_NOTIFICATION_KEY -> openNoPartyScreen()
                     PushNotificationManager.QUEST_BEGUN_PUSH_NOTIFICATION_KEY -> openPartyScreen()
                     PushNotificationManager.QUEST_INVITE_PUSH_NOTIFICATION_KEY -> openPartyScreen()
                     PushNotificationManager.GUILD_INVITE_PUSH_NOTIFICATION_KEY -> openGuildDetailScreen(intent.getStringExtra("groupID"))
@@ -49,6 +49,10 @@ class NotificationOpenHandler {
 
         private fun openPartyScreen() {
             MainNavigationController.navigate(R.id.partyFragment)
+        }
+
+        private fun openNoPartyScreen() {
+            MainNavigationController.navigate(R.id.noPartyFragment)
         }
 
         private fun openGiftOneGetOneInfoScreen() {

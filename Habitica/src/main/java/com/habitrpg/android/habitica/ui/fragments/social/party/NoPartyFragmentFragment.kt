@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
@@ -32,7 +31,6 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
-import com.habitrpg.common.habitica.views.AvatarView
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -87,17 +85,17 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             binding?.invitationWrapper?.visibility = View.GONE
         }
 
-        binding?.invitationsView?.setLeader = { leaderID ->
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                val leader = socialRepository.retrieveMember(leaderID) ?: return@launch
-                binding?.root?.findViewById<AvatarView>(R.id.groupleader_avatar_view)
-                    ?.setAvatar(leader)
-                binding?.root?.findViewById<TextView>(R.id.groupleader_text_view)?.text =
-                    getString(
-                        R.string.invitation_title,
-                        leader.displayName,
-                        binding?.invitationsView?.groupName
-                    )
+        binding?.invitationsView?.getLeader = { leaderID ->
+            socialRepository.retrieveMember(leaderID)
+        }
+
+        userViewModel.user.observe(viewLifecycleOwner) { user ->
+            val partyInvitations = user?.invitations?.parties ?: emptyList()
+            if (partyInvitations.isNotEmpty()) {
+                binding?.invitationWrapper?.visibility = View.VISIBLE
+                binding?.invitationsView?.setInvitations(partyInvitations)
+            } else {
+                binding?.invitationWrapper?.visibility = View.GONE
             }
         }
 
@@ -143,14 +141,6 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             }
         }
 
-        val partyInvitations = userViewModel.partyInvitations
-        if (partyInvitations.size > 0) {
-            binding?.invitationWrapper?.visibility = View.VISIBLE
-            binding?.invitationsView?.setInvitations(partyInvitations)
-        } else {
-            binding?.invitationWrapper?.visibility = View.GONE
-        }
-
         binding?.usernameTextview?.text = userViewModel.formattedUsername
     }
 
@@ -183,6 +173,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
     private fun refresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val user = userRepository.retrieveUser(false, true)
+            binding?.refreshLayout?.isRefreshing = false
             if (user?.hasParty == true) {
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     val group = socialRepository.retrieveGroup("party")
