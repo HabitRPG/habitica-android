@@ -30,6 +30,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayTy
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration

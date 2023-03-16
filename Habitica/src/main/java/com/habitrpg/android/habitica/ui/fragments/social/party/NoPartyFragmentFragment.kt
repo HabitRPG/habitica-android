@@ -69,7 +69,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         binding?.invitationsView?.acceptCall = {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 socialRepository.joinGroup(it)
-                userRepository.retrieveUser(false)
+                userRepository.retrieveUser(false, true)
                 parentFragmentManager.popBackStack()
                 MainNavigationController.navigate(
                     R.id.partyFragment,
