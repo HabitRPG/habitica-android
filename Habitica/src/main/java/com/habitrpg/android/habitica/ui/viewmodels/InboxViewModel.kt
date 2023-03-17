@@ -45,7 +45,7 @@ class InboxViewModel @Inject constructor(
         .setEnablePlaceholders(false)
         .build()
 
-    val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
+    private val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
     val messages: LiveData<PagedList<ChatMessage>> = dataSourceFactory.toLiveData(config)
     private val member = memberIDFlow
         .filterNotNull()

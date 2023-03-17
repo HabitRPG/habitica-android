@@ -72,7 +72,7 @@ interface ApiService {
     suspend fun getContent(@Query("language") language: String?): HabitResponse<ContentResult>
 
     @PUT("user/")
-    suspend fun updateUser(@Body updateDictionary: Map<String, Any>): HabitResponse<User>
+    suspend fun updateUser(@Body updateDictionary: Map<String, Any?>): HabitResponse<User>
 
     @PUT("user/")
     suspend fun registrationLanguage(@Header("Accept-Language") registrationLanguage: String): HabitResponse<User>

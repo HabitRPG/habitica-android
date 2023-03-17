@@ -328,7 +328,7 @@ class ApiClientImpl(
         return process { apiService.getContent(language ?: this.languageCode) }
     }
 
-    override suspend fun updateUser(updateDictionary: Map<String, Any>): User? {
+    override suspend fun updateUser(updateDictionary: Map<String, Any?>): User? {
         return process { apiService.updateUser(updateDictionary) }
     }
 

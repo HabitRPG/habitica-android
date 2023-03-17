@@ -46,21 +46,21 @@ class UserRepositoryImpl(
     override fun getUser(): Flow<User?> = getUser(userID)
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
 
-    private suspend fun updateUser(userID: String, updateData: Map<String, Any>): User? {
+    private suspend fun updateUser(userID: String, updateData: Map<String, Any?>): User? {
         val networkUser = apiClient.updateUser(updateData) ?: return null
         val oldUser = localRepository.getUser(userID).firstOrNull()
         return mergeUser(oldUser, networkUser)
     }
 
-    private suspend fun updateUser(userID: String, key: String, value: Any): User? {
+    private suspend fun updateUser(userID : String, key : String, value : Any?): User? {
         return updateUser(userID, mapOf(key to value))
     }
 
-    override suspend fun updateUser(updateData: Map<String, Any>): User? {
+    override suspend fun updateUser(updateData: Map<String, Any?>): User? {
         return updateUser(userID, updateData)
     }
 
-    override suspend fun updateUser(key: String, value: Any): User? {
+    override suspend fun updateUser(key : String, value : Any?): User? {
         return updateUser(userID, key, value)
     }
 

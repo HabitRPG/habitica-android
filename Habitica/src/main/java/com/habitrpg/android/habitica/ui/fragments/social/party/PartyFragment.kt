@@ -160,7 +160,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             val inviteData = HashMap<String, Any>()
             inviteData["inviter"] = viewModel.user.value?.profile?.name ?: ""
             val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
-            if (emails != null && emails.isNotEmpty()) {
+            if (!emails.isNullOrEmpty()) {
                 val invites = ArrayList<HashMap<String, String>>()
                 emails.forEach { email ->
                     val invite = HashMap<String, String>()
@@ -171,7 +171,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 inviteData["emails"] = invites
             }
             val userIDs = it.data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
-            if (userIDs != null && userIDs.isNotEmpty()) {
+            if (!userIDs.isNullOrEmpty()) {
                 val invites = ArrayList<String>()
                 userIDs.forEach { invites.add(it) }
                 inviteData["usernames"] = invites

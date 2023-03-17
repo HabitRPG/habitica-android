@@ -10,6 +10,7 @@
     <dimen name="spacing_large">16dp</dimen>
     <dimen name="spacing_medium">8dp</dimen>
     <dimen name="spacing_xlarge">32dp</dimen>
+    <dimen name="spacing_sides">25dp</dimen>
 
     <dimen name="icon_size">18dp</dimen>
 

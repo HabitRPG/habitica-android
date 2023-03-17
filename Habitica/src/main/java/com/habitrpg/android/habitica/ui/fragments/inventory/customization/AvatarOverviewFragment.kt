@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController

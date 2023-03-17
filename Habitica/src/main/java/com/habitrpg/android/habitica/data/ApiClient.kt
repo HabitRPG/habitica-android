@@ -56,7 +56,7 @@ interface ApiClient {
     var languageCode: String?
     suspend fun getContent(language: String? = null): ContentResult?
 
-    suspend fun updateUser(updateDictionary: Map<String, Any>): User?
+    suspend fun updateUser(updateDictionary: Map<String, Any?>): User?
 
     suspend fun registrationLanguage(registrationLanguage: String): User?
 

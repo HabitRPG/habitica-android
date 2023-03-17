@@ -1,14 +1,10 @@
 package com.habitrpg.android.habitica.ui.fragments.social.party
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +12,8 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
@@ -26,15 +22,14 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.roundToInt
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
 
 @AndroidEntryPoint
 class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
@@ -97,15 +92,21 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
             } else {
                 binding?.invitationWrapper?.visibility = View.GONE
             }
+
+            val isSeeking = user?.party?.seeking != null
+            binding?.seekPartyButton?.isVisible = !isSeeking
+            binding?.seekingPartyWrapper?.isVisible = isSeeking
         }
 
-        binding?.usernameTextview?.setOnClickListener {
-            val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-            val clip = ClipData.newPlainText(context?.getString(R.string.username), userViewModel.username)
-            clipboard?.setPrimaryClip(clip)
-            val activity = mainActivity
-            if (activity != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-                HabiticaSnackbar.showSnackbar(activity.snackbarContainer, getString(R.string.username_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+        binding?.seekPartyButton?.setOnClickListener {
+            lifecycleScope.launchCatching {
+                userRepository.updateUser("party.seeking", Date())
+            }
+        }
+
+        binding?.leaveSeekingButton?.setOnClickListener {
+            lifecycleScope.launchCatching {
+                userRepository.updateUser("party.seeking", null)
             }
         }
 
@@ -132,16 +133,6 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                 }
             }
         }
-
-        if (configManager.noPartyLinkPartyGuild()) {
-            binding?.joinPartyDescriptionTextview?.setMarkdown(getString(R.string.join_party_description_guild, "[Party Wanted Guild](https://habitica.com/groups/guild/f2db2a7f-13c5-454d-b3ee-ea1f5089e601)"))
-            binding?.joinPartyDescriptionTextview?.setOnClickListener {
-                context?.let { FirebaseAnalytics.getInstance(it).logEvent("clicked_party_wanted", null) }
-                MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "f2db2a7f-13c5-454d-b3ee-ea1f5089e601"))
-            }
-        }
-
-        binding?.usernameTextview?.text = userViewModel.formattedUsername
     }
 
     private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -184,20 +175,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
     }
 
     override fun onDestroy() {
-        userRepository.close()
         socialRepository.close()
         super.onDestroy()
-    }
-
-
-    companion object {
-
-        fun newInstance(): NoPartyFragmentFragment {
-            val args = Bundle()
-
-            val fragment = NoPartyFragmentFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 }
