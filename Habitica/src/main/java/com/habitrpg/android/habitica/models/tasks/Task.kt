@@ -25,9 +25,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.TemporalAccessor
-import java.util.Calendar
 import java.util.Date
-import java.util.GregorianCalendar
 
 open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     override val realmClass: Class<Task>
@@ -311,20 +309,22 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     fun checkIfDue(): Boolean = isDue == true
 
     fun getNextReminderOccurrence(remindersItem: RemindersItem): ZonedDateTime? {
-        remindersItem.time?.let {
-            val oldTime = it
+        remindersItem.time?.let { oldTime ->
             val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-            val nextDate = nextDue?.firstOrNull()
 
             // If task !isDisplayedActive or if isDisplayedActive but reminder passed,
             // set a updated reminder with nextDate
-            return if (nextDate != null && (!isDisplayedActive || remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true)) {
-                val nextDueCalendar = GregorianCalendar()
-                nextDueCalendar.time = nextDate
-                parse(oldTime)
-                    ?.withYear(nextDueCalendar.get(Calendar.YEAR))
-                    ?.withMonth(nextDueCalendar.get(Calendar.MONTH) + 1) // +1 to handle Gregorian Calendar month range from 0-11
-                    ?.withDayOfMonth(nextDueCalendar.get(Calendar.DAY_OF_MONTH))
+            return if (nextDue?.firstOrNull() != null && (!isDisplayedActive || remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true)) {
+                val nextDate = LocalDateTime.ofInstant(nextDue?.firstOrNull()?.toInstant(), ZoneId.systemDefault())
+                val currentDateTime = LocalDateTime.now()
+                val nextDueCalendar: LocalDateTime = LocalDateTime.of(
+                    currentDateTime.year,
+                    currentDateTime.month,  // Add one to adjust from zero-based counting.
+                    currentDateTime.dayOfMonth,
+                    nextDate.hour,
+                    nextDate.minute
+                )
+                nextDueCalendar.atZone(ZoneId.systemDefault())
             } else {
                 return parse(oldTime)
             }
