@@ -100,14 +100,10 @@ class TaskAlarmManager(
         val zonedTime = remindersItem?.getLocalZonedDateTimeInstant()
         if (remindersItem == null ||
             (reminderItemTask.type == TaskType.DAILY && zonedTime?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null) ||
-            (reminderItemTask.type == TaskType.TODO && zonedTime?.isBefore(now) == true)
+            (reminderItemTask.type == TaskType.TODO && zonedTime?.isBefore(now) == true || zonedTime == null)
         ) {
             return
         }
-
-        val time = Date.from(zonedTime)
-        val cal = Calendar.getInstance()
-        cal.time = time
 
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
@@ -134,7 +130,7 @@ class TaskAlarmManager(
             withImmutableFlag(PendingIntent.FLAG_CANCEL_CURRENT)
         )
 
-        setAlarm(context, cal.timeInMillis, sender)
+        setAlarm(context, zonedTime.toEpochMilli(), sender)
     }
 
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
