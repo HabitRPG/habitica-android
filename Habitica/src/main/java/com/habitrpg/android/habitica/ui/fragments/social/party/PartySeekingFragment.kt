@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
@@ -27,16 +26,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
@@ -51,11 +45,10 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.ClassIcon
+import com.habitrpg.android.habitica.ui.views.ClassText
 import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.LoadingButton
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
-import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.android.habitica.ui.views.progress.HabiticaPullRefreshIndicator
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
@@ -126,41 +119,6 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
 }
 
 @Composable
-fun ClassText(
-    className : String?,
-    hasClass : Boolean,
-    fontSize : TextUnit,
-    modifier : Modifier = Modifier,
-    iconSize : Dp? = null
-) {
-    if (!hasClass) return
-    val classColor = colorResource(
-        when (className) {
-            "warrior" -> R.color.text_red
-            "wizard" -> R.color.text_blue
-            "rogue" -> R.color.text_brand
-            "healer" -> R.color.text_yellow
-            else -> R.color.text_primary
-        }
-    )
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
-        ClassIcon(
-            className = className,
-            hasClass = true,
-            modifier = Modifier.size(iconSize ?: with(LocalDensity.current) {
-                fontSize.toDp()
-            })
-        )
-        Text(
-            getTranslatedClassName(LocalContext.current.resources, className),
-            fontSize = fontSize,
-            fontWeight = FontWeight.SemiBold,
-            color = classColor
-        )
-    }
-}
-
-@Composable
 fun InviteButton(
     state : LoadingButtonState,
     onClick : () -> Unit,
@@ -177,7 +135,8 @@ fun InviteButton(
 fun PartySeekingListItem(
     user : Member,
     modifier : Modifier = Modifier,
-    onInvite : suspend (Member) -> InviteResponse?
+    inviteState : LoadingButtonState = LoadingButtonState.LOADING,
+    onInvite : (Member) -> Unit
 ) {
     Column(
         modifier
@@ -242,20 +201,8 @@ fun PartySeekingListItem(
                 )
             }
         }
-        val scope = rememberCoroutineScope()
-        var inviteState : LoadingButtonState by remember { mutableStateOf(LoadingButtonState.CONTENT) }
         InviteButton(state = inviteState, modifier = Modifier.fillMaxWidth().padding(top=8.dp), onClick = {
-            scope.launchCatching({
-                inviteState = LoadingButtonState.FAILED
-            }) {
-                inviteState = LoadingButtonState.LOADING
-                val response = onInvite(user)
-                inviteState = if (response != null) {
-                    LoadingButtonState.SUCCESS
-                } else {
-                    LoadingButtonState.FAILED
-                }
-            }
+            onInvite(user)
         })
     }
 }
@@ -269,6 +216,9 @@ fun PartySeekingView(
     val users : List<Member> by viewModel.seekingUsers
     val refreshing by viewModel.isRefreshing
     val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.retrieveUsers() })
+    val scope = rememberCoroutineScope()
+
+    val inviteStates = remember { mutableMapOf<String, LoadingButtonState>() }
 
     Box(modifier = modifier
         .fillMaxSize()
@@ -293,8 +243,18 @@ fun PartySeekingView(
                 }
             }
             items(users) {
-                PartySeekingListItem(user = it, modifier = Modifier.animateItemPlacement()) { member ->
-                    return@PartySeekingListItem viewModel.inviteUser(member)
+                PartySeekingListItem(user = it, inviteState = inviteStates[it.id] ?: LoadingButtonState.LOADING, modifier = Modifier.animateItemPlacement()) { member ->
+                        scope.launchCatching({
+                            inviteStates[member.id] = LoadingButtonState.FAILED
+                        }) {
+                            inviteStates[member.id] = LoadingButtonState.LOADING
+                            val response = viewModel.inviteUser(member)
+                            inviteStates[member.id] = if (response != null) {
+                                LoadingButtonState.SUCCESS
+                            } else {
+                                LoadingButtonState.FAILED
+                            }
+                        }
                 }
             }
         }

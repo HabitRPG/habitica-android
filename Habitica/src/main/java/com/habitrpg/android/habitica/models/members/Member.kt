@@ -21,7 +21,7 @@ open class Member : RealmObject(), Avatar, BaseMainObject, Assignable {
 
     @PrimaryKey
     @SerializedName("_id")
-    override var id: String? = null
+    override var id: String = ""
     override var stats: Stats? = null
     var inbox: Inbox? = null
     override var preferences: MemberPreferences? = null
