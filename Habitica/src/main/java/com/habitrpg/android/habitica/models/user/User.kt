@@ -100,8 +100,11 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     val contributorColor: Int
         get() = this.contributor?.contributorColor ?: R.color.text_primary
 
-    override val hourglassCount: Int
+    override var hourglassCount: Int
         get() = purchased?.plan?.consecutive?.trinkets ?: 0
+        set(value) {
+            purchased?.plan?.consecutive?.trinkets = value
+        }
 
     val hasParty: Boolean
         get() {

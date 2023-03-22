@@ -28,11 +28,12 @@ class MemberSerialization : JsonDeserializer<Member> {
 
         val realm = Realm.getDefaultInstance()
         var member = realm.where(Member::class.java).equalTo("id", id).findFirst() ?: Member()
-        if (member.id == null) {
+        if (member.id.isBlank()) {
             member.id = id
         } else {
             member = realm.copyFromRealm(member)
         }
+        realm.close()
 
         if (obj.has("flags")) {
             member.flags = context.deserialize(obj.get("flags"), MemberFlags::class.java)
@@ -99,8 +100,6 @@ class MemberSerialization : JsonDeserializer<Member> {
         }
 
         member.id = member.id
-
-        realm.close()
         return member
     }
 }

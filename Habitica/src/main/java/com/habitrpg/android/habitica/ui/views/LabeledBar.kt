@@ -2,12 +2,17 @@ package com.habitrpg.android.habitica.ui.views
 
 import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +24,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,19 +48,19 @@ import java.text.NumberFormat
 
 @Composable
 fun LabeledBar(
-    modifier: Modifier = Modifier,
-    icon: Bitmap? = null,
-    label: String? = null,
-    color: Color = colorResource(R.color.brand),
-    barColor: Color = HabiticaTheme.colors.windowBackground,
-    value: Double,
-    maxValue: Double,
-    displayCompact: Boolean = false,
-    barHeight: Dp = 8.dp,
-    disabled: Boolean = false,
-    abbreviateValue: Boolean = true,
-    abbreviateMax: Boolean = true,
-    animated: Boolean = true
+    modifier : Modifier = Modifier,
+    icon : Bitmap? = null,
+    label : String? = null,
+    color : Color = colorResource(R.color.brand),
+    barColor : Color = HabiticaTheme.colors.windowBackground,
+    value : Double,
+    maxValue : Double,
+    displayCompact : Boolean = false,
+    barHeight : Dp = 8.dp,
+    disabled : Boolean = false,
+    abbreviateValue : Boolean = true,
+    abbreviateMax : Boolean = true,
+    animated : Boolean = true
 ) {
     val cleanedMaxValue = java.lang.Double.max(1.0, maxValue)
 
@@ -62,22 +71,31 @@ fun LabeledBar(
     val formatter = NumberFormat.getNumberInstance()
     formatter.minimumFractionDigits = 0
     formatter.maximumFractionDigits = 2
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+
+    val animatedPadding = animateDpAsState(
+        targetValue = if (displayCompact) {
+            0.dp
+        } else {
+            24.dp
+        }
+    )
+
+    Box(
         modifier = modifier.alpha(if (disabled) 0.5f else 1.0f)
     ) {
         icon?.let {
             AnimatedVisibility(
                 visible = !displayCompact,
-                enter = slideInHorizontally { -18 },
-                exit = slideOutHorizontally { -18 }
+                enter = fadeIn() + slideInHorizontally { -18 },
+                exit = fadeOut() + slideOutHorizontally { -18 },
+                modifier = Modifier.align(Alignment.CenterStart)
             ) {
                 Image(
-                    it.asImageBitmap(), null, modifier = Modifier.padding(end = 8.dp)
+                    it.asImageBitmap(), null, modifier = Modifier
                 )
             }
         }
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.padding(start = animatedPadding.value)) {
             LinearProgressIndicator(
                 progress = (animatedValue / cleanedMaxValue).toFloat(),
                 Modifier
@@ -122,14 +140,22 @@ fun LabeledBar(
 @Composable
 @Preview
 private fun Preview() {
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp), modifier = Modifier.width(180.dp)) {
+    var compact : Boolean by remember { mutableStateOf(false) }
+    Column(
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier
+            .width(240.dp)
+            .padding(8.dp)
+            .clickable {
+                compact = !compact
+            }) {
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfHeartLightBg(),
             label = stringResource(id = R.string.health),
             color = colorResource(R.color.hpColor),
             value = 10.0,
             maxValue = 50.0,
-            displayCompact = false
+            displayCompact = compact
         )
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfExperience(),
@@ -137,7 +163,7 @@ private fun Preview() {
             color = colorResource(R.color.xpColor),
             value = 100123.0,
             maxValue = 50000000000000.0,
-            displayCompact = false,
+            displayCompact = compact,
             abbreviateValue = false
         )
         LabeledBar(
@@ -145,8 +171,8 @@ private fun Preview() {
             label = stringResource(id = R.string.XP_default),
             color = colorResource(R.color.xpColor),
             value = 100123.0,
-            maxValue = 50000000000000.0,
-            displayCompact = false,
+            maxValue = 500000000000.0,
+            displayCompact = compact,
             abbreviateValue = false,
             abbreviateMax = false
         )
@@ -156,8 +182,8 @@ private fun Preview() {
             color = colorResource(R.color.mpColor),
             value = 10.0,
             maxValue = 5000.0,
-            displayCompact = false,
-            disabled = true
+            displayCompact = compact,
+            disabled = false
         )
     }
 }

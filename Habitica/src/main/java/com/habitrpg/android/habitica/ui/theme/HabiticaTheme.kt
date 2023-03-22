@@ -118,6 +118,7 @@ val Typography.subtitle3
         fontSize = 16.sp,
         letterSpacing = 0.15.sp
     )
+
 object HabiticaTheme {
     val typography: Typography
         @Composable
@@ -204,4 +205,8 @@ class HabiticaColors(
             colorResource(if (hasIcon) R.color.content_background else R.color.content_background_offset)
         }
     }
+}
+
+class HabiticaTypography {
+
 }

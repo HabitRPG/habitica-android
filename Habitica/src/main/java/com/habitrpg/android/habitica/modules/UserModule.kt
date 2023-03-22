@@ -14,6 +14,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -38,6 +39,7 @@ class UserModule {
     }
 
     @Provides
+    @Singleton
     fun providesUserViewModel(
         @Named(NAMED_USER_ID) userID: String,
         userRepository: UserRepository,

@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -42,6 +43,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
+import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
@@ -255,12 +257,18 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         setupNotifications()
         setupBottomnavigationLayoutListener()
 
+        lifecycleScope.launch {
+            viewModel.userViewModel.currentTeamPlan.collect {
+                Log.d("asdf", it?.toString() ?: "")
+            }
+        }
+
         binding.content.headerView.setContent {
             HabiticaTheme {
                 val user by viewModel.user.observeAsState(null)
-                val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsState(null)
+                val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(null)
                 val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
-                AppHeaderView(user, teamPlan, teamPlanMembers) {
+                AppHeaderView(user, teamPlan = teamPlan, teamPlanMembers = teamPlanMembers) {
                     showAsBottomSheet { onClose ->
                         val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
                         val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()

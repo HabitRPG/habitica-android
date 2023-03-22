@@ -31,6 +31,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     ) : View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
+        showsBackButton = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

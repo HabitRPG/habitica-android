@@ -57,11 +57,14 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.UserRow
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import java.text.DateFormat
 import java.util.Date
+import javax.inject.Inject
 
-class TaskSummaryViewModel(
+@HiltViewModel
+class TaskSummaryViewModel @Inject constructor(
     userRepository : UserRepository,
     userViewModel : MainUserViewModel,
     val taskRepository : TaskRepository,

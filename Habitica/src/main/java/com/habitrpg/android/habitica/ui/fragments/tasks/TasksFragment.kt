@@ -425,7 +425,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             mainActivity?.title = viewModel.ownerTitle
             MainNavigationController.updateLabel(R.id.tasksFragment, viewModel.ownerTitle.toString())
         }
-        viewModel.userViewModel.currentTeamPlan.value = viewModel.teamPlans[viewModel.ownerID.value]
+        val teamPlan = viewModel.teamPlans[viewModel.ownerID.value]
+        viewModel.userViewModel.currentTeamPlan.tryEmit(teamPlan)
         lifecycleScope.launchCatching {
             bottomNavigation?.canAddTasks = viewModel.canAddTasks()
         }

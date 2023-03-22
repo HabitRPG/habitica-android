@@ -139,9 +139,9 @@ class InventoryRepositoryImpl(
         return sellItem(item)
     }
 
-    override suspend fun sellItem(ownedItem: OwnedItem): User? {
-        val item = localRepository.getItem(ownedItem.itemType ?: "", ownedItem.key ?: "").firstOrNull() ?: return null
-        return sellItem(item, ownedItem)
+    override suspend fun sellItem(item: OwnedItem): User? {
+        val itemData = localRepository.getItem(item.itemType ?: "", item.key ?: "").firstOrNull() ?: return null
+        return sellItem(itemData, item)
     }
 
     override fun getLatestMysteryItem(): Flow<Equipment> {
