@@ -1365,7 +1365,7 @@
     <string name="pause_damage_3_description">Damage to a boss or found collection items will be stored until you resume damage</string>
     <string name="list">List</string>
     <string name="by_invite">By Invite</string>
-    <string name="habiticans_looking_party">Here’s a list of Habiticans looking to join a Party</string>
+    <string name="habiticans_looking_party_empty">There\'s no one looking for a Party right now. You can check back later!</string>
     <string name="invited">Invited</string>
     <string name="invite_with_username_email">Invite with @username or email</string>
     <string name="habiticans_send_invite">Send an invite directly to Habiticans you know</string>
