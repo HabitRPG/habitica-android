@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -83,85 +84,96 @@
                         android:text="@string/create_party"
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
-                <LinearLayout
+
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/spacing_sides"
-                    android:paddingTop="@dimen/spacing_sides"
-                    android:paddingBottom="60dp"
-                    android:background="@color/window_background">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/party_seeking"
-                        android:layout_marginBottom="@dimen/spacing_large"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/Headline"
-                        android:fontFamily="sans-serif-medium"
-                        android:textSize="16sp"
-                        android:text="@string/seeking_party_title"
-                        android:gravity="center"
-                        android:layout_marginBottom="@dimen/spacing_medium"/>
-                    <TextView
-                        android:id="@+id/join_party_description_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/Body2"
-                        android:text="@string/seeking_party_description"
-                        android:textColor="@color/text_quad"
-                        android:textColorLink="@color/text_brand_neon"
-                        android:gravity="center"
-                        android:layout_marginStart="@dimen/spacing_large"
-                        android:layout_marginEnd="@dimen/spacing_large"
-                        android:layout_marginBottom="@dimen/spacing_large"/>
+                    app:cardBackgroundColor="@color/window_background"
+                    app:cardCornerRadius="16dp"
+                    app:strokeWidth="0dp">
 
-                    <Button
-                        android:id="@+id/seek_party_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/HabiticaButton.Primary"
-                        android:text="@string/look_for_party"/>
                     <LinearLayout
-                        android:id="@+id/seeking_party_wrapper"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/spacing_sides"
+                        android:paddingTop="@dimen/spacing_sides"
+                        android:paddingBottom="60dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/party_seeking"
+                            android:layout_marginBottom="@dimen/spacing_large"/>
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:text="@string/you_re_looking_for_party"
-                            android:textColor="@color/text_green10_green500"
-                            style="@style/Body1_Button"
-                            android:textAllCaps="false"
-                            android:background="@drawable/success_border"/>
-
-                        <TextView
-                            style="@style/Body1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            style="@style/Headline"
+                            android:fontFamily="sans-serif-medium"
+                            android:textSize="16sp"
+                            android:text="@string/seeking_party_title"
                             android:gravity="center"
-                            android:paddingStart="8dp"
-                            android:paddingEnd="8dp"
-                            android:text="@string/seeking_hint"
-                            android:textColor="@color/text_green10_green500" />
+                            android:layout_marginBottom="@dimen/spacing_medium"/>
+                        <TextView
+                            android:id="@+id/join_party_description_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Body2"
+                            android:text="@string/seeking_party_description"
+                            android:textColor="@color/text_quad"
+                            android:textColorLink="@color/text_brand_neon"
+                            android:gravity="center"
+                            android:layout_marginStart="@dimen/spacing_large"
+                            android:layout_marginEnd="@dimen/spacing_large"
+                            android:layout_marginBottom="@dimen/spacing_large"/>
 
                         <Button
-                            android:id="@+id/leave_seeking_button"
-                            style="@style/HabiticaButton.Borderless"
+                            android:id="@+id/seek_party_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/leave_party_finder"
-                            android:textColor="@color/text_red_maroon"
-                            android:textSize="14sp" />
+                            style="@style/HabiticaButton.Primary"
+                            android:text="@string/look_for_party"/>
+                        <LinearLayout
+                            android:id="@+id/seeking_party_wrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:text="@string/you_re_looking_for_party"
+                                android:textColor="@color/text_green10_green500"
+                                style="@style/Body1_Button"
+                                android:textAllCaps="false"
+                                android:background="@drawable/success_border"/>
+
+                            <TextView
+                                style="@style/Body1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:text="@string/seeking_hint"
+                                android:textColor="@color/text_green10_green500" />
+
+                            <Button
+                                android:id="@+id/leave_seeking_button"
+                                style="@style/HabiticaButton.Borderless"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/leave_party_finder"
+                                android:textColor="@color/text_red_maroon"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
-                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
