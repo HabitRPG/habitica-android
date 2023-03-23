@@ -64,6 +64,7 @@
                         android:textColor="@color/text_ternary"
                         android:text="@string/no_party_title"
                         android:gravity="center"
+                        android:fontFamily="sans-serif-medium"
                         android:layout_marginBottom="@dimen/spacing_medium"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -101,6 +102,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/Headline"
+                        android:fontFamily="sans-serif-medium"
                         android:textSize="16sp"
                         android:text="@string/seeking_party_title"
                         android:gravity="center"
@@ -133,24 +135,30 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:text="@string/you_re_looking_for_party"
-                            android:textColor="@color/text_green"
+                            android:textColor="@color/text_green10_green500"
                             style="@style/Body1_Button"
+                            android:textAllCaps="false"
                             android:background="@drawable/success_border"/>
+
                         <TextView
+                            style="@style/Body1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/seeking_hint"
-                            android:textColor="@color/text_green"
-                            style="@style/Body1"
+                            android:layout_marginTop="6dp"
                             android:gravity="center"
-                            android:layout_marginTop="6dp"/>
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:text="@string/seeking_hint"
+                            android:textColor="@color/text_green10_green500" />
+
                         <Button
                             android:id="@+id/leave_seeking_button"
+                            style="@style/HabiticaButton.Borderless"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/HabiticaButton.Borderless"
-                            android:textColor="@color/text_maroon"
-                            android:text="@string/leave_party_finder"/>
+                            android:text="@string/leave_party_finder"
+                            android:textColor="@color/text_red_maroon"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                 </LinearLayout>

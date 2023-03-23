@@ -704,7 +704,7 @@
     <string name="old_password">Vecchia Password</string>
     <string name="task_title">Titolo dell\'attività</string>
     <string name="add_local_authentication">Aggiungi l\'Autenticazione Locale</string>
-    <string name="create_party">Crea una Squadra</string>
+    <string name="create_party">Creare una nuova squadra</string>
     <string name="only_leader_create_challenge">Solo il leader può creare delle Sfide</string>
     <string name="create">Crea</string>
     <string name="defeat">Sconfiggi</string>

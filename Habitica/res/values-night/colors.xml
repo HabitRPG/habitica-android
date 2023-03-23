@@ -49,7 +49,9 @@
     <color name="text_teal_white">@color/white</color>
     <color name="text_brown_white">@color/white</color>
     <color name="text_brand_white">@color/white</color>
+    <color name="text_red_maroon">@color/red_100</color>
     <color name="lightly_tinted_background">@color/brand_50</color>
+    <color name="text_green10_green500">@color/green_500</color>
     <color name="dialog_background">@color/gray_10</color>
     <color name="armoire_text">@color/gray_400</color>
 

@@ -641,7 +641,7 @@
     <string name="preference_push_important_announcements">Важные объявления</string>
     <string name="create">Создать</string>
     <string name="only_leader_create_challenge">Только лидер может создавать испытания</string>
-    <string name="create_party">Создать команду</string>
+    <string name="create_party">Создать новую команду</string>
     <string name="notifications">Уведомления</string>
     <string name="no_notifications_title">Вы все вспомнили!</string>
     <string name="no_notifications_text">Феи уведомлений вам тихо рукоплещут! Отлично сработано!</string>

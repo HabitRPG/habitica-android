@@ -828,7 +828,7 @@
     <string name="discover">Ontdekken</string>
     <string name="gift_confirmation_text_sub">Je hebt %s een %s-maand Habitica abonnement gestuurd.</string>
     <string name="task_title">Taaktitel</string>
-    <string name="create_party">Gezelschap aanmaken</string>
+    <string name="create_party">Een nieuwe groep aanmaken</string>
     <string name="only_leader_create_challenge">Alleen de leider kan uitdagingen creëren</string>
     <string name="create">Creëren</string>
     <string name="defeat">Vernietiging</string>

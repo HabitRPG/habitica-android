@@ -727,7 +727,7 @@
     <string name="old_password">Kata Sandi Lama</string>
     <string name="task_title">Judul Tugas</string>
     <string name="add_local_authentication">Menambahkan Otentikasi Lokal</string>
-    <string name="create_party">Membuat Party</string>
+    <string name="create_party">Membuat pesta baru</string>
     <string name="only_leader_create_challenge">Hanya ketua yang dapat membuat Tantangan</string>
     <string name="defeat">Kalah</string>
     <string name="invited_to_quest">Kamu telah diundang untuk melaksanakan Misi <b>%1$s</b></string>

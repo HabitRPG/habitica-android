@@ -642,7 +642,7 @@
     <string name="preference_push_important_announcements">Annonces importantes</string>
     <string name="create">Créer</string>
     <string name="only_leader_create_challenge">Seul le responsable peut créer un défi</string>
-    <string name="create_party">Créer une équipe</string>
+    <string name="create_party">Créer une nouvelle soirée</string>
     <string name="notifications">Notifications</string>
     <string name="no_notifications_title">Vous êtes à jour !</string>
     <string name="no_notifications_text">Les fées de la notification vous font un tonnerre d\'applaudissements ! Bien joué !</string>

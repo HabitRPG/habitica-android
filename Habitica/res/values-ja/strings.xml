@@ -642,7 +642,7 @@
     <string name="preference_push_important_announcements">大切なお知らせ</string>
     <string name="create">作成する</string>
     <string name="only_leader_create_challenge">リーダーだけが、チャレンジを作成できます</string>
-    <string name="create_party">パーティーを作成する</string>
+    <string name="create_party">新しいパーティーを作成する</string>
     <string name="notifications">通知</string>
     <string name="no_notifications_title">全ての通知をチェックしました！</string>
     <string name="no_notifications_text">通知の妖精はパチパチとあなたに拍手を送っています！えらい！</string>
