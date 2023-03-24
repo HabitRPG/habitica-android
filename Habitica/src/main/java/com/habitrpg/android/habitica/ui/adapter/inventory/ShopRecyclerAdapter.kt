@@ -17,6 +17,7 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
+import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.common.habitica.extensions.fromHtml
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
@@ -126,24 +127,23 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                                 }
                             }
                             if (user?.stats?.habitClass != category?.identifier && category?.identifier != "none") {
-                                sectionHolder.notesView?.text = context.getString(R.string.class_gear_disclaimer)
                                 if (user?.hasClass == true) {
                                     sectionHolder.switchClassButton?.setOnClickListener {
                                         changeClassEvents?.invoke(selectedGearCategory)
                                     }
-                                    // TODO: Enable this again when we have a nicer design
-                                    sectionHolder.switchClassButton?.visibility = View.GONE
+                                    sectionHolder.switchClassButton?.visibility = View.VISIBLE
+                                    sectionHolder.switchClassLabel?.text = context.getString(R.string.change_class_to_x, getTranslatedClassName(context.resources, selectedGearCategory))
+                                    sectionHolder.switchClassCurrency.value = 3.0
                                 } else {
                                     sectionHolder.switchClassButton?.visibility = View.GONE
                                 }
-                                sectionHolder.notesWrapper?.visibility = View.VISIBLE
                             } else {
-                                sectionHolder.notesWrapper?.visibility = View.GONE
+                                sectionHolder.switchClassButton?.visibility = View.GONE
                             }
                         }
                     } else {
                         sectionHolder.spinnerAdapter = null
-                        sectionHolder.notesWrapper?.visibility = View.GONE
+                        sectionHolder.notesView?.visibility = View.GONE
                     }
                 }
                 ShopItem::class.java -> {

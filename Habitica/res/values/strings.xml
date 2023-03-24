@@ -1376,6 +1376,8 @@
     <string name="you_re_looking_for_party">You’re looking for a Party!</string>
     <string name="seeking_hint">Keep an eye out for an invite or start your own Party at any time</string>
     <string name="leave_party_finder">Leave Party Finder</string>
+    <string name="equipment_class_locked">This equipment is class-locked</string>
+    <string name="change_class_to_x">Change class to %s</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
