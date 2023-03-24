@@ -25,7 +25,7 @@ fun HabiticaButton(
     onClick : () -> Unit,
     modifier : Modifier = Modifier,
     contentPadding : PaddingValues = PaddingValues(8.dp),
-    fontSize : TextUnit = 18.sp,
+    fontSize : TextUnit = 16.sp,
     content : @Composable () -> Unit
 ) {
     Box(

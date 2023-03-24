@@ -187,7 +187,7 @@ fun PartySeekingListItem(
                         user.stats?.habitClass,
                         fontSize = 14.sp,
                         iconSize = 18.dp,
-                        hasClass = user.preferences?.disableClasses == false
+                        hasClass = user.hasClass
                     )
                 }
                 Text(
@@ -249,7 +249,7 @@ fun PartySeekingView(
                 }
             }
             items(users) {
-                PartySeekingListItem(user = it, inviteState = inviteStates[it.id] ?: LoadingButtonState.LOADING, modifier = Modifier.animateItemPlacement()) { member ->
+                PartySeekingListItem(user = it, inviteState = inviteStates[it.id] ?: LoadingButtonState.CONTENT, modifier = Modifier.animateItemPlacement()) { member ->
                         scope.launchCatching({
                             inviteStates[member.id] = LoadingButtonState.FAILED
                         }) {

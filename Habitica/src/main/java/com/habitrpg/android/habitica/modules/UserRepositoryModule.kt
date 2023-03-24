@@ -47,12 +47,13 @@ import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.scopes.ActivityScoped
 import io.realm.Realm
 import javax.inject.Named
 
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 @Module
 class UserRepositoryModule {
     @Provides
@@ -207,6 +208,7 @@ class UserRepositoryModule {
     }
 
     @Provides
+    @ActivityScoped
     fun providesPurchaseHandler(
         @ApplicationContext context: Context,
         analyticsManager: AnalyticsManager,

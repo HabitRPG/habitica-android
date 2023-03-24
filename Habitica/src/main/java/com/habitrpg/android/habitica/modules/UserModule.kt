@@ -11,12 +11,12 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Named
-import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 @Module
 class UserModule {
     @Provides
@@ -39,7 +39,7 @@ class UserModule {
     }
 
     @Provides
-    @Singleton
+    @ActivityScoped
     fun providesUserViewModel(
         @Named(NAMED_USER_ID) userID: String,
         userRepository: UserRepository,

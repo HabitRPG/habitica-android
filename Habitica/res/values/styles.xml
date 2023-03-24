@@ -52,7 +52,7 @@
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
         <item name="android:textColorLink">@color/brand_400</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/HabiticaAlertDialogTheme</item>
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:statusBarColor">@color/system_bars</item>
@@ -473,35 +473,6 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="DialogButton" parent="android:Widget.Button">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">?colorAccent</item>
-    </style>
-
-    <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
-        <item name="android:windowLightStatusBar">true</item>
-    </style>
-
-    <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="colorPrimary">@color/text_brand_neon</item>
-        <item name="colorAccent">@color/color_accent</item>
-        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
-        <item name="buttonBarNeutralButtonStyle">@style/PositiveButtonStyle</item>
-        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
-        <item name="backgroundTint">@color/dialog_background</item>
-    </style>
-
-    <style name="HabiticaAccountDialogTheme" parent="AppTheme">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@color/gray_2_alpha</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:navigationBarColor">@color/account_dialog_bars</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-    </style>
-
-
     <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/text_red</item>
     </style>
@@ -510,7 +481,7 @@
         <item name="android:textColor">@color/dialog_button_text_color</item>
     </style>
 
-    <style name="HabiticaAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    <style name="HabiticaAlertDialogTheme" parent="Theme.Material3.DayNight.Dialog.Alert">
         <item name="colorAccent">@color/brand_400</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -518,6 +489,8 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
     </style>
 
     <style name="SectionTitle">

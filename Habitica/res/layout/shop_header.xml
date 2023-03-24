@@ -21,8 +21,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="18dp"
-        android:layout_marginTop="114dp"
+        android:layout_marginTop="115dp"
         android:src="@drawable/npc_gradient_banner"
+        android:importantForAccessibility="no"
         android:scaleType="fitXY"/>
 
     <TextView

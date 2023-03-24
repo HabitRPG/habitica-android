@@ -27,7 +27,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.DialogTheme)
+        setStyle(STYLE_NO_TITLE, R.style.HabiticaAlertDialogTheme)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -133,7 +133,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
     }
 
     override fun getTheme(): Int {
-        return R.style.HabiticaAccountDialogTheme
+        return R.style.HabiticaAlertDialogTheme
     }
 
     interface AccountUpdateConfirmed {
