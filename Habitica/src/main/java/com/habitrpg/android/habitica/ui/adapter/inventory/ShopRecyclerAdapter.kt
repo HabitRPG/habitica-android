@@ -173,7 +173,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                     category?.text = context?.getString(R.string.class_equipment) ?: ""
                     category
                 }
-                getSelectedShopCategory()?.items?.size ?: 0 <= position - 2 -> return context?.getString(R.string.equipment_empty)
+                (getSelectedShopCategory()?.items?.size ?: 0) <= position - 2 -> return context?.getString(R.string.equipment_empty)
                 else -> getSelectedShopCategory()?.items?.get(position - 2)
             }
         } else {
