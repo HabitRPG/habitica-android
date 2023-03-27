@@ -40,6 +40,7 @@
         <item name="colorContentBackgroundOffset">@color/content_background_offset</item>
         <item name="colorWindowBackground">@color/window_background</item>
         <item name="colorTintedBackground">@color/brand_800</item>
+        <item name="colorGradientTransparentBackground">@color/transparent</item>
         <item name="colorTintedBackgroundOffset">@color/brand_50012</item>
         <item name="textColorTintedSecondary">@color/brand_sub_text</item>
         <item name="textColorTintedPrimary">@color/brand_100</item>
