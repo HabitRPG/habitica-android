@@ -719,6 +719,14 @@
         <item name="android:paddingEnd">32dp</item>
     </style>
 
+    <style name="LoginButtonProgress" parent="@style/Widget.Material3.CircularProgressIndicator">
+        <item name="indicatorSize">22dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:indeterminate">false</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginStart">@dimen/spacing_xlarge</item>
+    </style>
+
     <style name="DiamondButton" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:layout_height">36dp</item>
         <item name="android:background">@drawable/diamond_button</item>
