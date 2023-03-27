@@ -1378,6 +1378,8 @@
     <string name="leave_party_finder">Leave Party Finder</string>
     <string name="equipment_class_locked">This equipment is class-locked</string>
     <string name="change_class_to_x">Change class to %s</string>
+    <string name="shop_armoire_title">You own all %s gear</string>
+    <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, theres %d pieces of gear in the Enchanted Armoire to find!</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

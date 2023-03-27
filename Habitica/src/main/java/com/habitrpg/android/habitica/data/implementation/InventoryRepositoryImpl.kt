@@ -39,12 +39,16 @@ class InventoryRepositoryImpl(
         return localRepository.getEquipment(searchedKeys)
     }
 
-    override fun getArmoireRemainingCount(): Long {
+    override fun getArmoireRemainingCount(): Flow<Int> {
         return localRepository.getArmoireRemainingCount()
     }
 
     override fun getInAppRewards(): Flow<List<ShopItem>> {
         return localRepository.getInAppRewards()
+    }
+
+    override fun getInAppReward(key : String) : Flow<ShopItem> {
+        return localRepository.getInAppReward(key)
     }
 
     override suspend fun retrieveInAppRewards(): List<ShopItem>? {

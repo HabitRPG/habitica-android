@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/layout_rounded_bg_window"
+    android:layout_marginHorizontal="12dp"
+    android:clipToOutline="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_large"
+        android:paddingHorizontal="@dimen/spacing_large"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            style="@style/Body1"/>
+        <TextView
+            android:id="@+id/description_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_ternary"
+            style="@style/Body2"
+            android:gravity="center"/>
+        <com.habitrpg.common.habitica.views.PixelArtView
+            android:id="@+id/icon_view"
+            android:layout_width="68dp"
+            android:layout_height="68dp" />
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/offset_background"
+        android:padding="8dp">
+        <com.habitrpg.android.habitica.ui.views.CurrencyView
+            android:id="@+id/currency_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:currency="gold" />
+    </FrameLayout>
+</LinearLayout>

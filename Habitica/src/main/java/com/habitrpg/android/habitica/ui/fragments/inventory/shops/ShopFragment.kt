@@ -121,13 +121,24 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.changeClassEvents = {
                 showClassChangeDialog(it)
             }
+
+            lifecycleScope.launchCatching {
+                inventoryRepository.getInAppReward("armoire").collect {
+                    adapter?.armoireItem = it
+                }
+            }
+            lifecycleScope.launchCatching {
+                inventoryRepository.getArmoireRemainingCount().collect {
+                    adapter?.armoireCount = it
+                }
+            }
         }
 
         if (binding?.recyclerView?.layoutManager == null) {
             layoutManager = GridLayoutManager(context, 2)
             layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
-                    return if ((adapter?.getItemViewType(position) ?: 0) < 3) {
+                    return if ((adapter?.getItemViewType(position) ?: 0) < 4) {
                         layoutManager?.spanCount ?: 1
                     } else {
                         1
