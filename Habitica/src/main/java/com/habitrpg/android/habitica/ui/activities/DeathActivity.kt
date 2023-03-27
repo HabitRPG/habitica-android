@@ -48,7 +48,7 @@ class DeathActivity : BaseActivity() {
             binding.lossDescription.text = getString(R.string.faint_loss_description, (user?.stats?.lvl ?: 2).toInt() - 1, user?.stats?.gp?.toInt()).fromHtml()
         }
 
-        if (appConfigManager.enableArmoireAds()) {
+        if (appConfigManager.enableFaintAds()) {
             val handler = AdHandler(this, AdType.FAINT) {
                 if (!it) {
                     return@AdHandler

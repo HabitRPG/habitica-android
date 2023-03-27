@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
@@ -65,12 +66,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskSummaryViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     userRepository : UserRepository,
     userViewModel : MainUserViewModel,
     val taskRepository : TaskRepository,
     val socialRepository : SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
-    val taskID : String = ""
+    val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
 
     val task = taskRepository.getTask(taskID).asLiveData()
 

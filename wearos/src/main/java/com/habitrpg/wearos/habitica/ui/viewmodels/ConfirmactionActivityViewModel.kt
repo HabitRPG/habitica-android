@@ -17,6 +17,6 @@ class ConfirmactionActivityViewModel @Inject constructor(
     exceptionBuilder: ExceptionHandlerBuilder,
     appStateManager: AppStateManager
 ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-    val icon: Int = savedStateHandle.get("icon") ?: R.drawable.error
-    val text: String? = savedStateHandle.get("text")
+    val icon: Int = savedStateHandle["icon"] ?: R.drawable.error
+    val text: String? = savedStateHandle["text"]
 }
