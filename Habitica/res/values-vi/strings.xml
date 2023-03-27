@@ -675,7 +675,7 @@
     <string name="old_password">Mật khẩu cũ</string>
     <string name="task_title">Tiêu đề Công việc</string>
     <string name="add_local_authentication">Thêm Xác thực Cục bộ</string>
-    <string name="create_party">Tạo Tổ đội</string>
+    <string name="create_party">Tạo một đội mới</string>
     <string name="only_leader_create_challenge">Chỉ có Lãnh đạo có thể tạo Thử thách</string>
     <string name="create">Tạo</string>
     <string name="defeat">Đánh bại</string>

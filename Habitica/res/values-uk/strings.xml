@@ -1003,7 +1003,7 @@
     <string name="old_password">Старий пароль</string>
     <string name="task_title">Назва задачі</string>
     <string name="add_local_authentication">Додати локальну аутентифікацію</string>
-    <string name="create_party">Створити команду</string>
+    <string name="create_party">Створити нову команду</string>
     <string name="invited_to_public_guild">Вас запросили в гільдію <b>%1$s</b></string>
     <string name="invited_to_quest">Вас запросили на квест <b>%1$s</b></string>
     <string name="invited_to_private_guild">Вас запросили приєднатися до приватної гільдії <b>%1$s</b></string>

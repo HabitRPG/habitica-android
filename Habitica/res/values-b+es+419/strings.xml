@@ -780,7 +780,7 @@
     <string name="defeat">Derrotado</string>
     <string name="create">Crear</string>
     <string name="only_leader_create_challenge">Solo el líder puede crear desafíos</string>
-    <string name="create_party">Crear un grupo</string>
+    <string name="create_party">Crear una nueva fiesta</string>
     <string name="add_local_authentication">Agregar autentificación local</string>
     <string name="task_title">Título de la misión</string>
     <string name="new_password_repeat">Repite la nueva contraseña</string>

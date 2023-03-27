@@ -642,7 +642,7 @@
     <string name="preference_push_important_announcements">Önemli Duyurular</string>
     <string name="create">Oluştur</string>
     <string name="only_leader_create_challenge">Sadece lider Mücadele oluşturabilir</string>
-    <string name="create_party">Takım Oluştur</string>
+    <string name="create_party">Yeni bir takım oluştur</string>
     <string name="notifications">Bildirimler</string>
     <string name="no_notifications_title">Bildirimleri temizledin!</string>
     <string name="no_notifications_text">Bildirim perileri seni şevkle alkışlıyor! Bravo!</string>

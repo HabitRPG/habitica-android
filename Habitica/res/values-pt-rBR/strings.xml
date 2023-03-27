@@ -641,7 +641,7 @@
     <string name="preference_push_important_announcements">Anúncios importantes</string>
     <string name="create">Criar</string>
     <string name="only_leader_create_challenge">Somente líderes podem criar Desafios</string>
-    <string name="create_party">Criar Grupo</string>
+    <string name="create_party">Criar um novo grupo</string>
     <string name="notifications">Notificações</string>
     <string name="no_notifications_title">Você está com tudo em dia!</string>
     <string name="no_notifications_text">As fadas da notificação lhe deram uma rodada de aplausos barulhentos! Muito bem!</string>
