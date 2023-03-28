@@ -12,7 +12,8 @@ import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerIntroViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
 
-class InboxAdapter(private var user: User?, private var replyToUser: Member?) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+    internal var replyToUser: Member? = null
     private val FIRST_MESSAGE = 0
     private val NORMAL_MESSAGE = 1
 

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
@@ -31,11 +32,12 @@ import kotlin.math.ceil
 
 @HiltViewModel
 class InboxViewModel @Inject constructor(
+    savedStateHandle : SavedStateHandle,
     userRepository : UserRepository,
     userViewModel : MainUserViewModel,
     val socialRepository : SocialRepository) : BaseViewModel(userRepository, userViewModel) {
-    val recipientID: String? = null
-    val recipientUsername: String? = null
+    val recipientID: String? = savedStateHandle.get("userID")
+    val recipientUsername: String? = savedStateHandle.get("username")
 
     private var memberIDFlow = MutableStateFlow<String?>(null)
     val memberIDState: StateFlow<String?> = memberIDFlow

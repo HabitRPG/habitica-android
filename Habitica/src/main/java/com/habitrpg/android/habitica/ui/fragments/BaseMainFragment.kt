@@ -15,7 +15,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -25,9 +24,6 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import javax.inject.Inject
 
 abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
-
-    @Inject
-    lateinit var apiClient: ApiClient
     @Inject
     lateinit var userRepository: UserRepository
     @Inject
