@@ -11,6 +11,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.getTranslatedAnimalType
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.views.CurrencyView
@@ -21,7 +22,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val selectionSpinner: Spinner? = itemView.findViewById(R.id.classSelectionSpinner)
     val switchClassButton: LinearLayout? = itemView.findViewById(R.id.change_class_button)
     val switchClassLabel: TextView? = itemView.findViewById(R.id.change_class_label)
-    val switchClassCurrency: CurrencyView = itemView.findViewById(R.id.change_class_currency_view)
+    val switchClassCurrency: CurrencyView? = itemView.findViewById(R.id.change_class_currency_view)
     internal val notesView: TextView? = itemView.findViewById(R.id.headerNotesView)
     private val countPill: TextView? = itemView.findViewById(R.id.count_pill)
     var context: Context = itemView.context
@@ -57,7 +58,11 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bind(section: StableSection) {
-        label.text = section.text
+        label.text = if (section.type == "pets") {
+            context.getString(R.string.pet_category, getTranslatedAnimalType(context, section.key))
+        } else {
+            context.getString(R.string.mount_category, getTranslatedAnimalType(context, section.key))
+        }
         if (section.key == "special") {
             countPill?.visibility = View.GONE
         } else {

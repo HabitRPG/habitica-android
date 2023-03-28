@@ -9,7 +9,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.getTranslatedType
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -25,12 +24,12 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PetDetailRecyclerFragment :
@@ -201,8 +200,8 @@ class PetDetailRecyclerFragment :
                                 currentSection =
                                     StableSection(
                                         pet.type,
-                                        pet.getTranslatedType(context) ?: ""
-                                    )
+                                        "pets"
+                                        )
                                 items.add(currentSection)
                             }
                             currentSection?.let { section ->

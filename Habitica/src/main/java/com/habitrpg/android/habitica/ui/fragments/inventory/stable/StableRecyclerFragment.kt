@@ -45,7 +45,6 @@ class StableRecyclerFragment :
     lateinit var userViewModel: MainUserViewModel
 
     var adapter: StableRecyclerAdapter? = null
-    var itemType: String? = null
     var itemTypeText: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
@@ -53,18 +52,6 @@ class StableRecyclerFragment :
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
-        }
-
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onDestroy() {
@@ -77,7 +64,7 @@ class StableRecyclerFragment :
         super.onViewCreated(view, savedInstanceState)
 
         binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText ?: itemType)
+            getString(R.string.empty_items, itemTypeText ?: viewModel.itemType)
         )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
@@ -107,7 +94,7 @@ class StableRecyclerFragment :
                     callback(Pair(egg, potion))
                 }
             }
-            adapter?.itemType = this.itemType
+            adapter?.itemType = viewModel.itemType
             adapter?.shopSpriteSuffix = configManager.shopSpriteSuffix()
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
@@ -115,7 +102,7 @@ class StableRecyclerFragment :
             adapter?.let {
                 it.onEquip = {
                     lifecycleScope.launchCatching {
-                        inventoryRepository.equip(if (itemType == "pets") "pet" else "mount", it)
+                        inventoryRepository.equip(if (viewModel.itemType == "pets") "pet" else "mount", it)
                     }
                 }
             }
@@ -131,13 +118,13 @@ class StableRecyclerFragment :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(ITEM_TYPE_KEY, this.itemType)
+        outState.putString(ITEM_TYPE_KEY, viewModel.itemType)
     }
 
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
         if (context != null && context?.resources != null) {
-            val animalWidth = if (itemType == "pets") R.dimen.pet_width else R.dimen.mount_width
+            val animalWidth = if (viewModel.itemType == "pets") R.dimen.pet_width else R.dimen.mount_width
             val itemWidth: Float = context?.resources?.getDimension(animalWidth) ?: 0.toFloat()
 
             spanCount = (width / itemWidth).toInt()
@@ -167,7 +154,7 @@ class StableRecyclerFragment :
     }
 
     companion object {
-        private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
+        internal const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
         private const val HEADER_VIEW_TYPE = 0
     }
 

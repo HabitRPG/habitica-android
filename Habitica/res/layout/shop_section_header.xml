@@ -79,12 +79,13 @@
         <FrameLayout
             android:layout_width="59dp"
             android:layout_height="73dp"
-            android:background="@color/offset_background">
+            android:background="@color/offset_background_30">
             <com.habitrpg.android.habitica.ui.views.CurrencyView
                 android:id="@+id/change_class_currency_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                style="@style/Body1"
                 app:currency="gems"/>
         </FrameLayout>
     </LinearLayout>

@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -14,6 +15,7 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedObject
 import com.habitrpg.android.habitica.models.user.OwnedPet
+import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableRecyclerFragment
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,12 +26,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StableViewModel @Inject constructor(
+    savedStateHandle : SavedStateHandle,
     userRepository : UserRepository,
     userViewModel : MainUserViewModel,
     val inventoryRepository : InventoryRepository
 ) : BaseViewModel(userRepository, userViewModel) {
 
-    private val itemType = ""
+    internal val itemType: String? = savedStateHandle.get(StableRecyclerFragment.ITEM_TYPE_KEY)
 
     private val _items: MutableLiveData<List<Any>> = MutableLiveData()
     val items: LiveData<List<Any>> = _items
@@ -115,14 +118,9 @@ class StableViewModel @Inject constructor(
                 if (items.size > 0 && items[items.size - 1].javaClass == StableSection::class.java) {
                     items.removeAt(items.size - 1)
                 }
-                /*val title = if (itemType == "pets") {
-                    application?.getString(R.string.pet_category, animal.getTranslatedType(application))
-                } else {
-                    application?.getString(R.string.mount_category, animal.getTranslatedType(application))
-                }
-                val section = StableSection(animal.type, title ?: "")
+                val section = StableSection(animal.type, itemType ?: "")
                 items.add(section)
-                lastSection = section*/
+                lastSection = section
             }
             val isOwned = when (itemType) {
                 "pets" -> {

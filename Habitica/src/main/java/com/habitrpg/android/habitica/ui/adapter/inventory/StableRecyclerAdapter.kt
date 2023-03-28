@@ -171,7 +171,6 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     internal inner class StableHeaderViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
-
         private var binding: ShopHeaderBinding = ShopHeaderBinding.bind(itemView)
 
         fun bind() {

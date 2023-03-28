@@ -53,7 +53,7 @@
         <item name="actionOverflowMenuStyle">@style/PopupTheme</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
         <item name="android:textColorLink">@color/brand_400</item>
-        <item name="alertDialogTheme">@style/HabiticaAlertDialogTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:windowTranslucentStatus">false</item>
 
         <item name="android:statusBarColor">@color/system_bars</item>
@@ -480,6 +480,15 @@
 
     <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
         <item name="android:textColor">@color/dialog_button_text_color</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/text_brand_neon</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="backgroundTint">@color/dialog_background</item>
     </style>
 
     <style name="HabiticaAlertDialogTheme" parent="Theme.Material3.DayNight.Dialog.Alert">

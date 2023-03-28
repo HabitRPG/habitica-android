@@ -144,7 +144,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                     }
                                     sectionHolder.switchClassButton?.visibility = View.VISIBLE
                                     sectionHolder.switchClassLabel?.text = context.getString(R.string.change_class_to_x, getTranslatedClassName(context.resources, selectedGearCategory))
-                                    sectionHolder.switchClassCurrency.value = 3.0
+                                    sectionHolder.switchClassCurrency?.value = 3.0
                                 } else {
                                     sectionHolder.switchClassButton?.visibility = View.GONE
                                 }

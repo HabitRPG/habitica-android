@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/brand_50012">
+    android:clipToPadding="false"
+    android:clipChildren="false">
 
     <RelativeLayout
         android:id="@+id/confetti_container"
@@ -15,12 +16,12 @@
     android:orientation="vertical"
     android:layout_width="360dp"
     android:layout_height="wrap_content"
-    tools:background="@android:color/black"
     android:minWidth="300dp"
     android:gravity="center_horizontal"
     android:layout_gravity="center_horizontal"
-    android:paddingTop="@dimen/spacing_medium"
-    android:paddingBottom="@dimen/spacing_medium"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:padding="@dimen/spacing_large"
     android:layout_centerInParent="true">
     <LinearLayout
         android:id="@+id/dialog_container"
@@ -31,7 +32,8 @@
         android:background="@drawable/alert_dialog_background"
         android:paddingBottom="24dp"
         android:paddingTop="40dp"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:elevation="12dp">
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
@@ -121,6 +123,7 @@
         android:textSize="16sp"
         android:textAllCaps="false"
         android:textColor="?colorAccent"
+        android:elevation="12dp"
         />
 </LinearLayout>
 </RelativeLayout>
