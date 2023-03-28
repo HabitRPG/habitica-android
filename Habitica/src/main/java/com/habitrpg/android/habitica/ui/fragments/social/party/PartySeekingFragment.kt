@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
@@ -38,6 +36,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LoadState
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.cachedIn
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -52,10 +59,12 @@ import com.habitrpg.android.habitica.ui.views.ClassText
 import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.LoadingButton
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
+import com.habitrpg.android.habitica.ui.views.progress.HabiticaCircularProgressView
 import com.habitrpg.android.habitica.ui.views.progress.HabiticaPullRefreshIndicator
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import java.util.Locale
 import javax.inject.Inject
 
@@ -66,18 +75,17 @@ class PartySeekingViewModel @Inject constructor(
     val socialRepository : SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
     val isRefreshing = mutableStateOf(false)
-    val seekingUsers = mutableStateOf<List<Member>>(emptyList())
+    var seekingUsers: Flow<PagingData<Member>>
 
     init {
-        retrieveUsers()
-    }
-
-    fun retrieveUsers() {
-        isRefreshing.value = true
-        viewModelScope.launchCatching {
-            seekingUsers.value = socialRepository.retrievePartySeekingUsers() ?: emptyList()
-            isRefreshing.value = false
-        }
+        seekingUsers = Pager(
+            config = PagingConfig(
+                pageSize = 30,
+            ),
+            pagingSourceFactory = {
+                PartySeekingPagingSource(socialRepository)
+            }
+        ).flow.cachedIn(viewModelScope)
     }
 
     suspend fun inviteUser(member : Member) : InviteResponse? {
@@ -113,11 +121,6 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
             }
         }
         return view
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.retrieveUsers()
     }
 }
 
@@ -216,9 +219,9 @@ fun PartySeekingView(
     viewModel : PartySeekingViewModel,
     modifier : Modifier = Modifier
 ) {
-    val users : List<Member> by viewModel.seekingUsers
+    val pageData = viewModel.seekingUsers.collectAsLazyPagingItems()
     val refreshing by viewModel.isRefreshing
-    val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.retrieveUsers() })
+    val pullRefreshState = rememberPullRefreshState(refreshing, { pageData.refresh() })
     val scope = rememberCoroutineScope()
 
     val inviteStates = remember { mutableMapOf<String, LoadingButtonState>() }
@@ -248,8 +251,11 @@ fun PartySeekingView(
                     )
                 }
             }
-            items(users) {
-                PartySeekingListItem(user = it, inviteState = inviteStates[it.id] ?: LoadingButtonState.CONTENT, modifier = Modifier.animateItemPlacement()) { member ->
+                items(
+                    items = pageData
+                ) {
+                    if (it == null) return@items
+                    PartySeekingListItem(user = it, inviteState = inviteStates[it.id] ?: LoadingButtonState.CONTENT, modifier = Modifier.animateItemPlacement()) { member ->
                         scope.launchCatching({
                             inviteStates[member.id] = LoadingButtonState.FAILED
                         }) {
@@ -261,9 +267,73 @@ fun PartySeekingView(
                                 LoadingButtonState.FAILED
                             }
                         }
+                    }
                 }
-            }
+
+                when (pageData.loadState.refresh) {
+                    is LoadState.Error -> {
+                    }
+                    is LoadState.Loading -> {
+                        item {
+                            Column(
+                                modifier = Modifier
+                                    .fillParentMaxSize(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                            ) {
+
+                                HabiticaCircularProgressView()
+                            }
+                        }
+                    }
+                    else -> {}
+                }
+
+                when (pageData.loadState.append) {
+                    is LoadState.Error -> {
+                    }
+                    is LoadState.Loading -> {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                HabiticaCircularProgressView()
+                            }
+                        }
+                    }
+                    else -> {}
+                }
         }
-        HabiticaPullRefreshIndicator(users.isEmpty(), refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+        HabiticaPullRefreshIndicator(pageData.itemCount == 0, refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+    }
+}
+
+
+class PartySeekingPagingSource(
+    private val repository: SocialRepository,
+): PagingSource<Int, Member>() {
+    override fun getRefreshKey(state: PagingState<Int, Member>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
+    }
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Member> {
+        return try {
+            val page = params.key ?: 0
+            val response = repository.retrievePartySeekingUsers(page)
+
+            LoadResult.Page(
+                data = response ?: emptyList(),
+                prevKey = if (page == 0) null else page.minus(1),
+                nextKey = if (response?.isEmpty() != false) null else page.plus(1),
+            )
+        } catch (e: Exception) {
+            LoadResult.Error(e)
+        }
     }
 }
