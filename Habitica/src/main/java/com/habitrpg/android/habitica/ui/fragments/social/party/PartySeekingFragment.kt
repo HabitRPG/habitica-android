@@ -75,7 +75,7 @@ class PartySeekingViewModel @Inject constructor(
     val socialRepository : SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
     val isRefreshing = mutableStateOf(false)
-    var seekingUsers: Flow<PagingData<Member>>
+    var seekingUsers : Flow<PagingData<Member>>
 
     init {
         seekingUsers = Pager(
@@ -207,9 +207,14 @@ fun PartySeekingListItem(
                 )
             }
         }
-        InviteButton(state = inviteState, modifier = Modifier.fillMaxWidth().padding(top=8.dp), onClick = {
-            onInvite(user)
-        })
+        InviteButton(
+            state = inviteState,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            onClick = {
+                onInvite(user)
+            })
     }
 }
 
@@ -226,103 +231,135 @@ fun PartySeekingView(
 
     val inviteStates = remember { mutableMapOf<String, LoadingButtonState>() }
 
-    Box(modifier = modifier
-        .fillMaxSize()
-        .pullRefresh(pullRefreshState)) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .pullRefresh(pullRefreshState)
+    ) {
         LazyColumn {
-            item {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 22.dp, bottom = 14.dp)
-                ) {
-                    Text(
-                        stringResource(R.string.find_more_members),
-                        color = HabiticaTheme.colors.textPrimary,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        stringResource(R.string.habiticans_looking_party_empty),
-                        textAlign = TextAlign.Center,
-                        color = HabiticaTheme.colors.textSecondary, modifier = Modifier
-                            .width(250.dp)
-                            .align(alignment = Alignment.CenterHorizontally)
-                    )
+            if (pageData.itemCount == 0 && pageData.loadState.refresh is LoadState.NotLoading && pageData.loadState.append is LoadState.NotLoading) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillParentMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            stringResource(R.string.habiticans_looking_party_empty),
+                            textAlign = TextAlign.Center,
+                            color = HabiticaTheme.colors.textSecondary, modifier = Modifier
+                                .width(250.dp)
+                                .align(alignment = Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+            } else {
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 22.dp, bottom = 14.dp)
+                    ) {
+                        Text(
+                            stringResource(R.string.find_more_members),
+                            color = HabiticaTheme.colors.textPrimary,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            stringResource(R.string.habiticans_looking_party),
+                            textAlign = TextAlign.Center,
+                            color = HabiticaTheme.colors.textSecondary, modifier = Modifier
+                                .width(250.dp)
+                                .align(alignment = Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+            items(
+                items = pageData
+            ) {
+                if (it == null) return@items
+                PartySeekingListItem(
+                    user = it,
+                    inviteState = inviteStates[it.id] ?: LoadingButtonState.CONTENT,
+                    modifier = Modifier.animateItemPlacement()
+                ) { member ->
+                    scope.launchCatching({
+                        inviteStates[member.id] = LoadingButtonState.FAILED
+                    }) {
+                        inviteStates[member.id] = LoadingButtonState.LOADING
+                        val response = viewModel.inviteUser(member)
+                        inviteStates[member.id] = if (response != null) {
+                            LoadingButtonState.SUCCESS
+                        } else {
+                            LoadingButtonState.FAILED
+                        }
+                    }
                 }
             }
-                items(
-                    items = pageData
-                ) {
-                    if (it == null) return@items
-                    PartySeekingListItem(user = it, inviteState = inviteStates[it.id] ?: LoadingButtonState.CONTENT, modifier = Modifier.animateItemPlacement()) { member ->
-                        scope.launchCatching({
-                            inviteStates[member.id] = LoadingButtonState.FAILED
-                        }) {
-                            inviteStates[member.id] = LoadingButtonState.LOADING
-                            val response = viewModel.inviteUser(member)
-                            inviteStates[member.id] = if (response != null) {
-                                LoadingButtonState.SUCCESS
-                            } else {
-                                LoadingButtonState.FAILED
-                            }
+
+            when (pageData.loadState.refresh) {
+                is LoadState.Error -> {
+                }
+
+                is LoadState.Loading -> {
+                    item {
+                        Column(
+                            modifier = Modifier
+                                .fillParentMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+
+                            HabiticaCircularProgressView()
                         }
                     }
                 }
 
-                when (pageData.loadState.refresh) {
-                    is LoadState.Error -> {
-                    }
-                    is LoadState.Loading -> {
-                        item {
-                            Column(
-                                modifier = Modifier
-                                    .fillParentMaxSize(),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                            ) {
+                else -> {}
+            }
 
-                                HabiticaCircularProgressView()
-                            }
-                        }
-                    }
-                    else -> {}
+            when (pageData.loadState.append) {
+                is LoadState.Error -> {
                 }
 
-                when (pageData.loadState.append) {
-                    is LoadState.Error -> {
-                    }
-                    is LoadState.Loading -> {
-                        item {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(8.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                HabiticaCircularProgressView()
-                            }
+                is LoadState.Loading -> {
+                    item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            HabiticaCircularProgressView()
                         }
                     }
-                    else -> {}
                 }
+
+                else -> {}
+            }
         }
-        HabiticaPullRefreshIndicator(pageData.itemCount == 0, refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+        HabiticaPullRefreshIndicator(
+            pageData.itemCount == 0,
+            refreshing,
+            pullRefreshState,
+            Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
-
 class PartySeekingPagingSource(
-    private val repository: SocialRepository,
-): PagingSource<Int, Member>() {
-    override fun getRefreshKey(state: PagingState<Int, Member>): Int? {
+    private val repository : SocialRepository,
+) : PagingSource<Int, Member>() {
+    override fun getRefreshKey(state : PagingState<Int, Member>) : Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Member> {
+    override suspend fun load(params : LoadParams<Int>) : LoadResult<Int, Member> {
         return try {
             val page = params.key ?: 0
             val response = repository.retrievePartySeekingUsers(page)
@@ -332,7 +369,7 @@ class PartySeekingPagingSource(
                 prevKey = if (page == 0) null else page.minus(1),
                 nextKey = if (response?.isEmpty() != false) null else page.plus(1),
             )
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             LoadResult.Error(e)
         }
     }
