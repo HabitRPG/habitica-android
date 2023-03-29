@@ -23,6 +23,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -227,26 +228,28 @@ class ClassSelectionActivity : BaseActivity() {
             alert.setTitle(getString(R.string.change_class_confirmation))
             alert.setMessage(getString(R.string.change_class_equipment_warning, currentClass))
             alert.addButton(R.string.choose_class, true) { _, _ ->
-                selectClass(newClass)
-                displayClassChanged()
+                selectClass(newClass, true)
             }
             alert.addButton(R.string.dialog_go_back, false)
             alert.show()
         } else {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(getString(R.string.class_confirmation, className))
-            alert.addButton(R.string.choose_class, true) { _, _ -> selectClass(newClass) }
+            alert.addButton(R.string.choose_class, true) { _, _ -> selectClass(newClass, false) }
             alert.addButton(R.string.dialog_go_back, false)
             alert.show()
         }
     }
 
-    private fun displayClassChanged() {
+    private fun displayClassChanged(selectedClass: String) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.class_changed, className))
-        alert.setMessage(getString(R.string.class_changed_description))
-        alert.addButton(getString(R.string.complete_tutorial), true)
-        alert.enqueue()
+        alert.setMessage(getString(R.string.class_changed_description, selectedClass))
+        alert.addButton(getString(R.string.complete_tutorial), true){ _, _ -> dismiss() }
+        alert.setOnCancelListener {
+            dismiss()
+        }
+        alert.show()
     }
 
     private fun optOutOfClasses() {
@@ -258,17 +261,17 @@ class ClassSelectionActivity : BaseActivity() {
         }
     }
 
-    private fun selectClass(selectedClass: String) {
+    private fun selectClass(selectedClass: String, isChanging: Boolean) {
         shouldFinish = true
         this.displayProgressDialog(getString(R.string.changing_class_progress))
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launch(Dispatchers.Main) {
             userRepository.changeClass(selectedClass)
-            dismiss()
+            if (isChanging) displayClassChanged(selectedClass)
         }
     }
 
     private fun displayProgressDialog(progressText: String) {
-        HabiticaProgressDialog.show(this, progressText)
+        HabiticaProgressDialog.show(this, progressText, 300)
     }
 
     private fun dismiss() {
