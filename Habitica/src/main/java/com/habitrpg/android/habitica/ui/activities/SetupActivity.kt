@@ -225,8 +225,11 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     }
 
     private fun startMainActivity() {
+        val bundle = Bundle()
+        bundle.putBoolean("new_user", true)
         val intent = Intent(this@SetupActivity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtras(bundle)
         startActivity(intent)
         finish()
     }

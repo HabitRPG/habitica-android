@@ -54,6 +54,7 @@ class MainActivityViewModel @Inject constructor(
                 putString("language", value)
             }
         }
+    var isNewlyCreatedUser = false
     var requestNotificationPermission = MutableLiveData(false)
 
     override fun onCleared() {

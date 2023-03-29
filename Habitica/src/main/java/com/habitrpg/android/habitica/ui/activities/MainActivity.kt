@@ -179,6 +179,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         launchTrace?.start()
         super.onCreate(savedInstanceState)
 
+        val bundle = intent.extras
+        if (bundle != null) {
+            viewModel.isNewlyCreatedUser = bundle.getBoolean("new_user", false)
+        }
+
         if (!viewModel.isAuthenticated) {
             val intent = Intent(this, IntroActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)

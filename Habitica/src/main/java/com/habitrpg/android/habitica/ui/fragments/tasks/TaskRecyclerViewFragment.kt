@@ -80,6 +80,7 @@ open class TaskRecyclerViewFragment :
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
+    var mainActivity: MainActivity? = null
     var recyclerAdapter: TaskRecyclerViewAdapter? = null
     var itemAnimator = SafeDefaultItemAnimator()
 
@@ -184,7 +185,7 @@ open class TaskRecyclerViewFragment :
 
     private fun handleTaskResult(result: TaskScoringResult, value: Int) {
         if (taskType == TaskType.REWARD) {
-            (activity as? MainActivity)?.let { activity ->
+            mainActivity?.let { activity ->
                 HabiticaSnackbar.showSnackbar(
                     activity.snackbarContainer,
                     null,
@@ -196,7 +197,7 @@ open class TaskRecyclerViewFragment :
                 )
             }
         } else {
-            (activity as? MainActivity)?.displayTaskScoringResponse(result)
+            mainActivity?.displayTaskScoringResponse(result)
         }
     }
 
@@ -238,7 +239,7 @@ open class TaskRecyclerViewFragment :
             this.taskType =
                 TaskType.from(savedInstanceState.getString(CLASS_TYPE_KEY, "")) ?: TaskType.HABIT
         }
-
+        mainActivity = (activity as? MainActivity)
         this.setInnerAdapter()
         recyclerAdapter?.filter()
 
@@ -354,7 +355,7 @@ open class TaskRecyclerViewFragment :
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     binding?.refreshLayout?.isEnabled =
-                        (activity as? MainActivity)?.isAppBarExpanded ?: false
+                        mainActivity?.isAppBarExpanded ?: false
                 }
             }
         })
@@ -537,7 +538,14 @@ open class TaskRecyclerViewFragment :
     }
 
     private fun setPreferenceTaskFilters() {
-        (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
+        val isNewUser = mainActivity?.viewModel?.isNewlyCreatedUser
+        if (isNewUser == true) {
+            lifecycleScope.launchCatching {
+                userRepository.updateUser("preferences.dailyDueDefaultView", true)
+            }
+        }
+
+        mainActivity?.viewModel?.user?.observeOnce(this) {
             if (it != null) {
                 when (taskType) {
                     TaskType.TODO -> viewModel.setActiveFilter(
@@ -547,7 +555,7 @@ open class TaskRecyclerViewFragment :
                     TaskType.DAILY -> {
                         if (!viewModel.initialPreferenceFilterSet) {
                             viewModel.initialPreferenceFilterSet = true
-                            if (it.isValid && it.preferences?.dailyDueDefaultView == true) {
+                            if (it.isValid && (it.preferences?.dailyDueDefaultView == true || isNewUser == true)) {
                                 viewModel.setActiveFilter(TaskType.DAILY, Task.FILTER_ACTIVE)
                             }
                         }
