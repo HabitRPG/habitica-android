@@ -6,17 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
-import com.habitrpg.android.habitica.modules.AppModule
-import javax.inject.Inject
-import javax.inject.Named
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userID: String
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentNewsBinding? = null
 
@@ -44,7 +42,7 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
         arguments?.let {
             val args = PromoWebFragmentArgs.fromBundle(it)
             var url = args.url
-            url = url.replace("USER_ID", userID)
+            url = url.replace("USER_ID", userViewModel.userID)
             binding?.newsWebview?.loadUrl(url)
         }
     }

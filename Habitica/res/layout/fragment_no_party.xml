@@ -85,21 +85,14 @@
                         android:layout_marginTop="@dimen/spacing_large"/>
                 </LinearLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/window_background"
-                    app:cardCornerRadius="16dp"
-                    app:strokeWidth="0dp">
-
-                    <LinearLayout
+                <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:paddingHorizontal="@dimen/spacing_sides"
                         android:paddingTop="@dimen/spacing_sides"
-                        android:paddingBottom="60dp">
+                        android:paddingBottom="60dp"
+                        app:cardBackgroundColor="@color/window_background">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -171,10 +164,9 @@
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
 
             </LinearLayout>
-        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

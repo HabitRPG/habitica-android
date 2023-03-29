@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.user.OwnedItem
@@ -52,11 +51,6 @@ internal class PetDetailRecyclerFragmentTest :
 
         fragment = spyk()
         fragment.shouldInitializeComponent = false
-
-        val mockComponent: UserComponent = mockk(relaxed = true)
-        every { mockComponent.inject(any<ItemDialogFragment>()) } answers { initializeInjects(this.args.first()) }
-        mockkObject(HabiticaBaseApplication)
-        every { HabiticaBaseApplication.userComponent } returns mockComponent
     }
 
     override fun launchFragment(args: Bundle?) {

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -15,18 +14,17 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.social.ChallengesListViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChallengeListFragment :
@@ -35,15 +33,12 @@ class ChallengeListFragment :
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
-
     @Inject
     lateinit var socialRepository: SocialRepository
-
     @Inject
     lateinit var userRepository: UserRepository
-
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -77,7 +72,7 @@ class ChallengeListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userId)
+        challengeAdapter = ChallengesListViewAdapter(viewUserChallengesOnly, userViewModel.userID)
         challengeAdapter?.onOpenChallengeFragment = { openDetailFragment(it) }
         binding?.refreshLayout?.setOnRefreshListener(this)
 

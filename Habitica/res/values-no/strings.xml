@@ -202,7 +202,7 @@
     <string name="opt_out_class">Reserver Deg</string>
     <string name="class_confirmation">Er du sikker på at du vil være en %s?</string>
     <string name="class_changed">Du er nå en %s!</string>
-    <string name="class_changed_description">Du har nytt standard stridsutstyr som du kan bytte til under Utstyr!</string>
+
     <string name="choose_class">Velg Klasse</string>
     <string name="dialog_go_back">Gå Tilbake</string>
     <string name="opt_out_confirmation">Er du sikker på at du vil reservere deg?</string>

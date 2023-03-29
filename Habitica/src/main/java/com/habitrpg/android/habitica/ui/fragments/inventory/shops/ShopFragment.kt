@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
@@ -202,10 +203,11 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     private fun showClassChangeDialog(classIdentifier: String) {
         context?.let { context ->
             val alert = HabiticaAlertDialog(context)
-            alert.setTitle(getString(R.string.class_confirmation_price, classIdentifier, 3))
+            alert.setTitle(getString(R.string.class_confirmation_price, getTranslatedClassName(requireContext().resources, classIdentifier), 3))
             alert.addButton(R.string.choose_class, true) { _, _ ->
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     userRepository.changeClass(classIdentifier)
+                    adapter?.notifyDataSetChanged()
                 }
             }
             alert.addButton(R.string.dialog_go_back, false)

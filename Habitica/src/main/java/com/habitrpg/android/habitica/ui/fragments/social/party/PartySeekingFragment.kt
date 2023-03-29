@@ -81,6 +81,7 @@ class PartySeekingViewModel @Inject constructor(
         seekingUsers = Pager(
             config = PagingConfig(
                 pageSize = 30,
+                prefetchDistance = 10
             ),
             pagingSourceFactory = {
                 PartySeekingPagingSource(socialRepository)
@@ -250,8 +251,7 @@ fun PartySeekingView(
                             textAlign = TextAlign.Center,
                             color = HabiticaTheme.colors.textSecondary, modifier = Modifier
                                 .width(250.dp)
-                                .align(alignment = Alignment.CenterHorizontally)
-                        )
+                                .align(alignment = Alignment.CenterHorizontally))
                     }
                 }
             } else {
@@ -276,6 +276,7 @@ fun PartySeekingView(
                         )
                     }
                 }
+            }
             items(
                 items = pageData
             ) {
@@ -329,10 +330,10 @@ fun PartySeekingView(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp),
+                                .padding(12.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            HabiticaCircularProgressView()
+                            HabiticaCircularProgressView(indicatorSize = 32.dp)
                         }
                     }
                 }
@@ -367,7 +368,7 @@ class PartySeekingPagingSource(
             LoadResult.Page(
                 data = response ?: emptyList(),
                 prevKey = if (page == 0) null else page.minus(1),
-                nextKey = if (response?.isEmpty() != false) null else page.plus(1),
+                nextKey = if ((response?.size ?: 0) < 30) null else page.plus(1),
             )
         } catch (e : Exception) {
             LoadResult.Error(e)

@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
@@ -19,12 +20,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainUserViewModel @Inject constructor(private val providedUserID: String, val userRepository: UserRepository, val socialRepository: SocialRepository) {
+class MainUserViewModel @Inject constructor(private val authenticationHandler : AuthenticationHandler, val userRepository: UserRepository, val socialRepository: SocialRepository) {
 
     val formattedUsername: CharSequence?
         get() = user.value?.formattedUsername
     val userID: String
-        get() = user.value?.id ?: providedUserID
+        get() = user.value?.id ?: authenticationHandler.currentUserID ?: ""
     val username: CharSequence
         get() = user.value?.username ?: ""
     val displayName: CharSequence

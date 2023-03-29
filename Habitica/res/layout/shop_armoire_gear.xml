@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/layout_rounded_bg_window"
     android:layout_marginHorizontal="12dp"
@@ -35,13 +36,17 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/offset_background"
+        android:background="@color/offset_background_30"
         android:padding="8dp">
         <com.habitrpg.android.habitica.ui.views.CurrencyView
             android:id="@+id/currency_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/text_quad"
+            tools:text="150"
+            style="@style/Body1"
+            android:textSize="15sp"
             app:currency="gold" />
     </FrameLayout>
 </LinearLayout>

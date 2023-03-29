@@ -8,7 +8,6 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -78,11 +77,6 @@ internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment,
         }
         fragment = spyk()
         fragment.shouldInitializeComponent = false
-
-        val mockComponent: UserComponent = mockk(relaxed = true)
-        every { mockComponent.inject(any<ItemDialogFragment>()) } answers { initializeInjects(this.args.first()) }
-        mockkObject(HabiticaBaseApplication)
-        every { HabiticaBaseApplication.userComponent } returns mockComponent
     }
 
     override fun launchFragment(args: Bundle?) {

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.WidgetConfigureHabitButtonBinding
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -23,7 +22,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 @AndroidEntryPoint
 class HabitButtonWidgetActivity : BaseActivity() {
@@ -33,8 +31,6 @@ class HabitButtonWidgetActivity : BaseActivity() {
 
     @Inject
     lateinit var taskRepository: TaskRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
 
     private var widgetId: Int = 0
     private var adapter: SkillTasksRecyclerViewAdapter? = null
@@ -78,7 +74,7 @@ class HabitButtonWidgetActivity : BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         CoroutineScope(Dispatchers.Main + job).launch(ExceptionHandler.coroutine()) {
-            adapter?.data = taskRepository.getTasks(TaskType.HABIT, userId, emptyArray()).firstOrNull() ?: listOf()
+            adapter?.data = taskRepository.getTasks(TaskType.HABIT, includedGroupIDs = emptyArray()).firstOrNull() ?: listOf()
         }
     }
 

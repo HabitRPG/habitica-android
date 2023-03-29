@@ -233,7 +233,7 @@
     <string name="opt_out_class">Çekil</string>
     <string name="class_confirmation">Bir %s olmak istediğine emin misin?</string>
     <string name="class_changed">Yeni sınıfın: %s!</string>
-    <string name="class_changed_description">Ekipmanlar menüsü altında değiştirebileceğin yeni varsayılan Savaş Ekipmanın var!</string>
+
     <string name="choose_class">Sınıf Seç</string>
     <string name="dialog_go_back">Geri Dön</string>
     <string name="opt_out_confirmation">Çekilmek istediğinden emin misin?</string>

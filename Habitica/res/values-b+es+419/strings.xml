@@ -253,7 +253,7 @@
     <string name="opting_out_progress">Renunciando</string>
     <string name="class_confirmation">¿Estás seguro de que quieres ser un %s\?</string>
     <string name="class_changed">¡Ahora eres un %s!</string>
-    <string name="class_changed_description">¡Tienes nuevo Equipamiento de Combate predeterminado que puedes cambiar en Equipo!</string>
+
     <string name="choose_class">Elegir Clase</string>
     <string name="dialog_go_back">Volver Atrás</string>
     <string name="opt_out_confirmation">¿Estás seguro de que quieres renunciar\?</string>

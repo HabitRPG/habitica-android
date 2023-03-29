@@ -22,6 +22,7 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val selectionSpinner: Spinner? = itemView.findViewById(R.id.classSelectionSpinner)
     val switchClassButton: LinearLayout? = itemView.findViewById(R.id.change_class_button)
     val switchClassLabel: TextView? = itemView.findViewById(R.id.change_class_label)
+    val switchClassDescription: TextView? = itemView.findViewById(R.id.change_class_description)
     val switchClassCurrency: CurrencyView? = itemView.findViewById(R.id.change_class_currency_view)
     internal val notesView: TextView? = itemView.findViewById(R.id.headerNotesView)
     private val countPill: TextView? = itemView.findViewById(R.id.count_pill)

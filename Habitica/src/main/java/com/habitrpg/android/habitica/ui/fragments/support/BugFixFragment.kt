@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.databinding.FragmentSupportBugFixBinding
 import com.habitrpg.android.habitica.databinding.KnownIssueBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.layoutInflater
@@ -25,7 +24,6 @@ import com.jaredrummler.android.device.DeviceName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 @AndroidEntryPoint
 class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
@@ -38,9 +36,6 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
     ): FragmentSupportBugFixBinding {
         return FragmentSupportBugFixBinding.inflate(inflater, container, false)
     }
-
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
 
     @Inject
     lateinit var appConfigManager: AppConfigManager
@@ -121,7 +116,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
             bodyOfEmail += newLine + Uri.encode(appConfigManager.testingLevel().name)
         }
-        bodyOfEmail += newLine + Uri.encode("User ID: $userId")
+        bodyOfEmail += newLine + Uri.encode("User ID: $userViewModel.userID")
 
         userViewModel.user.value?.let { user ->
             bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +

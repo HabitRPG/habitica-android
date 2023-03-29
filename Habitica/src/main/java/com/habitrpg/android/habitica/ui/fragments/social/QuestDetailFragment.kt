@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.toHtml
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentQuestDetailBinding
@@ -37,7 +36,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,9 +46,6 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
@@ -123,7 +118,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
         val user = userViewModel.user.value
         if (binding?.questResponseWrapper != null) {
-            if (userId != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.RSVPNeeded == false) {
+            if (userViewModel.userID != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.RSVPNeeded == false) {
                 binding?.questLeaveButton?.visibility = View.VISIBLE
             } else {
                 binding?.questLeaveButton?.visibility = View.GONE
@@ -143,7 +138,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     }
 
     private fun showLeaderButtons(): Boolean {
-        return userId == party?.quest?.leader || userId == party?.leaderID
+        return userViewModel.userID == party?.quest?.leader || userViewModel.userID == party?.leaderID
     }
 
     private fun updateQuestContent(questContent: QuestContent) {

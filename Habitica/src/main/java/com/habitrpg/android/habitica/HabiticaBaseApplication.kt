@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -53,6 +54,8 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     internal lateinit var analyticsManager: AnalyticsManager
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
+    @Inject
+    internal lateinit var authenticationHandler: AuthenticationHandler
     /**
      * For better performance billing class should be used as singleton
      */

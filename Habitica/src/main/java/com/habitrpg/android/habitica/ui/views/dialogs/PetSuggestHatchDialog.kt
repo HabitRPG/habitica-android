@@ -15,12 +15,10 @@ import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
-import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.launchCatching
-import kotlinx.coroutines.MainScope
 import java.util.Locale
 import javax.inject.Inject
 
@@ -136,16 +134,20 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                     val activity = (getActivity() as? MainActivity) ?: return@addButton
                     val thisPotion = potion ?: return@addButton
                     val thisEgg = egg ?: return@addButton
-                    lifecycleScope.launchCatching {
-                        if (!hasEgg) {
-                            activity.inventoryRepository.purchaseItem("eggs", thisEgg.key, 1)
+                        longLivingScope.launchCatching {
+                            if (!hasEgg) {
+                                activity.inventoryRepository.purchaseItem("eggs", thisEgg.key, 1)
+                            }
+                            if (!hasPotion) {
+                                activity.inventoryRepository.purchaseItem(
+                                    "hatchingPotions",
+                                    thisPotion.key,
+                                    1
+                                )
+                            }
+                            activity.userRepository.retrieveUser(true, forced = true)
+                            hatchPet(thisPotion, thisEgg)
                         }
-                        if (!hasPotion) {
-                            activity.inventoryRepository.purchaseItem("hatchingPotions", thisPotion.key, 1)
-                        }
-                        activity.userRepository.retrieveUser(true, forced = true)
-                        hatchPet(thisPotion, thisEgg)
-                    }
                 }
             }
 
@@ -158,22 +160,20 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         DataBindingUtils.loadImage(context, imageName) {
             val resources = context.resources ?: return@loadImage
             val drawable = if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
-            MainScope().launchCatching {
+            lifecycleScope.launchCatching {
                 binding.petView.bitmap = drawable.toBitmap()
             }
         }
     }
 
     private fun hatchPet(potion: HatchingPotion, egg: Egg) {
-        (getActivity() as? BaseActivity)?.let {
-            it.lifecycleScope.launchCatching {
-                hatchPetUseCase.callInteractor(
-                    HatchPetUseCase.RequestValues(
-                        potion, egg,
-                        it
-                    )
+        longLivingScope.launchCatching {
+            hatchPetUseCase.callInteractor(
+                HatchPetUseCase.RequestValues(
+                    potion, egg,
+                    context
                 )
-            }
+            )
         }
     }
 

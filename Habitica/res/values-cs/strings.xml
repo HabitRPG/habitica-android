@@ -212,7 +212,7 @@
     <string name="opt_out_class">Neúčastnit se</string>
     <string name="class_confirmation">Opravdu chceš být %s?</string>
     <string name="class_changed">Nyní jsi %s!</string>
-    <string name="class_changed_description">Máš novou výchozí Bojovou výzbroj, kterou si můžeš změnit ve Vybavení!</string>
+
     <string name="choose_class">Vybrat třidu</string>
     <string name="dialog_go_back">Jít zpět</string>
     <string name="opt_out_confirmation">Jsi si jist, že se chceš neúčastnit?</string>

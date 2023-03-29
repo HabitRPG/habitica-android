@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.ui.fragments.skills.SkillTasksRecyclerViewF
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import javax.inject.Named
 
 @AndroidEntryPoint
 class SkillTasksActivity : BaseActivity() {
@@ -26,8 +25,6 @@ class SkillTasksActivity : BaseActivity() {
 
     @Inject
     lateinit var taskRepository: TaskRepository
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
 
     internal var viewFragmentsDictionary = SparseArray<SkillTasksRecyclerViewFragment>()
 

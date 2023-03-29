@@ -233,7 +233,7 @@
     <string name="opt_out_class">Отказване</string>
     <string name="class_confirmation">Наистина ли искате да бъдете %s?</string>
     <string name="class_changed">Вие вече сте %s!</string>
-    <string name="class_changed_description">Вече имате ново бойно снаряжение по подразбиране, което можете да намерите в „Екипировка“!</string>
+
     <string name="choose_class">Избиране на класа</string>
     <string name="dialog_go_back">Назад</string>
     <string name="opt_out_confirmation">Наистина ли искате да се откажете?</string>

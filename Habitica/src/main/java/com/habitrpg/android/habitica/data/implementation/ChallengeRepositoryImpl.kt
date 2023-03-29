@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChallengeMembership
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
 import kotlinx.coroutines.flow.Flow
@@ -15,19 +16,19 @@ import kotlinx.coroutines.flow.Flow
 class ChallengeRepositoryImpl(
     localRepository: ChallengeLocalRepository,
     apiClient: ApiClient,
-    userID: String
-) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, userID), ChallengeRepository {
+    authenticationHandler: AuthenticationHandler
+) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, authenticationHandler), ChallengeRepository {
 
     override fun isChallengeMember(challengeID: String): Flow<Boolean> {
-        return localRepository.isChallengeMember(userID, challengeID)
+        return localRepository.isChallengeMember(currentUserID, challengeID)
     }
 
     override fun getChallengepMembership(id: String): Flow<ChallengeMembership> {
-        return localRepository.getChallengeMembership(userID, id)
+        return localRepository.getChallengeMembership(currentUserID, id)
     }
 
     override fun getChallengeMemberships(): Flow<List<ChallengeMembership>> {
-        return localRepository.getChallengeMemberships(userID)
+        return localRepository.getChallengeMemberships(currentUserID)
     }
 
     override fun getChallenge(challengeId: String): Flow<Challenge> {
@@ -130,26 +131,26 @@ class ChallengeRepositoryImpl(
     }
 
     override fun getUserChallenges(userId: String?): Flow<List<Challenge>> {
-        return localRepository.getUserChallenges(userId ?: userID)
+        return localRepository.getUserChallenges(userId ?: currentUserID)
     }
 
     override suspend fun retrieveChallenges(page: Int, memberOnly: Boolean): List<Challenge>? {
         val challenges = apiClient.getUserChallenges(page, memberOnly)
         if (challenges != null) {
-            localRepository.saveChallenges(challenges, page == 0, memberOnly, userID)
+            localRepository.saveChallenges(challenges, page == 0, memberOnly, currentUserID)
         }
         return challenges
     }
 
     override suspend fun leaveChallenge(challenge: Challenge, keepTasks: String): Void? {
         apiClient.leaveChallenge(challenge.id ?: "", LeaveChallengeBody(keepTasks))
-        localRepository.setParticipating(userID, challenge.id ?: "", false)
+        localRepository.setParticipating(currentUserID, challenge.id ?: "", false)
         return null
     }
 
     override suspend fun joinChallenge(challenge: Challenge): Challenge? {
         val returnedChallenge = apiClient.joinChallenge(challenge.id ?: "") ?: return null
-        localRepository.setParticipating(userID, returnedChallenge.id ?: "", true)
+        localRepository.setParticipating(currentUserID, returnedChallenge.id ?: "", true)
         return returnedChallenge
     }
 }

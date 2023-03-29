@@ -232,7 +232,7 @@
     <string name="opt_out_class">Rinuncia</string>
     <string name="class_confirmation">Vuoi davvero essere un %s?</string>
     <string name="class_changed">Ora sei un %s!</string>
-    <string name="class_changed_description">Hai del nuovo equipaggiamento da battaglia che puoi indossare, vai nella sezione Equipaggiamento!</string>
+
     <string name="choose_class">Scegli classe</string>
     <string name="dialog_go_back">Ritorna</string>
     <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>

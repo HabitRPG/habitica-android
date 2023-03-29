@@ -223,7 +223,7 @@
     <string name="opt_out_class">Wycofaj się</string>
     <string name="class_confirmation">Jesteś pewien, że chcesz być %s?</string>
     <string name="class_changed">Jesteś teraz %s!</string>
-    <string name="class_changed_description">Masz nowe domyślne wyposażenie bojowe, które możesz zmienić pod Wyposażeniem!</string>
+
     <string name="choose_class">Wybierz klasę postaci</string>
     <string name="dialog_go_back">Wróć</string>
     <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>

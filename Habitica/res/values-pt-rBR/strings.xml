@@ -232,7 +232,7 @@
     <string name="opt_out_class">Decidir mais tarde</string>
     <string name="class_confirmation">Você tem certeza que quer ser um(a) %s\?</string>
     <string name="class_changed">Você é um(a) %s agora!</string>
-    <string name="class_changed_description">Você tem um novo Equipamento de Batalha padrão, que pode ser trocado em Equipamentos!</string>
+
     <string name="choose_class">Escolha a sua Classe</string>
     <string name="dialog_go_back">Voltar</string>
     <string name="opt_out_confirmation">Você tem certeza de que ainda não quer escolher\?</string>

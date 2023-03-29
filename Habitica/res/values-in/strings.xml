@@ -220,7 +220,7 @@
     <string name="opt_out_class">Matikan Fitur</string>
     <string name="class_confirmation">Apakah kamu yakin ingin menjadi seorang %s?</string>
     <string name="class_changed">Kamu sekarang seorang %s! </string>
-    <string name="class_changed_description">Kamu memiliki Baju Perang baru yang dapat diganti pada menu Perlengkapan! </string>
+
     <string name="choose_class">Pilih Kelas</string>
     <string name="dialog_go_back">Kembali</string>
     <string name="opt_out_confirmation">Apakah kamu yakin kamu ingin mematikan fitur?</string>

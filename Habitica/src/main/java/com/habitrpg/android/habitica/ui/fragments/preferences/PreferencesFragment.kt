@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -622,34 +623,40 @@ fun PauseResumeDamageView(
             Text(
                 stringResource(R.string.pause_damage_1_title),
                 color = HabiticaTheme.colors.textPrimary,
+                fontWeight = FontWeight.Normal,
                 fontSize = 16.sp
             )
             Text(
                 stringResource(R.string.pause_damage_1_description),
                 color = HabiticaTheme.colors.textSecondary,
                 fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
             Text(
                 stringResource(R.string.pause_damage_2_title),
                 color = HabiticaTheme.colors.textPrimary,
+                fontWeight = FontWeight.Normal,
                 fontSize = 16.sp
             )
             Text(
                 stringResource(R.string.pause_damage_2_description),
                 color = HabiticaTheme.colors.textSecondary,
                 fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
             Text(
                 stringResource(R.string.pause_damage_3_title),
                 color = HabiticaTheme.colors.textPrimary,
+                fontWeight = FontWeight.Normal,
                 fontSize = 16.sp
             )
             Text(
                 stringResource(R.string.pause_damage_3_description),
                 color = HabiticaTheme.colors.textSecondary,
                 fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
                 modifier = Modifier.padding(bottom = 18.dp)
             )
             HabiticaButton(

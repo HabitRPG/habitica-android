@@ -220,7 +220,7 @@
     <string name="opt_out_class">선택 유예</string>
     <string name="class_confirmation">%s 이(가) 되고싶은 것이 확실한가요\?</string>
     <string name="class_changed">%s이(가) 되었습니다!</string>
-    <string name="class_changed_description">장비 메뉴에서 교체할 수 있는 새로운 기본 전투 장비를 얻었습니다!</string>
+
     <string name="choose_class">직업 선택</string>
     <string name="dialog_go_back">뒤로 가기</string>
     <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>

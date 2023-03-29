@@ -232,7 +232,7 @@
     <string name="opt_out_class">Izaberi kasnije</string>
     <string name="class_confirmation">Jesi li siguran/na da želiš biti %s?</string>
     <string name="class_changed">Sada si %s!</string>
-    <string name="class_changed_description">Imaš novu zadanu Ratnu Opremu koju možeš promijeniti pod Opremom!</string>
+
     <string name="choose_class">Odaberi Klasu </string>
     <string name="dialog_go_back">Idi natrag</string>
     <string name="opt_out_confirmation">Jesi li siguran/na da želiš izabrati kasnije?</string>

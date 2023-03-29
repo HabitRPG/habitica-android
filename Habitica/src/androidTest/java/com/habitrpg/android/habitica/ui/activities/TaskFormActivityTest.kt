@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -65,10 +64,7 @@ class TaskFormActivityTest : ActivityTestCase() {
     @Before
     fun setup() {
         every { sharedPreferences.getString("FirstDayOfTheWeek", any()) } returns "-1"
-        val mockComponent: UserComponent = mockk(relaxed = true)
-        every { mockComponent.inject(any<TaskFormActivity>()) } answers { initializeInjects(this.args.first()) }
         mockkObject(HabiticaBaseApplication)
-        every { HabiticaBaseApplication.userComponent } returns mockComponent
     }
 
     private fun hasBasicTaskEditingViews() {

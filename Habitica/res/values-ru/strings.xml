@@ -230,7 +230,7 @@
     <string name="opt_out_class">Отказаться</string>
     <string name="class_confirmation">Вы уверены, что хотите продолжить как %s\?</string>
     <string name="class_changed">Теперь вы %s!</string>
-    <string name="class_changed_description">У вас есть новая боевая экипировка по умолчанию, которую вы можете сменить в разделе Снаряжение!</string>
+
     <string name="choose_class">Выбрать класс</string>
     <string name="dialog_go_back">Вернуться назад</string>
     <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>

@@ -233,7 +233,7 @@
     <string name="opt_out_class">Afmelden</string>
     <string name="class_confirmation">Weet je zeker dat je een %s wilt zijn?</string>
     <string name="class_changed">Je bent nu een %s!</string>
-    <string name="class_changed_description">Je hebt een nieuwe standaard gevechtsuitrusting die je kan veranderen onder Uitrusting!</string>
+
     <string name="choose_class">Kies een Klasse</string>
     <string name="dialog_go_back">Ga terug</string>
     <string name="opt_out_confirmation">Weet je zeker dat je je wil afmelden?</string>

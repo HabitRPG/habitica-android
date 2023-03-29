@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.databinding.FragmentIntroBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint

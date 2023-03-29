@@ -364,7 +364,7 @@
 \n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
     <string name="warrior_description">Guerreiros obtêm mais Golpes Críticos e infligem maior dano aos Monstros. Joga como Guerreiro se quiseres derrotar Monstros mais facilmente! Guerreiros beneficiam de uma elevada estatística de Força.</string>
     <string name="opting_out_progress">Optando por</string>
-    <string name="class_changed_description">Você tem um novo Battle Gear padrão que pode ser alterado em Equipamento!</string>
+
     <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
     <string name="notifications">Notificações</string>
     <string name="no_notifications_title">Já sabes tudo o que se passa!</string>

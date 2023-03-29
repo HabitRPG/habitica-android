@@ -232,7 +232,7 @@
     <string name="opt_out_class">選ばない</string>
     <string name="class_confirmation">%s になります。いいですか?</string>
     <string name="class_changed">あなたは%s に転職した！</string>
-    <string name="class_changed_description">新たな標準の武装を手に入れました。「装備」で取り換えることもできます！</string>
+
     <string name="choose_class">クラスを選ぶ</string>
     <string name="dialog_go_back">戻る</string>
     <string name="opt_out_confirmation">選ばないでいい?</string>

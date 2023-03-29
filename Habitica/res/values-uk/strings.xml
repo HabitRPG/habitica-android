@@ -296,7 +296,7 @@
     <string name="opt_out_confirmation">Ви дійсно хочете відмовитись\?</string>
     <string name="dialog_go_back">Назад</string>
     <string name="choose_class">Виберіть клас</string>
-    <string name="class_changed_description">У вас є нове бойове спорядження за замовчуванням, яке ви можете змінити в розділі Спорядження!</string>
+
     <string name="class_changed">Тепер ви - %s!</string>
     <string name="class_confirmation">Ви впевнені, що хочете бути %s\?</string>
     <string name="opting_out_progress">Не приймати участь</string>

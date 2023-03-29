@@ -229,7 +229,7 @@
     <string name="opt_out_class">退出</string>
     <string name="class_confirmation">你確定想要成為%1$s嗎？</string>
     <string name="class_changed">你成為了%s！</string>
-    <string name="class_changed_description">你有新的默認的戰鬥裝備，你可以在裝備裡替換！</string>
+
     <string name="choose_class">選擇職業</string>
     <string name="dialog_go_back">返回</string>
     <string name="opt_out_confirmation">你確定要退出嗎？</string>

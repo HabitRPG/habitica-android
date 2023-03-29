@@ -233,7 +233,7 @@
     <string name="opt_out_class">No elegir</string>
     <string name="class_confirmation">¿Seguro que quieres ser %s?</string>
     <string name="class_changed">¡Ahora eres un %s!</string>
-    <string name="class_changed_description">¡Tienes un nuevo Equipo de Combate que puedes ponerte en tu Equipamiento!</string>
+
     <string name="choose_class">Elegir clase</string>
     <string name="dialog_go_back">Volver</string>
     <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>

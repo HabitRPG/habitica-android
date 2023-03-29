@@ -70,9 +70,10 @@
                 style="@style/Body1"
                 android:layout_marginBottom="1dp"/>
             <TextView
+                android:id="@+id/change_class_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/equipment_class_locked"
+                tools:text="@string/unlock_gear_and_skills"
                 android:textColor="?textColorSecondary"
                 style="@style/Body2"/>
         </LinearLayout>

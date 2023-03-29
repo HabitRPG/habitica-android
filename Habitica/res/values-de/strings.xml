@@ -232,7 +232,7 @@
     <string name="opt_out_class">Später entscheiden</string>
     <string name="class_confirmation">Bist Du sicher, dass Du %s werden willst?</string>
     <string name="class_changed">Du bist jetzt ein/eine %s!</string>
-    <string name="class_changed_description">Du hast neue Basis-Kampfausrüstung, die Du im Ausrüstungsreiter wechseln kannst!</string>
+
     <string name="choose_class">Klasse wählen</string>
     <string name="dialog_go_back">Zurück</string>
     <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>

@@ -291,9 +291,9 @@
     <string name="opt_out_class">Opt Out</string>
     <string name="opting_out_progress">Opting Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
-    <string name="class_confirmation_price">Do you want to change your class to %s for %d gems?</string>
+    <string name="class_confirmation_price">Do you want to change your class to %s for %d Gems?</string>
     <string name="class_changed">You are now a %s!</string>
-    <string name="class_changed_description">You have new default Battle Gear that you can change under Equipment!</string>
+    <string name="class_changed_description">You can use %s skills and purchase gear from shops!</string>
     <string name="choose_class">Choose Class</string>
     <string name="dialog_go_back">Go Back</string>
     <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
@@ -1381,6 +1381,7 @@
     <string name="change_class_to_x">Change class to %s</string>
     <string name="shop_armoire_title">You own all %s gear</string>
     <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, theres %d pieces of gear in the Enchanted Armoire to find!</string>
+    <string name="unlock_gear_and_skills">Unlock %s gear and skills</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

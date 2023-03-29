@@ -232,7 +232,7 @@
     <string name="opt_out_class">Désactiver</string>
     <string name="class_confirmation">Êtes vous sûr de vouloir devenir un %s \?</string>
     <string name="class_changed">Vous êtes maintenant un %s !</string>
-    <string name="class_changed_description">Vous avez une nouvelle tenue de combat par défaut que vous pouvez changer dans l\'équipement !</string>
+
     <string name="choose_class">Choisissez une classe</string>
     <string name="dialog_go_back">Revenir</string>
     <string name="opt_out_confirmation">Confirmez-vous vouloir désactiver votre compte ?</string>

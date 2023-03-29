@@ -17,25 +17,27 @@ import io.realm.Realm
 @Module
 open class RepositoryModule {
     @Provides
-    open fun providesRealm(): Realm? {
+    open fun providesRealm(): Realm {
         return Realm.getDefaultInstance()
     }
 
     @Provides
-    fun providesContentLocalRepository(realm: Realm?): ContentLocalRepository {
-        return RealmContentLocalRepository(realm!!)
+    fun providesContentLocalRepository(realm: Realm): ContentLocalRepository {
+        return RealmContentLocalRepository(realm)
     }
 
     @Provides
     fun providesContentRepository(
         contentLocalRepository: ContentLocalRepository,
         apiClient: ApiClient,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        authenticationHandler : AuthenticationHandler
     ): ContentRepository {
         return ContentRepositoryImpl(
             contentLocalRepository,
             apiClient,
-            context
+            context,
+            authenticationHandler
         )
     }
 }

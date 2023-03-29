@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -20,26 +21,29 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
+@ExperimentalCoroutinesApi
 class TaskRepositoryImpl(
     localRepository: TaskLocalRepository,
     apiClient: ApiClient,
-    userID: String,
+    authenticationHandler : AuthenticationHandler,
     val appConfigManager: AppConfigManager,
     val analyticsManager: AnalyticsManager
-) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, userID), TaskRepository {
+) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler), TaskRepository {
     private var lastTaskAction: Long = 0
 
     override fun getTasks(taskType: TaskType, userID: String?, includedGroupIDs: Array<String>): Flow<List<Task>> =
-        this.localRepository.getTasks(taskType, userID ?: this.userID, includedGroupIDs)
+        this.localRepository.getTasks(taskType, userID ?: authenticationHandler.currentUserID ?: "", includedGroupIDs)
 
     override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
         localRepository.saveTasks(userId, order, tasks)
@@ -54,7 +58,7 @@ class TaskRepositoryImpl(
     override suspend fun retrieveCompletedTodos(userId: String?): TaskList? {
         val taskList = this.apiClient.getTasks("completedTodos") ?: return null
         val tasks = taskList.tasks
-        this.localRepository.saveCompletedTodos(userId ?: this.userID, tasks.values)
+        this.localRepository.saveCompletedTodos(userId ?: authenticationHandler.currentUserID ?: "", tasks.values)
         return taskList
     }
 
@@ -92,7 +96,7 @@ class TaskRepositoryImpl(
         lastTaskAction = now
         val res = this.apiClient.postTaskDirection(id, (if (up) TaskDirection.UP else TaskDirection.DOWN).text) ?: return null
         // There are cases where the user object is not set correctly. So the app refetches it as a fallback
-        val thisUser = user ?: localRepository.getUser(userID).firstOrNull() ?: return null
+        val thisUser = user ?: localRepository.getUser(authenticationHandler.currentUserID ?: "").firstOrNull() ?: return null
         // save local task changes
 
         analyticsManager.logEvent(
@@ -132,7 +136,7 @@ class TaskRepositoryImpl(
             if (bgTask.type != TaskType.REWARD && (bgTask.value - localDelta) + res.delta != bgTask.value) {
                 bgTask.value = (bgTask.value - localDelta) + res.delta
                 if (TaskType.DAILY == bgTask.type || TaskType.TODO == bgTask.type) {
-                    bgTask.completeForUser(userID, up)
+                    bgTask.completeForUser(authenticationHandler.currentUserID ?: "", up)
                     if (TaskType.DAILY == bgTask.type) {
                         if (up) {
                             bgTask.streak = (bgTask.streak ?: 0) + 1
@@ -243,7 +247,7 @@ class TaskRepositoryImpl(
         task.ownerID = if (task.isGroupTask) {
             task.group?.groupID ?: ""
         } else {
-            userID
+            authenticationHandler.currentUserID ?: ""
         }
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
@@ -362,8 +366,9 @@ class TaskRepositoryImpl(
         }
     }
 
-    override fun getTaskCopies(userId: String): Flow<List<Task>> =
-        localRepository.getTasks(userId).map { localRepository.getUnmanagedCopy(it) }
+    override fun getTaskCopies(): Flow<List<Task>> = authenticationHandler.userIDFlow.flatMapLatest {
+        localRepository.getTasks(it)
+    }.map { localRepository.getUnmanagedCopy(it) }
 
     override fun getTaskCopies(tasks: List<Task>): List<Task> = localRepository.getUnmanagedCopy(tasks)
 
@@ -373,7 +378,7 @@ class TaskRepositoryImpl(
     }
 
     override suspend fun syncErroredTasks(): List<Task>? {
-        val tasks = localRepository.getErroredTasks(userID).firstOrNull()
+        val tasks = localRepository.getErroredTasks(currentUserID ?: "").firstOrNull()
         return tasks?.map { localRepository.getUnmanagedCopy(it) }?.mapNotNull {
             if (it.isCreating) {
                 createTask(it, true)
@@ -388,6 +393,6 @@ class TaskRepositoryImpl(
     }
 
     override fun getTasksForChallenge(challengeID: String?): Flow<List<Task>> {
-        return localRepository.getTasksForChallenge(challengeID, userID)
+        return localRepository.getTasksForChallenge(challengeID, currentUserID ?: "")
     }
 }
