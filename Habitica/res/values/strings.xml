@@ -314,8 +314,9 @@
     <string name="share_hatched">I just hatched a %1$s %2$s pet in #Habitica by completing my real-life tasks!</string>
     <string name="share_raised">I just gained a %1$s mount in #Habitica by completing my real-life tasks!</string>
     <string name="open_in_store">Open Play Store</string>
-    <string name="change_class_confirmation">Are you sure you want to change your class? This will cost 3 gems.</string>
-    <string name="change_class_equipment_warning">Warning: You will no longer be able to buy equipment from the %s class.</string>
+    <string name="change_class_confirmation">Do you want to change your class for 3 Gems?</string>
+    <string name="change_class_selected_confirmation">Do you want to change your class to %1$s for 3 Gems?</string>
+    <string name="change_class_equipment_warning">This will refund your stat points, switch which gear is unlocked in shops, and change your available skills.</string>
     <string name="confirm">Confirm</string>
     <string name="market">Market</string>
     <string name="timeTravelers">Time Travelers</string>

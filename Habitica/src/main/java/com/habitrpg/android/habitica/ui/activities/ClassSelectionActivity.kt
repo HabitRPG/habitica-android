@@ -225,8 +225,8 @@ class ClassSelectionActivity : BaseActivity() {
     private fun displayConfirmationDialogForClass() {
         if (!this.isInitialSelection && this.classWasUnset == false) {
             val alert = HabiticaAlertDialog(this)
-            alert.setTitle(getString(R.string.change_class_confirmation))
-            alert.setMessage(getString(R.string.change_class_equipment_warning, currentClass))
+            alert.setTitle(getString(R.string.change_class_selected_confirmation, newClass))
+            alert.setMessage(getString(R.string.change_class_equipment_warning))
             alert.addButton(R.string.choose_class, true) { _, _ ->
                 selectClass(newClass, true)
             }
