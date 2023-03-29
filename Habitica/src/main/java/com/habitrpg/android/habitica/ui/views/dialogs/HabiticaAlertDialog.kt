@@ -211,6 +211,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             button
         } ?: Button(context)
         button.text = string
+        button.elevation = 0f
         return addButton(button, autoDismiss, function) as Button
     }
 

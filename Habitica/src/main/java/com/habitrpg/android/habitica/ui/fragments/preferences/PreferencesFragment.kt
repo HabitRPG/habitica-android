@@ -8,20 +8,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -43,12 +29,11 @@ import com.habitrpg.android.habitica.prefs.TimePreference
 import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.PrefsActivity
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
-import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
+import com.habitrpg.android.habitica.ui.views.preferences.PauseResumeDamageView
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -164,16 +149,15 @@ class PreferencesFragment : BasePreferencesFragment(),
                 if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
                     if ((user?.gemCount ?: 0) >= 3) {
                         context?.let { context ->
-                            val builder = AlertDialog.Builder(context)
-                                .setMessage(getString(R.string.change_class_confirmation))
-                                .setNegativeButton(getString(R.string.dialog_go_back)) { dialog, _ -> dialog.dismiss() }
-                                .setPositiveButton(getString(R.string.change_class)) { _, _ ->
-                                    classSelectionResult.launch(
-                                        intent
-                                    )
-                                }
-                            val alert = builder.create()
-                            alert.show()
+                            val dialog = HabiticaAlertDialog(context)
+                            dialog.setTitle(R.string.change_class_confirmation)
+                            dialog.addButton(R.string.change_class, true, true) { _, _ ->
+                                classSelectionResult.launch(
+                                    intent
+                                )
+                            }
+                            dialog.addButton(R.string.dialog_go_back, false)
+                            dialog.enqueue()
                         }
                     } else {
                         val dialog = context?.let { InsufficientGemsDialog(it, 3) }
@@ -545,126 +529,6 @@ class PreferencesFragment : BasePreferencesFragment(),
         if (configManager.testingLevel() == AppTestingLevel.STAFF || BuildConfig.DEBUG) {
             serverUrlPreference?.isVisible = true
             taskListPreference?.isVisible = true
-        }
-    }
-}
-
-@Composable
-fun PauseResumeDamageView(
-    isPaused : Boolean,
-    onClick : () -> Unit,
-    modifier : Modifier = Modifier
-) {
-    Column(
-        horizontalAlignment = Alignment.Start,
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-    ) {
-        if (isPaused) {
-            Text(
-                stringResource(R.string.resume_damage),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(bottom = 18.dp)
-                    .fillMaxWidth()
-            )
-            Text(
-                stringResource(R.string.resume_damage_1_title),
-                color = HabiticaTheme.colors.textPrimary,
-                fontSize = 16.sp
-            )
-            Text(
-                stringResource(R.string.resume_damage_1_description),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-            Text(
-                stringResource(R.string.resume_damage_2_title),
-                color = HabiticaTheme.colors.textPrimary,
-                fontSize = 16.sp
-            )
-            Text(
-                stringResource(R.string.resume_damage_2_description),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-            Text(
-                stringResource(R.string.resume_damage_3_title),
-                color = HabiticaTheme.colors.textPrimary,
-                fontSize = 16.sp
-            )
-            Text(
-                stringResource(R.string.resume_damage_3_description),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 18.dp)
-            )
-            HabiticaButton(
-                background = colorResource(R.color.yellow_100),
-                color = colorResource(R.color.yellow_1),
-                onClick = { onClick() }) {
-                Text(stringResource(R.string.resume_damage))
-            }
-        } else {
-            Text(
-                stringResource(R.string.pause_damage),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .padding(bottom = 18.dp)
-                    .fillMaxWidth()
-            )
-            Text(
-                stringResource(R.string.pause_damage_1_title),
-                color = HabiticaTheme.colors.textPrimary,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp
-            )
-            Text(
-                stringResource(R.string.pause_damage_1_description),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-            Text(
-                stringResource(R.string.pause_damage_2_title),
-                color = HabiticaTheme.colors.textPrimary,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp
-            )
-            Text(
-                stringResource(R.string.pause_damage_2_description),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-            Text(
-                stringResource(R.string.pause_damage_3_title),
-                color = HabiticaTheme.colors.textPrimary,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp
-            )
-            Text(
-                stringResource(R.string.pause_damage_3_description),
-                color = HabiticaTheme.colors.textSecondary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.padding(bottom = 18.dp)
-            )
-            HabiticaButton(
-                background = colorResource(R.color.yellow_100),
-                color = colorResource(R.color.yellow_1),
-                onClick = { onClick() }) {
-                Text(stringResource(R.string.pause_damage))
-            }
         }
     }
 }
