@@ -143,7 +143,7 @@ class TaskFormActivity : BaseActivity() {
     private var taskType: TaskType = TaskType.HABIT
     private var tags = listOf<Tag>()
     private var groupID: String? = null
-    private var groupMembers = listOf<Member>()
+    private var groupMembers = mutableStateListOf<Member>()
     private var assignedIDs = mutableStateListOf<String>()
     private var taskCompletedMap = mutableStateMapOf<String, Date>()
     private var preselectedTags: ArrayList<String>? = null
@@ -249,40 +249,6 @@ class TaskFormActivity : BaseActivity() {
             }
         }
 
-        if (groupID != null) {
-            binding.assignView.setContent {
-                HabiticaTheme {
-                    AssignedView(
-                        groupMembers.filter { assignedIDs.contains(it.id) },
-                        taskCompletedMap,
-                        HabiticaTheme.colors.windowBackgroundFor(task),
-                        HabiticaTheme.colors.textPrimaryFor(task),
-                        {
-                            showAssignDialog()
-                        },
-                        {
-                            taskCompletedMap.remove(it)
-                            lifecycleScope.launch(Dispatchers.Main) {
-                                task?.let { it1 -> taskRepository.markTaskNeedsWork(it1, it) }
-                            }
-                        },
-                        showEditButton = true
-                    )
-                }
-            }
-
-            lifecycleScope.launch(Dispatchers.Main) {
-                socialRepository.getGroupMembers(groupID ?: "").collect {
-                    groupMembers = it
-                }
-            }
-
-            binding.tagsTitleView.isVisible = false
-            binding.tagsWrapper.isVisible = false
-        } else {
-            binding.assignTitleView.visibility = View.GONE
-            binding.assignView.visibility = View.GONE
-        }
 
         title = ""
         when {
@@ -331,6 +297,42 @@ class TaskFormActivity : BaseActivity() {
                 )
                 initialTaskInstance = configureTask(Task())
             }
+        }
+
+        if (groupID != null) {
+            binding.assignView.setContent {
+                HabiticaTheme {
+                    AssignedView(
+                        groupMembers.filter { assignedIDs.contains(it.id) },
+                        taskCompletedMap,
+                        HabiticaTheme.colors.windowBackgroundFor(task),
+                        HabiticaTheme.colors.textPrimaryFor(task),
+                        {
+                            showAssignDialog()
+                        },
+                        {
+                            taskCompletedMap.remove(it)
+                            lifecycleScope.launch(Dispatchers.Main) {
+                                task?.let { it1 -> taskRepository.markTaskNeedsWork(it1, it) }
+                            }
+                        },
+                        showEditButton = true
+                    )
+                }
+            }
+
+            lifecycleScope.launch(Dispatchers.Main) {
+                socialRepository.getGroupMembers(groupID ?: "").collect {
+                    groupMembers.clear()
+                    groupMembers.addAll(it)
+                }
+            }
+
+            binding.tagsTitleView.isVisible = false
+            binding.tagsWrapper.isVisible = false
+        } else {
+            binding.assignTitleView.visibility = View.GONE
+            binding.assignView.visibility = View.GONE
         }
 
         binding.taskDifficultyButtons.setContent {
