@@ -244,7 +244,7 @@ class ClassSelectionActivity : BaseActivity() {
     private fun displayClassChanged() {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.class_changed, className))
-        alert.setMessage(getString(R.string.class_changed_description))
+        alert.setMessage(getString(R.string.class_changed_description, className))
         alert.addButton(getString(R.string.complete_tutorial), true)
         alert.enqueue()
     }

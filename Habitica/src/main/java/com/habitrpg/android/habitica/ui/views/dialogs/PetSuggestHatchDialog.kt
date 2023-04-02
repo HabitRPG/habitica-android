@@ -19,13 +19,20 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import java.util.Locale
-import javax.inject.Inject
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
-    @Inject
-    lateinit var hatchPetUseCase: HatchPetUseCase
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface PetSuggestHatchDialogEntryPoint {
+        fun useCase(): HatchPetUseCase
+    }
+    var hatchPetUseCase: HatchPetUseCase
 
     private lateinit var binding: DialogPetSuggestHatchBinding
 
@@ -34,6 +41,9 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         inflater?.let { binding = DialogPetSuggestHatchBinding.inflate(it) }
         setAdditionalContentView(binding.root)
         binding.shimmerView.startShimmer()
+
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(context, PetSuggestHatchDialogEntryPoint::class.java)
+        hatchPetUseCase = hiltEntryPoint.useCase()
     }
 
     fun configure(

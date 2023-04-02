@@ -35,9 +35,11 @@ import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import com.habitrpg.android.habitica.ui.views.equipment.AvatarCustomizationOverviewView
 import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
+@AndroidEntryPoint
 open class AvatarOverviewFragment :
     BaseMainFragment<FragmentComposeScrollingBinding>(),
     AdapterView.OnItemSelectedListener {

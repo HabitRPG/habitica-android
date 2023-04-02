@@ -33,6 +33,7 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -189,6 +190,16 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         view.post { setGridSpanCount(view.width) }
 
         context?.let { analyticsManager.logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
+
+        lifecycleScope.launchCatching {
+            inventoryRepository.getOwnedItems()
+                .collect { adapter?.setOwnedItems(it) }
+        }
+        lifecycleScope.launchCatching {
+            inventoryRepository.getInAppRewards()
+                .map { rewards -> rewards.map { it.key } }
+                .collect { adapter?.setPinnedItemKeys(it) }
+        }
     }
 
     open fun initializeCurrencyViews() {
@@ -207,7 +218,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             alert.addButton(R.string.choose_class, true) { _, _ ->
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     userRepository.changeClass(classIdentifier)
-                    adapter?.notifyDataSetChanged()
+                    loadMarketGear()
                 }
             }
             alert.addButton(R.string.dialog_go_back, false)
@@ -232,19 +243,19 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             binding?.recyclerView?.state = RecyclerViewState.FAILED
         }) {
             val shop1 = inventoryRepository.retrieveShopInventory(shopUrl) ?: return@launchCatching
-            if (shop1.identifier == Shop.MARKET) {
-                val user = userViewModel.user.value
-                val specialCategory = ShopCategory()
-                specialCategory.text = getString(R.string.special)
-                if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
-                    val item = ShopItem.makeGemItem(context?.resources)
-                    item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft
-                    specialCategory.items.add(item)
-                }
-                specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
-                shop1.categories.add(specialCategory)
-            }
             when (shop1.identifier) {
+                Shop.MARKET -> {
+                    val user = userViewModel.user.value
+                    val specialCategory = ShopCategory()
+                    specialCategory.text = getString(R.string.special)
+                    if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
+                        val item = ShopItem.makeGemItem(context?.resources)
+                        item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft
+                        specialCategory.items.add(item)
+                    }
+                    specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
+                    shop1.categories.add(specialCategory)
+                }
                 Shop.TIME_TRAVELERS_SHOP -> {
                     formatTimeTravelersShop(shop1)
                 }
@@ -259,16 +270,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             shop = shop1
             adapter?.setShop(shop1)
             binding?.refreshLayout?.isRefreshing = false
-        }
-
-        lifecycleScope.launchCatching {
-            inventoryRepository.getOwnedItems()
-                .collect { adapter?.setOwnedItems(it) }
-        }
-        lifecycleScope.launchCatching {
-            inventoryRepository.getInAppRewards()
-                .map { rewards -> rewards.map { it.key } }
-                .collect { adapter?.setPinnedItemKeys(it) }
         }
     }
 
@@ -300,19 +301,17 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     private fun loadMarketGear() {
         lifecycleScope.launchCatching {
             val shop = inventoryRepository.retrieveMarketGear()
-            inventoryRepository.getOwnedEquipment()
-                .map { equipment -> equipment.map { it.key } }
-                .collect { equipment ->
-                    for (category in shop?.categories ?: emptyList()) {
-                        val items = category.items.asSequence().filter {
-                            !equipment.contains(it.key)
-                        }.sortedBy { it.locked }.toList()
-                        category.items.clear()
-                        category.items.addAll(items)
-                    }
-                    gearCategories = shop?.categories
-                    adapter?.gearCategories = shop?.categories ?: mutableListOf()
-                }
+            val equipment = inventoryRepository.getOwnedEquipment()
+                .map { equipment -> equipment.map { it.key } }.firstOrNull()
+            for (category in shop?.categories ?: emptyList()) {
+                val items = category.items.asSequence().filter {
+                    equipment?.contains(it.key) == false
+                }.sortedBy { it.locked }.toList()
+                category.items.clear()
+                category.items.addAll(items)
+            }
+            gearCategories = shop?.categories
+            adapter?.gearCategories = shop?.categories ?: mutableListOf()
         }
     }
 
