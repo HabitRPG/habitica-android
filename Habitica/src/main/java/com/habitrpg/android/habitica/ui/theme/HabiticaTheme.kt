@@ -205,6 +205,17 @@ class HabiticaColors(
             colorResource(if (hasIcon) R.color.content_background else R.color.content_background_offset)
         }
     }
+
+    @Composable
+    fun basicTextColor(): Color {
+        return colorResource(R.color.gray200_gray400)
+    }
+
+    @Composable
+    fun basicButtonColor(): Color {
+        return colorResource(R.color.gray700_gray10)
+    }
+
 }
 
 class HabiticaTypography {
