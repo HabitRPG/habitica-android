@@ -249,7 +249,7 @@ class ClassSelectionActivity : BaseActivity() {
         alert.setOnCancelListener {
             dismiss()
         }
-        alert.show()
+        alert.enqueue()
     }
 
     private fun optOutOfClasses() {

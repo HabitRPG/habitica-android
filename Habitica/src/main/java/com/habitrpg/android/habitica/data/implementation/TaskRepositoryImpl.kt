@@ -286,6 +286,7 @@ class TaskRepositoryImpl(
         val savedTask = apiClient.updateTask(id, unmanagedTask)
         savedTask?.position = task.position
         savedTask?.id = task.id
+        savedTask?.ownerID = task.ownerID
         if (savedTask != null) {
             savedTask.tags = task.tags
             localRepository.save(savedTask)

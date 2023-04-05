@@ -296,7 +296,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 }
                 item.isVisible = true
             }
-            updateItem(item)
+            adapter.updateItem(item)
         }
         val statsItem = getItemWithIdentifier(SIDEBAR_STATS)
         if (statsItem != null) {
@@ -310,7 +310,7 @@ class NavigationDrawerFragment : DialogFragment() {
             } else {
                 statsItem.isVisible = false
             }
-            updateItem(statsItem)
+            adapter.updateItem(statsItem)
         }
 
         val subscriptionItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION)
@@ -336,12 +336,12 @@ class NavigationDrawerFragment : DialogFragment() {
             subscriptionItem?.subtitle = context?.getString(R.string.more_out_of_habitica)
         }
 
-        subscriptionItem?.let { updateItem(it) }
+        subscriptionItem?.let { adapter.updateItem(it) }
 
         val promoItem = getItemWithIdentifier(SIDEBAR_SUBSCRIPTION_PROMO)
         if (promoItem != null) {
             promoItem.isVisible = !user.isSubscribed
-            updateItem(promoItem)
+            adapter.updateItem(promoItem)
         }
         getItemWithIdentifier(SIDEBAR_NEWS)?.let {
             it.showBubble = user.flags?.newStuff ?: false
@@ -689,10 +689,6 @@ class NavigationDrawerFragment : DialogFragment() {
     private fun getItemWithIdentifier(identifier: String): HabiticaDrawerItem? =
         adapter.getItemWithIdentifier(identifier)
 
-    private fun updateItem(item: HabiticaDrawerItem) {
-        adapter.updateItem(item)
-    }
-
     private fun setDisplayName(name: String?) {
         if (name != null && name.isNotEmpty()) {
             binding?.toolbarTitle?.text = name
@@ -793,17 +789,17 @@ class NavigationDrawerFragment : DialogFragment() {
                         R.string.sale_ends_in,
                         activePromo.endDate.getShortRemainingString()
                     )
-                    updateItem(promotedItem)
+                    adapter.updateItem(promotedItem)
                 } else {
                     promotedItem.subtitle = null
                     promotedItem.pillText = null
-                    updateItem(promotedItem)
+                    adapter.updateItem(promotedItem)
                 }
             }
         } ?: run {
             promoItem.isVisible = false
         }
-        updateItem(promoItem)
+        adapter.updateItem(promoItem)
     }
 
     companion object {
