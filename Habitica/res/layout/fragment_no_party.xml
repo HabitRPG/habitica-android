@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/refreshLayout">
+    android:id="@+id/refreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarSize="3dp"
         android:scrollbarThumbVertical="@color/scrollbarThumb"
         android:scrollbars="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/invitationWrapper"
                 style="@style/FlatCardView"
-                android:id="@+id/invitationWrapper">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <com.habitrpg.android.habitica.ui.views.social.InvitationsView
                     android:id="@+id/invitations_view"
+                    style="@style/CardContent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CardContent" />
+                    android:layout_height="wrap_content" />
             </FrameLayout>
 
             <LinearLayout
@@ -32,125 +35,151 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="158dp"
                     android:layout_marginBottom="@dimen/spacing_medium">
+
                     <ImageView
                         android:id="@+id/no_party_background"
                         android:layout_width="match_parent"
                         android:layout_height="124dp"
-                        android:layout_alignParentTop="true"/>
+                        android:layout_alignParentTop="true" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="124dp"
-                        android:background="@drawable/no_party_background_gradient"/>
+                        android:background="@drawable/no_party_background_gradient" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="124dp"
+                        android:rotation="-180"
+                        android:background="@drawable/no_party_background_gradient" />
+
                     <ImageView
                         android:layout_width="332dp"
                         android:layout_height="146dp"
-                        android:layout_marginTop="12dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/no_party_banner"/>
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/no_party_banner" />
                 </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="@dimen/spacing_sides">
+                    android:layout_margin="@dimen/spacing_sides"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         style="@style/Headline"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_ternary"
-                        android:text="@string/no_party_title"
-                        android:gravity="center"
-                        android:fontFamily="sans-serif-medium"
-                        android:layout_marginBottom="@dimen/spacing_medium"/>
-                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Body2"
-                        android:text="@string/no_party_description"
-                        android:textColor="@color/text_quad"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:fontFamily="sans-serif-medium"
                         android:gravity="center"
+                        android:text="@string/no_party_title"
+                        android:textColor="@color/text_ternary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        style="@style/Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_large"
-                        android:layout_marginEnd="@dimen/spacing_large"/>
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        android:gravity="center"
+                        android:text="@string/no_party_description"
+                        android:textColor="@color/text_quad" />
+
                     <Button
                         android:id="@+id/createPartyButton"
+                        style="@style/HabiticaButton.Gray"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/HabiticaButton.Gray"
-                        android:text="@string/create_party"
-                        android:layout_marginTop="@dimen/spacing_large"/>
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:text="@string/create_party" />
                 </LinearLayout>
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/window_background"
+                    app:strokeWidth="0dp"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
+                        android:paddingBottom="100dp"
                         android:paddingHorizontal="@dimen/spacing_sides"
-                        android:paddingTop="@dimen/spacing_sides"
-                        android:paddingBottom="60dp"
-                        app:cardBackgroundColor="@color/window_background">
+                        android:paddingTop="@dimen/spacing_sides">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:src="@drawable/party_seeking"
-                            android:layout_marginBottom="@dimen/spacing_large"/>
+                            android:layout_marginBottom="@dimen/spacing_large"
+                            android:src="@drawable/party_seeking" />
+
                         <TextView
+                            style="@style/Headline"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/Headline"
+                            android:layout_marginBottom="@dimen/spacing_medium"
                             android:fontFamily="sans-serif-medium"
-                            android:textSize="16sp"
-                            android:text="@string/seeking_party_title"
                             android:gravity="center"
-                            android:layout_marginBottom="@dimen/spacing_medium"/>
+                            android:text="@string/seeking_party_title"
+                            android:textSize="16sp" />
+
                         <TextView
                             android:id="@+id/join_party_description_textview"
+                            style="@style/Body2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/Body2"
-                            android:text="@string/seeking_party_description"
-                            android:textColor="@color/text_quad"
-                            android:textColorLink="@color/text_brand_neon"
-                            android:gravity="center"
                             android:layout_marginStart="@dimen/spacing_large"
                             android:layout_marginEnd="@dimen/spacing_large"
-                            android:layout_marginBottom="@dimen/spacing_large"/>
+                            android:layout_marginBottom="@dimen/spacing_large"
+                            android:gravity="center"
+                            android:text="@string/seeking_party_description"
+                            android:textColor="@color/text_green1_green500"
+                            android:textColorLink="@color/text_brand_neon" />
 
                         <Button
                             android:id="@+id/seek_party_button"
+                            style="@style/HabiticaButton.Primary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            style="@style/HabiticaButton.Primary"
-                            android:text="@string/look_for_party"/>
+                            android:text="@string/look_for_party" />
+
                         <LinearLayout
                             android:id="@+id/seeking_party_wrapper"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
                             <TextView
+                                style="@style/Body1_Button"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
+                                android:background="@drawable/success_border"
                                 android:text="@string/you_re_looking_for_party"
-                                android:textColor="@color/text_green10_green500"
-                                style="@style/Body1_Button"
                                 android:textAllCaps="false"
-                                android:background="@drawable/success_border"/>
+                                android:textColor="@color/text_green1_green500"
+                                android:textSize="16sp" />
 
                             <TextView
                                 style="@style/Body1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="6dp"
+                                android:fontFamily="@string/font_family_regular"
                                 android:gravity="center"
                                 android:paddingStart="8dp"
                                 android:paddingEnd="8dp"
                                 android:text="@string/seeking_hint"
-                                android:textColor="@color/text_green10_green500" />
+                                android:textColor="@color/text_green1_green500" />
 
                             <Button
                                 android:id="@+id/leave_seeking_button"
@@ -158,15 +187,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/leave_party_finder"
-                                android:textColor="@color/text_red_maroon"
-                                android:textSize="14sp" />
+                                android:textColor="@color/text_red_maroon" />
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
-
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
+
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
