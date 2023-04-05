@@ -233,7 +233,7 @@
     <string name="opt_out_class">Çekil</string>
     <string name="class_confirmation">Bir %s olmak istediğine emin misin?</string>
     <string name="class_changed">Yeni sınıfın: %s!</string>
-    <string name="class_changed_description">Ekipmanlar menüsü altında değiştirebileceğin yeni varsayılan Savaş Ekipmanın var!</string>
+
     <string name="choose_class">Sınıf Seç</string>
     <string name="dialog_go_back">Geri Dön</string>
     <string name="opt_out_confirmation">Çekilmek istediğinden emin misin?</string>
@@ -642,7 +642,7 @@
     <string name="preference_push_important_announcements">Önemli Duyurular</string>
     <string name="create">Oluştur</string>
     <string name="only_leader_create_challenge">Sadece lider Mücadele oluşturabilir</string>
-    <string name="create_party">Takım Oluştur</string>
+    <string name="create_party">Yeni bir takım oluştur</string>
     <string name="notifications">Bildirimler</string>
     <string name="no_notifications_title">Bildirimleri temizledin!</string>
     <string name="no_notifications_text">Bildirim perileri seni şevkle alkışlıyor! Bravo!</string>
@@ -652,7 +652,7 @@
     <string name="new_msg_party"><![CDATA[<b>%1$s</b> adlı Takımında yeni mesajlar var]]></string>
     <string name="unallocated_stats_points"><![CDATA[<b>%1$s adet dağıtılmamış Nitelik Puanın var.</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Yeni <b>Gizemli Eşyaların</b> var]]></string>
-    <string name="invited_to_party_notification"><![CDATA[<b>%1$s</b> Takımına davet edildin]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<b>%2$s</b> Takımına davet edildin <font color=#925CF3>%1$s</font>]]></string>
     <string name="invited_to_private_guild"><![CDATA[<b>%1$s</b> adlı özel Loncaya davet edildin]]></string>
     <string name="invited_to_public_guild"><![CDATA[<b>%1$s</b> adlı Loncaya davet edildin]]></string>
     <string name="invited_to_quest"><![CDATA[<b>%1$s</b> Görevine davet edildin]]></string>

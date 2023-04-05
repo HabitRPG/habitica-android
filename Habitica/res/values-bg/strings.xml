@@ -233,7 +233,7 @@
     <string name="opt_out_class">Отказване</string>
     <string name="class_confirmation">Наистина ли искате да бъдете %s?</string>
     <string name="class_changed">Вие вече сте %s!</string>
-    <string name="class_changed_description">Вече имате ново бойно снаряжение по подразбиране, което можете да намерите в „Екипировка“!</string>
+
     <string name="choose_class">Избиране на класа</string>
     <string name="dialog_go_back">Назад</string>
     <string name="opt_out_confirmation">Наистина ли искате да се откажете?</string>
@@ -643,7 +643,7 @@
     <string name="new_msg_party"><![CDATA[Има нови публикации в групата Ви — <b>%1$s</b>]]></string>
     <string name="unallocated_stats_points"><![CDATA[Имате <b>%1$s неразпределени показателни точки</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Имате нов <b>тайнствен предмет</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Получихте покана за присъединяване към групата <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Получихте покана за присъединяване към групата <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Получихте покана за присъединяване към частната гилдия <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Получихте покана за присъединяване към гилдията <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Получихте покана за присъединяване в мисията <b>%1$s</b>]]></string>

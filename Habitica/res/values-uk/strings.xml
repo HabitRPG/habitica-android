@@ -296,7 +296,7 @@
     <string name="opt_out_confirmation">Ви дійсно хочете відмовитись\?</string>
     <string name="dialog_go_back">Назад</string>
     <string name="choose_class">Виберіть клас</string>
-    <string name="class_changed_description">У вас є нове бойове спорядження за замовчуванням, яке ви можете змінити в розділі Спорядження!</string>
+
     <string name="class_changed">Тепер ви - %s!</string>
     <string name="class_confirmation">Ви впевнені, що хочете бути %s\?</string>
     <string name="opting_out_progress">Не приймати участь</string>
@@ -1003,11 +1003,11 @@
     <string name="old_password">Старий пароль</string>
     <string name="task_title">Назва задачі</string>
     <string name="add_local_authentication">Додати локальну аутентифікацію</string>
-    <string name="create_party">Створити команду</string>
+    <string name="create_party">Створити нову команду</string>
     <string name="invited_to_public_guild">Вас запросили в гільдію <b>%1$s</b></string>
     <string name="invited_to_quest">Вас запросили на квест <b>%1$s</b></string>
     <string name="invited_to_private_guild">Вас запросили приєднатися до приватної гільдії <b>%1$s</b></string>
-    <string name="invited_to_party_notification">Вас запросили до команди <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s Вас запросили до команди <b>%2$s</b></string>
     <string name="gift_confirmation_text_sub_g1g1">Ви відправили %s %s-місячну підписку Habitica. Ця ж підписка була застосована до вашого облікового запису, завдяки участі в акції «Подаруйте підписку, отримайте підписку»!</string>
     <string name="gift_subscription_subtitle">Виберіть підписку, яку хочете подарувати внизу! Ця покупка не буде продовжена автоматично.</string>
     <string name="gift_one_get_one_detailed_description">Допоки ця акція активна, ви отримуєте відповідну підписку автоматично після відправки подарунка.</string>

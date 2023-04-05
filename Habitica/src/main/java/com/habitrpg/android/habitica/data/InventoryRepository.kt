@@ -22,9 +22,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface InventoryRepository : BaseRepository {
 
-    fun getArmoireRemainingCount(): Long
+    fun getArmoireRemainingCount(): Flow<Int>
 
     fun getInAppRewards(): Flow<List<ShopItem>>
+    fun getInAppReward(key: String): Flow<ShopItem>
+
     fun getOwnedEquipment(): Flow<List<Equipment>>
 
     fun getMounts(): Flow<List<Mount>>

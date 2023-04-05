@@ -14,6 +14,7 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/content_background</item>
 
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/brand</item>
@@ -40,6 +41,7 @@
         <item name="colorContentBackgroundOffset">@color/content_background_offset</item>
         <item name="colorWindowBackground">@color/window_background</item>
         <item name="colorTintedBackground">@color/brand_800</item>
+        <item name="colorGradientTransparentBackground">@color/transparent</item>
         <item name="colorTintedBackgroundOffset">@color/brand_50012</item>
         <item name="textColorTintedSecondary">@color/brand_sub_text</item>
         <item name="textColorTintedPrimary">@color/brand_100</item>
@@ -472,13 +474,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="DialogButton" parent="android:Widget.Button">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:textColor">?colorAccent</item>
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/text_red</item>
     </style>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
-        <item name="android:windowLightStatusBar">true</item>
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/dialog_button_text_color</item>
     </style>
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
@@ -490,26 +491,7 @@
         <item name="backgroundTint">@color/dialog_background</item>
     </style>
 
-    <style name="HabiticaAccountDialogTheme" parent="AppTheme">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@color/gray_2_alpha</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:navigationBarColor">@color/account_dialog_bars</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-    </style>
-
-
-    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/text_red</item>
-    </style>
-
-    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/dialog_button_text_color</item>
-    </style>
-
-    <style name="HabiticaAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    <style name="HabiticaAlertDialogTheme" parent="Theme.Material3.DayNight.Dialog.Alert">
         <item name="colorAccent">@color/brand_400</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -517,6 +499,8 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
     </style>
 
     <style name="SectionTitle">
@@ -716,6 +700,14 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:paddingStart">32dp</item>
         <item name="android:paddingEnd">32dp</item>
+    </style>
+
+    <style name="LoginButtonProgress" parent="@style/Widget.Material3.CircularProgressIndicator">
+        <item name="indicatorSize">22dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:indeterminate">false</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginStart">@dimen/spacing_xlarge</item>
     </style>
 
     <style name="DiamondButton" parent="@style/Widget.AppCompat.Button.Borderless">

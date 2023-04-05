@@ -57,8 +57,7 @@ interface TaskRepository : BaseRepository {
 
     fun createTaskInBackground(task: Task, assignChanges: Map<String, MutableList<String>>)
 
-    fun getTaskCopies(userId: String): Flow<List<Task>>
-
+    fun getTaskCopies(): Flow<List<Task>>
     fun getTaskCopies(tasks: List<Task>): List<Task>
 
     suspend fun retrieveDailiesFromDate(date: Date): TaskList?

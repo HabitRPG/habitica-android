@@ -183,7 +183,7 @@
     <string name="opt_out_class">No optar per res</string>
     <string name="class_confirmation">Segur que vols ser un %s?</string>
     <string name="class_changed">Ara ets un %s!</string>
-    <string name="class_changed_description">Tens un nou Equip de Batalla per defecte que pots canviar a Equipament.</string>
+
     <string name="choose_class">Escull la classe</string>
     <string name="dialog_go_back">Torna enrere</string>
     <string name="opt_out_confirmation">Estàs segur que no vols optar per res?</string>

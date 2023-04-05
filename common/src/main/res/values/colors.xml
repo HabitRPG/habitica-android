@@ -159,4 +159,6 @@
     <color name="text_blue">@color/blue_10</color>
     <color name="text_teal">@color/teal_10</color>
     <color name="divider_color">@color/gray_500</color>
+
+    <color name="dim_background">#40BDA8FF</color>
 </resources>

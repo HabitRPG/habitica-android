@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -272,9 +271,9 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 inventoryRepository.getOwnedItems(type)
                     .onEach { items ->
                         val filteredItems = if (isFeeding) {
-                            items.filter { it.key != "Saddle" }
+                            items.filter { it.key != "Saddle" }.distinctBy { it.key }
                         } else {
-                            items
+                            items.distinctBy { it.key }
                         }
                         adapter?.data = filteredItems
                     }

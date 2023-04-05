@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoroutinesApi::class)
+
 package com.habitrpg.android.habitica.data.implementation
 
 import com.habitrpg.android.habitica.data.ApiClient
@@ -21,16 +23,19 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 
 class InventoryRepositoryImpl(
     localRepository: InventoryLocalRepository,
     apiClient: ApiClient,
-    userID: String,
+    authenticationHandler: AuthenticationHandler,
     var appConfigManager: AppConfigManager
-) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, userID), InventoryRepository {
+) : BaseRepositoryImpl<InventoryLocalRepository>(localRepository, apiClient, authenticationHandler), InventoryRepository {
     override fun getQuestContent(keys: List<String>) = localRepository.getQuestContent(keys)
 
     override fun getQuestContent(key: String) = localRepository.getQuestContent(key)
@@ -39,12 +44,16 @@ class InventoryRepositoryImpl(
         return localRepository.getEquipment(searchedKeys)
     }
 
-    override fun getArmoireRemainingCount(): Long {
+    override fun getArmoireRemainingCount(): Flow<Int> {
         return localRepository.getArmoireRemainingCount()
     }
 
     override fun getInAppRewards(): Flow<List<ShopItem>> {
         return localRepository.getInAppRewards()
+    }
+
+    override fun getInAppReward(key : String) : Flow<ShopItem> {
+        return localRepository.getInAppReward(key)
     }
 
     override suspend fun retrieveInAppRewards(): List<ShopItem>? {
@@ -68,11 +77,11 @@ class InventoryRepositoryImpl(
     }
 
     override fun getOwnedItems(itemType: String, includeZero: Boolean): Flow<List<OwnedItem>> {
-        return localRepository.getOwnedItems(itemType, userID, includeZero)
+        return authenticationHandler.userIDFlow.flatMapLatest { localRepository.getOwnedItems(itemType, it, includeZero) }
     }
 
     override fun getOwnedItems(includeZero: Boolean): Flow<Map<String, OwnedItem>> {
-        return localRepository.getOwnedItems(userID, includeZero)
+        return authenticationHandler.userIDFlow.flatMapLatest { localRepository.getOwnedItems(it, includeZero) }
     }
 
     override fun getItems(itemClass: Class<out Item>, keys: Array<String>): Flow<List<Item>> {
@@ -111,7 +120,7 @@ class InventoryRepositoryImpl(
     }
 
     override fun getOwnedMounts(): Flow<List<OwnedMount>> {
-        return localRepository.getOwnedMounts(userID)
+        return authenticationHandler.userIDFlow.flatMapLatest {  localRepository.getOwnedMounts(it) }
     }
 
     override fun getPets(): Flow<List<Pet>> {
@@ -123,7 +132,7 @@ class InventoryRepositoryImpl(
     }
 
     override fun getOwnedPets(): Flow<List<OwnedPet>> {
-        return localRepository.getOwnedPets(userID)
+        return authenticationHandler.userIDFlow.flatMapLatest {  localRepository.getOwnedPets(it) }
     }
 
     override fun updateOwnedEquipment(user: User) {
@@ -131,11 +140,11 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun changeOwnedCount(type: String, key: String, amountToAdd: Int) {
-        localRepository.changeOwnedCount(type, key, userID, amountToAdd)
+        localRepository.changeOwnedCount(type, key, currentUserID, amountToAdd)
     }
 
     override suspend fun sellItem(type: String, key: String): User? {
-        val item = localRepository.getOwnedItem(userID, type, key, true).firstOrNull() ?: return null
+        val item = localRepository.getOwnedItem(currentUserID, type, key, true).firstOrNull() ?: return null
         return sellItem(item)
     }
 
@@ -158,7 +167,7 @@ class InventoryRepositoryImpl(
             liveItem?.numberOwned = (liveItem?.numberOwned ?: 0) - 1
         }
         val user = apiClient.sellItem(item.type, item.key) ?: return null
-        return localRepository.soldItem(userID, user)
+        return localRepository.soldItem(currentUserID, user)
     }
 
     override suspend fun equipGear(equipment: String, asCostume: Boolean): Items? {
@@ -166,7 +175,7 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun equip(type: String, key: String): Items? {
-        val liveUser = localRepository.getLiveUser(userID)
+        val liveUser = localRepository.getLiveUser(currentUserID)
 
         if (liveUser != null) {
             localRepository.modify(liveUser) { user ->
@@ -210,17 +219,17 @@ class InventoryRepositoryImpl(
 
     override suspend fun feedPet(pet: Pet, food: Food): FeedResponse? {
         val feedResponse = apiClient.feedPet(pet.key ?: "", food.key) ?: return null
-        localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, userID)
+        localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, currentUserID)
         return feedResponse
     }
 
     override suspend fun hatchPet(egg: Egg, hatchingPotion: HatchingPotion, successFunction: () -> Unit): Items? {
         if (appConfigManager.enableLocalChanges()) {
-            localRepository.hatchPet(egg.key, hatchingPotion.key, userID)
+            localRepository.hatchPet(egg.key, hatchingPotion.key, currentUserID)
             successFunction()
         }
         val items = apiClient.hatchPet(egg.key, hatchingPotion.key) ?: return null
-        localRepository.save(items, userID)
+        localRepository.save(items, currentUserID)
         if (!appConfigManager.enableLocalChanges()) {
             successFunction()
         }
@@ -229,13 +238,13 @@ class InventoryRepositoryImpl(
 
     override suspend fun inviteToQuest(quest: QuestContent): Quest? {
         val newQuest = apiClient.inviteToQuest("party", quest.key)
-        localRepository.changeOwnedCount("quests", quest.key, userID, -1)
+        localRepository.changeOwnedCount("quests", quest.key, currentUserID, -1)
         return newQuest
     }
 
     override suspend fun buyItem(user: User?, id: String, value: Double, purchaseQuantity: Int): BuyResponse? {
         val buyResponse = apiClient.buyItem(id, purchaseQuantity) ?: return null
-        val foundUser = user ?: localRepository.getLiveUser(userID) ?: return buyResponse
+        val foundUser = user ?: localRepository.getLiveUser(currentUserID) ?: return buyResponse
         val copiedUser = localRepository.getUnmanagedCopy(foundUser)
         if (buyResponse.items != null) {
             copiedUser.items = buyResponse.items

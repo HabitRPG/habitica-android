@@ -233,7 +233,7 @@
     <string name="opt_out_class">Afmelden</string>
     <string name="class_confirmation">Weet je zeker dat je een %s wilt zijn?</string>
     <string name="class_changed">Je bent nu een %s!</string>
-    <string name="class_changed_description">Je hebt een nieuwe standaard gevechtsuitrusting die je kan veranderen onder Uitrusting!</string>
+
     <string name="choose_class">Kies een Klasse</string>
     <string name="dialog_go_back">Ga terug</string>
     <string name="opt_out_confirmation">Weet je zeker dat je je wil afmelden?</string>
@@ -628,7 +628,7 @@
     <string name="new_msg_party"><![CDATA[Je Gezelschap, <b>%1$s</b>, heeft nieuwe berichten]]></string>
     <string name="unallocated_stats_points"><![CDATA[Je hebt <b>%1$s niet toegekende statuspunten</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Je hebt nieuwe <b>Mysterieuze items</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij de Groep <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> je werd uitgenodigd om je aan te sluiten bij de Groep <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij het Gilde <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij de Gilde <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Je bent uitgenodigd voor de Queeste <b>%1$s</b>]]></string>
@@ -828,7 +828,7 @@
     <string name="discover">Ontdekken</string>
     <string name="gift_confirmation_text_sub">Je hebt %s een %s-maand Habitica abonnement gestuurd.</string>
     <string name="task_title">Taaktitel</string>
-    <string name="create_party">Gezelschap aanmaken</string>
+    <string name="create_party">Een nieuwe groep aanmaken</string>
     <string name="only_leader_create_challenge">Alleen de leider kan uitdagingen creëren</string>
     <string name="create">Creëren</string>
     <string name="defeat">Vernietiging</string>

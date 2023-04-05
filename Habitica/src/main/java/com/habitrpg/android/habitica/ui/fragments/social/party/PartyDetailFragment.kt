@@ -12,7 +12,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.components.UserComponent
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -26,7 +25,6 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -43,13 +41,12 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.views.AvatarView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
@@ -73,10 +70,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
-
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
-
 
     override fun onDestroyView() {
         inventoryRepository.close()
@@ -252,7 +245,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questProgressView?.setData(questContent, viewModel?.getGroupData()?.value?.quest?.progress)
 
             val questParticipants = viewModel?.getGroupData()?.value?.quest?.members
-            if (questParticipants?.find { it.key == userId } != null) {
+            if (questParticipants?.find { it.key == viewModel?.userViewModel?.userID } != null) {
                 binding?.questParticipationView?.text = context?.getString(R.string.number_participants, questParticipants.size)
             } else {
                 binding?.questParticipationView?.text = context?.getString(R.string.not_participating)
@@ -286,13 +279,13 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 FullProfileActivity.open(member.id ?: "")
             }
             viewHolder.sendMessageEvent = {
-                member.id?.let { showSendMessageToUserDialog(it, member.displayName) }
+                member.id.let { showSendMessageToUserDialog(it, member.displayName) }
             }
             viewHolder.transferOwnershipEvent = {
-                member.id?.let { showTransferOwnerShipDialog(it, member.displayName) }
+                member.id.let { showTransferOwnerShipDialog(it, member.displayName) }
             }
             viewHolder.removeMemberEvent = {
-                member.id?.let { showRemoveMemberDialog(it, member.displayName) }
+                member.id.let { showRemoveMemberDialog(it, member.displayName) }
             }
         }
     }

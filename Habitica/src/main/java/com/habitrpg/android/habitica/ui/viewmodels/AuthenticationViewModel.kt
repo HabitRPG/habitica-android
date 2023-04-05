@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
@@ -34,6 +35,7 @@ class AuthenticationViewModel @Inject constructor(
     val apiClient : ApiClient,
     val userRepository : UserRepository,
     val sharedPrefs : SharedPreferences,
+    val authenticationHandler : AuthenticationHandler,
     val hostConfig : HostConfig,
     val analyticsManager : AnalyticsManager,
     private val keyHelper : KeyHelper?
@@ -142,6 +144,7 @@ class AuthenticationViewModel @Inject constructor(
     @Throws(Exception::class)
     private fun saveTokens(api : String, user : String) {
         this.apiClient.updateAuthenticationCredentials(user, api)
+        authenticationHandler.updateUserID(user)
         sharedPrefs.edit {
             putString("UserID", user)
             val encryptedKey =

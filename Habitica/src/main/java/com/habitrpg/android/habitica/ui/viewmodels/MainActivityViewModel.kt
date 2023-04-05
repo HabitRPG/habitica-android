@@ -113,6 +113,7 @@ class MainActivityViewModel @Inject constructor(
                         pushNotificationManager.addPushDeviceUsingStoredToken()
                     }
                 }
+                inventoryRepository.retrieveInAppRewards()
                 contentRepository.retrieveContent()
             }
             viewModelScope.launchCatching {

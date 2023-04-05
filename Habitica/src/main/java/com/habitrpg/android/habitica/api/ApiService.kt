@@ -465,5 +465,5 @@ interface ApiService {
     suspend fun markTaskNeedsWork(@Path("taskID") taskID: String, @Path("userID") userID: String): HabitResponse<Task>
 
     @GET("looking-for-party")
-    suspend fun retrievePartySeekingUsers(): HabitResponse<List<Member>>
+    suspend fun retrievePartySeekingUsers(@Query("page") page: Int): HabitResponse<List<Member>>
 }

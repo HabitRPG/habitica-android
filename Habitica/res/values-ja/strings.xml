@@ -232,7 +232,7 @@
     <string name="opt_out_class">選ばない</string>
     <string name="class_confirmation">%s になります。いいですか?</string>
     <string name="class_changed">あなたは%s に転職した！</string>
-    <string name="class_changed_description">新たな標準の武装を手に入れました。「装備」で取り換えることもできます！</string>
+
     <string name="choose_class">クラスを選ぶ</string>
     <string name="dialog_go_back">戻る</string>
     <string name="opt_out_confirmation">選ばないでいい?</string>
@@ -642,7 +642,7 @@
     <string name="preference_push_important_announcements">大切なお知らせ</string>
     <string name="create">作成する</string>
     <string name="only_leader_create_challenge">リーダーだけが、チャレンジを作成できます</string>
-    <string name="create_party">パーティーを作成する</string>
+    <string name="create_party">新しいパーティーを作成する</string>
     <string name="notifications">通知</string>
     <string name="no_notifications_title">全ての通知をチェックしました！</string>
     <string name="no_notifications_text">通知の妖精はパチパチとあなたに拍手を送っています！えらい！</string>
@@ -652,7 +652,7 @@
     <string name="new_msg_party">あなたのパーティー、<b>%1$s</b>に新しい投稿があります</string>
     <string name="unallocated_stats_points"><![CDATA[<b>%1$sポイントが割り当てできます。</b>]]></string>
     <string name="new_subscriber_item">新しい<b>ミステリーアイテム</b></string>
-    <string name="invited_to_party_notification">パーティー「<b>%1$s</b>」に招待されました</string>
+    <string name="invited_to_party_notification">パーティー「<b>%1$s</b>」に招待されました %2$s</string>
     <string name="invited_to_private_guild">プライベートギルド「<b>%1$s</b>」に招待されました</string>
     <string name="invited_to_public_guild">「<b>%1$s</b>」ギルドに招待されました</string>
     <string name="invited_to_quest"><b>%1$s</b>クエストに招待されました</string>

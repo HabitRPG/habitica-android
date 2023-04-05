@@ -17,33 +17,37 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UserRepositoryImpl(
     localRepository: UserLocalRepository,
     apiClient: ApiClient,
-    userID: String,
+    authenticationHandler: AuthenticationHandler,
     private val taskRepository: TaskRepository,
     private val appConfigManager: AppConfigManager,
     private val analyticsManager: AnalyticsManager
-) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, userID), UserRepository {
+) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
 
     companion object {
         private var lastReadNotification: String? = null
         private var lastSync: Date? = null
     }
 
-    override fun getUser(): Flow<User?> = getUser(userID)
+    override fun getUser(): Flow<User?> = authenticationHandler.userIDFlow.flatMapLatest { getUser(it) }
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
 
     private suspend fun updateUser(userID: String, updateData: Map<String, Any?>): User? {
@@ -57,11 +61,11 @@ class UserRepositoryImpl(
     }
 
     override suspend fun updateUser(updateData: Map<String, Any?>): User? {
-        return updateUser(userID, updateData)
+        return updateUser(currentUserID, updateData)
     }
 
     override suspend fun updateUser(key : String, value : Any?): User? {
-        return updateUser(userID, key, value)
+        return updateUser(currentUserID, key, value)
     }
 
     @Suppress("ReturnCount")
@@ -156,7 +160,7 @@ class UserRepositoryImpl(
 
     override suspend fun unlockPath(path: String, price: Int): UnlockResponse? {
         val unlockResponse = apiClient.unlockPath(path) ?: return null
-        val user = localRepository.getUser(userID).firstOrNull() ?: return unlockResponse
+        val user = localRepository.getUser(currentUserID).firstOrNull() ?: return unlockResponse
         localRepository.modify(user) { liveUser ->
             unlockResponse.preferences?.let { liveUser.preferences = it }
             liveUser.purchased = unlockResponse.purchased
@@ -176,7 +180,7 @@ class UserRepositoryImpl(
         return apiClient.readNotification(id)
     }
     override fun getUserQuestStatus(): Flow<UserQuestStatus> {
-        return localRepository.getUserQuestStatus(userID)
+        return localRepository.getUserQuestStatus(currentUserID)
     }
 
     override suspend fun reroll(): User? {
@@ -214,7 +218,7 @@ class UserRepositoryImpl(
         } else {
             apiClient.updateUsername(newLoginName.trim())
         }
-        val user = localRepository.getUser(userID).firstOrNull() ?: return null
+        val user = localRepository.getUser(currentUserID).firstOrNull() ?: return null
         localRepository.modify(user) { liveUser ->
             liveUser.authentication?.localAuthentication?.username = newLoginName
             liveUser.flags?.verifiedUsername = true
@@ -344,7 +348,7 @@ class UserRepositoryImpl(
     }
 
     override suspend fun retrieveAchievements(): List<Achievement>? {
-        val achievements = apiClient.getMemberAchievements(userID) ?: return null
+        val achievements = apiClient.getMemberAchievements(currentUserID) ?: return null
         localRepository.save(achievements)
         return achievements
     }
@@ -354,18 +358,18 @@ class UserRepositoryImpl(
     }
 
     override fun getQuestAchievements(): Flow<List<QuestAchievement>> {
-        return localRepository.getQuestAchievements(userID)
+        return localRepository.getQuestAchievements(currentUserID)
     }
 
     override suspend fun retrieveTeamPlans(): List<TeamPlan>? {
         val teams = apiClient.getTeamPlans() ?: return null
-        teams.forEach { it.userID = userID }
+        teams.forEach { it.userID = currentUserID }
         localRepository.save(teams)
         return teams
     }
 
     override fun getTeamPlans(): Flow<List<TeamPlan>> {
-        return localRepository.getTeamPlans(userID)
+        return localRepository.getTeamPlans(currentUserID)
     }
 
     override suspend fun retrieveTeamPlan(teamID: String): Group? {
@@ -391,7 +395,7 @@ class UserRepositoryImpl(
     }
 
     private suspend fun getLiveUser(): User? {
-        val user = localRepository.getUser(userID).firstOrNull() ?: return null
+        val user = localRepository.getUser(currentUserID).firstOrNull() ?: return null
         return localRepository.getLiveObject(user)
     }
 

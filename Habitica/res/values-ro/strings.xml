@@ -208,7 +208,7 @@
     <string name="opt_out_class">Alege să nu iei parte</string>
     <string name="class_confirmation">Ești sigur că vrei să fii %s?</string>
     <string name="class_changed">De acum ești %s!</string>
-    <string name="class_changed_description">Acum ai Echipament de Luptă de bază, pe care îl poți schimba de la Echipament!</string>
+
     <string name="choose_class">Alege Clasa</string>
     <string name="dialog_go_back">Mergi înapoi</string>
     <string name="opt_out_confirmation">Ești sigur că vrei să nu iei parte?</string>

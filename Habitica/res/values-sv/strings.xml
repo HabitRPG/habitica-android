@@ -202,7 +202,7 @@
     <string name="opt_out_class">Välj bort</string>
     <string name="class_confirmation">Är du säker på att du vill vara en %s?</string>
     <string name="class_changed">Du är nu en %s!</string>
-    <string name="class_changed_description">Du har ny standard Stridsutrustning som du kan ändra under Utrustning!</string>
+
     <string name="choose_class">Välj klass</string>
     <string name="dialog_go_back">Gå tillbaka</string>
     <string name="opt_out_confirmation">Är du säker på att du vill välja bort?</string>

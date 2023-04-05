@@ -24,6 +24,7 @@ import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -95,7 +96,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
         fun bind(ownedItem: OwnedItem, item: Item?) {
             this.ownedItem = ownedItem
             this.item = item
-            binding.titleTextView.text = item?.text ?: ownedItem.key
+            binding.titleTextView.text = item?.text ?: ownedItem.key?.localizedCapitalizeWithSpaces()
             binding.ownedTextView.text = ownedItem.numberOwned.toString()
 
             val disabled = if (isHatching) {
@@ -190,7 +191,10 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     if (item == null && ownedItem != null) {
                         //Special items that are not Mystery Item
                         val specialItem = SpecialItem()
-                        ownedItem?.key?.let { key -> specialItem.key = key }
+                        ownedItem?.key?.let { key ->
+                            specialItem.key = key
+                            specialItem.text = key.localizedCapitalizeWithSpaces()
+                        }
                         onUseSpecialItem?.invoke(specialItem)
                         return@setSelectionRunnable
                     }

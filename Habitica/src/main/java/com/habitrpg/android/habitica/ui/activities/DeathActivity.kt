@@ -35,7 +35,7 @@ class DeathActivity : BaseActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    override fun getLayoutResId(): Int = R.layout.activity_armoire
+    override fun getLayoutResId(): Int = R.layout.activity_death
 
     override fun getContentView(layoutResId: Int?): View {
         binding = ActivityDeathBinding.inflate(layoutInflater)
@@ -48,7 +48,7 @@ class DeathActivity : BaseActivity() {
             binding.lossDescription.text = getString(R.string.faint_loss_description, (user?.stats?.lvl ?: 2).toInt() - 1, user?.stats?.gp?.toInt()).fromHtml()
         }
 
-        if (appConfigManager.enableArmoireAds()) {
+        if (appConfigManager.enableFaintAds()) {
             val handler = AdHandler(this, AdType.FAINT) {
                 if (!it) {
                     return@AdHandler
@@ -66,7 +66,7 @@ class DeathActivity : BaseActivity() {
                     binding.adButton.visibility = View.INVISIBLE
                 }
             }
-            binding.adButton.updateForAdType(AdType.ARMOIRE, lifecycleScope)
+            binding.adButton.updateForAdType(AdType.FAINT, lifecycleScope)
             binding.adButton.setOnClickListener {
                 binding.adButton.state = AdButton.State.LOADING
                 handler.show()

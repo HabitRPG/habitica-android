@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.helpers.MainNavigationController
@@ -17,16 +19,20 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
+import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.common.habitica.extensions.fromHtml
+import com.habitrpg.common.habitica.extensions.loadImage
 
-class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ViewHolder>() {
 
+    var armoireCount : Int = 0
     var onNeedsRefresh: (() -> Unit)? = null
     var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
     private val items: MutableList<Any> = ArrayList()
     private var shopIdentifier: String? = null
     private var ownedItems: Map<String, OwnedItem> = HashMap()
+    var armoireItem: ShopItem? = null
 
     var changeClassEvents: ((String) -> Unit)? = null
 
@@ -87,11 +93,18 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         when (viewType) {
             0 -> ShopHeaderViewHolder(parent)
             1 -> SectionViewHolder(parent.inflate(R.layout.shop_section_header))
             2 -> EmptyStateViewHolder(parent.inflate(emptyViewResource))
+            3 -> {
+                val viewHolder = ArmoireGearViewHolder(parent.inflate(R.layout.shop_armoire_gear))
+                viewHolder.itemView.setOnClickListener {
+                    armoireItem?.let { it1 -> onShowPurchaseDialog?.invoke(it1, true) }
+                }
+                viewHolder
+            }
             else -> {
                 val view = parent.inflate(R.layout.row_shopitem)
                 val viewHolder = ShopItemViewHolder(view)
@@ -104,56 +117,55 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
 
     @Suppress("ReturnCount")
     override fun onBindViewHolder(
-        holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+        holder: ViewHolder,
         position: Int
     ) {
         val obj = getItem(position)
         if (obj != null) {
-            when (obj.javaClass) {
-                Shop::class.java -> (obj as? Shop)?.let { (holder as? ShopHeaderViewHolder)?.bind(it, shopSpriteSuffix) }
-                ShopCategory::class.java -> {
-                    val category = obj as? ShopCategory
+            when (obj) {
+                is Shop -> (holder as? ShopHeaderViewHolder)?.bind(obj, shopSpriteSuffix)
+                is ShopCategory -> {
                     val sectionHolder = holder as? SectionViewHolder ?: return
-                    sectionHolder.bind(category?.text ?: "")
-                    if (gearCategories.contains(category)) {
+                    sectionHolder.bind(obj.text)
+                    if (gearCategories.contains(obj)) {
                         context?.let { context ->
                             val adapter = HabiticaClassArrayAdapter(context, R.layout.class_spinner_dropdown_item, gearCategories.map { it.identifier })
                             sectionHolder.spinnerAdapter = adapter
-                            sectionHolder.selectedItem = gearCategories.indexOf(category)
+                            sectionHolder.selectedItem = gearCategories.indexOf(obj)
                             sectionHolder.spinnerSelectionChanged = {
                                 if (selectedGearCategory != gearCategories[holder.selectedItem].identifier) {
                                     selectedGearCategory = gearCategories[holder.selectedItem].identifier
                                 }
                             }
-                            if (user?.stats?.habitClass != category?.identifier && category?.identifier != "none") {
-                                sectionHolder.notesView?.text = context.getString(R.string.class_gear_disclaimer)
+                            if (user?.stats?.habitClass != obj.identifier && obj.identifier != "none") {
                                 if (user?.hasClass == true) {
                                     sectionHolder.switchClassButton?.setOnClickListener {
                                         changeClassEvents?.invoke(selectedGearCategory)
                                     }
-                                    // TODO: Enable this again when we have a nicer design
-                                    sectionHolder.switchClassButton?.visibility = View.GONE
+                                    sectionHolder.switchClassButton?.visibility = View.VISIBLE
+                                    sectionHolder.switchClassLabel?.text = context.getString(R.string.change_class_to_x, getTranslatedClassName(context.resources, selectedGearCategory))
+                                    sectionHolder.switchClassDescription?.text = context.getString(R.string.unlock_gear_and_skills, getTranslatedClassName(context.resources, selectedGearCategory))
+                                    sectionHolder.switchClassCurrency?.value = 3.0
                                 } else {
                                     sectionHolder.switchClassButton?.visibility = View.GONE
                                 }
-                                sectionHolder.notesWrapper?.visibility = View.VISIBLE
                             } else {
-                                sectionHolder.notesWrapper?.visibility = View.GONE
+                                sectionHolder.switchClassButton?.visibility = View.GONE
                             }
                         }
                     } else {
                         sectionHolder.spinnerAdapter = null
-                        sectionHolder.notesWrapper?.visibility = View.GONE
+                        sectionHolder.notesView?.visibility = View.GONE
                     }
                 }
-                ShopItem::class.java -> {
-                    val item = obj as? ShopItem ?: return
+                is ShopItem -> {
                     val itemHolder = holder as? ShopItemViewHolder ?: return
-                    val numberOwned = ownedItems[item.key + "-" + item.purchaseType]?.numberOwned ?: 0
-                    itemHolder.bind(item, item.canAfford(user, 1), numberOwned)
-                    itemHolder.isPinned = pinnedItemKeys.contains(item.key)
+                    val numberOwned = ownedItems[obj.key + "-" + obj.purchaseType]?.numberOwned ?: 0
+                    itemHolder.bind(obj, obj.canAfford(user, 1), numberOwned)
+                    itemHolder.isPinned = pinnedItemKeys.contains(obj.key)
                 }
-                String::class.java -> (holder as? EmptyStateViewHolder)?.text = obj as? String
+                is String -> (holder as? EmptyStateViewHolder)?.text = obj
+                is Pair<*, *> -> (holder as? ArmoireGearViewHolder)?.bind(obj.first as? String ?: "", obj.second as? Int ?: 0)
             }
         }
     }
@@ -167,14 +179,15 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
             return items[0]
         }
         if (position <= getGearItemCount()) {
+            val selectedGearCategory = getSelectedShopCategory()
             return when {
                 position == 1 -> {
-                    val category = getSelectedShopCategory()
-                    category?.text = context?.getString(R.string.class_equipment) ?: ""
-                    category
+                    selectedGearCategory?.text = context?.getString(R.string.class_equipment) ?: ""
+                    selectedGearCategory
                 }
-                getSelectedShopCategory()?.items?.size ?: 0 <= position - 2 -> return context?.getString(R.string.equipment_empty)
-                else -> getSelectedShopCategory()?.items?.get(position - 2)
+                (selectedGearCategory?.items?.size ?: 0) <= position - 2 -> return Pair(
+                    context?.resources?.let { getTranslatedClassName(it, selectedGearCategory?.identifier) } ?: selectedGearCategory?.identifier, armoireCount)
+                else -> selectedGearCategory?.items?.get(position - 2)
             }
         } else {
             val itemPosition = position - getGearItemCount()
@@ -185,10 +198,11 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
         }
     }
 
-    override fun getItemViewType(position: Int): Int = when (getItem(position)?.javaClass) {
-        Shop::class.java -> 0
-        ShopCategory::class.java -> 1
-        ShopItem::class.java -> 3
+    override fun getItemViewType(position: Int): Int = when (getItem(position)) {
+        is Shop -> 0
+        is ShopCategory -> 1
+        is Pair<*, *> -> 3
+        is ShopItem -> 4
         else -> 2
     }
 
@@ -233,7 +247,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
         }
     }
 
-    internal class ShopHeaderViewHolder(parent: ViewGroup) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
+    internal class ShopHeaderViewHolder(parent: ViewGroup) : ViewHolder(parent.inflate(R.layout.shop_header)) {
         private val binding = ShopHeaderBinding.bind(itemView)
 
         init {
@@ -249,7 +263,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
         }
     }
 
-    class EmptyStateViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+    class EmptyStateViewHolder(view: View) : ViewHolder(view) {
         private val subscribeButton: Button? = itemView.findViewById(R.id.subscribeButton)
         private val textView: TextView? = itemView.findViewById(R.id.textView)
 
@@ -262,5 +276,19 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<an
                 field = value
                 textView?.text = field
             }
+    }
+
+    class ArmoireGearViewHolder(view: View): ViewHolder(view) {
+        private val binding = ShopArmoireGearBinding.bind(view)
+
+        init {
+            binding.currencyView.value = 100.0
+            binding.iconView.loadImage("shop_armoire")
+        }
+
+        fun bind(className: String, armoireCount: Int) {
+            binding.titleView.text = itemView.context.getString(R.string.shop_armoire_title, className)
+            binding.descriptionView.text = itemView.context.getString(R.string.shop_armoire_description, armoireCount)
+        }
     }
 }

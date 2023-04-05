@@ -220,7 +220,7 @@
     <string name="opt_out_class">Matikan Fitur</string>
     <string name="class_confirmation">Apakah kamu yakin ingin menjadi seorang %s?</string>
     <string name="class_changed">Kamu sekarang seorang %s! </string>
-    <string name="class_changed_description">Kamu memiliki Baju Perang baru yang dapat diganti pada menu Perlengkapan! </string>
+
     <string name="choose_class">Pilih Kelas</string>
     <string name="dialog_go_back">Kembali</string>
     <string name="opt_out_confirmation">Apakah kamu yakin kamu ingin mematikan fitur?</string>
@@ -727,13 +727,13 @@
     <string name="old_password">Kata Sandi Lama</string>
     <string name="task_title">Judul Tugas</string>
     <string name="add_local_authentication">Menambahkan Otentikasi Lokal</string>
-    <string name="create_party">Membuat Party</string>
+    <string name="create_party">Membuat pesta baru</string>
     <string name="only_leader_create_challenge">Hanya ketua yang dapat membuat Tantangan</string>
     <string name="defeat">Kalah</string>
     <string name="invited_to_quest">Kamu telah diundang untuk melaksanakan Misi <b>%1$s</b></string>
     <string name="invited_to_public_guild">Kamu telah diundang untuk bergabung dengan Guild <b>%1$s</b></string>
     <string name="invited_to_private_guild">Kamu telah diundang untuk bergabung dengan Guild pribadi <b>%1$s</b></string>
-    <string name="invited_to_party_notification">Kamu telah diundang untuk bergabung dengan Party <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s Kamu telah diundang untuk bergabung dengan Party <b>%2$s</b></string>
     <string name="new_subscriber_item">Kamu memiliki <b>Item Misteri</b> baru</string>
     <string name="unallocated_stats_points">Kamu memiliki <b>%1$s Poin Stat yang belum dialokasikan</b></string>
     <string name="new_msg_party">Party-mu, <b>%1$s</b>, ada postingan baru</string>

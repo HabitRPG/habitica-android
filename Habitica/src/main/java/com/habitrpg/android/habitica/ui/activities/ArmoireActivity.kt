@@ -27,6 +27,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
@@ -66,9 +67,11 @@ class ArmoireActivity : BaseActivity() {
             if (gold == null) {
                 gold = user?.stats?.gp
             }
-            val remaining = inventoryRepository.getArmoireRemainingCount()
-            binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
-            binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
+            lifecycleScope.launchCatching {
+                val remaining = inventoryRepository.getArmoireRemainingCount().firstOrNull() ?: 0
+                binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
+                binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
+            }
         }
 
         if (appConfigManager.enableArmoireAds()) {

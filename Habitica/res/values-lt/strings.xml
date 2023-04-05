@@ -292,7 +292,7 @@
     <string name="warrior_description">Warriors surinko daugiau ir geresnių kritinių paspaudimų, kurie atsitiktinai suteikia premiją „Gold“, „Experience“ ir „drop“ šansams atlikti užduotį. Jie taip pat susiduria su sunkia boso monstrų žala. Žaisti Warrior, jei radote motyvaciją iš neprognozuojamų jackpoto stiliaus apdovanojimų, arba norėsite išvalyti skausmą bosas Quests!</string>
     <string name="opting_out_progress">Atsisakymas</string>
     <string name="class_changed">Dabar esate %s!</string>
-    <string name="class_changed_description">Turite naują numatytąjį „Battle Gear“, kurį galite keisti pagal „Įranga“!</string>
+
     <string name="change_class_description">Pakeiskite savo klasę ir grąžinkite savo statistinius taškus už 3 brangakmenius.</string>
     <string name="invite_username_description">Jei turite draugų, kurie jau naudojasi Habitica, pakvieskite juos pagal vartotojo vardą.</string>
     <string name="share_levelup">Habiticoje pasiekiau %d lygį, gerindamas savo tikrojo gyvenimo įpročius!</string>

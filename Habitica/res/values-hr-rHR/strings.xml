@@ -232,7 +232,7 @@
     <string name="opt_out_class">Izaberi kasnije</string>
     <string name="class_confirmation">Jesi li siguran/na da želiš biti %s?</string>
     <string name="class_changed">Sada si %s!</string>
-    <string name="class_changed_description">Imaš novu zadanu Ratnu Opremu koju možeš promijeniti pod Opremom!</string>
+
     <string name="choose_class">Odaberi Klasu </string>
     <string name="dialog_go_back">Idi natrag</string>
     <string name="opt_out_confirmation">Jesi li siguran/na da želiš izabrati kasnije?</string>
@@ -673,11 +673,11 @@
     <string name="subscribe_listitem5">Udvostruči nagrade</string>
     <string name="cancel_subscription_notgoogle_description">Više ne želiš biti pretplaćen/a\? Zbog ograničenja mobilnog plaćanja, morati ćeš odustati preko naše web stranice. Da to učiniš, dotakni gumb ispod, prijavi se na svoj račun, pritisni ikonu Korisnik gore desno, te odi na Pretplata. Bilo koji mjesečni krediti tvoje pretplate će biti apliciran nakon što je tvoja pretplata zaustavljena. Nedostajat ćeš nam!</string>
     <string name="create">Stvori</string>
-    <string name="create_party">Stvori Družinu</string>
+    <string name="create_party">Stvoriti novu zabavu</string>
     <string name="years">Godina</string>
     <string name="x_class">%s Klasa</string>
     <string name="discard_changes_to_task_message">Jesi li siguran/la da želiš odbaciti promjene ovom zadatku\?</string>
-    <string name="invited_to_party_notification">Pozvan/a si da se pridružiš Družini <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s Pozvan/a si da se pridružiš Družini <b>%2$s</b></string>
     <string name="month_reminder_title">Trebaš li promjenu svakodnevnice\?</string>
     <string name="become_x">Postani %s</string>
     <string name="no_notifications_text">Vile obavijesti ti daju prodornu rundu pljeska! Svaka čast!</string>

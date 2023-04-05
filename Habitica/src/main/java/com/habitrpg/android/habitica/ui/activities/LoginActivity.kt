@@ -169,7 +169,9 @@ class LoginActivity : BaseActivity() {
         binding.showLoginButton.setOnClickListener { showLoginButtonClicked() }
         binding.backButton.setOnClickListener { backButtonClicked() }
         binding.forgotPassword.setOnClickListener { onForgotPasswordClicked() }
-        binding.googleLoginButton.setOnClickListener { viewModel.handleGoogleLogin(this, pickAccountResult) }
+        binding.googleLoginButton.setOnClickListener {
+            binding.googleLoginProgress.visibility = View.VISIBLE
+            viewModel.handleGoogleLogin(this, pickAccountResult) }
     }
 
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
@@ -304,6 +306,7 @@ class LoginActivity : BaseActivity() {
 
     private fun hideProgress() {
         runOnUiThread {
+            binding.googleLoginProgress.visibility = View.GONE
             binding.PBAsyncTask.visibility = View.GONE
         }
     }
@@ -327,6 +330,8 @@ class LoginActivity : BaseActivity() {
             viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) { isNew ->
                 handleAuthResponse(isNew)
             }
+        } else {
+            binding.googleLoginProgress.visibility = View.GONE
         }
     }
 

@@ -12,7 +12,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -55,8 +57,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     lateinit var configManager: AppConfigManager
 
     private var chatAdapter: InboxAdapter? = null
-    private var chatRoomUser: String? = null
-    private var replyToUserUUID: String? = null
 
     private val viewModel: InboxViewModel by viewModels()
 
@@ -73,41 +73,33 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            val args = InboxMessageListFragmentArgs.fromBundle(it)
-            setReceivingUser(args.username, args.userID)
-        }
-
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val member = if (replyToUserUUID?.isNotBlank() == true) {
-                apiClient.getMember(replyToUserUUID!!)
-            } else {
-                apiClient.getMemberWithUsername(chatRoomUser ?: "")
+            socialRepository.getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "").collect {
+                mainActivity?.title = it?.displayName
+                chatAdapter?.replyToUser = it
             }
-            setReceivingUser(member?.username, member?.id)
-            mainActivity?.title = member?.displayName
-            chatAdapter = InboxAdapter(viewModel.user.value, member)
-            chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    if (positionStart == 0) {
-                        binding?.recyclerView?.scrollToPosition(0)
-                    }
+        }
+        chatAdapter = InboxAdapter(viewModel.user.value)
+        chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    binding?.recyclerView?.scrollToPosition(0)
                 }
-            })
-            binding?.recyclerView?.adapter = chatAdapter
-            binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
-            chatAdapter?.let { adapter ->
-                adapter.onOpenProfile = {
-                    FullProfileActivity.open(it)
-                }
-                adapter.onDeleteMessage = { showDeleteConfirmationDialog(it) }
-                adapter.onFlagMessage = { showFlagConfirmationDialog(it) }
-                adapter.onCopyMessage = { copyMessageToClipboard(it) }
             }
+        })
+        binding?.recyclerView?.adapter = chatAdapter
+        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
+        chatAdapter?.let { adapter ->
+            adapter.onOpenProfile = {
+                FullProfileActivity.open(it)
+            }
+            adapter.onDeleteMessage = { showDeleteConfirmationDialog(it) }
+            adapter.onFlagMessage = { showFlagConfirmationDialog(it) }
+            adapter.onCopyMessage = { copyMessageToClipboard(it) }
         }
 
         viewModel.messages.observe(viewLifecycleOwner) {
@@ -120,16 +112,18 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
         binding?.chatBarView?.hasAcceptedGuidelines = true
 
-        lifecycleScope.launchWhenResumed {
-            while (true) {
-                refreshConversation()
-                delay(30.toDuration(DurationUnit.SECONDS))
+        lifecycleScope.launchCatching {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                while (true) {
+                    refreshConversation()
+                    delay(30.toDuration(DurationUnit.SECONDS))
+                }
             }
         }
     }
 
     override fun onResume() {
-        if (replyToUserUUID?.isNotBlank() != true && chatRoomUser?.isNotBlank() != true) {
+        if (viewModel.recipientID?.isNotBlank() != true && viewModel.recipientUsername?.isNotBlank() != true) {
             parentFragmentManager.popBackStack()
         }
         super.onResume()
@@ -162,7 +156,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         return super.onOptionsItemSelected(item)
     }
 
-
     private fun markMessagesAsRead(messages: List<ChatMessage>) {
         socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
     }
@@ -170,7 +163,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     private fun refreshConversation() {
         if (viewModel.memberID?.isNotBlank() != true) { return }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            socialRepository.retrieveInboxMessages(replyToUserUUID ?: "", 0)
+            socialRepository.retrieveInboxMessages(viewModel.recipientID ?: "", 0)
             viewModel.invalidateDataSource()
         }
     }
@@ -195,12 +188,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 viewModel.invalidateDataSource()
             }
         }
-    }
-
-    private fun setReceivingUser(chatRoomUser: String?, replyToUserUUID: String?) {
-        this.chatRoomUser = chatRoomUser
-        this.replyToUserUUID = replyToUserUUID
-        mainActivity?.title = chatRoomUser
     }
 
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
@@ -236,6 +223,6 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun openProfile() {
-        replyToUserUUID?.let { FullProfileActivity.open(it) }
+        viewModel.recipientID?.let { FullProfileActivity.open(it) }
     }
 }

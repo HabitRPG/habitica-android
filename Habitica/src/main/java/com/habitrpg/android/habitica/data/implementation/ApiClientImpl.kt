@@ -622,8 +622,8 @@ class ApiClientImpl(
         return process { apiService.markTaskNeedsWork(taskID, userID) }
     }
 
-    override suspend fun retrievePartySeekingUsers() : List<Member>? {
-        return process { apiService.retrievePartySeekingUsers() }
+    override suspend fun retrievePartySeekingUsers(page: Int) : List<Member>? {
+        return process { apiService.retrievePartySeekingUsers(page) }
     }
 
     override suspend fun getMember(memberId: String) = processResponse(apiService.getMember(memberId))

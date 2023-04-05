@@ -1,9 +1,9 @@
-New in 4.1.8:
--Fixed various for: item names, shared task creation, and duplicate items
--You can view, complete, assign, and add tasks to your Group Plan's shared task board!
+New in 4.1.9:
+-Various subscription status optimizations
+-Party invites will show the sender’s username and profile
+-You can view, complete, assign, and add tasks to your Group Plan’s shared task board
 -Tap your name on a task screen to switch to different task boards
 -More intuitive system notification settings
 -New Avatar Customization interface
 -Audio will be controlled by media volume now
 -Task details are now tinted based on task health
-

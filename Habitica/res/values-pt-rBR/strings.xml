@@ -232,7 +232,7 @@
     <string name="opt_out_class">Decidir mais tarde</string>
     <string name="class_confirmation">Você tem certeza que quer ser um(a) %s\?</string>
     <string name="class_changed">Você é um(a) %s agora!</string>
-    <string name="class_changed_description">Você tem um novo Equipamento de Batalha padrão, que pode ser trocado em Equipamentos!</string>
+
     <string name="choose_class">Escolha a sua Classe</string>
     <string name="dialog_go_back">Voltar</string>
     <string name="opt_out_confirmation">Você tem certeza de que ainda não quer escolher\?</string>
@@ -641,7 +641,7 @@
     <string name="preference_push_important_announcements">Anúncios importantes</string>
     <string name="create">Criar</string>
     <string name="only_leader_create_challenge">Somente líderes podem criar Desafios</string>
-    <string name="create_party">Criar Grupo</string>
+    <string name="create_party">Criar um novo grupo</string>
     <string name="notifications">Notificações</string>
     <string name="no_notifications_title">Você está com tudo em dia!</string>
     <string name="no_notifications_text">As fadas da notificação lhe deram uma rodada de aplausos barulhentos! Muito bem!</string>
@@ -651,7 +651,7 @@
     <string name="new_msg_party">Seu Grupo, <b>%1$s</b>, tem novas publicações</string>
     <string name="unallocated_stats_points"><![CDATA[Você tem <b>%1$s</b> Pontos de Atributos não distribuidos]]></string>
     <string name="new_subscriber_item">Você possui novos <b>Itens Misteriosos</b></string>
-    <string name="invited_to_party_notification"><![CDATA[Você foi convidado para entrar em um Grupo <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Você foi convidado para entrar em um Grupo <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Você foi convidado para entrar em uma Guilda privada <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Você foi convidado para entrar em uma Guilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Você foi convidado para a Missão <b>%1$s</b>]]></string>

@@ -5,6 +5,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.inventory.Animal
 
 fun Animal.getTranslatedType(c: Context?): String? {
+    return getTranslatedAnimalType(c, type)
+}
+
+fun getTranslatedAnimalType(c: Context?, type: String?): String? {
     if (c == null) {
         return type
     }

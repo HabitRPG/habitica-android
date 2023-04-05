@@ -193,14 +193,29 @@
                         android:layout_marginTop="@dimen/spacing_xlarge"
                         style="@style/LoginButton"/>
 
-                    <Button
-                        android:id="@+id/google_login_button"
-                        android:layout_width="match_parent"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/spacing_large"
-                        android:layout_height="@dimen/diamond_button_height"
-                        android:text="@string/login_btn_google"
-                        android:drawableStart="@drawable/google_icon"
-                        style="@style/LoginButton"/>
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/google_login_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/diamond_button_height"
+                            android:text="@string/login_btn_google"
+                            android:drawableStart="@drawable/google_icon"
+                            style="@style/LoginButton"/>
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/google_login_progress"
+                            style="@style/LoginButtonProgress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:indeterminate="true"
+                            android:visibility="gone"
+                            app:indicatorColor="@color/white" />
+                        
+                    </RelativeLayout>
 
                     <Button
                         android:id="@+id/apple_login_button"

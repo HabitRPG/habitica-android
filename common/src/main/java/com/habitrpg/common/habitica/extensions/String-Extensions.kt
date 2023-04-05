@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.text.util.Linkify
 import android.util.Patterns
 import java.util.Locale
+import java.util.*
 
 fun String.fromHtml(): CharSequence {
     return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -33,5 +34,12 @@ fun String.localizedCapitalize(): String {
     return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 }
 
+fun String.spaceBetweenCapitals(): String {
+    return this.replace("(.)([A-Z0-9]\\w)".toRegex(), "$1 $2")
+}
+
+fun String.localizedCapitalizeWithSpaces(): String {
+    return this.localizedCapitalize().spaceBetweenCapitals()
+}
 
 fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()

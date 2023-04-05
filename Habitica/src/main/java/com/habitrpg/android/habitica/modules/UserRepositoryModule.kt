@@ -50,76 +50,76 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
-import javax.inject.Named
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 class UserRepositoryModule {
     @Provides
-    fun providesSetupCustomizationRepository(@ApplicationContext context: Context?): SetupCustomizationRepository {
-        return SetupCustomizationRepositoryImpl(context!!)
+    fun providesSetupCustomizationRepository(@ApplicationContext context: Context): SetupCustomizationRepository {
+        return SetupCustomizationRepositoryImpl(context)
     }
 
     @Provides
-    fun providesTaskLocalRepository(realm: Realm?): TaskLocalRepository {
-        return RealmTaskLocalRepository(realm!!)
+    fun providesTaskLocalRepository(realm: Realm): TaskLocalRepository {
+        return RealmTaskLocalRepository(realm)
     }
 
     @Provides
     fun providesTaskRepository(
         localRepository: TaskLocalRepository,
         apiClient: ApiClient,
-        @Named(AppModule.NAMED_USER_ID) userId: String,
+        authenticationHandler : AuthenticationHandler,
         appConfigManager: AppConfigManager,
         analyticsManager: AnalyticsManager
     ): TaskRepository {
         return TaskRepositoryImpl(
             localRepository,
             apiClient,
-            userId,
+            authenticationHandler,
             appConfigManager,
             analyticsManager
         )
     }
 
     @Provides
-    fun providesTagLocalRepository(realm: Realm?): TagLocalRepository {
-        return RealmTagLocalRepository(realm!!)
+    fun providesTagLocalRepository(realm: Realm): TagLocalRepository {
+        return RealmTagLocalRepository(realm)
     }
 
     @Provides
     fun providesTagRepository(
-        localRepository: TagLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?
+        localRepository: TagLocalRepository,
+        apiClient: ApiClient,
+        authenticationHandler : AuthenticationHandler
     ): TagRepository {
-        return TagRepositoryImpl(localRepository!!, apiClient!!, userId!!)
+        return TagRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
-    fun provideChallengeLocalRepository(realm: Realm?): ChallengeLocalRepository {
-        return RealmChallengeLocalRepository(realm!!)
+    fun provideChallengeLocalRepository(realm: Realm): ChallengeLocalRepository {
+        return RealmChallengeLocalRepository(realm)
     }
 
     @Provides
     fun providesChallengeRepository(
-        localRepository: ChallengeLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?
+        localRepository: ChallengeLocalRepository,
+        apiClient: ApiClient,
+        authenticationHandler : AuthenticationHandler
     ): ChallengeRepository {
-        return ChallengeRepositoryImpl(localRepository!!, apiClient!!, userId!!)
+        return ChallengeRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
-    fun providesUserLocalRepository(realm: Realm?): UserLocalRepository {
-        return RealmUserLocalRepository(realm!!)
+    fun providesUserLocalRepository(realm: Realm): UserLocalRepository {
+        return RealmUserLocalRepository(realm)
     }
 
     @Provides
     fun providesUserRepository(
         localRepository: UserLocalRepository,
         apiClient: ApiClient,
-        @Named(AppModule.NAMED_USER_ID) userId: String,
+        authenticationHandler : AuthenticationHandler,
         taskRepository: TaskRepository,
         appConfigManager: AppConfigManager,
         analyticsManager: AnalyticsManager
@@ -127,7 +127,7 @@ class UserRepositoryModule {
         return UserRepositoryImpl(
             localRepository,
             apiClient,
-            userId,
+            authenticationHandler,
             taskRepository,
             appConfigManager,
             analyticsManager
@@ -135,78 +135,79 @@ class UserRepositoryModule {
     }
 
     @Provides
-    fun providesSocialLocalRepository(realm: Realm?): SocialLocalRepository {
-        return RealmSocialLocalRepository(realm!!)
+    fun providesSocialLocalRepository(realm: Realm): SocialLocalRepository {
+        return RealmSocialLocalRepository(realm)
     }
 
     @Provides
     fun providesSocialRepository(
-        localRepository: SocialLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?
+        localRepository: SocialLocalRepository,
+        apiClient: ApiClient,
+        authenticationHandler : AuthenticationHandler
     ): SocialRepository {
-        return SocialRepositoryImpl(localRepository!!, apiClient!!, userId!!)
+        return SocialRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
     fun providesInventoryLocalRepository(
-        realm: Realm?): InventoryLocalRepository {
-        return RealmInventoryLocalRepository(realm!!)
+        realm: Realm): InventoryLocalRepository {
+        return RealmInventoryLocalRepository(realm)
     }
 
     @Provides
     fun providesInventoryRepository(
-        localRepository: InventoryLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?,
-        remoteConfig: AppConfigManager?
+        localRepository: InventoryLocalRepository,
+        apiClient: ApiClient,
+        authenticationHandler : AuthenticationHandler,
+        remoteConfig: AppConfigManager
     ): InventoryRepository {
-        return InventoryRepositoryImpl(localRepository!!, apiClient!!, userId!!, remoteConfig!!)
+        return InventoryRepositoryImpl(localRepository, apiClient, authenticationHandler, remoteConfig)
     }
 
     @Provides
-    fun providesFAQLocalRepository(realm: Realm?): FAQLocalRepository {
-        return RealmFAQLocalRepository(realm!!)
+    fun providesFAQLocalRepository(realm: Realm): FAQLocalRepository {
+        return RealmFAQLocalRepository(realm)
     }
 
     @Provides
     fun providesFAQRepository(
-        localRepository: FAQLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?
+        localRepository: FAQLocalRepository,
+        apiClient: ApiClient,
+        authenticationHandler : AuthenticationHandler
     ): FAQRepository {
-        return FAQRepositoryImpl(localRepository!!, apiClient!!, userId!!)
+        return FAQRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
-    fun providesTutorialLocalRepository(realm: Realm?): TutorialLocalRepository {
-        return RealmTutorialLocalRepository(realm!!)
+    fun providesTutorialLocalRepository(realm: Realm): TutorialLocalRepository {
+        return RealmTutorialLocalRepository(realm)
     }
 
     @Provides
     fun providesTutorialRepository(
-        localRepository: TutorialLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?
+        localRepository: TutorialLocalRepository,
+        apiClient: ApiClient,
+        authenticationHandler : AuthenticationHandler
     ): TutorialRepository {
-        return TutorialRepositoryImpl(localRepository!!, apiClient!!, userId!!)
+        return TutorialRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
-    fun providesCustomizationLocalRepository(realm: Realm?): CustomizationLocalRepository {
-        return RealmCustomizationLocalRepository(realm!!)
+    fun providesCustomizationLocalRepository(realm: Realm): CustomizationLocalRepository {
+        return RealmCustomizationLocalRepository(realm)
     }
 
     @Provides
     fun providesCustomizationRepository(
-        localRepository: CustomizationLocalRepository?,
-        apiClient: ApiClient?,
-        @Named(AppModule.NAMED_USER_ID) userId: String?
+        localRepository: CustomizationLocalRepository,
+        apiClient: ApiClient,
+        authenticationHandler : AuthenticationHandler
     ): CustomizationRepository {
-        return CustomizationRepositoryImpl(localRepository!!, apiClient!!, userId!!)
+        return CustomizationRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
+    @Singleton
     fun providesPurchaseHandler(
         @ApplicationContext context: Context,
         analyticsManager: AnalyticsManager,

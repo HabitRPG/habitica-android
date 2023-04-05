@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -49,15 +50,7 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
             override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                 val fragment = StableRecyclerFragment()
-
-                when (position) {
-                    0 -> {
-                        fragment.itemType = "pets"
-                    }
-                    1 -> {
-                        fragment.itemType = "mounts"
-                    }
-                }
+                fragment.arguments = bundleOf(StableRecyclerFragment.ITEM_TYPE_KEY to "pets")
                 fragment.itemTypeText = getPageTitle(position)
 
                 return fragment

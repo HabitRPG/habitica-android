@@ -255,6 +255,10 @@ class PurchaseDialog(context: Context, private val userRepository : UserReposito
         lifecycleScope.launchCatching {
             userRepository.getUser().filterNotNull().collect { setUser(it) }
         }
+
+        if (item.key == "armoire") {
+            pinButton.visibility = View.GONE
+        }
     }
 
     private fun setUser(user: User) {

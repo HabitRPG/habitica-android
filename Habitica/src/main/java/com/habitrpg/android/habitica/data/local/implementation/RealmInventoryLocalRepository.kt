@@ -57,7 +57,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .filter { it.isLoaded }
     }
 
-    override fun getArmoireRemainingCount(): Long {
+    override fun getArmoireRemainingCount(): Flow<Int> {
         return realm.where(Equipment::class.java)
             .equalTo("klass", "armoire")
             .beginGroup()
@@ -65,7 +65,9 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .or()
             .isNull("owned")
             .endGroup()
-            .count()
+            .findAll()
+            .toFlow()
+            .map { it.count() }
     }
 
     override fun getOwnedEquipment(type: String): Flow<out List<Equipment>> {
@@ -316,6 +318,16 @@ class RealmInventoryLocalRepository(realm: Realm) :
             .findAll()
             .toFlow()
             .filter { it.isLoaded }
+    }
+
+    override fun getInAppReward(key: String): Flow<ShopItem> {
+        return realm.where(ShopItem::class.java)
+            .equalTo("key", key)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
+            .map { it.firstOrNull() }
+            .filterNotNull()
     }
 
     override fun saveInAppRewards(onlineItems: List<ShopItem>) {

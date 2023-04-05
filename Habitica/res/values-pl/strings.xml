@@ -223,7 +223,7 @@
     <string name="opt_out_class">Wycofaj się</string>
     <string name="class_confirmation">Jesteś pewien, że chcesz być %s?</string>
     <string name="class_changed">Jesteś teraz %s!</string>
-    <string name="class_changed_description">Masz nowe domyślne wyposażenie bojowe, które możesz zmienić pod Wyposażeniem!</string>
+
     <string name="choose_class">Wybierz klasę postaci</string>
     <string name="dialog_go_back">Wróć</string>
     <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>
@@ -585,7 +585,7 @@
     <string name="new_msg_party"><![CDATA[Twoja drużyna <b>%1$s</b> ma nowe posty]]></string>
     <string name="unallocated_stats_points"><![CDATA[Masz <b>nieprzydzielone Punkty Atrybutów: %1$s</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Masz nowy <b>Tajemniczy Przedmiot</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Zostałeś/aś zaproszony/a do Dryżyny <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> zostałeś/aś zaproszony/a do Dryżyny <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Zostałeś/aś zaproszony/a do prywatnej Gildii <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Zostałeś/aś zaproszony/a do Gildii <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Zostałeś/aś zaproszony/a do Misji <b>%1$s</b>]]></string>
@@ -738,7 +738,7 @@
     <string name="x_class">Klasa %s</string>
     <string name="become_x">Zostań %s</string>
     <string name="need_more_help">Potrzebujesz więcej wsparcia\?</string>
-    <string name="create_party">Stwórz drużynę</string>
+    <string name="create_party">Stwórz nowy zespół</string>
     <string name="create">Stwórz</string>
     <string name="gift_confirmation_text_sub">Wysłałeś %s %s-miesięczną subskrypcję Habitica.</string>
     <string name="gift_confirmation_text_sub_g1g1">Wysłałeś %s %s-miesięczną subskrypcję Habitica i taka sama subskrypcja zasiliła Twoje konto w ramach promocji Dajesz - Dostajesz!</string>

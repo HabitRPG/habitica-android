@@ -233,7 +233,7 @@
     <string name="opt_out_class">No elegir</string>
     <string name="class_confirmation">¿Seguro que quieres ser %s?</string>
     <string name="class_changed">¡Ahora eres un %s!</string>
-    <string name="class_changed_description">¡Tienes un nuevo Equipo de Combate que puedes ponerte en tu Equipamiento!</string>
+
     <string name="choose_class">Elegir clase</string>
     <string name="dialog_go_back">Volver</string>
     <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>
@@ -653,7 +653,7 @@
     <string name="new_msg_party"><![CDATA[Tu Equipo, <b>%1$s</b>, tiene nuevos mensajes]]></string>
     <string name="unallocated_stats_points"><![CDATA[Tienes <b>%1$s Puntos de Estadísticas sin asignar</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Tienes <b>Objetos Misteriosos</b> nuevos]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Has sido invitado a unirte al Equipo <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<![CDATA[<font color=#925CF3>%1$s</font> has sido invitado a unirte al Equipo <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Has sido invitado a unirte al Gremio privado <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Has sido invitado a unirte al Gremio <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Has sido invitado a la misión <b>%1$s</b>]]></string>

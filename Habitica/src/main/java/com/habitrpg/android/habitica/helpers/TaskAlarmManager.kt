@@ -10,6 +10,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
 import com.habitrpg.android.habitica.models.tasks.RemindersItem
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.receivers.NotificationPublisher
 import com.habitrpg.android.habitica.receivers.TaskReceiver
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -30,7 +31,7 @@ import java.util.Date
 class TaskAlarmManager(
     private var context: Context,
     private var taskRepository: TaskRepository,
-    private var userId: String
+    private var authenticationHandler : AuthenticationHandler
 ) {
     private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
@@ -68,7 +69,7 @@ class TaskAlarmManager(
     }
 
     suspend fun scheduleAllSavedAlarms(preventDailyReminder: Boolean) {
-        val tasks = taskRepository.getTaskCopies(userId).firstOrNull()
+        val tasks = taskRepository.getTaskCopies().firstOrNull()
         tasks?.forEach { this.setAlarmsForTask(it) }
 
         if (!preventDailyReminder) {

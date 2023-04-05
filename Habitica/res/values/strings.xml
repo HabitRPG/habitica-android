@@ -291,9 +291,9 @@
     <string name="opt_out_class">Opt Out</string>
     <string name="opting_out_progress">Opting Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
-    <string name="class_confirmation_price">Do you want to change your class to %s for %d gems?</string>
+    <string name="class_confirmation_price">Do you want to change your class to %s for %d Gems?</string>
     <string name="class_changed">You are now a %s!</string>
-    <string name="class_changed_description">You have new default Battle Gear that you can change under Equipment!</string>
+    <string name="class_changed_description">You can use %s skills and purchase gear from shops!</string>
     <string name="choose_class">Choose Class</string>
     <string name="dialog_go_back">Go Back</string>
     <string name="opt_out_confirmation">Are you sure you want to Opt Out?</string>
@@ -764,14 +764,14 @@
     <string name="new_msg_party"><![CDATA[Your Party, <b>%1$s</b>, has new posts]]></string>
     <string name="unallocated_stats_points"><![CDATA[You have <b>%1$s unallocated Stat Points</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[You have new <b>Mystery Items</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[You were invited to join the Party <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%2$s</font> has invited you to join the party <b>%1$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[You were invited to join the private Guild <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[You were invited to join the Guild <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[You were invited to the Quest <b>%1$s</b>]]></string>
     <string name="defeat">Defeat</string>
     <string name="create">Create</string>
     <string name="only_leader_create_challenge">Only leader can create Challenges</string>
-    <string name="create_party">Create Party</string>
+    <string name="create_party">Create a new Party</string>
     <string name="add_local_authentication">Add Local Authentication</string>
     <string name="task_title">Task Title</string>
 
@@ -1365,6 +1365,7 @@
     <string name="pause_damage_3_description">Damage to a boss or found collection items will be stored until you resume damage</string>
     <string name="list">List</string>
     <string name="by_invite">By Invite</string>
+    <string name="habiticans_looking_party">Here’s a list of Habiticans looking to join a Party</string>
     <string name="habiticans_looking_party_empty">There\'s no one looking for a Party right now. You can check back later!</string>
     <string name="invited">Invited</string>
     <string name="invite_with_username_email">Invite with @username or email</string>
@@ -1376,6 +1377,11 @@
     <string name="you_re_looking_for_party">You’re looking for a Party!</string>
     <string name="seeking_hint">Keep an eye out for an invite or start your own Party at any time</string>
     <string name="leave_party_finder">Leave Party Finder</string>
+    <string name="equipment_class_locked">This equipment is class-locked</string>
+    <string name="change_class_to_x">Change class to %s</string>
+    <string name="shop_armoire_title">You own all %s gear</string>
+    <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, theres %d pieces of gear in the Enchanted Armoire to find!</string>
+    <string name="unlock_gear_and_skills">Unlock %s gear and skills</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

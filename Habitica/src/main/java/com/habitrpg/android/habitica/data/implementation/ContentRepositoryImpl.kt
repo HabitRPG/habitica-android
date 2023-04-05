@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.helpers.AprilFoolsHandler
 import com.habitrpg.android.habitica.models.ContentResult
 import com.habitrpg.android.habitica.models.WorldState
 import com.habitrpg.android.habitica.models.inventory.SpecialItem
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import io.realm.RealmList
 import kotlinx.coroutines.flow.Flow
 import java.util.Date
@@ -15,8 +16,9 @@ import java.util.Date
 class ContentRepositoryImpl<T : ContentLocalRepository>(
     localRepository: T,
     apiClient: ApiClient,
-    context: Context
-) : BaseRepositoryImpl<T>(localRepository, apiClient), ContentRepository {
+    context: Context,
+    authenticationHandler: AuthenticationHandler
+) : BaseRepositoryImpl<T>(localRepository, apiClient, authenticationHandler), ContentRepository {
 
     private val mysteryItem = SpecialItem.makeMysteryItem(context)
 

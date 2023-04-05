@@ -230,7 +230,7 @@
     <string name="opt_out_class">Отказаться</string>
     <string name="class_confirmation">Вы уверены, что хотите продолжить как %s\?</string>
     <string name="class_changed">Теперь вы %s!</string>
-    <string name="class_changed_description">У вас есть новая боевая экипировка по умолчанию, которую вы можете сменить в разделе Снаряжение!</string>
+
     <string name="choose_class">Выбрать класс</string>
     <string name="dialog_go_back">Вернуться назад</string>
     <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
@@ -641,7 +641,7 @@
     <string name="preference_push_important_announcements">Важные объявления</string>
     <string name="create">Создать</string>
     <string name="only_leader_create_challenge">Только лидер может создавать испытания</string>
-    <string name="create_party">Создать команду</string>
+    <string name="create_party">Создать новую команду</string>
     <string name="notifications">Уведомления</string>
     <string name="no_notifications_title">Вы все вспомнили!</string>
     <string name="no_notifications_text">Феи уведомлений вам тихо рукоплещут! Отлично сработано!</string>
@@ -651,7 +651,7 @@
     <string name="new_msg_party"><![CDATA[В команде <b>%1$s</b> есть новые сообщения]]></string>
     <string name="unallocated_stats_points"><![CDATA[Вы не распределили <b>%1$s очков</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[У вас новый <b>Таинственный предмет</b>]]></string>
-    <string name="invited_to_party_notification"><![CDATA[Вас пригласили в команду <b>%1$s</b>]]></string>
+    <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Вас пригласили в команду <b>%2$s</b>]]></string>
     <string name="invited_to_private_guild"><![CDATA[Вас пригласили присоединиться к частной гильдии <b>%1$s</b>]]></string>
     <string name="invited_to_public_guild"><![CDATA[Вас пригласили в гильдию <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Вас пригласили на квест <b>%1$s</b>]]></string>

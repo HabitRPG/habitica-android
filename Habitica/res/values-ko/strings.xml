@@ -220,7 +220,7 @@
     <string name="opt_out_class">선택 유예</string>
     <string name="class_confirmation">%s 이(가) 되고싶은 것이 확실한가요\?</string>
     <string name="class_changed">%s이(가) 되었습니다!</string>
-    <string name="class_changed_description">장비 메뉴에서 교체할 수 있는 새로운 기본 전투 장비를 얻었습니다!</string>
+
     <string name="choose_class">직업 선택</string>
     <string name="dialog_go_back">뒤로 가기</string>
     <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
@@ -592,7 +592,7 @@
     <string name="setup_task_reward">스스로에게 보상을 주세요</string>
     <string name="setup_task_reward_notes">TV 보기, 게임하기, 군것질 하기, 당신에게 달려있어요!</string>
     <string name="visit_website">웹사이트로 가기</string>
-    <string name="create_party">파티 만들기</string>
+    <string name="create_party">새로운 파티 만들기</string>
     <string name="no_party_description">친구들과 함께 혹은 혼자 퀘스트 수행을 해봐요. 파티를 통해 몬스터와 싸우고, 도전을 시작하고, 책임감을 유지할 수 있게 스스로를 도와주세요.</string>
     <string name="insufficientSubscriberGems">이번 달에 살 수 있는 보석을 모두 구입했습니다. 매달 첫 3일 안에 더 구입할 수 있도록 재충전이 됩니다. 후원해주셔서 감사해요!</string>
     <string name="world_boss_description_3">평소의 퀘스트 보스도 함께 피해를 입기 때문에 동시에 진행할 수 있습니다</string>
@@ -715,7 +715,7 @@
     <string name="invited_to_quest"><b>%1$s</b> 퀘스트에 초대되었습니다</string>
     <string name="invited_to_public_guild"><b>%1$s</b> 길드에 초대되었습니다</string>
     <string name="invited_to_private_guild"><b>%1$s</b> 비공개 길드에 초대되었습니다</string>
-    <string name="invited_to_party_notification"><b>%1$s</b> 파티에 초대되었습니다</string>
+    <string name="invited_to_party_notification"><b>%1$s</b> 파티에 초대되었습니다 %2$s</string>
     <string name="new_subscriber_item">"새로운  "<b>미스터리 아이템</b>이 있습니다</string>
     <string name="unallocated_stats_points"><b>%1$s 개의 배분되지 않은 능력치 포인트</b>가 있습니다</string>
     <string name="new_msg_party"><b>%1$s</b> 파티창에 새로운 글이 올라왔습니다</string>

@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.dpToPx
 
 class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
+
     companion object {
         fun show(context: Context?, titleID: Int): HabiticaProgressDialog? {
             return show(context, context?.getString(titleID))
@@ -12,8 +13,8 @@ class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
 
         fun show(context: Context?, title: String?): HabiticaProgressDialog? {
             val dialog = context?.let { HabiticaProgressDialog(it) }
-            context?.let { dialog?.setAdditionalContentView(R.layout.circular_progress) }
-            dialog?.dialogWidth = 150.dpToPx(context)
+            dialog?.setAdditionalContentView(R.layout.circular_progress)
+            dialog?.dialogWidth = 300.dpToPx(context)
             dialog?.setTitle(title)
             dialog?.enqueue()
             return dialog

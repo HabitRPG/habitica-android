@@ -65,6 +65,7 @@ import com.habitrpg.android.habitica.widget.AvatarStatsWidgetProvider
 import com.habitrpg.android.habitica.widget.DailiesWidgetProvider
 import com.habitrpg.android.habitica.widget.HabitButtonWidgetProvider
 import com.habitrpg.android.habitica.widget.TodoListWidgetProvider
+import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
@@ -178,6 +179,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
         launchTrace?.start()
         super.onCreate(savedInstanceState)
+        DataBindingUtils.configManager = appConfigManager
 
         if (!viewModel.isAuthenticated) {
             val intent = Intent(this, IntroActivity::class.java)

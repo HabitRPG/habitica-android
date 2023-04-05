@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.preference.PreferenceManager
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -62,6 +63,17 @@ class AppModule {
         } else getInstance(context, sharedPreferences, keyStore)
     }
 
+
+    @Provides
+    @Singleton
+    fun providesAuthenticationHandler(sharedPreferences: SharedPreferences): AuthenticationHandler {
+        return if (BuildConfig.DEBUG && BuildConfig.TEST_USER_ID.isNotEmpty()) {
+            AuthenticationHandler(BuildConfig.TEST_USER_ID)
+        } else {
+            AuthenticationHandler(sharedPreferences)
+        }
+    }
+
     @Provides
     fun providesResources(@ApplicationContext context: Context): Resources {
         return context.resources
@@ -86,9 +98,5 @@ class AppModule {
     @Singleton
     fun providesRemoteConfigManager(contentRepository: ContentRepository?): AppConfigManager {
         return AppConfigManager(contentRepository)
-    }
-
-    companion object {
-        const val NAMED_USER_ID = "userId"
     }
 }

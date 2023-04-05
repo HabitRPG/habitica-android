@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +25,9 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.plattysoft.leonids.ParticleSystem
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
@@ -66,6 +69,17 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             val layoutParams = binding.dialogWrapper.layoutParams
             layoutParams.width = value
             binding.dialogWrapper.layoutParams = layoutParams
+        }
+
+    // Used when a dialog has an action that neeeds to complete even when the dialog is alrady closed
+    val longLivingScope: CoroutineScope
+        get() {
+            val activity = getActivity()
+            return if (activity is AppCompatActivity) {
+                activity.lifecycleScope
+            } else {
+                MainScope()
+            }
         }
 
     init {
@@ -197,6 +211,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
             button
         } ?: Button(context)
         button.text = string
+        button.elevation = 0f
         return addButton(button, autoDismiss, function) as Button
     }
 

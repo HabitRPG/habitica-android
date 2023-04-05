@@ -288,7 +288,7 @@
     <string name="change_class_confirmation">Bạn có chắc là muốn thay đổi chức nghiệp của mình không\? Điều này sẽ tốn 3 gem đấy.</string>
     <string name="open_in_store">Mở trong cửa hàng</string>
     <string name="change_class_description">Thay đổi chức nghiệp của bạn và hoàn lại điểm chỉ số với 3 gem.</string>
-    <string name="class_changed_description">Bạn có Trang bị Chiến đấu mặc định mới mà bạn có thể thay đổi ở dưới phần Trang bị!</string>
+
     <string name="setup_task_teams_2">Cập nhập đội trên Trạng thái</string>
     <string name="all_dailies_completed">Bạn đã hoàn thành tất cả Việc hằng ngày của mình. Giỏi lắm!</string>
     <string name="add_reward">Thêm Phần thưởng</string>
@@ -675,14 +675,14 @@
     <string name="old_password">Mật khẩu cũ</string>
     <string name="task_title">Tiêu đề Công việc</string>
     <string name="add_local_authentication">Thêm Xác thực Cục bộ</string>
-    <string name="create_party">Tạo Tổ đội</string>
+    <string name="create_party">Tạo một đội mới</string>
     <string name="only_leader_create_challenge">Chỉ có Lãnh đạo có thể tạo Thử thách</string>
     <string name="create">Tạo</string>
     <string name="defeat">Đánh bại</string>
     <string name="invited_to_quest">Bạn đã được mời tham gia vào Nhiệm vụ <b>%1$s</b></string>
     <string name="invited_to_public_guild">Bạn đã được mời tham gia vào Bang hội <b>%1$s</b></string>
     <string name="invited_to_private_guild">Bạn đã được mời tham gia vào Bang hội kín <b>%1$s</b></string>
-    <string name="invited_to_party_notification">Bạn đã được mời tham gia vào Tổ đội <b>%1$s</b></string>
+    <string name="invited_to_party_notification">%1$s bạn đã được mời tham gia vào Tổ đội <b>%2$s</b></string>
     <string name="new_subscriber_item">Bạn có <b>Vật phẩm Bí ẩn</b> mới</string>
     <string name="unallocated_stats_points">Bạn có <b>%1$s Điểm Chỉ số chưa phân bổ</b></string>
     <string name="new_msg_party">Tổ đội của bạn, <b>%1$s</b>, có bài viết mới</string>

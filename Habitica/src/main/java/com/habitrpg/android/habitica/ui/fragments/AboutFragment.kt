@@ -19,14 +19,10 @@ import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.plattysoft.leonids.ParticleSystem
 import javax.inject.Inject
-import javax.inject.Named
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
-
-    @field:[Inject Named(AppModule.NAMED_USER_ID)]
-    lateinit var userId: String
 
     @Inject
     lateinit var appConfigManager: AppConfigManager

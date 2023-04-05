@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +17,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -35,9 +35,11 @@ import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import com.habitrpg.android.habitica.ui.views.equipment.AvatarCustomizationOverviewView
 import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
+@AndroidEntryPoint
 open class AvatarOverviewFragment :
     BaseMainFragment<FragmentComposeScrollingBinding>(),
     AdapterView.OnItemSelectedListener {
@@ -226,11 +228,9 @@ fun AvatarOverviewView(
                     userViewModel.updateUser("preferences.costume", it)
                 })
             }
-            AnimatedVisibility(visible = user?.preferences?.costume == true) {
-                EquipmentOverviewView(user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
-                    onEquipmentTap(type, equipped, true)
-                })
-            }
+            EquipmentOverviewView(user?.items?.gear?.costume, costumeTwoHanded, { type, equipped ->
+                onEquipmentTap(type, equipped, true)
+            }, modifier = Modifier.alpha(if (user?.preferences?.costume == true) 1.0f else 0.5f))
         }
     }
 }

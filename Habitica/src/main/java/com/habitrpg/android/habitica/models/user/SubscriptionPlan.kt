@@ -25,6 +25,7 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
     var consecutive: SubscriptionPlanConsecutive? = null
     var mysteryItemCount = 0
     var additionalData: AdditionalSubscriptionInfo? = null
+    var perkMonthCount: Int = 0
 
     @SerializedName("owner")
     var ownerID: String? = null
@@ -70,10 +71,10 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
 
     val monthsUntilNextHourglass: Int
         get() {
-            return if (subMonthCount > 0) {
-                (consecutive?.offset ?: 0)
+            return if (subMonthCount > 1) {
+                (consecutive?.offset ?: 0) + 1
             } else {
-                (3 - (((consecutive?.count ?: 0)) % 3))
+                (3 - perkMonthCount)
             }
         }
 

@@ -7,7 +7,6 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
@@ -128,10 +127,8 @@ class SubscriptionDetailsView : LinearLayout {
             }
             val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
-            // TODO: Unhide once we figured out discrepancies.
-            binding.nextHourglassContainer.isVisible = false
         } else {
-            binding.nextHourglassContainer.isVisible = false
+            binding.nextHourglassTextview.text = "--"
         }
 
         binding.changeSubscriptionButton.visibility = View.VISIBLE
