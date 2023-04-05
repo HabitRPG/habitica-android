@@ -153,8 +153,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         if (zonedDueDate != null) {
             val day = ZonedDateTime.now().dayOfYear
             val year = ZonedDateTime.now().year
-            val test1 = zonedDueDate.dayOfYear
-            val test2 = zonedDueDate.year
             return (zonedDueDate.dayOfYear == day) && (zonedDueDate.year == year)
         }
         return null
