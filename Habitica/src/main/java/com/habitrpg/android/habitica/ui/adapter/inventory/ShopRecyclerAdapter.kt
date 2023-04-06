@@ -19,7 +19,9 @@ import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
 
@@ -140,7 +142,12 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                             if (user?.stats?.habitClass != obj.identifier && obj.identifier != "none") {
                                 if (user?.hasClass == true) {
                                     sectionHolder.switchClassButton?.setOnClickListener {
-                                        changeClassEvents?.invoke(selectedGearCategory)
+                                        if ((user?.gemCount ?: 0) >= 3) {
+                                            changeClassEvents?.invoke(selectedGearCategory)
+                                        } else {
+                                            val dialog = InsufficientGemsDialog(context, 3)
+                                            dialog.show()
+                                        }
                                     }
                                     sectionHolder.switchClassButton?.visibility = View.VISIBLE
                                     sectionHolder.switchClassLabel?.text = context.getString(R.string.change_class_to_x, getTranslatedClassName(context.resources, selectedGearCategory))
