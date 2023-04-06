@@ -289,7 +289,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         fun bind(className: String, armoireCount: Int) {
             binding.titleView.text = itemView.context.getString(R.string.shop_armoire_title, className)
             binding.descriptionView.text = itemView.context.getString(R.string.shop_armoire_description)
-            binding.iconView.visibility = View.INVISIBLE
+            binding.iconView.visibility = View.GONE
             binding.footerLayout.visibility = View.INVISIBLE
         }
     }
