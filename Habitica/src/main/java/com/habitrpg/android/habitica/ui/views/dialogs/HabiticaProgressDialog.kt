@@ -11,10 +11,10 @@ class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
             return show(context, context?.getString(titleID))
         }
 
-        fun show(context: Context?, title: String?): HabiticaProgressDialog? {
+        fun show(context: Context?, title: String?, dialogWidth: Int = 300): HabiticaProgressDialog? {
             val dialog = context?.let { HabiticaProgressDialog(it) }
             dialog?.setAdditionalContentView(R.layout.circular_progress)
-            dialog?.dialogWidth = 300.dpToPx(context)
+            dialog?.dialogWidth = dialogWidth.dpToPx(context)
             dialog?.setTitle(title)
             dialog?.enqueue()
             return dialog

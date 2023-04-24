@@ -1,10 +1,13 @@
 package com.habitrpg.android.habitica.models.tasks
 
+import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.dayOfWeekString
+import com.habitrpg.android.habitica.extensions.parseToZonedDateTime
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -22,9 +25,6 @@ import org.json.JSONException
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.TemporalAccessor
 import java.util.Date
 
 open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
@@ -308,49 +308,52 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     fun checkIfDue(): Boolean = isDue == true
 
-    fun getNextReminderOccurrence(remindersItem: RemindersItem): ZonedDateTime? {
-        remindersItem.time?.let { oldTime ->
-            val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-
-            // If task !isDisplayedActive or if isDisplayedActive but reminder passed,
-            // set a updated reminder with nextDate
-            return if (nextDue?.firstOrNull() != null && (!isDisplayedActive || remindersItem.getLocalZonedDateTimeInstant()?.isBefore(now) == true)) {
-                val nextDate = LocalDateTime.ofInstant(nextDue?.firstOrNull()?.toInstant(), ZoneId.systemDefault())
+    /**
+     * When manually changing the alarm time, nextDue will provide the previously set upcoming alarm -
+     * however if the alarm was changed to a upcoming time today (and not before the current time) AND the previous alarm
+     * set for today already passed, we want to check if the alarm repeat/days includes today as well.
+     * If so - use today's date to schedule an alarm. If not, use nextDue.
+     *
+     * Alarms automatically rescheduled -> nextDue used.
+     * A alarm that already passed today and is rescheduled for a upcoming time today -> Schedule for today (instead of using nextDue)
+     */
+    fun getNextReminderOccurrence(remindersItem: RemindersItem?, context: Context): ZonedDateTime? {
+        if (remindersItem == null) {
+            return null
+        }
+        val reminderTime = remindersItem.time?.parseToZonedDateTime()
+        val zonedDateTimeNow = ZonedDateTime.now()
+        return if (nextDue?.firstOrNull() != null && (!isDisplayedActive || reminderTime?.isBefore(zonedDateTimeNow) == true)
+        ) {
+            val repeatingDays = repeat?.dayStrings(context)
+            val isScheduledForToday = repeatingDays?.find { day -> day == zonedDateTimeNow.dayOfWeekString() }
+            if (isScheduledForToday != null) {
                 val currentDateTime = LocalDateTime.now()
-                val nextDueCalendar: LocalDateTime = LocalDateTime.of(
+                val updatedDateTime: LocalDateTime = LocalDateTime.of(
                     currentDateTime.year,
-                    currentDateTime.month,  // Add one to adjust from zero-based counting.
+                    currentDateTime.month,
                     currentDateTime.dayOfMonth,
-                    nextDate.hour,
-                    nextDate.minute
+                    reminderTime?.hour ?: 0,
+                    reminderTime?.minute ?: 0
                 )
-                nextDueCalendar.atZone(ZoneId.systemDefault())
+                updatedDateTime.atZone(ZoneId.systemDefault())
             } else {
-                return parse(oldTime)
+                val nextDate = LocalDateTime.ofInstant(nextDue?.firstOrNull()?.toInstant(), ZoneId.systemDefault())
+                val updatedDateTime: LocalDateTime = LocalDateTime.of(
+                    nextDate.year,
+                    nextDate.month,
+                    nextDate.dayOfMonth,
+                    reminderTime?.hour ?: 0,
+                    reminderTime?.minute ?: 0
+                )
+                updatedDateTime.atZone(ZoneId.systemDefault())
             }
-        }
-        return null
-    }
-
-    fun formatter(): DateTimeFormatter =
-        DateTimeFormatterBuilder().append(DateTimeFormatter.ISO_LOCAL_DATE)
-            .appendPattern("['T'][' ']")
-            .append(DateTimeFormatter.ISO_LOCAL_TIME)
-            .appendPattern("[XX]")
-            .toFormatter()
-
-    fun parse(dateTime: String): ZonedDateTime? {
-        val parsed: TemporalAccessor = formatter().parseBest(
-            dateTime,
-            ZonedDateTime::from, LocalDateTime::from
-        )
-        return if (parsed is ZonedDateTime) {
-            parsed
         } else {
-            val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone)
+            return reminderTime
         }
     }
+
+
 
     fun parseMarkdown() {
         parsedText = MarkdownParser.parseMarkdown(text)

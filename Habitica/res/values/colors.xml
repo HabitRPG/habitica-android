@@ -123,6 +123,7 @@
     <color name="lightly_tinted_background">@color/brand_700</color>
     <color name="dialog_background">@color/white</color>
     <color name="error_banner_background">@color/maroon_5</color>
+    <color name="text_green1_green500">@color/green_1</color>
     <color name="text_gold">@color/yellow_1</color>
 
     <color name="text_green10_green500">@color/green_10</color>
