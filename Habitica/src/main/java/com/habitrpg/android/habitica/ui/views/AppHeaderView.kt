@@ -177,7 +177,7 @@ fun AppHeaderView(
                         )
                     } else if (user?.preferences?.disableClasses != true && user?.flags?.classSelected == false) {
                         HabiticaButton(
-                            background = MaterialTheme.colors.primarySurface,
+                            background = HabiticaTheme.colors.basicButtonColor(),
                             color = MaterialTheme.colors.onPrimary,
                             onClick = {
                                 MainNavigationController.navigate(R.id.classSelectionActivity)
@@ -186,7 +186,10 @@ fun AppHeaderView(
                             fontSize = 14.sp,
                             modifier = Modifier.height(28.dp)
                         ) {
-                            Text(stringResource(R.string.choose_class))
+                            Text(
+                                text = stringResource(R.string.choose_class),
+                                color = HabiticaTheme.colors.basicTextColor()
+                            )
                         }
                     } else {
                         Spacer(modifier = Modifier.weight(1f))
