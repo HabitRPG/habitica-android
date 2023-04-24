@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.viewHolders.tasks
 
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -34,7 +36,14 @@ class TodoViewHolder(
     override fun configureSpecialTaskTextView(task: Task) {
         super.configureSpecialTaskTextView(task)
         if (task.dueDate != null) {
-            task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
+            if (task.isDueToday() == true) {
+                specialTaskTextView?.text = context.getString(R.string.today)
+            } else if (task.isDayOrMorePastDue() == true) {
+                task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
+                specialTaskTextView?.setTextColor(ContextCompat.getColor(context, R.color.maroon_100))
+            } else {
+                task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
+            }
             this.specialTaskTextView?.visibility = View.VISIBLE
             calendarIconView?.visibility = View.VISIBLE
         } else {

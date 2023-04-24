@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.dayOfWeekString
 import com.habitrpg.android.habitica.extensions.parseToZonedDateTime
+import com.habitrpg.android.habitica.extensions.toZonedDateTime
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.Tag
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -22,6 +23,7 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -144,6 +146,21 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     fun isDisplayedActiveForUser(userID: String?): Boolean {
         val isActive = ((isDue == true && type == TaskType.DAILY) || type == TaskType.TODO)
         return isActive && !completed(userID)
+    }
+
+    fun isDueToday(): Boolean? {
+        val zonedDueDate = dueDate?.toZonedDateTime()
+        if (zonedDueDate != null) {
+            val day = ZonedDateTime.now().dayOfYear
+            val year = ZonedDateTime.now().year
+            return (zonedDueDate.dayOfYear == day) && (zonedDueDate.year == year)
+        }
+        return null
+    }
+
+    fun isDayOrMorePastDue(): Boolean? {
+        val zonedDueDate = dueDate?.toZonedDateTime()
+        return zonedDueDate?.toLocalDate()?.isBefore(LocalDate.now())
     }
 
     val streakString: String?

@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.TextStyle
 import java.time.temporal.TemporalAccessor
+import java.util.Date
 import java.util.Locale
 
 fun String.parseToZonedDateTime(): ZonedDateTime? {
@@ -21,6 +22,10 @@ fun String.parseToZonedDateTime(): ZonedDateTime? {
         val defaultZone: ZoneId = ZoneId.of("UTC")
         (parsed as LocalDateTime).atZone(defaultZone)
     }
+}
+
+fun Date.toZonedDateTime(): ZonedDateTime? {
+    return this.toInstant().atZone(ZoneId.systemDefault())
 }
 
 /**
