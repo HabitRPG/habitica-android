@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.library")
@@ -13,7 +13,6 @@ android {
 
     defaultConfig {
         minSdk = rootExtra.get("min_sdk") as Int
-        targetSdkVersion(rootExtra.get("target_sdk") as Int)
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -35,12 +34,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    kotlin {
+        jvmToolchain(11)
     }
     namespace = "com.habitrpg.common.habitica"
 
@@ -78,12 +77,12 @@ android {
     }
 }
 
-val core_ktx_version = rootExtra.get("core_ktx_version")
-val appcompat_version = rootExtra.get("appcompat_version")
-val markwon_version = rootExtra.get("markwon_version")
-val coil_version = rootExtra.get("coil_version")
-val mockk_version = rootExtra.get("mockk_version")
-val kotest_version = rootExtra.get("kotest_version")
+val core_ktx_version: String by rootExtra
+val appcompat_version: String by rootExtra
+val markwon_version: String by rootExtra
+val coil_version: String by rootExtra
+val mockk_version: String by rootExtra
+val kotest_version: String by rootExtra
 
 dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
@@ -122,17 +121,13 @@ android.testOptions {
 // Add Habitica Properties to buildConfigField
 val HRPG_PROPS_FILE = File(projectDir.absolutePath + "/../habitica.properties")
 if (HRPG_PROPS_FILE.canRead()) {
-    val HRPG_PROPS = Properties()
-    HRPG_PROPS.load(FileInputStream(HRPG_PROPS_FILE))
+    val hrpgProps = Properties()
+    hrpgProps.load(FileInputStream(HRPG_PROPS_FILE))
 
-    if (HRPG_PROPS != null) {
-        android.buildTypes.configureEach {
-            HRPG_PROPS.forEach { property ->
-                buildConfigField("String", property.key as String, "\"${property.value}\"")
-            }
+    android.buildTypes.configureEach {
+        hrpgProps.forEach { property ->
+            buildConfigField("String", property.key as String, "\"${property.value}\"")
         }
-    } else {
-        throw InvalidUserDataException("habitica.properties found but some entries are missing")
     }
 } else {
     throw MissingResourceException("habitica.properties not found")

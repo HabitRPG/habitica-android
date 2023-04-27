@@ -20,7 +20,7 @@ class PartyMemberRecyclerViewAdapter : BaseRecyclerViewAdapter<Member, GroupMemb
     override fun onBindViewHolder(holder: GroupMemberViewHolder, position: Int) {
         holder.bind(data[position], leaderID, null)
         holder.onClickEvent = {
-            onUserClicked?.invoke(data[position].id ?: "")
+            onUserClicked?.invoke(data[position].id)
         }
     }
 }

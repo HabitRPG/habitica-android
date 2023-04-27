@@ -60,9 +60,9 @@ fun GroupPlanMemberList(
                 ?: emptyList()
         ) {
             item {
-                val role = if (group?.isLeader(member.id ?: "") == true) {
+                val role = if (group?.isLeader(member.id) == true) {
                     stringResource(R.string.owner)
-                } else if (group?.isManager(member.id ?: "") == true) {
+                } else if (group?.isManager(member.id) == true) {
                     stringResource(R.string.manager)
                 } else {
                     stringResource(R.string.member)

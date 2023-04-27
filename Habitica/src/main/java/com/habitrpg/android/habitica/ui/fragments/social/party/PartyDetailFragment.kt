@@ -276,7 +276,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             val viewHolder = GroupMemberViewHolder(memberView)
             viewHolder.bind(member, leaderID ?: "", viewModel?.user?.value?.id)
             viewHolder.onClickEvent = {
-                FullProfileActivity.open(member.id ?: "")
+                FullProfileActivity.open(member.id)
             }
             viewHolder.sendMessageEvent = {
                 member.id.let { showSendMessageToUserDialog(it, member.displayName) }

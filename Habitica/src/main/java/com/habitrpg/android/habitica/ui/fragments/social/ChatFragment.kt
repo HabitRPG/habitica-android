@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -28,9 +30,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -119,10 +121,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 it?.flags?.communityGuidelinesAccepted == true
         }
 
-        lifecycleScope.launchWhenResumed {
-            while (true) {
-                refresh()
-                delay(30.toDuration(DurationUnit.SECONDS))
+        lifecycleScope.launchCatching {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                while (true) {
+                    refresh()
+                    delay(30.toDuration(DurationUnit.SECONDS))
+                }
             }
         }
     }

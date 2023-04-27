@@ -72,7 +72,7 @@ class AuthenticationViewModel @Inject constructor(
     ) {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
-        var newUser = false
+        var newUser : Boolean
         CoroutineScope(Dispatchers.IO).launchCatching({ throwable ->
             if (recoverFromPlayServicesErrorResult == null) return@launchCatching
             if (throwable is GoogleAuthException) {

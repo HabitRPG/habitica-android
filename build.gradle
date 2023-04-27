@@ -117,3 +117,9 @@ tasks.named("detekt").configure {
 task allUnitTests(type: GradleBuild) {
     tasks = [':Habitica:testProdDebugUnitTest', ':wearos:testProdDebugUnitTest', ':common:testProdDebugUnitTest', ':shared:testDebugUnitTest']
 }
+
+subprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions.jvmTarget = "11"
+    }
+}

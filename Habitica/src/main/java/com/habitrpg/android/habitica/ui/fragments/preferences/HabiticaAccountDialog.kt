@@ -38,7 +38,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.let { activity ->
+        activity?.let { _ ->
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = true
         }
 

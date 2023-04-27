@@ -145,7 +145,7 @@ class StableViewModel @Inject constructor(
         }
 
         items.add(0, "header")
-        items.removeAll { it is StableSection && (it.key as? String) == "special" && it.ownedCount == 0 }
+        items.removeAll { it is StableSection && it.key == "special" && it.ownedCount == 0 }
         return items
     }
 }

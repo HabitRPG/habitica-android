@@ -36,16 +36,6 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
     }
 
     private val webviewClient = object : WebViewClient() {
-
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            if (url?.contains("/static/new-stuff") == true) {
-                view?.loadUrl(url)
-            } else if (url != null) {
-                MainNavigationController.navigate(url)
-            }
-            return true
-        }
-
         override fun shouldOverrideUrlLoading(
             view: WebView?,
             request: WebResourceRequest?
