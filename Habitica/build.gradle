@@ -46,12 +46,12 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     //Desugaring
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
     implementation('com.jaredrummler:android-device-names:2.1.1')
 
     // IAP Handling / Verification
-    implementation "com.android.billingclient:billing-ktx:5.1.0"
+    implementation "com.android.billingclient:billing-ktx:5.2.0"
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
     implementation("io.coil-kt:coil-compose:$coil_version")
@@ -73,7 +73,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test:rules:1.5.0'
-    debugImplementation 'androidx.fragment:fragment-testing:1.5.6'
+    debugImplementation 'androidx.fragment:fragment-testing:1.5.7'
     androidTestImplementation 'androidx.test:core-ktx:1.5.0'
     debugImplementation "androidx.test:monitor:1.6.1"
     androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.5'
@@ -95,7 +95,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
     implementation "com.google.android.gms:play-services-auth:$play_auth_version"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "com.google.android.gms:play-services-wearable:$play_wearables_version"
@@ -106,7 +106,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
-    implementation "androidx.fragment:fragment-ktx:1.5.6"
+    implementation "androidx.fragment:fragment-ktx:1.5.7"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
     implementation "androidx.paging:paging-compose:1.0.0-alpha18"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
@@ -115,9 +115,9 @@ dependencies {
     implementation "androidx.compose.material3:material3:1.0.1"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
-    implementation 'androidx.activity:activity-compose:1.7.0'
+    implementation 'androidx.activity:activity-compose:1.7.1'
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.compose.material:material:1.4.0"
+    implementation "androidx.compose.material:material:1.4.2"
     implementation "androidx.compose.animation:animation:$compose_version"
     implementation "androidx.compose.ui:ui-text-google-fonts:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
@@ -138,13 +138,15 @@ android {
         animationsDisabled = true
     }
 
+    namespace "com.habitrpg.android.habitica"
+
     defaultConfig {
         minSdkVersion min_sdk
         applicationId "com.habitrpg.android.habitica"
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "STORE", "\"google\""
         buildConfigField "String", "TESTING_LEVEL", "\"production\""
-        resConfigs 'en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'uk', 'zh', 'zh-rTW'
+        resourceConfigurations += ['en', 'bg', 'de', 'en-rGB', 'es', 'fr', 'hr-rHR', 'in', 'it', 'iw', 'ja', 'ko', 'lt', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ru', 'tr', 'uk', 'zh', 'zh-rTW']
 
         versionCode app_version_code
         versionName app_version_name
@@ -161,6 +163,8 @@ android {
     buildFeatures {
         viewBinding true
         compose true
+        renderScript true
+        aidl true
     }
 
     composeOptions {

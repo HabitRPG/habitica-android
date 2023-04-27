@@ -11,22 +11,22 @@ buildscript {
         amplitude_version = '1.6.1'
         appcompat_version = '1.6.1'
         coil_version = '2.2.2'
-        compose_version = '1.4.0'
-        core_ktx_version = '1.9.0'
+        compose_version = '1.4.2'
+        core_ktx_version = '1.10.0'
         coroutines_version = '1.6.4'
         daggerhilt_version = '2.44.2'
         firebase_bom = '31.3.0'
         kotest_version = '5.5.5'
-        kotlin_version = '1.8.10'
+        kotlin_version = '1.8.20'
         ktlint_version = '0.48.2'
-        lifecycle_version = '2.6.0'
+        lifecycle_version = '2.6.1'
         markwon_version = '4.6.2'
         mockk_version = '1.13.4'
         moshi_version = '1.14.0'
         navigation_version = '2.5.3'
         okhttp_version = '4.10.0'
         play_wearables_version = '18.0.0'
-        play_auth_version = '20.4.1'
+        play_auth_version = '20.5.0'
         preferences_version = '1.2.0'
         realm_version = '1.0.2'
         retrofit_version = '2.9.0'
@@ -39,10 +39,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.0.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.4'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
         classpath "io.realm:realm-gradle-plugin:10.13.2-transformer-api"
         classpath("io.realm.kotlin:gradle-plugin:$realm_version")
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"

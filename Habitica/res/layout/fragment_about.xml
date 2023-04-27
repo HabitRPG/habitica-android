@@ -113,6 +113,17 @@
             android:textSize="@dimen/card_medium_text" />
 
         <Button
+            android:id="@+id/guidelines_button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8sp"
+            style="@style/HabiticaButton.Gray"
+            android:text="@string/community_guidelines"
+            android:textAllCaps="false"
+            android:textSize="@dimen/card_medium_text" />
+
+        <Button
             android:id="@+id/googlePlayStoreButton"
             android:layout_width="250dp"
             android:layout_height="wrap_content"

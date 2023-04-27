@@ -15,11 +15,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.plattysoft.leonids.ParticleSystem
-import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
@@ -108,6 +107,7 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
 
         binding?.privacyPolicyButton?.setOnClickListener { openBrowserLink(privacyPolicyLink) }
         binding?.termsButton?.setOnClickListener { openBrowserLink(termsLink) }
+        binding?.guidelinesButton?.setOnClickListener { MainNavigationController.navigate(R.id.guidelinesActivity) }
         binding?.sourceCodeLink?.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
         binding?.twitter?.setOnClickListener { openBrowserLink(twitterLink) }
         binding?.sourceCodeButton?.setOnClickListener { openBrowserLink(androidSourceCodeLink) }
