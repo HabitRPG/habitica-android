@@ -263,15 +263,16 @@ class ClassSelectionActivity : BaseActivity() {
 
     private fun selectClass(selectedClass: String, isChanging: Boolean) {
         shouldFinish = true
-        this.displayProgressDialog(getString(R.string.changing_class_progress))
+        val dialog = this.displayProgressDialog(getString(R.string.changing_class_progress))
         lifecycleScope.launch(Dispatchers.Main) {
             userRepository.changeClass(selectedClass)
+            dialog.hide()
             if (isChanging) displayClassChanged(selectedClass)
         }
     }
 
-    private fun displayProgressDialog(progressText: String) {
-        HabiticaProgressDialog.show(this, progressText, 300)
+    private fun displayProgressDialog(progressText: String) : HabiticaProgressDialog {
+        return HabiticaProgressDialog.show(this, progressText, 300)
     }
 
     private fun dismiss() {
