@@ -160,8 +160,10 @@ class PreferencesFragment : BasePreferencesFragment(),
                             dialog.enqueue()
                         }
                     } else {
-                        val dialog = context?.let { InsufficientGemsDialog(it, 3) }
-                        dialog?.show()
+                        activity?.let { activity ->
+                            val dialog = InsufficientGemsDialog(activity, 3)
+                            dialog.show()
+                        }
                     }
                 } else {
                     classSelectionResult.launch(intent)

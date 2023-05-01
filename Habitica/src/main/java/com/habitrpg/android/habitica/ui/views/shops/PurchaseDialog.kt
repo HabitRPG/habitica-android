@@ -331,7 +331,11 @@ class PurchaseDialog(context: Context, private val userRepository : UserReposito
                         }
                     }
                     "gold" == shopItem.currency -> InsufficientGoldDialog(context)
-                    "gems" == shopItem.currency -> InsufficientGemsDialog(context, shopItem.value)
+                    "gems" == shopItem.currency -> {
+                        val application = ownerActivity?.application as? HabiticaBaseApplication
+                        val activity = (application?.currentActivity?.get() ?: getActivity() ?: ownerActivity)
+                        activity?.let { InsufficientGemsDialog(activity, shopItem.value) }
+                    }
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)
                     else -> null
                 }?.show()

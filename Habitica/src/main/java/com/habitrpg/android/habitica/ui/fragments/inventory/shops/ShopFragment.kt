@@ -117,7 +117,10 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 dialog.show()
             }
+
+
             adapter?.context = context
+            adapter?.mainActivity = mainActivity
             binding?.recyclerView?.adapter = adapter
             binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
             adapter?.changeClassEvents = {
