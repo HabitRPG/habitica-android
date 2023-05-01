@@ -10,9 +10,11 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.dpToPx
+import kotlin.math.min
 
 class IndeterminateProgressView @JvmOverloads constructor(
     context: Context,
@@ -20,7 +22,8 @@ class IndeterminateProgressView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    var progressBarWidth = 6f.dpToPx(context)
+    private val progressBarWidth = 6f.dpToPx(context)
+    private val revealDuration = 200L
 
     private val rainbow = listOf(
         ContextCompat.getColor(context, R.color.black),
@@ -37,7 +40,7 @@ class IndeterminateProgressView @JvmOverloads constructor(
     private val isCircular: Boolean
     private val cornerRadius = 12f.dpToPx(context)
 
-    private var currentAngle = 0f
+    private val currentAngle = 0f
 
     init {
         paint.style = Paint.Style.STROKE
@@ -65,15 +68,22 @@ class IndeterminateProgressView @JvmOverloads constructor(
             start()
         }
         ValueAnimator.ofFloat(0f, progressBarWidth).apply {
-            duration = 200
+            duration = revealDuration
             addUpdateListener { paint.strokeWidth = it.animatedValue as Float }
             start()
         }
     }
 
-    fun stopAnimation() {
-        animator?.end()
-        animator = null
+    fun stopAnimation(onAnimationEnd: () -> Unit) {
+        val hideDuration = min(revealDuration, animator?.currentPlayTime ?: revealDuration)
+        ValueAnimator.ofFloat(paint.strokeWidth, 0f).apply {
+            duration = hideDuration
+            addUpdateListener { paint.strokeWidth = it.animatedValue as Float }
+            start()
+        }.doOnEnd {
+            animator = null
+            onAnimationEnd()
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
