@@ -34,6 +34,7 @@
             android:layout_height="68dp" />
     </LinearLayout>
     <FrameLayout
+        android:id="@+id/footer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/offset_background_30"
