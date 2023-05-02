@@ -173,8 +173,13 @@ class PurchaseDialog(context: Context, private val userRepository : UserReposito
 
     private fun setLimitedTextView() {
         if (user == null) return
+        val userLvl = user?.stats?.lvl ?: 0
         if (shopItem.habitClass != null && shopItem.habitClass != "special" && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
-            limitedTextView.text = context.getString(R.string.class_equipment_shop_dialog)
+            limitedTextView.text = if (userLvl >= 10) {
+                context.getString(R.string.class_equipment_shop_dialog)
+            } else {
+                context.getString(R.string.insufficient_level_equipment_dialog)
+            }
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
         } else if (shopItem.event?.end != null) {
