@@ -40,9 +40,10 @@ class TodoViewHolder(
                 specialTaskTextView?.text = context.getString(R.string.today)
             } else if (task.isDayOrMorePastDue() == true) {
                 task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
-                specialTaskTextView?.setTextColor(ContextCompat.getColor(context, R.color.maroon_100))
+                specialTaskTextView?.setTextColor(ContextCompat.getColor(context, R.color.maroon100_red100))
             } else {
                 task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
+                specialTaskTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
             }
             this.specialTaskTextView?.visibility = View.VISIBLE
             calendarIconView?.visibility = View.VISIBLE
