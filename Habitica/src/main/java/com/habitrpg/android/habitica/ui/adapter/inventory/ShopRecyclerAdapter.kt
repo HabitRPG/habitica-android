@@ -17,9 +17,9 @@ import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ShopItemViewHolder
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.fromHtml
@@ -46,6 +46,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
             }
         }
     var context: Context? = null
+    var mainActivity: MainActivity? = null
     var user: User? = null
         set(value) {
             field = value
@@ -145,8 +146,10 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                         if ((user?.gemCount ?: 0) >= 3) {
                                             changeClassEvents?.invoke(selectedGearCategory)
                                         } else {
-                                            val dialog = InsufficientGemsDialog(context, 3)
-                                            dialog.show()
+                                            mainActivity?.let { activity ->
+                                                val dialog = InsufficientGemsDialog(activity, 3)
+                                                dialog.show()
+                                            }
                                         }
                                     }
                                     sectionHolder.switchClassButton?.visibility = View.VISIBLE
