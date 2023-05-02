@@ -43,6 +43,9 @@
 #retrofit
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
+-if interface * { @retrofit2.http.* *** *(...); }
+-keep,allowobfuscation interface <3>
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
 
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
@@ -53,6 +56,14 @@
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
+
+-keepattributes Signature
+-keep class com.google.gson.reflect.TypeToken
+-keep class * extends com.google.gson.reflect.TypeToken
+-keep public class * implements java.lang.reflect.Type
+-keepclassmembers,allowobfuscation class * {
+ @com.google.gson.annotations.SerializedName <fields>;
+}
 
 #keep Habitica code
 -keep class com.habitrpg.android.habitica.** { *; }
@@ -119,3 +130,6 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+-keepattributes Signature
+-keep class kotlin.coroutines.Continuation

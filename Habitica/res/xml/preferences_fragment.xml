@@ -169,11 +169,6 @@
             android:entries="@array/AppThemeModes"
             android:entryValues="@array/AppThemeModeValues"
             android:layout="@layout/preference_child_summary" />
-        <CheckBoxPreference android:title="@string/dailyDueDefaultView"
-            android:key="dailyDueDefaultView"
-            android:summary="@string/dailyDueDefaultViewDescription"
-            android:layout="@layout/preference_child_summary"
-            />
         <CheckBoxPreference android:title="@string/disablePrivateMessages"
             android:key="disablePMs"
             android:layout="@layout/preference_child_summary"

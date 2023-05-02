@@ -148,6 +148,9 @@ class StableRecyclerFragment :
         viewModel.mounts.observe(viewLifecycleOwner) {
             adapter?.setExistingMounts(it)
         }
+        viewModel.ownedPets.observe(viewLifecycleOwner) {
+            adapter?.setOwnedPets(it)
+        }
         viewModel.ownedMounts.observe(viewLifecycleOwner) {
             adapter?.setOwnedMounts(it)
         }

@@ -249,6 +249,15 @@ class TasksViewModel @Inject constructor(
                 taskRepository.retrieveCompletedTodos()
             }
         }
+
+        if (type == TaskType.DAILY) {
+            val isShowingDue = activeFilter == Task.FILTER_ACTIVE
+            if (isShowingDue != user.value?.preferences?.dailyDueDefaultView) {
+                viewModelScope.launchCatching {
+                    userRepository.updateUser("preferences.dailyDueDefaultView", isShowingDue)
+                }
+            }
+        }
     }
 
     fun getActiveFilter(type : TaskType?) : String? {

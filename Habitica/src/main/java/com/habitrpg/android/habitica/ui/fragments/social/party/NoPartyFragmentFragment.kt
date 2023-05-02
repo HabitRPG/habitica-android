@@ -25,12 +25,11 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.helpers.setMarkdown
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 import kotlin.math.roundToInt
-import dagger.hilt.android.AndroidEntryPoint
-import java.util.Date
 
 @AndroidEntryPoint
 class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
@@ -149,13 +148,13 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                         bundle.getString("privacy"),
                         bundle.getBoolean("leaderCreateChallenge")
                     )
-                    userRepository.retrieveUser(false)
+                    userRepository.retrieveUser(false, true)
                     if (isAdded) {
                         parentFragmentManager.popBackStack()
                     }
                     MainNavigationController.navigate(
                         R.id.partyFragment,
-                        bundleOf(Pair("partyID", userViewModel.partyID))
+                        bundleOf(Pair("partyID", group?.id))
                     )
                 }
             }

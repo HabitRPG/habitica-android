@@ -238,35 +238,27 @@ fun PartySeekingView(
             .pullRefresh(pullRefreshState)
     ) {
         LazyColumn {
-            if (pageData.itemCount == 0 && pageData.loadState.refresh is LoadState.NotLoading && pageData.loadState.append is LoadState.NotLoading) {
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillParentMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                    ) {
+            item {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 22.dp, bottom = 14.dp)
+                ) {
+                    Text(
+                        stringResource(R.string.find_more_members),
+                        color = HabiticaTheme.colors.textPrimary,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    if (pageData.itemCount == 0 && pageData.loadState.refresh is LoadState.NotLoading && pageData.loadState.append is LoadState.NotLoading) {
                         Text(
                             stringResource(R.string.habiticans_looking_party_empty),
                             textAlign = TextAlign.Center,
                             color = HabiticaTheme.colors.textSecondary, modifier = Modifier
                                 .width(250.dp)
-                                .align(alignment = Alignment.CenterHorizontally))
-                    }
-                }
-            } else {
-                item {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 22.dp, bottom = 14.dp)
-                    ) {
-                        Text(
-                            stringResource(R.string.find_more_members),
-                            color = HabiticaTheme.colors.textPrimary,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium
+                                .align(alignment = Alignment.CenterHorizontally)
                         )
+                    } else {
                         Text(
                             stringResource(R.string.habiticans_looking_party),
                             textAlign = TextAlign.Center,

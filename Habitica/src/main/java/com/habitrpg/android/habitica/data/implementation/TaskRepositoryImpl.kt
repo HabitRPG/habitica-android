@@ -350,6 +350,7 @@ class TaskRepositoryImpl(
             if (assignments.isEmpty()) return@let
             val savedTask = apiClient.assignToTask(taskID, assignments) ?: return@let
             savedTask.id = task.id
+            savedTask.ownerID = task.ownerID
             savedTask.position = task.position
             localRepository.save(savedTask)
         }
@@ -362,6 +363,7 @@ class TaskRepositoryImpl(
             if (savedTask != null) {
                 savedTask.id = task.id
                 savedTask.position = task.position
+                savedTask.ownerID = task.ownerID
                 localRepository.save(savedTask)
             }
         }

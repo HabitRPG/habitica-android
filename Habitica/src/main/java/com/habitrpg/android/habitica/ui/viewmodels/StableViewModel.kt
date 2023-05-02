@@ -16,12 +16,10 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.models.user.OwnedObject
 import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableRecyclerFragment
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +30,7 @@ class StableViewModel @Inject constructor(
     val inventoryRepository : InventoryRepository
 ) : BaseViewModel(userRepository, userViewModel) {
 
-    internal val itemType: String? = savedStateHandle.get(StableRecyclerFragment.ITEM_TYPE_KEY)
+    internal val itemType: String? = savedStateHandle[StableRecyclerFragment.ITEM_TYPE_KEY]
 
     private val _items: MutableLiveData<List<Any>> = MutableLiveData()
     val items: LiveData<List<Any>> = _items
@@ -45,10 +43,10 @@ class StableViewModel @Inject constructor(
             eggMap
         }
         .asLiveData()
-    private val _ownedItems: MutableLiveData<Map<String, OwnedItem>> = MutableLiveData()
-    val ownedItems: LiveData<Map<String, OwnedItem>> = _ownedItems
-    private val _mounts: MutableLiveData<List<Mount>> = MutableLiveData()
-    val mounts: LiveData<List<Mount>> = _mounts
+    val ownedItems: LiveData<Map<String, OwnedItem>> = inventoryRepository.getOwnedItems(true).asLiveData()
+    val mounts: LiveData<List<Mount>> = inventoryRepository.getMounts().asLiveData()
+    private val _ownedPets: MutableLiveData<Map<String, OwnedPet>> = MutableLiveData()
+    val ownedPets: LiveData<Map<String, OwnedPet>> = _ownedPets
     private val _ownedMounts: MutableLiveData<Map<String, OwnedMount>> = MutableLiveData()
     val ownedMounts: LiveData<Map<String, OwnedMount>> = _ownedMounts
 
@@ -57,7 +55,7 @@ class StableViewModel @Inject constructor(
     }
 
     private fun loadItems() {
-        viewModelScope.launch(ExceptionHandler.coroutine()) {
+        viewModelScope.launchCatching {
             val animals = if ("pets" == itemType) {
                 inventoryRepository.getPets().firstOrNull()
             } else {
@@ -77,14 +75,17 @@ class StableViewModel @Inject constructor(
             }.collect {
                 _items.value = mapAnimals(animals, it)
             }
-            viewModelScope.launchCatching {
-                _ownedItems.value = inventoryRepository.getOwnedItems(true).firstOrNull() ?: emptyMap()
+        }
+        viewModelScope.launchCatching {
+            inventoryRepository.getOwnedPets().map { ownedPets ->
+                val petMap = mutableMapOf<String, OwnedPet>()
+                ownedPets.forEach { petMap[it.key ?: ""] = it }
+                return@map petMap
+            }.collect {
+                _ownedPets.value = it
             }
-            _mounts.value = if ("pets" == itemType) {
-                inventoryRepository.getMounts().firstOrNull() ?: emptyList()
-            } else {
-                animals.map { it as Mount }
-            }
+        }
+        viewModelScope.launchCatching {
             inventoryRepository.getOwnedMounts().map { ownedMounts ->
                 val mountMap = mutableMapOf<String, OwnedMount>()
                 ownedMounts.forEach { mountMap[it.key ?: ""] = it }

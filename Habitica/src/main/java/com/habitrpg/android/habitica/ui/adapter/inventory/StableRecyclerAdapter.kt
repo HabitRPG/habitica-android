@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.OwnedMount
+import com.habitrpg.android.habitica.models.user.OwnedPet
 import com.habitrpg.android.habitica.ui.fragments.inventory.stable.StableFragmentDirections
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
@@ -45,6 +46,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     var onEquip: ((String) -> Unit)? = null
     private var existingMounts: List<Mount>? = null
+    private var ownedPets: Map<String, OwnedPet>? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
     private var ownedItems: Map<String, OwnedItem>? = null
     private var ownsSaddles: Boolean = false
@@ -66,6 +68,11 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun potionCount(pet: Pet): Int {
         return ownedItems?.get(pet.color + "-hatchingPotions")?.numberOwned ?: 0
+    }
+
+    fun setOwnedPets(ownedPets: Map<String, OwnedPet>) {
+        this.ownedPets = ownedPets
+        notifyDataSetChanged()
     }
 
     fun setOwnedMounts(ownedMounts: Map<String, OwnedMount>) {
@@ -95,6 +102,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             4 -> StableViewHolder(parent.inflate(R.layout.pet_overview_item))
             5 -> StableViewHolder(parent.inflate(R.layout.mount_overview_item))
             2 -> PetViewHolder(parent, onEquip, onFeed, animalIngredientsRetriever)
+            22 -> PetDetailRecyclerAdapter.CanHatchViewHolder(parent, animalIngredientsRetriever)
             3 -> MountViewHolder(parent, onEquip)
             else -> StableHeaderViewHolder(parent)
         }
@@ -114,18 +122,32 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val isIndividualAnimal = item.type == "special" || item.type == "wacky"
                 if (isIndividualAnimal) {
                     if (item is Pet) {
-                        (holder as? PetViewHolder)?.bind(
-                            item = item,
-                            trained = item.numberOwned,
-                            eggCount = eggCount(item),
-                            potionCount = potionCount(item),
-                            canRaiseToMount = canRaiseToMount(item),
-                            ownsSaddles = ownsSaddles,
-                            hasUnlockedEgg = ownedItems?.get(item.animal + "-eggs") != null,
-                            hasUnlockedPotion = ownedItems?.get(item.color + "-hatchingPotions") != null,
-                            hasMount = ownedMounts?.containsKey(item.key) == true,
-                            currentPet = currentPet
-                        )
+                        val trained = ownedPets?.get(item.key ?: "")?.trained ?: 0
+                        val eggCount = eggCount(item)
+                        val potionCount = potionCount(item)
+                        if (trained <= 0 && eggCount > 0 && potionCount > 0) {
+                            (holder as? PetDetailRecyclerAdapter.CanHatchViewHolder)?.bind(
+                                item,
+                                eggCount,
+                                potionCount,
+                                ownedItems?.get(item.animal + "-eggs") != null,
+                                ownedItems?.get(item.color + "-hatchingPotions") != null,
+                                ownedMounts?.containsKey(item.key) == true,
+                            )
+                        } else {
+                            (holder as? PetViewHolder)?.bind(
+                                item,
+                                trained,
+                                eggCount,
+                                potionCount,
+                                canRaiseToMount(item),
+                                ownsSaddles,
+                                ownedItems?.get(item.animal + "-eggs") != null,
+                                ownedItems?.get(item.color + "-hatchingPotions") != null,
+                                ownedMounts?.containsKey(item.key) == true,
+                                currentPet
+                            )
+                        }
                     } else if (item is Mount) {
                         (holder as? MountViewHolder)?.bind(item, item.numberOwned > 0, currentMount)
                     }
@@ -146,13 +168,19 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         } else if (item is Animal) {
             val isIndividualAnimal = item.type == "special" || item.type == "wacky"
             if (isIndividualAnimal) {
-                if (itemType == "pets") {
-                    2
+                if (item is Pet) {
+                    if ((ownedPets?.get(item.key ?: "")?.trained
+                            ?: 0) <= 0 && eggCount(item) > 0 && potionCount(item) > 0
+                    ) {
+                        22
+                    } else {
+                        2
+                    }
                 } else {
                     3
                 }
             } else {
-                if (itemType == "pets") {
+                if (item is Pet) {
                     4
                 } else {
                     5
@@ -219,7 +247,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
 
-            val alpha = if (item.numberOwned <= 0 && (ownedItems?.containsKey(item.animal) != true || itemType == "mounts")) 0.2f else 1.0f
+            val alpha = if (item.numberOwned <= 0 && (ownedItems?.containsKey(item.animal + "-eggs") != true || itemType == "mounts")) 0.2f else 1.0f
             this.imageView.alpha = alpha
             this.titleView.alpha = alpha
             this.ownedTextView.alpha = alpha

@@ -30,7 +30,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.util.UUID
 
-class TaskFilterDialog(context: Context, private val repository: TagRepository, private val showTags: Boolean) : HabiticaBottomSheetDialog(context), RadioGroup.OnCheckedChangeListener {
+class TaskFilterDialog(context: Context, private val repository: TagRepository, private val showTags: Boolean) : HabiticaBottomSheetDialog(context) {
     lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
 
@@ -76,7 +76,16 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         setTitle(R.string.filters)
         this.setContentView(binding.root)
 
-        binding.taskFilterWrapper.setOnCheckedChangeListener(this)
+        // Need to use this instead of RadioGroup.onCheckedChangeListener, because that fires twice per change
+        binding.allTaskFilter.setOnClickListener {
+            onCheckedChanged(binding.taskFilterWrapper,  binding.taskFilterWrapper.checkedRadioButtonId)
+        }
+        binding.secondTaskFilter.setOnClickListener {
+            onCheckedChanged(binding.taskFilterWrapper,  binding.taskFilterWrapper.checkedRadioButtonId)
+        }
+        binding.thirdTaskFilter.setOnClickListener {
+            onCheckedChanged(binding.taskFilterWrapper,  binding.taskFilterWrapper.checkedRadioButtonId)
+        }
 
         binding.clearButton.setOnClickListener {
             if (isEditing) {
@@ -240,7 +249,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         binding.tagsList.addView(editBinding.root)
     }
 
-    fun setActiveTags(tagIds: MutableList<String>?) {
+    private fun setActiveTags(tagIds: MutableList<String>?) {
         if (tagIds == null) {
             this.viewModel.tags.clear()
         } else {
@@ -288,7 +297,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         filtersChanged()
     }
 
-    override fun onCheckedChanged(group: RadioGroup, @IdRes checkedId: Int) {
+    private fun onCheckedChanged(group: RadioGroup, @IdRes checkedId: Int) {
         val newFilter = when (checkedId) {
             R.id.second_task_filter -> when (taskType) {
                 TaskType.HABIT -> Task.FILTER_WEAK

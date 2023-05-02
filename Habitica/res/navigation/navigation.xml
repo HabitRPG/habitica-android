@@ -69,8 +69,8 @@
     </fragment>
     <fragment
         android:id="@+id/partyInvitationFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.party.PartySeekingFragment"
-        android:label="@string/find_more_members">
+        android:name="com.habitrpg.android.habitica.ui.fragments.social.party.PartyInvitePagerFragment"
+        android:label="@string/find_new_member">
     </fragment>
     <fragment
         android:id="@+id/questDetailFragment"

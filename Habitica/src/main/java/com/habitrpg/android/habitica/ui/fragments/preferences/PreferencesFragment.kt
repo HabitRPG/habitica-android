@@ -345,13 +345,6 @@ class PreferencesFragment : BasePreferencesFragment(),
                 activity.reload()
             }
 
-            "dailyDueDefaultView" -> lifecycleScope.launchCatching {
-                userRepository.updateUser(
-                    "preferences.dailyDueDefaultView",
-                    sharedPreferences.getBoolean(key, false)
-                )
-            }
-
             "server_url" -> {
                 apiClient.updateServerUrl(sharedPreferences.getString(key, ""))
                 findPreference<Preference>(key)?.summary = sharedPreferences.getString(key, "")
@@ -431,9 +424,6 @@ class PreferencesFragment : BasePreferencesFragment(),
         val cdsTimePreference = findPreference("cds_time") as? ListPreference
         cdsTimePreference?.value = user?.preferences?.dayStart.toString()
         cdsTimePreference?.summary = cdsTimePreference?.entry
-        val dailyDueDefault =
-            findPreference<Preference>("dailyDueDefaultView") as? CheckBoxPreference
-        dailyDueDefault?.isChecked = user?.preferences?.dailyDueDefaultView == true
         val languagePreference = findPreference("language") as? ListPreference
         languagePreference?.value = user?.preferences?.language
         languagePreference?.summary = languagePreference?.entry

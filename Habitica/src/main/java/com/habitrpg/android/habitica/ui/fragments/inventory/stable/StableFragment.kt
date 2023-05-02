@@ -50,7 +50,7 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
             override fun createFragment(position: Int): androidx.fragment.app.Fragment {
                 val fragment = StableRecyclerFragment()
-                fragment.arguments = bundleOf(StableRecyclerFragment.ITEM_TYPE_KEY to "pets")
+                fragment.arguments = bundleOf(StableRecyclerFragment.ITEM_TYPE_KEY to if (position == 0) "pets" else "mounts")
                 fragment.itemTypeText = getPageTitle(position)
 
                 return fragment

@@ -1345,7 +1345,7 @@
     <string name="birthday_set">Birthday Set</string>
     <string name="you_equipped_x">You equipped %s</string>
     <string name="purchase_gryphatrice_confirmation">Purchase the Jubilant Gryphatrice for %d Gems?</string>
-    <string name="find_new_member">Find a Member</string>
+    <string name="find_new_member">Find Members</string>
     <string name="find_more_members">Find more members</string>
     <string name="go_to_settings">Go to Settings</string>
     <string name="resume_damage">Resume Damage</string>
@@ -1372,12 +1372,11 @@
     <string name="invite_with_username_email">Invite with @username or email</string>
     <string name="habiticans_send_invite">Send an invite directly to Habiticans you know</string>
     <string name="username_or_email">Username or email address</string>
-    <string name="seeking_party_description">Want to join a Party with others but don’t know any Habiticans? Join our Party Finder to let Party leaders know you’re looking for an invite!</string>
+    <string name="seeking_party_description">Want to join a Party with others but don’t know any other players? Let Party leaders know you’re looking for an invite!</string>
     <string name="seeking_party_title">Looking for a Party?</string>
     <string name="look_for_party">Look for a Party</string>
     <string name="you_re_looking_for_party">You’re looking for a Party!</string>
     <string name="seeking_hint">Keep an eye out for an invite or start your own Party at any time</string>
-    <string name="leave_party_finder">Leave Party Finder</string>
     <string name="equipment_class_locked">This equipment is class-locked</string>
     <string name="change_class_to_x">Change class to %s</string>
     <string name="shop_armoire_title">You own all %s gear</string>

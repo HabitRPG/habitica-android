@@ -537,7 +537,7 @@ open class TaskRecyclerViewFragment :
     }
 
     private fun setPreferenceTaskFilters() {
-        (activity as? MainActivity)?.viewModel?.user?.observeOnce(this) {
+        viewModel.userViewModel.user.observeOnce(this) {
             if (it != null) {
                 when (taskType) {
                     TaskType.TODO -> viewModel.setActiveFilter(

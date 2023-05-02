@@ -143,7 +143,7 @@
                             android:layout_marginBottom="@dimen/spacing_large"
                             android:gravity="center"
                             android:text="@string/seeking_party_description"
-                            android:textColor="@color/text_green1_green500"
+                            android:textColor="@color/text_quad"
                             android:textColorLink="@color/text_brand_neon" />
 
                         <Button
@@ -186,7 +186,7 @@
                                 style="@style/HabiticaButton.Borderless"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/leave_party_finder"
+                                android:text="@string/leave"
                                 android:textColor="@color/text_red_maroon" />
                         </LinearLayout>
 
