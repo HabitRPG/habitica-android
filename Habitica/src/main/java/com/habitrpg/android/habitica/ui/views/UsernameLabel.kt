@@ -9,6 +9,21 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.ProvideTextStyle
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.models.PlayerTier
@@ -45,7 +60,7 @@ class UsernameLabel @JvmOverloads constructor(
                 tierIconView.visibility = View.GONE
             } else {
                 tierIconView.visibility = View.VISIBLE
-                tierIconView.setImageBitmap(com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), isNPC))
+                tierIconView.setImageBitmap(HabiticaIconsHelper.imageOfContributorBadge(value.toFloat(), isNPC))
             }
         }
 
@@ -66,5 +81,26 @@ class UsernameLabel @JvmOverloads constructor(
         )
         iconViewParams.gravity = Gravity.CENTER_VERTICAL
         addView(tierIconView, iconViewParams)
+    }
+}
+
+
+@Composable
+fun ComposableUsernameLabel(
+    username: String,
+    tier: Int,
+    modifier : Modifier = Modifier,
+    isNPC: Boolean = false
+) {
+    Row(horizontalArrangement = Arrangement.spacedBy(2.dp), verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
+        ProvideTextStyle(value = TextStyle(fontWeight = FontWeight.SemiBold)) {
+            Text(username, color = if (isNPC) colorResource(id = R.color.contributor_npc) else Color(PlayerTier.getColorForTier(LocalContext.current, tier)))
+            if (tier > 0) {
+                Image(
+                    bitmap = HabiticaIconsHelper.imageOfContributorBadge(tier.toFloat(), isNPC).asImageBitmap(),
+                    contentDescription = null
+                )
+            }
+        }
     }
 }

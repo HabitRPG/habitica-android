@@ -19,4 +19,5 @@
     <color name="text_blue">@color/blue_100</color>
     <color name="text_teal">@color/teal_100</color>
     <color name="dim_background">#40502B94</color>
+    <color name="divider_color">@color/gray_100</color>
 </resources>

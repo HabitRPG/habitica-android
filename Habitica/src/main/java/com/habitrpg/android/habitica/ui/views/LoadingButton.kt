@@ -31,6 +31,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ButtonElevation
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,8 +45,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import kotlinx.coroutines.delay
@@ -125,53 +129,55 @@ fun LoadingButton(
         colors = buttonColors,
         contentPadding = PaddingValues(0.dp)
     ) {
-        AnimatedContent(
-            targetState = state,
-            transitionSpec = {
-                val isInitialShowingContent =
-                    initialState == LoadingButtonState.CONTENT || initialState == LoadingButtonState.DISABLED || (initialState == LoadingButtonState.SUCCESS && successContent == null)
-                val isTargetShowingContent =
-                    targetState == LoadingButtonState.CONTENT || targetState == LoadingButtonState.DISABLED || (targetState == LoadingButtonState.SUCCESS && successContent == null)
-                if (targetState == LoadingButtonState.FAILED) {
-                    fadeIn(
-                        animationSpec = tween(220, delayMillis = 90)
-                    ) +
-                        slideInHorizontally(
-                            animationSpec = spring(
-                                dampingRatio = 0.2f,
-                                stiffness = StiffnessMediumLow,
-                            )
-                        ) with
-                        fadeOut(animationSpec = tween(90))
-                } else if (isInitialShowingContent && isTargetShowingContent) {
-                    fadeIn() with fadeOut()
-                } else {
-                    fadeIn(animationSpec = tween(220, delayMillis = 90)) +
-                        scaleIn(
-                            initialScale = 0.92f,
-                            animationSpec = tween(220, delayMillis = 90, FastOutSlowInEasing)
-                        ) with
-                        fadeOut(animationSpec = tween(90))
-                }
-            },
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.padding(contentPadding)
-        ) { state ->
-            when (state) {
-                LoadingButtonState.LOADING ->
-                    CircularProgressIndicator(
-                        color = contentColor.value,
-                        modifier = Modifier.size(16.dp)
-                    )
+        ProvideTextStyle(value = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)) {
+            AnimatedContent(
+                targetState = state,
+                transitionSpec = {
+                    val isInitialShowingContent =
+                        initialState == LoadingButtonState.CONTENT || initialState == LoadingButtonState.DISABLED || (initialState == LoadingButtonState.SUCCESS && successContent == null)
+                    val isTargetShowingContent =
+                        targetState == LoadingButtonState.CONTENT || targetState == LoadingButtonState.DISABLED || (targetState == LoadingButtonState.SUCCESS && successContent == null)
+                    if (targetState == LoadingButtonState.FAILED) {
+                        fadeIn(
+                            animationSpec = tween(220, delayMillis = 90)
+                        ) +
+                            slideInHorizontally(
+                                animationSpec = spring(
+                                    dampingRatio = 0.2f,
+                                    stiffness = StiffnessMediumLow,
+                                )
+                            ) with
+                            fadeOut(animationSpec = tween(90))
+                    } else if (isInitialShowingContent && isTargetShowingContent) {
+                        fadeIn() with fadeOut()
+                    } else {
+                        fadeIn(animationSpec = tween(220, delayMillis = 90)) +
+                            scaleIn(
+                                initialScale = 0.92f,
+                                animationSpec = tween(220, delayMillis = 90, FastOutSlowInEasing)
+                            ) with
+                            fadeOut(animationSpec = tween(90))
+                    }
+                },
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.padding(contentPadding)
+            ) { state ->
+                when (state) {
+                    LoadingButtonState.LOADING ->
+                        CircularProgressIndicator(
+                            color = contentColor.value,
+                            modifier = Modifier.size(16.dp)
+                        )
 
-                LoadingButtonState.SUCCESS -> successContent?.let { it() } ?: content()
-                LoadingButtonState.FAILED ->
-                    failedContent?.let { it() } ?: Image(
-                        painterResource(R.drawable.failed_loading),
-                        stringResource(R.string.failed),
-                        Modifier.padding(horizontal = 8.dp)
-                    )
-                else -> content()
+                    LoadingButtonState.SUCCESS -> successContent?.let { it() } ?: content()
+                    LoadingButtonState.FAILED ->
+                        failedContent?.let { it() } ?: Image(
+                            painterResource(R.drawable.failed_loading),
+                            stringResource(R.string.failed),
+                            Modifier.padding(horizontal = 8.dp)
+                        )
+                    else -> content()
+                }
             }
         }
     }
@@ -208,7 +214,10 @@ private fun Preview() {
         }, content = {
             Text("Do something")
         }, modifier = Modifier.fillMaxWidth())
-        LoadingButton(LoadingButtonState.LOADING, {}, content = {
+        LoadingButton(LoadingButtonState.LOADING, {}, colors = ButtonDefaults.buttonColors(
+            backgroundColor = HabiticaTheme.colors.successBackground,
+            contentColor = Color.White
+        ), content = {
             Text("Do something")
         })
         LoadingButton(LoadingButtonState.LOADING, {}, content = {

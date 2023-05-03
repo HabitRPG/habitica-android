@@ -1383,6 +1383,8 @@
     <string name="shop_armoire_description">New gear is released during the seasonal Galas. Until then, theres %d pieces of gear in the Enchanted Armoire to find!</string>
     <string name="shop_armoire_empty_description">New gear is released during the seasonal Galas. The Enchanted Armoire gets new stock every month too!</string>
     <string name="unlock_gear_and_skills">Unlock %s gear and skills</string>
+    <string name="rescind_invite">Rescind Invite</string>
+    <string name="rescinded">Rescinded</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

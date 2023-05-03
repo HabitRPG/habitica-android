@@ -5,18 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Divider
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -28,7 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -55,18 +52,19 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.android.habitica.ui.views.ClassText
-import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.LoadingButton
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.android.habitica.ui.views.progress.HabiticaCircularProgressView
 import com.habitrpg.android.habitica.ui.views.progress.HabiticaPullRefreshIndicator
+import com.habitrpg.android.habitica.ui.views.social.PartySeekingListItem
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import java.util.Locale
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 @HiltViewModel
 class PartySeekingViewModel @Inject constructor(
@@ -95,6 +93,10 @@ class PartySeekingViewModel @Inject constructor(
                 "uuids" to listOf(member.id)
             )
         )?.firstOrNull()
+    }
+
+    suspend fun rescindInvite(member : Member) : Member? {
+        return socialRepository.removeMemberFromGroup("party", member.id)?.firstOrNull()
     }
 }
 
@@ -129,93 +131,24 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
 fun InviteButton(
     state : LoadingButtonState,
     onClick : () -> Unit,
-    modifier : Modifier = Modifier
-) {
-    LoadingButton(state = state, onClick = onClick, modifier = modifier, successContent = {
-        Text(stringResource(R.string.invited))
-    }) {
-        Text(stringResource(R.string.send_invite))
-    }
-}
-
-@Composable
-fun PartySeekingListItem(
-    user : Member,
     modifier : Modifier = Modifier,
-    inviteState : LoadingButtonState = LoadingButtonState.LOADING,
-    onInvite : (Member) -> Unit
+    isAlreadyInvited: Boolean = false,
 ) {
-    Column(
-        modifier
-            .fillMaxWidth()
-            .padding(horizontal = 14.dp, vertical = 4.dp)
-            .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.large)
-            .padding(14.dp)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
-            verticalAlignment = Alignment.Top
-        ) {
-            ComposableAvatarView(user, Modifier.size(94.dp, 98.dp))
-            Column(
-                verticalArrangement = Arrangement.spacedBy(2.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    user.displayName,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
-                    color = HabiticaTheme.colors.textPrimary
-                )
-                Text(
-                    user.formattedUsername ?: "",
-                    fontSize = 14.sp,
-                    color = HabiticaTheme.colors.textTertiary
-                )
-                Divider(
-                    color = colorResource(R.color.divider_color),
-                    thickness = 1.dp,
-                    modifier = Modifier.padding(vertical = 4.dp)
-                )
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        stringResource(R.string.level_abbreviated, user.stats?.lvl ?: 0),
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 14.sp,
-                        color = HabiticaTheme.colors.textPrimary
-                    )
-                    ClassText(
-                        user.stats?.habitClass,
-                        fontSize = 14.sp,
-                        iconSize = 18.dp,
-                        hasClass = user.hasClass
-                    )
-                }
-                Text(
-                    stringResource(R.string.x_checkins, user.loginIncentives),
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    color = HabiticaTheme.colors.textPrimary
-                )
-                Text(
-                    Locale(user.preferences?.language ?: "en").getDisplayName(Locale.getDefault()),
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    color = HabiticaTheme.colors.textPrimary
-                )
-            }
+    LoadingButton(state = state, onClick = onClick, colors = ButtonDefaults.buttonColors(
+        backgroundColor = if (isAlreadyInvited) HabiticaTheme.colors.errorBackground else HabiticaTheme.colors.tintedUiSub,
+        contentColor = Color.White,
+    ), modifier = modifier, successContent = {
+        if (isAlreadyInvited) {
+            Text(stringResource(R.string.invited))
+        } else {
+            Text(stringResource(R.string.rescinded))
         }
-        InviteButton(
-            state = inviteState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            onClick = {
-                onInvite(user)
-            })
+    }) {
+        if (isAlreadyInvited) {
+            Text(stringResource(R.string.rescind_invite))
+        } else {
+            Text(stringResource(R.string.send_invite))
+        }
     }
 }
 
@@ -230,6 +163,7 @@ fun PartySeekingView(
     val pullRefreshState = rememberPullRefreshState(refreshing, { pageData.refresh() })
     val scope = rememberCoroutineScope()
 
+    val successfulInvites = remember { mutableListOf<String>() }
     val inviteStates = remember { mutableMapOf<String, LoadingButtonState>() }
 
     Box(
@@ -276,17 +210,25 @@ fun PartySeekingView(
                 PartySeekingListItem(
                     user = it,
                     inviteState = inviteStates[it.id] ?: LoadingButtonState.CONTENT,
+                    isInvited = successfulInvites.contains(it.id),
                     modifier = Modifier.animateItemPlacement()
                 ) { member ->
                     scope.launchCatching({
                         inviteStates[member.id] = LoadingButtonState.FAILED
                     }) {
                         inviteStates[member.id] = LoadingButtonState.LOADING
-                        val response = viewModel.inviteUser(member)
-                        inviteStates[member.id] = if (response != null) {
-                            LoadingButtonState.SUCCESS
+                        val response = if (successfulInvites.contains(member.id)) viewModel.inviteUser(member) else viewModel.inviteUser(member)
+                        if (response != null) {
+                            if (successfulInvites.contains(member.id)) {
+                                successfulInvites.remove(member.id)
+                            } else {
+                                successfulInvites.add(member.id)
+                            }
+                            inviteStates[member.id] = LoadingButtonState.SUCCESS
+                            delay(4.toDuration(DurationUnit.SECONDS))
+                            inviteStates[member.id] = LoadingButtonState.CONTENT
                         } else {
-                            LoadingButtonState.FAILED
+                            inviteStates[member.id] = LoadingButtonState.FAILED
                         }
                     }
                 }
@@ -304,7 +246,6 @@ fun PartySeekingView(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
                         ) {
-
                             HabiticaCircularProgressView()
                         }
                     }
