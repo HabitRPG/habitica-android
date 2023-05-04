@@ -11,6 +11,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.temporal.TemporalAccessor
+import java.util.UUID
 
 open class RemindersItem : RealmObject, Parcelable {
     @PrimaryKey
@@ -43,7 +44,9 @@ open class RemindersItem : RealmObject, Parcelable {
         time = source.readString()
     }
 
-    constructor()
+    constructor() {
+        id = UUID.randomUUID().toString()
+    }
 
     override fun equals(other: Any?): Boolean {
         return if (other is RemindersItem) {

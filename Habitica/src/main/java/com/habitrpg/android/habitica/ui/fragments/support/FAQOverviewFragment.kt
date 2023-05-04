@@ -7,19 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentFaqOverviewBinding
 import com.habitrpg.android.habitica.databinding.SupportFaqItemBinding
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
-import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
@@ -32,6 +34,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     @Inject
     lateinit var faqRepository: FAQRepository
+    @Inject
+    lateinit var configManager: AppConfigManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +49,11 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding?.npcHeader?.npcBannerView?.shopSpriteSuffix = configManager.shopSpriteSuffix()
+        binding?.npcHeader?.npcBannerView?.identifier = "tavern"
+        binding?.npcHeader?.namePlate?.setText(R.string.tavern_owner)
+        binding?.npcHeader?.descriptionView?.isVisible = false
 
         binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
             HabiticaIconsHelper.imageOfHeartLarge()

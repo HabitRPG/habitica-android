@@ -513,7 +513,7 @@
 
     <style name="SectionHeaderCaps">
         <item name="android:fontFamily">@string/font_family_medium</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/text_ternary</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:layout_marginStart">@dimen/spacing_large</item>

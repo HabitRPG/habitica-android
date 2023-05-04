@@ -11,6 +11,7 @@
         android:background="@drawable/shop_header_background"
         android:clipChildren="true"
         android:clipToOutline="true"
+        android:clipToPadding="true"
         android:layout_marginTop="8dp">
     <com.habitrpg.android.habitica.ui.views.NPCBannerView
         android:id="@+id/npcBannerView"

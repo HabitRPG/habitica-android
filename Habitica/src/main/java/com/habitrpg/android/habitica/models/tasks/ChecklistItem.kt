@@ -18,7 +18,7 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
         get() = "id"
 
     @PrimaryKey
-    var id: String? = null
+    var id: String? = UUID.randomUUID().toString()
     var text: String? = null
     var completed: Boolean = false
     var position: Int = 0

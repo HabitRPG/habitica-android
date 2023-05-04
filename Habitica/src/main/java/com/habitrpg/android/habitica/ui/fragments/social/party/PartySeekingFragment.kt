@@ -20,8 +20,9 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,8 +74,9 @@ class PartySeekingViewModel @Inject constructor(
     val socialRepository : SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
     val isRefreshing = mutableStateOf(false)
-    var seekingUsers : Flow<PagingData<Member>>
-
+    val seekingUsers : Flow<PagingData<Member>>
+    val successfulInvites = mutableStateListOf<String>()
+    val inviteStates = mutableStateMapOf<String, LoadingButtonState>()
     init {
         seekingUsers = Pager(
             config = PagingConfig(
@@ -163,9 +165,6 @@ fun PartySeekingView(
     val pullRefreshState = rememberPullRefreshState(refreshing, { pageData.refresh() })
     val scope = rememberCoroutineScope()
 
-    val successfulInvites = remember { mutableListOf<String>() }
-    val inviteStates = remember { mutableMapOf<String, LoadingButtonState>() }
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -209,26 +208,26 @@ fun PartySeekingView(
                 if (it == null) return@items
                 PartySeekingListItem(
                     user = it,
-                    inviteState = inviteStates[it.id] ?: LoadingButtonState.CONTENT,
-                    isInvited = successfulInvites.contains(it.id),
+                    inviteState =viewModel.inviteStates[it.id] ?: LoadingButtonState.CONTENT,
+                    isInvited = viewModel.successfulInvites.contains(it.id),
                     modifier = Modifier.animateItemPlacement()
                 ) { member ->
                     scope.launchCatching({
-                        inviteStates[member.id] = LoadingButtonState.FAILED
+                        viewModel.inviteStates[member.id] = LoadingButtonState.FAILED
                     }) {
-                        inviteStates[member.id] = LoadingButtonState.LOADING
-                        val response = if (successfulInvites.contains(member.id)) viewModel.inviteUser(member) else viewModel.inviteUser(member)
+                        viewModel.inviteStates[member.id] = LoadingButtonState.LOADING
+                        val response: Any? = if (viewModel.successfulInvites.contains(member.id)) viewModel.rescindInvite(member) else viewModel.inviteUser(member)
                         if (response != null) {
-                            if (successfulInvites.contains(member.id)) {
-                                successfulInvites.remove(member.id)
+                            if (viewModel.successfulInvites.contains(member.id)) {
+                                viewModel.successfulInvites.remove(member.id)
                             } else {
-                                successfulInvites.add(member.id)
+                                viewModel.successfulInvites.add(member.id)
                             }
-                            inviteStates[member.id] = LoadingButtonState.SUCCESS
+                            viewModel.inviteStates[member.id] = LoadingButtonState.SUCCESS
                             delay(4.toDuration(DurationUnit.SECONDS))
-                            inviteStates[member.id] = LoadingButtonState.CONTENT
+                            viewModel.inviteStates[member.id] = LoadingButtonState.CONTENT
                         } else {
-                            inviteStates[member.id] = LoadingButtonState.FAILED
+                            viewModel.inviteStates[member.id] = LoadingButtonState.FAILED
                         }
                     }
                 }
