@@ -131,10 +131,13 @@ open class GroupViewModel @Inject constructor(
                 val group = socialRepository.retrieveGroup(groupID ?: "")
                 if (groupViewType == GroupViewType.PARTY) {
                     socialRepository.retrievePartyMembers(group?.id ?: "", true)
-                    val invites =
-                        socialRepository.retrievegroupInvites(group?.id ?: "", true) ?: emptyList()
-                    pendingInvites.clear()
-                    pendingInvites.addAll(invites)
+                    if (isLeader) {
+                        val invites =
+                            socialRepository.retrievegroupInvites(group?.id ?: "", true)
+                                ?: emptyList()
+                        pendingInvites.clear()
+                        pendingInvites.addAll(invites)
+                    }
                 }
                 function?.invoke()
             }

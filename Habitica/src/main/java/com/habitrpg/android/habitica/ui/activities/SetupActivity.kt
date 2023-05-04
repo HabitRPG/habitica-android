@@ -212,6 +212,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             hasCompleted = true
             lifecycleScope.launchCatching {
                 userRepository.updateUser("flags.welcomed", true)
+                userRepository.retrieveUser(true, true)
                 startMainActivity()
             }
             return

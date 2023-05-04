@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/input_layout"
+    <com.habitrpg.android.habitica.ui.views.ValidatingEditText
+        android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/TextInputLayoutAppearanceTheme"
-        style="@style/TextInputLayoutAppearance">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_large" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:inputType="textEmailAddress"
+        app:hint="@string/email" />
 </LinearLayout>

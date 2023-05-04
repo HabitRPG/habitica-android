@@ -382,7 +382,9 @@ class UserRepositoryImpl(
             taskRepository.saveTasks(id, tasksOrder, tasks)
         }
         val members = apiClient.getGroupMembers(teamID, true) ?: return team
-        localRepository.save(members.map { it.id?.let { member -> GroupMembership(member, id) } }.filterNotNull())
+        localRepository.save(members.map {
+            GroupMembership(it.id, id)
+        })
         members.let { localRepository.save(members) }
         return team
     }

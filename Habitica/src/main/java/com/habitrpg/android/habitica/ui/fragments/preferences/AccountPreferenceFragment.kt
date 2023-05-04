@@ -53,8 +53,10 @@ class AccountPreferenceFragment :
     AccountUpdateConfirmed {
     @Inject
     lateinit var hostConfig: HostConfig
+
     @Inject
     lateinit var apiClient: ApiClient
+
     @Inject
     lateinit var viewModel: AuthenticationViewModel
     private lateinit var accountDialog: HabiticaAccountDialog
@@ -67,7 +69,8 @@ class AccountPreferenceFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        findPreference<Preference>("confirm_username")?.isVisible = user?.flags?.verifiedUsername == false
+        findPreference<Preference>("confirm_username")?.isVisible =
+            user?.flags?.verifiedUsername == false
     }
 
     override fun setupPreferences() {
@@ -86,9 +89,16 @@ class AccountPreferenceFragment :
 
     private fun updateUserFields() {
         val user = user ?: return
-        configurePreference(findPreference("username"), user.authentication?.localAuthentication?.username)
-        configurePreference(findPreference("email"), user.authentication?.localAuthentication?.email ?: getString(R.string.not_set))
-        findPreference<Preference>("confirm_username")?.isVisible = user.flags?.verifiedUsername != true
+        configurePreference(
+            findPreference("username"),
+            user.authentication?.localAuthentication?.username
+        )
+        configurePreference(
+            findPreference("email"),
+            user.authentication?.localAuthentication?.email ?: getString(R.string.not_set)
+        )
+        findPreference<Preference>("confirm_username")?.isVisible =
+            user.flags?.verifiedUsername != true
 
         val passwordPref = findPreference<ExtraLabelPreference>("password")
         if (user.authentication?.hasPassword == true) {
@@ -102,25 +112,30 @@ class AccountPreferenceFragment :
         if (user.authentication?.hasGoogleAuth == true) {
             googlePref?.summary = user.authentication?.googleAuthentication?.emails?.firstOrNull()
             googlePref?.extraText = getString(R.string.disconnect)
-            googlePref?.extraTextColor = context?.let { ContextCompat.getColor(it, R.color.text_red) }
+            googlePref?.extraTextColor =
+                context?.let { ContextCompat.getColor(it, R.color.text_red) }
         } else {
             googlePref?.summary = getString(R.string.not_connected)
             googlePref?.extraText = getString(R.string.connect)
-            googlePref?.extraTextColor = context?.let { ContextCompat.getColor(it, R.color.text_ternary) }
+            googlePref?.extraTextColor =
+                context?.let { ContextCompat.getColor(it, R.color.text_ternary) }
         }
         val applePref = findPreference<ExtraLabelPreference>("apple_auth")
         if (user.authentication?.hasAppleAuth == true) {
             applePref?.summary = user.authentication?.appleAuthentication?.emails?.firstOrNull()
             applePref?.extraText = getString(R.string.disconnect)
-            applePref?.extraTextColor = context?.let { ContextCompat.getColor(it, R.color.text_red) }
+            applePref?.extraTextColor =
+                context?.let { ContextCompat.getColor(it, R.color.text_red) }
         } else {
             applePref?.isVisible = false
         }
         val facebookPref = findPreference<ExtraLabelPreference>("facebook_auth")
         if (user.authentication?.hasFacebookAuth == true) {
-            facebookPref?.summary = user.authentication?.facebookAuthentication?.emails?.firstOrNull()
+            facebookPref?.summary =
+                user.authentication?.facebookAuthentication?.emails?.firstOrNull()
             facebookPref?.extraText = getString(R.string.disconnect)
-            facebookPref?.extraTextColor = context?.let { ContextCompat.getColor(it, R.color.text_red) }
+            facebookPref?.extraTextColor =
+                context?.let { ContextCompat.getColor(it, R.color.text_red) }
         } else {
             facebookPref?.isVisible = false
         }
@@ -150,6 +165,7 @@ class AccountPreferenceFragment :
                     showEmailDialog()
                 }
             }
+
             "password" -> {
                 if (user?.authentication?.hasPassword == true) {
                     showChangePasswordDialog()
@@ -157,16 +173,29 @@ class AccountPreferenceFragment :
                     showAddPasswordDialog(user?.authentication?.localAuthentication?.email?.isNotBlank() != true)
                 }
             }
+
             "UserID" -> {
                 copyValue(getString(R.string.SP_userID), user?.id)
                 return true
             }
+
             "APIToken" -> {
                 copyValue(getString(R.string.SP_APIToken_title), hostConfig.apiKey)
                 return true
             }
-            "display_name" -> updateUser("profile.name", user?.profile?.name, getString(R.string.display_name))
-            "photo_url" -> updateUser("profile.imageUrl", user?.profile?.imageUrl, getString(R.string.photo_url))
+
+            "display_name" -> updateUser(
+                "profile.name",
+                user?.profile?.name,
+                getString(R.string.display_name)
+            )
+
+            "photo_url" -> updateUser(
+                "profile.imageUrl",
+                user?.profile?.imageUrl,
+                getString(R.string.photo_url)
+            )
+
             "about" -> updateUser("profile.blurb", user?.profile?.blurb, getString(R.string.about))
             "google_auth" -> {
                 if (user?.authentication?.hasGoogleAuth == true) {
@@ -177,11 +206,13 @@ class AccountPreferenceFragment :
                     }
                 }
             }
+
             "facebook_auth" -> {
                 if (user?.authentication?.hasFacebookAuth == true) {
                     disconnect("facebook", "Facebook")
                 }
             }
+
             "reset_account" -> showAccountResetConfirmation(user)
             "delete_account" -> showAccountDeleteConfirmation(user)
             "fixCharacterValues" -> {
@@ -208,16 +239,20 @@ class AccountPreferenceFragment :
         }
     }
 
-    private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            activity?.let { it1 ->
-                viewModel.handleGoogleLoginResult(it1, recoverFromPlayServicesErrorResult) { _ ->
-                    displayAuthenticationSuccess(getString(R.string.google))
+    private val pickAccountResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+                activity?.let { it1 ->
+                    viewModel.handleGoogleLoginResult(
+                        it1,
+                        recoverFromPlayServicesErrorResult
+                    ) { _ ->
+                        displayAuthenticationSuccess(getString(R.string.google))
+                    }
                 }
             }
         }
-    }
 
     private fun displayAuthenticationSuccess(network: String) {
         (activity as? SnackbarActivity)?.showSnackbar(
@@ -258,11 +293,13 @@ class AccountPreferenceFragment :
     private fun showChangePasswordDialog() {
         val inflater = context?.layoutInflater
         val view = inflater?.inflate(R.layout.dialog_edittext_change_pw, null)
-        val oldPasswordEditText = view?.findViewById<ValidatingEditText>(R.id.old_password_edit_text)
+        val oldPasswordEditText =
+            view?.findViewById<ValidatingEditText>(R.id.old_password_edit_text)
         val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.new_password_edit_text)
         passwordEditText?.validator = { (it?.length ?: 0) >= 8 }
         passwordEditText?.errorText = getString(R.string.password_too_short, 8)
-        val passwordRepeatEditText = view?.findViewById<ValidatingEditText>(R.id.new_password_repeat_edit_text)
+        val passwordRepeatEditText =
+            view?.findViewById<ValidatingEditText>(R.id.new_password_repeat_edit_text)
         passwordRepeatEditText?.validator = { it == passwordEditText?.text }
         passwordRepeatEditText?.errorText = getString(R.string.password_not_matching)
         context?.let { context ->
@@ -303,7 +340,8 @@ class AccountPreferenceFragment :
         val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.password_edit_text)
         passwordEditText?.validator = { (it?.length ?: 0) >= 8 }
         passwordEditText?.errorText = getString(R.string.password_too_short, 8)
-        val passwordRepeatEditText = view?.findViewById<ValidatingEditText>(R.id.password_repeat_edit_text)
+        val passwordRepeatEditText =
+            view?.findViewById<ValidatingEditText>(R.id.password_repeat_edit_text)
         passwordRepeatEditText?.validator = { it == passwordEditText?.text }
         passwordRepeatEditText?.errorText = getString(R.string.password_not_matching)
         context?.let { context ->
@@ -319,7 +357,8 @@ class AccountPreferenceFragment :
                 passwordEditText?.showErrorIfNecessary()
                 passwordRepeatEditText?.showErrorIfNecessary()
                 if ((showEmail && emailEditText?.isValid != true) || passwordEditText?.isValid != true || passwordRepeatEditText?.isValid != true) return@addButton
-                val email = if (showEmail) emailEditText?.text else user?.authentication?.findFirstSocialEmail()
+                val email =
+                    if (showEmail) emailEditText?.text else user?.authentication?.findFirstSocialEmail()
                 lifecycleScope.launchCatching {
                     apiClient.registerUser(
                         user?.username ?: "",
@@ -348,7 +387,8 @@ class AccountPreferenceFragment :
         emailEditText?.text = user?.authentication?.localAuthentication?.email
         emailEditText?.validator = { PatternsCompat.EMAIL_ADDRESS.matcher(it ?: "").matches() }
         emailEditText?.errorText = getString(R.string.email_invalid)
-        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = context?.getString(R.string.email)
+        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint =
+            context?.getString(R.string.email)
         val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.password_edit_text)
         if (user?.authentication?.hasPassword != true) {
             passwordEditText?.isVisible = false
@@ -379,20 +419,30 @@ class AccountPreferenceFragment :
         }
     }
 
+    private val regex = "[^a-z0-9_-]".toRegex()
+
     private fun showLoginNameDialog() {
-        showSingleEntryDialog(user?.username, getString(R.string.username)) {
+        showSingleEntryDialog(user?.username, getString(R.string.username), {
+            it?.contains(" ") == false && it.length > 1 && it.length < 20 && !it.contains(regex)
+        }) {
             lifecycleScope.launchCatching {
                 userRepository.updateLoginName(it ?: "")
             }
         }
     }
 
-    private fun showSingleEntryDialog(value: String?, title: String, onChange: (String?) -> Unit) {
+    private fun showSingleEntryDialog(
+        value: String?,
+        title: String,
+        validator: ((String?) -> Boolean)? = null,
+        onChange: (String?) -> Unit
+    ) {
         val inflater = context?.layoutInflater
         val view = inflater?.inflate(R.layout.dialog_edittext, null)
-        val editText = view?.findViewById<EditText>(R.id.editText)
-        editText?.setText(value)
-        editText?.maxLines = 15
+        val editText = view?.findViewById<ValidatingEditText>(R.id.edit_text)
+        editText?.text = value
+        editText?.validator = validator
+        editText?.errorText = getString(R.string.invalid_input)
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = title
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
@@ -489,7 +539,8 @@ class AccountPreferenceFragment :
     }
 
     private fun copyValue(name: String, value: CharSequence?) {
-        val clipboard: ClipboardManager? = context?.let { getSystemService(it, ClipboardManager::class.java) }
+        val clipboard: ClipboardManager? =
+            context?.let { getSystemService(it, ClipboardManager::class.java) }
         clipboard?.setPrimaryClip(ClipData.newPlainText(name, value))
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             (activity as? SnackbarActivity)?.showSnackbar(

@@ -1386,6 +1386,7 @@
     <string name="rescind_invite">Rescind Invite</string>
     <string name="rescinded">Rescinded</string>
     <string name="pending_invite">Pending Invite</string>
+    <string name="invalid_input">Input invalid</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

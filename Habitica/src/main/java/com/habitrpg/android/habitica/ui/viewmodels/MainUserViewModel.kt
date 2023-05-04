@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -17,6 +16,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,7 +49,6 @@ class MainUserViewModel @Inject constructor(private val authenticationHandler : 
     var currentTeamPlanGroup = currentTeamPlan
         .filterNotNull()
         .distinctUntilChanged { old, new ->
-            Log.d("asfd", "${old.id} - ${new.id}")
             old.id == new.id }
         .flatMapLatest { socialRepository.getGroup(it.id) }
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -56,6 +56,14 @@ class MainUserViewModel @Inject constructor(private val authenticationHandler : 
         .filterNotNull()
         .distinctUntilChanged { old, new -> old.id == new.id }
         .flatMapLatest { socialRepository.getGroupMembers(it.id) }
+        .distinctUntilChanged()
+        .onEach {
+            if (it.isEmpty()) {
+                currentTeamPlan.lastOrNull()?.let { plan ->
+                    userRepository.retrieveTeamPlan(plan.id)
+                }
+            }
+        }
         .asLiveData()
 
     fun onCleared() {

@@ -259,12 +259,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         setupNotifications()
         setupBottomnavigationLayoutListener()
 
-        lifecycleScope.launch {
-            viewModel.userViewModel.currentTeamPlan.collect {
-                Log.d("asdf", it?.toString() ?: "")
-            }
-        }
-
         binding.content.headerView.setContent {
             HabiticaTheme {
                 val user by viewModel.user.observeAsState(null)
