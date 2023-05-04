@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -178,12 +179,14 @@ fun PartySeekingView(
                         .fillMaxWidth()
                         .padding(top = 22.dp, bottom = 14.dp)
                 ) {
-                    Text(
-                        stringResource(R.string.find_more_members),
-                        color = HabiticaTheme.colors.textPrimary,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium
-                    )
+                    Box(modifier = Modifier.background(Color.Transparent)) {
+                        Text(
+                            stringResource(R.string.find_more_members),
+                            color = HabiticaTheme.colors.textPrimary,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
                     if (pageData.itemCount == 0 && pageData.loadState.refresh is LoadState.NotLoading && pageData.loadState.append is LoadState.NotLoading) {
                         Text(
                             stringResource(R.string.habiticans_looking_party_empty),

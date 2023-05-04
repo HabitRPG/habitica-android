@@ -246,7 +246,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         dialog.enqueue()
                     }
                 } else {
-                    val dialog = context?.let { InsufficientGemsDialog(it, 3) }
+                    val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
                     dialog?.show()
                 }
             } else {
