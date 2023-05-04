@@ -210,7 +210,7 @@ fun PartySeekingView(
                     user = it,
                     inviteState =viewModel.inviteStates[it.id] ?: LoadingButtonState.CONTENT,
                     isInvited = viewModel.successfulInvites.contains(it.id),
-                    modifier = Modifier.animateItemPlacement()
+                    modifier = Modifier.animateItemPlacement().padding(horizontal = 14.dp)
                 ) { member ->
                     scope.launchCatching({
                         viewModel.inviteStates[member.id] = LoadingButtonState.FAILED

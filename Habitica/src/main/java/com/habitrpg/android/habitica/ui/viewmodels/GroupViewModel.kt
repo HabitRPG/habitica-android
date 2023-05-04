@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.os.Bundle
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
@@ -14,12 +16,14 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
+import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -29,8 +33,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
-enum class GroupViewType(internal val order : String) {
+enum class GroupViewType(internal val order: String) {
     PARTY("party"),
     GUILD("guild"),
     TAVERN("tavern")
@@ -39,17 +45,17 @@ enum class GroupViewType(internal val order : String) {
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 open class GroupViewModel @Inject constructor(
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    val challengeRepository : ChallengeRepository,
-    val socialRepository : SocialRepository,
-    val notificationsManager : NotificationsManager
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val challengeRepository: ChallengeRepository,
+    val socialRepository: SocialRepository,
+    val notificationsManager: NotificationsManager
 ) : BaseViewModel(userRepository, userViewModel) {
 
     protected val groupIDState = MutableStateFlow<String?>(null)
-    val groupIDFlow : Flow<String?> = groupIDState
+    val groupIDFlow: Flow<String?> = groupIDState
 
-    var groupViewType : GroupViewType? = null
+    var groupViewType: GroupViewType? = null
 
     private val groupFlow = groupIDFlow
         .filterNotNull()
@@ -67,21 +73,21 @@ open class GroupViewModel @Inject constructor(
         .map { it != null }
     private val isMemberData = isMemberFlow.asLiveData()
 
-    private val _chatMessages : MutableLiveData<List<ChatMessage>> by lazy {
+    private val _chatMessages: MutableLiveData<List<ChatMessage>> by lazy {
         MutableLiveData<List<ChatMessage>>(listOf())
     }
-    val chatmessages : LiveData<List<ChatMessage>> by lazy {
+    val chatmessages: LiveData<List<ChatMessage>> by lazy {
         _chatMessages
     }
 
-    var gotNewMessages : Boolean = false
+    var gotNewMessages: Boolean = false
 
     override fun onCleared() {
         socialRepository.close()
         super.onCleared()
     }
 
-    fun setGroupID(groupID : String) {
+    fun setGroupID(groupID: String) {
         if (groupID == groupIDState.value) return
         groupIDState.value = groupID
 
@@ -95,22 +101,25 @@ open class GroupViewModel @Inject constructor(
         }
     }
 
-    val groupID : String?
+    val groupID: String?
         get() = groupIDState.value
-    val isMember : Boolean
+    val isMember: Boolean
         get() = isMemberData.value ?: false
-    val leaderID : String?
+    val leaderID: String?
         get() = group.value?.leaderID
-    val isLeader : Boolean
+    val isLeader: Boolean
         get() = user.value?.id == leaderID
-    val isPublicGuild : Boolean
+    val isPublicGuild: Boolean
         get() = group.value?.privacy == "public"
 
-    fun getGroupData() : LiveData<Group?> = group
-    fun getLeaderData() : LiveData<Member?> = leader
-    fun getIsMemberData() : LiveData<Boolean> = isMemberData
+    val pendingInvites = mutableStateListOf<Member>()
+    val pendingInviteStates = mutableStateMapOf<String, LoadingButtonState>()
 
-    fun retrieveGroup(function : (() -> Unit)?) {
+    fun getGroupData(): LiveData<Group?> = group
+    fun getLeaderData(): LiveData<Member?> = leader
+    fun getIsMemberData(): LiveData<Boolean> = isMemberData
+
+    fun retrieveGroup(function: (() -> Unit)?) {
         if (groupID?.isNotEmpty() == true) {
             viewModelScope.launch(
                 ExceptionHandler.coroutine {
@@ -122,19 +131,23 @@ open class GroupViewModel @Inject constructor(
                 val group = socialRepository.retrieveGroup(groupID ?: "")
                 if (groupViewType == GroupViewType.PARTY) {
                     socialRepository.retrievePartyMembers(group?.id ?: "", true)
+                    val invites =
+                        socialRepository.retrievegroupInvites(group?.id ?: "", true) ?: emptyList()
+                    pendingInvites.clear()
+                    pendingInvites.addAll(invites)
                 }
                 function?.invoke()
             }
         }
     }
 
-    fun inviteToGroup(inviteData : HashMap<String, Any>) {
+    fun inviteToGroup(inviteData: HashMap<String, Any>) {
         viewModelScope.launchCatching {
             socialRepository.inviteToGroup(group.value?.id ?: "", inviteData)
         }
     }
 
-    fun updateOrCreateGroup(bundle : Bundle?) {
+    fun updateOrCreateGroup(bundle: Bundle?) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             if (group.value == null) {
                 socialRepository.createGroup(
@@ -157,9 +170,9 @@ open class GroupViewModel @Inject constructor(
     }
 
     fun leaveGroup(
-        groupChallenges : List<Challenge>,
-        keepChallenges : Boolean = true,
-        function : (() -> Unit)? = null
+        groupChallenges: List<Challenge>,
+        keepChallenges: Boolean = true,
+        function: (() -> Unit)? = null
     ) {
         if (!keepChallenges) {
             viewModelScope.launchCatching {
@@ -175,14 +188,14 @@ open class GroupViewModel @Inject constructor(
         }
     }
 
-    fun joinGroup(id : String? = null, function : (() -> Unit)? = null) {
+    fun joinGroup(id: String? = null, function: (() -> Unit)? = null) {
         viewModelScope.launchCatching {
             socialRepository.joinGroup(id ?: groupID)
             function?.invoke()
         }
     }
 
-    fun rejectGroupInvite(id : String? = null) {
+    fun rejectGroupInvite(id: String? = null) {
         groupID?.let {
             viewModelScope.launchCatching {
                 socialRepository.rejectGroupInvite(id ?: it)
@@ -200,7 +213,7 @@ open class GroupViewModel @Inject constructor(
         }
     }
 
-    fun likeMessage(message : ChatMessage) {
+    fun likeMessage(message: ChatMessage) {
         viewModelScope.launchCatching {
             val message = socialRepository.likeMessage(message)
             val index = _chatMessages.value?.indexOfFirst { it.id == message?.id }
@@ -216,7 +229,7 @@ open class GroupViewModel @Inject constructor(
         }
     }
 
-    fun deleteMessage(chatMessage : ChatMessage) {
+    fun deleteMessage(chatMessage: ChatMessage) {
         val oldIndex = _chatMessages.value?.indexOf(chatMessage) ?: return
         val list = _chatMessages.value?.toMutableList()
         list?.remove(chatMessage)
@@ -232,7 +245,7 @@ open class GroupViewModel @Inject constructor(
         }
     }
 
-    fun postGroupChat(chatText : String, onComplete : () -> Unit, onError : () -> Unit) {
+    fun postGroupChat(chatText: String, onComplete: () -> Unit, onError: () -> Unit) {
         groupID?.let { groupID ->
             viewModelScope.launch(
                 ExceptionHandler.coroutine {
@@ -251,7 +264,7 @@ open class GroupViewModel @Inject constructor(
         }
     }
 
-    fun retrieveGroupChat(onComplete : () -> Unit) {
+    fun retrieveGroupChat(onComplete: () -> Unit) {
         var groupID = groupID
         if (groupViewType == GroupViewType.PARTY) {
             groupID = "party"
@@ -267,7 +280,7 @@ open class GroupViewModel @Inject constructor(
         }
     }
 
-    fun updateGroup(bundle : Bundle?) {
+    fun updateGroup(bundle: Bundle?) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             socialRepository.updateGroup(
                 group.value,
@@ -276,6 +289,18 @@ open class GroupViewModel @Inject constructor(
                 bundle?.getString("leader"),
                 bundle?.getBoolean("leaderOnlyChallenges")
             )
+        }
+    }
+
+    fun rescindInvite(invitedMember: Member) {
+        pendingInviteStates[invitedMember.id] = LoadingButtonState.LOADING
+        viewModelScope.launchCatching({
+            pendingInviteStates[invitedMember.id] = LoadingButtonState.FAILED
+        }) {
+            socialRepository.removeMemberFromGroup(groupID ?: "", invitedMember.id)
+            pendingInviteStates[invitedMember.id] = LoadingButtonState.SUCCESS
+            delay(1.toDuration(DurationUnit.SECONDS))
+            pendingInvites.remove(invitedMember)
         }
     }
 }

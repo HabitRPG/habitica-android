@@ -213,7 +213,7 @@ class UserRepositoryImpl(
     override suspend fun sendPasswordResetEmail(email: String) = apiClient.sendPasswordResetEmail(email)
 
     override suspend fun updateLoginName(newLoginName: String, password: String?): User? {
-        if (password != null && password.isNotEmpty()) {
+        if (!password.isNullOrEmpty()) {
             apiClient.updateLoginName(newLoginName.trim(), password.trim())
         } else {
             apiClient.updateUsername(newLoginName.trim())

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.compose.foundation.layout.Column
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -30,10 +31,13 @@ import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
+import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewHolders.GroupMemberViewHolder
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.social.PartySeekingListItem
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
@@ -55,7 +59,10 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     override var binding: FragmentPartyDetailBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentPartyDetailBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentPartyDetailBinding {
         return FragmentPartyDetailBinding.inflate(inflater, container, false)
     }
 
@@ -110,6 +117,28 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 userRepository.retrieveUser(false, true)
             }
         }
+        binding?.invitesWrapper?.setContent {
+            HabiticaTheme {
+                val invitedMembers = viewModel?.pendingInvites
+                Column {
+                    for (invitedMember in (invitedMembers ?: emptyList())) {
+                        val state = viewModel?.pendingInviteStates?.getOrDefault(
+                            invitedMember.id,
+                            LoadingButtonState.CONTENT
+                        ) ?: LoadingButtonState.CONTENT
+                        PartySeekingListItem(
+                            user = invitedMember,
+                            inviteState = state,
+                            isInvited = state != LoadingButtonState.SUCCESS,
+                            showHeader = true,
+                            showExtendedInfo = false,
+                            onInvite = {
+                                viewModel?.rescindInvite(invitedMember)
+                            })
+                    }
+                }
+            }
+        }
 
         viewModel?.getGroupData()?.observe(viewLifecycleOwner) { updateParty(it) }
         viewModel?.user?.observe(viewLifecycleOwner) { updateUser(it) }
@@ -138,7 +167,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questImageWrapper?.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) {
                 delay(500)
-                val content = inventoryRepository.getQuestContent(party.quest?.key ?: "").firstOrNull()
+                val content =
+                    inventoryRepository.getQuestContent(party.quest?.key ?: "").firstOrNull()
                 if (content != null) {
                     updateQuestContent(content)
                 }
@@ -239,17 +269,36 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
         binding?.questImageWrapper?.alpha = 1.0f
         binding?.questProgressView?.alpha = 1.0f
-        context?.let { binding?.questParticipationView?.setTextColor(ContextCompat.getColor(it, R.color.text_quad)) }
+        context?.let {
+            binding?.questParticipationView?.setTextColor(
+                ContextCompat.getColor(
+                    it,
+                    R.color.text_quad
+                )
+            )
+        }
         if (viewModel?.isQuestActive == true) {
             binding?.questProgressView?.visibility = View.VISIBLE
-            binding?.questProgressView?.setData(questContent, viewModel?.getGroupData()?.value?.quest?.progress)
+            binding?.questProgressView?.setData(
+                questContent,
+                viewModel?.getGroupData()?.value?.quest?.progress
+            )
 
             val questParticipants = viewModel?.getGroupData()?.value?.quest?.members
             if (questParticipants?.find { it.key == viewModel?.userViewModel?.userID } != null) {
-                binding?.questParticipationView?.text = context?.getString(R.string.number_participants, questParticipants.size)
+                binding?.questParticipationView?.text =
+                    context?.getString(R.string.number_participants, questParticipants.size)
             } else {
-                binding?.questParticipationView?.text = context?.getString(R.string.not_participating)
-                context?.let { binding?.questParticipationView?.setTextColor(ContextCompat.getColor(it, R.color.red_10)) }
+                binding?.questParticipationView?.text =
+                    context?.getString(R.string.not_participating)
+                context?.let {
+                    binding?.questParticipationView?.setTextColor(
+                        ContextCompat.getColor(
+                            it,
+                            R.color.red_10
+                        )
+                    )
+                }
                 binding?.questImageWrapper?.alpha = 0.5f
                 binding?.questProgressView?.alpha = 0.5f
             }
@@ -257,7 +306,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questProgressView?.visibility = View.GONE
             val members = viewModel?.getGroupData()?.value?.quest?.members
             val responded = members?.filter { it.isParticipating != null }
-            binding?.questParticipationView?.text = context?.getString(R.string.number_responded, responded?.size, members?.size)
+            binding?.questParticipationView?.text =
+                context?.getString(R.string.number_responded, responded?.size, members?.size)
         }
     }
 
@@ -294,7 +344,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         val factory = LayoutInflater.from(context)
         val newMessageView = factory.inflate(R.layout.profile_new_message_dialog, null)
 
-        val emojiEditText = newMessageView.findViewById<AppCompatEditText>(R.id.edit_new_message_text)
+        val emojiEditText =
+            newMessageView.findViewById<AppCompatEditText>(R.id.edit_new_message_text)
 
         val newMessageTitle = newMessageView.findViewById<TextView>(R.id.new_message_title)
         newMessageTitle.text = String.format(getString(R.string.profile_send_message_to), username)
@@ -306,13 +357,17 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                     HabiticaSnackbar.showSnackbar(
                         it1,
-                        String.format(getString(R.string.profile_message_sent_to), username), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                        String.format(getString(R.string.profile_message_sent_to), username),
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
                     )
                 }
             }
             activity?.dismissKeyboard()
         }
-        addMessageDialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
+        addMessageDialog?.addButton(
+            android.R.string.cancel,
+            false
+        ) { _, _ -> activity?.dismissKeyboard() }
         addMessageDialog?.setAdditionalContentView(newMessageView)
         addMessageDialog?.show()
     }
@@ -325,7 +380,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                     HabiticaSnackbar.showSnackbar(
                         it1,
-                        String.format(getString(R.string.transferred_ownership), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                        String.format(getString(R.string.transferred_ownership), displayName),
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
                     )
                 }
             }
@@ -333,7 +389,12 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         }
         dialog?.addButton(android.R.string.cancel, false) { _, _ -> activity?.dismissKeyboard() }
         dialog?.setTitle(context?.getString(R.string.transfer_ownership_confirm))
-        dialog?.setMessage(context?.getString(R.string.transfer_ownership_confirm_message, displayName))
+        dialog?.setMessage(
+            context?.getString(
+                R.string.transfer_ownership_confirm_message,
+                displayName
+            )
+        )
         dialog?.show()
     }
 
@@ -345,7 +406,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 (activity as? MainActivity)?.snackbarContainer?.let { it1 ->
                     HabiticaSnackbar.showSnackbar(
                         it1,
-                        String.format(getString(R.string.removed_member), displayName), HabiticaSnackbar.SnackbarDisplayType.NORMAL
+                        String.format(getString(R.string.removed_member), displayName),
+                        HabiticaSnackbar.SnackbarDisplayType.NORMAL
                     )
                 }
             }
@@ -370,7 +432,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         lifecycleScope.launchCatching {
             userRepository.getUser().collect {
                 it?.challenges?.forEach { membership ->
-                    val challenge = challengeRepository.getChallenge(membership.challengeID).firstOrNull()
+                    val challenge =
+                        challengeRepository.getChallenge(membership.challengeID).firstOrNull()
                     if (challenge != null && challenge.groupId == viewModel?.groupID) {
                         groupChallenges.add(challenge)
                     }
@@ -396,7 +459,11 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                             MainNavigationController.navigate(R.id.noPartyFragment)
                         }
                     }
-                    alert.addButton(R.string.leave_challenges_delete_tasks, false, isDestructive = true) { _, _ ->
+                    alert.addButton(
+                        R.string.leave_challenges_delete_tasks,
+                        false,
+                        isDestructive = true
+                    ) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)
@@ -408,7 +475,11 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(R.string.leave_party_confirmation)
                     alert.setMessage(R.string.rejoin_party)
-                    alert.addButton(R.string.leave, isPrimary = true, isDestructive = true) { _, _ ->
+                    alert.addButton(
+                        R.string.leave,
+                        isPrimary = true,
+                        isDestructive = true
+                    ) { _, _ ->
                         viewModel?.leaveGroup(groupChallenges, false) {
                             parentFragmentManager.popBackStack()
                             MainNavigationController.navigate(R.id.noPartyFragment)

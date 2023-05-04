@@ -46,13 +46,14 @@ fun PartySeekingListItem(
     modifier : Modifier = Modifier,
     inviteState : LoadingButtonState = LoadingButtonState.LOADING,
     isInvited: Boolean = false,
+    showHeader: Boolean = false,
+    showExtendedInfo: Boolean = true,
     onInvite : (Member) -> Unit
 ) {
     Column(
         modifier
             .fillMaxWidth()
-            .padding(horizontal = 14.dp)
-            .padding(bottom = 4.dp)
+            .padding(bottom = 6.dp)
             .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.large)
             .padding(14.dp)
     ) {
@@ -68,6 +69,14 @@ fun PartySeekingListItem(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                if (showHeader) {
+                    Text(
+                        stringResource(R.string.pending_invite).uppercase(),
+                        fontSize = 12.sp,
+                        color = HabiticaTheme.colors.textQuad,
+                        modifier = Modifier.padding(bottom = 4.dp)
+                    )
+                }
                 ProvideTextStyle(value = TextStyle(fontSize = 14.sp)) {
                     ComposableUsernameLabel(
                         user.displayName,
@@ -101,18 +110,22 @@ fun PartySeekingListItem(
                         hasClass = user.hasClass
                     )
                 }
-                Text(
-                    stringResource(R.string.x_checkins, user.loginIncentives),
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    color = HabiticaTheme.colors.textPrimary
-                )
-                Text(
-                    Locale(user.preferences?.language ?: "en").getDisplayName(Locale.getDefault()),
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 14.sp,
-                    color = HabiticaTheme.colors.textPrimary
-                )
+                if (showExtendedInfo) {
+                    Text(
+                        stringResource(R.string.x_checkins, user.loginIncentives),
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        color = HabiticaTheme.colors.textPrimary
+                    )
+                    Text(
+                        Locale(
+                            user.preferences?.language ?: "en"
+                        ).getDisplayName(Locale.getDefault()),
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        color = HabiticaTheme.colors.textPrimary
+                    )
+                }
             }
         }
         InviteButton(

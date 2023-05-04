@@ -1385,6 +1385,7 @@
     <string name="unlock_gear_and_skills">Unlock %s gear and skills</string>
     <string name="rescind_invite">Rescind Invite</string>
     <string name="rescinded">Rescinded</string>
+    <string name="pending_invite">Pending Invite</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -286,6 +286,10 @@ interface ApiService {
     @POST("groups/{gid}/quests/invite/{questKey}")
     suspend fun inviteToQuest(@Path("gid") groupId: String, @Path("questKey") questKey: String): HabitResponse<Quest>
 
+    @GET("groups/{gid}/invites")
+    suspend fun getGroupInvites(@Path("gid") groupId: String,
+        @Query("includeAllPublicFields") includeAllPublicFields: Boolean?): HabitResponse<List<Member>>
+
     @POST("groups/{gid}/quests/abort")
     suspend fun abortQuest(@Path("gid") groupId: String): HabitResponse<Quest>
 

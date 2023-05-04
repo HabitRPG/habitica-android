@@ -578,6 +578,10 @@ class ApiClientImpl(
         return process { apiService.rejectGroupInvite(groupId) }
     }
 
+    override suspend fun getGroupInvites(groupId: String, includeAllPublicFields: Boolean?): List<Member>? {
+        return process { apiService.getGroupInvites(groupId, includeAllPublicFields) }
+    }
+
     override suspend fun acceptQuest(groupId: String): Void? {
         return process { apiService.acceptQuest(groupId) }
     }

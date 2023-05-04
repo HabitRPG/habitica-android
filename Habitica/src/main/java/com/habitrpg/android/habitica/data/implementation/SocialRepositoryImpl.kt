@@ -275,6 +275,9 @@ class SocialRepositoryImpl(
         }
     }
 
+    override suspend fun retrievegroupInvites(id: String, includeAllPublicFields: Boolean) = apiClient.getGroupInvites(id, includeAllPublicFields)
+
+
     override suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member? {
         return retrieveMember(username, fromHall)
     }

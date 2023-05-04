@@ -278,4 +278,5 @@ interface ApiClient {
     suspend fun getHallMember(userId: String): Member?
     suspend fun markTaskNeedsWork(taskID: String, userID: String): Task?
     suspend fun retrievePartySeekingUsers(page: Int) : List<Member>?
+    suspend fun getGroupInvites(groupId: String, includeAllPublicFields: Boolean?): List<Member>?
 }
