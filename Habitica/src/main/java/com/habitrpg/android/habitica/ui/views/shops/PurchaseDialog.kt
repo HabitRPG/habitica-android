@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.shops
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
@@ -50,7 +51,13 @@ import java.util.Date
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class PurchaseDialog(context: Context, private val userRepository : UserRepository, private val inventoryRepository : InventoryRepository, val item: ShopItem) : HabiticaAlertDialog(context) {
+class PurchaseDialog(
+    context: Context,
+    private val userRepository: UserRepository,
+    private val inventoryRepository: InventoryRepository,
+    val item: ShopItem,
+    val parentActivity: Activity? = null,
+) : HabiticaAlertDialog(context) {
 
     private val customHeader: View by lazy {
         LayoutInflater.from(context).inflate(R.layout.dialog_purchase_shopitem_header, null)
@@ -337,9 +344,7 @@ class PurchaseDialog(context: Context, private val userRepository : UserReposito
                     }
                     "gold" == shopItem.currency -> InsufficientGoldDialog(context)
                     "gems" == shopItem.currency -> {
-                        val application = ownerActivity?.application as? HabiticaBaseApplication
-                        val activity = (application?.currentActivity?.get() ?: getActivity() ?: ownerActivity)
-                        activity?.let { InsufficientGemsDialog(activity, shopItem.value) }
+                        parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value) }
                     }
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)
                     else -> null
