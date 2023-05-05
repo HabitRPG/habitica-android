@@ -474,7 +474,7 @@ class AccountPreferenceFragment :
         habiticaAccountDialog?.accountAction = "delete_account"
         habiticaAccountDialog?.accountUpdateConfirmed = this
         habiticaAccountDialog?.user = user
-        habiticaAccountDialog?.show(parentFragmentManager, "account")
+        habiticaAccountDialog?.show(childFragmentManager, HabiticaAccountDialog.TAG)
 
         if (habiticaAccountDialog != null) {
             accountDialog = habiticaAccountDialog
