@@ -16,7 +16,6 @@ import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
-import java.util.Collections
 import java.util.Date
 
 fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
@@ -135,7 +134,7 @@ object DataBindingUtils {
     var configManager: AppConfigManager? = null
 
     init {
-        val tempMap = HashMap<String, String>()
+        val tempMap = mutableMapOf<String, String>()
         tempMap["head_special_1"] = "gif"
         tempMap["broad_armor_special_1"] = "gif"
         tempMap["slim_armor_special_1"] = "gif"
@@ -170,9 +169,10 @@ object DataBindingUtils {
         tempMap["Pet_HatchingPotion_VirtualPet"] = "gif"
         tempMap["Pet-Gryphatrice-Jubilant"] = "gif"
         tempMap["stable_Pet-Gryphatrice-Jubilant"] = "gif"
-        FILEFORMAT_MAP = Collections.unmodifiableMap(tempMap)
+        tempMap["back_special_heroicAureole"] = "gif"
+        FILEFORMAT_MAP = tempMap
 
-        val tempNameMap = HashMap<String, String>()
+        val tempNameMap = mutableMapOf<String, String>()
         tempNameMap["head_special_1"] = "ContributorOnly-Equip-CrystalHelmet"
         tempNameMap["armor_special_1"] = "ContributorOnly-Equip-CrystalArmor"
         tempNameMap["head_special_0"] = "BackerOnly-Equip-ShadeHelmet"
@@ -181,6 +181,6 @@ object DataBindingUtils {
         tempNameMap["weapon_special_0"] = "BackerOnly-Weapon-DarkSoulsBlade"
         tempNameMap["weapon_special_critical"] = "weapon_special_critical"
         tempNameMap["Pet-Wolf-Cerberus"] = "Pet-Wolf-Cerberus"
-        FILENAME_MAP = Collections.unmodifiableMap(tempNameMap)
+        FILENAME_MAP = tempNameMap
     }
 }

@@ -161,6 +161,7 @@ fun PartyInviteView(
             }
         }
         items(viewModel.invites.indices.toList()) { index ->
+            if (viewModel.invites.size <= index) return@items
             val invite = viewModel.invites[index]
             val transition = updateTransition(viewModel.invites.size - 1 == index, label = "isLast")
             val rotation = transition.animateFloat(
