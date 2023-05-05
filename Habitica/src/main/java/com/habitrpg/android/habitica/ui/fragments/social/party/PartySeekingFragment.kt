@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -191,6 +193,10 @@ fun PartySeekingView(
                                 .width(250.dp)
                                 .align(alignment = Alignment.CenterHorizontally)
                         )
+                        Image(
+                            painterResource(R.drawable.looking_for_party_empty), null,
+                            modifier = Modifier.padding(top = 50.dp)
+                        )
                     } else {
                         Text(
                             stringResource(R.string.habiticans_looking_party),
@@ -210,7 +216,9 @@ fun PartySeekingView(
                     user = it,
                     inviteState =viewModel.inviteStates[it.id] ?: LoadingButtonState.CONTENT,
                     isInvited = viewModel.successfulInvites.contains(it.id),
-                    modifier = Modifier.animateItemPlacement().padding(horizontal = 14.dp)
+                    modifier = Modifier
+                        .animateItemPlacement()
+                        .padding(horizontal = 14.dp)
                 ) { member ->
                     scope.launchCatching({
                         viewModel.inviteStates[member.id] = LoadingButtonState.FAILED

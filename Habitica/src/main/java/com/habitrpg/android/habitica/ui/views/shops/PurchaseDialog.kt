@@ -416,7 +416,8 @@ class PurchaseDialog(context: Context, private val userRepository : UserReposito
                 "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
                 else -> 0
             }
-            ((application?.currentActivity?.get() ?: getActivity() ?: ownerActivity) as? SnackbarActivity)?.showSnackbar(
+            val a = (application?.currentActivity?.get() ?: getActivity() ?: ownerActivity)
+            (a as? SnackbarActivity)?.showSnackbar(
                 content = text,
                 rightIcon = priceLabel.compoundDrawables[0],
                 rightTextColor = rightTextColor,

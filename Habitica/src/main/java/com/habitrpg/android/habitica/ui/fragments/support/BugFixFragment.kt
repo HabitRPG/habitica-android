@@ -105,8 +105,7 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         val newLine = "%0D%0A"
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
             newLine + Uri.encode("Android Version: $version") +
-            newLine + Uri.encode(
-            "AppVersion: " + getString(
+            newLine + Uri.encode("AppVersion: " + getString(
                 R.string.version_info,
                 versionName,
                 versionCode
@@ -114,9 +113,9 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
-            bodyOfEmail += newLine + Uri.encode(appConfigManager.testingLevel().name)
+            bodyOfEmail += " " + Uri.encode(appConfigManager.testingLevel().name)
         }
-        bodyOfEmail += newLine + Uri.encode("User ID: $userViewModel.userID")
+        bodyOfEmail += newLine + Uri.encode("User ID: ${userViewModel.userID}")
 
         userViewModel.user.value?.let { user ->
             bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
