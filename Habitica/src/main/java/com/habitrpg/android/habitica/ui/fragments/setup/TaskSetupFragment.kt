@@ -17,8 +17,9 @@ import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
-import java.util.Date
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Date
+import java.util.UUID
 
 @AndroidEntryPoint
 class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
@@ -123,10 +124,12 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         notes: String? = null
     ): Task {
         val task = Task()
+        task.id = UUID.randomUUID().toString()
         task.text = text ?: ""
         task.notes = notes
         task.priority = 1.0f
         task.type = type ?: TaskType.HABIT
+        task.frequency = Frequency.DAILY
 
         if (type == TaskType.HABIT) {
             task.up = up
