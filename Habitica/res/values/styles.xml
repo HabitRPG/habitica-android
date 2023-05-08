@@ -39,6 +39,7 @@
 
         <item name="colorContentBackground">@color/content_background</item>
         <item name="colorContentBackgroundOffset">@color/content_background_offset</item>
+        <item name="colorOffsetBackground">@color/offset_background</item>
         <item name="colorWindowBackground">@color/window_background</item>
         <item name="colorTintedBackground">@color/brand_800</item>
         <item name="colorGradientTransparentBackground">@color/transparent</item>

@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
@@ -30,7 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private var detailFragment: PartyDetailFragment? = null
-    private var chatFragment: ChatFragment? = null
     private var viewPagerAdapter: FragmentStateAdapter? = null
 
     internal val viewModel: PartyViewModel by viewModels()
@@ -189,13 +187,10 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 return when (position) {
                     0 -> {
                         detailFragment = PartyDetailFragment()
-                        detailFragment?.viewModel = viewModel
                         detailFragment
                     }
                     1 -> {
-                        chatFragment = ChatFragment()
-                        chatFragment?.viewModel = viewModel
-                        chatFragment
+                        ChatFragment()
                     }
                     else -> Fragment()
                 } ?: Fragment()
@@ -206,24 +201,6 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             }
         }
         binding?.viewPager?.adapter = viewPagerAdapter
-
-        binding?.viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                if (position == 1) {
-                    chatFragment?.setNavigatedToFragment()
-                }
-            }
-
-            override fun onPageSelected(position: Int) {
-                if (position == 1) {
-                    chatFragment?.setNavigatedToFragment()
-                }
-            }
-        })
 
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->

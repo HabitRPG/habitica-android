@@ -18,8 +18,8 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
-import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
@@ -87,9 +87,7 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         TavernDetailFragment()
                     }
                     1 -> {
-                        val fragment = ChatFragment()
-                        fragment.viewModel = viewModel
-                        fragment
+                        ChatFragment()
                     }
                     else -> Fragment()
                 }

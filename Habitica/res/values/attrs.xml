@@ -6,6 +6,7 @@
     <attr name="colorTintedBackground" format="color" />
     <attr name="colorTintedBackgroundOffset" format="color" />
     <attr name="colorContentBackgroundOffset" format="color" />
+    <attr name="colorOffsetBackground" format="color" />
     <attr name="colorWindowBackground" format="color" />
     <attr name="colorGradientTransparentBackground" format="color" />
     <attr name="textColorPrimary" format="color" />

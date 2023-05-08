@@ -63,38 +63,52 @@ enum class LoadingButtonState {
     SUCCESS
 }
 
+enum class LoadingButtonType {
+    NORMAL,
+    DESTRUCTIVE
+}
+
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LoadingButton(
     state : LoadingButtonState,
     onClick : () -> Unit,
     modifier : Modifier = Modifier,
+    type : LoadingButtonType = LoadingButtonType.NORMAL,
     elevation : ButtonElevation? = ButtonDefaults.elevation(0.dp),
     shape : Shape = MaterialTheme.shapes.medium,
     border : BorderStroke? = null,
-    colors : ButtonColors = ButtonDefaults.buttonColors(
-        backgroundColor = HabiticaTheme.colors.tintedUiSub,
-        contentColor = Color.White
-    ),
+    colors : ButtonColors? = null,
     contentPadding : PaddingValues = ButtonDefaults.ContentPadding,
     successContent : (@Composable RowScope.() -> Unit)? = null,
     failedContent : (@Composable RowScope.() -> Unit)? = null,
     content : @Composable RowScope.() -> Unit
 ) {
+    val colorStyle = if (type == LoadingButtonType.DESTRUCTIVE) ButtonDefaults.buttonColors(
+        backgroundColor = HabiticaTheme.colors.errorBackground,
+        contentColor = Color.White,
+        disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
+        disabledContentColor = HabiticaTheme.colors.textQuad
+    ) else ButtonDefaults.buttonColors(
+        backgroundColor = HabiticaTheme.colors.tintedUiSub,
+        contentColor = Color.White,
+        disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
+        disabledContentColor = HabiticaTheme.colors.textQuad
+    )
     val colorSpec = tween<Color>(350)
     val backgroundColor = animateColorAsState(
         targetValue = when (state) {
             LoadingButtonState.FAILED -> HabiticaTheme.colors.errorBackground
             LoadingButtonState.SUCCESS -> Color.Transparent
-            else -> colors.backgroundColor(enabled = state != LoadingButtonState.DISABLED).value
+            else -> colorStyle.backgroundColor(enabled = state != LoadingButtonState.DISABLED).value
         },
         animationSpec = colorSpec
     )
     val contentColor = animateColorAsState(
         targetValue = when (state) {
             LoadingButtonState.FAILED -> Color.White
-            LoadingButtonState.SUCCESS -> HabiticaTheme.colors.successColor
-            else -> colors.contentColor(enabled = state != LoadingButtonState.DISABLED).value
+            LoadingButtonState.SUCCESS -> if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
+            else -> colorStyle.contentColor(enabled = state != LoadingButtonState.DISABLED).value
         },
         animationSpec = colorSpec
     )
@@ -124,7 +138,7 @@ fun LoadingButton(
         shape = shape,
         border = if (state == LoadingButtonState.SUCCESS) BorderStroke(
             borderWidth.value,
-            HabiticaTheme.colors.successBackground
+            if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
         ) else border,
         colors = buttonColors,
         contentPadding = PaddingValues(0.dp)

@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
@@ -54,16 +56,18 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         return FragmentGuildDetailBinding.inflate(inflater, container, false)
     }
 
-    var viewModel: GroupViewModel? = null
+    val viewModel: GroupViewModel by viewModels(
+        ownerProducer = { parentFragment as Fragment }
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.refreshLayout?.setOnRefreshListener { this.refresh() }
 
-        viewModel?.getGroupData()?.observe(viewLifecycleOwner, { updateGuild(it) })
-        viewModel?.getLeaderData()?.observe(viewLifecycleOwner, { setLeader(it) })
-        viewModel?.getIsMemberData()?.observe(viewLifecycleOwner, { updateMembership(it) })
+        viewModel.getGroupData().observe(viewLifecycleOwner, { updateGuild(it) })
+        viewModel.getLeaderData().observe(viewLifecycleOwner, { setLeader(it) })
+        viewModel.getIsMemberData().observe(viewLifecycleOwner, { updateMembership(it) })
 
         binding?.guildDescription?.movementMethod = LinkMovementMethod.getInstance()
         binding?.guildSummary?.movementMethod = LinkMovementMethod.getInstance()
@@ -72,7 +76,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             leaveGuild()
         }
         binding?.joinButton?.setOnClickListener {
-            viewModel?.joinGroup {
+            viewModel.joinGroup {
                 (this.activity as? SnackbarActivity)?.showSnackbar(title = getString(R.string.joined_guild))
             }
         }
@@ -81,7 +85,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             sendInvitesResult.launch(intent)
         }
         binding?.leaderWrapper?.setOnClickListener {
-            viewModel?.leaderID?.let { leaderID ->
+            viewModel.leaderID?.let { leaderID ->
                 val profileDirections = MainNavDirections.openProfileActivity(leaderID)
                 MainNavigationController.navigate(profileDirections)
             }
@@ -106,7 +110,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
     private val sendInvitesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val inviteData = HashMap<String, Any>()
-            inviteData["inviter"] = viewModel?.user?.value?.profile?.name ?: ""
+            inviteData["inviter"] = viewModel.user.value?.profile?.name ?: ""
             val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
             if (emails != null && emails.isNotEmpty()) {
                 val invites = ArrayList<HashMap<String, String>>()
@@ -124,12 +128,12 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                 userIDs.forEach { invites.add(it) }
                 inviteData["usernames"] = invites
             }
-            viewModel?.inviteToGroup(inviteData)
+            viewModel.inviteToGroup(inviteData)
         }
     }
 
     private fun refresh() {
-        viewModel?.retrieveGroup {
+        viewModel.retrieveGroup {
             binding?.refreshLayout?.isRefreshing = false
         }
     }
@@ -140,7 +144,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             userRepository.getUser().collect {
                 it?.challenges?.forEach { membership ->
                     val challenge = challengeRepository.getChallenge(membership.challengeID).firstOrNull()
-                    if (challenge != null && challenge.groupId == viewModel?.groupID) {
+                    if (challenge != null && challenge.groupId == viewModel.groupID) {
                         groupChallenges.add(challenge)
                     }
                 }
@@ -200,12 +204,11 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
     }
 
     companion object {
-        fun newInstance(viewModel: GroupViewModel?): GuildDetailFragment {
+        fun newInstance(): GuildDetailFragment {
             val args = Bundle()
 
             val fragment = GuildDetailFragment()
             fragment.arguments = args
-            fragment.viewModel = viewModel
             return fragment
         }
     }

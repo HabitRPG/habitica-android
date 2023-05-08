@@ -1,9 +1,9 @@
-New in 4.1.9:
--Various subscription status optimizations
--Party invites will show the sender’s username and profile
--You can view, complete, assign, and add tasks to your Group Plan’s shared task board
--Tap your name on a task screen to switch to different task boards
--More intuitive system notification settings
--New Avatar Customization interface
--Audio will be controlled by media volume now
--Task details are now tinted based on task health
+New in 4.2:
+It's easier than ever to party up with our newest feature: Look for Party and Find Members!
+
+- Solo players can let Party leaders know they want an invite by going to Menu > Party and tapping 'Look for Party'
+- Party leaders can see players looking for Party by tapping 'Find Members' on the Party screen and send invites from the list
+- Armoire shows in Market when you have all gear
+- Change class from Market when viewing gear from another class
+- Various bug fixes and improvements
+

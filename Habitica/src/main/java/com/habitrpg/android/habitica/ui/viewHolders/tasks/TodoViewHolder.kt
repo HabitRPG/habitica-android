@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
-import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class TodoViewHolder(
     itemView: View,
@@ -18,7 +18,7 @@ class TodoViewHolder(
     assignedTextProvider: GroupPlanInfoProvider?
 ) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
 
-    private val dateFormatter: DateFormat = android.text.format.DateFormat.getDateFormat(context)
+    private val dateFormatter = SimpleDateFormat.getDateInstance()
 
     override fun bind(
         data: Task,

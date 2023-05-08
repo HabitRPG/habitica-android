@@ -43,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +52,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
@@ -61,8 +63,11 @@ import com.habitrpg.common.habitica.extensions.isValidEmail
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import java.util.UUID
 import javax.inject.Inject
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 fun uUIDFromStringOrNull(name: String): UUID? {
     return try {
@@ -120,7 +125,9 @@ class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding?.composeView?.setContent {
             HabiticaTheme {
-                PartyInviteView(viewModel)
+                PartyInviteView(viewModel) {
+                    MainNavigationController.navigateBack()
+                }
             }
         }
         return view
@@ -130,7 +137,8 @@ class PartyInviteFragment : BaseFragment<FragmentComposeBinding>() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PartyInviteView(
-    viewModel: PartyInviteViewModel
+    viewModel: PartyInviteViewModel,
+    dismiss: () -> Unit
 ) {
     var inviteButtonState: LoadingButtonState by remember { mutableStateOf(LoadingButtonState.CONTENT) }
     val scope = rememberCoroutineScope()
@@ -152,11 +160,13 @@ fun PartyInviteView(
                     stringResource(R.string.invite_with_username_email),
                     color = HabiticaTheme.colors.textPrimary,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
                     stringResource(R.string.habiticans_send_invite),
-                    color = HabiticaTheme.colors.textSecondary
+                    color = HabiticaTheme.colors.textSecondary,
+                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
                 )
             }
         }
@@ -209,6 +219,7 @@ fun PartyInviteView(
                         viewModel.invites[index] = value
                     },
                     singleLine = true,
+                    textStyle = TextStyle(fontSize = 16.sp),
                     placeholder = { Text(stringResource(R.string.username_or_email)) },
                     colors = TextFieldDefaults.textFieldColors(
                         backgroundColor = Color.Transparent,
@@ -241,6 +252,8 @@ fun PartyInviteView(
                             inviteButtonState = LoadingButtonState.SUCCESS
                             viewModel.invites.clear()
                             viewModel.invites.add("")
+                            delay(2.toDuration(DurationUnit.SECONDS))
+                            dismiss()
                         } else {
                             inviteButtonState = LoadingButtonState.FAILED
                         }

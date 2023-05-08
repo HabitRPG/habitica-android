@@ -44,10 +44,8 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
     internal val items: MutableList<HabiticaDrawerItem> = ArrayList()
     var selectedItem: Int? = null
         set(value) {
-            val oldValue = field
             field = value
-            oldValue?.let { notifyItemChanged(it) }
-            value?.let { notifyItemChanged(it) }
+            notifyDataSetChanged()
         }
 
     var itemSelectedEvents: ((HabiticaDrawerItem) -> Unit)? = null
