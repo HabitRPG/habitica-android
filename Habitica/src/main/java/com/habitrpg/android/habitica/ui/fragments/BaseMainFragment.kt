@@ -90,12 +90,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     var isTitleInteractive = false
 
     open fun updateToolbarInteractivity() {
-        mainActivity?.binding?.content?.toolbarTitle?.background?.alpha = if (isTitleInteractive) 255 else 0
-        if (isTitleInteractive) {
-            mainActivity?.binding?.content?.toolbarTitle?.setScaledPadding(context, 16, 4, 16, 4)
-        } else {
-            mainActivity?.binding?.content?.toolbarTitle?.setPadding(0)
-        }
+        mainActivity?.updateToolbarInteractivity(isTitleInteractive)
     }
 
     private fun updateTabLayoutVisibility() {

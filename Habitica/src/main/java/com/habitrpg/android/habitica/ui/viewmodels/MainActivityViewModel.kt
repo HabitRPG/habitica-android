@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
 import android.content.SharedPreferences
+import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -55,6 +56,8 @@ class MainActivityViewModel @Inject constructor(
             }
         }
     var requestNotificationPermission = MutableLiveData(false)
+
+    val canShowTeamPlanHeader = mutableStateOf(false)
 
     override fun onCleared() {
         taskRepository.close()

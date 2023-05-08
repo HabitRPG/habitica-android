@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.View
@@ -22,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.view.children
+import androidx.core.view.setPadding
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
@@ -37,6 +37,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -264,7 +265,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 val user by viewModel.user.observeAsState(null)
                 val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(null)
                 val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
-                AppHeaderView(user, teamPlan = teamPlan, teamPlanMembers = teamPlanMembers) {
+                val canShowTeamHeader: Boolean by viewModel.canShowTeamPlanHeader
+                AppHeaderView(user, teamPlan = if (canShowTeamHeader) teamPlan else null, teamPlanMembers = teamPlanMembers) {
                     showAsBottomSheet { onClose ->
                         val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
                         val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
@@ -670,6 +672,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             if (binding.content.connectionIssueView.visibility == View.VISIBLE) {
                 binding.content.connectionIssueView.visibility = View.GONE
             }
+        }
+    }
+
+    fun updateToolbarInteractivity(titleInteractive : Boolean) {
+        viewModel.canShowTeamPlanHeader.value = titleInteractive
+        binding.content.toolbarTitle.background?.alpha = if (titleInteractive) 255 else 0
+        if (titleInteractive) {
+            binding.content.toolbarTitle.setScaledPadding(this, 16, 4, 16, 4)
+        } else {
+            binding.content.toolbarTitle.setPadding(0)
         }
     }
 }

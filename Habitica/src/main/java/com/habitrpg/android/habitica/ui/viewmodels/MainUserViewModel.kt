@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -53,8 +54,8 @@ class MainUserViewModel @Inject constructor(private val authenticationHandler : 
         .flatMapLatest { socialRepository.getGroup(it.id) }
     @OptIn(ExperimentalCoroutinesApi::class)
     var currentTeamPlanMembers: LiveData<List<Member>> = currentTeamPlan
+        .distinctUntilChanged { old, new -> old?.id == new?.id }
         .filterNotNull()
-        .distinctUntilChanged { old, new -> old.id == new.id }
         .flatMapLatest { socialRepository.getGroupMembers(it.id) }
         .distinctUntilChanged()
         .onEach {
