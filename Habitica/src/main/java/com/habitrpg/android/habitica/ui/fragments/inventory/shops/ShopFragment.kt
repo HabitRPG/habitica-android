@@ -116,7 +116,13 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
             }
             adapter?.onShowPurchaseDialog = { item, isPinned ->
-                val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
+                val dialog = PurchaseDialog(
+                    requireContext(),
+                    userRepository,
+                    inventoryRepository,
+                    item,
+                    mainActivity
+                )
                 dialog.shopIdentifier = shopIdentifier
                 dialog.isPinned = isPinned
                 dialog.onGearPurchased = {
@@ -245,7 +251,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                         dialog.enqueue()
                     }
                 } else {
-                    val dialog = activity?.let { InsufficientGemsDialog(it, 3) }
+                    val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
                     dialog?.show()
                 }
             } else {
