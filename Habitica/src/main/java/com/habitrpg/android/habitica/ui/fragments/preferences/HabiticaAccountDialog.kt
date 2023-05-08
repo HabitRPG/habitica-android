@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.fragments.preferences
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -10,14 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.DialogFragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
 import com.habitrpg.android.habitica.models.user.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R.layout.dialog_habitica_account) {
+class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialogFragment(R.layout.dialog_habitica_account) {
     private var _binding: DialogHabiticaAccountBinding? = null
     private val binding get() = _binding!!
 
@@ -48,6 +52,16 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
         }
 
         binding.backImagebutton.setOnClickListener { dismiss() }
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val habiticaAccountDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        habiticaAccountDialog.setOnShowListener { dialog: DialogInterface ->
+            val notificationDialog = dialog as BottomSheetDialog
+            notificationDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            notificationDialog.behavior.isDraggable = false
+        }
+        return habiticaAccountDialog
     }
 
     private fun setResetAccountViews() {
@@ -139,5 +153,9 @@ class HabiticaAccountDialog(private var thisContext: Context) : DialogFragment(R
     interface AccountUpdateConfirmed {
         fun resetConfirmedClicked()
         fun deletionConfirmClicked(confirmationString: String)
+    }
+
+    companion object {
+        const val TAG = "HabiticaAccountDialog"
     }
 }
