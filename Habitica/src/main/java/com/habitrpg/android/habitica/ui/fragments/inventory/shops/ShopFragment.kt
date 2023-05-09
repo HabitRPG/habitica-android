@@ -226,11 +226,11 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val user = userViewModel.user.value ?: return@launch
             context?.let { context ->
-                if ((user.gemCount ?: 0) >= 3) {
+                if ((user.gemCount ?: 0) <= 2) {
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
                     dialog?.show()
                     return@launch
-                }
+                } else
                 if (user.flags?.classSelected == true && user.preferences?.disableClasses == false) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(getString(R.string.change_class_selected_confirmation, classIdentifier))
