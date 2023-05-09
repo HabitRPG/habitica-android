@@ -211,11 +211,14 @@
 
             <Button
                 android:id="@+id/leave_button"
+                style="@style/HabiticaButton.Red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_large"
-                style="@style/HabiticaButton.Red"
-                android:text="@string/leave_party"/>
+                android:backgroundTint="@color/background_red"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/leave_party"
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
