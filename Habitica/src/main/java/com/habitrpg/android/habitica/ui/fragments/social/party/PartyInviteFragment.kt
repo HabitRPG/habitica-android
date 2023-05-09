@@ -250,8 +250,6 @@ fun PartyInviteView(
                         val responses = viewModel.sendInvites()
                         if (responses?.isNotEmpty() == true) {
                             inviteButtonState = LoadingButtonState.SUCCESS
-                            viewModel.invites.clear()
-                            viewModel.invites.add("")
                             delay(2.toDuration(DurationUnit.SECONDS))
                             dismiss()
                         } else {

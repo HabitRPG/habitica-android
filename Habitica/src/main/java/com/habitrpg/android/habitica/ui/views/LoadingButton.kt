@@ -122,7 +122,9 @@ fun LoadingButton(
 
     val buttonColors = ButtonDefaults.buttonColors(
         backgroundColor = backgroundColor.value,
-        contentColor = contentColor.value
+        contentColor = contentColor.value,
+        disabledBackgroundColor = backgroundColor.value,
+        disabledContentColor = contentColor.value
     )
     Button(
         {

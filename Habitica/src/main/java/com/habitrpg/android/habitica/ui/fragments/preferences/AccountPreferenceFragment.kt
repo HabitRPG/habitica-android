@@ -447,11 +447,12 @@ class AccountPreferenceFragment :
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(title)
-            dialog.addButton(R.string.save, true) { _, _ ->
+            dialog.addButton(R.string.save, true, autoDismiss = false) { dialog, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
                 editText?.showErrorIfNecessary()
                 if (editText?.isValid != true) return@addButton
                 onChange(editText.text)
+                dialog.dismiss()
             }
             dialog.addCancelButton()
             dialog.setAdditionalContentView(view)

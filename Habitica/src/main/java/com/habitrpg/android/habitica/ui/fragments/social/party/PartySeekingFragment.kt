@@ -21,7 +21,6 @@ import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -79,8 +78,7 @@ class PartySeekingViewModel @Inject constructor(
 ) : BaseViewModel(userRepository, userViewModel) {
     val isRefreshing = mutableStateOf(false)
     val seekingUsers : Flow<PagingData<Member>>
-    val successfulInvites = mutableStateListOf<String>()
-    val inviteStates = mutableStateMapOf<String, LoadingButtonState>()
+    val inviteStates = mutableStateMapOf<String, Pair<Boolean, LoadingButtonState>>()
     init {
         seekingUsers = Pager(
             config = PagingConfig(
@@ -196,7 +194,7 @@ fun PartySeekingView(
                             textAlign = TextAlign.Center,
                             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
                             color = HabiticaTheme.colors.textSecondary, modifier = Modifier
-                                .width(250.dp)
+                                .width(320.dp)
                                 .align(alignment = Alignment.CenterHorizontally)
                         )
                         Image(
@@ -207,8 +205,9 @@ fun PartySeekingView(
                         Text(
                             stringResource(R.string.habiticans_looking_party),
                             textAlign = TextAlign.Center,
+                            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
                             color = HabiticaTheme.colors.textSecondary, modifier = Modifier
-                                .width(250.dp)
+                                .width(320.dp)
                                 .align(alignment = Alignment.CenterHorizontally)
                         )
                     }
@@ -220,28 +219,24 @@ fun PartySeekingView(
                 if (it == null) return@items
                 PartySeekingListItem(
                     user = it,
-                    inviteState =viewModel.inviteStates[it.id] ?: LoadingButtonState.CONTENT,
-                    isInvited = viewModel.successfulInvites.contains(it.id),
+                    inviteState = viewModel.inviteStates[it.id]?.second ?: LoadingButtonState.CONTENT,
+                    isInvited = viewModel.inviteStates[it.id]?.first ?: false,
                     modifier = Modifier
                         .animateItemPlacement()
                         .padding(horizontal = 14.dp)
                 ) { member ->
                     scope.launchCatching({
-                        viewModel.inviteStates[member.id] = LoadingButtonState.FAILED
+                        viewModel.inviteStates[member.id] = Pair(false, LoadingButtonState.FAILED)
                     }) {
-                        viewModel.inviteStates[member.id] = LoadingButtonState.LOADING
-                        val response: Any? = if (viewModel.successfulInvites.contains(member.id)) viewModel.rescindInvite(member) else viewModel.inviteUser(member)
+                        val isInvited = viewModel.inviteStates[member.id]?.first ?: false
+                        viewModel.inviteStates[member.id] = Pair(isInvited, LoadingButtonState.LOADING)
+                        val response: Any? = if (isInvited) viewModel.rescindInvite(member) else viewModel.inviteUser(member)
                         if (response != null) {
-                            viewModel.inviteStates[member.id] = LoadingButtonState.SUCCESS
+                            viewModel.inviteStates[member.id] = Pair(isInvited, LoadingButtonState.SUCCESS)
                             delay(4.toDuration(DurationUnit.SECONDS))
-                            if (viewModel.successfulInvites.contains(member.id)) {
-                                viewModel.successfulInvites.remove(member.id)
-                            } else {
-                                viewModel.successfulInvites.add(member.id)
-                            }
-                            viewModel.inviteStates[member.id] = LoadingButtonState.CONTENT
+                            viewModel.inviteStates[member.id] = Pair(!isInvited, LoadingButtonState.CONTENT)
                         } else {
-                            viewModel.inviteStates[member.id] = LoadingButtonState.FAILED
+                            viewModel.inviteStates[member.id] = Pair(isInvited, LoadingButtonState.FAILED)
                         }
                     }
                 }
