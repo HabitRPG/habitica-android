@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -40,7 +39,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 @AndroidEntryPoint
-class ChatFragment : BaseFragment<FragmentChatBinding>() {
+open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     override var binding : FragmentChatBinding? = null
 
@@ -51,8 +50,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
-    val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { parentFragment as Fragment }
+    open val viewModel: GroupViewModel by viewModels(
+        ownerProducer = { requireParentFragment() }
     )
 
     @Inject

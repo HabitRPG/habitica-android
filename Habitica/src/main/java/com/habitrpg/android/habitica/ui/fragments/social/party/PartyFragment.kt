@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.fragments.social.ChatFragment
+import com.habitrpg.android.habitica.ui.fragments.social.PartyChatFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -190,7 +190,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                         detailFragment
                     }
                     1 -> {
-                        ChatFragment()
+                        PartyChatFragment()
                     }
                     else -> Fragment()
                 } ?: Fragment()
