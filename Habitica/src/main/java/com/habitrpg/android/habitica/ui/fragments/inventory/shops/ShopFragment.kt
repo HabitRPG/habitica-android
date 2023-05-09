@@ -230,7 +230,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
                     dialog?.show()
                     return@launch
-                } else
+                }
                 if (user.flags?.classSelected == true && user.preferences?.disableClasses == false) {
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(getString(R.string.change_class_selected_confirmation, classIdentifier))
