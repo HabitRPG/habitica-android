@@ -40,7 +40,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 @AndroidEntryPoint
-class ChatFragment : BaseFragment<FragmentChatBinding>() {
+class ChatFragment(var groupViewModel: GroupViewModel? = null) : BaseFragment<FragmentChatBinding>() {
 
     override var binding : FragmentChatBinding? = null
 
@@ -51,9 +51,15 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
-    val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { parentFragment as Fragment }
-    )
+    // In instances where ChatFragment is created from FragmentStateAdapter,
+    // use a passed viewmodel reference.Else, use the Parent fragment as the ownerProducer.
+    val viewModel: GroupViewModel
+        get() {
+            groupViewModel?.let { return it }
+            return parentViewModel
+        }
+
+    private val parentViewModel: GroupViewModel by viewModels(ownerProducer = { parentFragment as Fragment })
 
     @Inject
     lateinit var configManager : AppConfigManager
