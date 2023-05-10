@@ -1086,7 +1086,7 @@
     <string name="block_user">Block User</string>
     <string name="unblock_user">Unblock User</string>
     <string name="block_user_title">Block %s?</string>
-    <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds. This will have no effect if the person is a moderator now or in the future.</string>
+    <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts.</string>
     <string name="block">Block</string>
     <string name="disablePrivateMessages">Disable Private Messages</string>
     <string name="pms_disabled">Private Messages are disabled</string>
@@ -1106,7 +1106,7 @@
     <string name="theme_color">Theme Color</string>
     <string name="submit_feedback">Submit Feedback</string>
     <string name="user_is_blocked">You blocked this user</string>
-    <string name="user_is_blocked_explanation">A blocked user cannot send you Private Messages but you will still see their posts in Tavern or Guilds.</string>
+    <string name="user_is_blocked_explanation">A blocked user cannot send you Private Messages but you will still see their posts.</string>
     <string name="finish">Finish</string>
     <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
     <string name="you">You</string>
@@ -1389,6 +1389,8 @@
     <string name="pending_invite">Pending Invite</string>
     <string name="invalid_input">Input invalid</string>
     <string name="username_requirements">Can only contain letters a-z, numbers, hyphens, or underscores</string>
+    <string name="contributor_tiers">Contributor Tiers</string>
+    <string name="contrib_tier_description">If you see an account with a colored display name and an icon, that’s a contributor tier! Tiers are given to people who help around Habitica, whether it be for translation, coding, or just being helpful. The higher the tier, the more the player has contributed.</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
