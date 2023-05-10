@@ -1,11 +1,9 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.shops
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.mutableStateOf
@@ -23,18 +21,19 @@ import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -67,13 +66,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     private var gearCategories: MutableList<ShopCategory>? = null
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
-
-    private val classSelectionResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.retrieveUser(true, true)
-            }
-        }
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
@@ -233,31 +225,51 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     private fun showClassChangeDialog(classIdentifier: String) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val user = userViewModel.user.value ?: return@launch
-            val bundle = Bundle()
-            bundle.putBoolean("isInitialSelection", user.flags?.classSelected == false)
-            val intent = Intent(activity, ClassSelectionActivity::class.java)
-            intent.putExtras(bundle)
-            if (user.flags?.classSelected == true && user.preferences?.disableClasses == false) {
-                if ((user.gemCount ?: 0) >= 3) {
-                    context?.let { context ->
-                        val dialog = HabiticaAlertDialog(context)
-                        dialog.setTitle(R.string.change_class_confirmation)
-                        dialog.addButton(R.string.change_class, true, true) { _, _ ->
-                            classSelectionResult.launch(
-                                intent
-                            )
-                        }
-                        dialog.addButton(R.string.dialog_go_back, false)
-                        dialog.enqueue()
-                    }
-                } else {
+            context?.let { context ->
+                if ((user.gemCount ?: 0) <= 2) {
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
                     dialog?.show()
+                    return@launch
                 }
-            } else {
-                classSelectionResult.launch(intent)
+                if (user.flags?.classSelected == true && user.preferences?.disableClasses == false) {
+                    val alert = HabiticaAlertDialog(context)
+                    alert.setTitle(getString(R.string.change_class_selected_confirmation, classIdentifier))
+                    alert.setMessage(getString(R.string.change_class_equipment_warning))
+                    alert.addButton(R.string.choose_class, true) { _, _ ->
+                        val dialog = HabiticaProgressDialog.show(
+                            context,
+                            getString(R.string.changing_class_progress),
+                            300
+                        )
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            userRepository.changeClass(classIdentifier)
+                            dialog.dismiss()
+                            displayClassChanged(classIdentifier)
+                            loadMarketGear()
+                        }
+                    }
+                    alert.addButton(R.string.dialog_go_back, false)
+                    alert.show()
+                } else {
+                    val alert = HabiticaAlertDialog(context)
+                    alert.setTitle(getString(R.string.class_confirmation, classIdentifier))
+                    alert.addButton(R.string.choose_class, true) { _, _ ->
+                        val dialog = HabiticaProgressDialog.show(
+                            context,
+                            getString(R.string.changing_class_progress),
+                            300
+                        )
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            userRepository.changeClass(classIdentifier)
+                            dialog.dismiss()
+                            displayClassChanged(classIdentifier)
+                            loadMarketGear()
+                        }
+                    }
+                    alert.addButton(R.string.dialog_go_back, false)
+                    alert.show()
+                }
             }
-            loadMarketGear()
         }
     }
 
@@ -368,6 +380,15 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         }
         layoutManager?.spanCount = spanCount
         layoutManager?.requestLayout()
+    }
+
+    private fun displayClassChanged(selectedClass: String) {
+        context?.let { context ->
+            val alert = HabiticaAlertDialog(context)
+            alert.setMessage(getString(R.string.class_changed_description, selectedClass))
+            alert.addButton(getString(R.string.complete_tutorial), true){ _, _ -> alert.dismiss() }
+            alert.show()
+        }
     }
 
     companion object {
