@@ -4,6 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -131,6 +137,7 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun InviteButton(
     state : LoadingButtonState,
@@ -138,24 +145,31 @@ fun InviteButton(
     modifier : Modifier = Modifier,
     isAlreadyInvited: Boolean = false,
 ) {
-    LoadingButton(state = state, onClick = onClick,
-        type = if (isAlreadyInvited) LoadingButtonType.DESTRUCTIVE else LoadingButtonType.NORMAL,
-        colors = ButtonDefaults.buttonColors(
-        backgroundColor = if (isAlreadyInvited) HabiticaTheme.colors.errorBackground else HabiticaTheme.colors.tintedUiSub,
-        contentColor = Color.White,
-    ), modifier = modifier, successContent = {
-        if (isAlreadyInvited) {
-            Text(stringResource(R.string.rescinded))
+    AnimatedContent(
+        transitionSpec = { fadeIn(animationSpec = tween(220, delayMillis = 90)) with
+            fadeOut(animationSpec = tween(90)) },
+        targetState = isAlreadyInvited) {isInvited ->
+        if (isInvited) {
+            LoadingButton(state = state, onClick = onClick,
+                type = LoadingButtonType.DESTRUCTIVE,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = HabiticaTheme.colors.errorBackground,
+                    contentColor = Color.White,
+                ), modifier = modifier, successContent = {
+                        Text(stringResource(R.string.rescinded))
+                }) {
+                Text(stringResource(R.string.rescind_invite))
+            }
         } else {
-            Text(stringResource(R.string.invited))
-        }
-    }) {
-        if (isAlreadyInvited) {
-            Text(stringResource(R.string.rescind_invite))
-        } else {
-            Text(stringResource(R.string.send_invite))
+            LoadingButton(state = state, onClick = onClick,
+                modifier = modifier, successContent = {
+                    Text(stringResource(R.string.invited))
+                }) {
+                Text(stringResource(R.string.send_invite))
+            }
         }
     }
+
 }
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
@@ -233,7 +247,7 @@ fun PartySeekingView(
                         val response: Any? = if (isInvited) viewModel.rescindInvite(member) else viewModel.inviteUser(member)
                         if (response != null) {
                             viewModel.inviteStates[member.id] = Pair(isInvited, LoadingButtonState.SUCCESS)
-                            delay(4.toDuration(DurationUnit.SECONDS))
+                            delay(2500.toDuration(DurationUnit.MILLISECONDS))
                             viewModel.inviteStates[member.id] = Pair(!isInvited, LoadingButtonState.CONTENT)
                         } else {
                             viewModel.inviteStates[member.id] = Pair(isInvited, LoadingButtonState.FAILED)

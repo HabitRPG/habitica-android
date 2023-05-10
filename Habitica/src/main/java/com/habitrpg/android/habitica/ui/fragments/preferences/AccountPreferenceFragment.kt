@@ -426,7 +426,10 @@ class AccountPreferenceFragment :
             it?.contains(" ") == false && it.length > 1 && it.length < 20 && !it.contains(regex)
         }) {
             lifecycleScope.launchCatching {
-                userRepository.updateLoginName(it ?: "")
+                val user = userRepository.updateLoginName(it ?: "")
+                if (user == null) {
+                    userRepository.retrieveUser(false, forced = true)
+                }
             }
         }
     }
@@ -442,7 +445,7 @@ class AccountPreferenceFragment :
         val editText = view?.findViewById<ValidatingEditText>(R.id.edit_text)
         editText?.text = value
         editText?.validator = validator
-        editText?.errorText = getString(R.string.invalid_input)
+        editText?.errorText = getString(R.string.username_requirements)
         view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = title
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)

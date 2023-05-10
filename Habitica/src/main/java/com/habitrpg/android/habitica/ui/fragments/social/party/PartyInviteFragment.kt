@@ -246,6 +246,10 @@ fun PartyInviteView(
                     inviteButtonState = LoadingButtonState.LOADING
                     scope.launchCatching({
                         inviteButtonState = LoadingButtonState.FAILED
+                        scope.launchCatching {
+                            delay(2.toDuration(DurationUnit.SECONDS))
+                            inviteButtonState = LoadingButtonState.CONTENT
+                        }
                     }) {
                         val responses = viewModel.sendInvites()
                         if (responses?.isNotEmpty() == true) {
@@ -254,6 +258,8 @@ fun PartyInviteView(
                             dismiss()
                         } else {
                             inviteButtonState = LoadingButtonState.FAILED
+                            delay(2.toDuration(DurationUnit.SECONDS))
+                            inviteButtonState = LoadingButtonState.CONTENT
                         }
                     }
                 })
