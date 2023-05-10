@@ -4,5 +4,5 @@
     <stroke
         android:width="1dp"
         android:color="@color/offset_background"/>
-    <corners android:radius="6dp" />
+    <corners android:radius="8dp" />
 </shape>

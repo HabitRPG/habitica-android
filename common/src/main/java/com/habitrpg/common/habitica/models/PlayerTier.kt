@@ -16,7 +16,6 @@ class PlayerTier(val title: String, val id: Int) {
                 PlayerTier("Tier 5 (Champion)", 5),
                 PlayerTier("Tier 6 (Champion)", 6),
                 PlayerTier("Tier 7 (Legendary)", 7),
-                PlayerTier("Moderator (Guardian)", 8),
                 PlayerTier("Staff (Heroic)", 9)
             )
         }

@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SupportCollapsibleSectionBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
@@ -41,12 +43,17 @@ class SupportCollapsibleSection : LinearLayout {
         a.recycle()
 
         setOnClickListener {
-            binding.descriptionView.visibility = if (binding.descriptionView.visibility == View.VISIBLE) {
-                binding.caretView.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
-                View.GONE
-            } else {
+            val shouldBeVisible = binding.descriptionView.visibility != View.VISIBLE
+            if (shouldBeVisible) {
                 binding.caretView.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp)
-                View.VISIBLE
+            } else {
+                binding.caretView.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp)
+            }
+            val descriptionIndex = children.indexOf(binding.descriptionView)
+            children.forEachIndexed { index, view ->
+                if (index >= descriptionIndex) {
+                    view.isVisible = shouldBeVisible
+                }
             }
         }
     }

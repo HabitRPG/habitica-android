@@ -1,6 +1,8 @@
 package com.habitrpg.android.habitica.ui.views
 
 import android.content.Context
+import android.graphics.Typeface
+import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -75,6 +77,9 @@ class UsernameLabel @JvmOverloads constructor(
         val padding = context.resources.getDimension(R.dimen.spacing_small).toInt()
         textView.setPadding(0, 0, padding, 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            textView.typeface = Typeface.create(null,600,false)
+        }
         val iconViewParams = LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
@@ -83,7 +88,6 @@ class UsernameLabel @JvmOverloads constructor(
         addView(tierIconView, iconViewParams)
     }
 }
-
 
 @Composable
 fun ComposableUsernameLabel(

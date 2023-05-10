@@ -60,7 +60,7 @@
                         android:textSize="12sp"
                         android:textColor="@color/white"
                         style="@style/Pill.Purple"
-                        tools:text="Moderator"
+                        tools:text="Staff"
                         android:layout_marginStart="@dimen/spacing_small"/>
                     <View
                         android:layout_width="0dp"

@@ -28,6 +28,8 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.wearable.Wearable
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
@@ -475,6 +477,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 viewModel.preferenceLanguage = preferences?.language
             }
             preferences?.sound?.let { soundManager.soundTheme = it }
+
+            val crashlytics = Firebase.crashlytics
+            crashlytics.setCustomKey("day_start", user.preferences?.dayStart ?: 0)
+            crashlytics.setCustomKey("timezone_offset", user.preferences?.timezoneOffset ?: 0)
 
             displayDeathDialogIfNeeded()
             YesterdailyDialog.showDialogIfNeeded(this, user.id, userRepository, taskRepository)
