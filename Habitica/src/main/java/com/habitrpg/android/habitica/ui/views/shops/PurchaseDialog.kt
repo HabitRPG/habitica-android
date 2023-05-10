@@ -39,6 +39,7 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientS
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.internal.managers.ViewComponentManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -147,6 +148,20 @@ class PurchaseDialog(
             setAdditionalContentView(contentView)
             setLimitedTextView()
         }
+
+    private fun findSnackBarActivity(context: Context): SnackbarActivity? {
+        return when (context) {
+            is SnackbarActivity -> context
+            is ViewComponentManager.FragmentContextWrapper -> findSnackBarActivity(context.baseContext)
+            else -> (context.applicationContext as? HabiticaBaseApplication)?.currentActivity?.get() as? SnackbarActivity
+        }
+    }
+
+    init {
+        findSnackBarActivity(context)?.let {
+            (it as? Activity)?.let { activity -> setOwnerActivity(activity) }
+        }
+    }
 
     private fun updatePurchaseTotal() {
         priceLabel.value = shopItem.value.toDouble() * purchaseQuantity
@@ -426,7 +441,8 @@ class PurchaseDialog(
                 content = text,
                 rightIcon = priceLabel.compoundDrawables[0],
                 rightTextColor = rightTextColor,
-                rightText = "-" + priceLabel.text
+                rightText = "-" + priceLabel.text,
+                isCelebratory = true
             )
             inventoryRepository.retrieveInAppRewards()
             userRepository.retrieveUser(forced = true)
