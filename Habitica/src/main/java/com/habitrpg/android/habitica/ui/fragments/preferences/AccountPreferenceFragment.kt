@@ -427,7 +427,7 @@ class AccountPreferenceFragment :
         }) {
             lifecycleScope.launchCatching {
                 val user = userRepository.updateLoginName(it ?: "")
-                if (user == null) {
+                if (user == null || user.username != it) {
                     userRepository.retrieveUser(false, forced = true)
                 }
             }

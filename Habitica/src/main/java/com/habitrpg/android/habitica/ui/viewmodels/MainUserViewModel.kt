@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -18,9 +17,11 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class MainUserViewModel @Inject constructor(private val authenticationHandler : AuthenticationHandler, val userRepository: UserRepository, val socialRepository: SocialRepository) {
 
@@ -48,16 +49,17 @@ class MainUserViewModel @Inject constructor(private val authenticationHandler : 
     )
     @OptIn(ExperimentalCoroutinesApi::class)
     var currentTeamPlanGroup = currentTeamPlan
+        .map { it?.id }
+        .distinctUntilChanged { old, new -> old == new }
         .filterNotNull()
-        .distinctUntilChanged { old, new ->
-            old.id == new.id }
-        .flatMapLatest { socialRepository.getGroup(it.id) }
+        .flatMapLatest { socialRepository.getGroup(it) }
     @OptIn(ExperimentalCoroutinesApi::class)
     var currentTeamPlanMembers: LiveData<List<Member>> = currentTeamPlan
-        .distinctUntilChanged { old, new -> old?.id == new?.id }
+        .map { it?.id }
+        .distinctUntilChanged { old, new -> old == new }
         .filterNotNull()
-        .flatMapLatest { socialRepository.getGroupMembers(it.id) }
-        .distinctUntilChanged()
+        .flatMapLatest { socialRepository.getGroupMembers(it) }
+        .distinctUntilChanged { old, new -> old.size == new.size && !old.mapIndexed { index, member -> member.id == new[index].id }.contains(false) }
         .onEach {
             if (it.isEmpty()) {
                 currentTeamPlan.lastOrNull()?.let { plan ->
