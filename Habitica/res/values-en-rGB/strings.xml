@@ -223,7 +223,7 @@
     <string name="by_email">By Email</string>
     <string name="invite_existing_users">Invite Existing Users</string>
     <string name="send">Send</string>
-    <string name="invite">Invite Friends</string>
+    <string name="invite">Find Members</string>
     <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
     <string name="add_invites">Add Invites</string>
     <string name="email">Email</string>

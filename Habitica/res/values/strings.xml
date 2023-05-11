@@ -304,7 +304,7 @@
     <string name="by_email">By Email</string>
     <string name="invite_existing_users">Invite Existing Users</string>
     <string name="send">Send</string>
-    <string name="invite">Invite Friends</string>
+    <string name="invite">Find Members</string>
     <string name="invite_username_description">If you have friends already using Habitica, invite them by username here.</string>
     <string name="invite_email_description">If a friend joins Habitica via your email, they\'ll automatically be invited to your party!</string>
     <string name="add_invites">Add Invites</string>
@@ -326,7 +326,7 @@
     <string name="login_incentive">Unlock by logging into Habitica regularly</string>
     <string name="login_incentive_count">Unlock by checking into Habitica %d times.</string>
     <string name="create_account">Unlock by creating an account</string>
-    <string name="party_invite_short">Invite Friends</string>
+    <string name="party_invite_short">Find Members</string>
     <string name="login_incentive_short">log into Habitica regularly</string>
     <string name="login_incentive_short_count">%d Checkins</string>
     <string name="create_account_short">create an account</string>

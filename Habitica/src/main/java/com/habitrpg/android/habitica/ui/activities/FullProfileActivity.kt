@@ -323,7 +323,7 @@ class FullProfileActivity : BaseActivity() {
     private fun useBlock() {
         lifecycleScope.launchCatching {
             socialRepository.blockMember(userID)
-            userRepository.retrieveUser()
+            userRepository.retrieveUser(false, true)
             invalidateOptionsMenu()
         }
     }

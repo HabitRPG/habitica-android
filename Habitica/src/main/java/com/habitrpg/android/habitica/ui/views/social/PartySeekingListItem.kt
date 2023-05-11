@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.social
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,7 +23,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.members.MemberFlags
@@ -53,6 +56,10 @@ fun PartySeekingListItem(
     Column(
         modifier
             .fillMaxWidth()
+            .clickable {
+                val profileDirections = MainNavDirections.openProfileActivity(user.id)
+                MainNavigationController.navigate(profileDirections)
+            }
             .padding(bottom = 6.dp)
             .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.large)
             .padding(14.dp)
