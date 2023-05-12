@@ -25,7 +25,7 @@
     <string name="start_new_day">Start new day</string>
     <string name="check_off_yesterday">Check off any you did yesterday:</string>
     <string name="task_type">Task Type</string>
-    <string name="task_title_hint">Task title…</string>
+    <string name="task_title_hint">Enter Task Title</string>
     <string name="save">Save</string>
     <string name="sync_data">Sync Data</string>
     <string name="hide_task_rewards">Hide task rewards</string>

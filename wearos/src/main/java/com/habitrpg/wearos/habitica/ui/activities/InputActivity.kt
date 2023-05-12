@@ -21,14 +21,6 @@ class InputActivity : BaseActivity<ActivityInputBinding, InputViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInputBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-        binding.titleView.text = viewModel.title
-
-        binding.speechInput.setOnClickListener {
-            showSpeechInput()
-        }
-        binding.keyboardInput.setOnClickListener {
-            showKeyboard()
-        }
 
         binding.editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
@@ -38,6 +30,8 @@ class InputActivity : BaseActivity<ActivityInputBinding, InputViewModel>() {
             }
             false
         }
+
+        showKeyboard()
     }
 
     private fun returnInput(inputString: String?) {
@@ -48,28 +42,15 @@ class InputActivity : BaseActivity<ActivityInputBinding, InputViewModel>() {
     }
 
     private fun showKeyboard() {
-        binding.editText.hint = binding.titleView.text
-        binding.editText.setText(viewModel.existingInput)
-        binding.editText.requestFocus()
-        binding.editText.postDelayed(100) {
-            val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(binding.editText, InputMethodManager.SHOW_FORCED)
+        binding.editText.post {
+            binding.editText.setText(viewModel.existingInput)
+            binding.editText.requestFocus()
+            binding.editText.postDelayed(250) {
+                val imm: InputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showSoftInput(binding.editText, InputMethodManager.SHOW_FORCED)
+            }
         }
     }
 
-    private val speechInputResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val spokenText: String? = it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.firstOrNull()
-            returnInput(spokenText)
-        }
-    }
-
-    private fun showSpeechInput() {
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_PROMPT, binding.titleView.text)
-        }
-        speechInputResult.launch(intent)
-    }
 }
