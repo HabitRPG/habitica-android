@@ -126,7 +126,7 @@ fun Duration.getMinuteOrSeconds(): DurationUnit {
 
 fun Date.formatForLocale(): String {
     val locale = Locale.getDefault()
-    val dateFormatter: DateFormat = if (locale == Locale.US) {
+    val dateFormatter: DateFormat = if (locale == Locale.US || locale == Locale.ENGLISH) {
         SimpleDateFormat("M/d/yy", locale)
     } else {
         SimpleDateFormat.getDateInstance(DateFormat.LONG, locale)
