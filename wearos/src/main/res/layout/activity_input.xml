@@ -20,7 +20,9 @@
             android:visibility="visible">
         <EditText
             android:id="@+id/edit_text"
-            android:layout_width="wrap_content"
+            android:layout_width="145dp"
+            android:gravity="center_horizontal"
+            android:hint="@string/task_title_hint"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
             android:inputType="text"
