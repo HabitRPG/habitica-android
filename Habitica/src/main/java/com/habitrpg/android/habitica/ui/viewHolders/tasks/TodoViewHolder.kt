@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.viewHolders.tasks
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.formatForLocale
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -17,8 +18,6 @@ class TodoViewHolder(
     brokenTaskFunc: ((Task) -> Unit),
     assignedTextProvider: GroupPlanInfoProvider?
 ) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
-
-    private val dateFormatter = SimpleDateFormat.getDateInstance()
 
     override fun bind(
         data: Task,
@@ -39,10 +38,10 @@ class TodoViewHolder(
             if (task.isDueToday() == true) {
                 specialTaskTextView?.text = context.getString(R.string.today)
             } else if (task.isDayOrMorePastDue() == true) {
-                task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
+                task.dueDate?.let { specialTaskTextView?.text = it.formatForLocale() }
                 specialTaskTextView?.setTextColor(ContextCompat.getColor(context, R.color.maroon100_red100))
             } else {
-                task.dueDate?.let { specialTaskTextView?.text = dateFormatter.format(it) }
+                task.dueDate?.let { specialTaskTextView?.text = it.formatForLocale() }
                 specialTaskTextView?.setTextColor(ContextCompat.getColor(context, R.color.gray_300))
             }
             this.specialTaskTextView?.visibility = View.VISIBLE

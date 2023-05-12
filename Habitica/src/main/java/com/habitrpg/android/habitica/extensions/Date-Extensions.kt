@@ -2,8 +2,11 @@ package com.habitrpg.android.habitica.extensions
 
 import android.content.res.Resources
 import com.habitrpg.android.habitica.R
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -119,4 +122,15 @@ fun Long.getShortRemainingString(): String {
 
 fun Duration.getMinuteOrSeconds(): DurationUnit {
     return if (this.inWholeHours < 1) DurationUnit.SECONDS else DurationUnit.MINUTES
+}
+
+fun Date.formatForLocale(): String {
+    val locale = Locale.getDefault()
+    val dateFormatter: DateFormat = if (locale == Locale.US) {
+        SimpleDateFormat("M/d/yy", locale)
+    } else {
+        SimpleDateFormat.getDateInstance(DateFormat.LONG, locale)
+    }
+
+    return dateFormatter.format(this)
 }
