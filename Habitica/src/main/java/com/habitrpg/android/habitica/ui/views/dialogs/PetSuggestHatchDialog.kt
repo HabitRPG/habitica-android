@@ -16,6 +16,8 @@ import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -31,8 +33,11 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
     @InstallIn(SingletonComponent::class)
     interface PetSuggestHatchDialogEntryPoint {
         fun useCase(): HatchPetUseCase
+        fun mainUserViewModel(): MainUserViewModel
     }
-    var hatchPetUseCase: HatchPetUseCase
+
+    private val userViewModel : MainUserViewModel
+    private val hatchPetUseCase: HatchPetUseCase
 
     private lateinit var binding: DialogPetSuggestHatchBinding
 
@@ -44,6 +49,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
 
         val hiltEntryPoint = EntryPointAccessors.fromApplication(context, PetSuggestHatchDialogEntryPoint::class.java)
         hatchPetUseCase = hiltEntryPoint.useCase()
+        userViewModel = hiltEntryPoint.mainUserViewModel()
     }
 
     fun configure(
@@ -142,22 +148,26 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
                 addButton(binding.root, true) { _, _ ->
                     val activity = (getActivity() as? MainActivity) ?: return@addButton
+                    if ((userViewModel.user.value?.gemCount ?: hatchPrice) < hatchPrice) {
+                        InsufficientGemsDialog(activity, hatchPrice).show()
+                        return@addButton
+                    }
                     val thisPotion = potion ?: return@addButton
                     val thisEgg = egg ?: return@addButton
-                        longLivingScope.launchCatching {
-                            if (!hasEgg) {
-                                activity.inventoryRepository.purchaseItem("eggs", thisEgg.key, 1)
-                            }
-                            if (!hasPotion) {
-                                activity.inventoryRepository.purchaseItem(
-                                    "hatchingPotions",
-                                    thisPotion.key,
-                                    1
-                                )
-                            }
-                            activity.userRepository.retrieveUser(true, forced = true)
-                            hatchPet(thisPotion, thisEgg)
+                    longLivingScope.launchCatching {
+                        if (!hasEgg) {
+                            activity.inventoryRepository.purchaseItem("eggs", thisEgg.key, 1)
                         }
+                        if (!hasPotion) {
+                            activity.inventoryRepository.purchaseItem(
+                                "hatchingPotions",
+                                thisPotion.key,
+                                1
+                            )
+                        }
+                        activity.userRepository.retrieveUser(true, forced = true)
+                        hatchPet(thisPotion, thisEgg)
+                    }
                 }
             }
 

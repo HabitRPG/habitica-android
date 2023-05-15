@@ -226,7 +226,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             val user = userViewModel.user.value ?: return@launch
             context?.let { context ->
-                if ((user.gemCount ?: 0) <= 2) {
+                if (user.gemCount <= 2) {
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
                     dialog?.show()
                     return@launch
