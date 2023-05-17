@@ -79,6 +79,9 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
 
         binding.notificationsRefreshLayout.setOnRefreshListener(this)
+        lifecycleScope.launchCatching {
+            viewModel.refreshNotifications()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

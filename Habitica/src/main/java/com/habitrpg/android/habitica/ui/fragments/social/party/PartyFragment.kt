@@ -16,9 +16,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
-import com.habitrpg.android.habitica.ui.activities.GroupInviteActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.PartyChatFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
@@ -108,9 +108,7 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_invite_item -> {
-                val intent = Intent(mainActivity, GroupInviteActivity::class.java)
-                intent.putExtra("groupType", "party")
-                sendInvitesResult.launch(intent)
+                MainNavigationController.navigate(R.id.partyInvitationFragment)
                 return true
             }
             R.id.menu_guild_edit -> {
@@ -150,31 +148,6 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             viewModel.updateOrCreateGroup(it.data?.extras)
-        }
-    }
-
-    private val sendInvitesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val inviteData = HashMap<String, Any>()
-            inviteData["inviter"] = viewModel.user.value?.profile?.name ?: ""
-            val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
-            if (!emails.isNullOrEmpty()) {
-                val invites = ArrayList<HashMap<String, String>>()
-                emails.forEach { email ->
-                    val invite = HashMap<String, String>()
-                    invite["name"] = ""
-                    invite["email"] = email
-                    invites.add(invite)
-                }
-                inviteData["emails"] = invites
-            }
-            val userIDs = it.data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
-            if (!userIDs.isNullOrEmpty()) {
-                val invites = ArrayList<String>()
-                userIDs.forEach { invites.add(it) }
-                inviteData["usernames"] = invites
-            }
-            viewModel.inviteToGroup(inviteData)
         }
     }
 

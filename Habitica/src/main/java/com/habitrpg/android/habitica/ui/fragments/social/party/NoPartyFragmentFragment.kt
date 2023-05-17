@@ -60,6 +60,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.refreshLayout?.setOnRefreshListener { this.refresh() }
+        refresh()
 
         binding?.invitationsView?.acceptCall = {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {

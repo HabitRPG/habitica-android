@@ -9,14 +9,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.setPadding
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
@@ -37,6 +35,10 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     val toolbarAccessoryContainer get() = mainActivity?.binding?.content?.toolbarAccessoryContainer
     val bottomNavigation get() = mainActivity?.binding?.content?.bottomNavigation
     var usesTabLayout: Boolean = false
+        set(value) {
+            field = value
+            updateTabLayoutVisibility()
+        }
     var hidesToolbar: Boolean = false
     var usesBottomNavigation = false
 
@@ -53,6 +55,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
         setHasOptionsMenu(true)
 
+        tabLayout?.removeAllTabs()
         updateTabLayoutVisibility()
         updateToolbarInteractivity()
 
@@ -95,7 +98,6 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     private fun updateTabLayoutVisibility() {
         if (this.usesTabLayout) {
-            tabLayout?.removeAllTabs()
             tabLayout?.visibility = View.VISIBLE
             tabLayout?.tabMode = TabLayout.MODE_FIXED
         } else {

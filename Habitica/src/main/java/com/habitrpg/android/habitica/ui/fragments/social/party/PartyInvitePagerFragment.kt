@@ -5,17 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.distinctUntilChanged
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override var binding : FragmentViewpagerBinding? = null
+
+    internal val viewModel: PartyViewModel by viewModels()
 
     override fun createBinding(
         inflater : LayoutInflater,
@@ -32,6 +37,15 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         this.usesTabLayout = true
         this.hidesToolbar = true
         showsBackButton = true
+
+        viewModel.loadPartyID()
+
+        viewModel.getGroupData()
+            .distinctUntilChanged()
+            .observe(viewLifecycleOwner) {
+                binding?.viewPager?.adapter?.notifyDataSetChanged()
+                usesTabLayout = viewModel.isLeader
+        }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -48,7 +62,11 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             override fun createFragment(position : Int) : Fragment {
                 return when (position) {
                     0 -> {
-                        PartySeekingFragment()
+                        if (viewModel.isLeader) {
+                            PartySeekingFragment()
+                        } else {
+                            PartyInviteFragment()
+                        }
                     }
 
                     1 -> {
@@ -60,7 +78,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             }
 
             override fun getItemCount() : Int {
-                return 2
+                return if (viewModel.isLeader) 2 else 1
             }
         }
         tabLayout?.let {
