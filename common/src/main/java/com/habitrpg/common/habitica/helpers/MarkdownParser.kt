@@ -34,6 +34,8 @@ object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
     internal var markwon: Markwon? = null
 
+
+
     fun setup(context: Context) {
         markwon = Markwon.builder(context)
             .usePlugin(StrikethroughPlugin.create())
@@ -91,15 +93,18 @@ object MarkdownParser {
         if (input == null) {
             return SpannableString("")
         }
-        val hashCode = input.hashCode()
+
+        val preProcessedInput = preprocessImageMarkdown(input)
+
+        val hashCode = preProcessedInput.hashCode()
         try {
             if (cache.containsKey(hashCode)) {
-                return cache[hashCode] ?: SpannableString(input)
+                return cache[hashCode] ?: SpannableString(preProcessedInput)
             }
         } catch (_: NullPointerException) {
             // Sometimes happens
         }
-        val text = EmojiParser.parseEmojis(input) ?: input
+        val text = EmojiParser.parseEmojis(preProcessedInput) ?: preProcessedInput
         // Adding this space here bc for some reason some markdown is not rendered correctly when the whole string is supposed to be formatted
         val result = markwon?.toMarkdown("$text ") ?: SpannableString(text)
 
@@ -112,6 +117,22 @@ object MarkdownParser {
             // for some reason hashCode seems to be null sometimes.
         }
         return result
+    }
+    
+    fun preprocessImageMarkdown(markdown: String): String {
+        // Used to handle an image tag with a URL that ends with .jpg or .png (Else the image may be shown as broken, a link, or not at all)
+        // Example: (..ample_image_name.png"Zombie hatching potion") -> (..ample_image_name.png "Zombie hatching potion")
+        val regex = Regex("""!\[.*?]\(.*?".*?"\)""")
+        return markdown.replace(regex) { matchResult ->
+            val match = matchResult.value
+            if (match.contains(".jpg\"")) {
+                match.replace(".jpg\"", ".jpg \"")
+            } else if (match.contains(".png\"")) {
+                match.replace(".png\"", ".png \"")
+            } else {
+                match
+            }
+        }
     }
 
     fun parseMarkdownAsync(input: String?, onSuccess: (Spanned) -> Unit) {
