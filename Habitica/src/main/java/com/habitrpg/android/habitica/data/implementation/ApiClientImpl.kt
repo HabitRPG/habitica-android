@@ -144,7 +144,19 @@ class ApiClientImpl(
                 val request = builder.method(original.method, original.body)
                     .build()
                 lastAPICallURL = original.url.toString()
-                chain.proceed(request)
+                val response = chain.proceed(request)
+                if (response.isSuccessful) {
+                    return@addNetworkInterceptor response
+                } else {
+                    // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
+                    if (response.code in 400..599) {
+                        return@addNetworkInterceptor response.newBuilder()
+                            .header("Cache-Control", "no-store")
+                            .build()
+                    } else {
+                        return@addNetworkInterceptor response
+                    }
+                }
             }
             .addInterceptor(logging)
             .readTimeout(2400, TimeUnit.SECONDS)
