@@ -53,7 +53,7 @@
     <string name="create_task_title">Stwórz Zadanie</string>
     <string name="complete_task_title">Wykonaj Zadanie</string>
     <string name="create_task">Utwórz %s</string>
-    <string name="new_task_x">Nowy %@</string>
+    <string name="new_task_x">Nowy %s</string>
     <string name="are_you_sure">Na pewno\?</string>
     <string name="task">Zadania</string>
 </resources>

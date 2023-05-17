@@ -52,7 +52,7 @@
     <string name="create_task_title">タスクの作成</string>
     <string name="complete_task_title">タスクを完了する</string>
     <string name="create_task">%sの作成</string>
-    <string name="new_task_x">新しい %@</string>
+    <string name="new_task_x">新しい %s</string>
     <string name="task">タスク</string>
     <string name="failed">読み込みに失敗しました</string>
     <string name="retry">再試行</string>

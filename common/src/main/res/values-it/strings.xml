@@ -52,7 +52,7 @@
     <string name="create_task_title">Crea una Attività</string>
     <string name="complete_task_title">Completa una Attività</string>
     <string name="create_task">Crea %s</string>
-    <string name="new_task_x">Nuova %@</string>
+    <string name="new_task_x">Nuova %s</string>
     <string name="are_you_sure">Sei sicuro/a\?</string>
     <string name="task">Attività</string>
     <string name="failed">Caricamento fallito</string>

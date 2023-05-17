@@ -54,7 +54,7 @@
     <string name="create_task_title">Criar uma Tarefa</string>
     <string name="complete_task_title">Completar uma Tarefa</string>
     <string name="create_task">Criar %s</string>
-    <string name="new_task_x">Novo %@</string>
+    <string name="new_task_x">Novo %s</string>
     <string name="failed">Erro ao carregar</string>
     <string name="retry">Tentar novamente</string>
     <plurals name="x_habits">

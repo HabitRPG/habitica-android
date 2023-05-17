@@ -6,7 +6,7 @@
     <string name="about_title">Sobre</string>
     <string name="create_task_title">Crie uma Tarefa</string>
     <string name="complete_task_title">Complete uma Tarefa</string>
-    <string name="new_task_x">Novo %@</string>
+    <string name="new_task_x">Novo %s</string>
     <string name="are_you_sure">Tem a certeza\?</string>
     <string name="task">Tarefas</string>
     <string name="mystic_hourglasses">Ampulheta Mística</string>
