@@ -1391,6 +1391,7 @@
     <string name="username_requirements">Can only contain letters a-z, numbers, hyphens, or underscores</string>
     <string name="contributor_tiers">Contributor Tiers</string>
     <string name="contrib_tier_description">If you see an account with a colored display name and an icon, that’s a contributor tier! Tiers are given to people who help around Habitica, whether it be for translation, coding, or just being helpful. The higher the tier, the more the player has contributed.</string>
+    <string name="visit_faq">Visit FAQ</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

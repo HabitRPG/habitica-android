@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
@@ -31,6 +33,10 @@ class TutorialView(
         binding.speechBubbleView.binding.completeButton.setOnClickListener { completeButtonClicked() }
         binding.speechBubbleView.binding.dismissButton.setOnClickListener { dismissButtonClicked() }
         binding.background.setOnClickListener { backgroundClicked() }
+
+        if (step.linkFAQ) {
+            binding.speechBubbleView.binding.dismissButton.setText(R.string.visit_faq)
+        }
     }
 
     fun setTutorialText(text: String) {
@@ -75,9 +81,13 @@ class TutorialView(
     }
 
     private fun dismissButtonClicked() {
-        onReaction.onTutorialDeferred(step)
         post {
             (parent as? ViewGroup)?.removeView(this)
+        }
+        if (step.linkFAQ) {
+            MainNavigationController.navigate(R.id.FAQOverviewFragment)
+        } else {
+            onReaction.onTutorialDeferred(step)
         }
     }
 

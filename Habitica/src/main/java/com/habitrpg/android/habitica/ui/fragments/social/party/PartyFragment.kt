@@ -74,10 +74,15 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
         viewModel.loadPartyID()
 
-        this.tutorialStepIdentifier = "party"
-        this.tutorialTexts = listOf(getString(R.string.tutorial_party))
-
         viewModel.retrieveGroup {}
+    }
+
+    override fun onResume() {
+        if (viewModel.isLeader) {
+            this.tutorialStepIdentifier = "party"
+            this.tutorialTexts = listOf(getString(R.string.tutorial_party_created))
+        }
+        super.onResume()
     }
 
     private fun updateGroupUI(group: Group?) {
