@@ -45,6 +45,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -58,7 +59,6 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NavigationDrawerFragment : DialogFragment() {
@@ -690,7 +690,7 @@ class NavigationDrawerFragment : DialogFragment() {
         adapter.getItemWithIdentifier(identifier)
 
     private fun setDisplayName(name: String?) {
-        if (name != null && name.isNotEmpty()) {
+        if (!name.isNullOrEmpty()) {
             binding?.toolbarTitle?.text = name
         } else {
             binding?.toolbarTitle?.text = context?.getString(R.string.app_name)

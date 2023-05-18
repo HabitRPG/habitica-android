@@ -93,7 +93,7 @@ open class NotificationsViewModel @Inject constructor(
     }
 
     fun allNotificationsSeen() : Flow<Boolean> {
-        return getNotifications().map { it.all { notification -> notification.seen != false } }
+        return getNotifications().map { it.all { notification -> notification.seen == true } }
             .distinctUntilChanged()
     }
 
