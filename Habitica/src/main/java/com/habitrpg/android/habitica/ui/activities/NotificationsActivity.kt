@@ -141,7 +141,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 }
 
                 if (item != null) {
-                    binding.notificationItems.addView(item)
+                    item.tag = it.id
+                    
+                    if (binding.notificationItems.findViewWithTag<View>(it.id) == null) {
+                        binding.notificationItems.addView(item)
+                    }
                 }
             }
         }
