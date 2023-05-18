@@ -7,6 +7,7 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.SubscriptionDetailsBinding
 import com.habitrpg.android.habitica.models.user.SubscriptionPlan
@@ -155,6 +156,8 @@ class SubscriptionDetailsView : LinearLayout {
             binding.changeSubscriptionTitle.setText(R.string.resubscribe)
             binding.changeSubscriptionDescription.setText(R.string.resubscribe_description)
             binding.changeSubscriptionButton.setText(R.string.renew_subscription)
+            // Hide the button until we improve the flow in 4.3
+            binding.changeSubscriptionButton.isVisible = false
         }
     }
 
