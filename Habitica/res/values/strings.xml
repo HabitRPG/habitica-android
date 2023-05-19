@@ -712,7 +712,7 @@
     <string name="month_reminder_title">Need a change of routine?</string>
     <string name="month_reminder_text">Sometimes starting fresh is the best option, Habitica can help!</string>
     <string name="last_login">Latest Check In</string>
-    <string name="total_checkins">Total Checkins</string>
+    <string name="total_checkins">Total Check-ins</string>
     <string name="x_checkins">%d Checkins</string>
     <string name="two_handed">Two-Handed</string>
     <string name="usernamePromptTitle">It’s time to set your username!</string>
