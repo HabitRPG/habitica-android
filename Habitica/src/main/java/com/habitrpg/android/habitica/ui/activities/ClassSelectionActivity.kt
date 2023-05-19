@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
@@ -21,6 +22,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -262,12 +264,29 @@ class ClassSelectionActivity : BaseActivity() {
     }
 
     private fun selectClass(selectedClass: String, isChanging: Boolean) {
-        shouldFinish = true
-        val dialog = this.displayProgressDialog(getString(R.string.changing_class_progress))
-        lifecycleScope.launch(Dispatchers.Main) {
-            userRepository.changeClass(selectedClass)
-            dialog.hide()
-            if (isChanging) displayClassChanged(selectedClass)
+        userViewModel.user.observeOnce(this) { user ->
+            if (user == null) {
+                return@observeOnce
+            }
+            if ((user.gemCount ?: 0) >= 3) {
+                val dialog = HabiticaAlertDialog(this)
+                dialog.setTitle(R.string.change_class_confirmation)
+                dialog.addButton(R.string.change_class, true, true) { _, _ ->
+                    shouldFinish = true
+                    val dialog =
+                        this.displayProgressDialog(getString(R.string.changing_class_progress))
+                    lifecycleScope.launch(Dispatchers.Main) {
+                        userRepository.changeClass(selectedClass)
+                        dialog.hide()
+                        if (isChanging) displayClassChanged(selectedClass)
+                    }
+                }
+                dialog.addButton(R.string.dialog_go_back, false)
+                dialog.enqueue()
+            } else {
+                val dialog = InsufficientGemsDialog(this, 3)
+                dialog.show()
+            }
         }
     }
 
