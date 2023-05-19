@@ -68,4 +68,8 @@ object AmplitudeManager {
         }
         amplitude.identify(identify)
     }
+
+    fun setUserID(userID: String) {
+        amplitude.setUserId(userID)
+    }
 }

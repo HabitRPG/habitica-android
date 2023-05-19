@@ -26,13 +26,11 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
-import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.setupCoil
 import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -70,6 +68,8 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
                 AmplitudeManager.initialize(this)
             } catch (ignored: Resources.NotFoundException) {
             }
+            AmplitudeManager.identify(sharedPrefs)
+            AmplitudeManager.setUserID(lazyApiHelper.hostConfig.userID)
         }
         registerActivityLifecycleCallbacks(this)
         setupRealm()

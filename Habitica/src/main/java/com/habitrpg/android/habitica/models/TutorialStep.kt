@@ -43,6 +43,6 @@ open class TutorialStep : RealmObject(), BaseMainObject {
 
     val linkFAQ : Boolean
         get() {
-            return key == "party"
+            return identifier == "party"
         }
 }

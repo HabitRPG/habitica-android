@@ -157,7 +157,7 @@ class SubscriptionDetailsView : LinearLayout {
             binding.changeSubscriptionDescription.setText(R.string.resubscribe_description)
             binding.changeSubscriptionButton.setText(R.string.renew_subscription)
             // Hide the button until we improve the flow in 4.3
-            binding.changeSubscriptionButton.isVisible = false
+            binding.changeSubscriptionWrapper.isVisible = false
         }
     }
 

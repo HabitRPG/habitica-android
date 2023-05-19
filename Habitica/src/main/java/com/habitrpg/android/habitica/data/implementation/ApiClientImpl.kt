@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.helpers.AmplitudeManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
@@ -332,6 +333,7 @@ class ApiClientImpl(
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
         analyticsManager.setUserIdentifier(this.hostConfig.userID)
+        AmplitudeManager.setUserID(hostConfig.userID)
     }
 
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }

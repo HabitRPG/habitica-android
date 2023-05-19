@@ -11,7 +11,7 @@ buildscript {
         amplitude_version = '1.6.1'
         appcompat_version = '1.6.1'
         coil_version = '2.2.2'
-        compose_version = '1.4.2'
+        compose_version = '1.4.3'
         core_ktx_version = '1.10.0'
         coroutines_version = '1.6.4'
         daggerhilt_version = '2.44.2'
@@ -39,7 +39,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.0'
+        classpath 'com.android.tools.build:gradle:8.0.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.google.gms:google-services:4.3.15'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'

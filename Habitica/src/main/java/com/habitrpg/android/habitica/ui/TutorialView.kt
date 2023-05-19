@@ -85,6 +85,7 @@ class TutorialView(
             (parent as? ViewGroup)?.removeView(this)
         }
         if (step.linkFAQ) {
+            onReaction.onTutorialCompleted(step)
             MainNavigationController.navigate(R.id.FAQOverviewFragment)
         } else {
             onReaction.onTutorialDeferred(step)
