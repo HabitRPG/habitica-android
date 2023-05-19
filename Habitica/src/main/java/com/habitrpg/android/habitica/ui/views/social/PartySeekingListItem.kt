@@ -40,6 +40,7 @@ import com.habitrpg.android.habitica.ui.views.ClassText
 import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.ComposableUsernameLabel
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
+import com.habitrpg.common.habitica.extensions.toLocale
 import java.util.Locale
 import kotlin.random.Random
 
@@ -125,9 +126,7 @@ fun PartySeekingListItem(
                         color = HabiticaTheme.colors.textPrimary
                     )
                     Text(
-                        Locale(
-                            user.preferences?.language ?: "en"
-                        ).getDisplayName(Locale.getDefault()),
+                        "Language: ${user.preferences?.language?.toLocale()?.getDisplayLanguage(Locale.getDefault())}",
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
                         color = HabiticaTheme.colors.textPrimary

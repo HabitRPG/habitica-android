@@ -43,3 +43,12 @@ fun String.localizedCapitalizeWithSpaces(): String {
 }
 
 fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+fun String.toLocale(): Locale {
+    val parts = this.split("_")
+    return when(parts.size) {
+        1 -> Locale(parts[0])
+        2 -> Locale(parts[0], parts[1])
+        else -> Locale("en")
+    }
+}
