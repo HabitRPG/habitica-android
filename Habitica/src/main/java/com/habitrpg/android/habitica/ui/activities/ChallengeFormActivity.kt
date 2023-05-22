@@ -15,8 +15,12 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckedTextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -59,6 +63,8 @@ class ChallengeFormActivity : BaseActivity() {
 
     @Inject
     internal lateinit var userViewModel: MainUserViewModel
+
+    lateinit var tasksViewModel: TasksViewModel
 
     private lateinit var challengeTasks: ChallengeTasksRecyclerViewAdapter
 
@@ -221,11 +227,14 @@ class ChallengeFormActivity : BaseActivity() {
         val intent = intent
         val bundle = intent.extras
 
-        /*ChallengeTasksRecyclerViewAdapter(
-            TasksViewModel(), 0, this, "",
+        tasksViewModel = ViewModelProvider(this)[TasksViewModel::class.java]
+
+        ChallengeTasksRecyclerViewAdapter(
+            tasksViewModel, 0, this, "",
             openTaskDisabled = false,
             taskActionsDisabled = true
-        ).also { challengeTasks = it }*/
+        ).also { challengeTasks = it }
+
         challengeTasks.onTaskOpen = {
             if (it.isValid) {
                 openNewTaskActivity(it.type, it)
