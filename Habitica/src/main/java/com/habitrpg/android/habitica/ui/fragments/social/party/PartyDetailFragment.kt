@@ -322,6 +322,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 } else {
                     val view = binding?.membersWrapper?.inflate(R.layout.party_member, false)
                     binding?.membersWrapper?.addView(view)
+                    view?.tag = member.id
                     view
                 }
                 ) ?: return@forEachIndexed
@@ -411,6 +412,11 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         String.format(getString(R.string.removed_member), displayName),
                         HabiticaSnackbar.SnackbarDisplayType.NORMAL
                     )
+                    binding?.membersWrapper?.findViewWithTag<View>(userID)?.let { memberView ->
+                        binding?.membersWrapper?.removeView(memberView)
+                    }
+                    refreshParty()
+
                 }
             }
             activity?.dismissKeyboard()
