@@ -104,9 +104,10 @@ fun getTranslatedClassName(resources : Resources, className : String?) : String 
 fun AppHeaderView(
     user : Avatar?,
     modifier : Modifier = Modifier,
+    isMyProfile : Boolean = false,
     teamPlan : TeamPlan? = null,
     teamPlanMembers : List<Member>? = null,
-    onMemberRowClicked : () -> Unit
+    onMemberRowClicked : () -> Unit,
 ) {
     Column(modifier) {
         Row {
@@ -175,7 +176,7 @@ fun AppHeaderView(
                             disabled = true,
                             modifier = Modifier.weight(1f)
                         )
-                    } else if (user?.preferences?.disableClasses != true && user?.flags?.classSelected == false) {
+                    } else if (user?.preferences?.disableClasses != true && user?.flags?.classSelected == false && isMyProfile) {
                         HabiticaButton(
                             background = HabiticaTheme.colors.basicButtonColor(),
                             color = MaterialTheme.colors.onPrimary,
