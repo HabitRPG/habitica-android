@@ -181,6 +181,7 @@ open class NotificationsViewModel @Inject constructor(
     fun dismissNotification(notification : Notification) {
         if (isCustomNotification(notification)) {
             if (isCustomNewStuffNotification(notification)) {
+                updateUser("flags.newStuff", false)
                 customNotifications.value =
                     customNotifications.value.filterNot { it.id == notification.id }
             }
