@@ -104,7 +104,7 @@ class FullProfileActivity : BaseActivity() {
 
         binding.avatarWithBars.setContent {
             HabiticaTheme {
-                AppHeaderView(member.value) {
+                AppHeaderView(member.value, isMyProfile = isMyProfile()) {
                 }
             }
         }
@@ -144,6 +144,10 @@ class FullProfileActivity : BaseActivity() {
                     }
                     invalidateOptionsMenu()
                 }
+        }
+
+        if (!isMyProfile()) {
+
         }
     }
 
