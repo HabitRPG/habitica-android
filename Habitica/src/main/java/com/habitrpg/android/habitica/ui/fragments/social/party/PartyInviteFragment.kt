@@ -230,7 +230,7 @@ fun PartyInviteView(
                     modifier = Modifier
                         .onFocusChanged {
                             if (!it.isFocused) {
-                                if (viewModel.invites[index].isBlank() && viewModel.invites.size - 1 != index && viewModel.invites.size > 1) {
+                                if (viewModel.invites.size > index && viewModel.invites[index].isBlank() && viewModel.invites.size - 1 != index && viewModel.invites.size > 1) {
                                     viewModel.invites.removeAt(index)
                                 }
                             }

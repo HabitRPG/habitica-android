@@ -111,9 +111,10 @@ class AuthenticationViewModel @Inject constructor(
             // Unable to authenticate, such as when the user has not yet granted
             // the app access to the account, but the user can fix this.
             // Forward the user to an activity in Google Play services.
-            val intent = e.intent
-            recoverFromPlayServicesErrorResult.launch(intent)
-            return
+            if (!activity.isFinishing) {
+                val intent = e.intent
+                recoverFromPlayServicesErrorResult.launch(intent)
+            }
         }
     }
 

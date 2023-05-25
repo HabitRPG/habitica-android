@@ -1,4 +1,4 @@
-New in 4.2:
+New in 4.2.1:
 It's easier than ever to party up with our newest feature: Look for Party and Find Members!
 
 - Solo players can let Party leaders know they want an invite by going to Menu > Party and tapping 'Look for Party'

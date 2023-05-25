@@ -135,12 +135,17 @@ class PurchaseHandler(
             }
     }
 
+    private var listeningRetryCount = 0
     fun startListening() {
         if (billingClient.connectionState == BillingClient.ConnectionState.CONNECTING ||
             billingClient.connectionState == BillingClient.ConnectionState.CONNECTED ||
             billingClientState == BillingClientState.UNAVAILABLE
         ) {
             // Don't connect again if it's already connected
+            return
+        }
+        if (listeningRetryCount > 10) {
+            // Something is wrong
             return
         }
         billingClientState = BillingClientState.CONNECTING
@@ -152,13 +157,9 @@ class PurchaseHandler(
                         queryPurchases()
                     }
                 } else if (billingResult.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) {
-                    startListening()
+                    retryListening()
                 } else if (billingResult.responseCode == BillingClient.BillingResponseCode.SERVICE_TIMEOUT) {
-                    CoroutineScope(Dispatchers.IO).launchCatching {
-                        // try again after 30 seconds
-                        delay(30.seconds)
-                        startListening()
-                    }
+                    retryListening()
                 } else {
                     billingClientState = BillingClientState.UNAVAILABLE
                 }
@@ -166,9 +167,18 @@ class PurchaseHandler(
 
             override fun onBillingServiceDisconnected() {
                 billingClientState = BillingClientState.DISCONNECTED
-                startListening()
+                retryListening()
             }
         })
+    }
+
+    private fun retryListening() {
+        listeningRetryCount += 1
+        CoroutineScope(Dispatchers.IO).launchCatching {
+            // try again after 30 seconds
+            delay(30.seconds)
+            startListening()
+        }
     }
 
     fun stopListening() {
