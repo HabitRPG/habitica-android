@@ -166,7 +166,7 @@ open class GroupViewModel @Inject constructor(
                     group.value, bundle?.getString("name"),
                     bundle?.getString("description"),
                     bundle?.getString("leader"),
-                    bundle?.getBoolean("leaderCreateChallenge")
+                    bundle?.getBoolean("leaderOnlyChallenges")
                 )
             }
         }
