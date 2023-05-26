@@ -1100,7 +1100,7 @@
     <string name="setup_task_habit_2">Кликните, чтобы сделать это плохой привычкой, от которой Вам бы хотелось отказаться</string>
     <string name="leave_guild_challenges_confirmation">Вы хотите продолжить участвовать в испытании, покинув команду\?</string>
     <string name="leave_guild_confirmation">Вы уверены, что хотите покинуть команду\?</string>
-    <string name="report_explanation">Жалуйтесь ** только ** на те публикации, которые нарушают [Принципы сообщества] (https://habitica.com/static/community-guidelines) и / или [Условия предоставления услуг] (https://habitica.com/static/terms ). Ложное сообщение о нарушении может привести к наказанию.</string>
+    <string name="report_post_explanation">Жалуйтесь ** только ** на те публикации, которые нарушают [Принципы сообщества] (https://habitica.com/static/community-guidelines) и / или [Условия предоставления услуг] (https://habitica.com/static/terms ). Ложное сообщение о нарушении может привести к наказанию.</string>
     <string name="gift_gems_subtitle">Выберите ниже набор самоцветов, который хотите подарить!</string>
     <string name="available_for">Доступно для %s</string>
     <string name="reloaded_content">Содержимое обновлено</string>

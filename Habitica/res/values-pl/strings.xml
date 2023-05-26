@@ -726,7 +726,7 @@
     <string name="mystery_sets">Tajemnicze zestawy</string>
     <string name="reason_for_report">Przyczyna zgłoszenia (opcjonalnie)</string>
     <string name="report_message_title">Zgłoś %s za naruszenie:</string>
-    <string name="report_explanation">Zgłaszaj **wyłącznie** post który narusza [Standardy Społeczności](https://habitica.com/static/community-guidelines) i/lub [Warunki usługi](https://habitica.com/static/terms). Niewłaściwe zgłoszenie postu może przynieść Ci naganę.</string>
+    <string name="report_post_explanation">Zgłaszaj **wyłącznie** post który narusza [Standardy Społeczności](https://habitica.com/static/community-guidelines) i/lub [Warunki usługi](https://habitica.com/static/terms). Niewłaściwe zgłoszenie postu może przynieść Ci naganę.</string>
     <string name="defeat">Porażka</string>
     <string name="damage_paused">Uszkodzenia wstrzymane</string>
     <string name="gift_one_get_one_detailed_description">Gdy ta promocja jest aktywna, otrzymasz pasującą subskrypcję automatycznie po wysłaniu podarunku.</string>

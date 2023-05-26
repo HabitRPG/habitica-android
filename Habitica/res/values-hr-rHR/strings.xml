@@ -739,7 +739,7 @@
     <string name="update_available">Dostupno ažuriranje: %1$s (%2$d)</string>
     <string name="need_help_header_description">Objavi poruku u %s da drugi/e igrači/ce mogu odgovoriti na tvoja pitanja.</string>
     <string name="need_more_help">Trebaš još pomoći\?</string>
-    <string name="report_explanation">**Samo** prijavi objave koje krše [Smjernice zajednice] (https://habitica.com/static/community-guidelines) i/ili [Pravila o korištenju] (https://habitica.com/static/terms). Neprikladne prijave objava ti mogu dati prekršaj.</string>
+    <string name="report_post_explanation">**Samo** prijavi objave koje krše [Smjernice zajednice] (https://habitica.com/static/community-guidelines) i/ili [Pravila o korištenju] (https://habitica.com/static/terms). Neprikladne prijave objava ti mogu dati prekršaj.</string>
     <string name="special_items">Posebni predmeti</string>
     <string name="party_challenges">Sudjeluješ u Izazovu Družine</string>
     <string name="reset_counter">Resetiraj brojilo</string>

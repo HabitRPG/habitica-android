@@ -201,7 +201,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id, null)
+        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id, null, false, chatMessage.userID)
         MainNavigationController.navigate(directions)
     }
 

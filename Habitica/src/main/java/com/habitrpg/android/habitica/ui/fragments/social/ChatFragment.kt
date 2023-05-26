@@ -186,7 +186,9 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             chatMessage.text ?: "",
             chatMessage.user ?: "",
             chatMessage.id,
-            chatMessage.groupId
+            chatMessage.groupId,
+            false,
+            chatMessage.userID
         )
         MainNavigationController.navigate(directions)
     }

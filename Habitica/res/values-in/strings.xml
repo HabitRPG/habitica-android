@@ -769,7 +769,7 @@
     <string name="mystery_sets">Set Misteri</string>
     <string name="reason_for_report">Alasan pelaporan (opsional)</string>
     <string name="report_message_title">Melaporkan %s atas pelanggaran:</string>
-    <string name="report_explanation">**Laporkan** hanya jika postingan tersebut melanggar [Pedoman Komunitas](https://habitica.com/static/community-guidelines) dan/atau [Syarat Layanan](https://habitica.com/static/terms). Laporan yang tidak sesuai dapat memberimu pelanggaran.</string>
+    <string name="report_post_explanation">**Laporkan** hanya jika postingan tersebut melanggar [Pedoman Komunitas](https://habitica.com/static/community-guidelines) dan/atau [Syarat Layanan](https://habitica.com/static/terms). Laporan yang tidak sesuai dapat memberimu pelanggaran.</string>
     <string name="become_x">Menjadi %s</string>
     <string name="x_class">Kelas %s</string>
     <string name="need_more_help">Butuh bantuan lebih lanjut\?</string>

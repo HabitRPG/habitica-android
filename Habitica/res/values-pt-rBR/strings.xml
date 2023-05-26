@@ -793,7 +793,7 @@
     <string name="mystery_sets">Conjuntos Misteriosos</string>
     <string name="reason_for_report">Motivo para reportar (opcional)</string>
     <string name="report_message_title">Reportar %s por violação:</string>
-    <string name="report_explanation">Reporte uma mensagem **apenas** se esta violar as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Reportar uma postagem inadequadamente pode lhe dar uma infração.</string>
+    <string name="report_post_explanation">Reporte uma mensagem **apenas** se esta violar as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Reportar uma postagem inadequadamente pode lhe dar uma infração.</string>
     <string name="x_class">%s Classe</string>
     <string name="become_x">Tornar-se um(a) %s</string>
     <string name="need_more_help">Precisa de mais ajuda\?</string>

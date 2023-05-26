@@ -771,7 +771,7 @@
     <string name="levelup_detail_10">Choose a class that fits your playstyle and unlock special skills and armor to help you on your journey</string>
     <string name="not_now">Not right now</string>
     <string name="delete_task">Delete Task</string>
-    <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
+    <string name="report_post_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
     <string name="x_class">%s Class</string>
     <string name="become_x">Become a %s</string>
     <string name="need_more_help">Need more help\?</string>

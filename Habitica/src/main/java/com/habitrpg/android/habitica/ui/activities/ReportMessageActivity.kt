@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -33,8 +34,11 @@ class ReportMessageActivity : BaseActivity() {
     private var raisedElevation = 0f
 
     private var messageID: String? = null
+    private var displayName: String? = null
     private var groupID: String? = null
     private var isReporting: Boolean = false
+    private var isReportUser: Boolean = false
+    private var userId: String? = null
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_report_message
@@ -54,7 +58,7 @@ class ReportMessageActivity : BaseActivity() {
 
         binding.bottomSheet.setOnTouchListener { _, _ -> true }
         binding.touchOutside.setOnClickListener { finish() }
-        binding.reportExplanationTextview.setMarkdown(getString(R.string.report_explanation))
+        binding.reportExplanationTextview.setMarkdown(getString(R.string.report_post_explanation))
 
         BottomSheetBehavior.from<View>(binding.bottomSheet)
             .addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -75,8 +79,24 @@ class ReportMessageActivity : BaseActivity() {
         val args = navArgs<ReportMessageActivityArgs>().value
         messageID = args.messageID
         groupID = args.groupID
-        binding.titleTextView.text = getString(R.string.report_message_title, args.profileName)
-        binding.messageTextView.text = args.text
+        displayName = args.profileName
+        isReportUser = args.isReportUser
+        userId = args.userId
+
+        if (isReportUser) {
+            binding.titleTextView.visibility = View.GONE
+            binding.messageTextView.visibility = View.GONE
+            binding.toolbarTitle.text = getString(R.string.report_user_title, args.profileName)
+            binding.closeButton.visibility = View.VISIBLE
+            binding.additionalExplanationTextview.visibility = View.VISIBLE
+            binding.additionalExplanationTextview.text = getString(R.string.report_user_description, displayName ?: "")
+            binding.additionalInfoInputLayout.hint = getString(R.string.report_user_hint)
+            binding.reportExplanationTextview.text = getString(R.string.report_user_explanation)
+        } else {
+            binding.additionalExplanationTextview.visibility = View.GONE
+            binding.titleTextView.text = getString(R.string.report_message_title, args.profileName)
+            binding.messageTextView.text = args.text
+        }
 
         binding.reportButton.setOnClickListener { reportMessage() }
         binding.closeButton.setOnClickListener { finish() }
@@ -98,7 +118,18 @@ class ReportMessageActivity : BaseActivity() {
                     isReporting = false
                 }
             ) {
-                socialRepository.flagMessage(messageID ?: "", binding.additionalInfoEdittext.text.toString(), groupID)
+                if (isReportUser) {
+                    socialRepository.flagMessage("Reporting User ${displayName ?: ""}: ${userId ?: ""}",
+                        binding.additionalInfoEdittext.text.toString(), null
+                    )
+                    userId?.let { userId ->
+                        socialRepository.blockMember(userId)
+                    }
+                } else {
+                    socialRepository.flagMessage(messageID ?: "",
+                        binding.additionalInfoEdittext.text.toString(), groupID
+                    )
+                }
                 finish()
             }
         }

@@ -21,6 +21,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.MenuCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -168,14 +169,18 @@ class FullProfileActivity : BaseActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_full_profile, menu)
         MenuCompat.setGroupDividerEnabled(menu, true)
-        val item = menu.findItem(R.id.block_user)
+        val itemBlockUser = menu.findItem(R.id.block_user)
+        val itemReportUser = menu.findItem(R.id.report_user)
 
-        if (isMyProfile()) item.isVisible = false
+        if (isMyProfile()) {
+            itemBlockUser.isVisible = false
+            itemReportUser.isVisible = false
+        }
 
         if (isUserBlocked()) {
-            item?.title = getString(R.string.unblock_user)
+            itemBlockUser?.title = getString(R.string.unblock_user)
         } else {
-            item?.title = getString(R.string.block)
+            itemBlockUser?.title = getString(R.string.block)
         }
         menu.setGroupVisible(R.id.admin_items, isModerator)
         if (isModerator) {
@@ -254,6 +259,11 @@ class FullProfileActivity : BaseActivity() {
                 }
                 true
             }
+            R.id.report_user -> {
+                showReport()
+                true
+            }
+
             R.id.ban_user -> {
                 banUser()
                 true
@@ -332,6 +342,14 @@ class FullProfileActivity : BaseActivity() {
         }
     }
 
+    private fun useReport() {
+        lifecycleScope.launchCatching {
+            socialRepository.blockMember(userID)
+            userRepository.retrieveUser(false, true)
+            invalidateOptionsMenu()
+        }
+    }
+
     private fun showBlockDialog() {
         val dialog = HabiticaAlertDialog(this)
         dialog.setTitle(getString(R.string.block_user_title, userDisplayName))
@@ -341,6 +359,18 @@ class FullProfileActivity : BaseActivity() {
         }
         dialog.addCancelButton()
         dialog.show()
+    }
+
+    private fun showReport() {
+        val directions = MainNavDirections.actionGlobalReportMessageActivity(
+            "ReportUser",
+            userDisplayName?: "",
+            "",
+            null,
+            true,
+            userID
+        )
+        MainNavigationController.navigate(directions)
     }
 
     private fun showSendMessageToUserDialog() {

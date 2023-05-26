@@ -441,6 +441,14 @@
             android:name="groupID"
             app:nullable="true"
             app:argType="string" />
+        <argument
+            android:name="isReportUser"
+            app:nullable="false"
+            app:argType="boolean" />
+        <argument
+            android:name="userId"
+            app:nullable="true"
+            app:argType="string" />
     </activity>
     <action
         android:id="@+id/action_global_reportMessageActivity"
