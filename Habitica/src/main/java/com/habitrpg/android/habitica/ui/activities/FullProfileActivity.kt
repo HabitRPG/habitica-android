@@ -146,10 +146,6 @@ class FullProfileActivity : BaseActivity() {
                     invalidateOptionsMenu()
                 }
         }
-
-        if (!isMyProfile()) {
-
-        }
     }
 
     private suspend fun refresh() {
