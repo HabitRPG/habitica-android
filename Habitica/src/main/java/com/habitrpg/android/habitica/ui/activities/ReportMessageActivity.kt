@@ -119,6 +119,11 @@ class ReportMessageActivity : BaseActivity() {
                 }
             ) {
                 if (isReportUser) {
+                    if (binding.additionalInfoEdittext.text.isNullOrBlank()) {
+                        binding.additionalInfoInputLayout.error = getString(R.string.report_user_hint)
+                        isReporting = false
+                        return@launch
+                    }
                     socialRepository.flagMessage("Reporting User ${displayName ?: ""}: ${userId ?: ""}",
                         binding.additionalInfoEdittext.text.toString(), null
                     )
