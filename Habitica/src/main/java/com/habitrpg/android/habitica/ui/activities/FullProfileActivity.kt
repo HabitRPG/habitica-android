@@ -363,7 +363,7 @@ class FullProfileActivity : BaseActivity() {
 
     private fun showReport() {
         val directions = MainNavDirections.actionGlobalReportMessageActivity(
-            "ReportUser",
+            "",
             userDisplayName?: "",
             "",
             null,
