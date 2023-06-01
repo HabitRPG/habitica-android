@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
+import com.habitrpg.android.habitica.extensions.fadeInAnimation
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.common.habitica.extensions.fromHtml
@@ -37,6 +38,7 @@ import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,6 +56,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     val viewModel: NotificationsViewModel by viewModels()
 
     var inflater: LayoutInflater? = null
+    val viewTagMap = mutableMapOf<String, View>()
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
@@ -104,8 +107,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     private fun setNotifications(notifications: List<Notification>) {
         this.notifications = notifications
 
-        binding.notificationItems.removeAllViewsInLayout()
-
         if (notifications.isEmpty()) {
             displayNoNotificationsView()
         } else {
@@ -114,9 +115,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun displayNoNotificationsView() {
+        binding.notificationItems.removeAllViewsInLayout()
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_NONE
-
         binding.notificationItems.addView(inflater?.inflate(R.layout.no_notifications, binding.notificationItems, false))
+        refreshViews(listOf())
     }
 
     private fun displayNotificationsListView(notifications: List<Notification>) {
@@ -125,6 +127,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         binding.notificationItems.addView(
             createNotificationsHeaderView(notifications.count())
         )
+        val viewList = arrayListOf<View>()
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             notifications.map {
@@ -144,16 +147,34 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 }
 
                 if (item != null) {
-                    item.tag = it.id
-                    
-                    if (binding.notificationItems.findViewWithTag<View>(it.id) == null) {
-                        binding.notificationItems.addView(item)
-                    }
+                    viewList.add(item)
                 }
             }
+            refreshViews(viewList)
         }
 
     }
+
+    private fun refreshViews(newItems: List<View>) {
+        val currentViews = (0 until binding.notificationItems.childCount).map {
+            binding.notificationItems.getChildAt(it)
+        }
+        val viewsToRemove = currentViews - newItems
+        viewsToRemove.forEach { binding.notificationItems.removeView(it) }
+        val viewsToAdd = newItems - currentViews
+        viewsToAdd.forEach {
+            binding.notificationItems.addView(it)
+        }
+
+        lifecycleScope.launch {
+            delay(250)
+            // Unnecessary but looks clean c:
+            if (binding.notificationItems.visibility != View.VISIBLE) {
+                binding.notificationItems.fadeInAnimation(200)
+            }
+        }
+    }
+
 
     private fun createNotificationsHeaderView(notificationCount: Int): View? {
         val header = inflater?.inflate(R.layout.notifications_header, binding.notificationItems, false)
