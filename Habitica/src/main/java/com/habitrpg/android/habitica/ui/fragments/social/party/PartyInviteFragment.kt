@@ -86,14 +86,17 @@ class PartyInviteViewModel @Inject constructor(
     val invites = mutableStateListOf("")
 
     suspend fun sendInvites(): List<InviteResponse>? {
-        val inviteMap = mapOf<String, MutableList<String>>(
+        val inviteMap = mapOf<String, MutableList<Any>>(
             "emails" to mutableListOf(),
             "uuids" to mutableListOf(),
             "usernames" to mutableListOf()
         )
         for (invite in invites) {
             if (invite.isValidEmail()) {
-                inviteMap["emails"]?.add(invite)
+                inviteMap["emails"]?.add(mapOf(
+                    "name" to "",
+                    "email" to invite
+                ))
             } else if (uUIDFromStringOrNull(invite) != null) {
                 inviteMap["uuids"]?.add(invite)
             } else if (invite.isNotBlank()) {

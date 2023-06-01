@@ -22,8 +22,7 @@
                 <com.habitrpg.android.habitica.ui.views.social.InvitationsView
                     android:id="@+id/invitations_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CardContent" />
+                    android:layout_height="wrap_content" />
             </FrameLayout>
 
             <TextView
