@@ -118,16 +118,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         binding.notificationItems.removeAllViewsInLayout()
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_NONE
         binding.notificationItems.addView(inflater?.inflate(R.layout.no_notifications, binding.notificationItems, false))
-        refreshViews(listOf())
     }
 
     private fun displayNotificationsListView(notifications: List<Notification>) {
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
-
-        binding.notificationItems.addView(
-            createNotificationsHeaderView(notifications.count())
-        )
         val viewList = arrayListOf<View>()
+        createNotificationsHeaderView(notifications.count())?.let { viewList.add(it) }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             notifications.map {
