@@ -157,6 +157,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
+    private val classSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.retrieveUser(true, true)
+            }
+        }
+
     val isAppBarExpanded: Boolean
         get() = binding.content.appbar.height - binding.content.appbar.bottom == 0
 
@@ -265,19 +272,38 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         binding.content.headerView.setContent {
             HabiticaTheme {
                 val user by viewModel.user.observeAsState(null)
-                val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(null)
+                val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(
+                    null
+                )
                 val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
                 val canShowTeamHeader: Boolean by viewModel.canShowTeamPlanHeader
-                AppHeaderView(user, teamPlan = if (canShowTeamHeader) teamPlan else null, teamPlanMembers = teamPlanMembers) {
-                    showAsBottomSheet { onClose ->
-                        val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
-                        val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
-                        GroupPlanMemberList(members, group) {
-                            onClose()
-                            FullProfileActivity.open(it)
+                AppHeaderView(
+                    user,
+                    teamPlan = if (canShowTeamHeader) teamPlan else null,
+                    teamPlanMembers = teamPlanMembers,
+                    onMemberRowClicked = {
+                        showAsBottomSheet { onClose ->
+                            val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
+                                null
+                            )
+                            val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
+                            GroupPlanMemberList(members, group) {
+                                onClose()
+                                FullProfileActivity.open(it)
+                            }
+
                         }
+                    },
+                    onClassSelectionClicked = {
+                        val bundle = Bundle()
+                        bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
+                        val intent = Intent(this@MainActivity, ClassSelectionActivity::class.java)
+                        intent.putExtras(bundle)
+                        classSelectionResult.launch(
+                            intent
+                        )
                     }
-                }
+                )
             }
         }
 
