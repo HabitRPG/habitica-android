@@ -1,14 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.social.guilds
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -65,9 +63,9 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
 
         binding?.refreshLayout?.setOnRefreshListener { this.refresh() }
 
-        viewModel.getGroupData().observe(viewLifecycleOwner, { updateGuild(it) })
-        viewModel.getLeaderData().observe(viewLifecycleOwner, { setLeader(it) })
-        viewModel.getIsMemberData().observe(viewLifecycleOwner, { updateMembership(it) })
+        viewModel.getGroupData().observe(viewLifecycleOwner) { updateGuild(it) }
+        viewModel.getLeaderData().observe(viewLifecycleOwner) { setLeader(it) }
+        viewModel.getIsMemberData().observe(viewLifecycleOwner) { updateMembership(it) }
 
         binding?.guildDescription?.movementMethod = LinkMovementMethod.getInstance()
         binding?.guildSummary?.movementMethod = LinkMovementMethod.getInstance()
@@ -79,10 +77,6 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             viewModel.joinGroup {
                 (this.activity as? SnackbarActivity)?.showSnackbar(title = getString(R.string.joined_guild))
             }
-        }
-        binding?.inviteButton?.setOnClickListener {
-            val intent = Intent(activity, GroupInviteActivity::class.java)
-            sendInvitesResult.launch(intent)
         }
         binding?.leaderWrapper?.setOnClickListener {
             viewModel.leaderID?.let { leaderID ->
@@ -112,7 +106,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
             val inviteData = HashMap<String, Any>()
             inviteData["inviter"] = viewModel.user.value?.profile?.name ?: ""
             val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY)
-            if (emails != null && emails.isNotEmpty()) {
+            if (!emails.isNullOrEmpty()) {
                 val invites = ArrayList<HashMap<String, String>>()
                 emails.forEach { email ->
                     val invite = HashMap<String, String>()
@@ -123,7 +117,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                 inviteData["emails"] = invites
             }
             val userIDs = it.data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY)
-            if (userIDs != null && userIDs.isNotEmpty()) {
+            if (!userIDs.isNullOrEmpty()) {
                 val invites = ArrayList<String>()
                 userIDs.forEach { invites.add(it) }
                 inviteData["usernames"] = invites
@@ -164,10 +158,10 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.setTitle(R.string.guild_challenges)
                     alert.setMessage(R.string.leave_guild_challenges_confirmation)
                     alert.addButton(R.string.keep_challenges, true) { _, _ ->
-                        viewModel?.leaveGroup(groupChallenges, true) { showLeaveSnackbar() }
+                        viewModel.leaveGroup(groupChallenges, true) { showLeaveSnackbar() }
                     }
                     alert.addButton(R.string.leave_challenges_delete_tasks, isPrimary = false, isDestructive = true) { _, _ ->
-                        viewModel?.leaveGroup(groupChallenges, false) { showLeaveSnackbar() }
+                        viewModel.leaveGroup(groupChallenges, false) { showLeaveSnackbar() }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)
                     alert.show()
@@ -176,7 +170,7 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
                     alert.setTitle(R.string.leave_guild_confirmation)
                     alert.setMessage(R.string.rejoin_guild)
                     alert.addButton(R.string.leave, isPrimary = true, isDestructive = true) { _, _ ->
-                        viewModel?.leaveGroup(groupChallenges, false) {
+                        viewModel.leaveGroup(groupChallenges, false) {
                             showLeaveSnackbar()
                         }
                     }
@@ -199,8 +193,6 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         binding?.guildBankText?.text = guild?.gemCount.toString()
         binding?.guildSummary?.setMarkdown(guild?.summary)
         binding?.guildDescription?.setMarkdown(guild?.description)
-
-        binding?.inviteButton?.isVisible = guild?.isGroupPlan != true
     }
 
     companion object {
