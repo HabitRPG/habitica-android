@@ -254,16 +254,10 @@ fun PartyInviteView(
                             inviteButtonState = LoadingButtonState.CONTENT
                         }
                     }) {
-                        val responses = viewModel.sendInvites()
-                        if (responses?.isNotEmpty() == true) {
-                            inviteButtonState = LoadingButtonState.SUCCESS
-                            delay(2.toDuration(DurationUnit.SECONDS))
-                            dismiss()
-                        } else {
-                            inviteButtonState = LoadingButtonState.FAILED
-                            delay(2.toDuration(DurationUnit.SECONDS))
-                            inviteButtonState = LoadingButtonState.CONTENT
-                        }
+                        viewModel.sendInvites()
+                        inviteButtonState = LoadingButtonState.SUCCESS
+                        delay(2.toDuration(DurationUnit.SECONDS))
+                        dismiss()
                     }
                 })
         }
