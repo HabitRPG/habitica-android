@@ -459,8 +459,8 @@ interface ApiService {
     @POST("tasks/{taskID}/unassign/{userID}")
     suspend fun unassignFromTask(@Path("taskID") taskID: String, @Path("userID") userID: String): HabitResponse<Task>
 
-    @POST("hall/heroes/{memberID}")
-    suspend fun updateUser(@Path("memberID") memberID: String, @Body updateData: Map<String, Any?>): HabitResponse<Member>
+    @PUT("hall/heroes/{heroId}")
+    suspend fun updateUser(@Path("heroId") memberID: String, @Body updateData: Map<String, Any?>): HabitResponse<Member>
 
     @GET("hall/heroes/{memberID}")
     suspend fun getHallMember(@Path("memberID") memberID: String): HabitResponse<Member>

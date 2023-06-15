@@ -98,10 +98,6 @@ class FullProfileActivity : BaseActivity() {
 
         setTitle(R.string.profile_loading_data)
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            refresh()
-        }
-
         binding.avatarWithBars.setContent {
             HabiticaTheme {
                 AppHeaderView(member.value, isMyProfile = isMyProfile()) {
@@ -125,38 +121,32 @@ class FullProfileActivity : BaseActivity() {
                 bundleOf(Pair("userID", userID), Pair("username", null))
             )
         }
+
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            refresh()
+            invalidateOptionsMenu()
+        }
+    }
+
+    private suspend fun refresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.getUser()
                 .collect {
                     blocks = it?.inbox?.blocks ?: listOf()
                     binding.blockedDisclaimerView.visibility =
                         if (isUserBlocked()) View.VISIBLE else View.GONE
-
                     isModerator = it?.hasPermission(Permission.MODERATOR) == true
                     binding.adminStatusView.isVisible = isModerator
-                    if (isModerator) {
-                        val member = socialRepository.retrieveMember(userID, true)
-                        member?.stats = this@FullProfileActivity.member.value?.stats
-                        if (member != null) {
-                            updateView(member)
-                        }
+
+                    //Get Current viewed profile user
+                    val member = socialRepository.retrieveMember(userID)
+                    member?.let { currentlyViewedMember ->
                         this@FullProfileActivity.member.value = member
+                        updateProfileUserViews(currentlyViewedMember)
+                        currentlyViewedMember.stats = this@FullProfileActivity.member.value?.stats
                     }
-                    invalidateOptionsMenu()
                 }
         }
-
-        if (!isMyProfile()) {
-
-        }
-    }
-
-    private suspend fun refresh() {
-        val member = socialRepository.retrieveMember(userID)
-        if (member != null) {
-            updateView(member)
-        }
-        this@FullProfileActivity.member.value = member
     }
 
     override fun onDestroy() {
@@ -274,9 +264,9 @@ class FullProfileActivity : BaseActivity() {
         val isMuted = member.value?.flags?.chatRevoked == true
         val alert = HabiticaAlertDialog(this)
         if (isMuted) {
-            alert.setTitle(R.string.mute_user_confirm)
-        } else {
             alert.setTitle(R.string.unmute_user_confirm)
+        } else {
+            alert.setTitle(R.string.mute_user_confirm)
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
@@ -289,16 +279,16 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun shadowMuteUser() {
-        val isBanned = member.value?.flags?.chatShadowMuted == true
+        val isShadowMuted = member.value?.flags?.chatShadowMuted == true
         val alert = HabiticaAlertDialog(this)
-        if (isBanned) {
-            alert.setTitle(R.string.shadowmute_user_confirm)
-        } else {
+        if (isShadowMuted) {
             alert.setTitle(R.string.unshadowmute_user_confirm)
+        } else {
+            alert.setTitle(R.string.shadowmute_user_confirm)
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatShadowMuted", !isBanned) }
+                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatShadowMuted", !isShadowMuted) }
                 refresh()
                 invalidateOptionsMenu()
             }
@@ -310,9 +300,9 @@ class FullProfileActivity : BaseActivity() {
         val isBanned = member.value?.authentication?.blocked == true
         val alert = HabiticaAlertDialog(this)
         if (isBanned) {
-            alert.setTitle(R.string.ban_user_confirm)
-        } else {
             alert.setTitle(R.string.unban_user_confirm)
+        } else {
+            alert.setTitle(R.string.ban_user_confirm)
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
@@ -354,7 +344,7 @@ class FullProfileActivity : BaseActivity() {
         }
     }
 
-    private fun updateView(user: Member) {
+    private fun updateProfileUserViews(user: Member) {
         val profile = user.profile ?: return
 
         updatePetsMountsView(user)
@@ -367,12 +357,10 @@ class FullProfileActivity : BaseActivity() {
         val imageUrl = profile.imageUrl
         if (imageUrl == null || imageUrl.isEmpty()) {
             binding.profileImage.visibility = View.GONE
-        } else {
-            // binding.profileImage.load(imageUrl)
         }
 
         val blurbText = profile.blurb
-        if (blurbText != null && blurbText.isNotEmpty()) {
+        if (!blurbText.isNullOrEmpty()) {
             binding.blurbTextView.setMarkdown(blurbText)
             binding.blurbTextView.movementMethod = LinkMovementMethod.getInstance()
         }
