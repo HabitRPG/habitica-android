@@ -372,7 +372,7 @@ class FullProfileActivity : BaseActivity() {
         }
 
         val blurbText = profile.blurb
-        if (blurbText != null && blurbText.isNotEmpty()) {
+        if (!blurbText.isNullOrEmpty()) {
             binding.blurbTextView.setMarkdown(blurbText)
             binding.blurbTextView.movementMethod = LinkMovementMethod.getInstance()
         }
