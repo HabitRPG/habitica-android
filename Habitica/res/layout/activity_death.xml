@@ -1,91 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
     <FrameLayout
         android:id="@+id/confetti_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:paddingHorizontal="23dp">
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="157dp">
-        <ImageView
-            android:id="@+id/ghost_view"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="23dp">
+
+        <RelativeLayout
+            android:id="@+id/ghost_container"
+            android:layout_width="match_parent"
+            android:layout_height="157dp"
+            android:layout_above="@id/loss_health_title"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:layout_marginBottom="@dimen/spacing_xlarge">
+
+            <ImageView
+                android:id="@+id/ghost_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/death_ghost" />
+
+            <ImageView
+                android:id="@+id/heart_view"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_broken_heart" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/loss_health_title"
+            style="@style/Title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/death_ghost"
-            android:layout_centerHorizontal="true" />
-        <ImageView
-            android:id="@+id/heart_view"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:src="@drawable/ic_broken_heart"
+            android:layout_above="@id/loss_description"
+            android:layout_marginHorizontal="@dimen/spacing_xlarge"
+            android:gravity="center"
+            android:text="@string/you_ran_out_of_health"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/loss_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="@dimen/spacing_xlarge"
+            android:layout_marginVertical="@dimen/spacing_medium"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/restart_button"
+            android:layout_below="@id/loss_description"
+            android:layout_marginTop="@dimen/spacing_medium">
+
+            <TextView
+                android:id="@+id/loss_sub_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_large"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+
+                android:text="@string/death_description"
+                android:textColor="@color/text_secondary"
+                android:textSize="20sp" />
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <Button
+            android:id="@+id/restart_button"
+            style="@style/HabiticaButton.Maroon"
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+            android:layout_above="@id/ad_button"
+            android:layout_marginBottom="6dp"
+            android:text="@string/faint_button"
+            android:textStyle="bold" />
+
+        <com.habitrpg.android.habitica.ui.views.ads.AdButton
+            android:id="@+id/ad_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_above="@id/broken_equipment_text"
+            app:activeBackground="@drawable/ad_button_background_content"
+            app:text="@string/watch_ad_to_open"
+            app:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/broken_equipment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/spacing_large"
+            android:gravity="center"
+            android:text="@string/faint_broken_equipment"
+            android:textColor="@color/text_quad" />
     </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Title2"
-        android:textStyle="bold"
-        android:text="@string/you_ran_out_of_health"
-        android:layout_marginHorizontal="@dimen/spacing_xlarge"
-        android:gravity="center"/>
-    <TextView
-        android:id="@+id/loss_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_xlarge"
-        android:layout_marginVertical="@dimen/spacing_medium"
-        android:textColor="@color/text_primary"
-        android:textSize="20sp"
-        android:lineSpacingExtra="4dp"
-        android:gravity="center" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/death_description"
-        android:textSize="20sp"
-        android:lineSpacingExtra="4dp"
-        android:textColor="@color/text_secondary"
-        android:layout_marginHorizontal="@dimen/spacing_xlarge"
-        android:gravity="center"/>
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-    <Button
-        android:id="@+id/restart_button"
-        android:layout_width="match_parent"
-        android:layout_height="69dp"
-        android:text="@string/faint_button"
-        android:textStyle="bold"
-        style="@style/HabiticaButton.Maroon"
-        android:layout_marginBottom="6dp"/>
-    <com.habitrpg.android.habitica.ui.views.ads.AdButton
-        android:id="@+id/ad_button"
-        android:layout_width="match_parent"
-        app:text="@string/watch_ad_to_open"
-        app:activeBackground="@drawable/ad_button_background_content"
-        android:layout_height="60dp"
-        app:textColor="@color/text_primary"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/text_quad"
-        android:text="@string/faint_broken_equipment"
-        android:layout_margin="@dimen/spacing_large"/>
-    </LinearLayout>
 </FrameLayout>
