@@ -223,6 +223,8 @@ interface ApiClient {
 
     suspend fun debugAddTenGems(): Void?
 
+    suspend fun getNews(): List<Any>?
+
     // Notifications
     suspend fun readNotification(notificationId: String): List<Any>?
     suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>?

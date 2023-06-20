@@ -85,6 +85,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         lifecycleScope.launchCatching {
             viewModel.refreshNotifications()
         }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -203,16 +204,19 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun createNewStuffNotification(notification: Notification): View? {
+    private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
+        var baileyNotification = notification
         val data = notification.data as? NewStuffData
         val text = if (data?.title != null) {
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
         } else {
-            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b>")
+            baileyNotification = userRepository.getNewsNotification() ?: return@withContext null
+            val baileyNewsData = baileyNotification.data as? NewStuffData
+            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
         }
 
-        return createDismissableNotificationItem(
-            notification,
+        return@withContext createDismissableNotificationItem(
+            baileyNotification,
             text,
             R.drawable.notifications_bailey
         )

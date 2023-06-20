@@ -719,6 +719,10 @@ class ApiClientImpl(
         return process { apiService.debugAddTenGems() }
     }
 
+    override suspend fun getNews(): List<Any>? {
+        return process { apiService.getNews() }
+    }
+
     override suspend fun readNotification(notificationId: String): List<Any>? {
         return process { apiService.readNotification(notificationId) }
     }

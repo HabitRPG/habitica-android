@@ -387,6 +387,9 @@ interface ApiService {
     @POST("debug/add-ten-gems")
     suspend fun debugAddTenGems(): HabitResponse<Void>
 
+    @GET("news")
+    suspend fun getNews(): HabitResponse<List<Any>>
+
     // Notifications
     @POST("notifications/{notificationId}/read")
     suspend fun readNotification(@Path("notificationId") notificationId: String): HabitResponse<List<Any>>
