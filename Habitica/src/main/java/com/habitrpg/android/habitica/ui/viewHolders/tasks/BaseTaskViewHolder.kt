@@ -156,7 +156,6 @@ abstract class BaseTaskViewHolder constructor(
         if (data.notes?.isNotEmpty() == true) {
             notesTextView?.visibility = View.VISIBLE
             notesTextView?.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
-            // expandNotesButton.visibility = if (notesTextView.hadEllipses() || notesExpanded) View.VISIBLE else View.GONE
         } else {
             notesTextView?.visibility = View.GONE
         }
