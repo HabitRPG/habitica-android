@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.extensions.fadeInAnimation
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.common.habitica.extensions.fromHtml
@@ -56,7 +57,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     val viewModel: NotificationsViewModel by viewModels()
 
     var inflater: LayoutInflater? = null
-    val viewTagMap = mutableMapOf<String, View>()
+    var userLvl: Int? = null
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
@@ -71,6 +72,13 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         super.onCreate(savedInstanceState)
 
         setupToolbar(binding.toolbar)
+        
+        // Check user level to handle if a user loses hp and drops below necessary level to allocate points -
+        // and if so, don't display the notification to allocate points.
+        viewModel.user.observeOnce(this) {user ->
+            userLvl = user?.stats?.lvl ?: 0
+            println("test")
+        }
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
@@ -223,13 +231,16 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     }
 
     private fun createUnallocatedStatsNotification(notification: Notification): View? {
-        val data = notification.data as? UnallocatedPointsData
+        val level = userLvl ?: return null
+        return if (level >= 10) {
+            val data = notification.data as? UnallocatedPointsData
 
-        return createDismissableNotificationItem(
-            notification,
-            fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
-            R.drawable.notification_stat_sparkles
-        )
+            createDismissableNotificationItem(
+                notification,
+                fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
+                R.drawable.notification_stat_sparkles
+            )
+        } else null
     }
 
     private fun createMysteryItemsNotification(notification: Notification): View? {
