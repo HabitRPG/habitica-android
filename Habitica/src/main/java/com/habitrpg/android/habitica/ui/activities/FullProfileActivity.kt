@@ -145,10 +145,6 @@ class FullProfileActivity : BaseActivity() {
                     invalidateOptionsMenu()
                 }
         }
-
-        if (!isMyProfile()) {
-
-        }
     }
 
     private suspend fun refresh() {
@@ -274,9 +270,9 @@ class FullProfileActivity : BaseActivity() {
         val isMuted = member.value?.flags?.chatRevoked == true
         val alert = HabiticaAlertDialog(this)
         if (isMuted) {
-            alert.setTitle(R.string.mute_user_confirm)
-        } else {
             alert.setTitle(R.string.unmute_user_confirm)
+        } else {
+            alert.setTitle(R.string.mute_user_confirm)
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
@@ -289,16 +285,16 @@ class FullProfileActivity : BaseActivity() {
     }
 
     private fun shadowMuteUser() {
-        val isBanned = member.value?.flags?.chatShadowMuted == true
+        val isShadowMuted = member.value?.flags?.chatShadowMuted == true
         val alert = HabiticaAlertDialog(this)
-        if (isBanned) {
-            alert.setTitle(R.string.shadowmute_user_confirm)
-        } else {
+        if (isShadowMuted) {
             alert.setTitle(R.string.unshadowmute_user_confirm)
+        } else {
+            alert.setTitle(R.string.shadowmute_user_confirm)
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatShadowMuted", !isBanned) }
+                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatShadowMuted", !isShadowMuted) }
                 refresh()
                 invalidateOptionsMenu()
             }
@@ -365,10 +361,8 @@ class FullProfileActivity : BaseActivity() {
         supportActionBar?.subtitle = user.formattedUsername
 
         val imageUrl = profile.imageUrl
-        if (imageUrl == null || imageUrl.isEmpty()) {
+        if (imageUrl.isNullOrEmpty()) {
             binding.profileImage.visibility = View.GONE
-        } else {
-            // binding.profileImage.load(imageUrl)
         }
 
         val blurbText = profile.blurb

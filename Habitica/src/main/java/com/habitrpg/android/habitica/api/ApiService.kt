@@ -462,7 +462,7 @@ interface ApiService {
     @POST("tasks/{taskID}/unassign/{userID}")
     suspend fun unassignFromTask(@Path("taskID") taskID: String, @Path("userID") userID: String): HabitResponse<Task>
 
-    @POST("hall/heroes/{memberID}")
+    @PUT("hall/heroes/{memberID}")
     suspend fun updateUser(@Path("memberID") memberID: String, @Body updateData: Map<String, Any?>): HabitResponse<Member>
 
     @GET("hall/heroes/{memberID}")
