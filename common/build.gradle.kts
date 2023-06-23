@@ -18,6 +18,12 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    testOptions {
+        unitTests {
+        }
+        animationsDisabled = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -83,6 +89,7 @@ val markwon_version: String by rootExtra
 val coil_version: String by rootExtra
 val mockk_version: String by rootExtra
 val kotest_version: String by rootExtra
+val kotlin_version: String by rootExtra
 
 dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
@@ -106,8 +113,11 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:$kotest_version")
     testImplementation("io.kotest:kotest-assertions-core:$kotest_version")
     testImplementation("io.kotest:kotest-framework-datatest:$kotest_version")
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
 
     implementation(project(":shared"))
 }
@@ -115,6 +125,12 @@ dependencies {
 android.testOptions {
     unitTests.all {
         it.useJUnitPlatform()
+    }
+}
+
+tasks.withType<Test> {
+    this.testLogging {
+        this.showStandardStreams = true
     }
 }
 
