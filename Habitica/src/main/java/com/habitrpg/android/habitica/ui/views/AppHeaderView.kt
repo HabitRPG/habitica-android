@@ -108,6 +108,7 @@ fun AppHeaderView(
     teamPlan : TeamPlan? = null,
     teamPlanMembers : List<Member>? = null,
     onMemberRowClicked : () -> Unit,
+    onClassSelectionClicked: () -> Unit
 ) {
     Column(modifier) {
         Row {
@@ -181,7 +182,7 @@ fun AppHeaderView(
                             background = HabiticaTheme.colors.basicButtonColor(),
                             color = MaterialTheme.colors.onPrimary,
                             onClick = {
-                                MainNavigationController.navigate(R.id.classSelectionActivity)
+                                onClassSelectionClicked()
                             },
                             contentPadding = PaddingValues(0.dp),
                             fontSize = 14.sp,
@@ -397,8 +398,9 @@ private fun Preview(@PreviewParameter(UserProvider::class) data: Pair<User, Team
             teamPlan = data.second,
             modifier = Modifier
                 .background(HabiticaTheme.colors.contentBackground)
-                .padding(8.dp)
-        ) {
-        }
+                .padding(8.dp),
+            onMemberRowClicked = { },
+            onClassSelectionClicked = { }
+        )
     }
 }
