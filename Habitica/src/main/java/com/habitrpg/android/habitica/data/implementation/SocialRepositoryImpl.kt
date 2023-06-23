@@ -270,7 +270,7 @@ class SocialRepositoryImpl(
                     apiClient.getMember(UUID.fromString(userId).toString())
                 }
             } catch (_: IllegalArgumentException) {
-                apiClient.getMemberWithUsername(userId)
+                null
             }
         }
     }
@@ -279,7 +279,14 @@ class SocialRepositoryImpl(
 
 
     override suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member? {
-        return retrieveMember(username, fromHall)
+        if (username.isNullOrBlank()) {
+            return null
+        }
+        return try {
+            apiClient.getMemberWithUsername(username)
+        } catch (_: IllegalArgumentException) {
+            null
+        }
     }
 
     override suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>? {
