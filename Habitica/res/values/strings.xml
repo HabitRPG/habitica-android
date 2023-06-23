@@ -305,7 +305,7 @@
     <string name="changing_class_progress">Changing Class</string>
     <string name="choosing_class_progress">Choosing Class</string>
     <string name="by_email">By Email</string>
-    <string name="invite_existing_users">Invite Existing Users</string>
+    <string name="invite_existing_users">Invite Existing players</string>
     <string name="send">Send</string>
     <string name="invite">Find Members</string>
     <string name="invite_username_description">If you have friends already using Habitica, invite them by username here.</string>
@@ -326,7 +326,7 @@
     <string name="market">Market</string>
     <string name="timeTravelers">Time Travelers</string>
     <string name="seasonalShop">Seasonal Shop</string>
-    <string name="empty_inbox">You don\'t have any messages. You can send a user a new message from their public chat messages!</string>
+    <string name="empty_inbox">You don\'t have any messages. You can send a player a new message from their public chat messages!</string>
     <string name="party_invite">Unlock by inviting friends</string>
     <string name="login_incentive">Unlock by logging into Habitica regularly</string>
     <string name="login_incentive_count">Unlock by checking into Habitica %d times.</string>
@@ -407,7 +407,7 @@
     <string name="due">Due</string>
     <string name="cancel_subscription">Cancel Subscription</string>
     <string name="cancel_subscription_google_description">You can cancel your subscription from the Google Play Store app. Any months of Subscription credit will be applied after your recurring Subscription has ended.</string>
-    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the User icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you!</string>
+    <string name="cancel_subscription_notgoogle_description">No longer want to subscribe? Due to constraints on mobile payments, you\'ll need to cancel via our website. To do this, tap the button below, log in to your account, tap the player icon in the top right, then go to Subscription. Any months of subscription credit will be applied after your subscription has ended. We\'ll miss you!</string>
     <string name="visit_habitica_website">Visit Habitica Website</string>
     <string name="current_bonuses">Current Bonuses</string>
     <string name="months_subscribed">Months Subscribed</string>
@@ -644,7 +644,7 @@
     <string name="check_into_inn">Check into Inn</string>
     <string name="community_guidelines">Community Guidelines</string>
     <string name="view_community_guidelines">View Community Guidelines</string>
-    <string name="guidelines_description">Habitica tries to create a welcoming environment for users of all ages and backgrounds, especially in public spaces like the Tavern. If you have any questions, please consult our guidelines.</string>
+    <string name="guidelines_description">Habitica tries to create a welcoming environment for players of all ages and backgrounds, especially in public spaces like the Tavern. If you have any questions, please consult our guidelines.</string>
     <string name="helpful_links">Helpful Links</string>
     <string name="view_faq">View FAQ</string>
     <string name="report_bug">Report a Bug</string>
@@ -1012,7 +1012,7 @@
     <string name="support">Support</string>
     <string name="wacky"> Wacky </string>
     <string name="habitica_questions">Habitica Questions</string>
-    <string name="could_not_find_user">Could not find user</string>
+    <string name="could_not_find_user">Could not find player</string>
     <string name="animal_ears">Animal Ears</string>
     <string name="animal_tail">Animal Tail</string>
     <string name="avatar_headband">Headband</string>
@@ -1089,10 +1089,10 @@
     <string name="challenge_task_name">%s Challenge Task</string>
     <string name="pet_category">%s Pets</string>
     <string name="mount_category">%s Mounts</string>
-    <string name="block_user">Block User</string>
-    <string name="unblock_user">Unblock User</string>
+    <string name="block_user">Block Player</string>
+    <string name="unblock_user">Unblock Player</string>
     <string name="block_user_title">Block %s?</string>
-    <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts.</string>
+    <string name="block_user_description">A blocked player cannot send you Private Messages but you will still see their posts</string>
     <string name="block">Block</string>
     <string name="disablePrivateMessages">Disable Private Messages</string>
     <string name="pms_disabled">Private Messages are disabled</string>
@@ -1111,8 +1111,8 @@
     <string name="theme_mode">Theme Mode</string>
     <string name="theme_color">Theme Color</string>
     <string name="submit_feedback">Submit Feedback</string>
-    <string name="user_is_blocked">You blocked this user</string>
-    <string name="user_is_blocked_explanation">A blocked user cannot send you Private Messages but you will still see their posts.</string>
+    <string name="user_is_blocked">You blocked this player</string>
+    <string name="user_is_blocked_explanation">A blocked player cannot send you Private Messages but you will still see their posts</string>
     <string name="finish">Finish</string>
     <string name="login_disclaimer">By signing up, you are indicating that you have read and agree to the <a href="https://habitica.com/static/terms">Terms of Service</a> and <a href="https://habitica.com/static/privacy">Privacy Policy.</a></string>
     <string name="you">You</string>
@@ -1290,18 +1290,18 @@
     <string name="promote_to_manager">Promote to Manager</string>
     <string name="manager">Manager</string>
     <string name="member_list">Member List</string>
-    <string name="ban_user">Ban User</string>
+    <string name="ban_user">Ban Player</string>
     <string name="shadow_mute_user">Shadow Mute</string>
-    <string name="mute_user">Mute User</string>
-    <string name="ban_user_confirm">Do you want to ban this user?</string>
-    <string name="unban_user_confirm">Do you want to unban this user?</string>
-    <string name="mute_user_confirm">Do you want to revoke chat access for this user?</string>
-    <string name="unmute_user_confirm">Do you want to return chat access for this user?</string>
-    <string name="shadowmute_user_confirm">Do you want to shadow mute this user?</string>
+    <string name="mute_user">Mute Player</string>
+    <string name="ban_user_confirm">Do you want to ban this player?</string>
+    <string name="unban_user_confirm">Do you want to unban this player?</string>
+    <string name="mute_user_confirm">Do you want to revoke chat access for this player?</string>
+    <string name="unmute_user_confirm">Do you want to return chat access for this player?</string>
+    <string name="shadowmute_user_confirm">Do you want to shadow mute this player?</string>
     <string name="unshadowmute_user_confirm">Do you want to remove the shadow mute?</string>
-    <string name="unban_user">Unban User</string>
+    <string name="unban_user">Unban Player</string>
     <string name="unshadowmute_user">Remove Shadow Mute</string>
-    <string name="unmute_user">Unmute User</string>
+    <string name="unmute_user">Unmute player</string>
     <string name="status">Status</string>
     <string name="regular_access">Regular Access</string>
     <string name="message_flagged">Message flagged %d times.</string>
