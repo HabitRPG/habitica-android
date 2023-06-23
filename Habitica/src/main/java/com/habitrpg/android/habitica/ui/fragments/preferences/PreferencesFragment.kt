@@ -140,32 +140,11 @@ class PreferencesFragment : BasePreferencesFragment(),
             }
 
             "choose_class" -> {
-                val bundle = Bundle()
-                bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
-
-                val intent = Intent(activity, ClassSelectionActivity::class.java)
-                intent.putExtras(bundle)
-
                 if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
-                    if ((user?.gemCount ?: 0) >= 3) {
-                        context?.let { context ->
-                            val dialog = HabiticaAlertDialog(context)
-                            dialog.setTitle(R.string.change_class_confirmation)
-                            dialog.addButton(R.string.change_class, true, true) { _, _ ->
-                                classSelectionResult.launch(
-                                    intent
-                                )
-                            }
-                            dialog.addButton(R.string.dialog_go_back, false)
-                            dialog.enqueue()
-                        }
-                    } else {
-                        activity?.let { activity ->
-                            val dialog = InsufficientGemsDialog(activity, 3)
-                            dialog.show()
-                        }
-                    }
-                } else {
+                    val bundle = Bundle()
+                    bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
+                    val intent = Intent(activity, ClassSelectionActivity::class.java)
+                    intent.putExtras(bundle)
                     classSelectionResult.launch(intent)
                 }
                 return true
