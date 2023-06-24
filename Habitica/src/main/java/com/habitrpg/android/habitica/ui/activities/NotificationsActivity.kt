@@ -214,6 +214,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             val baileyNewsData = baileyNotification.data as? NewStuffData
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
         }
+        baileyNotification.id = notification.id
 
         return@withContext createDismissableNotificationItem(
             baileyNotification,
