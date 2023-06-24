@@ -268,6 +268,19 @@ class ClassSelectionActivity : BaseActivity() {
             if (user == null) {
                 return@observeOnce
             }
+
+            if (isInitialSelection) {
+                shouldFinish = true
+                val dialog =
+                    this.displayProgressDialog(getString(R.string.changing_class_progress))
+                lifecycleScope.launch(Dispatchers.Main) {
+                    userRepository.changeClass(selectedClass)
+                    dialog.hide()
+                    displayClassChanged(selectedClass)
+                }
+                return@observeOnce
+            }
+
             if ((user.gemCount ?: 0) >= 3) {
                 val dialog = HabiticaAlertDialog(this)
                 dialog.setTitle(R.string.change_class_confirmation)

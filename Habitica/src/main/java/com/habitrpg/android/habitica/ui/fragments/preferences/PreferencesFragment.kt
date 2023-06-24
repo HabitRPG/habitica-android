@@ -71,6 +71,13 @@ class PreferencesFragment : BasePreferencesFragment(),
     private var serverUrlPreference : ListPreference? = null
     private var taskListPreference : ListPreference? = null
 
+    private val classSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.retrieveUser(true, true)
+            }
+        }
+
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
@@ -140,10 +147,18 @@ class PreferencesFragment : BasePreferencesFragment(),
             }
 
             "choose_class" -> {
-                if (user?.flags?.classSelected == true && user?.preferences?.disableClasses == false) {
-                    val bundle = Bundle()
-                    bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
-                    val intent = Intent(activity, ClassSelectionActivity::class.java)
+                if (user?.preferences?.disableClasses == true) {
+                    return true
+                }
+
+                val bundle = Bundle()
+                val intent = Intent(activity, ClassSelectionActivity::class.java)
+                if (user?.flags?.classSelected == true) {
+                    bundle.putBoolean("isInitialSelection", false)
+                    intent.putExtras(bundle)
+                    classSelectionResult.launch(intent)
+                } else if (user?.flags?.classSelected == false) {
+                    bundle.putBoolean("isInitialSelection", true)
                     intent.putExtras(bundle)
                     classSelectionResult.launch(intent)
                 }
@@ -184,13 +199,6 @@ class PreferencesFragment : BasePreferencesFragment(),
             dialog.show()
         }
     }
-
-    private val classSelectionResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.retrieveUser(true, true)
-            }
-        }
 
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
