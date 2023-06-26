@@ -290,6 +290,7 @@ open class NotificationsViewModel @Inject constructor(
         if (isPartyMessage(data)) {
             val bundle = Bundle()
             bundle.putString("groupID", data?.group?.id)
+            bundle.putInt("tabToOpen", 1)
             navController.navigate(R.id.partyFragment, bundle)
         } else {
             val bundle = Bundle()
