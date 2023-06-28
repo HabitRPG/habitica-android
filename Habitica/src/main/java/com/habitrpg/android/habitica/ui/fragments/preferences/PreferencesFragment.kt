@@ -146,19 +146,40 @@ class PreferencesFragment : BasePreferencesFragment(),
             }
 
             "choose_class" -> {
-                if (user?.preferences?.disableClasses == true) {
-                    return true
-                }
-
+                val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
+                val isClassSelected = if (isPlayerOptedOutOfClass) false else (user?.flags?.classSelected ?: false)
                 val bundle = Bundle()
+                bundle.putBoolean("isInitialSelection", isClassSelected)
                 val intent = Intent(activity, ClassSelectionActivity::class.java)
-                if (user?.flags?.classSelected == true) {
-                    bundle.putBoolean("isInitialSelection", false)
-                    intent.putExtras(bundle)
-                    classSelectionResult.launch(intent)
-                } else if (user?.flags?.classSelected == false) {
-                    bundle.putBoolean("isInitialSelection", true)
-                    intent.putExtras(bundle)
+                intent.putExtras(bundle)
+
+                if (isClassSelected) {
+                    if ((user?.gemCount ?: 0) >= 3) {
+                        context?.let { context ->
+                            val dialog = HabiticaAlertDialog(context)
+                            dialog.setTitle(R.string.change_class_confirmation)
+                            dialog.setMessage(R.string.change_class_message)
+                            dialog.addButton(R.string.change_class,
+                                isPrimary = true,
+                                isDestructive = true
+                            ) { _, _ ->
+                                classSelectionResult.launch(
+                                    intent
+                                )
+                            }
+                            dialog.addButton(R.string.dialog_go_back, false)
+                            dialog.enqueue()
+                        }
+                    } else {
+                        activity?.let { activity ->
+                            val dialog = InsufficientGemsDialog(activity, 3)
+                            dialog.show()
+                        }
+                    }
+                } else {
+                    // This will handle initial class selection (If a player has not already selected a class),
+                    // if a player started changing a class and force closes the app previously,
+                    // and if a player previously opted out of class selection.
                     classSelectionResult.launch(intent)
                 }
                 return true
@@ -403,6 +424,7 @@ class PreferencesFragment : BasePreferencesFragment(),
             if (user?.flags?.classSelected == true) {
                 if (user.preferences?.disableClasses == true) {
                     classSelectionPreference?.title = getString(R.string.enable_class)
+                    classSelectionPreference?.summary = getString(R.string.enable_class_description)
                 } else {
                     classSelectionPreference?.title = getString(R.string.change_class)
                     classSelectionPreference?.summary = getString(R.string.change_class_description)

@@ -297,12 +297,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     },
                     onClassSelectionClicked = {
                         val bundle = Bundle()
-                        bundle.putBoolean("isInitialSelection", user?.flags?.classSelected == false)
+                        val isClassSelected = user?.flags?.classSelected ?: false
+                        bundle.putBoolean("isInitialSelection", isClassSelected)
                         val intent = Intent(this@MainActivity, ClassSelectionActivity::class.java)
                         intent.putExtras(bundle)
-                        classSelectionResult.launch(
-                            intent
-                        )
+                        classSelectionResult.launch(intent)
                     }
                 )
             }
