@@ -292,8 +292,8 @@
     <string name="opting_out_progress">Opting Out</string>
     <string name="class_confirmation">Are you sure you want to be a %s?</string>
     <string name="class_confirmation_price">Do you want to change your class to %s for %d Gems?</string>
-    <string name="class_changed">You are now a %s!</string>
-    <string name="class_changed_description">You can use %s skills and purchase gear from shops!</string>
+    <string name="class_changed">You\'re a %s!</string>
+    <string name="class_changed_description">You can now use %s skills and purchase gear from shops. Gain levels to earn stat points you can use to power up your skills.</string>
     <string name="choose_class">Choose Class</string>
     <string name="dialog_go_back">Go Back</string>
     <string name="opt_out_confirmation">Opt out of the class system?</string>

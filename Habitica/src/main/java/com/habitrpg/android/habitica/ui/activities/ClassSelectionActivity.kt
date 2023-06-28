@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
@@ -254,6 +255,10 @@ class ClassSelectionActivity : BaseActivity() {
         alert.setTitle(getString(R.string.class_changed, className))
         alert.setMessage(getString(R.string.class_changed_description, selectedClass))
         alert.addButton(getString(R.string.complete_tutorial), true){ _, _ -> dismiss() }
+        alert.addButton(getString(R.string.learn_more), false){ _, _ ->
+            dismiss()
+            MainNavigationController.navigate(R.id.FAQOverviewFragment)
+        }
         alert.setOnCancelListener {
             dismiss()
         }
