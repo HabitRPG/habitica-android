@@ -218,7 +218,7 @@ class ClassSelectionActivity : BaseActivity() {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.opt_out_confirmation))
         alert.setMessage(getString(R.string.opt_out_description))
-        alert.addButton(R.string.opt_out_class, true) { _, _ ->
+        alert.addButton(R.string.opt_out_class, true, true) { _, _ ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 // Set Player to have no class, and opt out
                 userRepository.changeClass()

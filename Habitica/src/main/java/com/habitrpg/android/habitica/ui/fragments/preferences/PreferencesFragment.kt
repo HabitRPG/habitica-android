@@ -167,7 +167,7 @@ class PreferencesFragment : BasePreferencesFragment(),
                                     intent
                                 )
                             }
-                            dialog.addButton(R.string.dialog_go_back, false)
+                            dialog.addButton(R.string.close, false)
                             dialog.enqueue()
                         }
                     } else {

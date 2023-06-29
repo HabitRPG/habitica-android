@@ -76,7 +76,7 @@
                 android:id="@+id/purchase_button"
                 android:layout_width="129dp"
                 android:layout_height="50dp"
-                style="@style/HabiticaButton.White.Small"
+                style="@style/HabiticaButton.Maroon.Small"
                 tools:text="$0.99"
                 android:textSize="16sp"
                 android:visibility="invisible"/>
