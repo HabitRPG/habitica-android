@@ -24,7 +24,7 @@
     <string name="start_new_day">Começar novo dia</string>
     <string name="check_off_yesterday">Marque qualquer que você completou ontem:</string>
     <string name="task_type">Tipo de Tarefa</string>
-    <string name="task_title_hint">Título da Tarefa…</string>
+    <string name="task_title_hint">Escreve o título da Tarefa</string>
     <string name="save">Salvar</string>
     <string name="sync_data">Sincronizar Dados</string>
     <string name="hide_task_rewards">Esconder Recompensas de Tarefas</string>

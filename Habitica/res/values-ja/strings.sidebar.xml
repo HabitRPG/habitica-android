@@ -18,4 +18,5 @@
     <string name="sidebar_stats">ステータス</string>
     <string name="sidebar_subscription">有料プラン</string>
     <string name="sidebar_gems">ジェムを買う</string>
+    <string name="sidebar_avatar_equipment">アバターと装備</string>
 </resources>

@@ -15,4 +15,5 @@
     <string name="action_edit">Edit</string>
     <string name="action_cancel">Cancel Invitation</string>
     <string name="about_title">About</string>
+    <string name="stats">Stats</string>
 </resources>

@@ -208,7 +208,6 @@
     <string name="opt_out_class">Alege să nu iei parte</string>
     <string name="class_confirmation">Ești sigur că vrei să fii %s?</string>
     <string name="class_changed">De acum ești %s!</string>
-
     <string name="choose_class">Alege Clasa</string>
     <string name="dialog_go_back">Mergi înapoi</string>
     <string name="opt_out_confirmation">Ești sigur că vrei să nu iei parte?</string>
@@ -509,4 +508,5 @@
     <string name="questShop_owner_long">Ian Ghidul Expedițiilor</string>
     <string name="seasonalShop_owner_long">Vrăjitoarea Sezonului</string>
     <string name="rage_attack">Atac furios:</string>
+    <string name="x_and_y">%1$s și %2$s</string>
 </resources>

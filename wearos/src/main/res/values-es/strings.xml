@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="ok">OK</string>
+    <string name="syncing_account">Sincronizando Cuenta De El Dispositivo Móvil</string>
+    <string name="you_found">Encontraste…</string>
+    <string name="how_did_you_do">¿Cómo te fue\?</string>
+    <string name="one_quest_item">1 Artículo De Misión</string>
+</resources>

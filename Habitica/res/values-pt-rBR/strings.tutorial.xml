@@ -16,4 +16,7 @@
     <string name="tutorial_party">É aqui que você e seus amigos podem se ajudar em seus objetivos e lutar contra monstros usando suas tarefas!</string>
     <string name="tutorial_tavern">Seja bem-vindo(a) à Taverna, uma sala de bate-papo pública e para todas as idades! Aqui você pode conversar sobre produtividade e fazer perguntas. Divirta-se!</string>
     <string name="tutorial_stats">Toque no botão cinza para alocar todos seus atributos de uma vez ou toque nas setas para adicionar um ponto de cada vez.</string>
+    <string name="tutorial_party_created">Boas vindas ao seu Grupo! Você pode encontrar mais membros a partir de uma lista de jogadores que estão procurando por um Grupo ou convidar amigos diretamente para ganhar o Pergaminho de Missão Basi-lista.
+\n
+\nVisite o Suporte para saber mais sobre Grupos.</string>
 </resources>

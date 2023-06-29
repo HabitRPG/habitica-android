@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="action_refresh">Atualizar</string>
+    <string name="XP_default">Experiência</string>
+    <string name="HP_default">Saúde</string>
+    <string name="MP_default">Mana</string>
+    <string name="PS_settings_title">Configurações</string>
+    <string name="SP_userID_title">ID de Usuário</string>
+    <string name="SP_userID_summary">Seu ID de Usuário</string>
+</resources>

@@ -112,7 +112,7 @@
     <string name="quest_begin">クエストをはじめる</string>
     <string name="quest_cancel">招待を中止する</string>
     <string name="quest_abort">クエストを中断する</string>
-    <string name="version_info">バージョン： %1$s (%2$d)</string>
+    <string name="version_info">バージョン %1$s (%2$d)</string>
     <string name="sidebar_help">ヘルプ・よくある質問</string>
     <string name="complete_tutorial">わかった!</string>
     <string name="dismiss_tutorial">もう一度通知</string>
@@ -232,7 +232,6 @@
     <string name="opt_out_class">選ばない</string>
     <string name="class_confirmation">%s になります。いいですか?</string>
     <string name="class_changed">あなたは%s に転職した！</string>
-
     <string name="choose_class">クラスを選ぶ</string>
     <string name="dialog_go_back">戻る</string>
     <string name="opt_out_confirmation">選ばないでいい?</string>
@@ -243,7 +242,7 @@
     <string name="by_email">メールで</string>
     <string name="invite_existing_users">登録済みのユーザー</string>
     <string name="send">送信</string>
-    <string name="invite">友達を招待する</string>
+    <string name="invite">メンバーを探す</string>
     <string name="invite_username_description">Habiticaをやってる友達がいたら、ユーザー名を入力してパーティーに招待しよう。</string>
     <string name="invite_email_description">メールを通じて、友達がHabiticaに登録したら、自動的にあなたのパーティーに招待するよ！</string>
     <string name="add_invites">招待の追加</string>
@@ -253,8 +252,8 @@
     <string name="share_hatched">現実でのタスクをこなして、 #Habitica で %1$s%2$s のペットをかえしました！</string>
     <string name="share_raised">現実でタスクをこなして、 #Habitica で%1$s の乗騎を手に入れました！</string>
     <string name="open_in_store">Play ストアで開く</string>
-    <string name="change_class_confirmation">クラスを変更します。いいですか？3 ジェムかかります。</string>
-    <string name="change_class_equipment_warning">注意： %s クラスの装備を買うことはできなくなります。</string>
+    <string name="change_class_confirmation">3 ジェム支払ってクラスを変更しますか？</string>
+    <string name="change_class_equipment_warning">これにより、ステータス ポイントが返却され、ショップでロックが解除される装備が切り替わり、利用可能なスキルが変更されます。</string>
     <string name="confirm">確認</string>
     <string name="market">市場</string>
     <string name="timeTravelers">タイムトラベラー</string>
@@ -262,7 +261,7 @@
     <string name="empty_inbox">メッセージがありません。公開チャットから他のユーザーにメッセージを送ることができます！</string>
     <string name="party_invite">友達を招待するとアンロック</string>
     <string name="login_incentive">Habiticaに連続でログインするとアンロック</string>
-    <string name="create_account">アカウントを作成するとアンロック</string>
+    <string name="create_account">アカウントを作成するとアンロックします</string>
     <string name="successful_purchase">%1$sを購入しました</string>
     <string name="chat_message_copied">メッセージをクリップボードにコピーしました</string>
     <string name="edit_tag_btn_edit">編集</string>
@@ -303,7 +302,7 @@
     <string name="belongs_to_challenge">チャレンジに参加中</string>
     <string name="has_reminder">通知あり</string>
     <string name="has_tag">タグあり</string>
-    <string name="subscribe_title">有料プランに加入することで、開発者を支援してHabiticaの運営を援助できます</string>
+    <string name="subscribe_title">有料プランに加入することは、小規模なHabiticaの運営チームを支援して、運営を続ける助けになります、ありがとう！</string>
     <string name="subscribe_prompt">これらの限定特典を受けるために有料会員になりましょう！</string>
     <string name="subscribe_listitem1">ゴールドをジェムに</string>
     <string name="subscribe_listitem2">神秘の砂時計</string>
@@ -523,7 +522,7 @@
     <string name="class_equipment_shop_dialog">このアイテムは特定のクラスにのみ利用可能です、\n
 クラスはセッティングから変更できます。</string>
     <string name="class_gear_disclaimer">現在のクラス用の装備しか購入できません</string>
-    <string name="tavern_description">ロッジにようこそ！腰掛けてチャットをし、タスクを休憩しましょう。</string>
+    <string name="tavern_description">ロッジにようこそ！腰掛けてチャットをしましょう。</string>
     <string name="check_into_inn">宿にチェックインする</string>
     <string name="community_guidelines">コミュニティガイドライン</string>
     <string name="view_community_guidelines">コミュニティガイドラインを見る</string>
@@ -679,7 +678,7 @@
     <string name="register_btn_google">Googleでサインアップ</string>
     <string name="login_incentive_short">Habiticaに定期的にログインする</string>
     <string name="login_incentive_short_count">%d回チェックイン</string>
-    <string name="party_invite_short">友達を招待する</string>
+    <string name="party_invite_short">メンバーを探す</string>
     <string name="empty_title_habits_filtered">習慣がありません</string>
     <string name="register_btn_fb">Facebookでサインアップ</string>
     <string name="login_btn_apple">Appleでサインイン</string>
@@ -694,7 +693,7 @@
     <string name="empty_description_todos_filtered">現在のフィルターでは表示できるTo Doがありません。</string>
     <string name="empty_description_dailies_filtered">現在のフィルターでは表示できる日課がありません。</string>
     <string name="streak">連続実行</string>
-    <string name="gift_confirmation_text_sub">%sに%sヶ月分のHabitica有料プランを送りました。</string>
+    <string name="gift_confirmation_text_sub">%1$sに%2$sヶ月分のHabitica有料プランを送りました。</string>
     <string name="gift_gems_subtitle">下から贈りたいジェムの量を選びましょう！</string>
     <string name="join_party_description_guild">友達に下のユーザー名を教えるか、%sに行って未来の仲間たちに出会いましょう！</string>
     <string name="sale">セール</string>
@@ -821,7 +820,7 @@
     <string name="report_violation">違反を報告する</string>
     <string name="need_help_header_description">%sにメッセージを投稿して、疑問について仲間のプレイヤーに答えてもらいましょう。</string>
     <string name="checklist_text">チェックリストのテキスト</string>
-    <string name="gift_confirmation_text_sub_g1g1">%sに%sヶ月分のHabitica有料プランを送りました。そして、誰かにプレゼントすると同じ分だけ無料で受けられるキャンペーンによって、あなたのアカウントにも同じプランが無料で適用されました！</string>
+    <string name="gift_confirmation_text_sub_g1g1">%1$sに%2$sヶ月分のHabitica有料プランを送りました。そして、誰かにプレゼントすると同じ分だけ無料で受けられるキャンペーンによって、あなたのアカウントにも同じプランが無料で適用されました！</string>
     <string name="number_responded">%1$d/%2$d人参加予定</string>
     <string name="from_balance">残高から</string>
     <string name="preference_push_party_mention">パーティーチャットでのあなたへの返信</string>
@@ -992,16 +991,16 @@
     <string name="pms_disabled">プライベートメッセージが無効になりました</string>
     <string name="disablePrivateMessages">プライベートメッセージを無効にする</string>
     <string name="block">ブロックする</string>
-    <string name="block_user_description">ブロックしたユーザーからはプライベートメッセージを受けとれません。ですが、ブロックしたユーザーがキャンプ場やギルドに書き込んだ書き込みはいままでどおり見ることができます。ブロックはモデレーターや将来モデレーターになるユーザーに対しては使えません。</string>
+    <string name="block_user_description">ブロックしたユーザーからはプライベートメッセージを受けとれません。ですが、彼らの投稿はいままでどおり見ることができます。</string>
     <string name="broken_challenge">チャレンジのリンク切れ</string>
     <string name="leave_delete_x_tasks">やめる、%dタスクを削除する</string>
     <string name="leave_delete_task">やめる、タスクも削除する</string>
     <string name="delete_challenge_task_description">このタスクは「%2$s」チャレンジの%1$dタスクの一部です。このタスクを削除するにはチャレンジを止めてください。</string>
-    <string name="can_hatch_pet">%sのたまごと%sたまごがえしの薬を融合させてこのペットを孵化させましょう！</string>
+    <string name="can_hatch_pet">%1$sのたまごと%2$sたまごがえしの薬を融合させてこのペットを孵化させましょう！</string>
     <string name="suggest_pet_hatch_missing_potion">このペットの孵化には%sたまごがえしの薬が必要です</string>
-    <string name="suggest_pet_hatch_missing_both">このペットの孵化には%sのたまごと%sたまごがえしの薬が必要です</string>
+    <string name="suggest_pet_hatch_missing_both">このペットの孵化には%1$sのたまごと%2$sのたまごがえしの薬が必要です</string>
     <string name="suggest_pet_hatch_again_missing_potion">このペットをもう一度孵化するには%sたまごがえしの薬が必要です</string>
-    <string name="suggest_pet_hatch_again_missing_both">このペットをもう一度孵化するには%sのたまごと%sたまごがえしの薬が必要です</string>
+    <string name="suggest_pet_hatch_again_missing_both">このペットをもう一度孵化するには%1$sのたまごと%2$sたまごがえしの薬が必要です</string>
     <string name="suggest_pet_hatch_again_missing_egg">このペットをもう一度孵化するには%sのたまごが必要です</string>
     <string name="suggest_pet_hatch_missing_egg">このペットの孵化には%sのたまごが必要です</string>
     <string name="first_drop_explanation2">「アイテム」メニューから新しいたまごにたまごがえしの薬を使ってみましょう！</string>
@@ -1038,7 +1037,7 @@
     <string name="fall_promo_info_instructions">%sから%sの間、いつものようにジェムセットを買うだけであなたのアカウントにキャンペーンのジェムが贈られます。もっとジェムを使ったりシェアしたり新しい機能のリリースに備えてたくわえておいたりしましょう！</string>
     <string name="limitations">制限事項</string>
     <string name="how_it_works">機能説明</string>
-    <string name="x_to_y">%sから%sへ</string>
+    <string name="x_to_y">%1$sから%2$sへ</string>
     <string name="usually_x_gems">通常は%dジェム</string>
     <string name="pms_disabled_description">あなたはまだメッセージを送ることができますが、誰もあなたにメッセージを送ることはできません。設定からメッセージ機能を再びオンに出来ます。</string>
     <string name="block_user_title">%sをブロックしますか？</string>
@@ -1071,7 +1070,7 @@
     <string name="dark_mode">ダークモード</string>
     <string name="login_disclaimer">サインアップすることで<a href="https://habitica.com/static/terms">利用規約</a>と<a href="https://habitica.com/static/privacy">プライバシーポリシー</a>の内容に同意したものとみなします。</string>
     <string name="finish">終了</string>
-    <string name="user_is_blocked_explanation">ブロックしたユーザーはあなたにプライベートメッセージを送ることができません。ですが、ブロックしたユーザーがキャンプ場やギルドに書き込んだ書き込みはいままでどおり見ることができます。</string>
+    <string name="user_is_blocked_explanation">ブロックしたユーザーからはプライベートメッセージを受けとれません。ですが、彼らの投稿はいままでどおり見ることができます。</string>
     <string name="user_is_blocked">このユーザーをブロックしています</string>
     <string name="submit_feedback">フィードバックを送る</string>
     <string name="gems_promo_info_limitations">このキャンペーンは季節限定イベントの間のみの実施です。このイベントはの%s21:00時 (12:00 UTC)に始まり、%sの09:00時(00:00 UTC)に終了します。キャンペーンの対象は自分へのジェムを購入したときにのみ適用されます。</string>
@@ -1137,7 +1136,7 @@
     <string name="use_item">パーティーメンバーにアイテムを使う</string>&gt;
     <string name="unsaved_changes">保存されていない変更</string>
     <string name="discard_changes_to_task_message">このタスクへの変更を保存せずに終了しますか？</string>
-    <string name="gift_confirmation_text_gems_new">%s %s のジェムを贈りました。</string>
+    <string name="gift_confirmation_text_gems_new">\@%1$sに%2$s個のジェムを贈りました。</string>
     <string name="subscription_confirmation">1ヶ月の有料会員です</string>
     <string name="sale_ends_in">セールは%sに終了</string>
     <string name="not_connected">未接続</string>
@@ -1261,4 +1260,21 @@
     <plurals name="you_x_others">
         <item quantity="other">あなたと他 %d</item>
     </plurals>
+    <string name="x_and_y">%1$sと%2$s</string>
+    <string name="class_changed_description">スキル %s を使えるようになりました。ショップで装備を購入することもできます！</string>
+    <string name="subscription_credit_canceling">あなたの有料プランは解約の後<b>+%d</b>ヶ月間有効です</string>
+    <string name="positive_sentence">いい</string>
+    <string name="negative_sentence">悪い</string>
+    <plurals name="repeat_daily">
+        <item quantity="other">%d 日ごと</item>
+    </plurals>
+    <string name="subscribers_mythic_hourglasses"><i>有料会員には月初の3日以内に神秘の砂時計をお届けします。</i></string>
+    <string name="task_summary">タスクの説明</string>
+    <string name="apple_pay">Apple Pay</string>
+    <string name="google_pay">Google Pay</string>
+    <string name="enable_notifications">通知を有効にする</string>
+    <string name="push_notification_system_settings_description">設定アプリでHabiticaからのプッシュ通知を許可する</string>
+    <string name="push_notification_system_settings_reminders">設定アプリでHabiticaからのリマインダーを許可する</string>
+    <string name="push_notification_system_settings_title">通知は無効です</string>
+    <string name="title">タイトル</string>
 </resources>

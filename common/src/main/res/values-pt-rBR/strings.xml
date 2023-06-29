@@ -70,4 +70,14 @@
         <item quantity="other">%d Afazeres</item>
     </plurals>
     <string name="save_task_x">Salvar %s</string>
+    <plurals name="flagged_count">
+        <item quantity="one">Sinalizado %d veze, oculto</item>
+        <item quantity="many">Sinalizado %d vezes, oculto</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="easy_sentence">fácil</string>
+    <string name="medium_sentence">médio</string>
+    <string name="hard_sentence">difícil</string>
+    <string name="trivial_sentence">trivial</string>
 </resources>

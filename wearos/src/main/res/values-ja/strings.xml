@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="other_options">ほかのオプション</string>
+    <string name="sign_in_password">パスワードでサインイン</string>
+    <string name="continue_text">続ける</string>
+    <string name="you_ran_out_of_hp">体力がなくなりました</string>
+    <string name="x_quest_item">%d個のクエストアイテム</string>
+    <string name="x_and_y">%1$sと%2$s</string>
+    <string name="some_x">いくつかの%s</string>
+    <string name="sign_in">サインイン</string>
+    <string name="start_new_day">新たな一日を始める</string>
+    <string name="ok">OK</string>
+    <string name="syncing_account">端末からのアカウント同期</string>
+    <string name="one_quest_item">1個のクエストアイテム</string>
+    <string name="edit_on_phone">端末で編集</string>
+    <string name="sign_in_on_phone">端末でサインイン</string>
+    <string name="create_account">アカウントを作成</string>
+    <string name="save">保存</string>
+    <string name="faint_description">レベル、経験値、ゴールドを失いました。あきらめないで！</string>
+    <string name="version_info">バージョン %1$s (%2$d)</string>
+</resources>

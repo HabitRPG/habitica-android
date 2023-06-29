@@ -11,7 +11,7 @@
     <string name="repeat_daily">Sehari-hari</string>
     <string name="monthly">Bulanan</string>
     <string name="weekly">Mingguan</string>
-    <string name="trivial">Trivial</string>
+    <string name="trivial">Remeh</string>
     <string name="easy">Mudah</string>
     <string name="medium">Sedang</string>
     <string name="hard">Susah</string>
@@ -29,7 +29,7 @@
     <string name="avatar">Avatar</string>
     <string name="user_level">Lvl %d</string>
     <string name="user_level_long">Level %d</string>
-    <string name="action_edit">Edit</string>
+    <string name="action_edit">Ubah</string>
     <string name="action_cancel">Batalkan Undangan</string>
     <string name="login_btn">Masuk</string>
     <string name="register_btn">Daftar</string>
@@ -45,11 +45,33 @@
     <string name="login_validation_error_title">Validasi Gagal</string>
     <string name="login_validation_error_fieldsmissing">Kamu harus mengisi semua kolom.</string>
     <plurals name="x_rewards">
-        <item quantity="other">Tambah Hadiah</item>
+        <item quantity="other">%d Hadiah</item>
     </plurals>
     <string name="create_task_title">Membuat Tugas</string>
     <string name="complete_task_title">Menyelesaikan Tugas</string>
     <string name="create_task">Membuat %s</string>
     <string name="are_you_sure">Apakah kamu yakin\?</string>
     <string name="task">Tugas</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="trivial_sentence">remeh</string>
+    <string name="email_username">Email/Nama Pengguna</string>
+    <plurals name="x_habits">
+        <item quantity="other">%d Kebiasaan</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="other">%d Keseharian</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="other">%d Agenda</item>
+    </plurals>
+    <string name="new_task_x">%s Baru</string>
+    <string name="save_task_x">Simpan %s</string>
+    <string name="failed">Gagal memuat</string>
+    <string name="retry">Coba lagi</string>
+    <string name="easy_sentence">mudah</string>
+    <string name="medium_sentence">sedang</string>
+    <string name="hard_sentence">sulit</string>
+    <plurals name="flagged_count">
+        <item quantity="other">Ditandai %d kali, tersembunyi</item>
+    </plurals>
 </resources>

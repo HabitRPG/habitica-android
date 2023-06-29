@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="thousand_abbrev">k</string>
+    <string name="million_abbrev">m</string>
+    <string name="billion_abbrev">b</string>
+    <string name="trillion_abbrev">t</string>
+    <string name="gems">Permata</string>
+    <string name="gold_plural">emas</string>
+    <string name="gold_capitalized">Emas</string>
+    <string name="quadrillion_abbrev">q</string>
+</resources>

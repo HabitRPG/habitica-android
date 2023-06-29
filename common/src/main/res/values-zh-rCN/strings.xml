@@ -15,4 +15,5 @@
     <string name="action_cancel">取消</string>
     <string name="about_title">关于</string>
     <string name="are_you_sure">你确定吗？</string>
+    <string name="stats">统计</string>
 </resources>

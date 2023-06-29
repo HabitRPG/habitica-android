@@ -17,5 +17,6 @@
     <string name="sidebar_shops">Toko</string>
     <string name="sidebar_stats">Status</string>
     <string name="sidebar_subscription">Berlangganan</string>
-    <string name="sidebar_gems">Membeli Permata</string>
+    <string name="sidebar_gems">Beli Permata</string>
+    <string name="sidebar_avatar_equipment">Avatar &amp; Perlengkapan</string>
 </resources>

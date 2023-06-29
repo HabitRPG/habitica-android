@@ -14,4 +14,5 @@
     <string name="action_cancel">Cancelar</string>
     <string name="about_title">Acerca de</string>
     <string name="are_you_sure">¿Estás seguro\?</string>
+    <string name="stats">Atributos</string>
 </resources>

@@ -232,7 +232,6 @@
     <string name="opt_out_class">Izaberi kasnije</string>
     <string name="class_confirmation">Jesi li siguran/na da želiš biti %s?</string>
     <string name="class_changed">Sada si %s!</string>
-
     <string name="choose_class">Odaberi Klasu </string>
     <string name="dialog_go_back">Idi natrag</string>
     <string name="opt_out_confirmation">Jesi li siguran/na da želiš izabrati kasnije?</string>
@@ -1140,4 +1139,5 @@
     <string name="task_list_mode">Vrste popisa zadataka</string>
     <string name="compact">Kompaktno</string>
     <string name="minimal">Minimalno</string>
+    <string name="trillion_abbrev">t</string>
 </resources>

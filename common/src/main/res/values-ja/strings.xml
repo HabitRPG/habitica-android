@@ -47,7 +47,7 @@
     <string name="login_validation_error_title">確認エラー</string>
     <string name="login_validation_error_fieldsmissing">全ての入力欄に入力してください。</string>
     <plurals name="x_rewards">
-        <item quantity="other">ごほうびを追加</item>
+        <item quantity="other">%d 個のごほうび</item>
     </plurals>
     <string name="create_task_title">タスクの作成</string>
     <string name="complete_task_title">タスクを完了する</string>
@@ -56,4 +56,18 @@
     <string name="task">タスク</string>
     <string name="failed">読み込みに失敗しました</string>
     <string name="retry">再試行</string>
+    <plurals name="x_habits">
+        <item quantity="other">%d個の習慣</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="other">%d個のTo Do</item>
+    </plurals>
+    <string name="save_task_x">%sの保存</string>
+    <string name="easy_sentence">かんたん</string>
+    <plurals name="x_dailies">
+        <item quantity="other">%d個の日課</item>
+    </plurals>
+    <string name="trivial_sentence">ちょろい</string>
+    <string name="hard_sentence">むずかしい</string>
+    <string name="medium_sentence">ふつう</string>
 </resources>

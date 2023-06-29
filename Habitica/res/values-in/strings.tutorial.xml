@@ -1,19 +1,22 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">Di sinilah kita! Aku sudah membuatkan beberapa tugas berdasarkan minatmu. Coba kamu tambahkan beberapa tugas lagi. Kamu bisa mengedit tugas dengan mengetuk judulnya.</string>
-  <string name="tutorial_habits_1">Pertama adalah Kebiasaan. Bisa Kebiasaan positif yang ingin kamu tingkatkan atau Kebiasaan negatif yang ingin kamu tinggalkan.</string>
-  <string name="tutorial_habits_2">Setiap kali kamu melakukan Kebiasaan positif, ketuk tanda + untuk memperoleh pengalaman dan koin emas!</string>
-  <string name="tutorial_habits_3">Kalau kamu lalai dan melakukan sebuah Kebiasaan negatif, mengetuk tanda - akan membuat nyawa avatarmu berkurang supaya kamu belajar bertanggung jawab.</string>
-  <string name="tutorial_habits_4">Coba deh! Kamu bisa mengeksplor macam-macam tugas lain melalui tombol navigasi di bawah.</string>
-  <string name="tutorial_dailies_1">Buat Keseharian untuk tugas-tugas yang terikat waktu dan butuh untuk diselesaikan secara berkala.</string>
-  <string name="tutorial_dailies_2">Hati-hati — kalau ada yang terlewat, avatar kamu akan terkena damage besoknya. Menyelesaikan Keseharian secara konsisten memberi banyak keuntungan!</string>
-  <string name="tutorial_todos_1">Gunakan To Do untuk mencatat tugas-tugas yang hanya perlu kamu lakukan sekali.</string>
-  <string name="tutorial_todos_2">Kalau To Do-mu harus diselesaikan pada waktu tertentu, tetapkan tenggat waktunya. Sepertinya ada satu yang bisa kamu centang sekarang — sana!</string>
-  <string name="tutorial_rewards_1">Beli perlengkapan untuk avatarmu menggunakan koin emas yang kamu dapatkan!</string>
-  <string name="tutorial_rewards_2">Kamu juga bisa membuat Hadiah yang benar-benar ada di dunia nyata tergantung apa yang memotivasimu.</string>
-  <string name="tutorial_tasks_complete">Itu dulu untuk sekarang. Kalau kamu butuh pengingat, lihat bagian FAQ.</string>
+    <string name="tutorial_overview">Di sinilah kita! Aku sudah membuatkan beberapa tugas berdasarkan minatmu. Coba kamu tambahkan beberapa tugas lagi. Kamu bisa mengedit tugas dengan mengetuk judulnya.</string>
+    <string name="tutorial_habits_1">Pertama adalah Kebiasaan. Bisa Kebiasaan positif yang ingin kamu tingkatkan atau Kebiasaan negatif yang ingin kamu tinggalkan.</string>
+    <string name="tutorial_habits_2">Setiap kali kamu melakukan Kebiasaan positif, ketuk tanda + untuk memperoleh pengalaman dan koin emas!</string>
+    <string name="tutorial_habits_3">Kalau kamu lalai dan melakukan sebuah Kebiasaan negatif, mengetuk tanda - akan membuat nyawa avatarmu berkurang supaya kamu belajar bertanggung jawab.</string>
+    <string name="tutorial_habits_4">Coba deh! Kamu bisa mengeksplor macam-macam tugas lain melalui tombol navigasi di bawah.</string>
+    <string name="tutorial_dailies_1">Buat Keseharian untuk tugas-tugas yang terikat waktu dan butuh untuk diselesaikan secara berkala.</string>
+    <string name="tutorial_dailies_2">Hati-hati — kalau ada yang terlewat, avatar kamu akan terkena damage besoknya. Menyelesaikan Keseharian secara konsisten memberi banyak keuntungan!</string>
+    <string name="tutorial_todos_1">Gunakan To Do untuk mencatat tugas-tugas yang hanya perlu kamu lakukan sekali.</string>
+    <string name="tutorial_todos_2">Kalau To Do-mu harus diselesaikan pada waktu tertentu, tetapkan tenggat waktunya. Sepertinya ada satu yang bisa kamu centang sekarang — sana!</string>
+    <string name="tutorial_rewards_1">Beli perlengkapan untuk avatarmu menggunakan koin emas yang kamu dapatkan!</string>
+    <string name="tutorial_rewards_2">Kamu juga bisa membuat Hadiah yang benar-benar ada di dunia nyata tergantung apa yang memotivasimu.</string>
+    <string name="tutorial_tasks_complete">Itu dulu untuk sekarang. Kalau kamu butuh pengingat, lihat bagian FAQ.</string>
     <string name="tutorial_skills">Kemampuan adalah hal spesial yang memiliki efek yang kuat! Ketuk pada kemampuan untuk menggunakannya. Kemampuan akan mengurangi Mana (bar biru), yang bisa kamu dapatkan dengan mengecek aplikasi setiap hari dan dengan menyelesaikan tugas dunia-nyatamu. Periksa FAQ pada menu untuk info lebih lanjut!</string>
-  <string name="tutorial_party">Ini adalah bagian dimana kamu dan teman-temanmu dapat menjaga masing-masing agar tetap bertanggung jawab sekaligus melawan monster-monster dengan tugasmu!</string>
-  <string name="tutorial_tavern">Selamat datang di Kedai Minuman, ruang berbincang publik untuk semua umur! Di sini kamu dapat berbincang mengenai produktivitas dan menanyakan pertanyaan. Selamat bersenang-senang!</string>
+    <string name="tutorial_party">Ini adalah bagian dimana kamu dan teman-temanmu dapat menjaga masing-masing agar tetap bertanggung jawab sekaligus melawan monster-monster dengan tugasmu!</string>
+    <string name="tutorial_tavern">Selamat datang di Kedai Minuman, ruang berbincang publik untuk semua umur! Di sini kamu dapat berbincang mengenai produktivitas dan menanyakan pertanyaan. Selamat bersenang-senang!</string>
     <string name="tutorial_stats">Ketuk tombol abu-abu untuk mengalokasikan banyak status sekaligus, atau ketuk pada tanda panah untuk menambahkan satu per satu.</string>
+    <string name="tutorial_party_created">Selamat datang di Party-mu! Kamu bisa menemukan lebih banyak anggota dari daftar pemain yang mencari Party atau undang teman secara langsung untuk mendapatkan Gulungan Misi Basi-List.
+\n
+\nKunjungi Dukungan untuk mempelajari lebih lanjut tentang Party.</string>
 </resources>

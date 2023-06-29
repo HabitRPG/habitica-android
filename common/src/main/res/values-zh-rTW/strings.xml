@@ -15,4 +15,6 @@
     <string name="action_cancel">取消</string>
     <string name="about_title">關於</string>
     <string name="are_you_sure">你確定嗎？</string>
+    <string name="gold_plural">金幣</string>
+    <string name="stats">統計</string>
 </resources>

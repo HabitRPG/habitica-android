@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="syncing_account">Synchronisation du compte à partir du téléphone</string>
+    <string name="how_did_you_do">Comment ça a été \?</string>
+    <string name="you_found">Tu as trouvé…</string>
+    <string name="some_x">quelques %s</string>
+    <string name="edit_on_phone">Modifier sur le téléphone</string>
+    <string name="sign_in">S\'identifier</string>
+    <string name="sign_in_description">Créez une liste de tâche et suivez votre progression avec votre avatar de jeu</string>
+    <string name="sign_in_on_phone">S\'identifier sur le téléphone</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="sign_in_password">S\'identifier avec un mot de passe</string>
+    <string name="other_options">Autres options</string>
+    <string name="continue_text">Continuer</string>
+    <string name="day_start">Début de journée</string>
+    <string name="faint_description">Vous avez perdu un Niveau, de l\'expérience, et de l\'or. N\'abandonnez pas !</string>
+    <string name="ok">OK</string>
+    <string name="x_and_y">%1$s et %2$s</string>
+    <string name="you_ran_out_of_hp">Vous n\'avez plus de point de vie</string>
+</resources>

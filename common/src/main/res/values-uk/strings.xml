@@ -15,4 +15,6 @@
     <string name="action_cancel">Скасувати</string>
     <string name="about_title">Про нас</string>
     <string name="are_you_sure">Ви впевнені\?</string>
+    <string name="stats">Характеристики</string>
+    <string name="reward">Нагорода</string>
 </resources>

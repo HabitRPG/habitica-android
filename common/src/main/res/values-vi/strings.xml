@@ -15,4 +15,10 @@
     <string name="action_edit">Chỉnh sửa</string>
     <string name="action_cancel">Hủy lời mời</string>
     <string name="about_title">Về chúng tôi</string>
+    <string name="gold_plural">vàng</string>
+    <string name="gold_capitalized">Vàng</string>
+    <string name="stats">Chỉ số</string>
+    <string name="rewards">Phần thưởng</string>
+    <string name="habit">Thói quen</string>
+    <string name="dailies">Công việc hằng ngày</string>
 </resources>

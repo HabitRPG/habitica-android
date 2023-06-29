@@ -232,7 +232,6 @@
     <string name="opt_out_class">Désactiver</string>
     <string name="class_confirmation">Êtes vous sûr de vouloir devenir un %s \?</string>
     <string name="class_changed">Vous êtes maintenant un %s !</string>
-
     <string name="choose_class">Choisissez une classe</string>
     <string name="dialog_go_back">Revenir</string>
     <string name="opt_out_confirmation">Confirmez-vous vouloir désactiver votre compte ?</string>
@@ -1263,4 +1262,5 @@
         <item quantity="one">%d personne</item>
         <item quantity="other">%d personnes</item>
     </plurals>
+    <string name="x_and_y">%1$s et %2$s</string>
 </resources>

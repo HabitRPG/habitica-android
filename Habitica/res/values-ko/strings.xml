@@ -220,7 +220,6 @@
     <string name="opt_out_class">선택 유예</string>
     <string name="class_confirmation">%s 이(가) 되고싶은 것이 확실한가요\?</string>
     <string name="class_changed">%s이(가) 되었습니다!</string>
-
     <string name="choose_class">직업 선택</string>
     <string name="dialog_go_back">뒤로 가기</string>
     <string name="opt_out_confirmation">선택을 유예하고 싶은 것이 확실한가요?</string>
@@ -971,7 +970,7 @@
     <string name="common_questions">자주 묻는 질문</string>
     <string name="usernames_party">%s의 파티</string>
     <string name="discard">버리기</string>
-    <string name="class_confirmation_price">당신의 클래스 %s로 %d개의 보석을 사용하여 변경 하시겠습니까\?</string>
+    <string name="class_confirmation_price">%d개의 보석을 사용하여 %s직업으로 전직하시겠습니까\?</string>
     <string name="subscription_confirmation">이제 1개월간 구독하였습니다</string>
     <string name="month_reminder_title">일과에 변화가 필요한가요\?</string>
     <string name="use_item">파티원에게 아이템 사용하기</string>&gt;
@@ -1259,4 +1258,13 @@
     <string name="copy_shared_tasks">공유 중인 과제 복사</string>
     <string name="group_plan_settings">그룹 계획 설정</string>
     <string name="copy_tasks_description">할당된 과제와 열려 있는 과제를 개인 과제 목록에 표시</string>
+    <string name="insufficient_level_equipment_dialog">직업 제한이 있는 아이템입니다.
+\n10 레벨부터 직업을 선택할 수 있습니다.</string>
+    <string name="send_invite">초대하기</string>
+    <string name="shop_armoire_description">시즌 행사에서 새로운 장비가 출시됩니다. 기다리시는 동안, 마법의 장비상자에서 %d 벌의 장비를 획득해보세요!</string>
+    <string name="enable_notifications">알림 켜기</string>
+    <string name="push_notification_system_settings_description">푸시 알림을 받으려면 설정 앱에서 Habitica 알림을 허용해주세요</string>
+    <string name="push_notification_system_settings_reminders">리마인더 알림을 받으려면 설정 앱에서 Habitica 알림을 허용해주세요</string>
+    <string name="push_notification_system_settings_title">알림 꺼짐</string>
+    <string name="shop_armoire_empty_description">시즌 행사에서 새로운 장비가 출시됩니다. 마법의 장비상자에도 매달 재고가 추가됩니다!</string>
 </resources>

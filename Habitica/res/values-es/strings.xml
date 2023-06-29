@@ -213,7 +213,7 @@
     <string name="notification_pet_fed">¡Tu %s ha comido!</string>
     <string name="notification_purchase_reward">Has comprado una recompensa</string>
     <string name="world_quest">Misión mundial</string>
-    <string name="inn_description">¿Necesitar un descanso\? Visita la Posada de Daniel para pausar algunas de los mecánicas de juego más difíciles de Habitica:
+    <string name="inn_description">¿Necesitas un descanso\? Visita la Posada de Daniel para pausar algunas de los mecánicas de juego más difíciles de Habitica:
 \n
 \n • Las Tareas Diarias perdidas no te harán daño
 \n • Las Tareas Pendientes no reiniciarán las rachas ni se degradarán en color
@@ -233,7 +233,6 @@
     <string name="opt_out_class">No elegir</string>
     <string name="class_confirmation">¿Seguro que quieres ser %s?</string>
     <string name="class_changed">¡Ahora eres un %s!</string>
-
     <string name="choose_class">Elegir clase</string>
     <string name="dialog_go_back">Volver</string>
     <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>
@@ -483,7 +482,7 @@
     <string name="forgot_password_title">Enviar un correo electrónico con un enlace para restablecer la contraseña</string>
     <string name="forgot_password_description">Introduce la dirección de correo electrónico que usaste para registrarte en Habitica.</string>
     <string name="forgot_password_confirmation">Si tenemos tu correo electrónico en el archivo, las instrucciones para establecer una nueva contraseña se han enviado al correo electrónico.</string>
-    <string name="ok">Vale</string>
+    <string name="ok">OK</string>
     <string name="profile">Perfil</string>
     <string name="profile_summary">Editar tu perfil público.</string>
     <string name="display_name">Mostrar Nombre</string>
@@ -1142,4 +1141,17 @@
     <string name="subscription_confirmation_multiple">Ahora estás suscrito por %s meses</string>
     <string name="gem_purchase_confirmation">Ganaste %s gemas.</string>
     <string name="usernames_party">Equipo de %s</string>
+    <string name="quest_party_required_title">Tienes que estar en un equipo antes de empezar una misión</string>
+    <string name="push_notification_system_settings_reminders">Permite las notificaciones de Habitica en Ajustes para recibir recordatorios</string>
+    <string name="enable_notifications">Habilitar Notificaciones</string>
+    <string name="push_notification_system_settings_description">"Permitir las notificaciones de Habitica en los  Ajustes de la app para recibir notificaciones push"</string>
+    <string name="push_notification_system_settings_title">Notificaciones Desactivadas</string>
+    <string name="title">Título</string>
+    <string name="positive_sentence">positivo</string>
+    <string name="negative_sentence">negativo</string>
+    <string name="quest_party_required_description">¡Cuando participes en una partida, podrás emprender misiones por tu cuenta o invitar a tus amigos para que también participen en ellas!</string>
+    <string name="sell_no_price">Vender</string>
+    <string name="armoireEquipment_new">¡Encontraste una pieza de equipamiento rara en el Armario!</string>
+    <string name="armoireFood_new">Rebuscas en el Armario y encuentras comida. ¿Qué hace eso aquí\?</string>
+    <string name="create_new_party">Crear un nuevo equipo</string>
 </resources>
