@@ -248,7 +248,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             loadMarketGear()
                         }
                     }
-                    alert.addButton(R.string.dialog_go_back, false)
+                    alert.addButton(R.string.close, false)
                     alert.show()
                 } else {
                     val alert = HabiticaAlertDialog(context)
@@ -266,7 +266,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             loadMarketGear()
                         }
                     }
-                    alert.addButton(R.string.dialog_go_back, false)
+                    alert.addButton(R.string.close, false)
                     alert.show()
                 }
             }
