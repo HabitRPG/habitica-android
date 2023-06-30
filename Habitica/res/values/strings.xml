@@ -433,6 +433,7 @@
     <string name="remove_tasks">Remove</string>
     <string name="keep_tasks">Keep</string>
     <string name="my_challenges">My Challenges</string>
+    <string name="challenges">Challenges</string>
     <string name="official">Official</string>
     <string name="challenge">Challenge</string>
     <string name="not_part_of_a_challenge">You’re not part of any Challenges right now!</string>
