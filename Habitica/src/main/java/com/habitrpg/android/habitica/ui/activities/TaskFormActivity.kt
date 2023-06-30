@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -217,6 +218,7 @@ class TaskFormActivity : BaseActivity() {
                 .map { tagRepository.getUnmanagedCopy(it) }
                 .collect {
                     tags = it
+                    sortTagPositions()
                     setTagViews()
                 }
         }
@@ -525,18 +527,65 @@ class TaskFormActivity : BaseActivity() {
         }
     }
 
+    private fun sortTagPositions() {
+        val sortedTagList = arrayListOf<Tag>()
+        val challengeTagList = arrayListOf<Tag>()
+        val groupTagList = arrayListOf<Tag>()
+        val otherTagList = arrayListOf<Tag>()
+        tags.forEach {
+            if (it.challenge) {
+                challengeTagList.add(it)
+            } else if (it.group != null) {
+                groupTagList.add(it)
+            } else {
+                otherTagList.add(it)
+            }
+        }
+        val challengesTagTitle = Tag().apply {
+            name = getString(R.string.challenges)
+        }
+        val groupsTagTitle = Tag().apply {
+            name = getString(R.string.groups)
+        }
+        val otherTagTitle = Tag().apply {
+            name = getString(R.string.tags)
+        }
+        if (challengeTagList.isNotEmpty()) {
+            sortedTagList.add(challengesTagTitle)
+            sortedTagList.addAll(challengeTagList)
+        }
+        if (groupTagList.isNotEmpty()) {
+            sortedTagList.add(groupsTagTitle)
+            sortedTagList.addAll(groupTagList)
+        }
+        if (otherTagList.isNotEmpty()) {
+            sortedTagList.add(otherTagTitle)
+            sortedTagList.addAll(otherTagList)
+        }
+        tags = sortedTagList
+    }
+
     private fun setTagViews() {
         binding.tagsWrapper.removeAllViews()
         val padding = 20.dpToPx(this)
-        for (tag in tags) {
-            val view = CheckBox(this)
-            view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
-            view.text = tag.name
-            view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
-            if (preselectedTags?.contains(tag.id) == true) {
-                view.isChecked = true
+        tags.forEach { tag ->
+            if (tag.id.isBlank()) {
+                // This is a title for a tag group
+                val view = TextView(this)
+                view.setPadding(0, view.paddingTop, view.paddingRight, view.paddingBottom)
+                view.text = tag.name
+                view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
+                binding.tagsWrapper.addView(view)
+            } else {
+                val view = CheckBox(this)
+                view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
+                view.text = tag.name
+                view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
+                if (preselectedTags?.contains(tag.id) == true) {
+                    view.isChecked = true
+                }
+                binding.tagsWrapper.addView(view)
             }
-            binding.tagsWrapper.addView(view)
         }
         setAllTagSelections()
         updateTagViewsColors()
@@ -678,7 +727,7 @@ class TaskFormActivity : BaseActivity() {
             thisTask.tags = RealmList()
             binding.tagsWrapper.forEachIndexed { index, view ->
                 val tagView = view as? CheckBox
-                if (tagView?.isChecked == true) {
+                if (tagView?.isChecked == true && tags[index].id.isNotBlank()) {
                     thisTask.tags?.add(tags[index])
                 }
             }
