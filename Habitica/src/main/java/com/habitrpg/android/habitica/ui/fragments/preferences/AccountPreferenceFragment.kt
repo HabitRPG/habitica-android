@@ -419,7 +419,7 @@ class AccountPreferenceFragment :
         }
     }
 
-    private val regex = "[^a-z0-9_-]".toRegex()
+    private val regex = "[^a-zA-Z0-9_-]".toRegex()
 
     private fun showLoginNameDialog() {
         showSingleEntryDialog(user?.username, getString(R.string.username), {
