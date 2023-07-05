@@ -62,6 +62,7 @@ import kotlin.math.min
 class FullProfileActivity : BaseActivity() {
     private var blocks: List<String> = listOf()
     private var isModerator = false
+    private var isUserSupport = false
     private var member: MutableState<Member?> = mutableStateOf(null)
 
     @Inject
@@ -131,9 +132,10 @@ class FullProfileActivity : BaseActivity() {
                     binding.blockedDisclaimerView.visibility =
                         if (isUserBlocked()) View.VISIBLE else View.GONE
 
+                    isUserSupport = it?.hasPermission(Permission.USER_SUPPORT) == true
                     isModerator = it?.hasPermission(Permission.MODERATOR) == true
                     binding.adminStatusView.isVisible = isModerator
-                    if (isModerator) {
+                    if (isModerator || isUserSupport) {
                         val member = socialRepository.retrieveMember(userID, true)
                         member?.stats = this@FullProfileActivity.member.value?.stats
                         if (member != null) {
@@ -173,7 +175,7 @@ class FullProfileActivity : BaseActivity() {
             item?.title = getString(R.string.block)
         }
         menu.setGroupVisible(R.id.admin_items, isModerator)
-        if (isModerator) {
+        if (isModerator || isUserSupport) {
             menu.findItem(R.id.ban_user)?.title = getString(
                 if (member.value?.authentication?.blocked == true) {
                     R.string.unban_user
