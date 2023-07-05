@@ -272,9 +272,12 @@ class PurchaseHandler(
         retryUntil { billingClientState.canMaybePurchase && billingClient.isReady }
         val params = ConsumeParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
         val result = billingClient.consumePurchase(params)
-        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK && retries > 0) {
             delay(500)
             consume(purchase, retries - 1)
+        } else if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            //Throw an error to continue the flow
+            throw Exception("Failed to consume purchase after multiple attempts")
         } else {
             userViewModel.userRepository.retrieveUser(false, true)
         }
@@ -393,16 +396,25 @@ class PurchaseHandler(
     }
 
     private fun handleError(throwable : Throwable, purchase : Purchase) {
-        (throwable as? HttpException)?.let { error ->
-            if (error.code() == 401) {
-                val res = apiClient.getErrorResponse(throwable)
-                if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
-                    processedPurchase(purchase)
-                    removeGift(purchase.products.firstOrNull())
-                    CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
-                        consume(purchase)
+        when (throwable) {
+            is HttpException -> {
+                if (throwable.code() == 401) {
+                    val res = apiClient.getErrorResponse(throwable)
+                    if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
+                        processedPurchase(purchase)
+                        removeGift(purchase.products.firstOrNull())
+                        CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                            consume(purchase)
+                        }
+                        return
                     }
-                    return
+                }
+            }
+            else -> {
+                // Handles other potential errors such as IOException or an exception
+                // thrown by billingClient.consumePurchase method that is not handled
+                CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
+                    consume(purchase)
                 }
             }
         }
