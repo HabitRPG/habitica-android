@@ -114,6 +114,8 @@ class ChallengeListFragment :
                 }
             }
         })
+
+        retrieveChallengesPage(true)
     }
 
     private fun openDetailFragment(challengeID: String) {
