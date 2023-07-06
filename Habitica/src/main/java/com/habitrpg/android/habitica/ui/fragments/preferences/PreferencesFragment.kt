@@ -32,7 +32,6 @@ import com.habitrpg.android.habitica.ui.activities.PrefsActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.preferences.PauseResumeDamageView
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
@@ -393,6 +392,13 @@ class PreferencesFragment : BasePreferencesFragment(),
             }
         )
 
+        val themePreference = findPreference("theme_name") as? ListPreference
+        if (themePreference?.value == "Default") themePreference.value = "purple"
+
+        val themeModePreference = findPreference("theme_mode") as? ListPreference
+        if (themeModePreference?.value == "Follow System") themeModePreference.value = "system"
+
+
         if (10 <= (user?.stats?.lvl ?: 0)) {
             if (user?.flags?.classSelected == true) {
                 if (user.preferences?.disableClasses == true) {
@@ -434,6 +440,9 @@ class PreferencesFragment : BasePreferencesFragment(),
             launchScreenPreference?.entryValues =
                 resources.getStringArray(R.array.launch_screen_values).dropLast(1).toTypedArray()
         }
+
+        val launchScreenPreference = findPreference<ListPreference>("launch_screen")
+        if (launchScreenPreference?.value == "habits") launchScreenPreference.value = "/user/tasks/habits"
 
         val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference
         val inbox = user?.inbox

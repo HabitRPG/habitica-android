@@ -145,7 +145,7 @@
             android:key="launch_screen"
             android:entries="@array/launch_screen_types"
             android:entryValues="@array/launch_screen_values"
-            android:defaultValue="habits"
+            android:defaultValue="/user/tasks/habits"
             android:layout="@layout/preference_child_summary"/>
         <ListPreference android:title="@string/Language_title"
             android:key="language"
@@ -163,11 +163,13 @@
             android:key="theme_name"
             android:entries="@array/AppThemes"
             android:entryValues="@array/AppThemeValues"
+            android:defaultValue="purple"
             android:layout="@layout/preference_child_summary"/>
         <ListPreference android:title="@string/theme_mode"
             android:key="theme_mode"
             android:entries="@array/AppThemeModes"
             android:entryValues="@array/AppThemeModeValues"
+            android:defaultValue="system"
             android:layout="@layout/preference_child_summary" />
         <CheckBoxPreference android:title="@string/disablePrivateMessages"
             android:key="disablePMs"
