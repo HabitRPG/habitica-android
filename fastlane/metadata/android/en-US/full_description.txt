@@ -1,7 +1,9 @@
 Habitica is a free habit-building and productivity app that uses retro RPG elements to gamify your tasks and goals.
 Use Habitica to help with ADHD, self care, New Year’s resolutions, household chores, work tasks, creative projects, fitness goals, back-to-school routines, and more!
+
 How it works:
 Create an avatar then add tasks, chores, or goals you’d like to work on. When you do something in real life, check it off in the app and receive gold, experience, and items that can be used in-game!
+
 Features:
 • Automatically repeating tasks scheduled for your daily, weekly, or monthly routines
 • Flexible habit tracker for tasks you want to do multiple times a day or only once in awhile
@@ -17,8 +19,16 @@ Features:
 • Reminders and widgets to help keep you on track
 • Customizable color themes with dark and light mode
 • Syncing across devices
-• Brand new WearOS watch app available in version 4.0!
+
+Want even more flexibility to take your tasks on the go? We have a Wear OS app on the watch!
+Wear OS features:
+• View, create, and complete Habites, Dailies, and To do’s
+• Receive rewards for your efforts with experience, food, eggs, and potions
+• Track your stats with dynamic progress bars
+• Show off your stunning pixel avatar on the watch face
+
 —
+
 Habitica is an open-source app run by a small team that’s made better by the work of volunteers who contribute pixel art, translations, bug fixes, and more. If you’d like to contribute, reach out!
 Community, privacy, and transparency are important to us. Your tasks are private and we don’t sell your personal data to third parties.
-If you have any questions, feel free to send feedback to admin@habitica.com! And if you enjoy our app, we would really appreciate it if you would leave us a review.
+If you have any questions, feel free to send feedback to admin@habitica.com! And if you enjoy our app, we would really appreciate it if you would leave us a review. 

@@ -62,7 +62,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                     binding.loginButton.isVisible = true
                 }
             }
-            binding.root.smoothScrollTo(0, 0)
+            binding.scrollView.smoothScrollTo(0, 0)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {

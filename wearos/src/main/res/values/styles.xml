@@ -105,4 +105,12 @@
         <item name="android:textColorHint">@color/watch_gray_200</item>
     </style>
 
+    <style name="TextAppearanceTime">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+    <style name="TextTime">
+        <item name="android:paddingHorizontal">4dp</item>
+    </style>
 </resources>
