@@ -177,7 +177,7 @@ fun AppHeaderView(
                             disabled = true,
                             modifier = Modifier.weight(1f)
                         )
-                    } else if (user?.preferences?.disableClasses != true && user?.flags?.classSelected == false && isMyProfile) {
+                    } else if (user?.preferences?.disableClasses != true && user?.flags?.classSelected != true && isMyProfile) {
                         HabiticaButton(
                             background = HabiticaTheme.colors.basicButtonColor(),
                             color = MaterialTheme.colors.onPrimary,

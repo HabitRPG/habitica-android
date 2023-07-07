@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
-import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
@@ -22,7 +22,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
-import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +53,7 @@ class ClassSelectionActivity : BaseActivity() {
             binding.selectedTitleTextView.text = getString(R.string.x_class, className)
             binding.selectedButton.text = getString(R.string.become_x, className)
         }
-    private var isInitialSelection: Boolean = false
+    private var isClassSelected: Boolean = false
     private var classWasUnset: Boolean? = false
     private var shouldFinish: Boolean? = false
 
@@ -76,9 +75,8 @@ class ClassSelectionActivity : BaseActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val args = navArgs<ClassSelectionActivityArgs>().value
-        isInitialSelection = args.isInitialSelection
+        isClassSelected = args.isInitialSelection
         currentClass = args.className
-
         newClass = currentClass ?: "healer"
 
         userViewModel.user.observe(this) {
@@ -89,7 +87,7 @@ class ClassSelectionActivity : BaseActivity() {
             }
         }
 
-        if (!isInitialSelection) {
+        if (!isClassSelected) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.changeClass()
                 classWasUnset
@@ -214,21 +212,30 @@ class ClassSelectionActivity : BaseActivity() {
     }
 
     private fun optOutSelected() {
-        if (!this.isInitialSelection && this.classWasUnset == false) {
+        if (!this.isClassSelected && this.classWasUnset == false) {
             return
         }
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.opt_out_confirmation))
-        alert.addButton(R.string.opt_out_class, true) { _, _ -> optOutOfClasses() }
-        alert.addButton(R.string.dialog_go_back, false)
+        alert.setMessage(getString(R.string.opt_out_description))
+        alert.addButton(R.string.opt_out_class, true, true) { _, _ ->
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                // Set Player to have no class, and opt out
+                userRepository.changeClass()
+                classWasUnset
+                optOutOfClasses()
+            }
+
+        }
+        alert.addButton(R.string.close, false)
         alert.show()
     }
 
     private fun displayConfirmationDialogForClass() {
-        if (!this.isInitialSelection && this.classWasUnset == false) {
+        if (isClassSelected) {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(getString(R.string.change_class_selected_confirmation, newClass))
-            alert.setMessage(getString(R.string.change_class_equipment_warning))
+            alert.setMessage(getString(R.string.change_class_confirmation_message))
             alert.addButton(R.string.choose_class, true) { _, _ ->
                 selectClass(newClass, true)
             }
@@ -248,6 +255,10 @@ class ClassSelectionActivity : BaseActivity() {
         alert.setTitle(getString(R.string.class_changed, className))
         alert.setMessage(getString(R.string.class_changed_description, selectedClass))
         alert.addButton(getString(R.string.complete_tutorial), true){ _, _ -> dismiss() }
+        alert.addButton(getString(R.string.learn_more), false){ _, _ ->
+            dismiss()
+            MainNavigationController.navigate(R.id.FAQOverviewFragment)
+        }
         alert.setOnCancelListener {
             dismiss()
         }
@@ -264,41 +275,20 @@ class ClassSelectionActivity : BaseActivity() {
     }
 
     private fun selectClass(selectedClass: String, isChanging: Boolean) {
-        userViewModel.user.observeOnce(this) { user ->
-            if (user == null) {
-                return@observeOnce
+        shouldFinish = true
+        if (isClassSelected) {
+            val dialog = this.displayProgressDialog(getString(R.string.changing_class_progress))
+            lifecycleScope.launch(Dispatchers.Main) {
+                userRepository.changeClass(selectedClass)
+                dialog.hide()
+                displayClassChanged(selectedClass)
             }
-
-            if (isInitialSelection) {
-                shouldFinish = true
-                val dialog =
-                    this.displayProgressDialog(getString(R.string.changing_class_progress))
-                lifecycleScope.launch(Dispatchers.Main) {
-                    userRepository.changeClass(selectedClass)
-                    dialog.hide()
-                    displayClassChanged(selectedClass)
-                }
-                return@observeOnce
-            }
-
-            if ((user.gemCount ?: 0) >= 3) {
-                val dialog = HabiticaAlertDialog(this)
-                dialog.setTitle(R.string.change_class_confirmation)
-                dialog.addButton(R.string.change_class, true, true) { _, _ ->
-                    shouldFinish = true
-                    val dialog =
-                        this.displayProgressDialog(getString(R.string.changing_class_progress))
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        userRepository.changeClass(selectedClass)
-                        dialog.hide()
-                        if (isChanging) displayClassChanged(selectedClass)
-                    }
-                }
-                dialog.addButton(R.string.dialog_go_back, false)
-                dialog.enqueue()
-            } else {
-                val dialog = InsufficientGemsDialog(this, 3)
-                dialog.show()
+        } else {
+            val dialog = this.displayProgressDialog(getString(R.string.choosing_class_progress))
+            lifecycleScope.launch(Dispatchers.Main) {
+                userRepository.changeClass(selectedClass)
+                dialog.hide()
+                displayClassChanged(selectedClass)
             }
         }
     }
