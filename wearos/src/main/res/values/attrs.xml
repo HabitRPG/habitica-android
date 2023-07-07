@@ -19,4 +19,8 @@
         <attr name="chipColor" format="color" />
         <attr name="chipTextColor" format="color" />
     </declare-styleable>
+    <declare-styleable name="TimeText">
+        <attr name="android:titleTextColor" format="reference|color" />
+        <attr name="titleText" format="string" />
+    </declare-styleable>
 </resources>
