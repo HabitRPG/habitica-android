@@ -77,7 +77,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         // and if so, don't display the notification to allocate points.
         viewModel.user.observeOnce(this) {user ->
             userLvl = user?.stats?.lvl ?: 0
-            println("test")
         }
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
@@ -155,12 +154,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                     viewList.add(item)
                 }
             }
-            refreshViews(viewList)
+            updateNotificationsAndRefresh(viewList)
         }
 
     }
 
-    private fun refreshViews(newItems: List<View>) {
+    private fun updateNotificationsAndRefresh(newItems: List<View>) {
         val currentViews = (0 until binding.notificationItems.childCount).map {
             binding.notificationItems.getChildAt(it)
         }
@@ -179,6 +178,19 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             }
         }
     }
+
+    private fun removeNotificationAndRefresh(notification: Notification) {
+        // Immediately remove notification for better user experience
+        // (To avoid waiting for the server to respond for potential slower connections)
+        this.notifications = this.notifications.filter { it.id != notification.id }
+
+        if (notifications.isEmpty()) {
+            displayNoNotificationsView()
+        } else {
+            displayNotificationsListView(notifications)
+        }
+    }
+
 
 
     private fun createNotificationsHeaderView(notificationCount: Int): View? {
@@ -320,7 +332,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
-        dismissButton?.setOnClickListener { viewModel.dismissNotification(notification) }
+        dismissButton?.setOnClickListener {
+            removeNotificationAndRefresh(notification)
+            viewModel.dismissNotification(notification)
+        }
 
         val messageTextView = item?.findViewById(R.id.message_text) as? TextView
         messageTextView?.text = messageText
