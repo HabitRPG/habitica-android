@@ -47,8 +47,9 @@ class NotificationOpenHandler {
             }
         }
 
-        private fun openPartyScreen() {
-            MainNavigationController.navigate(R.id.partyFragment)
+        private fun openPartyScreen(isChatNotification: Boolean = false) {
+            val tabToOpen = if (isChatNotification) 1 else 0
+            MainNavigationController.navigate(R.id.partyFragment, bundleOf("tabToOpen" to tabToOpen))
         }
 
         private fun openNoPartyScreen() {
@@ -77,7 +78,7 @@ class NotificationOpenHandler {
 
         private fun handleChatMessage(type: String?, groupID: String?) {
             when (type) {
-                "party" -> openPartyScreen()
+                "party" -> openPartyScreen(true)
                 "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)
                 "guild" -> openGuildDetailScreen(groupID)
             }
