@@ -801,6 +801,7 @@
     <string name="new_reminder">New reminder</string>
     <string name="streak">Streak</string>
     <string name="update_available">Update available: %1$s (%2$d)</string>
+    <string name="need_help_description">You can contact us and a member of our team will do their best to help!</string>
     <string name="need_help_header_description">Post a message in the %s to have your questions answered by a fellow player.</string>
     <string name="need_more_help">Need more help?</string>
     <string name="become_x">Become a %s</string>
