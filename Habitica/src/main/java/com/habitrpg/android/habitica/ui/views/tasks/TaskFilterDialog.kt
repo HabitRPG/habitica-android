@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
@@ -135,28 +136,38 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         )
         val leftPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, context.resources.displayMetrics).toInt()
         val verticalPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, context.resources.displayMetrics).toInt()
+        sortTagPositions()
         for (tag in tags) {
-            val tagCheckbox = AppCompatCheckBox(context)
-            tagCheckbox.text = tag.name
-            tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            tagCheckbox.isChecked = viewModel.tags.contains(tag.id)
-            tagCheckbox.setPadding(
-                tagCheckbox.paddingLeft + leftPadding,
-                verticalPadding,
-                tagCheckbox.paddingRight,
-                verticalPadding
-            )
-            tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-            CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
-            tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    viewModel.addActiveTag(tag.id)
-                } else {
-                    viewModel.removeActiveTag(tag.id)
+            if (tag.id.isBlank()) {
+                // This is a title for a tag group
+                val view = TextView(context)
+                view.setPadding(0, view.paddingTop, view.paddingRight, view.paddingBottom)
+                view.text = tag.name
+                view.setTextColor(context.getThemeColor(R.attr.textColorTintedPrimary))
+                binding.tagsList.addView(view)
+            } else {
+                val tagCheckbox = AppCompatCheckBox(context)
+                tagCheckbox.text = tag.name
+                tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+                tagCheckbox.isChecked = viewModel.tags.contains(tag.id)
+                tagCheckbox.setPadding(
+                    tagCheckbox.paddingLeft + leftPadding,
+                    verticalPadding,
+                    tagCheckbox.paddingRight,
+                    verticalPadding
+                )
+                tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
+                tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        viewModel.addActiveTag(tag.id)
+                    } else {
+                        viewModel.removeActiveTag(tag.id)
+                    }
+                    filtersChanged()
                 }
-                filtersChanged()
+                binding.tagsList.addView(tagCheckbox)
             }
-            binding.tagsList.addView(tagCheckbox)
         }
         createAddTagButton()
     }
@@ -328,6 +339,44 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         } else {
             stopEditing()
         }
+    }
+
+    private fun sortTagPositions() {
+        val sortedTagList = arrayListOf<Tag>()
+        val challengeTagList = arrayListOf<Tag>()
+        val groupTagList = arrayListOf<Tag>()
+        val otherTagList = arrayListOf<Tag>()
+        tags.forEach {
+            if (it.challenge) {
+                challengeTagList.add(it)
+            } else if (it.group != null) {
+                groupTagList.add(it)
+            } else {
+                otherTagList.add(it)
+            }
+        }
+        val challengesTagTitle = Tag().apply {
+            name = context.getString(R.string.challenge_tags)
+        }
+        val groupsTagTitle = Tag().apply {
+            name = context.getString(R.string.group_tags)
+        }
+        val otherTagTitle = Tag().apply {
+            name = context.getString(R.string.your_tags)
+        }
+        if (challengeTagList.isNotEmpty()) {
+            sortedTagList.add(challengesTagTitle)
+            sortedTagList.addAll(challengeTagList)
+        }
+        if (groupTagList.isNotEmpty()) {
+            sortedTagList.add(groupsTagTitle)
+            sortedTagList.addAll(groupTagList)
+        }
+        if (otherTagList.isNotEmpty()) {
+            sortedTagList.add(otherTagTitle)
+            sortedTagList.addAll(otherTagList)
+        }
+        tags = sortedTagList
     }
 
     private fun filtersChanged() {
