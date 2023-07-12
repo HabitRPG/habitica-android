@@ -165,14 +165,18 @@ class FullProfileActivity : BaseActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_full_profile, menu)
         MenuCompat.setGroupDividerEnabled(menu, true)
-        val item = menu.findItem(R.id.block_user)
+        val itemBlock = menu.findItem(R.id.block_user)
+        val itemReport = menu.findItem(R.id.report_user)
 
-        if (isMyProfile()) item.isVisible = false
+        if (isMyProfile()) {
+            itemBlock.isVisible = false
+            itemReport.isVisible = false
+        }
 
         if (isUserBlocked()) {
-            item?.title = getString(R.string.unblock_user)
+            itemBlock?.title = getString(R.string.unblock_user)
         } else {
-            item?.title = getString(R.string.block)
+            itemBlock?.title = getString(R.string.block)
         }
         menu.setGroupVisible(R.id.admin_items, isModerator)
         if (isModerator || isUserSupport) {
@@ -251,6 +255,13 @@ class FullProfileActivity : BaseActivity() {
                 }
                 true
             }
+            R.id.report_user -> {
+                showReportUserBottomSheet(
+                    userIdBeingReported = userID,
+                    usernameBeingReported = username ?: "",
+                )
+                true
+            }
             R.id.ban_user -> {
                 banUser()
                 true
@@ -301,6 +312,19 @@ class FullProfileActivity : BaseActivity() {
             }
         }
         alert.show()
+    }
+
+    private fun showReportUserBottomSheet(userIdBeingReported : String, usernameBeingReported: String) {
+        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
+            reportType = ReportBottomSheetFragment.REPORT_TYPE_USER,
+            profileName = usernameBeingReported,
+            messageId = "",
+            messageText = "",
+            groupId = "",
+            userIdBeingReported = userIdBeingReported
+        )
+
+        reportBottomSheetFragment.show(supportFragmentManager, "ReportMessageFragment")
     }
 
     private fun banUser() {
@@ -729,6 +753,4 @@ class FullProfileActivity : BaseActivity() {
         }
     }
 
-// endregion
-    // endregion
 }

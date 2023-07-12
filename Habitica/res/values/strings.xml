@@ -1091,6 +1091,7 @@
     <string name="pet_category">%s Pets</string>
     <string name="mount_category">%s Mounts</string>
     <string name="block_user">Block Player</string>
+    <string name="report_user">Report Player</string>
     <string name="unblock_user">Unblock Player</string>
     <string name="block_user_title">Block %s?</string>
     <string name="block_user_description">A blocked player cannot send you Private Messages but you will still see their posts</string>

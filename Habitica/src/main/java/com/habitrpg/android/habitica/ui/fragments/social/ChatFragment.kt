@@ -13,16 +13,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
+import com.habitrpg.android.habitica.ui.activities.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
@@ -77,7 +76,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.let { adapter ->
             adapter.onOpenProfile = { userId -> FullProfileActivity.open(userId) }
             adapter.onDeleteMessage = { this.showDeleteConfirmationDialog(it) }
-            adapter.onFlagMessage = { this.showFlagConfirmationDialog(it) }
+            adapter.onFlagMessage = { this.showFlagMessageBottomSheet(it) }
             adapter.onReply = { setReplyTo(it) }
             adapter.onCopyMessage = { this.copyMessageToClipboard(it) }
             adapter.onMessageLike = { viewModel.likeMessage(it) }
@@ -181,15 +180,33 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
     }
 
-    private fun showFlagConfirmationDialog(chatMessage : ChatMessage) {
-        val directions = MainNavDirections.actionGlobalReportMessageActivity(
-            chatMessage.text ?: "",
-            chatMessage.user ?: "",
-            chatMessage.id,
-            chatMessage.groupId
+    private fun showFlagMessageBottomSheet(chatMessage : ChatMessage) {
+        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
+            reportType = ReportBottomSheetFragment.REPORT_TYPE_MESSAGE,
+            profileName = chatMessage.username ?: "",
+            messageId = chatMessage.id,
+            messageText = chatMessage.text ?: "",
+            groupId = chatMessage.groupId ?: "",
+            userIdBeingReported = chatMessage.userID ?: ""
         )
-        MainNavigationController.navigate(directions)
+
+        reportBottomSheetFragment.show(childFragmentManager, "ReportMessageFragment")
     }
+
+    private fun showReportUserBottomSheet(chatMessage : ChatMessage) {
+        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
+            reportType = ReportBottomSheetFragment.REPORT_TYPE_USER,
+            profileName = chatMessage.username ?: "",
+            messageId = "",
+            messageText = "",
+            groupId = chatMessage.groupId ?: "",
+            userIdBeingReported = chatMessage.userID ?: ""
+        )
+
+        reportBottomSheetFragment.show(childFragmentManager, "ReportMessageFragment")
+    }
+
+
 
     private fun showDeleteConfirmationDialog(chatMessage : ChatMessage) {
         val context = context

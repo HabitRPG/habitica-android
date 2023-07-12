@@ -257,12 +257,6 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.activities.ReportMessageActivity"
-            android:theme="@style/SheetDialog"
-            android:configChanges="screenSize | smallestScreenSize | screenLayout | orientation"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
         <service
             android:name=".helpers.notifications.HabiticaFirebaseMessagingService"
             android:exported="false">
