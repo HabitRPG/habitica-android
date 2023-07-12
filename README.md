@@ -46,11 +46,7 @@ Given that our team is stretched pretty thin, it can be difficult for us to take
    * Don't forget to include your Habitica User ID, so that we can count your contribution towards your contributor tier
 
 ### Code Style Guidelines
-We follow the code style guidelines outlined in [Android Code Style Guidelines for Contributors](https://source.android.com/source/code-style.html).
-
-You can install our code style scheme to Intellij and/or Android Studio via this shell command:
-
-    $ ./install-codestyle.sh
+We use Kotlin and follow the code style based on the [Android Kotlin Style Guide](https://developer.android.com/kotlin/style-guide).
 
 ## Build Instructions
 
