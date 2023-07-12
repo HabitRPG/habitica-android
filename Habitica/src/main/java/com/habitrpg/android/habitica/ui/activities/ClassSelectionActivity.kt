@@ -95,7 +95,7 @@ class ClassSelectionActivity : BaseActivity() {
         }
 
         binding.healerWrapper.setOnClickListener { newClass = "healer" }
-        binding.mageWrapper.setOnClickListener { newClass = "wizard" }
+        binding.mageWrapper.setOnClickListener { newClass = "mage" }
         binding.rogueWrapper.setOnClickListener { newClass = "rogue" }
         binding.warriorWrapper.setOnClickListener { newClass = "warrior" }
         binding.selectedButton.setOnClickListener { displayConfirmationDialogForClass() }

@@ -318,7 +318,7 @@
     <string name="share_raised">I just gained a %1$s mount in #Habitica by completing my real-life tasks!</string>
     <string name="open_in_store">Open Play Store</string>
     <string name="change_class_confirmation">Do you want to change class for 3 Gems?</string>
-    <string name="change_class_selected_confirmation">Do you want to change your class to %1$s for 3 Gems?</string>
+    <string name="change_class_selected_confirmation">Do you want to change your class to %1$s?</string>
     <string name="change_class_message">This will remove your current class and refund all stat points then let you select a new class</string>
     <string name="change_class_confirmation_message">This will switch which gear is unlocked in shops and change your available skills</string>
     <string name="change_class_equipment_warning">This will refund your stat points, switch which gear is unlocked in shops, and change your available skills.</string>

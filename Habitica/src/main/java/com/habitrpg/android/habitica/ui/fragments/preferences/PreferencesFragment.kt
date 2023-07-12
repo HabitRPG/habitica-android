@@ -147,13 +147,13 @@ class PreferencesFragment : BasePreferencesFragment(),
 
             "choose_class" -> {
                 val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
-                val isClassSelected = if (isPlayerOptedOutOfClass) false else (user?.flags?.classSelected ?: false)
+                val isClassSelected =  user?.flags?.classSelected ?: false
                 val bundle = Bundle()
                 bundle.putBoolean("isInitialSelection", isClassSelected)
                 val intent = Intent(activity, ClassSelectionActivity::class.java)
                 intent.putExtras(bundle)
 
-                if (isClassSelected) {
+                if (isClassSelected && !isPlayerOptedOutOfClass) {
                     if ((user?.gemCount ?: 0) >= 3) {
                         context?.let { context ->
                             val dialog = HabiticaAlertDialog(context)
