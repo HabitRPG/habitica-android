@@ -1,9 +1,10 @@
-New in 4.2.1:
+New in 4.2.3:
 It's easier than ever to party up with our newest feature: Look for Party and Find Members!
 
-- Solo players can let Party leaders know they want an invite by going to Menu > Party and tapping 'Look for Party'
-- Party leaders can see players looking for Party by tapping 'Find Members' on the Party screen and send invites from the list
-- Armoire shows in Market when you have all gear
-- Change class from Market when viewing gear from another class
-- Various bug fixes and improvements
-
+Solo players can let Party leaders know they want an invite by going to Menu > Party and tapping 'Look for Party'
+Party leaders can see players looking for Party by tapping 'Find Members' on the Party screen and send invites
+Bailey notification will show title
+Selecting a class is more consistent
+Chat notifications open Party
+Username case fixes
+Other various fixes
