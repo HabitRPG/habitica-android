@@ -803,7 +803,7 @@
     <string name="become_x">Conviértete en un %s</string>
     <string name="x_class">Clase %s</string>
     <string name="report_message_title">Reporta a %s por violación:</string>
-    <string name="reason_for_report">Razón para reportar (opcional)</string>
+    <string name="report_message_hint">Razón para reportar (opcional)</string>
     <string name="mystery_sets">Conjuntos misteriosos</string>
     <string name="guild_description">Descripción del Gremio</string>
     <string name="invite_to_guild">Invitar al Gremio</string>
@@ -846,7 +846,7 @@
     <string name="levelup_detail_10">Selecciona una clase que se acomode a tu estilo de juego y desbloquea habilidades especiales y equipamiento para ayudarte en tu aventura</string>
     <string name="transferred_ownership">Liderazgo transferido a %s</string>
     <string name="beastMasterDescription">¡Conseguiste el Logro \"Maestro de las Bestias\" por haber coleccionado a todas las mascotas!</string>
-    <string name="report_explanation">**Solo** reporta una publicación que viola las [Normas de la Comunidad] (https://habitica.com/static/community-guidelines) y/o [Términos del Servicio] (https://habitica.com/static/terms). Reportar una publicación de forma inapropiada te puede significar una infracción.</string>
+    <string name="report_message_explanation">**Solo** reporta una publicación que viola las [Normas de la Comunidad] (https://habitica.com/static/community-guidelines) y/o [Términos del Servicio] (https://habitica.com/static/terms). Reportar una publicación de forma inapropiada te puede significar una infracción.</string>
     <string name="guild_members">Miembros del Gremio</string>
     <string name="guild_bank">Banco del Gremio</string>
     <string name="invite_to_party">Invitar al grupo</string>

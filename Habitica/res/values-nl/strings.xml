@@ -861,9 +861,9 @@
     <string name="invite_to_guild">Nodig uit voor Gilde</string>
     <string name="guild_description">Gilde Beschrijving</string>
     <string name="mystery_sets">Mysteriesets</string>
-    <string name="reason_for_report">Reden voor melding (optioneel)</string>
+    <string name="report_message_hint">Reden voor melding (optioneel)</string>
     <string name="report_message_title">%s melden wegens overtreding:</string>
-    <string name="report_explanation">Meld **alleen** een bericht dat de [Communityrichtlijnen](https://habitica.com/static/community-guidelines) en/of [Servicevoorwaarden](https://habitica.com/static/terms) schendt. Het ongepast melden van een bericht kan een overtreding opleveren.</string>
+    <string name="report_message_explanation">Meld **alleen** een bericht dat de [Communityrichtlijnen](https://habitica.com/static/community-guidelines) en/of [Servicevoorwaarden](https://habitica.com/static/terms) schendt. Het ongepast melden van een bericht kan een overtreding opleveren.</string>
     <string name="gift_confirmation_text_sub_g1g1">Je hebt %s een %s-maand Habitica-abonnement gestuurd en hetzelfde abonnement is toegepast op je account voor onze Gift One Get One-promotie!</string>
     <string name="gift_gems_subtitle">Kies hieronder het edelsteenpakket dat je cadeau wilt doen!</string>
     <string name="gift_subscription_subtitle">Kies hieronder het abonnement dat u wilt schenken! Deze aankoop wordt niet automatisch verlengd.</string>

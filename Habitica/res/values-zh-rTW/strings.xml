@@ -846,9 +846,9 @@
     <string name="invite_to_guild">邀請加入公會</string>
     <string name="guild_description">公會描述</string>
     <string name="mystery_sets">神秘套裝</string>
-    <string name="reason_for_report">報告原因（可選）</string>
+    <string name="report_message_hint">報告原因（可選）</string>
     <string name="report_message_title">舉報%s違反：</string>
-    <string name="report_explanation">你**只能**舉報違反了【社會準則】（https://habitica.com/static/community-guidelines）和/或者【服務條款】（https://habitica.com/static/terms）的消息。不當的舉報會讓你違規。</string>
+    <string name="report_message_explanation">你**只能**舉報違反了【社會準則】（https://habitica.com/static/community-guidelines）和/或者【服務條款】（https://habitica.com/static/terms）的消息。不當的舉報會讓你違規。</string>
     <string name="x_class">%s職業</string>
     <string name="become_x">成為%s</string>
     <string name="need_more_help">需要其他幫助？</string>

@@ -749,9 +749,9 @@
     <string name="invite_to_guild">Inviter dans la guilde</string>
     <string name="guild_description">Description de la guilde</string>
     <string name="mystery_sets">Ensembles mystère</string>
-    <string name="reason_for_report">Motif du signalement (optionnel)</string>
+    <string name="report_message_hint">Motif du signalement (optionnel)</string>
     <string name="report_message_title">Signaler %s pour violation :</string>
-    <string name="report_explanation">Ne signalez **que** les messages qui enfreignent les [règles de vie en communauté](https://habitica.com/static/community-guidelines) et/ou les [conditions de service](https://habitica.com/static/terms). Signaler des messages de façon inadéquate pourrait vous valoir une infraction.</string>
+    <string name="report_message_explanation">Ne signalez **que** les messages qui enfreignent les [règles de vie en communauté](https://habitica.com/static/community-guidelines) et/ou les [conditions de service](https://habitica.com/static/terms). Signaler des messages de façon inadéquate pourrait vous valoir une infraction.</string>
     <string name="x_class">Classe %s</string>
     <string name="become_x">Devenez un %s</string>
     <string name="need_more_help">Besoin d\'un peu plus d\'aide \?</string>

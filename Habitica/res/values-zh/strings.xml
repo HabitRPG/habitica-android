@@ -779,9 +779,9 @@
     <string name="invite_to_guild">邀请加入公会</string>
     <string name="guild_description">公会简介</string>
     <string name="mystery_sets">神秘套装</string>
-    <string name="reason_for_report">报告原因（可选）</string>
+    <string name="report_message_hint">报告原因（可选）</string>
     <string name="report_message_title">举报%s违反：</string>
-    <string name="report_explanation">你**只能**举报违反了【社会准则】（https://habitica.com/static/community-guidelines）和/或者【服务条款】（https://habitica.com/static/terms）的消息。不当的举报会让你违规。</string>
+    <string name="report_message_explanation">你**只能**举报违反了【社会准则】（https://habitica.com/static/community-guidelines）和/或者【服务条款】（https://habitica.com/static/terms）的消息。不当的举报会让你违规。</string>
     <string name="gems_to_gift">宝石送礼</string>
     <string name="preference_push_joined_guild_mention">来自你加入的公会的提醒</string>
     <string name="preference_push_unjoined_guild_mention">来自未加入的公会的提醒</string>

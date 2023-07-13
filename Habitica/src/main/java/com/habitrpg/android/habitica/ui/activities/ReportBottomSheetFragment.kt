@@ -28,7 +28,6 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
     lateinit var socialRepository: SocialRepository
 
     private var reportType: String? = null
-    private var reporting_user_id: String? = null
     private var messageID: String? = null
     private var messageText: String? = null
     private var profileName: String? = null
@@ -54,14 +53,14 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        reportType = arguments?.getString(REPORT_TYPE)
         messageID = arguments?.getString(MESSAGE_ID)
         groupID = arguments?.getString(GROUP_ID)
         messageText = arguments?.getString(MESSAGE_TEXT)
         profileName = arguments?.getString(PROFILE_NAME)
         reportingUserId = arguments?.getString(REPORTING_USER_ID)
 
-        binding.reportExplanationTextview.setMarkdown(getString(R.string.report_explanation))
-        binding.titleTextView.text = getString(R.string.report_message_title, profileName)
+
         binding.messageTextView.text = arguments?.getString(messageText)
         binding.reportButton.setOnClickListener {
             if (reportType == REPORT_TYPE_MESSAGE)
@@ -70,6 +69,21 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                 reportUser()
         }
         binding.closeButton.setOnClickListener { dismiss() }
+
+        if (reportType == REPORT_TYPE_USER) {
+            binding.additionalExplanationTextview.visibility = View.VISIBLE
+            binding.infoTextInputLayout.hint = getString(R.string.report_player_hint)
+            binding.additionalExplanationTextview.setMarkdown(getString(R.string.report_user_description))
+            binding.reportExplanationTextview.setMarkdown(getString(R.string.report_user_explanation))
+            binding.titleTextView.text = getString(R.string.report_player_title, profileName)
+            binding.messageTextView.visibility = View.GONE
+        } else if (reportType == REPORT_TYPE_MESSAGE) {
+            binding.additionalExplanationTextview.visibility = View.GONE
+            binding.infoTextInputLayout.hint = getString(R.string.report_message_hint)
+            binding.reportExplanationTextview.setMarkdown(getString(R.string.report_message_explanation))
+            binding.titleTextView.text = getString(R.string.report_message_title, profileName)
+            binding.messageTextView.text = messageText
+        }
     }
 
     private fun reportMessage() {
@@ -93,8 +107,8 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         if (isReporting) {
             return
         }
-        val userBeingReported = reportingUserId
-        if (userBeingReported.isNullOrBlank()) {
+        val userIdBeingReported = reportingUserId
+        if (userIdBeingReported.isNullOrBlank()) {
             return
         }
         isReporting = true
@@ -105,7 +119,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         ) {
             val reportReasonInfo = binding.additionalInfoEdittext.text.toString()
             val data = mapOf(Pair("comment", reportReasonInfo))
-            socialRepository.reportMember(userBeingReported, data)
+            socialRepository.reportMember(userIdBeingReported, data)
             dismiss()
         }
     }

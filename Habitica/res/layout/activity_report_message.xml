@@ -102,7 +102,7 @@
                     android:theme="@style/TextInputLayoutAppearanceTheme"
                     style="@style/TextInputLayoutAppearance"
                     android:layout_marginTop="@dimen/spacing_large"
-                    android:hint="@string/reason_for_report"
+                    android:hint="@string/report_message_hint"
                     android:layout_marginBottom="@dimen/spacing_large">
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/additional_info_edittext"
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    tools:text="@string/report_explanation"
+                    tools:text="@string/report_message_explanation"
                     android:textColor="@color/text_ternary"
                     style="@style/Caption3"
                     android:textColorLink="?colorAccent"

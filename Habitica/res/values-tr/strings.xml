@@ -792,9 +792,9 @@
     <string name="invite_to_guild">Loncaya Davet Et</string>
     <string name="guild_description">Lonca Açıklaması</string>
     <string name="mystery_sets">Gizem Setleri</string>
-    <string name="reason_for_report">Bildirme nedeni (tercihen)</string>
+    <string name="report_message_hint">Bildirme nedeni (tercihen)</string>
     <string name="report_message_title">%s kullanıcısını ihlal nedeniyle bildir:</string>
-    <string name="report_explanation">**Sadece** [Topluluk Kuralları](https://habitica.com/static/community-guidelines)\'nı ve/veya [Kullanım Koşulları](https://habitica.com/static/terms)\' nı ihlal eden gönderileri bildirin. Aksi takdirde ceza alabilirsiniz.</string>
+    <string name="report_message_explanation">**Sadece** [Topluluk Kuralları](https://habitica.com/static/community-guidelines)\'nı ve/veya [Kullanım Koşulları](https://habitica.com/static/terms)\' nı ihlal eden gönderileri bildirin. Aksi takdirde ceza alabilirsiniz.</string>
     <string name="x_class">%s Sınıfı</string>
     <string name="become_x">%s ol</string>
     <string name="purchase_equipment_description">Ekipman kuşanmak, avatarını özelleştirmenin ve istatistiklerini iyileştirmenin bir yoludur</string>

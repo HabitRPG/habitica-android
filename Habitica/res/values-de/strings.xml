@@ -812,9 +812,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="join_guild">Gilde beitreten</string>
     <string name="invite_to_guild">In Gilde einladen</string>
     <string name="guild_description">Gildenbeschreibung</string>
-    <string name="reason_for_report">Grund für die Meldung (optional)</string>
+    <string name="report_message_hint">Grund für die Meldung (optional)</string>
     <string name="report_message_title">Melde %s wegen eines Verstoßes:</string>
-    <string name="report_explanation">Melde einen Post **nur**, wenn er die [Community-Richtlinien](https://habitica.com/static/community-guidelines) und/oder die [Allgemeinen Geschäftsbedingungen](https://habitica.com/static/terms) verletzt. Zweckwidrige Meldungen können Dir eine Rüge einbringen.</string>
+    <string name="report_message_explanation">Melde einen Post **nur**, wenn er die [Community-Richtlinien](https://habitica.com/static/community-guidelines) und/oder die [Allgemeinen Geschäftsbedingungen](https://habitica.com/static/terms) verletzt. Zweckwidrige Meldungen können Dir eine Rüge einbringen.</string>
     <string name="x_class">%s-Klasse</string>
     <string name="become_x">Werde %s</string>
     <string name="need_more_help">Brauchst Du mehr Hilfe\?</string>

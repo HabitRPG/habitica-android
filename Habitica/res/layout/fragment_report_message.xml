@@ -103,12 +103,13 @@
                     tools:text="This is the message that is reported" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/info_text_input_layout"
                     style="@style/TextInputLayoutAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:layout_marginBottom="@dimen/spacing_large"
-                    android:hint="@string/reason_for_report"
+                    android:hint="@string/report_message_hint"
                     android:theme="@style/TextInputLayoutAppearanceTheme">
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -124,6 +125,19 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:id="@+id/additional_explanation_textview"
+                    style="@style/Caption3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:gravity="center"
+                    android:textColor="@color/text_ternary"
+                    android:textColorLink="?colorAccent"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    tools:text="@string/report_user_description" />
+
+                <TextView
                     android:id="@+id/report_explanation_textview"
                     style="@style/Caption3"
                     android:layout_width="match_parent"
@@ -131,7 +145,7 @@
                     android:gravity="center"
                     android:textColor="@color/text_ternary"
                     android:textColorLink="?colorAccent"
-                    tools:text="@string/report_explanation" />
+                    tools:text="@string/report_message_explanation" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
