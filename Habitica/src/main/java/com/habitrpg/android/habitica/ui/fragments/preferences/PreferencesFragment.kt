@@ -425,6 +425,7 @@ class PreferencesFragment : BasePreferencesFragment(),
                 }
             } else {
                 classSelectionPreference?.title = getString(R.string.enable_class)
+                classSelectionPreference?.summary = getString(R.string.enable_class_description)
             }
             classSelectionPreference?.isVisible = true
         } else {

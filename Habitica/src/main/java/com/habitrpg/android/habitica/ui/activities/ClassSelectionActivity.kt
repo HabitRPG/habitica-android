@@ -75,7 +75,7 @@ class ClassSelectionActivity : BaseActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val args = navArgs<ClassSelectionActivityArgs>().value
-        isClassSelected = args.isInitialSelection
+        isClassSelected = args.isClassSelected
         currentClass = args.className
         newClass = currentClass ?: "healer"
 
@@ -84,13 +84,6 @@ class ClassSelectionActivity : BaseActivity() {
                 val unmanagedPrefs = userRepository.getUnmanagedCopy(preferences)
                 unmanagedPrefs.costume = false
                 setAvatarViews(unmanagedPrefs)
-            }
-        }
-
-        if (!isClassSelected) {
-            lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.changeClass()
-                classWasUnset
             }
         }
 
@@ -212,16 +205,12 @@ class ClassSelectionActivity : BaseActivity() {
     }
 
     private fun optOutSelected() {
-        if (!this.isClassSelected && this.classWasUnset == false) {
-            return
-        }
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.opt_out_confirmation))
         alert.setMessage(getString(R.string.opt_out_description))
         alert.addButton(R.string.opt_out_class, true, true) { _, _ ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 // Set Player to have no class, and opt out
-                userRepository.changeClass()
                 classWasUnset
                 optOutOfClasses()
             }
@@ -237,14 +226,14 @@ class ClassSelectionActivity : BaseActivity() {
             alert.setTitle(getString(R.string.change_class_selected_confirmation, newClass))
             alert.setMessage(getString(R.string.change_class_confirmation_message))
             alert.addButton(R.string.choose_class, true) { _, _ ->
-                selectClass(newClass, true)
+                selectClass(newClass)
             }
             alert.addButton(R.string.dialog_go_back, false)
             alert.show()
         } else {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(getString(R.string.class_confirmation, className))
-            alert.addButton(R.string.choose_class, true) { _, _ -> selectClass(newClass, false) }
+            alert.addButton(R.string.choose_class, true) { _, _ -> selectClass(newClass) }
             alert.addButton(R.string.dialog_go_back, false)
             alert.show()
         }
@@ -274,21 +263,22 @@ class ClassSelectionActivity : BaseActivity() {
         }
     }
 
-    private fun selectClass(selectedClass: String, isChanging: Boolean) {
+    private fun selectClass(selectedClass: String) {
         shouldFinish = true
+        val chosenClass = if (selectedClass == "mage") "wizard" else selectedClass
         if (isClassSelected) {
             val dialog = this.displayProgressDialog(getString(R.string.changing_class_progress))
             lifecycleScope.launch(Dispatchers.Main) {
-                userRepository.changeClass(selectedClass)
+                userRepository.changeClass(chosenClass)
                 dialog.hide()
-                displayClassChanged(selectedClass)
+                displayClassChanged(chosenClass)
             }
         } else {
             val dialog = this.displayProgressDialog(getString(R.string.choosing_class_progress))
             lifecycleScope.launch(Dispatchers.Main) {
-                userRepository.changeClass(selectedClass)
+                userRepository.changeClass(chosenClass)
                 dialog.hide()
-                displayClassChanged(selectedClass)
+                displayClassChanged(chosenClass)
             }
         }
     }
