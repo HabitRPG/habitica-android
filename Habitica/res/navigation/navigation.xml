@@ -416,7 +416,7 @@
         android:name="com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity"
         android:label="ClassSelectionActivity" >
         <argument
-            android:name="isInitialSelection"
+            android:name="isClassSelected"
             app:argType="boolean"
             android:defaultValue="false" />
         <argument
