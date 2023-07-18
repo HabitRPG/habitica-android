@@ -279,6 +279,9 @@ open class NotificationsViewModel @Inject constructor(
         when (data?.destination) {
             "equipment" -> navController.navigate(R.id.equipmentOverviewFragment)
             "customization" -> navController.navigate(R.id.avatarCustomizationFragment)
+            "stable" -> navController.navigate(R.id.stableFragment)
+            "pets" -> navController.navigate(R.id.stableFragment)
+            "mounts" -> navController.navigate(R.id.stableFragment)
             else -> navController.navigate(R.id.itemsFragment)
         }
     }
