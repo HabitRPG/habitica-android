@@ -223,7 +223,7 @@ class ClassSelectionActivity : BaseActivity() {
     private fun displayConfirmationDialogForClass() {
         if (isClassSelected) {
             val alert = HabiticaAlertDialog(this)
-            alert.setTitle(getString(R.string.change_class_selected_confirmation, newClass))
+            alert.setTitle(getString(R.string.change_class_selected_confirmation, className))
             alert.setMessage(getString(R.string.change_class_confirmation_message))
             alert.addButton(R.string.choose_class, true) { _, _ ->
                 selectClass(newClass)
@@ -242,7 +242,7 @@ class ClassSelectionActivity : BaseActivity() {
     private fun displayClassChanged(selectedClass: String) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.class_changed, className))
-        alert.setMessage(getString(R.string.class_changed_description, selectedClass))
+        alert.setMessage(getString(R.string.class_changed_description, className))
         alert.addButton(getString(R.string.complete_tutorial), true){ _, _ -> dismiss() }
         alert.addButton(getString(R.string.learn_more), false){ _, _ ->
             dismiss()
