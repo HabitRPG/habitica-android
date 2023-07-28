@@ -276,6 +276,10 @@ open class NotificationsViewModel @Inject constructor(
         notification : Notification, navController : MainNavigationController
     ) {
         val data = notification.data as? ItemReceivedData
+        if (data?.destination?.startsWith("/") == true) {
+            MainNavigationController.navigate(data.destination ?: "")
+            return
+        }
         when (data?.destination) {
             "equipment" -> navController.navigate(R.id.equipmentOverviewFragment)
             "customization" -> navController.navigate(R.id.avatarCustomizationFragment)
