@@ -27,19 +27,27 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
         }
         tag = fullname
         setImageDrawable(null)
-        DataBindingUtils.loadImage(context, imageName, imageFormat) {
-            if (tag == fullname) {
-                bitmap = if (fullname.endsWith("gif")) {
-                    setImageDrawable(it)
-                    if (it is Animatable) {
-                        it.start()
+        bitmap = null
+        DataBindingUtils.loadImage(context, imageName, imageFormat,
+            imageResult ={
+                if (tag == fullname) {
+                    bitmap = if (fullname.endsWith("gif")) {
+                        setImageDrawable(it)
+                        if (it is Animatable) {
+                            it.start()
+                        }
+                        null
+                    } else {
+                        it.toBitmap()
                     }
-                    null
-                } else {
-                    it.toBitmap()
                 }
+            },
+            imageError = {
+                tag = null
+                setImageDrawable(null)
+                bitmap = null
             }
-        }
+        )
     } else {
         tag = null
         setImageDrawable(null)
@@ -56,14 +64,22 @@ object DataBindingUtils {
         context: Context,
         imageName: String,
         imageFormat: String?,
-        imageResult: (Drawable) -> Unit
+        imageResult: (Drawable) -> Unit,
+        imageError:()->Unit = { }
     ) {
         val request = ImageRequest.Builder(context)
             .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
-            .target()
-            .target {
-                imageResult(it)
-            }
+            .target(
+                onStart = { _ ->
+
+                },
+                onSuccess = {
+                    imageResult(it)
+                },
+                onError = {
+                    imageError()
+                }
+            )
             .build()
         context.imageLoader.enqueue(request)
     }
