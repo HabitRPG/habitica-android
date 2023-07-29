@@ -71,9 +71,10 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         binding.closeButton.setOnClickListener { dismiss() }
 
         if (reportType == REPORT_TYPE_USER) {
+            binding.toolbarTitle.text = getString(R.string.report_player_toolbar_title, profileName)
             binding.additionalExplanationTextview.visibility = View.VISIBLE
             binding.infoTextInputLayout.hint = getString(R.string.report_player_hint)
-            binding.additionalExplanationTextview.setMarkdown(getString(R.string.report_user_description))
+            binding.additionalExplanationTextview.setMarkdown(getString(R.string.report_user_description, profileName))
             binding.reportExplanationTextview.setMarkdown(getString(R.string.report_user_explanation))
             binding.titleTextView.text = getString(R.string.report_player_title, profileName)
             binding.messageTextView.visibility = View.GONE
@@ -115,11 +116,14 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         lifecycleScope.launch(
             ExceptionHandler.coroutine {
                 isReporting = false
+                (this.activity as? MainActivity)?.showSnackbar(title = getString(R.string.report_failure))
             }
         ) {
             val reportReasonInfo = binding.additionalInfoEdittext.text.toString()
             val data = mapOf(Pair("comment", reportReasonInfo))
             socialRepository.reportMember(userIdBeingReported, data)
+            socialRepository.blockMember(userIdBeingReported)
+            (activity as? MainActivity)?.showSnackbar(title = getString(R.string.report_successful, profileName))
             dismiss()
         }
     }
