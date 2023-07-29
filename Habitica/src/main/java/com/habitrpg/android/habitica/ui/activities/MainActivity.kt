@@ -281,6 +281,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     user,
                     teamPlan = if (canShowTeamHeader) teamPlan else null,
                     teamPlanMembers = teamPlanMembers,
+                    isMyProfile = true,
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
                             val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
