@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,7 +68,7 @@ import com.habitrpg.shared.habitica.models.Avatar
 import kotlin.random.Random
 
 @Composable
-fun UserLevelText(user: Avatar) {
+fun UserLevelText(user : Avatar) {
     val text = if (user.hasClass) {
         stringResource(
             id = R.string.user_level_with_class,
@@ -88,7 +89,7 @@ fun UserLevelText(user: Avatar) {
     )
 }
 
-fun getTranslatedClassName(resources: Resources, className: String?): String {
+fun getTranslatedClassName(resources : Resources, className : String?) : String {
     return when (className) {
         Stats.HEALER -> resources.getString(R.string.healer)
         Stats.ROGUE -> resources.getString(R.string.rogue)
@@ -101,12 +102,12 @@ fun getTranslatedClassName(resources: Resources, className: String?): String {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppHeaderView(
-    user: Avatar?,
-    modifier: Modifier = Modifier,
-    isMyProfile: Boolean = false,
-    teamPlan: TeamPlan? = null,
-    teamPlanMembers: List<Member>? = null,
-    onMemberRowClicked: () -> Unit,
+    user : Avatar?,
+    modifier : Modifier = Modifier,
+    isMyProfile : Boolean = false,
+    teamPlan : TeamPlan? = null,
+    teamPlanMembers : List<Member>? = null,
+    onMemberRowClicked : () -> Unit,
     onClassSelectionClicked: () -> Unit
 ) {
     Column(modifier) {
@@ -176,7 +177,7 @@ fun AppHeaderView(
                             disabled = true,
                             modifier = Modifier.weight(1f)
                         )
-                    } else if (user?.preferences?.disableClasses != true && isMyProfile) {
+                    } else if (user?.hasClass == false && isMyProfile) {
                         HabiticaButton(
                             background = HabiticaTheme.colors.basicButtonColor(),
                             color = MaterialTheme.colors.onPrimary,
@@ -222,8 +223,7 @@ fun AppHeaderView(
                             }
                     ) {
                         Image(
-                            painterResource(R.drawable.icon_chat),
-                            null,
+                            painterResource(R.drawable.icon_chat), null,
                             colorFilter = ColorFilter.tint(
                                 colorResource(R.color.text_ternary)
                             )
@@ -237,15 +237,13 @@ fun AppHeaderView(
                     exit = slideOutVertically { animHeight } + fadeOut(),
                     modifier = Modifier.align(Alignment.BottomCenter)
                 ) {
-                    AnimatedContent(
-                        targetState = teamPlanMembers?.filter { it.id != user?.id },
+                    AnimatedContent(targetState = teamPlanMembers?.filter { it.id != user?.id },
                         transitionSpec = {
                             ContentTransform(
-                                targetContentEnter = fadeIn(animationSpec = tween(200, easing = FastOutSlowInEasing)) + slideInVertically { height -> height },
+                                targetContentEnter =  fadeIn(animationSpec = tween(200, easing = FastOutSlowInEasing)) + slideInVertically { height -> height },
                                 initialContentExit = fadeOut(animationSpec = tween(200)) + slideOutVertically { height -> -height }
                             )
-                        }
-                    ) { members ->
+                        }) {members ->
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(
                                 12.dp,
@@ -333,7 +331,7 @@ fun AppHeaderView(
 
 private class UserProvider : PreviewParameterProvider<Pair<User, TeamPlan?>> {
 
-    private fun generateMember(): User {
+    private fun generateMember() : User {
         val member = User()
         member.profile = Profile()
         member.profile?.name = "User"
@@ -358,7 +356,7 @@ private class UserProvider : PreviewParameterProvider<Pair<User, TeamPlan?>> {
         return member
     }
 
-    override val values: Sequence<Pair<User, TeamPlan?>>
+    override val values : Sequence<Pair<User, TeamPlan?>>
         get() {
             val list = mutableListOf<Pair<User, TeamPlan?>>()
             val earlyMember = generateMember()
