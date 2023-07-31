@@ -20,6 +20,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.api.HostConfig
@@ -145,7 +146,7 @@ class AuthenticationViewModel @Inject constructor(
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
-            analyticsManager.logException(e)
+            Analytics.logException(e)
         }
     }
 

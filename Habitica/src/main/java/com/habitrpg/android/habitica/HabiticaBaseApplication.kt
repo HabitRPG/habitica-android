@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.Wearable
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -88,9 +87,11 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
         setupCoil()
 
-        ExceptionHandler.init(analyticsManager)
+        ExceptionHandler.init {
+            Analytics.logException(it)
+        }
 
-        FirebaseAnalytics.getInstance(this).setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
+        Analytics.setUserProperty("app_testing_level", BuildConfig.TESTING_LEVEL)
 
         checkIfNewVersion()
     }

@@ -349,7 +349,7 @@ class PurchaseHandler(
                     try {
                         apiClient.validateSubscription(validationRequest)
                         processedPurchase(purchase)
-                        analyticsManager.logEvent("user_subscribed", bundleOf(Pair("sku", sku)))
+                        Analytics.sendEvent("user_subscribed", bundleOf(Pair("sku", sku)))
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             acknowledgePurchase(purchase)
                         }

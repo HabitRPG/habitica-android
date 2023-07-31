@@ -4,6 +4,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseMainObject
@@ -101,7 +102,7 @@ class TaskRepositoryImpl(
         val thisUser = user ?: localRepository.getUser(authenticationHandler.currentUserID ?: "").firstOrNull() ?: return null
         // save local task changes
 
-        analyticsManager.logEvent(
+        Analytics.logEvent(
             "task_scored",
             bundleOf(
                 Pair("type", task.type),
