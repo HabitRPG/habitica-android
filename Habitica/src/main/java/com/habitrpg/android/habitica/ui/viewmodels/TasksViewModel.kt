@@ -10,9 +10,11 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.GroupPlanInfoProvider
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
@@ -116,10 +118,10 @@ class TasksViewModel @Inject constructor(
             ) { result ->
                 onResult(result, task.value.toInt())
                 if (!DateUtils.isToday(sharedPreferences.getLong("last_task_reporting", 0))) {
-                    AmplitudeManager.sendEvent(
+                    Analytics.sendEvent(
                         "task scored",
-                        AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                        AmplitudeManager.EVENT_HITTYPE_EVENT
+                        EventCategory.BEHAVIOUR,
+                        HitType.EVENT
                     )
                     sharedPreferences.edit {
                         putLong("last_task_reporting", Date().time)

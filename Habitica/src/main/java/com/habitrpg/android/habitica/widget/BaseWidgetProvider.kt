@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import android.widget.Toast
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import javax.inject.Inject
@@ -89,13 +91,13 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         super.onEnabled(context)
         val additionalData = HashMap<String, Any>()
         additionalData["identifier"] = this.javaClass.simpleName
-        AmplitudeManager.sendEvent("widgets", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_CREATE_WIDGET, additionalData)
+        Analytics.sendEvent("widgets", EventCategory.BEHAVIOUR, HitType.CREATE_WIDGET, additionalData)
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         val additionalData = HashMap<String, Any>()
         additionalData["identifier"] = this.javaClass.simpleName
-        AmplitudeManager.sendEvent("widgets", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_REMOVE_WIDGET, additionalData)
+        Analytics.sendEvent("widgets", EventCategory.BEHAVIOUR, HitType.REMOVE_WIDGET, additionalData)
         super.onDeleted(context, appWidgetIds)
     }
 }

@@ -7,7 +7,9 @@ import androidx.core.content.edit
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
@@ -141,10 +143,10 @@ class PushNotificationManager(
                 if (remoteMessage.data.containsKey("sendAnalytics")) {
                     val additionalData = HashMap<String, Any>()
                     additionalData["identifier"] = remoteMessageIdentifier ?: ""
-                    AmplitudeManager.sendEvent(
+                    Analytics.sendEvent(
                         "receive notification",
-                        AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                        AmplitudeManager.EVENT_HITTYPE_EVENT,
+                        EventCategory.BEHAVIOUR,
+                        HitType.EVENT,
                         additionalData
                     )
                 }

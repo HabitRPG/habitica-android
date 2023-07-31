@@ -41,8 +41,10 @@ import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -429,10 +431,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             if (intent.hasExtra("sendAnalytics")) {
                 val additionalData = HashMap<String, Any>()
                 additionalData["identifier"] = identifier
-                AmplitudeManager.sendEvent(
+                Analytics.sendEvent(
                     "open notification",
-                    AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                    AmplitudeManager.EVENT_HITTYPE_EVENT,
+                    EventCategory.BEHAVIOUR,
+                    HitType.EVENT,
                     additionalData
                 )
             }

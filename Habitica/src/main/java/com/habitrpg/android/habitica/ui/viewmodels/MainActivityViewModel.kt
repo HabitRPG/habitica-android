@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
@@ -146,10 +148,10 @@ class MainActivityViewModel @Inject constructor(
         additionalData["eventLabel"] = step.identifier + "-android"
         additionalData["eventValue"] = step.identifier ?: ""
         additionalData["complete"] = complete
-        AmplitudeManager.sendEvent(
+        Analytics.sendEvent(
             "tutorial",
-            AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-            AmplitudeManager.EVENT_HITTYPE_EVENT,
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
             additionalData
         )
     }
