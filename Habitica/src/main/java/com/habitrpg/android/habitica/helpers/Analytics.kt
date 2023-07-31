@@ -8,8 +8,8 @@ import com.amplitude.android.Configuration
 import com.amplitude.android.events.Identify
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.R
-import com.habitrpg.shared.habitica.BuildConfig
 
 enum class AnalyticsTarget {
     AMPLITUDE,

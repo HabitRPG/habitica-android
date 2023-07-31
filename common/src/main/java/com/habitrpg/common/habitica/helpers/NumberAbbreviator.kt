@@ -32,10 +32,10 @@ object NumberAbbreviator {
         if (number < 0) {
             result = "-$result"
         }
-        return result + abbreviationForCounter(context, counter)
+        return result + abbreviationForCounter(counter)
     }
 
-    private fun abbreviationForCounter(context: Context?, counter: Int): String = when (counter) {
+    private fun abbreviationForCounter(counter: Int): String = when (counter) {
         0 -> ""
         1 -> "k"
         2 -> "m"

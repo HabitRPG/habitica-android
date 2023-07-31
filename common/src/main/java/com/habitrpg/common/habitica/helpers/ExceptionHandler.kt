@@ -10,14 +10,14 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 class ExceptionHandler {
-    private var analyticsManager: AnalyticsManager? = null
+    private var exceptionLogger: ((Throwable) -> Unit)? = null
 
     companion object {
 
         private var instance = ExceptionHandler()
 
-        fun init(analyticsManager: AnalyticsManager? = null) {
-            instance.analyticsManager = analyticsManager
+        fun init(exceptionLogger: ((Throwable) -> Unit)? = null) {
+            instance.exceptionLogger = exceptionLogger
         }
 
         fun coroutine(handler: ((Throwable) -> Unit)? = null): CoroutineExceptionHandler {
@@ -38,7 +38,7 @@ class ExceptionHandler {
                     throwable !is HttpException &&
                     throwable !is CancellationException
                 ) {
-                    instance.analyticsManager?.logException(throwable)
+                    instance.exceptionLogger?.invoke(throwable)
                 }
             }
         }

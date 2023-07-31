@@ -79,7 +79,7 @@ class MainActivityViewModel @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            analyticsManager.logException(e)
+            Analytics.logException(e)
         }
     }
 
@@ -96,19 +96,19 @@ class MainActivityViewModel @Inject constructor(
             viewModelScope.launch(ExceptionHandler.coroutine()) {
                 contentRepository.retrieveWorldState()
                 userRepository.retrieveUser(true, forced)?.let { user ->
-                    analyticsManager.setUserProperty(
+                    Analytics.setUserProperty(
                         "has_party",
                         if (user.party?.id?.isNotEmpty() == true) "true" else "false"
                     )
-                    analyticsManager.setUserProperty(
+                    Analytics.setUserProperty(
                         "is_subscribed",
                         if (user.isSubscribed) "true" else "false"
                     )
-                    analyticsManager.setUserProperty(
+                    Analytics.setUserProperty(
                         "checkin_count",
                         user.loginIncentives.toString()
                     )
-                    analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
+                    Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
                     if (!pushNotificationManager.notificationPermissionEnabled()) {
                         if (sharedPreferences.getBoolean("usePushNotifications", true)) {

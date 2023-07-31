@@ -104,7 +104,7 @@ class ApiClientImpl(
     private var hadError = false
 
     init {
-        analyticsManager.setUserIdentifier(this.hostConfig.userID)
+        Analytics.setUserID(this.hostConfig.userID)
         buildRetrofit()
     }
 
@@ -256,9 +256,9 @@ class ApiClientImpl(
                 showConnectionProblemDialog(R.string.internal_error_api)
             }
         } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
-            analyticsManager.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
+            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
         } else {
-            analyticsManager.logException(throwable)
+            Analytics.logException(throwable)
         }
     }
 
@@ -273,7 +273,7 @@ class ApiClientImpl(
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: IOException) {
-            analyticsManager.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         }
     }
@@ -332,7 +332,6 @@ class ApiClientImpl(
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
-        analyticsManager.setUserIdentifier(this.hostConfig.userID)
         Analytics.setUserID(hostConfig.userID)
     }
 
