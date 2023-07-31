@@ -37,7 +37,8 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.CurrencyView,
-            0, 0
+            0,
+            0
         )
         val fallBackLight = !context.isUsingNightModeResources()
         lightBackground = try {
@@ -102,11 +103,14 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                 drawable = BitmapDrawable(resources, value)
                 this.setCompoundDrawablesWithIntrinsicBounds(
                     drawable,
-                    null, null, null
+                    null,
+                    null,
+                    null
                 )
                 val padding = TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP,
-                    6f, context.resources.displayMetrics
+                    6f,
+                    context.resources.displayMetrics
                 ).toInt()
                 compoundDrawablePadding = padding
                 this.gravity = Gravity.CENTER_VERTICAL

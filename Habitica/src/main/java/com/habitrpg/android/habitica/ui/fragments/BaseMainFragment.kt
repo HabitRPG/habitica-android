@@ -24,6 +24,7 @@ import javax.inject.Inject
 abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var soundManager: SoundManager
 

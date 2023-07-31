@@ -73,6 +73,7 @@ class FullProfileActivity : BaseActivity() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var sharedPrefs: SharedPreferences
 
@@ -530,7 +531,11 @@ class FullProfileActivity : BaseActivity() {
     private fun addLevelAttributes(user: Member) {
         val byLevelStat = min((user.stats?.lvl ?: 0) / 2.0f, 50f)
         addAttributeRow(
-            getString(R.string.profile_level), byLevelStat, byLevelStat, byLevelStat, byLevelStat,
+            getString(R.string.profile_level),
+            byLevelStat,
+            byLevelStat,
+            byLevelStat,
+            byLevelStat,
             roundDown = true,
             isSummary = false
         )
@@ -679,10 +684,11 @@ class FullProfileActivity : BaseActivity() {
         binding.attributesCollapseIcon.setImageDrawable(
             ContextCompat.getDrawable(
                 this,
-                if (attributeDetailsHidden)
+                if (attributeDetailsHidden) {
                     R.drawable.ic_keyboard_arrow_right_black_24dp
-                else
+                } else {
                     R.drawable.ic_keyboard_arrow_down_black_24dp
+                }
             )
         )
 

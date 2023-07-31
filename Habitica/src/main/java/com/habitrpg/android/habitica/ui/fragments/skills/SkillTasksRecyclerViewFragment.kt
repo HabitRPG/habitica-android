@@ -13,14 +13,15 @@ import com.habitrpg.android.habitica.ui.adapter.SkillTasksRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>() {
     @Inject
     lateinit var taskRepository: TaskRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
     var taskType: TaskType? = null
@@ -35,7 +36,6 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
     internal var layoutManager: LinearLayoutManager? = null
 
     var onTaskSelection: ((Task) -> Unit)? = null
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

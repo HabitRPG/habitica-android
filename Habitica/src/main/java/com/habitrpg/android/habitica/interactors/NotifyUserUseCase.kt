@@ -74,7 +74,6 @@ constructor(
             questDamage: Double?,
             user: User?
         ): Pair<View, SnackbarDisplayType> {
-
             var displayType = SnackbarDisplayType.SUCCESS
 
             val container = LinearLayout(context)

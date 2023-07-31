@@ -41,7 +41,7 @@ open class TutorialStep : RealmObject(), BaseMainObject {
     val flagPath: String
         get() = "flags.tutorial.$tutorialGroup.$identifier"
 
-    val linkFAQ : Boolean
+    val linkFAQ: Boolean
         get() {
             return identifier == "party"
         }

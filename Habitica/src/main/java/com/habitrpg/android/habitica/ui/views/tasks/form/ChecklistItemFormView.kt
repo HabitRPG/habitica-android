@@ -41,8 +41,11 @@ class ChecklistItemFormView @JvmOverloads constructor(
             // Button is only clickable when it is *not* an add button (ie when it is a delete button),
             // so make screenreaders skip it when it is an add button.
             binding.button.importantForAccessibility =
-                if (value) View.IMPORTANT_FOR_ACCESSIBILITY_NO
-                else View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                if (value) {
+                    View.IMPORTANT_FOR_ACCESSIBILITY_NO
+                } else {
+                    View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                }
             if (field == value) {
                 return
             }

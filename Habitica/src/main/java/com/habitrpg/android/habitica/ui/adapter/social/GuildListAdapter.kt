@@ -130,9 +130,13 @@ class GuildListAdapter : BaseRecyclerViewAdapter<Group, RecyclerView.ViewHolder>
                 val textView = PillTextviewBinding.inflate(itemView.context.layoutInflater, binding.tagWrapper, true)
                 textView.root.text = category.name?.split("_")?.joinToString(" ") {
                     it.replaceFirstChar {
-                        if (it.isLowerCase()) it.titlecase(
-                            Locale.getDefault()
-                        ) else it.toString()
+                        if (it.isLowerCase()) {
+                            it.titlecase(
+                                Locale.getDefault()
+                            )
+                        } else {
+                            it.toString()
+                        }
                     }
                 }
                 textView.root.background = if (category.slug == "habitica_official") {

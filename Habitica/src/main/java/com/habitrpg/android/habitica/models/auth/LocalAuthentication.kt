@@ -10,6 +10,7 @@ import io.realm.annotations.RealmClass
 open class LocalAuthentication : RealmObject(), BaseObject, AvatarLocalAuthentication {
     override var username: String? = null
     var email: String? = null
+
     @SerializedName("has_password")
     var hasPassword: Boolean? = false
 }

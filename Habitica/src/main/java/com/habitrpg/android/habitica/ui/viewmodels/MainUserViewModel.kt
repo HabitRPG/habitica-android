@@ -22,8 +22,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-class MainUserViewModel @Inject constructor(private val authenticationHandler : AuthenticationHandler, val userRepository: UserRepository, val socialRepository: SocialRepository) {
+class MainUserViewModel @Inject constructor(private val authenticationHandler: AuthenticationHandler, val userRepository: UserRepository, val socialRepository: SocialRepository) {
 
     val formattedUsername: CharSequence?
         get() = user.value?.formattedUsername
@@ -45,14 +44,16 @@ class MainUserViewModel @Inject constructor(private val authenticationHandler : 
     val user: LiveData<User?> = userRepository.getUser().asLiveData()
     var currentTeamPlan = MutableSharedFlow<TeamPlan?>(
         replay = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
+
     @OptIn(ExperimentalCoroutinesApi::class)
     var currentTeamPlanGroup = currentTeamPlan
         .map { it?.id }
         .distinctUntilChanged { old, new -> old == new }
         .filterNotNull()
         .flatMapLatest { socialRepository.getGroup(it) }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     var currentTeamPlanMembers: LiveData<List<Member>> = currentTeamPlan
         .map { it?.id }

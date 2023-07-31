@@ -73,10 +73,12 @@ class RewardsRecyclerViewAdapter(
                         taskScoreEvents?.invoke(task, direction)
                     }
                 },
-                { task -> taskOpenEvents?.invoke(task.first, task.second) }, {
-                task ->
-                brokenTaskEvents?.invoke(task)
-            }, viewModel
+                { task -> taskOpenEvents?.invoke(task.first, task.second) },
+                {
+                        task ->
+                    brokenTaskEvents?.invoke(task)
+                },
+                viewModel
             )
         } else {
             val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))

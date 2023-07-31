@@ -49,8 +49,10 @@ import javax.inject.Inject
 class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivityNotificationsBinding
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -72,10 +74,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         super.onCreate(savedInstanceState)
 
         setupToolbar(binding.toolbar)
-        
+
         // Check user level to handle if a user loses hp and drops below necessary level to allocate points -
         // and if so, don't display the notification to allocate points.
-        viewModel.user.observeOnce(this) {user ->
+        viewModel.user.observeOnce(this) { user ->
             userLvl = user?.stats?.lvl ?: 0
         }
 
@@ -92,7 +94,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         lifecycleScope.launchCatching {
             viewModel.refreshNotifications()
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -156,7 +157,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             }
             updateNotificationsAndRefresh(viewList)
         }
-
     }
 
     private fun updateNotificationsAndRefresh(newItems: List<View>) {
@@ -190,8 +190,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             displayNotificationsListView(notifications)
         }
     }
-
-
 
     private fun createNotificationsHeaderView(notificationCount: Int): View? {
         val header = inflater?.inflate(R.layout.notifications_header, binding.notificationItems, false)
@@ -253,7 +251,9 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
                 R.drawable.notification_stat_sparkles
             )
-        } else null
+        } else {
+            null
+        }
     }
 
     private fun createMysteryItemsNotification(notification: Notification): View? {
@@ -358,7 +358,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         return item
     }
-    
+
     private suspend fun createPartyInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
         val data = notification.data as? PartyInvitationData
         val inviterId = data?.invitation?.inviter

@@ -31,7 +31,7 @@ import java.util.Date
 class TaskAlarmManager(
     private var context: Context,
     private var taskRepository: TaskRepository,
-    private var authenticationHandler : AuthenticationHandler
+    private var authenticationHandler: AuthenticationHandler
 ) {
     private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 

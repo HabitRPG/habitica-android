@@ -58,7 +58,7 @@ class UserRepositoryImpl(
         return mergeUser(oldUser, networkUser)
     }
 
-    private suspend fun updateUser(userID : String, key : String, value : Any?): User? {
+    private suspend fun updateUser(userID: String, key: String, value: Any?): User? {
         return updateUser(userID, mapOf(key to value))
     }
 
@@ -66,7 +66,7 @@ class UserRepositoryImpl(
         return updateUser(currentUserID, updateData)
     }
 
-    override suspend fun updateUser(key : String, value : Any?): User? {
+    override suspend fun updateUser(key: String, value: Any?): User? {
         return updateUser(currentUserID, key, value)
     }
 
@@ -400,9 +400,11 @@ class UserRepositoryImpl(
             taskRepository.saveTasks(id, tasksOrder, tasks)
         }
         val members = apiClient.getGroupMembers(teamID, true) ?: return team
-        localRepository.save(members.map {
-            GroupMembership(it.id, id)
-        })
+        localRepository.save(
+            members.map {
+                GroupMembership(it.id, id)
+            }
+        )
         members.let { localRepository.save(members) }
         return team
     }

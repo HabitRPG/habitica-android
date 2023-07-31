@@ -46,6 +46,7 @@ open class AvatarOverviewFragment :
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -75,15 +76,19 @@ open class AvatarOverviewFragment :
                 HabiticaTheme {
                     AvatarOverviewView(
                         userViewModel,
-                        showCustomization, !showCustomization,
-                        battleGearWeapon.value?.twoHanded == true, costumeWeapon.value?.twoHanded == true,
+                        showCustomization,
+                        !showCustomization,
+                        battleGearWeapon.value?.twoHanded == true,
+                        costumeWeapon.value?.twoHanded == true,
                         { type, category ->
                             displayCustomizationFragment(type, category)
-                        }, { type, category ->
-                        displayAvatarEquipmentFragment(type, category)
-                    }, { type, equipped, isCostume ->
-                        displayEquipmentFragment(type, equipped, isCostume)
-                    }
+                        },
+                        { type, category ->
+                            displayAvatarEquipmentFragment(type, category)
+                        },
+                        { type, equipped, isCostume ->
+                            displayEquipmentFragment(type, equipped, isCostume)
+                        }
                     )
                 }
             }
@@ -106,7 +111,6 @@ open class AvatarOverviewFragment :
             }
         return view
     }
-
 
     private fun displayCustomizationFragment(type: String, category: String?) {
         MainNavigationController.navigate(
@@ -191,7 +195,8 @@ fun AvatarOverviewView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    stringResource(R.string.equipped), style = HabiticaTheme.typography.subtitle2,
+                    stringResource(R.string.equipped),
+                    style = HabiticaTheme.typography.subtitle2,
                     color = HabiticaTheme.colors.textSecondary
                 )
                 Spacer(modifier = Modifier.weight(1f))

@@ -20,5 +20,5 @@ data class TaskDirectionDataDrop(
     var value: Int,
     var key: String?,
     var type: String?,
-    var dialog: String?,
+    var dialog: String?
 ) : HParcelable

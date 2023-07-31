@@ -52,7 +52,8 @@ constructor(
                 HabiticaSnackbar.showSnackbar(
                     requestValues.snackbarTargetView,
                     requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel),
-                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS, true
+                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                    true
                 )
                 return requestValues.user.stats
             }

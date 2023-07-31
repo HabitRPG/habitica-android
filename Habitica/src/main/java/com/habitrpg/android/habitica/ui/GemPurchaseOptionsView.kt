@@ -17,7 +17,8 @@ class GemPurchaseOptionsView(context: Context, attrs: AttributeSet) : FrameLayou
         val a = context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.GemPurchaseOptionsView,
-            0, 0
+            0,
+            0
         )
 
         binding.gemAmount.text = a.getText(R.styleable.GemPurchaseOptionsView_gemAmount)

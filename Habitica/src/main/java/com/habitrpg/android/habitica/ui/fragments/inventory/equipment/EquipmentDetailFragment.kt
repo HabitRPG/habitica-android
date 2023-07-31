@@ -18,9 +18,9 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class EquipmentDetailFragment :
@@ -96,7 +96,6 @@ class EquipmentDetailFragment :
         inventoryRepository.close()
         super.onDestroy()
     }
-
 
     override fun onRefresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {

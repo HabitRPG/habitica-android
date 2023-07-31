@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.activities.SkillMemberActivity
@@ -80,7 +79,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
             dialog.isPinned = isPinned
             dialog.onGearPurchased = {
-                viewModel.refreshData {  }
+                viewModel.refreshData { }
             }
             dialog.show()
         }

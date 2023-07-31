@@ -16,11 +16,11 @@ import com.habitrpg.android.habitica.R
 
 @Composable
 fun ClassText(
-    className : String?,
-    hasClass : Boolean,
-    fontSize : TextUnit,
-    modifier : Modifier = Modifier,
-    iconSize : Dp? = null
+    className: String?,
+    hasClass: Boolean,
+    fontSize: TextUnit,
+    modifier: Modifier = Modifier,
+    iconSize: Dp? = null
 ) {
     if (!hasClass) return
     val classColor = colorResource(
@@ -36,9 +36,11 @@ fun ClassText(
         ClassIcon(
             className = className,
             hasClass = true,
-            modifier = Modifier.size(iconSize ?: with(LocalDensity.current) {
-                fontSize.toDp()
-            })
+            modifier = Modifier.size(
+                iconSize ?: with(LocalDensity.current) {
+                    fontSize.toDp()
+                }
+            )
         )
         Text(
             getTranslatedClassName(LocalContext.current.resources, className),

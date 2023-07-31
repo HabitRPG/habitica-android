@@ -171,7 +171,9 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             }
 
             RewardedAd.load(
-                activity, type.adUnitID, adRequest,
+                activity,
+                type.adUnitID,
+                adRequest,
                 object : RewardedAdLoadCallback() {
                     override fun onAdFailedToLoad(adError: LoadAdError) {
                         FirebaseCrashlytics.getInstance().recordException(Throwable(adError.message))

@@ -32,31 +32,37 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class AuthenticationViewModel @Inject constructor(
-    val apiClient : ApiClient,
-    val userRepository : UserRepository,
-    val sharedPrefs : SharedPreferences,
-    val authenticationHandler : AuthenticationHandler,
-    val hostConfig : HostConfig,
-    val analyticsManager : AnalyticsManager,
-    private val keyHelper : KeyHelper?
+    val apiClient: ApiClient,
+    val userRepository: UserRepository,
+    val sharedPrefs: SharedPreferences,
+    val authenticationHandler: AuthenticationHandler,
+    val hostConfig: HostConfig,
+    val analyticsManager: AnalyticsManager,
+    private val keyHelper: KeyHelper?
 ) {
-    var googleEmail : String? = null
+    var googleEmail: String? = null
 
     fun handleGoogleLogin(
-        activity : Activity,
-        pickAccountResult : ActivityResultLauncher<Intent>
+        activity: Activity,
+        pickAccountResult: ActivityResultLauncher<Intent>
     ) {
         if (!checkPlayServices(activity)) {
             return
         }
         val accountTypes = arrayOf("com.google")
         val intent = AccountManager.newChooseAccountIntent(
-            null, null,
-            accountTypes, true, null, null, null, null
+            null,
+            null,
+            accountTypes,
+            true,
+            null,
+            null,
+            null,
+            null
         )
         try {
             pickAccountResult.launch(intent)
-        } catch (e : ActivityNotFoundException) {
+        } catch (e: ActivityNotFoundException) {
             val alert = HabiticaAlertDialog(activity)
             alert.setTitle(R.string.authentication_error_title)
             alert.setMessage(R.string.google_services_missing)
@@ -66,13 +72,13 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     fun handleGoogleLoginResult(
-        activity : Activity,
-        recoverFromPlayServicesErrorResult : ActivityResultLauncher<Intent>?,
-        onSuccess : (Boolean) -> Unit
+        activity: Activity,
+        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
+        onSuccess: (Boolean) -> Unit
     ) {
         val scopesString = Scopes.PROFILE + " " + Scopes.EMAIL
         val scopes = "oauth2:$scopesString"
-        var newUser : Boolean
+        var newUser: Boolean
         CoroutineScope(Dispatchers.IO).launchCatching({ throwable ->
             if (recoverFromPlayServicesErrorResult == null) return@launchCatching
             if (throwable is GoogleAuthException) {
@@ -93,9 +99,9 @@ class AuthenticationViewModel @Inject constructor(
     }
 
     private fun handleGoogleAuthException(
-        e : Exception,
-        activity : Activity,
-        recoverFromPlayServicesErrorResult : ActivityResultLauncher<Intent>
+        e: Exception,
+        activity: Activity,
+        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>
     ) {
         if (e is GooglePlayServicesAvailabilityException) {
             GoogleApiAvailability.getInstance()
@@ -118,13 +124,14 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    private fun checkPlayServices(activity : Activity) : Boolean {
+    private fun checkPlayServices(activity: Activity): Boolean {
         val googleAPI = GoogleApiAvailability.getInstance()
         val result = googleAPI.isGooglePlayServicesAvailable(activity)
         if (result != ConnectionResult.SUCCESS) {
             if (googleAPI.isUserResolvableError(result)) {
                 googleAPI.getErrorDialog(
-                    activity, result,
+                    activity,
+                    result,
                     PLAY_SERVICES_RESOLUTION_REQUEST
                 )?.show()
             }
@@ -134,16 +141,16 @@ class AuthenticationViewModel @Inject constructor(
         return true
     }
 
-    fun handleAuthResponse(userAuthResponse : UserAuthResponse) {
+    fun handleAuthResponse(userAuthResponse: UserAuthResponse) {
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             analyticsManager.logException(e)
         }
     }
 
     @Throws(Exception::class)
-    private fun saveTokens(api : String, user : String) {
+    private fun saveTokens(api: String, user: String) {
         this.apiClient.updateAuthenticationCredentials(user, api)
         authenticationHandler.updateUserID(user)
         sharedPrefs.edit {
@@ -152,10 +159,12 @@ class AuthenticationViewModel @Inject constructor(
                 if (keyHelper != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     try {
                         keyHelper.encrypt(api)
-                    } catch (e : Exception) {
+                    } catch (e: Exception) {
                         null
                     }
-                } else null
+                } else {
+                    null
+                }
             if ((encryptedKey?.length ?: 0) > 5) {
                 putString(user, encryptedKey)
             } else {

@@ -61,7 +61,8 @@ class BottomNavigationItem @JvmOverloads constructor(
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.BottomNavigationItem,
-            0, 0
+            0,
+            0
         )
         if (attributes != null) {
             icon = attributes.getDrawable(R.styleable.BottomNavigationItem_iconDrawable)

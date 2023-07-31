@@ -32,8 +32,10 @@ class NotificationPublisher : BroadcastReceiver() {
 
     @Inject
     lateinit var taskRepository: TaskRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
@@ -44,7 +46,7 @@ class NotificationPublisher : BroadcastReceiver() {
         this.context = context
         if (!wasInjected) {
             wasInjected = true
-            }
+        }
 
         var wasInactive = false
         // Show special notification if user hasn't logged in for a week
@@ -121,8 +123,10 @@ class NotificationPublisher : BroadcastReceiver() {
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
         val intent = PendingIntent.getActivity(
-            thisContext, 0,
-            notificationIntent, withImmutableFlag(0)
+            thisContext,
+            0,
+            notificationIntent,
+            withImmutableFlag(0)
         )
         builder.setContentIntent(intent)
 

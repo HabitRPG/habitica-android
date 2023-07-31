@@ -37,10 +37,13 @@ class StableRecyclerFragment :
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -58,7 +61,6 @@ class StableRecyclerFragment :
         inventoryRepository.close()
         super.onDestroy()
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

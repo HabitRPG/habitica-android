@@ -81,12 +81,12 @@ import kotlin.time.toDuration
 
 @HiltViewModel
 class PartySeekingViewModel @Inject constructor(
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    val socialRepository : SocialRepository
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val socialRepository: SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
     val isRefreshing = mutableStateOf(false)
-    val seekingUsers : Flow<PagingData<Member>>
+    val seekingUsers: Flow<PagingData<Member>>
     val inviteStates = mutableStateMapOf<String, Pair<Boolean, LoadingButtonState>>()
     init {
         seekingUsers = Pager(
@@ -100,36 +100,37 @@ class PartySeekingViewModel @Inject constructor(
         ).flow.cachedIn(viewModelScope)
     }
 
-    suspend fun inviteUser(member : Member) : InviteResponse? {
+    suspend fun inviteUser(member: Member): InviteResponse? {
         return socialRepository.inviteToGroup(
-            "party", mapOf(
+            "party",
+            mapOf(
                 "uuids" to listOf(member.id)
             )
         )?.firstOrNull()
     }
 
-    suspend fun rescindInvite(member : Member) : Member? {
+    suspend fun rescindInvite(member: Member): Member? {
         return socialRepository.removeMemberFromGroup("party", member.id)?.firstOrNull()
     }
 }
 
 @AndroidEntryPoint
 class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
-    val viewModel : PartySeekingViewModel by viewModels()
+    val viewModel: PartySeekingViewModel by viewModels()
 
-    override var binding : FragmentComposeBinding? = null
+    override var binding: FragmentComposeBinding? = null
     override fun createBinding(
-        inflater : LayoutInflater,
-        container : ViewGroup?
-    ) : FragmentComposeBinding {
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentComposeBinding {
         return FragmentComposeBinding.inflate(inflater)
     }
 
     override fun onCreateView(
-        inflater : LayoutInflater,
-        container : ViewGroup?,
-        savedInstanceState : Bundle?
-    ) : View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding?.composeView?.setContent {
             HabiticaTheme {
@@ -148,43 +149,54 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun InviteButton(
-    state : LoadingButtonState,
-    onClick : () -> Unit,
-    modifier : Modifier = Modifier,
-    isAlreadyInvited: Boolean = false,
+    state: LoadingButtonState,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    isAlreadyInvited: Boolean = false
 ) {
     AnimatedContent(
-        transitionSpec = { fadeIn(animationSpec = tween(220, delayMillis = 90)) with
-            fadeOut(animationSpec = tween(90)) },
-        targetState = isAlreadyInvited) {isInvited ->
+        transitionSpec = {
+            fadeIn(animationSpec = tween(220, delayMillis = 90)) with
+                fadeOut(animationSpec = tween(90))
+        },
+        targetState = isAlreadyInvited
+    ) { isInvited ->
         if (isInvited) {
-            LoadingButton(state = state, onClick = onClick,
+            LoadingButton(
+                state = state,
+                onClick = onClick,
                 type = LoadingButtonType.DESTRUCTIVE,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = HabiticaTheme.colors.errorBackground,
-                    contentColor = Color.White,
-                ), modifier = modifier, successContent = {
-                        Text(stringResource(R.string.rescinded))
-                }) {
+                    contentColor = Color.White
+                ),
+                modifier = modifier,
+                successContent = {
+                    Text(stringResource(R.string.rescinded))
+                }
+            ) {
                 Text(stringResource(R.string.rescind_invite))
             }
         } else {
-            LoadingButton(state = state, onClick = onClick,
-                modifier = modifier, successContent = {
+            LoadingButton(
+                state = state,
+                onClick = onClick,
+                modifier = modifier,
+                successContent = {
                     Text(stringResource(R.string.invited))
-                }) {
+                }
+            ) {
                 Text(stringResource(R.string.send_invite))
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun PartySeekingView(
-    viewModel : PartySeekingViewModel,
-    modifier : Modifier = Modifier
+    viewModel: PartySeekingViewModel,
+    modifier: Modifier = Modifier
 ) {
     val pageData = viewModel.seekingUsers.collectAsLazyPagingItems()
     val refreshing by viewModel.isRefreshing
@@ -199,7 +211,8 @@ fun PartySeekingView(
         LazyColumn {
             item {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 36.dp, bottom = 14.dp)
                 ) {
@@ -215,12 +228,14 @@ fun PartySeekingView(
                             stringResource(R.string.habiticans_looking_party_empty),
                             textAlign = TextAlign.Center,
                             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
-                            color = HabiticaTheme.colors.textSecondary, modifier = Modifier
+                            color = HabiticaTheme.colors.textSecondary,
+                            modifier = Modifier
                                 .width(320.dp)
                                 .align(alignment = Alignment.CenterHorizontally)
                         )
                         Image(
-                            painterResource(R.drawable.looking_for_party_empty), null,
+                            painterResource(R.drawable.looking_for_party_empty),
+                            null,
                             modifier = Modifier.padding(top = 50.dp)
                         )
                     } else {
@@ -228,7 +243,8 @@ fun PartySeekingView(
                             stringResource(R.string.habiticans_looking_party),
                             textAlign = TextAlign.Center,
                             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
-                            color = HabiticaTheme.colors.textSecondary, modifier = Modifier
+                            color = HabiticaTheme.colors.textSecondary,
+                            modifier = Modifier
                                 .width(320.dp)
                                 .align(alignment = Alignment.CenterHorizontally)
                         )
@@ -274,7 +290,7 @@ fun PartySeekingView(
                             modifier = Modifier
                                 .fillParentMaxSize(),
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Center,
+                            verticalArrangement = Arrangement.Center
                         ) {
                             HabiticaCircularProgressView()
                         }
@@ -314,16 +330,16 @@ fun PartySeekingView(
 }
 
 class PartySeekingPagingSource(
-    private val repository : SocialRepository,
+    private val repository: SocialRepository
 ) : PagingSource<Int, Member>() {
-    override fun getRefreshKey(state : PagingState<Int, Member>) : Int? {
+    override fun getRefreshKey(state: PagingState<Int, Member>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params : LoadParams<Int>) : LoadResult<Int, Member> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Member> {
         return try {
             val page = params.key ?: 0
             val response = repository.retrievePartySeekingUsers(page)
@@ -331,9 +347,9 @@ class PartySeekingPagingSource(
             LoadResult.Page(
                 data = response ?: emptyList(),
                 prevKey = if (page == 0) null else page.minus(1),
-                nextKey = if ((response?.size ?: 0) < 30) null else page.plus(1),
+                nextKey = if ((response?.size ?: 0) < 30) null else page.plus(1)
             )
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
     }

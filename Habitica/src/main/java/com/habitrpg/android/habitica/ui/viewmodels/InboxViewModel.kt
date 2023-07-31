@@ -32,10 +32,11 @@ import kotlin.math.ceil
 
 @HiltViewModel
 class InboxViewModel @Inject constructor(
-    savedStateHandle : SavedStateHandle,
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    val socialRepository : SocialRepository) : BaseViewModel(userRepository, userViewModel) {
+    savedStateHandle: SavedStateHandle,
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val socialRepository: SocialRepository
+) : BaseViewModel(userRepository, userViewModel) {
     val recipientID: String? = savedStateHandle.get("userID")
     val recipientUsername: String? = savedStateHandle.get("username")
 
@@ -125,10 +126,11 @@ class MessagesDataSource(
                     }
                 }
                 .collect {
-                    if (it.size < 10 && footer != null)
+                    if (it.size < 10 && footer != null) {
                         callback.onResult(it.plusElement(footer!!), 0)
-                    else
+                    } else {
                         callback.onResult(it, 0)
+                    }
                 }
         }
     }

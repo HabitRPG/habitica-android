@@ -44,7 +44,6 @@ class AddTaskWidgetProvider : BaseWidgetProvider() {
         columns: Int,
         rows: Int
     ): RemoteViews {
-
         val selectedTaskType = getSelectedTaskType(widgetId)
         var addText: String? = ""
         var backgroundResource = R.drawable.widget_add_habit_background

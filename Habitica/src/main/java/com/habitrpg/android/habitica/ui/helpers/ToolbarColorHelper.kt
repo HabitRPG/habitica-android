@@ -102,7 +102,8 @@ object ToolbarColorHelper {
         activity.window.decorView.waitForLayout {
             val outViews = ArrayList<View>()
             findViewsWithText(
-                outViews, overflowDescription,
+                outViews,
+                overflowDescription,
                 View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION
             )
             if (outViews.isEmpty()) {

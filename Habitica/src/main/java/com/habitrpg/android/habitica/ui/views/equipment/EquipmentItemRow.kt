@@ -33,7 +33,8 @@ class EquipmentItemRow(context: Context, attrs: AttributeSet?) : LinearLayout(co
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.EquipmentItemRow,
-            0, 0
+            0,
+            0
         )
 
         binding.titleTextView.text = attributes?.getString(R.styleable.EquipmentItemRow_equipmentTitle)

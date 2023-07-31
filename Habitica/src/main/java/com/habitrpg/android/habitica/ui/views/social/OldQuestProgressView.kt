@@ -52,7 +52,8 @@ class OldQuestProgressView : LinearLayout {
 
     override fun onDraw(canvas: Canvas?) {
         rect.set(
-            0.0f, 0.0f,
+            0.0f,
+            0.0f,
             (
                 canvas?.width?.toFloat()
                     ?: 1.0f

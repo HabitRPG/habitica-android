@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
@@ -25,7 +24,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import org.hamcrest.Matcher
@@ -63,8 +61,8 @@ class ItemScreen : Screen<ItemScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-        itemType(::ItemItem)
-    })
+            itemType(::ItemItem)
+        })
 }
 
 internal class ItemRecyclerFragmentTest : FragmentTestCase<ItemRecyclerFragment, FragmentRecyclerviewBinding, ItemScreen>(false) {

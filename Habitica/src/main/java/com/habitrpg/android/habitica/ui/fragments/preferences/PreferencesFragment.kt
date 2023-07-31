@@ -46,30 +46,31 @@ import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PreferencesFragment : BasePreferencesFragment(),
+class PreferencesFragment :
+    BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Inject
-    lateinit var contentRepository : ContentRepository
+    lateinit var contentRepository: ContentRepository
 
     @Inject
-    lateinit var soundManager : SoundManager
+    lateinit var soundManager: SoundManager
 
     @Inject
-    lateinit var pushNotificationManager : PushNotificationManager
+    lateinit var pushNotificationManager: PushNotificationManager
 
     @Inject
-    lateinit var configManager : AppConfigManager
+    lateinit var configManager: AppConfigManager
 
     @Inject
-    lateinit var apiClient : ApiClient
+    lateinit var apiClient: ApiClient
 
-    private var timePreference : TimePreference? = null
-    private var pushNotificationsPreference : PreferenceScreen? = null
-    private var emailNotificationsPreference : PreferenceScreen? = null
-    private var classSelectionPreference : Preference? = null
-    private var serverUrlPreference : ListPreference? = null
-    private var taskListPreference : ListPreference? = null
+    private var timePreference: TimePreference? = null
+    private var pushNotificationsPreference: PreferenceScreen? = null
+    private var emailNotificationsPreference: PreferenceScreen? = null
+    private var classSelectionPreference: Preference? = null
+    private var serverUrlPreference: ListPreference? = null
+    private var taskListPreference: ListPreference? = null
 
     private val classSelectionResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -78,7 +79,7 @@ class PreferencesFragment : BasePreferencesFragment(),
             }
         }
 
-    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
 
@@ -129,14 +130,14 @@ class PreferencesFragment : BasePreferencesFragment(),
         super.onPause()
     }
 
-    override fun onPreferenceTreeClick(preference : Preference) : Boolean {
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
             "logout" -> {
                 logout()
             }
 
             "pause_damage" -> {
-                showAsBottomSheet {dismiss ->
+                showAsBottomSheet { dismiss ->
                     PauseResumeDamageView(user?.preferences?.sleep ?: true, {
                         lifecycleScope.launchCatching {
                             user?.let { it -> userRepository.sleep(it) }
@@ -148,7 +149,7 @@ class PreferencesFragment : BasePreferencesFragment(),
 
             "choose_class" -> {
                 val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
-                val isClassSelected =  user?.flags?.classSelected ?: false
+                val isClassSelected = user?.flags?.classSelected ?: false
                 val bundle = Bundle()
                 bundle.putBoolean("isInitialSelection", isClassSelected)
                 val intent = Intent(activity, ClassSelectionActivity::class.java)
@@ -160,7 +161,8 @@ class PreferencesFragment : BasePreferencesFragment(),
                             val dialog = HabiticaAlertDialog(context)
                             dialog.setTitle(R.string.change_class_confirmation)
                             dialog.setMessage(R.string.change_class_message)
-                            dialog.addButton(R.string.change_class,
+                            dialog.addButton(
+                                R.string.change_class,
                                 isPrimary = true,
                                 isDestructive = true
                             ) { _, _ ->
@@ -196,7 +198,7 @@ class PreferencesFragment : BasePreferencesFragment(),
         return super.onPreferenceTreeClick(preference)
     }
 
-    private fun reloadContent(withConfirmation : Boolean) {
+    private fun reloadContent(withConfirmation: Boolean) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             contentRepository.retrieveContent(true)
             if (withConfirmation) {
@@ -234,7 +236,7 @@ class PreferencesFragment : BasePreferencesFragment(),
             alert?.setTitle(R.string.push_notification_system_settings_title)
             alert?.setMessage(R.string.push_notification_system_settings_description)
             alert?.addButton(R.string.open_settings, true, false) { _, _ ->
-                val notifSettingIntent : Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, context?.applicationContext?.packageName)
                 startActivity(notifSettingIntent)
@@ -246,7 +248,7 @@ class PreferencesFragment : BasePreferencesFragment(),
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences : SharedPreferences, key : String?) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             "use_reminder" -> {
                 val useReminder = sharedPreferences.getBoolean(key, false)
@@ -264,7 +266,7 @@ class PreferencesFragment : BasePreferencesFragment(),
             }
 
             "usePushNotifications" -> {
-                val notifPermissionEnabled : Boolean =
+                val notifPermissionEnabled: Boolean =
                     pushNotificationManager.notificationPermissionEnabled()
                 val usePushNotifications = sharedPreferences.getBoolean(key, true)
                 pushNotificationsPreference?.isEnabled = usePushNotifications
@@ -384,7 +386,7 @@ class PreferencesFragment : BasePreferencesFragment(),
         }
     }
 
-    override fun onDisplayPreferenceDialog(preference : Preference) {
+    override fun onDisplayPreferenceDialog(preference: Preference) {
         if (preference is TimePreference) {
             if (parentFragmentManager.findFragmentByTag(TimePreferenceDialogFragment.TAG) == null) {
                 TimePreferenceDialogFragment.newInstance(this, preference.getKey())
@@ -395,7 +397,7 @@ class PreferencesFragment : BasePreferencesFragment(),
         }
     }
 
-    override fun setUser(user : User?) {
+    override fun setUser(user: User?) {
         super.setUser(user)
 
         val pauseDamagePreference = findPreference<Preference>("pause_damage")
@@ -462,7 +464,7 @@ class PreferencesFragment : BasePreferencesFragment(),
         val inbox = user?.inbox
         disablePMsPreference?.isChecked = inbox?.optOut ?: true
 
-        val notifPermissionEnabled : Boolean =
+        val notifPermissionEnabled: Boolean =
             pushNotificationManager.notificationPermissionEnabled()
         val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
         pushNotificationsPreference = findPreference("pushNotifications") as? PreferenceScreen

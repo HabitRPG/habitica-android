@@ -14,12 +14,12 @@ import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.GemPurchaseOptionsView
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() {
@@ -46,7 +46,6 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         }
 
     private var purchaseHandler: PurchaseHandler? = null
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

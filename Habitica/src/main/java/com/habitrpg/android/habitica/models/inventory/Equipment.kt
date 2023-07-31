@@ -10,6 +10,7 @@ open class Equipment : RealmObject(), BaseMainObject {
 
     var value: Double = 0.toDouble()
     var type: String? = ""
+
     @PrimaryKey
     var key: String? = ""
     var klass: String = ""
@@ -20,6 +21,7 @@ open class Equipment : RealmObject(), BaseMainObject {
     var con: Int = 0
     var str: Int = 0
     var per: Int = 0
+
     @SerializedName("int")
     var _int: Int = 0
     var owned: Boolean? = null

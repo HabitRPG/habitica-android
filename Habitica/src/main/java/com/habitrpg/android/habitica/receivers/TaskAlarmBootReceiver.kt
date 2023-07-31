@@ -18,6 +18,7 @@ class TaskAlarmBootReceiver : BroadcastReceiver() {
 
     @Inject
     lateinit var taskAlarmManager: TaskAlarmManager
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 

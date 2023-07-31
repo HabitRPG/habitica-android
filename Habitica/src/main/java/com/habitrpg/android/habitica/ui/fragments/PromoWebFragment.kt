@@ -46,5 +46,4 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
             binding?.newsWebview?.loadUrl(url)
         }
     }
-
 }

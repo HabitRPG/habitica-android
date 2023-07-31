@@ -4,10 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.speech.RecognizerIntent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.postDelayed
 import com.habitrpg.android.habitica.databinding.ActivityInputBinding
@@ -52,5 +50,4 @@ class InputActivity : BaseActivity<ActivityInputBinding, InputViewModel>() {
             }
         }
     }
-
 }

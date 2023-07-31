@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.habitrpg.android.habitica.databinding.FragmentPromoInfoBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
@@ -20,7 +20,6 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
 
     @Inject
     lateinit var configManager: AppConfigManager
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

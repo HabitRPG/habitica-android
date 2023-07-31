@@ -30,8 +30,10 @@ class DeathActivity : BaseActivity() {
 
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 

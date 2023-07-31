@@ -36,7 +36,7 @@ import java.util.UUID
 class TaskRepositoryImpl(
     localRepository: TaskLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler : AuthenticationHandler,
+    authenticationHandler: AuthenticationHandler,
     val appConfigManager: AppConfigManager,
     val analyticsManager: AnalyticsManager
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler), TaskRepository {
@@ -79,7 +79,9 @@ class TaskRepositoryImpl(
     ): TaskScoringResult? {
         val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
             ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
-        } else null
+        } else {
+            null
+        }
         if (user != null && localData != null) {
             val stats = user.stats
             val result = TaskScoringResult(localData, stats)

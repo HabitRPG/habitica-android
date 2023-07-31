@@ -89,7 +89,8 @@ fun StatsViewComposable(
                     .weight(1f)
                     .fillMaxHeight()
                     .background(colorResource(if (canAllocate) R.color.offset_background_30 else R.color.window_background)),
-                verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally
+                verticalArrangement = Arrangement.Center,
+                Alignment.CenterHorizontally
             ) {
                 Text(text = "$allocatedValue", fontSize = 20.sp, color = if (canAllocate) statColor else colorResource(R.color.text_primary))
                 Text(text = stringResource(R.string.allocated), color = if (canAllocate) statColor else colorResource(R.color.text_quad), fontSize = 12.sp)
@@ -191,7 +192,8 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.StatsView,
-            0, 0
+            0,
+            0
         )
 
         val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg_white)

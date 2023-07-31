@@ -48,7 +48,7 @@ fun HabiticaTheme(
             ),
             subtitle1 = TextStyle(
                 fontWeight = FontWeight.Medium,
-                fontSize = 16.sp,
+                fontSize = 16.sp
             ),
             subtitle2 = TextStyle(
                 fontWeight = FontWeight.Normal,
@@ -168,10 +168,10 @@ class HabiticaColors(
     val tintedUiSub: Color,
     val tintedUiDetails: Color,
     val pixelArtBackground: Color,
-    val errorBackground : Color,
-    val errorColor : Color,
-    val successBackground : Color,
-    val successColor : Color
+    val errorBackground: Color,
+    val errorColor: Color,
+    val successBackground: Color,
+    val successColor: Color
 ) {
 
     @Composable
@@ -217,9 +217,6 @@ class HabiticaColors(
     fun basicButtonColor(): Color {
         return colorResource(R.color.gray700_gray10)
     }
-
 }
 
-class HabiticaTypography {
-
-}
+class HabiticaTypography

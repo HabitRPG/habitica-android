@@ -33,24 +33,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    val hostConfig : HostConfig,
-    val pushNotificationManager : PushNotificationManager,
-    val sharedPreferences : SharedPreferences,
-    val contentRepository : ContentRepository,
-    val taskRepository : TaskRepository,
-    val inventoryRepository : InventoryRepository,
-    val taskAlarmManager : TaskAlarmManager,
-    val analyticsManager : AnalyticsManager,
-    val maintenanceService : MaintenanceApiService
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val hostConfig: HostConfig,
+    val pushNotificationManager: PushNotificationManager,
+    val sharedPreferences: SharedPreferences,
+    val contentRepository: ContentRepository,
+    val taskRepository: TaskRepository,
+    val inventoryRepository: InventoryRepository,
+    val taskAlarmManager: TaskAlarmManager,
+    val analyticsManager: AnalyticsManager,
+    val maintenanceService: MaintenanceApiService
 ) : BaseViewModel(userRepository, userViewModel), TutorialView.OnTutorialReaction {
 
-    val isAuthenticated : Boolean
+    val isAuthenticated: Boolean
         get() = hostConfig.hasAuthentication()
-    val launchScreen : String?
+    val launchScreen: String?
         get() = sharedPreferences.getString("launch_screen", "")
-    var preferenceLanguage : String?
+    var preferenceLanguage: String?
         get() = sharedPreferences.getString("language", "en")
         set(value) {
             sharedPreferences.edit {
@@ -78,7 +78,7 @@ class MainActivityViewModel @Inject constructor(
                     )
                 )
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             analyticsManager.logException(e)
         }
     }
@@ -91,7 +91,7 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    fun retrieveUser(forced : Boolean = false) {
+    fun retrieveUser(forced: Boolean = false) {
         if (hostConfig.hasAuthentication()) {
             viewModelScope.launch(ExceptionHandler.coroutine()) {
                 contentRepository.retrieveWorldState()
@@ -127,23 +127,23 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    fun updateAllowPushNotifications(allowPushNotifications : Boolean) {
+    fun updateAllowPushNotifications(allowPushNotifications: Boolean) {
         sharedPreferences.getBoolean("usePushNotifications", true)
         sharedPreferences.edit {
             putBoolean("usePushNotifications", allowPushNotifications)
         }
     }
 
-    override fun onTutorialCompleted(step : TutorialStep) {
+    override fun onTutorialCompleted(step: TutorialStep) {
         updateUser("flags.tutorial." + step.tutorialGroup + "." + step.identifier, true)
         logTutorialStatus(step, true)
     }
 
-    override fun onTutorialDeferred(step : TutorialStep) {
+    override fun onTutorialDeferred(step: TutorialStep) {
         taskRepository.modify(step) { it.displayedOn = Date() }
     }
 
-    fun logTutorialStatus(step : TutorialStep, complete : Boolean) {
+    fun logTutorialStatus(step: TutorialStep, complete: Boolean) {
         val additionalData = HashMap<String, Any>()
         additionalData["eventLabel"] = step.identifier + "-android"
         additionalData["eventValue"] = step.identifier ?: ""
@@ -156,7 +156,7 @@ class MainActivityViewModel @Inject constructor(
         )
     }
 
-    fun ifNeedsMaintenance(onResult : ((MaintenanceResponse) -> Unit)) {
+    fun ifNeedsMaintenance(onResult: ((MaintenanceResponse) -> Unit)) {
         viewModelScope.launchCatching {
             val maintenanceResponse = maintenanceService.getMaintenanceStatus()
             if (maintenanceResponse?.activeMaintenance == null) {
@@ -167,10 +167,10 @@ class MainActivityViewModel @Inject constructor(
     }
 
     fun getToolbarTitle(
-        id : Int,
-        label : CharSequence?,
-        eggType : String?,
-        onSuccess : ((CharSequence?) -> Unit)
+        id: Int,
+        label: CharSequence?,
+        eggType: String?,
+        onSuccess: ((CharSequence?) -> Unit)
     ) {
         if (id == R.id.petDetailRecyclerFragment || id == R.id.mountDetailRecyclerFragment) {
             viewModelScope.launchCatching {
@@ -190,7 +190,9 @@ class MainActivityViewModel @Inject constructor(
                     ""
                 } else if (label.isNullOrEmpty() && user.value?.isValid == true) {
                     user.value?.profile?.name
-                } else label ?: ""
+                } else {
+                    label ?: ""
+                }
             )
         }
     }

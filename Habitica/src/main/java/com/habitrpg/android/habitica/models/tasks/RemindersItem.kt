@@ -51,7 +51,9 @@ open class RemindersItem : RealmObject, Parcelable {
     override fun equals(other: Any?): Boolean {
         return if (other is RemindersItem) {
             this.id == other.id
-        } else super.equals(other)
+        } else {
+            super.equals(other)
+        }
     }
 
     override fun hashCode(): Int {
@@ -71,7 +73,8 @@ open class RemindersItem : RealmObject, Parcelable {
 
         val parsed: TemporalAccessor = formatter.parseBest(
             time,
-            ZonedDateTime::from, LocalDateTime::from
+            ZonedDateTime::from,
+            LocalDateTime::from
         )
         return if (parsed is ZonedDateTime) {
             parsed
@@ -91,7 +94,8 @@ open class RemindersItem : RealmObject, Parcelable {
 
         val parsed: TemporalAccessor = formatter.parseBest(
             time,
-            ZonedDateTime::from, LocalDateTime::from
+            ZonedDateTime::from,
+            LocalDateTime::from
         )
         return if (parsed is ZonedDateTime) {
             parsed.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()

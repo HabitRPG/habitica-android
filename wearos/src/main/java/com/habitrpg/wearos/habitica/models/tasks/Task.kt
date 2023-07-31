@@ -36,27 +36,32 @@ open class Task constructor() : Parcelable, BaseTask {
     var value: Double? = 0.0
     var dateCreated: Date? = null
     var position: Int = 0
+
     // Habits
     var up: Boolean? = false
     var down: Boolean? = false
     override var counterUp: Int? = 0
     override var counterDown: Int? = 0
+
     // todos/dailies
     override var completed: Boolean = false
     var checklist: List<ChecklistItem>? = listOf()
     var reminders: List<RemindersItem>? = listOf()
+
     // dailies
     var frequency: Frequency? = null
     var everyX: Int? = 0
     override var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
+
     // todos
     @Json(name = "date")
     var dueDate: Date? = null
 
     @Json(ignore = true)
     var parsedText: Spanned? = null
+
     @Json(ignore = true)
     var parsedNotes: Spanned? = null
 

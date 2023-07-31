@@ -45,8 +45,9 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
         LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     private fun updateTask(task: Task) {
-        if (taskType != task.type)
+        if (taskType != task.type) {
             return
+        }
         var i = 0
         while (i < (this.content?.size ?: 0)) {
             if (content?.get(i)?.id == task.id) {

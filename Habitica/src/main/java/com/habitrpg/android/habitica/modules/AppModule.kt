@@ -60,9 +60,10 @@ class AppModule {
     ): KeyHelper? {
         return if (keyStore == null) {
             null
-        } else getInstance(context, sharedPreferences, keyStore)
+        } else {
+            getInstance(context, sharedPreferences, keyStore)
+        }
     }
-
 
     @Provides
     @Singleton

@@ -80,12 +80,14 @@ fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier) {
                 }
                 Column(
                     verticalArrangement = Arrangement.spacedBy(
-                        2.dp, Alignment.CenterVertically
+                        2.dp,
+                        Alignment.CenterVertically
                     ),
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
                     Image(
-                        painterResource(R.drawable.birthday_menu_text), null
+                        painterResource(R.drawable.birthday_menu_text),
+                        null
                     )
                     Text(
                         stringResource(R.string.exclusive_items_await),
@@ -130,7 +132,8 @@ private fun buildString(
     formatString: Int
 ): String {
     return stringResource(
-        formatString, endDate.getShortRemainingString()
+        formatString,
+        endDate.getShortRemainingString()
     ).uppercase()
 }
 

@@ -27,7 +27,6 @@ class NotificationOpenHandler {
                     PushNotificationManager.G1G1_PROMO_KEY -> openGiftOneGetOneInfoScreen()
                     else -> {
                         intent.getStringExtra("openURL")?.let {
-
                             MainNavigationController.navigate(it)
                         }
                     }

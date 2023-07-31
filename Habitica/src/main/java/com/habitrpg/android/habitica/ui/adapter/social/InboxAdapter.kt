@@ -41,8 +41,11 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
-        return if (viewType == FIRST_MESSAGE) ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser?.id ?: "")
-        else ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
+        return if (viewType == FIRST_MESSAGE) {
+            ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser?.id ?: "")
+        } else {
+            ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
+        }
     }
 
     override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
@@ -70,8 +73,9 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
     }
 
     private fun expandMessage(id: String, position: Int) {
-        if (isPositionIntroMessage(position))
+        if (isPositionIntroMessage(position)) {
             return
+        }
         expandedMessageId = if (expandedMessageId == id) {
             null
         } else {

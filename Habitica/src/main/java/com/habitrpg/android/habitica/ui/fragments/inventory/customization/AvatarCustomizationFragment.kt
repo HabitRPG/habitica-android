@@ -27,7 +27,6 @@ import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBind
 import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
-import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter
@@ -62,8 +61,10 @@ class AvatarCustomizationFragment :
 
     @Inject
     lateinit var customizationRepository: CustomizationRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -191,7 +192,6 @@ class AvatarCustomizationFragment :
         return super.onOptionsItemSelected(item)
     }
 
-
     private fun loadCustomizations() {
         val type = this.type ?: return
         lifecycleScope.launchCatching {
@@ -242,7 +242,9 @@ class AvatarCustomizationFragment :
     ): Boolean {
         return if (filter.onlyPurchased && ownedCustomizations.find { it.key == customization.identifier } == null) {
             true
-        } else filter.months.isNotEmpty() && !filter.months.contains(customization.customizationSet?.substringAfter('.'))
+        } else {
+            filter.months.isNotEmpty() && !filter.months.contains(customization.customizationSet?.substringAfter('.'))
+        }
     }
 
     fun updateUser(user: User?) {

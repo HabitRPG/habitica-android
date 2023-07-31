@@ -101,22 +101,30 @@ class ChatRecyclerMessageViewHolder(
         }
         binding.replyButton.setCompoundDrawablesWithIntrinsicBounds(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReplyIcon()),
-            null, null, null
+            null,
+            null,
+            null
         )
         binding.copyButton.setOnClickListener { chatMessage?.let { onCopyMessage?.invoke(it) } }
         binding.copyButton.setCompoundDrawablesWithIntrinsicBounds(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatCopyIcon()),
-            null, null, null
+            null,
+            null,
+            null
         )
         binding.reportButton.setOnClickListener { chatMessage?.let { onFlagMessage?.invoke(it) } }
         binding.reportButton.setCompoundDrawablesWithIntrinsicBounds(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatReportIcon()),
-            null, null, null
+            null,
+            null,
+            null
         )
         binding.deleteButton.setOnClickListener { chatMessage?.let { onDeleteMessage?.invoke(it) } }
         binding.deleteButton.setCompoundDrawablesWithIntrinsicBounds(
             BitmapDrawable(res, HabiticaIconsHelper.imageOfChatDeleteIcon()),
-            null, null, null
+            null,
+            null,
+            null
         )
     }
 

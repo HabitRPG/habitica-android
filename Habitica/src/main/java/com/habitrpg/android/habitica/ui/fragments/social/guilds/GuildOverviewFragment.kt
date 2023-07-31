@@ -21,8 +21,8 @@ import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener {
@@ -54,7 +54,6 @@ class GuildOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>(), Sear
         super.onViewCreated(view, savedInstanceState)
         setViewPagerAdapter()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

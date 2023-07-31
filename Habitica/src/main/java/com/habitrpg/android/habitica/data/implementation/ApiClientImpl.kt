@@ -378,7 +378,9 @@ class ApiClientImpl(
     override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? {
         return if (lastSubscribeCall == null || Date().time - lastSubscribeCall.time > 60000) {
             process { apiService.validateSubscription(request) }
-        } else null
+        } else {
+            null
+        }
     }
 
     override suspend fun getHallMember(userId: String): Member? {
@@ -629,7 +631,9 @@ class ApiClientImpl(
         // make sure a purchase attempt doesn't happen
         return if (lastPurchaseValidation == null || Date().time - lastPurchaseValidation.time > 5000) {
             return process { apiService.validatePurchase(request) }
-        } else null
+        } else {
+            null
+        }
     }
 
     override suspend fun changeCustomDayStart(updateObject: Map<String, Any>): User? {
@@ -640,7 +644,7 @@ class ApiClientImpl(
         return process { apiService.markTaskNeedsWork(taskID, userID) }
     }
 
-    override suspend fun retrievePartySeekingUsers(page: Int) : List<Member>? {
+    override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? {
         return process { apiService.retrievePartySeekingUsers(page) }
     }
 

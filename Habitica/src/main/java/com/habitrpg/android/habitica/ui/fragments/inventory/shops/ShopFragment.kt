@@ -52,12 +52,16 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     internal val hourglasses = mutableStateOf<Double?>(null)
     private val gems = mutableStateOf<Double?>(null)
     private val gold = mutableStateOf<Double?>(null)
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -125,7 +129,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 dialog.show()
             }
-
 
             adapter?.context = context
             adapter?.mainActivity = mainActivity
@@ -362,7 +365,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         }
     }
 
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(SHOP_IDENTIFIER_KEY, this.shopIdentifier)
@@ -386,7 +388,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         context?.let { context ->
             val alert = HabiticaAlertDialog(context)
             alert.setMessage(getString(R.string.class_changed_description, selectedClass))
-            alert.addButton(getString(R.string.complete_tutorial), true){ _, _ -> alert.dismiss() }
+            alert.addButton(getString(R.string.complete_tutorial), true) { _, _ -> alert.dismiss() }
             alert.show()
         }
     }

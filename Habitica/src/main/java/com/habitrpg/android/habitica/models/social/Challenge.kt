@@ -33,6 +33,7 @@ open class Challenge : RealmObject(), BaseMainObject {
     var group: Group? = null
 
     var leader: User? = null
+
     @Ignore
     var tasksOrder: TasksOrder? = null
     var summary: String? = null
@@ -69,7 +70,9 @@ open class Challenge : RealmObject(), BaseMainObject {
     override fun equals(other: Any?): Boolean {
         return if (other?.javaClass == Challenge::class.java && this.id != null) {
             this.id == (other as Challenge).id
-        } else super.equals(other)
+        } else {
+            super.equals(other)
+        }
     }
 
     override fun hashCode(): Int {

@@ -90,7 +90,8 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.ValueBar,
-            0, 0
+            0,
+            0
         )
 
         binding.progressBar.barForegroundColor = attributes?.getColor(R.styleable.ValueBar_barForegroundColor, 0) ?: 0

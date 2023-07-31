@@ -16,7 +16,8 @@ class AvatarViewModel @Inject constructor(
 ) : BaseViewModel(
     userRepository,
     taskRepository,
-    exceptionBuilder, appStateManager
+    exceptionBuilder,
+    appStateManager
 ) {
     var user = userRepository.getUser()
 }

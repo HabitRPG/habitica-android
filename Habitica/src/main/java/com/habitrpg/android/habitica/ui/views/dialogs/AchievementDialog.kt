@@ -66,7 +66,6 @@ class AchievementDialog(context: Context) : HabiticaAlertDialog(context) {
         }
 
         if (User.ONBOARDING_ACHIEVEMENT_KEYS.contains(iconName)) {
-
             addButton(R.string.onwards, isPrimary = true, isDestructive = false) { _, _ ->
             }
             if (!isLastOnboardingAchievement) {

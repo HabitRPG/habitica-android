@@ -38,7 +38,9 @@ open class RemindersItem constructor() : Parcelable {
     override fun equals(other: Any?): Boolean {
         return if (other is RemindersItem) {
             this.id == other.id
-        } else super.equals(other)
+        } else {
+            super.equals(other)
+        }
     }
 
     override fun hashCode(): Int {

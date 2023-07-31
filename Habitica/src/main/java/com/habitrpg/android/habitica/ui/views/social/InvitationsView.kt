@@ -41,11 +41,13 @@ class InvitationsView @JvmOverloads constructor(
                 leaderID?.let {
                     val leader = getLeader?.invoke(it) ?: return@launch
                     binding.groupleaderAvatarView.setAvatar(leader)
-                    binding.groupleaderTextView.setMarkdown(context.getString(
-                        R.string.invitation_title,
-                        "[${leader.formattedUsername}](https://habitica.com/profile/${leaderID})",
-                        invitation.name
-                    ))
+                    binding.groupleaderTextView.setMarkdown(
+                        context.getString(
+                            R.string.invitation_title,
+                            "[${leader.formattedUsername}](https://habitica.com/profile/$leaderID)",
+                            invitation.name
+                        )
+                    )
                 }
             }
 

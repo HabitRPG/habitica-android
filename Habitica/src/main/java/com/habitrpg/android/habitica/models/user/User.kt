@@ -58,6 +58,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
     var profile: Profile? = null
     var party: UserParty? = null
     override var items: Items? = null
+
     @SerializedName("auth")
     override var authentication: Authentication? = null
     override var flags: Flags? = null

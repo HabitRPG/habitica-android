@@ -62,7 +62,6 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
         binding?.newsWebview?.loadUrl("$address/static/new-stuff")
     }
 
-
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch(ExceptionHandler.coroutine()) {

@@ -54,9 +54,13 @@ class RewardViewHolder(
         if (isLocked) {
             binding.priceLabel.setCompoundDrawablesWithIntrinsicBounds(
                 HabiticaIconsHelper.imageOfLocked(
-                    ContextCompat.getColor(context, R.color.gray_1_30), 10, 12
+                    ContextCompat.getColor(context, R.color.gray_1_30),
+                    10,
+                    12
                 ).toDrawable(context.resources),
-                null, null, null
+                null,
+                null,
+                null
             )
             binding.priceLabel.compoundDrawablePadding = 2.dpToPx(context)
         } else {

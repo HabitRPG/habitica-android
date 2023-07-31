@@ -44,11 +44,15 @@ class PixelArtView @JvmOverloads constructor(
             (
                 if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
                     smallestSide / (targetWidth / 3)
-                } else 1
+                } else {
+                    1
+                }
                 ),
             if (smallestSide > 0 && targetHeight > 0 && smallestSide != targetHeight) {
                 smallestSide / (targetHeight / 3)
-            } else 1
+            } else {
+                1
+            }
         )
         targetWidth = (targetWidth / 3) * factor
         targetHeight = (targetHeight / 3) * factor

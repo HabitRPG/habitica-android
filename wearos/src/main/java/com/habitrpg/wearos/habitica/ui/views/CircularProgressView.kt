@@ -25,7 +25,8 @@ class CircularProgressView(
     private val attributes = context?.theme?.obtainStyledAttributes(
         attrs,
         R.styleable.CircularProgressView,
-        0, 0
+        0,
+        0
     )
     private val offset = attributes?.getDimension(R.styleable.CircularProgressView_offset, 0f)?.toInt()
     private val backgroundArcColor = attributes?.getColor(R.styleable.CircularProgressView_backgroundArcColor, 0) ?: Color.GRAY

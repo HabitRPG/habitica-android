@@ -101,7 +101,9 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
 
             val disabled = if (isHatching) {
                 !this.canHatch
-            } else false
+            } else {
+                false
+            }
             val imageName = if (item != null) {
                 getImageName(item = item)
             } else {
@@ -189,7 +191,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                 }
                 menu.setSelectionRunnable { index ->
                     if (item == null && ownedItem != null) {
-                        //Special items that are not Mystery Item
+                        // Special items that are not Mystery Item
                         val specialItem = SpecialItem()
                         ownedItem?.key?.let { key ->
                             specialItem.key = key

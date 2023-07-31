@@ -42,7 +42,6 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         setViewPagerAdapter()
     }
 
-
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 

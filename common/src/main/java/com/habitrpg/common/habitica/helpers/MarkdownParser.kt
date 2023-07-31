@@ -36,8 +36,6 @@ object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
     internal var markwon: Markwon? = null
 
-
-
     fun setup(context: Context) {
         markwon = Markwon.builder(context)
             .usePlugin(StrikethroughPlugin.create())
@@ -126,7 +124,7 @@ object MarkdownParser {
         processedInput = preprocessImageMarkdown(processedInput)
         return processedInput
     }
-    
+
     private fun preprocessImageMarkdown(markdown: String): String {
         // Used to handle an image tag with a URL that ends with .jpg or .png (Else the image may be shown as broken, a link, or not at all)
         // Example: (..ample_image_name.png"Zombie hatching potion") -> (..ample_image_name.png "Zombie hatching potion")
@@ -161,8 +159,6 @@ object MarkdownParser {
 
         return sb.toString()
     }
-
-
 
     fun parseMarkdownAsync(input: String?, onSuccess: (Spanned) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -199,8 +195,8 @@ object MarkdownParser {
     private val markdownLinkRegex = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)".toRegex()
     fun containsMarkdown(text: String): Boolean {
         return text.matches(markdownRegex) ||
-                text.contains(imageMarkdownRegex) ||
-                text.contains(markdownLinkRegex)
+            text.contains(imageMarkdownRegex) ||
+            text.contains(markdownLinkRegex)
     }
 }
 

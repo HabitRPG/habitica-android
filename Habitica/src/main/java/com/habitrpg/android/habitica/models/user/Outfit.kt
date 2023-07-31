@@ -14,6 +14,7 @@ open class Outfit : RealmObject(), BaseObject, AvatarOutfit {
     override var head: String = ""
     override var shield: String = ""
     override var weapon: String = ""
+
     @SerializedName("eyewear")
     override var eyeWear: String = ""
     override var headAccessory: String = ""

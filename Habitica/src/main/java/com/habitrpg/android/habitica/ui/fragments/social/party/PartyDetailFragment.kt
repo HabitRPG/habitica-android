@@ -136,7 +136,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                             showExtendedInfo = false,
                             onInvite = {
                                 viewModel.rescindInvite(invitedMember)
-                            })
+                            }
+                        )
                     }
                 }
             }
@@ -416,7 +417,6 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         binding?.membersWrapper?.removeView(memberView)
                     }
                     refreshParty()
-
                 }
             }
             activity?.dismissKeyboard()

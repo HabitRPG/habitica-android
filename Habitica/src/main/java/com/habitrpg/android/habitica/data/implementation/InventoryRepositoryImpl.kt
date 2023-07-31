@@ -52,7 +52,7 @@ class InventoryRepositoryImpl(
         return localRepository.getInAppRewards()
     }
 
-    override fun getInAppReward(key : String) : Flow<ShopItem> {
+    override fun getInAppReward(key: String): Flow<ShopItem> {
         return localRepository.getInAppReward(key)
     }
 
@@ -120,7 +120,7 @@ class InventoryRepositoryImpl(
     }
 
     override fun getOwnedMounts(): Flow<List<OwnedMount>> {
-        return authenticationHandler.userIDFlow.flatMapLatest {  localRepository.getOwnedMounts(it) }
+        return authenticationHandler.userIDFlow.flatMapLatest { localRepository.getOwnedMounts(it) }
     }
 
     override fun getPets(): Flow<List<Pet>> {
@@ -132,7 +132,7 @@ class InventoryRepositoryImpl(
     }
 
     override fun getOwnedPets(): Flow<List<OwnedPet>> {
-        return authenticationHandler.userIDFlow.flatMapLatest {  localRepository.getOwnedPets(it) }
+        return authenticationHandler.userIDFlow.flatMapLatest { localRepository.getOwnedPets(it) }
     }
 
     override fun updateOwnedEquipment(user: User) {

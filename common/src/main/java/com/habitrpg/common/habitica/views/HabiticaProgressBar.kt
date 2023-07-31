@@ -78,7 +78,8 @@ class HabiticaProgressBar @JvmOverloads constructor(
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.HabiticaProgressBar,
-            0, 0
+            0,
+            0
         )
 
         barForegroundColor = attributes?.getColor(R.styleable.HabiticaProgressBar_barForegroundColor, 0) ?: 0

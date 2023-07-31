@@ -59,7 +59,9 @@ fun TaskDifficultySelector(
                 value = difficulty,
                 selected = selected == difficulty,
                 icon = HabiticaIconsHelper.imageOfTaskDifficultyStars(
-                    colorResource(R.color.white).toArgb(), difficulty.value, true
+                    colorResource(R.color.white).toArgb(),
+                    difficulty.value,
+                    true
                 ).asImageBitmap(),
                 text = stringResource(difficulty.nameRes),
                 onSelect = onSelect
