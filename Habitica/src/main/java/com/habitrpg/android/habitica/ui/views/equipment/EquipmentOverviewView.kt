@@ -90,26 +90,30 @@ fun EquipmentOverviewView(
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
             OverviewItem(
-                stringResource(R.string.outfit_weapon), outfit?.weapon.let { "shop_$it" },
+                stringResource(R.string.outfit_weapon),
+                outfit?.weapon.let { "shop_$it" },
                 modifier = Modifier.clickable {
                     onEquipmentTap("weapon", outfit?.weapon)
                 }
             )
             OverviewItem(
-                stringResource(R.string.outfit_shield), outfit?.shield.let { "shop_$it" },
+                stringResource(R.string.outfit_shield),
+                outfit?.shield.let { "shop_$it" },
                 modifier = Modifier.clickable {
                     onEquipmentTap("shield", outfit?.shield)
                 },
                 isUsingTwohanded
             )
             OverviewItem(
-                stringResource(R.string.outfit_head), outfit?.head.let { "shop_$it" },
+                stringResource(R.string.outfit_head),
+                outfit?.head.let { "shop_$it" },
                 modifier = Modifier.clickable {
                     onEquipmentTap("head", outfit?.head)
                 }
             )
             OverviewItem(
-                stringResource(R.string.outfit_armor), outfit?.armor.let { "shop_$it" },
+                stringResource(R.string.outfit_armor),
+                outfit?.armor.let { "shop_$it" },
                 modifier = Modifier.clickable {
                     onEquipmentTap("armor", outfit?.armor)
                 }
@@ -124,13 +128,15 @@ fun EquipmentOverviewView(
                 }
             )
             OverviewItem(
-                stringResource(R.string.outfit_body), outfit?.body.let { "shop_$it" },
+                stringResource(R.string.outfit_body),
+                outfit?.body.let { "shop_$it" },
                 modifier = Modifier.clickable {
                     onEquipmentTap("body", outfit?.body)
                 }
             )
             OverviewItem(
-                stringResource(R.string.outfit_back), outfit?.back.let { "shop_$it" },
+                stringResource(R.string.outfit_back),
+                outfit?.back.let { "shop_$it" },
                 modifier = Modifier.clickable {
                     onEquipmentTap("back", outfit?.back)
                 }

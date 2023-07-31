@@ -161,9 +161,13 @@ class NavigationDrawerFragment : DialogFragment() {
                         gearEvent?.isCurrentlyActive == true || pair.second.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
-                        if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) 1.toDuration(
-                            DurationUnit.SECONDS
-                        ) else 1.toDuration(DurationUnit.MINUTES)
+                        if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) {
+                            1.toDuration(
+                                DurationUnit.SECONDS
+                            )
+                        } else {
+                            1.toDuration(DurationUnit.MINUTES)
+                        }
                     }) {
                         updateSeasonalMenuEntries(gearEvent, pair.second)
                     }

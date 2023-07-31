@@ -33,10 +33,13 @@ class ChallengeListFragment :
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -123,7 +126,6 @@ class ChallengeListFragment :
             )
         )
     }
-
 
     override fun onRefresh() {
         nextPageToLoad = 0

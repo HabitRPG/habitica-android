@@ -29,7 +29,8 @@ class RealmTaskLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), 
 
     private fun findTasks(
         taskType: TaskType,
-        ownerID: String): RealmResults<Task> {
+        ownerID: String
+    ): RealmResults<Task> {
         return realm.where(Task::class.java)
             .equalTo("typeValue", taskType.value)
             .equalTo("ownerID", ownerID)

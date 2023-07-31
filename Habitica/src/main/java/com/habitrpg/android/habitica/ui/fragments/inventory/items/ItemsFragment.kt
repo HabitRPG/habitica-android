@@ -49,7 +49,6 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         }
     }
 
-
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
@@ -67,8 +66,11 @@ class ItemsFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                     else -> ""
                 }
                 fragment.itemTypeText =
-                    if (position == 4 && isAdded) getString(R.string.special_items)
-                    else getPageTitle(position)
+                    if (position == 4 && isAdded) {
+                        getString(R.string.special_items)
+                    } else {
+                        getPageTitle(position)
+                    }
 
                 return fragment
             }

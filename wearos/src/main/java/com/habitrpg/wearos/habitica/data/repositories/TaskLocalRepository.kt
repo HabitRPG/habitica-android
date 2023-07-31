@@ -94,7 +94,7 @@ class TaskLocalRepository @Inject constructor() {
             TaskType.HABIT.value to (tasks[TaskType.HABIT]?.value?.size ?: 0),
             TaskType.DAILY.value to (tasks[TaskType.DAILY]?.value?.size ?: 0),
             TaskType.TODO.value to (tasks[TaskType.TODO]?.value?.size ?: 0),
-            TaskType.REWARD.value to (tasks[TaskType.REWARD]?.value?.size ?: 0),
+            TaskType.REWARD.value to (tasks[TaskType.REWARD]?.value?.size ?: 0)
         )
     }
 
@@ -109,7 +109,7 @@ class TaskLocalRepository @Inject constructor() {
                 tasks[TaskType.TODO]?.value?.filter { !it.completed }?.size
                     ?: 0
                 ),
-            TaskType.REWARD.value to (tasks[TaskType.REWARD]?.value?.size ?: 0),
+            TaskType.REWARD.value to (tasks[TaskType.REWARD]?.value?.size ?: 0)
         )
     }
 

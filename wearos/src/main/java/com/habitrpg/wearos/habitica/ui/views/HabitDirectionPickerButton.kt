@@ -38,7 +38,8 @@ class HabitDirectionPickerButton @JvmOverloads constructor(
         val attributes = context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.HabitDirectionPickerButton,
-            0, 0
+            0,
+            0
         )
         drawable = attributes.getDrawable(R.styleable.HabitDirectionPickerButton_drawable) as? BitmapDrawable
         drawFromTop = attributes.getBoolean(R.styleable.HabitDirectionPickerButton_drawFromTop, false)

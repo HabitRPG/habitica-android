@@ -78,7 +78,7 @@ class UsernameLabel @JvmOverloads constructor(
         textView.setPadding(0, 0, padding, 0)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            textView.typeface = Typeface.create(null,600,false)
+            textView.typeface = Typeface.create(null, 600, false)
         }
         val iconViewParams = LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -93,7 +93,7 @@ class UsernameLabel @JvmOverloads constructor(
 fun ComposableUsernameLabel(
     username: String,
     tier: Int,
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     isNPC: Boolean = false
 ) {
     Row(horizontalArrangement = Arrangement.spacedBy(2.dp), verticalAlignment = Alignment.CenterVertically, modifier = modifier) {

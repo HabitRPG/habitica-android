@@ -41,8 +41,10 @@ import com.habitrpg.android.habitica.extensions.hideKeyboard
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -157,6 +159,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
+    private val classSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.retrieveUser(true, true)
+            }
+        }
+
     val isAppBarExpanded: Boolean
         get() = binding.content.appbar.height - binding.content.appbar.bottom == 0
 
@@ -265,19 +274,36 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         binding.content.headerView.setContent {
             HabiticaTheme {
                 val user by viewModel.user.observeAsState(null)
-                val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(null)
+                val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(
+                    null
+                )
                 val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
                 val canShowTeamHeader: Boolean by viewModel.canShowTeamPlanHeader
-                AppHeaderView(user, teamPlan = if (canShowTeamHeader) teamPlan else null, teamPlanMembers = teamPlanMembers) {
-                    showAsBottomSheet { onClose ->
-                        val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(null)
-                        val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
-                        GroupPlanMemberList(members, group) {
-                            onClose()
-                            FullProfileActivity.open(it)
+                AppHeaderView(
+                    user,
+                    teamPlan = if (canShowTeamHeader) teamPlan else null,
+                    teamPlanMembers = teamPlanMembers,
+                    onMemberRowClicked = {
+                        showAsBottomSheet { onClose ->
+                            val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
+                                null
+                            )
+                            val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
+                            GroupPlanMemberList(members, group) {
+                                onClose()
+                                FullProfileActivity.open(it)
+                            }
                         }
+                    },
+                    onClassSelectionClicked = {
+                        val bundle = Bundle()
+                        val isClassSelected = user?.flags?.classSelected ?: false
+                        bundle.putBoolean("isInitialSelection", isClassSelected)
+                        val intent = Intent(this@MainActivity, ClassSelectionActivity::class.java)
+                        intent.putExtras(bundle)
+                        classSelectionResult.launch(intent)
                     }
-                }
+                )
             }
         }
 
@@ -356,7 +382,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 MainNavigationController.navigateBack()
             }
             true
-        } else super.onOptionsItemSelected(item)
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onResume() {
@@ -404,10 +432,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             if (intent.hasExtra("sendAnalytics")) {
                 val additionalData = HashMap<String, Any>()
                 additionalData["identifier"] = identifier
-                AmplitudeManager.sendEvent(
+                Analytics.sendEvent(
                     "open notification",
-                    AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                    AmplitudeManager.EVENT_HITTYPE_EVENT,
+                    EventCategory.BEHAVIOUR,
+                    HitType.EVENT,
                     additionalData
                 )
             }
@@ -681,7 +709,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
-    fun updateToolbarInteractivity(titleInteractive : Boolean) {
+    fun updateToolbarInteractivity(titleInteractive: Boolean) {
         viewModel.canShowTeamPlanHeader.value = titleInteractive
         binding.content.toolbarTitle.background?.alpha = if (titleInteractive) 255 else 0
         if (titleInteractive) {

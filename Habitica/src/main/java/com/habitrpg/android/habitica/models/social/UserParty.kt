@@ -13,6 +13,7 @@ open class UserParty : RealmObject(), BaseObject {
     var id: String = ""
     var quest: Quest? = null
     var seeking: Date? = null
+
     @SerializedName("order")
     var partyOrder: String? = null // Order to display ppl
     var orderAscending: String? = null // Order type

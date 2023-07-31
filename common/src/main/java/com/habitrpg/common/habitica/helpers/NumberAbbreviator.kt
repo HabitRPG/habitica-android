@@ -1,10 +1,8 @@
 package com.habitrpg.common.habitica.helpers
 
 import android.content.Context
-import com.habitrpg.common.habitica.R
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import kotlin.math.abs
+import kotlin.math.min
 
 object NumberAbbreviator {
 
@@ -21,28 +19,29 @@ object NumberAbbreviator {
             counter++
             usedNumber /= 1000
         }
-        var pattern = "###"
-        if (decimalCount > 0) {
-            pattern = ("$pattern.").padEnd(4 + decimalCount, '#')
+        val parts = usedNumber.toString().split(".")
+        var result = parts[0]
+        if (parts.size == 2) {
+            var decimal = parts[1]
+            decimal = decimal.substring(0, min(decimal.length, decimalCount))
+            decimal = decimal.trimEnd('0')
+            if (decimal.isNotEmpty()) {
+                result = "$result.$decimal"
+            }
         }
         if (number < 0) {
-            pattern = "-$pattern"
+            result = "-$result"
         }
-        val formatter = DecimalFormat(
-            pattern + abbreviationForCounter(context, counter)
-                .replace(".", "")
-                .replace(",", "")
-        )
-        formatter.roundingMode = RoundingMode.FLOOR
-        return formatter.format(usedNumber)
+        return result + abbreviationForCounter(context, counter)
     }
 
     private fun abbreviationForCounter(context: Context?, counter: Int): String = when (counter) {
-        1 -> context?.getString(R.string.thousand_abbrev) ?: "k"
-        2 -> context?.getString(R.string.million_abbrev) ?: "m"
-        3 -> context?.getString(R.string.billion_abbrev) ?: "b"
-        4 -> context?.getString(R.string.trillion_abbrev) ?: "t"
-        5 -> context?.getString(R.string.quadrillion_abbrev) ?: "q"
+        0 -> ""
+        1 -> "k"
+        2 -> "m"
+        3 -> "b"
+        4 -> "t"
+        5 -> "q"
         else -> ""
     }
 }

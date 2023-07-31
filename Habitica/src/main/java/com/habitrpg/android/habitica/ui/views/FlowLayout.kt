@@ -40,7 +40,7 @@ fun flowLayoutMeasurePolicy(spacing: Int = 0) = MeasurePolicy { measurables, con
 fun FlowLayout(
     modifier: Modifier = Modifier,
     spacing: Int = 0,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val measurePolicy = flowLayoutMeasurePolicy(spacing)
     Layout(

@@ -34,7 +34,7 @@ import com.habitrpg.android.habitica.R
 fun HabiticaCircularProgressView(
     modifier: Modifier = Modifier,
     partialDisplay: Float = 1f,
-    animate : Boolean = true,
+    animate: Boolean = true,
     indicatorSize: Dp = 100.dp,
     animationDuration: Int = 4000,
     strokeWidth: Dp = 8.dp
@@ -65,14 +65,14 @@ fun HabiticaCircularProgressView(
             colorResource(R.color.background_yellow),
             colorResource(R.color.background_green),
             colorResource(R.color.background_blue),
-            colorResource(R.color.background_brand),
+            colorResource(R.color.background_brand)
         )
     )
     Canvas(
         modifier = modifier
             .rotate(-90f)
-            .size(size = indicatorSize - (strokeWidth*2))
-            .padding(strokeWidth/2)
+            .size(size = indicatorSize - (strokeWidth * 2))
+            .padding(strokeWidth / 2)
     ) {
         rotate(rotateAnimation.value) {
             drawCircle(
@@ -86,7 +86,7 @@ fun HabiticaCircularProgressView(
                 startAngle = (360f * partialDisplay),
                 sweepAngle = 360f - (360f * partialDisplay),
                 useCenter = true,
-                style = Stroke(width = strokeWidth.toPx()*1.4f, cap = StrokeCap.Square, join = StrokeJoin.Miter, miter = 2f)
+                style = Stroke(width = strokeWidth.toPx() * 1.4f, cap = StrokeCap.Square, join = StrokeJoin.Miter, miter = 2f)
             )
         }
     }
@@ -104,6 +104,5 @@ private fun Preview() {
         HabiticaCircularProgressView(indicatorSize = 40.dp, strokeWidth = 5.dp)
         HabiticaCircularProgressView(partialDisplay = 0.3f, indicatorSize = 32.dp, strokeWidth = 4.dp)
         HabiticaCircularProgressView(partialDisplay = 0.91f, indicatorSize = 32.dp, strokeWidth = 4.dp)
-
     }
 }

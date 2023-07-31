@@ -75,7 +75,6 @@ class TaskSetupFragment : BaseFragment<FragmentSetupTasksBinding>() {
         }
     }
 
-
     private fun setTasks() {
         this.taskGroups = listOf(listOf(getString(R.string.setup_group_work), TYPE_WORK), listOf(getString(R.string.setup_group_exercise), TYPE_EXERCISE), listOf(getString(R.string.setup_group_health), TYPE_HEALTH), listOf(getString(R.string.setup_group_school), TYPE_SCHOOL), listOf(getString(R.string.setup_group_teams), TYPE_TEAMS), listOf(getString(R.string.setup_group_chores), TYPE_CHORES), listOf(getString(R.string.setup_group_creativity), TYPE_CREATIVITY), listOf(getString(R.string.setuP_group_other), TYPE_OTHER))
 

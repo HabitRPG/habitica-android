@@ -32,26 +32,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TasksViewModel @Inject constructor(
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    val taskRepository : TaskRepository,
-    val tagRepository : TagRepository,
-    val appConfigManager : AppConfigManager,
-    val sharedPreferences : SharedPreferences
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val taskRepository: TaskRepository,
+    val tagRepository: TagRepository,
+    val appConfigManager: AppConfigManager,
+    val sharedPreferences: SharedPreferences
 ) : BaseViewModel(userRepository, userViewModel), GroupPlanInfoProvider {
-    private var owners : List<Pair<String, CharSequence>> = listOf()
+    private var owners: List<Pair<String, CharSequence>> = listOf()
     var canSwitchOwners = MutableLiveData<Boolean?>()
-    val ownerID : MutableLiveData<String?> by lazy {
+    val ownerID: MutableLiveData<String?> by lazy {
         MutableLiveData()
     }
     var teamPlans = mapOf<String, TeamPlan>()
-    var initialPreferenceFilterSet : Boolean = false
+    var initialPreferenceFilterSet: Boolean = false
 
-    val isPersonalBoard : Boolean
+    val isPersonalBoard: Boolean
         get() {
             return ownerID.value == userViewModel.userID
         }
-    val ownerTitle : CharSequence
+    val ownerTitle: CharSequence
         get() {
             return owners.firstOrNull { it.first == ownerID.value }?.second ?: ""
         }
@@ -75,7 +75,7 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    internal fun refreshData(onComplete : () -> Unit) {
+    internal fun refreshData(onComplete: () -> Unit) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             if (isPersonalBoard) {
                 userRepository.retrieveUser(
@@ -103,9 +103,9 @@ class TasksViewModel @Inject constructor(
     }
 
     fun scoreTask(
-        task : Task,
-        direction : TaskDirection,
-        onResult : (TaskScoringResult, Int) -> Unit
+        task: Task,
+        direction: TaskDirection,
+        onResult: (TaskScoringResult, Int) -> Unit
     ) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.taskChecked(
@@ -129,18 +129,18 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    private val filterSets : HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> =
+    private val filterSets: HashMap<TaskType, MutableLiveData<Triple<String?, String?, List<String>>>> =
         hashMapOf(
             Pair(TaskType.HABIT, MutableLiveData()),
             Pair(TaskType.DAILY, MutableLiveData()),
             Pair(TaskType.TODO, MutableLiveData())
         )
 
-    fun getFilterSet(type : TaskType) : MutableLiveData<Triple<String?, String?, List<String>>>? {
+    fun getFilterSet(type: TaskType): MutableLiveData<Triple<String?, String?, List<String>>>? {
         return filterSets[type]
     }
 
-    var searchQuery : String? = null
+    var searchQuery: String? = null
         set(value) {
             field = value
             filterSets.forEach {
@@ -150,7 +150,7 @@ class TasksViewModel @Inject constructor(
         }
     private val activeFilters = HashMap<TaskType, String>()
 
-    var tags : MutableList<String> = mutableListOf()
+    var tags: MutableList<String> = mutableListOf()
         set(value) {
             field = value
             filterSets.forEach {
@@ -159,7 +159,7 @@ class TasksViewModel @Inject constructor(
             }
         }
 
-    fun addActiveTag(tagID : String) {
+    fun addActiveTag(tagID: String) {
         if (!tags.contains(tagID)) {
             tags.add(tagID)
         }
@@ -169,7 +169,7 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun removeActiveTag(tagID : String) {
+    fun removeActiveTag(tagID: String) {
         if (tags.contains(tagID)) {
             tags.remove(tagID)
         }
@@ -179,15 +179,15 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun filterCount(type : TaskType?) : Int {
+    fun filterCount(type: TaskType?): Int {
         return this.tags.size + if (isTaskFilterActive(type)) 1 else 0
     }
 
-    fun isFiltering(type : TaskType?) : Boolean {
+    fun isFiltering(type: TaskType?): Boolean {
         return filterCount(type) > 0
     }
 
-    private fun isTaskFilterActive(type : TaskType?) : Boolean {
+    private fun isTaskFilterActive(type: TaskType?): Boolean {
         if (activeFilters[type] == null) {
             return false
         }
@@ -198,12 +198,12 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun filter(tasks : List<Task>) : List<Task> {
+    fun filter(tasks: List<Task>): List<Task> {
         if (tasks.isEmpty()) {
             return tasks
         }
         val filtered = ArrayList<Task>()
-        var activeFilter : String? = null
+        var activeFilter: String? = null
         if (activeFilters.size > 0) {
             activeFilter = activeFilters[tasks[0].type]
         }
@@ -216,7 +216,7 @@ class TasksViewModel @Inject constructor(
         return filtered
     }
 
-    private fun isFiltered(task : Task, activeFilter : String?) : Boolean {
+    private fun isFiltered(task: Task, activeFilter: String?): Boolean {
         if (!task.containsAllTagIds(tags)) {
             return false
         }
@@ -240,7 +240,7 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun setActiveFilter(type : TaskType, activeFilter : String) {
+    fun setActiveFilter(type: TaskType, activeFilter: String) {
         activeFilters[type] = activeFilter
         filterSets[type]?.value = Triple(searchQuery, activeFilter, tags)
 
@@ -260,7 +260,7 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun getActiveFilter(type : TaskType?) : String? {
+    fun getActiveFilter(type: TaskType?): String? {
         return if (activeFilters.containsKey(type)) {
             activeFilters[type]
         } else {
@@ -268,7 +268,7 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun createQuery(unfilteredData : OrderedRealmCollection<Task>) : RealmQuery<Task>? {
+    fun createQuery(unfilteredData: OrderedRealmCollection<Task>): RealmQuery<Task>? {
         if (!unfilteredData.isValid) {
             return null
         }
@@ -317,14 +317,14 @@ class TasksViewModel @Inject constructor(
         return query
     }
 
-    override fun canScoreTask(task : Task) : Boolean {
+    override fun canScoreTask(task: Task): Boolean {
         if (!task.isGroupTask) {
             return true
         }
         return task.isAssignedToUser(userViewModel.userID) || task.group?.assignedUsers?.isEmpty() != false
     }
 
-    override suspend fun canEditTask(task : Task) : Boolean {
+    override suspend fun canEditTask(task: Task): Boolean {
         if (!task.isGroupTask) {
             return true
         }
@@ -333,7 +333,7 @@ class TasksViewModel @Inject constructor(
         return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
     }
 
-    override suspend fun canAddTasks() : Boolean {
+    override suspend fun canAddTasks(): Boolean {
         if (isPersonalBoard) {
             return true
         }
@@ -342,7 +342,7 @@ class TasksViewModel @Inject constructor(
         return group?.hasTaskEditPrivileges(userViewModel.userID) ?: false
     }
 
-    override fun assignedTextForTask(resources : Resources, assignedUsers : List<String>) : String {
+    override fun assignedTextForTask(resources: Resources, assignedUsers: List<String>): String {
         return if (assignedUsers.contains(userViewModel.userID)) {
             if (assignedUsers.size == 1) {
                 resources.getString(R.string.you)

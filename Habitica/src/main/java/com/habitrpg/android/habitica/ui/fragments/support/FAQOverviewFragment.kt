@@ -1,7 +1,15 @@
 package com.habitrpg.android.habitica.ui.fragments.support
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +18,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -20,20 +27,31 @@ import com.habitrpg.android.habitica.databinding.SupportFaqItemBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.AppTestingLevel
+import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.models.PlayerTier
+import com.jaredrummler.android.device.DeviceName
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
+    private var deviceInfo: DeviceName.DeviceInfo? = null
     override var binding: FragmentFaqOverviewBinding? = null
+
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
+
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFaqOverviewBinding {
         return FragmentFaqOverviewBinding.inflate(inflater, container, false)
@@ -41,8 +59,28 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     @Inject
     lateinit var faqRepository: FAQRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
+
+    private val versionName: String by lazy {
+        try {
+            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionName
+                ?: ""
+        } catch (e: PackageManager.NameNotFoundException) {
+            ""
+        }
+    }
+
+    private val versionCode: Int by lazy {
+        try {
+            @Suppress("DEPRECATION")
+            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionCode
+                ?: 0
+        } catch (e: PackageManager.NameNotFoundException) {
+            0
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +99,12 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         binding?.npcHeader?.npcBannerView?.identifier = "tavern"
         binding?.npcHeader?.namePlate?.setText(R.string.tavern_owner)
         binding?.npcHeader?.descriptionView?.isVisible = false
+
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            DeviceName.with(context).request { info, _ ->
+                deviceInfo = info
+            }
+        }
 
         binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
             HabiticaIconsHelper.imageOfHeartLarge()
@@ -87,8 +131,23 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         binding?.contribTierSection?.findViewById<ImageView>(R.id.icon_view)?.setImageResource(R.drawable.contributor_icon)
         addPlayerTiers()
 
-        binding?.moreHelpTextView?.setMarkdown(context?.getString(R.string.need_help_header_description, "[Habitica Help Guild](https://habitica.com/groups/guild/5481ccf3-5d2d-48a9-a871-70a7380cee5a)"))
-        binding?.moreHelpTextView?.setOnClickListener { MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to "5481ccf3-5d2d-48a9-a871-70a7380cee5a")) }
+        val fullText = getString(R.string.need_help_description)
+        val clickableText = "contact us"
+        val spannableString = SpannableStringBuilder(fullText)
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                sendEmail("[Android] Question")
+            }
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+            }
+        }
+        val startIndex = fullText.indexOf(clickableText)
+        val endIndex = startIndex + clickableText.length
+        spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding?.moreHelpTextView?.text = spannableString
         binding?.moreHelpTextView?.movementMethod = LinkMovementMethod.getInstance()
 
         this.loadArticles()
@@ -98,7 +157,6 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         faqRepository.close()
         super.onDestroy()
     }
-
 
     private fun loadArticles() {
         lifecycleScope.launchCatching {
@@ -119,6 +177,61 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                     }
                 }
             }
+        }
+    }
+
+    private fun sendEmail(subject: String) {
+        val version = Build.VERSION.SDK_INT
+        val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
+        val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
+        val newLine = "%0D%0A"
+        var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
+            newLine + Uri.encode("Android Version: $version") +
+            newLine + Uri.encode(
+            "AppVersion: " + getString(
+                R.string.version_info,
+                versionName,
+                versionCode
+            )
+        )
+
+        if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
+            bodyOfEmail += " " + Uri.encode(appConfigManager.testingLevel().name)
+        }
+        bodyOfEmail += newLine + Uri.encode("User ID: ${userViewModel.userID}")
+
+        userViewModel.user.value?.let { user ->
+            bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
+                newLine + Uri.encode(
+                "Class: " + (
+                    if (user.preferences?.disableClasses == true) {
+                        "Disabled"
+                    } else {
+                        (
+                            user.stats?.habitClass
+                                ?: "None"
+                            )
+                    }
+                    )
+            ) +
+                newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
+                newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
+                newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
+                newLine + Uri.encode(
+                "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
+            )
+        }
+
+        bodyOfEmail += "%0D%0ADetails:%0D%0A%0D%0A"
+
+        mainActivity?.let {
+            val emailIntent = Intent(Intent.ACTION_SENDTO)
+            val mailto = "mailto:" + appConfigManager.supportEmail() +
+                "?subject=" + Uri.encode(subject) +
+                "&body=" + bodyOfEmail
+            emailIntent.data = Uri.parse(mailto)
+
+            startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"))
         }
     }
 

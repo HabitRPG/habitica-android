@@ -130,7 +130,8 @@ class TaskDescriptionBuilder(private val context: Context) {
             Frequency.WEEKLY -> context.resources.getQuantityString(R.plurals.repeat_weekly, everyX, everyX)
             Frequency.MONTHLY -> context.resources.getQuantityString(
                 R.plurals.repeat_monthly,
-                everyX, everyX
+                everyX,
+                everyX
             )
             Frequency.YEARLY -> context.resources.getQuantityString(R.plurals.repeat_yearly, everyX, everyX)
             null -> ""

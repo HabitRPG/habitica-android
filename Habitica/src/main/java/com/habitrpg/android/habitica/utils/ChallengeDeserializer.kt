@@ -16,7 +16,6 @@ import java.util.Date
 class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challenge> {
     @Throws(JsonParseException::class)
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Challenge {
-
         val jsonObject = json.asJsonObject
 
         val challenge = Challenge()
@@ -98,7 +97,6 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
         tasksOrderObj: JsonObject,
         taskType: String
     ): String {
-
         if (tasksOrderObj.has(taskType)) {
             val jsonElement = tasksOrderObj.get(taskType)
 

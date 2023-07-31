@@ -11,8 +11,10 @@ open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
     override var hair: Hair? = null
     var suppressModals: SuppressedModals? = null
     override var costume: Boolean = false
+
     @SerializedName("disableClasses")
     override var disableClasses: Boolean = false
+
     @SerializedName("sleep")
     override var sleep: Boolean = false
     var dailyDueDefaultView: Boolean = false
@@ -30,7 +32,9 @@ open class Preferences : RealmObject(), AvatarPreferences, BaseObject {
                 } else {
                     "chair_" + field!!
                 }
-            } else "chair_none"
+            } else {
+                "chair_none"
+            }
         }
     var language: String? = null
     var sound: String? = null

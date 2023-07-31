@@ -41,7 +41,8 @@ class DateDeserializerTest : SerializerSpec({
                 Date(
                     referenceTimestamp
                 ),
-                Date::class.java, serializationContext
+                Date::class.java,
+                serializationContext
             )
             dateElement.asString shouldBe "2015-09-28T13:00:00.000Z"
         }

@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.inventory.Quest
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
-import com.habitrpg.android.habitica.modules.AppModule
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -29,6 +28,7 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -36,7 +36,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
@@ -303,5 +302,4 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
             }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()
     }
-
 }

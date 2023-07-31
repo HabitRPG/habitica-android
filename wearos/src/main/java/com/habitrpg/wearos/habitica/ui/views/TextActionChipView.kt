@@ -15,7 +15,8 @@ open class TextActionChipView @JvmOverloads constructor(context: Context, attrs:
     private val attributes = context.theme?.obtainStyledAttributes(
         attrs,
         R.styleable.TextActionChip,
-        0, 0
+        0,
+        0
     )
 
     val binding = TextActionChipBinding.inflate(context.layoutInflater, this)

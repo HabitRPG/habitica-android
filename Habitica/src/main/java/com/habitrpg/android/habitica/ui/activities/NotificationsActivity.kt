@@ -19,6 +19,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.extensions.fadeInAnimation
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.common.habitica.extensions.fromHtml
@@ -48,15 +49,17 @@ import javax.inject.Inject
 class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivityNotificationsBinding
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
 
     val viewModel: NotificationsViewModel by viewModels()
 
     var inflater: LayoutInflater? = null
-    val viewTagMap = mutableMapOf<String, View>()
+    var userLvl: Int? = null
 
     override fun getLayoutResId(): Int = R.layout.activity_notifications
 
@@ -71,6 +74,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         super.onCreate(savedInstanceState)
 
         setupToolbar(binding.toolbar)
+
+        // Check user level to handle if a user loses hp and drops below necessary level to allocate points -
+        // and if so, don't display the notification to allocate points.
+        viewModel.user.observeOnce(this) { user ->
+            userLvl = user?.stats?.lvl ?: 0
+        }
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
@@ -146,12 +155,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                     viewList.add(item)
                 }
             }
-            refreshViews(viewList)
+            updateNotificationsAndRefresh(viewList)
         }
-
     }
 
-    private fun refreshViews(newItems: List<View>) {
+    private fun updateNotificationsAndRefresh(newItems: List<View>) {
         val currentViews = (0 until binding.notificationItems.childCount).map {
             binding.notificationItems.getChildAt(it)
         }
@@ -171,6 +179,17 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
     }
 
+    private fun removeNotificationAndRefresh(notification: Notification) {
+        // Immediately remove notification for better user experience
+        // (To avoid waiting for the server to respond for potential slower connections)
+        this.notifications = this.notifications.filter { it.id != notification.id }
+
+        if (notifications.isEmpty()) {
+            displayNoNotificationsView()
+        } else {
+            displayNotificationsListView(notifications)
+        }
+    }
 
     private fun createNotificationsHeaderView(notificationCount: Int): View? {
         val header = inflater?.inflate(R.layout.notifications_header, binding.notificationItems, false)
@@ -203,29 +222,38 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private fun createNewStuffNotification(notification: Notification): View? {
+    private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
+        var baileyNotification = notification
         val data = notification.data as? NewStuffData
         val text = if (data?.title != null) {
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
         } else {
-            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b>")
+            baileyNotification = userRepository.getNewsNotification() ?: return@withContext null
+            val baileyNewsData = baileyNotification.data as? NewStuffData
+            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
         }
+        baileyNotification.id = notification.id
 
-        return createDismissableNotificationItem(
-            notification,
+        return@withContext createDismissableNotificationItem(
+            baileyNotification,
             text,
             R.drawable.notifications_bailey
         )
     }
 
     private fun createUnallocatedStatsNotification(notification: Notification): View? {
-        val data = notification.data as? UnallocatedPointsData
+        val level = userLvl ?: return null
+        return if (level >= 10) {
+            val data = notification.data as? UnallocatedPointsData
 
-        return createDismissableNotificationItem(
-            notification,
-            fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
-            R.drawable.notification_stat_sparkles
-        )
+            createDismissableNotificationItem(
+                notification,
+                fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
+                R.drawable.notification_stat_sparkles
+            )
+        } else {
+            null
+        }
     }
 
     private fun createMysteryItemsNotification(notification: Notification): View? {
@@ -304,7 +332,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
-        dismissButton?.setOnClickListener { viewModel.dismissNotification(notification) }
+        dismissButton?.setOnClickListener {
+            removeNotificationAndRefresh(notification)
+            viewModel.dismissNotification(notification)
+        }
 
         val messageTextView = item?.findViewById(R.id.message_text) as? TextView
         messageTextView?.text = messageText
@@ -327,7 +358,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         return item
     }
-    
+
     private suspend fun createPartyInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
         val data = notification.data as? PartyInvitationData
         val inviterId = data?.invitation?.inviter

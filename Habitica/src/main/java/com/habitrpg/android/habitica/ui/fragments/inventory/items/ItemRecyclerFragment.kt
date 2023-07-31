@@ -42,24 +42,28 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     internal lateinit var hatchPetUseCase: HatchPetUseCase
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -81,7 +85,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         inventoryRepository.close()
         super.onDestroy()
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -209,7 +212,8 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             lifecycleScope.launchCatching {
                 hatchPetUseCase.callInteractor(
                     HatchPetUseCase.RequestValues(
-                        potion, egg,
+                        potion,
+                        egg,
                         it
                     )
                 )

@@ -10,8 +10,10 @@ open class TeamPlan : RealmObject(), BaseObject {
 
     var userID: String? = null
     var summary: String = ""
+
     @SerializedName("leader")
     var leaderID: String? = null
+
     // var managers: RealmList<String> = RealmList()
     var isActive: Boolean = false
 

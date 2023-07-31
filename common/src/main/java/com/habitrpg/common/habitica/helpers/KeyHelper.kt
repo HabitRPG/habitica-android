@@ -121,7 +121,8 @@ constructor(ctx: Context, var sharedPreferences: SharedPreferences, var keyStore
         val output = Cipher.getInstance(RSA_MODE, "AndroidOpenSSL")
         output.init(Cipher.DECRYPT_MODE, privateKeyEntry?.privateKey)
         val cipherInputStream = CipherInputStream(
-            ByteArrayInputStream(encrypted), output
+            ByteArrayInputStream(encrypted),
+            output
         )
         return cipherInputStream.readBytes()
     }

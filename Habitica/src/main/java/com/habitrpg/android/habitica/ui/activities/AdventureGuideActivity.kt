@@ -75,7 +75,9 @@ class AdventureGuideActivity : BaseActivity() {
         return if (item.itemId == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this)
             true
-        } else super.onOptionsItemSelected(item)
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private fun updateUser(user: User) {

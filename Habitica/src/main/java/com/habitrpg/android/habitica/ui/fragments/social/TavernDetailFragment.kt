@@ -29,25 +29,29 @@ import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.models.PlayerTier
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
 
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -171,7 +175,6 @@ class TavernDetailFragment : BaseFragment<FragmentTavernDetailBinding>() {
         }
         (binding?.playerTiersView?.parent as? ViewGroup)?.invalidate()
     }
-
 
     companion object {
 

@@ -103,8 +103,11 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                 for (moveInfo in moves) {
                     moveInfo.holder?.let {
                         animateMoveImpl(
-                            it, moveInfo.fromX, moveInfo.fromY,
-                            moveInfo.toX, moveInfo.toY
+                            it,
+                            moveInfo.fromX,
+                            moveInfo.fromY,
+                            moveInfo.toX,
+                            moveInfo.toY
                         )
                     }
                 }
@@ -123,7 +126,6 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
         }
         // Next, change stuff, to run in parallel with move animations
         if (changesPending) {
-
             val changes = ArrayList(pendingChanges)
             changesList.add(changes)
             pendingChanges.clear()
@@ -193,7 +195,8 @@ class SafeDefaultItemAnimator : SimpleItemAnimator() {
                     removeAnimations.remove(holder)
                     dispatchFinishedWhenDone()
                 }
-            }).start()
+            }
+        ).start()
     }
 
     override fun animateAdd(holder: RecyclerView.ViewHolder): Boolean {

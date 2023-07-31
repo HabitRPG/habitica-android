@@ -132,7 +132,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                                 potionCount,
                                 ownedItems?.get(item.animal + "-eggs") != null,
                                 ownedItems?.get(item.color + "-hatchingPotions") != null,
-                                ownedMounts?.containsKey(item.key) == true,
+                                ownedMounts?.containsKey(item.key) == true
                             )
                         } else {
                             (holder as? PetViewHolder)?.bind(
@@ -169,8 +169,10 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val isIndividualAnimal = item.type == "special" || item.type == "wacky"
             if (isIndividualAnimal) {
                 if (item is Pet) {
-                    if ((ownedPets?.get(item.key ?: "")?.trained
-                            ?: 0) <= 0 && eggCount(item) > 0 && potionCount(item) > 0
+                    if ((
+                        ownedPets?.get(item.key ?: "")?.trained
+                            ?: 0
+                        ) <= 0 && eggCount(item) > 0 && potionCount(item) > 0
                     ) {
                         22
                     } else {
@@ -230,7 +232,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val egg = eggs[item.animal]
             titleView.text = if (egg != null) {
                 if (item.type == "drop" || itemType == "mounts") egg.mountText else egg.text
-            } else item.animal
+            } else {
+                item.animal
+            }
             ownedTextView.visibility = View.VISIBLE
 
             val imageName = if (itemType == "pets") {

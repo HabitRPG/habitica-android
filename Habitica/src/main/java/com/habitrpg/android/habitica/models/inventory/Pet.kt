@@ -11,13 +11,17 @@ open class Pet : RealmObject(), Animal {
         get() {
             return if (field.isBlank()) {
                 key?.split("-")?.toTypedArray()?.get(0) ?: ""
-            } else field
+            } else {
+                field
+            }
         }
     override var color: String = ""
         get() {
             return if (field.isBlank()) {
                 key?.split("-")?.toTypedArray()?.get(1) ?: ""
-            } else field
+            } else {
+                field
+            }
         }
     override var text: String? = null
     override var type: String? = null
@@ -25,6 +29,7 @@ open class Pet : RealmObject(), Animal {
 
     @Ignore
     override var numberOwned: Int = 0
+
     @Ignore
     override var totalNumber: Int = 0
 }

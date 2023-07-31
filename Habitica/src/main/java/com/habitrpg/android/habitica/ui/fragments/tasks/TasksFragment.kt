@@ -42,7 +42,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
     @Inject
-    lateinit var tagRepository : TagRepository
+    lateinit var tagRepository: TagRepository
 
     internal val viewModel: TasksViewModel by viewModels()
     override var binding: FragmentViewpagerBinding? = null
@@ -137,7 +137,6 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
         super.onPause()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

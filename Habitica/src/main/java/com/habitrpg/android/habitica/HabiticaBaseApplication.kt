@@ -48,14 +48,19 @@ import javax.inject.Inject
 abstract class HabiticaBaseApplication : Application(), Application.ActivityLifecycleCallbacks {
     @Inject
     internal lateinit var lazyApiHelper: ApiClient
+
     @Inject
     internal lateinit var sharedPrefs: SharedPreferences
+
     @Inject
     internal lateinit var analyticsManager: AnalyticsManager
+
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
+
     @Inject
     internal lateinit var authenticationHandler: AuthenticationHandler
+
     /**
      * For better performance billing class should be used as singleton
      */

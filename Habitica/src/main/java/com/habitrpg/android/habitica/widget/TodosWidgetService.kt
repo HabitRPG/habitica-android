@@ -12,8 +12,9 @@ class TodosWidgetService : RemoteViewsService() {
 
     @Inject
     lateinit var taskRepository: TaskRepository
+
     @Inject
-    lateinit var userRepository : UserRepository
+    lateinit var userRepository: UserRepository
 
     override fun onGetViewFactory(intent: Intent): RemoteViewsFactory {
         return TodoListFactory(this.applicationContext, intent, taskRepository, userRepository)

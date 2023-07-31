@@ -52,6 +52,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
     private val dragBottomShadowDrawable: Drawable?
     private val dragShadowHeight: Int
     private var containerScrollView: ScrollView? = null
+
     /**
      * Sets the height from upper / lower edge at which a container [android.widget.ScrollView],
      * if one is registered via [.setContainerScrollView],
@@ -245,8 +246,9 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
      * [com.habitrpg.android.habitica.ui.views.DragLinearLayout.DragItem.detecting].
      */
     private fun startDetectingDrag(child: View) {
-        if (draggedItem.detecting)
+        if (draggedItem.detecting) {
             return // existing drag in process, only one at a time is allowed
+        }
 
         val position = indexOfChild(child)
 
@@ -524,8 +526,9 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
                     val pointerIndex = event.actionIndex
                     val pointerId = event.getPointerId(pointerIndex)
 
-                    if (pointerId != activePointerId)
+                    if (pointerId != activePointerId) {
                         return false // if active pointer, fall through and cancel!
+                    }
                 }
                 run {
                     onTouchEnd()
@@ -566,8 +569,9 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
                     val pointerIndex = event.actionIndex
                     val pointerId = event.getPointerId(pointerIndex)
 
-                    if (pointerId != activePointerId)
+                    if (pointerId != activePointerId) {
                         return false // if active pointer, fall through and cancel!
+                    }
                 }
                 run {
                     onTouchEnd()

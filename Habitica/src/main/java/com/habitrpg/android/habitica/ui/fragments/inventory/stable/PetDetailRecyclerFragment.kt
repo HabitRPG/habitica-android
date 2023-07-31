@@ -77,7 +77,6 @@ class PetDetailRecyclerFragment :
         super.onDestroy()
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
@@ -201,7 +200,7 @@ class PetDetailRecyclerFragment :
                                     StableSection(
                                         pet.type,
                                         "pets"
-                                        )
+                                    )
                                 items.add(currentSection)
                             }
                             currentSection?.let { section ->
@@ -225,7 +224,8 @@ class PetDetailRecyclerFragment :
             lifecycleScope.launchCatching {
                 feedPetUseCase.callInteractor(
                     FeedPetUseCase.RequestValues(
-                        pet, food,
+                        pet,
+                        food,
                         context
                     )
                 )

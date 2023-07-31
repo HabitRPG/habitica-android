@@ -31,6 +31,7 @@ import kotlin.time.toDuration
 class MainApplication : Application() {
 
     @Inject lateinit var userRepository: UserRepository
+
     @Inject lateinit var taskRepository: TaskRepository
 
     override fun onCreate() {

@@ -55,7 +55,8 @@ class AdButton @JvmOverloads constructor(
         context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.AdButton,
-            0, 0
+            0,
+            0
         )?.let { attributes ->
             text = attributes.getString(R.styleable.AdButton_text) ?: ""
             binding.currencyView.currency = attributes.getString(R.styleable.AdButton_currency)

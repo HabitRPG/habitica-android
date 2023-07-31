@@ -71,30 +71,34 @@ enum class LoadingButtonType {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LoadingButton(
-    state : LoadingButtonState,
-    onClick : () -> Unit,
-    modifier : Modifier = Modifier,
-    type : LoadingButtonType = LoadingButtonType.NORMAL,
-    elevation : ButtonElevation? = ButtonDefaults.elevation(0.dp),
-    shape : Shape = MaterialTheme.shapes.medium,
-    border : BorderStroke? = null,
-    colors : ButtonColors? = null,
-    contentPadding : PaddingValues = ButtonDefaults.ContentPadding,
-    successContent : (@Composable RowScope.() -> Unit)? = null,
-    failedContent : (@Composable RowScope.() -> Unit)? = null,
-    content : @Composable RowScope.() -> Unit
+    state: LoadingButtonState,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    type: LoadingButtonType = LoadingButtonType.NORMAL,
+    elevation: ButtonElevation? = ButtonDefaults.elevation(0.dp),
+    shape: Shape = MaterialTheme.shapes.medium,
+    border: BorderStroke? = null,
+    colors: ButtonColors? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    successContent: (@Composable RowScope.() -> Unit)? = null,
+    failedContent: (@Composable RowScope.() -> Unit)? = null,
+    content: @Composable RowScope.() -> Unit
 ) {
-    val colorStyle = if (type == LoadingButtonType.DESTRUCTIVE) ButtonDefaults.buttonColors(
-        backgroundColor = HabiticaTheme.colors.errorBackground,
-        contentColor = Color.White,
-        disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
-        disabledContentColor = HabiticaTheme.colors.textQuad
-    ) else ButtonDefaults.buttonColors(
-        backgroundColor = HabiticaTheme.colors.tintedUiSub,
-        contentColor = Color.White,
-        disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
-        disabledContentColor = HabiticaTheme.colors.textQuad
-    )
+    val colorStyle = if (type == LoadingButtonType.DESTRUCTIVE) {
+        ButtonDefaults.buttonColors(
+            backgroundColor = HabiticaTheme.colors.errorBackground,
+            contentColor = Color.White,
+            disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
+            disabledContentColor = HabiticaTheme.colors.textQuad
+        )
+    } else {
+        ButtonDefaults.buttonColors(
+            backgroundColor = HabiticaTheme.colors.tintedUiSub,
+            contentColor = Color.White,
+            disabledBackgroundColor = HabiticaTheme.colors.offsetBackground,
+            disabledContentColor = HabiticaTheme.colors.textQuad
+        )
+    }
     val colorSpec = tween<Color>(350)
     val backgroundColor = animateColorAsState(
         targetValue = when (state) {
@@ -138,10 +142,14 @@ fun LoadingButton(
         state != LoadingButtonState.DISABLED,
         elevation = elevation,
         shape = shape,
-        border = if (state == LoadingButtonState.SUCCESS) BorderStroke(
-            borderWidth.value,
-            if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
-        ) else border,
+        border = if (state == LoadingButtonState.SUCCESS) {
+            BorderStroke(
+                borderWidth.value,
+                if (type == LoadingButtonType.DESTRUCTIVE) HabiticaTheme.colors.errorColor else HabiticaTheme.colors.successColor
+            )
+        } else {
+            border
+        },
         colors = buttonColors,
         contentPadding = PaddingValues(0.dp)
     ) {
@@ -160,7 +168,7 @@ fun LoadingButton(
                             slideInHorizontally(
                                 animationSpec = spring(
                                     dampingRatio = 0.2f,
-                                    stiffness = StiffnessMediumLow,
+                                    stiffness = StiffnessMediumLow
                                 )
                             ) with
                             fadeOut(animationSpec = tween(90))
@@ -202,7 +210,7 @@ fun LoadingButton(
 @Preview
 @Composable
 private fun Preview() {
-    var state : LoadingButtonState by remember { mutableStateOf(LoadingButtonState.CONTENT) }
+    var state: LoadingButtonState by remember { mutableStateOf(LoadingButtonState.CONTENT) }
     val scope = rememberCoroutineScope()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -226,16 +234,21 @@ private fun Preview() {
                 state = LoadingButtonState.CONTENT
             }
         }, successContent = {
-            Text("I did it!")
-        }, content = {
-            Text("Do something")
-        }, modifier = Modifier.fillMaxWidth())
-        LoadingButton(LoadingButtonState.LOADING, {}, colors = ButtonDefaults.buttonColors(
-            backgroundColor = HabiticaTheme.colors.successBackground,
-            contentColor = Color.White
-        ), content = {
-            Text("Do something")
-        })
+                Text("I did it!")
+            }, content = {
+                Text("Do something")
+            }, modifier = Modifier.fillMaxWidth())
+        LoadingButton(
+            LoadingButtonState.LOADING,
+            {},
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = HabiticaTheme.colors.successBackground,
+                contentColor = Color.White
+            ),
+            content = {
+                Text("Do something")
+            }
+        )
         LoadingButton(LoadingButtonState.LOADING, {}, content = {
             Text("Do something")
         }, modifier = Modifier.fillMaxWidth())
@@ -245,15 +258,15 @@ private fun Preview() {
         LoadingButton(LoadingButtonState.FAILED, {}, failedContent = {
             Text("Didn't work :(")
         }, content = {
-            Text("Do something")
-        })
+                Text("Do something")
+            })
         LoadingButton(LoadingButtonState.SUCCESS, {}, content = {
             Text("Do something")
         })
         LoadingButton(LoadingButtonState.SUCCESS, {}, successContent = {
             Text("Success!")
         }, content = {
-            Text("Do something")
-        })
+                Text("Do something")
+            })
     }
 }

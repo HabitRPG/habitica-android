@@ -87,7 +87,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                         potionCount,
                         ownedItems?.get(obj.animal + "-eggs") != null,
                         ownedItems?.get(obj.color + "-hatchingPotions") != null,
-                        ownedMounts?.containsKey(obj.key) == true,
+                        ownedMounts?.containsKey(obj.key) == true
                     )
                 } else {
                     (holder as? PetViewHolder)?.bind(
@@ -113,8 +113,10 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             1
         } else {
             val pet = itemList[position] as Pet
-            if ((ownedPets?.get(pet.key ?: "")?.trained
-                    ?: 0) <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0
+            if ((
+                ownedPets?.get(pet.key ?: "")?.trained
+                    ?: 0
+                ) <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0
             ) {
                 2
             } else {
@@ -169,7 +171,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             potionCount: Int,
             hasUnlockedEgg: Boolean,
             hasUnlockedPotion: Boolean,
-            hasMount: Boolean,
+            hasMount: Boolean
         ) {
             this.animal = item
             this.eggCount = eggCount

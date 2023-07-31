@@ -29,12 +29,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.NullPointerException
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 object MarkdownParser {
     private val cache = sortedMapOf<Int, Spanned>()
     internal var markwon: Markwon? = null
-
-
 
     fun setup(context: Context) {
         markwon = Markwon.builder(context)
@@ -94,7 +94,7 @@ object MarkdownParser {
             return SpannableString("")
         }
 
-        val preProcessedInput = preprocessImageMarkdown(input)
+        val preProcessedInput = processMarkdown(input)
 
         val hashCode = preProcessedInput.hashCode()
         try {
@@ -118,8 +118,14 @@ object MarkdownParser {
         }
         return result
     }
-    
-    fun preprocessImageMarkdown(markdown: String): String {
+
+    private fun processMarkdown(input: String): String {
+        var processedInput = preprocessMarkdownLinks(input)
+        processedInput = preprocessImageMarkdown(processedInput)
+        return processedInput
+    }
+
+    private fun preprocessImageMarkdown(markdown: String): String {
         // Used to handle an image tag with a URL that ends with .jpg or .png (Else the image may be shown as broken, a link, or not at all)
         // Example: (..ample_image_name.png"Zombie hatching potion") -> (..ample_image_name.png "Zombie hatching potion")
         val regex = Regex("""!\[.*?]\(.*?".*?"\)""")
@@ -133,6 +139,25 @@ object MarkdownParser {
                 match
             }
         }
+    }
+
+    private fun preprocessMarkdownLinks(input: String): String {
+        val linkPattern = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)"
+        val multilineLinkPattern = Pattern.compile(linkPattern, Pattern.DOTALL)
+        val matcher = multilineLinkPattern.matcher(input)
+
+        val sb = StringBuffer(input.length)
+
+        while (matcher.find()) {
+            val linkText = matcher.group(1)
+            val url = matcher.group(2)
+            val sanitizedUrl = url.replace(Regex("\\s"), "")
+            val correctedLink = "[$linkText]($sanitizedUrl)"
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(correctedLink))
+        }
+        matcher.appendTail(sb)
+
+        return sb.toString()
     }
 
     fun parseMarkdownAsync(input: String?, onSuccess: (Spanned) -> Unit) {
@@ -166,8 +191,12 @@ object MarkdownParser {
     }
 
     private val markdownRegex = ".*[*#_\\[`~].*".toRegex()
+    private val imageMarkdownRegex = """!\[.*?]\(.*?".*?"\)""".toRegex()
+    private val markdownLinkRegex = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)".toRegex()
     fun containsMarkdown(text: String): Boolean {
-        return text.matches(markdownRegex)
+        return text.matches(markdownRegex) ||
+            text.contains(imageMarkdownRegex) ||
+            text.contains(markdownLinkRegex)
     }
 }
 

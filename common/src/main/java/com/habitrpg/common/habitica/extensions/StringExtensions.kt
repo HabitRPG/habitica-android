@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.text.util.Linkify
 import android.util.Patterns
 import java.util.Locale
-import java.util.*
 
 fun String.fromHtml(): CharSequence {
     return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -46,7 +45,7 @@ fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.ma
 
 fun String.toLocale(): Locale {
     val parts = this.split("_")
-    return when(parts.size) {
+    return when (parts.size) {
         1 -> Locale(parts[0])
         2 -> Locale(parts[0], parts[1])
         else -> Locale("en")

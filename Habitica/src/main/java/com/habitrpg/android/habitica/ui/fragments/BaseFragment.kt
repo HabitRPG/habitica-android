@@ -24,6 +24,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     @Inject
     lateinit var tutorialRepository: TutorialRepository
+
     @Inject
     lateinit var analyticsManager: AnalyticsManager
 
@@ -35,7 +36,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
-
 
     abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 

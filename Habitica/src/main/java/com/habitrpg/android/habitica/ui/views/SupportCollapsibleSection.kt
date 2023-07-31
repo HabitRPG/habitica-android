@@ -28,7 +28,10 @@ class SupportCollapsibleSection : LinearLayout {
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         val binding = SupportCollapsibleSectionBinding.inflate(context.layoutInflater, this)
         val a = context.obtainStyledAttributes(
-            attrs, R.styleable.SupportCollapsibleSection, defStyle, 0
+            attrs,
+            R.styleable.SupportCollapsibleSection,
+            defStyle,
+            0
         )
 
         orientation = VERTICAL

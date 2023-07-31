@@ -18,9 +18,9 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AvatarEquipmentFragment :
@@ -29,6 +29,7 @@ class AvatarEquipmentFragment :
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -97,7 +98,6 @@ class AvatarEquipmentFragment :
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
     }
-
 
     private fun loadEquipment() {
         val type = this.type ?: return

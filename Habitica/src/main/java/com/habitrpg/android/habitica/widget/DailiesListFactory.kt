@@ -7,7 +7,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 
-class DailiesListFactory(context : Context, intent : Intent, taskRepository : TaskRepository, userRepository : UserRepository) : TaskListFactory(
+class DailiesListFactory(context: Context, intent: Intent, taskRepository: TaskRepository, userRepository: UserRepository) : TaskListFactory(
     context,
     intent,
     TaskType.DAILY,

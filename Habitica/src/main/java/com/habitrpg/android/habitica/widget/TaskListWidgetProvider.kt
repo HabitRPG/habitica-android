@@ -87,7 +87,9 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
             val toastPendingIntent = PendingIntent.getBroadcast(
-                context, 0, taskIntent,
+                context,
+                0,
+                taskIntent,
                 withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent)

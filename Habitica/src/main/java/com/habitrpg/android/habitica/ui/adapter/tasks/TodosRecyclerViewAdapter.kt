@@ -10,15 +10,18 @@ class TodosRecyclerViewAdapter(layoutResource: Int, viewModel: TasksViewModel) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             TodoViewHolder(
-                getContentView(parent), { task, direction -> taskScoreEvents?.invoke(task, direction) },
+                getContentView(parent),
+                { task, direction -> taskScoreEvents?.invoke(task, direction) },
                 { task, item -> checklistItemScoreEvents?.invoke(task, item) },
                 {
-                    task ->
+                        task ->
                     taskOpenEvents?.invoke(task.first, task.second)
-                }, {
-                task ->
-                brokenTaskEvents?.invoke(task)
-            }, viewModel
+                },
+                {
+                        task ->
+                    brokenTaskEvents?.invoke(task)
+                },
+                viewModel
             )
         } else {
             super.onCreateViewHolder(parent, viewType)

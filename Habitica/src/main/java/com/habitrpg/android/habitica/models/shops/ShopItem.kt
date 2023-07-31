@@ -18,6 +18,7 @@ open class ShopItem : RealmObject(), BaseObject {
     var key: String = ""
     var text: String? = ""
     var notes: String? = ""
+
     @SerializedName("class")
     var imageName: String? = null
         get() {
@@ -44,9 +45,11 @@ open class ShopItem : RealmObject(), BaseObject {
     var unlockPath: String? = null
     var isSuggested: String? = null
     var pinType: String? = null
+
     @SerializedName("klass")
     var habitClass: String? = null
     var previous: String? = null
+
     @SerializedName("lvl")
     var level: Int? = null
     var event: ItemEvent? = null

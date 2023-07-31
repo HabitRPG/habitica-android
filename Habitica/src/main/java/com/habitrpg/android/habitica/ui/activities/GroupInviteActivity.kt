@@ -52,7 +52,6 @@ class GroupInviteActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         return when (item.itemId) {
             R.id.action_send_invites -> {
                 setResult(Activity.RESULT_OK, createResultIntent())

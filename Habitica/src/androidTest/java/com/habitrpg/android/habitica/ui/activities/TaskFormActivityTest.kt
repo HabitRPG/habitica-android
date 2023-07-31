@@ -26,7 +26,6 @@ import io.github.kakaocup.kakao.toolbar.KToolbar
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.justRun
-import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.verify

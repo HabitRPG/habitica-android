@@ -63,7 +63,7 @@ class LoginViewModel @Inject constructor(
     fun handleGoogleLoginResult(
         activity: Activity,
         task: Task<GoogleSignInAccount>,
-        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?,
+        recoverFromPlayServicesErrorResult: ActivityResultLauncher<Intent>?
     ) {
         viewModelScope.launch(exceptionBuilder.userFacing(this)) {
             val account = async {

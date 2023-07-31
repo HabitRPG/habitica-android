@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class FeedPetUseCase @Inject
 constructor(
-    private val inventoryRepository: InventoryRepository,
+    private val inventoryRepository: InventoryRepository
 ) : UseCase<FeedPetUseCase.RequestValues, FeedResponse?>() {
     override suspend fun run(requestValues: FeedPetUseCase.RequestValues): FeedResponse? {
         val feedResponse = inventoryRepository.feedPet(requestValues.pet, requestValues.food)

@@ -15,7 +15,6 @@ class GemPurchaseActivity : PurchaseActivity() {
         return R.layout.activity_gem_purchase
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -38,19 +38,21 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
 
     @Inject
     lateinit var challengeRepository: ChallengeRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -63,7 +65,6 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     var challengeID: String? = null
     var challenge: Challenge? = null
     private var isCreator = false
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

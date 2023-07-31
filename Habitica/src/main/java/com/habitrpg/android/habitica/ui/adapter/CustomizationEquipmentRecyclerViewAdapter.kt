@@ -25,9 +25,9 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
     var equipmentList: MutableList<Equipment> =
         ArrayList()
         set(value) {
-                field = value
-                notifyDataSetChanged()
-            }
+            field = value
+            notifyDataSetChanged()
+        }
     var activeEquipment: String? = null
         set(value) {
             field = value

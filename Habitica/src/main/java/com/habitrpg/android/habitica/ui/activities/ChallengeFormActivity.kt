@@ -15,12 +15,9 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckedTextView
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -230,7 +227,10 @@ class ChallengeFormActivity : BaseActivity() {
         tasksViewModel = ViewModelProvider(this)[TasksViewModel::class.java]
 
         ChallengeTasksRecyclerViewAdapter(
-            tasksViewModel, 0, this, "",
+            tasksViewModel,
+            0,
+            this,
+            "",
             openTaskDisabled = false,
             taskActionsDisabled = true
         ).also { challengeTasks = it }
@@ -499,7 +499,9 @@ class ChallengeFormActivity : BaseActivity() {
         taskList.remove(addReward)
 
         return challengeRepository.updateChallenge(
-            c, taskList, ArrayList(addedTasks.values),
+            c,
+            taskList,
+            ArrayList(addedTasks.values),
             ArrayList(updatedTasks.values),
             ArrayList(removedTasks.keys)
         )

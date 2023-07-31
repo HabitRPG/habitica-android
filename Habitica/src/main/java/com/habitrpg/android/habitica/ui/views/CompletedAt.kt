@@ -22,7 +22,7 @@ val completedTimeFormat: DateFormat = DateFormat.getDateTimeInstance(DateFormat.
 
 @Composable
 fun CompletedAt(
-    completedAt: Date?,
+    completedAt: Date?
 ) {
     val completedToday = completedAt?.time?.let { DateUtils.isToday(it) } ?: false
     Row(

@@ -43,16 +43,24 @@ fun Long.getAgoString(res: Resources): String {
     return when {
         diffMonths != 0L -> if (diffMonths == 1L) {
             res.getString(R.string.ago_1month)
-        } else res.getString(R.string.ago_months, diffMonths)
+        } else {
+            res.getString(R.string.ago_months, diffMonths)
+        }
         diffWeeks != 0L -> if (diffWeeks == 1L) {
             res.getString(R.string.ago_1week)
-        } else res.getString(R.string.ago_weeks, diffWeeks)
+        } else {
+            res.getString(R.string.ago_weeks, diffWeeks)
+        }
         diffDays != 0L -> if (diffDays == 1L) {
             res.getString(R.string.ago_1day)
-        } else res.getString(R.string.ago_days, diffDays)
+        } else {
+            res.getString(R.string.ago_days, diffDays)
+        }
         diffHours != 0L -> if (diffHours == 1L) {
             res.getString(R.string.ago_1hour)
-        } else res.getString(R.string.ago_hours, diffHours)
+        } else {
+            res.getString(R.string.ago_hours, diffHours)
+        }
         diffMinutes == 1L -> res.getString(R.string.ago_1Minute)
         else -> res.getString(R.string.ago_minutes, diffMinutes)
     }
@@ -74,16 +82,24 @@ fun Long.getRemainingString(res: Resources): String {
     return when {
         diffMonths != 0L -> if (diffMonths == 1L) {
             res.getString(R.string.remaining_1month)
-        } else res.getString(R.string.remaining_months, diffMonths)
+        } else {
+            res.getString(R.string.remaining_months, diffMonths)
+        }
         diffWeeks != 0L -> if (diffWeeks == 1L) {
             res.getString(R.string.remaining_1week)
-        } else res.getString(R.string.remaining_weeks, diffWeeks)
+        } else {
+            res.getString(R.string.remaining_weeks, diffWeeks)
+        }
         diffDays != 0L -> if (diffDays == 1L) {
             res.getString(R.string.remaining_1day)
-        } else res.getString(R.string.remaining_days, diffDays)
+        } else {
+            res.getString(R.string.remaining_days, diffDays)
+        }
         diffHours != 0L -> if (diffHours == 1L) {
             res.getString(R.string.remaining_1hour)
-        } else res.getString(R.string.remaining_hours, diffHours)
+        } else {
+            res.getString(R.string.remaining_hours, diffHours)
+        }
         diffMinutes == 1L -> res.getString(R.string.remaining_1Minute)
         else -> res.getString(R.string.remaining_minutes, diffMinutes)
     }

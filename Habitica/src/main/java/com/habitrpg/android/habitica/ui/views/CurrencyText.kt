@@ -30,6 +30,7 @@ fun CurrencyText(
 ) {
     CurrencyText(currency = currency, value = value.toDouble(), modifier, fontSize, decimals, minForAbbreviation, animated)
 }
+
 @Composable
 fun CurrencyText(
     currency: String,
@@ -40,10 +41,14 @@ fun CurrencyText(
     minForAbbreviation: Int = 0,
     animated: Boolean = true
 ) {
-    val animatedValue = if (animated) animateFloatAsState(
-        targetValue = value.toFloat(),
-        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
-    ).value else value.toFloat()
+    val animatedValue = if (animated) {
+        animateFloatAsState(
+            targetValue = value.toFloat(),
+            animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+        ).value
+    } else {
+        value.toFloat()
+    }
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         when (currency) {
             "gold" -> HabiticaIconsHelper.imageOfGold()

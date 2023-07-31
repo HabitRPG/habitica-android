@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel (val userRepository : UserRepository, val userViewModel : MainUserViewModel) : ViewModel() {
+abstract class BaseViewModel(val userRepository: UserRepository, val userViewModel: MainUserViewModel) : ViewModel() {
     val user: LiveData<User?> by lazy {
         userViewModel.user
     }

@@ -61,10 +61,12 @@ open class Customization : RealmObject(), BaseObject {
             "hair" -> {
                 return if (identifier == "0") {
                     "head_0"
-                } else when (this.category) {
-                    "color" -> "hair_bangs_1_$identifier"
-                    "flower" -> "hair_flower_$identifier"
-                    else -> "hair_" + this.category + "_" + identifier + "_" + hairColor
+                } else {
+                    when (this.category) {
+                        "color" -> "hair_bangs_1_$identifier"
+                        "flower" -> "hair_flower_$identifier"
+                        else -> "hair_" + this.category + "_" + identifier + "_" + hairColor
+                    }
                 }
             }
             "background" -> return "background_$identifier"

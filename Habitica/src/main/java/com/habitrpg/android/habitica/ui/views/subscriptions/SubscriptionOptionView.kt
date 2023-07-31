@@ -19,7 +19,8 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         val a = context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.SubscriptionOptionView,
-            0, 0
+            0,
+            0
         )
 
         if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {

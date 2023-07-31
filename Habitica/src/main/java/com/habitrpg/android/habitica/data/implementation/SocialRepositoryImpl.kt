@@ -53,11 +53,11 @@ class SocialRepositoryImpl(
         return apiClient.updateMember(memberID, mapOf(key to value))
     }
 
-    override suspend fun retrievePartySeekingUsers(page: Int) : List<Member>? {
+    override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? {
         return apiClient.retrievePartySeekingUsers(page)
     }
 
-    override fun getGroupMembership(id: String) = authenticationHandler.userIDFlow.flatMapLatest {  localRepository.getGroupMembership(it, id) }
+    override fun getGroupMembership(id: String) = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getGroupMembership(it, id) }
 
     override fun getGroupMemberships(): Flow<List<GroupMembership>> {
         return authenticationHandler.userIDFlow.flatMapLatest { localRepository.getGroupMemberships(it) }
@@ -277,7 +277,6 @@ class SocialRepositoryImpl(
 
     override suspend fun retrievegroupInvites(id: String, includeAllPublicFields: Boolean) = apiClient.getGroupInvites(id, includeAllPublicFields)
 
-
     override suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member? {
         return retrieveMember(username, fromHall)
     }
@@ -363,7 +362,9 @@ class SocialRepositoryImpl(
     override suspend fun getMemberAchievements(userId: String?): List<Achievement>? {
         return if (userId == null) {
             null
-        } else apiClient.getMemberAchievements(userId)
+        } else {
+            apiClient.getMemberAchievements(userId)
+        }
     }
 
     override suspend fun transferGems(giftedID: String, amount: Int): Void? {

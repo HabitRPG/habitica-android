@@ -57,12 +57,15 @@ class LoginActivity : BaseActivity() {
 
     @Inject
     lateinit var apiClient: ApiClient
+
     @Inject
     lateinit var sharedPrefs: SharedPreferences
+
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
-    lateinit var viewModel : AuthenticationViewModel
+    lateinit var viewModel: AuthenticationViewModel
 
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
@@ -171,7 +174,8 @@ class LoginActivity : BaseActivity() {
         binding.forgotPassword.setOnClickListener { onForgotPasswordClicked() }
         binding.googleLoginButton.setOnClickListener {
             binding.googleLoginProgress.visibility = View.VISIBLE
-            viewModel.handleGoogleLogin(this, pickAccountResult) }
+            viewModel.handleGoogleLogin(this, pickAccountResult)
+        }
     }
 
     override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {

@@ -49,7 +49,8 @@ class LevelupActivity : BaseActivity<ActivityLevelupBinding, LevelupViewModel>()
                 createParticles(container, R.drawable.confetti_red)
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
-            }, 500
+            },
+            500
         )
     }
 

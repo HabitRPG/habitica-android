@@ -42,6 +42,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -244,7 +245,6 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         }
         binding?.numberOfPointsTextView?.setScaledPadding(context, 18, 4, 18, 4)
     }
-
 
     private fun updateStats(user: User) {
         val outfit = user.items?.gear?.equipped

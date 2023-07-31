@@ -27,7 +27,7 @@ import com.habitrpg.common.habitica.extensions.loadImage
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ViewHolder>() {
 
-    var armoireCount : Int = 0
+    var armoireCount: Int = 0
     var onNeedsRefresh: (() -> Unit)? = null
     var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
@@ -196,7 +196,9 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                     selectedGearCategory
                 }
                 (selectedGearCategory?.items?.size ?: 0) <= position - 2 -> return Pair(
-                    context?.resources?.let { getTranslatedClassName(it, selectedGearCategory?.identifier) } ?: selectedGearCategory?.identifier, armoireCount)
+                    context?.resources?.let { getTranslatedClassName(it, selectedGearCategory?.identifier) } ?: selectedGearCategory?.identifier,
+                    armoireCount
+                )
                 else -> selectedGearCategory?.items?.get(position - 2)
             }
         } else {
@@ -220,7 +222,9 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
         val size = items.size + getGearItemCount()
         return if (size == 1) {
             2
-        } else size
+        } else {
+            size
+        }
     }
 
     private fun getGearItemCount(): Int {
@@ -288,7 +292,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
             }
     }
 
-    class ArmoireGearViewHolder(view: View): ViewHolder(view) {
+    class ArmoireGearViewHolder(view: View) : ViewHolder(view) {
         private val binding = ShopArmoireGearBinding.bind(view)
 
         init {

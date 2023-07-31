@@ -21,8 +21,9 @@ constructor(private val soundManager: SoundManager) :
         val snackbarText = StringBuilder(data?.drop?.dialog ?: "")
 
         if ((data?.questItemsFound ?: 0) > 0 && requestValues.showQuestItems) {
-            if (snackbarText.isNotEmpty())
+            if (snackbarText.isNotEmpty()) {
                 snackbarText.append('\n')
+            }
             snackbarText.append(
                 requestValues.context.getString(
                     R.string.quest_items_found,
@@ -36,7 +37,9 @@ constructor(private val soundManager: SoundManager) :
                 delay(3000L)
                 HabiticaSnackbar.showSnackbar(
                     requestValues.snackbarTargetView,
-                    snackbarText, HabiticaSnackbar.SnackbarDisplayType.DROP, true
+                    snackbarText,
+                    HabiticaSnackbar.SnackbarDisplayType.DROP,
+                    true
                 )
                 soundManager.loadAndPlayAudio(SoundManager.SoundItemDrop)
             }

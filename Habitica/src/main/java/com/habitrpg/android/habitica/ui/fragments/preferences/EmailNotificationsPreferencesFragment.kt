@@ -13,7 +13,6 @@ class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedP
     private var isInitialSet: Boolean = true
     private var isSettingUser: Boolean = false
 
-
     override fun onResume() {
         super.onResume()
         preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)

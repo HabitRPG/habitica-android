@@ -185,7 +185,6 @@ class GuildDetailFragment : BaseFragment<FragmentGuildDetailBinding>() {
         (this.activity as? MainActivity)?.showSnackbar(title = getString(R.string.left_guild))
     }
 
-
     private fun updateGuild(guild: Group?) {
         binding?.titleView?.text = guild?.name
         binding?.guildMembersIcon?.setImageBitmap(HabiticaIconsHelper.imageOfGuildCrestMedium((guild?.memberCount ?: 0).toFloat()))

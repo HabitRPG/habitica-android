@@ -38,4 +38,3 @@ fun View.fadeInAnimation(duration: Long = 500) {
     fadeInAnimation.duration = duration
     fadeInAnimation.start()
 }
-

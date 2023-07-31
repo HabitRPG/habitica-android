@@ -66,7 +66,9 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
     override fun equals(other: Any?): Boolean {
         return if (other is ChecklistItem) {
             this.id == other.id
-        } else super.equals(other)
+        } else {
+            super.equals(other)
+        }
     }
 
     override fun hashCode(): Int {

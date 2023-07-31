@@ -61,6 +61,7 @@ var customDateAdapter: Any = object : Any() {
 class FrequencyAdapter {
     @ToJson
     fun toJson(type: Frequency): String = type.value
+
     @FromJson
     fun fromJson(value: String): Frequency? = Frequency.from(value)
 }
@@ -68,6 +69,7 @@ class FrequencyAdapter {
 class TaskTypeAdapter {
     @ToJson
     fun toJson(type: TaskType): String = type.value
+
     @FromJson
     fun fromJson(value: String): TaskType? = TaskType.from(value)
 }
@@ -75,6 +77,7 @@ class TaskTypeAdapter {
 class AttributeAdapter {
     @ToJson
     fun toJson(type: Attribute): String = type.value
+
     @FromJson
     fun fromJson(value: String): Attribute? = Attribute.from(value)
 }

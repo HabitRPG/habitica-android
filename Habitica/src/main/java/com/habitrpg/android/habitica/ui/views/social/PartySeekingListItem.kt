@@ -46,13 +46,13 @@ import kotlin.random.Random
 
 @Composable
 fun PartySeekingListItem(
-    user : Member,
-    modifier : Modifier = Modifier,
-    inviteState : LoadingButtonState = LoadingButtonState.LOADING,
+    user: Member,
+    modifier: Modifier = Modifier,
+    inviteState: LoadingButtonState = LoadingButtonState.LOADING,
     isInvited: Boolean = false,
     showHeader: Boolean = false,
     showExtendedInfo: Boolean = true,
-    onInvite : (Member) -> Unit
+    onInvite: (Member) -> Unit
 ) {
     Column(
         modifier
@@ -69,10 +69,12 @@ fun PartySeekingListItem(
             horizontalArrangement = Arrangement.spacedBy(14.dp),
             verticalAlignment = Alignment.Top
         ) {
-            ComposableAvatarView(user,
+            ComposableAvatarView(
+                user,
                 Modifier
                     .size(94.dp, 98.dp)
-                    .padding(top = 4.dp))
+                    .padding(top = 4.dp)
+            )
             Column(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier.fillMaxWidth()
@@ -142,13 +144,14 @@ fun PartySeekingListItem(
                 .padding(top = 8.dp),
             onClick = {
                 onInvite(user)
-            })
+            }
+        )
     }
 }
 
-private class MemberProvider: PreviewParameterProvider<Member> {
+private class MemberProvider : PreviewParameterProvider<Member> {
 
-    private fun generateMember() : Member {
+    private fun generateMember(): Member {
         val member = Member()
         member.profile = Profile()
         member.profile?.name = "User"
@@ -171,7 +174,7 @@ private class MemberProvider: PreviewParameterProvider<Member> {
         return member
     }
 
-    override val values : Sequence<Member>
+    override val values: Sequence<Member>
         get() {
             val list = mutableListOf<Member>()
             val earlyMember = generateMember()

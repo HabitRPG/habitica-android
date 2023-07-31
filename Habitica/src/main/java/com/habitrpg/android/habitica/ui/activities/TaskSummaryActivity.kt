@@ -67,27 +67,27 @@ import javax.inject.Inject
 @HiltViewModel
 class TaskSummaryViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    val taskRepository : TaskRepository,
-    val socialRepository : SocialRepository
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val taskRepository: TaskRepository,
+    val socialRepository: SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
     val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
 
     val task = taskRepository.getTask(taskID).asLiveData()
 
-    fun getMember(userID : String?) : Flow<Member?> {
+    fun getMember(userID: String?): Flow<Member?> {
         return socialRepository.getMember(userID)
     }
 }
 
 @AndroidEntryPoint
 class TaskSummaryActivity : BaseActivity() {
-    override fun getLayoutResId() : Int? = null
+    override fun getLayoutResId(): Int? = null
 
-    private val viewModel : TaskSummaryViewModel by viewModels()
+    private val viewModel: TaskSummaryViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             HabiticaTheme {
@@ -98,7 +98,7 @@ class TaskSummaryActivity : BaseActivity() {
 }
 
 @Composable
-fun TaskSummaryView(viewModel : TaskSummaryViewModel) {
+fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
     val taskDescriptionBuilder = TaskDescriptionBuilder(LocalContext.current)
     val task by viewModel.task.observeAsState()
     val titleModifier = Modifier.padding(top = 30.dp)
@@ -107,9 +107,13 @@ fun TaskSummaryView(viewModel : TaskSummaryViewModel) {
 
     if (task != null) {
         val darkestColor = HabiticaTheme.colors.textPrimaryFor(task)
-        val topTextColor = if ((task?.value ?: 0.0) >= -20) colorResource(
-            task?.extraDarkTaskColor ?: R.color.white
-        ) else Color.White
+        val topTextColor = if ((task?.value ?: 0.0) >= -20) {
+            colorResource(
+                task?.extraDarkTaskColor ?: R.color.white
+            )
+        } else {
+            Color.White
+        }
         val systemUiController = rememberSystemUiController()
         val statusBarColor = HabiticaTheme.colors.primaryBackgroundFor(task)
         val lightestColor = HabiticaTheme.colors.contentBackgroundFor(task)
@@ -169,8 +173,11 @@ fun TaskSummaryView(viewModel : TaskSummaryViewModel) {
                     modifier = titleModifier
                 )
                 Text(
-                    task?.text ?: "", fontSize = 16.sp, color = darkestColor,
-                    fontWeight = FontWeight.Normal, modifier = textModifier
+                    task?.text ?: "",
+                    fontSize = 16.sp,
+                    color = darkestColor,
+                    fontWeight = FontWeight.Normal,
+                    modifier = textModifier
                 )
                 if (task?.notes?.isNotBlank() == true) {
                     Text(
@@ -270,7 +277,8 @@ fun TaskSummaryView(viewModel : TaskSummaryViewModel) {
                     for (item in task?.group?.assignedUsersDetail ?: emptyList()) {
                         val member = viewModel.getMember(item.assignedUserID).collectAsState(null)
                         UserRow(
-                            item.assignedUsername ?: "", member.value,
+                            item.assignedUsername ?: "",
+                            member.value,
                             Modifier
                                 .padding(vertical = 4.dp)
                                 .background(
@@ -281,11 +289,15 @@ fun TaskSummaryView(viewModel : TaskSummaryViewModel) {
                                 .heightIn(min = 24.dp)
                                 .fillMaxWidth(),
                             color = darkestColor,
-                            extraContent = if (item.completed) (
-                                {
-                                    CompletedAt(item.completedDate)
-                                }
-                                ) else null
+                            extraContent = if (item.completed) {
+                                (
+                                    {
+                                        CompletedAt(item.completedDate)
+                                    }
+                                    )
+                            } else {
+                                null
+                            }
                         )
                     }
                     task?.group?.assignedUsersDetail?.find { it.assignedUserID == viewModel.userViewModel.userID }
@@ -311,7 +323,7 @@ fun TaskSummaryView(viewModel : TaskSummaryViewModel) {
     }
 }
 
-private fun String.makeBoldComposable() : AnnotatedString {
+private fun String.makeBoldComposable(): AnnotatedString {
     return buildAnnotatedString {
         var isBold = false
         for (segment in split("**")) {

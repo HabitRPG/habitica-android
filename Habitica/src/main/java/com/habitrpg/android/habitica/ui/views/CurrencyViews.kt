@@ -46,7 +46,8 @@ class CurrencyViews : LinearLayout {
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.CurrencyViews,
-            0, 0
+            0,
+            0
         )
         setupViews()
         val fallBackLight = !context.isUsingNightModeResources()

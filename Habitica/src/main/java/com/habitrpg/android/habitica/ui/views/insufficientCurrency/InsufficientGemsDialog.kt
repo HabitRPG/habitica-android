@@ -36,8 +36,10 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) : 
 
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var analyticsManager: AnalyticsManager
+
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -107,7 +109,6 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) : 
                 }
             }
         }
-
     }
 
     override fun onDetachedFromWindow() {

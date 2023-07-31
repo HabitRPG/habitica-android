@@ -41,12 +41,12 @@ import kotlin.time.toDuration
 @AndroidEntryPoint
 open class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
-    override var binding : FragmentChatBinding? = null
+    override var binding: FragmentChatBinding? = null
 
     override fun createBinding(
-        inflater : LayoutInflater,
-        container : ViewGroup?
-    ) : FragmentChatBinding {
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentChatBinding {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
@@ -55,17 +55,18 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     )
 
     @Inject
-    lateinit var configManager : AppConfigManager
+    lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var socialRepository: SocialRepository
 
-    private var chatAdapter : ChatRecyclerViewAdapter? = null
+    private var chatAdapter: ChatRecyclerViewAdapter? = null
     private var navigatedOnceToFragment = false
     private var isScrolledToBottom = true
     private var isFirstRefresh = true
-    var autocompleteContext : String = ""
+    var autocompleteContext: String = ""
 
-    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(context)
@@ -95,21 +96,20 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             configManager.enableUsernameAutocomplete()
         )
 
-
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         binding?.recyclerView?.addOnScrollListener(object :
-            androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
-            override fun onScrolled(
-                recyclerView : androidx.recyclerview.widget.RecyclerView,
-                dx : Int,
-                dy : Int
-            ) {
-                super.onScrolled(recyclerView, dx, dy)
-                isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
-            }
-        })
+                androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+                override fun onScrolled(
+                    recyclerView: androidx.recyclerview.widget.RecyclerView,
+                    dx: Int,
+                    dy: Int
+                ) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
+                }
+            })
 
         viewModel.chatmessages.observe(viewLifecycleOwner) { setChatMessages(it) }
 
@@ -139,7 +139,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         setNavigatedToFragment()
     }
 
-    private fun setReplyTo(username : String?) {
+    private fun setReplyTo(username: String?) {
         val previousMessage = binding?.chatBarView?.message ?: ""
         if (previousMessage.contains("@$username")) {
             return
@@ -167,7 +167,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
     }
 
-    private fun copyMessageToClipboard(chatMessage : ChatMessage) {
+    private fun copyMessageToClipboard(chatMessage: ChatMessage) {
         val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
         clipMan?.setPrimaryClip(messageText)
@@ -181,7 +181,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
     }
 
-    private fun showFlagConfirmationDialog(chatMessage : ChatMessage) {
+    private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
         val directions = MainNavDirections.actionGlobalReportMessageActivity(
             chatMessage.text ?: "",
             chatMessage.user ?: "",
@@ -191,7 +191,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         MainNavigationController.navigate(directions)
     }
 
-    private fun showDeleteConfirmationDialog(chatMessage : ChatMessage) {
+    private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {
         val context = context
         if (context != null) {
             val dialog = HabiticaAlertDialog(context)
@@ -204,7 +204,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
     }
 
-    private fun setChatMessages(chatMessages : List<ChatMessage>) {
+    private fun setChatMessages(chatMessages: List<ChatMessage>) {
         chatAdapter?.data = chatMessages
         binding?.chatBarView?.chatMessages = chatMessages
 
@@ -213,7 +213,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         markMessagesAsSeen()
     }
 
-    private fun sendChatMessage(chatText : String) {
+    private fun sendChatMessage(chatText: String) {
         viewModel.postGroupChat(
             chatText,
             { binding?.recyclerView?.scrollToPosition(0) }

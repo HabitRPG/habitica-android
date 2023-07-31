@@ -21,7 +21,7 @@ interface UserRepository : BaseRepository {
     fun getUser(userID: String): Flow<User?>
 
     suspend fun updateUser(updateData: Map<String, Any?>): User?
-    suspend fun updateUser(key : String, value : Any?): User?
+    suspend fun updateUser(key: String, value: Any?): User?
 
     suspend fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false, overrideExisting: Boolean = false): User?
 

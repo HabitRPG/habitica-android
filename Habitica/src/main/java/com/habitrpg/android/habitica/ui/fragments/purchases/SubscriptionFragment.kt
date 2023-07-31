@@ -55,10 +55,13 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
@@ -149,7 +152,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             binding?.refreshLayout?.isRefreshing = false
         }
     }
-
 
     private fun loadInventory() {
         CoroutineScope(Dispatchers.IO).launchCatching {

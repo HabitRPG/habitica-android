@@ -19,7 +19,9 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
         val existingNotifications = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
-        } else null
+        } else {
+            null
+        }
         val messageText = EmojiParser.parseEmojis(data["message"]?.trim { it <= ' ' })
         val oldMessages = existingNotifications?.firstOrNull()?.notification?.extras?.getStringArrayList("messages") ?: arrayListOf()
         var style = NotificationCompat.InboxStyle()
@@ -73,7 +75,8 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         intent.putExtra("NOTIFICATION_ID", notificationId)
         val replyPendingIntent: PendingIntent =
             PendingIntent.getBroadcast(
-                context, senderID.hashCode(),
+                context,
+                senderID.hashCode(),
                 intent,
                 withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
             )
@@ -81,7 +84,8 @@ class ReceivedPrivateMessageLocalNotification(context: Context, identifier: Stri
         val action: NotificationCompat.Action =
             NotificationCompat.Action.Builder(
                 R.drawable.ic_send_grey_600_24dp,
-                context.getString(R.string.reply), replyPendingIntent
+                context.getString(R.string.reply),
+                replyPendingIntent
             )
                 .addRemoteInput(remoteInput)
                 .build()

@@ -14,7 +14,8 @@ import java.util.Locale
 fun String.parseToZonedDateTime(): ZonedDateTime? {
     val parsed: TemporalAccessor = formatter().parseBest(
         this,
-        ZonedDateTime::from, LocalDateTime::from
+        ZonedDateTime::from,
+        LocalDateTime::from
     )
     return if (parsed is ZonedDateTime) {
         parsed
