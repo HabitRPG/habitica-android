@@ -10,7 +10,7 @@ import javax.inject.Inject
 class BuyRewardUseCase @Inject
 constructor(
     private val taskRepository: TaskRepository,
-    private val soundManager: SoundManager,
+    private val soundManager: SoundManager
 ) : UseCase<BuyRewardUseCase.RequestValues, TaskScoringResult?>() {
 
     override suspend fun run(requestValues: RequestValues): TaskScoringResult? {

@@ -19,18 +19,19 @@ import com.habitrpg.android.habitica.ui.adapter.AchievementsAdapter
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -48,7 +49,6 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
             adapter.useGridLayout = value
             adapter.notifyDataSetChanged()
         }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

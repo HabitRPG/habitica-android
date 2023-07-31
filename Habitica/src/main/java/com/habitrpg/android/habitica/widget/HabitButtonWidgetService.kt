@@ -31,9 +31,11 @@ import kotlin.math.min
 class HabitButtonWidgetService : Service() {
     @Inject
     lateinit var sharedPreferences: SharedPreferences
+
     @Inject
     @ApplicationContext
     lateinit var context: Context
+
     @Inject
     lateinit var taskRepository: TaskRepository
     private var appWidgetManager: AppWidgetManager? = null
@@ -114,7 +116,9 @@ class HabitButtonWidgetService : Service() {
         taskIntent.putExtra(HabitButtonWidgetProvider.TASK_ID, taskId)
         taskIntent.putExtra(HabitButtonWidgetProvider.TASK_DIRECTION, direction)
         return PendingIntent.getBroadcast(
-            context, widgetId + direction.hashCode(), taskIntent,
+            context,
+            widgetId + direction.hashCode(),
+            taskIntent,
             withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
         )
     }

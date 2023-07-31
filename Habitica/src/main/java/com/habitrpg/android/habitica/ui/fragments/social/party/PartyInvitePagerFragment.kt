@@ -18,22 +18,22 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
-    override var binding : FragmentViewpagerBinding? = null
+    override var binding: FragmentViewpagerBinding? = null
 
     internal val viewModel: PartyViewModel by viewModels()
 
     override fun createBinding(
-        inflater : LayoutInflater,
-        container : ViewGroup?
-    ) : FragmentViewpagerBinding {
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
-        inflater : LayoutInflater,
-        container : ViewGroup?,
-        savedInstanceState : Bundle?
-    ) : View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         showsBackButton = true
@@ -45,11 +45,11 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             .observe(viewLifecycleOwner) {
                 binding?.viewPager?.adapter?.notifyDataSetChanged()
                 usesTabLayout = viewModel.isLeader
-        }
+            }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setViewPagerAdapter()
@@ -59,7 +59,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
         binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
-            override fun createFragment(position : Int) : Fragment {
+            override fun createFragment(position: Int): Fragment {
                 return when (position) {
                     0 -> {
                         if (viewModel.isLeader) {
@@ -77,7 +77,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 }
             }
 
-            override fun getItemCount() : Int {
+            override fun getItemCount(): Int {
                 return if (viewModel.isLeader) 2 else 1
             }
         }

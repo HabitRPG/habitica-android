@@ -26,7 +26,9 @@ open class MemberPreferences :
                 } else {
                     "chair_$field"
                 }
-            } else null
+            } else {
+                null
+            }
         }
     var language: String? = null
 }

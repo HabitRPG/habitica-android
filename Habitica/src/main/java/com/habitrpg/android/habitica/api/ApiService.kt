@@ -59,6 +59,7 @@ interface ApiService {
 
     @GET("inbox/messages")
     suspend fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): HabitResponse<List<ChatMessage>>
+
     @GET("inbox/conversations")
     suspend fun getInboxConversations(): HabitResponse<List<InboxConversation>>
 
@@ -128,6 +129,7 @@ interface ApiService {
 
     @POST("tasks/{id}/score/{direction}")
     suspend fun postTaskDirection(@Path("id") id: String, @Path("direction") direction: String): HabitResponse<TaskDirectionData>
+
     @POST("tasks/bulk-score")
     suspend fun bulkScoreTasks(@Body data: List<Map<String, String>>): HabitResponse<BulkTaskScoringData>
 
@@ -139,6 +141,7 @@ interface ApiService {
 
     @POST("tasks/user")
     suspend fun createTask(@Body item: Task): HabitResponse<Task>
+
     @POST("tasks/group/{groupId}")
     suspend fun createGroupTask(@Path("groupId") groupId: String, @Body item: Task): HabitResponse<Task>
 
@@ -287,8 +290,10 @@ interface ApiService {
     suspend fun inviteToQuest(@Path("gid") groupId: String, @Path("questKey") questKey: String): HabitResponse<Quest>
 
     @GET("groups/{gid}/invites")
-    suspend fun getGroupInvites(@Path("gid") groupId: String,
-        @Query("includeAllPublicFields") includeAllPublicFields: Boolean?): HabitResponse<List<Member>>
+    suspend fun getGroupInvites(
+        @Path("gid") groupId: String,
+        @Query("includeAllPublicFields") includeAllPublicFields: Boolean?
+    ): HabitResponse<List<Member>>
 
     @POST("groups/{gid}/quests/abort")
     suspend fun abortQuest(@Path("gid") groupId: String): HabitResponse<Quest>

@@ -26,6 +26,7 @@ class MainActivityTest : ActivityTestCase() {
     val screen = MainActivityScreen()
 
     lateinit var scenario: ActivityScenario<MainActivity>
+
     @After
     fun cleanup() {
         scenario.close()

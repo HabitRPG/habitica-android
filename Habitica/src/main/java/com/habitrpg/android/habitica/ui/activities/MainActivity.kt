@@ -294,7 +294,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                 onClose()
                                 FullProfileActivity.open(it)
                             }
-
                         }
                     },
                     onClassSelectionClicked = {
@@ -384,7 +383,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                 MainNavigationController.navigateBack()
             }
             true
-        } else super.onOptionsItemSelected(item)
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onResume() {
@@ -709,7 +710,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
-    fun updateToolbarInteractivity(titleInteractive : Boolean) {
+    fun updateToolbarInteractivity(titleInteractive: Boolean) {
         viewModel.canShowTeamPlanHeader.value = titleInteractive
         binding.content.toolbarTitle.background?.alpha = if (titleInteractive) 255 else 0
         if (titleInteractive) {

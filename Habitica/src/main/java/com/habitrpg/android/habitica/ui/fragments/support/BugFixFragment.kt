@@ -39,9 +39,9 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
 
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,7 +105,8 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
         val newLine = "%0D%0A"
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
             newLine + Uri.encode("Android Version: $version") +
-            newLine + Uri.encode("AppVersion: " + getString(
+            newLine + Uri.encode(
+            "AppVersion: " + getString(
                 R.string.version_info,
                 versionName,
                 versionCode
@@ -121,10 +122,14 @@ class BugFixFragment : BaseMainFragment<FragmentSupportBugFixBinding>() {
             bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
                 newLine + Uri.encode(
                 "Class: " + (
-                    if (user.preferences?.disableClasses == true) "Disabled" else (
-                        user.stats?.habitClass
-                            ?: "None"
-                        )
+                    if (user.preferences?.disableClasses == true) {
+                        "Disabled"
+                    } else {
+                        (
+                            user.stats?.habitClass
+                                ?: "None"
+                            )
+                    }
                     )
             ) +
                 newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +

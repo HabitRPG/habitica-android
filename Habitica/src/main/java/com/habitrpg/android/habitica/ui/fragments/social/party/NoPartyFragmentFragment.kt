@@ -36,8 +36,10 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 

@@ -157,7 +157,8 @@ class TaskSchedulingControls @JvmOverloads constructor(
 
         binding.startDateWrapper.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
-                context, this,
+                context,
+                this,
                 startDateCalendar.get(Calendar.YEAR),
                 startDateCalendar.get(Calendar.MONTH),
                 startDateCalendar.get(Calendar.DAY_OF_MONTH)
@@ -334,7 +335,9 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private fun toContentDescription(buttonText: CharSequence, isActive: Boolean): String {
         val statusString = if (isActive) {
             context.getString(R.string.selected)
-        } else context.getString(R.string.not_selected)
+        } else {
+            context.getString(R.string.not_selected)
+        }
         return "$buttonText, $statusString"
     }
 
@@ -382,14 +385,18 @@ class TaskSchedulingControls @JvmOverloads constructor(
                 val formattedDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     val formatter = MessageFormat("{0,ordinal}", Locale.getDefault())
                     formatter.format(arrayOf(date))
-                } else date.toString()
+                } else {
+                    date.toString()
+                }
                 " on the $formattedDate"
             } else {
                 val week = startDateCalendar.get(Calendar.WEEK_OF_MONTH)
                 val formattedWeek = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     val formatter = MessageFormat("{0,ordinal}", Locale.getDefault())
                     formatter.format(arrayOf(week))
-                } else week.toString()
+                } else {
+                    week.toString()
+                }
                 val dayLongName = startDateCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
                 " on the $formattedWeek week on $dayLongName"
             }

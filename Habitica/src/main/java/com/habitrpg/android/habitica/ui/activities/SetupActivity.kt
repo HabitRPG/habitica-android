@@ -48,8 +48,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     @Inject
     lateinit var apiClient: ApiClient
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var taskRepository: TaskRepository
 

@@ -36,7 +36,8 @@ class ValidatingEditText @JvmOverloads constructor(
         context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.ValidatingEditText,
-            0, 0
+            0,
+            0
         )?.let { attributes ->
             binding.inputLayout.hint = attributes.getString(R.styleable.ValidatingEditText_hint)
             binding.editText.maxLines = attributes.getInt(R.styleable.ValidatingEditText_android_maxLines, 20)

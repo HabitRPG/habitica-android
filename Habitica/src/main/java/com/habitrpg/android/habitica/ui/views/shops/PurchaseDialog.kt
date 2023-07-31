@@ -57,7 +57,7 @@ class PurchaseDialog(
     private val userRepository: UserRepository,
     private val inventoryRepository: InventoryRepository,
     val item: ShopItem,
-    val parentActivity: Activity? = null,
+    val parentActivity: Activity? = null
 ) : HabiticaAlertDialog(context) {
 
     private val customHeader: View by lazy {

@@ -28,17 +28,19 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.AvatarView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -144,7 +146,6 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
             alert.show()
         }
     }
-
 
     private fun retrieveMessages() {
         lifecycleScope.launchCatching {

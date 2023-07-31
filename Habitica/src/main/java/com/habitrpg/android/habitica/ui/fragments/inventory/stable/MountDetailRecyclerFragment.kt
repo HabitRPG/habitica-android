@@ -32,6 +32,7 @@ class MountDetailRecyclerFragment :
 
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -60,7 +61,6 @@ class MountDetailRecyclerFragment :
         inventoryRepository.close()
         super.onDestroy()
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showsBackButton = true

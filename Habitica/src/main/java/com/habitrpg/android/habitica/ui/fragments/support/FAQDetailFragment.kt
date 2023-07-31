@@ -11,8 +11,8 @@ import com.habitrpg.android.habitica.databinding.FragmentFaqDetailBinding
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.common.habitica.helpers.launchCatching
-import javax.inject.Inject
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
@@ -55,5 +55,4 @@ class FAQDetailFragment : BaseMainFragment<FragmentFaqDetailBinding>() {
 
         binding?.answerTextView?.movementMethod = LinkMovementMethod.getInstance()
     }
-
 }

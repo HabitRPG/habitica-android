@@ -2,13 +2,11 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.stable
 
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
-import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.ui.fragments.FragmentTestCase
-import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.recycler.KRecyclerView
 import io.github.kakaocup.kakao.screen.Screen
@@ -18,7 +16,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.mockkObject
 import io.mockk.spyk
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Test
@@ -27,9 +24,9 @@ class PetDetailScreen : Screen<PetDetailScreen>() {
     val recycler: KRecyclerView = KRecyclerView({
         withId(R.id.recyclerView)
     }, itemTypeBuilder = {
-        itemType(::SectionItem)
-        itemType(::PetItem)
-    })
+            itemType(::SectionItem)
+            itemType(::PetItem)
+        })
 }
 
 internal class PetDetailRecyclerFragmentTest :

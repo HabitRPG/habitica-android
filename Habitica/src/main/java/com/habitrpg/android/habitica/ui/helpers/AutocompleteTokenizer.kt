@@ -49,8 +49,12 @@ class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.
             if (text is Spanned) {
                 val sp = SpannableString("$text ")
                 TextUtils.copySpansFrom(
-                    text, 0, text.length,
-                    Any::class.java, sp, 0
+                    text,
+                    0,
+                    text.length,
+                    Any::class.java,
+                    sp,
+                    0
                 )
                 sp
             } else {

@@ -53,7 +53,6 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>() {
         }
     }
 
-
     fun setImage(image: Drawable?) {
         this.image = image
         if (image != null) {

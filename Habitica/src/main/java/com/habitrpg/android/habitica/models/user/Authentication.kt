@@ -22,12 +22,16 @@ open class Authentication : RealmObject(), BaseObject, AvatarAuthentication {
     var blocked: Boolean = false
     val hasPassword: Boolean
         get() = localAuthentication?.hasPassword == true
+
     @SerializedName("local")
     override var localAuthentication: LocalAuthentication? = null
+
     @SerializedName("google")
     var googleAuthentication: SocialAuthentication? = null
+
     @SerializedName("apple")
     var appleAuthentication: SocialAuthentication? = null
+
     @SerializedName("facebook")
     var facebookAuthentication: SocialAuthentication? = null
 

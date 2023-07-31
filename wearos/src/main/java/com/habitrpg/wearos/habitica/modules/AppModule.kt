@@ -111,7 +111,9 @@ class AppModule {
     ): KeyHelper? {
         return if (keyStore == null) {
             null
-        } else KeyHelper.getInstance(context, sharedPreferences, keyStore)
+        } else {
+            KeyHelper.getInstance(context, sharedPreferences, keyStore)
+        }
     }
 
     @Provides

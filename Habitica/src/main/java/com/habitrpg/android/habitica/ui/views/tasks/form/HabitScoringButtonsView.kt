@@ -97,7 +97,9 @@ private fun HabitScoringSelection(
                 .padding(horizontal = 12.dp)
                 .size(34.dp)
                 .border(
-                    1.dp, borderColor.value, CircleShape
+                    1.dp,
+                    borderColor.value,
+                    CircleShape
                 )
                 .clip(CircleShape)
                 .clickable { onSelect() }
@@ -136,9 +138,11 @@ private fun Preview() {
             .padding(8.dp)
     ) {
         HabitScoringSelector(
-            selectedUp.value, selectedDown.value,
+            selectedUp.value,
+            selectedDown.value,
             { selectedUp.value = !selectedUp.value },
-            { selectedDown.value = !selectedDown.value }, Modifier.align(Alignment.Center)
+            { selectedDown.value = !selectedDown.value },
+            Modifier.align(Alignment.Center)
         )
     }
 }

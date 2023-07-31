@@ -27,6 +27,7 @@ class SkillMemberActivity : BaseActivity() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 

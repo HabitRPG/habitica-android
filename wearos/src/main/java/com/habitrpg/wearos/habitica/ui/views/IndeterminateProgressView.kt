@@ -33,7 +33,7 @@ class IndeterminateProgressView @JvmOverloads constructor(
         ContextCompat.getColor(context, R.color.watch_green_100),
         ContextCompat.getColor(context, R.color.watch_blue_100),
         ContextCompat.getColor(context, R.color.watch_purple_100),
-        ContextCompat.getColor(context, R.color.black),
+        ContextCompat.getColor(context, R.color.black)
     ).toIntArray()
     val gradient = SweepGradient(225f, 225f, rainbow, null)
     private val paint = Paint()

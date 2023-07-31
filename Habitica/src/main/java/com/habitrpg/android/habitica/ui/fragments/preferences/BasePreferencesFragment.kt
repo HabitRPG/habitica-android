@@ -15,6 +15,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
 
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 

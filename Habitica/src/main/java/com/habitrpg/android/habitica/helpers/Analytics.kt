@@ -30,7 +30,7 @@ enum class HitType(val key: String) {
 }
 
 object Analytics {
-    private lateinit var firebase : FirebaseAnalytics
+    private lateinit var firebase: FirebaseAnalytics
     private lateinit var amplitude: Amplitude
 
     @JvmOverloads

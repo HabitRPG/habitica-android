@@ -29,6 +29,7 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
 
     @Inject
     lateinit var faqRepository: FAQRepository
+
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
@@ -69,5 +70,4 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         faqRepository.close()
         super.onDestroy()
     }
-
 }

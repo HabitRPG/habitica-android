@@ -70,7 +70,6 @@ class ChatBarView : LinearLayout {
         orientation = VERTICAL
         this.setBackgroundResource(R.color.content_background)
 
-
         binding.chatEditText.addTextChangedListener(
             OnChangeTextWatcher { _, _, _, _ ->
                 setSendButtonEnabled(binding.chatEditText.text.isNotEmpty() && binding.chatEditText.text.length <= maxChatLength)

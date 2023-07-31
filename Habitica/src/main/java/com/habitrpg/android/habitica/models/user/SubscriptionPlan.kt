@@ -43,7 +43,9 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
         get() {
             return if (isActive) {
                 25 + (consecutive?.gemCapExtra ?: 0)
-            } else 0
+            } else {
+                0
+            }
         }
 
     val numberOfGemsLeft: Int

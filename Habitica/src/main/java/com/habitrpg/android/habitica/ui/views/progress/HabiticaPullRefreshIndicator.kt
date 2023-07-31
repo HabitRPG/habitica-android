@@ -36,9 +36,11 @@ fun HabiticaPullRefreshIndicator(
     backgroundColor: Color = MaterialTheme.colors.surface,
     scale: Boolean = true
 ) {
-    AnimatedVisibility(visible = isInitial && isRefreshing,
+    AnimatedVisibility(
+        visible = isInitial && isRefreshing,
         enter = fadeIn(),
-        exit = fadeOut()) {
+        exit = fadeOut()
+    ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             HabiticaCircularProgressView(Modifier)
         }
@@ -51,7 +53,6 @@ fun HabiticaPullRefreshIndicator(
             color = backgroundColor,
             elevation = if (isRefreshing) 6.dp else (min(1f, state.progress * 2) * 6f).dp
         ) {
-
             AnimatedVisibility(
                 visible = isRefreshing || state.progress > 0f,
                 enter = fadeIn(),
@@ -76,10 +77,9 @@ fun HabiticaPullRefreshIndicator(
 @Preview
 @Composable
 private fun Preview() {
-    val state = rememberPullRefreshState(refreshing = true, onRefresh = {  })
+    val state = rememberPullRefreshState(refreshing = true, onRefresh = { })
     Box(Modifier.pullRefresh(state)) {
         LazyColumn {
-
         }
         HabiticaPullRefreshIndicator(isInitial = false, isRefreshing = true, state = state)
     }

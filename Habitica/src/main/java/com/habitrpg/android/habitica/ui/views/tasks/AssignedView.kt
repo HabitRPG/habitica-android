@@ -101,7 +101,8 @@ fun AssignedView(
                     colorFilter = ColorFilter.tint(color)
                 )
                 Text(
-                    stringResource(R.string.edit_assignees), color = color,
+                    stringResource(R.string.edit_assignees),
+                    color = color,
                     modifier = Modifier.padding(start = 4.dp)
                 )
             }

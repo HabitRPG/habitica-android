@@ -93,10 +93,12 @@ class PartyInviteViewModel @Inject constructor(
         )
         for (invite in invites) {
             if (invite.isValidEmail()) {
-                inviteMap["emails"]?.add(mapOf(
-                    "name" to "",
-                    "email" to invite
-                ))
+                inviteMap["emails"]?.add(
+                    mapOf(
+                        "name" to "",
+                        "email" to invite
+                    )
+                )
             } else if (uUIDFromStringOrNull(invite) != null) {
                 inviteMap["uuids"]?.add(invite)
             } else if (invite.isNotBlank()) {
@@ -155,7 +157,8 @@ fun PartyInviteView(
     ) {
         item {
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 22.dp, bottom = 14.dp)
             ) {
@@ -169,7 +172,7 @@ fun PartyInviteView(
                 Text(
                     stringResource(R.string.habiticans_send_invite),
                     color = HabiticaTheme.colors.textSecondary,
-                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
+                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
                 )
             }
         }
@@ -184,7 +187,8 @@ fun PartyInviteView(
                 if (it) 135f else 0f
             }
             Row(
-                verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 4.dp)
                     .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.medium)
@@ -215,7 +219,8 @@ fun PartyInviteView(
                 }
 
                 TextField(
-                    value = invite, onValueChange = { value ->
+                    value = invite,
+                    onValueChange = { value ->
                         if (viewModel.invites.size - 1 == index && viewModel.invites[index].isBlank()) {
                             viewModel.invites.add("")
                         }
@@ -259,7 +264,8 @@ fun PartyInviteView(
                         delay(2.toDuration(DurationUnit.SECONDS))
                         dismiss()
                     }
-                })
+                }
+            )
         }
     }
 }

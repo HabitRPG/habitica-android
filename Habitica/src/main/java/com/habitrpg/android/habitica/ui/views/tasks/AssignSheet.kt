@@ -92,9 +92,10 @@ fun AssignSheetRow(
                 member.formattedUsername ?: "",
                 color = colorResource(R.color.text_ternary)
             )
-        }, endContent = {
-        IsAssignedIndicator(isAssigned = isAssigned)
-    },
+        },
+        endContent = {
+            IsAssignedIndicator(isAssigned = isAssigned)
+        },
         modifier = modifier
             .clickable {
                 member.id.let { onAssignClick(it) }

@@ -162,7 +162,11 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                     stats.lvl
                         ?: 0
                     ) < 10 || user.preferences?.disableClasses == true
-                ) View.GONE else View.VISIBLE
+                ) {
+                    View.GONE
+                } else {
+                    View.VISIBLE
+                }
             )
 
             remoteViews.setTextViewText(

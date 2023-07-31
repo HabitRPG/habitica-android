@@ -16,7 +16,8 @@ class SpeechBubbleView(context: Context, attrs: AttributeSet) : FrameLayout(cont
         val attributes = context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.SpeechBubbleView,
-            0, 0
+            0,
+            0
         )
 
         binding.namePlate.text = attributes.getString(R.styleable.SpeechBubbleView_namePlate)

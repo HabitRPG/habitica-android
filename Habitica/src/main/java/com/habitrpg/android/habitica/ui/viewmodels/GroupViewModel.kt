@@ -163,7 +163,8 @@ open class GroupViewModel @Inject constructor(
                 )
             } else {
                 socialRepository.updateGroup(
-                    group.value, bundle?.getString("name"),
+                    group.value,
+                    bundle?.getString("name"),
                     bundle?.getString("description"),
                     bundle?.getString("leader"),
                     bundle?.getBoolean("leaderOnlyChallenges")

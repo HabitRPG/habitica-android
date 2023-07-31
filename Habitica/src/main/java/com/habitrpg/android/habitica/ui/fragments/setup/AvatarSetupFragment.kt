@@ -21,17 +21,19 @@ import com.habitrpg.android.habitica.ui.adapter.setup.CustomizationSetupAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.views.setup.AvatarCategoryView
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Random
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
 
     @Inject
     lateinit var customizationRepository: SetupCustomizationRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -113,7 +115,6 @@ class AvatarSetupFragment : BaseFragment<FragmentSetupAvatarBinding>() {
             binding?.speechBubble?.animateText(context?.getString(R.string.avatar_setup_description) ?: "")
         }
     }
-
 
     private fun loadCustomizations() {
         val user = this.user ?: return

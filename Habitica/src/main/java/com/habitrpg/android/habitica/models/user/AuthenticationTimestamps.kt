@@ -10,6 +10,7 @@ import java.util.Date
 open class AuthenticationTimestamps : RealmObject(), BaseObject {
     @SerializedName("loggedin")
     var lastLoggedIn: Date? = null
+
     @SerializedName("created")
     var createdAt: Date? = null
 }

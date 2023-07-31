@@ -69,15 +69,18 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     var dateCreated: Date? = null
     var position: Int = 0
     var group: TaskGroupPlan? = null
+
     // Habits
     var up: Boolean? = false
     var down: Boolean? = false
     override var counterUp: Int? = 0
     override var counterDown: Int? = 0
+
     // todos/dailies
     override var completed: Boolean = false
     var checklist: RealmList<ChecklistItem>? = RealmList()
     var reminders: RealmList<RemindersItem>? = RealmList()
+
     // dailies
     var frequency: Frequency?
         get() = Frequency.from(frequencyValue)
@@ -87,11 +90,14 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     override var streak: Int? = 0
     var startDate: Date? = null
     var repeat: Days? = null
+
     // todos
     @SerializedName("date")
     var dueDate: Date? = null
+
     @Ignore
     var parsedText: Spanned? = null
+
     @Ignore
     var parsedNotes: Spanned? = null
 
@@ -370,8 +376,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         }
     }
 
-
-
     fun parseMarkdown() {
         parsedText = MarkdownParser.parseMarkdown(text)
         parsedNotes = MarkdownParser.parseMarkdown(notes)
@@ -421,7 +425,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     }
 
     fun isBeingEdited(task: Task): Boolean {
-
         when {
             text != task.text -> return true
             notes != task.notes -> return true

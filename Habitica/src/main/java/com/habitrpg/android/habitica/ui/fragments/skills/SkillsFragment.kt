@@ -26,11 +26,11 @@ import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
@@ -58,7 +58,6 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         this.tutorialTexts = listOf(getString(R.string.tutorial_skills))
         return super.onCreateView(inflater, container, savedInstanceState)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -117,10 +116,12 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         } else {
             context?.let {
                 showSnackbar(
-                    activity.snackbarContainer, null,
+                    activity.snackbarContainer,
+                    null,
                     context?.getString(R.string.used_skill_without_mana, usedSkill?.text),
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
-                    ContextCompat.getColor(it, R.color.blue_10), "-" + usedSkill?.mana,
+                    ContextCompat.getColor(it, R.color.blue_10),
+                    "-" + usedSkill?.mana,
                     HabiticaSnackbar.SnackbarDisplayType.BLUE
                 )
             }
@@ -130,10 +131,12 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                 delay(2000L)
                 if (!isAdded) return@launch
                 showSnackbar(
-                    activity.snackbarContainer, null,
+                    activity.snackbarContainer,
+                    null,
                     context?.getString(R.string.caused_damage),
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
-                    ContextCompat.getColor(activity, R.color.green_10), "+%.01f".format(response.damage),
+                    ContextCompat.getColor(activity, R.color.green_10),
+                    "+%.01f".format(response.damage),
                     HabiticaSnackbar.SnackbarDisplayType.SUCCESS
                 )
             }

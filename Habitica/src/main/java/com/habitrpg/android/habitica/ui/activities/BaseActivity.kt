@@ -41,8 +41,10 @@ import javax.inject.Inject
 abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     internal lateinit var analyticsManager: AnalyticsManager
 

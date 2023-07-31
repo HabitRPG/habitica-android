@@ -251,7 +251,6 @@ class TaskFormActivity : BaseActivity() {
             }
         }
 
-
         title = ""
         when {
             taskId != null -> {
@@ -367,7 +366,8 @@ class TaskFormActivity : BaseActivity() {
                             LabeledValue(getString(R.string.weekly), HabitResetOption.WEEKLY),
                             LabeledValue(getString(R.string.monthly), HabitResetOption.MONTHLY)
                         ),
-                        { viewModel.habitResetOption.value = it }, columnSize = 3
+                        { viewModel.habitResetOption.value = it },
+                        columnSize = 3
                     )
                 }
             }
@@ -697,10 +697,14 @@ class TaskFormActivity : BaseActivity() {
             thisTask.up = viewModel.habitScoringPositive.value
             thisTask.down = viewModel.habitScoringNegative.value
             thisTask.frequency = viewModel.habitResetOption.value.value
-            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.counterUp =
-                binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
-            if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) thisTask.counterDown =
-                binding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
+            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) {
+                thisTask.counterUp =
+                    binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            }
+            if (binding.habitAdjustNegativeStreakView.text?.isNotEmpty() == true) {
+                thisTask.counterDown =
+                    binding.habitAdjustNegativeStreakView.text.toString().toIntCatchOverflow()
+            }
         } else if (taskType == TaskType.DAILY) {
             thisTask.startDate = binding.taskSchedulingControls.startDate
             thisTask.everyX = binding.taskSchedulingControls.everyX
@@ -708,8 +712,10 @@ class TaskFormActivity : BaseActivity() {
             thisTask.repeat = binding.taskSchedulingControls.weeklyRepeat
             thisTask.setDaysOfMonth(binding.taskSchedulingControls.daysOfMonth)
             thisTask.setWeeksOfMonth(binding.taskSchedulingControls.weeksOfMonth)
-            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) thisTask.streak =
-                binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            if (binding.habitAdjustPositiveStreakView.text?.isNotEmpty() == true) {
+                thisTask.streak =
+                    binding.habitAdjustPositiveStreakView.text.toString().toIntCatchOverflow()
+            }
             checkIfShowNotifLayout()
         } else if (taskType == TaskType.TODO) {
             thisTask.dueDate = binding.taskSchedulingControls.dueDate

@@ -51,7 +51,9 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         )
 
         super.onAppWidgetOptionsChanged(
-            context, appWidgetManager, appWidgetId,
+            context,
+            appWidgetManager,
+            appWidgetId,
             newOptions
         )
     }

@@ -48,26 +48,30 @@ import java.text.NumberFormat
 
 @Composable
 fun LabeledBar(
-    modifier : Modifier = Modifier,
-    icon : Bitmap? = null,
-    label : String? = null,
-    color : Color = colorResource(R.color.brand),
-    barColor : Color = HabiticaTheme.colors.windowBackground,
-    value : Double,
-    maxValue : Double,
-    displayCompact : Boolean = false,
-    barHeight : Dp = 8.dp,
-    disabled : Boolean = false,
-    abbreviateValue : Boolean = true,
-    abbreviateMax : Boolean = true,
-    animated : Boolean = true
+    modifier: Modifier = Modifier,
+    icon: Bitmap? = null,
+    label: String? = null,
+    color: Color = colorResource(R.color.brand),
+    barColor: Color = HabiticaTheme.colors.windowBackground,
+    value: Double,
+    maxValue: Double,
+    displayCompact: Boolean = false,
+    barHeight: Dp = 8.dp,
+    disabled: Boolean = false,
+    abbreviateValue: Boolean = true,
+    abbreviateMax: Boolean = true,
+    animated: Boolean = true
 ) {
     val cleanedMaxValue = java.lang.Double.max(1.0, maxValue)
 
-    val animatedValue = if (animated) animateFloatAsState(
-        targetValue = value.toFloat(),
-        animationSpec = spring()
-    ).value else value.toFloat()
+    val animatedValue = if (animated) {
+        animateFloatAsState(
+            targetValue = value.toFloat(),
+            animationSpec = spring()
+        ).value
+    } else {
+        value.toFloat()
+    }
     val formatter = NumberFormat.getNumberInstance()
     formatter.minimumFractionDigits = 0
     formatter.maximumFractionDigits = 2
@@ -91,7 +95,9 @@ fun LabeledBar(
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
                 Image(
-                    it.asImageBitmap(), null, modifier = Modifier
+                    it.asImageBitmap(),
+                    null,
+                    modifier = Modifier
                 )
             }
         }
@@ -111,16 +117,24 @@ fun LabeledBar(
                     modifier = Modifier.padding(top = 2.dp)
                 ) {
                     if (!disabled) {
-                        val currentValueText = if (abbreviateValue) NumberAbbreviator.abbreviate(
-                            LocalContext.current,
-                            animatedValue,
-                            0
-                        ) else formatter.format(animatedValue)
-                        val maxValueText = if (abbreviateMax) NumberAbbreviator.abbreviate(
-                            LocalContext.current,
-                            cleanedMaxValue,
-                            0
-                        ) else formatter.format(cleanedMaxValue)
+                        val currentValueText = if (abbreviateValue) {
+                            NumberAbbreviator.abbreviate(
+                                LocalContext.current,
+                                animatedValue,
+                                0
+                            )
+                        } else {
+                            formatter.format(animatedValue)
+                        }
+                        val maxValueText = if (abbreviateMax) {
+                            NumberAbbreviator.abbreviate(
+                                LocalContext.current,
+                                cleanedMaxValue,
+                                0
+                            )
+                        } else {
+                            formatter.format(cleanedMaxValue)
+                        }
                         Text(
                             "$currentValueText / $maxValueText",
                             fontSize = 12.sp,
@@ -140,7 +154,7 @@ fun LabeledBar(
 @Composable
 @Preview
 private fun Preview() {
-    var compact : Boolean by remember { mutableStateOf(false) }
+    var compact: Boolean by remember { mutableStateOf(false) }
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier
@@ -148,7 +162,8 @@ private fun Preview() {
             .padding(8.dp)
             .clickable {
                 compact = !compact
-            }) {
+            }
+    ) {
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfHeartLightBg(),
             label = stringResource(id = R.string.health),

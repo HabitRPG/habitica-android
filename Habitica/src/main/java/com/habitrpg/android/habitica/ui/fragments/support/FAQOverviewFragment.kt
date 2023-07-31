@@ -18,7 +18,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
@@ -36,7 +35,6 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.AppTestingLevel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
-import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.common.habitica.models.PlayerTier
 import com.jaredrummler.android.device.DeviceName
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +49,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     @Inject
     lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -60,6 +59,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     @Inject
     lateinit var faqRepository: FAQRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
 
@@ -158,7 +158,6 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         super.onDestroy()
     }
 
-
     private fun loadArticles() {
         lifecycleScope.launchCatching {
             faqRepository.getArticles().collect {
@@ -187,12 +186,13 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         val newLine = "%0D%0A"
         var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
-                newLine + Uri.encode("Android Version: $version") +
-                newLine + Uri.encode("AppVersion: " + getString(
-            R.string.version_info,
-            versionName,
-            versionCode
-        )
+            newLine + Uri.encode("Android Version: $version") +
+            newLine + Uri.encode(
+            "AppVersion: " + getString(
+                R.string.version_info,
+                versionName,
+                versionCode
+            )
         )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
@@ -202,18 +202,22 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
         userViewModel.user.value?.let { user ->
             bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
-                    newLine + Uri.encode(
+                newLine + Uri.encode(
                 "Class: " + (
-                        if (user.preferences?.disableClasses == true) "Disabled" else (
-                                user.stats?.habitClass
-                                    ?: "None"
-                                )
-                        )
+                    if (user.preferences?.disableClasses == true) {
+                        "Disabled"
+                    } else {
+                        (
+                            user.stats?.habitClass
+                                ?: "None"
+                            )
+                    }
+                    )
             ) +
-                    newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
-                    newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
-                    newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
-                    newLine + Uri.encode(
+                newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
+                newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
+                newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
+                newLine + Uri.encode(
                 "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
             )
         }
@@ -223,8 +227,8 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         mainActivity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
             val mailto = "mailto:" + appConfigManager.supportEmail() +
-                    "?subject=" + Uri.encode(subject) +
-                    "&body=" + bodyOfEmail
+                "?subject=" + Uri.encode(subject) +
+                "&body=" + bodyOfEmail
             emailIntent.data = Uri.parse(mailto)
 
             startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"))

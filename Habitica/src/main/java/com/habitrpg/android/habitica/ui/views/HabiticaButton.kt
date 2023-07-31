@@ -20,13 +20,13 @@ import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 
 @Composable
 fun HabiticaButton(
-    background : Color,
-    color : Color,
-    onClick : () -> Unit,
-    modifier : Modifier = Modifier,
-    contentPadding : PaddingValues = PaddingValues(8.dp),
-    fontSize : TextUnit = 16.sp,
-    content : @Composable () -> Unit
+    background: Color,
+    color: Color,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(8.dp),
+    fontSize: TextUnit = 16.sp,
+    content: @Composable () -> Unit
 ) {
     Box(
         contentAlignment = Alignment.Center,

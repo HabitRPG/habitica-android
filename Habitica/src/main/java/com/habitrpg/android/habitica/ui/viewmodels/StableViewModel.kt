@@ -24,10 +24,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StableViewModel @Inject constructor(
-    savedStateHandle : SavedStateHandle,
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    val inventoryRepository : InventoryRepository
+    savedStateHandle: SavedStateHandle,
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    val inventoryRepository: InventoryRepository
 ) : BaseViewModel(userRepository, userViewModel) {
 
     internal val itemType: String? = savedStateHandle[StableRecyclerFragment.ITEM_TYPE_KEY]

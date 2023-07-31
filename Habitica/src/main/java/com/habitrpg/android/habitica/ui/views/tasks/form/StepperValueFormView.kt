@@ -82,7 +82,8 @@ class StepperValueFormView @JvmOverloads constructor(
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.StepperValueFormView,
-            0, 0
+            0,
+            0
         )
 
         // set value here, so that the setter is called and everything is set up correctly

@@ -18,6 +18,7 @@ class User : Avatar {
     override var sleep: Boolean = false
     override var id: String? = null
     override var balance: Double = 0.0
+
     @Json(ignore = true)
     override var authentication: AvatarAuthentication? = null
     override var stats: Stats? = null

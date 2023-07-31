@@ -35,26 +35,31 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var userRepository: UserRepository
+
     @Inject
     lateinit var hatchPetUseCase: HatchPetUseCase
+
     @Inject
     lateinit var feedPetUseCase: FeedPetUseCase
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -78,7 +83,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         inventoryRepository.close()
         super.onDestroy()
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -221,7 +225,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         activity.lifecycleScope.launchCatching {
             feedPetUseCase.callInteractor(
                 FeedPetUseCase.RequestValues(
-                    pet, food,
+                    pet,
+                    food,
                     activity
                 )
             )
@@ -250,7 +255,8 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         activity.lifecycleScope.launchCatching {
             hatchPetUseCase.callInteractor(
                 HatchPetUseCase.RequestValues(
-                    potion, egg,
+                    potion,
+                    egg,
                     activity
                 )
             )

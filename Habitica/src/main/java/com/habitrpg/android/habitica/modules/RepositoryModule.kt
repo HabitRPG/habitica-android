@@ -31,7 +31,7 @@ open class RepositoryModule {
         contentLocalRepository: ContentLocalRepository,
         apiClient: ApiClient,
         @ApplicationContext context: Context,
-        authenticationHandler : AuthenticationHandler
+        authenticationHandler: AuthenticationHandler
     ): ContentRepository {
         return ContentRepositoryImpl(
             contentLocalRepository,

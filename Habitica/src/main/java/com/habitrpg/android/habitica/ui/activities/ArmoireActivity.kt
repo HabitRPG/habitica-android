@@ -42,8 +42,10 @@ class ArmoireActivity : BaseActivity() {
 
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
+
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -156,7 +158,8 @@ class ArmoireActivity : BaseActivity() {
                 createParticles(container, R.drawable.confetti_red)
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
-            }, 500
+            },
+            500
         )
 
         binding.iconView.startAnimation(Animations.bobbingAnimation())

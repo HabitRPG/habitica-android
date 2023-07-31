@@ -54,7 +54,7 @@ fun UserRow(
                 "@$username",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                color = color ?: MaterialTheme.colors.primary,
+                color = color ?: MaterialTheme.colors.primary
             )
             if (extraContent != null) {
                 extraContent()

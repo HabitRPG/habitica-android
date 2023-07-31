@@ -19,17 +19,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PartyViewModel @Inject constructor(
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel,
-    challengeRepository : ChallengeRepository,
-    socialRepository : SocialRepository,
-    notificationsManager : NotificationsManager
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel,
+    challengeRepository: ChallengeRepository,
+    socialRepository: SocialRepository,
+    notificationsManager: NotificationsManager
 ) : GroupViewModel(userRepository, userViewModel, challengeRepository, socialRepository, notificationsManager) {
 
-    internal val isQuestActive : Boolean
+    internal val isQuestActive: Boolean
         get() = getGroupData().value?.quest?.active == true
 
-    internal val isUserOnQuest : Boolean
+    internal val isUserOnQuest: Boolean
         get() = !(
             getGroupData().value?.quest?.members?.none { it.key == user.value?.id }
                 ?: true
@@ -67,7 +67,7 @@ class PartyViewModel @Inject constructor(
         }
     }
 
-    fun showParticipantButtons() : Boolean {
+    fun showParticipantButtons(): Boolean {
         val user = user.value
         return !(user?.party == null || user.party?.quest == null) && !isQuestActive && user.party?.quest?.RSVPNeeded == true
     }

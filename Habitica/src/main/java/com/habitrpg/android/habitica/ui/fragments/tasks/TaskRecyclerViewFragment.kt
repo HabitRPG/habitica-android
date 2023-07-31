@@ -231,7 +231,6 @@ open class TaskRecyclerViewFragment :
         super.onDestroy()
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
@@ -329,7 +328,9 @@ open class TaskRecyclerViewFragment :
                     }
                     lifecycleScope.launchCatching {
                         taskRepository.updateTaskPosition(
-                            taskType, validTaskId, newPosition
+                            taskType,
+                            validTaskId,
+                            newPosition
                         )
                     }
                 }

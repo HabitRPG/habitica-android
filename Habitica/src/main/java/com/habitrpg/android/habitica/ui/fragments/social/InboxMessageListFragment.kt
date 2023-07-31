@@ -53,6 +53,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var configManager: AppConfigManager
 

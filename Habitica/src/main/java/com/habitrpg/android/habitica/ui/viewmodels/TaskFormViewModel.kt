@@ -10,8 +10,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskFormViewModel @Inject constructor(
-    userRepository : UserRepository,
-    userViewModel : MainUserViewModel) : BaseViewModel(userRepository, userViewModel) {
+    userRepository: UserRepository,
+    userViewModel: MainUserViewModel
+) : BaseViewModel(userRepository, userViewModel) {
     val taskDifficulty = mutableStateOf(TaskDifficulty.EASY)
     val selectedAttribute = mutableStateOf(Attribute.STRENGTH)
     val habitResetOption = mutableStateOf(HabitResetOption.DAILY)

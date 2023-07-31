@@ -19,9 +19,9 @@ import com.habitrpg.android.habitica.ui.views.HabiticaButton
 
 @Composable
 fun PauseResumeDamageView(
-    isPaused : Boolean,
-    onClick : () -> Unit,
-    modifier : Modifier = Modifier
+    isPaused: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.Start,
@@ -75,7 +75,8 @@ fun PauseResumeDamageView(
             HabiticaButton(
                 background = colorResource(R.color.yellow_100),
                 color = colorResource(R.color.yellow_1),
-                onClick = { onClick() }) {
+                onClick = { onClick() }
+            ) {
                 Text(stringResource(R.string.resume_damage))
             }
         } else {
@@ -130,7 +131,8 @@ fun PauseResumeDamageView(
             HabiticaButton(
                 background = colorResource(R.color.yellow_100),
                 color = colorResource(R.color.yellow_1),
-                onClick = { onClick() }) {
+                onClick = { onClick() }
+            ) {
                 Text(stringResource(R.string.pause_damage))
             }
         }

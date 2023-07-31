@@ -61,7 +61,6 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         super.onDestroy()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_tavern, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -96,7 +95,9 @@ class TavernFragment : BaseMainFragment<FragmentViewpagerBinding>() {
             override fun getItemCount(): Int {
                 return if (viewModel.getGroupData().value?.quest?.active == true) {
                     3
-                } else 2
+                } else {
+                    2
+                }
             }
         }
         tabLayout?.let {

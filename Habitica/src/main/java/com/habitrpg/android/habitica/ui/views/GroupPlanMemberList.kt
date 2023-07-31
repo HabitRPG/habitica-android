@@ -56,8 +56,8 @@ fun GroupPlanMemberList(
             )
         }
         for (
-            member in members?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }
-                ?: emptyList()
+        member in members?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }
+            ?: emptyList()
         ) {
             item {
                 val role = if (group?.isLeader(member.id) == true) {
@@ -179,7 +179,9 @@ fun MemberItem(
                     )
                     Spacer(Modifier.weight(1f))
                     Text(
-                        role, fontWeight = FontWeight.SemiBold, fontSize = 14.sp,
+                        role,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 14.sp,
                         color = HabiticaTheme.colors.textSecondary
                     )
                 }

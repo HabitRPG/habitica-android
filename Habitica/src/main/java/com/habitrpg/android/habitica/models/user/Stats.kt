@@ -10,16 +10,20 @@ import io.realm.annotations.RealmClass
 open class Stats : RealmObject(), AvatarStats, BaseObject {
     @SerializedName("con")
     var constitution: Int? = null
+
     @SerializedName("str")
     var strength: Int? = null
+
     @SerializedName("per")
     var per: Int? = null
+
     @SerializedName("int")
     var intelligence: Int? = null
     var training: Training? = null
     override var buffs: Buffs? = null
     override var points: Int? = null
     override var lvl: Int? = null
+
     @SerializedName("class")
     override var habitClass: String? = null
     override var gp: Double? = null

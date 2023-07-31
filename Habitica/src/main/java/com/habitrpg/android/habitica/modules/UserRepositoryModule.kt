@@ -69,7 +69,7 @@ class UserRepositoryModule {
     fun providesTaskRepository(
         localRepository: TaskLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler,
+        authenticationHandler: AuthenticationHandler,
         appConfigManager: AppConfigManager,
         analyticsManager: AnalyticsManager
     ): TaskRepository {
@@ -91,7 +91,7 @@ class UserRepositoryModule {
     fun providesTagRepository(
         localRepository: TagLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler
+        authenticationHandler: AuthenticationHandler
     ): TagRepository {
         return TagRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -105,7 +105,7 @@ class UserRepositoryModule {
     fun providesChallengeRepository(
         localRepository: ChallengeLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler
+        authenticationHandler: AuthenticationHandler
     ): ChallengeRepository {
         return ChallengeRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -119,7 +119,7 @@ class UserRepositoryModule {
     fun providesUserRepository(
         localRepository: UserLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler,
+        authenticationHandler: AuthenticationHandler,
         taskRepository: TaskRepository,
         appConfigManager: AppConfigManager,
         analyticsManager: AnalyticsManager
@@ -143,14 +143,15 @@ class UserRepositoryModule {
     fun providesSocialRepository(
         localRepository: SocialLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler
+        authenticationHandler: AuthenticationHandler
     ): SocialRepository {
         return SocialRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
     fun providesInventoryLocalRepository(
-        realm: Realm): InventoryLocalRepository {
+        realm: Realm
+    ): InventoryLocalRepository {
         return RealmInventoryLocalRepository(realm)
     }
 
@@ -158,7 +159,7 @@ class UserRepositoryModule {
     fun providesInventoryRepository(
         localRepository: InventoryLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler,
+        authenticationHandler: AuthenticationHandler,
         remoteConfig: AppConfigManager
     ): InventoryRepository {
         return InventoryRepositoryImpl(localRepository, apiClient, authenticationHandler, remoteConfig)
@@ -173,7 +174,7 @@ class UserRepositoryModule {
     fun providesFAQRepository(
         localRepository: FAQLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler
+        authenticationHandler: AuthenticationHandler
     ): FAQRepository {
         return FAQRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -187,7 +188,7 @@ class UserRepositoryModule {
     fun providesTutorialRepository(
         localRepository: TutorialLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler
+        authenticationHandler: AuthenticationHandler
     ): TutorialRepository {
         return TutorialRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -201,7 +202,7 @@ class UserRepositoryModule {
     fun providesCustomizationRepository(
         localRepository: CustomizationLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler : AuthenticationHandler
+        authenticationHandler: AuthenticationHandler
     ): CustomizationRepository {
         return CustomizationRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }

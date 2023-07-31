@@ -49,7 +49,6 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)

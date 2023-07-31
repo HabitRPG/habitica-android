@@ -59,15 +59,17 @@ fun SegmentedControl(
                                 .zIndex(if (selectedIndex.value == 0) 1f else 0f)
                         }
                     } else -> {
-                        if (useFixedWidth)
+                        if (useFixedWidth) {
                             Modifier
                                 .width(itemWidth)
                                 .offset((-1 * index).dp, 0.dp)
                                 .zIndex(if (selectedIndex.value == index) 1f else 0f)
-                        else Modifier
-                            .wrapContentSize()
-                            .offset((-1 * index).dp, 0.dp)
-                            .zIndex(if (selectedIndex.value == index) 1f else 0f)
+                        } else {
+                            Modifier
+                                .wrapContentSize()
+                                .offset((-1 * index).dp, 0.dp)
+                                .zIndex(if (selectedIndex.value == index) 1f else 0f)
+                        }
                     }
                 },
                 onClick = {
@@ -123,7 +125,7 @@ fun SegmentedControl(
                      * not selected colors
                      */
                     ButtonDefaults.outlinedButtonColors(backgroundColor = Color.Transparent)
-                },
+                }
             ) {
                 Text(
                     text = item,
@@ -132,7 +134,7 @@ fun SegmentedControl(
                         Color.White
                     } else {
                         color.copy(alpha = 0.9f)
-                    },
+                    }
                 )
             }
         }

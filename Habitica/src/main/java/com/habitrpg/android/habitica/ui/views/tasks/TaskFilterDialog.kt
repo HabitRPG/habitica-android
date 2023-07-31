@@ -78,13 +78,13 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
 
         // Need to use this instead of RadioGroup.onCheckedChangeListener, because that fires twice per change
         binding.allTaskFilter.setOnClickListener {
-            onCheckedChanged(binding.taskFilterWrapper,  binding.taskFilterWrapper.checkedRadioButtonId)
+            onCheckedChanged(binding.taskFilterWrapper, binding.taskFilterWrapper.checkedRadioButtonId)
         }
         binding.secondTaskFilter.setOnClickListener {
-            onCheckedChanged(binding.taskFilterWrapper,  binding.taskFilterWrapper.checkedRadioButtonId)
+            onCheckedChanged(binding.taskFilterWrapper, binding.taskFilterWrapper.checkedRadioButtonId)
         }
         binding.thirdTaskFilter.setOnClickListener {
-            onCheckedChanged(binding.taskFilterWrapper,  binding.taskFilterWrapper.checkedRadioButtonId)
+            onCheckedChanged(binding.taskFilterWrapper, binding.taskFilterWrapper.checkedRadioButtonId)
         }
 
         binding.clearButton.setOnClickListener {
@@ -199,7 +199,6 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         binding.tagEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         lifecycleScope.launchCatching {
-
             repository.updateTags(editedTags.values).forEach { editedTags.remove(it.id) }
             repository.createTags(createdTags.values).forEach { tag -> createdTags.remove(tag.id) }
             repeat(repository.deleteTags(deletedTags).size) { deletedTags.clear() }

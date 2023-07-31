@@ -559,7 +559,8 @@ fun PotionGrid() {
                             model = DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(
                                 "Pet_HatchingPotion_$potion"
                             ),
-                            null, Modifier.size(68.dp)
+                            null,
+                            Modifier.size(68.dp)
                         )
                     }
                 }

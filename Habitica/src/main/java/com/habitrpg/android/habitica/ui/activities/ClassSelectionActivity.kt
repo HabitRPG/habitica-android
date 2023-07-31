@@ -214,7 +214,6 @@ class ClassSelectionActivity : BaseActivity() {
                 classWasUnset
                 optOutOfClasses()
             }
-
         }
         alert.addButton(R.string.close, false)
         alert.show()
@@ -243,8 +242,8 @@ class ClassSelectionActivity : BaseActivity() {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(getString(R.string.class_changed, className))
         alert.setMessage(getString(R.string.class_changed_description, className))
-        alert.addButton(getString(R.string.complete_tutorial), true){ _, _ -> dismiss() }
-        alert.addButton(getString(R.string.learn_more), false){ _, _ ->
+        alert.addButton(getString(R.string.complete_tutorial), true) { _, _ -> dismiss() }
+        alert.addButton(getString(R.string.learn_more), false) { _, _ ->
             dismiss()
             MainNavigationController.navigate(R.id.FAQOverviewFragment)
         }
@@ -283,7 +282,7 @@ class ClassSelectionActivity : BaseActivity() {
         }
     }
 
-    private fun displayProgressDialog(progressText: String) : HabiticaProgressDialog {
+    private fun displayProgressDialog(progressText: String): HabiticaProgressDialog {
         return HabiticaProgressDialog.show(this, progressText, 300)
     }
 

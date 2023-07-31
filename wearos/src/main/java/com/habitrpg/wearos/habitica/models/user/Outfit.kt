@@ -12,6 +12,8 @@ class Outfit : AvatarOutfit {
     override var head: String = ""
     override var shield: String = ""
     override var weapon: String = ""
-    @Json(name = "eyewear") override var eyeWear: String = ""
+
+    @Json(name = "eyewear")
+    override var eyeWear: String = ""
     override var headAccessory: String = ""
 }

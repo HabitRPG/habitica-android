@@ -86,7 +86,8 @@ class AvatarView : FrameLayout {
                 avatarCanvas?.drawBitmap(
                     bitmap,
                     Rect(0, 0, bitmap.width, bitmap.height),
-                    Rect(it.marginStart, it.marginTop, bitmap.width, bitmap.height), null
+                    Rect(it.marginStart, it.marginTop, bitmap.width, bitmap.height),
+                    null
                 )
             }
 
@@ -114,7 +115,10 @@ class AvatarView : FrameLayout {
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         // Load attributes
         val a = context.obtainStyledAttributes(
-            attrs, R.styleable.AvatarView, defStyle, 0
+            attrs,
+            R.styleable.AvatarView,
+            defStyle,
+            0
         )
 
         try {

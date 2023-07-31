@@ -26,6 +26,7 @@ import javax.inject.Inject
 class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private lateinit var binding: ActivityIntroBinding
+
     @Inject
     lateinit var contentRepository: ContentRepository
 

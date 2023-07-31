@@ -24,6 +24,7 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("user/")
     suspend fun getUser(): Response<WearableHabitResponse<User>>
+
     @GET("user/")
     @Headers("Cache-Control: no-cache")
     suspend fun getUserForced(): Response<WearableHabitResponse<User>>
@@ -36,6 +37,7 @@ interface ApiService {
 
     @GET("tasks/user")
     suspend fun getTasks(): Response<WearableHabitResponse<TaskList>>
+
     @GET("tasks/user")
     @Headers("Cache-Control: no-cache")
     suspend fun getTasksForced(): Response<WearableHabitResponse<TaskList>>
@@ -51,6 +53,7 @@ interface ApiService {
 
     @POST("tasks/{id}/score/{direction}")
     suspend fun scoreTask(@Path("id") id: String, @Path("direction") direction: String): Response<WearableHabitResponse<TaskDirectionData>>
+
     @POST("tasks/bulk-score")
     suspend fun bulkScoreTasks(@Body data: List<Map<String, String>>): Response<WearableHabitResponse<BulkTaskScoringData>>
 

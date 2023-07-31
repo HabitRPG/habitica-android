@@ -120,7 +120,8 @@ class CollapsibleSectionView(context: Context, attrs: AttributeSet?) : LinearLay
         val attributes = context.theme?.obtainStyledAttributes(
             attrs,
             R.styleable.CollapsibleSectionView,
-            0, 0
+            0,
+            0
         )
         title = attributes?.getString(R.styleable.CollapsibleSectionView_title) ?: ""
         identifier = attributes?.getString(R.styleable.CollapsibleSectionView_identifier)

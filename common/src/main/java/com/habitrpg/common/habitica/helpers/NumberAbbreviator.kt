@@ -40,7 +40,7 @@ object NumberAbbreviator {
         1 -> "k"
         2 -> "m"
         3 -> "b"
-        4 ->"t"
+        4 -> "t"
         5 -> "q"
         else -> ""
     }

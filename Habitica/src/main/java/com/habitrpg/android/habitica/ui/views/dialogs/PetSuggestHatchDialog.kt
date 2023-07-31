@@ -36,7 +36,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         fun mainUserViewModel(): MainUserViewModel
     }
 
-    private val userViewModel : MainUserViewModel
+    private val userViewModel: MainUserViewModel
     private val hatchPetUseCase: HatchPetUseCase
 
     private lateinit var binding: DialogPetSuggestHatchBinding
@@ -73,14 +73,22 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         binding.hatchingPotionView.alpha = if (hasPotion) 1.0f else 0.5f
 
         val eggName = egg?.text ?: pet.animal.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(
-                Locale.getDefault()
-            ) else it.toString()
+            if (it.isLowerCase()) {
+                it.titlecase(
+                    Locale.getDefault()
+                )
+            } else {
+                it.toString()
+            }
         }
         val potionName = potion?.text ?: pet.color.replaceFirstChar {
-            if (it.isLowerCase()) it.titlecase(
-                Locale.getDefault()
-            ) else it.toString()
+            if (it.isLowerCase()) {
+                it.titlecase(
+                    Locale.getDefault()
+                )
+            } else {
+                it.toString()
+            }
         }
 
         if (hasEgg) {
@@ -190,7 +198,8 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         longLivingScope.launchCatching {
             hatchPetUseCase.callInteractor(
                 HatchPetUseCase.RequestValues(
-                    potion, egg,
+                    potion,
+                    egg,
                     context
                 )
             )

@@ -18,6 +18,7 @@ open class WorldState : RealmObject(), BaseObject {
     var npcImageSuffix: String? = null
 
     var currentEvent: WorldStateEvent? = null
+
     @SerializedName("currentEventList")
     var events: RealmList<WorldStateEvent> = RealmList()
 }
