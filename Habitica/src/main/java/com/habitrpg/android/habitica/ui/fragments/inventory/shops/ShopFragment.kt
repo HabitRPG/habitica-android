@@ -16,7 +16,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -214,6 +217,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 .map { rewards -> rewards.map { it.key } }
                 .collect { adapter?.setPinnedItemKeys(it) }
         }
+
+        Analytics.sendNavigationEvent("$shopIdentifier screen")
     }
 
     open fun initializeCurrencyViews() {
@@ -231,6 +236,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             context?.let { context ->
                 if (user.gemCount <= 2) {
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
+                    Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "class change"))
                     dialog?.show()
                     return@launch
                 }
