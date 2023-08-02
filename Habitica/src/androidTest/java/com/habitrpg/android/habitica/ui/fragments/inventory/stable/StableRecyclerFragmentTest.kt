@@ -132,7 +132,7 @@ internal class StableRecyclerFragmentTest : FragmentTestCase<StableRecyclerFragm
     }
 
     @Test fun displaysMountDetail() {
-        fragment.itemType = "mounts"
+        fragment.itemTypeText = "mounts"
         launchFragment()
         screen {
             recycler {
