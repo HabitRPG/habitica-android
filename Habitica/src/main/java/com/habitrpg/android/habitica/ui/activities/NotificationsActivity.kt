@@ -228,7 +228,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val text = if (data?.title != null) {
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
         } else {
-            baileyNotification = userRepository.getNewsNotification() ?: return@withContext null
+            baileyNotification = userRepository.getNewsNotification() ?: notification
             val baileyNewsData = baileyNotification.data as? NewStuffData
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
         }
@@ -458,11 +458,13 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
+            removeNotificationAndRefresh(notification)
             viewModel.accept(notification.id)
         }
 
         val rejectButton = item?.findViewById(R.id.reject_button) as? Button
         rejectButton?.setOnClickListener {
+            removeNotificationAndRefresh(notification)
             viewModel.reject(notification.id)
         }
 
