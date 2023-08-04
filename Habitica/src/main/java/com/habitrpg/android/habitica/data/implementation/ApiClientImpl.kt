@@ -39,7 +39,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
@@ -73,7 +72,6 @@ import javax.net.ssl.SSLException
 class ApiClientImpl(
     private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
-    private val analyticsManager: AnalyticsManager,
     private val notificationsManager: NotificationsManager,
     private val context: Context
 ) : ApiClient {
@@ -104,7 +102,6 @@ class ApiClientImpl(
     private var hadError = false
 
     init {
-        Analytics.setUserID(this.hostConfig.userID)
         buildRetrofit()
     }
 

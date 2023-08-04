@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.HabiticaApplication
@@ -24,13 +23,15 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.forceLocale
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -44,9 +45,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @Inject
     lateinit var userRepository: UserRepository
-
-    @Inject
-    internal lateinit var analyticsManager: AnalyticsManager
 
     private var currentTheme: String? = null
     private var isNightMode: Boolean = false
@@ -227,7 +225,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun shareContent(identifier: String, message: String, image: Bitmap? = null) {
-        analyticsManager.logEvent("shared", bundleOf(Pair("identifier", identifier)))
+        Analytics.sendEvent("shared", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("identifier" to identifier))
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "*/*"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, message)

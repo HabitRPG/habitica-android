@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import androidx.core.os.bundleOf
 import androidx.lifecycle.asFlow
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -32,7 +31,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.PurchaseActivity
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.IAPGift
@@ -55,7 +53,6 @@ import kotlin.time.toDuration
 
 class PurchaseHandler(
     private val context: Context,
-    private val analyticsManager: AnalyticsManager,
     private val apiClient: ApiClient,
     private val userViewModel: MainUserViewModel
 ) : PurchasesUpdatedListener, PurchasesResponseListener {
@@ -349,7 +346,7 @@ class PurchaseHandler(
                     try {
                         apiClient.validateSubscription(validationRequest)
                         processedPurchase(purchase)
-                        Analytics.sendEvent("user_subscribed", bundleOf(Pair("sku", sku)))
+                        Analytics.sendEvent("user_subscribed", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("sku" to (sku ?: "")))
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             acknowledgePurchase(purchase)
                         }

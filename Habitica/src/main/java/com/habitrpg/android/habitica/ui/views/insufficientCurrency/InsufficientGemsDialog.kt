@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.interactors.InsufficientGemsUseCase
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -38,16 +37,12 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) : 
     lateinit var configManager: AppConfigManager
 
     @Inject
-    lateinit var analyticsManager: AnalyticsManager
-
-    @Inject
     lateinit var purchaseHandler: PurchaseHandler
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface InsufficientGemsDialogEntryPoint {
         fun configManager(): AppConfigManager
-        fun analyticsManager(): AnalyticsManager
         fun purchaseHandler(): PurchaseHandler
         fun insufficientGemsUseCase(): InsufficientGemsUseCase
     }
@@ -57,7 +52,6 @@ class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) : 
         val hiltEntryPoint = EntryPointAccessors.fromApplication(parentActivity, InsufficientGemsDialogEntryPoint::class.java)
         insufficientGemsUseCase = hiltEntryPoint.insufficientGemsUseCase()
         configManager = hiltEntryPoint.configManager()
-        analyticsManager = hiltEntryPoint.analyticsManager()
         purchaseHandler = hiltEntryPoint.purchaseHandler()
     }
 

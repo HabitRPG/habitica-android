@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
@@ -205,8 +204,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         }
 
         view.post { setGridSpanCount(view.width) }
-
-        context?.let { analyticsManager.logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
 
         lifecycleScope.launchCatching {
             inventoryRepository.getOwnedItems()
