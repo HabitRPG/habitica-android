@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.ui.activities.MainActivity
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
@@ -24,9 +23,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     @Inject
     lateinit var tutorialRepository: TutorialRepository
-
-    @Inject
-    lateinit var analyticsManager: AnalyticsManager
 
     var tutorialStepIdentifier: String? = null
     protected var tutorialCanBeDeferred = true

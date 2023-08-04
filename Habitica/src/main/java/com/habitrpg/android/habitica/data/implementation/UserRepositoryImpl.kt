@@ -18,7 +18,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
@@ -41,7 +40,6 @@ class UserRepositoryImpl(
     authenticationHandler: AuthenticationHandler,
     private val taskRepository: TaskRepository,
     private val appConfigManager: AppConfigManager,
-    private val analyticsManager: AnalyticsManager
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
 
     companion object {

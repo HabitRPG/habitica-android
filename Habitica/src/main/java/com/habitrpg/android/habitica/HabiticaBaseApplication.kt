@@ -17,12 +17,19 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.Wearable
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.habitrpg.android.habitica.data.ApiClient
+import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -31,7 +38,6 @@ import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.activities.LoginActivity
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.setupCoil
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.MarkdownParser
@@ -41,7 +47,51 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.coroutines.MainScope
 import java.lang.ref.WeakReference
+import java.util.Date
 import javax.inject.Inject
+
+class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferences): DefaultLifecycleObserver {
+    private var lastResumeTime = 0L
+    override fun onResume(owner : LifecycleOwner) {
+        super.onResume(owner)
+        lastResumeTime = Date().time
+    }
+
+    override fun onPause(owner : LifecycleOwner) {
+        super.onPause(owner)
+        val duration = Date().time - lastResumeTime
+        addDurationToDay(duration / 1000)
+    }
+
+    private fun addDurationToDay(duration: Long) {
+        var currentTotal = sharedPreferences.getLong("usage_time_total", 0L)
+        currentTotal += duration
+        var currentDay = Date()
+        if (sharedPreferences.contains("usage_time_day")) {
+            currentDay = Date(sharedPreferences.getLong("usage_time_day", 0L))
+        }
+        var current = sharedPreferences.getLong("usage_time_current", 0L)
+        if (!DateUtils.isSameDay(currentDay, Date())) {
+            var average = sharedPreferences.getLong("usage_time_daily_average", 0L)
+            var observedDays = sharedPreferences.getInt("usage_time_day_count", 0)
+            average = ((average * observedDays) + current) / (observedDays + 1)
+            sharedPreferences.edit {
+                putInt("usage_time_day_count", ++observedDays)
+                putLong("usage_time_daily_average", average)
+            }
+            Analytics.setUserProperty("usage_time_daily_average", average)
+            Analytics.setUserProperty("usage_time_total", currentTotal)
+            current = 0
+            currentDay = Date()
+        }
+        current += duration
+        sharedPreferences.edit {
+            putLong("usage_time_current", current)
+            putLong("usage_time_total", currentTotal)
+            putLong("usage_time_day", currentDay.time)
+        }
+    }
+}
 
 @HiltAndroidApp
 abstract class HabiticaBaseApplication : Application(), Application.ActivityLifecycleCallbacks {
@@ -52,13 +102,12 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     internal lateinit var sharedPrefs: SharedPreferences
 
     @Inject
-    internal lateinit var analyticsManager: AnalyticsManager
-
-    @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
 
     @Inject
     internal lateinit var authenticationHandler: AuthenticationHandler
+
+    private lateinit var lifecycleTracker: ApplicationLifecycleTracker
 
     /**
      * For better performance billing class should be used as singleton
@@ -67,6 +116,9 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onCreate() {
         super.onCreate()
+        lifecycleTracker = ApplicationLifecycleTracker(sharedPrefs)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleTracker);
+
         if (!BuildConfig.DEBUG) {
             try {
                 Analytics.initialize(this)
@@ -96,8 +148,9 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         checkIfNewVersion()
     }
 
+
     private fun setupAdHandler() {
-        AdHandler.setup(sharedPrefs, analyticsManager)
+        AdHandler.setup(sharedPrefs)
     }
 
     private fun setLocale() {

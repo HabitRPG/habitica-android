@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
@@ -42,7 +41,6 @@ class MainActivityViewModel @Inject constructor(
     val taskRepository: TaskRepository,
     val inventoryRepository: InventoryRepository,
     val taskAlarmManager: TaskAlarmManager,
-    val analyticsManager: AnalyticsManager,
     val maintenanceService: MaintenanceApiService
 ) : BaseViewModel(userRepository, userViewModel), TutorialView.OnTutorialReaction {
 

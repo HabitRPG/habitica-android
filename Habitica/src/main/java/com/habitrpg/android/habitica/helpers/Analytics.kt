@@ -54,11 +54,15 @@ object Analytics {
             data.putAll(additionalData)
         }
         if (eventAction != null) {
-            if (target == null || target == AnalyticsTarget.AMPLITUDE) {
-                amplitude.track(eventAction, data)
+            if (this::amplitude.isInitialized) {
+                if (target == null || target == AnalyticsTarget.AMPLITUDE) {
+                    amplitude.track(eventAction, data)
+                }
             }
-            if (target == null || target == AnalyticsTarget.FIREBASE) {
-                firebase.logEvent(eventAction, bundleOf(*data.toList().toTypedArray()))
+            if (this::firebase.isInitialized) {
+                if (target == null || target == AnalyticsTarget.FIREBASE) {
+                    firebase.logEvent(eventAction, bundleOf(*data.toList().toTypedArray()))
+                }
             }
         }
     }
@@ -85,17 +89,28 @@ object Analytics {
         sharedPrefs.getString("launch_screen", "")?.let {
             identify.set("launch_screen", it)
         }
-        amplitude.identify(identify)
+        if (this::amplitude.isInitialized) {
+            amplitude.identify(identify)
+        }
     }
 
     fun setUserID(userID: String) {
-        amplitude.setUserId(userID)
+        if (this::amplitude.isInitialized) {
+            amplitude.setUserId(userID)
+        }
         FirebaseCrashlytics.getInstance().setUserId(userID)
-        firebase.setUserId(userID)
+        if (this::firebase.isInitialized) {
+            firebase.setUserId(userID)
+        }
     }
 
-    fun setUserProperty(identifier: String, value: String) {
-        firebase.setUserProperty(identifier, value)
+    fun setUserProperty(identifier: String, value: Any?) {
+        if (this::amplitude.isInitialized) {
+            amplitude.identify(mapOf(identifier to value))
+        }
+        if (this::firebase.isInitialized) {
+            firebase.setUserProperty(identifier, value?.toString())
+        }
     }
 
     fun logError(msg: String) {
