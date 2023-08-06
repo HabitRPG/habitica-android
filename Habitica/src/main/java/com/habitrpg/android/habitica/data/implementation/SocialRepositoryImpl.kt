@@ -49,8 +49,11 @@ class SocialRepositoryImpl(
         return localRepository.getMember(userID)
     }
 
-    override suspend fun updateMember(memberID: String, key: String, value: Any?): Member? {
-        return apiClient.updateMember(memberID, mapOf(key to value))
+    override suspend fun updateMember(
+        memberID: String,
+        data: Map<String, Map<String, Boolean>>
+    ): Member? {
+        return apiClient.updateMember(memberID, data)
     }
 
     override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? {
