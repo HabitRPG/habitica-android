@@ -121,7 +121,7 @@ interface SocialRepository : BaseRepository {
     fun getGroupMemberships(): Flow<List<GroupMembership>>
     suspend fun blockMember(userID: String): List<String>?
     fun getMember(userID: String?): Flow<Member?>
-    suspend fun updateMember(memberID: String, key: String, value: Any?): Member?
+    suspend fun updateMember(memberID: String, data: Map<String, Map<String, Boolean>>): Member?
     suspend fun retrievePartySeekingUsers(page: Int = 0): List<Member>?
     suspend fun retrievegroupInvites(id: String, includeAllPublicFields: Boolean): List<Member>?
 }

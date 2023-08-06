@@ -259,7 +259,7 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member? {
+    override suspend fun updateMember(memberID: String, updateData: Map<String, Map<String, Boolean>>): Member? {
         return process { apiService.updateUser(memberID, updateData) }
     }
 
