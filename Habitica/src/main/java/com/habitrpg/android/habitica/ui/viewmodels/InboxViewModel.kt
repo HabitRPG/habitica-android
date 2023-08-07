@@ -73,7 +73,7 @@ class InboxViewModel @Inject constructor(
             setMemberID(recipientID)
         } else if (recipientUsername?.isNotBlank() == true) {
             viewModelScope.launch(ExceptionHandler.coroutine()) {
-                val member = socialRepository.retrieveMemberWithUsername(recipientUsername, false)
+                val member = socialRepository.retrieveMember(recipientUsername, false)
                 setMemberID(member?.id ?: "")
                 invalidateDataSource()
                 dataSourceFactory.updateRecipientID(memberID)

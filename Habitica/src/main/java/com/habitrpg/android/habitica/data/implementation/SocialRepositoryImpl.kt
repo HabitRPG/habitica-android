@@ -263,30 +263,20 @@ class SocialRepositoryImpl(
         return if (userId == null) {
             null
         } else {
-            try {
-                if (fromHall) {
-                    apiClient.getHallMember(userId)
-                } else {
-                    apiClient.getMember(UUID.fromString(userId).toString())
+            if (fromHall) {
+                apiClient.getHallMember(userId)
+            } else {
+                try {
+                    val uuid = UUID.fromString(userId).toString()
+                    apiClient.getMember(uuid)
+                } catch (_: IllegalArgumentException) {
+                    apiClient.getMemberWithUsername(userId)
                 }
-            } catch (_: IllegalArgumentException) {
-                null
             }
         }
     }
 
     override suspend fun retrievegroupInvites(id: String, includeAllPublicFields: Boolean) = apiClient.getGroupInvites(id, includeAllPublicFields)
-
-    override suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member? {
-        if (username.isNullOrBlank()) {
-            return null
-        }
-        return try {
-            apiClient.getMemberWithUsername(username)
-        } catch (_: IllegalArgumentException) {
-            null
-        }
-    }
 
     override suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>? {
         return apiClient.findUsernames(username, context, id)

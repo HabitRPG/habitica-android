@@ -125,7 +125,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     var member: Member? = null
                     try {
-                        member = socialRepository.retrieveMemberWithUsername(username, false)
+                        member = socialRepository.retrieveMember(username, false)
                     } finally {
                         if (member != null) {
                             alert.dismiss()
