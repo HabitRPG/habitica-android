@@ -70,7 +70,7 @@ object Analytics {
     fun sendNavigationEvent(page: String) {
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = page
-        sendEvent("navigated", EventCategory.NAVIGATION, HitType.PAGEVIEW, additionalData)
+        sendEvent("navigated $page", EventCategory.NAVIGATION, HitType.PAGEVIEW, additionalData)
     }
 
     fun initialize(context: Context) {
