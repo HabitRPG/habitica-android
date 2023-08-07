@@ -55,9 +55,13 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         userViewModel = hiltEntryPoint.mainUserViewModel()
     }
 
+    private var hasAllItems = false
+
     override fun show() {
         super.show()
-        Analytics.sendNavigationEvent("pet suggestion modal")
+        if (!hasAllItems) {
+            Analytics.sendNavigationEvent("pet suggestion modal")
+        }
     }
 
     fun configure(
@@ -129,6 +133,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 setTitle(R.string.hatch_pet_title)
             }
             addButton(R.string.close, false)
+            hasAllItems = true
         } else {
             if (hasMount) {
                 if (!hasEgg && !hasPotion) {
