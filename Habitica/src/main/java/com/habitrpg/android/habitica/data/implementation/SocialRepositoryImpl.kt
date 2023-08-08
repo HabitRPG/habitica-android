@@ -201,22 +201,6 @@ class SocialRepositoryImpl(
         return apiClient.updateGroup(copiedGroup.id, copiedGroup)
     }
 
-    override suspend fun retrieveGroups(type: String): List<Group>? {
-        val groups = apiClient.listGroups(type) ?: return null
-        if ("guilds" == type) {
-            val memberships = groups.map {
-                GroupMembership(currentUserID, it.id)
-            }
-            localRepository.saveGroupMemberships(currentUserID, memberships)
-        }
-        localRepository.save(groups)
-        return groups
-    }
-
-    override fun getGroups(type: String) = localRepository.getGroups(type)
-
-    override fun getPublicGuilds() = localRepository.getPublicGuilds()
-
     override fun getInboxConversations() = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getInboxConversation(it) }
 
     override fun getInboxMessages(replyToUserID: String?) = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getInboxMessages(it, replyToUserID) }

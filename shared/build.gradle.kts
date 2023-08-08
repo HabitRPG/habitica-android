@@ -3,7 +3,7 @@ plugins {
     id("com.android.library")
     id("kotlin-parcelize")
     id("kotlin-kapt")
-    id("io.kotest.multiplatform") version "5.5.5"
+    id("io.kotest.multiplatform") version "5.6.2"
 }
 
 allprojects {

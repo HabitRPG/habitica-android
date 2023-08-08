@@ -121,11 +121,6 @@
         <key>enableSpellAds</key>
         <value>false</value>
     </entry>
-
-    <entry>
-        <key>hideTavern</key>
-        <value>false</value>
-    </entry>
     <entry>
         <key>hideGuilds</key>
         <value>false</value>

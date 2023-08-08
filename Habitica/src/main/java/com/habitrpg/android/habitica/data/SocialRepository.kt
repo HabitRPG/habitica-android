@@ -15,8 +15,6 @@ import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialRepository : BaseRepository {
-    fun getPublicGuilds(): Flow<List<Group>>
-
     fun getUserGroups(type: String?): Flow<List<Group>>
     suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>?
     fun getGroupChat(groupId: String): Flow<List<ChatMessage>>
@@ -63,9 +61,6 @@ interface SocialRepository : BaseRepository {
         leader: String?,
         leaderCreateChallenge: Boolean?
     ): Group?
-
-    suspend fun retrieveGroups(type: String): List<Group>?
-    fun getGroups(type: String): Flow<List<Group>>
 
     fun getInboxMessages(replyToUserID: String?): Flow<RealmResults<ChatMessage>>
     suspend fun retrieveInboxMessages(uuid: String, page: Int): List<ChatMessage>?

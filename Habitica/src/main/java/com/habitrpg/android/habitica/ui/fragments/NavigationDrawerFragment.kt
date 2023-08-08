@@ -272,13 +272,6 @@ class NavigationDrawerFragment : DialogFragment() {
         binding?.avatarView?.setAvatar(user)
         binding?.questMenuView?.configure(user)
 
-        val tavernItem = getItemWithIdentifier(SIDEBAR_TAVERN)
-        if (user.preferences?.sleep == true) {
-            tavernItem?.subtitle = context?.getString(R.string.damage_paused)
-        } else {
-            tavernItem?.subtitle = null
-        }
-
         val userItems = user.items
         var hasSpecialItems = false
         if (userItems != null) {
@@ -504,24 +497,6 @@ class NavigationDrawerFragment : DialogFragment() {
                     context.getString(R.string.sidebar_party)
                 )
             )
-            if (!configManager.hideTavern()) {
-                items.add(
-                    HabiticaDrawerItem(
-                        R.id.tavernFragment,
-                        SIDEBAR_TAVERN,
-                        context.getString(R.string.sidebar_tavern)
-                    )
-                )
-            }
-            if (!configManager.hideGuilds()) {
-                items.add(
-                    HabiticaDrawerItem(
-                        R.id.guildOverviewFragment,
-                        SIDEBAR_GUILDS,
-                        context.getString(R.string.sidebar_guilds)
-                    )
-                )
-            }
             if (!configManager.hideChallenges()) {
                 items.add(
                     HabiticaDrawerItem(
@@ -813,9 +788,7 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_STATS = "stats"
         const val SIDEBAR_ACHIEVEMENTS = "achievements"
         const val SIDEBAR_SOCIAL = "social"
-        const val SIDEBAR_TAVERN = "tavern"
         const val SIDEBAR_PARTY = "party"
-        const val SIDEBAR_GUILDS = "guilds"
         const val SIDEBAR_CHALLENGES = "challenges"
         const val SIDEBAR_INVENTORY = "inventory"
         const val SIDEBAR_SHOPS_MARKET = "market"

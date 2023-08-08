@@ -95,7 +95,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.android.gms:play-services-ads:22.0.0'
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
     implementation "com.google.android.gms:play-services-auth:$play_auth_version"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "com.google.android.gms:play-services-wearable:$play_wearables_version"
@@ -106,7 +106,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
-    implementation "androidx.fragment:fragment-ktx:1.5.7"
+    implementation "androidx.fragment:fragment-ktx:1.6.1"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
     implementation "androidx.paging:paging-compose:1.0.0-alpha19"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
@@ -168,7 +168,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
 
     signingConfigs {

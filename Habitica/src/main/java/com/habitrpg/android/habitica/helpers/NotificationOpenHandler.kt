@@ -64,11 +64,7 @@ class NotificationOpenHandler {
         }
 
         private fun openGuildDetailScreen(groupID: String?) {
-            if (groupID?.isNotEmpty() != true) {
-                MainNavigationController.navigate(R.id.guildOverviewFragment)
-            } else {
-                MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
-            }
+            MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
         }
 
         private fun openSettingsScreen() {
@@ -77,8 +73,7 @@ class NotificationOpenHandler {
 
         private fun handleChatMessage(type: String?, groupID: String?) {
             when (type) {
-                "party" -> openPartyScreen(true)
-                "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)
+                "party" -> openPartyScreen()
                 "guild" -> openGuildDetailScreen(groupID)
             }
         }

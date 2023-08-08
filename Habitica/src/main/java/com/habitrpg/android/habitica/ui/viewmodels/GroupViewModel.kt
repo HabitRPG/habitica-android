@@ -39,7 +39,6 @@ import kotlin.time.toDuration
 enum class GroupViewType(internal val order: String) {
     PARTY("party"),
     GUILD("guild"),
-    TAVERN("tavern")
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -209,7 +208,7 @@ open class GroupViewModel @Inject constructor(
 
     fun markMessagesSeen() {
         groupID?.let {
-            if (groupViewType != GroupViewType.TAVERN && it.isNotEmpty() && gotNewMessages) {
+            if (it.isNotEmpty() && gotNewMessages) {
                 viewModelScope.launchCatching {
                     socialRepository.markMessagesSeen(it)
                 }
