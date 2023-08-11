@@ -1399,6 +1399,19 @@
     <string name="contributor_tiers">Contributor Tiers</string>
     <string name="contrib_tier_description">If you see an account with a colored display name and an icon, that’s a contributor tier! Tiers are given to people who help around Habitica, whether it be for translation, coding, or just being helpful. The higher the tier, the more the player has contributed.</string>
     <string name="visit_faq">Visit FAQ</string>
+    <string name="no_x">No %s</string>
+    <string name="empty_quests_description">Get Quests from leveling up, log in bonuses, or the [Quest Shop](/shops/quests)!</string>
+    <string name="empty_special_description_subscribed">Get transformation items during Seasonal Galas and mystery boxes of subscriber gear are delivered at the start of each month!</string>
+    <string name="empty_food_description">Complete tasks, buy an Armoire, or head over to the [Market](/shops/market) to stock up!</string>
+    <string name="empty_items_description">Complete tasks, Potion Quests, or head over to the [Market](/shops/market) to stock up!</string>
+    <string name="item_footer_title">Not getting the right %s from tasks?</string>
+    <string name="item_footer_description">Check out the [Market](/shops/market) to buy just the things you need!</string>
+    <string name="quests_footer_description">Check out the [Quest Shop](/shops/quests) to see what’s available!</string>
+    <string name="quests_footer_title">Want more Quests?</string>
+    <string name="potions">potions</string>
+    <string name="eggs_footer_description">Check out the [Market](/shops/market) to buy just the eggs you need!</string>
+    <string name="food_footer_description">Check out the [Market](/shops/market) to buy food or a Saddle to instantly raise your Pet!</string>
+    <string name="hatchingPotions_footer_description">Check out the [Market](/shops/market) to buy standard and seasonal Hatching Potions!</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

@@ -13,6 +13,9 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
@@ -108,12 +111,35 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText ?: itemType),
-            getString(R.string.open_market)
-        ) {
-            openMarket()
+        val buttonMethod = {
+            Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                "area" to "empty",
+                "type" to (itemType ?: "")
+            ))
+            if (itemType == "quests") {
+                MainNavigationController.navigate(R.id.questShopFragment)
+            } else {
+                openMarket()
+            }
         }
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.no_x, itemTypeText ?: itemType),
+            when (itemType) {
+                "food" -> getString(R.string.empty_food_description)
+                "quests" -> getString(R.string.empty_quests_description)
+                "special" -> getString(R.string.empty_special_description_subscribed)
+                else -> getString(R.string.empty_items_description)
+            },
+            when (itemType) {
+                "eggs" -> R.drawable.icon_eggs
+                "hatchingPotions" -> R.drawable.icon_hatchingpotions
+                "food" -> R.drawable.icon_food
+                "quests" -> R.drawable.icon_quests
+                "special" -> R.drawable.icon_special
+                else -> null
+            },
+            false,
+            if (itemType == "special") null else buttonMethod)
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager

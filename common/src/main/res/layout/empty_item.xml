@@ -5,23 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="30dp">
+    android:gravity="top|center"
+    android:paddingTop="56dp"
+    android:paddingHorizontal="24dp">
 
     <ImageView
         android:id="@+id/empty_icon_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:id="@+id/emptyViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="2dp"
         android:gravity="center"
-        android:textColor="@color/text_ternary"
-        android:textSize="@dimen/card_medium_text"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:textStyle="bold"
         tools:text="No Items" />
 
     <TextView
@@ -29,15 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textColor="@color/text_ternary"
         tools:text="No Items" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:layout_marginTop="@dimen/spacing_large"/>
 </LinearLayout>

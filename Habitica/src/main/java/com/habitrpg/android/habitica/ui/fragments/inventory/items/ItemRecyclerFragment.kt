@@ -17,6 +17,9 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -90,18 +93,35 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         super.onViewCreated(view, savedInstanceState)
 
         binding?.refreshLayout?.setOnRefreshListener(this)
-        binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText ?: itemType),
-            null,
-            null,
-            if (itemType == "special") null else getString(R.string.open_shop)
-        ) {
+        val buttonMethod = {
+            Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                "area" to "empty",
+                "type" to (itemType ?: "")
+            ))
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
                 openMarket()
             }
         }
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.no_x, itemTypeText ?: itemType),
+            when (itemType) {
+                "food" -> getString(R.string.empty_food_description)
+                            "quests" -> getString(R.string.empty_quests_description)
+                "special" -> getString(R.string.empty_special_description_subscribed)
+                else -> getString(R.string.empty_items_description)
+                            },
+            when (itemType) {
+                            "eggs" -> R.drawable.icon_eggs
+                "hatchingPotions" -> R.drawable.icon_hatchingpotions
+                "food" -> R.drawable.icon_food
+                "quests" -> R.drawable.icon_quests
+                "special" -> R.drawable.icon_special
+                else -> null
+                            },
+            false,
+            if (itemType == "special") null else buttonMethod)
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
@@ -122,12 +142,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
         }
 
         binding?.titleTextView?.visibility = View.GONE
-        binding?.footerTextView?.visibility = View.GONE
-        binding?.openMarketButton?.visibility = View.GONE
-
-        binding?.openMarketButton?.setOnClickListener {
-            openMarket()
-        }
         setAdapter()
         this.loadItems()
     }
@@ -177,6 +191,19 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             adapter?.onStartHatching = { showHatchingDialog(it) }
             adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
             adapter?.onCreateNewParty = { createNewParty() }
+            adapter?.itemType = itemType ?: ""
+            adapter?.itemText = (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText) ?: ""
+            adapter?.onOpenShop = {
+                Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                    "area" to "bottom",
+                    "type" to (itemType ?: "")
+                ))
+                if (itemType == "quests") {
+                    MainNavigationController.navigate(R.id.questShopFragment)
+                } else {
+                    openMarket()
+                }
+            }
         }
     }
 

@@ -71,7 +71,6 @@ class EquipmentDetailFragment :
             getString(R.string.empty_title),
             getString(R.string.empty_equipment_description),
             null,
-            getString(R.string.open_market)
         ) {
             MainNavigationController.navigate(R.id.marketFragment)
         }
