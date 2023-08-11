@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.interactors
 
 import android.graphics.Bitmap
 import android.view.ViewGroup
+import androidx.core.graphics.scale
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogLevelup10Binding
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -68,7 +69,7 @@ constructor(
             avatarView.setAvatar(requestValues.user)
             var sharedImage: Bitmap? = null
             avatarView.onAvatarImageReady { image ->
-                sharedImage = image
+                sharedImage = image?.scale(image.width * 3, image.height * 3, false)
             }
 
             val alert = HabiticaAlertDialog(requestValues.activity)

@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +19,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.scale
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
@@ -28,13 +31,16 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
 import com.habitrpg.android.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import com.habitrpg.android.habitica.ui.views.equipment.AvatarCustomizationOverviewView
 import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.views.AvatarView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
@@ -88,6 +94,14 @@ open class AvatarOverviewFragment :
                         },
                         { type, equipped, isCostume ->
                             displayEquipmentFragment(type, equipped, isCostume)
+                        }, {
+                            val avatarView = AvatarView(requireActivity(), showBackground = true, showMount = true, showPet = true)
+                            avatarView.layoutParams = ViewGroup.LayoutParams(140, 147)
+                            userViewModel.user.value?.let { avatarView.setAvatar(it) }
+                            avatarView.onAvatarImageReady { image ->
+                                if (image == null) return@onAvatarImageReady
+                                (requireActivity() as BaseActivity).shareContent("customization", "Look at my Avatar!", image.scale(image.width * 3, image.height * 3, false))
+                            }
                         }
                     )
                 }
@@ -150,7 +164,8 @@ fun AvatarOverviewView(
     costumeTwoHanded: Boolean = false,
     onCustomizationTap: (String, String?) -> Unit,
     onAvatarEquipmentTap: (String, String?) -> Unit,
-    onEquipmentTap: (String, String?, Boolean) -> Unit
+    onEquipmentTap: (String, String?, Boolean) -> Unit,
+    onShareTap: () -> Unit
 ) {
     val user by userViewModel.user.observeAsState()
     Column(
