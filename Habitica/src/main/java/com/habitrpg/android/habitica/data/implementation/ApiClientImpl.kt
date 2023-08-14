@@ -580,6 +580,10 @@ class ApiClientImpl(
         return process { apiService.flagInboxMessage(mid, data) }
     }
 
+    override suspend fun reportMember(mid: String, data: Map<String, String>): Void? {
+        return process { apiService.reportMember(mid, data) }
+    }
+
     override suspend fun seenMessages(groupId: String): Void? {
         return process { apiService.seenMessages(groupId) }
     }

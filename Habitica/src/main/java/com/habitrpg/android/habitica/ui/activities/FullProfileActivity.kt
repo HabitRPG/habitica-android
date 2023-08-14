@@ -321,7 +321,8 @@ class FullProfileActivity : BaseActivity() {
             messageId = "",
             messageText = "",
             groupId = "",
-            userIdBeingReported = userIdBeingReported
+            userIdBeingReported = userIdBeingReported,
+            sourceView = this::class.simpleName ?: ""
         )
 
         reportBottomSheetFragment.show(supportFragmentManager, "ReportMessageFragment")

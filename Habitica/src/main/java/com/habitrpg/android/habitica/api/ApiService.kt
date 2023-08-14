@@ -331,6 +331,9 @@ interface ApiService {
         @Query("id") id: String?
     ): HabitResponse<List<FindUsernameResult>>
 
+    @POST("members/{mid}/flag")
+    suspend fun reportMember(@Path("mid") mid: String, @Body data: Map<String, String>): HabitResponse<Void>
+
     @POST("members/flag-private-message/{mid}")
     suspend fun flagInboxMessage(@Path("mid") mid: String, @Body data: Map<String, String>): HabitResponse<Void>
 

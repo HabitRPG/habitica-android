@@ -187,20 +187,8 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             messageId = chatMessage.id,
             messageText = chatMessage.text ?: "",
             groupId = chatMessage.groupId ?: "",
-            userIdBeingReported = chatMessage.userID ?: ""
-        )
-
-        reportBottomSheetFragment.show(childFragmentManager, "ReportMessageFragment")
-    }
-
-    private fun showReportUserBottomSheet(chatMessage : ChatMessage) {
-        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
-            reportType = ReportBottomSheetFragment.REPORT_TYPE_USER,
-            profileName = chatMessage.username ?: "",
-            messageId = "",
-            messageText = "",
-            groupId = chatMessage.groupId ?: "",
-            userIdBeingReported = chatMessage.userID ?: ""
+            userIdBeingReported = chatMessage.userID ?: "",
+            sourceView = this::class.simpleName ?: ""
         )
 
         reportBottomSheetFragment.show(childFragmentManager, "ReportMessageFragment")
