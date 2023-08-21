@@ -9,9 +9,9 @@ import android.text.style.URLSpan
 import android.view.View
 import android.widget.TextView
 
-class HabiticaClickableSpan(val onClick: () -> Unit): ClickableSpan() {
+class HabiticaClickableSpan(val onClickAction: () -> Unit): ClickableSpan() {
     override fun onClick(widget: View) {
-        onClick(widget)
+        onClickAction()
     }
 
     override fun updateDrawState(ds: TextPaint) {
