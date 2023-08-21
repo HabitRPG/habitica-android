@@ -7,7 +7,7 @@ import android.widget.RelativeLayout
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.extensions.getThemeColor
 
 class SubscriptionBuyGemsPromoView @JvmOverloads constructor(

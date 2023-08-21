@@ -1,5 +1,6 @@
-package com.habitrpg.android.habitica.helpers
+package com.habitrpg.common.habitica.helpers
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,7 +24,7 @@ object MainNavigationController {
         get() = controllerReference?.get() != null
 
     fun setup(navController: NavController) {
-        this.controllerReference = WeakReference(navController)
+        controllerReference = WeakReference(navController)
     }
 
     fun updateLabel(destinationID: Int, label: String) {
@@ -67,6 +68,13 @@ object MainNavigationController {
     fun navigate(uri: Uri) {
         if (navController?.graph?.hasDeepLink(uri) == true) {
             navController?.navigate(uri)
+        } else {
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            try {
+                navController?.context?.startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                // No application can handle the link
+            }
         }
     }
 

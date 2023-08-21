@@ -50,22 +50,16 @@ class OldQuestProgressView : LinearLayout {
         binding.bossRageView.setSecondaryIcon(HabiticaIconsHelper.imageOfRage())
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         rect.set(
             0.0f,
             0.0f,
-            (
-                canvas?.width?.toFloat()
-                    ?: 1.0f
-                ) / displayDensity,
-            (
-                canvas?.height?.toFloat()
-                    ?: 1.0f
-                ) / displayDensity
+            canvas.width.toFloat() / displayDensity,
+            canvas.height.toFloat() / displayDensity
         )
-        canvas?.scale(displayDensity, displayDensity)
+        canvas.scale(displayDensity, displayDensity)
         HabiticaIcons.drawQuestBackground(canvas, rect, lightGray, darkGray, mediumGray)
-        canvas?.scale(1.0f / displayDensity, 1.0f / displayDensity)
+        canvas.scale(1.0f / displayDensity, 1.0f / displayDensity)
         super.onDraw(canvas)
     }
 

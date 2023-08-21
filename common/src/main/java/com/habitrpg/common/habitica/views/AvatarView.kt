@@ -484,7 +484,7 @@ class AvatarView : FrameLayout {
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         initAvatarRectMatrix()
@@ -497,7 +497,7 @@ class AvatarView : FrameLayout {
 
     override fun invalidateDrawable(drawable: Drawable) {
         invalidate()
-        if (avatarCanvas != null) draw(avatarCanvas)
+        avatarCanvas?.let { draw(it) }
     }
 
     enum class LayerType {

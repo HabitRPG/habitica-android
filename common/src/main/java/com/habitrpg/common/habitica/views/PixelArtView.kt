@@ -61,12 +61,12 @@ class PixelArtView @JvmOverloads constructor(
         targetRect = Rect(left, top, left + targetWidth, top + targetHeight)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         if (bitmap == null) {
             super.onDraw(canvas)
             return
         }
         val bitmap = bitmap ?: return
-        canvas?.drawBitmap(bitmap, null, targetRect, paint)
+        canvas.drawBitmap(bitmap, null, targetRect, paint)
     }
 }

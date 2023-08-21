@@ -107,6 +107,9 @@ dependencies {
     // Image Management Library
     implementation("io.coil-kt:coil:$coil_version")
     implementation("io.coil-kt:coil-gif:$coil_version")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("androidx.navigation:navigation-common-ktx:2.7.0")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.0")
 
     testImplementation("io.mockk:mockk:$mockk_version")
     testImplementation("io.mockk:mockk-android:$mockk_version")

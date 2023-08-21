@@ -145,7 +145,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                     Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
                     Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
                     Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
-                    Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
                     Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
                     Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
                     else -> null
@@ -373,17 +372,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         } else {
             return@withContext null
         }
-    }
-
-    private fun createGuildInvitationNotification(notification: Notification): View? {
-        val data = notification.data as? GuildInvitationData
-        val stringId = if (data?.invitation?.publicGuild == false) R.string.invited_to_private_guild else R.string.invited_to_public_guild
-
-        return createActionableNotificationItem(
-            notification,
-            fromHtml(getString(stringId, data?.invitation?.name)),
-            data?.invitation?.publicGuild == true
-        )
     }
 
     private fun createQuestInvitationNotification(notification: Notification): View? {
