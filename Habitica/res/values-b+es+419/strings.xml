@@ -176,9 +176,7 @@
     <string name="setup_task_creativity_1">Estudia las técnicas de un profesional</string>
     <string name="setup_task_creativity_2">Trabaja en proyectos creativos</string>
     <string name="setup_task_creativity_3">Termina proyectos creativos</string>
-    <string name="my_guilds">Mis gremios</string>
-    <string name="public_guilds">Gremios públicos</string>
-    <string name="guild">Gremio</string>
+            <string name="guild">Gremio</string>
     <string name="leave">Abandonar</string>
     <string name="join">Unirse</string>
     <string name="delete">Borrar</string>
@@ -187,7 +185,6 @@
     <string name="add_tag">Agregar nueva etiqueta</string>
     <string name="privacy">Privacidad</string>
     <string name="write_message">Escribir mensaje</string>
-    <string name="guild_search_hint">Buscar gremios</string>
     <string name="battle_gear">Equipamiento de combate</string>
     <string name="costume">Apariencia</string>
     <string name="outfit_head">Cabeza</string>
@@ -658,7 +655,6 @@
     <string name="class_equipment_shop_dialog">Este objeto solo está disponible para una clase específica.
 \nPuedes cambiar tu clase desde los Ajustes.</string>
     <string name="class_gear_disclaimer">Solo puedes comprar equipamiento para tu clase actual</string>
-    <string name="tavern_description">¡Bienvenido a la Posada! Trae una silla para charlar, o toma un descanso de tus tareas.</string>
     <string name="check_into_inn">Entra a la Posada</string>
     <string name="community_guidelines">Normas de la Comunidad</string>
     <string name="view_community_guidelines">Ver las Normas de Seguridad</string>
@@ -696,7 +692,6 @@
     <string name="questShop_owner_long">Ian el Buscador de Misiones</string>
     <string name="seasonalShop_owner_long">Hechicera Estacional</string>
     <string name="rage_attack">Ataque de Ira:</string>
-    <string name="tavern_description_world_boss">Oh vamos, no tienes que tomarle atención a ese monstruo de abajo — Este es un lugar seguro para charlar en tus descansos.</string>
     <string name="report">Reportar</string>
     <string name="reply">Responder</string>
     <string name="challenge_prize">Premio del Desafío</string>
@@ -774,8 +769,6 @@
     <string name="unallocated_stats_points">Tienes <b>%1$s puntos de atributo sin asignar</b></string>
     <string name="new_subscriber_item">Tienes un nuevo <b>Objeto Misterioso</b></string>
     <string name="invited_to_party_notification">%1$s fuiste invitado a unirte al grupo <b>%2$s</b></string>
-    <string name="invited_to_private_guild">Fuiste invitado a ser parte del gremio privado <b>%1$s</b></string>
-    <string name="invited_to_public_guild">Fuiste invitado a ser parte del gremio <b>%1$s</b></string>
     <string name="invited_to_quest">Fuiste invitado a participar de la misión <b>%1$s</b></string>
     <string name="defeat">Derrotado</string>
     <string name="create">Crear</string>

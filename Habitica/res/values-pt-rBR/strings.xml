@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Estudar um guru</string>
     <string name="setup_task_creativity_2">Trabalhar em um projeto criativo</string>
     <string name="setup_task_creativity_3">Terminar um projeto criativo</string>
-    <string name="my_guilds">Minhas Guildas</string>
-    <string name="public_guilds">Guildas Públicas</string>
-    <string name="guild">Guildas</string>
+            <string name="guild">Guildas</string>
     <string name="leave">Sair</string>
     <string name="join">Entrar</string>
     <string name="delete">Excluir</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Adicionar nova etiqueta</string>
     <string name="privacy">Privacidade</string>
     <string name="write_message">Escrever Mensagem</string>
-    <string name="guild_search_hint">Procurar Guildas</string>
     <string name="battle_gear">Equipamento de Batalha</string>
     <string name="costume">Traje</string>
     <string name="outfit_head">Cabeça</string>
@@ -524,7 +521,6 @@
     <string name="classless">Sem Classe</string>
     <string name="class_equipment_shop_dialog">Este item está disponível apenas para uma classe específica.\nVocê pode alterar sua classe em Configurações.</string>
     <string name="class_gear_disclaimer">Você apenas pode comprar equipamento para sua classe atual</string>
-    <string name="tavern_description">Boas-vindas à Taverna. Puxe uma cadeira e junte-se ao bate-papo, ou dê um descanso de suas tarefas.</string>
     <string name="check_into_inn">Entrar na Pousada</string>
     <string name="community_guidelines">Diretrizes da Comunidade</string>
     <string name="view_community_guidelines">Veja as Diretrizes da Comunidade</string>
@@ -566,7 +562,6 @@
     <string name="questShop_owner_long">Ian o Guia das Missões</string>
     <string name="seasonalShop_owner_long">Feiticeira Sazonal</string>
     <string name="rage_attack">Ataque de Fúria:</string>
-    <string name="tavern_description_world_boss">Oh parça, não esquenta com o bicho lá embaixo — aqui ainda é seguro pra trocar ideia enquanto descansa.</string>
     <string name="report">Reportar</string>
     <string name="reply">Responder</string>
     <string name="challenge_prize">Prêmio do Desafio</string>
@@ -652,8 +647,6 @@
     <string name="unallocated_stats_points"><![CDATA[Você tem <b>%1$s</b> Pontos de Atributos não distribuidos]]></string>
     <string name="new_subscriber_item">Você possui novos <b>Itens Misteriosos</b></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Você foi convidado para entrar em um Grupo <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Você foi convidado para entrar em uma Guilda privada <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Você foi convidado para entrar em uma Guilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Você foi convidado para a Missão <b>%1$s</b>]]></string>
     <string name="g1g1_info_2">Como funciona</string>
     <string name="gift_a_subscription">Dê uma assinatura de presente</string>

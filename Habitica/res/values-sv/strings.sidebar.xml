@@ -9,9 +9,7 @@
     <string name="sidebar_avatar">Karaktär</string>
     <string name="sidebar_section_inventory">Förråd</string>
     <string name="sidebar_challenges">Utmaningar</string>
-    <string name="sidebar_guilds">Gillen</string>
     <string name="sidebar_party">Sällskap</string>
-    <string name="sidebar_tavern">Värdshus</string>
     <string name="sidebar_inbox">Meddelanden</string>
     <string name="sidebar_section_social">Social</string>
     <string name="sidebar_skills">Förmågor</string>

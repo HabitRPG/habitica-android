@@ -153,9 +153,7 @@
     <string name="setup_task_creativity_1">Belajar menguasai kerajinan tangan</string>
     <string name="setup_task_creativity_2">Mengerjakan proyek kreatif</string>
     <string name="setup_task_creativity_3">Menyelesaikan proyek kreatif</string>
-    <string name="my_guilds">Guild-ku</string>
-    <string name="public_guilds">Guild Publik</string>
-    <string name="guild">Guild</string>
+            <string name="guild">Guild</string>
     <string name="leave">Tinggalkan</string>
     <string name="join">Gabung</string>
     <string name="delete">Hapus</string>
@@ -164,7 +162,6 @@
     <string name="add_tag">Tambahkan Label baru</string>
     <string name="privacy">Privasi</string>
     <string name="write_message">Tulis Pesan</string>
-    <string name="guild_search_hint">Cari guild</string>
     <string name="battle_gear">Perlengkapan Bertarung</string>
     <string name="costume">Kostum</string>
     <string name="outfit_head">Kepala</string>
@@ -492,7 +489,6 @@
     <string name="classless">Tanpa Pekerjaan</string>
     <string name="class_equipment_shop_dialog">Item ini hanya tersedia untuk pekerjaan tetentu. \nKamu bisa menggantu pekerjaanmu dari Pengaturan.</string>
     <string name="class_gear_disclaimer">Kamu hanya bisa membeli perlengkapan untuk pekerjaanmu yang sekarang</string>
-    <string name="tavern_description">Selamat datang di Penginapan! Tarik kursi dan mari mengobrol, atau beristirahat dari tugas-tugasmu.</string>
     <string name="check_into_inn">Masuk ke Penginapan</string>
     <string name="community_guidelines">Pedoman Komunitas</string>
     <string name="view_community_guidelines">Lihat Pedoman Komunitas</string>
@@ -642,7 +638,6 @@
     <string name="created_challenge">Membuat Tantangan</string>
     <string name="challenge_categories">Kategori Tantangan</string>
     <string name="challenge_prize">Hadiah Tantangan</string>
-    <string name="tavern_description_world_boss">Oh sayangku, tak perlu kau hiraukan monster dibawah — ini adalah tempat yang aman untuk ngobrol selama kamu beristirahat.</string>
     <string name="rage_attack">Serangan Amarah:</string>
     <string name="seasonalShop_owner_long">Penyihir Musiman</string>
     <string name="world_boss_description_4">Periksa Kedai Minum untuk melihat progres Boss dan serangan Amarah</string>
@@ -731,8 +726,6 @@
     <string name="only_leader_create_challenge">Hanya ketua yang dapat membuat Tantangan</string>
     <string name="defeat">Kalah</string>
     <string name="invited_to_quest">Kamu telah diundang untuk melaksanakan Misi <b>%1$s</b></string>
-    <string name="invited_to_public_guild">Kamu telah diundang untuk bergabung dengan Guild <b>%1$s</b></string>
-    <string name="invited_to_private_guild">Kamu telah diundang untuk bergabung dengan Guild pribadi <b>%1$s</b></string>
     <string name="invited_to_party_notification">%1$s Kamu telah diundang untuk bergabung dengan Party <b>%2$s</b></string>
     <string name="new_subscriber_item">Kamu memiliki <b>Item Misteri</b> baru</string>
     <string name="unallocated_stats_points">Kamu memiliki <b>%1$s Poin Stat yang belum dialokasikan</b></string>

@@ -140,9 +140,7 @@
     <string name="setup_task_creativity_1">Studiază un o meserie</string>
     <string name="setup_task_creativity_2">Lucrează la un proiect de creativitate</string>
     <string name="setup_task_creativity_3">Finalizează proiectul de creativitate</string>
-    <string name="my_guilds">Breslele mele</string>
-    <string name="public_guilds">Bresle publice</string>
-    <string name="guild">Breaslă</string>
+            <string name="guild">Breaslă</string>
     <string name="leave">Părăsește</string>
     <string name="join">Alătură-te</string>
     <string name="delete">Șterge</string>
@@ -151,7 +149,6 @@
     <string name="add_tag">Adaugă Etichetă nouă</string>
     <string name="privacy">Intimitate</string>
     <string name="write_message">Scrie Mesaj</string>
-    <string name="guild_search_hint">Caută bresle</string>
     <string name="battle_gear">Echipament de Luptă</string>
     <string name="costume">Costum</string>
     <string name="outfit_head">Cap</string>
@@ -467,7 +464,6 @@
     <string name="classless">Fără Clasă</string>
     <string name="class_equipment_shop_dialog">Acest obiect este disponibil doar unei anumite clase.\nÎți poți modifica clasa din Setări.</string>
     <string name="class_gear_disclaimer">Poți achiziționa doar echipament pentru clasa ta actuală</string>
-    <string name="tavern_description">Bine ai venit la Han! Ia un scaun pentru a purta o discuție, sau ia o pauză de la sarcinile tale. </string>
     <string name="check_into_inn">Cazează-te în Han</string>
     <string name="community_guidelines">Ghidurile Comunității</string>
     <string name="view_community_guidelines">Vezi Ghidurile Comunității</string>

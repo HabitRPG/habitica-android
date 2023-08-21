@@ -3,14 +3,12 @@
     <string name="sidebar_tasks">Tareas</string>
     <string name="sidebar_skills">Habilidades</string>
     <string name="sidebar_gems">Comprar Gemas</string>
-    <string name="sidebar_guilds">Gremios</string>
     <string name="sidebar_challenges">Desafíos</string>
     <string name="sidebar_shops">Tiendas</string>
     <string name="sidebar_avatar">Personalización del Avatar</string>
     <string name="sidebar_about">Información</string>
     <string name="sidebar_section_social">Social</string>
     <string name="sidebar_inbox">Mensajes</string>
-    <string name="sidebar_tavern">Taberna</string>
     <string name="sidebar_party">Equipo</string>
     <string name="sidebar_subscription">Suscripción</string>
     <string name="sidebar_section_inventory">Inventario</string>

@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Uči od majstora vještine</string>
     <string name="setup_task_creativity_2">Radi na kreativnom projektu </string>
     <string name="setup_task_creativity_3">Završi kreativni projekt</string>
-    <string name="my_guilds">Moji Cehovi</string>
-    <string name="public_guilds">Javni Cehovi</string>
-    <string name="guild">Ceh</string>
+            <string name="guild">Ceh</string>
     <string name="leave">Napusti</string>
     <string name="join">Pridruži se</string>
     <string name="delete">Izbriši</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Dodaj novu oznaku</string>
     <string name="privacy">Privatnost </string>
     <string name="write_message">Napiši poruku</string>
-    <string name="guild_search_hint">Pretraži cehove</string>
     <string name="battle_gear">Borbena Oprema</string>
     <string name="costume">Kostim</string>
     <string name="outfit_head">Glava</string>
@@ -514,7 +511,6 @@
     <string name="classless">Bez klase</string>
     <string name="class_equipment_shop_dialog">Ovaj artikal je dostupan samo određenoj klasi.\nMožeš promijeniti svoju klasu u Postavkama.</string>
     <string name="class_gear_disclaimer">Možeš kupovati opremu samo za svoju trenutnu klasu</string>
-    <string name="tavern_description">Dobrodošao/la u Svratište! Dovuci stolicu i priključi se chatu, ili se malo odmori od svojih zadataka.</string>
     <string name="check_into_inn">Prijavi se u Svratište</string>
     <string name="community_guidelines">Smjernice za zajednicu</string>
     <string name="view_community_guidelines">Pogledaj Smjernice za zajednicu</string>
@@ -556,7 +552,6 @@
     <string name="questShop_owner_long">Ian, Vodič kroz Pustolovine</string>
     <string name="seasonalShop_owner_long">Sezonska Čarobnica</string>
     <string name="rage_attack">Napad Bijesa:</string>
-    <string name="tavern_description_world_boss">Ajoj, ne obračaj pozornost na čudovište ispod - ovo je i dalje sigurno utočište za čavrljanje u pauzama.</string>
     <string name="report">Prijavi</string>
     <string name="reply">Odgovori</string>
     <string name="challenge_prize">Nagrada za Izazov</string>
@@ -700,7 +695,6 @@
     <string name="defeat">Poraz</string>
     <string name="available_for">Dostupno do %s</string>
     <string name="register_btn_google">Prijavi se uz Google</string>
-    <string name="invited_to_public_guild">Pozvan/a si da se pridružiš Cehu <b>%1$s</b></string>
     <string name="invited_to_quest">Pozvan/a si u Pustolovinu <b>%1$s</b></string>
     <string name="leave_delete_tasks">Napusti i izbriši zadatke</string>
     <string name="notifications">Obavijesti</string>
@@ -716,7 +710,6 @@
     <string name="reloaded_content">Ponovno učitan sadržaj</string>
     <string name="insufficientGoldTitle">Nema dovoljno Zlatnika</string>
     <string name="join_party_description_guild">Daj korisničko ime prijatelju ili odi u %s da upoznaš potencijalne drugove!</string>
-    <string name="invited_to_private_guild">Pozvan/a si da se pridružiš privatnom Cehu <b>%1$s</b></string>
     <string name="gift_confirmation_text_sub_g1g1">Poslao/la si %s %s-mjeseca Habitica pretplatu i ista pretplata je primijenjena tvojem računu u našoj Pokloni Jednu Dobij Jednu promociji!</string>
     <string name="gift_confirmation_text_sub">Poslao/la si %s %s-mjeseca Habitica pretplatu.</string>
     <string name="unallocated_stats_points">Imaš <b>%1$s neraspodjeljenih bodova</b></string>

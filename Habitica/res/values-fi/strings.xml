@@ -119,9 +119,7 @@
     <string name="setup_task_creativity_1">Hio taitojasi</string>
     <string name="setup_task_creativity_2">Tee jotain luovaa</string>
     <string name="setup_task_creativity_3">Sain luovan projektin valmiiksi</string>
-    <string name="my_guilds">Minun killat</string>
-    <string name="public_guilds">Julkiset killat</string>
-    <string name="guild">Kilta</string>
+            <string name="guild">Kilta</string>
     <string name="leave">Poistu</string>
     <string name="join">Liity</string>
     <string name="delete">Poista</string>
@@ -129,7 +127,6 @@
     <string name="description">Kuvaus</string>
     <string name="privacy">Yksityisyys</string>
     <string name="write_message">Kirjoita viesti</string>
-    <string name="guild_search_hint">Hae kiltoja</string>
     <string name="battle_gear">Taisteluvarustus</string>
     <string name="costume">Asu</string>
     <string name="outfit_head">Pää</string>

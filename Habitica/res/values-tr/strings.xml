@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Bir zanaat uzmanlığına çalış</string>
     <string name="setup_task_creativity_2">Yaratıcı bir proje üzerinde çalış</string>
     <string name="setup_task_creativity_3">Yaratıcı projeyi bitir</string>
-    <string name="my_guilds">Loncalarım</string>
-    <string name="public_guilds">Açık Loncalar</string>
-    <string name="guild">Lonca</string>
+            <string name="guild">Lonca</string>
     <string name="leave">Ayrıl</string>
     <string name="join">Katıl</string>
     <string name="delete">Sil</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Yeni Etiket ekle</string>
     <string name="privacy">Gizlilik</string>
     <string name="write_message">Mesaj Yaz</string>
-    <string name="guild_search_hint">Lonca ara</string>
     <string name="battle_gear">Savaş Ekipmanı</string>
     <string name="costume">Kostüm</string>
     <string name="outfit_head">Kafa</string>
@@ -523,7 +520,6 @@
     <string name="classless">Sınıfsız</string>
     <string name="class_equipment_shop_dialog">Bu eşya yalnızca belirli bir sınıf için geçerlidir.\nAyarlardan sınıfını değiştirebilirsin.</string>
     <string name="class_gear_disclaimer">Yalnızca şu anki sınıfın için olan ekipmanları satın alabilirsin</string>
-    <string name="tavern_description">Hana hoş geldin! Sohbet etmek veya işlerine biraz ara vermek için bir sandalye çek.</string>
     <string name="check_into_inn">Han\'a Gir</string>
     <string name="community_guidelines">Topluluk Kuralları</string>
     <string name="view_community_guidelines">Topluluk Kuralları\'nı Gör</string>
@@ -565,7 +561,6 @@
     <string name="questShop_owner_long">Görev Rehberi Ian</string>
     <string name="seasonalShop_owner_long">Mevsimsel Büyücü</string>
     <string name="rage_attack">Öfke saldırısı:</string>
-    <string name="tavern_description_world_boss">Ah canım, aşağıdaki canavarı görmezden gel — burası hala molalarında sohbet etmen için güvenli bir bölge.</string>
     <string name="report">Bildir</string>
     <string name="reply">Cevapla</string>
     <string name="challenge_prize">Mücadele Ödülü</string>
@@ -653,8 +648,6 @@
     <string name="unallocated_stats_points"><![CDATA[<b>%1$s adet dağıtılmamış Nitelik Puanın var.</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Yeni <b>Gizemli Eşyaların</b> var]]></string>
     <string name="invited_to_party_notification"><![CDATA[<b>%2$s</b> Takımına davet edildin <font color=#925CF3>%1$s</font>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[<b>%1$s</b> adlı özel Loncaya davet edildin]]></string>
-    <string name="invited_to_public_guild"><![CDATA[<b>%1$s</b> adlı Loncaya davet edildin]]></string>
     <string name="invited_to_quest"><![CDATA[<b>%1$s</b> Görevine davet edildin]]></string>
     <string name="ago_weeks">%d hafta önce</string>
     <string name="ago_1week">1h önce</string>

@@ -155,9 +155,7 @@
     <string name="setup_task_creativity_1">學習以成為藝術能手</string>
     <string name="setup_task_creativity_2">進行創新項目</string>
     <string name="setup_task_creativity_3">完成創新項目</string>
-    <string name="my_guilds">我的工會</string>
-    <string name="public_guilds">公共公會</string>
-    <string name="guild">公會</string>
+            <string name="guild">公會</string>
     <string name="leave">離開</string>
     <string name="join">加入</string>
     <string name="delete">刪除</string>
@@ -166,7 +164,6 @@
     <string name="add_tag">添加新標籤</string>
     <string name="privacy">隱私</string>
     <string name="write_message">寫訊息</string>
-    <string name="guild_search_hint">搜尋公會</string>
     <string name="battle_gear">戰鬥裝備</string>
     <string name="costume">服裝</string>
     <string name="outfit_head">頭部</string>
@@ -508,7 +505,6 @@
     <string name="classless">無職業</string>
     <string name="class_equipment_shop_dialog">這個物品只對特定職業開放。\n你可以在設置改變你的職業。</string>
     <string name="class_gear_disclaimer">你只能購買當前職業的裝備</string>
-    <string name="tavern_description">歡迎來到酒館小棧！拉張椅子坐下聊天，或者暫停任務休息一下。</string>
     <string name="check_into_inn">入住客棧</string>
     <string name="community_guidelines">社群規範</string>
     <string name="view_community_guidelines">查看社群規範</string>
@@ -578,7 +574,6 @@
     <string name="delete_oauth_account_description">這個操作會永久刪除你的賬戶，無法恢復！剩餘或者已經消費的寶石都無法退款，如果你不容置疑，在下方文本框寫“DELETE”。</string>
     <string name="change_username">修改使用者名稱</string>
     <string name="join_party_description">把下方的用戶名給一個隊伍成員，這樣他們就能邀請你加入了</string>
-    <string name="tavern_description_world_boss">噢我親愛的老夥計，不用擔心下面的怪物，這裏仍然是一個安全的避風港，來聊聊天吧。</string>
     <string name="same_day_reminder_title">你添加任務了嗎？</string>
     <string name="same_day_reminder_text">你增加得越多，獎勵就會越多。溪流終將匯聚成大海。</string>
     <string name="next_day_reminder_title">今天完成任務了嗎？</string>
@@ -652,8 +647,6 @@
     <string name="unallocated_stats_points"><![CDATA[你有<b>%1$s點未分配屬性點</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[您有新的<b>神秘裝備</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> 您受邀加入<b>%2$s</b>隊伍]]></string>
-    <string name="invited_to_private_guild"><![CDATA[您受邀加入<b>%1$s</b>私人公會]]></string>
-    <string name="invited_to_public_guild"><![CDATA[您受邀加入<b>%1$s</b>您受邀加入]]></string>
     <string name="invited_to_quest"><![CDATA[您受邀加入<b>%1$s</b>副本]]></string>
     <string name="empty_title_dailies_filtered">沒有每日任務</string>
     <string name="empty_description_habits_filtered">你的篩選中沒有任何習慣。</string>

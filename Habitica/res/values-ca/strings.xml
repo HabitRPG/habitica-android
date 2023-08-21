@@ -124,9 +124,7 @@
     <string name="setup_task_creativity_1">Estudiar fins a dominar la tècnica </string>
     <string name="setup_task_creativity_2">Treballar en projecte creatiu</string>
     <string name="setup_task_creativity_3">Acabar projecte creatiu</string>
-    <string name="my_guilds">Els meus Gremis</string>
-    <string name="public_guilds">Gremis Publics</string>
-    <string name="guild">Gremi</string>
+            <string name="guild">Gremi</string>
     <string name="leave">Abandonar</string>
     <string name="join">Unir-se</string>
     <string name="delete">Eliminar</string>
@@ -134,7 +132,6 @@
     <string name="description">Descripció</string>
     <string name="privacy">Privacitat</string>
     <string name="write_message">Escriu Missatge</string>
-    <string name="guild_search_hint">Cercar Gremis</string>
     <string name="battle_gear">Roba de batalla</string>
     <string name="costume">Vestit</string>
     <string name="outfit_head">Cap</string>

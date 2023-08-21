@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         tools:text="Not getting the right eggs from tasks?"
         android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginBottom="4dp"
         android:gravity="center_horizontal"
         style="@style/SubHeader1"/>
     <TextView

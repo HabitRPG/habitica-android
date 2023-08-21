@@ -14,6 +14,5 @@
     <string name="tutorial_tasks_complete">이제 다 되었네요. 다시 보고 싶으시면 FAQ를 확인하세요.</string>
     <string name="tutorial_skills">스킬은 강력한 효과를 가진 능력입니다! 사용하고자 하는 스킬은 터치하면 됩니다. 스킬은 마나 (파란색 바)를 사용하는데, 마나는 매일 출석하고 일상생활의 과제들을 달성하면 채워집니다. 궁금한 점은 FAQ를 참고하세요!</string>
     <string name="tutorial_party">이곳에서는 친구들과 함께 서로의 목표에 대한 책임을 공유하고 과제를 달성하면서 함께 몬스터를 무찌를 수 있습니다!</string>
-    <string name="tutorial_tavern">주막에 오신 것을 환영합니다! 여기는 누구나 채팅할수있는 채팅방입니다. 묻고싶은 것이 있으면 여기서 물어보세요. 좋은 시간 보내시길 바랍니다!</string>
     <string name="tutorial_stats">많은 능력치를 한꺼번에 배분하려면 회색 버튼을 누르시고, 한 포인트씩 따로 할당하려면 화살표를 누르세요.</string>
 </resources>

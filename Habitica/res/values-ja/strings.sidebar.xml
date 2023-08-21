@@ -4,9 +4,7 @@
     <string name="sidebar_skills">スキル</string>
     <string name="sidebar_section_social">コミュニティ</string>
     <string name="sidebar_inbox">メッセージ</string>
-    <string name="sidebar_tavern">キャンプ場</string>
     <string name="sidebar_party">パーティー</string>
-    <string name="sidebar_guilds">ギルド</string>
     <string name="sidebar_challenges">チャレンジ</string>
     <string name="sidebar_section_inventory">所持品</string>
     <string name="sidebar_avatar">アバターカスタマイズ</string>

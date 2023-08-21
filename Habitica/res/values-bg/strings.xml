@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Да се уча от майстор в занаята</string>
     <string name="setup_task_creativity_2">Да работя по проекта си</string>
     <string name="setup_task_creativity_3">Да завърша проекта си</string>
-    <string name="my_guilds">Моите гилдии</string>
-    <string name="public_guilds">Обществени гилдии</string>
-    <string name="guild">Гилдия</string>
+            <string name="guild">Гилдия</string>
     <string name="leave">Напускане</string>
     <string name="join">Присъединяване</string>
     <string name="delete">Изтриване</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Добавяне на нов етикет</string>
     <string name="privacy">Поверителност</string>
     <string name="write_message">Напишете съобщение</string>
-    <string name="guild_search_hint">Търсене на гилдии</string>
     <string name="battle_gear">Бойно снаряжение</string>
     <string name="costume">Костюм</string>
     <string name="outfit_head">Глава</string>
@@ -522,7 +519,6 @@
     <string name="classless">Без клас</string>
     <string name="class_equipment_shop_dialog">Този предмет е предназначен само за определен клас.\nМожете да промените класа си от Настройките.</string>
     <string name="class_gear_disclaimer">Можете да купувате екипировка само за текущия си клас</string>
-    <string name="tavern_description">Добре дошли в Странноприемницата! Поседнете, за да си поговорим, или за да си починете от задачите.</string>
     <string name="check_into_inn">Влизане в странноприемницата</string>
     <string name="community_guidelines">Обществени правила</string>
     <string name="view_community_guidelines">Преглед на Обществените правила</string>
@@ -564,7 +560,6 @@
     <string name="questShop_owner_long">Иън Пазителят на Мисиите</string>
     <string name="seasonalShop_owner_long">Сезонната магьосница</string>
     <string name="rage_attack">Яростна атака:</string>
-    <string name="tavern_description_world_boss">Не обръщай внимание на чудовището по-долу – това все още е спокойно място за разговори по време на почивките Ви.</string>
     <string name="report">Докладване</string>
     <string name="reply">Отговор</string>
     <string name="challenge_prize">Награда за предизвикателството</string>
@@ -644,7 +639,5 @@
     <string name="unallocated_stats_points"><![CDATA[Имате <b>%1$s неразпределени показателни точки</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Имате нов <b>тайнствен предмет</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Получихте покана за присъединяване към групата <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Получихте покана за присъединяване към частната гилдия <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Получихте покана за присъединяване към гилдията <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Получихте покана за присъединяване в мисията <b>%1$s</b>]]></string>
 </resources>

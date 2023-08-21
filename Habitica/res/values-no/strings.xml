@@ -140,9 +140,7 @@
     <string name="setup_task_creativity_1">Studer en mester i håndverket</string>
     <string name="setup_task_creativity_2">Jobb på kreativt prosjekt</string>
     <string name="setup_task_creativity_3">Fullfør kreativt prosjekt</string>
-    <string name="my_guilds">Mine Laug</string>
-    <string name="public_guilds">Offentlige Laug</string>
-    <string name="guild">Laug</string>
+            <string name="guild">Laug</string>
     <string name="leave">Forlat</string>
     <string name="join">Bli med</string>
     <string name="delete">Slett</string>
@@ -151,7 +149,6 @@
     <string name="add_tag">Legg til ny Merkelapp</string>
     <string name="privacy">Privatliv</string>
     <string name="write_message">Skriv Melding</string>
-    <string name="guild_search_hint">Søk etter laug</string>
     <string name="battle_gear">Kamputstyr</string>
     <string name="costume">Kostyme</string>
     <string name="outfit_head">Hode</string>

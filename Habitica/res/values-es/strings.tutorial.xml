@@ -14,6 +14,5 @@
   <string name="tutorial_tasks_complete">Eso es todo por ahora. Si necesitas un recordatorio, consulta la sección de Preguntas Frecuentes.</string>
     <string name="tutorial_skills">Las habilidades son competencias especiales con efectos muy poderosos. Para usar una habilidad, solo tienes que pulsar en ella. Te costará maná (la barra azul), que puedes recuperar entrando todos los días y realizando tareas en la vida real. Para obtener más información, puedes consultar la sección de preguntas frecuentes en el menú!</string>
   <string name="tutorial_party">Aquí es donde tú y tus amigos podéis estar pendientes unos de otros para cumplir vuestros objetivos y combatir monstruos con vuestras tareas!</string>
-  <string name="tutorial_tavern">Te damos la bienvenida a la Taberna, una sala de chat pública para todas las edades. Aquí, puedes hablar de productividad y preguntar lo que quieras. ¡Que te diviertas!</string>
     <string name="tutorial_stats">Toca el botón gris para asignar los puntos de tus atributos de una sola vez, o toca las flechas para agregarlos punto por punto.</string>
 </resources>

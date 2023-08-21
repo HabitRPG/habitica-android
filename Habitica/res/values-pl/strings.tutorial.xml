@@ -14,6 +14,5 @@
   <string name="tutorial_tasks_complete">To wszystko na razie. Jeżeli potrzebujesz przypomnienia, sprawdź sekcję FAQ.</string>
     <string name="tutorial_skills">Umiejętności to specjalne zdolności, które mają potężne efekty! Stuknij umiejętność, aby jej użyć. To kosztuje Mana (niebieski pasek), którą zyskujesz zaglądając tu codziennie i kończąc zadania w prawdziwym świecie. Aby dowiedzieć się więcej, zaglądnij do FAQ w menu!</string>
   <string name="tutorial_party">Tutaj Ty i Twoi przyjaciele pilnujecie wzajemnie swoich celów i walczycie z potworami poprzez swoje zadania!</string>
-  <string name="tutorial_tavern">Witaj w Karczmie - publicznym czacie dla wszystkich grup wiekowych! Możecie tu rozmawiać o produktywności i zadawać pytania. Miłej zabawy!</string>
     <string name="tutorial_stats">Naciśnij szary przycisk by przydzielić dużo punktów statystyk na raz albo naciskaj strzałki by przydzielać je pojedynczo. </string>
 </resources>

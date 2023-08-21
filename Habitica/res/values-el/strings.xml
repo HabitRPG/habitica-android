@@ -118,9 +118,7 @@
     <string name="setup_task_school_1">Διάβασμα/Αναβολή</string>
     <string name="setup_task_chores_2">Πλύσιμο Πιάτων</string>
     <string name="setup_task_chores_3">Οργάνωση ντουλάπας</string>
-    <string name="my_guilds">Οι Συντεχνίες μου</string>
-    <string name="public_guilds">Δημόσιες Συντεχνίες</string>
-    <string name="guild">Συντεχνία</string>
+            <string name="guild">Συντεχνία</string>
     <string name="leave">Αποχώρηση</string>
     <string name="delete">Διαγραφή</string>
     <string name="name">Όνομα</string>
@@ -128,7 +126,6 @@
     <string name="add_tag">Προσθήκη νέας ετικέτας</string>
     <string name="privacy">Ιδιωτικότητα</string>
     <string name="write_message">Εγγραφή Μηνύματος</string>
-    <string name="guild_search_hint">Ψάξε για Συντεχνίες</string>
     <string name="battle_gear">Εξοπλισμός Μάχης</string>
     <string name="costume">Κουστούμι</string>
     <string name="outfit_head">Κεφάλι</string>

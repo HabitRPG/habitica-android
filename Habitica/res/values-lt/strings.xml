@@ -136,9 +136,7 @@
     <string name="setup_task_creativity_1">Mokytis amato</string>
     <string name="setup_task_creativity_2">Dirbti prie kūrybinio projekto</string>
     <string name="setup_task_creativity_3">Baigti kūrybinį projektą</string>
-    <string name="my_guilds">Mano Gildijos</string>
-    <string name="public_guilds">Viešos Gildijos</string>
-    <string name="guild">Gildija</string>
+            <string name="guild">Gildija</string>
     <string name="leave">Palikti</string>
     <string name="join">Prisijungti</string>
     <string name="delete">Trinti</string>
@@ -146,7 +144,6 @@
     <string name="description">Aprašymas</string>
     <string name="privacy">Privatumas</string>
     <string name="write_message">Rašyti Žinutę</string>
-    <string name="guild_search_hint">Ieškoti gildijų</string>
     <string name="battle_gear">Kovinė Apranga</string>
     <string name="costume">Kostiumas</string>
     <string name="outfit_head">Galva</string>

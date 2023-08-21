@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">手芸を習う</string>
     <string name="setup_task_creativity_2">創造的なプロジェクトで働く</string>
     <string name="setup_task_creativity_3">創造的なプロジェクトを完了する</string>
-    <string name="my_guilds">所属ギルド</string>
-    <string name="public_guilds">公共ギルド</string>
-    <string name="guild">ギルド</string>
+            <string name="guild">ギルド</string>
     <string name="leave">やめる</string>
     <string name="join">参加する</string>
     <string name="delete">削除</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">タグを追加する</string>
     <string name="privacy">プライバシー</string>
     <string name="write_message">メッセージを書く</string>
-    <string name="guild_search_hint">ギルドを検索</string>
     <string name="battle_gear">武装</string>
     <string name="costume">衣装</string>
     <string name="outfit_head">頭</string>
@@ -523,7 +520,6 @@
     <string name="class_equipment_shop_dialog">このアイテムは特定のクラスにのみ利用可能です、\n
 クラスはセッティングから変更できます。</string>
     <string name="class_gear_disclaimer">現在のクラス用の装備しか購入できません</string>
-    <string name="tavern_description">ロッジにようこそ！腰掛けてチャットをし、タスクを休憩しましょう。</string>
     <string name="check_into_inn">宿にチェックインする</string>
     <string name="community_guidelines">コミュニティガイドライン</string>
     <string name="view_community_guidelines">コミュニティガイドラインを見る</string>
@@ -565,7 +561,6 @@
     <string name="questShop_owner_long">クエストガイドのIan</string>
     <string name="seasonalShop_owner_long">季節の魔女</string>
     <string name="rage_attack">怒りの攻撃：</string>
-    <string name="tavern_description_world_boss">やれやれ、下の方にいるモンスターは気にしないでください。——あなたが休憩にチャットするにはまだ安全ですから。</string>
     <string name="report">報告</string>
     <string name="reply">返信する</string>
     <string name="challenge_prize">チャレンジの賞品</string>
@@ -653,8 +648,6 @@
     <string name="unallocated_stats_points"><![CDATA[<b>%1$sポイントが割り当てできます。</b>]]></string>
     <string name="new_subscriber_item">新しい<b>ミステリーアイテム</b></string>
     <string name="invited_to_party_notification">パーティー「<b>%1$s</b>」に招待されました %2$s</string>
-    <string name="invited_to_private_guild">プライベートギルド「<b>%1$s</b>」に招待されました</string>
-    <string name="invited_to_public_guild">「<b>%1$s</b>」ギルドに招待されました</string>
     <string name="invited_to_quest"><b>%1$s</b>クエストに招待されました</string>
     <string name="ago_months">%dヶ月前</string>
     <string name="ago_1month">1ヶ月前</string>

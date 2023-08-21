@@ -192,9 +192,7 @@
     <string name="setup_task_creativity_2">Work on creative project</string>
     <string name="setup_task_creativity_3">Finish creative project</string>
 
-    <string name="my_guilds">My Guilds</string>
-    <string name="public_guilds">Public Guilds</string>
-    <string name="guild">Guild</string>
+            <string name="guild">Guild</string>
     <string name="leave">Leave</string>
     <string name="join">Join</string>
     <string name="delete">Delete</string>
@@ -203,7 +201,6 @@
     <string name="add_tag">Add new Tag</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Write Message</string>
-    <string name="guild_search_hint">Search for guilds</string>
 
     <string name="battle_gear">Battle Gear</string>
     <string name="costume">Costume</string>
@@ -640,11 +637,10 @@
     <string name="class_equipment_shop_dialog">This item is only available to a specific class.\nYou can change your class from Settings.</string>
     <string name="insufficient_level_equipment_dialog">This item is only available to a specific class.\nYou can select a class after level 10.</string>
     <string name="class_gear_disclaimer">You can only purchase gear for your current class</string>
-    <string name="tavern_description">Welcome to the Inn! Pull up a chair to chat.</string>
     <string name="check_into_inn">Check into Inn</string>
     <string name="community_guidelines">Community Guidelines</string>
     <string name="view_community_guidelines">View Community Guidelines</string>
-    <string name="guidelines_description">Habitica tries to create a welcoming environment for players of all ages and backgrounds, especially in public spaces like the Tavern. If you have any questions, please consult our guidelines.</string>
+    <string name="guidelines_description">Habitica tries to create a welcoming environment for players of all ages and backgrounds. If you have any questions, please consult our guidelines.</string>
     <string name="helpful_links">Helpful Links</string>
     <string name="view_faq">View FAQ</string>
     <string name="report_bug">Report a Bug</string>
@@ -683,7 +679,6 @@
     <string name="questShop_owner_long">Ian the Quest Guide</string>
     <string name="seasonalShop_owner_long">Seasonal Sorceress</string>
     <string name="rage_attack">Rage attack:</string>
-    <string name="tavern_description_world_boss">Oh dear, pay no heed to the monster below — this is still a safe haven to chat on your breaks.</string>
     <string name="report">Report</string>
     <string name="reply">Reply</string>
     <string name="challenge_prize">Challenge Prize</string>
@@ -773,8 +768,6 @@
     <string name="unallocated_stats_points"><![CDATA[You have <b>%1$s unallocated Stat Points</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[You have new <b>Mystery Items</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%2$s</font> has invited you to join the party <b>%1$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[You were invited to join the private Guild <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[You were invited to join the Guild <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[You were invited to the Quest <b>%1$s</b>]]></string>
     <string name="defeat">Defeat</string>
     <string name="create">Create</string>

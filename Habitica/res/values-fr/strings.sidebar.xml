@@ -4,9 +4,7 @@
     <string name="sidebar_skills">Compétences</string>
     <string name="sidebar_section_social">Social</string>
     <string name="sidebar_inbox">Messages</string>
-    <string name="sidebar_tavern">Auberge</string>
     <string name="sidebar_party">Équipe</string>
-    <string name="sidebar_guilds">Guildes</string>
     <string name="sidebar_challenges">Défis</string>
     <string name="sidebar_section_inventory">Inventaire</string>
     <string name="sidebar_avatar">Personnalisation de l\'avatar</string>

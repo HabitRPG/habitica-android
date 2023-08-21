@@ -144,9 +144,7 @@
     <string name="join">Приєднатись</string>
     <string name="leave">Залишити</string>
     <string name="guild">Гільдія</string>
-    <string name="public_guilds">Відкриті гільдії</string>
-    <string name="my_guilds">Мої гільдії</string>
-    <string name="setup_task_creativity_3">Завершити творчий проєкт</string>
+            <string name="setup_task_creativity_3">Завершити творчий проєкт</string>
     <string name="setup_task_creativity_2">Попрацювати над творчим проєктом</string>
     <string name="setup_task_creativity_1">Покращити навик володіння ремеслом</string>
     <string name="setup_task_chores_3">Скласти речі в шафі</string>
@@ -191,7 +189,6 @@
     <string name="outfit_headAccessory">Акс. для голови</string>
     <string name="outfit_head">Головний убір</string>
     <string name="costume">Наряд</string>
-    <string name="guild_search_hint">Пошук гільдій</string>
     <string name="write_message">Написати повідомлення</string>
     <string name="privacy">Конфіденційність</string>
     <string name="ago_1week">1 тиждень тому</string>
@@ -322,7 +319,6 @@
     <string name="view_community_guidelines">Переглянути правила спiльноти</string>
     <string name="community_guidelines">Правила спiльноти</string>
     <string name="check_into_inn">Поселитись в готель</string>
-    <string name="tavern_description">Ласкаво просимо в Готель! Підсувайте стілець, щоб поспілкуватися або відпочити від своїх завдань.</string>
     <string name="class_gear_disclaimer">Ви можете придбати спорядження лише для вашого поточного класу</string>
     <string name="class_equipment_shop_dialog">Цей предмет доступний лише для певного класу.
 \nВи можете змінити свій клас у налаштуваннях.</string>
@@ -796,7 +792,6 @@
     <string name="challenge_prize">Нагорода за Випробування</string>
     <string name="reply">Відповісти</string>
     <string name="report">Повідомити</string>
-    <string name="tavern_description_world_boss">О, друже, не звертай уваги на монстра нижче - це все ще надійний притулок для спілкування на перервах.</string>
     <string name="rage_attack">Атака люті:</string>
     <string name="seasonalShop_owner_long">Сезонна чарівниця</string>
     <string name="questShop_owner_long">Квест-мастер Іван</string>
@@ -1004,9 +999,7 @@
     <string name="task_title">Назва задачі</string>
     <string name="add_local_authentication">Додати локальну аутентифікацію</string>
     <string name="create_party">Створити нову команду</string>
-    <string name="invited_to_public_guild">Вас запросили в гільдію <b>%1$s</b></string>
     <string name="invited_to_quest">Вас запросили на квест <b>%1$s</b></string>
-    <string name="invited_to_private_guild">Вас запросили приєднатися до приватної гільдії <b>%1$s</b></string>
     <string name="invited_to_party_notification">%1$s Вас запросили до команди <b>%2$s</b></string>
     <string name="gift_confirmation_text_sub_g1g1">Ви відправили %s %s-місячну підписку Habitica. Ця ж підписка була застосована до вашого облікового запису, завдяки участі в акції «Подаруйте підписку, отримайте підписку»!</string>
     <string name="gift_subscription_subtitle">Виберіть підписку, яку хочете подарувати внизу! Ця покупка не буде продовжена автоматично.</string>

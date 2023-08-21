@@ -2,9 +2,7 @@
 <resources>
     <string name="sidebar_tasks">Завдання</string>
     <string name="sidebar_inbox">Повідомлення</string>
-    <string name="sidebar_tavern">Таверна</string>
     <string name="sidebar_section_inventory">Інвентар</string>
-    <string name="sidebar_guilds">Ґільдії</string>
     <string name="sidebar_gems">Придбати самоцвіти</string>
     <string name="sidebar_stable">Хлів</string>
     <string name="sidebar_news">Новини</string>
