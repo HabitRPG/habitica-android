@@ -473,8 +473,8 @@ class AvatarView : FrameLayout {
             // full hero box when showMount and showPet is enabled (140w * 147h)
             // compact hero box when only showBackground is enabled (114w * 114h)
             // hero only box when all show settings disabled (90w * 90h)
-            val viewWidth = if (width > 0) width else layoutParams.width
-            val viewHeight = if (height > 0) height else layoutParams.height
+            val viewWidth = if (width > 0) width else (layoutParams?.width ?: 140)
+            val viewHeight = if (height > 0) height else (layoutParams?.height ?: 147)
             val width = if (viewWidth > 0) viewWidth.toFloat() else 140.dpToPx(context).toFloat()
             val height = if (viewHeight > 0) viewHeight.toFloat() else 147.dpToPx(context).toFloat()
             avatarRectF = RectF(0f, 0f, width, height)

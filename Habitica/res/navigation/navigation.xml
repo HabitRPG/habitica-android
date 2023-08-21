@@ -443,24 +443,28 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.MarketFragment"
         android:label="@string/market">
         <deepLink app:uri="habitica.com/inventory/market" />
+        <deepLink app:uri="habitica.com/shops/market" />
     </fragment>
     <fragment
         android:id="@+id/questShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.QuestShopFragment"
         android:label="@string/questShop">
         <deepLink app:uri="habitica.com/inventory/quests" />
+        <deepLink app:uri="habitica.com/shops/quests" />
     </fragment>
     <fragment
         android:id="@+id/seasonalShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.SeasonalShopFragment"
         android:label="@string/seasonalShop">
         <deepLink app:uri="habitica.com/inventory/seasonal" />
+        <deepLink app:uri="habitica.com/shops/seasonal" />
     </fragment>
     <fragment
         android:id="@+id/timeTravelersShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.TimeTravelersShopFragment"
         android:label="@string/timeTravelers">
         <deepLink app:uri="habitica.com/inventory/time" />
+        <deepLink app:uri="habitica.com/shops/time" />
     </fragment>
     <fragment
         android:id="@+id/supportMainFragment"
