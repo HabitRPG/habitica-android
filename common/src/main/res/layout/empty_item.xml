@@ -29,9 +29,10 @@
     <TextView
         android:id="@+id/emptyViewDescription"
         android:layout_width="wrap_content"
+        android:maxWidth="300dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="@color/text_ternary"
         tools:text="No Items" />
 </LinearLayout>

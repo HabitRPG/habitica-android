@@ -125,9 +125,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
-        activity?.let {
-            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
-        }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         userViewModel.user.observeOnce(this) {
@@ -155,54 +152,54 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 adapter = ItemRecyclerAdapter(context)
             }
             binding?.recyclerView?.adapter = adapter
-            adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
-            adapter?.onSellItem = {
-                lifecycleScope.launchCatching {
-                    inventoryRepository.sellItem(it)
-                }
+        }
+        adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
+        adapter?.onSellItem = {
+            lifecycleScope.launchCatching {
+                inventoryRepository.sellItem(it)
             }
-            adapter?.onQuestInvitation = {
-                lifecycleScope.launchCatching {
-                    inventoryRepository.inviteToQuest(it)
-                    MainNavigationController.navigate(R.id.partyFragment)
-                }
+        }
+        adapter?.onQuestInvitation = {
+            lifecycleScope.launchCatching {
+                inventoryRepository.inviteToQuest(it)
+                MainNavigationController.navigate(R.id.partyFragment)
             }
-            adapter?.onOpenMysteryItem = {
-                lifecycleScope.launchCatching {
-                    val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
-                    val activity = activity as? MainActivity
-                    if (activity != null) {
-                        val dialog = OpenedMysteryitemDialog(activity)
-                        dialog.isCelebratory = true
-                        dialog.setTitle(R.string.mystery_item_title)
-                        dialog.binding.iconView.loadImage("shop_${item.key}")
-                        dialog.binding.titleView.text = item.text
-                        dialog.binding.descriptionView.text = item.notes
-                        dialog.addButton(R.string.equip, true) { _, _ ->
-                            lifecycleScope.launchCatching {
-                                item.key?.let { mysteryItem -> inventoryRepository.equip("equipped", mysteryItem) }
-                            }
+        }
+        adapter?.onOpenMysteryItem = {
+            lifecycleScope.launchCatching {
+                val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
+                val activity = activity as? MainActivity
+                if (activity != null) {
+                    val dialog = OpenedMysteryitemDialog(activity)
+                    dialog.isCelebratory = true
+                    dialog.setTitle(R.string.mystery_item_title)
+                    dialog.binding.iconView.loadImage("shop_${item.key}")
+                    dialog.binding.titleView.text = item.text
+                    dialog.binding.descriptionView.text = item.notes
+                    dialog.addButton(R.string.equip, true) { _, _ ->
+                        lifecycleScope.launchCatching {
+                            item.key?.let { mysteryItem -> inventoryRepository.equip("equipped", mysteryItem) }
                         }
-                        dialog.addCloseButton()
-                        dialog.enqueue()
                     }
+                    dialog.addCloseButton()
+                    dialog.enqueue()
                 }
             }
-            adapter?.onStartHatching = { showHatchingDialog(it) }
-            adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
-            adapter?.onCreateNewParty = { createNewParty() }
-            adapter?.itemType = itemType ?: ""
-            adapter?.itemText = (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText) ?: ""
-            adapter?.onOpenShop = {
-                Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
-                    "area" to "bottom",
-                    "type" to (itemType ?: "")
-                ))
-                if (itemType == "quests") {
-                    MainNavigationController.navigate(R.id.questShopFragment)
-                } else {
-                    openMarket()
-                }
+        }
+        adapter?.onStartHatching = { showHatchingDialog(it) }
+        adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
+        adapter?.onCreateNewParty = { createNewParty() }
+        adapter?.itemType = itemType ?: ""
+        adapter?.itemText = (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText) ?: ""
+        adapter?.onOpenShop = {
+            Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                "area" to "bottom",
+                "type" to (itemType ?: "")
+            ))
+            if (itemType == "quests") {
+                MainNavigationController.navigate(R.id.questShopFragment)
+            } else {
+                openMarket()
             }
         }
     }
