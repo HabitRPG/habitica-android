@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.Dispatchers
@@ -114,22 +115,26 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
             }
             adapter?.onShowPurchaseDialog = { item, isPinned ->
-                val dialog = PurchaseDialog(
-                    requireContext(),
-                    userRepository,
-                    inventoryRepository,
-                    item,
-                    mainActivity
-                )
-                dialog.shopIdentifier = shopIdentifier
-                dialog.isPinned = isPinned
-                dialog.onGearPurchased = {
-                    loadShopInventory()
-                    if (Shop.MARKET == shopIdentifier) {
-                        loadMarketGear()
+                if (item.key == "gem" && userViewModel.user.value?.isSubscribed != true) {
+                    MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                } else {
+                    val dialog = PurchaseDialog(
+                        requireContext(),
+                        userRepository,
+                        inventoryRepository,
+                        item,
+                        mainActivity
+                    )
+                    dialog.shopIdentifier = shopIdentifier
+                    dialog.isPinned = isPinned
+                    dialog.onGearPurchased = {
+                        loadShopInventory()
+                        if (Shop.MARKET == shopIdentifier) {
+                            loadMarketGear()
+                        }
                     }
+                    dialog.show()
                 }
-                dialog.show()
             }
 
             adapter?.context = context
@@ -301,11 +306,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     val user = userViewModel.user.value
                     val specialCategory = ShopCategory()
                     specialCategory.text = getString(R.string.special)
-                    if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
-                        val item = ShopItem.makeGemItem(context?.resources)
-                        item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft
-                        specialCategory.items.add(item)
-                    }
+                    val item = ShopItem.makeGemItem(context?.resources)
+                    item.limitedNumberLeft = user?.purchased?.plan?.numberOfGemsLeft
+                    specialCategory.items.add(item)
                     specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
                     shop1.categories.add(specialCategory)
                 }

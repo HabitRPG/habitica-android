@@ -106,15 +106,19 @@
     </entry>
 
     <entry>
-        <key>enableNewArmoire</key>
-        <value>true</value>
-    </entry>
-    <entry>
         <key>enableArmoireAds</key>
         <value>false</value>
     </entry>
     <entry>
         <key>enableFaintAds</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>enableArmoireSubs</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>enableFaintSubs</key>
         <value>false</value>
     </entry>
     <entry>

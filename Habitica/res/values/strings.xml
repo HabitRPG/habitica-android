@@ -381,6 +381,7 @@
     <string name="subscribe_listitem2">Mystic Hourglasses</string>
     <string name="subscribe_listitem3">Monthly Mystery Items</string>
     <string name="subscribe_listitem4">Special Subscriber Pet</string>
+    <string name="subscribe_listitemFaint">Hang on with 1 HP!</string>
     <string name="subscribe_listitem5">Double the Drops</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="subscription_duration">Recurring every %s</string>
@@ -391,6 +392,7 @@
     <string name="subscribe_listitem3_description">Subscribe now to get an exclusive set now and receive new items every month!</string>
     <string name="subscribe_listitem3_description_new">Subscribe now to get this %s and receive new items every month!</string>
     <string name="subscribe_listitem4_description">Receive the Royal Purple Jackalope pet when you become a new subscriber.</string>
+    <string name="subscribe_listitemFaint_description">You’ll have the option of a second chance when you run out of HP.</string>
     <string name="subscribe_listitem5_description">Discover even more items in Habitica with a 2x bonus daily drop cap.</string>
     <string name="subscribe1month_gemcap">25 Gem cap</string>
     <string name="subscribe3month_gemcap">30 Gem cap</string>

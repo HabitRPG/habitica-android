@@ -151,12 +151,16 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
         return remoteConfig.getBoolean("enableFaintAds")
     }
 
-    fun enableSpellAds(): Boolean {
-        return remoteConfig.getBoolean("enableSpellAds")
+    fun enableArmoireSubs(): Boolean {
+        return remoteConfig.getBoolean("enableArmoireSubs")
     }
 
-    fun enableNewArmoire(): Boolean {
-        return remoteConfig.getBoolean("enableNewArmoire")
+    fun enableFaintSubs(): Boolean {
+        return remoteConfig.getBoolean("enableFaintSubs")
+    }
+
+    fun enableSpellAds(): Boolean {
+        return remoteConfig.getBoolean("enableSpellAds")
     }
 
     fun hideChallenges(): Boolean {

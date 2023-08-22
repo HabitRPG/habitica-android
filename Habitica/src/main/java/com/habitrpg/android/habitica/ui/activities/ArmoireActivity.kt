@@ -2,7 +2,6 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AccelerateInterpolator
@@ -81,23 +80,7 @@ class ArmoireActivity : BaseActivity() {
                 if (!it) {
                     return@AdHandler
                 }
-                Log.d("AdHandler", "Giving Armoire")
-                val user = userViewModel.user.value ?: return@AdHandler
-                val currentGold = user.stats?.gp ?: return@AdHandler
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    userRepository.updateUser("stats.gp", currentGold + 100)
-                    val buyResponse = inventoryRepository.buyItem(user, "armoire", 100.0, 1) ?: return@launch
-                    configure(
-                        buyResponse.armoire["type"] ?: "",
-                        buyResponse.armoire["dropKey"] ?: "",
-                        buyResponse.armoire["dropText"] ?: "",
-                        buyResponse.armoire["value"] ?: ""
-                    )
-                    binding.adButton.state = AdButton.State.UNAVAILABLE
-                    binding.adButton.visibility = View.INVISIBLE
-                    hasAnimatedChanges = false
-                    gold = null
-                }
+                giveUserArmoire()
             }
             handler.prepare {
                 if (it && binding.adButton.state == AdButton.State.LOADING) {
@@ -132,6 +115,27 @@ class ArmoireActivity : BaseActivity() {
             equipmentKey = args.key
             configure(args.type, args.key, args.text, args.value)
         }
+    }
+
+    private fun giveUserArmoire(): Boolean {
+        val user = userViewModel.user.value ?: return true
+        val currentGold = user.stats?.gp ?: return true
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.updateUser("stats.gp", currentGold + 100)
+            val buyResponse =
+                inventoryRepository.buyItem(user, "armoire", 100.0, 1) ?: return@launch
+            configure(
+                buyResponse.armoire["type"] ?: "",
+                buyResponse.armoire["dropKey"] ?: "",
+                buyResponse.armoire["dropText"] ?: "",
+                buyResponse.armoire["value"] ?: ""
+            )
+            binding.adButton.state = AdButton.State.UNAVAILABLE
+            binding.adButton.visibility = View.INVISIBLE
+            hasAnimatedChanges = false
+            gold = null
+        }
+        return false
     }
 
     override fun onResume() {
