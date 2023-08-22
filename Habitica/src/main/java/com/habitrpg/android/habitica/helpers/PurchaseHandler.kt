@@ -149,17 +149,22 @@ class PurchaseHandler(
         billingClientState = BillingClientState.CONNECTING
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    billingClientState = BillingClientState.READY
-                    MainScope().launchCatching {
-                        queryPurchases()
+                when (billingResult.responseCode) {
+                    BillingClient.BillingResponseCode.OK -> {
+                        billingClientState = BillingClientState.READY
+                        MainScope().launchCatching {
+                            queryPurchases()
+                        }
                     }
-                } else if (billingResult.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) {
-                    retryListening()
-                } else if (billingResult.responseCode == BillingClient.BillingResponseCode.SERVICE_TIMEOUT) {
-                    retryListening()
-                } else {
-                    billingClientState = BillingClientState.UNAVAILABLE
+                    BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
+                        retryListening()
+                    }
+                    BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> {
+                        retryListening()
+                    }
+                    else -> {
+                        billingClientState = BillingClientState.UNAVAILABLE
+                    }
                 }
             }
 
@@ -286,7 +291,7 @@ class PurchaseHandler(
         if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED || processedPurchases.contains(purchase.orderId)) {
             return
         }
-        processedPurchases.add(purchase.orderId)
+        purchase.orderId?.let { processedPurchases.add(it) }
         val sku = purchase.products.firstOrNull()
         when {
             sku == PurchaseTypes.JubilantGrphatrice -> {
@@ -496,7 +501,7 @@ class PurchaseHandler(
         if (displayedConfirmations.contains(purchase.orderId)) {
             return
         }
-        displayedConfirmations.add(purchase.orderId)
+        purchase.orderId?.let { displayedConfirmations.add(it) }
         CoroutineScope(Dispatchers.Main).launchCatching {
             val application = (context as? HabiticaBaseApplication)
                 ?: (context.applicationContext as? HabiticaBaseApplication) ?: return@launchCatching

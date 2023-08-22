@@ -51,7 +51,7 @@ dependencies {
     implementation('com.jaredrummler:android-device-names:2.1.1')
 
     // IAP Handling / Verification
-    implementation "com.android.billingclient:billing-ktx:5.2.0"
+    implementation "com.android.billingclient:billing-ktx:6.0.1"
     implementation 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
 
     implementation("io.coil-kt:coil-compose:$coil_version")
