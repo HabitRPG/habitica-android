@@ -14,7 +14,6 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil.dispose
@@ -73,8 +72,8 @@ class AvatarView : FrameLayout {
             if (BuildConfig.DEBUG && (avatar == null || avatarRectF == null)) {
                 error("Assertion failed")
             }
-            val viewWidth = if (width > 0) width else layoutParams.width
-            val viewHeight = if (height > 0) height else layoutParams.height
+            val viewWidth = if (width > 0) width else (layoutParams?.width ?: 140)
+            val viewHeight = if (height > 0) height else (layoutParams?.height ?: 147)
             val canvasRect = Rect(0, 0, if (viewWidth > 0) viewWidth else 140.dpToPx(context), if (viewHeight > 0) viewHeight else 147.dpToPx(context))
             if (canvasRect.isEmpty) return null
             avatarBitmap = Bitmap.createBitmap(

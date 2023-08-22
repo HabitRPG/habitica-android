@@ -1405,6 +1405,9 @@
     <string name="eggs_footer_description">Check out the [Market](/shops/market) to buy just the eggs you need!</string>
     <string name="food_footer_description">Check out the [Market](/shops/market) to buy food or a Saddle to instantly raise your Pet!</string>
     <string name="hatchingPotions_footer_description">Check out the [Market](/shops/market) to buy standard and seasonal Hatching Potions!</string>
+    <string name="open_profile">Open Profile</string>
+    <string name="customize_avatar">Customize Avatar</string>
+    <string name="share_avatar">Share Avatar</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>

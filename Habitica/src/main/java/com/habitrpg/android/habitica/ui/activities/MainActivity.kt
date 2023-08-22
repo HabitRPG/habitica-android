@@ -17,9 +17,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.view.children
 import androidx.core.view.setPadding
 import androidx.drawerlayout.widget.DrawerLayout
@@ -45,13 +54,13 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
 import com.habitrpg.android.habitica.interactors.DisplayItemDropUseCase
 import com.habitrpg.android.habitica.interactors.NotifyUserUseCase
+import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
@@ -61,7 +70,9 @@ import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
+import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.GroupPlanMemberList
+import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
@@ -75,6 +86,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
@@ -284,6 +296,63 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     teamPlan = if (canShowTeamHeader) teamPlan else null,
                     teamPlanMembers = teamPlanMembers,
                     isMyProfile = true,
+                    onAvatarClicked = {
+                        showAsBottomSheet { dismiss ->
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(4.dp),
+                                modifier = Modifier.padding(22.dp)
+                            ) {
+                                ComposableAvatarView(avatar = user)
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(15.dp),
+                                ) {
+                                    HabiticaButton(
+                                        background = HabiticaTheme.colors.tintedUiSub,
+                                        color = Color.White,
+                                        onClick = {
+                                            dismiss()
+                                            MainNavigationController.navigate(R.id.openProfileActivity)
+                                        }) {
+                                        Text(stringResource(id = R.string.open_profile))
+                                    }
+
+                                    HabiticaButton(
+                                        background = HabiticaTheme.colors.tintedUiSub,
+                                        color = Color.White,
+                                        onClick = {
+                                            dismiss()
+                                            MainNavigationController.navigate(R.id.avatarOverviewFragment)
+                                        }) {
+                                        Text(stringResource(id = R.string.customize_avatar))
+                                    }
+
+                                    HabiticaButton(
+                                        background = HabiticaTheme.colors.tintedUiSub,
+                                        color = Color.White,
+                                        onClick = {
+                                            dismiss()
+                                            user?.let {
+                                                val usecase = ShareAvatarUseCase()
+                                                lifecycleScope.launchCatching {
+                                                    usecase.callInteractor(
+                                                        ShareAvatarUseCase.RequestValues(
+                                                            this@MainActivity,
+                                                            it,
+                                                            null,
+                                                            "avatar_bottomsheet"
+                                                        )
+                                                    )
+                                                }
+                                            }
+                                        }) {
+                                        Text(stringResource(id = R.string.share_avatar))
+                                    }
+                                }
+                            }
+                        }
+                    },
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
                             val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(

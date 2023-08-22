@@ -1,8 +1,6 @@
 package com.habitrpg.android.habitica.interactors
 
-import android.graphics.Bitmap
 import android.view.ViewGroup
-import androidx.core.graphics.scale
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogLevelup10Binding
 import com.habitrpg.android.habitica.helpers.SoundManager
@@ -64,14 +62,6 @@ constructor(
                 dialogAvatarView.setAvatar(requestValues.user)
             }
 
-            val message = requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel)
-            val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
-            avatarView.setAvatar(requestValues.user)
-            var sharedImage: Bitmap? = null
-            avatarView.onAvatarImageReady { image ->
-                sharedImage = image?.scale(image.width * 3, image.height * 3, false)
-            }
-
             val alert = HabiticaAlertDialog(requestValues.activity)
             alert.setTitle(requestValues.activity.getString(R.string.levelup_header, requestValues.newLevel))
             alert.setAdditionalContentView(customView)
@@ -81,7 +71,16 @@ constructor(
                 }
             }
             alert.addButton(R.string.share, false) { _, _ ->
-                requestValues.activity.shareContent("levelup", message, sharedImage)
+                MainScope().launchCatching {
+                    val usecase = ShareAvatarUseCase()
+                    usecase.callInteractor(ShareAvatarUseCase.RequestValues(
+                        requestValues.activity,
+                        requestValues.user,
+                        requestValues.activity.getString(R.string.share_levelup, requestValues.newLevel),
+                        "levelup"
+                    ))
+                }
+
             }
             alert.isCelebratory = true
 

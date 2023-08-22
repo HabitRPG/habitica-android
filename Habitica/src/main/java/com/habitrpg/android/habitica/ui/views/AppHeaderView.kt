@@ -106,6 +106,7 @@ fun AppHeaderView(
     isMyProfile : Boolean = false,
     teamPlan : TeamPlan? = null,
     teamPlanMembers : List<Member>? = null,
+    onAvatarClicked: (() -> Unit)? = null,
     onMemberRowClicked : () -> Unit,
     onClassSelectionClicked: () -> Unit
 ) {
@@ -117,7 +118,7 @@ fun AppHeaderView(
                     .size(110.dp, 100.dp)
                     .padding(end = 16.dp)
                     .clickable {
-                        MainNavigationController.navigate(R.id.avatarOverviewFragment)
+                        onAvatarClicked?.invoke()
                     }
             )
             val animationValue =

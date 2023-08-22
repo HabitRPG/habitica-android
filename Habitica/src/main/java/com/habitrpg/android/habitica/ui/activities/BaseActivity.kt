@@ -224,11 +224,13 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun hideConnectionProblem() {
     }
 
-    fun shareContent(identifier: String, message: String, image: Bitmap? = null) {
+    fun shareContent(identifier: String, message: String?, image: Bitmap? = null) {
         Analytics.sendEvent("shared", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("identifier" to identifier))
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "*/*"
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
+        if (message?.isNotBlank() == true) {
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
+        }
         if (image != null) {
             val path = MediaStore.Images.Media.insertImage(this.contentResolver, image, "${(Date())}", null)
             if (path != null) {

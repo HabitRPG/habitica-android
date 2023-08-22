@@ -71,7 +71,7 @@ private fun BottomSheetWrapper(
     content: @Composable (() -> Unit) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden, skipHalfExpanded = true)
     var isSheetOpened by remember { mutableStateOf(false) }
 
     val systemUiController = rememberSystemUiController()
