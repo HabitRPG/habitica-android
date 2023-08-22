@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 buildscript {
     ext {
         min_sdk = 21
-        target_sdk = 34
+        target_sdk = 33
         app_version_name = ''
         app_version_code = 0
 
@@ -24,7 +24,7 @@ buildscript {
         lifecycle_version = '2.6.1'
         markwon_version = '4.6.2'
         mockk_version = '1.13.4'
-        moshi_version = '1.14.0'
+        moshi_version = '1.15.0'
         navigation_version = '2.7.0'
         okhttp_version = '4.11.0'
         paging_version = '3.2.0'

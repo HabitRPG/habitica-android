@@ -8,7 +8,7 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.common.habitica.extensions.setupCoil
-import com.habitrpg.android.habitica.helpers.MarkdownParser
+import com.habitrpg.common.habitica.helpers.MarkdownParser
 import com.habitrpg.wearos.habitica.data.repositories.TaskRepository
 import com.habitrpg.wearos.habitica.data.repositories.UserRepository
 import com.habitrpg.wearos.habitica.ui.activities.BaseActivity
@@ -36,7 +36,7 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        com.habitrpg.android.habitica.helpers.MarkdownParser.setup(this)
+        MarkdownParser.setup(this)
         setupCoil()
         setupFirebase()
 

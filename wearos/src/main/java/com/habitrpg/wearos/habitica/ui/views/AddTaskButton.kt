@@ -61,10 +61,8 @@ class AddTaskButton @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        if (canvas == null) return
         path.reset()
         path.addArc(rect, 180f, 360f)
         canvas.drawPath(path, fillPaint)
