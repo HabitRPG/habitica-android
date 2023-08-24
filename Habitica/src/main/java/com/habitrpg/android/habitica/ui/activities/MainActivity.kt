@@ -41,6 +41,7 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.FirebasePerformance
 import com.habitrpg.android.habitica.BuildConfig
+import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -313,7 +314,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         color = Color.White,
                                         onClick = {
                                             dismiss()
-                                            MainNavigationController.navigate(R.id.openProfileActivity)
+                                            MainNavDirections.openProfileActivity(user?.id ?: "")
                                         }) {
                                         Text(stringResource(id = R.string.open_profile))
                                     }
@@ -340,7 +341,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                                         ShareAvatarUseCase.RequestValues(
                                                             this@MainActivity,
                                                             it,
-                                                            null,
+                                                            "Check out my avatar on Habitica!",
                                                             "avatar_bottomsheet"
                                                         )
                                                     )

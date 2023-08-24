@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -259,10 +260,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun updateUser(user: User) {
         binding?.avatarView?.setOnClickListener {
-            MainNavigationController.navigate(
-                R.id.openProfileActivity,
-                bundleOf(Pair("userID", user.id))
-            )
+            MainNavDirections.openProfileActivity(user.id ?: "")
         }
 
         setMessagesCount(user.inbox)
