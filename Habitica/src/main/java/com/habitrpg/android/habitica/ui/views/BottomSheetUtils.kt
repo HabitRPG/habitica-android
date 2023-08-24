@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 // Extension for Activity
@@ -136,7 +137,10 @@ private fun BottomSheetWrapper(
                     }
                     else -> {
                         isSheetOpened = true
-                        modalBottomSheetState.show()
+                        coroutineScope.launch {
+                            delay(100L)
+                            modalBottomSheetState.show()
+                        }
                     }
                 }
             }
