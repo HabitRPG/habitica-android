@@ -151,7 +151,7 @@ open class AvatarOverviewFragment :
                             requireActivity() as BaseActivity,
                             it,
                             "Check out my avatar on Habitica!",
-                            "avatar_bottomsheet"
+                            "avatar_customization"
                         )
                     )
                 }

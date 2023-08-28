@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -26,7 +28,13 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     var isPinned = false
         set(value) {
             field = value
-            binding.pinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
+            binding.pinIndicator.visibility = if (field) View.VISIBLE else View.GONE
+        }
+
+    var isCompleted = false
+        set(value) {
+            field = value
+            binding.completedIndicator.visibility = if (field) View.VISIBLE else View.GONE
         }
 
     init {
@@ -76,6 +84,10 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         } else if (item.isLimited || item.event?.end != null) {
             binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
             binding.itemDetailIndicator.visibility = View.VISIBLE
+        }
+
+        if (item.key == "gem" && item.limitedNumberLeft == -1) {
+            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.item_indicator_subscribe)
         }
 
         if (binding.itemDetailIndicator.visibility == View.VISIBLE) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:width="24dp" android:height="24dp">
+    <shape android:shape="oval">
+        <solid android:color="@color/green_100" />
+    </shape>
+</item>
+    <item  android:width="14dp" android:height="14dp" android:gravity="center">
+        <bitmap android:src="@drawable/indicator_subscribe"  />
+    </item>
+</layer-list>
