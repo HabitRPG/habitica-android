@@ -27,6 +27,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
@@ -89,6 +90,7 @@ class FullProfileActivity : BaseActivity() {
     private val attributeRows = ArrayList<TableRow>()
     private val dateFormatter = SimpleDateFormat.getDateInstance()
     private lateinit var binding: ActivityFullProfileBinding
+    private lateinit var reviewManager: ReviewManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +100,7 @@ class FullProfileActivity : BaseActivity() {
         if (userID.isEmpty()) {
             userID = intent?.data?.path?.removePrefix("/profile/") ?: ""
         }
+        reviewManager = ReviewManager(this)
 
         setTitle(R.string.profile_loading_data)
 
@@ -138,12 +141,18 @@ class FullProfileActivity : BaseActivity() {
                         member?.stats = this@FullProfileActivity.member.value?.stats
                         if (member != null) {
                             updateView(member)
+                            if (isMyProfile() && member.loginIncentives > 10) {
+                                reviewManager.requestReview(this@FullProfileActivity, member.loginIncentives)
+                            }
                         }
+
                         this@FullProfileActivity.member.value = member
                     } else {
                         refresh(false)
                     }
                     invalidateOptionsMenu()
+
+
                 }
         }
     }
