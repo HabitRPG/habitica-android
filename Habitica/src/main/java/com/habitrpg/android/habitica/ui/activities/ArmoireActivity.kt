@@ -15,6 +15,7 @@ import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
@@ -47,6 +48,7 @@ class ArmoireActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+    private lateinit var reviewManager: ReviewManager
 
     override fun getLayoutResId(): Int = R.layout.activity_armoire
 
@@ -57,6 +59,7 @@ class ArmoireActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        reviewManager = ReviewManager(this)
 
         binding.goldView.currency = "gold"
         binding.goldView.animationDuration = 1000
@@ -72,6 +75,11 @@ class ArmoireActivity : BaseActivity() {
                 val remaining = inventoryRepository.getArmoireRemainingCount().firstOrNull() ?: 0
                 binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
                 binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
+
+                val totalCheckIns = user?.loginIncentives
+                if (remaining > 0 && totalCheckIns != null) {
+                    reviewManager.requestReview(this@ArmoireActivity, totalCheckIns)
+                }
             }
         }
 

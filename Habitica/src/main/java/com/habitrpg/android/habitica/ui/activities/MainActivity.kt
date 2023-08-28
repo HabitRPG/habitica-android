@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -55,6 +56,7 @@ import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationOpenHandler
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.collectAsStateLifecycleAware
 import com.habitrpg.android.habitica.interactors.CheckClassSelectionUseCase
@@ -131,6 +133,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
+    private lateinit var reviewManager: ReviewManager
 
     lateinit var binding: ActivityMainBinding
 
@@ -204,6 +207,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         launchTrace?.start()
         super.onCreate(savedInstanceState)
         DataBindingUtils.configManager = appConfigManager
+        reviewManager = ReviewManager(this)
 
         if (!viewModel.isAuthenticated) {
             val intent = Intent(this, IntroActivity::class.java)
@@ -606,6 +610,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     this.title = newTitle
                 }
             }
+            checkForReviewPrompt(user)
         }
     }
 
@@ -788,4 +793,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             binding.content.toolbarTitle.setPadding(0)
         }
     }
+
+    private fun checkForReviewPrompt(user: User) {
+        reviewManager.requestReview(this, user.loginIncentives)
+    }
+
 }

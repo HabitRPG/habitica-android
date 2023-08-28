@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -12,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
@@ -33,6 +36,7 @@ class ClassSelectionActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+    private lateinit var reviewManager: ReviewManager
 
     private lateinit var binding: ActivityClassSelectionBinding
     private var currentClass: String? = null
@@ -73,6 +77,7 @@ class ClassSelectionActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        reviewManager = ReviewManager(this)
 
         val args = navArgs<ClassSelectionActivityArgs>().value
         isClassSelected = args.isClassSelected
@@ -280,6 +285,9 @@ class ClassSelectionActivity : BaseActivity() {
                 displayClassChanged(chosenClass)
             }
         }
+
+        // After class change was successful, check for in-app review eligibility the following check-in
+        checkForReviewPromptAfterClassSelection()
     }
 
     private fun displayProgressDialog(progressText: String): HabiticaProgressDialog {
@@ -290,6 +298,13 @@ class ClassSelectionActivity : BaseActivity() {
         if (shouldFinish == true) {
             progressDialog?.dismiss()
             finish()
+        }
+    }
+
+    private fun checkForReviewPromptAfterClassSelection() {
+        userViewModel.user.observeOnce(this) { user ->
+            val totalCheckIns = user?.loginIncentives ?: return@observeOnce
+            reviewManager.requestReview(this, totalCheckIns)
         }
     }
 }
