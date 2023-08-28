@@ -128,7 +128,9 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 "food" -> getString(R.string.empty_food_description)
                 "quests" -> getString(R.string.empty_quests_description)
                 "special" -> getString(R.string.empty_special_description_subscribed)
-                else -> getString(R.string.empty_items_description)
+                "eggs" -> getString(R.string.empty_eggs_description)
+                "hatchingPotions" -> getString(R.string.empty_potions_description)
+                else -> ""
             },
             when (itemType) {
                 "eggs" -> R.drawable.icon_eggs
@@ -143,9 +145,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
-        activity?.let {
-            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
-        }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         setAdapter()
@@ -164,27 +163,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             this.isHatching -> {
                 binding?.titleTextView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.hatching_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
             }
             this.isFeeding -> {
                 binding?.titleTextView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.feeding_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
             }
             else -> {
                 binding?.titleTextView?.visibility = View.GONE
-                binding?.footerTextView?.visibility = View.GONE
-                binding?.openMarketButton?.visibility = View.GONE
             }
-        }
-
-        binding?.openMarketButton?.setOnClickListener {
-            dismiss()
-            openMarket()
         }
 
         this.loadItems()
@@ -242,6 +228,20 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             }
             adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
             adapter?.onFeedPet = { food -> feedPet(food) }
+
+            adapter?.itemType = itemType ?: ""
+            adapter?.itemText = (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText) ?: ""
+            adapter?.onOpenShop = {
+                Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                    "area" to "bottom",
+                    "type" to (itemType ?: "")
+                ))
+                if (itemType == "quests") {
+                    MainNavigationController.navigate(R.id.questShopFragment)
+                } else {
+                    openMarket()
+                }
+            }
         }
     }
 

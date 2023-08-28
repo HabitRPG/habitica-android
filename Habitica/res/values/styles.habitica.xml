@@ -60,8 +60,8 @@
     <style name="Body1">
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.035</item>
-        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:letterSpacing">0.015</item>
+        <item name="android:lineSpacingExtra">4sp</item>
     </style>
 
     <style name="Body1_Button" parent="@style/Widget.AppCompat.Button.Borderless">

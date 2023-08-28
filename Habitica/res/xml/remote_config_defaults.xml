@@ -119,7 +119,7 @@
     </entry>
     <entry>
         <key>enableFaintSubs</key>
-        <value>false</value>
+        <value>true</value>
     </entry>
     <entry>
         <key>enableSpellAds</key>

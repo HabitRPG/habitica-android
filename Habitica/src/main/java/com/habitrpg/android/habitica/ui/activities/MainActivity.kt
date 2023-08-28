@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.collectAsState
@@ -312,9 +313,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                     HabiticaButton(
                                         background = HabiticaTheme.colors.tintedUiSub,
                                         color = Color.White,
+                                        modifier = Modifier.height(48.dp),
                                         onClick = {
                                             dismiss()
-                                            MainNavDirections.openProfileActivity(user?.id ?: "")
+                                            MainNavigationController.navigate(MainNavDirections.openProfileActivity(user?.id ?: ""))
                                         }) {
                                         Text(stringResource(id = R.string.open_profile))
                                     }
@@ -322,6 +324,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                     HabiticaButton(
                                         background = HabiticaTheme.colors.tintedUiSub,
                                         color = Color.White,
+                                        modifier = Modifier.height(48.dp),
                                         onClick = {
                                             dismiss()
                                             MainNavigationController.navigate(R.id.avatarOverviewFragment)
@@ -332,6 +335,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                     HabiticaButton(
                                         background = HabiticaTheme.colors.tintedUiSub,
                                         color = Color.White,
+                                        modifier = Modifier.height(48.dp),
                                         onClick = {
                                             dismiss()
                                             user?.let {

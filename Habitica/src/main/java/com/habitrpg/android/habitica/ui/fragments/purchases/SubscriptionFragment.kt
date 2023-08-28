@@ -134,6 +134,9 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             }
         }
 
+        binding?.benefitArmoireWrapper?.isVisible = appConfigManager.enableArmoireSubs()
+        binding?.benefitFaintWrapper?.isVisible = appConfigManager.enableFaintSubs()
+
         Analytics.sendNavigationEvent("subscription screen")
     }
 

@@ -260,7 +260,7 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun updateUser(user: User) {
         binding?.avatarView?.setOnClickListener {
-            MainNavDirections.openProfileActivity(user.id ?: "")
+            MainNavigationController.navigate(MainNavDirections.openProfileActivity(user.id ?: ""))
         }
 
         setMessagesCount(user.inbox)

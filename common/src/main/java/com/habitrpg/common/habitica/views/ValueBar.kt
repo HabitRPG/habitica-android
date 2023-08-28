@@ -148,12 +148,10 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
 
     fun setDescriptionIcon(iconRes: Drawable) {
         binding.descriptionIconView.setImageDrawable(iconRes)
-        binding.descriptionIconView.visibility = View.VISIBLE
     }
 
     fun setDescriptionIcon(bitmap: Bitmap) {
         binding.descriptionIconView.setImageBitmap(bitmap)
-        binding.descriptionIconView.visibility = View.VISIBLE
     }
 
     fun setValueText(valueText: String) {

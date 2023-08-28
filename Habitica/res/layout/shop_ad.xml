@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:paddingHorizontal="50dp"
-    android:layout_marginVertical="30dp">
+    android:layout_marginTop="70dp"
+    android:layout_marginBottom="30dp">
     <ImageView
         android:id="@+id/image_view"
         android:src="@drawable/icon_shops"

@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:id="@+id/confetti_container"
@@ -18,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingHorizontal="23dp">
+            android:orientation="vertical">
 
             <Space
                 android:layout_width="wrap_content"
@@ -53,7 +53,8 @@
                 android:layout_marginHorizontal="@dimen/spacing_xlarge"
                 android:gravity="center"
                 android:text="@string/you_ran_out_of_health"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingHorizontal="24dp" />
 
             <TextView
                 android:id="@+id/loss_description"
@@ -64,17 +65,16 @@
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/text_primary"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:paddingHorizontal="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/spacing_xlarge"
+                android:layout_margin="@dimen/spacing_large"
                 android:gravity="center"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/death_description"
-                android:textColor="@color/text_secondary"
-                android:textSize="20sp" />
+                android:text="@string/faint_broken_equipment"
+                android:textColor="@color/text_quad" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -88,23 +88,96 @@
                 android:layout_height="69dp"
                 android:layout_marginBottom="6dp"
                 android:text="@string/faint_button"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginHorizontal="24dp" />
 
             <com.habitrpg.android.habitica.ui.views.ads.AdButton
                 android:id="@+id/ad_button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 app:activeBackground="@drawable/ad_button_background_content"
-                app:text="@string/watch_ad_to_open"
-                app:textColor="@color/text_primary" />
+                app:text="@string/watch_ad_to_hang_on"
+                app:textColor="@color/text_primary"
+                android:layout_marginHorizontal="24dp"  />
+
+            <FrameLayout
+                android:id="@+id/revive_subscriber_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="18dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="@dimen/spacing_large">
+                <TextView
+                    android:id="@+id/revive_subscriber_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="@string/subscriber_button_faint"
+                    android:textStyle="bold"
+                    android:background="@drawable/subscriber_benefit_button_bg"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:backgroundTint="@null"
+                    android:textColor="@color/green_1"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="0dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/sub_perk_bg"
+                    android:textColor="@color/green_500"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="4dp"
+                    style="@style/Caption2"
+                    android:layout_gravity="top|end"
+                    android:text="@string/sub_perk"/>
+            </FrameLayout>
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/subscriber_benefit_used_view"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing_large"
-                android:gravity="center"
-                android:text="@string/faint_broken_equipment"
-                android:textColor="@color/text_quad" />
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_teal"
+                android:layout_marginHorizontal="42dp"
+                tools:text="@string/subscriber_benefit_used_faint"
+                style="@style/Body1"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:layout_marginTop="8dp"/>
+
+            <LinearLayout
+                android:id="@+id/unsubbed_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp"
+                android:paddingHorizontal="24dp"
+                android:background="@drawable/subscribe_incentive_bg_topround"
+                >
+                <Button
+                    android:id="@+id/subscribe_modal_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:text="@string/subscribe_incentive_button_armoire"
+                    android:textStyle="bold"
+                    style="@style/HabiticaButton.White"
+                    android:textColor="@color/teal_10"
+                    android:padding="0dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/subscribe_incentive_text_faint"
+                    android:textColor="@color/teal_1"
+                    android:layout_marginHorizontal="16dp"
+                    style="@style/Body1"
+                    android:layout_marginTop="3dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

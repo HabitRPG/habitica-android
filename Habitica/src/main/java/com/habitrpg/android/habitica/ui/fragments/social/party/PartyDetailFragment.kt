@@ -39,6 +39,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.android.habitica.ui.views.social.PartySeekingListItem
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
@@ -146,6 +147,10 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
         viewModel.getGroupData().observe(viewLifecycleOwner) { updateParty(it) }
         viewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
         viewModel.getMembersData().observe(viewLifecycleOwner) { updateMembersList(it) }
+
+        binding?.questMechanicsButton?.setOnClickListener {
+            showQuestMechanicsDialog()
+        }
     }
 
     private fun refreshParty() {
@@ -168,6 +173,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.newQuestButton?.visibility = View.GONE
             binding?.questDetailButton?.visibility = View.VISIBLE
             binding?.questImageWrapper?.visibility = View.VISIBLE
+            binding?.questMechanicsButton?.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.Main) {
                 delay(500)
                 val content =
@@ -181,6 +187,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questDetailButton?.visibility = View.GONE
             binding?.questImageWrapper?.visibility = View.GONE
             binding?.questProgressView?.visibility = View.GONE
+            binding?.questMechanicsButton?.visibility = View.GONE
         }
 
         binding?.findNewMember?.isVisible = viewModel.isLeader == true
@@ -208,7 +215,13 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             }
         }
 
-        binding?.questProgressView?.configure(user, viewModel.isUserOnQuest)
+
+        if (viewModel.isQuestActive && viewModel.isUserOnQuest) {
+            val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
+            binding?.questPendingDamageView?.text = getString(R.string.damage_pending, value)
+            val collectedItems = user.party?.quest?.progress?.collectedItems
+            binding?.questPendingDamageView?.text = requireContext().resources.getQuantityString(R.plurals.items_pending, collectedItems ?: 0, collectedItems ?: 0)
+        }
 
         if ((user.invitations?.parties?.count() ?: 0) > 0) {
             binding?.partyInvitationWrapper?.visibility = View.VISIBLE
@@ -291,6 +304,8 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             if (questParticipants?.find { it.key == viewModel.userViewModel.userID } != null) {
                 binding?.questParticipationView?.text =
                     context?.getString(R.string.number_participants, questParticipants.size)
+                binding?.questPendingDamageView?.isVisible = questContent.isBossQuest
+                binding?.questPendingItemsView?.isVisible = !questContent.isBossQuest
             } else {
                 binding?.questParticipationView?.text =
                     context?.getString(R.string.not_participating)
@@ -304,13 +319,18 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                 }
                 binding?.questImageWrapper?.alpha = 0.5f
                 binding?.questProgressView?.alpha = 0.5f
+                binding?.questPendingDamageView?.isVisible = false
+                binding?.questPendingItemsView?.isVisible = false
             }
+
         } else {
             binding?.questProgressView?.visibility = View.GONE
             val members = viewModel.getGroupData().value?.quest?.members
             val responded = members?.filter { it.isParticipating != null }
             binding?.questParticipationView?.text =
                 context?.getString(R.string.number_responded, responded?.size, members?.size)
+            binding?.questPendingDamageView?.isVisible = false
+            binding?.questPendingItemsView?.isVisible = false
         }
     }
 
@@ -512,5 +532,11 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
     private fun questDetailButtonClicked() {
         MainNavigationController.navigate(PartyFragmentDirections.openQuestDetail())
+    }
+
+    private fun showQuestMechanicsDialog() {
+        val dialog = HabiticaBottomSheetDialog(requireContext())
+        dialog.setContentView(R.layout.quest_mechanics_dialog)
+        dialog.show()
     }
 }

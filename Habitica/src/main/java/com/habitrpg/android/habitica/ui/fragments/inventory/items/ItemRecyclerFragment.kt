@@ -92,6 +92,11 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (savedInstanceState != null) {
+            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
+            this.itemTypeText = savedInstanceState.getString(ITEM_TYPE_TEXT_KEY, "")
+        }
+
         binding?.refreshLayout?.setOnRefreshListener(this)
         val buttonMethod = {
             Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
@@ -110,7 +115,9 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 "food" -> getString(R.string.empty_food_description)
                             "quests" -> getString(R.string.empty_quests_description)
                 "special" -> getString(R.string.empty_special_description_subscribed)
-                else -> getString(R.string.empty_items_description)
+                "eggs" -> getString(R.string.empty_eggs_description)
+                "hatchingPotions" -> getString(R.string.empty_potions_description)
+                else -> ""
                             },
             when (itemType) {
                             "eggs" -> R.drawable.icon_eggs
@@ -134,9 +141,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             }
         }
 
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
-        }
 
         binding?.titleTextView?.visibility = View.GONE
         setAdapter()
@@ -221,6 +225,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(ITEM_TYPE_KEY, this.itemType)
+        outState.putString(ITEM_TYPE_TEXT_KEY, this.itemTypeText)
     }
 
     override fun onRefresh() {
@@ -361,5 +366,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     companion object {
 
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
+        private const val ITEM_TYPE_TEXT_KEY = "CLASS_TYPE_TEXT_KEY"
     }
 }

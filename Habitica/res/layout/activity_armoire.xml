@@ -107,10 +107,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/armoire_background"
+        android:background="@drawable/armoire_background_full"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingHorizontal="24dp"
         android:paddingTop="36dp">
         <TextView
             android:id="@+id/equipment_count_view"
@@ -130,7 +129,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="24dp">
             <Button
                 android:id="@+id/equip_button"
                 android:layout_width="0dp"
@@ -140,7 +140,6 @@
                 android:textStyle="bold"
                 style="@style/HabiticaButton.White"
                 android:padding="0dp"
-
                 android:layout_marginEnd="12dp"/>
             <Button
                 android:id="@+id/close_button"
@@ -158,7 +157,81 @@
             android:layout_height="60dp"
             app:text="@string/watch_ad_to_open"
             android:layout_marginTop="4dp"
+            android:layout_marginHorizontal="24dp"
             app:currency="gold" />
+
+        <FrameLayout
+            android:id="@+id/open_armoire_subscriber_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="18dp"
+            android:layout_marginTop="4dp">
+            <TextView
+                android:id="@+id/open_armoire_subscriber_button"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/subscriber_button_armoire"
+                android:textStyle="bold"
+                android:background="@drawable/subscriber_benefit_button_bg"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:backgroundTint="@null"
+                android:textColor="@color/green_1"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="5dp"
+                android:padding="0dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sub_perk_bg"
+                android:textColor="@color/green_500"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="4dp"
+                style="@style/Caption2"
+                android:layout_gravity="top|end"
+                android:text="@string/sub_perk"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/unsubbed_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:paddingHorizontal="24dp"
+            android:background="@drawable/subscribe_incentive_bg_topround"
+            >
+            <Button
+                android:id="@+id/subscribe_modal_button"
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:text="@string/subscribe_incentive_button_armoire"
+                android:textStyle="bold"
+                style="@style/HabiticaButton.White"
+                android:textColor="@color/teal_10"
+                android:padding="0dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/subscribe_incentive_text_armoire"
+                android:textColor="@color/teal_1"
+                android:layout_marginHorizontal="16dp"
+                style="@style/Body1"
+                android:layout_marginTop="3dp"/>
+            <TextView
+                android:id="@+id/drop_rate_button_unsubbed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/armoire_drop_rates"
+                android:textColor="@color/teal_1"
+                android:layout_marginTop="5dp"
+                style="@style/Body2"/>
+        </LinearLayout>
         <TextView
             android:id="@+id/drop_rate_button"
             android:layout_width="wrap_content"

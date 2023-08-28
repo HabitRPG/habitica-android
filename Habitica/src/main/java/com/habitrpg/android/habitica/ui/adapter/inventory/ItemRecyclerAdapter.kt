@@ -231,10 +231,6 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
                     if ((ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
                     }
-                } else if (ownedItem?.itemType == "special") {
-                    if ((ownedItem?.numberOwned ?: 0) > 0) {
-                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
-                    }
                 }
                 menu.setSelectionRunnable { index ->
                     if (item == null && ownedItem != null) {

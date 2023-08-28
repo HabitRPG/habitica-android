@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.interactors
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
@@ -63,7 +64,8 @@ constructor(
                     mountImageSideLength,
                     mountImageSideLength
                 )
-                mountImageView?.drawable?.draw(canvas)
+                val bitmap = (mountImageView?.drawable as? BitmapDrawable)?.bitmap ?: mountImageView?.bitmap ?: return@addButton
+                canvas.drawBitmap(bitmap, 0f, 0f, null)
                 (requestValues.context as? BaseActivity)?.shareContent(
                     "raisedPet",
                     message,

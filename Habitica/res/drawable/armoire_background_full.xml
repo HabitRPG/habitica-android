@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:gravity="top">
+    <bitmap android:src="@drawable/armoire_background" />
+</item>
+    <item android:top="80dp" android:gravity="bottom">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/brand_400" />
+        </shape>
+    </item>
+</layer-list>

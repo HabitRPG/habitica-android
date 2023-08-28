@@ -25,12 +25,6 @@ import com.habitrpg.common.habitica.extensions.loadImage
 class OldQuestProgressView : LinearLayout {
     private val binding = QuestProgressOldBinding.inflate(context.layoutInflater, this)
 
-    private val rect = RectF()
-    private val displayDensity = context.resources.displayMetrics.density
-    private val lightGray = context.getThemeColor(R.attr.colorWindowBackground)
-    private val mediumGray = ContextCompat.getColor(context, R.color.offset_background)
-    private val darkGray = ContextCompat.getColor(context, R.color.separator)
-
     constructor(context: Context) : super(context) {
         setupView(context)
     }
@@ -40,7 +34,6 @@ class OldQuestProgressView : LinearLayout {
     }
 
     private fun setupView(context: Context) {
-        setWillNotDraw(false)
         orientation = VERTICAL
 
         setScaledPadding(context, 16, 16, 16, 16)
@@ -48,19 +41,6 @@ class OldQuestProgressView : LinearLayout {
         binding.bossHealthView.setSecondaryIcon(HabiticaIconsHelper.imageOfHeartLightBg())
         binding.bossHealthView.setDescriptionIcon(HabiticaIconsHelper.imageOfDamage())
         binding.bossRageView.setSecondaryIcon(HabiticaIconsHelper.imageOfRage())
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        rect.set(
-            0.0f,
-            0.0f,
-            canvas.width.toFloat() / displayDensity,
-            canvas.height.toFloat() / displayDensity
-        )
-        canvas.scale(displayDensity, displayDensity)
-        HabiticaIcons.drawQuestBackground(canvas, rect, lightGray, darkGray, mediumGray)
-        canvas.scale(1.0f / displayDensity, 1.0f / displayDensity)
-        super.onDraw(canvas)
     }
 
     fun setData(quest: QuestContent, progress: QuestProgress?) {
@@ -95,22 +75,6 @@ class OldQuestProgressView : LinearLayout {
                     collectBinding.valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
                 }
             }
-        }
-    }
-
-    fun configure(user: User, userOnQuest: Boolean?) {
-        val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
-        val collectedItems = user.party?.quest?.progress?.collectedItems
-        if (userOnQuest == true) {
-            binding.bossHealthView.pendingValue = value
-            binding.bossHealthView.description = context.getString(R.string.damage_pending, value)
-            binding.bossHealthView.descriptionIconVisibility = View.VISIBLE
-            binding.collectedItemsNumberView.text = context.getString(R.string.quest_items_found, collectedItems)
-        } else {
-            binding.bossHealthView.pendingValue = 0.0
-            binding.bossHealthView.description = ""
-            binding.bossHealthView.descriptionIconVisibility = View.GONE
-            binding.collectedItemsNumberView.text = ""
         }
     }
 }

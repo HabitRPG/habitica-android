@@ -1,14 +1,17 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateInterpolator
+import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityDeathBinding
+import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
@@ -19,9 +22,13 @@ import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,6 +43,9 @@ class DeathActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun getLayoutResId(): Int = R.layout.activity_death
 
@@ -55,7 +65,6 @@ class DeathActivity : BaseActivity() {
                 if (!it) {
                     return@AdHandler
                 }
-                Log.d("AdHandler", "Reviving user")
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     userRepository.updateUser("stats.hp", 1)
                     finish()
@@ -75,6 +84,52 @@ class DeathActivity : BaseActivity() {
             }
         } else {
             binding.adButton.visibility = View.GONE
+        }
+
+        if (appConfigManager.enableFaintSubs()) {
+            userViewModel.user.observe(this) {
+                if (it?.isSubscribed == true && binding.reviveSubscriberWrapper.visibility != View.INVISIBLE) {
+                    val lastRevive = Date(sharedPreferences.getLong("last_sub_revive", 0L))
+                    if (DateUtils.isSameDay(Date(), lastRevive)) {
+                        binding.reviveSubscriberWrapper.visibility = View.GONE
+                        binding.subscriberBenefitUsedView.visibility = View.VISIBLE
+                        lifecycleScope.launchCatching {
+                            val date: Calendar = Calendar.getInstance()
+                            date.set(Calendar.HOUR_OF_DAY, 0)
+                            date.set(Calendar.MINUTE, 0)
+                            date.set(Calendar.SECOND, 0)
+                            date.add(Calendar.DAY_OF_MONTH, 1)
+                            val midnight = date.time
+                            while (true) {
+                                binding.subscriberBenefitUsedView.text = getString(R.string.subscriber_benefit_used_faint, midnight.getShortRemainingString())
+                                delay(1000L)
+                            }
+                        }
+                    } else {
+                        binding.reviveSubscriberWrapper.visibility = View.VISIBLE
+                        binding.subscriberBenefitUsedView.visibility = View.GONE
+                    }
+                    binding.unsubbedWrapper.visibility = View.GONE
+                } else if (it?.isSubscribed == false) {
+                    binding.reviveSubscriberWrapper.visibility = View.GONE
+                    binding.unsubbedWrapper.visibility = View.VISIBLE
+                }
+            }
+        } else {
+            binding.reviveSubscriberWrapper.visibility = View.GONE
+            binding.unsubbedWrapper.visibility = View.GONE
+            binding.subscriberBenefitUsedView.visibility = View.GONE
+        }
+
+        binding.reviveSubscriberButton.setOnClickListener {
+            sharedPreferences.edit {
+                putLong("last_sub_revive", Date().time)
+            }
+            binding.reviveSubscriberWrapper.visibility = View.INVISIBLE
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.updateUser("stats.hp", 1)
+                finish()
+            }
         }
 
         binding.restartButton.setOnClickListener {

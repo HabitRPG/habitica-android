@@ -97,7 +97,7 @@ class PetViewHolder(
         DataBindingUtils.loadImage(itemView.context, imageName) {
             val resources = itemView.context.resources ?: return@loadImage
             val drawable =
-                if (trained == 0) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
+                if (trained == 0 && canRaiseToMount) BitmapDrawable(resources, it.toBitmap().extractAlpha()) else it
             if (binding.imageView.tag == imageName) {
                 binding.imageView.bitmap = drawable.toBitmap()
             }

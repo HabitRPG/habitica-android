@@ -8,6 +8,7 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -22,6 +23,7 @@ import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +100,33 @@ class ArmoireActivity : BaseActivity() {
             binding.adButton.visibility = View.GONE
         }
 
+        if (appConfigManager.enableArmoireSubs()) {
+            userViewModel.user.observe(this) {
+                if (it?.isSubscribed == true && binding.openArmoireSubscriberWrapper.visibility != View.INVISIBLE) {
+                    binding.openArmoireSubscriberWrapper.visibility = View.VISIBLE
+                    binding.unsubbedWrapper.visibility = View.GONE
+                    binding.dropRateButton.visibility = View.VISIBLE
+                } else if (it?.isSubscribed == false) {
+                    binding.openArmoireSubscriberWrapper.visibility = View.GONE
+                    binding.unsubbedWrapper.visibility = View.VISIBLE
+                    binding.dropRateButton.visibility = View.GONE
+                }
+            }
+        } else {
+            binding.openArmoireSubscriberWrapper.visibility = View.GONE
+            binding.unsubbedWrapper.visibility = View.GONE
+            binding.dropRateButton.visibility = View.VISIBLE
+        }
+
+        binding.openArmoireSubscriberButton.setOnClickListener {
+            giveUserArmoire()
+            binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
+        }
+
+        binding.subscribeModalButton.setOnClickListener {
+            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+        }
+
         binding.closeButton.setOnClickListener {
             finish()
         }
@@ -108,6 +137,9 @@ class ArmoireActivity : BaseActivity() {
             finish()
         }
         binding.dropRateButton.setOnClickListener {
+            showDropRateDialog()
+        }
+        binding.dropRateButtonUnsubbed.setOnClickListener {
             showDropRateDialog()
         }
         intent.extras?.let {
@@ -130,8 +162,12 @@ class ArmoireActivity : BaseActivity() {
                 buyResponse.armoire["dropText"] ?: "",
                 buyResponse.armoire["value"] ?: ""
             )
-            binding.adButton.state = AdButton.State.UNAVAILABLE
-            binding.adButton.visibility = View.INVISIBLE
+            if (binding.adButton.visibility == View.VISIBLE) {
+                binding.adButton.state = AdButton.State.UNAVAILABLE
+                binding.adButton.visibility = View.INVISIBLE
+            } else if (binding.openArmoireSubscriberWrapper.visibility == View.VISIBLE) {
+                binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
+            }
             hasAnimatedChanges = false
             gold = null
         }

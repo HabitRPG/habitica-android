@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.UserStatComputer
+import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.members.Member
@@ -166,14 +167,21 @@ class FullProfileActivity : BaseActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_full_profile, menu)
         MenuCompat.setGroupDividerEnabled(menu, true)
-        val item = menu.findItem(R.id.block_user)
+        val blockItem = menu.findItem(R.id.block_user)
+        val shareItem = menu.findItem(R.id.share_avatar)
 
-        if (isMyProfile()) item.isVisible = false
+        if (isMyProfile()) {
+            blockItem.isVisible = false
+            shareItem.isVisible = true
+        } else {
+            blockItem.isVisible = true
+            shareItem.isVisible = false
+        }
 
         if (isUserBlocked()) {
-            item?.title = getString(R.string.unblock_user)
+            blockItem?.title = getString(R.string.unblock_user)
         } else {
-            item?.title = getString(R.string.block)
+            blockItem?.title = getString(R.string.block)
         }
         menu.setGroupVisible(R.id.admin_items, isModerator)
         if (isModerator || isUserSupport) {
@@ -262,6 +270,22 @@ class FullProfileActivity : BaseActivity() {
             }
             R.id.mute_user -> {
                 muteUser()
+                true
+            }
+            R.id.share_avatar -> {
+                member.value?.let {
+                    val usecase = ShareAvatarUseCase()
+                    lifecycleScope.launchCatching {
+                        usecase.callInteractor(
+                                ShareAvatarUseCase.RequestValues(
+                                    this@FullProfileActivity,
+                                    it,
+                                    "Check out my avatar on Habitica!",
+                                    "avatar_bottomsheet"
+                                )
+                        )
+                    }
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

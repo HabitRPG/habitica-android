@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/share_avatar"
+        android:title="@string/share_avatar" />
     <item android:id="@+id/copy_username"
         android:title="@string/copy_username" />
     <item android:id="@+id/copy_userid"

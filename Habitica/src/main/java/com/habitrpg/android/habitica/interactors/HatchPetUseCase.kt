@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.interactors
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
@@ -44,7 +45,8 @@ constructor(
                 val sharedImage = Bitmap.createBitmap(petImageSideLength, petImageSideLength, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(sharedImage)
                 petImageView?.drawable?.setBounds(0, 0, petImageSideLength, petImageSideLength)
-                petImageView?.drawable?.draw(canvas)
+                val bitmap = (petImageView?.drawable as? BitmapDrawable)?.bitmap ?: petImageView?.bitmap ?: return@addButton
+                canvas.drawBitmap(bitmap, 0f, 0f, null)
                 (requestValues.context as? BaseActivity)?.shareContent("hatchedPet", message, sharedImage)
                 hatchingDialog.dismiss()
             }

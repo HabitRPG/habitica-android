@@ -1163,7 +1163,7 @@
     <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
-    <string name="damage_pending">%.01f dmg pending</string>
+    <string name="damage_pending">%.01f damage pending</string>
     <string name="x_remaining">%s remaining</string>
     <string name="sale_ends_in">Sale ends in %s</string>
     <string name="my_account">My Account</string>
@@ -1236,7 +1236,7 @@
     <string name="you_ran_out_of_health">You ran out of Health!</string>
     <string name="death_description">But you can get them all back with hard work! Good luck—you’ll do great.</string>
     <string name="faint_broken_equipment">Broken equipment can be repurchased from Rewards</string>
-    <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>…]]></string>
+    <string name="faint_loss_description"><![CDATA[You’ll drop to level <b>%d</b>, lose <b>%d</b> Gold, and break <b>a piece of gear</b>… You can earn them all back with hard work!]]></string>
     <string name="account_reset">Account Reset</string>
     <string name="avatar_skin_customization">Avatar Skin Customization</string>
     <string name="avatar_shirt_customization">Avatar Shirt Customization</string>
@@ -1398,7 +1398,8 @@
     <string name="empty_quests_description">Get Quests from leveling up, log in bonuses, or the [Quest Shop](/shops/quests)!</string>
     <string name="empty_special_description_subscribed">Get transformation items during Seasonal Galas and mystery boxes of subscriber gear are delivered at the start of each month!</string>
     <string name="empty_food_description">Complete tasks, buy an Armoire, or head over to the [Market](/shops/market) to stock up!</string>
-    <string name="empty_items_description">Complete tasks, Potion Quests, or head over to the [Market](/shops/market) to stock up!</string>
+    <string name="empty_potions_description">Complete tasks, Potion Quests, or head over to the [Market](/shops/market) to stock up!</string>
+    <string name="empty_eggs_description">Complete tasks, Egg Quests, or head over to the [Market](/shops/market) to stock up!</string>
     <string name="item_footer_title">Not getting the right %s from tasks?</string>
     <string name="item_footer_description">Check out the [Market](/shops/market) to buy just the things you need!</string>
     <string name="quests_footer_description">Check out the [Quest Shop](/shops/quests) to see what’s available!</string>
@@ -1410,6 +1411,27 @@
     <string name="open_profile">Open Profile</string>
     <string name="customize_avatar">Customize Avatar</string>
     <string name="share_avatar">Share Avatar</string>
+    <string name="subscribe_listitemArmoire">Extra Armoire chances</string>
+    <string name="subscribe_listitemArmoire_description">Get two chances at new equipment from the Armoire for the price of one</string>
+    <string name="subscribe_incentive_button_armoire">Subscribe to open again for free!</string>
+    <string name="subscribe_incentive_text_armoire">Get an extra chance at the Armoire each time you buy it with a subscription</string>
+    <string name="subscriber_button_armoire">Open again for free!</string>
+    <string name="subscriber_button_faint">Second chance: Hold on with 1HP!</string>
+    <string name="sub_perk">SUB PERK</string>
+    <string name="subscribe_incentive_text_faint">Get a second chance each day to avoid running out of HP with a subscription</string>
+    <string name="subscriber_benefit_used_faint">You already used your second chance today. It’s available again in %s</string>
+    <string name="watch_ad_to_hang_on">Watch ad to hold on with 1HP!</string>
+    <string name="quest_mechanics">Quest Mechanics</string>
+    <string name="quest_mechanics_boss_title">Damaging a Boss</string>
+    <string name="quest_mechanics_boss_description">Complete any type of task or use skills to rack up pending damage! Damage will be applied on your next day reset. Strength affects how much damage you do.</string>
+    <string name="quest_mechanics_collecting_title">Collecting Quest items</string>
+    <string name="quest_mechanics_collecting_description">When on a Collection Quest, complete your tasks for a random chance to find a Quest item. Pending items will be applied on your next day reset. Perception boosts item rates.</string>
+    <string name="quest_mechanics_damage_title">Bosses lash out for missed Dailies</string>
+    <string name="quest_mechanics_damage_description">Boss damage is calculated each time a Party member checks in throughout the day. This damage is applied the next time you perform an action that syncs with the server. Boss damage is recorded in your Party’s chat.</string>
+    <string name="quest_mechanics_pausing_title">Pausing damage</string>
+    <string name="quest_mechanics_pausing_description">"If you’re struggling to complete your Dailies, you can pause damage from Settings for a break. This will prevent the Boss from hurting you or others, but also pause your own damage. Other members missed Dailies will still cause damage, so be careful out there! "</string>
+    <string name="quest_mechanics_rage_title">Rage meters</string>
+    <string name="quest_mechanics_rage_description">Some difficult bosses have an orange Rage meter under their HP. This meter fills up when participants miss Dailies. When it fills completely, the boss will let out a fearsome attack that does extra damage!</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
@@ -1439,5 +1461,10 @@
         <item quantity="one">every year</item>
         <item quantity="two">every other year</item>
         <item quantity="other">every %d years</item>
+    </plurals>
+    <plurals name="items_pending">
+        <item quantity="zero">No items pending</item>
+        <item quantity="one">%d item pending</item>
+        <item quantity="other">%d items pending</item>
     </plurals>
 </resources>
