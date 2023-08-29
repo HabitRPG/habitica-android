@@ -152,7 +152,7 @@ class ArmoireActivity : BaseActivity() {
             configure(args.type, args.key, args.text, args.value)
 
             if (args.type == "gear") {
-                userViewModel.user?.observeOnce(this) { user ->
+                userViewModel.user.observeOnce(this) { user ->
                     val totalCheckIns = user?.loginIncentives
                     if (totalCheckIns != null) {
                         reviewManager.requestReview(this@ArmoireActivity, totalCheckIns)
