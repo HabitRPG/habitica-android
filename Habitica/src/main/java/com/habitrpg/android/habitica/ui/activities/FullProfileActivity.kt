@@ -101,10 +101,6 @@ class FullProfileActivity : BaseActivity() {
 
         setTitle(R.string.profile_loading_data)
 
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            refresh()
-        }
-
         binding.avatarWithBars.setContent {
             HabiticaTheme {
                 AppHeaderView(member.value, isMyProfile = isMyProfile(), onMemberRowClicked = {}, onClassSelectionClicked = {})
@@ -144,14 +140,16 @@ class FullProfileActivity : BaseActivity() {
                             updateView(member)
                         }
                         this@FullProfileActivity.member.value = member
+                    } else {
+                        refresh(false)
                     }
                     invalidateOptionsMenu()
                 }
         }
     }
 
-    private suspend fun refresh() {
-        val member = socialRepository.retrieveMember(userID)
+    private suspend fun refresh(fromHall: Boolean) {
+        val member = socialRepository.retrieveMember(userID, fromHall)
         if (member != null) {
             updateView(member)
         }
@@ -302,8 +300,10 @@ class FullProfileActivity : BaseActivity() {
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatRevoked", !isMuted) }
-                refresh()
+                val flagsMap = mapOf("chatRevoked" to !isMuted)
+                val updateData = mapOf("flags" to flagsMap)
+                member.value?.id?.let { socialRepository.updateMember(it, updateData) }
+                refresh(true)
                 invalidateOptionsMenu()
             }
         }
@@ -320,8 +320,10 @@ class FullProfileActivity : BaseActivity() {
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member.value?.id?.let { socialRepository.updateMember(it, "flags.chatShadowMuted", !isShadowMuted) }
-                refresh()
+                val flagsMap = mapOf("chatShadowMuted" to !isShadowMuted)
+                val updateData = mapOf("flags" to flagsMap)
+                member.value?.id?.let { socialRepository.updateMember(it, updateData) }
+                refresh(true)
                 invalidateOptionsMenu()
             }
         }
@@ -332,14 +334,16 @@ class FullProfileActivity : BaseActivity() {
         val isBanned = member.value?.authentication?.blocked == true
         val alert = HabiticaAlertDialog(this)
         if (isBanned) {
-            alert.setTitle(R.string.ban_user_confirm)
-        } else {
             alert.setTitle(R.string.unban_user_confirm)
+        } else {
+            alert.setTitle(R.string.ban_user_confirm)
         }
         alert.addButton(R.string.yes, isPrimary = true, isDestructive = true) { _, _ ->
             lifecycleScope.launchCatching {
-                member.value?.id?.let { socialRepository.updateMember(it, "auth.blocked", !isBanned) }
-                refresh()
+                val flagsMap = mapOf("blocked" to !isBanned)
+                val updateData = mapOf("auth" to flagsMap)
+                member.value?.id?.let { socialRepository.updateMember(it, updateData) }
+                refresh(true)
                 invalidateOptionsMenu()
             }
         }
