@@ -12,19 +12,19 @@ class ReviewManager(private val context: Context) {
     companion object {
         private const val REVIEW_REQUEST_COUNT_KEY = "ReviewRequestCount"
         private const val INITIAL_CHECKINS_KEY = "InitialCheckins"
-        private const val REVIEW_REQUESTED = "ReviewRequested"
+        private const val SHOULD_QUEUE_REVIEW = "ShouldQueueReview"
         private const val LAST_REVIEW_CHECKIN_KEY = "LastReviewCheckin"
     }
 
     private fun canRequestReview(currentCheckins: Int): Boolean {
         val initialCheckins = sharedPref.getInt(INITIAL_CHECKINS_KEY, -1)
-        val reviewRequested = sharedPref.getBoolean(REVIEW_REQUESTED, false)
+        val shouldQueueReview = sharedPref.getBoolean(SHOULD_QUEUE_REVIEW, false)
         val lastReviewCheckin = sharedPref.getInt(LAST_REVIEW_CHECKIN_KEY, -1)
 
-        if (reviewRequested) {
+        if (!shouldQueueReview) {
             // First review request has been made, wait for following request (if any)
             // to request again in the spirit of asking during a logical break.
-            sharedPref.edit().putBoolean(REVIEW_REQUESTED, true).apply()
+            sharedPref.edit().putBoolean(SHOULD_QUEUE_REVIEW, true).apply()
             return false
         }
 
