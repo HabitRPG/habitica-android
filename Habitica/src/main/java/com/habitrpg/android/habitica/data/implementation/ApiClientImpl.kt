@@ -259,7 +259,7 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member? {
+    override suspend fun updateMember(memberID: String, updateData: Map<String, Map<String, Boolean>>): Member? {
         return process { apiService.updateUser(memberID, updateData) }
     }
 
@@ -430,6 +430,10 @@ class ApiClientImpl(
     override suspend fun getTasks(type: String, dueDate: String): TaskList? {
         return process { apiService.getTasks(type, dueDate) }
     }
+
+//    override suspend fun reorderTags(type: String, dueDate: String): {
+//        return process { apiService.getTasks(type, dueDate) }
+//    }
 
     override suspend fun unlockPath(path: String): UnlockResponse? {
         return process { apiService.unlockPath(path) }
