@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -75,11 +76,6 @@ class ArmoireActivity : BaseActivity() {
                 val remaining = inventoryRepository.getArmoireRemainingCount().firstOrNull() ?: 0
                 binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
                 binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
-
-                val totalCheckIns = user?.loginIncentives
-                if (remaining > 0 && totalCheckIns != null) {
-                    reviewManager.requestReview(this@ArmoireActivity, totalCheckIns)
-                }
             }
         }
 
@@ -122,6 +118,15 @@ class ArmoireActivity : BaseActivity() {
             val args = ArmoireActivityArgs.fromBundle(it)
             equipmentKey = args.key
             configure(args.type, args.key, args.text, args.value)
+
+            if (args.type == "gear") {
+                userViewModel.user?.observeOnce(this) { user ->
+                    val totalCheckIns = user?.loginIncentives
+                    if (totalCheckIns != null) {
+                        reviewManager.requestReview(this@ArmoireActivity, totalCheckIns)
+                    }
+                }
+            }
         }
     }
 
