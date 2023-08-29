@@ -78,6 +78,8 @@
             tools:visibility="visible"
             android:gravity="center"
             android:scaleType="center"
+            android:tintMode="multiply"
+            app:tint="@color/text_dimmed"
             android:textColor="@color/white" />
     </LinearLayout>
     <TextView

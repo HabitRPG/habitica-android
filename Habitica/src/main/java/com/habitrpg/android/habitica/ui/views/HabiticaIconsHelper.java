@@ -234,7 +234,7 @@ public class HabiticaIconsHelper {
         if (imageOfPinnedItem != null)
             return imageOfPinnedItem;
 
-        int size = scaleSize(16);
+        int size = scaleSize(14);
         imageOfPinnedItem = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(imageOfPinnedItem);
         canvas.scale(displayDensity, displayDensity);

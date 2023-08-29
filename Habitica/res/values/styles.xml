@@ -1012,12 +1012,12 @@
     </style>
 
     <style name="CountLabel">
-        <item name="android:background">@drawable/pill_bg_gray_300</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">4dp</item>
+        <item name="android:background">@drawable/pill_bg_gray</item>
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
         <item name="android:minWidth">24dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_quad</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
