@@ -1121,7 +1121,7 @@
     <string name="terms_of_service">Conditions d\'utilisation</string>
     <string name="privacy_policy">Politique de Confidentialité</string>
     <string name="all_tasks_completed">Vous avez fini toutes vos tâches. Bravo !</string>
-    <string name="damage_pending">%.01f dégâts en cours</string>
+    <string name="damage_pending">%s dégâts en cours</string>
     <string name="reset_counter">Réinitialiser le compteur</string>
     <string name="adjust_counter">Ajuster le compteur</string>
     <string name="x_remaining">%s restant</string>

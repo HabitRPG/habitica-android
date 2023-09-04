@@ -1045,7 +1045,7 @@
     <string name="not_now">Şimdi olmaz</string>
     <string name="need_help_header_description">Sorularınızın bir başka oyuncu tarafından cevaplanması için%s içinde bir mesaj gönderin.</string>
     <string name="setup_task_habit_1_notes">Bir Alışkanlık, Günlük İş veya Yapılacak İş</string>
-    <string name="damage_pending">%.01f hasar bekliyor</string>
+    <string name="damage_pending">%s hasar bekliyor</string>
     <string name="x_remaining">%s kaldı</string>
     <string name="won_achievement_description"><![CDATA[<b>%s</b> seni kazanan olarak seçti! Zaferin başarımlarının arasına eklendi.]]></string>
     <string name="twelve_months_one_time">12 aylık tek seferlik abonelik</string>

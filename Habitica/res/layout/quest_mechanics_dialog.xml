@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:text="@string/quest_mechanics_damage_description"
         style="@style/ArmoireDescriptionTextView"
+        android:layout_marginBottom="12dp"
         />
 
     <TextView
@@ -66,6 +67,7 @@
         android:layout_height="wrap_content"
         android:text="@string/quest_mechanics_pausing_description"
         style="@style/ArmoireDescriptionTextView"
+        android:layout_marginBottom="12dp"
         />
 
     <TextView

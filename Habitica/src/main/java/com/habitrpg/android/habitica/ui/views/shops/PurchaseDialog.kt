@@ -435,7 +435,7 @@ class PurchaseDialog(
                 }
             }
             val rightTextColor = when (item.currency) {
-                "gold" -> ContextCompat.getColor(context, R.color.text_yellow)
+                "gold" -> ContextCompat.getColor(context, R.color.yellow_5)
                 "gems" -> ContextCompat.getColor(context, R.color.text_green)
                 "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
                 else -> 0

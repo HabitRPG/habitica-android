@@ -1163,7 +1163,7 @@
     <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
-    <string name="damage_pending">%.01f damage pending</string>
+    <string name="damage_pending">%s Damage pending</string>
     <string name="x_remaining">%s remaining</string>
     <string name="sale_ends_in">Sale ends in %s</string>
     <string name="my_account">My Account</string>
@@ -1432,6 +1432,10 @@
     <string name="quest_mechanics_pausing_description">"If you’re struggling to complete your Dailies, you can pause damage from Settings for a break. This will prevent the Boss from hurting you or others, but also pause your own damage. Other members missed Dailies will still cause damage, so be careful out there! "</string>
     <string name="quest_mechanics_rage_title">Rage meters</string>
     <string name="quest_mechanics_rage_description">Some difficult bosses have an orange Rage meter under their HP. This meter fills up when participants miss Dailies. When it fills completely, the boss will let out a fearsome attack that does extra damage!</string>
+    <string name="faint_subscriber_description">Your subscription lets you have a second chance each day if you run out of HP</string>
+    <string name="rage">Rage</string>
+    <string name="preference_push_invited_to_group_plan">Invited to Group Plan</string>
+    <string name="preference_push_joined_group_plan_mention">\@Mentions in Group Plans</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
@@ -1463,8 +1467,8 @@
         <item quantity="other">every %d years</item>
     </plurals>
     <plurals name="items_pending">
-        <item quantity="zero">No items pending</item>
-        <item quantity="one">%d item pending</item>
-        <item quantity="other">%d items pending</item>
+        <item quantity="zero">No Items pending</item>
+        <item quantity="one">%d Item pending</item>
+        <item quantity="other">%d Items pending</item>
     </plurals>
 </resources>

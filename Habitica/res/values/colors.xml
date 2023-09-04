@@ -131,4 +131,5 @@
     <color name="gray200_gray400">@color/gray_200</color>
     <color name="gray700_gray10">@color/gray_700</color>
     <color name="maroon100_red100">@color/maroon_100</color>
+    <color name="brand_button">@color/brand_400</color>
 </resources>

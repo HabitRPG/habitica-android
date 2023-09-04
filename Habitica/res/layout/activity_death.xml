@@ -64,8 +64,8 @@
                 android:layout_marginVertical="@dimen/spacing_medium"
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
-                android:textColor="@color/text_primary"
-                android:textSize="20sp"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
                 android:paddingHorizontal="12dp" />
 
             <TextView
@@ -100,14 +100,19 @@
                 app:textColor="@color/text_primary"
                 android:layout_marginHorizontal="24dp"  />
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/revive_subscriber_wrapper"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_large">
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="18dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="@dimen/spacing_large">
+                android:layout_marginBottom="8dp">
                 <TextView
                     android:id="@+id/revive_subscriber_button"
                     android:layout_width="match_parent"
@@ -133,7 +138,16 @@
                     android:layout_gravity="top|end"
                     android:text="@string/sub_perk"/>
             </FrameLayout>
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/faint_subscriber_description"
+                    android:layout_marginHorizontal="42dp"
+                    android:gravity="center"
+                    android:textColor="@color/text_teal"
+                    style="@style/Body1"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/subscriber_benefit_used_view"

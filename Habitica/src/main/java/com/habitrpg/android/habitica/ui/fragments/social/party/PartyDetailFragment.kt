@@ -53,6 +53,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -218,9 +219,10 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
 
         if (viewModel.isQuestActive && viewModel.isUserOnQuest) {
             val value = (user.party?.quest?.progress?.up ?: 0F).toDouble()
-            binding?.questPendingDamageView?.text = getString(R.string.damage_pending, value)
+            val df = DecimalFormat("###.#")
+            binding?.questPendingDamageView?.text = getString(R.string.damage_pending, df.format(value))
             val collectedItems = user.party?.quest?.progress?.collectedItems
-            binding?.questPendingDamageView?.text = requireContext().resources.getQuantityString(R.plurals.items_pending, collectedItems ?: 0, collectedItems ?: 0)
+            binding?.questPendingItemsView?.text = requireContext().resources.getQuantityString(R.plurals.items_pending, collectedItems ?: 0, collectedItems ?: 0)
         }
 
         if ((user.invitations?.parties?.count() ?: 0) > 0) {

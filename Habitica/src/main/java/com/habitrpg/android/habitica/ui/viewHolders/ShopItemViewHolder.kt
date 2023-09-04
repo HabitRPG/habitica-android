@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
@@ -86,6 +87,11 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
 
         if (item.key == "gem" && item.limitedNumberLeft == -1) {
             binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.item_indicator_subscribe)
+            binding.itemDetailIndicator.visibility = View.VISIBLE
+        } else if (item.key == "gem") {
+            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_green)
+            binding.itemDetailIndicator.text = "${item.limitedNumberLeft}"
+            binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.white))
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }
 

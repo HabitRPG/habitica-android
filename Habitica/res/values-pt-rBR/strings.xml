@@ -1100,7 +1100,7 @@
     <string name="theme_color">Tema Colorido</string>
     <string name="terms_of_service">Termos de Serviço</string>
     <string name="empty_title">Nada aqui ainda</string>
-    <string name="damage_pending">%.01f de dano pendente</string>
+    <string name="damage_pending">%s de dano pendente</string>
     <string name="privacy_policy">Política de Privacidade</string>
     <string name="open_shop">Loja Aberta</string>
     <string name="avatar_style">Estilo</string>

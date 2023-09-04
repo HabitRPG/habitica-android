@@ -255,7 +255,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 )
                 uri =
                     resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) ?: return
-                fos = resolver.openOutputStream(uri) ?: return
+                fos = resolver.openOutputStream(uri, "wt") ?: return
             } else {
                 val imagesDir =
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)

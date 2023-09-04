@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +11,7 @@
         android:id="@+id/icon_view"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="8dp" />
+        android:layout_marginEnd="16dp" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -22,7 +21,8 @@
         android:id="@+id/name_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        style="@style/SubHeader1"
+        android:textColor="@color/text_primary"
         tools:text="item to collect"
         android:layout_marginBottom="@dimen/spacing_small"/>
         <com.habitrpg.common.habitica.views.ValueBar
@@ -30,6 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:lightBackground="true"
-            app:barForegroundColor="@color/green_100"/>
+            app:barBackgroundColor="@color/offset_background"
+            app:barForegroundColor="@color/green_100"
+            app:valueTextColor="@color/text_ternary"/>
         </LinearLayout>
 </LinearLayout>

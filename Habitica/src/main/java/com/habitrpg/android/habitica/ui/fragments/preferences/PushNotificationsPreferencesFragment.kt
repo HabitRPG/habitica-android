@@ -40,7 +40,6 @@ class PushNotificationsPreferencesFragment : BasePreferencesFragment(), SharedPr
         updatePreference("preference_push_party_activity", user?.preferences?.pushNotifications?.partyActivity)
         updatePreference("preference_push_party_mention", user?.preferences?.pushNotifications?.mentionParty)
         updatePreference("preference_push_joined_guild_mention", user?.preferences?.pushNotifications?.mentionJoinedGuild)
-        updatePreference("preference_push_unjoined_guild_mention", user?.preferences?.pushNotifications?.mentionUnjoinedGuild)
         isSettingUser = false
         isInitialSet = false
     }

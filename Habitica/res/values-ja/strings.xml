@@ -1121,7 +1121,7 @@
     <string name="terms_of_service">利用規約</string>
     <string name="privacy_policy">プライバシーポリシー</string>
     <string name="all_tasks_completed">すべてのタスクを完了しました。すばらしい！</string>
-    <string name="damage_pending">%.01f ダメージを保留中</string>
+    <string name="damage_pending">%s ダメージを保留中</string>
     <string name="adjust_counter">回数を修正</string>
     <string name="reset_counter">カウンターをリセット</string>
     <string name="x_remaining">残り%s</string>

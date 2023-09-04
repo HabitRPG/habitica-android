@@ -1123,7 +1123,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="open_shop">Offener Laden</string>
     <string name="survey_menu_description">Fülle diese 5 Minuten Umfrage aus, um uns beim Wachsen zu helfen und eine Errungenschaft zu erhalten!</string>
     <string name="empty_equipment_description">Du hast noch keine Ausrüstung für diesen Typen. Du kannst Ausrüstung vom Markt mit dem Gold, das du verdient hast, kaufen.</string>
-    <string name="damage_pending">ausstehend %.01f dmg</string>
+    <string name="damage_pending">%s Schaden ausstehend</string>
     <string name="x_remaining">%s verbleibend</string>
     <string name="reset_counter">Zähler zurücksetzen</string>
     <string name="adjust_counter">Zähler anpassen</string>

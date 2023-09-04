@@ -1179,7 +1179,7 @@
     <string name="class_confirmation_price">更改你的職業成為%s需要%d的寶石，確認更改\?</string>
     <string name="armoireEquipment_new">你在衣櫥裏找到了一個稀有裝備！</string>
     <string name="starting_objectives">新手任務</string>
-    <string name="damage_pending">%.01f即將造成的傷害</string>
+    <string name="damage_pending">%s即將造成的傷害</string>
     <string name="armoireFood_new">你在衣櫥搜查，然後找到了食物。那爲什麼在這裏？</string>
     <string name="adventure_guide_description_new">完成這些任務，即可贏得&lt;b&gt;5項成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;！</string>
     <string name="survey_title">Habitica 用戶問卷</string>

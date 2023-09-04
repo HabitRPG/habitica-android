@@ -1120,7 +1120,7 @@
     <string name="terms_of_service">Условия Использования</string>
     <string name="privacy_policy">Политика Конфиденциальности</string>
     <string name="all_tasks_completed">Вы завершили все ваши задания. Отлично!</string>
-    <string name="damage_pending">%.01f ожидаемого урона</string>
+    <string name="damage_pending">%s ожидаемого урона</string>
     <string name="reset_counter">Сбросить счётчик</string>
     <string name="adjust_counter">Настроить счётчик</string>
     <string name="discard_changes_to_task_message">Вы уверены, что не хотите сохранять изменения в этой задаче\?</string>

@@ -1124,7 +1124,7 @@
     <string name="all_tasks_completed">Ви завершили всі свої завдання. Чудова робота!</string>
     <string name="privacy_policy">Політика конфіденційності</string>
     <string name="terms_of_service">Умови обслуговування</string>
-    <string name="damage_pending">%.01f пошкоджень буде нанесено</string>
+    <string name="damage_pending">%s пошкоджень буде нанесено</string>
     <string name="x_remaining">%s залишилось</string>
     <string name="sale_ends_in">Розпродаж закінчується %s</string>
     <string name="my_account">Мій акаунт</string>
