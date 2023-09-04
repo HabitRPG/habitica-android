@@ -52,7 +52,7 @@ open class Customization : RealmObject(), BaseObject {
 
     fun getImageName(userSize: String?, hairColor: String?): String? {
         if (identifier?.isNotBlank() != true || identifier == "none" || identifier == "0") return null
-        when (type) {
+        return when (type) {
             "skin" -> return "skin_$identifier"
             "shirt" -> return userSize + "_shirt_" + identifier
             "hair" -> {
@@ -64,8 +64,8 @@ open class Customization : RealmObject(), BaseObject {
             }
             "background" -> return "background_$identifier"
             "chair" -> return "chair_$identifier"
+            else -> null
         }
-        return null
     }
 
     fun isUsable(purchased: Boolean): Boolean {
