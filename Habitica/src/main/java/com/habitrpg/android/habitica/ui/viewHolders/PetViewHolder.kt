@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders
 
+import android.app.Activity
 import android.graphics.PorterDuff
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
@@ -16,7 +17,10 @@ import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
+import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
+import com.habitrpg.android.habitica.ui.views.stable.PetBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import dagger.hilt.android.internal.managers.ViewComponentManager
 
 class PetViewHolder(
     parent: ViewGroup,
@@ -110,39 +114,23 @@ class PetViewHolder(
             return
         }
         val context = itemView.context
-        val menu = BottomSheetMenu(context)
-        menu.setTitle(animal?.text)
-        menu.setImage("stable_Pet-${animal?.animal}-${animal?.color}")
-
-        val hasCurrentPet = currentPet.equals(animal?.key)
-        val labelId = if (hasCurrentPet) R.string.unequip else R.string.equip
-        menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(labelId)))
-
-        if (canRaiseToMount) {
-            menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.feed)))
-            if (ownsSaddles) {
-                menu.addMenuItem(BottomSheetMenuItem(itemView.resources.getString(R.string.use_saddle)))
+        animal?.let { pet ->
+            (if (context is ViewComponentManager.FragmentContextWrapper) {
+                context.baseContext
+            } else {
+                context
+            }as Activity).showAsBottomSheet {
+                PetBottomSheet(
+                    pet,
+                    currentPet.equals(animal?.key),
+                    canRaiseToMount,
+                    ownsSaddles,
+                    onEquip,
+                    onFeed,
+                    it
+                )
             }
         }
-        menu.setSelectionRunnable { index ->
-            val pet = animal ?: return@setSelectionRunnable
-            when (index) {
-                0 -> {
-                    animal?.let {
-                        onEquip?.invoke(it.key ?: "")
-                    }
-                }
-                1 -> {
-                    onFeed?.invoke(pet, null)
-                }
-                2 -> {
-                    val saddle = Food()
-                    saddle.key = "Saddle"
-                    onFeed?.invoke(pet, saddle)
-                }
-            }
-        }
-        menu.show()
     }
 
     private fun showRequirementsDialog() {

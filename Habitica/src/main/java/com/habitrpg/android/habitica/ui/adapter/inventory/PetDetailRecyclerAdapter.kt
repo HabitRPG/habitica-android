@@ -114,7 +114,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         } else {
             val pet = itemList[position] as Pet
             if ((
-                ownedPets?.get(pet.key ?: "")?.trained
+                ownedPets?.get(pet.key)?.trained
                     ?: 0
                 ) <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0
             ) {

@@ -31,8 +31,8 @@ fun HabiticaButton(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .background(background, HabiticaTheme.shapes.medium)
             .clickable { onClick() }
+            .background(background, HabiticaTheme.shapes.medium)
             .fillMaxWidth()
             .padding(contentPadding)
     ) {
