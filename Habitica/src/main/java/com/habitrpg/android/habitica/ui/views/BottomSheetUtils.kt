@@ -94,7 +94,7 @@ private fun BottomSheetWrapper(
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
                     .background(
-                        MaterialTheme.colors.background,
+                        HabiticaTheme.colors.windowBackground,
                         RoundedCornerShape(topStart = radius, topEnd = radius)
                     )
                     .padding(vertical = 8.dp)
