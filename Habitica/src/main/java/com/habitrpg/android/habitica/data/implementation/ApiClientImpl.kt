@@ -148,9 +148,18 @@ class ApiClientImpl(
                 } else {
                     // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
                     if (response.code in 400..599) {
-                        return@addNetworkInterceptor response.newBuilder()
-                            .header("Cache-Control", "no-store")
-                            .build()
+                        when (response.code) {
+                            404 -> {
+                                // The server is returning a 404 error, which means the requested resource was not found.
+                                // In this case - we want to actually cache the response, and handle it in the app
+                                // to prevent a niche HttpException/potential network crash
+                                return@addNetworkInterceptor response
+                            }
+
+                            else -> {
+                                return@addNetworkInterceptor response.newBuilder().header("Cache-Control", "no-store").build()
+                            }
+                        }
                     } else {
                         return@addNetworkInterceptor response
                     }
