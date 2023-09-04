@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
@@ -30,6 +31,8 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
+import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -60,7 +63,7 @@ class PurchaseDialog(
     private val userRepository: UserRepository,
     private val inventoryRepository: InventoryRepository,
     val item: ShopItem,
-    val parentActivity: Activity? = null
+    val parentActivity: AppCompatActivity? = null
 ) : HabiticaAlertDialog(context) {
 
     private val customHeader: View by lazy {
@@ -355,19 +358,22 @@ class PurchaseDialog(
                 when {
                     "gems" == shopItem.purchaseType -> {
                         if (shopItem.canAfford(user, purchaseQuantity)) {
-                            InsufficientSubscriberGemsDialog(context)
+                            InsufficientSubscriberGemsDialog(context).show()
                         } else {
-                            InsufficientGoldDialog(context)
+                            InsufficientGoldDialog(context).show()
                         }
                     }
-                    "gold" == shopItem.currency -> InsufficientGoldDialog(context)
+                    "gold" == shopItem.currency -> InsufficientGoldDialog(context).show()
                     "gems" == shopItem.currency -> {
                         Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "purchase modal", "item" to shopItem.key))
-                        parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value) }
+                        val subscriptionBottomSheet = SubscriptionBottomSheetFragment()
+                        parentActivity?.let { activity ->
+                            subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                        }
                     }
-                    "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)
+                    "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context).show()
                     else -> null
-                }?.show()
+                }
                 return
             }
         }
