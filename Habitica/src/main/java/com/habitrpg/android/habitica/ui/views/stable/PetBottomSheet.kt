@@ -1,6 +1,7 @@
 package com.habitrpg.android.habitica.ui.views.stable
 
 import android.graphics.Bitmap
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
@@ -9,6 +10,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,6 +38,7 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -150,23 +153,32 @@ fun PetBottomSheet(
             val regularPosition = 33f
             val highJump = 22f
             val lowJump = 30f
-            val position by infiniteTransition.animateFloat(
-                initialValue = regularPosition,
-                targetValue = highJump,
-                animationSpec = infiniteRepeatable(animation = keyframes {
-                    durationMillis = 6000
-                    regularPosition at 0 with LinearOutSlowInEasing
-                    highJump at 200 with LinearOutSlowInEasing
-                    regularPosition at 400 with FastOutSlowInEasing
-                    regularPosition at 1800 with FastOutSlowInEasing
-                    lowJump at 1850 with LinearOutSlowInEasing
-                    regularPosition at 1900 with LinearOutSlowInEasing
-                    regularPosition at 2100 with FastOutSlowInEasing
-                    lowJump at 2200 with LinearOutSlowInEasing
-                    regularPosition at 2350 with LinearOutSlowInEasing
-                    regularPosition at 6000
-                }, RepeatMode.Restart, StartOffset(1500))
-            )
+            val position by if (isAnimalFlying(pet)) {
+                infiniteTransition.animateFloat(
+                    initialValue = 24f,
+                    targetValue = 16f,
+                    animationSpec = infiniteRepeatable(tween(2500, easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f)), RepeatMode.Reverse),
+                    label = "animalPosition"
+                )
+            } else {
+                infiniteTransition.animateFloat(
+                    initialValue = regularPosition,
+                    targetValue = highJump,
+                    animationSpec = infiniteRepeatable(animation = keyframes {
+                        durationMillis = 6000
+                        regularPosition at 0 with LinearOutSlowInEasing
+                        highJump at 150 with LinearOutSlowInEasing
+                        regularPosition at 300 with FastOutSlowInEasing
+                        regularPosition at 1800 with FastOutSlowInEasing
+                        lowJump at 1850 with LinearOutSlowInEasing
+                        regularPosition at 1900 with LinearOutSlowInEasing
+                        regularPosition at 2100 with FastOutSlowInEasing
+                        lowJump at 2200 with LinearOutSlowInEasing
+                        regularPosition at 2350 with LinearOutSlowInEasing
+                        regularPosition at 6000
+                    }, RepeatMode.Restart, StartOffset(1500)), label = "animalPosition"
+                )
+            }
             PixelArtView(
                 imageName = "stable_Pet-${pet.animal}-${pet.color}", modifier = Modifier
                     .offset(0.dp, position.dp)
@@ -181,7 +193,7 @@ fun PetBottomSheet(
                 modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 HabiticaButton(
-                    HabiticaTheme.colors.windowBackground,
+                    colorResource(id = R.color.offset_background_30),
                     HabiticaTheme.colors.textPrimary,
                     onClick = {
                         if (ownsSaddles) {
@@ -205,7 +217,7 @@ fun PetBottomSheet(
                     }
                 }
                 HabiticaButton(
-                    HabiticaTheme.colors.windowBackground,
+                    colorResource(id = R.color.offset_background_30),
                     HabiticaTheme.colors.textPrimary,
                     onClick = {
                         onFeed?.invoke(pet, null)
@@ -239,4 +251,18 @@ fun PetBottomSheet(
             }
         }
     }
+}
+
+fun isAnimalFlying(pet: Pet): Boolean {
+    if (listOf(
+        "FlyingPig",
+        "Bee"
+    ).contains(pet.animal)) return true
+    return listOf(
+        "Ghost",
+        "Cupid",
+        "Fairy",
+        "SolarSystem",
+        "Vampire"
+    ).contains(pet.color)
 }
