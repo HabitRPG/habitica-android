@@ -18,6 +18,8 @@ import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.helpers.Animations
@@ -129,6 +131,10 @@ class DeathActivity : BaseActivity() {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.updateUser("stats.hp", 1)
                 finish()
+                (parent as? SnackbarActivity)?.snackbarContainer()?.let { it1 ->
+                    HabiticaSnackbar.showSnackbar(
+                        it1, getString(R.string.subscriber_benefit_used_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
+                }
             }
         }
 
