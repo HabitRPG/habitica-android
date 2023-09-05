@@ -681,7 +681,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         val now = Date().time
         lifecycleScope.launch(context = Dispatchers.Main) {
             delay(1000L)
-            if (!this@MainActivity.isFinishing && MainNavigationController.isReady && now - lastDeathDialogDisplay > 60000) {
+            if (!this@MainActivity.isFinishing && MainNavigationController.isReady && now - lastDeathDialogDisplay > 10000) {
                 lastDeathDialogDisplay = now
                 MainNavigationController.navigate(R.id.deathActivity)
             }
