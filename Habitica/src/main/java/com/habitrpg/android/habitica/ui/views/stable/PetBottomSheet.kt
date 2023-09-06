@@ -221,7 +221,6 @@ fun PetBottomSheet(
                     HabiticaTheme.colors.textPrimary,
                     onClick = {
                         onFeed?.invoke(pet, null)
-                        onDismiss()
                     }, modifier = Modifier
                         .weight(1.0f)
                         .heightIn(min = 101.dp)

@@ -177,7 +177,7 @@
                     android:id="@+id/subscribe_modal_button"
                     android:layout_width="match_parent"
                     android:layout_height="69dp"
-                    android:text="@string/subscribe_incentive_button_armoire"
+                    android:text="@string/subscribe_incentive_button_faint"
                     android:textStyle="bold"
                     style="@style/HabiticaButton.White"
                     android:textColor="@color/teal_10"
