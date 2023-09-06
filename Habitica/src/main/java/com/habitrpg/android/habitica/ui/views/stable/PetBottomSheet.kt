@@ -12,6 +12,7 @@ import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +26,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,6 +59,9 @@ import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
+import kotlinx.coroutines.delay
 import java.util.Calendar
 
 @Composable
@@ -99,15 +109,25 @@ private fun getFoodPainter(petColor: String): ImageBitmap {
 @Composable
 fun PetBottomSheet(
     pet: Pet,
+    trained: Int,
     isCurrentPet: Boolean,
     canRaiseToMount: Boolean,
     ownsSaddles: Boolean,
     onEquip: ((String) -> Unit)?,
-    onFeed: ((Pet, Food?) -> Unit)?,
+    onFeed: (suspend (Pet, Food?) -> FeedResponse)?,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val infiniteTransition = rememberInfiniteTransition()
+    val coroutineScope = rememberCoroutineScope()
+
+    var feedValue: Int by remember { mutableIntStateOf(0) }
+    var showFeedResponse: Boolean by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = pet, block = {
+        feedValue = trained
+    })
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.padding(horizontal = 22.dp)
@@ -150,6 +170,14 @@ fun PetBottomSheet(
                     }
                     paint.reset()
                 })
+
+            if (showFeedResponse) {
+                Text("Pet fed", modifier = Modifier
+                    .offset(y = 8.dp)
+                    .align(Alignment.TopCenter)
+                    .background(HabiticaTheme.colors.windowBackground, HabiticaTheme.shapes.medium))
+            }
+
             val regularPosition = 33f
             val highJump = 22f
             val lowJump = 30f
@@ -199,7 +227,9 @@ fun PetBottomSheet(
                         if (ownsSaddles) {
                             val saddle = Food()
                             saddle.key = "Saddle"
-                            onFeed?.invoke(pet, saddle)
+                            coroutineScope.launchCatching {
+                                onFeed?.invoke(pet, saddle)
+                            }
                         } else {
                             MainNavigationController.navigate(R.id.marketFragment)
                         }
@@ -220,7 +250,14 @@ fun PetBottomSheet(
                     colorResource(id = R.color.offset_background_30),
                     HabiticaTheme.colors.textPrimary,
                     onClick = {
-                        onFeed?.invoke(pet, null)
+                        coroutineScope.launchCatching {
+                            val response = onFeed?.invoke(pet, null)
+                            showFeedResponse = true
+                            delay(600)
+                            feedValue = response?.value ?: feedValue
+                            delay(1500)
+                            showFeedResponse = false
+                        }
                     }, modifier = Modifier
                         .weight(1.0f)
                         .heightIn(min = 101.dp)

@@ -14,18 +14,17 @@ import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
 import com.habitrpg.android.habitica.models.inventory.Pet
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
-import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
 import com.habitrpg.android.habitica.ui.views.stable.PetBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
 class PetViewHolder(
     parent: ViewGroup,
     private val onEquip: ((String) -> Unit)?,
-    private val onFeed: ((Pet, Food?) -> Unit)?,
+    private val onFeed: (suspend (Pet, Food?) -> FeedResponse)?,
     private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)),
     View.OnClickListener {
@@ -36,6 +35,7 @@ class PetViewHolder(
     private var potionCount: Int = 0
     private var ownsSaddles = false
     private var animal: Pet? = null
+    private var trained: Int = 0
     private var currentPet: String? = null
 
     private var binding: PetDetailItemBinding = PetDetailItemBinding.bind(itemView)
@@ -61,6 +61,7 @@ class PetViewHolder(
         currentPet: String?
     ) {
         this.animal = item
+        this.trained = trained
         isOwned = trained > 0
         binding.imageView.alpha = 1.0f
         this.canRaiseToMount = canRaiseToMount
@@ -122,6 +123,7 @@ class PetViewHolder(
             }as Activity).showAsBottomSheet {
                 PetBottomSheet(
                     pet,
+                    trained,
                     currentPet.equals(animal?.key),
                     canRaiseToMount,
                     ownsSaddles,
