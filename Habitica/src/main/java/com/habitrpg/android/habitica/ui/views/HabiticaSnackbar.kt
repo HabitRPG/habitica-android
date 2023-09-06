@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
+import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
 
 class HabiticaSnackbar
@@ -111,7 +112,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
     }
 
     enum class SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE
+        NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE, BLACK
     }
 
     companion object {
@@ -247,6 +248,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
 
             when (displayType) {
                 SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
+                SnackbarDisplayType.BLACK -> snackbar.setBackgroundResource(R.drawable.snackbar_background_black)
                 SnackbarDisplayType.FAILURE_BLUE, SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(
                     R.drawable.snackbar_background_blue
                 )
@@ -265,6 +267,11 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             }
 
             snackbar.show()
+            if (displayType == SnackbarDisplayType.FAILURE || displayType == SnackbarDisplayType.FAILURE_BLUE) {
+                container.postDelayed({
+                    snackbar.getView().startAnimation(Animations.negativeShakeAnimation())
+                }, 600L)
+            }
         }
 
         private fun showSubscriberBenefitAnimation(container: ViewGroup, snackbar: HabiticaSnackbar) {
