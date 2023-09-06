@@ -61,7 +61,8 @@
                         android:padding="@dimen/spacing_medium"
                         android:gravity="center_vertical"
                         android:layout_marginBottom="@dimen/spacing_medium"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
                         <com.habitrpg.common.habitica.views.PixelArtView
                             android:id="@+id/quest_scroll_image_view"
                             android:layout_width="@dimen/gear_image_size"
@@ -77,6 +78,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="The Wail of the Whale"
+                                style="@style/SubHeader1"
                                 android:textColor="@color/text_primary"
                                 />
                             <TextView
@@ -84,6 +86,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="3 Participants"
+                                style="@style/Body1"
                                 android:textColor="@color/text_ternary" />
                         </LinearLayout>
                         <ImageView

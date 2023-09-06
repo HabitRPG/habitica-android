@@ -221,7 +221,7 @@ fun PetBottomSheet(
                 val scale = (sin((progressAnimation.value - oldFeedValue) * 120) * 0.02f)
                 LinearProgressIndicator(
                     progress = progressAnimation.value,
-                    color = HabiticaTheme.colors.tintedUiSub,
+                    color = HabiticaTheme.colors.successColor,
                     strokeCap = StrokeCap.Round,
                     modifier = Modifier
                         .width(200.dp)
@@ -236,38 +236,54 @@ fun PetBottomSheet(
 
             val regularPosition = 33f
             val highJump = 22f
+            val midJump = 27f
             val lowJump = 30f
-            val position by if (isAnimalFlying(pet)) {
-                infiniteTransition.animateFloat(
-                    initialValue = 24f,
-                    targetValue = 16f,
-                    animationSpec = infiniteRepeatable(
-                        tween(
-                            2500,
-                            easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f)
-                        ), RepeatMode.Reverse
-                    ),
-                    label = "animalPosition"
-                )
-            } else {
-                infiniteTransition.animateFloat(
-                    initialValue = regularPosition,
-                    targetValue = highJump,
-                    animationSpec = infiniteRepeatable(animation = keyframes {
-                        durationMillis = 6000
-                        regularPosition at 0 with LinearOutSlowInEasing
-                        highJump at 150 with LinearOutSlowInEasing
-                        regularPosition at 300 with FastOutSlowInEasing
-                        regularPosition at 1800 with FastOutSlowInEasing
-                        lowJump at 1850 with LinearOutSlowInEasing
-                        regularPosition at 1900 with LinearOutSlowInEasing
-                        regularPosition at 2100 with FastOutSlowInEasing
-                        lowJump at 2200 with LinearOutSlowInEasing
-                        regularPosition at 2350 with LinearOutSlowInEasing
-                        regularPosition at 6000
-                    }, RepeatMode.Restart, StartOffset(1500)), label = "animalPosition"
-                )
-            }
+            val position by if (showFeedResponse) {
+                    infiniteTransition.animateFloat(
+                        initialValue = regularPosition,
+                        targetValue = highJump,
+                        animationSpec = infiniteRepeatable(animation = keyframes {
+                            durationMillis = 800
+                            regularPosition at 0 with FastOutSlowInEasing
+                            lowJump at 50 with LinearOutSlowInEasing
+                            regularPosition at 100 with LinearOutSlowInEasing
+                            regularPosition at 300 with FastOutSlowInEasing
+                            midJump at 400 with LinearOutSlowInEasing
+                            regularPosition at 550 with LinearOutSlowInEasing
+                            regularPosition at 800
+                        }, RepeatMode.Restart, StartOffset(1500)), label = "animalPosition"
+                    )
+                } else if (isAnimalFlying(pet)) {
+                        infiniteTransition.animateFloat(
+                            initialValue = 24f,
+                            targetValue = 16f,
+                            animationSpec = infiniteRepeatable(
+                                tween(
+                                    2500,
+                                    easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f)
+                                ), RepeatMode.Reverse
+                            ),
+                            label = "animalPosition"
+                        )
+                    } else {
+                        infiniteTransition.animateFloat(
+                            initialValue = regularPosition,
+                            targetValue = highJump,
+                            animationSpec = infiniteRepeatable(animation = keyframes {
+                                durationMillis = 6000
+                                regularPosition at 0 with LinearOutSlowInEasing
+                                highJump at 150 with LinearOutSlowInEasing
+                                regularPosition at 300 with FastOutSlowInEasing
+                                regularPosition at 1800 with FastOutSlowInEasing
+                                lowJump at 1850 with LinearOutSlowInEasing
+                                regularPosition at 1900 with LinearOutSlowInEasing
+                                regularPosition at 2100 with FastOutSlowInEasing
+                                lowJump at 2200 with LinearOutSlowInEasing
+                                regularPosition at 2350 with LinearOutSlowInEasing
+                                regularPosition at 6000
+                            }, RepeatMode.Restart, StartOffset(1500)), label = "animalPosition"
+                        )
+                    }
             PixelArtView(
                 imageName = "stable_Pet-${pet.animal}-${pet.color}", modifier = Modifier
                     .offset(0.dp, position.dp)

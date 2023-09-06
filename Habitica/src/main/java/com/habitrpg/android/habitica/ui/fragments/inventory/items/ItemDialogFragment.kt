@@ -231,8 +231,6 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
             adapter?.onFeedPet = { food -> feedPet(food) }
 
-            adapter?.itemType = itemType ?: ""
-            adapter?.itemText = (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText) ?: ""
             adapter?.onOpenShop = {
                 Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
                     "area" to "bottom",

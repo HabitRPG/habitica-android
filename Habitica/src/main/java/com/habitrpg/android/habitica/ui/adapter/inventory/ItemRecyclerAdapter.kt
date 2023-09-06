@@ -96,7 +96,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
 
     override fun getItemCount(): Int {
         val actualCount = super.getItemCount()
-        return actualCount + if (itemType == "special" || actualCount == 0) 0 else 1
+        return actualCount + if (itemType == "special" || actualCount == 0 || itemType == "") 0 else 1
     }
 
     override fun getItemViewType(position: Int): Int {

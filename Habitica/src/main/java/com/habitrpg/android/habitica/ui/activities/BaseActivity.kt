@@ -237,7 +237,7 @@ abstract class BaseActivity : AppCompatActivity() {
     fun shareContent(identifier: String, message: String?, image: Bitmap? = null) {
         Analytics.sendEvent("shared", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("identifier" to identifier))
         val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "*/*"
+        sharingIntent.type = "image/*"
         if (message?.isNotBlank() == true) {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
         }

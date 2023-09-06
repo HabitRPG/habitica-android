@@ -64,8 +64,8 @@
                 android:layout_marginVertical="@dimen/spacing_medium"
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
                 android:paddingHorizontal="12dp" />
 
             <TextView
@@ -74,7 +74,7 @@
                 android:layout_margin="@dimen/spacing_large"
                 android:gravity="center"
                 android:text="@string/faint_broken_equipment"
-                android:textColor="@color/text_quad" />
+                android:textColor="@color/text_secondary" />
 
             <Space
                 android:layout_width="wrap_content"

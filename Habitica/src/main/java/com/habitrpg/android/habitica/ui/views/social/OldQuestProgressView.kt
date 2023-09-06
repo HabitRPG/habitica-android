@@ -38,6 +38,7 @@ class OldQuestProgressView : LinearLayout {
         orientation = VERTICAL
         binding.bossHealthView.valueSuffix = "HP"
         binding.bossRageView.valueSuffix = context.getString(R.string.rage)
+        binding.bossHealthView
         setScaledPadding(context, 16, 16, 16, 16)
     }
 
