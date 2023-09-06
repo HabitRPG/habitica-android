@@ -38,6 +38,7 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -71,6 +72,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     var itemTypeText: String? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
+    var onFeedResult: ((FeedResponse?) -> Unit)? = null
     internal var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var user: User? = null
@@ -249,13 +251,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         val pet = feedingPet ?: return
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
-            feedPetUseCase.callInteractor(
+            val result = feedPetUseCase.callInteractor(
                 FeedPetUseCase.RequestValues(
                     pet,
                     food,
                     activity
                 )
             )
+            onFeedResult?.invoke(result)
         }
     }
 

@@ -26,13 +26,14 @@ import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
     var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
-    var onFeed: ((Pet, Food?) -> Unit)? = null
+    var onFeed: (suspend (Pet, Food?) -> FeedResponse?)? = null
     var itemType: String? = null
     var currentPet: String? = null
         set(value) {

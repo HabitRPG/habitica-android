@@ -24,7 +24,7 @@ import dagger.hilt.android.internal.managers.ViewComponentManager
 class PetViewHolder(
     parent: ViewGroup,
     private val onEquip: ((String) -> Unit)?,
-    private val onFeed: (suspend (Pet, Food?) -> FeedResponse)?,
+    private val onFeed: (suspend (Pet, Food?) -> FeedResponse?)?,
     private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
 ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.pet_detail_item)),
     View.OnClickListener {
