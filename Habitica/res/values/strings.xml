@@ -337,6 +337,9 @@
     <string name="edit_tag_btn_edit">Edit</string>
     <string name="confirm_delete_tag_title">Are you sure?</string>
     <string name="confirm_delete_tag_message">Do you really want to delete?</string>
+    <string name="your_tags">Your Tags</string>
+    <string name="challenge_tags">Challenge Tags</string>
+    <string name="group_tags">Group Tags</string>
 
     <!-- QR Strings -->
     <string name="choose_recipient_title">Choose Message Recipient</string>
@@ -1438,6 +1441,7 @@
     <string name="preference_push_invited_to_group_plan">Invited to Group Plan</string>
     <string name="preference_push_joined_group_plan_mention">\@Mentions in Group Plans</string>
     <string name="subscribe_incentive_button_faint">Subscribe to hold on with 1HP!</string>
+
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
