@@ -52,7 +52,9 @@ class PetDetailRecyclerFragment :
     private var animalGroup: String? = null
     private var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
-    private lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 

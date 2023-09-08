@@ -49,7 +49,9 @@ class ArmoireActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
-    private lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     override fun getLayoutResId(): Int = R.layout.activity_armoire
 
@@ -121,9 +123,8 @@ class ArmoireActivity : BaseActivity() {
 
             if (args.type == "gear") {
                 userViewModel.user.observeOnce(this) { user ->
-                    val totalCheckIns = user?.loginIncentives
-                    if (totalCheckIns != null) {
-                        reviewManager.requestReview(this@ArmoireActivity, totalCheckIns)
+                    user?.loginIncentives?.let { totalCheckins ->
+                        reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
                     }
                 }
             }

@@ -78,6 +78,9 @@ class FullProfileActivity : BaseActivity() {
     @Inject
     lateinit var sharedPrefs: SharedPreferences
 
+    @Inject
+    lateinit var reviewManager: ReviewManager
+
     private var userID = ""
     private var username: String? = null
     private var userDisplayName: String? = null
@@ -89,7 +92,7 @@ class FullProfileActivity : BaseActivity() {
     private val attributeRows = ArrayList<TableRow>()
     private val dateFormatter = SimpleDateFormat.getDateInstance()
     private lateinit var binding: ActivityFullProfileBinding
-    private lateinit var reviewManager: ReviewManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

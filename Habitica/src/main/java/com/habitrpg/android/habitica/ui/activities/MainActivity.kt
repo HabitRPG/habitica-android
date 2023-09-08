@@ -133,7 +133,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     @Inject
     internal lateinit var appConfigManager: AppConfigManager
-    private lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     lateinit var binding: ActivityMainBinding
 

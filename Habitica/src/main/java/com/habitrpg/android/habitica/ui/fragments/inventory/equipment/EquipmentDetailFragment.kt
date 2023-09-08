@@ -36,7 +36,9 @@ class EquipmentDetailFragment :
     override var binding: FragmentRefreshRecyclerviewBinding? = null
     @Inject
     lateinit var userViewModel: MainUserViewModel
-    private lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)

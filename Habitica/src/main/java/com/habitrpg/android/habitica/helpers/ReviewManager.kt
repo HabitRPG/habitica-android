@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.helpers
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.edit
 import com.google.android.play.core.review.ReviewManagerFactory
 
 class ReviewManager(private val context: Context) {
@@ -24,13 +25,17 @@ class ReviewManager(private val context: Context) {
         if (!shouldQueueReview) {
             // First review request has been made, wait for following request (if any)
             // to request again in the spirit of asking during a logical break.
-            sharedPref.edit().putBoolean(SHOULD_QUEUE_REVIEW, true).apply()
-            return false
+            sharedPref.edit {
+                putBoolean(SHOULD_QUEUE_REVIEW, true)
+            }
         }
 
         if (initialCheckins == -1) {
             // Store the current checkins as the initial value
-            sharedPref.edit().putInt(INITIAL_CHECKINS_KEY, currentCheckins).apply()
+
+            sharedPref.edit {
+                putInt(INITIAL_CHECKINS_KEY, currentCheckins)
+            }
             return true
         }
 
@@ -70,12 +75,16 @@ class ReviewManager(private val context: Context) {
         }
 
         // Save the current checkins after a successful review request
-        sharedPref.edit().putInt(LAST_REVIEW_CHECKIN_KEY, currentCheckins).apply()
+        sharedPref.edit {
+            putInt(LAST_REVIEW_CHECKIN_KEY, currentCheckins)
+        }
     }
 
     private fun incrementReviewRequestCount() {
         val currentCount = sharedPref.getInt(REVIEW_REQUEST_COUNT_KEY, 0)
-        sharedPref.edit().putInt(REVIEW_REQUEST_COUNT_KEY, currentCount + 1).apply()
+        sharedPref.edit {
+            putInt(REVIEW_REQUEST_COUNT_KEY, currentCount + 1)
+        }
     }
 }
 

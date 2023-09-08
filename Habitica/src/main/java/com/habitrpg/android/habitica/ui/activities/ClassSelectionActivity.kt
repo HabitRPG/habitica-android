@@ -36,7 +36,9 @@ class ClassSelectionActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
-    private lateinit var reviewManager: ReviewManager
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     private lateinit var binding: ActivityClassSelectionBinding
     private var currentClass: String? = null
@@ -303,8 +305,9 @@ class ClassSelectionActivity : BaseActivity() {
 
     private fun checkForReviewPromptAfterClassSelection() {
         userViewModel.user.observeOnce(this) { user ->
-            val totalCheckIns = user?.loginIncentives ?: return@observeOnce
-            reviewManager.requestReview(this, totalCheckIns)
+            user?.loginIncentives?.let { totalCheckins ->
+                reviewManager.requestReview(this, totalCheckins)
+            }
         }
     }
 }
