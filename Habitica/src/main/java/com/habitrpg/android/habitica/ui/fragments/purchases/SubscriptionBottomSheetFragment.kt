@@ -110,8 +110,7 @@ class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                     context?.getString(R.string.subscribe_listitem3_description_new, it.text)
             }
         }
-
-        binding.benefitArmoireWrapper.isVisible = appConfigManager.enableArmoireSubs()
+        
         binding.benefitFaintWrapper.isVisible = appConfigManager.enableFaintSubs()
 
         Analytics.sendNavigationEvent("subscription screen")
