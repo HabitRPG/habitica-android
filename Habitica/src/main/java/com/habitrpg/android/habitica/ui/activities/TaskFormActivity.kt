@@ -546,13 +546,13 @@ class TaskFormActivity : BaseActivity() {
             }
         }
         val challengesTagTitle = Tag().apply {
-            name = getString(R.string.challenges)
+            name = getString(R.string.challenge_tags)
         }
         val groupsTagTitle = Tag().apply {
-            name = getString(R.string.groups)
+            name = getString(R.string.group_tags)
         }
         val otherTagTitle = Tag().apply {
-            name = getString(R.string.tags)
+            name = getString(R.string.your_tags)
         }
         if (challengeTagList.isNotEmpty()) {
             sortedTagList.add(challengesTagTitle)
