@@ -36,6 +36,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -173,8 +174,36 @@ class ArmoireActivity : BaseActivity() {
     }
 
     private fun giveUserArmoire(): Boolean {
+        binding.iconWrapper.post {
+            binding.iconView.bitmap = null
+            Animations.circularHide(binding.iconWrapper)
+        }
+        binding.titleView.animate().apply {
+            alpha(0f)
+            duration = 300
+            startDelay = 0
+            start()
+        }
+        binding.subtitleView.animate().apply {
+            alpha(0f)
+            duration = 300
+            startDelay = 0
+            start()
+        }
+
+        binding.goldView.animate().apply {
+            alpha(0f)
+            start()
+        }
+
         val user = userViewModel.user.value ?: return true
         val currentGold = user.stats?.gp ?: return true
+        if (binding.adButton.visibility == View.VISIBLE) {
+            binding.adButton.state = AdButton.State.UNAVAILABLE
+            binding.adButton.visibility = View.INVISIBLE
+        } else if (binding.openArmoireSubscriberWrapper.visibility == View.VISIBLE) {
+            binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
+        }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser("stats.gp", currentGold + 100)
             val buyResponse =
@@ -185,27 +214,25 @@ class ArmoireActivity : BaseActivity() {
                 buyResponse.armoire["dropText"] ?: "",
                 buyResponse.armoire["value"] ?: ""
             )
-            if (binding.adButton.visibility == View.VISIBLE) {
-                binding.adButton.state = AdButton.State.UNAVAILABLE
-                binding.adButton.visibility = View.INVISIBLE
-            } else if (binding.openArmoireSubscriberWrapper.visibility == View.VISIBLE) {
-                binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
-            }
             hasAnimatedChanges = false
             gold = null
+            startAnimation(false)
         }
         return false
     }
 
     override fun onResume() {
         super.onResume()
-        startAnimation()
+        lifecycleScope.launchCatching {
+            delay(500L)
+            startAnimation(true)
+        }
     }
 
-    private fun startAnimation() {
+    private fun startAnimation(decreaseGold: Boolean) {
         val gold = gold?.toInt()
         if (hasAnimatedChanges) return
-        if (gold != null) {
+        if (gold != null && decreaseGold) {
             /**
              * We are adding 100 as the gold is already "deducted" before the animation starts,
              * and animating to show the current user's gold amount.

@@ -55,6 +55,7 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
@@ -67,37 +68,15 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import kotlinx.coroutines.delay
-import java.util.Calendar
 import kotlin.math.sin
-
-@Composable
-private fun getBackgroundPainter(): ImageBitmap {
-    val calendar = Calendar.getInstance()
-    val month = calendar.get(Calendar.MONTH)
-    return ImageBitmap.imageResource(
-        when (month) {
-            Calendar.JANUARY -> R.drawable.stable_tile_janurary
-            Calendar.FEBRUARY -> R.drawable.stable_tile_february
-            Calendar.MARCH -> R.drawable.stable_tile_march
-            Calendar.APRIL -> R.drawable.stable_tile_april
-            Calendar.MAY -> R.drawable.stable_tile_may
-            Calendar.JUNE -> R.drawable.stable_tile_june
-            Calendar.JULY -> R.drawable.stable_tile_july
-            Calendar.AUGUST -> R.drawable.stable_tile_august
-            Calendar.SEPTEMBER -> R.drawable.stable_tile_september
-            Calendar.OCTOBER -> R.drawable.stable_tile_october
-            Calendar.NOVEMBER -> R.drawable.stable_tile_november
-            Calendar.DECEMBER -> R.drawable.stable_tile_december
-            else -> R.drawable.stable_tile_may
-        }
-    )
-}
 
 @Composable
 private fun getFoodPainter(petColor: String): ImageBitmap {
@@ -152,7 +131,6 @@ fun PetBottomSheet(
             fontWeight = FontWeight.Medium,
             color = HabiticaTheme.colors.textTertiary
         )
-        val image = getBackgroundPainter()
         Box(
             modifier = Modifier
                 .padding(top = 9.dp, bottom = 16.dp)
@@ -160,30 +138,7 @@ fun PetBottomSheet(
                 .height(124.dp)
                 .clip(HabiticaTheme.shapes.medium)
         ) {
-            Canvas(
-                modifier = Modifier
-                    .height(124.dp)
-                    .fillMaxWidth()
-                    .zIndex(1f), onDraw = {
-                    val bitmap = Bitmap.createScaledBitmap(
-                        image.asAndroidBitmap(),
-                        image.width.dp.roundToPx(),
-                        124.dp.roundToPx(),
-                        false
-                    )
-                    val paint = Paint().asFrameworkPaint().apply {
-                        isAntiAlias = true
-                        shader = ImageShader(
-                            bitmap.asImageBitmap(),
-                            TileMode.Repeated,
-                            TileMode.Repeated
-                        )
-                    }
-                    drawIntoCanvas {
-                        it.nativeCanvas.drawPaint(paint)
-                    }
-                    paint.reset()
-                })
+            BackgroundScene()
 
             this@Column.AnimatedVisibility(
                 visible = showFeedResponse, modifier = Modifier
@@ -298,7 +253,7 @@ fun PetBottomSheet(
                 modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 HabiticaButton(
-                    colorResource(id = R.color.offset_background_30),
+                    Color(LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)),
                     HabiticaTheme.colors.textPrimary,
                     onClick = {
                         if (ownsSaddles) {
@@ -324,7 +279,7 @@ fun PetBottomSheet(
                     }
                 }
                 HabiticaButton(
-                    colorResource(id = R.color.offset_background_30),
+                    Color(LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)),
                     HabiticaTheme.colors.textPrimary,
                     onClick = {
                         coroutineScope.launchCatching {

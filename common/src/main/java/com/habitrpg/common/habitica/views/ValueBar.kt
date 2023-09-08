@@ -84,7 +84,7 @@ class ValueBar(context: Context, attrs: AttributeSet?) : FrameLayout(context, at
     private fun updateBar() {
         binding.progressBar.set(currentValue, maxValue)
         binding.progressBar.pendingValue = pendingValue
-        setValueText(formatter.format(currentValue) + " / " + formatter.format(maxValue.toInt()) + " " + valueSuffix)
+        setValueText(formatter.format(currentValue) + " / " + formatter.format(maxValue.toInt()) + " " + (valueSuffix ?: ""))
     }
 
     init {

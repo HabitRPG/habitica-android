@@ -72,8 +72,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.itemDetailIndicator.background =
                 AppCompatResources.getDrawable(context, R.drawable.pill_bg_gray)
             binding.itemDetailIndicator.visibility = View.VISIBLE
-        }
-        if (item.locked) {
+        } else if (item.locked) {
             binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.shop_locked)
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (isLimited) {

@@ -153,6 +153,7 @@ object DataBindingUtils {
         tempMap["shield_special_ks2019"] = "gif"
         tempMap["weapon_special_ks2019"] = "gif"
         tempMap["Pet-Gryphon-Gryphatrice"] = "gif"
+        tempMap["stable_Pet-Gryphon-Gryphatrice"] = "gif"
         tempMap["Mount_Head_Gryphon-Gryphatrice"] = "gif"
         tempMap["Mount_Body_Gryphon-Gryphatrice"] = "gif"
         tempMap["background_clocktower"] = "gif"

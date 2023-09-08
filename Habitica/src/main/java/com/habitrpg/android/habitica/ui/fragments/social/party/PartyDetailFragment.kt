@@ -291,7 +291,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
             binding?.questParticipationView?.setTextColor(
                 ContextCompat.getColor(
                     it,
-                    R.color.text_quad
+                    R.color.text_ternary
                 )
             )
         }
