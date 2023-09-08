@@ -777,7 +777,7 @@
     </style>
 
     <style name="HabiticaButton.Primary" parent="HabiticaButton">
-        <item name="android:backgroundTint">@color/color_accent</item>
+        <item name="android:backgroundTint">?colorAccent</item>
         <item name="android:textColor">@color/white</item>
     </style>
 

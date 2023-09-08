@@ -1,3 +1,28 @@
-Trasforma la tua vita in un gioco di ruolo per essere organizzato e motivato! Con Habitica raggiungere i propri obiettivi non è mai stato così divertente.
-Imposta le tue abitudini (Habit), i tuoi obiettivi giornalieri (Daily) e la tua lista di cose da fare (To-Do), poi crea il tuo avatar personalizzato. Completa le attività per far salire di livello il tuo avatar e sbloccare funzionalità come armature, animali, abilità e persino missioni! Combatti i mostri con i tuoi amici per aiutarvi a vicenda ad essere responsabili, e usa il tuo oro per ricompense in-game come pezzi di equipaggiamento, o ricompense personalizzate, ad esempio guardare un episodio della tua serie TV preferita. Flessibile, sociale e soprattutto divertente, Habitica è il modo perfetto per motivarti a fare qualsiasi cosa.
+Trasforma la tua vita in un gioco di ruolo per essere organizzato e motivato! Con Habitica raggiungere i propri obiettivi non è mai stato così divertente. Imposta le tue abitudini (Habit), i tuoi obiettivi giornalieri (Daily) e la tua lista di cose da fare (To-Do), poi crea il tuo avatar personalizzato. 
+
+Completa le attività per far salire di livello il tuo avatar e sbloccare funzionalità come armature, animali, abilità e persino missioni! Combatti i mostri con i tuoi amici per aiutarvi a vicenda ad essere responsabili, e usa il tuo oro per ricompense in-game come pezzi di equipaggiamento, o ricompense personalizzate, ad esempio guardare un episodio della tua serie TV preferita. Flessibile, sociale e soprattutto divertente, Habitica è il modo perfetto per motivarti a fare qualsiasi cosa.
+
+Caratteristiche:
+  • Ripetizione automatica delle attività pianificate per la routine quotidiana, settimanale o mensile
+  • Monitoraggio flessibile delle abitudini per le attività che desideri svolgere più volte al giorno o solo una volta ogni tanto
+  • Tradizionale elenco delle cose da fare per le attività che devono essere eseguite una sola volta
+  • Le attività codificate a colori e i contatori di serie ti aiutano a vedere come stai andando a colpo d'occhio
+  • Sistema di livellamento per visualizzare i tuoi progressi complessivi
+  • Tonnellate di attrezzi da collezione e animali domestici adatti al tuo stile personale
+  • Personalizzazioni avatar incluse: sedie a rotelle, acconciature, tonalità della pelle e altro ancora
+  • Rilasci regolari di contenuti ed eventi stagionali per mantenere le cose fresche
+  • I gruppi ti consentono di unirti agli amici per una maggiore responsabilità e combattere nemici feroci completando le attività
+  • Le sfide offrono elenchi di attività condivisi che puoi aggiungere alle tue attività personali
+  • Promemoria e widget per aiutarti a restare aggiornato
+  • Temi di colore personalizzabili con modalità scura e chiara
+  • Sincronizzazione tra dispositivi
+
+Desideri ancora più flessibilità per svolgere le tue attività in movimento? Abbiamo un'app Wear OS sull'orologio!
+
+Indossa le funzionalità del sistema operativo:
+  • Visualizza, crea e completa abitudini, quotidianità e cose da fare
+  • Ricevi ricompense per i tuoi sforzi con esperienza, cibo, uova e pozioni
+  • Tieni traccia delle tue statistiche con barre di avanzamento dinamiche
+  • Mostra il tuo straordinario avatar pixel sul quadrante
+
 Se avete una qualsiasi domanda o dei suggerimenti, sentitevi liberi di scrivere a mobile@habitica.com! E se vi piace la nostra app, saremmo davvero felici se ci lasciaste una recensione.

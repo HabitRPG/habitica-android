@@ -130,7 +130,7 @@ class FullProfileActivity : BaseActivity() {
                 bundleOf(Pair("userID", userID), Pair("username", null))
             )
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+        lifecycleScope.launchCatching {
             userRepository.getUser()
                 .collect {
                     blocks = it?.inbox?.blocks ?: listOf()
@@ -139,34 +139,31 @@ class FullProfileActivity : BaseActivity() {
 
                     isUserSupport = it?.hasPermission(Permission.USER_SUPPORT) == true
                     isModerator = it?.hasPermission(Permission.MODERATOR) == true
-                    binding.adminStatusView.isVisible = isModerator
                     if (isModerator || isUserSupport) {
-                        val member = socialRepository.retrieveMember(userID, true)
-                        member?.stats = this@FullProfileActivity.member.value?.stats
-                        if (member != null) {
-                            updateView(member)
-                            if (isMyProfile() && member.loginIncentives > 10) {
-                                reviewManager.requestReview(this@FullProfileActivity, member.loginIncentives)
-                            }
-                        }
-
-                        this@FullProfileActivity.member.value = member
-                    } else {
-                        refresh(false)
+                        binding.adminStatusView.isVisible = true
+                            refresh(true)
                     }
                     invalidateOptionsMenu()
 
 
                 }
         }
+        lifecycleScope.launchCatching {
+            refresh(false)
+        }
     }
 
     private suspend fun refresh(fromHall: Boolean) {
         val member = socialRepository.retrieveMember(userID, fromHall)
-        if (member != null) {
+        if (member != null && !fromHall) {
             updateView(member)
+            this.member.value = member
+            if (isMyProfile() && member.loginIncentives > 10) {
+                reviewManager.requestReview(this@FullProfileActivity, member.loginIncentives)
+            }
+        } else if (member != null) {
+            updateAccountStatus(member)
         }
-        this@FullProfileActivity.member.value = member
     }
 
     override fun onDestroy() {
@@ -443,18 +440,6 @@ class FullProfileActivity : BaseActivity() {
         }
         binding.totalCheckinsView.text = user.loginIncentives.toString()
 
-        val status = mutableListOf<String>()
-        if (user.authentication?.blocked == true) status.add("Banned")
-        if (user.flags?.chatShadowMuted == true) status.add("Shadow Muted")
-        if (user.flags?.chatRevoked == true) status.add("Muted")
-        if (status.isNotEmpty()) {
-            binding.adminStatusTextview.text = status.joinToString(", ")
-            binding.adminStatusTextview.setTextColor(ContextCompat.getColor(this, R.color.text_red))
-        } else {
-            binding.adminStatusTextview.text = getString(R.string.regular_access)
-            binding.adminStatusTextview.setTextColor(ContextCompat.getColor(this, R.color.text_green))
-        }
-
         lifecycleScope.launchCatching {
             loadItemDataByOutfit(user.equipped).collect { gear -> gotGear(gear, user) }
         }
@@ -480,6 +465,20 @@ class FullProfileActivity : BaseActivity() {
 
         if (user.currentPet?.isNotBlank() == true) binding.currentPetDrawee.loadImage("Pet-" + user.currentPet)
         if (user.currentMount?.isNotBlank() == true) binding.currentMountDrawee.loadImage("Mount_Icon_" + user.currentMount)
+    }
+
+    private fun updateAccountStatus(member: Member) {
+        val status = mutableListOf<String>()
+        if (member.authentication?.blocked == true) status.add("Banned")
+        if (member.flags?.chatShadowMuted == true) status.add("Shadow Muted")
+        if (member.flags?.chatRevoked == true) status.add("Muted")
+        if (status.isNotEmpty()) {
+            binding.adminStatusTextview.text = status.joinToString(", ")
+            binding.adminStatusTextview.setTextColor(ContextCompat.getColor(this, R.color.text_red))
+        } else {
+            binding.adminStatusTextview.text = getString(R.string.regular_access)
+            binding.adminStatusTextview.setTextColor(ContextCompat.getColor(this, R.color.text_green))
+        }
     }
 
 // endregion
