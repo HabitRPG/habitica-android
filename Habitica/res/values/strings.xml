@@ -1113,7 +1113,7 @@
     <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time for a Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
     <string name="view_gem_bundles">View Gem Bundles</string>
     <string name="spooky_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
-    <string name="gems_promo_info_limitations">This promotion only applies during the limited time event. This event starts on %s (12:00 UTC) and will end %s (00:00 UTC). The promo offer is only available when buying Gems for yourself.</string>
+    <string name="gems_promo_info_limitations_fixed">This promotion only applies during the limited time event. This event starts on %1$s (%2$s) and will end %3$s (%4$s). The promo offer is only available when buying Gems for yourself.</string>
     <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="theme_mode">Theme Mode</string>
@@ -1141,7 +1141,7 @@
     <string name="claim_x_gems">Claim %d Gems</string>
     <string name="g1g1_promo_info_prompt">In honor of the season of giving we\'re bringing back a very special promotion. Now when you gift somebody a subscription, you get the same sub for yourself for free!</string>
     <string name="g1g1_promo_info_instructions">Tap ‘Gift a Subscription’ and type in the username of the account you’d like to gift to. From there, pick the sub length you’d like to gift and check out. Your account will automatically be rewarded with the same level of subscription you just gifted.</string>
-    <string name="g1g1_promo_info_limitations">This is a limited time event that starts on %s (13:00 UTC) and will end %s (01:00 UTC). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
+    <string name="g1g1_promo_info_limitations_fixed">This is a limited time event that starts on %1$s (%2$s) and will end %3$s (%4$s). This promotion only applies when you gift to another Habitican. If you or your gift recipient already have a subscription, the gifted subscription will add months of credit that will only be used after the current subscription is cancelled or expires.</string>
     <string name="gift_one_get_one_purchase_banner">Gift a sub and get a sub for free until %s</string>
     <string name="one_month_one_time">1 month one-time subscription</string>
     <string name="three_months_one_time">3 month one-time subscription</string>

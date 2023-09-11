@@ -18,6 +18,7 @@ import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : HabiticaPromotion() {
     override val identifier: String
@@ -144,6 +145,14 @@ class SpookyExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habit
 
         fragment.binding?.instructionDescriptionView?.text = context.getString(R.string.spooky_promo_info_instructions, formatter.format(startDate), formatter.format(endDate))
         val limitationsFormatter = SimpleDateFormat.getDateTimeInstance()
-        fragment.binding?.limitationsDescriptionView?.text = context.getString(R.string.gems_promo_info_limitations, limitationsFormatter.format(startDate), limitationsFormatter.format(endDate))
+        val utcTimeFormatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.LONG)
+        utcTimeFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        fragment.binding?.limitationsDescriptionView?.text = context.getString(
+            R.string.gems_promo_info_limitations_fixed,
+            limitationsFormatter.format(startDate),
+            utcTimeFormatter.format(startDate),
+            limitationsFormatter.format(endDate),
+            utcTimeFormatter.format(endDate)
+        )
     }
 }

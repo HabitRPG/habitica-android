@@ -941,9 +941,9 @@
     <string name="assigned_stat">Atanan İstatistik</string>
     <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için %s gidin!</string>
     <string name="spooky_promo_info_prompt">Değerli Taş Satışı, bu yılki Sonbahar Galasının en sonunda tekrar gündeme geldi! Bu, her zamankinden daha fazla Mücevher almak için son bir şans, bu yüzden bu süre boyunca stok yapın!</string>
-    <string name="spooky_promo_info_instructions">29 Ekim ile 2 Kasım arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="spooky_promo_info_instructions">%s ile %s arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="fall_promo_info_prompt">Sonbahar Galası tüm hızıyla devam ediyor, bu yüzden ilk Mücevher Satışımızı sunmak için mükemmel bir zaman olduğunu düşündük! Artık her satın alma işleminde her zamankinden daha fazla Mücevher kazanacaksınız.</string>
-    <string name="fall_promo_info_instructions">22 ve 30 Eylül arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="fall_promo_info_instructions">%s ve %s arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="how_it_works">Nasıl çalışır</string>
     <string name="x_to_y">%s - %s</string>
     <string name="usually_x_gems">Genellikle %d Mücevher</string>

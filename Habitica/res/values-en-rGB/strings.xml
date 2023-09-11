@@ -1032,7 +1032,7 @@
     <string name="block_user_title">Block %s\?</string>
     <string name="unblock_user">Unblock User</string>
     <string name="block_user">Block User</string>
-    <string name="fall_promo_info_instructions">Between September 22nd and 30th, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="fall_promo_info_instructions">Between September %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="limitations">Limitations</string>
     <string name="how_it_works">How it works</string>
     <string name="x_to_y">%s to %s</string>
@@ -1043,7 +1043,7 @@
     <string name="block">Block</string>
     <string name="block_user_description">A blocked user cannot send you Private Messages but you will still see their posts. This will have no effect if the person is a moderator now or in the future.</string>
     <string name="spooky_promo_info_prompt">The Gem Sale is back to haunt the very end of this year’s Fall Gala! This is one last chance to get more Gems than ever, so stock up while it lasts!</string>
-    <string name="spooky_promo_info_instructions">Between October 29th and November 2nd, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
+    <string name="spooky_promo_info_instructions">Between %s and %s, simply purchase any Gem bundle like usual and your account will be credited with the promotional amount of Gems. More Gems to spend, share, or save for any future releases!</string>
     <string name="view_gem_bundles">View Gem Bundles</string>
     <string name="fall_promo_info_prompt">The Fall Gala is in full swing so we thought it was the perfect time for a Gem Sale! Now you will get more Gems with each purchase than ever before.</string>
 </resources>
