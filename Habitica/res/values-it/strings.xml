@@ -1130,7 +1130,7 @@
     <string name="added_social_auth">Aggiunta autenticazione %s</string>
     <string name="copied_to_clipboard">%s copiato negli appunti</string>
     <string name="sale_ends_in">La vendita termina fra %s</string>
-    <string name="damage_pending">%.01f danno in sospeso</string>
+    <string name="damage_pending">%s danno in sospeso</string>
     <string name="discard">Scarta</string>
     <string name="class_confirmation_price">Vuoi cambiare la tua classe in %s per %d gemme\?</string>
     <string name="adventure_guide_description_new">Completa questi obbiettivi e guadagnerai &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ori&lt;/b&gt;&lt;/font&gt; quando avrai finito!</string>

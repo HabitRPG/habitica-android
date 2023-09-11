@@ -9,6 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -50,6 +52,9 @@ class PetDetailRecyclerFragment :
     private var animalGroup: String? = null
     private var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -124,6 +129,14 @@ class PetDetailRecyclerFragment :
             lifecycleScope.launchCatching {
                 val items = inventoryRepository.equip("pet", it)
                 adapter.currentPet = items?.currentPet
+
+                userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                    val parentActivity = mainActivity
+                    val totalCheckIns = user?.loginIncentives
+                    if (totalCheckIns != null && parentActivity != null) {
+                        reviewManager.requestReview(parentActivity, totalCheckIns)
+                    }
+                }
             }
         }
         userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }

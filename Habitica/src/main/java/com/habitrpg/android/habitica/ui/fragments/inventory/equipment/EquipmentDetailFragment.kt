@@ -11,10 +11,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -31,6 +34,11 @@ class EquipmentDetailFragment :
     lateinit var inventoryRepository: InventoryRepository
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
+    @Inject
+    lateinit var userViewModel: MainUserViewModel
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
@@ -50,6 +58,14 @@ class EquipmentDetailFragment :
         adapter.onEquip = {
             lifecycleScope.launchCatching {
                 inventoryRepository.equipGear(it, isCostume ?: false)
+
+                userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                    val parentActivity = mainActivity
+                    val totalCheckIns = user?.loginIncentives
+                    if (totalCheckIns != null && parentActivity != null) {
+                        reviewManager.requestReview(parentActivity, totalCheckIns)
+                    }
+                }
             }
         }
         return super.onCreateView(inflater, container, savedInstanceState)

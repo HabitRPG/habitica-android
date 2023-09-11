@@ -1071,7 +1071,7 @@
     <string name="hatch_pet_again">Hatch Pet again</string>
     <string name="magic_potions">Magic Potions</string>
     <string name="magic_potion">Magic Potion</string>
-    <string name="use_saddle">Use Saddle</string>
+    <string name="use_saddle">Give Saddle</string>
     <string name="hatch_your_pet">Hatch your Pet</string>
     <string name="hatch">Hatch</string>
     <string name="delete_challenge_task_title">Delete Challenge Task?</string>
@@ -1163,7 +1163,7 @@
     <string name="all_tasks_completed">You completed all your tasks. Well done!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_service">Terms of Service</string>
-    <string name="damage_pending">%.01f damage pending</string>
+    <string name="damage_pending">%s Damage pending</string>
     <string name="x_remaining">%s remaining</string>
     <string name="sale_ends_in">Sale ends in %s</string>
     <string name="my_account">My Account</string>
@@ -1420,6 +1420,7 @@
     <string name="sub_perk">SUB PERK</string>
     <string name="subscribe_incentive_text_faint">Get a second chance each day to avoid running out of HP with a subscription</string>
     <string name="subscriber_benefit_used_faint">You already used your second chance today. It’s available again in %s</string>
+    <string name="subriber_benefit_notification_faint">You got a second chance with 1HP!</string>
     <string name="watch_ad_to_hang_on">Watch ad to hold on with 1HP!</string>
     <string name="quest_mechanics">Quest Mechanics</string>
     <string name="quest_mechanics_boss_title">Damaging a Boss</string>
@@ -1437,6 +1438,11 @@
     <string name="subscribe_listitemArmoire_description_2">Each time you open the Armoire, you can open again for free!</string>
     <string name="subscribe_listitem2_description_2">Earn Hourglasses over time to purchase items in the Time Traveler\'s Shop</string>
     <string name="see_more_subscription_options">See more subscription options</string>
+    <string name="faint_subscriber_description">Your subscription lets you have a second chance each day if you run out of HP</string>
+    <string name="rage">Rage</string>
+    <string name="preference_push_invited_to_group_plan">Invited to Group Plan</string>
+    <string name="preference_push_joined_group_plan_mention">\@Mentions in Group Plans</string>
+    <string name="subscribe_incentive_button_faint">Subscribe to hold on with 1HP!</string>
 
     <plurals name="you_x_others">
         <item quantity="zero">You</item>
@@ -1468,8 +1474,8 @@
         <item quantity="other">every %d years</item>
     </plurals>
     <plurals name="items_pending">
-        <item quantity="zero">No items pending</item>
-        <item quantity="one">%d item pending</item>
-        <item quantity="other">%d items pending</item>
+        <item quantity="zero">No Items pending</item>
+        <item quantity="one">%d Item pending</item>
+        <item quantity="other">%d Items pending</item>
     </plurals>
 </resources>

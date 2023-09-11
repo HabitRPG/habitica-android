@@ -110,6 +110,7 @@ fun AppHeaderView(
     onMemberRowClicked : () -> Unit,
     onClassSelectionClicked: () -> Unit
 ) {
+    val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
     Column(modifier) {
         Row {
             ComposableAvatarView(
@@ -177,7 +178,7 @@ fun AppHeaderView(
                             disabled = true,
                             modifier = Modifier.weight(1f)
                         )
-                    } else if (user?.hasClass == false && isMyProfile) {
+                    } else if (user?.hasClass == false && isMyProfile && isPlayerOptedOutOfClass == false) {
                         HabiticaButton(
                             background = HabiticaTheme.colors.basicButtonColor(),
                             color = MaterialTheme.colors.onPrimary,

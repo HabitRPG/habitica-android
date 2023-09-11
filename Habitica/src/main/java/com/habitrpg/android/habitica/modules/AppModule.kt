@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.BuildConfig
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.SoundFileLoader
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
@@ -99,5 +100,10 @@ class AppModule {
     @Singleton
     fun providesRemoteConfigManager(contentRepository: ContentRepository?): AppConfigManager {
         return AppConfigManager(contentRepository)
+    }
+
+    @Provides
+    fun providesReviewManager(@ApplicationContext context: Context): ReviewManager {
+        return ReviewManager(context)
     }
 }

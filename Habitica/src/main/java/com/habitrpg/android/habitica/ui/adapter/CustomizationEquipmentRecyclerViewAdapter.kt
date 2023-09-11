@@ -82,7 +82,13 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
         fun bind(equipment: Equipment) {
             this.equipment = equipment
-            binding.imageView.loadImage("shop_" + this.equipment?.key)
+            if (equipment.key?.isNotBlank() == true) {
+                binding.imageView.loadImage("shop_" + equipment.key)
+            } else {
+                binding.imageView.bitmap = null
+                binding.imageView.tag = null
+                binding.imageView.setImageResource(R.drawable.empty_slot)
+            }
             if (equipment.owned == true || equipment.value == 0.0) {
                 binding.buyButton.visibility = View.GONE
             } else {

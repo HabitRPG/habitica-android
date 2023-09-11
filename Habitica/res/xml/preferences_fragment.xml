@@ -265,7 +265,7 @@
                 <CheckBoxPreference
                     android:key="preference_push_invited_to_guild"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_invited_to_guild"
+                    android:title="@string/preference_push_invited_to_group_plan"
                     android:layout="@layout/preference_child_summary"/>
                 <CheckBoxPreference
                     android:key="preference_push_your_quest_has_begun"
@@ -295,12 +295,7 @@
                 <CheckBoxPreference
                     android:key="preference_push_joined_guild_mention"
                     android:defaultValue="true"
-                    android:title="@string/preference_push_joined_guild_mention"
-                    android:layout="@layout/preference_child_summary"/>
-                <CheckBoxPreference
-                    android:key="preference_push_unjoined_guild_mention"
-                    android:defaultValue="true"
-                    android:title="@string/preference_push_unjoined_guild_mention"
+                    android:title="@string/preference_push_joined_group_plan_mention"
                     android:layout="@layout/preference_child_summary"/>
             </PreferenceCategory>
         </PreferenceScreen>

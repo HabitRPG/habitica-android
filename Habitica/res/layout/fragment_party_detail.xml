@@ -77,13 +77,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="The Wail of the Whale"
+                                android:textColor="@color/text_primary"
                                 />
                             <TextView
                                 android:id="@+id/quest_participation_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="3 Participants"
-                                android:textColor="@color/text_quad" />
+                                android:textColor="@color/text_ternary" />
                         </LinearLayout>
                         <ImageView
                             android:layout_width="wrap_content"
@@ -111,6 +112,7 @@
                             android:layout_gravity="center_horizontal"/>
                         <com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
                             android:visibility="gone"
+                            tools:visibility="visible"
                             android:id="@+id/quest_progress_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
@@ -125,11 +127,13 @@
                             android:textColor="@color/green_1"
                             tools:text="Pending Items"
                             android:background="@color/green_100"
+                            android:minHeight="28dp"
                             android:visibility="gone"/>
                         <TextView
                             android:id="@+id/quest_pending_damage_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:minHeight="28dp"
                             android:textSize="13sp"
                             style="@style/Caption2"
                             android:paddingVertical="3dp"
@@ -146,7 +150,7 @@
                         android:layout_height="wrap_content"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:text="@string/quest_mechanics"
-                        android:textColor="?colorAccent" />
+                        android:textColor="@color/brand_button" />
 
                     <LinearLayout
                         android:id="@+id/quest_participant_response_wrapper"

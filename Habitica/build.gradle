@@ -114,6 +114,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-themeadapter-material:$accompanist_version"
     implementation "androidx.compose.material3:material3:1.1.1"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+    implementation 'com.google.android.play:core:1.10.0'
 
     implementation 'androidx.activity:activity-compose:1.7.2'
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"

@@ -1143,7 +1143,7 @@
     <string name="empty_discover_description">탐색 탭으로 이동하여 참여할만한 것을 찾아보세요!</string>
     <string name="all_tasks_completed">모든 과제를 완료하셨습니다. 잘하셨어요!</string>
     <string name="privacy_policy">개인정보보호정책</string>
-    <string name="damage_pending">%.01f피해 대기 중</string>
+    <string name="damage_pending">%s피해 대기 중</string>
     <string name="login_methods">로그인 방법</string>
     <string name="add_password">비밀번호 추가</string>
     <string name="connect">연결</string>

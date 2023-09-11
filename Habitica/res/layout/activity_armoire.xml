@@ -110,7 +110,7 @@
         android:background="@drawable/armoire_background_full"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingTop="36dp">
+        android:paddingTop="64dp">
         <TextView
             android:id="@+id/equipment_count_view"
             android:layout_width="wrap_content"
@@ -229,7 +229,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/armoire_drop_rates"
                 android:textColor="@color/teal_1"
+                android:alpha="0.75"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/spacing_medium"
                 style="@style/Body2"/>
         </LinearLayout>
         <TextView

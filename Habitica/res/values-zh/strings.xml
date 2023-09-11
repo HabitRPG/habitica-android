@@ -1126,7 +1126,7 @@
     <string name="class_confirmation_price">转职为%s需要%d宝石，是否确定更改？</string>
     <string name="use_item">对队伍成员使用物品</string>&gt;
     <string name="unsaved_changes">修改未保存</string>
-    <string name="damage_pending">即将造成%.01f点伤害</string>
+    <string name="damage_pending">即将造成%s点伤害</string>
     <string name="copied_to_clipboard">已将%s复制到剪贴板</string>
     <string name="adjust_counter">调整连击次数</string>
     <string name="reset_counter">重置连击次数</string>

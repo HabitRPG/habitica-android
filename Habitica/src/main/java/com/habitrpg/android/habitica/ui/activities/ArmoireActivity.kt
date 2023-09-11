@@ -13,9 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
@@ -50,6 +52,9 @@ class ArmoireActivity : BaseActivity() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
+    @Inject
+    lateinit var reviewManager: ReviewManager
+
     override fun getLayoutResId(): Int = R.layout.activity_armoire
 
     override fun getContentView(layoutResId: Int?): View {
@@ -59,6 +64,7 @@ class ArmoireActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        reviewManager = ReviewManager(this)
 
         binding.goldView.currency = "gold"
         binding.goldView.animationDuration = 1000
@@ -146,6 +152,14 @@ class ArmoireActivity : BaseActivity() {
             val args = ArmoireActivityArgs.fromBundle(it)
             equipmentKey = args.key
             configure(args.type, args.key, args.text, args.value)
+
+            if (args.type == "gear") {
+                userViewModel.user.observeOnce(this) { user ->
+                    user?.loginIncentives?.let { totalCheckins ->
+                        reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
+                    }
+                }
+            }
         }
     }
 

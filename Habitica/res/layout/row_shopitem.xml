@@ -89,6 +89,5 @@
         android:layout_gravity="end"
         android:visibility="gone"
         android:layout_alignEnd="@id/container"
-        android:layout_marginEnd="-4dp"
         style="@style/CountLabel"/>
 </RelativeLayout>

@@ -46,33 +46,26 @@ open class Customization : RealmObject(), BaseObject {
             return !(availableUntil != null && !availableUntil!!.after(today))
         }
 
-    fun getIconName(userSize: String?, hairColor: String?): String {
-        return if (type == "background") {
-            "icon_background_$identifier"
-        } else {
-            "icon_" + getImageName(userSize, hairColor)
-        }
+    fun getIconName(userSize: String?, hairColor: String?): String? {
+        return "icon_" + (getImageName(userSize, hairColor) ?: return null)
     }
 
-    fun getImageName(userSize: String?, hairColor: String?): String {
-        when (type) {
+    fun getImageName(userSize: String?, hairColor: String?): String? {
+        if (identifier?.isNotBlank() != true || identifier == "none" || identifier == "0") return null
+        return when (type) {
             "skin" -> return "skin_$identifier"
             "shirt" -> return userSize + "_shirt_" + identifier
             "hair" -> {
-                return if (identifier == "0") {
-                    "head_0"
-                } else {
                     when (this.category) {
                         "color" -> "hair_bangs_1_$identifier"
                         "flower" -> "hair_flower_$identifier"
                         else -> "hair_" + this.category + "_" + identifier + "_" + hairColor
                     }
-                }
             }
             "background" -> return "background_$identifier"
             "chair" -> return "chair_$identifier"
+            else -> null
         }
-        return ""
     }
 
     fun isUsable(purchased: Boolean): Boolean {

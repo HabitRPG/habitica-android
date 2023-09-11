@@ -218,8 +218,8 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun feedPet(pet: Pet, food: Food): FeedResponse? {
-        val feedResponse = apiClient.feedPet(pet.key ?: "", food.key) ?: return null
-        localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, currentUserID)
+        val feedResponse = apiClient.feedPet(pet.key, food.key) ?: return null
+        localRepository.feedPet(food.key, pet.key, feedResponse.value ?: 0, currentUserID)
         return feedResponse
     }
 
