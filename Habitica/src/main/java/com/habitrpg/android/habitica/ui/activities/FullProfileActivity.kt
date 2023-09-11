@@ -141,7 +141,7 @@ class FullProfileActivity : BaseActivity() {
                     isModerator = it?.hasPermission(Permission.MODERATOR) == true
                     if (isModerator || isUserSupport) {
                         binding.adminStatusView.isVisible = true
-                            refresh(true)
+                        refresh(true)
                     }
                     invalidateOptionsMenu()
 

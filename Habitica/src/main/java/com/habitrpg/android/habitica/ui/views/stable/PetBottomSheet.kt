@@ -142,7 +142,7 @@ fun PetBottomSheet(
 
             this@Column.AnimatedVisibility(
                 visible = showFeedResponse, modifier = Modifier
-                    .offset(y = 85.dp)
+                    .offset(y = 90.dp)
                     .align(Alignment.TopCenter)
                     .zIndex(4f), enter = fadeIn(), exit = fadeOut()
             ) {
@@ -189,10 +189,10 @@ fun PetBottomSheet(
                 )
             }
 
-            val regularPosition = 33f
-            val highJump = 22f
-            val midJump = 27f
-            val lowJump = 30f
+            val regularPosition = 44f
+            val highJump = 32f
+            val midJump = 37f
+            val lowJump = 40f
             val position by if (showFeedResponse) {
                     infiniteTransition.animateFloat(
                         initialValue = regularPosition,

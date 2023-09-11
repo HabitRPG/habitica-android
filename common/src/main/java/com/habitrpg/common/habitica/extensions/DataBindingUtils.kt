@@ -145,6 +145,7 @@ object DataBindingUtils {
         tempMap["weapon_special_0"] = "gif"
         tempMap["shield_special_0"] = "gif"
         tempMap["Pet-Wolf-Cerberus"] = "gif"
+        tempMap["stable_Pet-Wolf-Cerberus"] = "gif"
         tempMap["armor_special_ks2019"] = "gif"
         tempMap["slim_armor_special_ks2019"] = "gif"
         tempMap["broad_armor_special_ks2019"] = "gif"
@@ -181,7 +182,7 @@ object DataBindingUtils {
         tempNameMap["shield_special_0"] = "BackerOnly-Shield-TormentedSkull"
         tempNameMap["weapon_special_0"] = "BackerOnly-Weapon-DarkSoulsBlade"
         tempNameMap["weapon_special_critical"] = "weapon_special_critical"
-        tempNameMap["Pet-Wolf-Cerberus"] = "Pet-Wolf-Cerberus"
+        tempNameMap["Pet-Wolf-Cerberus"] = "BackerOnly-Pet-CerberusPup"
         FILENAME_MAP = tempNameMap
     }
 }

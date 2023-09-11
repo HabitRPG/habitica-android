@@ -257,6 +257,7 @@
             android:text="@string/armoire_drop_rates"
             android:textColor="@color/brand_600"
             android:layout_marginTop="22dp"
+            android:layout_marginBottom="8dp"
             style="@style/Body2"/>
     </LinearLayout>
 </LinearLayout>
