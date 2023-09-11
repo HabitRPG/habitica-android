@@ -133,7 +133,10 @@ class ArmoireActivity : BaseActivity() {
 
         binding.openArmoireSubscriberButton.setOnClickListener {
             giveUserArmoire()
-            binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
+            lifecycleScope.launchCatching {
+                delay(400)
+                binding.openArmoireSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
+            }
         }
 
         binding.subscribeModalButton.setOnClickListener {

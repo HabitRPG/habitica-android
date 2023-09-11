@@ -134,7 +134,10 @@ class DeathActivity : BaseActivity() {
             sharedPreferences.edit {
                 putLong("last_sub_revive", Date().time)
             }
-            binding.reviveSubscriberWrapper.visibility = View.INVISIBLE
+            lifecycleScope.launchCatching {
+                delay(400)
+                binding.reviveSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
+            }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.updateUser("stats.hp", 1)
                 finish()

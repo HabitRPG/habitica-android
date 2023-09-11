@@ -74,7 +74,8 @@
                 android:layout_margin="@dimen/spacing_large"
                 android:gravity="center"
                 android:text="@string/faint_broken_equipment"
-                android:textColor="@color/text_secondary" />
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"/>
 
             <Space
                 android:layout_width="wrap_content"

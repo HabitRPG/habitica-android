@@ -299,7 +299,14 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Void? {
-        return apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
+        val response = apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
+        if (key == "gem") {
+            val user = localRepository.getLiveUser(currentUserID)
+            localRepository.executeTransaction {
+                user?.purchased?.plan?.gemsBought = purchaseQuantity + (user?.purchased?.plan?.gemsBought ?: 0)
+            }
+        }
+        return response
     }
 
     override suspend fun togglePinnedItem(item: ShopItem): List<ShopItem>? {
