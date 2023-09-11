@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    app:cardBackgroundColor="@color/window_background"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarSize="3dp"
+        android:scrollbarThumbVertical="@color/scrollbarThumb"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="3dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/spacing_large"
+                android:src="@color/offset_background" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/subscriber_benefit_banner"
+                android:layout_width="match_parent"
+                android:layout_height="73dp"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_large"
+                app:cardBackgroundColor="@color/teal_5"
+                app:cardCornerRadius="24dp"
+                app:strokeWidth="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="true"
+                    android:clipToPadding="true">
+
+                    <ImageView
+                        android:id="@+id/banner_left_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentBottom="false"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/subscription_banner_image_left" />
+
+                    <ImageView
+                        android:id="@+id/banner_right_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/subscription_banner_image_right" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toStartOf="@id/banner_right_image"
+                        android:layout_toEndOf="@id/banner_left_image"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Title1"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/white"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/buy_gems_with_gold" />
+
+                        <TextView
+                            style="@style/Caption2.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/white"
+                            android:text="SUBSCRIBER BENEFIT" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <LinearLayout
+                android:layout_marginBottom="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+
+                <com.habitrpg.android.habitica.ui.views.DayNightTextView
+                    android:id="@+id/subscribe_benefits"
+                    style="@style/SubHeader1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"
+                    android:text="@string/subscribe_prompt_2"
+                    app:dayTextColor="@color/text_brand"
+                    app:nightTextColor="@color/gray_400" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/separator_fancy" />
+
+
+                <LinearLayout
+                    android:id="@+id/benefit_armoire_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.habitrpg.common.habitica.views.PixelArtView
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:scaleType="center"
+                        android:src="@drawable/sub_benefits_armoire" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitemArmoire"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            style="@style/Caption2.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitemArmoire_description_2"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:scaleType="center"
+                        android:src="@drawable/sub_benefits_hourglasses" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitem2"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            style="@style/Caption2.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitem2_description_2"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.habitrpg.common.habitica.views.PixelArtView
+                        android:id="@+id/sub_benefits_mystery_item_icon"
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:scaleType="center" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitem3"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            android:id="@+id/sub_benefits_mystery_item_text"
+                            style="@style/Caption2.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitem3_description"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/benefit_faint_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:scaleType="center"
+                        android:src="@drawable/sub_benefits_faint" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitemFaint"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            style="@style/Caption2.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitemFaint_description"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="68dp"
+                        android:layout_height="68dp"
+                        android:scaleType="center"
+                        android:src="@drawable/sub_benefits_drops" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitem5"
+                            android:textColor="@color/text_primary" />
+
+                        <TextView
+                            style="@style/Caption2.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribe_listitem5_description"
+                            android:textColor="@color/text_primary" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:src="@drawable/separator_fancy" />
+
+                <ProgressBar
+                    android:id="@+id/loadingIndicator"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:id="@+id/subscriptionOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                        android:id="@+id/subscription1month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:gemCapText="@string/subscribe1month_gemcap"
+                        app:recurringText="@string/month" />
+
+                    <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
+                        android:id="@+id/subscription12month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:flagText="@string/save_20"
+                        app:gemCapText="@string/subscribe12month_gemcap"
+                        app:hourGlassCount="4"
+                        app:recurringText="@string/twelve_months" />
+
+                    <Button
+                        android:id="@+id/subscribeButton"
+                        style="@style/HabiticaButton.Purple.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/subscribe"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:textSize="11sp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/subscribe_title"
+                    android:textColor="@color/text_quad" />
+
+                <Button
+                    android:id="@+id/see_more_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:text="@string/see_more_subscription_options"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_brand_neon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</com.google.android.material.card.MaterialCardView>

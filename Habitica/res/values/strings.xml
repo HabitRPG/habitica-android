@@ -1433,6 +1433,11 @@
     <string name="quest_mechanics_pausing_description">"If you’re struggling to complete your Dailies, you can pause damage from Settings for a break. This will prevent the Boss from hurting you or others, but also pause your own damage. Other members missed Dailies will still cause damage, so be careful out there! "</string>
     <string name="quest_mechanics_rage_title">Rage meters</string>
     <string name="quest_mechanics_rage_description">Some difficult bosses have an orange Rage meter under their HP. This meter fills up when participants miss Dailies. When it fills completely, the boss will let out a fearsome attack that does extra damage!</string>
+    <string name="buy_gems_with_gold">Buy Gems with Gold</string>
+    <string name="subscribe_prompt_2">Subscribe to buy Gems with Gold and receive these other exclusive benefits!</string>
+    <string name="subscribe_listitemArmoire_description_2">Each time you open the Armoire, you can open again for free!</string>
+    <string name="subscribe_listitem2_description_2">Earn Hourglasses over time to purchase items in the Time Traveler\'s Shop</string>
+    <string name="see_more_subscription_options">See more subscription options</string>
     <string name="faint_subscriber_description">Your subscription lets you have a second chance each day if you run out of HP</string>
     <string name="rage">Rage</string>
     <string name="preference_push_invited_to_group_plan">Invited to Group Plan</string>
