@@ -131,7 +131,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     )
                     dialog.shopIdentifier = shopIdentifier
                     dialog.isPinned = isPinned
-                    dialog.onGearPurchased = {
+                    dialog.onShopNeedsRefresh = {
                         loadShopInventory()
                         if (Shop.MARKET == shopIdentifier) {
                             loadMarketGear()

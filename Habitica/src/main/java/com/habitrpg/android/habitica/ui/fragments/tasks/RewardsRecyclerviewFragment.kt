@@ -65,6 +65,12 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         if (showCustomRewards) {
             lifecycleScope.launchCatching {
                 inventoryRepository.getInAppRewards().collect {
+                    val user = viewModel.user.value
+                    (recyclerAdapter as? RewardsRecyclerViewAdapter)?.goldGemsLeft = if (user?.isSubscribed == true) {
+                        user.purchased?.plan?.numberOfGemsLeft
+                    } else {
+                        -1
+                    }
                     (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
                 }
             }
@@ -78,7 +84,7 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         (recyclerAdapter as? RewardsRecyclerViewAdapter)?.onShowPurchaseDialog = { item, isPinned ->
             val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
             dialog.isPinned = isPinned
-            dialog.onGearPurchased = {
+            dialog.onShopNeedsRefresh = {
                 viewModel.refreshData { }
             }
             dialog.show()

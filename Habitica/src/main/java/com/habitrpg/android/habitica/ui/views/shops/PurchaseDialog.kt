@@ -31,14 +31,12 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
-import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGoldDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
@@ -82,7 +80,7 @@ class PurchaseDialog(
     private var purchaseQuantity = 1
 
     var purchaseCardAction: ((ShopItem) -> Unit)? = null
-    var onGearPurchased: ((ShopItem) -> Unit)? = null
+    var onShopNeedsRefresh: ((ShopItem) -> Unit)? = null
 
     private var shopItem: ShopItem = item
         set(value) {
@@ -453,8 +451,8 @@ class PurchaseDialog(
             )
             inventoryRepository.retrieveInAppRewards()
             userRepository.retrieveUser(forced = true)
-            if (item.isTypeGear || item.currency == "hourglasses") {
-                onGearPurchased?.invoke(item)
+            if (item.isTypeGear || item.currency == "hourglasses" || item.key == "gem") {
+                onShopNeedsRefresh?.invoke(item)
             }
         }
     }

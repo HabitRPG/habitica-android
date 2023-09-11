@@ -18,6 +18,8 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     private val binding = RowShopitemBinding.bind(itemView)
     var shopIdentifier: String? = null
     private var item: ShopItem? = null
+    var limitedNumberLeft: Int? = null
+
     var onNeedsRefresh: (() -> Unit)? = null
     var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
@@ -84,12 +86,13 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }
 
-        if (item.key == "gem" && item.limitedNumberLeft == -1) {
+        val limitedLeft = item.limitedNumberLeft ?: limitedNumberLeft
+        if (item.key == "gem" && limitedLeft == -1) {
             binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.item_indicator_subscribe)
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (item.key == "gem") {
             binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_green)
-            binding.itemDetailIndicator.text = "${item.limitedNumberLeft}"
+            binding.itemDetailIndicator.text = "$limitedLeft"
             binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.white))
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }
