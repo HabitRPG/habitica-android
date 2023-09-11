@@ -178,15 +178,15 @@ class TaskRepositoryImpl(
                     item.key = key
                     item.itemType = type
                     item.userID = user.id
+
+                    when (type) {
+                        "eggs" -> bgUser.items?.eggs?.add(item)
+                        "food" -> bgUser.items?.food?.add(item)
+                        "hatchingPotions" -> bgUser.items?.hatchingPotions?.add(item)
+                        "quests" -> bgUser.items?.quests?.add(item)
+                    }
                 }
                 item.numberOwned += 1
-                when (type) {
-                    "eggs" -> bgUser.items?.eggs?.add(item)
-                    "food" -> bgUser.items?.food?.add(item)
-                    "hatchingPotions" -> bgUser.items?.hatchingPotions?.add(item)
-                    "quests" -> bgUser.items?.quests?.add(item)
-                    else -> ""
-                }
             }
 
             bgUser.stats?.hp = res.hp

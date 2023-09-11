@@ -75,8 +75,8 @@ object DataBindingUtils {
             imageName.startsWith("handleless") -> "chair_$imageName"
             else -> imageName
         }
-        return name + if (imageFormat == null && FILEFORMAT_MAP.containsKey(name)) {
-            "." + FILEFORMAT_MAP[name]
+        return name + if (imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
+            "." + FILEFORMAT_MAP[imageName]
         } else {
             ".${imageFormat ?: "png"}"
         }

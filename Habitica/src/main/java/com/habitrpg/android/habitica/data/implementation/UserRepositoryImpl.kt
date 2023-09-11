@@ -99,7 +99,8 @@ class UserRepositoryImpl(
     }
 
     override suspend fun revive(): User? {
-        apiClient.revive()
+        val revivedUser = apiClient.revive()
+
         return retrieveUser(false, true)
     }
 
