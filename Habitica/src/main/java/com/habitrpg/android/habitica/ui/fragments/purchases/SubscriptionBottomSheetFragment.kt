@@ -1,20 +1,12 @@
 package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.android.billingclient.api.ProductDetails
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -23,23 +15,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.databinding.DialogHabiticaAccountBinding
 import com.habitrpg.android.habitica.databinding.FragmentBottomsheetSubscriptionBinding
-import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
-import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
-import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
-import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -52,10 +34,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
+open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentBottomsheetSubscriptionBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     @Inject
     lateinit var userRepository: UserRepository

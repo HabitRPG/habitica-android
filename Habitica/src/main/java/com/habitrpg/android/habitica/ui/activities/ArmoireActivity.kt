@@ -16,8 +16,14 @@ import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.ReviewManager
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
@@ -130,7 +136,10 @@ class ArmoireActivity : BaseActivity() {
         }
 
         binding.subscribeModalButton.setOnClickListener {
-            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                eventType = EVENT_ARMOIRE_OPENED
+            }
+            subscriptionBottomSheet.show(supportFragmentManager, EventOutcomeSubscriptionBottomSheetFragment.TAG)
         }
 
         binding.closeButton.setOnClickListener {
