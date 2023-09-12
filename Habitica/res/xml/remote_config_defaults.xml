@@ -115,7 +115,7 @@
     </entry>
     <entry>
         <key>enableArmoireSubs</key>
-        <value>false</value>
+        <value>true</value>
     </entry>
     <entry>
         <key>enableFaintSubs</key>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     app:cardBackgroundColor="@color/window_background"
     android:layout_height="match_parent">
@@ -32,6 +31,7 @@
                 android:layout_height="73dp"
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_medium"
                 app:cardBackgroundColor="@color/teal_5"
                 app:cardCornerRadius="24dp"
                 app:strokeWidth="0dp">
@@ -84,23 +84,15 @@
                             android:fontFamily="sans-serif-medium"
                             android:textColor="@color/white"
                             android:text="SUBSCRIBER BENEFIT" />
-
-
                     </LinearLayout>
-
-
                 </RelativeLayout>
-
-
             </com.google.android.material.card.MaterialCardView>
-
-
             <LinearLayout
                 android:layout_marginBottom="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingHorizontal="20dp">
 
 
                 <com.habitrpg.android.habitica.ui.views.DayNightTextView
@@ -370,4 +362,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</com.google.android.material.card.MaterialCardView>
+</FrameLayout>

@@ -68,8 +68,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         binding.subscriptionOptions.visibility = View.GONE
         binding.seeMoreOptions.setOnClickListener {
             dismiss()
-            MainNavigationController.navigate(R.id.gemPurchaseActivity)
-
+            MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
         }
         binding.subscribeButton.setOnClickListener { purchaseSubscription() }
 
@@ -102,7 +101,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener { dialog: DialogInterface ->
             val notificationDialog = dialog as BottomSheetDialog
-            notificationDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            notificationDialog.behavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             notificationDialog.behavior.isDraggable = true
         }
         return bottomSheetDialog
