@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
@@ -116,7 +117,10 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             }
             adapter?.onShowPurchaseDialog = { item, isPinned ->
                 if (item.key == "gem" && userViewModel.user.value?.isSubscribed != true) {
-                    MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                    val subscriptionBottomSheet = SubscriptionBottomSheetFragment()
+                    activity?.let { activity ->
+                        subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                    }
                 } else {
                     val dialog = PurchaseDialog(
                         requireContext(),

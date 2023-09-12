@@ -366,10 +366,7 @@ class PurchaseDialog(
                     "gold" == shopItem.currency -> InsufficientGoldDialog(context).show()
                     "gems" == shopItem.currency -> {
                         Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "purchase modal", "item" to shopItem.key))
-                        val subscriptionBottomSheet = SubscriptionBottomSheetFragment()
-                        parentActivity?.let { activity ->
-                            subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
-                        }
+                        parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
                     }
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context).show()
                     else -> null
