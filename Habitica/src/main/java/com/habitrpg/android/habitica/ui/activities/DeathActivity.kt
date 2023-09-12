@@ -16,6 +16,7 @@ import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -115,6 +116,12 @@ class DeathActivity : BaseActivity() {
                 } else if (it?.isSubscribed == false) {
                     binding.reviveSubscriberWrapper.visibility = View.GONE
                     binding.unsubbedWrapper.visibility = View.VISIBLE
+                    binding.subscribeModalButton.setOnClickListener {
+                        val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
+                        }
+                        subscriptionBottomSheet.show(supportFragmentManager, EventOutcomeSubscriptionBottomSheetFragment.TAG)
+                    }
                 }
             }
         } else {

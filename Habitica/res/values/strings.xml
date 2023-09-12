@@ -1415,10 +1415,12 @@
     <string name="subscribe_listitemArmoire_description">Get two chances at new equipment from the Armoire for the price of one</string>
     <string name="subscribe_incentive_button_armoire">Subscribe to open again for free!</string>
     <string name="subscribe_incentive_text_armoire">Get an extra chance at the Armoire each time you buy it with a subscription</string>
+    <string name="subscribe_second_armoire_open_text">Subscribers get extra chances at the Armoire and these other benefits!</string>
     <string name="subscriber_button_armoire">Open again for free!</string>
     <string name="subscriber_button_faint">Second chance: Hold on with 1HP!</string>
     <string name="sub_perk">SUB PERK</string>
     <string name="subscribe_incentive_text_faint">Get a second chance each day to avoid running out of HP with a subscription</string>
+    <string name="subscribe_second_chance_incentive_text">Subscribers get a second chance at life each day and these other benefits!</string>
     <string name="subscriber_benefit_used_faint">You already used your second chance today. It’s available again in %s</string>
     <string name="subriber_benefit_notification_faint">You got a second chance with 1HP!</string>
     <string name="watch_ad_to_hang_on">Watch ad to hold on with 1HP!</string>
