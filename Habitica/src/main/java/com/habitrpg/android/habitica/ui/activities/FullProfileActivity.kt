@@ -38,6 +38,7 @@ import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Permission
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
+import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -270,6 +271,13 @@ class FullProfileActivity : BaseActivity() {
                 }
                 true
             }
+            R.id.report_player -> {
+                showReportUserBottomSheet(
+                    userIdBeingReported = userID,
+                    usernameBeingReported = username ?: "",
+                )
+                true
+            }
             R.id.ban_user -> {
                 banUser()
                 true
@@ -340,6 +348,20 @@ class FullProfileActivity : BaseActivity() {
             }
         }
         alert.show()
+    }
+
+    private fun showReportUserBottomSheet(userIdBeingReported : String, usernameBeingReported: String) {
+        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
+            reportType = ReportBottomSheetFragment.REPORT_TYPE_USER,
+            profileName = usernameBeingReported,
+            messageId = "",
+            messageText = "",
+            groupId = "",
+            userIdBeingReported = userIdBeingReported,
+            sourceView = this::class.simpleName ?: ""
+        )
+
+        reportBottomSheetFragment.show(supportFragmentManager, ReportBottomSheetFragment.TAG)
     }
 
     private fun banUser() {

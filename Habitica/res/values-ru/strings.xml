@@ -716,7 +716,7 @@
     <string name="invite_to_guild">Пригласить в гильдию</string>
     <string name="guild_description">Описание гильдии</string>
     <string name="mystery_sets">Таинственные наборы</string>
-    <string name="reason_for_report">Причина (необязательно)</string>
+    <string name="report_message_hint">Причина (необязательно)</string>
     <string name="x_class">Класс персонажа %s</string>
     <string name="become_x">Стать %s</string>
     <string name="need_more_help">Нужна помощь\?</string>

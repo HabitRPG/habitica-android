@@ -796,7 +796,7 @@
     <string name="become_x">Conviértete en un %s</string>
     <string name="x_class">Clase %s</string>
     <string name="report_message_title">Reporta a %s por violación:</string>
-    <string name="reason_for_report">Razón para reportar (opcional)</string>
+    <string name="report_message_hint">Razón para reportar (opcional)</string>
     <string name="mystery_sets">Conjuntos misteriosos</string>
     <string name="guild_description">Descripción del Gremio</string>
     <string name="invite_to_guild">Invitar al Gremio</string>

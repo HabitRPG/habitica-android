@@ -803,7 +803,16 @@
     <string name="x_class">%s Class</string>
     <string name="report_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
     <string name="report_message_title">Report %s for violation:</string>
-    <string name="reason_for_report">Reason for report (optional)</string>
+    <string name="report_message_explanation">**Only** report a post that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction.</string>
+    <string name="report_user_explanation">**Only** report for a user that violates the [Community Guidelines](https://habitica.com/static/community-guidelines) and/or [Terms of Service](https://habitica.com/static/terms). Inappropriately reporting a user may give you an infraction.</string>
+    <string name="report_player_title">Report %s?</string>
+    <string name="report_player">Report Player</string>
+    <string name="report_player_hint">Reason for report (required)</string>
+    <string name="report_user_description">This will also block %s - A blocked user cannot send you Private Messages but you will still see their posts.</string>
+    <string name="report_message_hint">Reason for report (optional)</string>
+    <string name="report_successful">%s Reported</string>
+    <string name="report_failure">Report failed, please try again later</string>
+    <string name="report_player_toolbar_title">Report %s</string>
     <string name="mystery_sets">Mystery Sets</string>
     <string name="guild_description">Guild Description</string>
     <string name="invite_to_guild">Invite to Guild</string>

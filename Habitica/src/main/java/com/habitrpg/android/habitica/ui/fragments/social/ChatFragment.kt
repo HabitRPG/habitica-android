@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.ChatRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
+import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
@@ -78,7 +79,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         chatAdapter?.let { adapter ->
             adapter.onOpenProfile = { userId -> FullProfileActivity.open(userId) }
             adapter.onDeleteMessage = { this.showDeleteConfirmationDialog(it) }
-            adapter.onFlagMessage = { this.showFlagConfirmationDialog(it) }
+            adapter.onFlagMessage = { this.showFlagMessageBottomSheet(it) }
             adapter.onReply = { setReplyTo(it) }
             adapter.onCopyMessage = { this.copyMessageToClipboard(it) }
             adapter.onMessageLike = { viewModel.likeMessage(it) }
@@ -181,14 +182,18 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         }
     }
 
-    private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val directions = MainNavDirections.actionGlobalReportMessageActivity(
-            chatMessage.text ?: "",
-            chatMessage.user ?: "",
-            chatMessage.id,
-            chatMessage.groupId
+    private fun showFlagMessageBottomSheet(chatMessage : ChatMessage) {
+        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
+            reportType = ReportBottomSheetFragment.REPORT_TYPE_MESSAGE,
+            profileName = chatMessage.username ?: "",
+            messageId = chatMessage.id,
+            messageText = chatMessage.text ?: "",
+            groupId = chatMessage.groupId ?: "",
+            userIdBeingReported = chatMessage.userID ?: "",
+            sourceView = this::class.simpleName ?: ""
         )
-        MainNavigationController.navigate(directions)
+
+        reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)
     }
 
     private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {

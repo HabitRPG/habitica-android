@@ -27,6 +27,8 @@ interface SocialRepository : BaseRepository {
         groupID: String? = null
     ): Void?
 
+    suspend fun reportMember(memberID: String, data: Map<String, String>): Void?
+
     suspend fun likeMessage(chatMessage: ChatMessage): ChatMessage?
 
     suspend fun deleteMessage(chatMessage: ChatMessage): Void?

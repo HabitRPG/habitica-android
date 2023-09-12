@@ -96,6 +96,10 @@ class SocialRepositoryImpl(
         }
     }
 
+    override suspend fun reportMember(memberID: String, data: Map<String, String>): Void? {
+        return apiClient.reportMember(memberID, data)
+    }
+
     override suspend fun likeMessage(chatMessage: ChatMessage): ChatMessage? {
         if (chatMessage.id.isBlank()) {
             return null

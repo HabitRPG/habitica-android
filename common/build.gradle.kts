@@ -110,6 +110,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("androidx.navigation:navigation-common-ktx:2.7.0")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.0")
+    implementation("com.google.android.material:material:1.9.0")
 
     testImplementation("io.mockk:mockk:$mockk_version")
     testImplementation("io.mockk:mockk-android:$mockk_version")

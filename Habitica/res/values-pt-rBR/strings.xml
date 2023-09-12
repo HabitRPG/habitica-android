@@ -784,7 +784,7 @@
     <string name="invite_to_guild">Convidar para a Guilda</string>
     <string name="guild_description">Descrição da Guilda</string>
     <string name="mystery_sets">Conjuntos Misteriosos</string>
-    <string name="reason_for_report">Motivo para reportar (opcional)</string>
+    <string name="report_message_hint">Motivo para reportar (opcional)</string>
     <string name="report_message_title">Reportar %s por violação:</string>
     <string name="report_explanation">Reporte uma mensagem **apenas** se esta violar as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Reportar uma postagem inadequadamente pode lhe dar uma infração.</string>
     <string name="x_class">%s Classe</string>

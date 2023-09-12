@@ -790,7 +790,7 @@
     <string name="app_theme">Tema aplikacije</string>
     <string name="accept">Prihvati</string>
     <string name="pref_emails_checkbox">Koristi obavijesti e-pošte</string>
-    <string name="reason_for_report">Razlog prijave (neobavezno)</string>
+    <string name="report_message_hint">Razlog prijave (neobavezno)</string>
     <string name="mystery_sets">Mistični setovi</string>
     <string name="leave_guild">Napusti Ceh</string>
     <string name="guild_description">Opis Ceha</string>

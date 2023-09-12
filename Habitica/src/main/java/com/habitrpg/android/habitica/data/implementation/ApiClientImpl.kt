@@ -583,6 +583,10 @@ class ApiClientImpl(
         return process { apiService.likeMessage(groupId, mid) }
     }
 
+    override suspend fun reportMember(mid: String, data: Map<String, String>): Void? {
+        return process { apiService.reportMember(mid, data) }
+    }
+
     override suspend fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Void? {
         return process { apiService.flagMessage(groupId, mid, data) }
     }
