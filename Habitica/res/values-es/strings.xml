@@ -834,7 +834,7 @@
     <string name="need_help_header_description">Publica un mensaje en el %s para que tus preguntas sean respondidas por otros jugadores.</string>
     <string name="assigned_stat">Atributo Asignado</string>
     <string name="report_explanation">**Únicamente** reporta una publicación que viole las [Normas de la comunidad](https://habitica.com/static/community-guidelines) y/o los [Términos de servicio](https://habitica.com/static/terms). Reportar inadecuadamente una publicación puede conllevarte una infracción.</string>
-    <string name="reason_for_report">Motivo de la denuncia (opcional)</string>
+    <string name="report_message_hint">Motivo de la denuncia (opcional)</string>
     <string name="checklist_text">Texto de la lista</string>
     <string name="preference_push_party_activity">Actividad del equipo</string>
     <string name="partyUpDescription">¡Te agrupaste con un miembro del equipo!</string>

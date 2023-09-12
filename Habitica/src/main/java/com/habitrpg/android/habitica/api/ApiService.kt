@@ -265,6 +265,9 @@ interface ApiService {
         @Body data: Map<String, String>
     ): HabitResponse<Void>
 
+    @POST("members/{mid}/flag")
+    suspend fun reportMember(@Path("mid") mid: String, @Body data: Map<String, String>): HabitResponse<Void>
+
     @POST("groups/{gid}/chat/seen")
     suspend fun seenMessages(@Path("gid") groupId: String): HabitResponse<Void>
 

@@ -747,7 +747,7 @@
     <string name="invite_to_guild">Запросити до гільдії</string>
     <string name="guild_description">Опис гільдії</string>
     <string name="mystery_sets">Містичний комплект</string>
-    <string name="reason_for_report">Причина (опціонально)</string>
+    <string name="report_message_hint">Причина (опціонально)</string>
     <string name="report_message_title">Помітити %s, як порушення за:</string>
     <string name="report_explanation">Будь ласка, повідомляйте **лише** про публікації, які порушують [Правила спільноти](https://habitica.com/static/community-guidelines) і/або [Умови надання послуг](https://habitica.com/static/terms). Неналежне повідомлення про публікацію може призвести до порушення.</string>
     <string name="x_class">Клас %s</string>

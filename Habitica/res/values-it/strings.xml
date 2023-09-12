@@ -672,7 +672,7 @@
     <string name="invite_to_guild">Invita nella Gilda</string>
     <string name="guild_description">Descrizione della Gilda</string>
     <string name="mystery_sets">Set del Mistero</string>
-    <string name="reason_for_report">Ragioni della segnalazione (facoltativo)</string>
+    <string name="report_message_hint">Ragioni della segnalazione (facoltativo)</string>
     <string name="report_message_title">Segnala %s per violazione:</string>
     <string name="report_explanation">Segnala **SOLO** i messaggi che violano le [Linee Guida della Community](https://habitica.com/static/community-guidelines) and/o i [Termini di Servizio](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction. Se la segnalazione è inappropriata, potrai subire una sanzione.</string>
     <string name="x_class">Classe %s</string>

@@ -760,7 +760,7 @@
     <string name="trillion_abbrev">t</string>
     <string name="report_violation">Laporkan pelanggaran</string>
     <string name="mystery_sets">Set Misteri</string>
-    <string name="reason_for_report">Alasan pelaporan (opsional)</string>
+    <string name="report_message_hint">Alasan pelaporan (opsional)</string>
     <string name="report_message_title">Melaporkan %s atas pelanggaran:</string>
     <string name="report_explanation">**Laporkan** hanya jika postingan tersebut melanggar [Pedoman Komunitas](https://habitica.com/static/community-guidelines) dan/atau [Syarat Layanan](https://habitica.com/static/terms). Laporan yang tidak sesuai dapat memberimu pelanggaran.</string>
     <string name="become_x">Menjadi %s</string>

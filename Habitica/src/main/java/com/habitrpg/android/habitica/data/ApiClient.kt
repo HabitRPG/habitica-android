@@ -165,6 +165,8 @@ interface ApiClient {
     suspend fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Void?
     suspend fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Void?
 
+    suspend fun reportMember(mid: String, data: Map<String, String>): Void?
+
     suspend fun seenMessages(groupId: String): Void?
 
     suspend fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): List<InviteResponse>?

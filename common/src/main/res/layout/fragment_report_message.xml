@@ -1,132 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
-    <View
-        android:id="@+id/touch_outside"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:layout_height="wrap_content">
+
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/bottom_sheet"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        app:behavior_peekHeight="350dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:behavior_hideable="true">
+
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/colorContentBackground"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/Toolbar"
-                app:title=""
-                android:background="?attr/colorContentBackground"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:titleTextColor="@color/text_primary"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
                 app:theme="@style/ReportMessageToolbar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+                app:title=""
+                app:titleTextColor="@color/text_primary">
+
                 <ImageButton
                     android:id="@+id/close_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_close_grey_800_24dp"
                     android:background="@color/transparent"
-                    android:paddingEnd="@dimen/spacing_small"/>
+                    android:paddingEnd="@dimen/spacing_small"
+                    android:src="@drawable/ic_close_grey_800_24dp" />
+
                 <TextView
+                    android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/report_violation"
-                    android:textSize="20sp"
-                    android:textColor="@color/text_primary"
                     android:layout_marginEnd="36dp"
-                    android:id="@+id/toolbar_title" />
+                    android:text="@string/report_violation"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp" />
+
                 <Button
                     android:id="@+id/report_button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/report"
-                    android:textColor="@color/red_50"
-                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_gravity="end"
                     android:layout_marginEnd="8dp"
-                    android:layout_gravity="end" />
+                    android:text="@string/report"
+                    android:textColor="@color/red_50" />
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="0dp">
+
             <LinearLayout
-                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="16dp"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="25dp"
                 android:layout_marginBottom="0dp"
-                android:focusableInTouchMode="true">
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:paddingStart="24dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="25dp">
+
                 <TextView
                     android:id="@+id/title_text_view"
+                    style="@style/Caption1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Report NAME for violation:"
-                    android:textColor="@color/text_primary"
-                    style="@style/Caption1"
+                    android:layout_marginStart="13dp"
                     android:layout_marginBottom="@dimen/spacing_medium"
-                    android:layout_marginStart="13dp"/>
+                    android:textColor="@color/text_primary"
+                    tools:text="Report NAME for violation:" />
+
                 <TextView
                     android:id="@+id/message_text_view"
+                    style="@style/Body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_1f000000"
-                    android:textColor="@color/text_quad"
-                    style="@style/Body2"
                     android:lineSpacingExtra="4sp"
-                    android:paddingTop="11dp"
-                    android:paddingBottom="11dp"
                     android:paddingStart="13dp"
+                    android:paddingTop="11dp"
                     android:paddingEnd="13dp"
+                    android:paddingBottom="11dp"
+                    android:textColor="@color/text_quad"
                     tools:text="This is the message that is reported" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/info_text_input_layout"
+                    style="@style/TextInputLayoutAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:theme="@style/TextInputLayoutAppearanceTheme"
-                    style="@style/TextInputLayoutAppearance"
                     android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large"
                     android:hint="@string/report_message_hint"
-                    android:layout_marginBottom="@dimen/spacing_large">
+                    android:theme="@style/TextInputLayoutAppearanceTheme">
+
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/additional_info_edittext"
-                        android:overScrollMode="always"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_primary"
-                        android:paddingBottom="34dp"
-                        android:paddingTop="16dp"
+                        android:overScrollMode="always"
                         android:paddingStart="@dimen/spacing_large"
-                        android:paddingEnd="@dimen/spacing_large"/>
+                        android:paddingTop="16dp"
+                        android:paddingEnd="@dimen/spacing_large"
+                        android:paddingBottom="34dp"
+                        android:textColor="@color/text_primary" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
+                    android:id="@+id/additional_explanation_textview"
+                    style="@style/Caption3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:gravity="center"
+                    android:textColor="@color/text_ternary"
+                    android:textColorLink="?colorAccent"
+                    android:textStyle="italic"
+                    android:visibility="gone"
+                    tools:text="@string/report_user_description" />
+
+                <TextView
                     android:id="@+id/report_explanation_textview"
+                    style="@style/Caption3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    tools:text="@string/report_explanation"
                     android:textColor="@color/text_ternary"
-                    style="@style/Caption3"
                     android:textColorLink="?colorAccent"
-                    />
+                    tools:text="@string/report_message_explanation" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -644,7 +644,7 @@
     <string name="collapse_notes">Thu lại</string>
     <string name="guild_description">Mô tả Bang hội</string>
     <string name="mystery_sets">Bộ Bí ẩn</string>
-    <string name="reason_for_report">Lí do báo cáo (tùy chọn)</string>
+    <string name="report_message_hint">Lí do báo cáo (tùy chọn)</string>
     <string name="report_message_title">Báo có %s vì vi phạm:</string>
     <string name="report_explanation">**Chỉ** báo cáo một bài viết mà vi phạm [Nội quy Cộng đồng](https://habitica.com/static/community-guidelines) và/hoặc [Điều khoản Dịch vụ](https://habitica.com/static/terms). Báo cáo không hợp lí có thể khiến bạn nhận một cảnh cáo.</string>
     <string name="x_class">Chức nghiệp %s</string>

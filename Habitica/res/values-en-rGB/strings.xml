@@ -790,7 +790,7 @@
     <string name="defeat">Defeat</string>
     <string name="guild_description">Guild Description</string>
     <string name="mystery_sets">Mystery Sets</string>
-    <string name="reason_for_report">Reason for report (optional)</string>
+    <string name="report_message_hint">Reason for report (optional)</string>
     <string name="report_message_title">Report %s for violation:</string>
     <string name="invite_to_guild">Invite to Guild</string>
     <string name="join_guild">Join Guild</string>

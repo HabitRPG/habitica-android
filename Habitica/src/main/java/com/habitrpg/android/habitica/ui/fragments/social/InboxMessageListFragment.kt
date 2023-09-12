@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
 import com.habitrpg.android.habitica.ui.adapter.social.InboxAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.InboxViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -99,7 +100,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                 FullProfileActivity.open(it)
             }
             adapter.onDeleteMessage = { showDeleteConfirmationDialog(it) }
-            adapter.onFlagMessage = { showFlagConfirmationDialog(it) }
+            adapter.onFlagMessage = { showFlagMessageBottomSheet(it) }
             adapter.onCopyMessage = { copyMessageToClipboard(it) }
         }
 
@@ -201,9 +202,18 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         }
     }
 
-    private fun showFlagConfirmationDialog(chatMessage: ChatMessage) {
-        val directions = MainNavDirections.actionGlobalReportMessageActivity(chatMessage.text ?: "", chatMessage.user ?: "", chatMessage.id, null)
-        MainNavigationController.navigate(directions)
+    private fun showFlagMessageBottomSheet(chatMessage : ChatMessage) {
+        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
+            reportType = ReportBottomSheetFragment.REPORT_TYPE_MESSAGE,
+            profileName = chatMessage.username ?: "",
+            messageId = chatMessage.id,
+            messageText = chatMessage.text ?: "",
+            groupId = chatMessage.groupId ?: "",
+            userIdBeingReported = chatMessage.userID ?: "",
+            sourceView = this::class.simpleName ?: ""
+        )
+
+        reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)
     }
 
     private fun showDeleteConfirmationDialog(chatMessage: ChatMessage) {
