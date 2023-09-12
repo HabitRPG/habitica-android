@@ -5,6 +5,7 @@ import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.Skill
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
@@ -26,7 +27,7 @@ interface UserRepository : BaseRepository {
 
     suspend fun retrieveUser(withTasks: Boolean = false, forced: Boolean = false, overrideExisting: Boolean = false): User?
 
-    suspend fun revive(): User?
+    suspend fun revive(): Equipment?
 
     suspend fun resetTutorial(): User?
 

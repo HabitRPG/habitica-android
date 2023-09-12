@@ -182,7 +182,7 @@ interface ApiService {
     suspend fun sleep(): HabitResponse<Boolean>
 
     @POST("user/revive")
-    suspend fun revive(): HabitResponse<User>
+    suspend fun revive(): HabitResponse<Items>
 
     @POST("user/class/cast/{skill}")
     suspend fun useSkill(

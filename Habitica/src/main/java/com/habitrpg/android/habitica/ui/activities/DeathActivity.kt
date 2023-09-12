@@ -31,6 +31,7 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -143,9 +144,13 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
             }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.updateUser("stats.hp", 1)
-                HabiticaSnackbar.showSnackbar(
-                    this@DeathActivity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
-                delay(2000)
+                MainScope().launchCatching {
+                    delay(1000)
+                    (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let {activity ->
+                        HabiticaSnackbar.showSnackbar(
+                            activity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
+                    }
+                }
                 finish()
             }
         }
@@ -153,13 +158,20 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
         binding.restartButton.setOnClickListener {
             binding.restartButton.isEnabled = false
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.revive()
-                finish()
-                delay(1000)
-                (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity as? SnackbarActivity)?.let {activity ->
-                    HabiticaSnackbar.showSnackbar(
-                        activity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
+                val brokenItem = userRepository.revive()
+                if (brokenItem != null) {
+                    MainScope().launchCatching {
+                        delay(500)
+                        (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let { activity ->
+                            HabiticaSnackbar.showSnackbar(
+                                activity.snackbarContainer(),
+                                getString(R.string.revive_broken_equipment, brokenItem.text),
+                                HabiticaSnackbar.SnackbarDisplayType.BLACK
+                            )
+                        }
+                    }
                 }
+                finish()
             }
         }
         startAnimating()

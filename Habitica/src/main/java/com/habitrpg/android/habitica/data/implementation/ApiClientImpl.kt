@@ -502,7 +502,7 @@ class ApiClientImpl(
 
     override suspend fun sleep(): Boolean? = process { apiService.sleep() }
 
-    override suspend fun revive(): User? = process { apiService.revive() }
+    override suspend fun revive(): Items? = process { apiService.revive() }
 
     override suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType, targetId) }

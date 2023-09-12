@@ -9,11 +9,13 @@ import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
@@ -98,16 +100,17 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun revive(): User? {
-        val revivedUser = apiClient.revive()
+    override suspend fun revive(): Equipment? {
+        val items = apiClient.revive()
         val currentUser = localRepository.getLiveUser(currentUserID)
-        if (revivedUser != null && currentUser != null) {
-            val brokenItem = currentUser.items?.gear?.owned?.firstOrNull { equipment ->
-                revivedUser.items?.gear?.owned?.filter { it.key == equipment.key }?.size == 0
+        var brokenItem: Equipment? = null
+        if (items != null && currentUser != null) {
+            brokenItem = items.gear?.owned?.filter { it.owned == false }?.firstOrNull { equipment ->
+                currentUser.items?.gear?.owned?.firstOrNull { it.key == equipment.key && it.owned == true } != null
             }
-
         }
-        return retrieveUser(false, true)
+        retrieveUser(false, true)
+        return brokenItem
     }
 
     override suspend fun resetTutorial(): User? {

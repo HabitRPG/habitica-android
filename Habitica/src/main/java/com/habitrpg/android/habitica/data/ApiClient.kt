@@ -122,7 +122,7 @@ interface ApiClient {
     suspend fun loginApple(authToken: String): UserAuthResponse?
 
     suspend fun sleep(): Boolean?
-    suspend fun revive(): User?
+    suspend fun revive(): Items?
 
     suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse?
 

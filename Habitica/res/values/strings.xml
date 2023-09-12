@@ -1459,6 +1459,7 @@
     <string name="subscribe_incentive_button_faint">Subscribe to hold on with 1HP!</string>
     <string name="subscription_benefit_armoire_sub">Your subscription gives you an extra chance at the Armoire!</string>
     <string name="subscriber_benefit_success_faint">You got a second chance with 1HP!</string>
+    <string name="revive_broken_equipment">Your %s broke</string>
 
 
     <plurals name="you_x_others">
