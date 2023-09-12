@@ -100,7 +100,13 @@ class UserRepositoryImpl(
 
     override suspend fun revive(): User? {
         val revivedUser = apiClient.revive()
+        val currentUser = localRepository.getLiveUser(currentUserID)
+        if (revivedUser != null && currentUser != null) {
+            val brokenItem = currentUser.items?.gear?.owned?.firstOrNull { equipment ->
+                revivedUser.items?.gear?.owned?.filter { it.key == equipment.key }?.size == 0
+            }
 
+        }
         return retrieveUser(false, true)
     }
 

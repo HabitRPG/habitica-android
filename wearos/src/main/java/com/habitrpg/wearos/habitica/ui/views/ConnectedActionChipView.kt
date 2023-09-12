@@ -23,7 +23,7 @@ class ConnectedActionChipView(context: Context, attrs: AttributeSet? = null) :
             val result = Tasks.await(capabilityClient.getCapability("open_activity", CapabilityClient.FILTER_REACHABLE))
             launch(Dispatchers.Main) {
                 isEnabled = result.nodes.firstOrNull { it.isNearby } != null
-                isVisible = isEnabled
+                alpha = if (isEnabled) 1.0f else 0.7f
             }
         }
     }

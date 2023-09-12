@@ -195,4 +195,10 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <FrameLayout
+        android:id="@+id/snackbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_gravity="bottom"
+        android:paddingBottom="20dp"/>
 </FrameLayout>

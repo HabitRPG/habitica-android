@@ -203,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/subscription_benefit_armoire_sub"
                 android:textColor="@color/white"
-                style="@style/Body2"
+                style="@style/Body1"
                 android:gravity="center"
                 android:paddingHorizontal="48dp"
                 android:layout_marginTop="6dp"/>
@@ -256,8 +256,8 @@
             android:layout_height="wrap_content"
             android:text="@string/armoire_drop_rates"
             android:textColor="@color/brand_600"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             style="@style/Body2"/>
     </LinearLayout>
 </LinearLayout>

@@ -4,9 +4,12 @@ import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.HabiticaApplication
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityDeathBinding
@@ -35,7 +38,7 @@ import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DeathActivity : BaseActivity() {
+class DeathActivity : BaseActivity(), SnackbarActivity {
     private lateinit var binding: ActivityDeathBinding
 
     @Inject
@@ -135,16 +138,15 @@ class DeathActivity : BaseActivity() {
                 putLong("last_sub_revive", Date().time)
             }
             lifecycleScope.launchCatching {
-                delay(400)
+                delay(300)
                 binding.reviveSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
             }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.updateUser("stats.hp", 1)
+                HabiticaSnackbar.showSnackbar(
+                    this@DeathActivity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
+                delay(2000)
                 finish()
-                (parent as? SnackbarActivity)?.snackbarContainer()?.let { it1 ->
-                    HabiticaSnackbar.showSnackbar(
-                        it1, getString(R.string.subscriber_benefit_used_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
-                }
             }
         }
 
@@ -153,6 +155,11 @@ class DeathActivity : BaseActivity() {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.revive()
                 finish()
+                delay(1000)
+                (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity as? SnackbarActivity)?.let {activity ->
+                    HabiticaSnackbar.showSnackbar(
+                        activity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
+                }
             }
         }
         startAnimating()
@@ -185,5 +192,9 @@ class DeathActivity : BaseActivity() {
 
     override fun onBackPressed() {
         moveTaskToBack(true)
+    }
+
+    override fun snackbarContainer(): ViewGroup {
+        return binding.snackbarContainer
     }
 }

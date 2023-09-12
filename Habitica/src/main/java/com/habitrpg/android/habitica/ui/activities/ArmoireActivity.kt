@@ -210,7 +210,7 @@ class ArmoireActivity : BaseActivity() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser("stats.gp", currentGold + 100)
             val buyResponse =
-                inventoryRepository.buyItem(user, "armoire", 100.0, 1) ?: return@launch
+                inventoryRepository.buyItem(user, "armoire", 0.0, 1) ?: return@launch
             configure(
                 buyResponse.armoire["type"] ?: "",
                 buyResponse.armoire["dropKey"] ?: "",
