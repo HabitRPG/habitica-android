@@ -112,7 +112,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
     }
 
     enum class SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE, BLACK
+        NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE, BLACK, SUBSCRIBER_BENEFIT
     }
 
     companion object {
@@ -133,7 +133,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             content: CharSequence?,
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
-            isSubscriberBenefit: Boolean = false
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -146,7 +147,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 null,
                 displayType,
                 isCelebratory,
-                isSubscriberBenefit
+                isSubscriberBenefit,
+                duration
             )
         }
 
@@ -157,7 +159,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             content: CharSequence?,
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
-            isSubscriberBenefit: Boolean = false
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -170,7 +173,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 null,
                 displayType,
                 isCelebratory,
-                isSubscriberBenefit
+                isSubscriberBenefit,
+                duration
             )
         }
 
@@ -183,7 +187,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             rightText: String,
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
-            isSubscriberBenefit: Boolean = false
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -196,7 +201,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 rightText,
                 displayType,
                 isCelebratory,
-                isSubscriberBenefit
+                isSubscriberBenefit,
+                duration
             )
         }
 
@@ -207,7 +213,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             specialView: View?,
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
-            isSubscriberBenefit: Boolean = false
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
             showSnackbar(
                 container,
@@ -220,7 +227,8 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 null,
                 displayType,
                 isCelebratory,
-                isSubscriberBenefit
+                isSubscriberBenefit,
+                duration
             )
         }
 
@@ -235,9 +243,10 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             rightText: String?,
             displayType: SnackbarDisplayType,
             isCelebratory: Boolean = false,
-            isSubscriberBenefit: Boolean = false
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
-            val snackbar = make(container, Snackbar.LENGTH_LONG)
+            val snackbar = make(container, duration)
                 .setTitle(title)
                 .setText(content)
                 .setSpecialView(specialView)
@@ -258,6 +267,9 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 )
 
                 SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
+                SnackbarDisplayType.SUBSCRIBER_BENEFIT -> {
+                    snackbar.setBackgroundResource(R.drawable.subscriber_benefit_snackbar_bg)
+                }
             }
 
             if (isCelebratory) {
@@ -284,7 +296,7 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                         500L
                     )
                         .setFadeOut(200L)
-                        .setSpeedRange(0.1f, 0.4f)
+                        .setSpeedRange(0.05f, 0.2f)
                         .setScaleRange(0.8f, 1.2f)
                         .setRotationSpeedRange(134f, 164f)
                         .emit(snackbar.getView(), 150, 500)

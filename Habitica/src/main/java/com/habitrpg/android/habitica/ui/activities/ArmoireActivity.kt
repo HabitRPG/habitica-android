@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -27,6 +28,7 @@ import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSh
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.android.habitica.ui.views.progress.HabiticaCircularProgressView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
@@ -88,6 +90,10 @@ class ArmoireActivity : BaseActivity() {
                 binding.equipmentCountView.text = getString(R.string.equipment_remaining, remaining)
                 binding.noEquipmentView.visibility = if (remaining > 0) View.GONE else View.VISIBLE
             }
+        }
+
+        binding.progressView.setContent {
+            HabiticaCircularProgressView(indicatorSize = 60.dp)
         }
 
         if (appConfigManager.enableArmoireAds()) {
@@ -181,6 +187,11 @@ class ArmoireActivity : BaseActivity() {
             binding.iconView.bitmap = null
             Animations.circularHide(binding.iconWrapper)
         }
+        binding.progressView.animate().apply {
+            alpha(1f)
+            startDelay = 0
+            start()
+        }
         binding.titleView.animate().apply {
             alpha(0f)
             duration = 300
@@ -242,6 +253,12 @@ class ArmoireActivity : BaseActivity() {
              */
             binding.goldView.value = (gold + 100).toDouble()
             binding.goldView.value = (gold).toDouble()
+        }
+
+        binding.progressView.animate().apply {
+            alpha(0f)
+            startDelay = 0
+            start()
         }
 
         val container = binding.confettiAnchor

@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
-import com.habitrpg.common.habitica.databinding.FragmentReportMessageBinding
+import com.habitrpg.android.habitica.databinding.FragmentReportMessageBinding
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
@@ -180,4 +180,3 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 }
-

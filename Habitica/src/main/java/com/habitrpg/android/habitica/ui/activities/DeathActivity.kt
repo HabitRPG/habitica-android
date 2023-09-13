@@ -148,7 +148,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                     delay(1000)
                     (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let {activity ->
                         HabiticaSnackbar.showSnackbar(
-                            activity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUCCESS, isSubscriberBenefit = true)
+                            activity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT, isSubscriberBenefit = true, duration = 2500)
                     }
                 }
                 finish()
