@@ -13,6 +13,7 @@ import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.android.habitica.ui.views.stable.MountView
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
@@ -29,13 +30,13 @@ constructor(
             val mountWrapper =
                 View.inflate(
                     requestValues.context,
-                    R.layout.pet_imageview,
+                    R.layout.mount_imageview,
                     null
                 ) as? FrameLayout
             val mountImageView =
-                mountWrapper?.findViewById(R.id.pet_imageview) as? PixelArtView
+                mountWrapper?.findViewById(R.id.mount_imageview) as? MountView
 
-            mountImageView?.loadImage("Mount_Icon_" + requestValues.pet.key)
+            mountImageView?.setMount("Mount_Icon_" + requestValues.pet.key)
             val dialog = HabiticaAlertDialog(requestValues.context)
             dialog.setTitle(
                 requestValues.context.getString(
@@ -58,14 +59,7 @@ constructor(
                     Bitmap.Config.ARGB_8888
                 )
                 val canvas = Canvas(sharedImage)
-                mountImageView?.drawable?.setBounds(
-                    0,
-                    0,
-                    mountImageSideLength,
-                    mountImageSideLength
-                )
-                val bitmap = (mountImageView?.drawable as? BitmapDrawable)?.bitmap ?: mountImageView?.bitmap ?: return@addButton
-                canvas.drawBitmap(bitmap, 0f, 0f, null)
+                mountImageView?.draw(canvas)
                 (requestValues.context as? BaseActivity)?.shareContent(
                     "raisedPet",
                     message,
