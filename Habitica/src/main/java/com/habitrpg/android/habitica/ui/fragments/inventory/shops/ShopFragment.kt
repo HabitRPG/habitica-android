@@ -117,6 +117,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             }
             adapter?.onShowPurchaseDialog = { item, isPinned ->
                 if (item.key == "gem" && userViewModel.user.value?.isSubscribed != true) {
+                    Analytics.sendEvent("View gems for gold CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
                     val subscriptionBottomSheet = SubscriptionBottomSheetFragment()
                     activity?.let { activity ->
                         subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)

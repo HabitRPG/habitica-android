@@ -18,7 +18,10 @@ import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -121,6 +124,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                     binding.reviveSubscriberWrapper.visibility = View.GONE
                     binding.unsubbedWrapper.visibility = View.VISIBLE
                     binding.subscribeModalButton.setOnClickListener {
+                        Analytics.sendEvent("View death sub CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
                         val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
                             eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
                         }
@@ -135,6 +139,7 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
         }
 
         binding.reviveSubscriberButton.setOnClickListener {
+            Analytics.sendEvent("second chance perk", EventCategory.BEHAVIOUR, HitType.EVENT)
             sharedPreferences.edit {
                 putLong("last_sub_revive", Date().time)
             }

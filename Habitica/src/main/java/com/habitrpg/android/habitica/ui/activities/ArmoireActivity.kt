@@ -138,6 +138,7 @@ class ArmoireActivity : BaseActivity() {
         }
 
         binding.openArmoireSubscriberButton.setOnClickListener {
+            Analytics.sendEvent("Free armoire perk", EventCategory.BEHAVIOUR, HitType.EVENT)
             giveUserArmoire()
             lifecycleScope.launchCatching {
                 delay(400)
@@ -146,6 +147,7 @@ class ArmoireActivity : BaseActivity() {
         }
 
         binding.subscribeModalButton.setOnClickListener {
+            Analytics.sendEvent("View armoire sub CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
             val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
                 eventType = EVENT_ARMOIRE_OPENED
             }
