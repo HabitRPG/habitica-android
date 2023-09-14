@@ -44,7 +44,8 @@ class SharePetUseCase: UseCase<SharePetUseCase.RequestValues, Unit>() {
         petWrapper.root.visibility = View.INVISIBLE
         val currentActivity =
             HabiticaBaseApplication.getInstance(requestValues.context)?.currentActivity?.get()
-        (currentActivity?.window?.decorView as? ViewGroup)?.addView(petWrapper.root)
+        val containerView = (currentActivity?.window?.decorView as? ViewGroup)
+        containerView?.addView(petWrapper.root)
         if (currentActivity != null) {
             petWrapper.backgroundView.setContent {
                 HabiticaTheme {
@@ -73,7 +74,7 @@ class SharePetUseCase: UseCase<SharePetUseCase.RequestValues, Unit>() {
             ((requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
                 requestValues.context
             )?.currentActivity?.get())?.shareContent("pet", requestValues.message, sharedImage)
-            currentActivity?.toolbar?.removeView(petWrapper.root)
+            containerView?.removeView(petWrapper.root)
         }
         val m = FrameLayout.LayoutParams(width, height)
         petWrapper.root.layoutParams = m
