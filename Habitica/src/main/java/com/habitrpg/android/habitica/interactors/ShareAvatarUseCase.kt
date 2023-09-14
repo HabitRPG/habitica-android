@@ -7,8 +7,7 @@ import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.shared.habitica.models.Avatar
 import javax.inject.Inject
 
-class ShareAvatarUseCase @Inject
-constructor() : UseCase<ShareAvatarUseCase.RequestValues, Unit>() {
+class ShareAvatarUseCase @Inject constructor() : UseCase<ShareAvatarUseCase.RequestValues, Unit>() {
     override suspend fun run(requestValues: RequestValues) {
         val avatarView = AvatarView(requestValues.activity, showBackground = true, showMount = true, showPet = true)
         avatarView.setAvatar(requestValues.avatar)

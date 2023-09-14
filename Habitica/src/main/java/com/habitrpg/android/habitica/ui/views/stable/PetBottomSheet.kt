@@ -65,6 +65,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.interactors.ShareMountUseCase
+import com.habitrpg.android.habitica.interactors.SharePetUseCase
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
@@ -75,6 +77,7 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlin.math.sin
 
@@ -309,6 +312,25 @@ fun PetBottomSheet(
                     }
                 }
             }
+        }
+        val context = LocalContext.current
+        HabiticaButton(
+            background = HabiticaTheme.colors.tintedUiSub,
+            color = Color.White,
+            contentPadding = PaddingValues(12.dp),
+            modifier = Modifier.padding(bottom = 16.dp),
+            onClick = {
+                MainScope().launchCatching {
+                    SharePetUseCase().callInteractor(
+                        SharePetUseCase.RequestValues(
+                            pet.key,
+                            "",
+                            context
+                        ))
+                }
+                onDismiss()
+            }) {
+            Text(stringResource(id = R.string.share))
         }
         HabiticaButton(
             background = HabiticaTheme.colors.tintedUiSub,

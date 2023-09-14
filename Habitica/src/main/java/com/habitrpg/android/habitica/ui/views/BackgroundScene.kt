@@ -44,10 +44,10 @@ private fun getBackgroundPainter(): ImageBitmap {
 }
 
 @Composable
-fun BackgroundScene() {
+fun BackgroundScene(modifier: Modifier = Modifier) {
     val image = getBackgroundPainter()
     Canvas(
-        modifier = Modifier
+        modifier = modifier
             .height(124.dp)
             .fillMaxWidth()
             .zIndex(1f), onDraw = {

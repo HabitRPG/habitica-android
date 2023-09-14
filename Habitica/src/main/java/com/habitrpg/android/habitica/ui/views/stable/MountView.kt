@@ -15,6 +15,10 @@ class MountView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
+    val hasLoadedImages: Boolean
+        get() {
+            return bodyView.bitmap != null && headView.bitmap != null
+        }
     private val bodyView: PixelArtView = PixelArtView(context)
     private val headView: PixelArtView = PixelArtView(context)
 

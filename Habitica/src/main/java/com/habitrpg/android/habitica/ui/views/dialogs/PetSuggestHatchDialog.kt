@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
@@ -168,7 +169,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 binding.currencyView.currency = "gems"
                 binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
                 addButton(binding.root, true) { _, _ ->
-                    val activity = (getActivity() as? MainActivity) ?: return@addButton
+                    val activity = (getActivity() as? MainActivity) ?: (HabiticaBaseApplication.getInstance(context)?.currentActivity?.get() as? MainActivity) ?: return@addButton
                     if ((userViewModel.user.value?.gemCount ?: hatchPrice) < hatchPrice) {
                         InsufficientGemsDialog(activity, hatchPrice).show()
                         Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "pet suggest modal"))

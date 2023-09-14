@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.SnackbarViewBinding
 import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
 
@@ -28,18 +29,27 @@ class HabiticaSnackbar
  */
 private constructor(parent: ViewGroup, content: View, callback: ContentViewCallback) :
     BaseTransientBottomBar<HabiticaSnackbar>(parent, content, callback) {
+        val binding: SnackbarViewBinding = SnackbarViewBinding.bind(content)
 
     fun setTitle(title: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_title) as? TextView
-        textView?.text = title
-        textView?.visibility = if (title != null) View.VISIBLE else View.GONE
+        binding.snackbarTitle.text = title
+        binding.snackbarTitle.visibility = if (title != null) View.VISIBLE else View.GONE
         return this
     }
 
     fun setText(text: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_text) as? TextView
-        textView?.text = text
-        textView?.visibility = if (text != null) View.VISIBLE else View.GONE
+        binding.snackbarText.text = text
+        binding.snackbarText.visibility = if (text != null) View.VISIBLE else View.GONE
+        return this
+    }
+
+    fun setTitleColor(color: Int): HabiticaSnackbar {
+        binding.snackbarTitle.setTextColor(color)
+        return this
+    }
+
+    fun setTextColor(color: Int): HabiticaSnackbar {
+        binding.snackbarText.setTextColor(color)
         return this
     }
 
@@ -47,20 +57,16 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         if (icon == null) {
             return this
         }
-        val rightView = view.findViewById<View>(R.id.rightView)
-        rightView.visibility = View.VISIBLE
-        val rightIconView = view.findViewById<ImageView>(R.id.rightIconView)
-        rightIconView.setImageDrawable(icon)
-        val rightTextView = view.findViewById<TextView>(R.id.rightTextView)
-        rightTextView.setTextColor(textColor)
-        rightTextView.text = text
+        binding.rightView.visibility = View.VISIBLE
+        binding.rightIconView.setImageDrawable(icon)
+        binding.rightTextView.setTextColor(textColor)
+        binding.rightTextView.text = text
         return this
     }
 
     fun setLeftIcon(image: Drawable?): HabiticaSnackbar {
-        val imageView = view.findViewById<ImageView>(R.id.leftImageView)
-        imageView.setImageDrawable(image)
-        imageView.visibility = if (image != null) View.VISIBLE else View.GONE
+        binding.leftImageView.setImageDrawable(image)
+        binding.leftImageView.visibility = if (image != null) View.VISIBLE else View.GONE
         return this
     }
 
@@ -70,16 +76,14 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
     }
 
     fun setBackgroundResource(resourceId: Int): HabiticaSnackbar {
-        val snackbarView = view.findViewById<View>(R.id.snackbar_view)
-        snackbarView.setBackgroundResource(resourceId)
+        binding.snackbarView.setBackgroundResource(resourceId)
         view.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
         return this
     }
 
     private fun setSpecialView(specialView: View?): HabiticaSnackbar {
         if (specialView != null) {
-            val snackbarView = view.findViewById<View>(R.id.content_container) as? LinearLayout
-            snackbarView?.addView(specialView)
+            binding.contentContainer.addView(specialView)
         }
         return this
     }
@@ -261,14 +265,14 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 SnackbarDisplayType.FAILURE_BLUE, SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(
                     R.drawable.snackbar_background_blue
                 )
-
                 SnackbarDisplayType.DROP, SnackbarDisplayType.NORMAL -> snackbar.setBackgroundResource(
                     R.drawable.snackbar_background_gray
                 )
-
                 SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
                 SnackbarDisplayType.SUBSCRIBER_BENEFIT -> {
                     snackbar.setBackgroundResource(R.drawable.subscriber_benefit_snackbar_bg)
+                    snackbar.setTitleColor(ContextCompat.getColor(container.context, R.color.green_1))
+                    snackbar.setTextColor(ContextCompat.getColor(container.context, R.color.green_1))
                 }
             }
 
@@ -291,15 +295,15 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
                 {
                     ParticleSystem(
                         container,
-                        200,
+                        300,
                         ContextCompat.getDrawable(container.context, R.drawable.confetti_subs),
-                        500L
+                        800L
                     )
                         .setFadeOut(200L)
                         .setSpeedRange(0.05f, 0.2f)
                         .setScaleRange(0.8f, 1.2f)
                         .setRotationSpeedRange(134f, 164f)
-                        .emit(snackbar.getView(), 150, 500)
+                        .emit(snackbar.getView(), 200, 600)
                 }, 500L
             )
         }

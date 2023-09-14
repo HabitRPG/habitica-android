@@ -39,6 +39,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,9 +48,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.interactors.ShareMountUseCase
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
+import com.habitrpg.common.habitica.helpers.launchCatching
+import kotlinx.coroutines.MainScope
 import java.util.Calendar
 import kotlin.math.sin
 
@@ -145,6 +149,25 @@ fun MountBottomSheet(
                     .align(Alignment.TopCenter)
                     .zIndex(2f)
             )
+        }
+        val context = LocalContext.current
+        HabiticaButton(
+            background = HabiticaTheme.colors.tintedUiSub,
+            color = Color.White,
+            contentPadding = PaddingValues(12.dp),
+            modifier = Modifier.padding(bottom = 16.dp),
+            onClick = {
+                MainScope().launchCatching {
+                    ShareMountUseCase().callInteractor(
+                        ShareMountUseCase.RequestValues(
+                            mount.key,
+                            "",
+                            context
+                        ))
+                }
+                onDismiss()
+            }) {
+            Text(stringResource(id = R.string.share))
         }
         HabiticaButton(
             background = HabiticaTheme.colors.tintedUiSub,
