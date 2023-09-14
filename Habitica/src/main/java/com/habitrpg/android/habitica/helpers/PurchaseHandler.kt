@@ -351,7 +351,6 @@ class PurchaseHandler(
                     try {
                         apiClient.validateSubscription(validationRequest)
                         processedPurchase(purchase)
-                        Analytics.sendEvent("user_subscribed", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("sku" to (sku ?: "")))
                         CoroutineScope(Dispatchers.IO).launch(ExceptionHandler.coroutine()) {
                             acknowledgePurchase(purchase)
                         }

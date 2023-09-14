@@ -20,11 +20,13 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
     private fun setArmoireEventSubscriptionViews() {
         binding.subscriberBenefitBanner.visibility = View.GONE
         binding.subscribeBenefits.text = getString(R.string.subscribe_second_armoire_open_text)
+        binding.subscriberBenefits.hideArmoireBenefit()
     }
 
     private fun setDeathScreenEventSubscriptionViews() {
         binding.subscriberBenefitBanner.visibility = View.GONE
         binding.subscribeBenefits.text = getString(R.string.subscribe_second_chance_incentive_text)
+        binding.subscriberBenefits.hideDeathBenefit()
     }
 
     companion object {

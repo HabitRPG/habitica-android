@@ -77,24 +77,6 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                 user?.let { setUser(it) }
             }
         }
-
-        lifecycleScope.launchCatching {
-            inventoryRepository.getLatestMysteryItem().collect {
-                binding.subBenefitsMysteryItemIcon.loadImage(
-                    "shop_set_mystery_${
-                        it.key?.split(
-                            "_"
-                        )?.last()
-                    }"
-                )
-                binding.subBenefitsMysteryItemText.text =
-                    context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-            }
-        }
-        
-        binding.benefitFaintWrapper.isVisible = appConfigManager.enableFaintSubs()
-
-        Analytics.sendNavigationEvent("subscription screen")
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

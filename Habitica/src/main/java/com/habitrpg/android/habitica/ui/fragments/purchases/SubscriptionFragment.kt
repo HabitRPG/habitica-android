@@ -120,23 +120,6 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }
 
-        lifecycleScope.launchCatching {
-            inventoryRepository.getLatestMysteryItem().collect {
-                binding?.subBenefitsMysteryItemIcon?.loadImage(
-                    "shop_set_mystery_${
-                    it.key?.split(
-                        "_"
-                    )?.last()
-                    }"
-                )
-                binding?.subBenefitsMysteryItemText?.text =
-                    context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-            }
-        }
-
-        binding?.benefitArmoireWrapper?.isVisible = appConfigManager.enableArmoireSubs()
-        binding?.benefitFaintWrapper?.isVisible = appConfigManager.enableFaintSubs()
-
         Analytics.sendNavigationEvent("subscription screen")
     }
 
