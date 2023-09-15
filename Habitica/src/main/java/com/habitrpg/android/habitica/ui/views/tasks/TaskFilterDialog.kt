@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.button.MaterialButton
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
@@ -139,7 +140,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         sortTagPositions()
         for (tag in tags) {
             if (tag.id.isBlank()) {
-                // This is a title for a tag group
+                // Title for tag group
                 val view = TextView(context)
                 view.setPadding(0, view.paddingTop, view.paddingRight, view.paddingBottom)
                 view.text = tag.name
@@ -173,19 +174,23 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     }
 
     private fun createAddTagButton() {
-        val button = Button(context)
+        val button = MaterialButton(context)
+
         button.setText(R.string.add_tag)
-        button.setOnClickListener { createTag() }
-        button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            TextViewCompat.setCompoundDrawableTintList(button, ColorStateList.valueOf(context.getThemeColor(R.attr.colorAccent)))
-        }
+        button.icon = addIcon
+        button.iconTint = ColorStateList.valueOf(context.getThemeColor(R.attr.colorAccent))
+        button.iconGravity = MaterialButton.ICON_GRAVITY_START
         button.elevation = 0f
-        button.setBackgroundResource(R.drawable.button_background_gray_700)
-        button.setShadowLayer(0f, 0f, 0f, ContextCompat.getColor(context, R.color.content_background))
+//        button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.button_background_gray_700))
+        button.setStrokeColorResource(R.color.content_background)  // Assuming you want a border, otherwise remove
+        button.strokeWidth = 0  // Adjust if you want a thicker border
         button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+
+        button.setOnClickListener { createTag() }
+
         binding.tagsList.addView(button)
     }
+
 
     private fun createTag() {
         val tag = Tag()
