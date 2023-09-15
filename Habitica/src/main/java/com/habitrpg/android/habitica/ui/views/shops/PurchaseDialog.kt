@@ -18,6 +18,8 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.DialogPurchaseShopitemButtonBinding
+import com.habitrpg.android.habitica.databinding.DialogPurchaseShopitemHeaderBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
@@ -31,7 +33,6 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
-import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -42,6 +43,7 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.internal.managers.ViewComponentManager
@@ -62,11 +64,11 @@ class PurchaseDialog(
     private val userRepository: UserRepository,
     private val inventoryRepository: InventoryRepository,
     val item: ShopItem,
-    val parentActivity: AppCompatActivity? = null
+    private val parentActivity: AppCompatActivity? = null
 ) : HabiticaAlertDialog(context) {
 
     private val customHeader: View by lazy {
-        LayoutInflater.from(context).inflate(R.layout.dialog_purchase_shopitem_header, null)
+        DialogPurchaseShopitemHeaderBinding.inflate(context.layoutInflater).root
     }
     private val currencyView: CurrencyViews
     private val limitedTextView: TextView
@@ -80,7 +82,7 @@ class PurchaseDialog(
 
     private var purchaseQuantity = 1
 
-    var purchaseCardAction: ((ShopItem) -> Unit)? = null
+    private var purchaseCardAction: ((ShopItem) -> Unit)? = null
     var onShopNeedsRefresh: ((ShopItem) -> Unit)? = null
 
     private var shopItem: ShopItem = item
@@ -270,7 +272,7 @@ class PurchaseDialog(
         pinTextView = customHeader.findViewById(R.id.pin_text)
 
         addCloseButton()
-        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null), autoDismiss = false) { _, _ ->
+        buyButton = addButton(DialogPurchaseShopitemButtonBinding.inflate(layoutInflater).root, autoDismiss = false) { _, _ ->
             onBuyButtonClicked()
         }
         priceLabel = buyButton.findViewById(R.id.priceLabel)
@@ -368,7 +370,6 @@ class PurchaseDialog(
                         parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
                     }
                     "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context).show()
-                    else -> null
                 }
                 return
             }
@@ -484,7 +485,10 @@ class PurchaseDialog(
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.excess_items)
         alert.setMessage(context.getString(R.string.excessItemsNoneLeft, item.text, purchaseQuantity, item.text))
-        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity), true, false) { _, _ ->
+        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity),
+            isPrimary = true,
+            isDestructive = false
+        ) { _, _ ->
             buyItem(purchaseQuantity)
         }
         alert.addCancelButton()

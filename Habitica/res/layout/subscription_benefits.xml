@@ -6,6 +6,7 @@
     tools:parentTag="android.widget.LinearLayout"
     android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/benefit_gems_for_gold_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

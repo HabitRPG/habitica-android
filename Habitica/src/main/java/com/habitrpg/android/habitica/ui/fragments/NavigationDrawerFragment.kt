@@ -268,7 +268,6 @@ class NavigationDrawerFragment : DialogFragment() {
         setDisplayName(user.profile?.name)
         setUsername(user.formattedUsername)
         binding?.avatarView?.setAvatar(user)
-        binding?.questMenuView?.configure(user)
 
         val userItems = user.items
         var hasSpecialItems = false

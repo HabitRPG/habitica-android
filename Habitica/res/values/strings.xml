@@ -1463,6 +1463,7 @@
     <string name="subscription_benefit_armoire_sub">Your subscription gives you an extra chance at the Armoire!</string>
     <string name="subscriber_benefit_success_faint">You got a second chance with 1HP!</string>
     <string name="revive_broken_equipment">Your %s broke</string>
+    <string name="subscribe_gems_for_gold_incentive_text">Subscribe to buy Gems with Gold and receive these other exclusive benefits!</string>
 
 
     <plurals name="you_x_others">
