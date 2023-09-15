@@ -205,6 +205,11 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     }
 
     private fun stopEditing() {
+        // Filter out tags with empty names
+        val tagsToRemove = createdTags.values.filter { it.name.isBlank() }
+        createdTags.values.removeAll(tagsToRemove.toSet())
+        tags.removeAll(tagsToRemove)
+
         isEditingTags = false
         binding.tagsList.removeAllViews()
         createTagViews()
