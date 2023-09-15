@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.tasks
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -232,38 +233,48 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     }
 
     private fun createTagEditView(inflater: LayoutInflater, index: Int, tag: Tag) {
-        val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
-        editBinding.editText.setText(tag.name)
-        editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-        editBinding.editText.addTextChangedListener(
-            OnChangeTextWatcher { s, _, _, _ ->
-                if (index >= tags.size) {
-                    return@OnChangeTextWatcher
+        if (tag.id.isBlank()) {
+            // This is a title tag ("Challenge", "Group", "Your Tags", etc)
+            val view = TextView(context)
+            view.text = tag.name
+            view.setTypeface(view.typeface, Typeface.BOLD)
+            view.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            binding.tagsList.addView(view)
+        } else {
+            val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
+            editBinding.editText.setText(tag.name)
+            editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            editBinding.editText.addTextChangedListener(
+                OnChangeTextWatcher { s, _, _, _ ->
+                    if (index >= tags.size) {
+                        return@OnChangeTextWatcher
+                    }
+                    val changedTag = tags[index]
+                    changedTag.name = s.toString()
+                    if (createdTags.containsKey(changedTag.id)) {
+                        createdTags[changedTag.id] = changedTag
+                    } else {
+                        editedTags[changedTag.id] = changedTag
+                    }
+                    tags[index] = changedTag
                 }
-                val changedTag = tags[index]
-                changedTag.name = s.toString()
-                if (createdTags.containsKey(changedTag.id)) {
-                    createdTags[changedTag.id] = changedTag
-                } else {
-                    editedTags[changedTag.id] = changedTag
+            )
+            editBinding.deleteButton.setOnClickListener {
+                deletedTags.add(tag.id)
+                if (createdTags.containsKey(tag.id)) {
+                    createdTags.remove(tag.id)
                 }
-                tags[index] = changedTag
+                if (editedTags.containsKey(tag.id)) {
+                    editedTags.remove(tag.id)
+                }
+                viewModel.tags.remove(tag.id)
+                tags.remove(tag)
+                binding.tagsList.removeView(editBinding.root)
             }
-        )
-        editBinding.deleteButton.setOnClickListener {
-            deletedTags.add(tag.id)
-            if (createdTags.containsKey(tag.id)) {
-                createdTags.remove(tag.id)
-            }
-            if (editedTags.containsKey(tag.id)) {
-                editedTags.remove(tag.id)
-            }
-            viewModel.tags.remove(tag.id)
-            tags.remove(tag)
-            binding.tagsList.removeView(editBinding.root)
+            binding.tagsList.addView(editBinding.root)
         }
-        binding.tagsList.addView(editBinding.root)
     }
+
 
     private fun setActiveTags(tagIds: MutableList<String>?) {
         if (tagIds == null) {
