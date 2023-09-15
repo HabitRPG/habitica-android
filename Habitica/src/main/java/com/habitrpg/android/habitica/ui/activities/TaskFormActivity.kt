@@ -224,7 +224,7 @@ class TaskFormActivity : BaseActivity() {
                 .collect {
                     tags = it
                     sortTagPositions()
-                    setTagViews()
+                    createTagViews()
                 }
         }
         userViewModel.user.observe(this) {
@@ -569,7 +569,7 @@ class TaskFormActivity : BaseActivity() {
         tags = sortedTagList
     }
 
-    private fun setTagViews() {
+    private fun createTagViews() {
         binding.tagsWrapper.removeAllViews()
         val padding = 20.dpToPx(this)
         tags.forEach { tag ->
