@@ -7,6 +7,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.WindowManager
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -241,37 +242,49 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
             view.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
             binding.tagsList.addView(view)
         } else {
-            val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
-            editBinding.editText.setText(tag.name)
-            editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-            editBinding.editText.addTextChangedListener(
-                OnChangeTextWatcher { s, _, _, _ ->
-                    if (index >= tags.size) {
-                        return@OnChangeTextWatcher
+            if (tag.group != null) {
+                // Make Group tags uneditable
+                val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
+                editBinding.editText.setText(tag.name)
+                editBinding.editText.isEnabled = false
+                editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.disabled_background))
+                editBinding.deleteButton.isEnabled = false
+                editBinding.deleteButton.alpha = .75f
+                binding.tagsList.addView(editBinding.root)
+            } else {
+                // All tags (except group tags) are editable
+                val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
+                editBinding.editText.setText(tag.name)
+                editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                editBinding.editText.addTextChangedListener(
+                    OnChangeTextWatcher { s, _, _, _ ->
+                        if (index >= tags.size) {
+                            return@OnChangeTextWatcher
+                        }
+                        val changedTag = tags[index]
+                        changedTag.name = s.toString()
+                        if (createdTags.containsKey(changedTag.id)) {
+                            createdTags[changedTag.id] = changedTag
+                        } else {
+                            editedTags[changedTag.id] = changedTag
+                        }
+                        tags[index] = changedTag
                     }
-                    val changedTag = tags[index]
-                    changedTag.name = s.toString()
-                    if (createdTags.containsKey(changedTag.id)) {
-                        createdTags[changedTag.id] = changedTag
-                    } else {
-                        editedTags[changedTag.id] = changedTag
+                )
+                editBinding.deleteButton.setOnClickListener {
+                    deletedTags.add(tag.id)
+                    if (createdTags.containsKey(tag.id)) {
+                        createdTags.remove(tag.id)
                     }
-                    tags[index] = changedTag
+                    if (editedTags.containsKey(tag.id)) {
+                        editedTags.remove(tag.id)
+                    }
+                    viewModel.tags.remove(tag.id)
+                    tags.remove(tag)
+                    binding.tagsList.removeView(editBinding.root)
                 }
-            )
-            editBinding.deleteButton.setOnClickListener {
-                deletedTags.add(tag.id)
-                if (createdTags.containsKey(tag.id)) {
-                    createdTags.remove(tag.id)
-                }
-                if (editedTags.containsKey(tag.id)) {
-                    editedTags.remove(tag.id)
-                }
-                viewModel.tags.remove(tag.id)
-                tags.remove(tag)
-                binding.tagsList.removeView(editBinding.root)
+                binding.tagsList.addView(editBinding.root)
             }
-            binding.tagsList.addView(editBinding.root)
         }
     }
 
