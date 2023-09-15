@@ -181,9 +181,9 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         button.iconTint = ColorStateList.valueOf(context.getThemeColor(R.attr.colorAccent))
         button.iconGravity = MaterialButton.ICON_GRAVITY_START
         button.elevation = 0f
-//        button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.button_background_gray_700))
-        button.setStrokeColorResource(R.color.content_background)  // Assuming you want a border, otherwise remove
-        button.strokeWidth = 0  // Adjust if you want a thicker border
+        button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.gray700_gray10))
+        button.setStrokeColorResource(R.color.content_background)
+        button.strokeWidth = 0 
         button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
 
         button.setOnClickListener { createTag() }
