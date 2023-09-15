@@ -76,12 +76,11 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             else if (reportType == REPORT_TYPE_USER)
                 reportUser()
         }
-        binding.closeButton.setOnClickListener { dismiss() }
 
         if (reportType == REPORT_TYPE_USER) {
-            binding.toolbarTitle.text = getString(R.string.report_player_toolbar_title, profileName)
+            binding.toolbarTitle.text = getString(R.string.report_player)
             binding.additionalExplanationTextview.visibility = View.VISIBLE
-            binding.infoTextInputLayout.hint = getString(R.string.report_player_hint)
+            binding.infoTextInputLayout.hint = getString(R.string.report_hint)
             binding.additionalExplanationTextview.setMarkdown(
                 getString(
                     R.string.report_user_description,
@@ -89,14 +88,15 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                 )
             )
             binding.reportExplanationTextview.setMarkdown(getString(R.string.report_user_explanation))
-            binding.titleTextView.text = getString(R.string.report_player_title, profileName)
-            binding.messageTextView.visibility = View.GONE
+            binding.messageTextView.text = "@$profileName"
+            binding.reportReasonTitle.text = getString(R.string.report_reason_title_player)
         } else if (reportType == REPORT_TYPE_MESSAGE) {
+            binding.toolbarTitle.text = getString(R.string.report_message)
             binding.additionalExplanationTextview.visibility = View.GONE
             binding.infoTextInputLayout.hint = getString(R.string.report_message_hint)
             binding.reportExplanationTextview.setMarkdown(getString(R.string.report_message_explanation))
-            binding.titleTextView.text = getString(R.string.report_message_title, profileName)
             binding.messageTextView.text = messageText
+            binding.reportReasonTitle.text = getString(R.string.report_reason_title_message)
         }
     }
 
