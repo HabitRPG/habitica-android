@@ -148,7 +148,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
         return when (sku) {
             PurchaseTypes.Subscription1Month -> binding.subscription1month
-            PurchaseTypes.Subscription3Month -> binding.subscription1month
+            PurchaseTypes.Subscription3Month -> binding.subscription3month
             PurchaseTypes.Subscription12Month -> binding.subscription12month
             else -> null
         }

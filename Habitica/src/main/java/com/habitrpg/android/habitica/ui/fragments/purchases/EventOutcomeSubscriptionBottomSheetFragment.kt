@@ -13,6 +13,7 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
         when (eventType) {
             EVENT_ARMOIRE_OPENED -> setArmoireEventSubscriptionViews()
             EVENT_DEATH_SCREEN -> setDeathScreenEventSubscriptionViews()
+            EVENT_GEMS_FOR_GOLD -> setGemsForGoldEventSubscriptionViews()
         }
 
     }
@@ -29,9 +30,17 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
         binding.subscriberBenefits.hideDeathBenefit()
     }
 
+    private fun setGemsForGoldEventSubscriptionViews() {
+        binding.subscriberBenefitBanner.visibility = View.GONE
+        binding.subscribeBenefits.text = getString(R.string.subscribe_gems_for_gold_incentive_text)
+        binding.subscriberBenefits.hideGemsForGoldBenefit()
+        binding.subscription3month.visibility = View.GONE
+    }
+
     companion object {
         const val TAG = "EventOutcomeSubscriptionBottomSheet"
         const val EVENT_ARMOIRE_OPENED = "armoire_opened"
         const val EVENT_DEATH_SCREEN = "death_screen"
+        const val EVENT_GEMS_FOR_GOLD = "gems_for_gold"
     }
 }

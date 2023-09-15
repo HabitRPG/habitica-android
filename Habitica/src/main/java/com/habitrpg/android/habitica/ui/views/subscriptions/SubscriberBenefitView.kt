@@ -70,4 +70,8 @@ class SubscriberBenefitView @JvmOverloads constructor(
     fun hideArmoireBenefit() {
         binding.benefitArmoireWrapper.isVisible = false
     }
+
+    fun hideGemsForGoldBenefit() {
+        binding.benefitGemsForGoldWrapper.isVisible = false
+    }
 }

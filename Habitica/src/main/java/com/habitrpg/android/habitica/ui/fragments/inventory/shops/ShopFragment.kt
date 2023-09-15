@@ -25,6 +25,7 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -118,7 +119,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.onShowPurchaseDialog = { item, isPinned ->
                 if (item.key == "gem" && userViewModel.user.value?.isSubscribed != true) {
                     Analytics.sendEvent("View gems for gold CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
-                    val subscriptionBottomSheet = SubscriptionBottomSheetFragment()
+                    val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                        eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
+                    }
                     activity?.let { activity ->
                         subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                     }
