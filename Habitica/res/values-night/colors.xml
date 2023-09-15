@@ -62,6 +62,7 @@
 
     <color name="text_green10_green500">@color/green_500</color>
     <color name="gray200_gray400">@color/gray_400</color>
+    <color name="gray600_gray50">@color/gray_50</color>
     <color name="gray700_gray10">@color/gray_10</color>
     <color name="maroon100_red100">@color/red_100</color>
     <color name="brand_button">@color/brand_600</color>

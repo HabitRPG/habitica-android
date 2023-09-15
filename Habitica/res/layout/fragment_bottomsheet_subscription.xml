@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    app:cardBackgroundColor="@color/window_background"
-    android:layout_height="match_parent">
+    app:cardCornerRadius="28dp"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/window_background">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -32,7 +33,7 @@
                 android:layout_marginStart="@dimen/spacing_large"
                 android:layout_marginEnd="@dimen/spacing_large"
                 android:layout_marginBottom="@dimen/spacing_medium"
-                app:cardBackgroundColor="@color/teal_5"
+                app:cardBackgroundColor="@color/teal_1"
                 app:cardCornerRadius="24dp"
                 app:strokeWidth="0dp">
 
@@ -72,25 +73,26 @@
                         <TextView
                             style="@style/Title1"
                             android:layout_width="wrap_content"
-                            android:textColor="@color/white"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-medium"
-                            android:text="@string/buy_gems_with_gold" />
+                            android:text="@string/buy_gems_with_gold"
+                            android:textColor="@color/white" />
 
                         <TextView
                             style="@style/Caption2.Regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-medium"
-                            android:textColor="@color/white"
-                            android:text="SUBSCRIBER BENEFIT" />
+                            android:text="SUBSCRIBER BENEFIT"
+                            android:textColor="@color/white" />
                     </LinearLayout>
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <LinearLayout
-                android:layout_marginBottom="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="100dp"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp">
 
@@ -105,8 +107,8 @@
                     android:gravity="center"
                     android:lineSpacingExtra="4dp"
                     android:text="@string/subscribe_prompt_2"
-                    app:dayTextColor="@color/text_brand"
-                    app:nightTextColor="@color/gray_400" />
+                    android:textColor="@color/gray700_gray10"
+                    />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -182,10 +184,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_large"
                     android:layout_marginEnd="@dimen/spacing_large"
-                    android:textSize="11sp"
                     android:gravity="center_horizontal"
                     android:text="@string/subscribe_title"
-                    android:textColor="@color/text_quad" />
+                    android:textColor="@color/text_quad"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/see_more_options"
@@ -201,4 +203,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</FrameLayout>
+</com.google.android.material.card.MaterialCardView>
