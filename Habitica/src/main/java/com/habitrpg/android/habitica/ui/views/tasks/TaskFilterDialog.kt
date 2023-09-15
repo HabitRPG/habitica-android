@@ -249,7 +249,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
                 editBinding.editText.isEnabled = false
                 editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.disabled_background))
                 editBinding.deleteButton.isEnabled = false
-                editBinding.deleteButton.alpha = .75f
+                editBinding.deleteButton.alpha = .50f
                 binding.tagsList.addView(editBinding.root)
             } else {
                 // All tags (except group tags) are editable
