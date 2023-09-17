@@ -398,9 +398,9 @@
     <string name="subscribe_listitemFaint_description">You’ll have the option of a second chance when you run out of HP.</string>
     <string name="subscribe_listitem5_description">Discover even more items in Habitica with a 2x bonus daily drop cap.</string>
     <string name="subscribe1month_gemcap">25 Gems a month</string>
-    <string name="subscribe3month_gemcap">30 Gem a month</string>
-    <string name="subscribe6month_gemcap">35 Gem a month</string>
-    <string name="subscribe12month_gemcap">45 Gem a month</string>
+    <string name="subscribe3month_gemcap">30 Gems a month</string>
+    <string name="subscribe6month_gemcap">35 Gems a month</string>
+    <string name="subscribe12month_gemcap">45 Gems a month</string>
     <string name="subscription_hourglasses_3month_timeframe">Hourglass in 3 months</string>
     <string name="subscription_hourglasses">%d Hourglasses</string>
     <string name="payment_method">Payment method</string>
