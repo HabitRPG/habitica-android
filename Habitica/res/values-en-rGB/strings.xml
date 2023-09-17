@@ -443,10 +443,10 @@
     <string name="login_incentive">Unlock by logging into Habitica regularly</string>
     <string name="create_account">Unlock by creating an account</string>
     <string name="subscription_duration_norenew">For %s</string>
-    <string name="subscribe1month_gemcap">25 Gem cap</string>
-    <string name="subscribe3month_gemcap">30 Gem cap</string>
-    <string name="subscribe6month_gemcap">35 Gem cap</string>
-    <string name="subscribe12month_gemcap">45 Gem cap</string>
+    <string name="subscribe1month_gemcap">25 Gems a month</string>
+    <string name="subscribe3month_gemcap">30 Gems a month</string>
+    <string name="subscribe6month_gemcap">35 Gems a month</string>
+    <string name="subscribe12month_gemcap">45 Gems a month</string>
     <string name="due">Due</string>
     <string name="inbox">Messages</string>
     <string name="welcome_text">Oh, you must be new here. I’m Justin, I’ll be your guide in Habitica.

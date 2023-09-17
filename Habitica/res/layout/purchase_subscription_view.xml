@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/subscription_box_bg"
+    android:background="@drawable/subscription_type_box_bg"
     android:gravity="center"
     android:minHeight="106dp"
     android:layout_marginBottom="8dp">
