@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitem1_description"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
 
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitemArmoire_description"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
 
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitem2_description"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
 
@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitem3_description"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
 
@@ -177,7 +177,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitem4_description"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
 
@@ -213,7 +213,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitemFaint_description"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
 
@@ -248,7 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/subscribe_listitem5_description"
-                android:textColor="@color/text_primary" />
+                android:textColor="@color/gray100_gray400" />
         </LinearLayout>
     </LinearLayout>
 </merge>
