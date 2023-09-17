@@ -70,7 +70,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
             binding.descriptionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
         } else {
-            binding.wrapper.setBackgroundResource(R.drawable.subscription_box_bg)
+            binding.wrapper.setBackgroundResource(R.drawable.subscription_type_box_bg)
             binding.subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_unselected)
             binding.gemCapTextView.setBackgroundResource(R.drawable.pill_bg_gray)
             binding.gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
