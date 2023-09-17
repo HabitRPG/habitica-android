@@ -31,7 +31,6 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
     }
 
     private fun setGemsForGoldEventSubscriptionViews() {
-        binding.subscriberBenefitBanner.visibility = View.GONE
         binding.subscribeBenefits.text = getString(R.string.subscribe_gems_for_gold_incentive_text)
         binding.subscriberBenefits.hideGemsForGoldBenefit()
         binding.subscription3month.visibility = View.GONE

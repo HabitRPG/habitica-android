@@ -128,6 +128,7 @@
     <color name="text_gold">@color/yellow_1</color>
 
     <color name="text_green10_green500">@color/green_10</color>
+    <color name="gray100_gray400">@color/gray_10</color>
     <color name="gray200_gray400">@color/gray_200</color>
     <color name="gray600_gray50">@color/gray_600</color>
     <color name="gray700_gray10">@color/gray_700</color>

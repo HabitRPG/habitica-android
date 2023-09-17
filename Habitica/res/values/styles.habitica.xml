@@ -110,6 +110,7 @@
 
     <style name="Caption2.Regular">
         <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Caption3">
