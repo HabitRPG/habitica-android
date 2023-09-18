@@ -7,7 +7,9 @@
     android:id="@+id/scroll_view"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    android:scrollbarStyle="insideOverlay">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

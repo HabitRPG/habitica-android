@@ -3,6 +3,7 @@ package com.habitrpg.wearos.habitica.ui.views
 import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
+import android.view.View
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import com.habitrpg.common.habitica.extensions.dpToPx
@@ -11,6 +12,12 @@ class HabiticaScrollView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : NestedScrollView(context, attrs) {
+
+    init {
+        isVerticalScrollBarEnabled = true
+        focusable = View.FOCUSABLE
+        isFocusableInTouchMode = true
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
