@@ -201,7 +201,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val dismissAllButton = header?.findViewById(R.id.dismiss_all_button) as? Button
         dismissAllButton?.setOnClickListener {
-            it.flash()
+            binding.root.flash()
             HapticFeedbackManager.tap(it)
             viewModel.dismissAllNotifications(notifications)
         }
@@ -341,7 +341,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
         dismissButton?.setOnClickListener {
-            it.flash()
+            container?.flash()
             HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.dismissNotification(notification)
@@ -459,7 +459,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
-            it.flash()
+            binding.root.flash()
             HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.accept(notification.id)
@@ -467,7 +467,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val rejectButton = item?.findViewById(R.id.reject_button) as? Button
         rejectButton?.setOnClickListener {
-            it.flash()
+            binding.root.flash()
             HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.reject(notification.id)
