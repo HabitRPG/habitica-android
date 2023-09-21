@@ -7,7 +7,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -207,10 +206,13 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     }
 
     private fun stopEditing() {
+        // Refresh Tags
+        setActiveTags(null)
         // Filter out tags with empty names
-        val tagsToRemove = createdTags.values.filter { it.name.isBlank() }
-        createdTags.values.removeAll(tagsToRemove.toSet())
-        tags.removeAll(tagsToRemove)
+        val emptyTagsToRemove = createdTags.values.filter { it.name.isBlank() }
+        createdTags.values.removeAll(emptyTagsToRemove.toSet())
+        tags.removeAll(emptyTagsToRemove)
+
 
         isEditingTags = false
         binding.tagsList.removeAllViews()
@@ -218,8 +220,14 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         binding.tagEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         lifecycleScope.launchCatching {
-            repository.updateTags(editedTags.values).forEach { editedTags.remove(it.id) }
-            repository.createTags(createdTags.values).forEach { tag -> createdTags.remove(tag.id) }
+            repository.updateTags(editedTags.values).forEach { tag ->
+                editedTags.remove(tag.id)
+                tags.remove(tag)
+            }
+            repository.createTags(createdTags.values).forEach { tag ->
+                createdTags.remove(tag.id)
+                tags.remove(tag)
+            }
             repeat(repository.deleteTags(deletedTags).size) { deletedTags.clear() }
         }
     }
