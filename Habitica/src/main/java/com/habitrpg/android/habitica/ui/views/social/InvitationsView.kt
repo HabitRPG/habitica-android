@@ -63,12 +63,12 @@ class InvitationsView @JvmOverloads constructor(
             }
 
             binding.acceptButton.setOnClickListener {
-                it.flash()
+                binding.root.flash()
                 HapticFeedbackManager.tap(it)
                 invitation.id?.let { it1 -> acceptCall?.invoke(it1) }
             }
             binding.rejectButton.setOnClickListener {
-                it.flash()
+                binding.root.flash()
                 HapticFeedbackManager.tap(it)
                 invitation.id?.let { it1 -> rejectCall?.invoke(it1) }
             }
