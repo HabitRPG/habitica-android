@@ -35,7 +35,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.Dispatchers
@@ -326,6 +325,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 Shop.TIME_TRAVELERS_SHOP -> {
                     formatTimeTravelersShop(shop1)
+                    activity?.let { activity ->
+                        val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
+                        }
+                        subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                    }
                 }
                 Shop.SEASONAL_SHOP -> {
                     shop1.categories.sortWith(

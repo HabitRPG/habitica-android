@@ -74,4 +74,8 @@ class SubscriberBenefitView @JvmOverloads constructor(
     fun hideGemsForGoldBenefit() {
         binding.benefitGemsForGoldWrapper.isVisible = false
     }
+
+    fun hideMysticHourglassBenefit() {
+        binding.benefitHourglassesWrapper.isVisible = false
+    }
 }
