@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -19,7 +20,9 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.extensions.fadeInAnimation
+import com.habitrpg.android.habitica.extensions.flash
 import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.common.habitica.extensions.fromHtml
@@ -197,7 +200,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         badge?.text = notificationCount.toString()
 
         val dismissAllButton = header?.findViewById(R.id.dismiss_all_button) as? Button
-        dismissAllButton?.setOnClickListener { viewModel.dismissAllNotifications(notifications) }
+        dismissAllButton?.setOnClickListener {
+            it.flash()
+            HapticFeedbackManager.tap(it)
+            viewModel.dismissAllNotifications(notifications)
+        }
 
         return header
     }
@@ -324,6 +331,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val container = item?.findViewById(R.id.notification_item) as? View
         container?.setOnClickListener {
+            it.flash()
+            HapticFeedbackManager.tap(it)
             val resultIntent = Intent()
             resultIntent.putExtra("notificationId", notification.id)
             setResult(Activity.RESULT_OK, resultIntent)
@@ -332,6 +341,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
         dismissButton?.setOnClickListener {
+            it.flash()
+            HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.dismissNotification(notification)
         }
@@ -433,6 +444,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         if (openable) {
             val container = item?.findViewById(R.id.notification_item) as? View
             container?.setOnClickListener {
+                it.flash()
+                HapticFeedbackManager.tap(it)
                 if (inviterId != null) {
                     FullProfileActivity.open(inviterId)
                 } else {
@@ -446,12 +459,16 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
+            it.flash()
+            HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.accept(notification.id)
         }
 
         val rejectButton = item?.findViewById(R.id.reject_button) as? Button
         rejectButton?.setOnClickListener {
+            it.flash()
+            HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.reject(notification.id)
         }
