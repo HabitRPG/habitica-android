@@ -33,6 +33,8 @@ import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -369,7 +371,14 @@ class PurchaseDialog(
                         Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "purchase modal", "item" to shopItem.key))
                         parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
                     }
-                    "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context).show()
+                    "hourglasses" == shopItem.currency -> {
+                        val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                        }
+                        parentActivity?.let { activity -> subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG) }
+                    }
+
+
                 }
                 return
             }

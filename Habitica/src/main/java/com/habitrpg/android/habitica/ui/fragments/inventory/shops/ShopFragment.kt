@@ -327,7 +327,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     formatTimeTravelersShop(shop1)
                     activity?.let { activity ->
                         val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
+                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
                         }
                         subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                     }
