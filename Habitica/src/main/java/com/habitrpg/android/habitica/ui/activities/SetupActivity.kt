@@ -29,6 +29,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.viewpagerindicator.IconPagerAdapter
@@ -111,6 +112,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
         binding.previousButton.setOnClickListener { previousClicked() }
         binding.nextButton.setOnClickListener { nextClicked() }
+
+        if (this.isUsingNightModeResources()) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
+        }
     }
 
     override fun onDestroy() {
