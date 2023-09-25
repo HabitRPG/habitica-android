@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewTreeObserver
 import com.habitrpg.common.habitica.extensions.dpToPx
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 
 fun View.setScaledPadding(context: Context?, left: Int, top: Int, right: Int, bottom: Int) {
     this.setPadding(left.dpToPx(context), top.dpToPx(context), right.dpToPx(context), bottom.dpToPx(context))
@@ -43,7 +44,12 @@ fun View.fadeInAnimation(duration: Long = 500) {
 
 fun View.flash() {
     val originalColor = (background as? ColorDrawable)?.color
-    setBackgroundColor(Color.LTGRAY)
+    if (this.context.isUsingNightModeResources()) {
+        setBackgroundColor(Color.DKGRAY)
+    } else {
+        setBackgroundColor(Color.LTGRAY)
+    }
+
     postDelayed({
         originalColor?.let { setBackgroundColor(it) } ?: setBackgroundResource(0)
     }, 100)
