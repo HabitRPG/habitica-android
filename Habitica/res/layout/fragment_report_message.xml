@@ -46,10 +46,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="36dp"
-                    android:textStyle="bold"
                     android:text="@string/report_violation"
                     android:textColor="@color/text_primary"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/report_button"
@@ -117,23 +117,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
-                    android:layout_marginBottom="@dimen/spacing_large"
-                    android:background="@color/transparent"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:background="@color/gray600_gray10"
                     android:textColorHint="@color/text_quad"
-                    android:hint="@string/report_hint"
-                    android:theme="@style/TextInputLayoutAppearanceTheme">
+                    android:theme="@style/TextInputLayoutAppearanceTheme"
+                    app:hintEnabled="false">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/additional_info_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center_vertical"
+                        android:hint="@string/report_hint"
                         android:overScrollMode="always"
                         android:paddingStart="@dimen/spacing_large"
-                        android:gravity="center_vertical"
                         android:paddingTop="12dp"
                         android:paddingEnd="@dimen/spacing_large"
-                        android:paddingBottom="34dp"
-                        android:textColor="@color/text_primary" />
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_quad" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
