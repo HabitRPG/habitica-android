@@ -113,7 +113,7 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
             val info = Tasks.await(
                 capabilityClient.getCapability(
                     permission,
-                    CapabilityClient.FILTER_REACHABLE
+                    CapabilityClient.FILTER_ALL
                 )
             )
             val nodeID = info.nodes.firstOrNull()

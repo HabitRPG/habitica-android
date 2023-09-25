@@ -20,11 +20,12 @@ class ConnectedActionChipView(context: Context, attrs: AttributeSet? = null) :
 
     private fun checkIfPhoneAvailable() {
         MainScope().launch(Dispatchers.IO) {
-            val result = Tasks.await(capabilityClient.getCapability("open_activity", CapabilityClient.FILTER_REACHABLE))
-            launch(Dispatchers.Main) {
-                isEnabled = result.nodes.firstOrNull { it.isNearby } != null
-                alpha = if (isEnabled) 1.0f else 0.7f
-            }
+            capabilityClient.addListener( {
+                launch(Dispatchers.Main) {
+                    isEnabled = it.nodes.firstOrNull { it.isNearby } != null
+                    alpha = if (isEnabled) 1.0f else 0.7f
+                }
+            }, "open_activity")
         }
     }
 }
