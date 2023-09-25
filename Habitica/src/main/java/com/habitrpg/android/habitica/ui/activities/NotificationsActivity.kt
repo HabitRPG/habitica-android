@@ -42,6 +42,7 @@ import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -228,7 +229,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
+    private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(Dispatchers.IO) {
         var baileyNotification = notification
         val data = notification.data as? NewStuffData
         val text = if (data?.title != null) {
@@ -240,12 +241,15 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         }
         baileyNotification.id = notification.id
 
-        return@withContext createDismissableNotificationItem(
-            baileyNotification,
-            text,
-            R.drawable.notifications_bailey
-        )
+        return@withContext withContext(Dispatchers.Main) {
+            createDismissableNotificationItem(
+                baileyNotification,
+                text,
+                R.drawable.notifications_bailey
+            )
+        }
     }
+
 
     private fun createUnallocatedStatsNotification(notification: Notification): View? {
         val level = userLvl ?: return null
