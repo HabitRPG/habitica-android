@@ -293,7 +293,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override fun onResume() {
         super.onResume()
-        loadShopInventory()
+        if (shop == null) {
+            loadShopInventory()
+        }
     }
 
     private fun loadShopInventory() {
@@ -325,11 +327,13 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 Shop.TIME_TRAVELERS_SHOP -> {
                     formatTimeTravelersShop(shop1)
-                    activity?.let { activity ->
-                        val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                    if (userViewModel.user.value?.isSubscribed == false) {
+                        activity?.let { activity ->
+                            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                            }
+                            subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                         }
-                        subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                     }
                 }
                 Shop.SEASONAL_SHOP -> {
