@@ -814,6 +814,7 @@
     <string name="report_hint">Reason for report</string>
     <string name="report_reason_title_message">Why are you reporting this message?</string>
     <string name="report_reason_title_player">Why are you reporting this player?</string>
+    <string name="report_formatted_name"><b>%1$s</b>\n@%2$s</string>
     <string name="report_user_description">This will also block %s</string>
     <string name="report_message_hint">Reason for report</string>
     <string name="report_message">Report Message</string>

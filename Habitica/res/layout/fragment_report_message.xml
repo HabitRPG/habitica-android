@@ -59,7 +59,9 @@
                     android:layout_gravity="end"
                     android:layout_marginEnd="8dp"
                     android:text="@string/report"
-                    android:textColor="@color/red_50" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/red_100"
+                    android:textSize="18sp" />
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -84,8 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="@color/material_card_background_color"
-                    app:cardCornerRadius="12dp"
-                    app:strokeColor="@color/text_primary"
+                    app:cardCornerRadius="8dp"
+                    app:strokeColor="@color/text_quad"
                     app:strokeWidth="1dp">
 
                     <TextView
@@ -99,7 +101,7 @@
                         android:paddingTop="11dp"
                         android:paddingEnd="13dp"
                         android:paddingBottom="11dp"
-                        android:textColor="@color/text_quad"
+                        android:textColor="@color/text_primary"
                         tools:text="This is the message that is reported" />
 
                 </com.google.android.material.card.MaterialCardView>
@@ -112,16 +114,15 @@
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/info_text_input_layout"
+
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
                     android:layout_marginBottom="@dimen/spacing_small"
-                    android:background="@color/gray600_gray10"
-                    android:textColorHint="@color/text_quad"
-                    android:theme="@style/TextInputLayoutAppearanceTheme"
-                    app:hintEnabled="false">
+                    app:cardBackgroundColor="@color/gray600_gray10"
+                    app:cardCornerRadius="8dp"
+                    app:strokeWidth="0dp">
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/additional_info_edittext"
@@ -132,12 +133,13 @@
                         android:gravity="center_vertical"
                         android:hint="@string/report_hint"
                         android:overScrollMode="always"
-                        android:paddingStart="@dimen/spacing_large"
+                        android:padding="16dp"
                         android:paddingTop="12dp"
-                        android:paddingEnd="@dimen/spacing_large"
                         android:textColor="@color/text_primary"
                         android:textColorHint="@color/text_quad" />
-                </com.google.android.material.textfield.TextInputLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
 
                 <TextView
                     android:id="@+id/additional_explanation_textview"

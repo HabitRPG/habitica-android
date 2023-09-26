@@ -272,6 +272,7 @@ class FullProfileActivity : BaseActivity() {
                 showReportUserBottomSheet(
                     userIdBeingReported = userID,
                     usernameBeingReported = username ?: "",
+                    userDisplayName = userDisplayName ?: ""
                 )
                 true
             }
@@ -347,10 +348,11 @@ class FullProfileActivity : BaseActivity() {
         alert.show()
     }
 
-    private fun showReportUserBottomSheet(userIdBeingReported : String, usernameBeingReported: String) {
+    private fun showReportUserBottomSheet(userIdBeingReported : String, usernameBeingReported: String, userDisplayName: String) {
         val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
             reportType = ReportBottomSheetFragment.REPORT_TYPE_USER,
             profileName = usernameBeingReported,
+            displayName = userDisplayName,
             messageId = "",
             messageText = "",
             groupId = "",
