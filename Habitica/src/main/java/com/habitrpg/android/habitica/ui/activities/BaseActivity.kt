@@ -223,7 +223,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun showConnectionProblem(title: String?, message: String) {
+    open fun showConnectionProblem(errorCount: Int, title: String?, message: String) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(title)
         alert.setMessage(message)

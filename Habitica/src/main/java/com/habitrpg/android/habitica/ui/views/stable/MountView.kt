@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.views.stable
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,8 +30,11 @@ class MountView @JvmOverloads constructor(
 
     init {
         addView(bodyView)
+        bodyView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         addView(headView)
+        headView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
+
 }
 
 @Composable

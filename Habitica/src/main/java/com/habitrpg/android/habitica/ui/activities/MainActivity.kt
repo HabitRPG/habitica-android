@@ -81,6 +81,7 @@ import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.GroupPlanMemberList
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.dialogs.QuestCompletedDialog
 import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
@@ -767,9 +768,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private var errorJob: Job? = null
 
-    override fun showConnectionProblem(title: String?, message: String) {
-        if (title != null) {
-            super.showConnectionProblem(title, message)
+    override fun showConnectionProblem(errorCount: Int, title: String?, message: String) {
+        if (errorCount == 1) {
+            showSnackbar(title = title, content = message, displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE)
+        } else if (title != null) {
+            super.showConnectionProblem(errorCount, title, message)
         } else {
             if (errorJob?.isCancelled == false) {
                 // a new error resets the timer to hide the error message

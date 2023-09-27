@@ -99,7 +99,6 @@ class ApiClientImpl(
 
     override var languageCode: String? = null
     private var lastAPICallURL: String? = null
-    private var hadError = false
 
     init {
         buildRetrofit()
@@ -144,6 +143,7 @@ class ApiClientImpl(
                 lastAPICallURL = original.url.toString()
                 val response = chain.proceed(request)
                 if (response.isSuccessful) {
+                    hideConnectionProblemDialog()
                     return@addNetworkInterceptor response
                 } else {
                     // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
@@ -311,19 +311,21 @@ class ApiClientImpl(
         showConnectionProblemDialog(context.getString(resourceTitleString), context.getString(resourceMessageString))
     }
 
+    private var erroredRequestCount = 0
     private fun showConnectionProblemDialog(
         resourceTitleString: String?,
         resourceMessageString: String
     ) {
-        hadError = true
+        erroredRequestCount += 1
         val application = (context as? HabiticaBaseApplication)
             ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
-            ?.showConnectionProblem(resourceTitleString, resourceMessageString)
+            ?.showConnectionProblem(erroredRequestCount, resourceTitleString, resourceMessageString)
     }
 
     private fun hideConnectionProblemDialog() {
-        hadError = false
+        if (erroredRequestCount == 0) return
+        erroredRequestCount = 0
         val application = (context as? HabiticaBaseApplication)
             ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()

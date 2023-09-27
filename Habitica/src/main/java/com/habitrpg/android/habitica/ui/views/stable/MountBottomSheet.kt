@@ -109,13 +109,13 @@ fun MountBottomSheet(
         ) {
             BackgroundScene()
 
-            val regularPosition = 40f
-            val highJump = 28f
-            val lowJump = 35f
+            val regularPosition = 12f
+            val highJump = 0f
+            val lowJump = 8f
             val position by if (isAnimalFlying(mount)) {
                 infiniteTransition.animateFloat(
-                    initialValue = 24f,
-                    targetValue = 16f,
+                    initialValue = 4f,
+                    targetValue = 0f,
                     animationSpec = infiniteRepeatable(
                         tween(
                             2500,
@@ -145,7 +145,7 @@ fun MountBottomSheet(
             }
             MountView(mount, modifier = Modifier
                     .offset(0.dp, position.dp)
-                    .size(72.dp)
+                    .size(81.dp, 99.dp)
                     .align(Alignment.TopCenter)
                     .zIndex(2f)
             )
