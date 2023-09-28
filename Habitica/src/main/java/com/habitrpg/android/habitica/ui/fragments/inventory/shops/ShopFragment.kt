@@ -33,6 +33,7 @@ import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
@@ -327,12 +328,16 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 Shop.TIME_TRAVELERS_SHOP -> {
                     formatTimeTravelersShop(shop1)
-                    if (userViewModel.user.value?.isSubscribed == false && (hourglasses.value ?: 0.0) <= 0.0) {
-                        activity?.let { activity ->
-                            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                    if (userViewModel.user.value?.isSubscribed == false) {
+                        if ((hourglasses.value ?: 0.0) > 0.0) {
+                            context?.let { context -> InsufficientHourglassesDialog(context).show()}
+                        } else {
+                            activity?.let { activity ->
+                                val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                    eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                                }
+                                subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                             }
-                            subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                         }
                     }
                 }
