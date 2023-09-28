@@ -372,10 +372,15 @@ class PurchaseDialog(
                         parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
                     }
                     "hourglasses" == shopItem.currency -> {
-                        val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                        if ((user?.hourglassCount?.toDouble() ?: 0.0) > 0.0) {
+                            InsufficientHourglassesDialog(context).show()
+                        } else {
+                            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                            }
+                            parentActivity?.let { activity -> subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG) }
                         }
-                        parentActivity?.let { activity -> subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG) }
+
                     }
 
 
