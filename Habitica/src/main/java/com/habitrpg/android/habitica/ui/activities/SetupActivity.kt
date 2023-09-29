@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -99,15 +100,6 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             }
         }
 
-        val window = window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val decor = getWindow().decorView
-            decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            window.statusBarColor = ContextCompat.getColor(this, R.color.light_gray_bg)
-        } else {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.days_gray)
-        }
-
         binding.viewPager.disableFading = true
 
         binding.previousButton.setOnClickListener { previousClicked() }
@@ -115,7 +107,17 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
         if (this.isUsingNightModeResources()) {
             window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                window.insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
         }
+
     }
 
     override fun onDestroy() {

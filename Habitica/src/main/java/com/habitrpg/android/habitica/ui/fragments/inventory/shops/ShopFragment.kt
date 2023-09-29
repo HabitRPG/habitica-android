@@ -328,16 +328,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 Shop.TIME_TRAVELERS_SHOP -> {
                     formatTimeTravelersShop(shop1)
-                    if (userViewModel.user.value?.isSubscribed == false) {
-                        if ((hourglasses.value ?: 0.0) > 0.0) {
-                            context?.let { context -> InsufficientHourglassesDialog(context).show()}
-                        } else {
-                            activity?.let { activity ->
-                                val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                    eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
-                                }
-                                subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                    if (userViewModel.user.value?.isSubscribed == false && (hourglasses.value ?: 0.0) <= 0.0) {
+                        activity?.let { activity ->
+                            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
                             }
+                            subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                         }
                     }
                 }
