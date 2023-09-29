@@ -60,6 +60,7 @@
     <color name="widget_background">#2B203A</color>
     <color name="text_gold">@color/yellow_100</color>
 
+    <color name="purple400_purple500">@color/brand_500</color>
     <color name="text_green10_green500">@color/green_500</color>
     <color name="gray100_gray400">@color/gray_400</color>
     <color name="gray200_gray400">@color/gray_400</color>

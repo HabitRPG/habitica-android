@@ -46,10 +46,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="36dp"
+                    android:fontFamily="sans-serif-medium"
                     android:text="@string/report_violation"
                     android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/report_button"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="@color/material_card_background_color"
                     app:cardCornerRadius="8dp"
-                    app:strokeColor="@color/text_quad"
+                    app:strokeColor="@color/gray200_gray400"
                     app:strokeWidth="1dp">
 
                     <TextView
@@ -111,6 +111,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_small"
+                    android:fontFamily="sans-serif-medium"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
@@ -136,7 +138,7 @@
                         android:padding="16dp"
                         android:paddingTop="12dp"
                         android:textColor="@color/text_primary"
-                        android:textColorHint="@color/text_quad" />
+                        android:textColorHint="@color/gray200_gray400" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -147,9 +149,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_medium"
+                    android:fontFamily="sans-serif-medium"
                     android:gravity="start"
                     android:textColor="@color/text_ternary"
                     android:textColorLink="?colorAccent"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:visibility="gone"
                     tools:text="@string/report_user_description" />
@@ -159,9 +163,11 @@
                     style="@style/Caption3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
                     android:gravity="start"
                     android:textColor="@color/text_ternary"
-                    android:textColorLink="?colorAccent"
+                    android:textColorLink="@color/purple400_purple500"
+                    android:textSize="14sp"
                     tools:text="@string/report_message_explanation" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -3,6 +3,9 @@ package com.habitrpg.android.habitica.ui.fragments
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.TypefaceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,7 +93,21 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                 )
             )
             binding.reportExplanationTextview.setMarkdown(getString(R.string.report_user_explanation))
-            binding.messageTextView.text = getString(R.string.report_formatted_name, displayName, profileName)
+            val formattedString = getString(R.string.report_formatted_name, displayName, profileName)
+            val spannable = SpannableStringBuilder(formattedString)
+            spannable.setSpan(
+                TypefaceSpan("sans-serif-medium"),
+                0,
+                displayName?.length ?: 0,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable.setSpan(
+                TypefaceSpan("sans-serif"),
+                displayName?.length ?: 0,
+                formattedString.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            binding.messageTextView.text = spannable
             binding.reportReasonTitle.text = getString(R.string.report_reason_title_player)
         } else if (reportType == REPORT_TYPE_MESSAGE) {
             binding.toolbarTitle.text = getString(R.string.report_message)
