@@ -4,6 +4,17 @@
         <item name="android:windowBackground">@color/watch_black</item>
         <item name="fontFamily">sans-serif</item>
     </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background to black -->
+        <item name="windowSplashScreenBackground">@android:color/black</item>
+        <!-- Use windowSplashScreenAnimatedIcon to add a drawable or an animated
+             drawable. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
+        <!-- Set the theme of the Activity that follows your splash screen. -->
+        <item name="postSplashScreenTheme">@style/HabiticaAppTheme</item>
+    </style>
+
     <style name="Chip">
         <item name="android:layout_marginVertical">@dimen/row_spacing</item>
         <item name="android:layout_marginHorizontal">@dimen/row_side_spacing</item>

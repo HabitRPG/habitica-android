@@ -90,6 +90,7 @@ val coil_version: String by rootExtra
 val mockk_version: String by rootExtra
 val kotest_version: String by rootExtra
 val kotlin_version: String by rootExtra
+val navigation_version: String by rootExtra
 
 dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
@@ -108,8 +109,8 @@ dependencies {
     implementation("io.coil-kt:coil:$coil_version")
     implementation("io.coil-kt:coil-gif:$coil_version")
     implementation("androidx.recyclerview:recyclerview:1.3.1")
-    implementation("androidx.navigation:navigation-common-ktx:2.7.0")
-    implementation("androidx.navigation:navigation-runtime-ktx:2.7.0")
+    implementation("androidx.navigation:navigation-common-ktx:$navigation_version")
+    implementation("androidx.navigation:navigation-runtime-ktx:$navigation_version")
     implementation("com.google.android.material:material:1.9.0")
 
     testImplementation("io.mockk:mockk:$mockk_version")

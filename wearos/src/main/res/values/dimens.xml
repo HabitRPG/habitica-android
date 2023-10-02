@@ -17,4 +17,5 @@
     <dimen name="row_padding_vertical">6dp</dimen>
     <dimen name="row_side_spacing">10dp</dimen>
     <dimen name="row_spacing">2dp</dimen>
+    <dimen name="splash_screen_icon_size">48dp</dimen>
 </resources>
