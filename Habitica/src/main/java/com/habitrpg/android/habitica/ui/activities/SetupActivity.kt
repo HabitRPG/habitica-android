@@ -107,9 +107,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
         if (this.isUsingNightModeResources()) {
             window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.setSystemBarsAppearance(
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                    0,
                     WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                 )
             } else {
@@ -117,6 +118,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
+
 
     }
 
