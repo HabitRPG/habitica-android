@@ -372,7 +372,7 @@ class PurchaseDialog(
                         parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
                     }
                     "hourglasses" == shopItem.currency -> {
-                        if ((user?.hourglassCount?.toDouble() ?: 0.0) > 0.0) {
+                        if (user?.isSubscribed == true) {
                             InsufficientHourglassesDialog(context).show()
                         } else {
                             val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
