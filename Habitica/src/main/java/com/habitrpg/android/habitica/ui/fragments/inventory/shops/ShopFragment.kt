@@ -328,14 +328,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
                 Shop.TIME_TRAVELERS_SHOP -> {
                     formatTimeTravelersShop(shop1)
-                    if (userViewModel.user.value?.isSubscribed == false && (hourglasses.value ?: 0.0) <= 0.0) {
-                        activity?.let { activity ->
-                            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
-                            }
-                            subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
-                        }
-                    }
                 }
                 Shop.SEASONAL_SHOP -> {
                     shop1.categories.sortWith(
