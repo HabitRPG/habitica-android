@@ -251,10 +251,18 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             duration: Int = Snackbar.LENGTH_LONG
         ) {
             val snackbar = make(container, duration)
-                .setTitle(title)
-                .setText(content)
                 .setSpecialView(specialView)
                 .setLeftIcon(leftImage)
+            if (title?.isNotBlank() == true) {
+                snackbar.setTitle(title)
+            }
+            if (content?.isNotBlank() == true) {
+                if (title?.isNotBlank() != true) {
+                    snackbar.setTitle(content)
+                } else {
+                    snackbar.setText(content)
+                }
+            }
             rightTextColor?.let {
                 snackbar.setRightDiff(rightIcon, rightTextColor, rightText)
             }
