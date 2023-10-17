@@ -16,4 +16,7 @@
     <string name="tutorial_party">Voici l\'endroit où vos amis et vous pouvez vous tenir mutuellement responsables de vos buts et combattre des monstres grâce à vos tâches !</string>
     <string name="tutorial_tavern">Bienvenue à la Taverne, un salon de discussion public pour tous les âges ! Ici, vous pouvez discuter de productivité et poser des questions. Amusez-vous bien !</string>
     <string name="tutorial_stats">Utilisez le bouton gris pour allouer plusieurs points à la fois, ou utilisez les flèches pour en ajouter un à la fois.</string>
+    <string name="tutorial_party_created">Bienvenu dans votre équipe ! Vous pouvez trouver d\'autres membres dans la liste des personnes cherchant une équipe, ou en invitant directement vos amis pour recevoir le parchemin de quête du basi-liste.
+\n
+\nVisitez la section Support pour en apprendre plus sur les équipes.</string>
 </resources>

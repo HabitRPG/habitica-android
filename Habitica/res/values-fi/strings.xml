@@ -238,4 +238,8 @@
     <string name="hatching_potions">Kuoriutumistaikajuomat</string>
     <string name="intro_2_description">Avaa pelin ominaisuuksia rastittamalla tosielämän tehtäväsi. Ansaitse panssareita, lemmikkejä ja muuta palkkiona tavoitteidesi saavuttamisesta.</string>
     <string name="intro_3_title">Ryhdy sosiaaliseksi</string>
+    <string name="million_abbrev">milj</string>
+    <string name="thousand_abbrev">t</string>
+    <string name="billion_abbrev">mrd</string>
+    <string name="trillion_abbrev">bilj</string>
 </resources>

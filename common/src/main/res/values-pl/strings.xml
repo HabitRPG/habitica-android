@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">m</string>
-    <string name="billion_abbrev">b</string>
+    <string name="thousand_abbrev">tys.</string>
+    <string name="million_abbrev">mln</string>
+    <string name="billion_abbrev">mld</string>
     <string name="trillion_abbrev">bln</string>
     <string name="gems">Klejnoty</string>
     <string name="gold_plural">złoto</string>
@@ -45,10 +45,10 @@
     <string name="login_validation_error_title">Błąd walidacji</string>
     <string name="login_validation_error_fieldsmissing">Musisz wypełnić wszystkie pola.</string>
     <plurals name="x_rewards">
-        <item quantity="one">Dodaj Nagrodę</item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="one">%d Nagroda</item>
+        <item quantity="few">%d Nagrody</item>
+        <item quantity="many">%d Nagród</item>
+        <item quantity="other">%d Nagród</item>
     </plurals>
     <string name="create_task_title">Stwórz Zadanie</string>
     <string name="complete_task_title">Wykonaj Zadanie</string>
@@ -56,4 +56,31 @@
     <string name="new_task_x">Nowy %s</string>
     <string name="are_you_sure">Na pewno\?</string>
     <string name="task">Zadania</string>
+    <string name="email_username">E-mail/Nazwa użytkownika</string>
+    <string name="save_task_x">Zapisz %s</string>
+    <string name="retry">Spróbuj ponownie</string>
+    <string name="failed">Nie udało się załadować zawartości</string>
+    <string name="quadrillion_abbrev">bld</string>
+    <string name="trivial_sentence">banalne</string>
+    <string name="easy_sentence">łatwe</string>
+    <string name="medium_sentence">średnie</string>
+    <string name="hard_sentence">trudne</string>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Codzienne</item>
+        <item quantity="few">%d Codzienne</item>
+        <item quantity="many">%d Codziennych</item>
+        <item quantity="other">%d Codziennych</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Do Zrobienia</item>
+        <item quantity="few">%d Do Zrobienia</item>
+        <item quantity="many">%d Do Zrobienia</item>
+        <item quantity="other">%d Do Zrobienia</item>
+    </plurals>
+    <plurals name="x_habits">
+        <item quantity="one">%d Nawyk</item>
+        <item quantity="few">%d Nawyki</item>
+        <item quantity="many">%d Nawyków</item>
+        <item quantity="other">%d Nawyków</item>
+    </plurals>
 </resources>

@@ -1,2 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="ok">Tamam</string>
+    <string name="syncing_account">Hesabınız Telefondan Sekronize Ediliyor</string>
+    <string name="how_did_you_do">Nasıl gitti\?</string>
+    <string name="you_found">Şunu buldun…</string>
+    <string name="one_quest_item">1 Görev eşyası</string>
+    <string name="x_quest_item">%d Görev eşyası</string>
+    <string name="x_and_y">%1$s ve %2$s</string>
+    <string name="some_x">Biraz %s</string>
+    <string name="edit_on_phone">Telefondan Düzenle</string>
+    <string name="sign_in">Oturum aç</string>
+    <string name="sign_in_description">Oyunlaştırılmış avatarınla görev listeleri oluştur ve ilerlemeni kaydet</string>
+    <string name="sign_in_on_phone">Telefondan oturum aç</string>
+    <string name="other_options">Diğer seçenekler</string>
+    <string name="create_account">Hesap Oluştur</string>
+    <string name="sign_in_password">Şifre ile Oturum Aç</string>
+    <string name="continue_text">Devam Et</string>
+    <string name="you_ran_out_of_hp">Canın Bitti</string>
+    <string name="faint_description">Bir seviye, DP ve Altın kaybettin. Sakın pes etme!</string>
+    <string name="day_start">Gün başı</string>
+    <string name="rya_description">Dünden kalan bazı bitirilmemiş günlük işler var</string>
+    <string name="review_dailies">Günlük işleri Görüntüle</string>
+    <string name="check_on_phone">Telefondan kontrol et</string>
+    <string name="start_new_day">Yeni güne başla</string>
+    <string name="check_off_yesterday">Dün yaptıklarını işaretle:</string>
+    <string name="task_type">Görev Türü</string>
+    <string name="task_title_hint">Görev Başlığı Gir</string>
+    <string name="checklist_disclaimer">Görev kontrol listeleri telefonda mevcuttur</string>
+    <string name="save">Kaydet</string>
+    <string name="sync_data">Verileri Eşle</string>
+    <string name="hide_task_rewards">Görev ödüllerini gizle</string>
+    <string name="version_info">Sürüm %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">Habitica oturumunu kapatıyor musun\?</string>
+    <string name="no_tasks">Bu listeye ekli bir %s oluştur</string>
+    <string name="an_egg">bir Yumurta</string>
+    <string name="a_potion">bir İksir</string>
+    <string name="some_food">Biraz Yem</string>
+    <string name="continue_on_your_phone">Telefondan devam et</string>
+    <string name="levelup_description">Bütün emeğin sayesinde seviye atladın!</string>
+    <string name="all_done_today">Bugünlük Tamam!</string>
+    <string name="starting_your_day">Gününü başlatıyoruz...</string>
+    <string name="disconnected">Bağlantı kesildi</string>
+</resources>

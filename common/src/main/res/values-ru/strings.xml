@@ -79,4 +79,8 @@
     </plurals>
     <string name="login_validation_error_title">Ошибка проверки</string>
     <string name="quadrillion_abbrev">квадрлн</string>
+    <string name="medium_sentence">средний</string>
+    <string name="hard_sentence">сложный</string>
+    <string name="trivial_sentence">тривиальный</string>
+    <string name="easy_sentence">легкий</string>
 </resources>

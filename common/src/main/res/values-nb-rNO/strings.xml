@@ -37,14 +37,27 @@
     <string name="logout">Logg ut</string>
     <string name="logout_description">Logg ut av din brukerkonto</string>
     <string name="LoginActivityName">Velkommen</string>
-    <string name="about_title">About</string>
+    <string name="about_title">Om</string>
     <string name="login_validation_error_title">Verifiseringsfeil</string>
     <string name="login_validation_error_fieldsmissing">Du må fylle ut alle feltene.</string>
     <plurals name="x_rewards">
-        <item quantity="one">Legg til Belønning</item>
-        <item quantity="other"></item>
+        <item quantity="one">%d Belønning</item>
+        <item quantity="other">%d Belønninger</item>
     </plurals>
     <string name="complete_task_title">Fullfør en oppgave</string>
     <string name="are_you_sure">Er du sikker\?</string>
     <string name="task">Oppgaver</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Vane</item>
+        <item quantity="other">%d Vaner</item>
+    </plurals>
+    <string name="create_task_title">Lag en oppgave</string>
+    <plurals name="x_todos">
+        <item quantity="one">%d Gjøremål</item>
+        <item quantity="other">%d Gjøremål</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Daglig gjøremål</item>
+        <item quantity="other">%d Daglige gjøremål</item>
+    </plurals>
 </resources>

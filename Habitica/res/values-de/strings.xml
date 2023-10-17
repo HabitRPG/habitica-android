@@ -232,7 +232,6 @@
     <string name="opt_out_class">Später entscheiden</string>
     <string name="class_confirmation">Bist Du sicher, dass Du %s werden willst?</string>
     <string name="class_changed">Du bist jetzt ein/eine %s!</string>
-
     <string name="choose_class">Klasse wählen</string>
     <string name="dialog_go_back">Zurück</string>
     <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>
@@ -480,7 +479,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="forgot_password_title">Einen Passwort-Rücksetz-Link per E-Mail senden</string>
     <string name="forgot_password_description">Gib Deinen Benutzernamen oder die E-Mail-Adresse an, mit der Du Dich bei Habitica registriert hast.</string>
     <string name="forgot_password_confirmation">Wenn Deine E-Mail-Adresse bei uns gespeichert ist, sind Informationen, wie Du ein neues Passwort setzt, an Deine Adresse unterwegs.</string>
-    <string name="ok">OK</string>
+    <string name="ok">Okay</string>
     <string name="profile">Profil</string>
     <string name="profile_summary">Bearbeite Dein öffentliches Profil.</string>
     <string name="display_name">Anzeigename</string>
@@ -1265,4 +1264,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
         <item quantity="one">Du</item>
         <item quantity="other">Du und %d andere</item>
     </plurals>
+    <string name="push_notification_system_settings_description">Erlaube Habitica in den Einstellungen Benachrichtigungen zu senden, um Push-Benachrichtigungen zu erhalten</string>
+    <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um, Erinnerungen zu erhalten</string>
+    <string name="push_notification_system_settings_title">Benachrichtigungen wurden deaktiviert</string>
 </resources>

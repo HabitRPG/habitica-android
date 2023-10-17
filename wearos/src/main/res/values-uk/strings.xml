@@ -1,2 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="you_found">Ви знайшли…</string>
+    <string name="sign_in">Зареєструйтеся</string>
+    <string name="one_quest_item">1 Квестова річ</string>
+    <string name="syncing_account">Синхронізуємо акаунт з телефоном</string>
+    <string name="ok">ОК</string>
+    <string name="sign_in_password">Увійти за допомогою пароля</string>
+    <string name="starting_your_day">Починаємо твій день...</string>
+    <string name="disconnected">Роз\'єднано</string>
+    <string name="sign_in_description">Створюйте списки завдань та відстежуйте прогрес з вашим ігровим аватаром</string>
+    <string name="sign_in_on_phone">Увійти з телефону</string>
+    <string name="create_account">Створити акаунт</string>
+    <string name="continue_text">Далі</string>
+    <string name="you_ran_out_of_hp">У вас закінчилося здоров\'я</string>
+    <string name="day_start">Початок нового дня</string>
+    <string name="review_dailies">Огляд Щоденних Завдань</string>
+    <string name="save">Зберегти</string>
+    <string name="x_quest_item">%d квестових предметів</string>
+    <string name="how_did_you_do">Як ти впорався\?</string>
+    <string name="x_and_y">%1$s та %2$s</string>
+    <string name="some_x">трохи%s</string>
+    <string name="edit_on_phone">Редагувати на телефоні</string>
+    <string name="other_options">Інше</string>
+    <string name="check_on_phone">Перевірити на телефоні</string>
+    <string name="start_new_day">Почати новий день</string>
+    <string name="check_off_yesterday">Відміть те, що ти зробив вчора:</string>
+    <string name="task_type">Тип завдання</string>
+    <string name="task_title_hint">Назва завдання</string>
+    <string name="sync_data">Синхронізація даних</string>
+    <string name="version_info">Версія %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">Вийти з Habitica\?</string>
+    <string name="no_tasks">Створи %s щоб додати до цього списку</string>
+    <string name="an_egg">яйце</string>
+    <string name="a_potion">еліксир</string>
+    <string name="some_food">трохи їжі</string>
+    <string name="continue_on_your_phone">Продовжити у мобільному додатку</string>
+    <string name="all_done_today">На сьогодні все виконано!</string>
+    <string name="faint_description">Ви втратили Рівень, Досвід і Золото. Але не здавайся!</string>
+    <string name="rya_description">З учора у вас залишилися незавершені щоденні завдання</string>
+    <string name="checklist_disclaimer">Списки завдань доступні на телефоні</string>
+    <string name="hide_task_rewards">Сховати нагоди за завдання</string>
+    <string name="levelup_description">Твій рівень підвищено завдяки твоїм старанням!</string>
+</resources>

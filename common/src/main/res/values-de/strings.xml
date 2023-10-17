@@ -70,4 +70,9 @@
     <string name="save_task_x">%s speichern</string>
     <string name="failed">Laden fehlgeschlagen</string>
     <string name="retry">Wiederholen</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="trivial_sentence">geringfügig</string>
+    <string name="easy_sentence">leicht</string>
+    <string name="medium_sentence">mittel</string>
+    <string name="hard_sentence">schwer</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="profile_pets_and_mounts">Ljubimci &amp; Jahače životinje</string>
+    <string name="profile_pets_and_mounts">Ljubimci &amp; Životinje za jahanje</string>
     <string name="profile_pets_found">Ljubimaca pronađeno</string>
     <string name="profile_mounts_tamed">jahačih životinja pripitomljeno</string>
     <string name="profile_loading_data">Učitavanje podataka o članu…</string>

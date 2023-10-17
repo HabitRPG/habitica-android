@@ -16,4 +16,67 @@
     <string name="about_title">Hakkında</string>
     <string name="are_you_sure">Emin misin\?</string>
     <string name="stats">İstatistikler</string>
+    <string name="gems">Gems</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="gold_plural">altın</string>
+    <string name="easy">Kolay</string>
+    <string name="habits">Alışkanlıklar</string>
+    <string name="dailies">Günlük İşler</string>
+    <string name="todos">Yapılacaklar</string>
+    <string name="rewards">Ödüller</string>
+    <string name="habit">Alışkanlık</string>
+    <string name="reward">Ödül</string>
+    <string name="login_btn">Oturum Aç</string>
+    <string name="register_btn">Hesap Oluştur</string>
+    <string name="username">Kullanıcı Adı</string>
+    <string name="email_username">E-Posta/Kullanıcı Adı</string>
+    <string name="password">Şifre</string>
+    <string name="emailAddress">E-Posta Adresi</string>
+    <string name="login_btn_google">Google ile Oturum aç</string>
+    <string name="logout">Çıkış Yap</string>
+    <string name="gold_capitalized">Altın</string>
+    <string name="todo">Yapılacaklar</string>
+    <string name="confirmpassword">Şifreyi doğrula</string>
+    <string name="medium">Orta</string>
+    <string name="hard">Zor</string>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Günlük</item>
+        <item quantity="other">%d Günlük</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Yapılacak</item>
+        <item quantity="other">%d Yapılacak</item>
+    </plurals>
+    <string name="create_task_title">Bir Görev Oluştur</string>
+    <string name="easy_sentence">kolay</string>
+    <string name="medium_sentence">orta</string>
+    <string name="hard_sentence">zor</string>
+    <string name="new_task">Yeni Görev</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level">Svy. %d</string>
+    <string name="logout_description">Hesabından çıkış yap</string>
+    <string name="LoginActivityName">Hoş Geldin</string>
+    <string name="login_validation_error_title">Doğrulama Hatası</string>
+    <string name="login_validation_error_fieldsmissing">Bütün alanları doldurman lazım.</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Alışkanlık</item>
+        <item quantity="other">%d Alışkanlık</item>
+    </plurals>
+    <string name="complete_task_title">Bir Görev Tamamla</string>
+    <string name="create_task">%s Oluştur</string>
+    <string name="new_task_x">Yeni %s</string>
+    <string name="save_task_x">%s\'i Kaydet</string>
+    <string name="task">Görev</string>
+    <string name="failed">Yükleme hatalı bitti</string>
+    <string name="retry">Yeniden Dene</string>
+    <string name="trivial_sentence">önemsiz</string>
+    <string name="trivial">Önemsiz</string>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Ödül</item>
+        <item quantity="other">%d Ödül</item>
+    </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">%d defa işaretlendi</item>
+        <item quantity="other">%d defa işaretlendi, gizli</item>
+    </plurals>
 </resources>

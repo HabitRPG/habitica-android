@@ -1,2 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="you_found">Du hast gefunden:</string>
+    <string name="edit_on_phone">Auf dem Handy bearbeiten</string>
+    <string name="sign_in">Anmelden</string>
+    <string name="other_options">Andere Optionen</string>
+    <string name="create_account">Benutzerkonto erstellen</string>
+    <string name="sign_in_password">Mit Passwort anmelden</string>
+    <string name="continue_text">Fortfahren</string>
+    <string name="day_start">Tagesbeginn</string>
+    <string name="rya_description">Es sind noch unvervollständigte Tagesaufgaben von gestern übrig</string>
+    <string name="review_dailies">Tagesaufgaben ansehen</string>
+    <string name="start_new_day">Neuen Tag beginnen</string>
+    <string name="check_off_yesterday">Hake alles ab was du gestern erledigt hast:</string>
+    <string name="task_type">Aufgabentyp</string>
+    <string name="task_title_hint">Gib einen Titel für die Aufgabe ein</string>
+    <string name="faint_description">Du bist ein Level herabgefallen und hast Gold sowie Erfahrung verloren. Gib nicht auf!</string>
+    <string name="how_did_you_do">Wie hast du dich gemacht\?</string>
+    <string name="x_quest_item">Quest-Gegenstände</string>
+    <string name="sign_in_description">Erstelle Aufgabenlisten und verfolge Fortschritte spielerisch mit deinem Avatar!</string>
+    <string name="you_ran_out_of_hp">Deine LP sind ausgegangen</string>
+    <string name="checklist_disclaimer">Checklisten für Aufgaben sind auf dem Handy verfügbar</string>
+    <string name="sign_in_on_phone">Auf dem Handy anmelden</string>
+    <string name="check_on_phone">Auf dem Handy nachsehen</string>
+    <string name="ok">Okay</string>
+    <string name="syncing_account">Benutzerkonto vom Handy wird synchronisiert</string>
+</resources>

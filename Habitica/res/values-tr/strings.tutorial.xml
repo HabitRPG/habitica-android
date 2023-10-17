@@ -1,19 +1,22 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">İşte geldik! İlgi alanlarına göre sana bazı işler doldurdum. Kendin de birkaç tane eklemeyi dene. Başlığa basarak işleri düzenleyebilirsin.</string>
-  <string name="tutorial_habits_1">İlk önce alışkanlıklar. Geliştirmek istediğiniz olumlu alışkanlıklar veya bırakmak istediğiniz olumsuz alışkanlıklar olabilirler.</string>
-  <string name="tutorial_habits_2">Olumlu her bir alışkanlık kazandığınızda , deneyim ve altın almak için + simgesine dokunun!</string>
-  <string name="tutorial_habits_3">Eğer aksilik olur da negatif bir Alışkanlığı yaparsan, - butonuna dokunman avatarının sağlığını azaltıp sorumlu kalmana yardımcı olur.</string>
-  <string name="tutorial_habits_4">Bi dene! Diğer görev türlerini alttaki gezinme aracıyla keşfedebilirsiniz.</string>
-  <string name="tutorial_dailies_1">Düzenli bir programda yapılması gereken, zamana duyarlı görevler için Günlük İşler oluştur.</string>
-  <string name="tutorial_dailies_2">Dikkatli olun - eğer birini kaçırırsanız, avatarınız bir gece hasar alacaktır. Onları sürekli olarak kontrol etmek büyük ödüller getirrir!</string>
-  <string name="tutorial_todos_1">Sadece bir kere yapman gereken işleri takip etmek için Yapılacak İşleri kullan.</string>
-  <string name="tutorial_todos_2">Yapılacak İşin belirli bir süreyle yapılması gerekiyorsa, bir bitiş tarihi ayarla. Öyle görünüyor ki birini yapılmış olarak işaretleyebilirsin - devam et!</string>
-  <string name="tutorial_rewards_1">Kazandığın altınla avatarına eşya al!</string>
-  <string name="tutorial_rewards_2">Seni motive eden şeyleri kullanarak Gerçek hayat ödülleride oluşturabilirsin.</string>
-  <string name="tutorial_tasks_complete">Şimdilik bu kadar. Bir hatırlatıcıya ihtiyacın varsa SSS bölümüne bak.</string>
+    <string name="tutorial_overview">İşte geldik! İlgi alanlarına göre sana bazı işler doldurdum. Kendin de birkaç tane eklemeyi dene. Başlığa basarak işleri düzenleyebilirsin.</string>
+    <string name="tutorial_habits_1">İlk önce alışkanlıklar. Geliştirmek istediğiniz olumlu alışkanlıklar veya bırakmak istediğiniz olumsuz alışkanlıklar olabilirler.</string>
+    <string name="tutorial_habits_2">Olumlu her bir alışkanlık kazandığınızda , deneyim ve altın almak için + simgesine dokunun!</string>
+    <string name="tutorial_habits_3">Eğer aksilik olur da negatif bir Alışkanlığı yaparsan, - butonuna dokunman avatarının sağlığını azaltıp sorumlu kalmana yardımcı olur.</string>
+    <string name="tutorial_habits_4">Bi dene! Diğer görev türlerini alttaki gezinme aracıyla keşfedebilirsiniz.</string>
+    <string name="tutorial_dailies_1">Düzenli bir programda yapılması gereken, zamana duyarlı görevler için Günlük İşler oluştur.</string>
+    <string name="tutorial_dailies_2">Dikkatli olun - eğer birini kaçırırsanız, avatarınız bir gece hasar alacaktır. Onları sürekli olarak kontrol etmek büyük ödüller getirrir!</string>
+    <string name="tutorial_todos_1">Sadece bir kere yapman gereken işleri takip etmek için Yapılacak İşleri kullan.</string>
+    <string name="tutorial_todos_2">Yapılacak İşin belirli bir süreyle yapılması gerekiyorsa, bir bitiş tarihi ayarla. Öyle görünüyor ki birini yapılmış olarak işaretleyebilirsin - devam et!</string>
+    <string name="tutorial_rewards_1">Kazandığın altınla avatarına eşya al!</string>
+    <string name="tutorial_rewards_2">Seni motive eden şeyleri kullanarak Gerçek hayat ödülleride oluşturabilirsin.</string>
+    <string name="tutorial_tasks_complete">Şimdilik bu kadar. Bir hatırlatıcıya ihtiyacın varsa SSS bölümüne bak.</string>
     <string name="tutorial_skills">Yetenekler güçlü etkileri olan özel becerilerdir! Kullanmak için bir yetenğe bas. Bu Mana ile (mavi çubuk), yani hergün giriş yapmakla ve gerçek hayat görevlerini tamamlamakla kazanarak ödenir. Daha fazla bilgi için menüdeki SSS\'ı kontrol et!</string>
-  <string name="tutorial_party">Burası senin ve arkadaşlarının birbirinizi hedeflerinize sorumlu tutabileceğiniz ve görevlerinizle canavarlarla savaştığınız yer!</string>
-  <string name="tutorial_tavern">Taverna, yani herkese açık ve her yaşın sohbet odasına hoşgeldin! Burda üretkenlik hakkında sohbet edebilir ve sorular sorabilirsin. Iyi eğlenceler!</string>
+    <string name="tutorial_party">Burası senin ve arkadaşlarının birbirinizi hedeflerinize sorumlu tutabileceğiniz ve görevlerinizle canavarlarla savaştığınız yer!</string>
+    <string name="tutorial_tavern">Taverna, yani herkese açık ve her yaşın sohbet odasına hoşgeldin! Burda üretkenlik hakkında sohbet edebilir ve sorular sorabilirsin. Iyi eğlenceler!</string>
     <string name="tutorial_stats">Niteliklerinin çoğunu tek seferde paylaştırmak için gri butona dokun veya birer eklemek için okları kullan.</string>
+    <string name="tutorial_party_created">Takımına hoş geldin! Takım arayan oyuncular listesinden seçerek veya arkadaşlarını davet ederek Basi-Liste Görev tomarını alabilirsin.
+\n
+\nTakımlar hakkında daha fazla bilgi edinmek için Desteğe gidebilirsin.</string>
 </resources>

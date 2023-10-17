@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="tutorial_overview">Kita dah sampai! Saya telah mengisi beberapa tugasan untuk anda berdasarkan minat anda. Cuba tambah beberapa daripada anda sendiri. Anda boleh mengedit sebarang tugasan dengan mengetik tajuk.</string>
+</resources>

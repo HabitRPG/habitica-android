@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="action_refresh">Atualizar</string>
     <string name="XP_default">Experiência</string>
-    <string name="HP_default">Vida</string>
+    <string name="HP_default">Saúde</string>
     <string name="MP_default">Mana</string>
     <!--Prefs-->
     <string name="PS_settings_title">Configurações</string>
@@ -43,7 +43,7 @@
     <string name="authentication_error_title">Erro de Autenticação</string>
     <string name="save_changes">Salvar</string>
     <string name="copy">Copiar</string>
-    <string name="notes">Notas</string>
+    <string name="notes">Anotações</string>
     <string name="difficulty">Dificuldade</string>
     <string name="tags">Etiquetas</string>
     <string name="start_date">Data de início</string>
@@ -113,21 +113,21 @@
     <string name="quest_cancel">Cancelar Convite</string>
     <string name="quest_abort">Abortar Missão</string>
     <string name="version_info">Versão %1$s (%2$d)</string>
-    <string name="sidebar_help">Ajuda &amp; Perguntas Frequentes</string>
+    <string name="sidebar_help">Suporte</string>
     <string name="complete_tutorial">Entendi!</string>
     <string name="dismiss_tutorial">Lembre-me novamente</string>
     <string name="intro_1_subtitle">Bem-vindo(a) ao</string>
-    <string name="intro_1_description">É hora de se divertir enquanto faz suas coisas. Junte-se a mais de%s pessoas melhorando suas vidas uma tarefa por vez.</string>
+    <string name="intro_1_description">É hora de se divertir enquanto faz suas tarefas! Junte-se a mais de %s pessoas melhorando suas vidas, uma tarefa por vez.</string>
     <string name="intro_2_subtitle">Progresso no jogo</string>
     <string name="intro_2_title">Progresso na vida</string>
     <string name="intro_2_description">Desbloqueie recursos no jogo ao completar suas tarefas da vida real. Ganhe armaduras, mascotes e mais como recompensas por atingir suas metas.</string>
     <string name="intro_3_subtitle">Combata monstros</string>
     <string name="intro_3_title">Socialize</string>
-    <string name="intro_3_description">Mantenha suas metas sob controle com a ajuda de seus amigos. Ajudem-se na vida e na batalha enquanto melhoram juntos!</string>
+    <string name="intro_3_description">Mantenha seus objetivos sobre controle com a ajuda de seus amigos. Ajudem-se na vida e na batalha enquanto melhoram juntos!</string>
     <string name="intro_finish_button">Vamos começar!</string>
     <string name="next_button">Próximo</string>
     <string name="skip_button">Pular</string>
-    <string name="avatar_setup_description">Então, como você quer se parecer? Não se preocupe, você pode mudar isso depois.</string>
+    <string name="avatar_setup_description">Então, como você quer sua aparência\? Não se preocupe, você pode mudar isso depois.</string>
     <string name="task_setup_description">Ótimo! Então, no que você está interessado em trabalhar ao longo desta jornada?</string>
     <string name="setup_group_work">Trabalho</string>
     <string name="setup_group_exercise">Exercício</string>
@@ -139,7 +139,7 @@
     <string name="setup_task_work_1">Resolver e-mails</string>
     <string name="setup_task_work_2">Tarefa mais importante</string>
     <string name="setup_task_work_3">Projeto profissional</string>
-    <string name="setup_task_exercise_1">10 min aeróbica</string>
+    <string name="setup_task_exercise_1">10 minutos de aeróbica</string>
     <string name="setup_task_exercise_2">Alongamento</string>
     <string name="setup_task_exercise_3">Criar agenda de atividades físicas</string>
     <string name="setup_task_healthWellness_1">Comer bem / comer besteiras</string>
@@ -221,12 +221,12 @@
     <string name="empty_items">Você não tem nenhum %s</string>
     <string name="user_level_with_class">Nv. %1$d %2$s</string>
     <string name="warrior">Guerreiro(a)</string>
-    <string name="rogue">Gatuno(a)</string>
+    <string name="rogue">Ladino</string>
     <string name="mage">Mago(a)</string>
     <string name="healer">Curandeiro(a)</string>
     <string name="warrior_description">Guerreiros causam mais danos críticos aos Chefões. Seja um Guerreiro se você quer derrotar monstros com facilidade! Guerreiros se beneficiam de um alto atributo de Força.</string>
     <string name="mage_description">Magos(as) aprendem Habilidades que causam danos aos Chefões e aumentam EXP e Mana. Jogue como Mago(a) se você for motivado a passar de nível rapidamente! Magos(as) se beneficiam de um alto status de Inteligência.</string>
-    <string name="rogue_description">Gatunos(as) aprendem Habilidades que permitem que eles(as) e seu Grupo encontrem mais Ouro e tenham mais chances de encontrar peças aleatórias. Jogue como Gatuno(a) se você quer encontrar muitos itens e grandes quantidades de Ouro! Gatunos(as) se beneficiam de um alto status de Percepção.</string>
+    <string name="rogue_description">Ladinos aprendem Habilidades que permitem que eles e seu Grupo encontrem mais Ouro e tenham mais chances de encontrar itens aleatórios. Jogue como um Ladino ou Ladina se você quer encontrar muitos itens e grandes quantidades de Ouro! Ladinos se beneficiam de estatísticas altas em Percepção.</string>
     <string name="healer_description">Curandeiros(as) aprendem Habilidades que podem curar e proteger a si e a seu Grupo. Jogue como Curandeiro(a) se você gosta de ajudar os outros ou evitar danos! Curandeiros(as) se beneficiam de um alto status de Constituição.</string>
     <string name="select_class">Escolha sua Classe</string>
     <string name="opt_out_class">Decidir mais tarde</string>
@@ -302,7 +302,7 @@
     <string name="belongs_to_challenge">Pertence ao Desafio</string>
     <string name="has_reminder">Tem lembrete</string>
     <string name="has_tag">Tem etiqueta</string>
-    <string name="subscribe_title">Assinaturas contribuem com os desenvolvedores e ajudam a manter o Habitica funcionando</string>
+    <string name="subscribe_title">Assinaturas dão suporte à nossa pequena equipe e ajudam a manter o Habitica funcionando, obrigado!</string>
     <string name="subscribe_prompt">Seja um(a) assinante para receber estes benefícios exclusivos!</string>
     <string name="subscribe_listitem1">Ouro para Gemas</string>
     <string name="subscribe_listitem2">Ampulhetas Místicas</string>
@@ -816,8 +816,8 @@
     <string name="task_title">Título da tarefa</string>
     <string name="add_local_authentication">Adicionar autenticação local</string>
     <string name="defeat">Derrotar</string>
-    <string name="gift_confirmation_text_sub_g1g1">Você enviou para %s uma assinatura por %s mês/meses no Habitica e a mesma assinatura foi aplicada à sua conta para a nossa promoção \"Presenteie com uma e ganhe outra\"!</string>
-    <string name="gift_confirmation_text_sub">Você enviou para %s uma assinatura por %s mês/meses no Habitica.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Você enviou a %1$s uma assinatura do Habitica de %2$s mês/meses e a mesma assinatura foi aplicada à sua conta através da nossa promoção \"Presenteie com uma e ganhe outra\"!</string>
+    <string name="gift_confirmation_text_sub">Você enviou para %1$s uma assinatura por %2$s mês/meses no Habitica.</string>
     <string name="gift_gems_subtitle">Selecione abaixo o pacote de gemas que você deseja presentear!</string>
     <string name="join_party_description_guild">Dê o nome de usuário abaixo a um amigo ou vá para %s para conhecer potenciais camaradas!</string>
     <string name="insufficientGoldTitle">Ouro insuficiente</string>
@@ -838,7 +838,7 @@
     <string name="create_account_short">criar uma conta</string>
     <string name="login_incentive_short_count">%d check-ins</string>
     <string name="login_incentive_short">efetue login regularmente no Habitica</string>
-    <string name="party_invite_short">Encontrar Membros</string>
+    <string name="party_invite_short">Encontrar membros</string>
     <string name="login_incentive_count">Desbloqueie logando no Habitica %d vezes.</string>
     <string name="remaining_1hour">1 hora restante</string>
     <string name="remaining_hours">%d horas restantes</string>
@@ -932,15 +932,15 @@
     <string name="standard">Padrão</string>
     <string name="stat_description">Todos os personagens no Habitica possuem quatro atributos que afetam os aspectos da jogabilidade.
 \n
-\n**Força (FOR)** afeta acertos críticos e aumenta o dano causado a um Chefão de Missão. Guerreiros(as) e Gatunos(as) ganham FOR a partir dos seus equipamentos de classe.
+\n**Força (FOR)** afeta acertos críticos e aumenta o dano causado a um Chefão de Missão. Guerreiros e Ladinos ganham FOR a partir dos seus equipamentos de classe.
 \n
-\n**Constituição (CON)** aumenta seu PV e faz com que você sofra menos danos. Curandeiros(as) e Guerreiros(as) ganham CON a partir dos seus equipamentos de classe.
+\n**Constituição (CON)** aumenta seu PV e faz com que você sofra menos danos. Curandeiros e Guerreiros ganham CON a partir dos seus equipamentos de classe.
 \n
-\n**Inteligência (INT)** aumenta a quantidade de EXP que você ganha e concede mais Mana. Magos(as) e Curandeiros(as) ganham INT a partir dos seus equipamentos de classe.
+\n**Inteligência (INT)** aumenta a quantidade de EXP que você ganha e concede mais Mana. Magos e Curandeiros ganham INT a partir dos seus equipamentos de classe.
 \n
-\n**Percepção (PER)** aumenta a quantidade de ouro que você ganha e a capacidade de encontrar itens \"dropáveis\". Gatunos(as) e Magos(as) ganham PER a partir dos seus equipamentos de classe.
+\n**Percepção (PER)** aumenta a quantidade de ouro que você ganha e a capacidade de encontrar itens \"dropáveis\". Ladinos e Magos ganham PER a partir dos seus equipamentos de classe.
 \n
-\nApós o nível 10, você ganha 1 Ponto de Atributo para cada nível obtido e pode distribuí-los em qualquer atributo que desejar. Você também pode usar equipamentos com diferentes combinações de aumento de atributos.</string>
+\nApós o nível 10, você ganha 1 Ponto de Atributo para cada nível obtido e pode distribuir estes pontos em qualquer atributo que desejar. Você também pode usar equipamentos com diferentes combinações de aumento de atributos.</string>
     <string name="read_more">Leia mais</string>
     <string name="buy_all">Comprar todos(as)</string>
     <string name="avatar_headband">Tiara</string>
@@ -983,9 +983,9 @@
     <string name="hatch_pet_again">Chocar Mascote novamente</string>
     <string name="unhatched_pet">Mascote Não-Chocado</string>
     <string name="hatch_pet">Chocar Mascote</string>
-    <string name="can_hatch_pet">Combine seu Ovo de %s e Poção de %s para chocar esse mascote!</string>
-    <string name="suggest_pet_hatch_missing_both">Você precisa de um(a) %s e uma Poção de %s para chocar esse mascote</string>
-    <string name="suggest_pet_hatch_again_missing_both">Você precisa de um(a) %s e uma Poção de %s para chocar esse mascote de novo</string>
+    <string name="can_hatch_pet">Combine seu Ovo de %1$s e Poção de %2$s para chocar esse Mascote!</string>
+    <string name="suggest_pet_hatch_missing_both">Você precisa de um(a) %1$s e uma Poção de %2$s para chocar esse Mascote</string>
+    <string name="suggest_pet_hatch_again_missing_both">Você precisa de um(a) %1$s e uma Poção de %2$s para chocar esse Mascote novamente</string>
     <string name="suggest_pet_hatch_again_missing_potion">Você ainda precisa de uma Poção de %s para chocar esse mascote de novo</string>
     <string name="suggest_pet_hatch_again_missing_egg">Você ainda precisa de um Ovo de %s para chocar esse mascote de novo</string>
     <string name="suggest_pet_hatch_missing_potion">Você ainda precisa de uma Poção de %s para chocar esse mascote</string>
@@ -1048,7 +1048,7 @@
     <string name="fall_promo_info_instructions">Entre %s e %s, basta comprar qualquer pacote de Gemas como de costume e sua conta será creditada com o valor promocional de Gemas. Mais Gemas para gastar, compartilhar ou economizar para lançamentos futuros!</string>
     <string name="limitations">Limitações</string>
     <string name="how_it_works">Como funciona</string>
-    <string name="x_to_y">%s a %s</string>
+    <string name="x_to_y">%1$s a %2$s</string>
     <string name="usually_x_gems">Usualmente %d Gemas</string>
     <string name="leave_delete_tasks">Sair &amp; Deletar Tarefas</string>
     <string name="rejoin_party">Você não poderá reingressar a este grupo, a menos que receba um convite.</string>
@@ -1153,7 +1153,7 @@
     <string name="use_item">Use o item em um membro do grupo</string>&gt;
     <string name="unsaved_changes">Mudanças não salvas</string>
     <string name="discard_changes_to_task_message">Tem certeza que deseja desfazer as mudanças desta tarefa\?</string>
-    <string name="gift_confirmation_text_gems_new">Você enviou %s %s Gemas.</string>
+    <string name="gift_confirmation_text_gems_new">Você enviou @%1$s %2$s Gemas.</string>
     <string name="subscription_confirmation">Você tornou-se um(a) assinante por 1 mês</string>
     <string name="subscription_confirmation_multiple">Você tornou-se um(a) assinante por %s meses</string>
     <string name="gem_purchase_confirmation">Você ganhou %s Gemas.</string>
@@ -1256,7 +1256,7 @@
     <plurals name="people">
         <item quantity="one">%d pessoa</item>
         <item quantity="many">%d pessoas</item>
-        <item quantity="other"/>
+        <item quantity="other"></item>
     </plurals>
     <plurals name="you_x_others">
         <item quantity="one">Você, %d outro</item>
@@ -1349,11 +1349,11 @@
     <string name="resume_damage">Despausar dano</string>
     <string name="resume_damage_1_title">Suas Diárias incompletas não te causarão dano</string>
     <string name="insufficient_level_equipment_dialog">Este item apenas está disponível para uma classe específica.
-\n
 \nVocê pode selecionar uma classe depois do nível 10.</string>
     <string name="birthday_set">Conjunto de Aniversário</string>
     <string name="go_to_settings">Ir para Configurações</string>
-    <string name="resume_damage_1_description">Chefões ainda causarão dano devido as Diárias incompletas dos membros do Grupo</string>
+    <string name="resume_damage_1_description">Chefões ainda causarão dano devido as
+\nDiárias incompletas dos membros do Grupo</string>
     <string name="day_x">Dia %d</string>
     <string name="gryphatrice_description">O raro, Grifotriz Jubilante chega na festança! Não perca a chance de ter esse exclusivo Mascote animado.</string>
     <string name="for_for_free_description">Para continuar com a festa, estaremos distribuindo Túnicas Festivas, 20 Gemas e um conjunto de Capas de edição limitada e Cenário!</string>
@@ -1408,8 +1408,8 @@
     </plurals>
     <plurals name="repeat_monthly">
         <item quantity="one">Todo mês</item>
-        <item quantity="many">Á cada %d meses</item>
-        <item quantity="other"/>
+        <item quantity="many">A cada %d meses</item>
+        <item quantity="other"></item>
     </plurals>
     <plurals name="repeat_weekly">
         <item quantity="one">Toda semana</item>
@@ -1418,8 +1418,8 @@
     </plurals>
     <plurals name="repeat_yearly">
         <item quantity="one">Todo ano</item>
-        <item quantity="many">Á cada %d anos</item>
-        <item quantity="other"/>
+        <item quantity="many">A cada %d anos</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="shop_armoire_description">Novos equipamentos são lançados durante as Galas sazonais. Até lá, há %d peças de equipamento do Armário Encantado para encontrar!</string>
     <string name="shop_armoire_empty_description">Novos equipamentos são lançados durante as Galas sazonais. O Armário Encantado recebe novos estoques todo mês também!</string>

@@ -20,7 +20,7 @@
     <string name="gold_plural">Zlato</string>
     <string name="gold_capitalized">Zlato</string>
     <string name="trivial">Trivijalno</string>
-    <string name="dailies">Dnevne navike</string>
+    <string name="dailies">Dnevni zadaci</string>
     <string name="todos">Obaveze</string>
     <string name="user_level">Raz. %d</string>
     <string name="login_btn">Prijava</string>
@@ -62,7 +62,7 @@
     <plurals name="x_habits">
         <item quantity="one">%d navika</item>
         <item quantity="few">%d navike</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d navika</item>
     </plurals>
     <string name="complete_task_title">Dovrši zadatak</string>
     <string name="create_task">Stvori %s</string>

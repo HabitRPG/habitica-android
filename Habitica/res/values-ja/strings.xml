@@ -52,7 +52,7 @@
     <string name="checklist">チェックリスト</string>
     <string name="reminders">通知</string>
     <string name="attributes">属性</string>
-    <string name="repeatables_frequency_daily">毎日</string>
+    <string name="repeatables_frequency_daily">日課</string>
     <string name="repeatables_frequency_weekly">毎週</string>
     <string name="repeatables_frequency_monthly">毎月</string>
     <string name="repeatables_frequency_yearly">毎年</string>
@@ -1181,7 +1181,7 @@
     <string name="armoireFood_new">タンスを探したら、食べ物があった。これは何だろう？</string>
     <string name="sell_no_price">売る</string>
     <string name="create_new_party">新しいパーティーを作る</string>
-    <string name="next_hourglass">次の神秘の砂時計</string>
+    <string name="next_hourglass">神秘の砂時計の次回配布</string>
     <string name="reset_account_title">本当にリセットしますか？</string>
     <string name="confirm_reset">リセットする</string>
     <string name="forgot_password_hint_example">例：habitrabbit または gryphon@example.com</string>
@@ -1258,7 +1258,7 @@
         <item quantity="other">%d 人</item>
     </plurals>
     <plurals name="you_x_others">
-        <item quantity="other">あなたと他 %d</item>
+        <item quantity="other">あなたと他 %d 名</item>
     </plurals>
     <string name="x_and_y">%1$sと%2$s</string>
     <string name="class_changed_description">スキル %s を使えるようになりました。ショップで装備を購入することもできます！</string>
@@ -1277,4 +1277,24 @@
     <string name="push_notification_system_settings_reminders">設定アプリでHabiticaからのリマインダーを許可する</string>
     <string name="push_notification_system_settings_title">通知は無効です</string>
     <string name="title">タイトル</string>
+    <string name="level_abbreviated">レベル%d</string>
+    <string name="insufficient_level_equipment_dialog">このアイテムは特定のクラスにのみ利用可能です。
+\nレベル10になるとクラスを選択できます。</string>
+    <string name="x_checkins">%d 回チェックイン</string>
+    <string name="send_invite">招待状を送る</string>
+    <string name="change_class_selected_confirmation">3ジェムを支払ってクラスを%1$sに変更しますか？</string>
+    <string name="habit_summary_description">これは%2$sな%1$s習慣です。</string>
+    <string name="todo_summary_description_duedate">これは期限が%2$sである%1$sタスクです。</string>
+    <string name="todo_summary_description">これは期限がない%1$sタスクです。</string>
+    <string name="manager">マネージャー</string>
+    <string name="completed_at">%s で完了</string>
+    <string name="daily_summary_description">これは**%2$s%3$s**で繰り返す**%1$s**タスクです。</string>
+    <string name="assigned_to">割り当て対象</string>
+    <string name="assign">割り当て</string>
+    <string name="edit_assignees">割り当ての編集</string>
+    <string name="assign_to">...に割り当て</string>
+    <string name="positive_and_negative">いい と 悪い</string>
+    <string name="member_list">メンバーリスト</string>
+    <string name="not_set" tools:override="true">未セット</string>
+    <string name="promote_to_manager">マネージャーへの昇格</string>
 </resources>

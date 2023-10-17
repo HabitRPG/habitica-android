@@ -120,7 +120,7 @@
     <string name="intro_1_description">和 %s 玩家一起，用游戏战胜拖延症！你可以创建一个账户，用它来跟踪你生活中的点滴琐事。</string>
     <string name="intro_2_subtitle">游戏进度</string>
     <string name="intro_2_title">生活进度</string>
-    <string name="intro_2_description">通过完成现实生活中的任务来解锁游戏内容。得到装备、宠物和更多的奖励来促使你完成你的目标吧。</string>
+    <string name="intro_2_description">在现实生活中完成任务，即可解锁游戏中的新内容。努力达成目标，赢得装备、宠物等种种奖励吧。</string>
     <string name="intro_3_subtitle">对抗怪物</string>
     <string name="intro_3_title">交些朋友</string>
     <string name="intro_3_description">和朋友们一起为目标努力吧。在生活和战斗中互相支持，共同进步！</string>
@@ -221,7 +221,7 @@
 \n • 你的任务连击和习惯计数器不会重置
 \n • 你对boss的伤害和副本收集物将保持不变，直到你离开客栈</string>
     <string name="empty_items">你没有任何的%s</string>
-    <string name="user_level_with_class">Lvl %1$d %2$s</string>
+    <string name="user_level_with_class">Lv. %1$d %2$s</string>
     <string name="warrior">战士</string>
     <string name="rogue">盗贼</string>
     <string name="mage">法师</string>
@@ -233,7 +233,6 @@
     <string name="opt_out_class">退出</string>
     <string name="class_confirmation">你确定想要成为%s吗？</string>
     <string name="class_changed">你现在是 %s级了！</string>
-
     <string name="choose_class">选择职业</string>
     <string name="dialog_go_back">返回</string>
     <string name="opt_out_confirmation">你确定要退出吗？</string>
@@ -244,7 +243,7 @@
     <string name="by_email">通过电子邮件</string>
     <string name="invite_existing_users">邀请已存在的用户</string>
     <string name="send">发送</string>
-    <string name="invite">邀请朋友</string>
+    <string name="invite">寻找队友</string>
     <string name="invite_username_description">如果你已有朋友在使用Habitica，通过这里的用户名邀请他们。</string>
     <string name="invite_email_description">如果你的朋友通过你的邮件加入Habitica，他们将自动被邀请加入你的队伍！</string>
     <string name="add_invites">添加邀请</string>
@@ -255,15 +254,15 @@
     <string name="share_raised">我刚刚在#Habitica中通完成我现实生活中的任务得到了一匹%1$s坐骑！</string>
     <string name="open_in_store">在应用商店中打开</string>
     <string name="change_class_confirmation">你确定想要转变职业吗？这将花费3颗宝石。</string>
-    <string name="change_class_equipment_warning">提示：你无法再购买%s职业的装备了。</string>
+    <string name="change_class_equipment_warning">这将退还你的属性点数，切换商店中解锁的装备，并改变你的可用技能。</string>
     <string name="confirm">确认</string>
     <string name="market">市场</string>
     <string name="timeTravelers">时空旅行者</string>
     <string name="seasonalShop">季度商店</string>
     <string name="empty_inbox">你没有任何新消息。你可以从玩家们的公开聊天窗口中给他们发送新消息！</string>
-    <string name="party_invite">通过邀请朋友来解锁</string>
+    <string name="party_invite">邀请朋友可解锁</string>
     <string name="login_incentive">定期登录Habitica可解锁</string>
-    <string name="create_account">创建帐户可以解锁</string>
+    <string name="create_account">创建帐户可解锁</string>
     <string name="successful_purchase">已购买%1$s</string>
     <string name="chat_message_copied">复制到剪帖板的信息</string>
     <string name="edit_tag_btn_edit">编辑</string>
@@ -513,7 +512,7 @@
     <string name="classless">无职业</string>
     <string name="class_equipment_shop_dialog">这个物品只对特定职业开放。\n你可以在设置改变你的职业。</string>
     <string name="class_gear_disclaimer">你只能购买当前职业的装备</string>
-    <string name="tavern_description">欢迎来到客栈！拉张凳子坐下聊天，或者暂停任务休息一下。</string>
+    <string name="tavern_description">欢迎来到客栈！拉张凳子坐下聊天吧。</string>
     <string name="check_into_inn">入住客栈</string>
     <string name="community_guidelines">社区守则</string>
     <string name="view_community_guidelines">查看社区守则</string>
@@ -842,8 +841,8 @@
     <string name="preference_email_onboarding">设置你的Habitica帐户的指南</string>
     <string name="skill_unlocks_at">技能在%d级解锁</string>
     <string name="locked">已锁定</string>
-    <string name="unlock_previous">完成副本“%d”来解锁</string>
-    <string name="unlock_level">升到%d级来解锁</string>
+    <string name="unlock_previous">完成副本“%d”可解锁</string>
+    <string name="unlock_level">升到%d级可解锁</string>
     <string name="unlock_previous_short">完成副本“%d”</string>
     <string name="not_participating">你没有参加这个副本</string>
     <string name="quest_completed">副本已完成！</string>
@@ -860,8 +859,8 @@
     <string name="create_account_short">创建一个帐户</string>
     <string name="login_incentive_short_count">签到%d次</string>
     <string name="login_incentive_short">定期登录Habitica</string>
-    <string name="party_invite_short">邀请朋友</string>
-    <string name="login_incentive_count">通过在Habitica签到%d次来解锁。</string>
+    <string name="party_invite_short">寻找队友</string>
+    <string name="login_incentive_count">在Habitica签到%d次可解锁。</string>
     <string name="remaining_1hour">剩余1小时</string>
     <string name="remaining_hours">剩余%dh小时</string>
     <string name="remaining_1Minute">剩余1分钟</string>
@@ -872,7 +871,7 @@
     <string name="remaining_1week">剩余1个星期</string>
     <string name="remaining_months">剩余%d个月</string>
     <string name="remaining_1month">剩余1个月</string>
-    <string name="ago_weeks">%dw个星期前</string>
+    <string name="ago_weeks">%d个星期前</string>
     <string name="ago_1week">1个星期前</string>
     <string name="ago_months">%d月前</string>
     <string name="ago_1month">1月前</string>
@@ -925,7 +924,7 @@
     <string name="update_app_description">我们会不断推出新的修复程序，因此请务必检查Play Store以查看是否有更新。</string>
     <string name="update_app">更新应用</string>
     <string name="support">支持</string>
-    <string name="wacky">古怪</string>
+    <string name="wacky">搞怪</string>
     <string name="habitica_questions">Habitica问题</string>
     <string name="could_not_find_user">找不到用户</string>
     <string name="animal_ears">动物耳朵</string>
@@ -1038,7 +1037,7 @@
     <string name="pms_disabled">私信已停用</string>
     <string name="disablePrivateMessages">禁用私信</string>
     <string name="block">屏蔽</string>
-    <string name="block_user_description">被屏蔽用户不能发送私信给你, 但你仍然可以在酒馆或公会看到他们发表的内容。但如果此人是现在或未来的管理员，那么屏蔽无法生效。</string>
+    <string name="block_user_description">被屏蔽用户不能发送私信给你, 但你仍然可以看到他们发表的内容。</string>
     <string name="block_user_title">确定屏蔽%s？</string>
     <string name="block_user">屏蔽该用户</string>
     <string name="unblock_user">解除屏蔽该用户</string>
@@ -1106,7 +1105,7 @@
     <string name="daily_item_checkbox">每日打勾</string>
     <string name="avatar_style">风格</string>
     <string name="caused_damage">你伤害了boss</string>
-    <string name="locked_equipment_shop_dialog">你必须购买这个系列的前置物品来解锁</string>
+    <string name="locked_equipment_shop_dialog">必须购买此系列的前置物品才能解锁</string>
     <string name="survey_menu_description">填写这个问卷来帮我们成长以及获得一个成就！</string>
     <string name="survey_title">Habitica 用户问卷</string>
     <string name="go_to_survey">去填写问卷</string>
@@ -1262,4 +1261,25 @@
     <plurals name="people">
         <item quantity="other">%d人</item>
     </plurals>
+    <string name="level_abbreviated">%d级</string>
+    <string name="push_notification_system_settings_reminders">在系统设置中允许Habitica发送通知以接收提醒</string>
+    <string name="title">标题</string>
+    <string name="positive_sentence">增加</string>
+    <string name="negative_sentence">减少</string>
+    <string name="push_notification_system_settings_title">通知已关闭</string>
+    <string name="push_notification_system_settings_description">在系统设置中允许Habitica发送通知以接收推送</string>
+    <string name="enable_notifications">开启通知</string>
+    <string name="find_new_member">寻找队友</string>
+    <string name="find_more_members">寻找更多队友</string>
+    <string name="habit_summary_description">这是一个**%2$s**难度的**%1$s**习惯。</string>
+    <string name="subscribers_mythic_hourglasses"><i>订阅者会在每个月的前三天获得神秘沙漏。</i></string>
+    <string name="class_changed_description">你可以使用%s技能并且从商店购买装备!</string>
+    <string name="subscription_credit_canceling">你有<b>%d</b>个月的结存订阅，将在当前订阅取消后生效</string>
+    <string name="insufficient_level_equipment_dialog">这件物品只提供给特殊职业。
+\n您可以选择在10级后选择职业。</string>
+    <string name="x_checkins">签到数%d</string>
+    <string name="send_invite">发送邀请</string>
+    <string name="not_set" tools:override="true">未设置</string>
+    <string name="change_class_selected_confirmation">你确定想要花费3颗宝石转变你的职业至%1$s吗？</string>
+    <string name="task_summary">任务概要</string>
 </resources>

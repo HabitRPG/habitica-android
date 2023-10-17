@@ -211,7 +211,7 @@
 \n • Zadania nie stracą serii ani nie osłabią się w kolorze
 \n • Twoje obrażenia dla bossa albo misje zbierackie zostaną jako oczekujące do końca dnia</string>
     <string name="empty_items">Nie posiadasz %s</string>
-    <string name="user_level_with_class">poz %1$d %2$s</string>
+    <string name="user_level_with_class">Poziom %1$d %2$s</string>
     <string name="warrior">Wojownik</string>
     <string name="rogue">Łotrzyk</string>
     <string name="mage">Mag</string>
@@ -223,7 +223,6 @@
     <string name="opt_out_class">Wycofaj się</string>
     <string name="class_confirmation">Jesteś pewien, że chcesz być %s?</string>
     <string name="class_changed">Jesteś teraz %s!</string>
-
     <string name="choose_class">Wybierz klasę postaci</string>
     <string name="dialog_go_back">Wróć</string>
     <string name="opt_out_confirmation">Czy na pewno chcesz wyjść?</string>
@@ -234,7 +233,7 @@
     <string name="by_email">Przez e-mail</string>
     <string name="invite_existing_users">Zaproś istniejących użytkowników</string>
     <string name="send">Wyślij</string>
-    <string name="invite">Zaproś znajomych</string>
+    <string name="invite">Znajdź członków</string>
     <string name="invite_email_description">Jeśli przyjaciel dołączył do Habitiki przez Twojego maila, zostanie automatycznie dodany do Twojej drużyny!</string>
     <string name="add_invites">Dodaj zaproszenia</string>
     <string name="email">Email</string>
@@ -243,8 +242,8 @@
     <string name="share_hatched">Właśnie wyklułem chowańca %1$s %2$s w #Habitica dzięki wypełnianiu życiowych zadań!</string>
     <string name="share_raised">Właśnie zyskałem wierzchowca %1$s w #Habitica dzięki wypełnianiu życiowych zadań!</string>
     <string name="open_in_store">Otwórz w sklepie Google Play</string>
-    <string name="change_class_confirmation">Jesteś pewien, że chcesz zmienić klasę\? Będzie to kosztować 3 klejnoty.</string>
-    <string name="change_class_equipment_warning">Ostrzeżenie: Nie będziesz nie będziesz mógł kupić wyposażenia dla klasy: %s.</string>
+    <string name="change_class_confirmation">Czy chcesz zmienić swoją klasę za 3 klejnoty\?</string>
+    <string name="change_class_equipment_warning">Zresetuje to przydział punktów statystyk oraz zmieni zestawy wyposażenia dostępne w sklepach, a także dostępne umiejętności.</string>
     <string name="confirm">Potwierdź</string>
     <string name="market">Sklep</string>
     <string name="timeTravelers">Podróżnicy w czasie</string>
@@ -293,7 +292,7 @@
     <string name="belongs_to_challenge">Należy do wyzwania</string>
     <string name="has_reminder">Ma powiadomienie</string>
     <string name="has_tag">Ma tag</string>
-    <string name="subscribe_title">Subskrypcja wspiera deweloperów i pozwala utrzymać Habitikę</string>
+    <string name="subscribe_title">Subskrypcja wspiera nasz skromny zespół i pozwala utrzymać Habitica. Dziękujemy!</string>
     <string name="subscribe_prompt">Subskrybuj aby uzyskać te wyjątkowe korzyści!</string>
     <string name="subscribe_listitem1">Złoto na Klejnoty</string>
     <string name="subscribe_listitem2">Mistyczne Klepsydry</string>
@@ -309,7 +308,7 @@
     <string name="subscription">Subskrypcja</string>
     <string name="active">Aktywne</string>
     <string name="cancel_subscription">Anuluj Subskrypcję</string>
-    <string name="cancel_subscription_google_description">Nie chcesz dłużej subskrypcji\? Możesz z niej zrezygnować w sekcji \"Moje Aplikacje\" w Google Play Store. Jakiekolwiek uznania z miesięcznych subskrypcji zostaną zastosowane po zakończeniu obecnej subskrypcji.</string>
+    <string name="cancel_subscription_google_description">Z subskrybcji możesz zrezygnować w sklepie Google Play. Jakiekolwiek uznania z miesięcznych subskrypcji zostaną zastosowane po zakończeniu obecnej subskrypcji.</string>
     <string name="cancel_subscription_notgoogle_description">Nie chcesz dłużej subskrybować\? Z powodu ograniczeń w płatnościach mobilnych, musisz anulować subskrypcję poprzez stronę webową. Aby to zrobić, tapnij poniższy przycisk, zaloguj się na swoje konto, tapnij ikonę Użytkownika w prawym, górnym rogu i przejdź do Subskrypcji. Wszelkie uznania z miesięcznych subskrypcji zostaną zastosowane po zakończeniu Twojej subskrypcji. Będzie nam Ciebie brakowało!</string>
     <string name="visit_habitica_website">Odwiedź Stronę Habitiki</string>
     <string name="current_bonuses">Obecne Dodatki</string>
@@ -406,9 +405,9 @@
     <string name="invitations">Zaproszenia</string>
     <string name="quest_leader_header">Rozpoczęta przez %s</string>
     <string name="reloading_content">Odświeżanie zawartości</string>
-    <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">m</string>
-    <string name="billion_abbrev">b</string>
+    <string name="thousand_abbrev">tys.</string>
+    <string name="million_abbrev">mln</string>
+    <string name="billion_abbrev">mld</string>
     <string name="available_until">Dostępne do %s</string>
     <string name="gems_left_nomax">Miesięczne Klejnoty: pozostało %d</string>
     <string name="health">Zdrowie</string>
@@ -523,7 +522,7 @@
     <string name="moderator">Moderator</string>
     <string name="expand_notes">Czytaj więcej</string>
     <string name="collapse_notes">Pokaż mniej</string>
-    <string name="week_reminder_title">Jak Ci idzie z zadaniami\?</string>
+    <string name="week_reminder_title">Jak Ci idzie z codziennymi zadaniami\?</string>
     <string name="two_handed">Dwuręczna</string>
     <string name="usernamePromptTitle">Czas ustawić Twoją nazwę użytkownika!</string>
     <string name="cancel">Anuluj</string>
@@ -592,13 +591,11 @@
     <string name="character_build_description">Każdy zdobyty poziom daje Ci jeden punkt, który możesz przydzielić do wybranego przez siebie atrybutu. Możesz zrobić to ręcznie lub pozwolić, by gra zdecydowała za Ciebie, używając jednej z opcji automatycznego przydzielania.</string>
     <string name="character_build">Rozwój postaci</string>
     <string name="seasonal_closed_description">Wielkie Gale mają miejsce w pobliżu przesilenia i równonocy, więc zajrzyj tu później aby znaleźć zabawny asortyment specjalnych przedmiotów sezonowych!</string>
-    <string name="timetravelers_closed_description">"Zdobądź jedną Mistyczną Klepsydrę za każde, pełne trzy miesiące subskrypcji, a następnie używaj je aby odblokować przedmioty z limitowanych edycji, chowańce i wierzchowce z przeszłości…  i przyszłości!"</string>
+    <string name="timetravelers_closed_description">Zdobądź jedną Mistyczną Klepsydrę za każde pełne trzy miesiące subskrypcji i odblokuj dzięki nim przedmioty, chowańce i wierzchowce z limitowanych edycji w przeszłości… i przyszłości!</string>
     <string name="subscribe_for_hourglasses">Subskrybuj w celu uzyskania Klepsydr</string>
-    <string name="delete_oauth_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Wykorzystane lub wydane klejnoty nie będą zwrócone. Jeśli masz absolutną pewność, wpisz poniżej słowo DELETE.</string>
+    <string name="delete_oauth_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Nie otrzymasz zwrotu pieniędzy za zakupione i wydane dotąd klejnoty. Jeśli masz absolutną pewność, wpisz poniżej słowo DELETE.</string>
     <string name="delete_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Nie otrzymasz zwrotu za posiadane lub wydane klejnoty. Jeśli masz całkowitą pewność, wpisz do pola tekstowego poniżej swoje hasło.</string>
-    <string name="reset_account_description">OSTRZEŻENIE! Ta czynność resetuje wiele miejsc w Twoim koncie. Jest ona wysoce niezalecana, chociaż może okazać się przydatna zwłaszcza dla osób początkujących, których czas gry jest niewielki.
-\n
-\nStracisz wszystkie poziomy, całe złoto i punkty doświadczenia. Wszystkie Twoje zadania (z wyjątkiem tych z Wyzwań) zostaną na zawsze usunięte, razem z historią ich wypełnienia. Stracisz także wyposażenie, choć będziesz mógł je kupić ponownie, włączając w to przedmioty limitowane i tylko dla subskrybentów, które już posiadasz (aby odkupić wyposażenie przeznaczone dla konkretnej klasy, musisz do niej przynależeć). Zachowasz swoją klasę, chowańce i wierzchowce. Być może lepiej będzie jeśli użyjesz Kuli Odrodzenia – jest to bezpieczniejsze i zachowa wszystkie Twoje zadania oraz ekwipunek.</string>
+    <string name="reset_account_description">Stracisz wszystkie poziomy, całe Złoto i Doświadczenie. Wszystkie Twoje zadania (z wyjątkiem tych z Wyzwań) zostaną na zawsze usunięte, razem z historią ich wypełnienia. Stracisz także całe swoje wyposażenie, włączając w to przedmioty limitowane i tylko dla subskrybentów, choć będziesz mógł je kupić ponownie (aby odkupić wyposażenie przeznaczone dla konkretnej klasy, musisz do niej przynależeć). Zachowasz swoją klasę, Chowańce i Wierzchowce. Żeby potwierdzić reset, wpisz RESET w okienku pod spodem.</string>
     <string name="x_months">%d Miesięcy</string>
     <string name="skill_progress_title">Użycie umiejętności</string>
     <string name="authentication_error_body">Niepoprawna nazwa użytkownika i/lub hasło.</string>
@@ -633,7 +630,7 @@
     <string name="remaining_months">Pozostało %d miesięcy</string>
     <string name="remaining_1month">Pozostał 1 miesiąc</string>
     <string name="ago_weeks">%d tygodni temu</string>
-    <string name="party_invite_short">Zaproś Znajomych</string>
+    <string name="party_invite_short">Znajdź członków</string>
     <string name="login_incentive_short">Odwiedzaj Habitica regularnie</string>
     <string name="create_account_short">stwórz konto</string>
     <string name="login_incentive_short_count">%d Wizyt</string>
@@ -707,7 +704,7 @@
     <string name="daily_tip_2">Możesz zmienić to jak często powtarza się każde zadanie codzienne. Nawet rzadko wykonywane zadania mogą być zaplanowane.</string>
     <string name="daily_tip_4">Okresowa re-ewaluacja Twoich zadań może Ci pomóc trzymać się obranej ścieżki.</string>
     <string name="daily_tip_3">Możesz również planować przypomnienia dla zadań codziennych.</string>
-    <string name="week_reminder_text">Przerwy są zdrowe, ale nadal możesz zyskać punkty za proste czynności, aby podnieść swój poziom i zdobyć fajny sprzęt!</string>
+    <string name="week_reminder_text">Odznacz postępy w swoich zadaniach i postanowieniach w Habitica, by zyskać Doświadczenie i nagrody!</string>
     <string name="reset_streak">Zresetuj serię</string>
     <string name="daily_tip_9">Jeśli jest Ci trudno, spróbuj podzielić swoje zadania na mniejsze części.</string>
     <string name="daily_tip_6">Spróbuj ustawić minutnik na 10 minut i zobaczyć jak dużo dasz radę w tym czasie zrobić!</string>
@@ -740,8 +737,8 @@
     <string name="need_more_help">Potrzebujesz więcej wsparcia\?</string>
     <string name="create_party">Stwórz nowy zespół</string>
     <string name="create">Stwórz</string>
-    <string name="gift_confirmation_text_sub">Wysłałeś %s %s-miesięczną subskrypcję Habitica.</string>
-    <string name="gift_confirmation_text_sub_g1g1">Wysłałeś %s %s-miesięczną subskrypcję Habitica i taka sama subskrypcja zasiliła Twoje konto w ramach promocji Dajesz - Dostajesz!</string>
+    <string name="gift_confirmation_text_sub">Wysłałeś(-aś) @%1$s %2$s-miesięczną subskrypcję Habitica.</string>
+    <string name="gift_confirmation_text_sub_g1g1">Wysłałeś(-aś) %1$s %2$s-miesięczną subskrypcję Habitica i taka sama subskrypcja zasiliła Twoje konto w ramach promocji Dajesz - Dostajesz!</string>
     <string name="gift_gems_subtitle">Wybierz pakiet klejnotów do podarowania poniżej!</string>
     <string name="gift_subscription_subtitle">Wybierz poniżej subskrypcję, którą chcesz podarować! Ten zakup nie będzie odnawiał się automatycznie.</string>
     <string name="gift_title">Komu chcesz sprawić podarunek\?</string>
@@ -781,4 +778,356 @@
     <string name="available_for">Dostępne dla %s</string>
     <string name="unsaved_changes">Niezapisane zmiany</string>
     <string name="discard_changes_to_task_message">Jesteś pewien, że chcesz porzucić zmiany w tym zadaniu\?</string>
+    <string name="level_abbreviated">Poziom %d</string>
+    <string name="change_class_selected_confirmation">Czy chcesz zmienić klasę na: %1$s za 3 klejnoty\?</string>
+    <string name="class_changed_description">Możesz teraz używać umiejętności i kupować wyposażenie klasy: %s!</string>
+    <string name="enable_notifications">Włącz powiadomienia</string>
+    <string name="push_notification_system_settings_title">Powiadomienia wyłączone</string>
+    <string name="title">Tytuł</string>
+    <string name="positive_sentence">pozytywne</string>
+    <string name="negative_sentence">negatywne</string>
+    <string name="discard">Odrzuć</string>
+    <string name="partyUpDescription">Dołączyłeś(-aś) do drużyny z inną osobą!</string>
+    <string name="reset_account_title">Czy na pewno chcesz zresetować konto\?</string>
+    <string name="confirm_reset">Potwierdź zresetowanie</string>
+    <string name="insufficient_level_equipment_dialog">Ten przedmiot jest dostępny tylko dla konkretnej klasy.
+\nWybór klasy zostanie odblokowany na Poziomie 10.</string>
+    <string name="reset_counter">Zresetuj Licznik</string>
+    <string name="month_reminder_title">Rutyna Cię dobija\?</string>
+    <string name="month_reminder_text">Czasem łatwiej jest zacząć od zera. Habitica może Ci w tym pomóc!</string>
+    <string name="x_checkins">%d zalogowań</string>
+    <string name="gift_confirmation_text_gems_new">Wysłałeś(-aś) @%1$s %2$s Klejnotów.</string>
+    <string name="subscription_confirmation">Posiadasz teraz miesięczną subskrybcję</string>
+    <string name="subscription_confirmation_multiple">Posiadasz teraz %s-miesięczną subskrybcję</string>
+    <string name="gem_purchase_confirmation">Otrzymujesz %s Klejnotów.</string>
+    <string name="adjust_counter">Dostosuj Licznik</string>
+    <string name="leave_guild_challenges_confirmation">Czy chcesz dalej uczestniczyć w tym Wyzwaniu po opuszczeniu tej gildii\?</string>
+    <string name="delete_task">Usuń Zadanie</string>
+    <string name="delete_reminder">Usuń przypomnienie</string>
+    <string name="not_now">Może później</string>
+    <string name="levelup_title_10">Odblokowano system klas!</string>
+    <string name="pin">Przypnij</string>
+    <string name="switch_to_list_view">Włącz widok listy</string>
+    <string name="details">Szczegóły</string>
+    <string name="app_theme">Motyw aplikacji</string>
+    <string name="inbox_messages_title_single">Nowa wiadomość od %1$s</string>
+    <string name="inbox_messages_title">%1$d nowych wiadomości od %2$s</string>
+    <string name="inbox_messages_title_nosender">%d nowych wiadomości</string>
+    <string name="remove">Usuń</string>
+    <string name="transfer_ownership">Przekaż przywództwo</string>
+    <string name="remove_member">Usuń członka</string>
+    <string name="send_message">Wyślij wiadomość</string>
+    <string name="transfer_ownership_confirm">Przekazać przywództwo\?</string>
+    <string name="transfer_ownership_confirm_message">%s zostanie nowym przywódcą drużyny</string>
+    <string name="remove_member_confirm">Czy na pewno chcesz usunąć %s z grupy\?</string>
+    <string name="transfer">Przekaż</string>
+    <string name="mystery_item_received">Otwierasz prezent i otrzymujesz %s</string>
+    <string name="achievement_title">Otrzymujesz osiągnięcie!</string>
+    <string name="partyUpTitle">Razem raźniej</string>
+    <string name="partyOnDescription">Dołączyłeś(-aś) do drużyny z przynajmniej czwórką osób!</string>
+    <string name="is_open">Otwórz</string>
+    <string name="switch_to_grid_view">Włącz widok siatki</string>
+    <string name="sent_card">Wysłałeś(-aś) %s</string>
+    <string name="transferred_ownership">Przekazano przywództwo użytkownikowi %s</string>
+    <string name="removed_member">Użytkownik %s został usunięty z grupy</string>
+    <string name="partyOnTitle">Jeden za wszystkich, wszyscy za jednego</string>
+    <string name="unpin">Odepnij</string>
+    <string name="leave_party_challenges_confirmation">Czy chcesz dalej uczestniczyć w tym Wyzwaniu po opuszczeniu drużyny\?</string>
+    <string name="levelup_detail_10">Wybierz klasę dopasowaną do Twojego stylu gry i odblokuj specjalne umiejętności oraz wyposażenie postaci, które pomogą ci w dalszej podróży</string>
+    <string name="triadBingoTitle">Potrójne bingo</string>
+    <string name="joinedChallengeTitle">Dołączono do Wyzwania</string>
+    <string name="confirm_deletion">Potwierdź usunięcie</string>
+    <string name="beastMasterTitle">Władca chowańców</string>
+    <string name="mountMasterTitle">Władca wierzchowców</string>
+    <string name="beastMasterDescription">Odblokowano osiągnięcie: \"Władca chowańców\" za zebranie wszystkich chowańców!</string>
+    <string name="mountMasterDescription">Odblokowano osiągnięcie: \"Władca wierzchowców\" za oswojenie wszystkich wierzchowców!</string>
+    <string name="joinedChallengeDescription">Wystawiłeś się na próbę, dołączając do Wyzwania!</string>
+    <string name="inviteFriendTitle">Zaproszono znajomego</string>
+    <string name="inviteFriendDescription">Zaprosiłeś(-aś) znajomego (lub znajomych), którzy dołączyli do wspólnej przygody!</string>
+    <string name="keep_challenges">Zachowaj Wyzwania</string>
+    <string name="leave_challenges">Opuść Wyzwania</string>
+    <string name="gems_gift_description">Chcesz podarować komuś górę lśniących Klejnotów\?</string>
+    <string name="preference_push_party_mention">\@Wzmianki w drużynie</string>
+    <string name="purchase">Zakup</string>
+    <string name="from_balance">Z salda</string>
+    <string name="gift_gems_balance_subtitle">Wpisz poniżej, ile Klejnotów chcesz przesłać lub przełącz zakładkę, żeby kupić Klejnoty do podarowania</string>
+    <string name="gems_to_gift">Klejnoty do podarowania</string>
+    <string name="copy_userid">Skopiuj ID użytkownika</string>
+    <string name="id_copied">Skopiowano ID użytkownika do schowka</string>
+    <string name="apple_sign_in">Zaloguj się przez Apple</string>
+    <string name="send_invites">Wyślij zaproszenia</string>
+    <string name="send_invite">Wyślij zaproszenie</string>
+    <string name="cancelled">Anulowano</string>
+    <string name="not_recurring">Jednorazowa</string>
+    <string name="ending_on">Trwa do: %s</string>
+    <string name="subscribe_options_title">Wybierz odpowiadający Tobie okres Subskrybcji</string>
+    <string name="thanks_for_supporting">Dziękujemy za wsparcie Habitica</string>
+    <string name="renew_subscription">Odnów Subskrybcję</string>
+    <string name="resubscribe">Subskrybuj</string>
+    <string name="member">Członek</string>
+    <string name="event">Wydarzenie</string>
+    <string name="promo_g1g1_description">Podaruj Subskrypcję i otrzymaj identyczny plan dla siebie gratis!</string>
+    <string name="promo_g1g1_prompt">Promocja Dajesz-Dostajesz</string>
+    <string name="sale">Wyprzedaż</string>
+    <string name="gift_a_subscription">Podaruj Subskrybcję</string>
+    <string name="g1g1_info_2">Jak to działa</string>
+    <string name="g1g1_info_3">Ograniczenia</string>
+    <string name="limited_event">Wydarzenie ograniczone czasowo</string>
+    <string name="g1g1_duration">17.12-06.01</string>
+    <string name="learn_more">Dowiedz się więcej</string>
+    <string name="purchase_from_timetravel_shop">Ten element jest dostępny w Sklepie Podróżników w Czasie</string>
+    <string name="go_shopping">Zakup</string>
+    <string name="quest_completed">Misja ukończona!</string>
+    <string name="using_habitica">Korzystanie z Habitica</string>
+    <string name="using_habitica_description">Spróbujemy tutaj wyjaśnić podstawy i odpowiedzieć na najczęściej zadawane pytania, aby pomóc Ci wdrożyć się w system</string>
+    <string name="triadBingoDescription">Odblokowano osiągnięcie: \"Potrójne bingo\" za zebranie wszystkich chowańców, oswojenie wszystkich wierzchowców, i ponowne zebranie wszystkich chowańców!</string>
+    <string name="gift_gems_disclaimer">Habitica nigdy nie będzie od Ciebie wymagać przekazania innym graczom Klejnotów. Proszenie ludzi o Klejnoty jest sprzeczne z naszym Regulaminem Społeczności i powinno zostać zgłoszone e-mailem na adres admin@habitica.com.</string>
+    <string name="subscribers_mythic_hourglasses"><i>Subskrybenci otrzymują Mistyczną Klepsydrę w pierwszych trzech dniach miesiąca.</i></string>
+    <string name="member_group_plan">Członek Planu Grupowego</string>
+    <string name="g1g1_info_3_text">Aby skorzystać z promocji, należy podarować Subskrybcję innemu użytkownikowi Habitica. Jeśli Ty lub osoba otrzymująca Twój prezent już posiada Subskrybcję, miesiące z tego zakupu zostaną wykorzystane dopiero po zakończeniu lub zrezygnowaniu z bieżącej Subskrybcji.</string>
+    <string name="invitation_title">Użytkownik %s zaprosił cię do grupy %s</string>
+    <string name="copy_username">Skopiuj nazwę użytkownika</string>
+    <string name="password_too_short">Twoje hasło musi zawierać przynajmniej %d znaków</string>
+    <string name="authentication_methods">Metody Uwierzytelnienia</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="g1g1_info_2_text">Dotknij \"Podaruj Subskrybcję\" i wpisz nazwę użytkownika, któremu chcesz ją podarować. Następnie wybierz okres Subskrybcji i dokończ zakup. Twojemu kontu automatycznie zostanie przypisana Subskrybcja z takim samym okresem i korzyściami.</string>
+    <string name="g1g1_info_1">By uczcić ten świąteczny czas, przywracamy naszą wyjątkową promocję. Teraz kiedy podarujesz komuś Subskrybcję, samemu otrzymasz identyczny plan w gratisie!</string>
+    <string name="reject">Odmów</string>
+    <string name="leave_challenges_delete_tasks">Opuść Wyzwania i usuń Zadania</string>
+    <string name="equip_automatically">Automatycznie załóż nowe wyposażenie</string>
+    <string name="accept">Akceptuj</string>
+    <string name="complete">Wykonane</string>
+    <string name="preference_push_party_activity">Aktywność drużyny</string>
+    <string name="promo_subscription_buy_gems_prompt">Potrzebujesz Klejnotów\?</string>
+    <string name="promo_subscription_buy_gems_description">Zasubskrybuj, żeby kupować Klejnoty za Złoto, otrzymywać comiesięczne Mistyczne Przedmioty, zwiększyć dzienny limit łupów i nie tylko!</string>
+    <string name="see_other_options">Zobacz pozostałe opcje</string>
+    <string name="gift_gems">Podaruj Klejnoty</string>
+    <string name="profile_send_message">Wyślij
+\nwiadomość</string>
+    <string name="profile_gift_gems">Podaruj
+\nKlejnoty</string>
+    <string name="profile_gift_subscription">Podaruj
+\nSubskrybcję</string>
+    <string name="resubscribe_description">Chcesz zachować korzyści z Subskrypcji\? Możesz zakupić nową Subskrybcję przed zakończeniem okresu starej i cieszyć się dalej z jej bonusów.</string>
+    <string name="gifted">Podarowano</string>
+    <string name="owner">Właściciel</string>
+    <string name="cancel_subscription_group_plan_owner">Otrzymano darmową Subskrybcję, ponieważ zakupiono Plan Grupowy dla tej drużyny. Jeśli zrezygnujesz z Planu, ta Subskrybcja się zakończy. Jakiekolwiek miesiące pozostałe z osobno zakupionej wcześniej Subskrybcji zostaną wykorzystane po zakończeniu Planu Grupowego. Z Planu możesz zrezygnować w wersji przeglądarkowej Habitica.</string>
+    <string name="subscription_credit">Miesiące Subskrybcji</string>
+    <string name="save_20">Oszczędź 20%</string>
+    <string name="group_plan">Plan Grupowy</string>
+    <string name="cancel_subscription_group_plan">Otrzymano darmową Subskrybcję za przynależność do drużyny z Planem Grupowym. Zakończy się, kiedy posiadacz Planu z niego zrezygnuje lub kiedy opuścisz drużynę. Jakiekolwiek miesiące pozostałe z zakupionej wcześniej Subskrybcji zostaną wykorzystane po zakończeniu Planu Grupowego.</string>
+    <string name="unlock_level">Odblokowane na poziome %d</string>
+    <string name="unlock_previous_short">Ukończ Misję %d</string>
+    <string name="level_unabbreviated">Poziom %d</string>
+    <string name="not_participating">Nie bierzesz udziału</string>
+    <string name="emails">Powiadomienia e-mail</string>
+    <string name="pref_emails_checkbox">Włącz powiadomienia e-mail</string>
+    <string name="preference_email_subscription_reminder">Przypomnienia o Subskrybcji</string>
+    <string name="preference_email_kicked_group">Wyrzucenie z Grupy</string>
+    <string name="preference_email_onboarding">Wskazówki dot. ustawień konta Habitica</string>
+    <string name="skill_unlocks_at">Umiejętność odblokowana na poziomie %d</string>
+    <string name="locked">Zablokowane</string>
+    <string name="unlock_previous">Ukończ Misję %d, aby odblokować</string>
+    <string name="subscription_credit_canceling">Twoje <b>%d</b> zaległych miesięcy Subskrybcji zostanie wykorzystane po rezygnacji</string>
+    <string name="share_challenge_with">Udostępnij Wyzwanie</string>
+    <string name="see_what_s_new">Zobacz co nowego</string>
+    <string name="joinedGuildTitle">Dołączono do Gildii</string>
+    <string name="joinedGuildDescription">Dzięki dołączeniu do Gildii dotarłeś(-aś) do społecznościowej strony Habitica!</string>
+    <string name="more_out_of_habitica">Ulepsz swoją Habitica</string>
+    <string name="preference_push_joined_guild_mention">\@Wzmianki z Twoich Gildii</string>
+    <string name="preference_push_unjoined_guild_mention">\@Wzmianki z innych Gildii</string>
+    <string name="suggestions_feedback_description">Masz pomysł na nową funkcję lub na poprawę istniejącej\? Napisz do nas!</string>
+    <string name="get_help">Poproś o pomoc</string>
+    <string name="contact_us">Skontaktuj się z nami</string>
+    <string name="suggestions_feedback">Sugestie i Opinie</string>
+    <string name="bugs_fixes">Błędy i Rozwiązania</string>
+    <string name="bugs_fixes_description">Coś poszło nie tak\? Tu znajdziesz najczęstsze problemy i ich rozwiązania. Tu też możesz nam napisać o bardziej skomplikowanym błędzie.</string>
+    <string name="lets_go">Zaczynajmy</string>
+    <string name="purchasedEquipmentTitle">Zakupiono Wyposażenie</string>
+    <string name="createdTaskDescription">Tak trzymaj! Jeśli nie wiesz, jakie Zadania możesz jeszcze zaplanować, pomyśl, co chcesz zacząć robić o konkretnej porze dnia</string>
+    <string name="completedTaskDescription">Zadania dzielą się na Nawyki, Codzienne i Do Zrobienia. Wykonuj je regularnie, a otrzymasz mnóstwo różnych nagród!</string>
+    <string name="hatchedPetTitle">Wykluto Chowańca</string>
+    <string name="fedPetTitle">Nakarmiono Chowańca</string>
+    <string name="hatchedPetDescription">Jest tak wiele Chowańców do zebrania, że z pewnością niedługo natrafisz na swojego ulubieńca. A jeśli je nakarmisz, być może urosną duże i silne…</string>
+    <string name="someone">Ktoś</string>
+    <string name="local">lokalne</string>
+    <string name="push_notification_system_settings_description">Zezwól Habitica na wysyłanie powiadomień w ustawieniach telefonu, aby otrzymywać powiadomienia push</string>
+    <string name="push_notification_system_settings_reminders">Zezwól Habitica na wysyłanie powiadomień w ustawieniach telefonu, aby otrzymywać przypomnienia</string>
+    <string name="usernames_party">Drużyna %s</string>
+    <string name="feedPet_title">Nakarm Chowańca</string>
+    <string name="purchase_equipment_title">Kup ekwipunek</string>
+    <string name="create_task_description">Dodaj Zadanie, które chcesz wykonać w tym tygodniu</string>
+    <string name="complete_task_description">Odznaczaj Zadania, by zdobywać nagrody</string>
+    <string name="hatch_pet_description">Ukończ Zadania, by zdobyć Eliksir Wyklucia i Jajo, aby móc wykluć Chowańca!</string>
+    <string name="feedPet_description">Ukończ Zadania, żeby znaleźć jedzenie! Możesz nim nakarmić swojego Chowańca w zakładce \"Chowańce i Wierzchowce\"</string>
+    <string name="purchase_equipment_description">Dzięki wyposażeniu spersonalizujesz swojego awatara i zwiększysz statystyki postaci</string>
+    <string name="createdTaskTitle">Stworzono pierwsze Zadanie</string>
+    <string name="lets_get_started">Na początek</string>
+    <string name="percent_completed">%d%% ukończenia</string>
+    <string name="hatch_pet_title">Wykluj Chowańca</string>
+    <string name="completedTaskTitle">Wykonano pierwsze Zadanie</string>
+    <string name="fedPetDescription">Każdy Chowaniec ma swoje ulubione jedzenie! Poeksperymentuj i sprawdź, na jakim jedzeniu Twoje Chowańce urosną najszybciej</string>
+    <string name="support_bug_title">Nieustannie staramy się ulepszać nasze aplikacje w oparciu o opinie graczy, niestety błędy pojawiają się od czasu do czasu…</string>
+    <string name="common_fixes">Najczęstsze rozwiązania</string>
+    <string name="send_bug_prompt">Wyślij nam zgłoszenie, odezwiemy się jak najszybciej!</string>
+    <string name="health_points">Punkty zdrowia</string>
+    <string name="experience_points">Punkty Doświadczenia</string>
+    <string name="overview">Omówienie</string>
+    <string name="mana_points">Punkty Many</string>
+    <string name="gold_description">Złoto jest **główną walutą** Habitica. Za nie kupisz dużą część wyposażenia i Misji, a także parę innych przedmiotów. Jeśli chcesz, możesz również wydawać Złoto na swoje spersonalizowane Nagrody.
+\n
+\n**Zdobywasz Złoto** wypełniając Zadania i Misje, a także używając jednej z umiejętności konkretnej klasy. Na ilość zdobywanego Złota wpływa **Statystyka Percepcji**.
+\n
+\nSubskrybenci Habitica mogą kupić Złotem także Klejnoty, w ilości zależnej od długości subskrybcji.</string>
+    <string name="experience_description">Punkty Doświadczenia reprezentują Twoje postępy. Zdobywając PD, zyskujesz kolejne poziomy. **PD zdobywasz** wypełniając Zadania lub Misje, a także używając określonych umiejętności klasowych.
+\n
+\nZadania z większą Trudnością lub w czerwonej barwie dają **więcej PD**. Ilość PD za odznaczanie Zadań zależy również od Twojej **Statystyki Inteligencji**.</string>
+    <string name="stat_allocation">Przydział punktów Statystyk</string>
+    <string name="subscriber_currency">Waluta Subskrybencka</string>
+    <string name="clear_cache_description">Aby wyczyścić pamięć podręczną, otwórz Ustawienia w telefonie. Wybierz kolejno Pamięć &gt; Aplikacje &gt; Habitica, a następnie wybierz opcję Wyczyść pamięć podręczną.</string>
+    <string name="manual_sync_restart">Zsynchronizuj ręcznie lub zresetuj aplikację</string>
+    <string name="manual_sync_restart_description">Czasem aplikacja nie zaktualizuje automatycznie zawartości. Przeciągnij w dół, aby odświeżyć albo wyłącz i włącz aplikację.</string>
+    <string name="update_app">Zaktualizuj aplikację</string>
+    <string name="update_app_description">Nieustannie wprowadzamy nowe poprawki. Sprawdź, czy w Sklepie Google Play są dostępne nowe aktualizacje.</string>
+    <string name="support">Pomoc</string>
+    <string name="habitica_questions">Pytania o Habitica</string>
+    <string name="could_not_find_user">Nie udało się znaleźć użytkownika</string>
+    <string name="wacky">Zwariowane</string>
+    <string name="animal_ears">Zwierzęce uszy</string>
+    <string name="animal_tail">Zwierzęcy ogon</string>
+    <string name="avatar_headband">Opaska</string>
+    <string name="avatar_accent">Dodatki</string>
+    <string name="buy_all">Kup wszystko</string>
+    <string name="read_more">Czytaj dalej</string>
+    <string name="purchase_amount_error">Nie możesz kupić takiej ilości.</string>
+    <string name="still_questions">Wciąż masz pytania\?</string>
+    <string name="pet_ownership_fraction">%1$d/%2$d</string>
+    <string name="task_display">Widok listy Zadań</string>
+    <string name="onboarding_tasks">Zadania wprowadzające</string>
+    <string name="mana_description">Punkty Many zostają odblokowane wraz z systemem klasowym na poziomie 10. Pozwala ona **używać umiejętności**– pierwszą z nich odblokujesz na poziomie 11.
+\n
+\n**Odnawiasz część PM** z każdym początkiem dnia, a także odznaczając Zadania lub dzięki umiejętności drużynowego Maga.</string>
+    <string name="stat_description">Wszystkie postacie Habitica posiadają cztery statystyki wpływające na rozgrywkę.
+\n
+\n**Siła (SIŁ)** wpływa na trafienia krytyczne i zwiększa obrażenia zadawane bossowi Misji. SIŁ zwiększa m.in. klasowe wyposażenie Wojownika i Łotrzyka.
+\n
+\n**Kondycja (KON)** zmniejsza otrzymywane obrażenia. KON zwiększa m.in. klasowe wyposażenie Uzdrowiciela i Wojownika.
+\n
+\n**Inteligencja (INT)** zwiększa zdobywane PD i Manę. INT zwiększa m.in. klasowe wyposażenie Maga i Uzdrowiciela.
+\n
+\n**Percepcja (PER)** zwiększa zdobywane Złoto i szanse na zdobycze. PER zwiększa m.in. klasowe wyposażenie Łotrzyka i Maga.
+\n
+\nPo osiągnięciu poziomu 10 otrzymujesz jeden punkt statystyk za każdy zdobyty poziom. Możesz je przydzielić do wyżej wymienionych statystyk wedle uznania. Twoje założone wyposażenie bojowe również może zwiększyć Twoje statystyki.</string>
+    <string name="hourglasses_description">Mistyczne Klepsydry są niezwykle rzadką walutą otrzymywaną wyłącznie za każde trzy nieprzerwane miesiące Subskrybcji. Przyjmują ją Podróżnicy w Czasie, u których znajdziesz przedmioty z minionych edycji limitowanych, takie jak zestawy wyposażenia, Chowańce i Wierzchowce, a także unikatowe animowane tła profilu i ekskluzywne Misje.
+\n
+\nZ tego powodu na rok możesz otrzymać maksymalnie cztery Mistyczne Klepsydry. Subskrybenci otrzymują je w interwałach związanymi z długością ich Subskrybcji. Mistyczne Klepsydry przysługują pierwszego dnia miesiąca po zaksięgowaniu płatności za Subskrybcję kwalifikującej się na tę walutę. Więcej informacji znajdziesz na stronie [Subskrybcja].</string>
+    <string name="health_description">To jest zdrowie Twojej postaci. Opuszczenie Codziennego albo powtórzenie negatywnego Nawyku **zmniejsza twoje PZ**.
+\n
+\n**Odzyskujesz PZ** po zdobyciu poziomu, zakupie eliksiru uzdrawiającego lub użyciu umiejętności leczącej dostępnej dla określonej klasy.
+\n
+\nKiedy twoje **PZ spadną do 0**, tracisz jeden poziom, całe swoje Złoto i jeden losowy element wyposażenia. Utracone wyposażenie można kupić ponownie.</string>
+    <string name="gems_description">Klejnoty są walutą kupowaną za prawdziwe pieniądze, którą możesz wymienić na dodatkowe przedmioty w Habitica. Są one, obok Subskrybcji, głównym źródłem utrzymania zespołu Habitica.
+\n
+\nWszystkie przedmioty dostępne za Klejnoty są czysto kosmetyczne albo mogą zostać odblokowane za darmo po pewnym czasie gry.
+\n
+\nKlejnoty możesz także otrzymać w prezencie od innych graczy, za wygranie Wyzwania, wkład w rozwój Habitica lub w ramach Subskrybcji.</string>
+    <string name="how_best_habitica">Nie wiesz, jak wykorzystać w pełni potencjał Habitica\?</string>
+    <string name="stats_currency">Statystyki i Waluty</string>
+    <string name="standard">Standard</string>
+    <string name="premium_currency">Waluta Premium</string>
+    <string name="currency">Waluta</string>
+    <string name="common_questions">Częste pytania</string>
+    <string name="game_mechanics">Mechaniki gry</string>
+    <string name="clear_cache">Wyczyść pamięć podręczną Cache</string>
+    <string name="complete_for_gold">Ukończ, aby otrzymać &lt;font color=#EE9109&gt;&lt;b&gt;100 Złota&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="delete_checklist_entry">Usuń…</string>
+    <string name="getting_started">Na początek</string>
+    <string name="adventure_guide_description_new">Ukończ te zadania, a otrzymasz &lt;b&gt;5 Osiągnięć&lt;/b&gt; i &lt;font color=#EE9109&gt;&lt;b&gt;100 Złota&lt;/b&gt;&lt;/font&gt;!</string>
+    <string name="your_progress">Twoje postępy</string>
+    <string name="purchasedEquipmentDescription">Ekwipunek może być praktyczny albo po prostu modny. Możesz dzięki niemu zwiększyć swoje statystyki i wzmocnić swoją postać</string>
+    <string name="onboardingCompleteTitle">W nagrodę za Twój wysiłek otrzymujesz &lt;b&gt; 5 Osiągnięć&lt;/b&gt; oraz &lt;font color=#EE9109&gt;&lt;b&gt;100 Złota&lt;/b&gt;&lt;/font&gt;.</string>
+    <string name="onboardingCompleteDescription">Więcej Osiągnięć znajdziesz w zakładce \"Osiągnięcia\". Udanego zbieractwa!</string>
+    <string name="first_drop_explanation1">Przy każdym ukończeniu Zadania masz szansę na znalezienie Jaj, Eliksirów Wyklucia lub jedzenia dla Chowańców.</string>
+    <string name="first_drop_explanation2">Kliknij w zakładkę Przedmioty i spróbuj połączyć swoje nowe Jajo i Eliksir Wyklucia!</string>
+    <string name="go_to_items">Przejdź do Przedmiotów</string>
+    <string name="first_drop_title">Znaleziono nowe przedmioty!</string>
+    <string name="onboardingComplete_achievement_title">Ukończono wszystkie zadania wprowadzające!</string>
+    <string name="excess_items">Nadmiar Przedmiotów</string>
+    <string name="excessItemsXLeft">Aby wykluć wszystkie dostępne Chowańce, potrzebujesz jedynie %1$d %2$s. Czy na pewno chcesz kupić%3$d\?</string>
+    <string name="purchaseX">Kup %d</string>
+    <string name="excessItemsNoneLeft">Masz już dość sztuk tego przedmiotu, żeby wykluć wszystkie %1$s Chowańce. Czy na pewno chcesz kupić %2$d %3$s\?</string>
+    <string name="equip">Załóż</string>
+    <string name="unequip">Zdejmij</string>
+    <string name="view_onboarding_tasks">Zobacz zadania wprowadzające</string>
+    <string name="suggest_pet_hatch_missing_egg">Potrzebujesz Jaja Chowańca %s, aby wykluć tego Chowańca</string>
+    <string name="suggest_pet_hatch_missing_potion">Potrzebujesz %s Eliksir Wyklucia, aby wykluć tego Chowańca</string>
+    <string name="suggest_pet_hatch_again_missing_egg">Żeby wykluć ponownie tego Chowańca, potrzebujesz Jaja Chowańca %s</string>
+    <string name="suggest_pet_hatch_again_missing_potion">Żeby wykluć ponownie tego Chowańca, potrzebujesz %s Eliksir Wyklucia</string>
+    <string name="suggest_pet_hatch_missing_both">Potrzebujesz %1$s i %2$s Eliksir Wyklucia, aby wykluć tego Chowańca</string>
+    <string name="suggest_pet_hatch_again_missing_both">Żeby wykluć ponownie tego Chowańca, potrzebujesz %1$s i %2$s Eliksir Wyklucia</string>
+    <string name="can_hatch_pet">Połącz Jajo Chowańca %1$s i %2$s Eliksir Wyklucia, aby wykluć tego chowańca!</string>
+    <string name="hatch_pet">Wykluj</string>
+    <string name="unhatched_pet">Niewykluty Chowaniec</string>
+    <string name="hatch_pet_again">Wykluj ponownie</string>
+    <string name="magic_potions">Eliksiry Magiczne</string>
+    <string name="magic_potion">Eliksir Magiczny</string>
+    <string name="use_saddle">Użyj Siodła</string>
+    <string name="hatch_your_pet">Wykluj swojego Chowańca</string>
+    <string name="take_me_back">Wróć</string>
+    <string name="hatch">Wykluj</string>
+    <string name="delete_challenge_task_title">Usunąć Zadanie z Wyzwania\?</string>
+    <string name="delete_challenge_task_description">To jest jedno z %1$d Zadań, które są częścią Wyzwania %2$s”. Musisz opuścić Wyzwanie, aby usunąć to Zadanie.</string>
+    <string name="leave_delete_task">Opuść i usuń Zadanie</string>
+    <string name="leave_delete_x_tasks">Opuść i usuń %d Zadań</string>
+    <string name="broken_challenge">Nieprawidłowe Wyzwanie</string>
+    <string name="broken_challenge_description">To jest jedno z %d Zadań pochodzących z nieistniejącego już Wyzwania. Co chcesz zrobić z tymi Zadaniami\?</string>
+    <string name="keep_x_tasks">Zachowaj %d Zadań</string>
+    <string name="delete_x_tasks">Usuń %d Zadań</string>
+    <string name="challenge_task_name">Zadanie z Wyzwania \"%s\"</string>
+    <string name="pet_category">%s Chowańce</string>
+    <string name="mount_category">%s Wierzchowce</string>
+    <string name="block_user">Zablokuj użytkownika</string>
+    <string name="unblock_user">Odblokuj użytkownika</string>
+    <string name="block_user_title">Zablokować %s\?</string>
+    <string name="spooky_promo_info_instructions">Czas promocji: %s-%s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
+    <string name="gems_promo_info_limitations">Promocja ograniczona czasowo. Obowiązuje przez cały czas wydarzenia, między %s (12:00 UTC) a %s (00:00 UTC). Promocja obejmuje tylko pakiety Klejnotów zakupione na własne konto.</string>
+    <string name="g1g1_promo_info_instructions">Dotknij \"Podaruj Subskrybcję\" i wpisz nazwę użytkownika, któremu chcesz ją podarować. Następnie wybierz okres Subskrybcji i dokończ zakup. Twojemu kontu automatycznie zostanie przypisana Subskrybcja z takim samym okresem i korzyściami.</string>
+    <string name="pms_disabled">Prywatne wiadomości są wyłączone</string>
+    <string name="pms_disabled_description">Nadal jesteś w stanie wysyłać wiadomości, ale nie będziesz otrzymywać wiadomości od innych. Możesz to zmienić w dowolniej chwili w ustawieniach.</string>
+    <string name="x_to_y">%1$s-%2$s</string>
+    <string name="how_it_works">Jak to działa</string>
+    <string name="limitations">Ograniczenia</string>
+    <string name="fall_promo_info_instructions">Czas promocji: %s-%s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
+    <string name="view_gem_bundles">Przejdź do pakietów Klejnotów</string>
+    <string name="dark_mode">Tryb ciemny</string>
+    <string name="theme_mode">Tryb motywu</string>
+    <string name="theme_color">Kolor motywu</string>
+    <string name="submit_feedback">Prześlij opinię</string>
+    <string name="user_is_blocked">Ten użytkownik został zablokowany</string>
+    <string name="user_is_blocked_explanation">Zablokowany użytkownik nie może napisać do Ciebie w wiadomości prywatnej, ale nadal będziesz widzieć jego posty.</string>
+    <string name="finish">Zakończ</string>
+    <string name="g1g1_promo_info_limitations">Oferta ograniczona czasowo. Wydarzenie trwa od %s (13:00 UTC) do %s (1:00 UTC). Aby skorzystać z promocji, należy podarować Subskrybcję innemu użytkownikowi Habitica. Jeśli Ty lub osoba otrzymująca Twój prezent już posiada Subskrybcję, miesiące z tego zakupu zostaną wykorzystane dopiero po zakończeniu lub zrezygnowaniu z bieżącej Subskrybcji.</string>
+    <string name="g1g1_promo_info_prompt">By uczcić ten świąteczny czas, przywracamy naszą wyjątkową promocję. Teraz kiedy podarujesz komuś Subskrybcję, samemu otrzymasz identyczny plan w gratisie!</string>
+    <string name="hurray">Hurra!</string>
+    <string name="usually_x_gems">Zwykle %d Klejnotów</string>
+    <string name="open_website">Otwórz stronę internetową</string>
+    <string name="disablePrivateMessages">Wyłącz prywatne wiadomości</string>
+    <string name="block_user_description">Zablokowany użytkownik nie może napisać do Ciebie w wiadomości prywatnej, ale nadal będziesz widzieć jego posty.</string>
+    <string name="block">Zablokuj</string>
+    <string name="login_disclaimer">Rejestrując się, oświadczasz, że zapoznałeś(-aś) i zgadzasz się na <a href="https://habitica.com/static/terms">Warunki korzystania z Usług</a> i naszą<a href="https://habitica.com/static/privacy">Politykę Prywatności.</a></string>
+    <string name="you">Ty</string>
+    <string name="invitation_title_no_leader">Zaproszono Cię do drużyny</string>
+    <string name="fortify_shop">Mikstura Wzmocnienia</string>
+    <string name="fortify_shop_description">Przywraca wszystkie zadania do neutralnej wartości (żółty kolor), oraz uzdrawia całe stracone Zdrowie</string>
+    <string name="purchase_immediately_description">Działa natychmiastowo po zakupie!</string>
+    <string name="action_end_challenge">Zakończ Wyzwanie</string>
+    <string name="end_challenge_description">Aby zakończyć Wyzwanie, zaloguj się na stronie Habitica, a następnie naciśnij przycisk “Zakończ Wyzwanie” znajdujący się po prawej stronie ekranu Wyzwania.</string>
+    <string name="you_won_challenge">Wygrałeś(-aś) Wyzwanie</string>
+    <string name="congratulations">Gratulacje!</string>
+    <string name="won_achievement_description_noname">Zostałeś(-aś) zwycięzcą Wyzwania! Twoja wygrana została zapisana w Twoich Osiągnięciach</string>
+    <string name="claim_x_gems">Odbierz %d Klejnotów</string>
+    <string name="gift_one_get_one_purchase_banner">Podaruj Subskrypcję i otrzymaj darmową Subskrybcję do: %s</string>
+    <string name="one_month_one_time">1 miesiąc jednorazowej Subskrypcji</string>
+    <string name="three_months_one_time">3 miesiące jednorazowej Subskrypcji</string>
 </resources>

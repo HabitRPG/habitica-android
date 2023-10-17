@@ -219,7 +219,7 @@
 \n • Vos combos de tâches ou d\'habitude ne seront pas réinitialisés
 \n • Vos dégâts de boss ou objets de quêtes collectés resteront en cours jusqu\'à ce que vous quittiez l\'auberge</string>
     <string name="empty_items">Vous n\'avez pas de %s</string>
-    <string name="user_level_with_class">Niv %1$d - %2$s</string>
+    <string name="user_level_with_class">Niv. %1$d - %2$s</string>
     <string name="warrior">Guerrier</string>
     <string name="rogue">Voleur</string>
     <string name="mage">Mage</string>
@@ -242,7 +242,7 @@
     <string name="by_email">Par email</string>
     <string name="invite_existing_users">Inviter des proches déjà inscrits</string>
     <string name="send">Envoyer</string>
-    <string name="invite">Inviter des proches</string>
+    <string name="invite">Trouver des membres</string>
     <string name="invite_username_description">Si vous avez des amis qui utilisent déjà Habitica, invitez les ici avec leur identifiant.</string>
     <string name="invite_email_description">Si des proches rejoignent Habitica via votre email, ils seront automatiquement invités à rejoindre votre équipe !</string>
     <string name="add_invites">Ajouter des invitations</string>
@@ -252,8 +252,8 @@
     <string name="share_hatched">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes !</string>
     <string name="share_raised">Je viens de faire éclore une monture %1$s à Habitica en réalisant mes tâches quotidiennes !</string>
     <string name="open_in_store">Ouvrir dans le Play Store</string>
-    <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
-    <string name="change_class_equipment_warning">Attention : vous ne pourrez plus acheter l\'équipement de la classe %s.</string>
+    <string name="change_class_confirmation">Voulez-vous changer de classe pour 3 gemmes \?</string>
+    <string name="change_class_equipment_warning">Cela va remettre vos attributs à zéro, changer les équipements qui sont achetables dans les boutiques, et changer vos talents disponibles.</string>
     <string name="confirm">Confirmer</string>
     <string name="market">Marché</string>
     <string name="timeTravelers">Voyageurs temporels</string>
@@ -524,7 +524,7 @@
     <string name="class_equipment_shop_dialog">Cet objet est disponible pour une classe spécifique.
 \nVous pouvez changer de classe depuis les paramètres.</string>
     <string name="class_gear_disclaimer">Vous ne pouvez acheter de l\'équipement que pour votre classe actuelle</string>
-    <string name="tavern_description">Bienvenue à la taverne ! Prenez une chaise pour vous joindre à la conversation, ou faites une pause de vos tâches à l\'auberge.</string>
+    <string name="tavern_description">Bienvenue à la taverne ! Prenez une chaise pour vous joindre à la conversation.</string>
     <string name="check_into_inn">Se reposer à l\'auberge</string>
     <string name="community_guidelines">Règles de vie en communauté</string>
     <string name="view_community_guidelines">Voir les règles de vie en communauté</string>
@@ -598,7 +598,7 @@
     <string name="week_reminder_title">Les choses avancent \?</string>
     <string name="week_reminder_text">Validez-lez dans Habitica maintenant pour du butin et de l\'expérience !</string>
     <string name="last_login">Dernière connexion</string>
-    <string name="total_checkins">Total de connexions</string>
+    <string name="total_checkins">Connexions totales</string>
     <string name="two_handed">Deux mains</string>
     <string name="usernamePromptTitle">Il est temps de choisir votre identifiant !</string>
     <string name="usernamePromptBody">Les identifiants sont maintenant uniques. Ils seront visibles sous votre pseudo, et seront utilisés pour les invitations, les @mentions et les discussions.</string>
@@ -822,7 +822,7 @@
     <string name="create_account_short">Créer un compte</string>
     <string name="login_incentive_short_count">%d connexions</string>
     <string name="login_incentive_short">Connectez-vous régulièrement à Habitica</string>
-    <string name="party_invite_short">Inviter des amis</string>
+    <string name="party_invite_short">Trouver des Membres</string>
     <string name="login_incentive_count">Débloqué en se connectant à Habitica %d fois.</string>
     <string name="id_copied">Identifiant copié dans le presse-papier</string>
     <string name="g1g1_duration">17 Déc jusqu\'au 6 Jan</string>
@@ -1161,7 +1161,7 @@
     <string name="minimal">Minimal</string>
     <string name="task_list_mode">Mode liste de tâches</string>
     <string name="discard">Abandonner</string>
-    <string name="class_confirmation_price">Voulez-vous changer de classe et devenir %s pour %d gemmes \?</string>
+    <string name="class_confirmation_price">Voulez-vous changer de classe et devenir %s pour %d Gemmes \?</string>
     <string name="use_item">Utilisez l\'objet sur un allié</string>&gt;
     <string name="discard_changes_to_task_message">Voulez-vous vraiment abandonner les changements pour cette tâche \?</string>
     <string name="gift_confirmation_text_gems_new">Vous avez envoyé %s gemmes à %s.</string>
@@ -1263,4 +1263,19 @@
         <item quantity="other">%d personnes</item>
     </plurals>
     <string name="x_and_y">%1$s et %2$s</string>
+    <string name="level_abbreviated">Niv. %d</string>
+    <string name="change_class_selected_confirmation">Voulez-vous changer de classe en devenant %1$s pour 3 gemmes \?</string>
+    <string name="enable_notifications">Activer les Notifications</string>
+    <string name="push_notification_system_settings_description">Accepter les notifications Habitica dans les Paramètres de l\'application pour recevoir des notifications push</string>
+    <string name="push_notification_system_settings_title">Notifications Désactivées</string>
+    <string name="title">Titre</string>
+    <string name="push_notification_system_settings_reminders">Accepter les notifications Habitica dans les Paramètres de l\'application pour recevoir des rappels</string>
+    <string name="positive_sentence">positif</string>
+    <string name="negative_sentence">négatif</string>
+    <string name="class_changed_description">Vous pouvez utiliser %s talents et acheter del\'équipement depuis les boutiques !</string>
+    <string name="insufficient_level_equipment_dialog">Cet objet n\'est disponible que pour une certaine class.
+\nVous pouvez choisir votre classe après le niveau 10.</string>
+    <string name="x_checkins">%d Connexions</string>
+    <string name="send_invite">Envoyer une invitation</string>
+    <string name="subscription_credit_canceling">Vos <b>+%d</b> crédits de mois d\'abonnement s\'activeront après avoir annulé</string>
 </resources>

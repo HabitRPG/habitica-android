@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="sidebar_stats">Tilastot</string>
+    <string name="sidebar_tasks">Tehtävät</string>
+    <string name="sidebar_inbox">Viestit</string>
+    <string name="sidebar_gems">Osta Jalokiviä</string>
+    <string name="sidebar_guilds">Killat</string>
+    <string name="sidebar_party">Retkikunta</string>
+    <string name="sidebar_section_inventory">Varasto</string>
+    <string name="sidebar_news">Uutiset</string>
+    <string name="sidebar_about">Tietoja</string>
+    <string name="sidebar_shops">Kaupat</string>
+    <string name="sidebar_skills">Kyvyt</string>
+    <string name="sidebar_subscription">Tilaus</string>
+    <string name="sidebar_section_social">Sosiaalinen</string>
+    <string name="sidebar_tavern">Taverna</string>
+    <string name="sidebar_avatar">Hahmon Muokkaus</string>
+    <string name="sidebar_challenges">Haasteet</string>
+    <string name="sidebar_equipment">Varusteet</string>
+    <string name="sidebar_stable">Lemmikit &amp; Ratsut</string>
+    <string name="sidebar_avatar_equipment">Hahmo &amp; Varusteet</string>
+</resources>

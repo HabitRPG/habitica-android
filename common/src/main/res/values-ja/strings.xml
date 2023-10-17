@@ -5,11 +5,11 @@
     <string name="billion_abbrev">b</string>
     <string name="trillion_abbrev">兆</string>
     <string name="mystic_hourglasses">神秘の砂時計</string>
-    <string name="repeat_daily">毎日</string>
+    <string name="repeat_daily">日課</string>
     <string name="monthly">毎月</string>
     <string name="weekly">毎週</string>
     <string name="todos">To Do</string>
-    <string name="daily">毎日</string>
+    <string name="daily">日課</string>
     <string name="todo">To Do</string>
     <string name="stats">ステータス</string>
     <string name="settings">設定</string>

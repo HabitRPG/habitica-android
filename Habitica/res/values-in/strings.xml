@@ -823,7 +823,7 @@
     <string name="transfer">Memindahkan</string>
     <string name="transferred_ownership">Kepimpinan dipindahkan ke %s</string>
     <string name="send_message">Mengirim Pesan</string>
-    <string name="remove_member">Membuang Anggota</string>
+    <string name="remove_member">Keluarkan Anggota</string>
     <string name="transfer_ownership">Memindahkan Kepimpinan</string>
     <string name="remove">Membuang</string>
     <string name="inbox_messages_title_nosender">%d pesan baru</string>

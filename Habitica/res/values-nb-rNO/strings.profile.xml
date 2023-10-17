@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="profile_pets_and_mounts">Kjæledyr og ridedyr</string>
+</resources>

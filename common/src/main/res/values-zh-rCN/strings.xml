@@ -16,4 +16,62 @@
     <string name="about_title">关于</string>
     <string name="are_you_sure">你确定吗？</string>
     <string name="stats">统计</string>
+    <plurals name="x_rewards">
+        <item quantity="other">%d个奖励</item>
+    </plurals>
+    <string name="create_task_title">创建一项任务</string>
+    <string name="complete_task_title">完成一项任务</string>
+    <string name="create_task">创建%s</string>
+    <string name="new_task_x">新建%s</string>
+    <string name="save_task_x">保存%s</string>
+    <string name="trivial_sentence">琐事</string>
+    <plurals name="flagged_count">
+        <item quantity="other">被举报%d次，已被屏蔽</item>
+    </plurals>
+    <string name="medium">中等</string>
+    <string name="hard">困难</string>
+    <string name="medium_sentence">中等</string>
+    <string name="hard_sentence">困难</string>
+    <string name="habits">习惯</string>
+    <string name="dailies">每日任务</string>
+    <string name="todos">待办事项</string>
+    <string name="avatar">角色形象</string>
+    <string name="user_level">%d级</string>
+    <string name="login_btn">登录</string>
+    <string name="register_btn">注册</string>
+    <string name="username">用户名</string>
+    <string name="email_username">邮箱地址/用户名</string>
+    <string name="password">密码</string>
+    <string name="emailAddress">邮箱地址</string>
+    <string name="confirmpassword">确认密码</string>
+    <string name="login_btn_google">使用Google登录</string>
+    <string name="logout">退出</string>
+    <string name="LoginActivityName">欢迎</string>
+    <string name="login_validation_error_title">验证错误</string>
+    <string name="login_validation_error_fieldsmissing">请填写所有内容。</string>
+    <plurals name="x_habits">
+        <item quantity="other">%d个习惯</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="other">%d个每日任务</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="other">%d个待办事项</item>
+    </plurals>
+    <string name="retry">重试</string>
+    <string name="rewards">奖励</string>
+    <string name="gems">宝石</string>
+    <string name="gold_plural">金币</string>
+    <string name="habit">习惯</string>
+    <string name="reward">奖励</string>
+    <string name="todo">待办事项</string>
+    <string name="new_task">新任务</string>
+    <string name="task">任务</string>
+    <string name="failed">加载失败</string>
+    <string name="easy_sentence">简单</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="logout_description">退出账号</string>
+    <string name="gold_capitalized">金币</string>
+    <string name="trivial">琐事</string>
+    <string name="easy">简单</string>
 </resources>

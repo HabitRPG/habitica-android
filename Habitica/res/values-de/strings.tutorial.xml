@@ -1,19 +1,22 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">Da sind wir! Ich habe bereits einige Aufgaben basierend auf deinen Interessen erstellt. Füge ein paar Eigene hinzu. Du kannst jede Aufgabe durch das Antippen des Titels bearbeiten.</string>
-  <string name="tutorial_habits_1">Zuerst die Gewohnheiten. Sie können gute Gewohnheiten sein, die du verbessern möchtest, oder schlechte Gewohnheiten, die du aufgeben möchtest.</string>
-  <string name="tutorial_habits_2">Jedes Mal, wenn du eine gute Gewohnheit umsetzt, klicke auf das +, um Erfahrung und Gold zu erhalten!</string>
-  <string name="tutorial_habits_3">Falls dir doch einen Ausrutscher passiert und du eine schlechte Gewohnheit umsetzt, wird ein Klick auf das - die Lebenspunkte deines Avatars verringern, um dir dabei zu helfen, für deine Taten Verantwortung zu übernehmen.</string>
-  <string name="tutorial_habits_4">Probier es aus! Du kannst die anderen Aufgaben-Typen kennenernen, indem du die untere Navigation benutzt.</string>
-  <string name="tutorial_dailies_1">Erstelle tägliche Aufgaben für zeitkritische Aufgaben, die regelmäßig erledigt werden müssen. </string>
-  <string name="tutorial_dailies_2">Pass auf - wenn Du eine dieser Aufgaben nicht erledigst, wird Deinem Avatar über Nacht Schaden zugefügt. Erledige Deine Aufgaben täglich und Du wirst tolle Belohnungen erhalten!</string>
-  <string name="tutorial_todos_1">Nutze die To Do\'s, um Aufgaben zu organisieren, die du nur einmalig erledigen musst.</string>
-  <string name="tutorial_todos_2">Falls Dein To Do an einem bestimmten Tag erledigt sein muss, kannst du dafür ein Fälligkeitsdatum erstellen. Es sieht so aus, als ob du jetzt auch eine Aufgabe abhaken kannst - probier es aus!</string>
-  <string name="tutorial_rewards_1">Kaufe dir mit dem verdienten Gold Ausrüstung für deinen Avatar!</string>
-  <string name="tutorial_rewards_2">Du kannst auch benutzerdefinierte Belohnungen erstellen, die sich auf etwas in Deinem wirklichen Leben beziehen, je nachdem was Dich motiviert.</string>
-  <string name="tutorial_tasks_complete">Das war\'s für das Erste. Falls du eine Erinnerungshilfe brauchst, dann schau in die FAQs.</string>
+    <string name="tutorial_overview">Da sind wir! Ich habe bereits einige Aufgaben basierend auf deinen Interessen erstellt. Füge ein paar Eigene hinzu. Du kannst jede Aufgabe durch das Antippen des Titels bearbeiten.</string>
+    <string name="tutorial_habits_1">Zuerst die Gewohnheiten. Sie können gute Gewohnheiten sein, die du verbessern möchtest, oder schlechte Gewohnheiten, die du aufgeben möchtest.</string>
+    <string name="tutorial_habits_2">Jedes Mal, wenn du eine gute Gewohnheit umsetzt, klicke auf das +, um Erfahrung und Gold zu erhalten!</string>
+    <string name="tutorial_habits_3">Falls dir doch einen Ausrutscher passiert und du eine schlechte Gewohnheit umsetzt, wird ein Klick auf das - die Lebenspunkte deines Avatars verringern, um dir dabei zu helfen, für deine Taten Verantwortung zu übernehmen.</string>
+    <string name="tutorial_habits_4">Probier es aus! Du kannst die anderen Aufgaben-Typen kennenernen, indem du die untere Navigation benutzt.</string>
+    <string name="tutorial_dailies_1">Erstelle tägliche Aufgaben für zeitkritische Aufgaben, die regelmäßig erledigt werden müssen. </string>
+    <string name="tutorial_dailies_2">Pass auf - wenn Du eine dieser Aufgaben nicht erledigst, wird Deinem Avatar über Nacht Schaden zugefügt. Erledige Deine Aufgaben täglich und Du wirst tolle Belohnungen erhalten!</string>
+    <string name="tutorial_todos_1">Nutze die To Do\'s, um Aufgaben zu organisieren, die du nur einmalig erledigen musst.</string>
+    <string name="tutorial_todos_2">Falls Dein To Do an einem bestimmten Tag erledigt sein muss, kannst du dafür ein Fälligkeitsdatum erstellen. Es sieht so aus, als ob du jetzt auch eine Aufgabe abhaken kannst - probier es aus!</string>
+    <string name="tutorial_rewards_1">Kaufe dir mit dem verdienten Gold Ausrüstung für deinen Avatar!</string>
+    <string name="tutorial_rewards_2">Du kannst auch benutzerdefinierte Belohnungen erstellen, die sich auf etwas in Deinem wirklichen Leben beziehen, je nachdem was Dich motiviert.</string>
+    <string name="tutorial_tasks_complete">Das war\'s für das Erste. Falls du eine Erinnerungshilfe brauchst, dann schau in die FAQs.</string>
     <string name="tutorial_skills">Fähigkeiten erlauben es dir, mächtige Effekte auszulösen! Tippe auf eine Fähigkeit, um sie zu benutzen. Das kostet Mana (der blaue Balken), das du verdienst, indem du dich jeden Tag einloggst und reale Aufgaben abschließt. Für mehr Infos schaue im Menü in die FAQ!</string>
-  <string name="tutorial_party">Hier können du und deine Freunde einander motivieren und mit euren Aufgaben Monster bekämpfen!</string>
-  <string name="tutorial_tavern">Willkommen im Gasthaus, einem öffentlichen Chat für alle Altersklassen! Hier kannst du dich über Produktivität unterhalten und Fragen stellen. Viel Spaß!</string>
+    <string name="tutorial_party">Hier können du und deine Freunde einander motivieren und mit euren Aufgaben Monster bekämpfen!</string>
+    <string name="tutorial_tavern">Willkommen im Gasthaus, einem öffentlichen Chat für alle Altersklassen! Hier kannst du dich über Produktivität unterhalten und Fragen stellen. Viel Spaß!</string>
     <string name="tutorial_stats">Tippe auf den grauen Button, um mehrere Punkte auf einmal zuzuweisen, oder tippe auf die Pfeile, um die Punkte einzeln zu verteilen.</string>
+    <string name="tutorial_party_created">Willkommen in deiner Party! Mehr Partymitglieder findest du entweder über die Liste mit Spielern, welche nach einer Party suchen, oder indem du Freunde direkt einlädts - dafür erhältst du als Belohnung die Basi-List Questrolle.
+\n
+\nBesuche den Support-Bereich, um mehr über Partys zu lernen.</string>
 </resources>

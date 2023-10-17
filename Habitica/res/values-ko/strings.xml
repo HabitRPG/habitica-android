@@ -239,8 +239,8 @@
     <string name="share_hatched">일상생활의 과제들을 달성하여 #Habitica 에서 %1$s %2$s 펫을 부화시켰어요!</string>
     <string name="share_raised">일상생활의 과제들을 달성하여 #Habitica 에서 %1$s 탑승펫을 얻었어요!</string>
     <string name="open_in_store">플레이스토어로 열기</string>
-    <string name="change_class_confirmation">정말로 직업을 바꾸시겠습니까\? 보석 3개가 소모됩니다.</string>
-    <string name="change_class_equipment_warning">주의: 더 이상 %s 직업의 장비를 구입할 수 없게됩니다.</string>
+    <string name="change_class_confirmation">보석 3개를 사용하여 직업을 변경하시겠습니까\?</string>
+    <string name="change_class_equipment_warning">이것은 스탯 포인트가 반환되고, 상점에서 잠금 해제할 수 있는 장비가 변경되며, 사용 가능한 스킬이 변경됩니다.</string>
     <string name="confirm">확인</string>
     <string name="market">시장</string>
     <string name="timeTravelers">시간 여행자들</string>
@@ -1267,4 +1267,9 @@
     <string name="push_notification_system_settings_reminders">리마인더 알림을 받으려면 설정 앱에서 Habitica 알림을 허용해주세요</string>
     <string name="push_notification_system_settings_title">알림 꺼짐</string>
     <string name="shop_armoire_empty_description">시즌 행사에서 새로운 장비가 출시됩니다. 마법의 장비상자에도 매달 재고가 추가됩니다!</string>
+    <string name="title">제목</string>
+    <string name="positive_sentence">긍정적</string>
+    <string name="negative_sentence">부정적</string>
+    <string name="class_changed_description">%s 스킬을 사용할 수 있고 상점에서 장비를 구매할 수 있습니다!</string>
+    <string name="change_class_selected_confirmation">보석 3개를 사용하여 %1$s 직업으로 변경하시겠습니까\?</string>
 </resources>

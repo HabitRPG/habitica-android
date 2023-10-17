@@ -18,4 +18,18 @@
     <string name="save">保存</string>
     <string name="faint_description">レベル、経験値、ゴールドを失いました。あきらめないで！</string>
     <string name="version_info">バージョン %1$s (%2$d)</string>
+    <string name="check_off_yesterday">昨日行ったものをチェックしましょう：</string>
+    <string name="task_type">タスクのタイプ</string>
+    <string name="task_title_hint">タスクのタイトルを入力する</string>
+    <string name="sync_data">データの同期</string>
+    <string name="hide_task_rewards">タスクのごほうびを隠す</string>
+    <string name="log_out_of_habitica">Habiticaからログアウトしますか？</string>
+    <string name="no_tasks">このリストに追加する%sを作成する</string>
+    <string name="an_egg">たまご</string>
+    <string name="a_potion">たまごがえしの薬</string>
+    <string name="some_food">えさ</string>
+    <string name="continue_on_your_phone">携帯端末で続行する</string>
+    <string name="levelup_description">あなたは努力の積み重ねでレベルアップしました！</string>
+    <string name="all_done_today">今日はすべて完了しました！</string>
+    <string name="disconnected">接続を切断されました</string>
 </resources>

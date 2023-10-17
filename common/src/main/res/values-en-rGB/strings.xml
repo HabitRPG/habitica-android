@@ -16,4 +16,67 @@
     <string name="action_cancel">Cancel Invitation</string>
     <string name="about_title">About</string>
     <string name="stats">Stats</string>
+    <string name="gems">Gems</string>
+    <string name="gold_plural">gold</string>
+    <string name="gold_capitalized">Gold</string>
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="dailies">Dailies</string>
+    <string name="todos">To Do\'s</string>
+    <string name="rewards">Rewards</string>
+    <string name="habit">Habit</string>
+    <string name="reward">Reward</string>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Daily</item>
+        <item quantity="other">%d Dailies</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d To Do</item>
+        <item quantity="other">%d To Do\'s</item>
+    </plurals>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Reward</item>
+        <item quantity="other">%d Rewards</item>
+    </plurals>
+    <string name="create_task_title">Create a Task</string>
+    <string name="login_validation_error_title">Validation Error</string>
+    <string name="login_validation_error_fieldsmissing">You have to fill out all fields.</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Habit</item>
+        <item quantity="other">%d Habits</item>
+    </plurals>
+    <string name="complete_task_title">Complete a Task</string>
+    <string name="create_task">Create %s</string>
+    <string name="new_task_x">New %s</string>
+    <string name="save_task_x">Save %s</string>
+    <string name="task">Task</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="hard">Hard</string>
+    <string name="trivial_sentence">trivial</string>
+    <string name="easy_sentence">easy</string>
+    <string name="medium_sentence">medium</string>
+    <string name="hard_sentence">hard</string>
+    <string name="habits">Habits</string>
+    <string name="todo">To Do</string>
+    <string name="failed">Failed to load</string>
+    <string name="retry">Retry</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level">Lvl. %d</string>
+    <string name="login_btn">Login</string>
+    <string name="register_btn">Register</string>
+    <string name="username">Username</string>
+    <string name="email_username">Email/Username</string>
+    <string name="password">Password</string>
+    <string name="confirmpassword">Confirm password</string>
+    <string name="login_btn_google">Sign in with Google</string>
+    <string name="logout">Logout</string>
+    <string name="logout_description">Log out of your account</string>
+    <string name="LoginActivityName">Welcome</string>
+    <string name="new_task">New Task</string>
+    <string name="emailAddress">Email address</string>
+    <plurals name="flagged_count">
+        <item quantity="one">Flagged %d time</item>
+        <item quantity="other">Flagged %d times, hidden</item>
+    </plurals>
+    <string name="trivial">Trivial</string>
 </resources>
