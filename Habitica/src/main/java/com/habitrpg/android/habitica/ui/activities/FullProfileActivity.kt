@@ -104,7 +104,6 @@ class FullProfileActivity : BaseActivity() {
         if (userID.isEmpty()) {
             userID = intent?.data?.path?.removePrefix("/profile/") ?: ""
         }
-        reviewManager = ReviewManager(this)
 
         setTitle(R.string.profile_loading_data)
 

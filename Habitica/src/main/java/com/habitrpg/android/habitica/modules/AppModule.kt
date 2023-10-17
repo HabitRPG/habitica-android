@@ -103,7 +103,7 @@ class AppModule {
     }
 
     @Provides
-    fun providesReviewManager(@ApplicationContext context: Context): ReviewManager {
-        return ReviewManager(context)
+    fun providesReviewManager(@ApplicationContext context: Context, configManager: AppConfigManager): ReviewManager {
+        return ReviewManager(context, configManager)
     }
 }

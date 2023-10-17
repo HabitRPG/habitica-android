@@ -216,7 +216,6 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         launchTrace?.start()
         super.onCreate(savedInstanceState)
         DataBindingUtils.configManager = appConfigManager
-        reviewManager = ReviewManager(this)
 
         if (!viewModel.isAuthenticated) {
             val intent = Intent(this, IntroActivity::class.java)

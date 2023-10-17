@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.google.android.play.core.review.ReviewManagerFactory
 
-class ReviewManager(private val context: Context) {
+class ReviewManager(context: Context, private val configManager: AppConfigManager) {
 
     private val reviewManager = ReviewManagerFactory.create(context)
     private val sharedPref = context.getSharedPreferences("ReviewPrefs", Context.MODE_PRIVATE)
@@ -18,6 +18,7 @@ class ReviewManager(private val context: Context) {
     }
 
     private fun canRequestReview(currentCheckins: Int): Boolean {
+        if (!configManager.enableReviewPrompt()) return false
         val initialCheckins = sharedPref.getInt(INITIAL_CHECKINS_KEY, -1)
         val shouldQueueReview = sharedPref.getBoolean(SHOULD_QUEUE_REVIEW, false)
         val lastReviewCheckin = sharedPref.getInt(LAST_REVIEW_CHECKIN_KEY, -1)
@@ -32,7 +33,6 @@ class ReviewManager(private val context: Context) {
 
         if (initialCheckins == -1) {
             // Store the current checkins as the initial value
-
             sharedPref.edit {
                 putInt(INITIAL_CHECKINS_KEY, currentCheckins)
             }
@@ -87,4 +87,3 @@ class ReviewManager(private val context: Context) {
         }
     }
 }
-

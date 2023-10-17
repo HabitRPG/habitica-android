@@ -167,6 +167,10 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
         return remoteConfig.getBoolean("hideChallenges")
     }
 
+    fun enableReviewPrompt(): Boolean {
+        return remoteConfig.getBoolean("enableReviewPrompt")
+    }
+
     fun getBirthdayEvent(): WorldStateEvent? {
         val events = ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }

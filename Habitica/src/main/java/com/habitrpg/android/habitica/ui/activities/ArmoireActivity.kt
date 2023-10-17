@@ -73,7 +73,6 @@ class ArmoireActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        reviewManager = ReviewManager(this)
 
         binding.goldView.currency = "gold"
         binding.goldView.animationDuration = 1000

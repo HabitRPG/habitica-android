@@ -130,6 +130,10 @@
         <value>false</value>
     </entry>
     <entry>
+        <key>enableReviewPrompti </key>
+        <value>false</value>
+    </entry>
+    <entry>
         <key>hideChallenges</key>
         <value>false</value>
     </entry>

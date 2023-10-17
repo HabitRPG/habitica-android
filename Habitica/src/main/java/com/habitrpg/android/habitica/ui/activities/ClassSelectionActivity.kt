@@ -79,7 +79,6 @@ class ClassSelectionActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        reviewManager = ReviewManager(this)
 
         val args = navArgs<ClassSelectionActivityArgs>().value
         isClassSelected = args.isClassSelected
