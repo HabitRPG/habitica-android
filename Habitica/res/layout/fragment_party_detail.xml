@@ -61,7 +61,8 @@
                         android:padding="@dimen/spacing_medium"
                         android:gravity="center_vertical"
                         android:layout_marginBottom="@dimen/spacing_medium"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
                         <com.habitrpg.common.habitica.views.PixelArtView
                             android:id="@+id/quest_scroll_image_view"
                             android:layout_width="@dimen/gear_image_size"
@@ -77,39 +78,83 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="The Wail of the Whale"
+                                style="@style/SubHeader1"
+                                android:textColor="@color/text_primary"
                                 />
                             <TextView
                                 android:id="@+id/quest_participation_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 tools:text="3 Participants"
-                                android:textColor="@color/text_quad" />
+                                style="@style/Body1"
+                                android:textColor="@color/text_ternary" />
                         </LinearLayout>
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp"/>
                     </LinearLayout>
-                    <FrameLayout
+                    <LinearLayout
                         android:visibility="gone"
+                        tools:visibility="visible"
                         android:id="@+id/quest_image_wrapper"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/layout_rounded_bg_window"
-                        android:padding="@dimen/spacing_medium"
-                        android:layout_marginBottom="@dimen/spacing_medium">
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:clipToPadding="true"
+                        android:clipChildren="true"
+                        android:clipToOutline="true"
+                        android:orientation="vertical">
                         <com.habitrpg.common.habitica.views.PixelArtView
                             android:id="@+id/quest_image_view"
                             android:layout_width="@dimen/quest_image_width"
                             android:layout_height="wrap_content"
                             android:scaleType="fitCenter"
+                            android:padding="@dimen/spacing_medium"
                             android:layout_gravity="center_horizontal"/>
-                    </FrameLayout>
-                    <com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
-                        android:visibility="gone"
-                        android:id="@+id/quest_progress_view"
+                        <com.habitrpg.android.habitica.ui.views.social.OldQuestProgressView
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            android:id="@+id/quest_progress_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/quest_pending_items_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            style="@style/Caption2"
+                            android:paddingVertical="3dp"
+                            android:gravity="center"
+                            android:textColor="@color/green_1"
+                            tools:text="Pending Items"
+                            android:background="@color/green_100"
+                            android:minHeight="28dp"
+                            android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/quest_pending_damage_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="28dp"
+                            android:textSize="13sp"
+                            style="@style/Caption2"
+                            android:paddingVertical="3dp"
+                            android:gravity="center"
+                            android:textColor="@color/yellow_1"
+                            tools:text="Pending Damage"
+                            android:background="@color/yellow_100"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/quest_mechanics_button"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:text="@string/quest_mechanics"
+                        android:textColor="@color/brand_button" />
+
                     <LinearLayout
                         android:id="@+id/quest_participant_response_wrapper"
                         android:layout_width="match_parent"

@@ -14,7 +14,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint

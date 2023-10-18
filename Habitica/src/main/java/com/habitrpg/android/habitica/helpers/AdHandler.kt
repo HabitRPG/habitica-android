@@ -18,7 +18,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.habitrpg.android.habitica.BuildConfig
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.util.Date
@@ -75,7 +74,6 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             DISABLED
         }
 
-        private lateinit var analyticsManager: AnalyticsManager
         private lateinit var sharedPreferences: SharedPreferences
         const val TAG = "AdHandler"
 
@@ -144,9 +142,8 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             }
         }
 
-        fun setup(sharedPrefs: SharedPreferences, analyticsManager: AnalyticsManager) {
+        fun setup(sharedPrefs: SharedPreferences) {
             this.sharedPreferences = sharedPrefs
-            this.analyticsManager = analyticsManager
 
             for (type in AdType.values()) {
                 val time = sharedPrefs.getLong("nextAd${type.name}", 0)
@@ -228,10 +225,12 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
     }
 
     override fun onUserEarnedReward(rewardItem: RewardItem) {
-        analyticsManager.logEvent(
+        Analytics.sendEvent(
             "adRewardEarned",
-            bundleOf(
-                Pair("type", type.name)
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
+            mapOf(
+                "type" to type.name
             )
         )
         FirebaseAnalytics.getInstance(activity).logEvent(

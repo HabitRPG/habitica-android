@@ -103,7 +103,8 @@
                     tools:text="1"
                     android:inputType="number"
                     android:background="@color/transparent"
-                    android:textColor="@color/text_secondary"/>
+                    android:textColor="@color/text_secondary"
+                    android:paddingVertical="2dp"/>
 
                 <TextView
                     android:id="@+id/repeats_every_title"
@@ -128,19 +129,21 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/monthly_repeat_days"
-            style="@style/TaskFormToggle"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="28dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:background="@drawable/layout_rounded_bg_content"
             android:text="@string/repeatables_frequency_day_of_month"
             android:layout_marginEnd="@dimen/spacing_medium"/>
         <TextView
             android:id="@+id/monthly_repeat_weeks"
-            style="@style/TaskFormToggle"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="28dp"
+            android:layout_height="48dp"
             android:text="@string/repeatables_frequency_day_of_week"
+            android:gravity="center"
+            android:background="@drawable/layout_rounded_bg_content"
             android:layout_marginStart="@dimen/spacing_medium"/>
     </LinearLayout>
     <TextView

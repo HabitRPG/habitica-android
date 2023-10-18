@@ -91,8 +91,8 @@ object DataBindingUtils {
             imageName.startsWith("handleless") -> "chair_$imageName"
             else -> imageName
         }
-        return name + if (imageFormat == null && FILEFORMAT_MAP.containsKey(name)) {
-            "." + FILEFORMAT_MAP[name]
+        return name + if (imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
+            "." + FILEFORMAT_MAP[imageName]
         } else {
             ".${imageFormat ?: "png"}"
         }
@@ -161,6 +161,7 @@ object DataBindingUtils {
         tempMap["weapon_special_0"] = "gif"
         tempMap["shield_special_0"] = "gif"
         tempMap["Pet-Wolf-Cerberus"] = "gif"
+        tempMap["stable_Pet-Wolf-Cerberus"] = "gif"
         tempMap["armor_special_ks2019"] = "gif"
         tempMap["slim_armor_special_ks2019"] = "gif"
         tempMap["broad_armor_special_ks2019"] = "gif"
@@ -169,6 +170,7 @@ object DataBindingUtils {
         tempMap["shield_special_ks2019"] = "gif"
         tempMap["weapon_special_ks2019"] = "gif"
         tempMap["Pet-Gryphon-Gryphatrice"] = "gif"
+        tempMap["stable_Pet-Gryphon-Gryphatrice"] = "gif"
         tempMap["Mount_Head_Gryphon-Gryphatrice"] = "gif"
         tempMap["Mount_Body_Gryphon-Gryphatrice"] = "gif"
         tempMap["background_clocktower"] = "gif"
@@ -196,7 +198,7 @@ object DataBindingUtils {
         tempNameMap["shield_special_0"] = "BackerOnly-Shield-TormentedSkull"
         tempNameMap["weapon_special_0"] = "BackerOnly-Weapon-DarkSoulsBlade"
         tempNameMap["weapon_special_critical"] = "weapon_special_critical"
-        tempNameMap["Pet-Wolf-Cerberus"] = "Pet-Wolf-Cerberus"
+        tempNameMap["Pet-Wolf-Cerberus"] = "BackerOnly-Pet-CerberusPup"
         FILENAME_MAP = tempNameMap
     }
 }

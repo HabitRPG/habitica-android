@@ -33,6 +33,7 @@ import androidx.fragment.app.Fragment
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 // Extension for Activity
@@ -71,7 +72,7 @@ private fun BottomSheetWrapper(
     content: @Composable (() -> Unit) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden, skipHalfExpanded = true)
     var isSheetOpened by remember { mutableStateOf(false) }
 
     val systemUiController = rememberSystemUiController()
@@ -84,7 +85,7 @@ private fun BottomSheetWrapper(
     val radius = 20.dp
     ModalBottomSheetLayout(
         sheetBackgroundColor = Color.Transparent,
-        scrimColor = colorResource(R.color.content_background).copy(alpha = 0.3f),
+        scrimColor = colorResource(R.color.content_background).copy(alpha = 0.5f),
         sheetState = modalBottomSheetState,
         sheetShape = RoundedCornerShape(topStart = radius, topEnd = radius),
         sheetContent = {
@@ -92,13 +93,8 @@ private fun BottomSheetWrapper(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
-                    .border(
-                        2.dp,
-                        colorResource(R.color.window_background),
-                        RoundedCornerShape(topStart = radius, topEnd = radius)
-                    )
                     .background(
-                        MaterialTheme.colors.background,
+                        HabiticaTheme.colors.windowBackground,
                         RoundedCornerShape(topStart = radius, topEnd = radius)
                     )
                     .padding(vertical = 8.dp)
@@ -136,7 +132,10 @@ private fun BottomSheetWrapper(
                     }
                     else -> {
                         isSheetOpened = true
-                        modalBottomSheetState.show()
+                        coroutineScope.launch {
+                            delay(100L)
+                            modalBottomSheetState.show()
+                        }
                     }
                 }
             }

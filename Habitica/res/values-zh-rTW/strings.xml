@@ -155,9 +155,7 @@
     <string name="setup_task_creativity_1">學習以成為藝術能手</string>
     <string name="setup_task_creativity_2">進行創新項目</string>
     <string name="setup_task_creativity_3">完成創新項目</string>
-    <string name="my_guilds">我的工會</string>
-    <string name="public_guilds">公共公會</string>
-    <string name="guild">公會</string>
+            <string name="guild">公會</string>
     <string name="leave">離開</string>
     <string name="join">加入</string>
     <string name="delete">刪除</string>
@@ -166,7 +164,6 @@
     <string name="add_tag">添加新標籤</string>
     <string name="privacy">隱私</string>
     <string name="write_message">寫訊息</string>
-    <string name="guild_search_hint">搜尋公會</string>
     <string name="battle_gear">戰鬥裝備</string>
     <string name="costume">服裝</string>
     <string name="outfit_head">頭部</string>
@@ -508,7 +505,6 @@
     <string name="classless">無職業</string>
     <string name="class_equipment_shop_dialog">這個物品只對特定職業開放。\n你可以在設置改變你的職業。</string>
     <string name="class_gear_disclaimer">你只能購買當前職業的裝備</string>
-    <string name="tavern_description">歡迎來到酒館小棧！拉張椅子坐下聊天，或者暫停任務休息一下。</string>
     <string name="check_into_inn">入住客棧</string>
     <string name="community_guidelines">社群規範</string>
     <string name="view_community_guidelines">查看社群規範</string>
@@ -578,7 +574,6 @@
     <string name="delete_oauth_account_description">這個操作會永久刪除你的賬戶，無法恢復！剩餘或者已經消費的寶石都無法退款，如果你不容置疑，在下方文本框寫“DELETE”。</string>
     <string name="change_username">修改使用者名稱</string>
     <string name="join_party_description">把下方的用戶名給一個隊伍成員，這樣他們就能邀請你加入了</string>
-    <string name="tavern_description_world_boss">噢我親愛的老夥計，不用擔心下面的怪物，這裏仍然是一個安全的避風港，來聊聊天吧。</string>
     <string name="same_day_reminder_title">你添加任務了嗎？</string>
     <string name="same_day_reminder_text">你增加得越多，獎勵就會越多。溪流終將匯聚成大海。</string>
     <string name="next_day_reminder_title">今天完成任務了嗎？</string>
@@ -652,8 +647,6 @@
     <string name="unallocated_stats_points"><![CDATA[你有<b>%1$s點未分配屬性點</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[您有新的<b>神秘裝備</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> 您受邀加入<b>%2$s</b>隊伍]]></string>
-    <string name="invited_to_private_guild"><![CDATA[您受邀加入<b>%1$s</b>私人公會]]></string>
-    <string name="invited_to_public_guild"><![CDATA[您受邀加入<b>%1$s</b>您受邀加入]]></string>
     <string name="invited_to_quest"><![CDATA[您受邀加入<b>%1$s</b>副本]]></string>
     <string name="empty_title_dailies_filtered">沒有每日任務</string>
     <string name="empty_description_habits_filtered">你的篩選中沒有任何習慣。</string>
@@ -846,7 +839,7 @@
     <string name="invite_to_guild">邀請加入公會</string>
     <string name="guild_description">公會描述</string>
     <string name="mystery_sets">神秘套裝</string>
-    <string name="reason_for_report">報告原因（可選）</string>
+    <string name="report_message_hint">報告原因（可選）</string>
     <string name="report_message_title">舉報%s違反：</string>
     <string name="report_explanation">你**只能**舉報違反了【社會準則】（https://habitica.com/static/community-guidelines）和/或者【服務條款】（https://habitica.com/static/terms）的消息。不當的舉報會讓你違規。</string>
     <string name="x_class">%s職業</string>
@@ -1186,7 +1179,7 @@
     <string name="class_confirmation_price">更改你的職業成為%s需要%d的寶石，確認更改\?</string>
     <string name="armoireEquipment_new">你在衣櫥裏找到了一個稀有裝備！</string>
     <string name="starting_objectives">新手任務</string>
-    <string name="damage_pending">%.01f即將造成的傷害</string>
+    <string name="damage_pending">%s即將造成的傷害</string>
     <string name="armoireFood_new">你在衣櫥搜查，然後找到了食物。那爲什麼在這裏？</string>
     <string name="adventure_guide_description_new">完成這些任務，即可贏得&lt;b&gt;5項成就&lt;/b&gt;和&lt;font color=#EE9109&gt;&lt;b&gt;100金幣&lt;/b&gt;&lt;/font&gt;！</string>
     <string name="survey_title">Habitica 用戶問卷</string>

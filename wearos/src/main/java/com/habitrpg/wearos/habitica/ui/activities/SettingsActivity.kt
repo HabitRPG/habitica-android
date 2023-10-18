@@ -27,7 +27,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-        binding.root.apply {
+        binding.recyclerView.apply {
             layoutManager =
                 WearableLinearLayoutManager(this@SettingsActivity, HabiticaScrollingLayoutCallback())
             adapter = this@SettingsActivity.adapter

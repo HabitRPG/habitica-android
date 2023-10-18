@@ -20,7 +20,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
@@ -176,6 +179,7 @@ class PreferencesFragment :
                     } else {
                         activity?.let { activity ->
                             val dialog = InsufficientGemsDialog(activity, 3)
+                            Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "class change"))
                             dialog.show()
                         }
                     }
@@ -416,6 +420,13 @@ class PreferencesFragment :
             }
         )
 
+        val themePreference = findPreference("theme_name") as? ListPreference
+        if (themePreference?.value == "Default") themePreference.value = "purple"
+
+        val themeModePreference = findPreference("theme_mode") as? ListPreference
+        if (themeModePreference?.value == "Follow System") themeModePreference.value = "system"
+
+
         if (10 <= (user?.stats?.lvl ?: 0)) {
             if (user?.flags?.classSelected == true) {
                 if (user.preferences?.disableClasses == true) {
@@ -459,6 +470,9 @@ class PreferencesFragment :
             launchScreenPreference?.entryValues =
                 resources.getStringArray(R.array.launch_screen_values).dropLast(1).toTypedArray()
         }
+
+        val launchScreenPreference = findPreference<ListPreference>("launch_screen")
+        if (launchScreenPreference?.value == "habits") launchScreenPreference.value = "/user/tasks/habits"
 
         val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference
         val inbox = user?.inbox

@@ -777,7 +777,7 @@
     </style>
 
     <style name="HabiticaButton.Primary" parent="HabiticaButton">
-        <item name="android:backgroundTint">@color/color_accent</item>
+        <item name="android:backgroundTint">?colorAccent</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
@@ -867,8 +867,8 @@
 
     <style name="ArmoireDescriptionTextView">
         <item name="android:fontFamily">@string/font_family_regular</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.03</item>
         <item name="android:textColor">@color/armoire_text</item>
     </style>
 
@@ -882,7 +882,7 @@
         <item name="android:textColor">@color/red_10</item>
     </style>
     <style name="YellowTextLabel" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/yellow_10</item>
+        <item name="android:textColor">@color/yellow_5</item>
     </style>
     <style name="BlueTextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/blue_10</item>
@@ -1012,12 +1012,12 @@
     </style>
 
     <style name="CountLabel">
-        <item name="android:background">@drawable/pill_bg_gray_300</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">4dp</item>
+        <item name="android:background">@drawable/pill_bg_gray</item>
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
         <item name="android:minWidth">24dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_quad</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>

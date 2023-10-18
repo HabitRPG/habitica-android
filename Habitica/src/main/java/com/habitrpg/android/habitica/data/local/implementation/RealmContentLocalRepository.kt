@@ -47,21 +47,6 @@ open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(
     }
 
     override fun saveWorldState(worldState: WorldState) {
-        val tavern = getUnmanagedCopy(
-            realm.where(Group::class.java)
-                .equalTo("id", Group.TAVERN_ID)
-                .findFirst() ?: Group()
-        )
-        if (!tavern.isManaged) {
-            tavern.id = Group.TAVERN_ID
-        }
-        if (tavern.quest == null) {
-            tavern.quest = Quest()
-        }
-        tavern.quest?.active = worldState.worldBossActive
-        tavern.quest?.key = worldState.worldBossKey
-        tavern.quest?.progress = worldState.progress
-        save(tavern)
         save(worldState)
     }
 }

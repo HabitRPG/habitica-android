@@ -14,4 +14,10 @@
         android:layout_height="39dp"
         android:layout_gravity="center|bottom"
         app:layout_behavior="com.habitrpg.wearos.habitica.util.ScrollAwayBehavior"/>
+    <com.habitrpg.wearos.habitica.ui.views.TimeText
+        android:id="@+id/timeText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:titleTextColor="@color/text_primary"
+        app:layout_behavior="com.habitrpg.wearos.habitica.util.TopScrollAwayBehavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -8,12 +8,12 @@ import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.drawable.Animatable
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import coil.dispose
@@ -72,7 +72,9 @@ class AvatarView : FrameLayout {
             if (BuildConfig.DEBUG && (avatar == null || avatarRectF == null)) {
                 error("Assertion failed")
             }
-            val canvasRect = Rect(0, 0, 140.dpToPx(context), 147.dpToPx(context))
+            val viewWidth = if (width > 0) width else (layoutParams?.width ?: 140)
+            val viewHeight = if (height > 0) height else (layoutParams?.height ?: 147)
+            val canvasRect = Rect(0, 0, if (viewWidth > 0) viewWidth else 140.dpToPx(context), if (viewHeight > 0) viewHeight else 147.dpToPx(context))
             if (canvasRect.isEmpty) return null
             avatarBitmap = Bitmap.createBitmap(
                 canvasRect.width(),
@@ -82,11 +84,11 @@ class AvatarView : FrameLayout {
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             imageViewHolder.forEach {
                 val lp = it.layoutParams
-                val bitmap = it.drawable?.toBitmap(lp.width, lp.height) ?: return@forEach
+                val bitmap = (it.drawable as? BitmapDrawable)?.bitmap ?: return@forEach
                 avatarCanvas?.drawBitmap(
                     bitmap,
                     Rect(0, 0, bitmap.width, bitmap.height),
-                    Rect(it.marginStart, it.marginTop, bitmap.width, bitmap.height),
+                    Rect(it.marginStart, it.marginTop, bitmap.width + it.marginStart, bitmap.height + it.marginTop),
                     null
                 )
             }
@@ -470,8 +472,10 @@ class AvatarView : FrameLayout {
             // full hero box when showMount and showPet is enabled (140w * 147h)
             // compact hero box when only showBackground is enabled (114w * 114h)
             // hero only box when all show settings disabled (90w * 90h)
-            val width = if (this.width > 0) this.width.toFloat() else 140.dpToPx(context).toFloat()
-            val height = if (this.height > 0) this.height.toFloat() else 147.dpToPx(context).toFloat()
+            val viewWidth = if (width > 0) width else (layoutParams?.width ?: 140)
+            val viewHeight = if (height > 0) height else (layoutParams?.height ?: 147)
+            val width = if (viewWidth > 0) viewWidth.toFloat() else 140.dpToPx(context).toFloat()
+            val height = if (viewHeight > 0) viewHeight.toFloat() else 147.dpToPx(context).toFloat()
             avatarRectF = RectF(0f, 0f, width, height)
             avatarMatrix.setRectToRect(RectF(srcRect), avatarRectF, Matrix.ScaleToFit.START)
             avatarRectF = RectF(srcRect)
@@ -479,7 +483,7 @@ class AvatarView : FrameLayout {
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         initAvatarRectMatrix()
@@ -492,7 +496,7 @@ class AvatarView : FrameLayout {
 
     override fun invalidateDrawable(drawable: Drawable) {
         invalidate()
-        if (avatarCanvas != null) draw(avatarCanvas)
+        avatarCanvas?.let { draw(it) }
     }
 
     enum class LayerType {

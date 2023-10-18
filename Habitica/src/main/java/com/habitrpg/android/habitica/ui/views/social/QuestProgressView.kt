@@ -91,14 +91,14 @@ class QuestProgressView : LinearLayout {
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         if (quest?.isValid == true) {
             val colors = quest?.colors
             if (colors != null) {
                 rect.set(0.0f, 0.0f, width.toFloat() / displayDensity, height.toFloat() / displayDensity)
-                canvas?.scale(displayDensity, displayDensity)
+                canvas.scale(displayDensity, displayDensity)
                 HabiticaIcons.drawQuestBackground(canvas, rect, colors.darkColor, colors.mediumColor, colors.extraLightColor)
-                canvas?.scale(1.0f / displayDensity, 1.0f / displayDensity)
+                canvas.scale(1.0f / displayDensity, 1.0f / displayDensity)
             }
         }
         super.onDraw(canvas)
@@ -256,7 +256,6 @@ class QuestProgressView : LinearLayout {
     private fun getLocationName(key: String): String {
         return when (key) {
             "market" -> context.getString(R.string.market)
-            "tavern" -> context.getString(R.string.sidebar_tavern)
             "questShop" -> context.getString(R.string.questShop)
             "seasonalShop" -> context.getString(R.string.seasonalShop)
             "stable" -> context.getString(R.string.sidebar_stable)

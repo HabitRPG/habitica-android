@@ -13,7 +13,10 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -35,6 +38,7 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
@@ -68,6 +72,7 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     var itemTypeText: String? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
+    var onFeedResult: ((FeedResponse?) -> Unit)? = null
     internal var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var user: User? = null
@@ -108,18 +113,40 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText ?: itemType),
-            getString(R.string.open_market)
-        ) {
-            openMarket()
+        val buttonMethod = {
+            Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                "area" to "empty",
+                "type" to (itemType ?: "")
+            ))
+            if (itemType == "quests") {
+                MainNavigationController.navigate(R.id.questShopFragment)
+            } else {
+                openMarket()
+            }
         }
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.no_x, itemTypeText ?: itemType),
+            when (itemType) {
+                "food" -> getString(R.string.empty_food_description)
+                "quests" -> getString(R.string.empty_quests_description)
+                "special" -> getString(R.string.empty_special_description_subscribed)
+                "eggs" -> getString(R.string.empty_eggs_description)
+                "hatchingPotions" -> getString(R.string.empty_potions_description)
+                else -> ""
+            },
+            when (itemType) {
+                "eggs" -> R.drawable.icon_eggs
+                "hatchingPotions" -> R.drawable.icon_hatchingpotions
+                "food" -> R.drawable.icon_food
+                "quests" -> R.drawable.icon_quests
+                "special" -> R.drawable.icon_special
+                else -> null
+            },
+            false,
+            if (itemType == "special") null else buttonMethod)
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
-        activity?.let {
-            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
-        }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         setAdapter()
@@ -138,27 +165,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             this.isHatching -> {
                 binding?.titleTextView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.hatching_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
             }
             this.isFeeding -> {
                 binding?.titleTextView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
-                binding?.footerTextView?.text = getString(R.string.feeding_market_info)
-                binding?.footerTextView?.visibility = View.VISIBLE
-                binding?.openMarketButton?.visibility = View.VISIBLE
             }
             else -> {
                 binding?.titleTextView?.visibility = View.GONE
-                binding?.footerTextView?.visibility = View.GONE
-                binding?.openMarketButton?.visibility = View.GONE
             }
-        }
-
-        binding?.openMarketButton?.setOnClickListener {
-            dismiss()
-            openMarket()
         }
 
         this.loadItems()
@@ -216,6 +230,18 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             }
             adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
             adapter?.onFeedPet = { food -> feedPet(food) }
+
+            adapter?.onOpenShop = {
+                Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                    "area" to "bottom",
+                    "type" to (itemType ?: "")
+                ))
+                if (itemType == "quests") {
+                    MainNavigationController.navigate(R.id.questShopFragment)
+                } else {
+                    openMarket()
+                }
+            }
         }
     }
 
@@ -223,13 +249,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         val pet = feedingPet ?: return
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
-            feedPetUseCase.callInteractor(
+            val result = feedPetUseCase.callInteractor(
                 FeedPetUseCase.RequestValues(
                     pet,
                     food,
                     activity
                 )
             )
+            onFeedResult?.invoke(result)
         }
     }
 

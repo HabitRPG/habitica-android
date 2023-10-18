@@ -128,7 +128,6 @@
     <string name="description">Mô tả</string>
     <string name="privacy">Riêng tư</string>
     <string name="write_message">Viết tin nhắn</string>
-    <string name="guild_search_hint">Tìm Guild</string>
     <string name="battle_gear">Trang bị Chiến đấu</string>
     <string name="today">Hôm nay</string>
     <string name="sidebar_items">Vật phẩm</string>
@@ -169,9 +168,7 @@
     <string name="outfit_head">Đầu</string>
     <string name="costume">Trang phục</string>
     <string name="add_tag">Thêm Nhãn Dán mới</string>
-    <string name="public_guilds">Cộng đồng Bang hội</string>
-    <string name="my_guilds">Bang hội của tôi</string>
-    <string name="setup_task_creativity_1">Học một trò thủ công</string>
+            <string name="setup_task_creativity_1">Học một trò thủ công</string>
     <string name="setup_task_teams_3">Hoàn thành dự án của nhóm</string>
     <string name="setup_task_teams_1">Làm việc nhóm</string>
     <string name="setup_task_healthWellness_3">Kiểm tra lịch trình</string>
@@ -591,7 +588,6 @@
     <string name="view_community_guidelines">Xem Nội quy Cộng đồng</string>
     <string name="community_guidelines">Nội quy Cộng đồng</string>
     <string name="check_into_inn">Đi vào Quán trọ</string>
-    <string name="tavern_description">Chào mừng tới Quán trọ! Kéo một cái ghế ra để trò chuyện, hoặc giải lao sau công việc.</string>
     <string name="class_gear_disclaimer">Bạn chỉ có thể mua trang bị cho chức nghiệp hiện tại của mình</string>
     <string name="class_equipment_shop_dialog">Vật phẩm này chỉ tồn tại với một chức nghiệp nhất định.
 \nBạn có thể thay đổi Chức nghiệp của mình từ Cài đặt.</string>
@@ -608,7 +604,6 @@
     <string name="challenge_prize">Giải thưởng Thử thách</string>
     <string name="reply">Trả lời</string>
     <string name="report">Báo cáo</string>
-    <string name="tavern_description_world_boss">Ôi trời, đừng chú ý tới con Quái vật ở dưới — đây vẫn là nơi an toàn để trò chuyện trong lúc bạn nghỉ ngơi.</string>
     <string name="rage_attack">Tấn công Cuồng nộ:</string>
     <string name="seasonalShop_owner_long">Pháp sư Theo mùa</string>
     <string name="questShop_owner_long">Người hướng dẫn Nhiệm vụ Ian</string>
@@ -649,7 +644,7 @@
     <string name="collapse_notes">Thu lại</string>
     <string name="guild_description">Mô tả Bang hội</string>
     <string name="mystery_sets">Bộ Bí ẩn</string>
-    <string name="reason_for_report">Lí do báo cáo (tùy chọn)</string>
+    <string name="report_message_hint">Lí do báo cáo (tùy chọn)</string>
     <string name="report_message_title">Báo có %s vì vi phạm:</string>
     <string name="report_explanation">**Chỉ** báo cáo một bài viết mà vi phạm [Nội quy Cộng đồng](https://habitica.com/static/community-guidelines) và/hoặc [Điều khoản Dịch vụ](https://habitica.com/static/terms). Báo cáo không hợp lí có thể khiến bạn nhận một cảnh cáo.</string>
     <string name="x_class">Chức nghiệp %s</string>
@@ -680,8 +675,6 @@
     <string name="create">Tạo</string>
     <string name="defeat">Đánh bại</string>
     <string name="invited_to_quest">Bạn đã được mời tham gia vào Nhiệm vụ <b>%1$s</b></string>
-    <string name="invited_to_public_guild">Bạn đã được mời tham gia vào Bang hội <b>%1$s</b></string>
-    <string name="invited_to_private_guild">Bạn đã được mời tham gia vào Bang hội kín <b>%1$s</b></string>
     <string name="invited_to_party_notification">%1$s bạn đã được mời tham gia vào Tổ đội <b>%2$s</b></string>
     <string name="new_subscriber_item">Bạn có <b>Vật phẩm Bí ẩn</b> mới</string>
     <string name="unallocated_stats_points">Bạn có <b>%1$s Điểm Chỉ số chưa phân bổ</b></string>

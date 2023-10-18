@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.social.UserParty
 import com.habitrpg.android.habitica.models.user.User
@@ -286,9 +286,16 @@ open class NotificationsViewModel @Inject constructor(
         navController: MainNavigationController
     ) {
         val data = notification.data as? ItemReceivedData
+        if (data?.destination?.startsWith("/") == true) {
+            MainNavigationController.navigate(data.destination ?: "")
+            return
+        }
         when (data?.destination) {
             "equipment" -> navController.navigate(R.id.equipmentOverviewFragment)
             "customization" -> navController.navigate(R.id.avatarCustomizationFragment)
+            "stable" -> navController.navigate(R.id.stableFragment)
+            "pets" -> navController.navigate(R.id.stableFragment)
+            "mounts" -> navController.navigate(R.id.stableFragment)
             else -> navController.navigate(R.id.itemsFragment)
         }
     }
@@ -301,6 +308,7 @@ open class NotificationsViewModel @Inject constructor(
         if (isPartyMessage(data)) {
             val bundle = Bundle()
             bundle.putString("groupID", data?.group?.id)
+            bundle.putInt("tabToOpen", 1)
             navController.navigate(R.id.partyFragment, bundle)
         } else {
             val bundle = Bundle()

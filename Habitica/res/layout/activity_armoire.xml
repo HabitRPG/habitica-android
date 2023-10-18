@@ -1,172 +1,298 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-<FrameLayout
-    android:id="@+id/confetti_anchor"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/confetti_anchor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <com.habitrpg.android.habitica.ui.views.CurrencyView
-            android:id="@+id/gold_view"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:background="@drawable/armoire_gold_background"
-            android:gravity="center"
-            android:paddingStart="6dp"
-            android:paddingEnd="8dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            tools:text="118"/>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/icon_wrapper"
-            android:layout_width="165dp"
-            android:layout_height="158dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginBottom="23dp"
-            android:visibility="invisible"
-            tools:visibility="visible">
-            <ImageView
-                android:layout_width="158dp"
-                android:layout_height="158dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/circle_gray_700" />
-            <com.habitrpg.common.habitica.views.PixelArtView
-                android:id="@+id/icon_view"
-                android:layout_width="136dp"
-                android:layout_height="136dp"
-                android:layout_centerInParent="true"/>
-            <com.habitrpg.android.habitica.ui.views.SparkView
-                android:id="@+id/left_spark_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                app:color="@color/brand_500"
-                app:thickness="6dp"
-                app:maxSpacing="8dp"
-                app:length="12dp"
-                app:duration="3500"
-                android:layout_marginTop="12dp"/>
-            <com.habitrpg.android.habitica.ui.views.SparkView
-                android:id="@+id/right_spark_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                app:color="@color/brand_500"
-                app:thickness="6dp"
-                app:maxSpacing="10dp"
-                app:duration="4000"
-                app:length="12dp"
-                android:layout_marginEnd="4dp"/>
-        </RelativeLayout>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/title_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="+21 Experience"
-            android:textStyle="bold"
-            android:textSize="28sp"
-            android:gravity="center"
-            android:textColor="@color/text_primary"/>
-        <TextView
-            android:id="@+id/subtitle_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="You wrestle with the Armoire and gain Experience. Take that!"
-            android:textColor="@color/text_ternary"
-            android:layout_marginHorizontal="60dp"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:textSize="20sp"
-            android:letterSpacing="0.04"
-            android:lineSpacingExtra="2dp"
-            />
-    </LinearLayout>
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/armoire_background"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="36dp">
-        <TextView
-            android:id="@+id/equipment_count_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/equipment_remaining"
-            android:textColor="@color/white"
-            style="@style/Headline"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/no_equipment_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_pieces_added_every_month"
-            style="@style/Body2"
-            android:textColor="@color/white"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-            <Button
-                android:id="@+id/equip_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="69dp"
-                android:text="@string/equip"
-                android:textStyle="bold"
-                style="@style/HabiticaButton.White"
-                android:padding="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-                android:layout_marginEnd="12dp"/>
-            <Button
-                android:id="@+id/close_button"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="69dp"
-                android:text="@string/close"
+            <com.habitrpg.android.habitica.ui.views.CurrencyView
+                android:id="@+id/gold_view"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/armoire_gold_background"
+                android:gravity="center"
+                android:paddingStart="6dp"
+                android:paddingEnd="8dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                style="@style/HabiticaButton.White"/>
+                tools:text="118" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/icon_wrapper"
+                    android:layout_width="165dp"
+                    android:layout_height="158dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginBottom="23dp"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="158dp"
+                        android:layout_height="158dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/circle_gray_700" />
+
+                    <com.habitrpg.common.habitica.views.PixelArtView
+                        android:id="@+id/icon_view"
+                        android:layout_width="136dp"
+                        android:layout_height="136dp"
+                        android:layout_centerInParent="true" />
+
+                    <com.habitrpg.android.habitica.ui.views.SparkView
+                        android:id="@+id/left_spark_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="12dp"
+                        app:color="@color/brand_500"
+                        app:duration="3500"
+                        app:length="12dp"
+                        app:maxSpacing="8dp"
+                        app:thickness="6dp" />
+
+                    <com.habitrpg.android.habitica.ui.views.SparkView
+                        android:id="@+id/right_spark_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="4dp"
+                        app:color="@color/brand_500"
+                        app:duration="4000"
+                        app:length="12dp"
+                        app:maxSpacing="10dp"
+                        app:thickness="6dp" />
+                </RelativeLayout>
+                <androidx.compose.ui.platform.ComposeView
+                    android:id="@+id/progress_view"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:alpha="0" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/title_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0"
+                android:gravity="center"
+                android:textColor="@color/text_primary"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                tools:text="+21 Experience" />
+
+            <TextView
+                android:id="@+id/subtitle_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="60dp"
+                android:layout_marginTop="8dp"
+                android:alpha="0"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.04"
+                android:lineSpacingExtra="2dp"
+                android:textColor="@color/text_ternary"
+                android:textSize="20sp"
+                tools:text="You wrestle with the Armoire and gain Experience. Take that!" />
         </LinearLayout>
 
-        <com.habitrpg.android.habitica.ui.views.ads.AdButton
-            android:id="@+id/ad_button"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            app:text="@string/watch_ad_to_open"
-            android:layout_marginTop="4dp"
-            app:currency="gold" />
-        <TextView
-            android:id="@+id/drop_rate_button"
+        <Space
             android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/armoire_drop_rates"
-            android:textColor="@color/brand_600"
-            android:layout_marginTop="22dp"
-            style="@style/Body2"/>
+            android:background="@drawable/armoire_background_full"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="64dp">
+
+            <TextView
+                android:id="@+id/equipment_count_view"
+                style="@style/Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/equipment_remaining"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/no_equipment_view"
+                style="@style/Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_pieces_added_every_month"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingHorizontal="24dp">
+
+                <Button
+                    android:id="@+id/equip_button"
+                    style="@style/HabiticaButton.White"
+                    android:layout_width="0dp"
+                    android:layout_height="69dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:padding="0dp"
+                    android:text="@string/equip"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/close_button"
+                    style="@style/HabiticaButton.White"
+                    android:layout_width="0dp"
+                    android:layout_height="69dp"
+                    android:layout_weight="1"
+                    android:text="@string/close"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.habitrpg.android.habitica.ui.views.ads.AdButton
+                android:id="@+id/ad_button"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                app:currency="gold"
+                app:text="@string/watch_ad_to_open" />
+
+            <LinearLayout
+                android:id="@+id/open_armoire_subscriber_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:paddingStart="24dp"
+                    android:paddingEnd="18dp">
+
+                    <TextView
+                        android:id="@+id/open_armoire_subscriber_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/subscriber_benefit_button_bg"
+                        android:backgroundTint="@null"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="@string/subscriber_button_armoire"
+                        android:textColor="@color/green_1"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        style="@style/Caption2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/sub_perk_bg"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="4dp"
+                        android:text="@string/sub_perk"
+                        android:textColor="@color/green_500" />
+                </FrameLayout>
+
+                <TextView
+                    style="@style/Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="48dp"
+                    android:text="@string/subscription_benefit_armoire_sub"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/unsubbed_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/subscribe_incentive_bg_topround"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp">
+
+                <Button
+                    android:id="@+id/subscribe_modal_button"
+                    style="@style/HabiticaButton.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="69dp"
+                    android:padding="0dp"
+                    android:text="@string/subscribe_incentive_button_armoire"
+                    android:textColor="@color/teal_10"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/subscribe_incentive_text_armoire"
+                    android:textColor="@color/teal_1" />
+
+                <TextView
+                    android:id="@+id/drop_rate_button_unsubbed"
+                    style="@style/Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:alpha="0.75"
+                    android:text="@string/armoire_drop_rates"
+                    android:textColor="@color/teal_1" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/drop_rate_button"
+                style="@style/Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/armoire_drop_rates"
+                android:textColor="@color/brand_600" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </FrameLayout>

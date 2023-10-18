@@ -24,8 +24,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
 import com.habitrpg.android.habitica.extensions.setTintWith
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
@@ -324,7 +326,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             3 -> TaskType.REWARD
             else -> ""
         }
-        AmplitudeManager.sendEvent("open create task form", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+        Analytics.sendEvent("open create task form", EventCategory.BEHAVIOUR, HitType.EVENT, additionalData)
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type.value)
@@ -362,10 +364,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             }
 
             if (!DateUtils.isToday(viewModel.sharedPreferences.getLong("last_creation_reporting", 0))) {
-                AmplitudeManager.sendEvent(
+                Analytics.sendEvent(
                     "task created",
-                    AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                    AmplitudeManager.EVENT_HITTYPE_EVENT
+                    EventCategory.BEHAVIOUR,
+                    HitType.EVENT
                 )
                 viewModel.sharedPreferences.edit {
                     putLong("last_creation_reporting", Date().time)

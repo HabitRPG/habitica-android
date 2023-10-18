@@ -23,7 +23,7 @@ import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem

@@ -6,21 +6,17 @@ import io.realm.annotations.PrimaryKey
 
 open class Pet : RealmObject(), Animal {
     @PrimaryKey
-    override var key: String? = null
+    override var key: String = ""
     override var animal: String = ""
         get() {
-            return if (field.isBlank()) {
-                key?.split("-")?.toTypedArray()?.get(0) ?: ""
-            } else {
-                field
+            return field.ifBlank {
+                key.split("-").toTypedArray()[0]
             }
         }
     override var color: String = ""
         get() {
-            return if (field.isBlank()) {
-                key?.split("-")?.toTypedArray()?.get(1) ?: ""
-            } else {
-                field
+            return field.ifBlank {
+                key.split("-").toTypedArray()[1]
             }
         }
     override var text: String? = null

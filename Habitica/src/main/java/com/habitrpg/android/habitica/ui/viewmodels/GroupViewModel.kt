@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -39,7 +39,6 @@ import kotlin.time.toDuration
 enum class GroupViewType(internal val order: String) {
     PARTY("party"),
     GUILD("guild"),
-    TAVERN("tavern")
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -209,7 +208,7 @@ open class GroupViewModel @Inject constructor(
 
     fun markMessagesSeen() {
         groupID?.let {
-            if (groupViewType != GroupViewType.TAVERN && it.isNotEmpty() && gotNewMessages) {
+            if (it.isNotEmpty() && gotNewMessages) {
                 viewModelScope.launchCatching {
                     socialRepository.markMessagesSeen(it)
                 }

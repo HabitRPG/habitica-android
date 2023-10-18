@@ -218,8 +218,8 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun feedPet(pet: Pet, food: Food): FeedResponse? {
-        val feedResponse = apiClient.feedPet(pet.key ?: "", food.key) ?: return null
-        localRepository.feedPet(food.key, pet.key ?: "", feedResponse.value ?: 0, currentUserID)
+        val feedResponse = apiClient.feedPet(pet.key, food.key) ?: return null
+        localRepository.feedPet(food.key, pet.key, feedResponse.value ?: 0, currentUserID)
         return feedResponse
     }
 
@@ -299,7 +299,14 @@ class InventoryRepositoryImpl(
     }
 
     override suspend fun purchaseItem(purchaseType: String, key: String, purchaseQuantity: Int): Void? {
-        return apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
+        val response = apiClient.purchaseItem(purchaseType, key, purchaseQuantity)
+        if (key == "gem") {
+            val user = localRepository.getLiveUser(currentUserID)
+            localRepository.executeTransaction {
+                user?.purchased?.plan?.gemsBought = purchaseQuantity + (user?.purchased?.plan?.gemsBought ?: 0)
+            }
+        }
+        return response
     }
 
     override suspend fun togglePinnedItem(item: ShopItem): List<ShopItem>? {

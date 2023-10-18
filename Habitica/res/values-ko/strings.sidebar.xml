@@ -3,9 +3,7 @@
     <string name="sidebar_tasks">과제</string>
     <string name="sidebar_skills">스킬</string>
     <string name="sidebar_section_social">소셜</string>
-    <string name="sidebar_tavern">주막</string>
     <string name="sidebar_party">파티</string>
-    <string name="sidebar_guilds">길드</string>
     <string name="sidebar_challenges">도전</string>
     <string name="sidebar_section_inventory">인벤토리</string>
     <string name="sidebar_avatar">아바타 설정</string>

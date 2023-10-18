@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView
+<androidx.coordinatorlayout.widget.CoordinatorLayout tools:context="com.habitrpg.wearos.habitica.ui.activities.MainActivity"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.habitrpg.wearos.habitica.ui.activities.SettingsActivity"
-    tools:deviceIds="wear">
-
-</com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        tools:deviceIds="wear">
+    </com.habitrpg.wearos.habitica.ui.views.HabiticaRecyclerView>
+    <com.habitrpg.wearos.habitica.ui.views.TimeText
+        android:id="@+id/timeText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:titleTextColor="@color/text_primary"
+        app:layout_behavior="com.habitrpg.wearos.habitica.util.TopScrollAwayBehavior"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

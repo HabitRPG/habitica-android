@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionFooterBinding
 import com.habitrpg.android.habitica.databinding.CustomizationSectionHeaderBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -172,12 +172,13 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
         fun bind(customization: Customization) {
             this.customization = customization
 
-            if (customization.type == "background" && customization.identifier == "") {
+            val imageName = customization.getIconName(userSize, hairColor)
+            if (imageName != null) {
+                binding.imageView.loadImage(imageName)
+            } else {
                 binding.imageView.bitmap = null
                 binding.imageView.tag = null
-                binding.imageView.setImageResource(R.drawable.no_background)
-            } else {
-                binding.imageView.loadImage(customization.getIconName(userSize, hairColor))
+                binding.imageView.setImageResource(R.drawable.empty_slot)
             }
 
             if (customization.isUsable(ownedCustomizations.contains(customization.id))) {

@@ -13,14 +13,14 @@ fun HabiticaAlertDialog.addOkButton(
 
 fun HabiticaAlertDialog.addCloseButton(
     isPrimary: Boolean = false,
-    listener: ((DialogInterface, Int) -> Unit)? = null
+    listener: ((HabiticaAlertDialog, Int) -> Unit)? = null
 ) {
     this.addButton(R.string.close, isPrimary, false, true, listener)
 }
 
 fun HabiticaAlertDialog.addCancelButton(
     isPrimary: Boolean = false,
-    listener: ((DialogInterface, Int) -> Unit)? = null
+    listener: ((HabiticaAlertDialog, Int) -> Unit)? = null
 ) {
     this.addButton(R.string.cancel, isPrimary, false, true, listener)
 }

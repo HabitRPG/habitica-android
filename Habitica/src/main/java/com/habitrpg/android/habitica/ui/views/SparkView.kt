@@ -83,7 +83,7 @@ class SparkView @JvmOverloads constructor(
         setMeasuredDimension(width, height)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val thisCanvas = canvas ?: return
         val centerHorizontal = width / 2f

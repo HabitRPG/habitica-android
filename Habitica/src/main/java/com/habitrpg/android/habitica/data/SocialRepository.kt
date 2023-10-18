@@ -15,8 +15,6 @@ import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialRepository : BaseRepository {
-    fun getPublicGuilds(): Flow<List<Group>>
-
     fun getUserGroups(type: String?): Flow<List<Group>>
     suspend fun retrieveGroupChat(groupId: String): List<ChatMessage>?
     fun getGroupChat(groupId: String): Flow<List<ChatMessage>>
@@ -28,6 +26,8 @@ interface SocialRepository : BaseRepository {
         additionalInfo: String,
         groupID: String? = null
     ): Void?
+
+    suspend fun reportMember(memberID: String, data: Map<String, String>): Void?
 
     suspend fun likeMessage(chatMessage: ChatMessage): ChatMessage?
 
@@ -64,9 +64,6 @@ interface SocialRepository : BaseRepository {
         leaderCreateChallenge: Boolean?
     ): Group?
 
-    suspend fun retrieveGroups(type: String): List<Group>?
-    fun getGroups(type: String): Flow<List<Group>>
-
     fun getInboxMessages(replyToUserID: String?): Flow<RealmResults<ChatMessage>>
     suspend fun retrieveInboxMessages(uuid: String, page: Int): List<ChatMessage>?
     suspend fun retrieveInboxConversations(): List<InboxConversation>?
@@ -85,7 +82,6 @@ interface SocialRepository : BaseRepository {
     suspend fun inviteToGroup(id: String, inviteData: Map<String, Any>): List<InviteResponse>?
 
     suspend fun retrieveMember(userId: String?, fromHall: Boolean = false): Member?
-    suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member?
 
     suspend fun findUsernames(
         username: String,
@@ -121,7 +117,7 @@ interface SocialRepository : BaseRepository {
     fun getGroupMemberships(): Flow<List<GroupMembership>>
     suspend fun blockMember(userID: String): List<String>?
     fun getMember(userID: String?): Flow<Member?>
-    suspend fun updateMember(memberID: String, key: String, value: Any?): Member?
+    suspend fun updateMember(memberID: String, data: Map<String, Map<String, Boolean>>): Member?
     suspend fun retrievePartySeekingUsers(page: Int = 0): List<Member>?
     suspend fun retrievegroupInvites(id: String, includeAllPublicFields: Boolean): List<Member>?
 }

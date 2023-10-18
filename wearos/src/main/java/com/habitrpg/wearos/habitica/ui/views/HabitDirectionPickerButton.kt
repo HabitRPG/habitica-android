@@ -68,10 +68,9 @@ class HabitDirectionPickerButton @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if (canvas == null) return
         path.reset()
         if (drawFromTop) {
             path.addArc(rect, 0f, 180f)

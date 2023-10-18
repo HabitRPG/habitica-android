@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -22,11 +23,14 @@ import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivitySetupBinding
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.setup.AvatarSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.TaskSetupFragment
 import com.habitrpg.android.habitica.ui.fragments.setup.WelcomeFragment
+import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.viewpagerindicator.IconPagerAdapter
@@ -85,7 +89,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         }
         val additionalData = HashMap<String, Any>()
         additionalData["status"] = "displayed"
-        AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+        Analytics.sendEvent("setup", EventCategory.BEHAVIOUR, HitType.EVENT, additionalData)
 
         val currentDeviceLanguage = Locale.getDefault().language
         for (language in resources.getStringArray(R.array.LanguageValues)) {
@@ -96,19 +100,26 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             }
         }
 
-        val window = window
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val decor = getWindow().decorView
-            decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            window.statusBarColor = ContextCompat.getColor(this, R.color.light_gray_bg)
-        } else {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.days_gray)
-        }
-
         binding.viewPager.disableFading = true
 
         binding.previousButton.setOnClickListener { previousClicked() }
         binding.nextButton.setOnClickListener { nextClicked() }
+
+        if (this.isUsingNightModeResources()) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                window.insetsController?.setSystemBarsAppearance(
+                    0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
+
+
     }
 
     override fun onDestroy() {
@@ -210,7 +221,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         if (completedSetup && !hasCompleted) {
             val additionalData = HashMap<String, Any>()
             additionalData["status"] = "completed"
-            AmplitudeManager.sendEvent("setup", AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR, AmplitudeManager.EVENT_HITTYPE_EVENT, additionalData)
+            Analytics.sendEvent("setup", EventCategory.BEHAVIOUR, HitType.EVENT, additionalData)
             hasCompleted = true
             lifecycleScope.launchCatching {
                 userRepository.updateUser("flags.welcomed", true)

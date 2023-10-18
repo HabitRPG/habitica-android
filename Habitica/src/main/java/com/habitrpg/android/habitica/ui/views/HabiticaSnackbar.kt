@@ -15,6 +15,8 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.databinding.SnackbarViewBinding
+import com.habitrpg.common.habitica.helpers.Animations
 import com.plattysoft.leonids.ParticleSystem
 
 class HabiticaSnackbar
@@ -25,19 +27,29 @@ class HabiticaSnackbar
  * @param content The content view for this transient bottom bar.
  * @param callback The content view callback for this transient bottom bar.
  */
-private constructor(parent: ViewGroup, content: View, callback: ContentViewCallback) : BaseTransientBottomBar<HabiticaSnackbar>(parent, content, callback) {
+private constructor(parent: ViewGroup, content: View, callback: ContentViewCallback) :
+    BaseTransientBottomBar<HabiticaSnackbar>(parent, content, callback) {
+        val binding: SnackbarViewBinding = SnackbarViewBinding.bind(content)
 
     fun setTitle(title: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_title) as? TextView
-        textView?.text = title
-        textView?.visibility = if (title != null) View.VISIBLE else View.GONE
+        binding.snackbarTitle.text = title
+        binding.snackbarTitle.visibility = if (title != null) View.VISIBLE else View.GONE
         return this
     }
 
     fun setText(text: CharSequence?): HabiticaSnackbar {
-        val textView = view.findViewById<View>(R.id.snackbar_text) as? TextView
-        textView?.text = text
-        textView?.visibility = if (text != null) View.VISIBLE else View.GONE
+        binding.snackbarText.text = text
+        binding.snackbarText.visibility = if (text != null) View.VISIBLE else View.GONE
+        return this
+    }
+
+    fun setTitleColor(color: Int): HabiticaSnackbar {
+        binding.snackbarTitle.setTextColor(color)
+        return this
+    }
+
+    fun setTextColor(color: Int): HabiticaSnackbar {
+        binding.snackbarText.setTextColor(color)
         return this
     }
 
@@ -45,20 +57,16 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
         if (icon == null) {
             return this
         }
-        val rightView = view.findViewById<View>(R.id.rightView)
-        rightView.visibility = View.VISIBLE
-        val rightIconView = view.findViewById<ImageView>(R.id.rightIconView)
-        rightIconView.setImageDrawable(icon)
-        val rightTextView = view.findViewById<TextView>(R.id.rightTextView)
-        rightTextView.setTextColor(textColor)
-        rightTextView.text = text
+        binding.rightView.visibility = View.VISIBLE
+        binding.rightIconView.setImageDrawable(icon)
+        binding.rightTextView.setTextColor(textColor)
+        binding.rightTextView.text = text
         return this
     }
 
     fun setLeftIcon(image: Drawable?): HabiticaSnackbar {
-        val imageView = view.findViewById<ImageView>(R.id.leftImageView)
-        imageView.setImageDrawable(image)
-        imageView.visibility = if (image != null) View.VISIBLE else View.GONE
+        binding.leftImageView.setImageDrawable(image)
+        binding.leftImageView.visibility = if (image != null) View.VISIBLE else View.GONE
         return this
     }
 
@@ -68,42 +76,47 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
     }
 
     fun setBackgroundResource(resourceId: Int): HabiticaSnackbar {
-        val snackbarView = view.findViewById<View>(R.id.snackbar_view)
-        snackbarView.setBackgroundResource(resourceId)
+        binding.snackbarView.setBackgroundResource(resourceId)
         view.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
         return this
     }
 
     private fun setSpecialView(specialView: View?): HabiticaSnackbar {
         if (specialView != null) {
-            val snackbarView = view.findViewById<View>(R.id.content_container) as? LinearLayout
-            snackbarView?.addView(specialView)
+            binding.contentContainer.addView(specialView)
         }
         return this
     }
 
-    private class ContentViewCallback(private val content: View) : com.google.android.material.snackbar.ContentViewCallback {
+    private class ContentViewCallback(private val content: View) :
+        com.google.android.material.snackbar.ContentViewCallback {
 
         @Suppress("SameParameterValue")
         override fun animateContentIn(delay: Int, duration: Int) {
             content.scaleY = 0f
             content.scaleX = 0f
-            ViewCompat.animate(content).scaleY(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
-            ViewCompat.animate(content).scaleX(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
-            ViewCompat.animate(content).alpha(1f).setDuration(duration.toLong()).startDelay = delay.toLong()
+            ViewCompat.animate(content).scaleY(1f).setDuration(duration.toLong()).startDelay =
+                delay.toLong()
+            ViewCompat.animate(content).scaleX(1f).setDuration(duration.toLong()).startDelay =
+                delay.toLong()
+            ViewCompat.animate(content).alpha(1f).setDuration(duration.toLong()).startDelay =
+                delay.toLong()
         }
 
         override fun animateContentOut(delay: Int, duration: Int) {
             content.scaleY = 1f
             content.scaleX = 1f
-            ViewCompat.animate(content).scaleY(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
-            ViewCompat.animate(content).scaleX(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
-            ViewCompat.animate(content).alpha(0f).setDuration(duration.toLong()).startDelay = delay.toLong()
+            ViewCompat.animate(content).scaleY(0f).setDuration(duration.toLong()).startDelay =
+                delay.toLong()
+            ViewCompat.animate(content).scaleX(0f).setDuration(duration.toLong()).startDelay =
+                delay.toLong()
+            ViewCompat.animate(content).alpha(0f).setDuration(duration.toLong()).startDelay =
+                delay.toLong()
         }
     }
 
     enum class SnackbarDisplayType {
-        NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE
+        NORMAL, FAILURE, FAILURE_BLUE, DROP, SUCCESS, BLUE, BLACK, SUBSCRIBER_BENEFIT
     }
 
     companion object {
@@ -123,9 +136,24 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             container: ViewGroup,
             content: CharSequence?,
             displayType: SnackbarDisplayType,
-            isCelebratory: Boolean = false
+            isCelebratory: Boolean = false,
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
-            showSnackbar(container, null, null, content, null, null, 0, null, displayType, isCelebratory)
+            showSnackbar(
+                container,
+                null,
+                null,
+                content,
+                null,
+                null,
+                0,
+                null,
+                displayType,
+                isCelebratory,
+                isSubscriberBenefit,
+                duration
+            )
         }
 
         fun showSnackbar(
@@ -134,9 +162,24 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             title: CharSequence?,
             content: CharSequence?,
             displayType: SnackbarDisplayType,
-            isCelebratory: Boolean = false
+            isCelebratory: Boolean = false,
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
-            showSnackbar(container, leftImage, title, content, null, null, 0, null, displayType, isCelebratory)
+            showSnackbar(
+                container,
+                leftImage,
+                title,
+                content,
+                null,
+                null,
+                0,
+                null,
+                displayType,
+                isCelebratory,
+                isSubscriberBenefit,
+                duration
+            )
         }
 
         fun showSnackbar(
@@ -147,9 +190,24 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             rightTextColor: Int?,
             rightText: String,
             displayType: SnackbarDisplayType,
-            isCelebratory: Boolean = false
+            isCelebratory: Boolean = false,
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
-            showSnackbar(container, null, title, content, null, rightIcon, rightTextColor, rightText, displayType, isCelebratory)
+            showSnackbar(
+                container,
+                null,
+                title,
+                content,
+                null,
+                rightIcon,
+                rightTextColor,
+                rightText,
+                displayType,
+                isCelebratory,
+                isSubscriberBenefit,
+                duration
+            )
         }
 
         fun showSnackbar(
@@ -158,9 +216,24 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             content: CharSequence?,
             specialView: View?,
             displayType: SnackbarDisplayType,
-            isCelebratory: Boolean = false
+            isCelebratory: Boolean = false,
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
-            showSnackbar(container, null, title, content, specialView, null, 0, null, displayType, isCelebratory)
+            showSnackbar(
+                container,
+                null,
+                title,
+                content,
+                specialView,
+                null,
+                0,
+                null,
+                displayType,
+                isCelebratory,
+                isSubscriberBenefit,
+                duration
+            )
         }
 
         fun showSnackbar(
@@ -173,61 +246,136 @@ private constructor(parent: ViewGroup, content: View, callback: ContentViewCallb
             rightTextColor: Int?,
             rightText: String?,
             displayType: SnackbarDisplayType,
-            isCelebratory: Boolean = false
+            isCelebratory: Boolean = false,
+            isSubscriberBenefit: Boolean = false,
+            duration: Int = Snackbar.LENGTH_LONG
         ) {
-            val snackbar = make(container, Snackbar.LENGTH_LONG)
-                .setTitle(title)
-                .setText(content)
+            val snackbar = make(container, duration)
                 .setSpecialView(specialView)
                 .setLeftIcon(leftImage)
+            if (title?.isNotBlank() == true) {
+                snackbar.setTitle(title)
+            }
+            if (content?.isNotBlank() == true) {
+                if (title?.isNotBlank() != true) {
+                    snackbar.setTitle(content)
+                } else {
+                    snackbar.setText(content)
+                }
+            }
             rightTextColor?.let {
                 snackbar.setRightDiff(rightIcon, rightTextColor, rightText)
             }
 
             when (displayType) {
                 SnackbarDisplayType.FAILURE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_red)
-                SnackbarDisplayType.FAILURE_BLUE, SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(R.drawable.snackbar_background_blue)
-                SnackbarDisplayType.DROP, SnackbarDisplayType.NORMAL -> snackbar.setBackgroundResource(R.drawable.snackbar_background_gray)
+                SnackbarDisplayType.BLACK -> snackbar.setBackgroundResource(R.drawable.snackbar_background_black)
+                SnackbarDisplayType.FAILURE_BLUE, SnackbarDisplayType.BLUE -> snackbar.setBackgroundResource(
+                    R.drawable.snackbar_background_blue
+                )
+                SnackbarDisplayType.DROP, SnackbarDisplayType.NORMAL -> snackbar.setBackgroundResource(
+                    R.drawable.snackbar_background_gray
+                )
                 SnackbarDisplayType.SUCCESS -> snackbar.setBackgroundResource(R.drawable.snackbar_background_green)
+                SnackbarDisplayType.SUBSCRIBER_BENEFIT -> {
+                    snackbar.setBackgroundResource(R.drawable.subscriber_benefit_snackbar_bg)
+                    snackbar.setTitleColor(ContextCompat.getColor(container.context, R.color.green_1))
+                    snackbar.setTextColor(ContextCompat.getColor(container.context, R.color.green_1))
+                }
+            }
+
+            if (isCelebratory) {
+                showConfettiAnimation(container)
+            } else if (isSubscriberBenefit) {
+                showSubscriberBenefitAnimation(container, snackbar)
             }
 
             snackbar.show()
-
-            if (isCelebratory) {
-                container.postDelayed(
-                    {
-                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_blue), 6000)
-                            .setAcceleration(0.00070f, 90)
-                            .setRotationSpeedRange(134f, 164f)
-                            .setScaleRange(0.8f, 1.2f)
-                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
-                            .setFadeOut(200, AccelerateInterpolator())
-                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_red), 6000)
-                            .setAcceleration(0.00060f, 90)
-                            .setRotationSpeedRange(134f, 164f)
-                            .setScaleRange(0.8f, 1.2f)
-                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
-                            .setFadeOut(200, AccelerateInterpolator())
-                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_yellow), 6000)
-                            .setAcceleration(0.00070f, 90)
-                            .setRotationSpeedRange(134f, 164f)
-                            .setScaleRange(0.8f, 1.2f)
-                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
-                            .setFadeOut(200, AccelerateInterpolator())
-                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                        ParticleSystem(container, 30, ContextCompat.getDrawable(container.context, R.drawable.confetti_purple), 6000)
-                            .setAcceleration(0.00090f, 90)
-                            .setRotationSpeedRange(134f, 164f)
-                            .setScaleRange(0.8f, 1.2f)
-                            .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
-                            .setFadeOut(200, AccelerateInterpolator())
-                            .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
-                    },
-                    500
-                )
+            if (displayType == SnackbarDisplayType.FAILURE || displayType == SnackbarDisplayType.FAILURE_BLUE) {
+                container.postDelayed({
+                    snackbar.getView().startAnimation(Animations.negativeShakeAnimation())
+                }, 600L)
             }
+        }
+
+        private fun showSubscriberBenefitAnimation(container: ViewGroup, snackbar: HabiticaSnackbar) {
+            container.postDelayed(
+                {
+                    ParticleSystem(
+                        container,
+                        300,
+                        ContextCompat.getDrawable(container.context, R.drawable.confetti_subs),
+                        800L
+                    )
+                        .setFadeOut(200L)
+                        .setSpeedRange(0.05f, 0.2f)
+                        .setScaleRange(0.8f, 1.2f)
+                        .setRotationSpeedRange(134f, 164f)
+                        .emit(snackbar.getView(), 200, 600)
+                }, 500L
+            )
+        }
+
+        private fun showConfettiAnimation(container: ViewGroup) {
+            container.postDelayed(
+                {
+                    ParticleSystem(
+                        container,
+                        30,
+                        ContextCompat.getDrawable(container.context, R.drawable.confetti_blue),
+                        6000
+                    )
+                        .setAcceleration(0.00070f, 90)
+                        .setRotationSpeedRange(134f, 164f)
+                        .setScaleRange(0.8f, 1.2f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                    ParticleSystem(
+                        container,
+                        30,
+                        ContextCompat.getDrawable(container.context, R.drawable.confetti_red),
+                        6000
+                    )
+                        .setAcceleration(0.00060f, 90)
+                        .setRotationSpeedRange(134f, 164f)
+                        .setScaleRange(0.8f, 1.2f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                    ParticleSystem(
+                        container,
+                        30,
+                        ContextCompat.getDrawable(
+                            container.context,
+                            R.drawable.confetti_yellow
+                        ),
+                        6000
+                    )
+                        .setAcceleration(0.00070f, 90)
+                        .setRotationSpeedRange(134f, 164f)
+                        .setScaleRange(0.8f, 1.2f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                    ParticleSystem(
+                        container,
+                        30,
+                        ContextCompat.getDrawable(
+                            container.context,
+                            R.drawable.confetti_purple
+                        ),
+                        6000
+                    )
+                        .setAcceleration(0.00090f, 90)
+                        .setRotationSpeedRange(134f, 164f)
+                        .setScaleRange(0.8f, 1.2f)
+                        .setSpeedByComponentsRange(-0.15f, 0.15f, -0.15f, -0.45f)
+                        .setFadeOut(200, AccelerateInterpolator())
+                        .emitWithGravity(container, Gravity.BOTTOM, 7, 1000)
+                },
+                500
+            )
         }
     }
 }
@@ -247,6 +395,17 @@ interface SnackbarActivity {
         displayType: HabiticaSnackbar.SnackbarDisplayType = HabiticaSnackbar.SnackbarDisplayType.NORMAL,
         isCelebratory: Boolean = false
     ) {
-        HabiticaSnackbar.showSnackbar(snackbarContainer(), leftImage, title, content, specialView, rightIcon, rightTextColor, rightText, displayType, isCelebratory)
+        HabiticaSnackbar.showSnackbar(
+            snackbarContainer(),
+            leftImage,
+            title,
+            content,
+            specialView,
+            rightIcon,
+            rightTextColor,
+            rightText,
+            displayType,
+            isCelebratory
+        )
     }
 }

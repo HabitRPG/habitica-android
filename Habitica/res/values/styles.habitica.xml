@@ -60,8 +60,8 @@
     <style name="Body1">
         <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.035</item>
-        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:letterSpacing">0.015</item>
+        <item name="android:lineSpacingExtra">4sp</item>
     </style>
 
     <style name="Body1_Button" parent="@style/Widget.AppCompat.Button.Borderless">
@@ -87,6 +87,14 @@
         <item name="android:letterSpacing">0.035</item>
     </style>
 
+    <style name="Body4">
+        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="textColor">?textColorPrimary</item>
+    </style>
+
     <!-- Captions -->
     <style name="Caption1">
         <item name="android:fontFamily">@string/font_family_regular</item>
@@ -102,6 +110,7 @@
 
     <style name="Caption2.Regular">
         <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Caption3">

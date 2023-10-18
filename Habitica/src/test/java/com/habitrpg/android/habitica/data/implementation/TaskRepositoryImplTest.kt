@@ -8,6 +8,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import com.habitrpg.shared.habitica.models.tasks.TasksOrder
@@ -37,10 +38,11 @@ class TaskRepositoryImplTest : WordSpec({
         every { localRepository.executeTransaction(transaction = capture(slot)) } answers {
             slot.captured(mockk(relaxed = true))
         }
+        val authenticationHandler = mockk<AuthenticationHandler>()
         repository = TaskRepositoryImpl(
             localRepository,
             apiClient,
-            "",
+            authenticationHandler,
             mockk(relaxed = true),
             mockk(relaxed = true)
         )

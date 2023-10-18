@@ -154,16 +154,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun login(username: String, password: String, onResult: (Boolean) -> Unit) {
-        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            val response = apiClient.loginLocal(UserAuth(username, password)).responseData
-            handleAuthResponse(response)
-            onResult(response?.id != null)
-        }.invokeOnCompletion {
-            onResult(it == null)
-        }
-    }
-
     companion object {
         private const val REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001
     }

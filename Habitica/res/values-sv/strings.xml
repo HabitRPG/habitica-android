@@ -140,9 +140,7 @@
     <string name="setup_task_creativity_1">Studera en mästare inom hantverket</string>
     <string name="setup_task_creativity_2">Arbeta på ett kreativt projekt</string>
     <string name="setup_task_creativity_3">Slutför ett kreativt projekt</string>
-    <string name="my_guilds">Mina gillen</string>
-    <string name="public_guilds">Allmänna gillen</string>
-    <string name="guild">Gille</string>
+            <string name="guild">Gille</string>
     <string name="leave">Lämna</string>
     <string name="join">Gå med</string>
     <string name="delete">Radera</string>
@@ -151,7 +149,6 @@
     <string name="add_tag">Lägg till tagg</string>
     <string name="privacy">Privat</string>
     <string name="write_message">Skriv meddelande</string>
-    <string name="guild_search_hint">Sök efter gillen</string>
     <string name="battle_gear">Stridsutrustning</string>
     <string name="costume">Kostym</string>
     <string name="outfit_head">Huvud</string>

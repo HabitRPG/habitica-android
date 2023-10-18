@@ -10,10 +10,7 @@ import io.realm.RealmResults
 import kotlinx.coroutines.flow.Flow
 
 interface SocialLocalRepository : BaseLocalRepository {
-    fun getPublicGuilds(): Flow<List<Group>>
-
     fun getUserGroups(userID: String, type: String?): Flow<List<Group>>
-    fun getGroups(type: String): Flow<List<Group>>
 
     fun getGroup(id: String): Flow<Group?>
     fun saveGroup(group: Group)

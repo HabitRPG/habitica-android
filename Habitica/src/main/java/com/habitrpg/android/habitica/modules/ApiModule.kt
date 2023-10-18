@@ -9,7 +9,6 @@ import com.habitrpg.android.habitica.data.implementation.ApiClientImpl.Companion
 import com.habitrpg.android.habitica.helpers.MainNotificationsManager
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import dagger.Module
 import dagger.Provides
@@ -50,14 +49,12 @@ open class ApiModule {
     fun providesApiHelper(
         gsonConverter: GsonConverterFactory,
         hostConfig: HostConfig,
-        analyticsManager: AnalyticsManager,
         notificationsManager: NotificationsManager,
         @ApplicationContext context: Context
     ): ApiClient {
         val apiClient = ApiClientImpl(
             gsonConverter,
             hostConfig,
-            analyticsManager,
             notificationsManager,
             context
         )

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sidebar_guilds">กิลด์</string>
     <string name="sidebar_subscription">สมัครสมาชิก</string>
     <string name="sidebar_gems">ซื้อเพชร</string>
     <string name="sidebar_party">ปาร์ตี้</string>
-    <string name="sidebar_tavern">โรงเตี๋ยม</string>
     <string name="sidebar_inbox">ข้อความ</string>
     <string name="sidebar_section_social">สังคม</string>
     <string name="sidebar_skills">สกิล</string>

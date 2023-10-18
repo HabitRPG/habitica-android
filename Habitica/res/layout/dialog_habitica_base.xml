@@ -59,9 +59,8 @@
             android:paddingBottom="@dimen/spacing_medium"
             android:paddingStart="@dimen/alert_side_padding"
             android:paddingEnd="@dimen/alert_side_padding"
-            android:textColor="?textColorSecondary"
             android:scrollbars = "vertical"
-            style="@style/Body2"
+            style="@style/Body4"
             />
         <com.habitrpg.android.habitica.ui.views.login.LockableScrollView
             android:id="@+id/main_scroll_view"

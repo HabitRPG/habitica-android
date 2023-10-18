@@ -14,7 +14,6 @@ open class QuestBossRage : RealmObject(), BaseObject {
     var description: String? = null
 
     var value: Double = 0.toDouble()
-    var tavern: String? = null
     var stables: String? = null
     var market: String? = null
 }

@@ -43,7 +43,6 @@ import com.habitrpg.android.habitica.data.local.implementation.RealmUserLocalRep
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -71,14 +70,12 @@ class UserRepositoryModule {
         apiClient: ApiClient,
         authenticationHandler: AuthenticationHandler,
         appConfigManager: AppConfigManager,
-        analyticsManager: AnalyticsManager
     ): TaskRepository {
         return TaskRepositoryImpl(
             localRepository,
             apiClient,
             authenticationHandler,
-            appConfigManager,
-            analyticsManager
+            appConfigManager
         )
     }
 
@@ -122,7 +119,6 @@ class UserRepositoryModule {
         authenticationHandler: AuthenticationHandler,
         taskRepository: TaskRepository,
         appConfigManager: AppConfigManager,
-        analyticsManager: AnalyticsManager
     ): UserRepository {
         return UserRepositoryImpl(
             localRepository,
@@ -130,7 +126,6 @@ class UserRepositoryModule {
             authenticationHandler,
             taskRepository,
             appConfigManager,
-            analyticsManager
         )
     }
 
@@ -211,10 +206,9 @@ class UserRepositoryModule {
     @Singleton
     fun providesPurchaseHandler(
         @ApplicationContext context: Context,
-        analyticsManager: AnalyticsManager,
         apiClient: ApiClient,
         userViewModel: MainUserViewModel
     ): PurchaseHandler {
-        return PurchaseHandler(context, analyticsManager, apiClient, userViewModel)
+        return PurchaseHandler(context, apiClient, userViewModel)
     }
 }

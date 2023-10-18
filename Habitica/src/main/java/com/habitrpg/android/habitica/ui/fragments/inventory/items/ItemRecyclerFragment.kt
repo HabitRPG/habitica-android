@@ -17,7 +17,10 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.observeOnce
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -89,25 +92,46 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (savedInstanceState != null) {
+            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
+            this.itemTypeText = savedInstanceState.getString(ITEM_TYPE_TEXT_KEY, "")
+        }
+
         binding?.refreshLayout?.setOnRefreshListener(this)
-        binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText ?: itemType),
-            null,
-            null,
-            if (itemType == "special") null else getString(R.string.open_shop)
-        ) {
+        val buttonMethod = {
+            Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                "area" to "empty",
+                "type" to (itemType ?: "")
+            ))
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
                 openMarket()
             }
         }
+        binding?.recyclerView?.emptyItem = EmptyItem(
+            getString(R.string.no_x, itemTypeText ?: itemType),
+            when (itemType) {
+                "food" -> getString(R.string.empty_food_description)
+                            "quests" -> getString(R.string.empty_quests_description)
+                "special" -> getString(R.string.empty_special_description_subscribed)
+                "eggs" -> getString(R.string.empty_eggs_description)
+                "hatchingPotions" -> getString(R.string.empty_potions_description)
+                else -> ""
+                            },
+            when (itemType) {
+                            "eggs" -> R.drawable.icon_eggs
+                "hatchingPotions" -> R.drawable.icon_hatchingpotions
+                "food" -> R.drawable.icon_food
+                "quests" -> R.drawable.icon_quests
+                "special" -> R.drawable.icon_special
+                else -> null
+                            },
+            false,
+            if (itemType == "special") null else buttonMethod)
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
-        activity?.let {
-            binding?.recyclerView?.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(it, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL))
-        }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         userViewModel.user.observeOnce(this) {
@@ -117,17 +141,8 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
             }
         }
 
-        if (savedInstanceState != null) {
-            this.itemType = savedInstanceState.getString(ITEM_TYPE_KEY, "")
-        }
 
         binding?.titleTextView?.visibility = View.GONE
-        binding?.footerTextView?.visibility = View.GONE
-        binding?.openMarketButton?.visibility = View.GONE
-
-        binding?.openMarketButton?.setOnClickListener {
-            openMarket()
-        }
         setAdapter()
         this.loadItems()
     }
@@ -141,42 +156,55 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
                 adapter = ItemRecyclerAdapter(context)
             }
             binding?.recyclerView?.adapter = adapter
-            adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
-            adapter?.onSellItem = {
-                lifecycleScope.launchCatching {
-                    inventoryRepository.sellItem(it)
-                }
+        }
+        adapter?.onUseSpecialItem = { onSpecialItemSelected(it) }
+        adapter?.onSellItem = {
+            lifecycleScope.launchCatching {
+                inventoryRepository.sellItem(it)
             }
-            adapter?.onQuestInvitation = {
-                lifecycleScope.launchCatching {
-                    inventoryRepository.inviteToQuest(it)
-                    MainNavigationController.navigate(R.id.partyFragment)
-                }
+        }
+        adapter?.onQuestInvitation = {
+            lifecycleScope.launchCatching {
+                inventoryRepository.inviteToQuest(it)
+                MainNavigationController.navigate(R.id.partyFragment)
             }
-            adapter?.onOpenMysteryItem = {
-                lifecycleScope.launchCatching {
-                    val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
-                    val activity = activity as? MainActivity
-                    if (activity != null) {
-                        val dialog = OpenedMysteryitemDialog(activity)
-                        dialog.isCelebratory = true
-                        dialog.setTitle(R.string.mystery_item_title)
-                        dialog.binding.iconView.loadImage("shop_${item.key}")
-                        dialog.binding.titleView.text = item.text
-                        dialog.binding.descriptionView.text = item.notes
-                        dialog.addButton(R.string.equip, true) { _, _ ->
-                            lifecycleScope.launchCatching {
-                                item.key?.let { mysteryItem -> inventoryRepository.equip("equipped", mysteryItem) }
-                            }
+        }
+        adapter?.onOpenMysteryItem = {
+            lifecycleScope.launchCatching {
+                val item = inventoryRepository.openMysteryItem(user) ?: return@launchCatching
+                val activity = activity as? MainActivity
+                if (activity != null) {
+                    val dialog = OpenedMysteryitemDialog(activity)
+                    dialog.isCelebratory = true
+                    dialog.setTitle(R.string.mystery_item_title)
+                    dialog.binding.iconView.loadImage("shop_${item.key}")
+                    dialog.binding.titleView.text = item.text
+                    dialog.binding.descriptionView.text = item.notes
+                    dialog.addButton(R.string.equip, true) { _, _ ->
+                        lifecycleScope.launchCatching {
+                            item.key?.let { mysteryItem -> inventoryRepository.equip("equipped", mysteryItem) }
                         }
-                        dialog.addCloseButton()
-                        dialog.enqueue()
                     }
+                    dialog.addCloseButton()
+                    dialog.enqueue()
                 }
             }
-            adapter?.onStartHatching = { showHatchingDialog(it) }
-            adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
-            adapter?.onCreateNewParty = { createNewParty() }
+        }
+        adapter?.onStartHatching = { showHatchingDialog(it) }
+        adapter?.onHatchPet = { pet, egg -> hatchPet(pet, egg) }
+        adapter?.onCreateNewParty = { createNewParty() }
+        adapter?.itemType = itemType ?: ""
+        adapter?.itemText = (if (itemType == "hatchingPotions") context?.getString(R.string.potions) else itemTypeText) ?: ""
+        adapter?.onOpenShop = {
+            Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
+                "area" to "bottom",
+                "type" to (itemType ?: "")
+            ))
+            if (itemType == "quests") {
+                MainNavigationController.navigate(R.id.questShopFragment)
+            } else {
+                openMarket()
+            }
         }
     }
 
@@ -197,6 +225,7 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(ITEM_TYPE_KEY, this.itemType)
+        outState.putString(ITEM_TYPE_TEXT_KEY, this.itemTypeText)
     }
 
     override fun onRefresh() {
@@ -337,5 +366,6 @@ class ItemRecyclerFragment : BaseFragment<FragmentItemsBinding>(), SwipeRefreshL
     companion object {
 
         private const val ITEM_TYPE_KEY = "CLASS_TYPE_KEY"
+        private const val ITEM_TYPE_TEXT_KEY = "CLASS_TYPE_TEXT_KEY"
     }
 }

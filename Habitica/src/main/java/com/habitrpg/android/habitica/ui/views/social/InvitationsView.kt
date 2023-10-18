@@ -9,7 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ViewInvitationBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.extensions.flash
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.invitations.GenericInvitation
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.common.habitica.extensions.layoutInflater
@@ -53,15 +55,21 @@ class InvitationsView @JvmOverloads constructor(
 
             binding.root.setOnClickListener {
                 leaderID?.let { id ->
+                    it.flash()
+                    HapticFeedbackManager.tap(it)
                     val profileDirections = MainNavDirections.openProfileActivity(id)
                     MainNavigationController.navigate(profileDirections)
                 }
             }
 
             binding.acceptButton.setOnClickListener {
+                binding.root.flash()
+                HapticFeedbackManager.tap(it)
                 invitation.id?.let { it1 -> acceptCall?.invoke(it1) }
             }
             binding.rejectButton.setOnClickListener {
+                binding.root.flash()
+                HapticFeedbackManager.tap(it)
                 invitation.id?.let { it1 -> rejectCall?.invoke(it1) }
             }
         }

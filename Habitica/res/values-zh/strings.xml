@@ -159,9 +159,7 @@
     <string name="setup_task_creativity_1">学习以成为艺术能手</string>
     <string name="setup_task_creativity_2">进行创新项目</string>
     <string name="setup_task_creativity_3">完成创新项目</string>
-    <string name="my_guilds">我的公会</string>
-    <string name="public_guilds">公共公会</string>
-    <string name="guild">公会</string>
+            <string name="guild">公会</string>
     <string name="leave">离开</string>
     <string name="join">加入</string>
     <string name="delete">删除</string>
@@ -170,7 +168,6 @@
     <string name="add_tag">添加新标签</string>
     <string name="privacy">隐私</string>
     <string name="write_message">写消息</string>
-    <string name="guild_search_hint">查找公会</string>
     <string name="battle_gear">战斗装备</string>
     <string name="costume">服装</string>
     <string name="outfit_head">头部</string>
@@ -513,7 +510,6 @@
     <string name="classless">无职业</string>
     <string name="class_equipment_shop_dialog">这个物品只对特定职业开放。\n你可以在设置改变你的职业。</string>
     <string name="class_gear_disclaimer">你只能购买当前职业的装备</string>
-    <string name="tavern_description">欢迎来到客栈！拉张凳子坐下聊天，或者暂停任务休息一下。</string>
     <string name="check_into_inn">入住客栈</string>
     <string name="community_guidelines">社区守则</string>
     <string name="view_community_guidelines">查看社区守则</string>
@@ -578,7 +574,6 @@
     <string name="world_boss_description_4">在酒馆可以看到Boss攻略进度和怒气伤害</string>
     <string name="world_boss_action_prompt">打败Boss就能获得特殊奖励！快来从%s的手里拯救Habitica吧！</string>
     <string name="seasonalShop_owner_long">季节女巫</string>
-    <string name="tavern_description_world_boss">噢我亲爱的老伙计，不用担心下面的怪物，这里仍然是一个安全的避风港，来聊聊天吧。</string>
     <string name="challenge_categories">挑战类型</string>
     <string name="joined">已加入</string>
     <string name="short_name">简短的名称</string>
@@ -653,8 +648,6 @@
     <string name="unallocated_stats_points"><![CDATA[你有<b>%1$s没分配的属性点</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[你有新的<b>神秘物品</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> 你被邀请加入队伍<b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild">您收到邀请加入一个私人公会<b>%1$s</b></string>
-    <string name="invited_to_public_guild">您收到了加入公会的邀请<b>%1$s</b></string>
     <string name="invited_to_quest">你被邀请加入副本<b>%1$s</b></string>
     <string name="x_class">%s职业</string>
     <string name="become_x">成为%s</string>
@@ -779,7 +772,7 @@
     <string name="invite_to_guild">邀请加入公会</string>
     <string name="guild_description">公会简介</string>
     <string name="mystery_sets">神秘套装</string>
-    <string name="reason_for_report">报告原因（可选）</string>
+    <string name="report_message_hint">报告原因（可选）</string>
     <string name="report_message_title">举报%s违反：</string>
     <string name="report_explanation">你**只能**举报违反了【社会准则】（https://habitica.com/static/community-guidelines）和/或者【服务条款】（https://habitica.com/static/terms）的消息。不当的举报会让你违规。</string>
     <string name="gems_to_gift">宝石送礼</string>
@@ -1133,7 +1126,7 @@
     <string name="class_confirmation_price">转职为%s需要%d宝石，是否确定更改？</string>
     <string name="use_item">对队伍成员使用物品</string>&gt;
     <string name="unsaved_changes">修改未保存</string>
-    <string name="damage_pending">即将造成%.01f点伤害</string>
+    <string name="damage_pending">即将造成%s点伤害</string>
     <string name="copied_to_clipboard">已将%s复制到剪贴板</string>
     <string name="adjust_counter">调整连击次数</string>
     <string name="reset_counter">重置连击次数</string>

@@ -14,6 +14,5 @@
   <string name="tutorial_tasks_complete">Şimdilik bu kadar. Bir hatırlatıcıya ihtiyacın varsa SSS bölümüne bak.</string>
     <string name="tutorial_skills">Yetenekler güçlü etkileri olan özel becerilerdir! Kullanmak için bir yetenğe bas. Bu Mana ile (mavi çubuk), yani hergün giriş yapmakla ve gerçek hayat görevlerini tamamlamakla kazanarak ödenir. Daha fazla bilgi için menüdeki SSS\'ı kontrol et!</string>
   <string name="tutorial_party">Burası senin ve arkadaşlarının birbirinizi hedeflerinize sorumlu tutabileceğiniz ve görevlerinizle canavarlarla savaştığınız yer!</string>
-  <string name="tutorial_tavern">Taverna, yani herkese açık ve her yaşın sohbet odasına hoşgeldin! Burda üretkenlik hakkında sohbet edebilir ve sorular sorabilirsin. Iyi eğlenceler!</string>
     <string name="tutorial_stats">Niteliklerinin çoğunu tek seferde paylaştırmak için gri butona dokun veya birer eklemek için okları kullan.</string>
 </resources>

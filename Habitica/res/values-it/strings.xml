@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Studia un artista</string>
     <string name="setup_task_creativity_2">Lavora su un progetto creativo</string>
     <string name="setup_task_creativity_3">Completa un progetto creativo</string>
-    <string name="my_guilds">Le mie Gilde</string>
-    <string name="public_guilds">Gilde pubbliche</string>
-    <string name="guild">Gilda</string>
+            <string name="guild">Gilda</string>
     <string name="leave">Abbandona</string>
     <string name="join">Partecipa</string>
     <string name="delete">Elimina</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Aggiungi una nuova etichetta</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Scrivi messaggio</string>
-    <string name="guild_search_hint">Cerca gilde</string>
     <string name="battle_gear">Assetto da battaglia</string>
     <string name="costume">Costume</string>
     <string name="outfit_head">Testa</string>
@@ -522,7 +519,6 @@
     <string name="classless">Nessuna classe</string>
     <string name="class_equipment_shop_dialog">Questo oggetto è disponibile solo per una specifica classe.\nPuoi cambiare la tua classe nelle Impostazioni.</string>
     <string name="class_gear_disclaimer">Puoi comprare solo equipaggiamento per la Classe a cui appartieni</string>
-    <string name="tavern_description">Benvenuto nella Taverna! Siediti vicino a noi per fare due chiacchiere, o prenditi una pausa dalle tue attività.</string>
     <string name="check_into_inn">Entra nella Locanda</string>
     <string name="community_guidelines">Linee guida della community</string>
     <string name="view_community_guidelines">Visualizza le Linee guida della community</string>
@@ -564,7 +560,6 @@
     <string name="questShop_owner_long">Ian la Guida Missione</string>
     <string name="seasonalShop_owner_long">Maga Stagionale</string>
     <string name="rage_attack">Attacco Furia:</string>
-    <string name="tavern_description_world_boss">Oddio, non fare attenzione al mostro lì sotto — qui siamo ancora in una zona protetta in cui puoi discutere quando fai una pausa.</string>
     <string name="report">Segnala</string>
     <string name="reply">Rispondi</string>
     <string name="challenge_prize">Premio Sfida</string>
@@ -644,8 +639,6 @@
     <string name="unallocated_stats_points"><![CDATA[Hai <b>%1$s Punti Statistica non allocati</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Hai dei nuovi <b>Oggetti Misteriosi</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> hai ricevuto un invito per unirti alla Squadra <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Hai ricevuto un invito per unirti alla Gilda privata <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Hai ricevuto un invito per unirti alla Gilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Hai ricevuto un invito per la missione <b>%1$s</b>]]></string>
     <string name="join_party_description_guild">Scrivi qui sotto il nome di un amico oppure vai in %s per incontrare potenziali compagni !</string>
     <string name="skill_progress_title">Sto usando un\'abilità</string>
@@ -679,7 +672,7 @@
     <string name="invite_to_guild">Invita nella Gilda</string>
     <string name="guild_description">Descrizione della Gilda</string>
     <string name="mystery_sets">Set del Mistero</string>
-    <string name="reason_for_report">Ragioni della segnalazione (facoltativo)</string>
+    <string name="report_message_hint">Ragioni della segnalazione (facoltativo)</string>
     <string name="report_message_title">Segnala %s per violazione:</string>
     <string name="report_explanation">Segnala **SOLO** i messaggi che violano le [Linee Guida della Community](https://habitica.com/static/community-guidelines) and/o i [Termini di Servizio](https://habitica.com/static/terms). Inappropriately reporting a post may give you an infraction. Se la segnalazione è inappropriata, potrai subire una sanzione.</string>
     <string name="x_class">Classe %s</string>
@@ -1137,7 +1130,7 @@
     <string name="added_social_auth">Aggiunta autenticazione %s</string>
     <string name="copied_to_clipboard">%s copiato negli appunti</string>
     <string name="sale_ends_in">La vendita termina fra %s</string>
-    <string name="damage_pending">%.01f danno in sospeso</string>
+    <string name="damage_pending">%s danno in sospeso</string>
     <string name="discard">Scarta</string>
     <string name="class_confirmation_price">Vuoi cambiare la tua classe in %s per %d gemme\?</string>
     <string name="adventure_guide_description_new">Completa questi obbiettivi e guadagnerai &lt;b&gt;5 Medaglie&lt;/b&gt; e &lt;font color=#EE9109&gt;&lt;b&gt;100 Ori&lt;/b&gt;&lt;/font&gt; quando avrai finito!</string>

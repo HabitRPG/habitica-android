@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -26,7 +27,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.toMutableStateList
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.core.view.forEachIndexed
 import androidx.core.view.isVisible
@@ -80,6 +80,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TaskFormActivity : BaseActivity() {
 
+
+
     private val viewModel: TaskFormViewModel by viewModels()
 
     private lateinit var binding: ActivityTaskFormBinding
@@ -122,10 +124,14 @@ class TaskFormActivity : BaseActivity() {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(R.string.push_notification_system_settings_title)
             alert.setMessage(R.string.push_notification_system_settings_description)
-            alert.addButton(R.string.settings, true, false) { _, _ ->
-                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, applicationContext?.packageName)
+            alert.addButton(R.string.settings, isPrimary = true, isDestructive = false) { _, _ ->
+                val notifSettingIntent: Intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, applicationContext?.packageName)
+                } else {
+                    return@addButton
+                }
                 startActivity(notifSettingIntent)
             }
             alert.addButton(R.string.cancel, false) { _, _ ->
@@ -217,7 +223,8 @@ class TaskFormActivity : BaseActivity() {
                 .map { tagRepository.getUnmanagedCopy(it) }
                 .collect {
                     tags = it
-                    setTagViews()
+                    sortTagPositions()
+                    createTagViews()
                 }
         }
         userViewModel.user.observe(this) {
@@ -414,8 +421,7 @@ class TaskFormActivity : BaseActivity() {
             val alert = HabiticaAlertDialog(this)
             alert.setTitle(R.string.unsaved_changes)
             alert.setMessage(R.string.discard_changes_to_task_message)
-            alert.addButton(R.string.discard, true, true) { _, _ ->
-                analyticsManager.logEvent("discard_task", bundleOf(Pair("is_creating", isCreating)))
+            alert.addButton(R.string.discard, isPrimary = true, isDestructive = true) { _, _ ->
                 super.onBackPressed()
             }
             alert.addButton(R.string.cancel, false) { _, _ ->
@@ -525,18 +531,65 @@ class TaskFormActivity : BaseActivity() {
         }
     }
 
-    private fun setTagViews() {
+    private fun sortTagPositions() {
+        val sortedTagList = arrayListOf<Tag>()
+        val challengeTagList = arrayListOf<Tag>()
+        val groupTagList = arrayListOf<Tag>()
+        val otherTagList = arrayListOf<Tag>()
+        tags.forEach {
+            if (it.challenge) {
+                challengeTagList.add(it)
+            } else if (it.group != null) {
+                groupTagList.add(it)
+            } else {
+                otherTagList.add(it)
+            }
+        }
+        val challengesTagTitle = Tag().apply {
+            name = getString(R.string.challenge_tags)
+        }
+        val groupsTagTitle = Tag().apply {
+            name = getString(R.string.group_tags)
+        }
+        val otherTagTitle = Tag().apply {
+            name = getString(R.string.your_tags)
+        }
+        if (challengeTagList.isNotEmpty()) {
+            sortedTagList.add(challengesTagTitle)
+            sortedTagList.addAll(challengeTagList)
+        }
+        if (groupTagList.isNotEmpty()) {
+            sortedTagList.add(groupsTagTitle)
+            sortedTagList.addAll(groupTagList)
+        }
+        if (otherTagList.isNotEmpty()) {
+            sortedTagList.add(otherTagTitle)
+            sortedTagList.addAll(otherTagList)
+        }
+        tags = sortedTagList
+    }
+
+    private fun createTagViews() {
         binding.tagsWrapper.removeAllViews()
         val padding = 20.dpToPx(this)
-        for (tag in tags) {
-            val view = CheckBox(this)
-            view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
-            view.text = tag.name
-            view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
-            if (preselectedTags?.contains(tag.id) == true) {
-                view.isChecked = true
+        tags.forEach { tag ->
+            if (tag.id.isBlank()) {
+                // This is a title for a tag group
+                val view = TextView(this)
+                view.setPadding(0, view.paddingTop, view.paddingRight, view.paddingBottom)
+                view.text = tag.name
+                view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
+                binding.tagsWrapper.addView(view)
+            } else {
+                val view = CheckBox(this)
+                view.setPadding(padding, view.paddingTop, view.paddingRight, view.paddingBottom)
+                view.text = tag.name
+                view.setTextColor(getThemeColor(R.attr.textColorTintedPrimary))
+                if (preselectedTags?.contains(tag.id) == true) {
+                    view.isChecked = true
+                }
+                binding.tagsWrapper.addView(view)
             }
-            binding.tagsWrapper.addView(view)
         }
         setAllTagSelections()
         updateTagViewsColors()
@@ -608,7 +661,7 @@ class TaskFormActivity : BaseActivity() {
             binding.habitResetStreakButtons.visibility = View.GONE
 
             assignedIDs =
-                task.group?.assignedUsersDetail?.map { it.assignedUserID }?.filterNotNull()
+                task.group?.assignedUsersDetail?.mapNotNull { it.assignedUserID }
                     ?.toMutableStateList() ?: mutableStateListOf()
             task.group?.assignedUsersDetail?.forEach {
                 it.completedDate?.let { date ->
@@ -684,7 +737,7 @@ class TaskFormActivity : BaseActivity() {
             thisTask.tags = RealmList()
             binding.tagsWrapper.forEachIndexed { index, view ->
                 val tagView = view as? CheckBox
-                if (tagView?.isChecked == true) {
+                if (tagView?.isChecked == true && tags[index].id.isNotBlank()) {
                     thisTask.tags?.add(tags[index])
                 }
             }
@@ -721,7 +774,7 @@ class TaskFormActivity : BaseActivity() {
 
         val assignChanges = mapOf(
             "assign" to mutableListOf<String>(),
-            "unassign" to mutableListOf<String>()
+            "unassign" to mutableListOf()
         )
         if (groupID != null && thisTask.group?.groupID == null) {
             thisTask.group = TaskGroupPlan()
@@ -745,9 +798,6 @@ class TaskFormActivity : BaseActivity() {
                 taskRepository.createTaskInBackground(thisTask, assignChanges)
             } else {
                 taskRepository.updateTaskInBackground(thisTask, assignChanges)
-            }
-            if (isDiscardCancelled) {
-                analyticsManager.logEvent("back_to_task", bundleOf(Pair("is_creating", isCreating)))
             }
 
             if (thisTask.type == TaskType.DAILY || thisTask.type == TaskType.TODO) {
@@ -828,7 +878,7 @@ class TaskFormActivity : BaseActivity() {
                     lifecycleScope.launch(Dispatchers.Main) {
                         challengeRepository.leaveChallenge(it, "keep-all")
                         taskRepository.deleteTask(task?.id ?: "")
-                        userRepository.retrieveUser(true, true)
+                        userRepository.retrieveUser(withTasks = true, forced = true)
                     }
                 }
             }
@@ -840,7 +890,7 @@ class TaskFormActivity : BaseActivity() {
                 challenge?.let {
                     lifecycleScope.launch(Dispatchers.Main) {
                         challengeRepository.leaveChallenge(it, "remove-all")
-                        userRepository.retrieveUser(true, true)
+                        userRepository.retrieveUser(withTasks = true, forced = true)
                     }
                 }
             }
@@ -872,17 +922,17 @@ class TaskFormActivity : BaseActivity() {
             ) { _, _ ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "keep-all")
-                    userRepository.retrieveUser(true, true)
+                    userRepository.retrieveUser(withTasks = true, forced = true)
                 }
             }
             dialog.addButton(
                 getString(R.string.delete_x_tasks, taskCount),
-                false,
-                true
+                isPrimary = false,
+                isDestructive = true
             ) { _, _ ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.unlinkAllTasks(task.challengeID, "remove-all")
-                    userRepository.retrieveUser(true, true)
+                    userRepository.retrieveUser(withTasks = true, forced = true)
                 }
             }
             dialog.setExtraCloseButtonVisibility(View.VISIBLE)

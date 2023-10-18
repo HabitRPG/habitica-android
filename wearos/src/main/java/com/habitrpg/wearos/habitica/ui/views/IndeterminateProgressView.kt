@@ -86,9 +86,8 @@ class IndeterminateProgressView @JvmOverloads constructor(
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (canvas == null) return
         val halfBar = paint.strokeWidth / 2f
         if (isCircular) {
             canvas.drawArc(halfBar, halfBar, width.toFloat() - halfBar, height.toFloat() - halfBar, currentAngle, 360f, false, paint)

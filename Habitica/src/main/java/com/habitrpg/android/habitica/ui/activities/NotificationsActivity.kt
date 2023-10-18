@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -19,7 +20,9 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
 import com.habitrpg.android.habitica.extensions.fadeInAnimation
+import com.habitrpg.android.habitica.extensions.flash
 import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.common.habitica.extensions.fromHtml
@@ -39,6 +42,7 @@ import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -145,7 +149,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                     Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
                     Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
                     Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
-                    Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
                     Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
                     Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
                     else -> null
@@ -198,7 +201,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         badge?.text = notificationCount.toString()
 
         val dismissAllButton = header?.findViewById(R.id.dismiss_all_button) as? Button
-        dismissAllButton?.setOnClickListener { viewModel.dismissAllNotifications(notifications) }
+        dismissAllButton?.setOnClickListener {
+            binding.root.flash()
+            HapticFeedbackManager.tap(it)
+            viewModel.dismissAllNotifications(notifications)
+        }
 
         return header
     }
@@ -222,24 +229,27 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
-    private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
+    private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(Dispatchers.IO) {
         var baileyNotification = notification
         val data = notification.data as? NewStuffData
         val text = if (data?.title != null) {
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
         } else {
-            baileyNotification = userRepository.getNewsNotification() ?: return@withContext null
+            baileyNotification = userRepository.getNewsNotification() ?: notification
             val baileyNewsData = baileyNotification.data as? NewStuffData
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
         }
         baileyNotification.id = notification.id
 
-        return@withContext createDismissableNotificationItem(
-            baileyNotification,
-            text,
-            R.drawable.notifications_bailey
-        )
+        return@withContext withContext(Dispatchers.Main) {
+            createDismissableNotificationItem(
+                baileyNotification,
+                text,
+                R.drawable.notifications_bailey
+            )
+        }
     }
+
 
     private fun createUnallocatedStatsNotification(notification: Notification): View? {
         val level = userLvl ?: return null
@@ -325,6 +335,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val container = item?.findViewById(R.id.notification_item) as? View
         container?.setOnClickListener {
+            it.flash()
+            HapticFeedbackManager.tap(it)
             val resultIntent = Intent()
             resultIntent.putExtra("notificationId", notification.id)
             setResult(Activity.RESULT_OK, resultIntent)
@@ -333,6 +345,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
         dismissButton?.setOnClickListener {
+            container?.flash()
+            HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.dismissNotification(notification)
         }
@@ -373,17 +387,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         } else {
             return@withContext null
         }
-    }
-
-    private fun createGuildInvitationNotification(notification: Notification): View? {
-        val data = notification.data as? GuildInvitationData
-        val stringId = if (data?.invitation?.publicGuild == false) R.string.invited_to_private_guild else R.string.invited_to_public_guild
-
-        return createActionableNotificationItem(
-            notification,
-            fromHtml(getString(stringId, data?.invitation?.name)),
-            data?.invitation?.publicGuild == true
-        )
     }
 
     private fun createQuestInvitationNotification(notification: Notification): View? {
@@ -445,6 +448,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         if (openable) {
             val container = item?.findViewById(R.id.notification_item) as? View
             container?.setOnClickListener {
+                it.flash()
+                HapticFeedbackManager.tap(it)
                 if (inviterId != null) {
                     FullProfileActivity.open(inviterId)
                 } else {
@@ -458,11 +463,17 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
+            binding.root.flash()
+            HapticFeedbackManager.tap(it)
+            removeNotificationAndRefresh(notification)
             viewModel.accept(notification.id)
         }
 
         val rejectButton = item?.findViewById(R.id.reject_button) as? Button
         rejectButton?.setOnClickListener {
+            binding.root.flash()
+            HapticFeedbackManager.tap(it)
+            removeNotificationAndRefresh(notification)
             viewModel.reject(notification.id)
         }
 

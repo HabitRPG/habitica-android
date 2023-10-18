@@ -6,59 +6,61 @@
     android:orientation="horizontal">
 
     <ImageView
-            android:id="@+id/icon_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/progressBar"
-            android:layout_marginEnd="@dimen/bar_icon_padding"
-            android:contentDescription="@null"
-            android:scaleType="center"
-            android:visibility="gone"/>
+        android:id="@+id/icon_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/progressBar"
+        android:layout_marginEnd="@dimen/bar_icon_padding"
+        android:contentDescription="@null"
+        android:scaleType="center"
+        android:visibility="gone" />
 
     <com.habitrpg.common.habitica.views.HabiticaProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bar_size"
-            android:layout_toEndOf="@id/icon_view"
-            android:orientation="horizontal"/>
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_size"
+        android:layout_toEndOf="@id/icon_view"
+        android:orientation="horizontal" />
 
     <LinearLayout
-            android:id="@+id/labelWrapper"
-            android:layout_width="match_parent"
+        android:id="@+id/labelWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBar"
+        android:layout_toEndOf="@id/icon_view"
+        android:paddingTop="2dp">
+
+        <ImageView
+            android:id="@+id/secondaryIconView"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/value_text_view"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/progressBar"
-            android:layout_toEndOf="@id/icon_view"
-            android:paddingTop="2dp">
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="14sp"
+            tools:text="50/50" />
 
         <ImageView
-                android:id="@+id/secondaryIconView"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:visibility="gone"/>
+            android:id="@+id/description_icon_view"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:visibility="gone" />
 
         <TextView
-                android:id="@+id/value_text_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="12sp"
-                tools:text="50/50"/>
-
-        <ImageView
-                android:id="@+id/description_icon_view"
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:visibility="gone"/>
-
-        <TextView
-                android:id="@+id/description_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center|end"
-                android:textSize="12sp"
-                tools:text="Health"/>
+            android:id="@+id/description_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center|end"
+            android:textSize="14sp"
+            tools:text="Health" />
     </LinearLayout>
 
 </RelativeLayout>

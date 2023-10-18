@@ -16,6 +16,5 @@
     <string name="tutorial_skills">Skills are special abilities that have powerful effects! Tap on a skill to use it. It will cost Mana (the blue bar), which you earn by checking in every day and by completing your real-life tasks. Check out the FAQ in the menu for more info!</string>
     <string name="tutorial_party_created">Welcome to your Party! You can find more members from a list of players looking for a Party or invite friends directly to earn the Basi-List Quest Scroll.\n\nVisit Support to learn more about Parties.</string>
     <string name="tutorial_party">This is where you and your friends can hold each other accountable to your goals and fight monsters with your tasks!</string>
-    <string name="tutorial_tavern">Welcome to the Tavern, a public, all-ages chatroom! Here you can chat about productivity and ask questions. Have fun!</string>
     <string name="tutorial_stats">Tap the gray button to allocate lots of your stats at once, or tap the arrows to add them one point at a time.</string>
 </resources>

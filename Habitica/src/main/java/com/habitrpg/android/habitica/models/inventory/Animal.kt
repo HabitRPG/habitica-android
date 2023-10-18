@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.models.inventory
 
 interface Animal {
-    var key: String?
+    var key: String
     var text: String?
     var type: String?
     var animal: String

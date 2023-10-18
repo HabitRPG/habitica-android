@@ -20,7 +20,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
@@ -37,12 +37,12 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
@@ -120,21 +120,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }
 
-        lifecycleScope.launchCatching {
-            inventoryRepository.getLatestMysteryItem().collect {
-                binding?.subBenefitsMysteryItemIcon?.loadImage(
-                    "shop_set_mystery_${
-                    it.key?.split(
-                        "_"
-                    )?.last()
-                    }"
-                )
-                binding?.subBenefitsMysteryItemText?.text =
-                    context?.getString(R.string.subscribe_listitem3_description_new, it.text)
-            }
-        }
-
-        AmplitudeManager.sendNavigationEvent("subscription screen")
+        Analytics.sendNavigationEvent("subscription screen")
     }
 
     override fun onResume() {

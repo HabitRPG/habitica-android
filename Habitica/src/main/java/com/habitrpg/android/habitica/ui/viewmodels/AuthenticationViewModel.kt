@@ -20,10 +20,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.addCloseButton
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.KeyHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
@@ -37,7 +37,6 @@ class AuthenticationViewModel @Inject constructor(
     val sharedPrefs: SharedPreferences,
     val authenticationHandler: AuthenticationHandler,
     val hostConfig: HostConfig,
-    val analyticsManager: AnalyticsManager,
     private val keyHelper: KeyHelper?
 ) {
     var googleEmail: String? = null
@@ -145,7 +144,7 @@ class AuthenticationViewModel @Inject constructor(
         try {
             saveTokens(userAuthResponse.apiToken, userAuthResponse.id)
         } catch (e: Exception) {
-            analyticsManager.logException(e)
+            Analytics.logException(e)
         }
     }
 

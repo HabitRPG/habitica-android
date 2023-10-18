@@ -3,7 +3,7 @@ package com.habitrpg.android.habitica.ui.views.dialogs
 import android.content.Context
 import android.view.LayoutInflater
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 

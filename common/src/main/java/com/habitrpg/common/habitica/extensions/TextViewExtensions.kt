@@ -2,11 +2,23 @@ package com.habitrpg.common.habitica.extensions
 
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.URLSpan
 import android.view.View
 import android.widget.TextView
+
+class HabiticaClickableSpan(val onClickAction: () -> Unit): ClickableSpan() {
+    override fun onClick(widget: View) {
+        onClickAction()
+    }
+
+    override fun updateDrawState(ds: TextPaint) {
+        super.updateDrawState(ds)
+        ds.isUnderlineText = false
+    }
+}
 
 fun TextView.handleUrlClicks(onClicked: ((String) -> Unit)? = null) {
     // create span builder and replaces current text with it
@@ -15,10 +27,8 @@ fun TextView.handleUrlClicks(onClicked: ((String) -> Unit)? = null) {
         getSpans(0, length, URLSpan::class.java).forEach {
             // add new clickable span at the same position
             setSpan(
-                object : ClickableSpan() {
-                    override fun onClick(widget: View) {
-                        onClicked?.invoke(it.url)
-                    }
+                HabiticaClickableSpan {
+                    onClicked?.invoke(it.url)
                 },
                 getSpanStart(it),
                 getSpanEnd(it),

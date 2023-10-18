@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Lerne ein Handwerk</string>
     <string name="setup_task_creativity_2">An einem kreativem Projekt arbeiten</string>
     <string name="setup_task_creativity_3">Kreatives Projekt fertigstellen</string>
-    <string name="my_guilds">Meine Gilden</string>
-    <string name="public_guilds">Öffentliche Gilden</string>
-    <string name="guild">Gilde</string>
+            <string name="guild">Gilde</string>
     <string name="leave">Verlassen</string>
     <string name="join">Beitreten</string>
     <string name="delete">Löschen</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Tag hinzufügen</string>
     <string name="privacy">Privatsphäre</string>
     <string name="write_message">Nachricht schreiben</string>
-    <string name="guild_search_hint">Nach Gilden suchen</string>
     <string name="battle_gear">Kampfausrüstung</string>
     <string name="costume">Kostüm</string>
     <string name="outfit_head">Kopf</string>
@@ -523,7 +520,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="classless">Ohne Klasse</string>
     <string name="class_equipment_shop_dialog">Dieser Gegenstand ist nur für eine bestimmte Klasse verfügbar.\nDu kannst Deine Klasse in den Einstellungen wechseln.</string>
     <string name="class_gear_disclaimer">Du kannst nur Ausrüstung für Deine aktuelle Klasse kaufen</string>
-    <string name="tavern_description">Willkommen im Gasthaus! Setze Dich dazu und chatte oder nimm Dir eine Pause von Deinen Aufgaben.</string>
     <string name="check_into_inn">Im Gasthaus erholen</string>
     <string name="community_guidelines">Community-Richtlinien</string>
     <string name="view_community_guidelines">Community-Richtlinien ansehen</string>
@@ -565,7 +561,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="questShop_owner_long">Ian der Questmeister</string>
     <string name="seasonalShop_owner_long">Jahreszeitenzauberin</string>
     <string name="rage_attack">Raserei-Angriff:</string>
-    <string name="tavern_description_world_boss">Ihr Lieben, kümmert Euch nicht um das Monster — dies ist immer noch ein sicherer Platz für eine kleine Pause zum Chatten.</string>
     <string name="report">Melden</string>
     <string name="reply">Antworten</string>
     <string name="challenge_prize">Herausforderungspreis</string>
@@ -655,8 +650,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="unallocated_stats_points"><![CDATA[Du kannst <b>%1$s Attributpunkt(e)</b> verteilen]]></string>
     <string name="new_subscriber_item"><![CDATA[Du hast einen neuen <b>Überraschungsgegenstand</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> du wurdest zu der Gruppe <b>%2$s</b> eingeladen]]></string>
-    <string name="invited_to_private_guild">Du wurdest eingeladen, der privaten Gilde <b>%1$s</b> beizutreten</string>
-    <string name="invited_to_public_guild">Du wurdest eingeladen, der Gilde <b>%1$s</b> beizutreten</string>
     <string name="invited_to_quest"><![CDATA[Du wurdest zur Quest <b>%1$s</b> eingeladen]]></string>
     <string name="repeat_summary" translatable="false">%1$s wird jeden %2$s %3$s %4$s wiederholt</string>
     <string name="skill_progress_title">Fertigkeiten benutzen</string>
@@ -812,7 +805,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="join_guild">Gilde beitreten</string>
     <string name="invite_to_guild">In Gilde einladen</string>
     <string name="guild_description">Gildenbeschreibung</string>
-    <string name="reason_for_report">Grund für die Meldung (optional)</string>
+    <string name="report_message_hint">Grund für die Meldung (optional)</string>
     <string name="report_message_title">Melde %s wegen eines Verstoßes:</string>
     <string name="report_explanation">Melde einen Post **nur**, wenn er die [Community-Richtlinien](https://habitica.com/static/community-guidelines) und/oder die [Allgemeinen Geschäftsbedingungen](https://habitica.com/static/terms) verletzt. Zweckwidrige Meldungen können Dir eine Rüge einbringen.</string>
     <string name="x_class">%s-Klasse</string>
@@ -1049,9 +1042,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="usually_x_gems">Üblicherweise %d Edelsteine</string>
     <string name="limitations">Einschränkungen</string>
     <string name="how_it_works">So funktioniert es</string>
-    <string name="fall_promo_info_instructions">Zwischen 22. und 30. September kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="fall_promo_info_instructions">Zwischen %s und %s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="spooky_promo_info_prompt">Der Edelstein-Sonderverkauf ist zurück! Das ist die letzte Chance, mehr Edelsteine als je zuvor zu bekommen, also füll\' Deine Lager solange Du noch kannst!</string>
-    <string name="spooky_promo_info_instructions">Zwischen 29. Oktober und 2. November kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
+    <string name="spooky_promo_info_instructions">Zwischen %s und %s kannst Du wie gewohnt ein Edelstein-Paket kaufen, Deinem Konto wird aber der Aktions-Betrag Edelsteine hinzugefügt. Mehr Edelsteine zum ausgeben, teilen oder aufsparen für spätere Neuerungen!</string>
     <string name="view_gem_bundles">Edelstein-Pakete anzeigen</string>
     <string name="fall_promo_info_prompt">Die Herbstgala ist in vollem Gange. Deshalb haben wir gedacht, dass dies der perfekte Zeitpunkt für den allerersten Edelstein-Sonderverkauf ist! Jetzt bekommst Du mit jedem Einkauf mehr Edelsteine als je zuvor.</string>
     <string name="quest_items_found">Du hast %d Questgegenstände gefunden</string>
@@ -1130,7 +1123,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="open_shop">Offener Laden</string>
     <string name="survey_menu_description">Fülle diese 5 Minuten Umfrage aus, um uns beim Wachsen zu helfen und eine Errungenschaft zu erhalten!</string>
     <string name="empty_equipment_description">Du hast noch keine Ausrüstung für diesen Typen. Du kannst Ausrüstung vom Markt mit dem Gold, das du verdient hast, kaufen.</string>
-    <string name="damage_pending">ausstehend %.01f dmg</string>
+    <string name="damage_pending">%s Schaden ausstehend</string>
     <string name="x_remaining">%s verbleibend</string>
     <string name="reset_counter">Zähler zurücksetzen</string>
     <string name="adjust_counter">Zähler anpassen</string>

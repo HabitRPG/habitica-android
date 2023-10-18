@@ -3,19 +3,20 @@ package com.habitrpg.android.habitica.ui.views.tasks
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.CompoundButtonCompat
-import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.button.MaterialButton
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.DialogTaskFilterBinding
@@ -68,7 +69,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     private val deletedTags = ArrayList<String>()
 
     private val addIcon: Drawable?
-    private var isEditing: Boolean = false
+    private var isEditingTags: Boolean = false
 
     init {
         addIcon = ContextCompat.getDrawable(context, R.drawable.ic_add_purple_300_36dp)
@@ -88,7 +89,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         }
 
         binding.clearButton.setOnClickListener {
-            if (isEditing) {
+            if (isEditingTags) {
                 stopEditing()
             }
             setActiveFilter(null)
@@ -116,7 +117,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         this.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
     }
 
-    fun setTags(tags: List<Tag>) {
+    private fun setTags(tags: List<Tag>) {
         this.tags = repository.getUnmanagedCopy(tags).toMutableList()
         createTagViews()
     }
@@ -135,46 +136,58 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         )
         val leftPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, context.resources.displayMetrics).toInt()
         val verticalPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, context.resources.displayMetrics).toInt()
+        sortTagPositions()
         for (tag in tags) {
-            val tagCheckbox = AppCompatCheckBox(context)
-            tagCheckbox.text = tag.name
-            tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            tagCheckbox.isChecked = viewModel.tags.contains(tag.id)
-            tagCheckbox.setPadding(
-                tagCheckbox.paddingLeft + leftPadding,
-                verticalPadding,
-                tagCheckbox.paddingRight,
-                verticalPadding
-            )
-            tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-            CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
-            tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    viewModel.addActiveTag(tag.id)
-                } else {
-                    viewModel.removeActiveTag(tag.id)
+            if (tag.id.isBlank()) {
+                // Title for tag group
+                val view = TextView(context)
+                view.setPadding(0, view.paddingTop, view.paddingRight, view.paddingBottom)
+                view.text = tag.name
+                view.setTextColor(context.getThemeColor(R.attr.textColorTintedPrimary))
+                binding.tagsList.addView(view)
+            } else {
+                val tagCheckbox = AppCompatCheckBox(context)
+                tagCheckbox.text = tag.name
+                tagCheckbox.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+                tagCheckbox.isChecked = viewModel.tags.contains(tag.id)
+                tagCheckbox.setPadding(
+                    tagCheckbox.paddingLeft + leftPadding,
+                    verticalPadding,
+                    tagCheckbox.paddingRight,
+                    verticalPadding
+                )
+                tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
+                tagCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        viewModel.addActiveTag(tag.id)
+                    } else {
+                        viewModel.removeActiveTag(tag.id)
+                    }
+                    filtersChanged()
                 }
-                filtersChanged()
+                binding.tagsList.addView(tagCheckbox)
             }
-            binding.tagsList.addView(tagCheckbox)
         }
         createAddTagButton()
     }
 
     private fun createAddTagButton() {
-        val button = Button(context)
+        val button = MaterialButton(context)
         button.setText(R.string.add_tag)
-        button.setOnClickListener { createTag() }
-        button.setCompoundDrawablesWithIntrinsicBounds(addIcon, null, null, null)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            TextViewCompat.setCompoundDrawableTintList(button, ColorStateList.valueOf(context.getThemeColor(R.attr.colorAccent)))
-        }
+        button.icon = addIcon
+        button.iconTint = ColorStateList.valueOf(context.getThemeColor(R.attr.colorAccent))
+        button.iconGravity = MaterialButton.ICON_GRAVITY_START
         button.elevation = 0f
-        button.setBackgroundResource(R.drawable.button_background_gray_700)
-        button.setShadowLayer(0f, 0f, 0f, ContextCompat.getColor(context, R.color.content_background))
+        button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.gray700_gray10))
+        button.setStrokeColorResource(R.color.content_background)
+        button.strokeWidth = 0
         button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+        button.setOnClickListener { createTag() }
+
         binding.tagsList.addView(button)
     }
+
 
     private fun createTag() {
         val tag = Tag()
@@ -185,7 +198,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     }
 
     private fun startEditing() {
-        isEditing = true
+        isEditingTags = true
         binding.tagsList.removeAllViews()
         createTagEditViews()
         binding.tagEditButton.setText(R.string.done)
@@ -193,14 +206,28 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     }
 
     private fun stopEditing() {
-        isEditing = false
+        // Refresh Tags
+        setActiveTags(null)
+        // Filter out tags with empty names
+        val emptyTagsToRemove = createdTags.values.filter { it.name.isBlank() }
+        createdTags.values.removeAll(emptyTagsToRemove.toSet())
+        tags.removeAll(emptyTagsToRemove)
+
+
+        isEditingTags = false
         binding.tagsList.removeAllViews()
         createTagViews()
         binding.tagEditButton.setText(R.string.edit_tag_btn_edit)
         this.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         lifecycleScope.launchCatching {
-            repository.updateTags(editedTags.values).forEach { editedTags.remove(it.id) }
-            repository.createTags(createdTags.values).forEach { tag -> createdTags.remove(tag.id) }
+            repository.updateTags(editedTags.values).forEach { tag ->
+                editedTags.remove(tag.id)
+                tags.remove(tag)
+            }
+            repository.createTags(createdTags.values).forEach { tag ->
+                createdTags.remove(tag.id)
+                tags.remove(tag)
+            }
             repeat(repository.deleteTags(deletedTags).size) { deletedTags.clear() }
         }
     }
@@ -215,38 +242,60 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
     }
 
     private fun createTagEditView(inflater: LayoutInflater, index: Int, tag: Tag) {
-        val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
-        editBinding.editText.setText(tag.name)
-        editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-        editBinding.editText.addTextChangedListener(
-            OnChangeTextWatcher { s, _, _, _ ->
-                if (index >= tags.size) {
-                    return@OnChangeTextWatcher
+        if (tag.id.isBlank()) {
+            // This is a title tag ("Challenge", "Group", "Your Tags", etc)
+            val view = TextView(context)
+            view.text = tag.name
+            view.setTypeface(view.typeface, Typeface.BOLD)
+            view.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            binding.tagsList.addView(view)
+        } else {
+            if (tag.group != null) {
+                // Make Group tags uneditable
+                val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
+                editBinding.editText.setText(tag.name)
+                editBinding.editText.isEnabled = false
+                editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.disabled_background))
+                editBinding.deleteButton.isEnabled = false
+                editBinding.deleteButton.alpha = .50f
+                binding.tagsList.addView(editBinding.root)
+            } else {
+                // All tags (except group tags) are editable
+                val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
+                editBinding.editText.setText(tag.name)
+                editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                editBinding.editText.addTextChangedListener(
+                    OnChangeTextWatcher { s, _, _, _ ->
+                        if (index >= tags.size) {
+                            return@OnChangeTextWatcher
+                        }
+                        val changedTag = tags[index]
+                        changedTag.name = s.toString()
+                        if (createdTags.containsKey(changedTag.id)) {
+                            createdTags[changedTag.id] = changedTag
+                        } else {
+                            editedTags[changedTag.id] = changedTag
+                        }
+                        tags[index] = changedTag
+                    }
+                )
+                editBinding.deleteButton.setOnClickListener {
+                    deletedTags.add(tag.id)
+                    if (createdTags.containsKey(tag.id)) {
+                        createdTags.remove(tag.id)
+                    }
+                    if (editedTags.containsKey(tag.id)) {
+                        editedTags.remove(tag.id)
+                    }
+                    viewModel.tags.remove(tag.id)
+                    tags.remove(tag)
+                    binding.tagsList.removeView(editBinding.root)
                 }
-                val changedTag = tags[index]
-                changedTag.name = s.toString()
-                if (createdTags.containsKey(changedTag.id)) {
-                    createdTags[changedTag.id] = changedTag
-                } else {
-                    editedTags[changedTag.id] = changedTag
-                }
-                tags[index] = changedTag
+                binding.tagsList.addView(editBinding.root)
             }
-        )
-        editBinding.deleteButton.setOnClickListener {
-            deletedTags.add(tag.id)
-            if (createdTags.containsKey(tag.id)) {
-                createdTags.remove(tag.id)
-            }
-            if (editedTags.containsKey(tag.id)) {
-                editedTags.remove(tag.id)
-            }
-            viewModel.tags.remove(tag.id)
-            tags.remove(tag)
-            binding.tagsList.removeView(editBinding.root)
         }
-        binding.tagsList.addView(editBinding.root)
     }
+
 
     private fun setActiveTags(tagIds: MutableList<String>?) {
         if (tagIds == null) {
@@ -320,9 +369,54 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         filtersChanged()
     }
 
+    private fun sortTagPositions() {
+        val sortedTagList = arrayListOf<Tag>()
+        val challengeTagList = arrayListOf<Tag>()
+        val groupTagList = arrayListOf<Tag>()
+        val otherTagList = arrayListOf<Tag>()
+
+        val challengesTagTitleName = context.getString(R.string.challenge_tags)
+        val groupsTagTitleName = context.getString(R.string.group_tags)
+        val otherTagTitleName = context.getString(R.string.your_tags)
+
+        tags.forEach {
+            if (it.name == challengesTagTitleName || it.name == groupsTagTitleName || it.name == otherTagTitleName) {
+                // This tag is a title, skip it.
+                return@forEach
+            }
+            if (it.challenge) {
+                challengeTagList.add(it)
+            } else if (it.group != null) {
+                groupTagList.add(it)
+            } else {
+                otherTagList.add(it)
+            }
+        }
+
+        val challengesTagTitle = Tag().apply { name = challengesTagTitleName }
+        val groupsTagTitle = Tag().apply { name = groupsTagTitleName }
+        val otherTagTitle = Tag().apply { name = otherTagTitleName }
+
+        if (challengeTagList.isNotEmpty() && sortedTagList.none { it.name == challengesTagTitleName }) {
+            sortedTagList.add(challengesTagTitle)
+            sortedTagList.addAll(challengeTagList)
+        }
+        if (groupTagList.isNotEmpty() && sortedTagList.none { it.name == groupsTagTitleName }) {
+            sortedTagList.add(groupsTagTitle)
+            sortedTagList.addAll(groupTagList)
+        }
+        if (otherTagList.isNotEmpty() && sortedTagList.none { it.name == otherTagTitleName }) {
+            sortedTagList.add(otherTagTitle)
+            sortedTagList.addAll(otherTagList)
+        }
+
+        tags = sortedTagList
+    }
+
+
     private fun editButtonClicked() {
-        isEditing = !isEditing
-        if (isEditing) {
+        isEditingTags = !isEditingTags
+        if (isEditingTags) {
             startEditing()
         } else {
             stopEditing()

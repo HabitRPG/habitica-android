@@ -2,4 +2,27 @@ Betrachte Dein Leben als ein Spiel, um motiviert und organisiert zu bleiben! Hab
 
 Hake Deine Aufgaben ab, damit Dein Avatar auf ein höheres Level aufsteigen kann und um weitere Funktionen freizuschalten, wie beispielsweise Ausrüstung, Haustiere, Fähigkeiten und auch Quests! Du kannst Monster mit Deinen Freunden bekämpfen und euch so gegenseitig unterstützen. Du kannst Dein Gold dazu nutzen um spielbezogene Belohnungen zu kaufen, oder für individuelle Belohnungen, wie beispielsweise eine Episode deiner lieblings Fehrnsehserie zu gucken. Habitica ist flexibel, kommunikativ und macht Spaß, es bietet eine tolle Möglichkeit Dich zu jedem Ziel zu motivieren.
 
+Merkmale:
+  • Automatisch wiederkehrende Aufgaben, die für Ihre täglichen, wöchentlichen oder monatlichen Routinen geplant sind
+  • Flexibler Gewohnheitstracker für Aufgaben, die Sie mehrmals am Tag oder nur ab und zu erledigen möchten
+  • Traditionelle Aufgabenliste für Aufgaben, die nur einmal erledigt werden müssen
+  • Farbcodierte Aufgaben und Streak-Zähler helfen Ihnen, auf einen Blick zu sehen, wie es Ihnen geht
+  • Nivelliersystem zur Visualisierung Ihres Gesamtfortschritts
+  • Tonnenweise sammelbare Ausrüstung und Haustiere, passend zu Ihrem persönlichen Stil
+  • Inklusive Avatar-Anpassungen: Rollstühle, Frisuren, Hauttöne und mehr
+  • Regelmäßige Content-Veröffentlichungen und saisonale Events, um die Dinge auf dem neuesten Stand zu halten
+  • In Gruppen können Sie sich mit Freunden zusammenschließen, um zusätzliche Verantwortung zu übernehmen und durch das Erledigen von Aufgaben gegen erbitterte Gegner anzutreten
+  • Herausforderungen bieten gemeinsame Aufgabenlisten, die Sie zu Ihren persönlichen Aufgaben hinzufügen können
+  • Erinnerungen und Widgets, die Ihnen helfen, den Überblick zu behalten
+  • Anpassbare Farbthemen mit Dunkel- und Hellmodus
+  • Synchronisierung zwischen Geräten
+
+Möchten Sie noch mehr Flexibilität, um Ihre Aufgaben auch unterwegs zu erledigen? Wir haben eine Wear OS-App auf der Uhr!
+
+Wear OS-Funktionen:
+  • Gewohnheiten, tägliche Aufgaben und Aufgaben ansehen, erstellen und abschließen
+  • Erhalten Sie Belohnungen für Ihre Bemühungen mit Erfahrung, Essen, Eiern und Tränken
+  • Verfolgen Sie Ihre Statistiken mit dynamischen Fortschrittsbalken
+  • Zeigen Sie Ihren atemberaubenden Pixel-Avatar auf dem Zifferblatt
+
 Falls Du irgendwelche Fragen hast, kannst Du uns gerne Feedback an mobile@habitica.com schicken! Und falls Dir unsere App gefällt, würden wir uns freuen, wenn Du uns bewertest.

@@ -49,8 +49,11 @@ class SocialRepositoryImpl(
         return localRepository.getMember(userID)
     }
 
-    override suspend fun updateMember(memberID: String, key: String, value: Any?): Member? {
-        return apiClient.updateMember(memberID, mapOf(key to value))
+    override suspend fun updateMember(
+        memberID: String,
+        data: Map<String, Map<String, Boolean>>
+    ): Member? {
+        return apiClient.updateMember(memberID, data)
     }
 
     override suspend fun retrievePartySeekingUsers(page: Int): List<Member>? {
@@ -91,6 +94,10 @@ class SocialRepositoryImpl(
                 }
             }
         }
+    }
+
+    override suspend fun reportMember(memberID: String, data: Map<String, String>): Void? {
+        return apiClient.reportMember(memberID, data)
     }
 
     override suspend fun likeMessage(chatMessage: ChatMessage): ChatMessage? {
@@ -201,22 +208,6 @@ class SocialRepositoryImpl(
         return apiClient.updateGroup(copiedGroup.id, copiedGroup)
     }
 
-    override suspend fun retrieveGroups(type: String): List<Group>? {
-        val groups = apiClient.listGroups(type) ?: return null
-        if ("guilds" == type) {
-            val memberships = groups.map {
-                GroupMembership(currentUserID, it.id)
-            }
-            localRepository.saveGroupMemberships(currentUserID, memberships)
-        }
-        localRepository.save(groups)
-        return groups
-    }
-
-    override fun getGroups(type: String) = localRepository.getGroups(type)
-
-    override fun getPublicGuilds() = localRepository.getPublicGuilds()
-
     override fun getInboxConversations() = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getInboxConversation(it) }
 
     override fun getInboxMessages(replyToUserID: String?) = authenticationHandler.userIDFlow.flatMapLatest { localRepository.getInboxMessages(it, replyToUserID) }
@@ -263,23 +254,20 @@ class SocialRepositoryImpl(
         return if (userId == null) {
             null
         } else {
-            try {
-                if (fromHall) {
-                    apiClient.getHallMember(userId)
-                } else {
-                    apiClient.getMember(UUID.fromString(userId).toString())
+            if (fromHall) {
+                apiClient.getHallMember(userId)
+            } else {
+                try {
+                    val uuid = UUID.fromString(userId).toString()
+                    apiClient.getMember(uuid)
+                } catch (_: IllegalArgumentException) {
+                    apiClient.getMemberWithUsername(userId)
                 }
-            } catch (_: IllegalArgumentException) {
-                apiClient.getMemberWithUsername(userId)
             }
         }
     }
 
     override suspend fun retrievegroupInvites(id: String, includeAllPublicFields: Boolean) = apiClient.getGroupInvites(id, includeAllPublicFields)
-
-    override suspend fun retrieveMemberWithUsername(username: String?, fromHall: Boolean): Member? {
-        return retrieveMember(username, fromHall)
-    }
 
     override suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>? {
         return apiClient.findUsernames(username, context, id)

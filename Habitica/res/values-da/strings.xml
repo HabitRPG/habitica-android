@@ -127,16 +127,13 @@
     <string name="setup_task_chores_3">Organiser skab</string>
     <string name="setup_task_creativity_2">Arbejd på et kreativt projekt</string>
     <string name="setup_task_creativity_3">Færdiggør et kreativt projekt</string>
-    <string name="my_guilds">Mine klaner</string>
-    <string name="public_guilds">Offentlige klaner</string>
-    <string name="guild">Klan</string>
+            <string name="guild">Klan</string>
     <string name="leave">Forlad</string>
     <string name="delete">Slet</string>
     <string name="name">Navn</string>
     <string name="description">Beskrivelse</string>
     <string name="privacy">Privatliv</string>
     <string name="write_message">Skriv besked</string>
-    <string name="guild_search_hint">Søg efter klaner</string>
     <string name="battle_gear">Kampudstyr</string>
     <string name="costume">Kostume</string>
     <string name="outfit_head">Hoved</string>

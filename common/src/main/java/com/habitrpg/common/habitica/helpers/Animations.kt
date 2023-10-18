@@ -61,11 +61,13 @@ object Animations {
         anim.start()
     }
 
-    fun circularHide(view: View) {
+    fun circularHide(view: View, duration: Long = 300) {
         val cx = view.width / 2
         val cy = view.height / 2
         val initialRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0f)
+        anim.duration = duration
+        anim.interpolator = AccelerateInterpolator()
         anim.doOnEnd {
             view.visibility = View.INVISIBLE
         }

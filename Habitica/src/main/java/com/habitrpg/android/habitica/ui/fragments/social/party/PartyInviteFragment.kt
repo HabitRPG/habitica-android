@@ -52,7 +52,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
@@ -259,10 +259,16 @@ fun PartyInviteView(
                             inviteButtonState = LoadingButtonState.CONTENT
                         }
                     }) {
-                        viewModel.sendInvites()
-                        inviteButtonState = LoadingButtonState.SUCCESS
-                        delay(2.toDuration(DurationUnit.SECONDS))
-                        dismiss()
+                        val responses = viewModel.sendInvites()
+                        if ((responses?.size ?: 0) > 0) {
+                            inviteButtonState = LoadingButtonState.SUCCESS
+                            delay(2.toDuration(DurationUnit.SECONDS))
+                            dismiss()
+                        } else {
+                            inviteButtonState = LoadingButtonState.FAILED
+                            delay(2.toDuration(DurationUnit.SECONDS))
+                            inviteButtonState = LoadingButtonState.CONTENT
+                        }
                     }
                 }
             )
