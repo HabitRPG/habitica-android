@@ -87,7 +87,11 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
                 animation1.duration = 300
                 animation1.startOffset = 500
                 animation1.fillAfter = true
-                view.findViewById<ProgressBar>(R.id.loading_indicator).startAnimation(animation1)
+                view.findViewById<ProgressBar>(R.id.compose_view).setContent {
+                    HabiticaTheme {
+                        HabiticaCircularProgressView(Modifier.size(60.dp))
+                    }
+                }
                 object : RecyclerView.ViewHolder(view) {}
             }
             1 -> FailedViewHolder(parent.inflate(R.layout.failed_item))
