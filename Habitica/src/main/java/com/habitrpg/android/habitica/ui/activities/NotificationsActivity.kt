@@ -133,13 +133,18 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         binding.notificationItems.addView(inflater?.inflate(R.layout.no_notifications, binding.notificationItems, false))
     }
 
+
     private fun displayNotificationsListView(notifications: List<Notification>) {
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
-        val viewList = arrayListOf<View>()
-        createNotificationsHeaderView(notifications.count())?.let { viewList.add(it) }
+
+        val currentViews = mutableSetOf<View>().apply {
+            for (i in 0 until binding.notificationItems.childCount) {
+                add(binding.notificationItems.getChildAt(i))
+            }
+        }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            notifications.map {
+            notifications.forEach {
                 val item: View? = when (it.type) {
                     Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
                     Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
@@ -154,30 +159,23 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                     else -> null
                 }
 
-                if (item != null) {
-                    viewList.add(item)
+                item?.let { view ->
+                    if (currentViews.contains(view)) {
+                        currentViews.remove(view)
+                    } else {
+                        binding.notificationItems.addView(view)
+                    }
                 }
             }
-            updateNotificationsAndRefresh(viewList)
-        }
-    }
 
-    private fun updateNotificationsAndRefresh(newItems: List<View>) {
-        val currentViews = (0 until binding.notificationItems.childCount).map {
-            binding.notificationItems.getChildAt(it)
-        }
-        val viewsToRemove = currentViews - newItems
-        viewsToRemove.forEach { binding.notificationItems.removeView(it) }
-        val viewsToAdd = newItems - currentViews
-        viewsToAdd.forEach {
-            binding.notificationItems.addView(it)
-        }
+            // Remove views that are no longer valid
+            currentViews.forEach { binding.notificationItems.removeView(it) }
 
-        lifecycleScope.launch {
-            delay(250)
-            // Unnecessary but looks clean c:
-            if (binding.notificationItems.visibility != View.VISIBLE) {
-                binding.notificationItems.fadeInAnimation(200)
+            lifecycleScope.launch {
+                delay(250)
+                if (binding.notificationItems.visibility != View.VISIBLE) {
+                    binding.notificationItems.fadeInAnimation(200)
+                }
             }
         }
     }
