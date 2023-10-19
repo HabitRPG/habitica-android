@@ -49,7 +49,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.interactors.ShareMountUseCase
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.common.habitica.helpers.launchCatching

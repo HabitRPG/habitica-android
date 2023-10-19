@@ -55,7 +55,8 @@ import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState

@@ -82,6 +82,11 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
+            <androidx.compose.ui.platform.ComposeView
+                android:id="@+id/progress_view"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
             <Button
                 android:id="@+id/restart_button"
                 style="@style/HabiticaButton.Maroon"

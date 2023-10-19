@@ -4,12 +4,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.widget.ProgressBar
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.databinding.EmptyItemBinding
 import com.habitrpg.common.habitica.databinding.FailedItemBinding
+import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 
 data class EmptyItem(
     var title: String,
@@ -87,7 +93,8 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
                 animation1.duration = 300
                 animation1.startOffset = 500
                 animation1.fillAfter = true
-                view.findViewById<ProgressBar>(R.id.compose_view).setContent {
+                view.findViewById<ComposeView>(R.id.compose_view).startAnimation(animation1)
+                view.findViewById<ComposeView>(R.id.compose_view).setContent {
                     HabiticaTheme {
                         HabiticaCircularProgressView(Modifier.size(60.dp))
                     }

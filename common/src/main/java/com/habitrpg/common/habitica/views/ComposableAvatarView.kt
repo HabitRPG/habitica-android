@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views
+package com.habitrpg.common.habitica.views
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

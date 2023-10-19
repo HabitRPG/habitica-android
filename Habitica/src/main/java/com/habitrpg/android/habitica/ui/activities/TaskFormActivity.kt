@@ -50,7 +50,10 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.models.tasks.TaskGroupPlan
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.android.habitica.ui.theme.textPrimaryFor
+import com.habitrpg.android.habitica.ui.theme.windowBackgroundFor
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.TaskFormViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog

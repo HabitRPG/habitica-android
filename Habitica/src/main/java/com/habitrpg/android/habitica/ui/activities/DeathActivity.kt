@@ -32,6 +32,8 @@ import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -144,8 +146,14 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
                 putLong("last_sub_revive", Date().time)
             }
             lifecycleScope.launchCatching {
-                delay(300)
                 binding.reviveSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
+                binding.restartButton.startAnimation(Animations.fadeOutAnimation())
+                binding.progressView.startAnimation(Animations.fadeInAnimation())
+                binding.progressView.setContent {
+                    HabiticaTheme {
+                        HabiticaCircularProgressView()
+                    }
+                }
             }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.updateUser("stats.hp", 1)
@@ -162,6 +170,14 @@ class DeathActivity : BaseActivity(), SnackbarActivity {
 
         binding.restartButton.setOnClickListener {
             binding.restartButton.isEnabled = false
+            binding.reviveSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
+            binding.restartButton.startAnimation(Animations.fadeOutAnimation())
+            binding.progressView.startAnimation(Animations.fadeInAnimation())
+            binding.progressView.setContent {
+                HabiticaTheme {
+                    HabiticaCircularProgressView()
+                }
+            }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 val brokenItem = userRepository.revive()
                 if (brokenItem != null) {

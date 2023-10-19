@@ -23,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import java.lang.Float.min
 
 @OptIn(ExperimentalMaterialApi::class)

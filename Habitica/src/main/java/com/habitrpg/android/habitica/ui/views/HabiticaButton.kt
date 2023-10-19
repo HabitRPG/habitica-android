@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 
 @Composable
 fun HabiticaButton(

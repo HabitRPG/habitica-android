@@ -50,7 +50,13 @@ import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.TaskDescriptionBuilder
 import com.habitrpg.android.habitica.models.members.Member
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.android.habitica.ui.theme.contentBackgroundFor
+import com.habitrpg.android.habitica.ui.theme.primaryBackgroundFor
+import com.habitrpg.android.habitica.ui.theme.textPrimaryFor
+import com.habitrpg.android.habitica.ui.theme.textSecondaryFor
+import com.habitrpg.android.habitica.ui.theme.windowBackgroundFor
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CompletedAt

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.ui.views.progress
+package com.habitrpg.common.habitica.views
 
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.animateFloat
@@ -28,7 +28,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.habitrpg.android.habitica.R
+import com.habitrpg.common.habitica.R
 
 @Composable
 fun HabiticaCircularProgressView(
