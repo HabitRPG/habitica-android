@@ -763,11 +763,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private var errorJob: Job? = null
 
-    override fun showConnectionProblem(errorCount: Int, title: String?, message: String) {
-        if (errorCount == 1) {
+    override fun showConnectionProblem(errorCount: Int, title: String?, message: String, isFromUserInput: Boolean) {
+        if (errorCount == 1 && !isFromUserInput) {
             showSnackbar(title = title, content = message, displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE)
         } else if (title != null) {
-            super.showConnectionProblem(errorCount, title, message)
+            super.showConnectionProblem(errorCount, title, message, isFromUserInput)
         } else {
             if (errorJob?.isCancelled == false) {
                 // a new error resets the timer to hide the error message
