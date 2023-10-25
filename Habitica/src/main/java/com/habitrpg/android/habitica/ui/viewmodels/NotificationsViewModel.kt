@@ -56,6 +56,7 @@ open class NotificationsViewModel @Inject constructor(
     )
 
     private var party: UserParty? = null
+    private var hasStats = false
 
     private val customNotifications = MutableStateFlow<List<Notification>>(emptyList())
 
@@ -63,6 +64,7 @@ open class NotificationsViewModel @Inject constructor(
         userViewModel.user.observeForever {
             if (it == null) return@observeForever
             party = it.party
+            hasStats = it.hasClass
             val notifications = convertInvitationsToNotifications(it)
             if (it.flags?.newStuff == true) {
                 val notification = Notification()
@@ -89,7 +91,11 @@ open class NotificationsViewModel @Inject constructor(
     }
 
     fun getNotificationCount(): Flow<Int> {
-        return getNotifications().map { it.count() }.distinctUntilChanged()
+        return getNotifications().map {
+            it.count { notification ->
+                (notification.type == Notification.Type.UNALLOCATED_STATS_POINTS.type) == hasStats
+            }
+        }.distinctUntilChanged()
     }
 
     fun allNotificationsSeen(): Flow<Boolean> {

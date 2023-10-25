@@ -14,6 +14,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -43,7 +44,9 @@ import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -74,6 +77,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     private var notifications: List<Notification> = emptyList()
 
+    @OptIn(FlowPreview::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -88,7 +92,9 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
         lifecycleScope.launchCatching {
-            viewModel.getNotifications().collect {
+            viewModel.getNotifications()
+                .debounce(500)
+                .collect {
                 setNotifications(it)
                 viewModel.markNotificationsAsSeen(it)
             }
@@ -138,9 +144,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
 
         val currentViews = mutableSetOf<View>().apply {
-            for (i in 0 until binding.notificationItems.childCount) {
-                add(binding.notificationItems.getChildAt(i))
-            }
+            addAll(binding.notificationItems.children)
         }
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
@@ -160,9 +164,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                 }
 
                 item?.let { view ->
-                    if (currentViews.contains(view)) {
-                        currentViews.remove(view)
-                    } else {
+                    if (!currentViews.removeIf { it.tag == view.tag }) {
                         binding.notificationItems.addView(view)
                     }
                 }
@@ -227,13 +229,16 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         )
     }
 
+    private var baileyNewsNotification: Notification? = null
+
     private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(Dispatchers.IO) {
         var baileyNotification = notification
         val data = notification.data as? NewStuffData
         val text = if (data?.title != null) {
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
         } else {
-            baileyNotification = userRepository.getNewsNotification() ?: notification
+            baileyNotification = baileyNewsNotification ?: userRepository.getNewsNotification() ?: notification
+            baileyNewsNotification = baileyNotification
             val baileyNewsData = baileyNotification.data as? NewStuffData
             fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
         }
@@ -330,6 +335,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         textColor: Int? = null
     ): View? {
         val item = inflater?.inflate(R.layout.notification_item, binding.notificationItems, false)
+        item?.tag = notification.id
 
         val container = item?.findViewById(R.id.notification_item) as? View
         container?.setOnClickListener {
@@ -442,6 +448,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         inviterId: String? = null
     ): View? {
         val item = inflater?.inflate(R.layout.notification_item_actionable, binding.notificationItems, false)
+        item?.tag = notification.id
 
         if (openable) {
             val container = item?.findViewById(R.id.notification_item) as? View
@@ -461,7 +468,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val acceptButton = item?.findViewById(R.id.accept_button) as? Button
         acceptButton?.setOnClickListener {
-            binding.root.flash()
             HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.accept(notification.id)
@@ -469,7 +475,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val rejectButton = item?.findViewById(R.id.reject_button) as? Button
         rejectButton?.setOnClickListener {
-            binding.root.flash()
             HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.reject(notification.id)
