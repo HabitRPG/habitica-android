@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -35,7 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/death_ghost" />
+                    android:src="@drawable/death_ghost"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/heart_view"
@@ -43,7 +44,8 @@
                     android:layout_height="110dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_broken_heart" />
+                    android:src="@drawable/ic_broken_heart"
+                    android:importantForAccessibility="no" />
             </RelativeLayout>
 
             <TextView

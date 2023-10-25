@@ -47,12 +47,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:src="@drawable/flag_flap"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:importantForAccessibility="no" />
             <TextView
                 android:id="@+id/flag_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="0dp"
                 android:background="@color/green_50"
                 android:textColor="@color/white"
                 style="@style/Caption2"

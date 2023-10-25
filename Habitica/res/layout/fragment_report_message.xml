@@ -18,7 +18,8 @@
             android:layout_height="3dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/spacing_large"
-            android:src="@color/offset_background" />
+            android:src="@color/offset_background"
+            android:importantForAccessibility="no" />
 
 
         <com.google.android.material.appbar.AppBarLayout

@@ -72,7 +72,8 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingStart="@dimen/spacing_medium">
+                            android:paddingStart="@dimen/spacing_medium"
+                            android:paddingEnd="0dp">
                             <TextView
                                 android:id="@+id/quest_title_view"
                                 android:layout_width="match_parent"
@@ -92,7 +93,8 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp"/>
+                            app:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp"
+                            android:importantForAccessibility="no" />
                     </LinearLayout>
                     <LinearLayout
                         android:visibility="gone"
