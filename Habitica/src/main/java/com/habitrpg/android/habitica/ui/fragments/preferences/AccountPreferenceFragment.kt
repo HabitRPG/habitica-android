@@ -488,7 +488,7 @@ class AccountPreferenceFragment :
     }
 
     private fun deleteAccount(password: String) {
-        val dialog = context?.let { HabiticaProgressDialog.show(it, R.string.deleting_account) }
+        val dialog = activity?.let { HabiticaProgressDialog.show(it, R.string.deleting_account) }
         lifecycleScope.launchCatching({ throwable ->
             dialog?.dismiss()
             if (throwable is HttpException && throwable.code() == 401) {
@@ -537,7 +537,7 @@ class AccountPreferenceFragment :
     }
 
     private fun resetAccount() {
-        val dialog = context?.let { HabiticaProgressDialog.show(it, R.string.resetting_account) }
+        val dialog = activity?.let { HabiticaProgressDialog.show(it, R.string.resetting_account) }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.resetAccount()
             dialog?.dismiss()

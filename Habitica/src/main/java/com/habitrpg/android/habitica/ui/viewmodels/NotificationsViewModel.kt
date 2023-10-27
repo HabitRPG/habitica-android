@@ -93,7 +93,7 @@ open class NotificationsViewModel @Inject constructor(
     fun getNotificationCount(): Flow<Int> {
         return getNotifications().map {
             it.count { notification ->
-                (notification.type == Notification.Type.UNALLOCATED_STATS_POINTS.type) == hasStats
+                (notification.type != Notification.Type.UNALLOCATED_STATS_POINTS.type) || hasStats
             }
         }.distinctUntilChanged()
     }
