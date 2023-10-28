@@ -11,14 +11,8 @@ import io.mockk.mockk
 import java.util.Locale
 
 class NumberAbbreviatorTest : StringSpec({
-    val mockContext = mockk<Context>()
     beforeSpec {
         Locale.setDefault(Locale.US)
-        every { mockContext.getString(com.habitrpg.common.habitica.R.string.thousand_abbrev) } returns "k"
-        every { mockContext.getString(com.habitrpg.common.habitica.R.string.million_abbrev) } returns "m"
-        every { mockContext.getString(com.habitrpg.common.habitica.R.string.billion_abbrev) } returns "b"
-        every { mockContext.getString(com.habitrpg.common.habitica.R.string.trillion_abbrev) } returns "t"
-        every { mockContext.getString(com.habitrpg.common.habitica.R.string.quadrillion_abbrev) } returns "q"
     }
 
     withData(
@@ -43,14 +37,14 @@ class NumberAbbreviatorTest : StringSpec({
         Triple(0.328, "0.32", 0),
         Triple(-0.99, "-0.99", 0)
     ) { (input, output, decimals) ->
-        NumberAbbreviator.abbreviate(mockContext, input, decimals) shouldBe output
+        NumberAbbreviator.abbreviate(input, decimals) shouldBe output
     }
 
     "completes quickly" {
         val iterations = 10000
         val startTime = System.nanoTime()
         repeat(iterations) {
-            NumberAbbreviator.abbreviate(mockContext, 201.5, 2) shouldBe "201.5"
+            NumberAbbreviator.abbreviate( 201.5, 2)
         }
         val endTime = System.nanoTime()
 
@@ -63,7 +57,7 @@ class NumberAbbreviatorTest : StringSpec({
         val iterations = 10000
         val startTime = System.nanoTime()
         repeat(iterations) {
-            NumberAbbreviator.abbreviate(mockContext, 1.9943212354213233E30, 2) shouldBe "1.99"
+            NumberAbbreviator.abbreviate( 1.9943212354213233E30, 2) shouldBe "1.99"
         }
         val endTime = System.nanoTime()
 
@@ -71,6 +65,4 @@ class NumberAbbreviatorTest : StringSpec({
         print("Average duration: $averageDuration")
         averageDuration shouldBeLessThan 2000
     }
-
-    afterSpec { clearMocks(mockContext) }
 })
