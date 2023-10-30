@@ -233,7 +233,6 @@
     <string name="opt_out_class">Afmelden</string>
     <string name="class_confirmation">Weet je zeker dat je een %s wilt zijn?</string>
     <string name="class_changed">Je bent nu een %s!</string>
-
     <string name="choose_class">Kies een Klasse</string>
     <string name="dialog_go_back">Ga terug</string>
     <string name="opt_out_confirmation">Weet je zeker dat je je wil afmelden?</string>
@@ -994,4 +993,12 @@
     <string name="hourglasses_description">Mystieke zandlopers zijn een zeldzaam soort betaalmiddel dat je alleen ontvangt bij een abonnement op Habitica dat minstens drie opeenvolgende maanden duurt. Je kunt er in de Tijdreiziger\'s winkel voorafgaande uitrustingssets, huisdieren, rijdieren, geanimeerde acthergronden of zelfs speciale queestes voor kopen.
 \n
 \nJe kunt maximaal vier mystieke zandlopers per jaar ontvangen. Het tijdstip dat je ze krijgt hangt af van wanneer je abonnement wordt herniewd. Ze worden uitgezonden op de eerste dag van een nieuwe maand nadat je laatste abonnementsbetaling je heeft gequalificeerd voor een zandloper. Zie de [Abonnementen]-pagina voor meer details.</string>
+    <string name="level_abbreviated">NIV</string>
+    <string name="enable_notifications">Notificaties inschakelen</string>
+    <string name="push_notification_system_settings_description">Sta Habitica meldingen toe in Instellingen om pushnotificaties te ontvangen</string>
+    <string name="push_notification_system_settings_reminders">Sta Habitica meldingen toe in de Instellingen om herinneringen te ontvangen</string>
+    <string name="push_notification_system_settings_title">Pushnotificaties uitgeschakeld</string>
+    <string name="title">Titel</string>
+    <string name="positive_sentence">positief</string>
+    <string name="negative_sentence">negatief</string>
 </resources>
