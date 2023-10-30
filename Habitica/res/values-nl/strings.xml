@@ -1001,4 +1001,5 @@
     <string name="title">Titel</string>
     <string name="positive_sentence">positief</string>
     <string name="negative_sentence">negatief</string>
+    <string name="usernames_party">%s\'s Groep</string>
 </resources>
