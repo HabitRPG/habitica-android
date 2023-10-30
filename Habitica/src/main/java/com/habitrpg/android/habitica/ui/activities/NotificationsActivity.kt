@@ -13,8 +13,10 @@ import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -41,6 +43,7 @@ import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.common.habitica.models.notifications.PartyInvitationData
 import com.habitrpg.common.habitica.models.notifications.QuestInvitationData
 import com.habitrpg.common.habitica.models.notifications.UnallocatedPointsData
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -91,18 +94,35 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
 
+        binding.progressView.setContent {
+            HabiticaCircularProgressView(indicatorSize = 60.dp)
+        }
+
         lifecycleScope.launchCatching {
             viewModel.getNotifications()
-                .debounce(500)
+                .debounce(250)
                 .collect {
                 setNotifications(it)
                 viewModel.markNotificationsAsSeen(it)
             }
         }
 
+        lifecycleScope.launchCatching {
+            viewModel.getNotificationCount()
+                .collect {
+                    binding.notificationsTitleBadge.text = it.toString()
+                }
+        }
+
         binding.notificationsRefreshLayout.setOnRefreshListener(this)
         lifecycleScope.launchCatching {
             viewModel.refreshNotifications()
+        }
+
+        binding.dismissAllButton.setOnClickListener {
+            HapticFeedbackManager.tap(it)
+            viewModel.dismissAllNotifications(notifications)
+            setNotifications(emptyList())
         }
     }
 
@@ -137,17 +157,17 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         binding.notificationItems.removeAllViewsInLayout()
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_NONE
         binding.notificationItems.addView(inflater?.inflate(R.layout.no_notifications, binding.notificationItems, false))
+        binding.progressView.isVisible = false
     }
 
 
     private fun displayNotificationsListView(notifications: List<Notification>) {
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
 
-        val currentViews = mutableSetOf<View>().apply {
-            addAll(binding.notificationItems.children)
-        }
-
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            val currentViews = mutableSetOf<View>().apply {
+                addAll(binding.notificationItems.children)
+            }
             notifications.forEach {
                 val item: View? = when (it.type) {
                     Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
@@ -174,6 +194,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             currentViews.forEach { binding.notificationItems.removeView(it) }
 
             lifecycleScope.launch {
+                binding.progressView.isVisible = false
                 delay(250)
                 if (binding.notificationItems.visibility != View.VISIBLE) {
                     binding.notificationItems.fadeInAnimation(200)
@@ -192,22 +213,6 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         } else {
             displayNotificationsListView(notifications)
         }
-    }
-
-    private fun createNotificationsHeaderView(notificationCount: Int): View? {
-        val header = inflater?.inflate(R.layout.notifications_header, binding.notificationItems, false)
-
-        val badge = header?.findViewById(R.id.notifications_title_badge) as? TextView
-        badge?.text = notificationCount.toString()
-
-        val dismissAllButton = header?.findViewById(R.id.dismiss_all_button) as? Button
-        dismissAllButton?.setOnClickListener {
-            binding.root.flash()
-            HapticFeedbackManager.tap(it)
-            viewModel.dismissAllNotifications(notifications)
-        }
-
-        return header
     }
 
     private fun createNewChatMessageNotification(notification: Notification): View? {
@@ -349,7 +354,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
         val dismissButton = item?.findViewById(R.id.dismiss_button) as? ImageView
         dismissButton?.setOnClickListener {
-            container?.flash()
+            it.flash()
             HapticFeedbackManager.tap(it)
             removeNotificationAndRefresh(notification)
             viewModel.dismissNotification(notification)

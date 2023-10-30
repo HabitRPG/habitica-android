@@ -112,7 +112,11 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                 for (sku in subscriptions) {
                     updateButtonLabel(sku, sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice ?: "")
                 }
-                subscriptions.minByOrNull { it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros ?: 0 }?.let { selectSubscription(it) }
+                subscriptions
+                    .filter { buttonForSku(it)?.isVisible == true }
+                    .minByOrNull {
+                    it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros ?: 0
+                }?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
