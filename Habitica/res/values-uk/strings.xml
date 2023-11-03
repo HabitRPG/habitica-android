@@ -142,7 +142,7 @@
     <string name="name">Ім\'я</string>
     <string name="delete">Видалити</string>
     <string name="join">Приєднатись</string>
-    <string name="leave">Залишити</string>
+    <string name="leave">Зупинити пошук</string>
     <string name="guild">Гільдія</string>
     <string name="public_guilds">Відкриті гільдії</string>
     <string name="my_guilds">Мої гільдії</string>
@@ -197,7 +197,7 @@
     <string name="ago_1week">1 тиждень тому</string>
     <string name="ago_months">%d міс. тому</string>
     <string name="ago_1month">1 місяць тому</string>
-    <string name="quest_begin_message">Ви впевнені\? Лише %1$d з %2$d членів Вашої команди приєдналися до цього квесту! Квести розпочинаються автоматично, коли всі гравці приєдналися або відхилили запрошення.</string>
+    <string name="quest_begin_message">Ви впевнені\? Лише %1$d з %2$d членів вашої команди приєдналися до цього Квесту! Квести розпочинаються автоматично, коли всі гравці приймуть або відхилять запрошення.</string>
     <string name="quest_cancel_message">Ви впевнені, що хочете скасувати цей квест\? Усі прийняті запрошення будуть втрачені. Власник квесту збереже у своєму розпорядженні сувій квесту.</string>
     <string name="equipped">Одягнуто</string>
     <string name="hatched_pet_title">Ви висиділи %1$s %2$s!</string>
