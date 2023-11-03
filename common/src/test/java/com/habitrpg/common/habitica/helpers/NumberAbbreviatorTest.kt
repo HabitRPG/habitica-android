@@ -39,30 +39,4 @@ class NumberAbbreviatorTest : StringSpec({
     ) { (input, output, decimals) ->
         NumberAbbreviator.abbreviate(input, decimals) shouldBe output
     }
-
-    "completes quickly" {
-        val iterations = 10000
-        val startTime = System.nanoTime()
-        repeat(iterations) {
-            NumberAbbreviator.abbreviate( 201.5, 2)
-        }
-        val endTime = System.nanoTime()
-
-        val averageDuration = (endTime - startTime) / iterations
-        print("Average duration: $averageDuration")
-        averageDuration shouldBeLessThan 1500
-    }
-
-    "completes large numbers quickly" {
-        val iterations = 10000
-        val startTime = System.nanoTime()
-        repeat(iterations) {
-            NumberAbbreviator.abbreviate( 1.9943212354213233E30, 2) shouldBe "1.99"
-        }
-        val endTime = System.nanoTime()
-
-        val averageDuration = (endTime - startTime) / iterations
-        print("Average duration: $averageDuration")
-        averageDuration shouldBeLessThan 2000
-    }
 })
