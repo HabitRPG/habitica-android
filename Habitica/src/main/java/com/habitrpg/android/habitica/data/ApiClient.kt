@@ -122,7 +122,7 @@ interface ApiClient {
     suspend fun loginApple(authToken: String): UserAuthResponse?
 
     suspend fun sleep(): Boolean?
-    suspend fun revive(): User?
+    suspend fun revive(): Items?
 
     suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse?
 
@@ -164,6 +164,8 @@ interface ApiClient {
 
     suspend fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Void?
     suspend fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Void?
+
+    suspend fun reportMember(mid: String, data: Map<String, String>): Void?
 
     suspend fun seenMessages(groupId: String): Void?
 
@@ -223,6 +225,8 @@ interface ApiClient {
 
     suspend fun debugAddTenGems(): Void?
 
+    suspend fun getNews(): List<Any>?
+
     // Notifications
     suspend fun readNotification(notificationId: String): List<Any>?
     suspend fun readNotifications(notificationIds: Map<String, List<String>>): List<Any>?
@@ -274,7 +278,7 @@ interface ApiClient {
     suspend fun getTeamPlanTasks(teamID: String): TaskList?
     suspend fun assignToTask(taskId: String, ids: List<String>): Task?
     suspend fun unassignFromTask(taskId: String, userID: String): Task?
-    suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member?
+    suspend fun updateMember(memberID: String, updateData: Map<String, Map<String, Boolean>>): Member?
     suspend fun getHallMember(userId: String): Member?
     suspend fun markTaskNeedsWork(taskID: String, userID: String): Task?
     suspend fun retrievePartySeekingUsers(page: Int): List<Member>?

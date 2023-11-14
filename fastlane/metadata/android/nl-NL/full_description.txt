@@ -1,3 +1,28 @@
-Behandel je leven als een spel om gemotiveerd en georganiseerd te blijven! Habitica houdt het simpel om plezier te maken terwijl je doelen bereikt.
-Voer je gewoontes, dagelijkse taken en to-do's toe en maak dan een eigen avatar. Vink taken af om je avatar sterker te maken en functies vrij te spelen zoals uitrusting, huisdieren, vaardigheden en zelfs queesten! Vecht tegen monsters met vrienden om samen verantwoordelijk te blijven en gebruik je goud voor beloningen, zoals uitrusting of kies je eigen beloning, zoals een aflevering van je favoriete serie bekijken. Flexibel, sociaal en plezant, Habitica is de perfecte manier om jezelf te motiveren om alles te bereiken.
+Behandel je leven als een spel om gemotiveerd en georganiseerd te blijven! Habitica houdt het simpel om plezier te maken terwijl je doelen bereikt. Voer je gewoontes, dagelijkse taken en to-do's toe en maak dan een eigen avatar. 
+
+Vink taken af om je avatar sterker te maken en functies vrij te spelen zoals uitrusting, huisdieren, vaardigheden en zelfs queesten! Vecht tegen monsters met vrienden om samen verantwoordelijk te blijven en gebruik je goud voor beloningen, zoals uitrusting of kies je eigen beloning, zoals een aflevering van je favoriete serie bekijken. Flexibel, sociaal en plezant, Habitica is de perfecte manier om jezelf te motiveren om alles te bereiken.
+
+Functies:
+  • Automatisch herhalen van taken die zijn gepland voor uw dagelijkse, wekelijkse of maandelijkse routines
+  • Flexibele gewoonte-tracker voor taken die u meerdere keren per dag of slechts af en toe wilt uitvoeren
+  • Traditionele to do-lijst voor taken die maar één keer gedaan hoeven te worden
+  • Kleurgecodeerde taken en streaktellers zorgen ervoor dat u in één oogopslag kunt zien hoe het met u gaat
+  • Niveausysteem om uw algehele voortgang te visualiseren
+  • Tal van verzamelbare uitrustingen en huisdieren die bij jouw persoonlijke stijl passen
+  • Inclusief avataraanpassingen: rolstoelen, haarstijlen, huidtinten en meer
+  • Regelmatige releases van inhoud en seizoensevenementen om de zaken actueel te houden
+  • Met feesten kun je samenwerken met vrienden voor extra verantwoordelijkheid en de strijd aangaan met felle vijanden door taken te voltooien
+  • Uitdagingen bieden gedeelde takenlijsten die u aan uw persoonlijke taken kunt toevoegen
+  • Herinneringen en widgets om u op het goede spoor te houden
+  • Aanpasbare kleurthema's met donkere en lichte modus
+  • Synchroniseren tussen apparaten
+
+Wilt u nog meer flexibiliteit om uw taken onderweg uit te voeren? We hebben een Wear OS-app op het horloge!
+
+Wear OS-functies:
+  • Gewoontes, dagelijkse taken en taken bekijken, creëren en voltooien
+  • Ontvang beloningen voor je inspanningen met ervaring, eten, eieren en drankjes
+  • Houd uw statistieken bij met dynamische voortgangsbalken
+  • Laat je verbluffende pixelavatar zien op de wijzerplaat
+
 Als je vragen hebt kan je ze stellen bij mobile@habitica.com! En als je de app leuk vindt, waarderen we het als je ons een recensie nalaat.

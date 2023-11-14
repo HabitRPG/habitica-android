@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tutorial_stats">Chạm vào nút màu xám để phân bố nhiều Chỉ số của bạn trong một lần, hoặc chạm vào mũi tên để thêm chúng một điểm một lần.</string>
-    <string name="tutorial_tavern">Chào mừng tới Quán rượu, một phòng trò chuyện mở cho tất cả mọi lứa tuổi! Ở đây bạn có thể nói về năng suất và hỏi chuyện nhau. Vui vẻ nhé!</string>
     <string name="tutorial_skills">Kĩ năng là những khả năng đặc biệt có những hiệu ứng mạnh mẽ! Chạm vào một Kĩ năng để sử dụng chúng. Nó sẽ tiêu tốn Mana (thanh màu xanh), thứ mà bạn kiếm được bằng việc đăng nhập hằng ngày và hoàn thành những công việc đời thực của bạn. Xem ở FAQ để có thêm nhiều thông tin!</string>
     <string name="tutorial_tasks_complete">Đó là tất cả rồi đó. Nếu bạn cần được nhắc lại, xem mục FAQ.</string>
     <string name="tutorial_rewards_2">Bạn còn có thể tạo Phần thưởng Tự chọn ở đời thực dựa vào thứ gì thúc đẩy bạn.</string>

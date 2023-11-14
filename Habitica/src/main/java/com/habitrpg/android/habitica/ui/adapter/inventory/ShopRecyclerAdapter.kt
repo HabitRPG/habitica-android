@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopArmoireGearBinding
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
@@ -24,9 +26,11 @@ import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ViewHolder>() {
 
+    var completedQuests: List<String?> = emptyList()
     var armoireCount: Int = 0
     var onNeedsRefresh: (() -> Unit)? = null
     var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
@@ -148,6 +152,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                                         } else {
                                             mainActivity?.let { activity ->
                                                 val dialog = InsufficientGemsDialog(activity, 3)
+                                                Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "class change"))
                                                 dialog.show()
                                             }
                                         }
@@ -173,6 +178,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
                     val numberOwned = ownedItems[obj.key + "-" + obj.purchaseType]?.numberOwned ?: 0
                     itemHolder.bind(obj, obj.canAfford(user, 1), numberOwned)
                     itemHolder.isPinned = pinnedItemKeys.contains(obj.key)
+                    itemHolder.isCompleted = completedQuests.contains(obj.key)
                 }
                 is String -> (holder as? EmptyStateViewHolder)?.text = obj
                 is Pair<*, *> -> (holder as? ArmoireGearViewHolder)?.bind(obj.first as? String ?: "", obj.second as? Int ?: 0)

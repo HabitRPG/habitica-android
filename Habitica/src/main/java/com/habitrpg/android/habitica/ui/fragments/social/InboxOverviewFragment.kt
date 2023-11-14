@@ -17,7 +17,8 @@ import com.habitrpg.android.habitica.databinding.DialogChooseMessageRecipientBin
 import com.habitrpg.android.habitica.databinding.FragmentInboxBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
@@ -122,14 +123,18 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
                 binding.progressCircular.visibility = View.VISIBLE
                 val username = binding.uuidEditText.text?.toString() ?: ""
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    val member = socialRepository.retrieveMemberWithUsername(username, false)
-                    if (member != null) {
-                        alert.dismiss()
-                        openInboxMessages("", username)
-                        binding.progressCircular.visibility = View.GONE
-                    } else {
-                        binding.errorTextView.visibility = View.VISIBLE
-                        binding.progressCircular.visibility = View.GONE
+                    var member: Member? = null
+                    try {
+                        member = socialRepository.retrieveMember(username, false)
+                    } finally {
+                        if (member != null) {
+                            alert.dismiss()
+                            openInboxMessages("", username)
+                            binding.progressCircular.visibility = View.GONE
+                        } else {
+                            binding.errorTextView.visibility = View.VISIBLE
+                            binding.progressCircular.visibility = View.GONE
+                        }
                     }
                 }
             }

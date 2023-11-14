@@ -14,6 +14,5 @@
   <string name="tutorial_tasks_complete">目前為止就這樣了。如果您想了解更多，請查看FAQ部分。</string>
     <string name="tutorial_skills">技能是有強大作用的特殊能力！點擊技能使用。使用技能需要消耗魔法值(藍色條)，魔力可由每日打卡和完成現實任務來獲得。更多信息請查詢FAQ！</string>
   <string name="tutorial_party">在這裡，你和你的朋友可以互相激勵完成目標並通過完成任務組團打BOSS！</string>
-  <string name="tutorial_tavern">歡迎來到酒館，這裡是一個公開的不分年齡的聊天室！這裡，可以聊聊心得，問問問題。祝您玩的愉快！</string>
     <string name="tutorial_stats">按灰色的按鈕可以把所有的能力點用於一次升級某項能力，或是按箭頭以批次分配能力點。</string>
 </resources>

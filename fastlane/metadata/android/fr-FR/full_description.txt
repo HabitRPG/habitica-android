@@ -1,3 +1,29 @@
-Gérez votre vie comme un jeu pour garder la motivation et l'organisation ! Habitica rend simple le fait de s'amuser en accomplissant ses tâches.
-Intégrez vos habitudes, vos objectifs quotidiens, et votre liste de tâches, puis créez-vous un avatar personnalisé. Validez vos tâches pour gagner des niveau et débloquer des fonctionnalités comme l'armure, les familiers, les compétences et même les quêtes ! Combattez les monstres avec vos amis pour vous responsabiliser, et utilisez votre or pour acheter des récompenses du jeu, comme de l'équipement, ou des récompenses personnalisées comme regarder un épisode de votre série préférée. Flexible, social et amusant, Habitica est la meilleure manière de vous motiver à accomplir vos objectifs.
-Si vous avez la moindre question, n'hésitez pas à envoyer un message à mobile@habitica.com ! Et si vous appréciez notre application, nous vous serions reconnaissant de bien vouloir nous laisser un avis
+Gérez votre vie comme un jeu pour garder la motivation et l'organisation ! Habitica rend simple le fait de s'amuser en accomplissant ses tâches.Intégrez vos habitudes, vos objectifs quotidiens, et votre liste de tâches, puis créez-vous un avatar personnalisé. 
+
+Validez vos tâches pour gagner des niveau et débloquer des fonctionnalités comme l'armure, les familiers, les compétences et même les quêtes ! Combattez les monstres avec vos amis pour vous responsabiliser, et utilisez votre or pour acheter des récompenses du jeu, comme de l'équipement, ou des récompenses personnalisées comme regarder un épisode de votre série préférée. Flexible, social et amusant, Habitica est la meilleure manière de vous motiver à accomplir vos objectifs.
+
+Caractéristiques:
+   • Répétition automatique des tâches programmées pour vos routines quotidiennes, hebdomadaires ou mensuelles
+   • Suivi des habitudes flexible pour les tâches que vous souhaitez effectuer plusieurs fois par jour ou seulement de temps en temps
+   • Liste de tâches traditionnelle pour les tâches qui ne doivent être effectuées qu'une seule fois.
+   • Les tâches codées par couleur et les compteurs de séquences vous aident à voir comment vous vous en sortez en un coup d'œil.
+   • Système de mise à niveau pour visualiser votre progression globale
+   • Des tonnes d'équipements à collectionner et d'animaux de compagnie adaptés à votre style personnel
+   • Personnalisations d'avatar incluses : fauteuils roulants, coiffures, tons de peau, etc.
+   • Sorties de contenu régulières et événements saisonniers pour garder les choses à jour
+   • Les groupes vous permettent de faire équipe avec des amis pour plus de responsabilité et de combattre des ennemis féroces en accomplissant des tâches
+   • Les défis proposent des listes de tâches partagées que vous pouvez ajouter à vos tâches personnelles.
+   • Rappels et widgets pour vous aider à rester sur la bonne voie
+   • Thèmes de couleurs personnalisables avec modes sombre et clair
+   • Synchronisation entre appareils
+
+Vous souhaitez encore plus de flexibilité pour effectuer vos tâches en déplacement ? Nous avons une application Wear OS sur la montre !
+
+Fonctionnalités du système d'exploitation Wear :
+   • Afficher, créer et compléter les habitudes, les quotidiens et les tâches à faire
+   • Recevez des récompenses pour vos efforts avec de l'expérience, de la nourriture, des œufs et des potions.
+   • Suivez vos statistiques avec des barres de progression dynamiques
+   • Montrez votre superbe avatar en pixels sur le cadran de la montre
+
+
+Si vous avez la moindre question, n'hésitez pas à envoyer un message à mobile@habitica.com ! Et si vous appréciez notre application, nous vous serions reconnaissant de bien vouloir nous laisser un avis.

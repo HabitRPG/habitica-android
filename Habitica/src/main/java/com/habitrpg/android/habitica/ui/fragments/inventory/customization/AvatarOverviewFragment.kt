@@ -2,6 +2,9 @@ package com.habitrpg.android.habitica.ui.fragments.inventory.customization
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -21,13 +24,16 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.scale
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Equipment
+import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -35,6 +41,7 @@ import com.habitrpg.android.habitica.ui.views.SegmentedControl
 import com.habitrpg.android.habitica.ui.views.equipment.AvatarCustomizationOverviewView
 import com.habitrpg.android.habitica.ui.views.equipment.EquipmentOverviewView
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.views.AvatarView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
@@ -129,6 +136,30 @@ open class AvatarOverviewFragment :
         MainNavigationController.navigate(AvatarOverviewFragmentDirections.openEquipmentDetail(type, isCostume, equipped ?: ""))
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_share_avatar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.share_avatar) {
+            userViewModel.user.value?.let {
+                val usecase = ShareAvatarUseCase()
+                lifecycleScope.launchCatching {
+                    usecase.callInteractor(
+                        ShareAvatarUseCase.RequestValues(
+                            requireActivity() as BaseActivity,
+                            it,
+                            "Check out my avatar on Habitica!",
+                            "avatar_customization"
+                        )
+                    )
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         val newSize: String = if (position == 0) "slim" else "broad"
 
@@ -150,7 +181,7 @@ fun AvatarOverviewView(
     costumeTwoHanded: Boolean = false,
     onCustomizationTap: (String, String?) -> Unit,
     onAvatarEquipmentTap: (String, String?) -> Unit,
-    onEquipmentTap: (String, String?, Boolean) -> Unit
+    onEquipmentTap: (String, String?, Boolean) -> Unit,
 ) {
     val user by userViewModel.user.observeAsState()
     Column(

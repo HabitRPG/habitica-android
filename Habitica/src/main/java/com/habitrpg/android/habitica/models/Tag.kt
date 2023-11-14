@@ -10,6 +10,7 @@ open class Tag : RealmObject(), BaseObject {
 
     var userId: String? = null
     var name: String = ""
+    var group: String? = null
     internal var challenge: Boolean = false
 
     override fun equals(other: Any?): Boolean {

@@ -98,6 +98,8 @@
                 tools:text="List of items"
                 android:textColor="@color/white"
                 style="@style/Body2"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 />
         </TableRow>
         <TableRow

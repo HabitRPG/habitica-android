@@ -156,9 +156,7 @@
     <string name="setup_task_creativity_1">Inspirez-vous du travail d\'un mentor</string>
     <string name="setup_task_creativity_2">Travailler sur un projet créatif</string>
     <string name="setup_task_creativity_3">Finir un projet créatif</string>
-    <string name="my_guilds">Mes guildes</string>
-    <string name="public_guilds">Guildes publiques</string>
-    <string name="guild">Guilde</string>
+            <string name="guild">Guilde</string>
     <string name="leave">Quitter</string>
     <string name="join">Rejoindre</string>
     <string name="delete">Supprimer</string>
@@ -167,7 +165,6 @@
     <string name="add_tag">Ajouter une nouvelle étiquette</string>
     <string name="privacy">Sécurité</string>
     <string name="write_message">Écrire un message</string>
-    <string name="guild_search_hint">Chercher des guildes</string>
     <string name="battle_gear">Équipement de combat</string>
     <string name="costume">Costume</string>
     <string name="outfit_head">Tête</string>
@@ -524,7 +521,6 @@
     <string name="class_equipment_shop_dialog">Cet objet est disponible pour une classe spécifique.
 \nVous pouvez changer de classe depuis les paramètres.</string>
     <string name="class_gear_disclaimer">Vous ne pouvez acheter de l\'équipement que pour votre classe actuelle</string>
-    <string name="tavern_description">Bienvenue à la taverne ! Prenez une chaise pour vous joindre à la conversation.</string>
     <string name="check_into_inn">Se reposer à l\'auberge</string>
     <string name="community_guidelines">Règles de vie en communauté</string>
     <string name="view_community_guidelines">Voir les règles de vie en communauté</string>
@@ -566,7 +562,6 @@
     <string name="questShop_owner_long">Ian le guide des quêtes</string>
     <string name="seasonalShop_owner_long">Sorcière saisonnière</string>
     <string name="rage_attack">Attaque de rage :</string>
-    <string name="tavern_description_world_boss">Oh, ne faites pas attention au monstre ci-dessous — c\'est toujours un endroit sûr pour discuter pendant vos pauses.</string>
     <string name="report">Signaler</string>
     <string name="reply">Répondre</string>
     <string name="challenge_prize">Récompense du défi</string>
@@ -652,8 +647,6 @@
     <string name="unallocated_stats_points"><![CDATA[Vous avez <b>%1$s points d\'attribut non alloués</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Vous avez de nouveaux <b>objets mystère</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<![CDATA[<font color=#925CF3>%1$s</font> vous avez reçu une invitation à rejoindre l\'équipe <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Vous avez reçu une invitation à rejoindre la guilde privée <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Vous avez reçu une invitation à rejoindre la guilde <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[On vous invite à rejoindre la quête <b>%1$s</b>]]></string>
     <string name="remaining_1hour">1 heure restante</string>
     <string name="remaining_hours">%d heures restantes</string>
@@ -748,7 +741,7 @@
     <string name="invite_to_guild">Inviter dans la guilde</string>
     <string name="guild_description">Description de la guilde</string>
     <string name="mystery_sets">Ensembles mystère</string>
-    <string name="reason_for_report">Motif du signalement (optionnel)</string>
+    <string name="report_message_hint">Motif du signalement (optionnel)</string>
     <string name="report_message_title">Signaler %s pour violation :</string>
     <string name="report_explanation">Ne signalez **que** les messages qui enfreignent les [règles de vie en communauté](https://habitica.com/static/community-guidelines) et/ou les [conditions de service](https://habitica.com/static/terms). Signaler des messages de façon inadéquate pourrait vous valoir une infraction.</string>
     <string name="x_class">Classe %s</string>
@@ -1127,7 +1120,7 @@
     <string name="terms_of_service">Conditions d\'utilisation</string>
     <string name="privacy_policy">Politique de Confidentialité</string>
     <string name="all_tasks_completed">Vous avez fini toutes vos tâches. Bravo !</string>
-    <string name="damage_pending">%.01f dégâts en cours</string>
+    <string name="damage_pending">%s dégâts en cours</string>
     <string name="reset_counter">Réinitialiser le compteur</string>
     <string name="adjust_counter">Ajuster le compteur</string>
     <string name="x_remaining">%s restant</string>

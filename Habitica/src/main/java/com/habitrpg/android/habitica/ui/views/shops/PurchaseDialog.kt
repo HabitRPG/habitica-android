@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
@@ -17,16 +18,23 @@ import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.databinding.DialogPurchaseShopitemButtonBinding
+import com.habitrpg.android.habitica.databinding.DialogPurchaseShopitemHeaderBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.ArmoireActivityDirections
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 import com.habitrpg.android.habitica.ui.views.CurrencyViews
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -37,6 +45,7 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientG
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientSubscriberGemsDialog
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
+import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.internal.managers.ViewComponentManager
@@ -57,11 +66,11 @@ class PurchaseDialog(
     private val userRepository: UserRepository,
     private val inventoryRepository: InventoryRepository,
     val item: ShopItem,
-    val parentActivity: Activity? = null
+    private val parentActivity: AppCompatActivity? = null
 ) : HabiticaAlertDialog(context) {
 
     private val customHeader: View by lazy {
-        LayoutInflater.from(context).inflate(R.layout.dialog_purchase_shopitem_header, null)
+        DialogPurchaseShopitemHeaderBinding.inflate(context.layoutInflater).root
     }
     private val currencyView: CurrencyViews
     private val limitedTextView: TextView
@@ -75,8 +84,8 @@ class PurchaseDialog(
 
     private var purchaseQuantity = 1
 
-    var purchaseCardAction: ((ShopItem) -> Unit)? = null
-    var onGearPurchased: ((ShopItem) -> Unit)? = null
+    private var purchaseCardAction: ((ShopItem) -> Unit)? = null
+    var onShopNeedsRefresh: ((ShopItem) -> Unit)? = null
 
     private var shopItem: ShopItem = item
         set(value) {
@@ -265,7 +274,7 @@ class PurchaseDialog(
         pinTextView = customHeader.findViewById(R.id.pin_text)
 
         addCloseButton()
-        buyButton = addButton(layoutInflater.inflate(R.layout.dialog_purchase_shopitem_button, null), autoDismiss = false) { _, _ ->
+        buyButton = addButton(DialogPurchaseShopitemButtonBinding.inflate(layoutInflater).root, autoDismiss = false) { _, _ ->
             onBuyButtonClicked()
         }
         priceLabel = buyButton.findViewById(R.id.priceLabel)
@@ -352,18 +361,30 @@ class PurchaseDialog(
                 when {
                     "gems" == shopItem.purchaseType -> {
                         if (shopItem.canAfford(user, purchaseQuantity)) {
-                            InsufficientSubscriberGemsDialog(context)
+                            InsufficientSubscriberGemsDialog(context).show()
                         } else {
-                            InsufficientGoldDialog(context)
+                            InsufficientGoldDialog(context).show()
                         }
                     }
-                    "gold" == shopItem.currency -> InsufficientGoldDialog(context)
+                    "gold" == shopItem.currency -> InsufficientGoldDialog(context).show()
                     "gems" == shopItem.currency -> {
-                        parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value) }
+                        Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "purchase modal", "item" to shopItem.key))
+                        parentActivity?.let { activity -> InsufficientGemsDialog(activity, shopItem.value).show() }
                     }
-                    "hourglasses" == shopItem.currency -> InsufficientHourglassesDialog(context)
-                    else -> null
-                }?.show()
+                    "hourglasses" == shopItem.currency -> {
+                        if (user?.isSubscribed == true) {
+                            InsufficientHourglassesDialog(context).show()
+                        } else {
+                            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                            }
+                            parentActivity?.let { activity -> subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG) }
+                        }
+
+                    }
+
+
+                }
                 return
             }
         }
@@ -431,9 +452,9 @@ class PurchaseDialog(
                 }
             }
             val rightTextColor = when (item.currency) {
-                "gold" -> ContextCompat.getColor(context, R.color.text_yellow)
-                "gems" -> ContextCompat.getColor(context, R.color.text_green)
-                "hourglasses" -> ContextCompat.getColor(context, R.color.text_brand)
+                "gold" -> ContextCompat.getColor(context, R.color.yellow_5)
+                "gems" -> ContextCompat.getColor(context, R.color.green_10)
+                "hourglasses" -> ContextCompat.getColor(context, R.color.brand_300)
                 else -> 0
             }
             val a = (application?.currentActivity?.get() ?: getActivity() ?: ownerActivity)
@@ -446,8 +467,8 @@ class PurchaseDialog(
             )
             inventoryRepository.retrieveInAppRewards()
             userRepository.retrieveUser(forced = true)
-            if (item.isTypeGear || item.currency == "hourglasses") {
-                onGearPurchased?.invoke(item)
+            if (item.isTypeGear || item.currency == "hourglasses" || item.key == "gem") {
+                onShopNeedsRefresh?.invoke(item)
             }
         }
     }
@@ -478,7 +499,10 @@ class PurchaseDialog(
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.excess_items)
         alert.setMessage(context.getString(R.string.excessItemsNoneLeft, item.text, purchaseQuantity, item.text))
-        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity), true, false) { _, _ ->
+        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity),
+            isPrimary = true,
+            isDestructive = false
+        ) { _, _ ->
             buyItem(purchaseQuantity)
         }
         alert.addCancelButton()

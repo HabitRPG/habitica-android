@@ -14,6 +14,5 @@
     <string name="tutorial_tasks_complete">Per ora è tutto. Se hai bisogno di un ripasso, consulta la sezione FAQ.</string>
     <string name="tutorial_skills">Le Abilità sono dei poteri con straordinari effetti! Tocca un\'abilità per utilizzarla. Costerà punti Mana (la barra blu), che puoi ottenere usando Habitica ogni giorno e completando le attività. Dai un\'occhiata alle FAQ nel menù per avere maggiori informazioni!</string>
     <string name="tutorial_party">Qui è dove tu e i tuoi amici potete motivarvi a vicenda e combattere i mostri con le vostre attività!</string>
-    <string name="tutorial_tavern">Benvenuto nella Taverna, una chat pubblica per tutte le età! Qui puoi chiacchierare e fare delle domande. Divertiti!</string>
     <string name="tutorial_stats">Premi sul pulsante grigio per assegnare più punti statistica in una volta, oppure usa le frecce per aggiungerne uno alla volta.</string>
 </resources>

@@ -1,7 +1,26 @@
-Nowa apka od HabitRPG! Przepisana od zera, bardziej przyjazna i z nowymi funkcjami.
+Traktuj swoje życie jak grę aby być zmotywowanym i zorganizowanym! Dzięki Habitica osiąganie celów jest fajne. Wprowadź swoje Nawyki, Codzienne oraz Do-zrobienia, a potem stwórz swojego awatara. Odhaczaj zadania by zwiększać poziom swojego awatara i odblokowywać takie opcje jak zbroja, chowańce, umiejętności a nawet misje! Zwalczaj potwory z przyjaciółmi by motywować siebie nawzajem i wydawaj złoto na wbudowane nagrody takie jak zbroja lub stworzone przez siebie, takie jak obejrzenie odcinka ulubionego serialu. Elastyczna, społecznościowa i zabawna - Habitica jest idealnym sposobem na zmotywowanie siebie do osiągnięcia celów.
 
-Traktuj życie jako grę, będziesz zmotywowany i zorganizowany.
+Cechy:
+  • Automatyczne powtarzanie zadań zaplanowanych w ramach codziennych, cotygodniowych lub miesięcznych rutyn
+  • Elastyczny moduł śledzenia nawyków do zadań, które chcesz wykonywać kilka razy dziennie lub tylko raz na jakiś czas
+  • Tradycyjna lista rzeczy do zrobienia zawierająca zadania, które należy wykonać tylko raz
+  • Oznaczone kolorami zadania i liczniki serii pozwalają szybko sprawdzić, jak sobie radzisz
+  • System poziomowania umożliwiający wizualizację ogólnego postępu
+  • Mnóstwo kolekcjonerskiego sprzętu i zwierzątek, które pasują do Twojego osobistego stylu
+  • Możliwość dostosowania awatarów: wózki inwalidzkie, fryzury, odcienie skóry i inne
+  • Regularne publikacje treści i wydarzenia sezonowe zapewniające świeżość
+  • Strony umożliwiają współpracę z przyjaciółmi w celu uzyskania dodatkowej odpowiedzialności i walkę z zaciekłymi wrogami, wykonując zadania
+  • Wyzwania oferują wspólne listy zadań, które możesz dodać do swoich osobistych zadań
+  • Przypomnienia i widżety pomagające utrzymać się na właściwej drodze
+  • Konfigurowalne motywy kolorystyczne z trybem ciemnym i jasnym
+  • Synchronizacja między urządzeniami
 
-Wpisz swoje Nawyki, swoje Codzienne cele, swoją listę Do-Zrobienia i stwórz własnego awatara. Odhaczaj zadania aby levelować postać i odblokować opcje jak pancerz, zwierzaczki, zdolności a nawet misje! Walcz z potworami wespół z przyjaciółmi aby wzajemnie się podbudowywać, i zdobywać złoto oraz nagrody: ekwipunek, odznaczenia, bilet na odcinek Twojego ulubionego serialu. Przyjazny, społeczny i zabawny, HAbitica jest doskonałym sposobem by zmotywować się i dokończyć wszystko.
+Chcesz jeszcze większej elastyczności, aby móc wykonywać swoje zadania w drodze? Na zegarku mamy aplikację Wear OS!
 
-Obecnie mamy wersję beta, tak więc swobodnie zbesztaj nas przez mobile@habitica.com! A jeśli podoba ci się nasza apka, będziemy wdzięczni za pozostawienie opini.
+Funkcje systemu operacyjnego Wear:
+  • Przeglądaj, twórz i wykonuj nawyki, codzienne czynności i zadania do wykonania
+  • Otrzymuj nagrody za swoje wysiłki w postaci doświadczenia, jedzenia, jajek i mikstur
+  • Śledź swoje statystyki za pomocą dynamicznych pasków postępu
+  • Pochwal się swoim oszałamiającym pikselowym awatarem na tarczy zegarka
+
+W razie jakichkolwiek pytań pisz śmiało na mobile@habitica.com. A jeśli podoba Ci się nasza aplikacja, bylibyśmy naprawdę wdzięczni za opinię.

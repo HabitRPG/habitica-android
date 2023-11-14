@@ -7,11 +7,10 @@
     <string name="sign_in">Войти</string>
     <string name="other_options">Другие опции</string>
     <string name="create_account">Создать аккаунт</string>
-    <string name="sign_in_password">Войти с паролем</string>
     <string name="continue_text">Продолжить</string>
     <string name="day_start">Начало дня</string>
     <string name="start_new_day">Начать новый день</string>
-    <string name="task_title_hint">Введите название задачи</string>
+    <string name="task_title_hint">Название задачи…</string>
     <string name="save">Сохранить</string>
     <string name="sync_data">Синхронизировать данные</string>
     <string name="hide_task_rewards">Скрыть награды за задание</string>

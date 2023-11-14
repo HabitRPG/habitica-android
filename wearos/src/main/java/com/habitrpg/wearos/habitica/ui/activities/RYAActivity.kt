@@ -30,13 +30,13 @@ class RYAActivity : BaseActivity<ActivityRyaBinding, RYAViewModel>() {
         viewModel.tasks.observe(
             this,
             object : Observer<List<Task>> {
-                override fun onChanged(list: List<Task>) {
-                    if (list.isEmpty()) {
+                override fun onChanged(value: List<Task>) {
+                    if (value.isEmpty()) {
                         runCron()
                         viewModel.tasks.removeObserver(this)
                     } else {
                         binding.scrollView.isVisible = true
-                        createTaskListViews(list)
+                        createTaskListViews(value)
                         viewModel.tasks.removeObserver(this)
                     }
                 }

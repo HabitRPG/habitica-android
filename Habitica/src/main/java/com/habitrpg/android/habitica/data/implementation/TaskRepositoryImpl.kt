@@ -1,10 +1,12 @@
 package com.habitrpg.android.habitica.data.implementation
 
-import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.local.TaskLocalRepository
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.interactors.ScoreTaskLocallyInteractor
 import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.responses.BulkTaskScoringData
@@ -14,7 +16,6 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskDirectionData
@@ -38,7 +39,6 @@ class TaskRepositoryImpl(
     apiClient: ApiClient,
     authenticationHandler: AuthenticationHandler,
     val appConfigManager: AppConfigManager,
-    val analyticsManager: AnalyticsManager
 ) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler), TaskRepository {
     private var lastTaskAction: Long = 0
 
@@ -101,12 +101,14 @@ class TaskRepositoryImpl(
         val thisUser = user ?: localRepository.getUser(authenticationHandler.currentUserID ?: "").firstOrNull() ?: return null
         // save local task changes
 
-        analyticsManager.logEvent(
+        Analytics.sendEvent(
             "task_scored",
-            bundleOf(
-                Pair("type", task.type),
-                Pair("scored_up", up),
-                Pair("value", task.value)
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
+            mapOf(
+                "type" to (task.type ?: ""),
+                "scored_up" to up,
+                "value" to task.value
             )
         )
         if (res.lvl == 0) {
@@ -176,15 +178,15 @@ class TaskRepositoryImpl(
                     item.key = key
                     item.itemType = type
                     item.userID = user.id
+
+                    when (type) {
+                        "eggs" -> bgUser.items?.eggs?.add(item)
+                        "food" -> bgUser.items?.food?.add(item)
+                        "hatchingPotions" -> bgUser.items?.hatchingPotions?.add(item)
+                        "quests" -> bgUser.items?.quests?.add(item)
+                    }
                 }
                 item.numberOwned += 1
-                when (type) {
-                    "eggs" -> bgUser.items?.eggs?.add(item)
-                    "food" -> bgUser.items?.food?.add(item)
-                    "hatchingPotions" -> bgUser.items?.hatchingPotions?.add(item)
-                    "quests" -> bgUser.items?.quests?.add(item)
-                    else -> ""
-                }
             }
 
             bgUser.stats?.hp = res.hp

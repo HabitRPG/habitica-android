@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Studeer een meester van het ambacht</string>
     <string name="setup_task_creativity_2">Aan een creatief project werken</string>
     <string name="setup_task_creativity_3">Een creatief project afronden</string>
-    <string name="my_guilds">Mijn Gilden</string>
-    <string name="public_guilds">Publieke Gilden</string>
-    <string name="guild">Gilde</string>
+            <string name="guild">Gilde</string>
     <string name="leave">Verlaten</string>
     <string name="join">Toetreden</string>
     <string name="delete">Verwijderen</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Nieuwe label toevoegen</string>
     <string name="privacy">Privacy</string>
     <string name="write_message">Bericht schrijven</string>
-    <string name="guild_search_hint">Zoek naar gilden</string>
     <string name="battle_gear">Gevechtsuitrusting</string>
     <string name="costume">Kostuum</string>
     <string name="outfit_head">Hoofd</string>
@@ -521,7 +518,6 @@
     <string name="classless">Klasseloos</string>
     <string name="class_equipment_shop_dialog">Dit voorwerp is enkel beschikbaar voor een specifieke klasse.\n Je kunt van klasse veranderen bij je Instellingen.</string>
     <string name="class_gear_disclaimer">Je kunt enkel uitrusting kopen voor je huidige klasse</string>
-    <string name="tavern_description">Welkom in de Herberg! Kom erbij zitten om te praten of neem een pauze van je taken.</string>
     <string name="check_into_inn">Check in bij de Herberg</string>
     <string name="community_guidelines">gemeenschapsrichtlijnen</string>
     <string name="view_community_guidelines">Bekijk de gemeenschapsrichtlijnen</string>
@@ -563,7 +559,6 @@
     <string name="questShop_owner_long">Ian de queeste-gids</string>
     <string name="seasonalShop_owner_long">Seizoenstovenares</string>
     <string name="rage_attack">Woedeaanval:</string>
-    <string name="tavern_description_world_boss">Oh jee, schenk geen aandacht aan het monster hier beneden — dit blijft een veilige plaats om te chatten tijdens je pauzes.</string>
     <string name="report">rapporteer</string>
     <string name="reply">Reageer</string>
     <string name="challenge_prize">Uitdaging Prijs</string>
@@ -628,8 +623,6 @@
     <string name="unallocated_stats_points"><![CDATA[Je hebt <b>%1$s niet toegekende statuspunten</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Je hebt nieuwe <b>Mysterieuze items</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> je werd uitgenodigd om je aan te sluiten bij de Groep <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij het Gilde <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Je werd uitgenodigd om je aan te sluiten bij de Gilde <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Je bent uitgenodigd voor de Queeste <b>%1$s</b>]]></string>
     <string name="empty_title_rewards_filtered">Geen Beloningen</string>
     <string name="empty_description_todos_filtered">Er zijn geen To-Do\'s te zien met de huidige filters.</string>
@@ -860,7 +853,7 @@
     <string name="invite_to_guild">Nodig uit voor Gilde</string>
     <string name="guild_description">Gilde Beschrijving</string>
     <string name="mystery_sets">Mysteriesets</string>
-    <string name="reason_for_report">Reden voor melding (optioneel)</string>
+    <string name="report_message_hint">Reden voor melding (optioneel)</string>
     <string name="report_message_title">%s melden wegens overtreding:</string>
     <string name="report_explanation">Meld **alleen** een bericht dat de [Communityrichtlijnen](https://habitica.com/static/community-guidelines) en/of [Servicevoorwaarden](https://habitica.com/static/terms) schendt. Het ongepast melden van een bericht kan een overtreding opleveren.</string>
     <string name="gift_confirmation_text_sub_g1g1">Je hebt %s een %s-maand Habitica-abonnement gestuurd en hetzelfde abonnement is toegepast op je account voor onze Gift One Get One-promotie!</string>

@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Улучшить навык владения ремеслом</string>
     <string name="setup_task_creativity_2">Поработать над творческим проектом</string>
     <string name="setup_task_creativity_3">Закончить творческий проект</string>
-    <string name="my_guilds">Мои гильдии</string>
-    <string name="public_guilds">Открытые гильдии</string>
-    <string name="guild">Гильдия</string>
+            <string name="guild">Гильдия</string>
     <string name="leave">Покинуть</string>
     <string name="join">Присоединиться</string>
     <string name="delete">Удалить</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Добавить новый Тег</string>
     <string name="privacy">Приватность</string>
     <string name="write_message">Написать сообщение</string>
-    <string name="guild_search_hint">Поиск для гильдий</string>
     <string name="battle_gear">Боевая экипировка</string>
     <string name="costume">Костюм</string>
     <string name="outfit_head">Голова</string>
@@ -515,7 +512,6 @@
     <string name="classless">Бесклассовый</string>
     <string name="class_equipment_shop_dialog">Этот предмет доступен только определенному классу\n Вы можете изменить свой класс в Настройках.</string>
     <string name="class_gear_disclaimer">Вы можете покупать экипировку только для текущего класса</string>
-    <string name="tavern_description">Добро пожаловать в Гостиницу! Пододвигайе кресло к чату или возьмите перерыв и отдохните от ваших заданий.</string>
     <string name="check_into_inn">Разместиться в гостинице</string>
     <string name="community_guidelines">Правила сообщества</string>
     <string name="view_community_guidelines">Посмотреть правила сообщества</string>
@@ -557,7 +553,6 @@
     <string name="questShop_owner_long">Квест-мастер Ян</string>
     <string name="seasonalShop_owner_long">Сезонная Чародейка</string>
     <string name="rage_attack">Атака при ярости:</string>
-    <string name="tavern_description_world_boss">О, дорогуша, не обращай внимания на монстра внизу - это по-прежнему райский уголок, чтобы поболтать на перерывах.</string>
     <string name="report">Пожаловаться</string>
     <string name="reply">Ответить</string>
     <string name="challenge_prize">Награда за испытание</string>
@@ -651,8 +646,6 @@
     <string name="unallocated_stats_points"><![CDATA[Вы не распределили <b>%1$s очков</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[У вас новый <b>Таинственный предмет</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Вас пригласили в команду <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Вас пригласили присоединиться к частной гильдии <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Вас пригласили в гильдию <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Вас пригласили на квест <b>%1$s</b>]]></string>
     <string name="basic_achievements">Основные достижения</string>
     <string name="guild_summary">Кратко о гильдии</string>
@@ -722,7 +715,7 @@
     <string name="invite_to_guild">Пригласить в гильдию</string>
     <string name="guild_description">Описание гильдии</string>
     <string name="mystery_sets">Таинственные наборы</string>
-    <string name="reason_for_report">Причина (необязательно)</string>
+    <string name="report_message_hint">Причина (необязательно)</string>
     <string name="x_class">Класс персонажа %s</string>
     <string name="become_x">Стать %s</string>
     <string name="need_more_help">Нужна помощь\?</string>
@@ -1126,7 +1119,7 @@
     <string name="terms_of_service">Условия Использования</string>
     <string name="privacy_policy">Политика Конфиденциальности</string>
     <string name="all_tasks_completed">Вы завершили все ваши задания. Отлично!</string>
-    <string name="damage_pending">%.01f ожидаемого урона</string>
+    <string name="damage_pending">%s ожидаемого урона</string>
     <string name="reset_counter">Сбросить счётчик</string>
     <string name="adjust_counter">Настроить счётчик</string>
     <string name="discard_changes_to_task_message">Вы уверены, что не хотите сохранять изменения в этой задаче\?</string>

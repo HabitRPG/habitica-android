@@ -7,9 +7,13 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogHatchPetButtonBinding
 import com.habitrpg.android.habitica.databinding.DialogPetSuggestHatchBinding
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -50,6 +54,15 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         val hiltEntryPoint = EntryPointAccessors.fromApplication(context, PetSuggestHatchDialogEntryPoint::class.java)
         hatchPetUseCase = hiltEntryPoint.useCase()
         userViewModel = hiltEntryPoint.mainUserViewModel()
+    }
+
+    private var hasAllItems = false
+
+    override fun show() {
+        super.show()
+        if (!hasAllItems) {
+            Analytics.sendNavigationEvent("pet suggestion modal")
+        }
     }
 
     fun configure(
@@ -121,6 +134,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 setTitle(R.string.hatch_pet_title)
             }
             addButton(R.string.close, false)
+            hasAllItems = true
         } else {
             if (hasMount) {
                 if (!hasEgg && !hasPotion) {
@@ -155,9 +169,10 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 binding.currencyView.currency = "gems"
                 binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
                 addButton(binding.root, true) { _, _ ->
-                    val activity = (getActivity() as? MainActivity) ?: return@addButton
+                    val activity = (getActivity() as? MainActivity) ?: (HabiticaBaseApplication.getInstance(context)?.currentActivity?.get() as? MainActivity) ?: return@addButton
                     if ((userViewModel.user.value?.gemCount ?: hatchPrice) < hatchPrice) {
                         InsufficientGemsDialog(activity, hatchPrice).show()
+                        Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "pet suggest modal"))
                         return@addButton
                     }
                     val thisPotion = potion ?: return@addButton

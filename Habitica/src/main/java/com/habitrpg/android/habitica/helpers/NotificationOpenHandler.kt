@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -46,8 +47,9 @@ class NotificationOpenHandler {
             }
         }
 
-        private fun openPartyScreen() {
-            MainNavigationController.navigate(R.id.partyFragment)
+        private fun openPartyScreen(isChatNotification: Boolean = false) {
+            val tabToOpen = if (isChatNotification) 1 else 0
+            MainNavigationController.navigate(R.id.partyFragment, bundleOf("tabToOpen" to tabToOpen))
         }
 
         private fun openNoPartyScreen() {
@@ -63,11 +65,7 @@ class NotificationOpenHandler {
         }
 
         private fun openGuildDetailScreen(groupID: String?) {
-            if (groupID?.isNotEmpty() != true) {
-                MainNavigationController.navigate(R.id.guildOverviewFragment)
-            } else {
-                MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
-            }
+            MainNavigationController.navigate(R.id.guildFragment, bundleOf("groupID" to groupID))
         }
 
         private fun openSettingsScreen() {
@@ -77,7 +75,6 @@ class NotificationOpenHandler {
         private fun handleChatMessage(type: String?, groupID: String?) {
             when (type) {
                 "party" -> openPartyScreen()
-                "tavern" -> MainNavigationController.navigate(R.id.tavernFragment)
                 "guild" -> openGuildDetailScreen(groupID)
             }
         }

@@ -128,15 +128,6 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         }
     }
 
-    override fun getPublicGuilds() = realm.where(Group::class.java)
-        .equalTo("type", "guild")
-        .equalTo("privacy", "public")
-        .notEqualTo("id", Group.TAVERN_ID)
-        .sort("memberCount", Sort.DESCENDING)
-        .findAll()
-        .toFlow()
-        .filter { it.isLoaded }
-
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserGroups(userID: String, type: String?) = realm.where(GroupMembership::class.java)
         .equalTo("userID", userID)
@@ -146,7 +137,6 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
         .flatMapLatest { memberships ->
             realm.where(Group::class.java)
                 .equalTo("type", type ?: "guild")
-                .notEqualTo("id", Group.TAVERN_ID)
                 .`in`(
                     "id",
                     memberships.map {
@@ -157,14 +147,6 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
                 .findAll()
                 .toFlow()
         }
-
-    override fun getGroups(type: String): Flow<List<Group>> {
-        return realm.where(Group::class.java)
-            .equalTo("type", type)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
-    }
 
     override fun getGroup(id: String): Flow<Group?> {
         return realm.where(Group::class.java)

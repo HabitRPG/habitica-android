@@ -1,3 +1,28 @@
-Trate sua vida como um jogo para se manter motivado e organizado! Habitica facilita a diversão enquanto cumpre metas.
-Insira seus Hábitos, suas Tarefas Diárias, e sua lista de afazeres e então crie um personagem customizado. Registre suas tarefas para subir de nível e desbloqueie recursos como armadura, animais de estimação, habilidades e até mesmo missões! Combata monstros com amigos para manter todos eles responsáveis, e use seu ouro em recompensas dentro do jogo, como equipamento, ou prêmios customizados, como assistir um episódio de seu show de TV favorito. Flexível, social, e divertido, Habitica é a maneira perfeita de se motivar para cumprir qualquer coisa.
-Se você tem qualquer pergunta, sinta-se livre para enviar seus comentários para mobile@habitica.com! E se você gostou de nosso aplicativo, nós iríamos gostar muito se você deixasse sua opinião.
+Trate sua vida como um jogo para se manter motivado e organizado! Habitica facilita a diversão ao cumprir suas metas. Insira seus Hábitos, seus objetivos Diários, sua lista de Afazeres e então crie um personagem personalizado. 
+
+Marque como feitas suas tarefas para subir de nível e desbloqueie recursos como armaduras, mascotes, habilidades e até mesmo missões! Combata monstros com amigos para manter todos na linha enquanto usa seu ouro em recompensas dentro do jogo, como equipamento, ou prêmios personalizados como assistir a um episódio de sua série preferida. Flexível, social, e divertido, o Habitica é a maneira perfeita de se motivar para cumprir qualquer coisa.
+
+Características:
+  • Repetir automaticamente tarefas agendadas para suas rotinas diárias, semanais ou mensais
+  • Rastreador de hábitos flexível para tarefas que você deseja realizar várias vezes ao dia ou apenas de vez em quando
+  • Lista de tarefas tradicional para tarefas que só precisam ser realizadas uma vez
+  • Tarefas codificadas por cores e contadores de sequências ajudam você a ver rapidamente como está seu desempenho
+  • Sistema de nivelamento para visualizar seu progresso geral
+  • Toneladas de equipamentos colecionáveis ​​e animais de estimação para combinar com seu estilo pessoal
+  • Personalizações inclusivas de avatar: cadeiras de rodas, estilos de cabelo, tons de pele e muito mais
+  • Lançamentos regulares de conteúdo e eventos sazonais para manter as coisas atualizadas
+  • Os grupos permitem que você se junte a amigos para maior responsabilidade e enfrente inimigos ferozes completando tarefas
+  • Os desafios oferecem listas de tarefas compartilhadas que você pode adicionar às suas tarefas pessoais
+  • Lembretes e widgets para ajudar você a se manter atualizado
+  • Temas de cores personalizáveis ​​com modo claro e escuro
+  • Sincronização entre dispositivos
+
+Quer ainda mais flexibilidade para realizar suas tarefas em qualquer lugar? Temos um aplicativo Wear OS no relógio!
+
+Recursos do SO Wear:
+  • Visualizar, criar e concluir hábitos, tarefas diárias e tarefas
+  • Receba recompensas por seus esforços com experiência, comida, ovos e poções
+  • Acompanhe suas estatísticas com barras de progresso dinâmicas
+  • Mostre seu impressionante avatar de pixel no mostrador do relógio
+
+Se você tem qualquer pergunta, sinta-se à vontade para enviar seus comentários para mobile@habitica.com! E se você gostou de nosso aplicativo, nós iríamos adorar se você deixasse sua opinião.

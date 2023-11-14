@@ -147,9 +147,7 @@
     <string name="setup_task_creativity_1">Estudar a mestria de um ofício</string>
     <string name="setup_task_creativity_2">Trabalhe num projeto criativo</string>
     <string name="setup_task_creativity_3">Termine um projeto criativo</string>
-    <string name="my_guilds">As Minhas Guildas</string>
-    <string name="public_guilds">Guildas Públicas</string>
-    <string name="guild">Guilda</string>
+            <string name="guild">Guilda</string>
     <string name="leave">Sair</string>
     <string name="join">Aderir</string>
     <string name="delete">Eliminar</string>
@@ -157,7 +155,6 @@
     <string name="description">Descrição</string>
     <string name="privacy">Privacidade</string>
     <string name="write_message">Escrever Mensagem</string>
-    <string name="guild_search_hint">Procurar por guildas</string>
     <string name="battle_gear">Equipamento de Batalha</string>
     <string name="costume">Traje</string>
     <string name="outfit_head">Cabeça</string>
@@ -339,7 +336,6 @@
     <string name="boss_quest">Chefe de Missão</string>
     <string name="collection_quest">Recolha de Missão</string>
     <string name="quest_owner_rewards">Recompensas do Dono de Missão</string>
-    <string name="tavern_description">Bem-vindo à Pousada! Puxe uma cadeira para conversar, ou efetue uma pausa das suas tarefas.</string>
     <string name="levelup_header">Alcançaste o Nível %1$d!</string>
     <string name="levelup_detail">Por completares os teus objectivos na vida real, subiste de nível e agora estás totalmente curado!</string>
     <string name="faint_penalty_body">Perdeste um Nível. o teu Ouro, e uma peça de Equipamento, mas podes recuperá-los de volta com trabalho árduo! Boa sorte — Vais-te sair bem.</string>
@@ -375,8 +371,6 @@
     <string name="unallocated_stats_points"><![CDATA[Tens <b>%1$s Ponto(s) de Atributo por alocar</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Você tem <b>Items Mistério</b> novos]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> foi convidado a juntar-se à Equipa <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Foi convidado a juntar-se à Guilda privada <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Foi convidado a juntar-se à Guilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Foste convidado para a Missão <b>%1$s</b>]]></string>
     <string name="special_achievements">Conquistas Especiais</string>
     <string name="seasonal_achievements">Conquistas Sazonais</string>
@@ -488,7 +482,6 @@
     <string name="challenge_prize">Prêmio do Desafio</string>
     <string name="reply">Responder</string>
     <string name="report">Reportar</string>
-    <string name="tavern_description_world_boss">Ah, querido, não preste atenção ao monstro abaixo - este ainda é um porto seguro para conversar em teu tempo livre.</string>
     <string name="rage_attack">Ataque de Fúria:</string>
     <string name="seasonalShop_owner_long">Feiticeira Sazonal</string>
     <string name="questShop_owner_long">Ian o Guia de Missões</string>

@@ -37,7 +37,7 @@ fun OverviewItem(
     modifier: Modifier = Modifier,
     isTwoHanded: Boolean = false
 ) {
-    val hasIcon = isTwoHanded || (iconName?.isNotBlank() == true && iconName != "shirt_" && !iconName.endsWith("_none") && !iconName.endsWith("_base_0"))
+    val hasIcon = isTwoHanded || (iconName?.isNotBlank() == true && iconName != "shirt_" && !iconName.endsWith("_none") && !iconName.endsWith("_base_0") && !iconName.endsWith("_"))
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier

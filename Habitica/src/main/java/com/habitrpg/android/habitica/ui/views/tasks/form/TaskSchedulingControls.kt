@@ -3,6 +3,7 @@ package com.habitrpg.android.habitica.ui.views.tasks.form
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.icu.text.MessageFormat
 import android.os.Build
 import android.text.TextUtils
@@ -321,14 +322,14 @@ class TaskSchedulingControls @JvmOverloads constructor(
     }
 
     private fun styleButtonAsActive(button: TextView) {
-        button.setTextColor(context.getThemeColor(R.attr.colorTintedBackground))
-        button.background.mutate().setTint(tintColor)
+        button.setTextColor(context.getThemeColor(R.attr.tintedUiDetails))
+        button.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.tintedUiMain))
         button.contentDescription = toContentDescription(button.text, true)
     }
 
     private fun styleButtonAsInactive(button: TextView) {
-        button.setTextColor(context.getThemeColor(R.attr.colorPrimaryDark))
-        button.background.mutate().setTint(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
+        button.setTextColor(context.getThemeColor(R.attr.textColorTintedSecondary))
+        button.backgroundTintList = ColorStateList.valueOf(context.getThemeColor(R.attr.colorTintedBackgroundOffset))
         button.contentDescription = toContentDescription(button.text, false)
     }
 

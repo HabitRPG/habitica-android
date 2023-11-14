@@ -6,40 +6,83 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/bossNameView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Quest Boss"
-        style="@style/Body1"
-        android:layout_marginBottom="@dimen/spacing_medium"/>
-    <com.habitrpg.common.habitica.views.ValueBar
-        android:id="@+id/bossHealthView"
+    <LinearLayout
+        android:id="@+id/boss_health_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:barForegroundColor="@color/red_100"
-        app:barPendingColor="@color/yellow_50"
-        app:lightBackground="true"
-        app:valueTextColor="@color/red_100"
-        app:labelSpacing="@dimen/spacing_medium"
-        app:descriptionTextColor="@color/yellow_5"/>
-    <com.habitrpg.common.habitica.views.ValueBar
-        android:id="@+id/bossRageView"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/icon_boss_health"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/bossNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SubHeader1"
+                tools:text="item to collect"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="@dimen/spacing_small"/>
+            <com.habitrpg.common.habitica.views.ValueBar
+                android:id="@+id/bossHealthView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:barForegroundColor="@color/red_100"
+                app:barBackgroundColor="@color/offset_background"
+                app:barPendingColor="@color/yellow_50"
+                app:lightBackground="true"
+                app:valueTextColor="@color/text_ternary"
+                app:labelSpacing="@dimen/spacing_small"
+                app:descriptionTextColor="@color/yellow_5"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/boss_rage_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:barForegroundColor="@color/orange_100"
-        app:lightBackground="true"
-        app:valueTextColor="@color/orange_100"
-        app:labelSpacing="@dimen/spacing_medium" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/icon_boss_rage"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/boss_rage_name_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SubHeader1"
+                android:textColor="@color/text_primary"
+                android:text=""
+                android:layout_marginBottom="@dimen/spacing_small"/>
+            <com.habitrpg.common.habitica.views.ValueBar
+                android:id="@+id/bossRageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:barBackgroundColor="@color/offset_background"
+                app:barForegroundColor="@color/orange_100"
+                app:lightBackground="true"
+                app:valueTextColor="@color/text_ternary"
+                app:labelSpacing="@dimen/spacing_small" />
+        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/collectionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>
-    <TextView
-        android:id="@+id/collectedItemsNumberView"
-        android:layout_width="match_parent"
-        android:gravity="end"
-        android:layout_height="wrap_content"
-        tools:text="+N items found"/>
 </merge>

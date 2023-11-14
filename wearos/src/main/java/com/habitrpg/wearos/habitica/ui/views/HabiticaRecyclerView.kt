@@ -13,6 +13,13 @@ class HabiticaRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : WearableRecyclerView(context, attrs) {
+
+    init {
+        isVerticalScrollBarEnabled = true
+        focusable = View.FOCUSABLE
+        isFocusableInTouchMode = true
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         post {

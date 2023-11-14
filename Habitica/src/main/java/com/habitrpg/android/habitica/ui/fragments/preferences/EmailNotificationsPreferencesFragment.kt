@@ -49,7 +49,7 @@ class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedP
         preference?.isChecked = isChecked == true
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         if (isSettingUser) {
             return
         }

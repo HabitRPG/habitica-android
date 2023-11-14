@@ -16,20 +16,20 @@ class CheckClassSelectionUseCase @Inject constructor() : UseCase<CheckClassSelec
                 user?.preferences?.disableClasses != true &&
                 user?.flags?.classSelected != true
             ) {
-                displayClassSelectionActivity(true, null, requestValues.activity)
+                displayClassSelectionActivity(false, null, requestValues.activity)
             }
         } else {
-            displayClassSelectionActivity(requestValues.isInitialSelection, requestValues.currentClass, requestValues.activity)
+            displayClassSelectionActivity(requestValues.isClassSelected, requestValues.currentClass, requestValues.activity)
         }
     }
 
     private fun displayClassSelectionActivity(
-        isInitialSelection: Boolean,
+        isClassSelected: Boolean,
         currentClass: String?,
         activity: Activity
     ) {
         val bundle = Bundle()
-        bundle.putBoolean("isInitialSelection", isInitialSelection)
+        bundle.putBoolean("isClassSelected", isClassSelected)
         bundle.putString("currentClass", currentClass)
 
         val intent = Intent(activity, ClassSelectionActivity::class.java)
@@ -39,7 +39,7 @@ class CheckClassSelectionUseCase @Inject constructor() : UseCase<CheckClassSelec
 
     class RequestValues(
         val user: User?,
-        val isInitialSelection: Boolean,
+        val isClassSelected: Boolean,
         val currentClass: String?,
         val activity: Activity
     ) : UseCase.RequestValues

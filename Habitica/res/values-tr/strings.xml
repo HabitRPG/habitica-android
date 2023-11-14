@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Bir zanaat uzmanlığına çalış</string>
     <string name="setup_task_creativity_2">Yaratıcı bir proje üzerinde çalış</string>
     <string name="setup_task_creativity_3">Yaratıcı projeyi bitir</string>
-    <string name="my_guilds">Loncalarım</string>
-    <string name="public_guilds">Açık Loncalar</string>
-    <string name="guild">Lonca</string>
+            <string name="guild">Lonca</string>
     <string name="leave">Ayrıl</string>
     <string name="join">Katıl</string>
     <string name="delete">Sil</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Yeni Etiket ekle</string>
     <string name="privacy">Gizlilik</string>
     <string name="write_message">Mesaj Yaz</string>
-    <string name="guild_search_hint">Lonca ara</string>
     <string name="battle_gear">Savaş Ekipmanı</string>
     <string name="costume">Kostüm</string>
     <string name="outfit_head">Kafa</string>
@@ -521,7 +518,6 @@
     <string name="classless">Sınıfsız</string>
     <string name="class_equipment_shop_dialog">Bu eşya yalnızca belirli bir sınıf için geçerlidir.\nAyarlardan sınıfını değiştirebilirsin.</string>
     <string name="class_gear_disclaimer">Yalnızca şu anki sınıfın için olan ekipmanları satın alabilirsin</string>
-    <string name="tavern_description">Hana hoş geldin! Sohbet etmek için bir sandalye çek.</string>
     <string name="check_into_inn">Han\'a Gir</string>
     <string name="community_guidelines">Topluluk Kuralları</string>
     <string name="view_community_guidelines">Topluluk Kuralları\'nı Gör</string>
@@ -563,7 +559,6 @@
     <string name="questShop_owner_long">Görev Rehberi Ian</string>
     <string name="seasonalShop_owner_long">Mevsimsel Büyücü</string>
     <string name="rage_attack">Öfke saldırısı:</string>
-    <string name="tavern_description_world_boss">Ah canım, aşağıdaki canavarı görmezden gel — burası hala molalarında sohbet etmen için güvenli bir bölge.</string>
     <string name="report">Bildir</string>
     <string name="reply">Cevapla</string>
     <string name="challenge_prize">Mücadele Ödülü</string>
@@ -651,8 +646,6 @@
     <string name="unallocated_stats_points"><![CDATA[<b>%1$s adet dağıtılmamış Nitelik Puanın var.</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Yeni <b>Gizemli Eşyaların</b> var]]></string>
     <string name="invited_to_party_notification"><![CDATA[<b>%2$s</b> Takımına davet edildin <font color=#925CF3>%1$s</font>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[<b>%1$s</b> adlı özel Loncaya davet edildin]]></string>
-    <string name="invited_to_public_guild"><![CDATA[<b>%1$s</b> adlı Loncaya davet edildin]]></string>
     <string name="invited_to_quest"><![CDATA[<b>%1$s</b> Görevine davet edildin]]></string>
     <string name="ago_weeks">%d hafta önce</string>
     <string name="ago_1week">1h önce</string>
@@ -790,7 +783,7 @@
     <string name="invite_to_guild">Loncaya Davet Et</string>
     <string name="guild_description">Lonca Açıklaması</string>
     <string name="mystery_sets">Gizem Setleri</string>
-    <string name="reason_for_report">Bildirme nedeni (tercihen)</string>
+    <string name="report_message_hint">Bildirme nedeni (tercihen)</string>
     <string name="report_message_title">%s kullanıcısını ihlal nedeniyle bildir:</string>
     <string name="report_explanation">**Sadece** [Topluluk Kuralları](https://habitica.com/static/community-guidelines)\'nı ve/veya [Kullanım Koşulları](https://habitica.com/static/terms)\' nı ihlal eden gönderileri bildirin. Aksi takdirde ceza alabilirsiniz.</string>
     <string name="x_class">%s Sınıfı</string>
@@ -946,9 +939,9 @@
     <string name="assigned_stat">Atanan İstatistik</string>
     <string name="join_party_description_guild">Aşağıdaki kullanıcı adını bir arkadaşınıza verin veya potansiyel yoldaşlarla tanışmak için %s gidin!</string>
     <string name="spooky_promo_info_prompt">Değerli Taş Satışı, bu yılki Sonbahar Galasının en sonunda tekrar gündeme geldi! Bu, her zamankinden daha fazla Mücevher almak için son bir şans, bu yüzden bu süre boyunca stok yapın!</string>
-    <string name="spooky_promo_info_instructions">29 Ekim ile 2 Kasım arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
-    <string name="fall_promo_info_prompt">Sonbahar Galası tüm hızıyla devam ediyor, bu yüzden Mücevher Satışımı için mükemmel bir zaman olduğunu düşündük! Artık her satın alma işleminde her zamankinden daha fazla Mücevher kazanacaksınız.</string>
-    <string name="fall_promo_info_instructions">22 ve 30 Eylül arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="spooky_promo_info_instructions">%s ile %s arasında, her zamanki gibi herhangi bir Mücevher paketi satın alın ve hesabınıza promosyon miktarda Mücevher yatırılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
+    <string name="fall_promo_info_prompt">Sonbahar Galası tüm hızıyla devam ediyor, bu yüzden ilk Mücevher Satışımızı sunmak için mükemmel bir zaman olduğunu düşündük! Artık her satın alma işleminde her zamankinden daha fazla Mücevher kazanacaksınız.</string>
+    <string name="fall_promo_info_instructions">%s ve %s arasında, her zamanki gibi herhangi bir Gem paketi satın alın ve hesabınıza promosyon miktarda Mücevher kredisi aktarılacaktır. Gelecek sürümler için harcayabileceğiniz, paylaşabileceğiniz veya saklayabileceğiniz daha fazla Mücevher!</string>
     <string name="how_it_works">Nasıl çalışır</string>
     <string name="x_to_y">%1$s - %2$s</string>
     <string name="usually_x_gems">Genellikle %d Mücevher</string>
@@ -1050,7 +1043,7 @@
     <string name="not_now">Şimdi olmaz</string>
     <string name="need_help_header_description">Sorularınızın bir başka oyuncu tarafından cevaplanması için%s içinde bir mesaj gönderin.</string>
     <string name="setup_task_habit_1_notes">Bir Alışkanlık, Günlük İş veya Yapılacak İş</string>
-    <string name="damage_pending">%.01f hasar bekliyor</string>
+    <string name="damage_pending">%s hasar bekliyor</string>
     <string name="x_remaining">%s kaldı</string>
     <string name="won_achievement_description"><![CDATA[<b>%s</b> seni kazanan olarak seçti! Zaferin başarımlarının arasına eklendi.]]></string>
     <string name="twelve_months_one_time">12 aylık tek seferlik abonelik</string>

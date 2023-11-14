@@ -14,9 +14,6 @@
     <string name="tutorial_tasks_complete">To je to za sada. Ako ti treba podsjetnik, pogledaj odjeljak Često postavljenih pitanja.</string>
     <string name="tutorial_skills">Vještine su posebne sposobnosti koje imaju jake učinke! Klikni na sposobnost kako bi ju iskoristio/la. Koštat će te mane (plava traka), koju zaradiš prijavljujući se svaki dan i izvršavajući svoje zadatke u stvarnom životu. Provjeri Često Postavljena Pitanja u meniju za više informacija!</string>
     <string name="tutorial_party">Ovo je mjesto gdje se ti i tvoji prijatelji možete držati svojih ciljeva i boriti protiv čudovišta pomoću svojih zadataka!</string>
-    <string name="tutorial_tavern">Dobrodošao/la u Krčmu, javni chat za ljude svih dobi! Ovdje možeš razgovarati o produktivnosti i postavljati pitanja. Zabavi se!</string>
     <string name="tutorial_stats">Klikni na sivi gumb kako bi raspodijelio/la mnoštvo svojih statističkih bodova odjednom, ili klikni na strelice kako bi ih dodavao/la jednog po jednog.</string>
-    <string name="tutorial_party_created">Dobrodošao/la u svoju Družinu! Možeš naći nove članove na popisu igrača koji traže Družinu ili pozvati prijatelje kako bi dobio/la Svitak za Bazi-Lista Pustolovinu.
-\n
-\nPosjeti Podršku kako bi naučio/la više o Družinama.</string>
+    <string name="tutorial_party_created">Dobrodošao/la u svoju Družinu! Možeš naći nove članove na popisu igrača koji traže Družinu ili pozvati prijatelje kako bi dobio/la Svitak za Bazi-Lista Pustolovinu.\n\nPosjeti Podršku kako bi naučio/la više o Družinama.</string>
 </resources>

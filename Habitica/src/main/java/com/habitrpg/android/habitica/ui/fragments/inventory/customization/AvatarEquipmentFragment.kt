@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.adapter.CustomizationEquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -97,6 +98,8 @@ class AvatarEquipmentFragment :
         this.loadEquipment()
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
+
+        Analytics.sendNavigationEvent("$type screen")
     }
 
     private fun loadEquipment() {

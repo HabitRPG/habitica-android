@@ -9,16 +9,19 @@ import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.QuestAchievement
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.inventory.Customization
+import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.models.responses.SkillResponse
 import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
+import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.modules.AuthenticationHandler
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
+import com.habitrpg.common.habitica.models.Notification
+import com.habitrpg.common.habitica.models.notifications.NewStuffData
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +42,6 @@ class UserRepositoryImpl(
     authenticationHandler: AuthenticationHandler,
     private val taskRepository: TaskRepository,
     private val appConfigManager: AppConfigManager,
-    private val analyticsManager: AnalyticsManager
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
 
     companion object {
@@ -98,9 +100,17 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun revive(): User? {
-        apiClient.revive()
-        return retrieveUser(false, true)
+    override suspend fun revive(): Equipment? {
+        val items = apiClient.revive()
+        val currentUser = localRepository.getLiveUser(currentUserID)
+        var brokenItem: Equipment? = null
+        if (items != null && currentUser != null) {
+            brokenItem = items.gear?.owned?.filter { it.owned == false }?.firstOrNull { equipment ->
+                currentUser.items?.gear?.owned?.firstOrNull { it.key == equipment.key && it.owned == true } != null
+            }
+        }
+        retrieveUser(false, true)
+        return brokenItem
     }
 
     override suspend fun resetTutorial(): User? {
@@ -172,6 +182,22 @@ class UserRepositoryImpl(
 
     override suspend fun runCron() {
         runCron(ArrayList())
+    }
+
+    override suspend fun getNews(): List<Any>? {
+        return apiClient.getNews()
+    }
+
+    override suspend fun getNewsNotification(): Notification? {
+        val baileyNews = apiClient.getNews()
+        val baileyAnnouncement = (baileyNews?.first() as Map<*, *>)["title"] as String
+        val notification = Notification()
+        notification.id = "custom-new-stuff-notification"
+        notification.type = Notification.Type.NEW_STUFF.type
+        val data = NewStuffData()
+        data.title = baileyAnnouncement
+        notification.data = data
+        return notification
     }
 
     override suspend fun readNotification(id: String): List<Any>? {

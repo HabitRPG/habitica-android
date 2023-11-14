@@ -9,26 +9,31 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopCategory
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.adapter.inventory.ShopRecyclerAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
+import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
@@ -112,22 +117,32 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 }
             }
             adapter?.onShowPurchaseDialog = { item, isPinned ->
-                val dialog = PurchaseDialog(
-                    requireContext(),
-                    userRepository,
-                    inventoryRepository,
-                    item,
-                    mainActivity
-                )
-                dialog.shopIdentifier = shopIdentifier
-                dialog.isPinned = isPinned
-                dialog.onGearPurchased = {
-                    loadShopInventory()
-                    if (Shop.MARKET == shopIdentifier) {
-                        loadMarketGear()
+                if (item.key == "gem" && userViewModel.user.value?.isSubscribed != true) {
+                    Analytics.sendEvent("View gems for gold CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
+                    val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                        eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
                     }
+                    activity?.let { activity ->
+                        subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
+                    }
+                } else {
+                    val dialog = PurchaseDialog(
+                        requireContext(),
+                        userRepository,
+                        inventoryRepository,
+                        item,
+                        mainActivity
+                    )
+                    dialog.shopIdentifier = shopIdentifier
+                    dialog.isPinned = isPinned
+                    dialog.onShopNeedsRefresh = {
+                        loadShopInventory()
+                        if (Shop.MARKET == shopIdentifier) {
+                            loadMarketGear()
+                        }
+                    }
+                    dialog.show()
                 }
-                dialog.show()
             }
 
             adapter?.context = context
@@ -203,8 +218,6 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
         view.post { setGridSpanCount(view.width) }
 
-        context?.let { analyticsManager.logEvent("open_shop", bundleOf(Pair("shopIdentifier", shopIdentifier))) }
-
         lifecycleScope.launchCatching {
             inventoryRepository.getOwnedItems()
                 .collect { adapter?.setOwnedItems(it) }
@@ -214,6 +227,8 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                 .map { rewards -> rewards.map { it.key } }
                 .collect { adapter?.setPinnedItemKeys(it) }
         }
+
+        Analytics.sendNavigationEvent("$shopIdentifier screen")
     }
 
     open fun initializeCurrencyViews() {
@@ -231,6 +246,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             context?.let { context ->
                 if (user.gemCount <= 2) {
                     val dialog = mainActivity?.let { InsufficientGemsDialog(it, 3) }
+                    Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "class change"))
                     dialog?.show()
                     return@launch
                 }
@@ -251,7 +267,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             loadMarketGear()
                         }
                     }
-                    alert.addButton(R.string.dialog_go_back, false)
+                    alert.addButton(R.string.close, false)
                     alert.show()
                 } else {
                     val alert = HabiticaAlertDialog(context)
@@ -269,7 +285,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                             loadMarketGear()
                         }
                     }
-                    alert.addButton(R.string.dialog_go_back, false)
+                    alert.addButton(R.string.close, false)
                     alert.show()
                 }
             }
@@ -278,7 +294,9 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override fun onResume() {
         super.onResume()
-        loadShopInventory()
+        if (shop == null) {
+            loadShopInventory()
+        }
     }
 
     private fun loadShopInventory() {
@@ -298,11 +316,13 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     val user = userViewModel.user.value
                     val specialCategory = ShopCategory()
                     specialCategory.text = getString(R.string.special)
-                    if (user?.isValid == true && user.purchased?.plan?.isActive == true) {
-                        val item = ShopItem.makeGemItem(context?.resources)
+                    val item = ShopItem.makeGemItem(context?.resources)
+                    if (user?.isSubscribed == true) {
                         item.limitedNumberLeft = user.purchased?.plan?.numberOfGemsLeft
-                        specialCategory.items.add(item)
+                    } else {
+                        item.limitedNumberLeft = -1
                     }
+                    specialCategory.items.add(item)
                     specialCategory.items.add(ShopItem.makeFortifyItem(context?.resources))
                     shop1.categories.add(specialCategory)
                 }

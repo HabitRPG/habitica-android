@@ -26,19 +26,4 @@
                 android:scrollbarThumbVertical="@color/scrollbarThumb"
                 android:scrollbars="vertical" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/footerTextView"
-        tools:text="Need more items. Check the Market"
-        android:gravity="center"
-        android:padding="8dp"/>
-    <Button
-        android:id="@+id/openMarketButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="@string/open_market"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"/>
 </LinearLayout>

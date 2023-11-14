@@ -151,22 +151,24 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
         return remoteConfig.getBoolean("enableFaintAds")
     }
 
+    fun enableArmoireSubs(): Boolean {
+        return remoteConfig.getBoolean("enableArmoireSubs")
+    }
+
+    fun enableFaintSubs(): Boolean {
+        return remoteConfig.getBoolean("enableFaintSubs")
+    }
+
     fun enableSpellAds(): Boolean {
         return remoteConfig.getBoolean("enableSpellAds")
     }
 
-    fun enableNewArmoire(): Boolean {
-        return remoteConfig.getBoolean("enableNewArmoire")
-    }
-
-    fun hideTavern(): Boolean {
-        return remoteConfig.getBoolean("hideTavern")
-    }
-    fun hideGuilds(): Boolean {
-        return remoteConfig.getBoolean("hideGuilds")
-    }
     fun hideChallenges(): Boolean {
         return remoteConfig.getBoolean("hideChallenges")
+    }
+
+    fun enableReviewPrompt(): Boolean {
+        return remoteConfig.getBoolean("enableReviewPrompt")
     }
 
     fun getBirthdayEvent(): WorldStateEvent? {

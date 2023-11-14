@@ -1,31 +1,48 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.content.SharedPreferences
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
+import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
+import com.habitrpg.android.habitica.HabiticaApplication
+import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityDeathBinding
+import com.habitrpg.android.habitica.extensions.DateUtils
+import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
+import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DeathActivity : BaseActivity() {
+class DeathActivity : BaseActivity(), SnackbarActivity {
     private lateinit var binding: ActivityDeathBinding
 
     @Inject
@@ -36,6 +53,9 @@ class DeathActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun getLayoutResId(): Int = R.layout.activity_death
 
@@ -55,7 +75,6 @@ class DeathActivity : BaseActivity() {
                 if (!it) {
                     return@AdHandler
                 }
-                Log.d("AdHandler", "Reviving user")
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
                     userRepository.updateUser("stats.hp", 1)
                     finish()
@@ -77,10 +96,86 @@ class DeathActivity : BaseActivity() {
             binding.adButton.visibility = View.GONE
         }
 
+        if (appConfigManager.enableFaintSubs()) {
+            userViewModel.user.observe(this) {
+                if (it?.isSubscribed == true && binding.reviveSubscriberWrapper.visibility != View.INVISIBLE) {
+                    val lastRevive = Date(sharedPreferences.getLong("last_sub_revive", 0L))
+                    if (DateUtils.isSameDay(Date(), lastRevive)) {
+                        binding.reviveSubscriberWrapper.visibility = View.GONE
+                        binding.subscriberBenefitUsedView.visibility = View.VISIBLE
+                        lifecycleScope.launchCatching {
+                            val date: Calendar = Calendar.getInstance()
+                            date.set(Calendar.HOUR_OF_DAY, 0)
+                            date.set(Calendar.MINUTE, 0)
+                            date.set(Calendar.SECOND, 0)
+                            date.add(Calendar.DAY_OF_MONTH, 1)
+                            val midnight = date.time
+                            while (true) {
+                                binding.subscriberBenefitUsedView.text = getString(R.string.subscriber_benefit_used_faint, midnight.getShortRemainingString())
+                                delay(1000L)
+                            }
+                        }
+                    } else {
+                        binding.reviveSubscriberWrapper.visibility = View.VISIBLE
+                        binding.subscriberBenefitUsedView.visibility = View.GONE
+                    }
+                    binding.unsubbedWrapper.visibility = View.GONE
+                } else if (it?.isSubscribed == false) {
+                    binding.reviveSubscriberWrapper.visibility = View.GONE
+                    binding.unsubbedWrapper.visibility = View.VISIBLE
+                    binding.subscribeModalButton.setOnClickListener {
+                        Analytics.sendEvent("View death sub CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
+                        val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_DEATH_SCREEN
+                        }
+                        subscriptionBottomSheet.show(supportFragmentManager, EventOutcomeSubscriptionBottomSheetFragment.TAG)
+                    }
+                }
+            }
+        } else {
+            binding.reviveSubscriberWrapper.visibility = View.GONE
+            binding.unsubbedWrapper.visibility = View.GONE
+            binding.subscriberBenefitUsedView.visibility = View.GONE
+        }
+
+        binding.reviveSubscriberButton.setOnClickListener {
+            Analytics.sendEvent("second chance perk", EventCategory.BEHAVIOUR, HitType.EVENT)
+            sharedPreferences.edit {
+                putLong("last_sub_revive", Date().time)
+            }
+            lifecycleScope.launchCatching {
+                delay(300)
+                binding.reviveSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
+            }
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.updateUser("stats.hp", 1)
+                MainScope().launchCatching {
+                    delay(1000)
+                    (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let {activity ->
+                        HabiticaSnackbar.showSnackbar(
+                            activity.snackbarContainer(), getString(R.string.subscriber_benefit_success_faint), HabiticaSnackbar.SnackbarDisplayType.SUBSCRIBER_BENEFIT, isSubscriberBenefit = true, duration = 2500)
+                    }
+                }
+                finish()
+            }
+        }
+
         binding.restartButton.setOnClickListener {
             binding.restartButton.isEnabled = false
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                userRepository.revive()
+                val brokenItem = userRepository.revive()
+                if (brokenItem != null) {
+                    MainScope().launchCatching {
+                        delay(500)
+                        (HabiticaBaseApplication.getInstance(this@DeathActivity)?.currentActivity?.get() as? SnackbarActivity)?.let { activity ->
+                            HabiticaSnackbar.showSnackbar(
+                                activity.snackbarContainer(),
+                                getString(R.string.revive_broken_equipment, brokenItem.text),
+                                HabiticaSnackbar.SnackbarDisplayType.BLACK
+                            )
+                        }
+                    }
+                }
                 finish()
             }
         }
@@ -114,5 +209,9 @@ class DeathActivity : BaseActivity() {
 
     override fun onBackPressed() {
         moveTaskToBack(true)
+    }
+
+    override fun snackbarContainer(): ViewGroup {
+        return binding.snackbarContainer
     }
 }

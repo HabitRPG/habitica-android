@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
@@ -27,7 +27,6 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import io.mockk.clearAllMocks
@@ -61,7 +60,6 @@ open class HabiticaTestCase : TestCase() {
     val soundManager: SoundManager = mockk(relaxed = true)
     val notificationsManager: NotificationsManager = mockk(relaxed = true)
     val hostConfig: HostConfig = mockk(relaxed = true)
-    val analyticsManager: AnalyticsManager = mockk(relaxed = true)
     val maintenanceService: MaintenanceApiService = mockk(relaxed = true)
     val tagRepository: TagRepository = mockk(relaxed = true)
     val hatchPetUseCase: HatchPetUseCase = mockk(relaxed = true)
@@ -126,7 +124,6 @@ open class HabiticaTestCase : TestCase() {
             if (it.returnType == SharedPreferences::class.starProjectedType) assign(it, obj, sharedPreferences)
             if (it.returnType == NotificationsManager::class.starProjectedType) assign(it, obj, notificationsManager)
             if (it.returnType == HostConfig::class.starProjectedType) assign(it, obj, hostConfig)
-            if (it.returnType == AnalyticsManager::class.starProjectedType) assign(it, obj, analyticsManager)
             if (it.returnType == MaintenanceApiService::class.starProjectedType) assign(it, obj, maintenanceService)
             if (it.returnType == TagRepository::class.starProjectedType) assign(it, obj, tagRepository)
             if (it.returnType == FeedPetUseCase::class.starProjectedType) assign(it, obj, feedPetUseCase)

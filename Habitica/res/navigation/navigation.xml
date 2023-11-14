@@ -90,24 +90,6 @@
         <deepLink app:uri="habitica.com/user/stats" />
     </fragment>
     <fragment
-        android:id="@+id/tavernFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.TavernFragment"
-        android:label="@string/sidebar_tavern">
-        <deepLink app:uri="habitica.com/tavern" />
-    </fragment>
-    <fragment
-        android:id="@+id/guildOverviewFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildOverviewFragment"
-        android:label="@string/sidebar_guilds" >
-        <deepLink app:uri="habitica.com/groups/myGuilds" />
-        <action
-            android:id="@+id/openGuildDetail"
-            app:destination="@id/guildFragment" />
-        <action
-            android:id="@+id/openPublicGuilds"
-            app:destination="@id/publicGuildsFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/challengesOverviewFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.social.challenges.ChallengesOverviewFragment"
         android:label="@string/sidebar_challenges" >
@@ -316,14 +298,6 @@
             android:defaultValue="0"/>
     </fragment>
     <fragment
-        android:id="@+id/publicGuildsFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.social.guilds.GuildListFragment"
-        android:label="@string/public_guilds" >
-        <action
-            android:id="@+id/openGuildDetail"
-            app:destination="@id/guildFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/avatarCustomizationFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.AvatarCustomizationFragment"
         android:label="@string/sidebar_avatar" >
@@ -416,7 +390,7 @@
         android:name="com.habitrpg.android.habitica.ui.activities.ClassSelectionActivity"
         android:label="ClassSelectionActivity" >
         <argument
-            android:name="isInitialSelection"
+            android:name="isClassSelected"
             app:argType="boolean"
             android:defaultValue="false" />
         <argument
@@ -469,24 +443,28 @@
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.MarketFragment"
         android:label="@string/market">
         <deepLink app:uri="habitica.com/inventory/market" />
+        <deepLink app:uri="habitica.com/shops/market" />
     </fragment>
     <fragment
         android:id="@+id/questShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.QuestShopFragment"
         android:label="@string/questShop">
         <deepLink app:uri="habitica.com/inventory/quests" />
+        <deepLink app:uri="habitica.com/shops/quests" />
     </fragment>
     <fragment
         android:id="@+id/seasonalShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.SeasonalShopFragment"
         android:label="@string/seasonalShop">
         <deepLink app:uri="habitica.com/inventory/seasonal" />
+        <deepLink app:uri="habitica.com/shops/seasonal" />
     </fragment>
     <fragment
         android:id="@+id/timeTravelersShopFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.TimeTravelersShopFragment"
         android:label="@string/timeTravelers">
         <deepLink app:uri="habitica.com/inventory/time" />
+        <deepLink app:uri="habitica.com/shops/time" />
     </fragment>
     <fragment
         android:id="@+id/supportMainFragment"

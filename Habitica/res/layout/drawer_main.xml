@@ -18,17 +18,19 @@
         android:background="?colorPrimaryOffset"
         android:baselineAligned="false">
 
-        <com.habitrpg.android.habitica.ui.views.RoundedCornerLayout
+        <com.habitrpg.android.habitica.ui.RoundedFrameLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="@dimen/spacing_large"
-            android:background="@drawable/rounded_avatar_bg">
+            android:background="@drawable/rounded_avatar_bg"
+            android:clipToPadding="true"
+            android:clipChildren="true">
             <com.habitrpg.common.habitica.views.AvatarView
                 android:id="@+id/avatarView"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"/>
-        </com.habitrpg.android.habitica.ui.views.RoundedCornerLayout>
+        </com.habitrpg.android.habitica.ui.RoundedFrameLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -156,12 +158,6 @@
                 tools:visibility="visible" />
         </RelativeLayout>
     </LinearLayout>
-    <com.habitrpg.android.habitica.ui.views.social.QuestMenuView
-        android:id="@+id/questMenuView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

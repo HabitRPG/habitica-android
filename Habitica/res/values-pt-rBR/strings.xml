@@ -157,9 +157,7 @@
     <string name="setup_task_creativity_1">Estudar um guru</string>
     <string name="setup_task_creativity_2">Trabalhar em um projeto criativo</string>
     <string name="setup_task_creativity_3">Terminar um projeto criativo</string>
-    <string name="my_guilds">Minhas Guildas</string>
-    <string name="public_guilds">Guildas Públicas</string>
-    <string name="guild">Guildas</string>
+            <string name="guild">Guildas</string>
     <string name="leave">Sair</string>
     <string name="join">Entrar</string>
     <string name="delete">Excluir</string>
@@ -168,7 +166,6 @@
     <string name="add_tag">Adicionar nova etiqueta</string>
     <string name="privacy">Privacidade</string>
     <string name="write_message">Escrever Mensagem</string>
-    <string name="guild_search_hint">Procurar Guildas</string>
     <string name="battle_gear">Equipamento de Batalha</string>
     <string name="costume">Traje</string>
     <string name="outfit_head">Cabeça</string>
@@ -219,7 +216,7 @@
 \n • As tarefas não vão perder progresso e os contadores dos Hábitos não irão resetar
 \n • Seu dano ao chefão ou items de Missão de coleta ficarão acumulados até você voltar</string>
     <string name="empty_items">Você não tem nenhum %s</string>
-    <string name="user_level_with_class">Nv. %1$d %2$s</string>
+    <string name="user_level_with_class">Nível %1$d %2$s</string>
     <string name="warrior">Guerreiro(a)</string>
     <string name="rogue">Ladino</string>
     <string name="mage">Mago(a)</string>
@@ -232,6 +229,7 @@
     <string name="opt_out_class">Decidir mais tarde</string>
     <string name="class_confirmation">Você tem certeza que quer ser um(a) %s\?</string>
     <string name="class_changed">Você é um(a) %s agora!</string>
+
     <string name="choose_class">Escolha a sua Classe</string>
     <string name="dialog_go_back">Voltar</string>
     <string name="opt_out_confirmation">Você tem certeza de que ainda não quer escolher\?</string>
@@ -242,7 +240,7 @@
     <string name="by_email">Por e-mail</string>
     <string name="invite_existing_users">Convide usuários existentes</string>
     <string name="send">Enviar</string>
-    <string name="invite">Encontrar membros</string>
+    <string name="invite">Convidar amigos</string>
     <string name="invite_username_description">Se você já tem amigos usando o Habitica, convide-os pelo nome de usuário aqui.</string>
     <string name="invite_email_description">Se um amigo(a) entrar no Habitica pelo seu e-mail, ele(a) será automaticamente convidado(a) para o seu grupo!</string>
     <string name="add_invites">Adicionar convites</string>
@@ -252,8 +250,8 @@
     <string name="share_hatched">Eu acabei de chocar um mascote de %1$s %2$s no #Habitica completando minhas tarefas da vida real!</string>
     <string name="share_raised">Eu acabei de ganhar um %1$s de montaria no #Habitica completando minhas tarefas da vida real!</string>
     <string name="open_in_store">Abrir na Play Store</string>
-    <string name="change_class_confirmation">Você quer mudar sua classe por 3 Gemas\?</string>
-    <string name="change_class_equipment_warning">Isso irá reembolsar seus pontos de atributos, mudar qual equipamento fica desbloqueado nas lojas e mudar suas habilidades disponíveis.</string>
+    <string name="change_class_confirmation">Você tem certeza que quer mudar a sua classe\? Isso irá custar 3 gemas.</string>
+    <string name="change_class_equipment_warning">Aviso: Você não poderá mais comprar equipamentos da classe %s.</string>
     <string name="confirm">Confirmar</string>
     <string name="market">Mercado</string>
     <string name="timeTravelers">Viajantes do Tempo</string>
@@ -523,7 +521,6 @@
     <string name="classless">Sem Classe</string>
     <string name="class_equipment_shop_dialog">Este item está disponível apenas para uma classe específica.\nVocê pode alterar sua classe em Configurações.</string>
     <string name="class_gear_disclaimer">Você apenas pode comprar equipamento para sua classe atual</string>
-    <string name="tavern_description">Boas-vindas à Taverna. Puxe uma cadeira e junte-se ao bate-papo.</string>
     <string name="check_into_inn">Entrar na Pousada</string>
     <string name="community_guidelines">Diretrizes da Comunidade</string>
     <string name="view_community_guidelines">Veja as Diretrizes da Comunidade</string>
@@ -565,7 +562,6 @@
     <string name="questShop_owner_long">Ian o Guia das Missões</string>
     <string name="seasonalShop_owner_long">Feiticeira Sazonal</string>
     <string name="rage_attack">Ataque de Fúria:</string>
-    <string name="tavern_description_world_boss">Oh parça, não esquenta com o bicho lá embaixo — aqui ainda é seguro pra trocar ideia enquanto descansa.</string>
     <string name="report">Reportar</string>
     <string name="reply">Responder</string>
     <string name="challenge_prize">Prêmio do Desafio</string>
@@ -651,8 +647,6 @@
     <string name="unallocated_stats_points"><![CDATA[Você tem <b>%1$s</b> Pontos de Atributos não distribuidos]]></string>
     <string name="new_subscriber_item">Você possui novos <b>Itens Misteriosos</b></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> Você foi convidado para entrar em um Grupo <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Você foi convidado para entrar em uma Guilda privada <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Você foi convidado para entrar em uma Guilda <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Você foi convidado para a Missão <b>%1$s</b>]]></string>
     <string name="g1g1_info_2">Como funciona</string>
     <string name="gift_a_subscription">Dê uma assinatura de presente</string>
@@ -790,7 +784,7 @@
     <string name="invite_to_guild">Convidar para a Guilda</string>
     <string name="guild_description">Descrição da Guilda</string>
     <string name="mystery_sets">Conjuntos Misteriosos</string>
-    <string name="reason_for_report">Motivo para reportar (opcional)</string>
+    <string name="report_message_hint">Motivo para reportar (opcional)</string>
     <string name="report_message_title">Reportar %s por violação:</string>
     <string name="report_explanation">Reporte uma mensagem **apenas** se esta violar as [Diretrizes da Comunidade](https://habitica.com/static/community-guidelines) e/ou os [Termos de Serviço](https://habitica.com/static/terms). Reportar uma postagem inadequadamente pode lhe dar uma infração.</string>
     <string name="x_class">%s Classe</string>
@@ -838,7 +832,7 @@
     <string name="create_account_short">criar uma conta</string>
     <string name="login_incentive_short_count">%d check-ins</string>
     <string name="login_incentive_short">efetue login regularmente no Habitica</string>
-    <string name="party_invite_short">Encontrar membros</string>
+    <string name="party_invite_short">Convidar amigos(as)</string>
     <string name="login_incentive_count">Desbloqueie logando no Habitica %d vezes.</string>
     <string name="remaining_1hour">1 hora restante</string>
     <string name="remaining_hours">%d horas restantes</string>
@@ -1037,7 +1031,7 @@
     <string name="pms_disabled">Mensagens Privadas estão desabilitadas</string>
     <string name="disablePrivateMessages">Desabilitar Mensagens Privadas</string>
     <string name="block">Bloquear</string>
-    <string name="block_user_description">Um usuário bloqueado não pode te enviar Mensagens Privadas, mas você ainda verá suas postagens.</string>
+    <string name="block_user_description">Um usuário bloqueado não pode te enviar Mensagens Privadas, mas você ainda verá suas postagens na Taverna ou nas Guildas. Isso não terá efeito se a pessoa for moderadora agora ou no futuro.</string>
     <string name="block_user_title">Bloquear %s\?</string>
     <string name="unblock_user">Desbloquear Usuário</string>
     <string name="block_user">Bloquear Usuário</string>
@@ -1090,7 +1084,7 @@
     <string name="you">Você</string>
     <string name="login_disclaimer">Ao se inscrever, você está indicando que leu e concorda com os <a href="https://habitica.com/static/terms">Termos de Serviço</a> e com a <a href="https://habitica.com/static/privacy">Política de Privacidade.</a></string>
     <string name="finish">Concluir</string>
-    <string name="user_is_blocked_explanation">Um usuário bloqueado não pode lhe enviar mensagens privadas, mas você ainda verá suas postagens.</string>
+    <string name="user_is_blocked_explanation">Um usuário bloqueado não pode lhe enviar mensagens privadas, mas você ainda verá seus posts na Taverna ou guildas.</string>
     <string name="user_is_blocked">Você bloqueou este usuário</string>
     <string name="submit_feedback">Submeter feedback</string>
     <string name="dark_mode">Modo escuro</string>
@@ -1106,7 +1100,7 @@
     <string name="theme_color">Tema Colorido</string>
     <string name="terms_of_service">Termos de Serviço</string>
     <string name="empty_title">Nada aqui ainda</string>
-    <string name="damage_pending">%.01f de dano pendente</string>
+    <string name="damage_pending">%s de dano pendente</string>
     <string name="privacy_policy">Política de Privacidade</string>
     <string name="open_shop">Loja Aberta</string>
     <string name="avatar_style">Estilo</string>
@@ -1149,7 +1143,7 @@
     <string name="disconnect">Desconectar</string>
     <string name="add">Adicionar</string>
     <string name="discard">Descartar</string>
-    <string name="class_confirmation_price">Você quer mudar sua classe para %s por %d Gemas\?</string>
+    <string name="class_confirmation_price">Você quer mudar sua Classe para %s por %d Gemas\?</string>
     <string name="use_item">Use o item em um membro do grupo</string>&gt;
     <string name="unsaved_changes">Mudanças não salvas</string>
     <string name="discard_changes_to_task_message">Tem certeza que deseja desfazer as mudanças desta tarefa\?</string>
@@ -1259,8 +1253,7 @@
         <item quantity="other"></item>
     </plurals>
     <plurals name="you_x_others">
-        <item quantity="one">Você, %d outro</item>
-        <item quantity="many">Você, %d outros</item>
+        <item quantity="one">Você</item>
         <item quantity="other">Vocês, %d outros</item>
     </plurals>
     <string name="x_and_y">%1$s e %2$s</string>
@@ -1424,3 +1417,6 @@
     <string name="shop_armoire_description">Novos equipamentos são lançados durante as Galas sazonais. Até lá, há %d peças de equipamento do Armário Encantado para encontrar!</string>
     <string name="shop_armoire_empty_description">Novos equipamentos são lançados durante as Galas sazonais. O Armário Encantado recebe novos estoques todo mês também!</string>
 </resources>
+=======
+</resources>
+>>>>>>> 7c1a682deddcd7a91fc9767586a61890c43396c4

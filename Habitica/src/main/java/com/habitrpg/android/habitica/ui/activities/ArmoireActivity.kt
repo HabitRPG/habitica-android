@@ -2,31 +2,43 @@ package com.habitrpg.android.habitica.ui.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
+import com.habitrpg.android.habitica.helpers.ReviewManager
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment
+import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscriptionBottomSheetFragment.Companion.EVENT_ARMOIRE_OPENED
+import com.habitrpg.android.habitica.ui.fragments.purchases.SubscriptionBottomSheetFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
+import com.habitrpg.android.habitica.ui.views.progress.HabiticaCircularProgressView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -48,6 +60,9 @@ class ArmoireActivity : BaseActivity() {
 
     @Inject
     lateinit var userViewModel: MainUserViewModel
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     override fun getLayoutResId(): Int = R.layout.activity_armoire
 
@@ -76,28 +91,16 @@ class ArmoireActivity : BaseActivity() {
             }
         }
 
+        binding.progressView.setContent {
+            HabiticaCircularProgressView(indicatorSize = 60.dp)
+        }
+
         if (appConfigManager.enableArmoireAds()) {
             val handler = AdHandler(this, AdType.ARMOIRE) {
                 if (!it) {
                     return@AdHandler
                 }
-                Log.d("AdHandler", "Giving Armoire")
-                val user = userViewModel.user.value ?: return@AdHandler
-                val currentGold = user.stats?.gp ?: return@AdHandler
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    userRepository.updateUser("stats.gp", currentGold + 100)
-                    val buyResponse = inventoryRepository.buyItem(user, "armoire", 100.0, 1) ?: return@launch
-                    configure(
-                        buyResponse.armoire["type"] ?: "",
-                        buyResponse.armoire["dropKey"] ?: "",
-                        buyResponse.armoire["dropText"] ?: "",
-                        buyResponse.armoire["value"] ?: ""
-                    )
-                    binding.adButton.state = AdButton.State.UNAVAILABLE
-                    binding.adButton.visibility = View.INVISIBLE
-                    hasAnimatedChanges = false
-                    gold = null
-                }
+                giveUserArmoire()
             }
             handler.prepare {
                 if (it && binding.adButton.state == AdButton.State.LOADING) {
@@ -115,6 +118,41 @@ class ArmoireActivity : BaseActivity() {
             binding.adButton.visibility = View.GONE
         }
 
+        if (appConfigManager.enableArmoireSubs()) {
+            userViewModel.user.observe(this) {
+                if (it?.isSubscribed == true && binding.openArmoireSubscriberWrapper.visibility != View.INVISIBLE) {
+                    binding.openArmoireSubscriberWrapper.visibility = View.VISIBLE
+                    binding.unsubbedWrapper.visibility = View.GONE
+                    binding.dropRateButton.visibility = View.VISIBLE
+                } else if (it?.isSubscribed == false) {
+                    binding.openArmoireSubscriberWrapper.visibility = View.GONE
+                    binding.unsubbedWrapper.visibility = View.VISIBLE
+                    binding.dropRateButton.visibility = View.GONE
+                }
+            }
+        } else {
+            binding.openArmoireSubscriberWrapper.visibility = View.GONE
+            binding.unsubbedWrapper.visibility = View.GONE
+            binding.dropRateButton.visibility = View.VISIBLE
+        }
+
+        binding.openArmoireSubscriberButton.setOnClickListener {
+            Analytics.sendEvent("Free armoire perk", EventCategory.BEHAVIOUR, HitType.EVENT)
+            giveUserArmoire()
+            lifecycleScope.launchCatching {
+                delay(400)
+                binding.openArmoireSubscriberWrapper.startAnimation(Animations.fadeOutAnimation())
+            }
+        }
+
+        binding.subscribeModalButton.setOnClickListener {
+            Analytics.sendEvent("View armoire sub CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
+            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
+                eventType = EVENT_ARMOIRE_OPENED
+            }
+            subscriptionBottomSheet.show(supportFragmentManager, EventOutcomeSubscriptionBottomSheetFragment.TAG)
+        }
+
         binding.closeButton.setOnClickListener {
             finish()
         }
@@ -127,28 +165,101 @@ class ArmoireActivity : BaseActivity() {
         binding.dropRateButton.setOnClickListener {
             showDropRateDialog()
         }
+        binding.dropRateButtonUnsubbed.setOnClickListener {
+            showDropRateDialog()
+        }
         intent.extras?.let {
             val args = ArmoireActivityArgs.fromBundle(it)
             equipmentKey = args.key
             configure(args.type, args.key, args.text, args.value)
+
+            if (args.type == "gear") {
+                userViewModel.user.observeOnce(this) { user ->
+                    user?.loginIncentives?.let { totalCheckins ->
+                        reviewManager.requestReview(this@ArmoireActivity, totalCheckins)
+                    }
+                }
+            }
         }
+    }
+
+    private fun giveUserArmoire(): Boolean {
+        binding.iconWrapper.post {
+            binding.iconView.bitmap = null
+            Animations.circularHide(binding.iconWrapper)
+        }
+        binding.progressView.animate().apply {
+            alpha(1f)
+            startDelay = 0
+            start()
+        }
+        binding.titleView.animate().apply {
+            alpha(0f)
+            duration = 300
+            startDelay = 0
+            start()
+        }
+        binding.subtitleView.animate().apply {
+            alpha(0f)
+            duration = 300
+            startDelay = 0
+            start()
+        }
+
+        binding.goldView.animate().apply {
+            alpha(0f)
+            start()
+        }
+
+        val user = userViewModel.user.value ?: return true
+        val currentGold = user.stats?.gp ?: return true
+        if (binding.adButton.visibility == View.VISIBLE) {
+            binding.adButton.state = AdButton.State.UNAVAILABLE
+            binding.adButton.visibility = View.INVISIBLE
+        } else if (binding.openArmoireSubscriberWrapper.visibility == View.VISIBLE) {
+            binding.openArmoireSubscriberWrapper.visibility = View.INVISIBLE
+        }
+        lifecycleScope.launch(ExceptionHandler.coroutine()) {
+            userRepository.updateUser("stats.gp", currentGold + 100)
+            val buyResponse =
+                inventoryRepository.buyItem(user, "armoire", 0.0, 1) ?: return@launch
+            configure(
+                buyResponse.armoire["type"] ?: "",
+                buyResponse.armoire["dropKey"] ?: "",
+                buyResponse.armoire["dropText"] ?: "",
+                buyResponse.armoire["value"] ?: ""
+            )
+            hasAnimatedChanges = false
+            gold = null
+            startAnimation(false)
+        }
+        return false
     }
 
     override fun onResume() {
         super.onResume()
-        startAnimation()
+        lifecycleScope.launchCatching {
+            delay(500L)
+            startAnimation(true)
+        }
     }
 
-    private fun startAnimation() {
+    private fun startAnimation(decreaseGold: Boolean) {
         val gold = gold?.toInt()
         if (hasAnimatedChanges) return
-        if (gold != null) {
+        if (gold != null && decreaseGold) {
             /**
              * We are adding 100 as the gold is already "deducted" before the animation starts,
              * and animating to show the current user's gold amount.
              */
             binding.goldView.value = (gold + 100).toDouble()
             binding.goldView.value = (gold).toDouble()
+        }
+
+        binding.progressView.animate().apply {
+            alpha(0f)
+            startDelay = 0
+            start()
         }
 
         val container = binding.confettiAnchor

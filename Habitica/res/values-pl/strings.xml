@@ -155,9 +155,7 @@
     <string name="setup_task_creativity_1">Studiować mistrzostwo rzemiosła</string>
     <string name="setup_task_creativity_2">Pracować nad twórczym projektem</string>
     <string name="setup_task_creativity_3">Ukończyć twórczy projekt</string>
-    <string name="my_guilds">Moje Gildie</string>
-    <string name="public_guilds">Publiczne Gildie</string>
-    <string name="guild">Gildia</string>
+            <string name="guild">Gildia</string>
     <string name="leave">Opuść</string>
     <string name="join">Dołącz</string>
     <string name="delete">Usuń</string>
@@ -166,7 +164,6 @@
     <string name="add_tag">Dodaj nowy tag</string>
     <string name="privacy">Prywatność</string>
     <string name="write_message">Napisz wiadomość</string>
-    <string name="guild_search_hint">Szukaj gildii</string>
     <string name="battle_gear">Sprzęt Bojowy</string>
     <string name="costume">Kostium</string>
     <string name="outfit_head">Głowa</string>
@@ -478,7 +475,6 @@
     <string name="classless">Bez klasy</string>
     <string name="class_equipment_shop_dialog">Ten przedmiot jest dostępny tylko dla konkretnej klasy. \nMożesz zmienić swoją klasę w Ustawieniach.</string>
     <string name="class_gear_disclaimer">Możesz kupić wyposażenie wyłącznie dla swojej obecnej klasy</string>
-    <string name="tavern_description">Witaj w Karczmie! Usiądź wygodnie na krześle i pogadaj lub zrób sobie przerwę od swoich zadań.</string>
     <string name="check_into_inn">Zamelduj się w Karczmie</string>
     <string name="community_guidelines">Zasady Społeczności</string>
     <string name="view_community_guidelines">Wyświetl Zasady Społeczności</string>
@@ -585,8 +581,6 @@
     <string name="unallocated_stats_points"><![CDATA[Masz <b>nieprzydzielone Punkty Atrybutów: %1$s</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[Masz nowy <b>Tajemniczy Przedmiot</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%1$s</font> zostałeś/aś zaproszony/a do Dryżyny <b>%2$s</b>]]></string>
-    <string name="invited_to_private_guild"><![CDATA[Zostałeś/aś zaproszony/a do prywatnej Gildii <b>%1$s</b>]]></string>
-    <string name="invited_to_public_guild"><![CDATA[Zostałeś/aś zaproszony/a do Gildii <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[Zostałeś/aś zaproszony/a do Misji <b>%1$s</b>]]></string>
     <string name="character_build_description">Każdy zdobyty poziom daje Ci jeden punkt, który możesz przydzielić do wybranego przez siebie atrybutu. Możesz zrobić to ręcznie lub pozwolić, by gra zdecydowała za Ciebie, używając jednej z opcji automatycznego przydzielania.</string>
     <string name="character_build">Rozwój postaci</string>
@@ -664,7 +658,6 @@
     <string name="challenge_leave_description">Możesz wybrać, czy chcesz zostawić zadania z Wyzwania na swojej tablicy, czy też usunąć je, gdy opuścisz Wyzwanie</string>
     <string name="created_challenge">Utworzono wyzwanie</string>
     <string name="challenge_prize">Nagroda za Wyzwanie</string>
-    <string name="tavern_description_world_boss">Och, skarbie, nie zwracaj uwagi na poniższego potwora - to wciąż jest bezpieczna kryjówka na prowadzenia rozmów podczas przerw.</string>
     <string name="world_boss_description_4">Zajrzyj do Tawerny aby zobaczyć postępy Bossa i jego wskaźnik Wściekłości</string>
     <string name="world_boss_description_3">Możesz kontynuować zwykłą misję z Bossami, obrażenia będą zadawane z obu stron</string>
     <string name="world_boss_description_2">Nie dostaniesz obrażeń od Bossa za niewykonane zadania, ale za to wzrośnie jego wskaźnik Wściekłości. Jeśli pasek cały się wypełni, Boss zaatakuje jednego ze sprzedawców!</string>
@@ -721,7 +714,7 @@
     <string name="total_checkins">Wszystkich zalogowań</string>
     <string name="last_login">Ostatnie zalogowanie</string>
     <string name="mystery_sets">Tajemnicze zestawy</string>
-    <string name="reason_for_report">Przyczyna zgłoszenia (opcjonalnie)</string>
+    <string name="report_message_hint">Przyczyna zgłoszenia (opcjonalnie)</string>
     <string name="report_message_title">Zgłoś %s za naruszenie:</string>
     <string name="report_explanation">Zgłaszaj **wyłącznie** post który narusza [Standardy Społeczności](https://habitica.com/static/community-guidelines) i/lub [Warunki usługi](https://habitica.com/static/terms). Niewłaściwe zgłoszenie postu może przynieść Ci naganę.</string>
     <string name="defeat">Porażka</string>

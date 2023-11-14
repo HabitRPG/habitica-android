@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/share_avatar"
+        android:title="@string/share_avatar" />
     <item android:id="@+id/copy_username"
         android:title="@string/copy_username" />
     <item android:id="@+id/copy_userid"
         android:title="@string/copy_userid" />
     <item android:id="@+id/block_user"
         android:title="@string/block_user" />
+    <item android:id="@+id/report_player"
+        android:title="@string/report_player" />
     <group android:id="@+id/admin_items">
         <item android:id="@+id/ban_user"
             android:title="@string/ban_user" />

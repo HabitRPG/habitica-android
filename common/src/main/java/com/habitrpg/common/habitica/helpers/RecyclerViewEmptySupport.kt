@@ -15,7 +15,7 @@ data class EmptyItem(
     var title: String,
     var text: String? = null,
     var iconResource: Int? = null,
-    var buttonLabel: String? = null,
+    var tintedIcon: Boolean = true,
     var onButtonTap: (() -> Unit)? = null
 )
 
@@ -46,24 +46,20 @@ class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val binding = EmptyItemBinding.bind(itemView)
 
     fun bind(emptyItem: EmptyItem?) {
-        binding.emptyIconView.setColorFilter(
-            ContextCompat.getColor(
-                itemView.context,
-                R.color.text_dimmed
-            ),
-            android.graphics.PorterDuff.Mode.MULTIPLY
-        )
+        if (emptyItem?.tintedIcon == true) {
+            binding.emptyIconView.setColorFilter(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.text_dimmed
+                ),
+                android.graphics.PorterDuff.Mode.MULTIPLY
+            )
+        }
         emptyItem?.iconResource?.let { binding.emptyIconView.setImageResource(it) }
         binding.emptyViewTitle.text = emptyItem?.title
-        binding.emptyViewDescription.text = emptyItem?.text
-
-        val buttonLabel = emptyItem?.buttonLabel
-        if (buttonLabel != null) {
-            binding.button.visibility = View.VISIBLE
-            binding.button.text = buttonLabel
-            binding.button.setOnClickListener { emptyItem.onButtonTap?.invoke() }
-        } else {
-            binding.button.visibility = View.GONE
+        binding.emptyViewDescription.setMarkdown(emptyItem?.text)
+        if (emptyItem?.onButtonTap != null) {
+            binding.emptyView.setOnClickListener { emptyItem.onButtonTap?.invoke() }
         }
     }
 }

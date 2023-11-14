@@ -20,9 +20,10 @@ import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.android.habitica.ui.views.dialogs.PetSuggestHatchDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 
 class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
-    var onFeed: ((Pet, Food?) -> Unit)? = null
+    var onFeed: (suspend (Pet, Food?) -> FeedResponse?)? = null
     var onEquip: ((String) -> Unit)? = null
     private var existingMounts: List<Mount>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
@@ -114,7 +115,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         } else {
             val pet = itemList[position] as Pet
             if ((
-                ownedPets?.get(pet.key ?: "")?.trained
+                ownedPets?.get(pet.key)?.trained
                     ?: 0
                 ) <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0
             ) {

@@ -1,12 +1,17 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.R.attr.bitmap
+import android.R.attr.name
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.Menu
@@ -16,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.HabiticaApplication
@@ -24,19 +29,25 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.extensions.forceLocale
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.interactors.ShowNotificationInteractor
 import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 import java.util.Date
 import javax.inject.Inject
+
 
 abstract class BaseActivity : AppCompatActivity() {
     @Inject
@@ -44,9 +55,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @Inject
     lateinit var userRepository: UserRepository
-
-    @Inject
-    internal lateinit var analyticsManager: AnalyticsManager
 
     private var currentTheme: String? = null
     private var isNightMode: Boolean = false
@@ -215,7 +223,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun showConnectionProblem(title: String?, message: String) {
+    open fun showConnectionProblem(errorCount: Int, title: String?, message: String) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(title)
         alert.setMessage(message)
@@ -226,17 +234,39 @@ abstract class BaseActivity : AppCompatActivity() {
     open fun hideConnectionProblem() {
     }
 
-    fun shareContent(identifier: String, message: String, image: Bitmap? = null) {
-        analyticsManager.logEvent("shared", bundleOf(Pair("identifier", identifier)))
+    fun shareContent(identifier: String, message: String?, image: Bitmap? = null) {
+        Analytics.sendEvent("shared", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("identifier" to identifier))
         val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "*/*"
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
+        sharingIntent.type = "image/*"
+        if (message?.isNotBlank() == true) {
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
+        }
         if (image != null) {
-            val path = MediaStore.Images.Media.insertImage(this.contentResolver, image, "${(Date())}", null)
-            if (path != null) {
-                val uri = Uri.parse(path)
-                sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            val fos: OutputStream
+            val uri: Uri
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val resolver = contentResolver
+                val contentValues = ContentValues()
+                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "${Date()}.png")
+                contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+                contentValues.put(
+                    MediaStore.MediaColumns.RELATIVE_PATH,
+                    Environment.DIRECTORY_PICTURES
+                )
+                uri =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) ?: return
+                fos = resolver.openOutputStream(uri, "wt") ?: return
+            } else {
+                val imagesDir =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        .toString()
+                val file = File(imagesDir, "${Date()}.png")
+                uri = file.absoluteFile.toUri()
+                fos = FileOutputStream(file)
             }
+            image.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            fos.close()
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
         }
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
     }

@@ -9,6 +9,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
+import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -24,12 +26,15 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 @AndroidEntryPoint
 class PetDetailRecyclerFragment :
@@ -50,6 +55,9 @@ class PetDetailRecyclerFragment :
     private var animalGroup: String? = null
     private var animalColor: String? = null
     internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
+
+    @Inject
+    lateinit var reviewManager: ReviewManager
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -124,6 +132,14 @@ class PetDetailRecyclerFragment :
             lifecycleScope.launchCatching {
                 val items = inventoryRepository.equip("pet", it)
                 adapter.currentPet = items?.currentPet
+
+                userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                    val parentActivity = mainActivity
+                    val totalCheckIns = user?.loginIncentives
+                    if (totalCheckIns != null && parentActivity != null) {
+                        reviewManager.requestReview(parentActivity, totalCheckIns)
+                    }
+                }
             }
         }
         userViewModel.user.observe(viewLifecycleOwner) { adapter.currentPet = it?.currentPet }
@@ -218,27 +234,29 @@ class PetDetailRecyclerFragment :
         }
     }
 
-    private fun showFeedingDialog(pet: Pet, food: Food?) {
+    private suspend fun showFeedingDialog(pet: Pet, food: Food?): FeedResponse? {
         if (food != null) {
-            val context = mainActivity ?: context ?: return
-            lifecycleScope.launchCatching {
-                feedPetUseCase.callInteractor(
-                    FeedPetUseCase.RequestValues(
-                        pet,
-                        food,
-                        context
-                    )
+            val context = mainActivity ?: context ?: return null
+            return feedPetUseCase.callInteractor(
+                FeedPetUseCase.RequestValues(
+                    pet,
+                    food,
+                    context
                 )
-            }
-            return
+            )
         }
-        val fragment = ItemDialogFragment()
-        fragment.feedingPet = pet
-        fragment.isFeeding = true
-        fragment.isHatching = false
-        fragment.itemType = "food"
-        fragment.itemTypeText = getString(R.string.food)
-        parentFragmentManager.let { fragment.show(it, "feedDialog") }
+        return suspendCoroutine { cont ->
+            val fragment = ItemDialogFragment()
+            fragment.feedingPet = pet
+            fragment.isFeeding = true
+            fragment.isHatching = false
+            fragment.itemType = "food"
+            fragment.itemTypeText = getString(R.string.food)
+            fragment.onFeedResult = {
+                cont.resume(it)
+            }
+            parentFragmentManager.let { fragment.show(it, "feedDialog") }
+        }
     }
 
     companion object {

@@ -4,9 +4,7 @@
     <string name="sidebar_skills">Kemampuan</string>
     <string name="sidebar_section_social">Sosial</string>
     <string name="sidebar_inbox">Pesan</string>
-    <string name="sidebar_tavern">Kedai Minuman</string>
     <string name="sidebar_party">Party</string>
-    <string name="sidebar_guilds">Guild</string>
     <string name="sidebar_challenges">Tantangan</string>
     <string name="sidebar_section_inventory">Inventori</string>
     <string name="sidebar_avatar">Avatar</string>
@@ -17,6 +15,5 @@
     <string name="sidebar_shops">Toko</string>
     <string name="sidebar_stats">Status</string>
     <string name="sidebar_subscription">Berlangganan</string>
-    <string name="sidebar_gems">Beli Permata</string>
-    <string name="sidebar_avatar_equipment">Avatar &amp; Perlengkapan</string>
+    <string name="sidebar_gems">Membeli Permata</string>
 </resources>

@@ -11,7 +11,7 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
@@ -82,7 +82,13 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
         fun bind(equipment: Equipment) {
             this.equipment = equipment
-            binding.imageView.loadImage("shop_" + this.equipment?.key)
+            if (equipment.key?.isNotBlank() == true) {
+                binding.imageView.loadImage("shop_" + equipment.key)
+            } else {
+                binding.imageView.bitmap = null
+                binding.imageView.tag = null
+                binding.imageView.setImageResource(R.drawable.empty_slot)
+            }
             if (equipment.owned == true || equipment.value == 0.0) {
                 binding.buyButton.visibility = View.GONE
             } else {

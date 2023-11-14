@@ -106,10 +106,6 @@
     </entry>
 
     <entry>
-        <key>enableNewArmoire</key>
-        <value>true</value>
-    </entry>
-    <entry>
         <key>enableArmoireAds</key>
         <value>false</value>
     </entry>
@@ -118,16 +114,23 @@
         <value>false</value>
     </entry>
     <entry>
-        <key>enableSpellAds</key>
-        <value>false</value>
+        <key>enableArmoireSubs</key>
+        <value>true</value>
     </entry>
-
     <entry>
-        <key>hideTavern</key>
+        <key>enableFaintSubs</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>enableSpellAds</key>
         <value>false</value>
     </entry>
     <entry>
         <key>hideGuilds</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>enableReviewPrompti </key>
         <value>false</value>
     </entry>
     <entry>

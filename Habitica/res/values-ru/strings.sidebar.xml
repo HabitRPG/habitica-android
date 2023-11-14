@@ -4,9 +4,7 @@
     <string name="sidebar_skills">Навыки</string>
     <string name="sidebar_section_social">Общение</string>
     <string name="sidebar_inbox">Сообщения</string>
-    <string name="sidebar_tavern">Таверна</string>
     <string name="sidebar_party">Команда</string>
-    <string name="sidebar_guilds">Гильдии</string>
     <string name="sidebar_challenges">Испытания</string>
     <string name="sidebar_section_inventory">Инвентарь</string>
     <string name="sidebar_avatar">Персонализация аватара</string>

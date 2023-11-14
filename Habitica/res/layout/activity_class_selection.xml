@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     tools:text="@string/healer_description"
                     android:gravity="center_horizontal"
-                    style="@style/Body2"
+                    style="@style/Body4"
                     android:lineSpacingExtra="4sp"/>
             </ScrollView>
             <TextView

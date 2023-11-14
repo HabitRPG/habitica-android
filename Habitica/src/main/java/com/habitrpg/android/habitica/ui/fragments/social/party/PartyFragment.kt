@@ -16,7 +16,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -66,7 +66,9 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
         arguments?.let {
             val args = PartyFragmentArgs.fromBundle(it)
-            binding?.viewPager?.currentItem = args.tabToOpen
+            binding?.viewPager?.post {
+                binding?.viewPager?.currentItem = args.tabToOpen
+            }
             if (args.partyID?.isNotBlank() == true) {
                 viewModel.setGroupID(args.partyID ?: "")
             }

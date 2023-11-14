@@ -23,7 +23,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
@@ -418,7 +418,7 @@ class AccountPreferenceFragment :
         }
     }
 
-    private val regex = "[^a-z0-9_-]".toRegex()
+    private val regex = "[^a-zA-Z0-9_-]".toRegex()
 
     private fun showLoginNameDialog() {
         showSingleEntryDialog(user?.username, getString(R.string.username), {

@@ -11,14 +11,15 @@ import com.habitrpg.android.habitica.data.ContentRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.common.habitica.api.HostConfig
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
@@ -40,7 +41,6 @@ class MainActivityViewModel @Inject constructor(
     val taskRepository: TaskRepository,
     val inventoryRepository: InventoryRepository,
     val taskAlarmManager: TaskAlarmManager,
-    val analyticsManager: AnalyticsManager,
     val maintenanceService: MaintenanceApiService
 ) : BaseViewModel(userRepository, userViewModel), TutorialView.OnTutorialReaction {
 
@@ -77,7 +77,7 @@ class MainActivityViewModel @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            analyticsManager.logException(e)
+            Analytics.logException(e)
         }
     }
 
@@ -94,19 +94,19 @@ class MainActivityViewModel @Inject constructor(
             viewModelScope.launch(ExceptionHandler.coroutine()) {
                 contentRepository.retrieveWorldState()
                 userRepository.retrieveUser(true, forced)?.let { user ->
-                    analyticsManager.setUserProperty(
+                    Analytics.setUserProperty(
                         "has_party",
                         if (user.party?.id?.isNotEmpty() == true) "true" else "false"
                     )
-                    analyticsManager.setUserProperty(
+                    Analytics.setUserProperty(
                         "is_subscribed",
                         if (user.isSubscribed) "true" else "false"
                     )
-                    analyticsManager.setUserProperty(
+                    Analytics.setUserProperty(
                         "checkin_count",
                         user.loginIncentives.toString()
                     )
-                    analyticsManager.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
+                    Analytics.setUserProperty("level", user.stats?.lvl?.toString() ?: "")
                     pushNotificationManager.setUser(user)
                     if (!pushNotificationManager.notificationPermissionEnabled()) {
                         if (sharedPreferences.getBoolean("usePushNotifications", true)) {
@@ -146,10 +146,10 @@ class MainActivityViewModel @Inject constructor(
         additionalData["eventLabel"] = step.identifier + "-android"
         additionalData["eventValue"] = step.identifier ?: ""
         additionalData["complete"] = complete
-        AmplitudeManager.sendEvent(
+        Analytics.sendEvent(
             "tutorial",
-            AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-            AmplitudeManager.EVENT_HITTYPE_EVENT,
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
             additionalData
         )
     }

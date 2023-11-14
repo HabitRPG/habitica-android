@@ -1,5 +1,7 @@
 package com.habitrpg.android.habitica.ui.viewmodels.inventory.equipment
 
+import com.habitrpg.android.habitica.data.InventoryRepository
+import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.models.user.Preferences
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
@@ -10,9 +12,10 @@ import io.mockk.every
 import io.mockk.mockk
 
 class EquipmentOverviewViewModelTest : WordSpec({
-    val viewModel = EquipmentOverviewViewModel()
     val mainUserViewmodel = mockk<MainUserViewModel>()
-    viewModel.userViewModel = mainUserViewmodel
+    val userRepository = mockk<UserRepository>()
+    val inventoryRepository = mockk<InventoryRepository>()
+    val viewModel = EquipmentOverviewViewModel(userRepository, mainUserViewmodel, inventoryRepository)
     "usesAutoEquip" should {
         "return true if user has it set" {
             every { mainUserViewmodel.user.value } returns User().apply {

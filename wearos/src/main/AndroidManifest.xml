@@ -7,12 +7,12 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <application
+        android:name="com.habitrpg.wearos.habitica.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name="com.habitrpg.wearos.habitica.MainApplication"
-        android:theme="@style/HabiticaAppTheme">
+        android:theme="@style/Theme.App.Starting">
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
@@ -23,35 +23,82 @@
         <activity
             android:name="com.habitrpg.wearos.habitica.ui.activities.MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
-        </activity>
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.SplashActivity"
-            android:exported="true">
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.SplashActivity"
+            android:exported="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.LoginActivity" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.LoginActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
 
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskListActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskFormActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskDetailActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.HabitDirectionActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.TaskResultActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.RYAActivity" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.TaskListActivity"
+            android:taskAffinity="com.habitrpg.wearos.habitica.tasks"
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.TaskFormActivity"
+            android:taskAffinity="com.habitrpg.wearos.habitica.tasks"
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.TaskDetailActivity"
+            android:taskAffinity="com.habitrpg.wearos.habitica.tasks"
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.HabitDirectionActivity"
+            android:taskAffinity="com.habitrpg.wearos.habitica.tasks"
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.TaskResultActivity"
+            android:taskAffinity="com.habitrpg.wearos.habitica.tasks"
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.RYAActivity"
+            android:taskAffinity="com.habitrpg.wearos.habitica.tasks"
+            android:theme="@style/HabiticaAppTheme" />
 
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.AvatarActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.StatsActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.FaintActivity" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.AvatarActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.StatsActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.FaintActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
 
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.SettingsActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.ContinuePhoneActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.LevelupActivity" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.SettingsActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.ContinuePhoneActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.LevelupActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
 
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.ConfirmationActivity" />
-        <activity android:name="com.habitrpg.wearos.habitica.ui.activities.InputActivity" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.ConfirmationActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
+        <activity
+            android:name="com.habitrpg.wearos.habitica.ui.activities.InputActivity"
+            android:taskAffinity=""
+            android:theme="@style/HabiticaAppTheme" />
     </application>
-
 </manifest>

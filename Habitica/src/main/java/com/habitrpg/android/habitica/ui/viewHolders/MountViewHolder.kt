@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.viewHolders
 
+import android.app.Activity
 import android.content.res.Resources
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
@@ -11,7 +12,11 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenu
 import com.habitrpg.android.habitica.ui.menu.BottomSheetMenuItem
+import com.habitrpg.android.habitica.ui.views.showAsBottomSheet
+import com.habitrpg.android.habitica.ui.views.stable.MountBottomSheet
+import com.habitrpg.android.habitica.ui.views.stable.PetBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import dagger.hilt.android.internal.managers.ViewComponentManager
 
 class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)), View.OnClickListener {
     private var binding: MountOverviewItemBinding = MountOverviewItemBinding.bind(itemView)
@@ -51,16 +56,20 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
         if (!owned) {
             return
         }
-        val menu = BottomSheetMenu(itemView.context)
-        menu.setTitle(animal?.text)
-        menu.setImage("stable_Mount_Icon_" + animal?.animal + "-" + animal?.color)
-
-        val hasCurrentMount = currentMount.equals(animal?.key)
-        val labelId = if (hasCurrentMount) R.string.unequip else R.string.equip
-        menu.addMenuItem(BottomSheetMenuItem(resources.getString(labelId)))
-        menu.setSelectionRunnable {
-            animal?.let { onEquip?.invoke(it.key ?: "") }
+        val context = itemView.context
+        animal?.let { pet ->
+            (if (context is ViewComponentManager.FragmentContextWrapper) {
+                context.baseContext
+            } else {
+                context
+            }as Activity).showAsBottomSheet {
+                MountBottomSheet(
+                    pet,
+                    currentMount.equals(animal?.key),
+                    onEquip,
+                    it
+                )
+            }
         }
-        menu.show()
     }
 }

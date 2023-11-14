@@ -39,6 +39,7 @@ class RewardsRecyclerViewAdapter(
     override var adventureGuideOpenEvents: ((Boolean) -> Unit)? = null
     var purchaseCardEvents: ((ShopItem) -> Unit)? = null
     var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
+    var goldGemsLeft: Int? = null
 
     override var taskDisplayMode: String = "standard"
         set(value) {
@@ -97,6 +98,9 @@ class RewardsRecyclerViewAdapter(
         } else if (inAppRewards != null) {
             val item = inAppRewards?.get(position - customRewardCount) ?: return
             if (holder is ShopItemViewHolder) {
+                if (item.key == "gem") {
+                    holder.limitedNumberLeft = goldGemsLeft
+                }
                 holder.bind(item, item.canAfford(user, 1), 0)
                 holder.isPinned = true
                 holder.hidePinIndicator()

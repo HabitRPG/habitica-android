@@ -50,12 +50,13 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.cachedIn
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
@@ -140,7 +141,7 @@ class PartySeekingFragment : BaseFragment<FragmentComposeBinding>() {
 
     override fun onStart() {
         super.onStart()
-        AmplitudeManager.sendEvent("View Find Members", AmplitudeManager.EVENT_CATEGORY_NAVIGATION, AmplitudeManager.EVENT_HITTYPE_EVENT)
+        Analytics.sendEvent("View Find Members", EventCategory.NAVIGATION, HitType.EVENT)
     }
 }
 
@@ -250,13 +251,13 @@ fun PartySeekingView(
                 }
             }
             items(
-                items = pageData
+                pageData.itemCount
             ) {
-                if (it == null) return@items
+                val item = pageData[it] ?: return@items
                 PartySeekingListItem(
-                    user = it,
-                    inviteState = viewModel.inviteStates[it.id]?.second ?: LoadingButtonState.CONTENT,
-                    isInvited = viewModel.inviteStates[it.id]?.first ?: false,
+                    user = item,
+                    inviteState = viewModel.inviteStates[item.id]?.second ?: LoadingButtonState.CONTENT,
+                    isInvited = viewModel.inviteStates[item.id]?.first ?: false,
                     modifier = Modifier
                         .animateItemPlacement()
                         .padding(horizontal = 14.dp)

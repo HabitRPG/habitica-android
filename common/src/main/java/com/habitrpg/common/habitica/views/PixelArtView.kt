@@ -39,34 +39,33 @@ class PixelArtView @JvmOverloads constructor(
         var targetWidth = bitmap?.width ?: 0
         var targetHeight = bitmap?.height ?: 0
         val smallestSide = min(width, height)
+        val divisor = if (targetWidth % 3 == 0 && targetHeight % 3 == 0) 3 else 2
 
         val factor = min(
-            (
-                if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
-                    smallestSide / (targetWidth / 3)
-                } else {
-                    1
-                }
-                ),
+            if (smallestSide > 0 && targetWidth > 0 && smallestSide != targetWidth) {
+                smallestSide / (targetWidth / divisor)
+            } else {
+                1
+            },
             if (smallestSide > 0 && targetHeight > 0 && smallestSide != targetHeight) {
-                smallestSide / (targetHeight / 3)
+                smallestSide / (targetHeight / divisor)
             } else {
                 1
             }
         )
-        targetWidth = (targetWidth / 3) * factor
-        targetHeight = (targetHeight / 3) * factor
+        targetWidth = (targetWidth / divisor) * factor
+        targetHeight = (targetHeight / divisor) * factor
         val left = (width - targetWidth) / 2
         val top = (height - targetHeight) / 2
         targetRect = Rect(left, top, left + targetWidth, top + targetHeight)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         if (bitmap == null) {
             super.onDraw(canvas)
             return
         }
         val bitmap = bitmap ?: return
-        canvas?.drawBitmap(bitmap, null, targetRect, paint)
+        canvas.drawBitmap(bitmap, null, targetRect, paint)
     }
 }

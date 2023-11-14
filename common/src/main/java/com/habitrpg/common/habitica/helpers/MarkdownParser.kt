@@ -1,8 +1,6 @@
 package com.habitrpg.common.habitica.helpers
 
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
 import android.text.SpannableString
@@ -45,7 +43,7 @@ object MarkdownParser {
                         .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
                 }
             )
-            .usePlugin(this.createImageSizeResolverScaleDpiPlugin(context))
+            .usePlugin(createImageSizeResolverScaleDpiPlugin(context))
             .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
             .usePlugin(LinkifyPlugin.create(Linkify.WEB_URLS))
             .build()
@@ -228,10 +226,5 @@ private fun handleUrlClicks(context: Context, url: String) {
             Uri.parse(url)
         }
     }
-    val intent = Intent(Intent.ACTION_VIEW, webpage)
-    try {
-        context.startActivity(intent)
-    } catch (e: ActivityNotFoundException) {
-        // No application can handle the link
-    }
+    MainNavigationController.navigate(webpage)
 }

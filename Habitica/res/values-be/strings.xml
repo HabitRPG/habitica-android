@@ -51,9 +51,7 @@
     <string name="setup_task_school_2">Зрабіць хатнія заданьні</string>
     <string name="setup_task_chores_1">10 хвілінаў прыборкі</string>
     <string name="setup_task_chores_2">Памыць посуд</string>
-    <string name="my_guilds">Мае гільдыі</string>
-    <string name="public_guilds">Публічныя гільдыі</string>
-    <string name="guild">Гільдыя</string>
+            <string name="guild">Гільдыя</string>
     <string name="leave">Выйсьці</string>
     <string name="join">Далучыцца</string>
     <string name="delete">Выдаліць</string>

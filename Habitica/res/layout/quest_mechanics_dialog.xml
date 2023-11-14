@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="@dimen/spacing_xlarge"
+    android:layout_marginVertical="@dimen/spacing_large">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quest_mechanics"
+        style="@style/ArmoireTitleTextView"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_marginBottom="18dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/quest_mechanics_boss_title"
+        style="@style/ArmoireSubHeader" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quest_mechanics_boss_description"
+        style="@style/ArmoireDescriptionTextView"
+        android:layout_marginBottom="12dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/quest_mechanics_collecting_title"
+        style="@style/ArmoireSubHeader" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quest_mechanics_collecting_description"
+        style="@style/ArmoireDescriptionTextView"
+        android:layout_marginBottom="12dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/quest_mechanics_damage_title"
+        style="@style/ArmoireSubHeader" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quest_mechanics_damage_description"
+        style="@style/ArmoireDescriptionTextView"
+        android:layout_marginBottom="12dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/quest_mechanics_pausing_title"
+        style="@style/ArmoireSubHeader" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quest_mechanics_pausing_description"
+        style="@style/ArmoireDescriptionTextView"
+        android:layout_marginBottom="12dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        android:text="@string/quest_mechanics_rage_title"
+        style="@style/ArmoireSubHeader" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/quest_mechanics_rage_description"
+        style="@style/ArmoireDescriptionTextView"
+        />
+</LinearLayout>

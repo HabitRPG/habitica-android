@@ -56,7 +56,6 @@ internal class NavigationDrawerFragmentTest : FragmentTestCase<NavigationDrawerF
                 childWith<MainItem> { withDescendant { withText("Purchase Gems") } }.isVisible()
                 childWith<MainItem> { withDescendant { withText("Subscription") } }.isVisible()
                 childWith<MainItem> { withDescendant { withText("Party") } }.isVisible()
-                childWith<MainItem> { withDescendant { withText("Tavern") } }.isVisible()
                 childWith<MainItem> { withDescendant { withText("Support") } }.isVisible()
             }
         }

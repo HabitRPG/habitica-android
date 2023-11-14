@@ -4,18 +4,22 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.RowShopitemBinding
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.loadImage
 
 class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     private val binding = RowShopitemBinding.bind(itemView)
     var shopIdentifier: String? = null
     private var item: ShopItem? = null
+    var limitedNumberLeft: Int? = null
+
     var onNeedsRefresh: (() -> Unit)? = null
     var onShowPurchaseDialog: ((ShopItem, Boolean) -> Unit)? = null
 
@@ -26,7 +30,13 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
     var isPinned = false
         set(value) {
             field = value
-            binding.pinIndicator.visibility = if (isPinned) View.VISIBLE else View.GONE
+            binding.pinIndicator.visibility = if (field) View.VISIBLE else View.GONE
+        }
+
+    var isCompleted = false
+        set(value) {
+            field = value
+            binding.completedIndicator.visibility = if (field) View.VISIBLE else View.GONE
         }
 
     init {
@@ -58,23 +68,32 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.priceLabel.visibility = View.GONE
             binding.unlockLabel.visibility = View.VISIBLE
         }
+        val isLimited = item.isLimited || item.event?.end != null
         if (numberOwned > 0) {
             binding.itemDetailIndicator.text = numberOwned.toString()
-            binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumberDark(item.isLimited || item.event?.end != null))
-            } else {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorNumber(item.isLimited || item.event?.end != null))
-            }
+            binding.itemDetailIndicator.background =
+                AppCompatResources.getDrawable(context, R.drawable.pill_bg_gray)
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (item.locked) {
-            binding.itemDetailIndicator.background = if (context.isUsingNightModeResources()) {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLockedDark(item.isLimited || item.event?.end != null))
+            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.shop_locked)
+            binding.itemDetailIndicator.visibility = View.VISIBLE
+        } else if (isLimited) {
+            if (numberOwned == 0) {
+                binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
             } else {
-                BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLocked(item.isLimited || item.event?.end != null))
+                binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_purple_300)
             }
             binding.itemDetailIndicator.visibility = View.VISIBLE
-        } else if (item.isLimited || item.event?.end != null) {
-            binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
+        }
+
+        val limitedLeft = item.limitedNumberLeft ?: limitedNumberLeft
+        if (item.key == "gem" && limitedLeft == -1) {
+            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.item_indicator_subscribe)
+            binding.itemDetailIndicator.visibility = View.VISIBLE
+        } else if (item.key == "gem") {
+            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_green)
+            binding.itemDetailIndicator.text = "$limitedLeft"
+            binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.white))
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }
 

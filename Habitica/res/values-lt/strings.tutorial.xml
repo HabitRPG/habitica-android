@@ -2,5 +2,4 @@
 <resources>
     <string name="tutorial_skills">Sugebėjimai turi stiprius efektus! Paspausk ant sugebėjimo ir tavo veikėjas jį panaudos. Tai kainos Magijos taškų (mėlyna juosta), kuriuos užsidirbi prisijungęs kiekvieną dieną ir atliekant savo užduotis. DUK meniu gali rasti daugiau informacijos!</string>
   <string name="tutorial_party">Tai yra vieta, kur tu ir tavo draugai galite vienas kitą palaikyti ir taip atsakingai siekti savo tikslų kovodami su pabaisomis ir savo užduotimis!</string>
-  <string name="tutorial_tavern">Sveiki atvykę į Smuklę, viešą, visiem amžiams tinkantį pokalbių kambarį! Čia galite šnekėti apie produktyvumą ir užduoti klausimus vieni kitiems. Sėkmės!</string>
 </resources>

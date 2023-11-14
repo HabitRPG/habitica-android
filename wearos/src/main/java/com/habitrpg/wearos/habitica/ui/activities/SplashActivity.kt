@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.databinding.ActivitySplashBinding
 import com.habitrpg.wearos.habitica.ui.viewmodels.SplashViewModel
@@ -20,11 +20,8 @@ import kotlin.time.toDuration
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     override val viewModel: SplashViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         binding = ActivitySplashBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         if (viewModel.hasAuthentication) {
@@ -81,7 +78,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
             } else {
                 stopAnimatingProgress()
             }
-            binding.textView.isVisible = show
             delay(90.toDuration(DurationUnit.SECONDS))
             if (isActive) {
                 // the sync attempt has timed out

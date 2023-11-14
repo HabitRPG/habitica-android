@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
+import com.habitrpg.android.habitica.databinding.ShopAdBinding
+import com.habitrpg.android.habitica.models.BaseMainObject
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.HatchingPotion
@@ -25,17 +28,20 @@ import com.habitrpg.android.habitica.ui.views.dialogs.DetailDialog
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.extensions.localizedCapitalizeWithSpaces
+import com.habitrpg.common.habitica.helpers.setMarkdown
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedItem, ItemRecyclerAdapter.ItemViewHolder>() {
+class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMainObject, ViewHolder>() {
     var user: User? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
     var hatchingItem: Item? = null
     var feedingPet: Pet? = null
     var fragment: DialogFragment? = null
+    var itemType = ""
+    var itemText = ""
     private var existingPets: List<Pet>? = null
     private var ownedPets: Map<String, OwnedPet>? = null
     var items: Map<String, Item>? = null
@@ -52,14 +58,53 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
     var onFeedPet: ((Food) -> Unit)? = null
     var onCreateNewParty: (() -> Unit)? = null
     var onUseSpecialItem: ((SpecialItem) -> Unit)? = null
+    var onOpenShop: (() -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return if (viewType == 0) {
+            ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
+        } else {
+            ShopAdViewHolder(ShopAdBinding.inflate(context.layoutInflater, parent, false))
+        }
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val ownedItem = data[position]
-        holder.bind(ownedItem, items?.get(ownedItem.key))
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (position < data.size) {
+            val ownedItem = data[position] as OwnedItem
+            (holder as? ItemViewHolder)?.bind(ownedItem, items?.get(ownedItem.key))
+        } else {
+            val typedHolder = (holder as? ShopAdViewHolder) ?: return
+            if (itemType == "quests") {
+                typedHolder.binding.imageView.setImageResource(R.drawable.icon_quests)
+                typedHolder.binding.titleView.text = context.getString(R.string.quests_footer_title)
+                typedHolder.binding.descriptionView.setMarkdown(context.getString(R.string.quests_footer_description))
+            } else {
+                typedHolder.binding.imageView.setImageResource(R.drawable.icon_shops)
+                typedHolder.binding.titleView.text = context.getString(R.string.item_footer_title, itemText)
+                typedHolder.binding.descriptionView.setMarkdown(when (itemType) {
+                    "eggs" -> context.getString(R.string.eggs_footer_description)
+                    "food" -> context.getString(R.string.food_footer_description)
+                    "hatchingPotions" -> context.getString(R.string.hatchingPotions_footer_description)
+                    else -> ""
+                })
+            }
+            typedHolder.itemView.setOnClickListener {
+                onOpenShop?.invoke()
+            }
+        }
+    }
+
+    override fun getItemCount(): Int {
+        val actualCount = super.getItemCount()
+        return actualCount + if (itemType == "special" || actualCount == 0 || itemType == "") 0 else 1
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position < data.size) {
+            0
+        } else {
+            -1
+        }
     }
 
     fun setExistingPets(pets: List<Pet>) {
@@ -71,6 +116,8 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
         this.ownedPets = ownedPets
         notifyDataSetChanged()
     }
+
+    inner class ShopAdViewHolder(val binding: ShopAdBinding): RecyclerView.ViewHolder(binding.root)
 
     inner class ItemViewHolder(val binding: ItemItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private var ownedItem: OwnedItem? = null
@@ -179,10 +226,6 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<OwnedI
                     val specialItem = item as SpecialItem
                     if (specialItem.isMysteryItem && (ownedItem?.numberOwned ?: 0) > 0) {
                         menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.open)))
-                    }
-                } else if (ownedItem?.itemType == "special") {
-                    if ((ownedItem?.numberOwned ?: 0) > 0) {
-                        menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.use_item)))
                     }
                 } else if (ownedItem?.itemType == "special") {
                     if ((ownedItem?.numberOwned ?: 0) > 0) {

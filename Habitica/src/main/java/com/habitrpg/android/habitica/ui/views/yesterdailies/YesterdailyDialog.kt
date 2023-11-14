@@ -13,7 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.EventCategory
+import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
 import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
@@ -254,10 +256,10 @@ class YesterdailyDialog private constructor(
 
                     val additionalData = HashMap<String, Any>()
                     additionalData["task count"] = sortedTasks?.size ?: 0
-                    AmplitudeManager.sendEvent(
+                    Analytics.sendEvent(
                         "show cron",
-                        AmplitudeManager.EVENT_CATEGORY_BEHAVIOUR,
-                        AmplitudeManager.EVENT_HITTYPE_EVENT,
+                        EventCategory.BEHAVIOUR,
+                        HitType.EVENT,
                         additionalData
                     )
 

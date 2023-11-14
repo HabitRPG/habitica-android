@@ -129,9 +129,7 @@
     <string name="setup_task_creativity_1">לימדו אשף של המלאכה</string>
     <string name="setup_task_creativity_2">עבוד על פרוייקט יצירתי</string>
     <string name="setup_task_creativity_3">סיים פרוייקט יצירתי</string>
-    <string name="my_guilds">הגילדות שלי</string>
-    <string name="public_guilds">גילדות פומביות</string>
-    <string name="guild">גילדה</string>
+            <string name="guild">גילדה</string>
     <string name="leave">עיזבו</string>
     <string name="join">הצטרפו</string>
     <string name="delete">מחיקה</string>
@@ -139,7 +137,6 @@
     <string name="description">תיאור</string>
     <string name="privacy">פרטיות</string>
     <string name="write_message">כיתבו הודעה</string>
-    <string name="guild_search_hint">חיפוש אחר גילדות</string>
     <string name="battle_gear">ציוד קרב</string>
     <string name="costume">תחפושת</string>
     <string name="outfit_head">ראש</string>

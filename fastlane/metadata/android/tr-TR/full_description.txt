@@ -1,5 +1,28 @@
-Hayatınızı motive etmek ve organize olmak için bir oyun gibi davranın! Habitica, amaçları gerçekleştirirken eğlenmeyi kolaylaştırır.
+Hayatınızı motive etmek ve organize olmak için bir oyun gibi davranın! Habitica, amaçları gerçekleştirirken eğlenmeyi kolaylaştırır. Alışkanlıklarınızı, Günlük hedeflerinizi ve Yapılacaklar listenizi girin ve özel bir avatar oluşturun. 
 
-Alışkanlıklarınızı, Günlük hedeflerinizi ve Yapılacaklar listenizi girin ve özel bir avatar oluşturun. Avatarınızı özelleştirmek için zırh, evcil hayvan, beceri ve hatta görevler gibi özellikleri açmak için görevleri kontrol edin! Canavarları birbirleriyle hesaplı tutmak için arkadaşlarınızla savaşın ve altınınızı teçhizat gibi oyun içi ödüller veya en sevdiğiniz TV şovunun bir bölümünü izlemek gibi özel ödüller için kullanın. Esnek, sosyal ve eğlenceli olan Habitica, kendinizi herhangi bir şeyi başarmak için motive etmenin mükemmel bir yoldur.
+Avatarınızı özelleştirmek için zırh, evcil hayvan, beceri ve hatta görevler gibi özellikleri açmak için görevleri kontrol edin! Canavarları birbirleriyle hesaplı tutmak için arkadaşlarınızla savaşın ve altınınızı teçhizat gibi oyun içi ödüller veya en sevdiğiniz TV şovunun bir bölümünü izlemek gibi özel ödüller için kullanın. Esnek, sosyal ve eğlenceli olan Habitica, kendinizi herhangi bir şeyi başarmak için motive etmenin mükemmel bir yoldur.
+
+Özellikler:
+  • Günlük, haftalık veya aylık rutinleriniz için planlanan görevlerin otomatik olarak tekrarlanması
+  • Günde birden çok kez veya yalnızca arada bir yapmak istediğiniz görevler için esnek alışkanlık izleyici
+  • Yalnızca bir kez yapılması gereken görevler için geleneksel yapılacaklar listesi
+  • Renk kodlu görevler ve seri sayaçları, bir bakışta ne durumda olduğunuzu görmenize yardımcı olur
+  • Genel ilerlemenizi görselleştirmek için seviyelendirme sistemi
+  • Kişisel tarzınıza uygun tonlarca koleksiyon eşyası ve evcil hayvan
+  • Kapsamlı avatar özelleştirmeleri: tekerlekli sandalyeler, saç stilleri, ten tonları ve daha fazlası
+  • Her şeyi taze tutmak için düzenli içerik yayınları ve sezonluk etkinlikler
+  • Partiler, ekstra sorumluluk için arkadaşlarınızla ekip kurmanıza ve görevleri tamamlayarak şiddetli düşmanlarla savaşmanıza olanak tanır
+  • Mücadeleler, kişisel görevlerinize ekleyebileceğiniz paylaşılan görev listeleri sunar
+  • Doğru yolda kalmanıza yardımcı olacak hatırlatıcılar ve widget'lar
+  • Koyu ve açık modlu özelleştirilebilir renk temaları
+  • Cihazlar arasında senkronizasyon
+
+Hareket halindeyken görevlerinizi yerine getirmek için daha fazla esneklik mi istiyorsunuz? Saatimizde bir Wear OS uygulamamız var!
+
+İşletim sistemi özelliklerini kullanın:
+  • Alışkanlıkları, Günlük İşleri ve Yapılacaklar'ı görüntüleyin, oluşturun ve tamamlayın
+  • Deneyim, yiyecek, yumurta ve iksirlerle ilgili çabalarınızın karşılığını alın
+  • Dinamik ilerleme çubuklarıyla istatistiklerinizi takip edin
+  • Çarpıcı piksel avatarınızı saat kadranında sergileyin
 
 Herhangi bir sorunuz varsa, mobile@habitica.com adresine geri bildirim göndermekten çekinmeyin! Ve uygulamanızdan hoşlanıyorsanız, bize bir inceleme bırakırsanız memnun oluruz.

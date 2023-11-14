@@ -7,7 +7,7 @@
                 android:angle="0"
                 android:startColor="@color/green_100"
                 android:endColor="@color/green_500" />
-            <corners android:radius="8dp" />
+            <corners android:radius="12dp" />
         </shape>
     </item>
     <item
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <solid android:color="@color/brand_400" />
-            <corners android:radius="6dp" />
+            <corners android:radius="10dp" />
         </shape>
         <ripple android:color="@color/white" />
     </item>

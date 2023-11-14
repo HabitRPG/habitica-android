@@ -8,7 +8,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.api.ApiService
 import com.habitrpg.android.habitica.api.GSonFactoryCreator
 import com.habitrpg.android.habitica.data.ApiClient
-import com.habitrpg.android.habitica.helpers.AmplitudeManager
+import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.Achievement
 import com.habitrpg.android.habitica.models.ContentResult
@@ -39,7 +39,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.api.Server
-import com.habitrpg.common.habitica.helpers.AnalyticsManager
 import com.habitrpg.common.habitica.models.HabitResponse
 import com.habitrpg.common.habitica.models.PurchaseValidationRequest
 import com.habitrpg.common.habitica.models.PurchaseValidationResult
@@ -73,7 +72,6 @@ import javax.net.ssl.SSLException
 class ApiClientImpl(
     private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
-    private val analyticsManager: AnalyticsManager,
     private val notificationsManager: NotificationsManager,
     private val context: Context
 ) : ApiClient {
@@ -101,10 +99,8 @@ class ApiClientImpl(
 
     override var languageCode: String? = null
     private var lastAPICallURL: String? = null
-    private var hadError = false
 
     init {
-        analyticsManager.setUserIdentifier(this.hostConfig.userID)
         buildRetrofit()
     }
 
@@ -147,13 +143,23 @@ class ApiClientImpl(
                 lastAPICallURL = original.url.toString()
                 val response = chain.proceed(request)
                 if (response.isSuccessful) {
+                    hideConnectionProblemDialog()
                     return@addNetworkInterceptor response
                 } else {
                     // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
                     if (response.code in 400..599) {
-                        return@addNetworkInterceptor response.newBuilder()
-                            .header("Cache-Control", "no-store")
-                            .build()
+                        when (response.code) {
+                            404 -> {
+                                // The server is returning a 404 error, which means the requested resource was not found.
+                                // In this case - we want to actually cache the response, and handle it in the app
+                                // to prevent a niche HttpException/potential network crash
+                                return@addNetworkInterceptor response
+                            }
+
+                            else -> {
+                                return@addNetworkInterceptor response.newBuilder().header("Cache-Control", "no-store").build()
+                            }
+                        }
                     } else {
                         return@addNetworkInterceptor response
                     }
@@ -256,13 +262,13 @@ class ApiClientImpl(
                 showConnectionProblemDialog(R.string.internal_error_api)
             }
         } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
-            analyticsManager.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
+            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
         } else {
-            analyticsManager.logException(throwable)
+            Analytics.logException(throwable)
         }
     }
 
-    override suspend fun updateMember(memberID: String, updateData: Map<String, Any?>): Member? {
+    override suspend fun updateMember(memberID: String, updateData: Map<String, Map<String, Boolean>>): Member? {
         return process { apiService.updateUser(memberID, updateData) }
     }
 
@@ -273,7 +279,7 @@ class ApiClientImpl(
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: IOException) {
-            analyticsManager.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
+            Analytics.logError("Json Error: " + lastAPICallURL + ",  " + e.message)
             ErrorResponse()
         }
     }
@@ -305,19 +311,21 @@ class ApiClientImpl(
         showConnectionProblemDialog(context.getString(resourceTitleString), context.getString(resourceMessageString))
     }
 
+    private var erroredRequestCount = 0
     private fun showConnectionProblemDialog(
         resourceTitleString: String?,
         resourceMessageString: String
     ) {
-        hadError = true
+        erroredRequestCount += 1
         val application = (context as? HabiticaBaseApplication)
             ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
-            ?.showConnectionProblem(resourceTitleString, resourceMessageString)
+            ?.showConnectionProblem(erroredRequestCount, resourceTitleString, resourceMessageString)
     }
 
     private fun hideConnectionProblemDialog() {
-        hadError = false
+        if (erroredRequestCount == 0) return
+        erroredRequestCount = 0
         val application = (context as? HabiticaBaseApplication)
             ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
@@ -332,8 +340,7 @@ class ApiClientImpl(
     override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
-        analyticsManager.setUserIdentifier(this.hostConfig.userID)
-        AmplitudeManager.setUserID(hostConfig.userID)
+        Analytics.setUserID(hostConfig.userID)
     }
 
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }
@@ -435,6 +442,10 @@ class ApiClientImpl(
         return process { apiService.getTasks(type, dueDate) }
     }
 
+//    override suspend fun reorderTags(type: String, dueDate: String): {
+//        return process { apiService.getTasks(type, dueDate) }
+//    }
+
     override suspend fun unlockPath(path: String): UnlockResponse? {
         return process { apiService.unlockPath(path) }
     }
@@ -493,7 +504,7 @@ class ApiClientImpl(
 
     override suspend fun sleep(): Boolean? = process { apiService.sleep() }
 
-    override suspend fun revive(): User? = process { apiService.revive() }
+    override suspend fun revive(): Items? = process { apiService.revive() }
 
     override suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType, targetId) }
@@ -572,6 +583,10 @@ class ApiClientImpl(
 
     override suspend fun likeMessage(groupId: String, mid: String): ChatMessage? {
         return process { apiService.likeMessage(groupId, mid) }
+    }
+
+    override suspend fun reportMember(mid: String, data: Map<String, String>): Void? {
+        return process { apiService.reportMember(mid, data) }
     }
 
     override suspend fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Void? {
@@ -721,6 +736,10 @@ class ApiClientImpl(
 
     override suspend fun debugAddTenGems(): Void? {
         return process { apiService.debugAddTenGems() }
+    }
+
+    override suspend fun getNews(): List<Any>? {
+        return process { apiService.getNews() }
     }
 
     override suspend fun readNotification(notificationId: String): List<Any>? {

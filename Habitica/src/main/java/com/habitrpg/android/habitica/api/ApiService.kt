@@ -182,7 +182,7 @@ interface ApiService {
     suspend fun sleep(): HabitResponse<Boolean>
 
     @POST("user/revive")
-    suspend fun revive(): HabitResponse<User>
+    suspend fun revive(): HabitResponse<Items>
 
     @POST("user/class/cast/{skill}")
     suspend fun useSkill(
@@ -264,6 +264,9 @@ interface ApiService {
         @Path("mid") mid: String,
         @Body data: Map<String, String>
     ): HabitResponse<Void>
+
+    @POST("members/{mid}/flag")
+    suspend fun reportMember(@Path("mid") mid: String, @Body data: Map<String, String>): HabitResponse<Void>
 
     @POST("groups/{gid}/chat/seen")
     suspend fun seenMessages(@Path("gid") groupId: String): HabitResponse<Void>
@@ -392,6 +395,9 @@ interface ApiService {
     @POST("debug/add-ten-gems")
     suspend fun debugAddTenGems(): HabitResponse<Void>
 
+    @GET("news")
+    suspend fun getNews(): HabitResponse<List<Any>>
+
     // Notifications
     @POST("notifications/{notificationId}/read")
     suspend fun readNotification(@Path("notificationId") notificationId: String): HabitResponse<List<Any>>
@@ -464,8 +470,8 @@ interface ApiService {
     @POST("tasks/{taskID}/unassign/{userID}")
     suspend fun unassignFromTask(@Path("taskID") taskID: String, @Path("userID") userID: String): HabitResponse<Task>
 
-    @POST("hall/heroes/{memberID}")
-    suspend fun updateUser(@Path("memberID") memberID: String, @Body updateData: Map<String, Any?>): HabitResponse<Member>
+    @PUT("hall/heroes/{memberID}")
+    suspend fun updateUser(@Path("memberID") memberID: String, @Body updateData: Map<String, Map<String, Boolean>>): HabitResponse<Member>
 
     @GET("hall/heroes/{memberID}")
     suspend fun getHallMember(@Path("memberID") memberID: String): HabitResponse<Member>

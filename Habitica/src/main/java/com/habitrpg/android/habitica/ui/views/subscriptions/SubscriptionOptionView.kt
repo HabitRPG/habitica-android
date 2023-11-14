@@ -32,11 +32,11 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         binding.gemCapTextView.text = a.getText(R.styleable.SubscriptionOptionView_gemCapText)
         setFlagText(a.getText(R.styleable.SubscriptionOptionView_flagText))
         val hourGlassCount = a.getInteger(R.styleable.SubscriptionOptionView_hourGlassCount, 0)
+        binding.hourglassTextView.visibility = View.VISIBLE
         if (hourGlassCount != 0) {
             binding.hourglassTextView.text = context.getString(R.string.subscription_hourglasses, hourGlassCount)
-            binding.hourglassTextView.visibility = View.VISIBLE
         } else {
-            binding.hourglassTextView.visibility = View.GONE
+            binding.hourglassTextView.text = context.getString(R.string.subscription_hourglasses_3month_timeframe)
         }
     }
 
@@ -70,7 +70,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
             binding.descriptionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
         } else {
-            binding.wrapper.setBackgroundResource(R.drawable.subscription_box_bg)
+            binding.wrapper.setBackgroundResource(R.drawable.subscription_type_box_bg)
             binding.subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_unselected)
             binding.gemCapTextView.setBackgroundResource(R.drawable.pill_bg_gray)
             binding.gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))

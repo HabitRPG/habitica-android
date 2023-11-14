@@ -141,9 +141,7 @@
     <string name="setup_task_creativity_1">Vypracovat předlohu</string>
     <string name="setup_task_creativity_2">Pracovat na kreativním projektu</string>
     <string name="setup_task_creativity_3">Dokončit kreativní projekt</string>
-    <string name="my_guilds">Moje cechy</string>
-    <string name="public_guilds">Veřejné cechy</string>
-    <string name="guild">Cech</string>
+            <string name="guild">Cech</string>
     <string name="leave">Odejít</string>
     <string name="join">Připojit se</string>
     <string name="delete">Smazat</string>
@@ -152,7 +150,6 @@
     <string name="add_tag">Přidat nový Štítek</string>
     <string name="privacy">Soukromí</string>
     <string name="write_message">Napsat zprávu</string>
-    <string name="guild_search_hint">Hledat gildy</string>
     <string name="battle_gear">Zbroj</string>
     <string name="costume">Kostým</string>
     <string name="outfit_head">Hlava</string>

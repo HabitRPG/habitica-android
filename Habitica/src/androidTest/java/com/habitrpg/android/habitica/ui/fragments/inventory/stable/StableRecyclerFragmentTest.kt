@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
-import com.habitrpg.android.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.FragmentTestCase
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.recycler.KRecyclerItem
@@ -132,7 +132,7 @@ internal class StableRecyclerFragmentTest : FragmentTestCase<StableRecyclerFragm
     }
 
     @Test fun displaysMountDetail() {
-        fragment.itemType = "mounts"
+        fragment.itemTypeText = "mounts"
         launchFragment()
         screen {
             recycler {

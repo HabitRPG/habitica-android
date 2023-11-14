@@ -48,8 +48,8 @@
     <dimen name="row_title_size">16sp</dimen>
     <dimen name="row_text_size">14sp</dimen>
     <dimen name="row_title_bottommargin">2dp</dimen>
-    <dimen name="pet_width">92dp</dimen>
-    <dimen name="mount_width">120dp</dimen>
+    <dimen name="pet_width">82dp</dimen>
+    <dimen name="mount_width">110dp</dimen>
     <dimen name="bottom_menu_padding">20dp</dimen>
     <dimen name="pet_image_width">68dp</dimen>
     <dimen name="pet_image_height">65dp</dimen>
