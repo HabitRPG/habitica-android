@@ -83,7 +83,7 @@ class TaskAlarmManager(
 
     private fun setTimeForDailyReminder(remindersItem: RemindersItem?, task: Task): RemindersItem? {
         val newTime = task.getNextReminderOccurrence(remindersItem, context)
-        remindersItem?.time = newTime?.withZoneSameLocal(ZoneId.systemDefault())?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        remindersItem?.time = newTime?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
 
         return remindersItem
     }
@@ -95,14 +95,13 @@ class TaskAlarmManager(
      * which is indicated by first nextDue being null (As the alarm is created before the API returns nextDue times)
      */
     private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
+        if (remindersItem == null) return
+
         val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        val zonedTime = remindersItem?.getLocalZonedDateTimeInstant()
-        if (remindersItem == null ||
-            (reminderItemTask.type == TaskType.DAILY && zonedTime?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null) ||
-            (reminderItemTask.type == TaskType.TODO && zonedTime?.isBefore(now) == true || zonedTime == null)
-        ) {
-            return
-        }
+        val reminderZonedTime = remindersItem.getLocalZonedDateTimeInstant()
+
+        if (reminderZonedTime == null || reminderZonedTime.isBefore(now)) return
+
 
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
@@ -129,7 +128,7 @@ class TaskAlarmManager(
             withImmutableFlag(PendingIntent.FLAG_CANCEL_CURRENT)
         )
 
-        setAlarm(context, zonedTime.toEpochMilli(), sender)
+        setAlarm(context, reminderZonedTime.toEpochMilli(), sender)
     }
 
     private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
