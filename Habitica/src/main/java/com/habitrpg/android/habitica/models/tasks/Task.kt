@@ -344,37 +344,45 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         if (remindersItem == null) {
             return null
         }
+
         val reminderTime = remindersItem.time?.parseToZonedDateTime()
         val zonedDateTimeNow = ZonedDateTime.now()
-        return if (nextDue?.firstOrNull() != null && (!isDisplayedActive || reminderTime?.isBefore(zonedDateTimeNow) == true)
-        ) {
-            val repeatingDays = repeat?.dayStrings(context)
-            val isScheduledForToday = repeatingDays?.find { day -> day == zonedDateTimeNow.dayOfWeekString() }
-            if (isScheduledForToday != null) {
-                val currentDateTime = LocalDateTime.now()
-                val updatedDateTime: LocalDateTime = LocalDateTime.of(
-                    currentDateTime.year,
-                    currentDateTime.month,
-                    currentDateTime.dayOfMonth,
-                    reminderTime?.hour ?: 0,
-                    reminderTime?.minute ?: 0
-                )
-                updatedDateTime.atZone(ZoneId.systemDefault())
-            } else {
-                val nextDate = LocalDateTime.ofInstant(nextDue?.firstOrNull()?.toInstant(), ZoneId.systemDefault())
-                val updatedDateTime: LocalDateTime = LocalDateTime.of(
-                    nextDate.year,
-                    nextDate.month,
-                    nextDate.dayOfMonth,
-                    reminderTime?.hour ?: 0,
-                    reminderTime?.minute ?: 0
-                )
-                updatedDateTime.atZone(ZoneId.systemDefault())
-            }
-        } else {
-            return reminderTime
+
+        // Check if the reminder is scheduled to repeat today
+        val repeatingDays = repeat?.dayStrings(context)
+        val isScheduledForToday = repeatingDays?.find { day -> day == zonedDateTimeNow.dayOfWeekString() }
+        // Check if reminder time already passed
+        val isReminderTimePassed = reminderTime?.isBefore(zonedDateTimeNow) == true
+        if (isScheduledForToday != null && !isReminderTimePassed) {
+            val currentDateTime = LocalDateTime.now()
+            val updatedDateTime: LocalDateTime = LocalDateTime.of(
+                currentDateTime.year,
+                currentDateTime.month,
+                currentDateTime.dayOfMonth,
+                reminderTime?.hour ?: 0,
+                reminderTime?.minute ?: 0
+            )
+            return updatedDateTime.atZone(ZoneId.systemDefault())
         }
+
+
+        // If the reminder is not scheduled to repeat today, use the first upcoming nextDue date
+        val today = LocalDate.now()
+        // Filter out the dates that are in the past
+        val futureNextDues = nextDue?.filter { nextDueDate -> nextDueDate.toInstant().atZone(ZonedDateTime.now().zone).toLocalDate().isAfter(today) }
+        val earliestFutureDate = futureNextDues?.minByOrNull { it }
+        if (earliestFutureDate != null) {
+            return earliestFutureDate.toInstant()
+                .atZone(ZonedDateTime.now().zone)
+                .withHour(reminderTime?.hour ?: 0)
+                .withMinute(reminderTime?.minute ?: 0)
+        }
+
+
+        // If there are no upcoming nextDue dates, use the first upcoming reminder time
+        return reminderTime
     }
+
 
     fun parseMarkdown() {
         parsedText = MarkdownParser.parseMarkdown(text)
