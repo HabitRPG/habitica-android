@@ -351,9 +351,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         // Check if the reminder is scheduled to repeat today
         val repeatingDays = repeat?.dayStrings(context)
         val isScheduledForToday = repeatingDays?.find { day -> day == zonedDateTimeNow.dayOfWeekString() }
-        // Check if reminder time already passed
-        val isReminderTimePassed = reminderTime?.isBefore(zonedDateTimeNow) == true
-        if (isScheduledForToday != null && !isReminderTimePassed) {
+        if (isScheduledForToday != null) {
             val currentDateTime = LocalDateTime.now()
             val updatedDateTime: LocalDateTime = LocalDateTime.of(
                 currentDateTime.year,
