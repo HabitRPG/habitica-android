@@ -95,7 +95,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-config-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation 'com.google.android.gms:play-services-ads:22.4.0'
     implementation "com.google.android.gms:play-services-auth:$play_auth_version"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "com.google.android.gms:play-services-wearable:$play_wearables_version"
