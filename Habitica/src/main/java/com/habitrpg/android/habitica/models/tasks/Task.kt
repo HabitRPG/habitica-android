@@ -1,12 +1,12 @@
 package com.habitrpg.android.habitica.models.tasks
 
-import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import android.text.Spanned
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.dayOfWeekString
+import com.habitrpg.android.habitica.extensions.isReminderDue
+import com.habitrpg.android.habitica.extensions.matchesRepeatDays
 import com.habitrpg.android.habitica.extensions.parseToZonedDateTime
 import com.habitrpg.android.habitica.extensions.toZonedDateTime
 import com.habitrpg.android.habitica.models.BaseMainObject
@@ -24,9 +24,9 @@ import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.time.temporal.ChronoUnit
 import java.util.Date
 
 open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
@@ -332,55 +332,96 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     fun checkIfDue(): Boolean = isDue == true
 
     /**
-     * When manually changing the alarm time, nextDue will provide the previously set upcoming alarm -
-     * however if the alarm was changed to a upcoming time today (and not before the current time) AND the previous alarm
-     * set for today already passed, we want to check if the alarm repeat/days includes today as well.
-     * If so - use today's date to schedule an alarm. If not, use nextDue.
+     * Calculates a list of the next upcoming reminder occurrences based on the reminder's configuration.
      *
-     * Alarms automatically rescheduled -> nextDue used.
-     * A alarm that already passed today and is rescheduled for a upcoming time today -> Schedule for today (instead of using nextDue)
+     * This method determines the next few occurrences of a reminder, taking into account its start date,
+     * frequency, repetition pattern, and other settings. It generates a list of ZonedDateTime instances,
+     * each representing a future point in time when the reminder is due.
+     *
+     * The method iterates starting from the reminder's start date and checks each day to see if it matches
+     * the criteria for triggering the reminder (like matching the specified days of the week, frequency, etc.).
+     * Once a matching date is found, it's added to the list with the specific time of the reminder.
+     *
+     * This is useful for scheduling reminders that need to occur multiple times in the future according
+     * to a specific pattern (e.g., every Monday and Wednesday at 10 AM).
+     *
+     * @param remindersItem The reminder item containing the configuration for calculating occurrences.
+     * @param occurrences The number of upcoming reminder occurrences to calculate.
+     * @return A list of ZonedDateTime instances, each representing an upcoming reminder occurrence.
+     *         Returns null if the reminder item is null or essential information for calculation is missing.
      */
-    fun getNextReminderOccurrence(remindersItem: RemindersItem?, context: Context): ZonedDateTime? {
-        if (remindersItem == null) {
-            return null
+    fun getNextReminderOccurrences(remindersItem: RemindersItem?, occurrences: Int): List<ZonedDateTime>? {
+        if (remindersItem == null) return null
+
+        val reminderTime = remindersItem.time?.parseToZonedDateTime() ?: return null
+        val startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
+        val frequency = this.frequency ?: return null
+        val everyX = this.everyX ?: 1
+        val repeatDays = this.repeat
+
+
+        // Determine the starting point: either the start date or the current date if start date is in the past
+        var currentDate = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
+        if (startDate.isAfter(currentDate)) {
+            currentDate = startDate
         }
 
-        val reminderTime = remindersItem.time?.parseToZonedDateTime()
-        val zonedDateTimeNow = ZonedDateTime.now()
+        val occurrencesList = mutableListOf<ZonedDateTime>()
 
-        // Check if the reminder is scheduled to repeat today
-        val repeatingDays = repeat?.dayStrings(context)
-        val isScheduledForToday = repeatingDays?.find { day -> day == zonedDateTimeNow.dayOfWeekString() }
-        if (isScheduledForToday != null) {
-            val currentDateTime = LocalDateTime.now()
-            val updatedDateTime: LocalDateTime = LocalDateTime.of(
-                currentDateTime.year,
-                currentDateTime.month,
-                currentDateTime.dayOfMonth,
-                reminderTime?.hour ?: 0,
-                reminderTime?.minute ?: 0
-            )
-            return updatedDateTime.atZone(ZoneId.systemDefault())
+        while (occurrencesList.size < occurrences) {
+            if (currentDate.isReminderDue(reminderTime, frequency, everyX, repeatDays, currentDate.dayOfMonth)) {
+                occurrencesList.add(currentDate.withHour(reminderTime.hour).withMinute(reminderTime.minute))
+            }
+
+            // Increment currentDate based on the frequency
+            currentDate = when (frequency) {
+                Frequency.DAILY -> currentDate.plusDays(everyX.toLong())
+                Frequency.WEEKLY -> {
+                    if (repeatDays?.hasAnyDaySelected() == true) {
+                        // Find the next day of the week that matches the player's selection
+                        var nextDueDate = currentDate
+                        while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                            nextDueDate = nextDueDate.plusDays(1)
+                        }
+
+                        // Calculate the number of weeks between the start date and the next due date
+                        val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
+
+                        // Check if the next due date falls in the correct week interval
+                        if (weeksSinceStart % everyX != 0L) {
+                            // If it doesn't, find the start of the next valid interval
+                            val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
+                            nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
+
+                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                nextDueDate = nextDueDate.plusDays(1)
+                            }
+                        }
+
+                        // Ensure the next due date is in the future
+                        val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
+                        if (nextDueDate.isBefore(now)) {
+                            nextDueDate = nextDueDate.plusWeeks(everyX.toLong())
+                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                nextDueDate = nextDueDate.plusDays(1)
+                            }
+                        }
+
+                        currentDate = nextDueDate
+                    } else {
+                        // If no specific days are selected, increment by the number of weeks
+                        currentDate = currentDate.plusWeeks(everyX.toLong())
+                    }
+                    currentDate
+                }
+                Frequency.MONTHLY -> currentDate.plusMonths(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth)
+                Frequency.YEARLY -> currentDate.plusYears(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withMonth(startDate.monthValue)
+            }
         }
 
 
-        // If the reminder is not scheduled to repeat today, use the first upcoming nextDue date
-        val today = LocalDate.now()
-        // Filter out the dates that are in the past
-        val futureNextDues = nextDue?.filter { nextDueDate -> nextDueDate.toInstant().atZone(ZonedDateTime.now().zone).toLocalDate().isAfter(today) }
-        val earliestFutureDate = futureNextDues?.minByOrNull { it }
-        if (earliestFutureDate != null) {
-            return earliestFutureDate.toInstant()
-                .atZone(ZonedDateTime.now().zone)
-                .withHour(reminderTime?.hour ?: 0)
-                .withMinute(reminderTime?.minute ?: 0)
-        }
-
-
-        // If there are no upcoming nextDue dates, use the first upcoming reminder time
-        return reminderTime
+        return occurrencesList
     }
-
 
     fun parseMarkdown() {
         parsedText = MarkdownParser.parseMarkdown(text)
@@ -577,6 +618,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         } else {
             daysOfMonthString = "[]"
         }
+    }
+
+    private fun Days.hasAnyDaySelected(): Boolean {
+        return m || t || w || th || f || s || su
     }
 
     fun getDaysOfMonth(): List<Int>? {
