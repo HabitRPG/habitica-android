@@ -187,7 +187,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
             limitationsFormatter.format(startDate),
             utcTimeFormatter.format(startDate),
             limitationsFormatter.format(endDate),
-            utcTimeFormatter.format(startDate)
+            utcTimeFormatter.format(endDate)
         )
     }
 }

@@ -538,7 +538,7 @@ class NavigationDrawerFragment : DialogFragment() {
         val promoItem = HabiticaDrawerItem(R.id.subscriptionPurchaseActivity, SIDEBAR_PROMO)
         promoItem.itemViewType = 5
         promoItem.isVisible = false
-        items.add(promoItem)
+        items.add(0, promoItem)
 
         if (configManager.showSubscriptionBanner()) {
             val item =
