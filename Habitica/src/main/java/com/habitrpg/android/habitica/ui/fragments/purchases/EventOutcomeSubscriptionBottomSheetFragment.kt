@@ -2,6 +2,7 @@ package com.habitrpg.android.habitica.ui.fragments.purchases
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 
 class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragment() {
@@ -42,6 +43,7 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
         binding.subscribeBenefits.text = getString(R.string.subscribe_hourglass_incentive_text)
         binding.subscriberBenefits.hideMysticHourglassBenefit()
         binding.subscription1month.visibility = View.GONE
+        skus.firstOrNull { buttonForSku(it)?.isVisible == true }?.let { selectSubscription(it) }
     }
 
     companion object {

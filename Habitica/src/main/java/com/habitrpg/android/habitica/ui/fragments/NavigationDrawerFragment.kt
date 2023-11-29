@@ -614,8 +614,8 @@ class NavigationDrawerFragment : DialogFragment() {
         // set UP the drawer's list view with items and click listener
 
         lifecycleScope.launchCatching {
-            viewModel.getNotifications().collect {
-                setNotificationsCount(it.count())
+            viewModel.getNotificationCount().collect {
+                setNotificationsCount(it)
             }
         }
         lifecycleScope.launchCatching {

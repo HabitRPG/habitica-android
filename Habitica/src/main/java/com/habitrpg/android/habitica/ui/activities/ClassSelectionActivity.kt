@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle

@@ -33,7 +33,6 @@ import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
-import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientHourglassesDialog
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
@@ -256,7 +255,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     alert.setMessage(getString(R.string.change_class_equipment_warning))
                     alert.addButton(R.string.choose_class, true) { _, _ ->
                         val dialog = HabiticaProgressDialog.show(
-                            context,
+                            requireActivity(),
                             getString(R.string.changing_class_progress),
                             300
                         )
@@ -274,7 +273,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     alert.setTitle(getString(R.string.class_confirmation, classIdentifier))
                     alert.addButton(R.string.choose_class, true) { _, _ ->
                         val dialog = HabiticaProgressDialog.show(
-                            context,
+                            requireActivity(),
                             getString(R.string.changing_class_progress),
                             300
                         )

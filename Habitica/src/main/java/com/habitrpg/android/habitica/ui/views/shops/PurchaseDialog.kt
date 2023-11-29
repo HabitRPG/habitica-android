@@ -380,10 +380,7 @@ class PurchaseDialog(
                             }
                             parentActivity?.let { activity -> subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG) }
                         }
-
                     }
-
-
                 }
                 return
             }

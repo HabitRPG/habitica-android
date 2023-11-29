@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:paddingTop="4dp"
               android:paddingBottom="4dp"
-              android:gravity="center_vertical|right">
+              android:gravity="center_vertical|end">
     <ImageView
         android:id="@+id/classIconView"
         android:layout_width="32dp"

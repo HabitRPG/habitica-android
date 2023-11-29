@@ -35,9 +35,10 @@ import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.models.user.Profile
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.fragments.social.party.InviteButton
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.ClassText
-import com.habitrpg.android.habitica.ui.views.ComposableAvatarView
+import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.ComposableUsernameLabel
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.common.habitica.extensions.toLocale

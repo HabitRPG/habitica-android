@@ -38,8 +38,7 @@
             android:layout_height="wrap_content"
             tools:text="This is the Title"
             android:gravity="center"
-            style="@style/Title2"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:visibility="gone"
             tools:visibility="visible"
             android:textColor="@color/white"/>
@@ -49,8 +48,7 @@
             android:layout_height="wrap_content"
             tools:text="This is the Content"
             android:gravity="center"
-            style="@style/Body1"
-            android:textSize="13sp"
+            android:textSize="14sp"
             android:visibility="gone"
             tools:visibility="visible"
             android:textColor="@color/white"/>

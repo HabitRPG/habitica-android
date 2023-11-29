@@ -37,6 +37,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 
     compileOptions {
@@ -84,7 +89,9 @@ android {
 }
 
 val core_ktx_version: String by rootExtra
+val accompanist_version: String by rootExtra
 val appcompat_version: String by rootExtra
+val compose_version: String by rootExtra
 val markwon_version: String by rootExtra
 val coil_version: String by rootExtra
 val mockk_version: String by rootExtra
@@ -111,7 +118,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("androidx.navigation:navigation-common-ktx:$navigation_version")
     implementation("androidx.navigation:navigation-runtime-ktx:$navigation_version")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
 
     testImplementation("io.mockk:mockk:$mockk_version")
     testImplementation("io.mockk:mockk-android:$mockk_version")
@@ -123,6 +130,15 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+
+    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
+    implementation("androidx.compose.material:material:$compose_version")
+    implementation("androidx.compose.animation:animation:$compose_version")
+    implementation("androidx.compose.ui:ui-text-google-fonts:$compose_version")
+    implementation("androidx.compose.ui:ui-tooling:$compose_version")
+    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("com.google.accompanist:accompanist-themeadapter-material:$accompanist_version")
 
     implementation(project(":shared"))
 }

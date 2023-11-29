@@ -25,14 +25,16 @@
                 android:scaleType="center"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="false"/>
+                android:layout_alignParentBottom="false"
+                android:importantForAccessibility="no" />
             <ImageView
                 android:id="@+id/promo_banner_right_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="center"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignParentEnd="true"
+                android:importantForAccessibility="no" />
             <LinearLayout
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"

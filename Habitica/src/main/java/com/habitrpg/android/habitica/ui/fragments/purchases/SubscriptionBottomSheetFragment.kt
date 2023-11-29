@@ -52,7 +52,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     lateinit var purchaseHandler: PurchaseHandler
 
     private var selectedSubscriptionSku: ProductDetails? = null
-    private var skus: List<ProductDetails> = emptyList()
+    internal var skus: List<ProductDetails> = emptyList()
 
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
@@ -112,7 +112,11 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
                 for (sku in subscriptions) {
                     updateButtonLabel(sku, sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice ?: "")
                 }
-                subscriptions.minByOrNull { it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros ?: 0 }?.let { selectSubscription(it) }
+                subscriptions
+                    .filter { buttonForSku(it)?.isVisible == true }
+                    .minByOrNull {
+                    it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros ?: 0
+                }?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
@@ -130,7 +134,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun selectSubscription(sku: ProductDetails) {
+    internal fun selectSubscription(sku: ProductDetails) {
         if (this.selectedSubscriptionSku != null) {
             val oldButton = buttonForSku(this.selectedSubscriptionSku)
             oldButton?.setIsSelected(false)
@@ -141,7 +145,7 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
         binding.subscribeButton.isEnabled = true
     }
 
-    private fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
+    internal fun buttonForSku(sku: ProductDetails?): SubscriptionOptionView? {
         return buttonForSku(sku?.productId)
     }
 

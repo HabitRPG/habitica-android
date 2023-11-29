@@ -114,7 +114,10 @@ class ApiClientImpl(
 
         val calendar = GregorianCalendar()
         val timeZone = calendar.timeZone
-        val timezoneOffset = -TimeUnit.MINUTES.convert(timeZone.getOffset(calendar.timeInMillis).toLong(), TimeUnit.MILLISECONDS)
+        val timezoneOffset = -TimeUnit.MINUTES.convert(
+            timeZone.getOffset(calendar.timeInMillis).toLong(),
+            TimeUnit.MILLISECONDS
+        )
 
         val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
 
@@ -157,7 +160,8 @@ class ApiClientImpl(
                             }
 
                             else -> {
-                                return@addNetworkInterceptor response.newBuilder().header("Cache-Control", "no-store").build()
+                                return@addNetworkInterceptor response.newBuilder()
+                                    .header("Cache-Control", "no-store").build()
                             }
                         }
                     } else {
@@ -208,7 +212,11 @@ class ApiClientImpl(
         return process { this.apiService.connectLocal(auth) }
     }
 
-    override suspend fun connectSocial(network: String, userId: String, accessToken: String): UserAuthResponse? {
+    override suspend fun connectSocial(
+        network: String,
+        userId: String,
+        accessToken: String
+    ): UserAuthResponse? {
         val auth = UserAuthSocial()
         auth.network = network
         val authResponse = UserAuthSocialTokens()
@@ -232,34 +240,51 @@ class ApiClientImpl(
         if (SocketTimeoutException::class.java.isAssignableFrom(throwableClass)) {
             return
         }
+
+        var isUserInputCall = false
         @Suppress("DEPRECATION")
-        if (SocketException::class.java.isAssignableFrom(throwableClass) || SSLException::class.java.isAssignableFrom(throwableClass)) {
-            this.showConnectionProblemDialog(R.string.internal_error_api)
+        if (SocketException::class.java.isAssignableFrom(throwableClass)
+            || SSLException::class.java.isAssignableFrom(throwableClass)
+        ) {
+            this.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
-            this.showConnectionProblemDialog(R.string.network_error_no_network_body)
+            this.showConnectionProblemDialog(
+                R.string.network_error_no_network_body,
+                isUserInputCall
+            )
         } else if (HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
             val error = throwable as HttpException
             val res = getErrorResponse(error)
             val status = error.code()
+            val requestUrl = error.response()?.raw()?.request?.url
+            val path = requestUrl?.encodedPath?.removePrefix("/api/v4") ?: ""
+            isUserInputCall = when {
+                path.startsWith("/groups") && path.endsWith("invite") -> true
+                else -> false
+            }
 
             if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                 return
             }
-            if (error.response()?.raw()?.request?.url?.toString()?.endsWith("/user/push-devices") == true) {
+            if (requestUrl?.toString()?.endsWith("/user/push-devices") == true) {
                 // workaround for an error that sometimes displays that the user already has this push device
                 return
             }
 
             if (status in 400..499) {
                 if (res.displayMessage.isNotEmpty()) {
-                    showConnectionProblemDialog("", res.displayMessage)
+                    showConnectionProblemDialog("", res.displayMessage, isUserInputCall)
                 } else if (status == 401) {
-                    showConnectionProblemDialog(R.string.authentication_error_title, R.string.authentication_error_body)
+                    showConnectionProblemDialog(
+                        R.string.authentication_error_title,
+                        R.string.authentication_error_body,
+                        isUserInputCall
+                    )
                 }
             } else if (status in 500..599) {
-                this.showConnectionProblemDialog(R.string.internal_error_api)
+                this.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
             } else {
-                showConnectionProblemDialog(R.string.internal_error_api)
+                showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
             }
         } else if (JsonSyntaxException::class.java.isAssignableFrom(throwableClass)) {
             Analytics.logError("Json Error: " + lastAPICallURL + ",  " + throwable.message)
@@ -268,7 +293,10 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun updateMember(memberID: String, updateData: Map<String, Map<String, Boolean>>): Member? {
+    override suspend fun updateMember(
+        memberID: String,
+        updateData: Map<String, Map<String, Boolean>>
+    ): Member? {
         return process { apiService.updateUser(memberID, updateData) }
     }
 
@@ -303,24 +331,41 @@ class ApiClientImpl(
         return this.hostConfig.userID.isNotEmpty() && hostConfig.apiKey.isNotEmpty()
     }
 
-    private fun showConnectionProblemDialog(resourceMessageString: Int) {
-        showConnectionProblemDialog(null, context.getString(resourceMessageString))
+    private fun showConnectionProblemDialog(
+        resourceMessageString: Int,
+        isFromUserInput: Boolean
+    ) {
+        showConnectionProblemDialog(null, context.getString(resourceMessageString), isFromUserInput)
     }
 
-    private fun showConnectionProblemDialog(resourceTitleString: Int, resourceMessageString: Int) {
-        showConnectionProblemDialog(context.getString(resourceTitleString), context.getString(resourceMessageString))
+    private fun showConnectionProblemDialog(
+        resourceTitleString: Int,
+        resourceMessageString: Int,
+        isFromUserInput: Boolean
+    ) {
+        showConnectionProblemDialog(
+            context.getString(resourceTitleString),
+            context.getString(resourceMessageString),
+            isFromUserInput
+        )
     }
 
     private var erroredRequestCount = 0
     private fun showConnectionProblemDialog(
         resourceTitleString: String?,
-        resourceMessageString: String
+        resourceMessageString: String,
+        isFromUserInput: Boolean
     ) {
         erroredRequestCount += 1
         val application = (context as? HabiticaBaseApplication)
             ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
-            ?.showConnectionProblem(erroredRequestCount, resourceTitleString, resourceMessageString)
+            ?.showConnectionProblem(
+                erroredRequestCount,
+                resourceTitleString,
+                resourceMessageString,
+                isFromUserInput
+            )
     }
 
     private fun hideConnectionProblemDialog() {
@@ -378,7 +423,13 @@ class ApiClientImpl(
     }
 
     override suspend fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Void? {
-        return process { apiService.purchaseItem(type, itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
+        return process {
+            apiService.purchaseItem(
+                type,
+                itemKey,
+                mapOf(Pair("quantity", purchaseQuantity))
+            )
+        }
     }
 
     val lastSubscribeCall: Date? = null
@@ -506,7 +557,11 @@ class ApiClientImpl(
 
     override suspend fun revive(): Items? = process { apiService.revive() }
 
-    override suspend fun useSkill(skillName: String, targetType: String, targetId: String): SkillResponse? {
+    override suspend fun useSkill(
+        skillName: String,
+        targetType: String,
+        targetId: String
+    ): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType, targetId) }
     }
 
@@ -562,22 +617,33 @@ class ApiClientImpl(
         return processResponse(apiService.leaveGroup(groupId, keepChallenges))
     }
 
-    override suspend fun postGroupChat(groupId: String, message: Map<String, String>): PostChatMessageResult? {
+    override suspend fun postGroupChat(
+        groupId: String,
+        message: Map<String, String>
+    ): PostChatMessageResult? {
         return process { apiService.postGroupChat(groupId, message) }
     }
 
     override suspend fun deleteMessage(groupId: String, messageId: String): Void? {
         return process { apiService.deleteMessage(groupId, messageId) }
     }
+
     override suspend fun deleteInboxMessage(id: String): Void? {
         return process { apiService.deleteInboxMessage(id) }
     }
 
-    override suspend fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?): List<Member>? {
+    override suspend fun getGroupMembers(
+        groupId: String,
+        includeAllPublicFields: Boolean?
+    ): List<Member>? {
         return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields))
     }
 
-    override suspend fun getGroupMembers(groupId: String, includeAllPublicFields: Boolean?, lastId: String): List<Member>? {
+    override suspend fun getGroupMembers(
+        groupId: String,
+        includeAllPublicFields: Boolean?,
+        lastId: String
+    ): List<Member>? {
         return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields, lastId))
     }
 
@@ -589,7 +655,11 @@ class ApiClientImpl(
         return process { apiService.reportMember(mid, data) }
     }
 
-    override suspend fun flagMessage(groupId: String, mid: String, data: MutableMap<String, String>): Void? {
+    override suspend fun flagMessage(
+        groupId: String,
+        mid: String,
+        data: MutableMap<String, String>
+    ): Void? {
         return process { apiService.flagMessage(groupId, mid, data) }
     }
 
@@ -601,7 +671,10 @@ class ApiClientImpl(
         return process { apiService.seenMessages(groupId) }
     }
 
-    override suspend fun inviteToGroup(groupId: String, inviteData: Map<String, Any>): List<InviteResponse>? {
+    override suspend fun inviteToGroup(
+        groupId: String,
+        inviteData: Map<String, Any>
+    ): List<InviteResponse>? {
         return process { apiService.inviteToGroup(groupId, inviteData) }
     }
 
@@ -609,7 +682,10 @@ class ApiClientImpl(
         return process { apiService.rejectGroupInvite(groupId) }
     }
 
-    override suspend fun getGroupInvites(groupId: String, includeAllPublicFields: Boolean?): List<Member>? {
+    override suspend fun getGroupInvites(
+        groupId: String,
+        includeAllPublicFields: Boolean?
+    ): List<Member>? {
         return process { apiService.getGroupInvites(groupId, includeAllPublicFields) }
     }
 
@@ -663,14 +739,21 @@ class ApiClientImpl(
         return process { apiService.retrievePartySeekingUsers(page) }
     }
 
-    override suspend fun getMember(memberId: String) = processResponse(apiService.getMember(memberId))
-    override suspend fun getMemberWithUsername(username: String) = processResponse(apiService.getMemberWithUsername(username))
+    override suspend fun getMember(memberId: String) =
+        processResponse(apiService.getMember(memberId))
+
+    override suspend fun getMemberWithUsername(username: String) =
+        processResponse(apiService.getMemberWithUsername(username))
 
     override suspend fun getMemberAchievements(memberId: String): List<Achievement>? {
         return process { apiService.getMemberAchievements(memberId, languageCode) }
     }
 
-    override suspend fun findUsernames(username: String, context: String?, id: String?): List<FindUsernameResult>? {
+    override suspend fun findUsernames(
+        username: String,
+        context: String?,
+        id: String?
+    ): List<FindUsernameResult>? {
         return process { apiService.findUsernames(username, context, id) }
     }
 
@@ -829,7 +912,14 @@ class ApiClientImpl(
     }
 
     override suspend fun transferGems(giftedID: String, amount: Int): Void? {
-        return process { apiService.transferGems(mapOf(Pair("toUserId", giftedID), Pair("gemAmount", amount))) }
+        return process {
+            apiService.transferGems(
+                mapOf(
+                    Pair("toUserId", giftedID),
+                    Pair("gemAmount", amount)
+                )
+            )
+        }
     }
 
     override suspend fun getTeamPlans(): List<TeamPlan>? {

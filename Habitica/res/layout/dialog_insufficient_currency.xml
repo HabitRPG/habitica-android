@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:scaleType="center" />
+        android:scaleType="center"
+        android:importantForAccessibility="no" />
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"

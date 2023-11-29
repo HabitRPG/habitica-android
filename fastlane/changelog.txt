@@ -1,9 +1,10 @@
 New in 4.3:
-It’s easier than ever to party up with our newest feature: Look for Party and Find Members!
-- Solo players can let Party leaders know they want an invite by going to Menu > Party and tapping ‘Look for Party’
-- Party leaders can see players looking for Party by tapping ‘Find Members’ on the Party screen and send invites
-- Can gift Gems by username
-- Bailey notification will show title
-- Selecting a class is more consistent
-- Chat notifications open Party
-- Other various fixes
+
+- Pets just got cuter! Tap a Pet or Mount to see them in an environment that changes each month.
+- Pets bounce when fed
+- New Subscriber benefit: Buy one Armoire, get another free!
+- New Subscriber benefit: Get a second chance at life once a day when you run out of HP!
+- Tap your avatar to share your latest looks at any time
+- See answers to common Quest mechanic questions under your active Quest
+- Updated Quest interface
+- The Quest shop now shows a check by completed Quests

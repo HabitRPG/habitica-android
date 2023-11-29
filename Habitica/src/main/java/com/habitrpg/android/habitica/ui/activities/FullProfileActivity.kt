@@ -39,7 +39,7 @@ import com.habitrpg.android.habitica.models.user.Permission
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
 import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType

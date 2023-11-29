@@ -60,13 +60,14 @@ import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.LoadingButton
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.android.habitica.ui.views.LoadingButtonType
-import com.habitrpg.android.habitica.ui.views.progress.HabiticaCircularProgressView
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import com.habitrpg.android.habitica.ui.views.progress.HabiticaPullRefreshIndicator
 import com.habitrpg.android.habitica.ui.views.social.PartySeekingListItem
 import com.habitrpg.common.habitica.helpers.launchCatching

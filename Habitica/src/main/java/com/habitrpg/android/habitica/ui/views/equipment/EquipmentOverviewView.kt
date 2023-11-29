@@ -26,8 +26,10 @@ import androidx.compose.ui.unit.dp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.models.user.Outfit
 import com.habitrpg.android.habitica.models.user.Preferences
-import com.habitrpg.android.habitica.ui.theme.HabiticaTheme
-import com.habitrpg.android.habitica.ui.theme.caption2
+import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.android.habitica.ui.theme.pixelArtBackground
+import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.theme.caption2
 import com.habitrpg.android.habitica.ui.views.PixelArtView
 
 @Composable
