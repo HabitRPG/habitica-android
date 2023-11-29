@@ -66,9 +66,13 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
 
     private fun setResetAccountViews() {
         binding.titleTextview.setText(R.string.reset_account_title)
-        binding.warningDescriptionTextview.setText(R.string.reset_account_description)
-        binding.confirmationTextInputLayout.setHint(R.string.confirm_reset)
-        binding.confirmationInputEdittext.inputType = InputType.TYPE_CLASS_TEXT
+        binding.warningDescriptionTextview.setText(R.string.reset_account_description_new)
+        binding.confirmationTextInputLayout.setHint(R.string.password)
+        if (user?.authentication?.hasPassword != true) {
+            binding.warningDescriptionTextview.text = context?.getString(R.string.reset_account_description_no_pw)
+            binding.confirmationTextInputLayout.setHint(R.string.confirm_deletion)
+            binding.confirmationInputEdittext.inputType = InputType.TYPE_CLASS_TEXT
+        }
         binding.confirmActionTextview.setText(R.string.reset_account)
 
         binding.confirmationInputEdittext.addTextChangedListener(object : TextWatcher {
@@ -78,9 +82,13 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.reset_caps)) {
-                    binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
-                    binding.confirmActionTextview.alpha = 1.0f
+                if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
+                    if ((user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.reset_caps)) ||
+                        user?.authentication?.hasPassword == true
+                    ) {
+                        binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
+                        binding.confirmActionTextview.alpha = 1.0f
+                    }
                 } else {
                     binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
                     binding.confirmActionTextview.alpha = .4f
@@ -92,8 +100,15 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
         })
 
         binding.confirmActionTextview.setOnClickListener {
-            if (binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.reset_caps)) {
-                accountUpdateConfirmed?.resetConfirmedClicked()
+            val confirmationString = binding.confirmationInputEdittext.text.toString()
+            if (user?.authentication?.hasPassword != true) {
+                if (confirmationString == context?.getString(R.string.reset_caps)) {
+                    accountUpdateConfirmed?.resetConfirmedClicked(confirmationString)
+                }
+            } else {
+                if (confirmationString.isNotEmpty()) {
+                    accountUpdateConfirmed?.resetConfirmedClicked(confirmationString)
+                }
             }
         }
     }
@@ -151,7 +166,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
     }
 
     interface AccountUpdateConfirmed {
-        fun resetConfirmedClicked()
+        fun resetConfirmedClicked(confirmationString: String)
         fun deletionConfirmClicked(confirmationString: String)
     }
 

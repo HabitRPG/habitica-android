@@ -415,7 +415,7 @@ interface ApiService {
     suspend fun runCron(): HabitResponse<Void>
 
     @POST("user/reset")
-    suspend fun resetAccount(): HabitResponse<Void>
+    suspend fun resetAccount(@Body body: Map<String, String>): HabitResponse<Void>
 
     @HTTP(method = "DELETE", path = "user", hasBody = true)
     suspend fun deleteAccount(@Body body: Map<String, String>): HabitResponse<Void>

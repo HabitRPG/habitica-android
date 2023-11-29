@@ -229,8 +229,8 @@ class UserRepositoryImpl(
         return user
     }
 
-    override suspend fun resetAccount(): User? {
-        apiClient.resetAccount()
+    override suspend fun resetAccount(password: String): User? {
+        apiClient.resetAccount(password)
         return retrieveUser(withTasks = true, forced = true)
     }
 

@@ -536,11 +536,12 @@ class AccountPreferenceFragment :
         dialog.show()
     }
 
-    private fun resetAccount() {
+    private fun resetAccount(confirmationString: String) {
         val dialog = activity?.let { HabiticaProgressDialog.show(it, R.string.resetting_account) }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.resetAccount()
+            userRepository.resetAccount(confirmationString)
             dialog?.dismiss()
+            accountDialog.dismiss()
         }
     }
 
@@ -559,8 +560,8 @@ class AccountPreferenceFragment :
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
     }
 
-    override fun resetConfirmedClicked() {
-        resetAccount()
+    override fun resetConfirmedClicked(confirmationString: String) {
+        resetAccount(confirmationString)
     }
 
     override fun deletionConfirmClicked(confirmationString: String) {

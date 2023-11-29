@@ -847,8 +847,10 @@ class ApiClientImpl(
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
-    override suspend fun resetAccount(): Void? {
-        return process { apiService.resetAccount() }
+    override suspend fun resetAccount(password: String): Void? {
+        val updateObject = HashMap<String, String>()
+        updateObject["password"] = password
+        return process { apiService.resetAccount(updateObject) }
     }
 
     override suspend fun deleteAccount(password: String): Void? {

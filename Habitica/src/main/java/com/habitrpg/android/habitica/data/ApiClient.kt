@@ -248,7 +248,7 @@ interface ApiClient {
 
     suspend fun reroll(): User?
 
-    suspend fun resetAccount(): Void?
+    suspend fun resetAccount(password: String): Void?
     suspend fun deleteAccount(password: String): Void?
 
     suspend fun togglePinnedItem(pinType: String, path: String): Void?
