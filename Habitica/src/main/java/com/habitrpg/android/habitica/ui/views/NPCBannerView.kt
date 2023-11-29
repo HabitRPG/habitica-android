@@ -19,9 +19,9 @@ import kotlin.math.roundToInt
 class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
     private val binding = NpcBannerBinding.inflate(context.layoutInflater, this)
 
-    var shopSpriteSuffix: String = ""
+    var shopSpriteSuffix: String? = null
         set(value) {
-            field = if (value.isEmpty() || value.startsWith("_")) {
+            field = if (value == null || value.isEmpty() || value.startsWith("_")) {
                 value
             } else {
                 "_$value"

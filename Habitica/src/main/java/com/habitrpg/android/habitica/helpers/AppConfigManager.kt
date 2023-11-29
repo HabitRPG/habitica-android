@@ -35,8 +35,8 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
 
     private val remoteConfig = FirebaseRemoteConfig.getInstance()
 
-    fun shopSpriteSuffix(): String {
-        return worldState?.npcImageSuffix ?: remoteConfig.getString("shopSpriteSuffix")
+    fun shopSpriteSuffix(): String? {
+        return worldState?.npcImageSuffix
     }
 
     fun maxChatLength(): Long {

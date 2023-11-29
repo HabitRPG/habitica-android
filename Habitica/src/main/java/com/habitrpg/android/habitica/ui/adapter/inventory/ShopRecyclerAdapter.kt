@@ -42,7 +42,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
 
     var changeClassEvents: ((String) -> Unit)? = null
 
-    var shopSpriteSuffix: String = ""
+    var shopSpriteSuffix: String? = null
         set(value) {
             field = value
             if (items.size > 0) {
@@ -274,7 +274,7 @@ class ShopRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<Vi
             binding.descriptionView.movementMethod = LinkMovementMethod.getInstance()
         }
 
-        fun bind(shop: Shop, shopSpriteSuffix: String) {
+        fun bind(shop: Shop, shopSpriteSuffix: String?) {
             binding.npcBannerView.shopSpriteSuffix = shopSpriteSuffix
             binding.npcBannerView.identifier = shop.identifier
 

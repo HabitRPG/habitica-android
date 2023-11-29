@@ -60,7 +60,7 @@ interface UserRepository : BaseRepository {
 
     suspend fun updateLanguage(languageCode: String): User?
 
-    suspend fun resetAccount(): User?
+    suspend fun resetAccount(password: String): User?
     suspend fun deleteAccount(password: String): Void?
 
     suspend fun sendPasswordResetEmail(email: String): Void?
