@@ -115,7 +115,7 @@ dependencies {
     // Image Management Library
     implementation("io.coil-kt:coil:$coil_version")
     implementation("io.coil-kt:coil-gif:$coil_version")
-    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.navigation:navigation-common-ktx:$navigation_version")
     implementation("androidx.navigation:navigation-runtime-ktx:$navigation_version")
     implementation("com.google.android.material:material:1.10.0")
@@ -131,7 +131,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
 
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.activity:activity-compose:1.8.1")
     implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
     implementation("androidx.compose.material:material:$compose_version")
     implementation("androidx.compose.animation:animation:$compose_version")
