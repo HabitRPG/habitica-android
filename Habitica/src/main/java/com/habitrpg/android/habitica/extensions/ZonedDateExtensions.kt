@@ -47,26 +47,6 @@ fun formatter(): DateTimeFormatter =
         .toFormatter()
 
 
-fun ZonedDateTime.matchesDailyInterval(startDate: ZonedDateTime, everyX: Int): Boolean {
-    val daysBetween = ChronoUnit.DAYS.between(startDate.toLocalDate(), this.toLocalDate())
-    return daysBetween % everyX == 0L
-}
-
-fun ZonedDateTime.matchesWeeklyInterval(startDate: ZonedDateTime, everyX: Int): Boolean {
-    val weeksBetween = ChronoUnit.WEEKS.between(startDate.toLocalDate(), this.toLocalDate())
-    return weeksBetween % everyX == 0L
-}
-
-fun ZonedDateTime.matchesMonthlyInterval(startDate: ZonedDateTime, everyX: Int, dayOfMonth: Int): Boolean {
-    val monthsBetween = ChronoUnit.MONTHS.between(startDate.toLocalDate(), this.toLocalDate())
-    return this.dayOfMonth == dayOfMonth && monthsBetween % everyX == 0L
-}
-
-fun ZonedDateTime.matchesYearlyInterval(startDate: ZonedDateTime, everyX: Int): Boolean {
-    val yearsBetween = ChronoUnit.YEARS.between(startDate.toLocalDate(), this.toLocalDate())
-    return yearsBetween % everyX == 0L
-}
-
 fun ZonedDateTime.matchesRepeatDays(repeatDays: Days?): Boolean {
     repeatDays ?: return true // If no repeatDays specified, assume it matches
 
@@ -83,25 +63,5 @@ fun ZonedDateTime.matchesRepeatDays(repeatDays: Days?): Boolean {
 }
 
 
-// Probably shouldn't be an extension function, but it's easier to test this way
-fun ZonedDateTime.isReminderDue(reminderTime: ZonedDateTime, frequency: Frequency, everyX: Int, repeatDays: Days?, dayOfMonth: Int): Boolean {
-    // Check if the reminder is due based on the frequency and everyX
-    when (frequency) {
-        Frequency.DAILY -> {
-            if (!this.matchesDailyInterval(reminderTime, everyX)) return false
-        }
-        Frequency.WEEKLY -> {
-            if (!this.matchesWeeklyInterval(reminderTime, everyX)) return false
-        }
-        Frequency.MONTHLY -> {
-            if (!this.matchesMonthlyInterval(reminderTime, everyX, dayOfMonth)) return false
-        }
-        Frequency.YEARLY -> {
-            if (!this.matchesYearlyInterval(reminderTime, everyX)) return false
-        }
-    }
 
-    // Check if the reminder is due based on the repeatDays
-    return this.matchesRepeatDays(repeatDays)
-}
 
