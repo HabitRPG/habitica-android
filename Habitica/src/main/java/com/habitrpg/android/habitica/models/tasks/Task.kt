@@ -5,7 +5,6 @@ import android.os.Parcelable
 import android.text.Spanned
 import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.extensions.isReminderDue
 import com.habitrpg.android.habitica.extensions.matchesRepeatDays
 import com.habitrpg.android.habitica.extensions.parseToZonedDateTime
 import com.habitrpg.android.habitica.extensions.toZonedDateTime
@@ -354,69 +353,85 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         if (remindersItem == null) return null
 
         val reminderTime = remindersItem.time?.parseToZonedDateTime() ?: return null
-        val startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
+        var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val frequency = this.frequency ?: return null
         val everyX = this.everyX ?: 1
         val repeatDays = this.repeat
+        startDate = startDate.withHour(reminderTime.hour).withMinute(reminderTime.minute)
 
-
-        // Determine the starting point: either the start date or the current date if start date is in the past
-        var currentDate = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
-        if (startDate.isAfter(currentDate)) {
-            currentDate = startDate
-        }
+        var dateTimeOccurenceToSchedule = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
 
         val occurrencesList = mutableListOf<ZonedDateTime>()
 
         while (occurrencesList.size < occurrences) {
-            if (currentDate.isReminderDue(reminderTime, frequency, everyX, repeatDays, currentDate.dayOfMonth)) {
-                occurrencesList.add(currentDate.withHour(reminderTime.hour).withMinute(reminderTime.minute))
-            }
-
             // Increment currentDate based on the frequency
-            currentDate = when (frequency) {
-                Frequency.DAILY -> currentDate.plusDays(everyX.toLong())
-                Frequency.WEEKLY -> {
-                    if (repeatDays?.hasAnyDaySelected() == true) {
-                        // Find the next day of the week that matches the player's selection
-                        var nextDueDate = currentDate
-                        while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                            nextDueDate = nextDueDate.plusDays(1)
-                        }
-
-                        // Calculate the number of weeks between the start date and the next due date
-                        val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
-
-                        // Check if the next due date falls in the correct week interval
-                        if (weeksSinceStart % everyX != 0L) {
-                            // If it doesn't, find the start of the next valid interval
-                            val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
-                            nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
-
-                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                                nextDueDate = nextDueDate.plusDays(1)
-                            }
-                        }
-
-                        // Ensure the next due date is in the future
-                        val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
-                        if (nextDueDate.isBefore(now)) {
-                            nextDueDate = nextDueDate.plusWeeks(everyX.toLong())
-                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                                nextDueDate = nextDueDate.plusDays(1)
-                            }
-                        }
-
-                        currentDate = nextDueDate
+            dateTimeOccurenceToSchedule = when (frequency) {
+                Frequency.DAILY -> {
+                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                        startDate
                     } else {
-                        // If no specific days are selected, increment by the number of weeks
-                        currentDate = currentDate.plusWeeks(everyX.toLong())
+                        dateTimeOccurenceToSchedule.plusDays(everyX.toLong()).withHour(reminderTime.hour).withMinute(reminderTime.minute)
                     }
-                    currentDate
+                    dateTimeOccurenceToSchedule
                 }
-                Frequency.MONTHLY -> currentDate.plusMonths(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth)
-                Frequency.YEARLY -> currentDate.plusYears(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withMonth(startDate.monthValue)
+                Frequency.WEEKLY -> {
+                    if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                        dateTimeOccurenceToSchedule = startDate
+                    } else {
+                        // Check if all days are selected
+                        if (repeatDays?.hasAnyDaySelected() == true) {
+                            // Simply increment by one day
+                            dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusDays(1)
+                        } else {
+                            // Logic for specific days selected
+                            var nextDueDate = dateTimeOccurenceToSchedule
+                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                nextDueDate = nextDueDate.plusDays(1)
+                            }
+
+                            val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
+                            if (weeksSinceStart % everyX != 0L) {
+                                val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
+                                nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
+                                while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                    nextDueDate = nextDueDate.plusDays(1)
+                                }
+                            }
+
+                            val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
+                            if (nextDueDate.isBefore(now)) {
+                                nextDueDate = nextDueDate.plusWeeks(everyX.toLong())
+                                while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                    nextDueDate = nextDueDate.plusDays(1)
+                                }
+                            }
+
+                            dateTimeOccurenceToSchedule = nextDueDate
+                        }
+                    }
+                    dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                    dateTimeOccurenceToSchedule
+                }
+
+                Frequency.MONTHLY -> {
+                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                        startDate
+                    } else {
+                        dateTimeOccurenceToSchedule.plusMonths(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                    }
+                    dateTimeOccurenceToSchedule
+                }
+                Frequency.YEARLY -> {
+                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                        startDate
+                    } else {
+                        dateTimeOccurenceToSchedule.plusYears(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withMonth(startDate.monthValue).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                    }
+                    dateTimeOccurenceToSchedule
+                }
             }
+
+            occurrencesList.add(dateTimeOccurenceToSchedule)
         }
 
 
