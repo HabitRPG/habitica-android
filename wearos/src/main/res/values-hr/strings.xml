@@ -5,7 +5,6 @@
     <string name="version_info">Verzija %1$s (%2$d)</string>
     <string name="create_account">Stvori račun</string>
     <string name="other_options">Ostale opcije</string>
-    <string name="sign_in_password">Prijavi se s lozinkom</string>
     <string name="continue_text">Nastavi</string>
     <string name="you_ran_out_of_hp">Ponestalo ti je HP-a</string>
     <string name="day_start">Početak dana</string>

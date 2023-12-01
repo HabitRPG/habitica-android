@@ -14,7 +14,6 @@
     <string name="x_quest_item">%d item Misi</string>
     <string name="x_and_y">%1$s dan %2$s</string>
     <string name="create_account">Buat akun</string>
-    <string name="sign_in_password">Masuk dengan sandi</string>
     <string name="continue_text">Lanjutkan</string>
     <string name="you_ran_out_of_hp">Kamu kehabisan nyawa</string>
     <string name="faint_description">Kamu kehilangan Level, Pengalaman, dan Koin Emas. Jangan menyerah!</string>

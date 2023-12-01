@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="other_options">ほかのオプション</string>
-    <string name="sign_in_password">パスワードでサインイン</string>
     <string name="continue_text">続ける</string>
     <string name="you_ran_out_of_hp">体力がなくなりました</string>
     <string name="x_quest_item">%d個のクエストアイテム</string>

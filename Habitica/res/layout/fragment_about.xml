@@ -81,15 +81,6 @@
             android:text="www.habitica.com"
             android:textSize="@dimen/card_medium_text" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10sp"
-            android:autoLink="web"
-            android:text="http://habitica.wikia.com/"
-            android:textSize="@dimen/card_medium_text" />
-
         <Button
             android:id="@+id/privacy_policy_button"
             android:layout_width="250dp"
