@@ -72,15 +72,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:background="@drawable/layout_rounded_bg">
+
                         <TextView
                             android:id="@+id/tvLikes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
-                            android:clickable="true"
-                            android:gravity="center_vertical"
-                            android:focusable="true" />
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:gravity="center_vertical" />
                     </LinearLayout>
             </LinearLayout>
             <TextView

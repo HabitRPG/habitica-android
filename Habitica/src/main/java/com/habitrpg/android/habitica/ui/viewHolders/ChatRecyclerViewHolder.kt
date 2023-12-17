@@ -76,7 +76,7 @@ class ChatRecyclerMessageViewHolder(
         itemView.setOnClickListener {
             onShouldExpand?.invoke()
         }
-        binding.tvLikes.setOnClickListener {
+        binding.likeBackgroundLayout.setOnClickListener {
             chatMessage?.let {
                 if (it.uuid != userId) {
                     onLikeMessage?.invoke(it)
