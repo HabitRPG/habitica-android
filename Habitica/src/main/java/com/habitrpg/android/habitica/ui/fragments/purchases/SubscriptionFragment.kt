@@ -34,9 +34,9 @@ import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.helpers.setMarkdown
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -78,7 +78,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
         binding?.subscriptionDetails?.visibility = View.GONE
         binding?.subscriptionDetails?.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
-        binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context, appConfigManager.activePromo()?.identifier == "g1g1") } }
+        binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context) } }
 
         binding?.subscribeButton?.setOnClickListener { purchaseSubscription() }
 
@@ -120,6 +120,8 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
         binding?.refreshLayout?.setOnRefreshListener { refresh() }
 
+        binding?.subscriptionDisclaimerView?.setMarkdown("Once we’ve confirmed your purchase, the payment will be charged to your Google Account.\n\nSubscriptions automatically renew unless auto-renewal is turned off at least 24-hours before the end of the current period. If you have an active subscription, your account will be charged for renewal within 24-hours prior to the end of your current subscription period and you will be charged the same price you initially paid.\n\nBy continuing you accept the [Terms of Use](https://habitica.com/static/terms) and [Privacy Policy](https://habitica.com/static/privacy).")
+
         Analytics.sendNavigationEvent("subscription screen")
     }
 
@@ -134,7 +136,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun refresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.retrieveUser(false, true)
+            userRepository.retrieveUser(withTasks = false, forced = true)
             binding?.refreshLayout?.isRefreshing = false
         }
     }
@@ -271,7 +273,7 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     }
 
     companion object {
-        fun showGiftSubscriptionDialog(context: Context, iSG1G1: Boolean) {
+        fun showGiftSubscriptionDialog(context: Context) {
             val chooseRecipientDialogView = context.layoutInflater.inflate(R.layout.dialog_choose_message_recipient, null)
 
             val alert = HabiticaAlertDialog(context)

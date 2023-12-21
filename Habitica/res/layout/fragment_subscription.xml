@@ -235,6 +235,16 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/subscribe"
                         android:textAllCaps="false" />
+
+                    <TextView
+                        android:id="@+id/subscription_disclaimer_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_quad"
+                        android:textSize="14sp"
+                        tools:text="This will contain text explaining subscriptions."
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"/>
                 </LinearLayout>
 
                 <ImageView

@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="28dp"
     android:layout_height="match_parent"
     app:cardBackgroundColor="@color/window_background">
@@ -182,6 +183,18 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/subscribe"
                         android:textAllCaps="false" />
+
+                    <TextView
+                        android:id="@+id/subscription_disclaimer_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_quad"
+                        android:textSize="14sp"
+                        android:layout_marginStart="@dimen/spacing_large"
+                        android:layout_marginEnd="@dimen/spacing_large"
+                        tools:text="This will contain text explaining subscriptions."
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="24dp"/>
                 </LinearLayout>
 
                 <TextView
