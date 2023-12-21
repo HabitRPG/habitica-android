@@ -283,4 +283,5 @@ interface ApiClient {
     suspend fun markTaskNeedsWork(taskID: String, userID: String): Task?
     suspend fun retrievePartySeekingUsers(page: Int): List<Member>?
     suspend fun getGroupInvites(groupId: String, includeAllPublicFields: Boolean?): List<Member>?
+    suspend fun syncUserStats(): User?
 }

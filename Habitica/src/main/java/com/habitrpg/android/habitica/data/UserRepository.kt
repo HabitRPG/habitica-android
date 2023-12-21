@@ -85,4 +85,5 @@ interface UserRepository : BaseRepository {
     fun getTeamPlans(): Flow<List<TeamPlan>>
     suspend fun retrieveTeamPlan(teamID: String): Group?
     fun getTeamPlan(teamID: String): Flow<Group?>
+    suspend fun syncUserStats(): User?
 }

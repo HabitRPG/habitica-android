@@ -57,6 +57,9 @@ interface ApiService {
     @GET("user/")
     suspend fun getUser(): HabitResponse<User>
 
+    @GET("user/stat-sync")
+    suspend fun syncUserStats(): HabitResponse<User>
+
     @GET("inbox/messages")
     suspend fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): HabitResponse<List<ChatMessage>>
 

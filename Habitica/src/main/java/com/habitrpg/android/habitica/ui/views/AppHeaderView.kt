@@ -182,7 +182,7 @@ fun AppHeaderView(
                             disabled = true,
                             modifier = Modifier.weight(1f)
                         )
-                    } else if (user?.hasClass == false && isMyProfile && isPlayerOptedOutOfClass == false) {
+                    } else if (user?.hasClass == false && isMyProfile && !isPlayerOptedOutOfClass) {
                         HabiticaButton(
                             background = HabiticaTheme.colors.basicButtonColor(),
                             color = MaterialTheme.colors.onPrimary,

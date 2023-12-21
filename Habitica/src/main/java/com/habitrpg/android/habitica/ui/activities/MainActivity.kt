@@ -601,7 +601,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "")
                             .firstOrNull()
                     if (questContent != null) {
-                        QuestCompletedDialog.showWithQuest(this@MainActivity, questContent)
+                        QuestCompletedDialog.showWithQuest(this@MainActivity, questContent, userRepository)
                     }
                     viewModel.updateUser("party.quest.completed", "")
                 }

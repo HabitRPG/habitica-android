@@ -65,6 +65,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.interactors.ShareMountUseCase
 import com.habitrpg.android.habitica.interactors.SharePetUseCase
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -74,6 +75,7 @@ import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
@@ -256,6 +258,7 @@ fun PetBottomSheet(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(bottom = 16.dp)
             ) {
+                val context = LocalContext.current
                 HabiticaButton(
                     Color(LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)),
                     HabiticaTheme.colors.textPrimary,
@@ -267,7 +270,13 @@ fun PetBottomSheet(
                                 onFeed?.invoke(pet, saddle)
                             }
                         } else {
-                            MainNavigationController.navigate(R.id.marketFragment)
+                            val dialog = HabiticaAlertDialog(context)
+                            dialog.setTitle(R.string.no_saddles)
+                            dialog.setMessage(R.string.purchase_saddles_in_market)
+                            dialog.addButton(R.string.visit_market, isPrimary = true) { _, _ ->
+                                MainNavigationController.navigate(R.id.marketFragment)
+                            }
+                            dialog.addCloseButton()
                         }
                         onDismiss()
                     }, modifier = Modifier

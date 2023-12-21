@@ -109,7 +109,7 @@ class FullProfileActivity : BaseActivity() {
 
         binding.avatarWithBars.setContent {
             HabiticaTheme {
-                AppHeaderView(member.value, isMyProfile = isMyProfile(), onMemberRowClicked = {}, onClassSelectionClicked = {})
+                AppHeaderView(member.value, isMyProfile = false, onMemberRowClicked = {}, onClassSelectionClicked = {})
             }
         }
 
