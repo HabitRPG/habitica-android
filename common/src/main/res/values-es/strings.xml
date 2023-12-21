@@ -47,7 +47,6 @@
     <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
     <plurals name="x_rewards">
         <item quantity="one">Añadir recompensa %d</item>
-        <item quantity="many">Recompensas Para Añadir %d</item>
         <item quantity="other">Recompensas Para Añadir %d</item>
     </plurals>
     <string name="create_task_title">Crea una tarea</string>
@@ -60,12 +59,10 @@
     <string name="retry">Reintentar</string>
     <plurals name="x_habits">
         <item quantity="one">%dHábito</item>
-        <item quantity="many">%dHábitos</item>
         <item quantity="other">Habito Numero %d</item>
     </plurals>
     <plurals name="x_dailies">
         <item quantity="one">Tarea diaria %d</item>
-        <item quantity="many">%d Tareas diarias</item>
         <item quantity="other">Tarea Numero %d</item>
     </plurals>
     <string name="save_task_x">Guardar %s</string>
@@ -75,13 +72,11 @@
     <string name="trivial_sentence">oración trivial</string>
     <plurals name="flagged_count">
         <item quantity="one">Vez Marcada %d</item>
-        <item quantity="many">%d Veces Marcadas</item>
         <item quantity="other">%d Veces Marcadas</item>
     </plurals>
     <string name="medium_sentence">oración Intermedia</string>
     <plurals name="x_todos">
         <item quantity="one">Tarea Pendiente %d</item>
-        <item quantity="many">%d Tareas Pendientes</item>
         <item quantity="other">Tarea Pendiente Numero %d</item>
     </plurals>
 </resources>

@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.models.tasks
 
-enum class TaskType constructor(val value: String) {
+enum class TaskType(val value: String) {
     HABIT("habit"),
     DAILY("daily"),
     TODO("todo"),

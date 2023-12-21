@@ -70,7 +70,6 @@ fun HabitScoringSelector(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun HabitScoringSelection(
     selected: Boolean,

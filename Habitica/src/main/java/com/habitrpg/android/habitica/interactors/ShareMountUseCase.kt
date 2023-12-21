@@ -14,12 +14,10 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.databinding.MountImageviewBinding
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
-import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 
 class ShareMountUseCase: UseCase<ShareMountUseCase.RequestValues, Unit>() {

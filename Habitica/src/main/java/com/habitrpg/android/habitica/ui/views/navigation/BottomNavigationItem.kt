@@ -9,7 +9,7 @@ import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.BottomNavigationItemBinding
-import com.habitrpg.android.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.layoutInflater

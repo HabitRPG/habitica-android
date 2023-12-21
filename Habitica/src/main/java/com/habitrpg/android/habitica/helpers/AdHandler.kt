@@ -1,12 +1,5 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.app.Activity
-import android.content.Context
-import android.content.SharedPreferences
-import android.provider.Settings
-import android.util.Log
-import androidx.core.content.edit
-import androidx.core.os.bundleOf
 /*import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
@@ -15,8 +8,11 @@ import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback*/
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
+import android.provider.Settings
+import androidx.core.content.edit
 import com.habitrpg.android.habitica.BuildConfig
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
@@ -108,9 +104,9 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             if (currentAdStatus != AdStatus.UNINITIALIZED) return
 
             if (BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.TESTING_LEVEL == "alpha") {
-                val android_id: String =
+                val androidId: String =
                     Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-                val deviceId: String = android_id.md5()?.uppercase() ?: ""
+                val deviceId: String = androidId.md5()?.uppercase() ?: ""
                 //val configuration = RequestConfiguration.Builder().setTestDeviceIds(listOf(deviceId)).build()
                 //MobileAds.setRequestConfiguration(configuration)
             }
@@ -208,9 +204,9 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
         }
     }
 
-    private fun configureReward() {
+    //private fun configureReward() {
         //rewardedAd?.run { }
-    }
+    //}
 
     private fun showRewardedAd() {
         if (nextAdAllowedDate(type)?.after(Date()) == true) {

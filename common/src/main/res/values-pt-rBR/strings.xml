@@ -49,8 +49,7 @@
     <string name="login_validation_error_fieldsmissing">Você precisa preencher todos os campos.</string>
     <plurals name="x_rewards">
         <item quantity="one">%d Recompensa</item>
-        <item quantity="many">%d Recompensas</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Recompensas</item>
     </plurals>
     <string name="create_task_title">Criar uma Tarefa</string>
     <string name="complete_task_title">Completar uma Tarefa</string>
@@ -60,24 +59,20 @@
     <string name="retry">Tentar novamente</string>
     <plurals name="x_habits">
         <item quantity="one">%d Hábito</item>
-        <item quantity="many">%d Hábitos</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Hábitos</item>
     </plurals>
     <plurals name="x_dailies">
         <item quantity="one">%d Diária</item>
-        <item quantity="many">%d Diárias</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Diárias</item>
     </plurals>
     <plurals name="x_todos">
         <item quantity="one">%d Afazer</item>
-        <item quantity="many">%d Afazeres</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Afazeres</item>
     </plurals>
     <string name="save_task_x">Salvar %s</string>
     <plurals name="flagged_count">
         <item quantity="one">Sinalizado %d vez, oculto</item>
-        <item quantity="many">Sinalizado %d vezes, oculto</item>
-        <item quantity="other"></item>
+        <item quantity="other">Sinalizado %d vezes, oculto</item>
     </plurals>
     <string name="quadrillion_abbrev">q</string>
     <string name="easy_sentence">fácil</string>

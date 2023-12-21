@@ -102,7 +102,7 @@ class StableViewModel @Inject constructor(
         var lastSection: StableSection? = null
         for (animal in unsortedAnimals) {
             val identifier = if (animal.animal.isNotEmpty() && (animal.type != "special" && animal.type != "wacky")) animal.animal else animal.key
-            val lastIdentifier = if (lastAnimal.animal.isNotEmpty()) lastAnimal.animal else lastAnimal.key
+            val lastIdentifier = lastAnimal.animal.ifEmpty { lastAnimal.key }
             if (animal.type == "premium") {
                 if (!items.contains(lastAnimal)) {
                     items.add(lastAnimal)

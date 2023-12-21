@@ -30,7 +30,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     protected var showsBackButton: Boolean = false
 
-    open val mainActivity get() = getActivity() as? MainActivity
+    open val mainActivity get() = activity as? MainActivity
     val tabLayout get() = mainActivity?.binding?.content?.detailTabs
     val collapsingToolbar get() = mainActivity?.binding?.content?.toolbar
     val toolbarAccessoryContainer get() = mainActivity?.binding?.content?.toolbarAccessoryContainer

@@ -734,7 +734,6 @@ class NavigationDrawerFragment : DialogFragment() {
         }
     }
 
-    @OptIn(ExperimentalTime::class)
     fun updatePromo() {
         activePromo = configManager.activePromo()
         val promoItem = getItemWithIdentifier(SIDEBAR_PROMO) ?: return

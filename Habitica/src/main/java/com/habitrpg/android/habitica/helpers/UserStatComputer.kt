@@ -80,7 +80,7 @@ class UserStatComputer {
             var itemClass: String? = i.klass
             val itemSpecialClass = i.specialClass
 
-            val classDoesNotExist = itemClass == null || itemClass.isEmpty()
+            val classDoesNotExist = itemClass.isNullOrEmpty()
             val specialClassDoesNotExist = itemSpecialClass.isEmpty()
 
             if (classDoesNotExist && specialClassDoesNotExist) {
@@ -93,7 +93,7 @@ class UserStatComputer {
 
             if (!userClassMatchesGearClass && !userClassMatchesGearSpecialClass) classBonus = 0f
 
-            if (itemClass == null || itemClass.isEmpty() || itemClass == "special") {
+            if (itemClass.isNullOrEmpty() || itemClass == "special") {
                 itemClass = itemSpecialClass
             }
 

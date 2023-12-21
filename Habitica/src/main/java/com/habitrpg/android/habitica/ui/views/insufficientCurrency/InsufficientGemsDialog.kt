@@ -32,12 +32,8 @@ import javax.inject.Inject
  */
 
 class InsufficientGemsDialog(val parentActivity: Activity, var gemPrice: Int) : InsufficientCurrencyDialog(parentActivity) {
-
-    @Inject
-    lateinit var configManager: AppConfigManager
-
-    @Inject
-    lateinit var purchaseHandler: PurchaseHandler
+    var configManager: AppConfigManager
+    var purchaseHandler: PurchaseHandler
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)

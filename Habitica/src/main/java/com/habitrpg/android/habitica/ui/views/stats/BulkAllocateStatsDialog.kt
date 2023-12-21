@@ -100,7 +100,7 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
         if (diff > 0) {
             var highestSlider: StatsSliderView? = null
             if (excludedSlider != binding.strengthSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, binding.strengthSliderView)
+                highestSlider = getSliderWithHigherValue(null, binding.strengthSliderView)
             }
             if (excludedSlider != binding.intelligenceSliderView) {
                 highestSlider = getSliderWithHigherValue(highestSlider, binding.intelligenceSliderView)

@@ -14,6 +14,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.view.animation.TranslateAnimation
 import androidx.core.animation.doOnEnd
+import kotlin.math.hypot
 import kotlin.random.Random
 
 object Animations {
@@ -53,7 +54,7 @@ object Animations {
         if (!view.isAttachedToWindow) return
         val cx = view.width / 2
         val cy = view.height / 2
-        val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+        val finalRadius = hypot(cx.toDouble(), cy.toDouble()).toFloat()
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0f, finalRadius)
         anim.duration = duration
         anim.interpolator = AccelerateInterpolator()
@@ -64,7 +65,7 @@ object Animations {
     fun circularHide(view: View, duration: Long = 300) {
         val cx = view.width / 2
         val cy = view.height / 2
-        val initialRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+        val initialRadius = hypot(cx.toDouble(), cy.toDouble()).toFloat()
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0f)
         anim.duration = duration
         anim.interpolator = AccelerateInterpolator()

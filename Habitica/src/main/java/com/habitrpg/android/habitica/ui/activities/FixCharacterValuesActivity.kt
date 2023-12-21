@@ -9,7 +9,7 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityFixcharacterBinding
-import com.habitrpg.android.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel

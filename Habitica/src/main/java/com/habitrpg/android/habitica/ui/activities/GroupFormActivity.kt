@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -80,6 +81,7 @@ class GroupFormActivity : BaseActivity() {
         return true
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         finish()
         dismissKeyboard()

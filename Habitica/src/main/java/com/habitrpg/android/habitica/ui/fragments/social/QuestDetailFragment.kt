@@ -256,14 +256,14 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         HapticFeedbackManager.tap(requireView())
         context?.let {
             if (isQuestActive) {
-                val builder = AlertDialog.Builder(getActivity())
+                val builder = AlertDialog.Builder(activity)
                     .setMessage(R.string.quest_abort_message)
                     .setPositiveButton(R.string.yes) { _, _ ->
                         party?.id?.let { partyID ->
                             lifecycleScope.launchCatching {
                                 socialRepository.abortQuest(partyID)
                                 userRepository.retrieveUser(true)
-                                getActivity()?.supportFragmentManager?.popBackStack()
+                                activity?.supportFragmentManager?.popBackStack()
                             }
                         }
                     }.setNegativeButton(R.string.no) { _, _ -> }
@@ -276,7 +276,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                         lifecycleScope.launchCatching {
                             socialRepository.cancelQuest(partyID)
                             userRepository.retrieveUser(true)
-                            getActivity()?.supportFragmentManager?.popBackStack()
+                            activity?.supportFragmentManager?.popBackStack()
                         }
                     }
                 }
@@ -288,7 +288,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     private fun onQuestLeave() {
         HapticFeedbackManager.tap(requireView())
-        val builder = AlertDialog.Builder(getActivity())
+        val builder = AlertDialog.Builder(activity)
             .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
             .setPositiveButton(R.string.yes) { _, _ ->
                 party?.id?.let { partyID ->
@@ -296,7 +296,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                         socialRepository.leaveQuest(partyID)
                         socialRepository.retrieveGroup(partyID)
                         userRepository.retrieveUser(true)
-                        getActivity()?.supportFragmentManager?.popBackStack()
+                        activity?.supportFragmentManager?.popBackStack()
                     }
                 }
             }.setNegativeButton(R.string.no) { _, _ -> }

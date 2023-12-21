@@ -98,7 +98,7 @@ fun AssignSheetRow(
         },
         modifier = modifier
             .clickable {
-                member.id.let { onAssignClick(it) }
+                onAssignClick(member.id)
             }
             .padding(30.dp, 12.dp)
             .heightIn(min = 24.dp)

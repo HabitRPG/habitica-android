@@ -210,11 +210,7 @@ class ApiClient @Inject constructor(
     suspend fun sleep() = process { apiService.sleep() }
     suspend fun revive() = process { apiService.revive() }
 
-    suspend fun loginLocal(auth: UserAuth) = process { apiService.connectLocal(auth) }
     suspend fun loginSocial(auth: UserAuthSocial) = process { apiService.connectSocial(auth) }
-
-    suspend fun addPushDevice(data: Map<String, String>) = process { apiService.addPushDevice(data) }
-    suspend fun removePushDevice(id: String) = process { apiService.removePushDevice(id) }
 
     suspend fun runCron() = process { apiService.runCron() }
 

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.extensions
+package com.habitrpg.common.habitica.extensions
 
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope

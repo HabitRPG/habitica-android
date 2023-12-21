@@ -6,9 +6,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.core.widget.doOnTextChanged
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityLoginBinding
 import com.habitrpg.common.habitica.helpers.DeviceCommunication
 import com.habitrpg.wearos.habitica.ui.viewmodels.LoginViewModel

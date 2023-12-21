@@ -3,7 +3,7 @@ package com.habitrpg.common.habitica.api
 class Server {
     private var addr: String
 
-    constructor(addr: String) : this(addr, true) {}
+    constructor(addr: String) : this(addr, true)
     private constructor(addr: String, attachSuffix: Boolean) {
         if (attachSuffix) {
             if (addr.endsWith("/api/v4") || addr.endsWith("/api/v4/")) {

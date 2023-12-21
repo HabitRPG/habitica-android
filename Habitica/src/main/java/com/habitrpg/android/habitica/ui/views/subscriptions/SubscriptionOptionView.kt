@@ -49,7 +49,7 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
     }
 
     fun setFlagText(text: CharSequence?) {
-        if (text?.length ?: 0 == 0) {
+        if ((text?.length ?: 0) == 0) {
             binding.flagFlap.visibility = View.GONE
             binding.flagTextview.visibility = View.GONE
         } else {

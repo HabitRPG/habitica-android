@@ -34,6 +34,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/g1g1_box"
                 android:clickable="true"
+                android:focusable="true"
                 android:clipChildren="true"
                 android:clipToOutline="true"
                 android:clipToPadding="true"
@@ -47,7 +48,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="false"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:importantForAccessibility="no" />
 
                 <ImageView
                     android:id="@+id/promo_banner_right_image"
@@ -55,7 +57,8 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:importantForAccessibility="no" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -114,7 +117,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/subscribe_header" />
+                    android:src="@drawable/subscribe_header"
+                    android:importantForAccessibility="no" />
 
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionDetailsView
                     android:id="@+id/subscriptionDetails"
@@ -140,7 +144,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/separator_fancy" />
+                    android:src="@drawable/separator_fancy"
+                    android:importantForAccessibility="no" />
 
                 <com.habitrpg.android.habitica.ui.views.subscriptions.SubscriberBenefitView
                     android:id="@+id/subscriber_benefits"
@@ -153,7 +158,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="12dp"
-                    android:src="@drawable/separator_fancy" />
+                    android:src="@drawable/separator_fancy"
+                    android:importantForAccessibility="no" />
 
                 <ProgressBar
                     android:id="@+id/loadingIndicator"
@@ -253,7 +259,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="6dp"
-                    android:src="@drawable/gift_sub_gift" />
+                    android:src="@drawable/gift_sub_gift"
+                    android:importantForAccessibility="no" />
 
                 <TextView
                     android:layout_width="match_parent"

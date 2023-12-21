@@ -17,13 +17,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
-import com.google.android.material.textfield.TextInputLayout
 import com.habitrpg.android.habitica.HabiticaBaseApplication
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.FixCharacterValuesActivity
 import com.habitrpg.android.habitica.ui.fragments.preferences.HabiticaAccountDialog.AccountUpdateConfirmed
@@ -39,6 +37,7 @@ import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -350,7 +349,7 @@ class AccountPreferenceFragment :
             } else {
                 dialog.setTitle(R.string.add_password)
             }
-            dialog.addButton(R.string.add, true, false, false) { dialog, _ ->
+            dialog.addButton(R.string.add, true, false, false) { _, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
                 emailEditText?.showErrorIfNecessary()
                 passwordEditText?.showErrorIfNecessary()
@@ -386,8 +385,7 @@ class AccountPreferenceFragment :
         emailEditText?.text = user?.authentication?.localAuthentication?.email
         emailEditText?.validator = { PatternsCompat.EMAIL_ADDRESS.matcher(it ?: "").matches() }
         emailEditText?.errorText = getString(R.string.email_invalid)
-        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint =
-            context?.getString(R.string.email)
+        emailEditText?.hint = context?.getString(R.string.email)
         val passwordEditText = view?.findViewById<ValidatingEditText>(R.id.password_edit_text)
         if (user?.authentication?.hasPassword != true) {
             passwordEditText?.isVisible = false
@@ -395,7 +393,7 @@ class AccountPreferenceFragment :
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.change_email)
-            dialog.addButton(R.string.change, true, false, false) { dialog, _ ->
+            dialog.addButton(R.string.change, true, false, false) { _, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
                 emailEditText?.showErrorIfNecessary()
                 if (emailEditText?.isValid != true) return@addButton
@@ -445,11 +443,11 @@ class AccountPreferenceFragment :
         editText?.text = value
         editText?.validator = validator
         editText?.errorText = getString(R.string.username_requirements)
-        view?.findViewById<TextInputLayout>(R.id.input_layout)?.hint = title
+        editText?.hint = title
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(title)
-            dialog.addButton(R.string.save, true, autoDismiss = false) { dialog, _ ->
+            dialog.addButton(R.string.save, true, autoDismiss = false) { _, _ ->
                 KeyboardUtil.dismissKeyboard(activity)
                 editText?.showErrorIfNecessary()
                 if (editText?.isValid != true) return@addButton

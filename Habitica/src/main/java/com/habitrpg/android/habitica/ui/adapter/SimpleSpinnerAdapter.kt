@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.extensions.inflate
 
 class SimpleSpinnerAdapter(context: Context, resource: Int) : ArrayAdapter<CharSequence>(context, resource, R.id.textView, context.resources.getTextArray(resource)) {
 
-    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View? {
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = parent.inflate(R.layout.spinner_item, false) ?: View(context)
         (view as? TextView)?.text = getItem(position)
         return view

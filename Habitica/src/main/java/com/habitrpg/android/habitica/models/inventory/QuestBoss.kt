@@ -20,6 +20,6 @@ open class QuestBoss : RealmObject(), BaseObject {
 
     val hasRage: Boolean
         get() {
-            return rage?.value ?: 0.0 > 0.0
+            return (rage?.value ?: 0.0) > 0.0
         }
 }

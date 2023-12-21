@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.models.tasks
 
-enum class Attribute constructor(val value: String) {
+enum class Attribute(val value: String) {
     STRENGTH("str"),
     INTELLIGENCE("int"),
     CONSTITUTION("con"),

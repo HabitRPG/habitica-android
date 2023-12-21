@@ -103,7 +103,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                 }
                 binding.buttonIconView.setImageDrawable(magicDrawable)
 
-                if (skill.mana ?: 0 > mana) {
+                if ((skill.mana ?: 0) > mana) {
                     binding.buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
                     binding.buttonIconView.alpha = 0.3f
                     binding.priceLabel.alpha = 0.3f
@@ -131,7 +131,7 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         }
 
         private fun getOwnedCount(key: String): Int {
-            return specialItems?.firstOrNull() { it.key == key }?.numberOwned ?: 0
+            return specialItems?.firstOrNull { it.key == key }?.numberOwned ?: 0
         }
     }
 }

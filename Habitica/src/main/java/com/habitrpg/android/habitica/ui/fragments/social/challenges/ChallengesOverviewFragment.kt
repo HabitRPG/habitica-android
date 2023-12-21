@@ -85,7 +85,7 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_create_challenge -> {
-                val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
+                val intent = Intent(activity, ChallengeFormActivity::class.java)
                 startActivity(intent)
                 return true
             }

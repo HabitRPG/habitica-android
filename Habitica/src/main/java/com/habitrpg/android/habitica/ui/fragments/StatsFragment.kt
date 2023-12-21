@@ -10,7 +10,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -110,9 +110,9 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             if (user == null) return@observe
             canAllocatePoints =
-                user.stats?.lvl ?: 0 >= 10 && user.stats?.points ?: 0 > 0
+                (user.stats?.lvl ?: 0) >= 10 && (user.stats?.points ?: 0) > 0
             binding?.unlockAtLevel?.visibility =
-                if (user.stats?.lvl ?: 0 < 10) View.VISIBLE else View.GONE
+                if ((user.stats?.lvl ?: 0) < 10) View.VISIBLE else View.GONE
             updateStats(user)
             updateAttributePoints(user)
         }

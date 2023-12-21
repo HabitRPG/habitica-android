@@ -25,6 +25,7 @@
             android:layout_marginBottom="@dimen/spacing_large"
             android:clipChildren="true"
             android:clipToPadding="true"
+            android:focusable="true"
             android:clickable="true"
             android:visibility="gone"
             tools:visibility="visible">

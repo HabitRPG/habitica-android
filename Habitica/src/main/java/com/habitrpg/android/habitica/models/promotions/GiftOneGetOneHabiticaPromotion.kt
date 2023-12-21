@@ -170,8 +170,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promptButton?.setOnClickListener {
             fragment.context?.let { context ->
                 SubscriptionFragment.showGiftSubscriptionDialog(
-                    context,
-                    true
+                    context
                 )
             }
         }

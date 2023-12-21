@@ -143,7 +143,7 @@ class PreferencesFragment :
                 showAsBottomSheet { dismiss ->
                     PauseResumeDamageView(user?.preferences?.sleep ?: true, {
                         lifecycleScope.launchCatching {
-                            user?.let { it -> userRepository.sleep(it) }
+                            user?.let { userRepository.sleep(it) }
                             dismiss()
                         }
                     })
@@ -239,11 +239,13 @@ class PreferencesFragment :
             val alert = context?.let { HabiticaAlertDialog(it) }
             alert?.setTitle(R.string.push_notification_system_settings_title)
             alert?.setMessage(R.string.push_notification_system_settings_description)
-            alert?.addButton(R.string.open_settings, true, false) { _, _ ->
-                val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, context?.applicationContext?.packageName)
-                startActivity(notifSettingIntent)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                alert?.addButton(R.string.open_settings, true, false) { _, _ ->
+                    val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, context?.applicationContext?.packageName)
+                    startActivity(notifSettingIntent)
+                }
             }
             alert?.addButton(R.string.cancel, false) { _, _ ->
                 alert.dismiss()

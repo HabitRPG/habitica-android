@@ -1,6 +1,5 @@
 package com.habitrpg.wearos.habitica.util
 
-import android.os.Build
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import com.habitrpg.shared.habitica.models.tasks.Frequency
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -43,11 +42,7 @@ var customDateAdapter: Any = object : Any() {
         addFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         addFormat("E MMM dd yyyy HH:mm:ss zzzz")
         addFormat("yyyy-MM-dd'T'HH:mm:sszzz")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            addFormat("yyyy-MM-dd'T'HH:mmX")
-        } else {
-            addFormat("yyyy-MM-dd'T'HH:mm")
-        }
+        addFormat("yyyy-MM-dd'T'HH:mmX")
         addFormat("yyyy-MM-dd")
     }
 

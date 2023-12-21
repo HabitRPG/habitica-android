@@ -1,37 +1,25 @@
 package com.habitrpg.android.habitica.interactors
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Rect
-import android.os.Build
-import android.os.Handler
-import android.view.PixelCopy
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.Toolbar
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.findViewTreeCompositionContext
 import androidx.core.view.doOnNextLayout
-import androidx.core.view.isVisible
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.habitrpg.android.habitica.HabiticaBaseApplication
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.PetImageviewBinding
-import com.habitrpg.android.habitica.models.inventory.Food
-import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
-import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 
 class SharePetUseCase: UseCase<SharePetUseCase.RequestValues, Unit>() {

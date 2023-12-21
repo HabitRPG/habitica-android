@@ -3,7 +3,7 @@ package com.habitrpg.wearos.habitica.ui.adapters
 import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
@@ -71,7 +71,7 @@ class SettingsViewHolder(itemView: View) : BindableViewHolder<SettingsItem>(item
         }
 
         if (data.type == SettingsItem.Types.TOGGLE) {
-            val switch = Switch(itemView.context)
+            val switch = SwitchCompat(itemView.context)
             switch.isChecked = data.value as? Boolean == true
             switch.isClickable = false
             switch.showText = false

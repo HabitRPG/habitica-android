@@ -9,7 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -99,7 +99,7 @@ class PetDetailRecyclerFragment :
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        layoutManager = androidx.recyclerview.widget.GridLayoutManager(getActivity(), 4)
+        layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
         layoutManager?.spanSizeLookup =
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {

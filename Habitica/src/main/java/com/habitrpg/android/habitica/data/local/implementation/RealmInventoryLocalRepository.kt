@@ -184,7 +184,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         return queryUser(userID)
             .map {
                 it?.items?.mounts?.filter {
-                    it.owned == true
+                    it.owned
                 } ?: emptyList()
             }
     }
@@ -301,7 +301,7 @@ class RealmInventoryLocalRepository(realm: Realm) :
         }
         val liveUser = getLiveObject(user)
         val ownedItems = liveUser?.items?.special
-        val item = ownedItems?.firstOrNull() { it.key == "inventory_present" }
+        val item = ownedItems?.firstOrNull { it.key == "inventory_present" }
         executeTransaction {
             if (item != null && item.isValid) {
                 item.numberOwned = item.numberOwned - 1

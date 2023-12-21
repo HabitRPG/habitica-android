@@ -102,7 +102,6 @@ fun getTranslatedClassName(resources : Resources, className : String?) : String 
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppHeaderView(
     user : Avatar?,

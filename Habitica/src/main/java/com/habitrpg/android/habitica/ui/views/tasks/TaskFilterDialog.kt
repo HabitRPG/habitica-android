@@ -79,13 +79,13 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
 
         // Need to use this instead of RadioGroup.onCheckedChangeListener, because that fires twice per change
         binding.allTaskFilter.setOnClickListener {
-            onCheckedChanged(binding.taskFilterWrapper, binding.taskFilterWrapper.checkedRadioButtonId)
+            onCheckedChanged(binding.taskFilterWrapper.checkedRadioButtonId)
         }
         binding.secondTaskFilter.setOnClickListener {
-            onCheckedChanged(binding.taskFilterWrapper, binding.taskFilterWrapper.checkedRadioButtonId)
+            onCheckedChanged(binding.taskFilterWrapper.checkedRadioButtonId)
         }
         binding.thirdTaskFilter.setOnClickListener {
-            onCheckedChanged(binding.taskFilterWrapper, binding.taskFilterWrapper.checkedRadioButtonId)
+            onCheckedChanged(binding.taskFilterWrapper.checkedRadioButtonId)
         }
 
         binding.clearButton.setOnClickListener {
@@ -345,7 +345,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         filtersChanged()
     }
 
-    private fun onCheckedChanged(group: RadioGroup, @IdRes checkedId: Int) {
+    private fun onCheckedChanged(@IdRes checkedId: Int) {
         val newFilter = when (checkedId) {
             R.id.second_task_filter -> when (taskType) {
                 TaskType.HABIT -> Task.FILTER_WEAK

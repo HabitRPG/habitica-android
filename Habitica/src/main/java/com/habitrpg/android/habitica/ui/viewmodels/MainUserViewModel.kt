@@ -70,10 +70,6 @@ class MainUserViewModel @Inject constructor(private val authenticationHandler: A
         }
         .asLiveData()
 
-    fun onCleared() {
-        userRepository.close()
-    }
-
     fun updateUser(path: String, value: Any) {
         MainScope().launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser(path, value)

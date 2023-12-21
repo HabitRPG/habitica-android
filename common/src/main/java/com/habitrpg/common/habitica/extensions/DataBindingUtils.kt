@@ -12,7 +12,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
@@ -108,10 +107,7 @@ object DataBindingUtils {
         if (imageName == null) {
             return false
         }
-        if (imageName == "shop_") {
-            return false
-        }
-        return true
+        return imageName != "shop_"
     }
 
     class LayoutWeightAnimation(internal var view: View, internal var targetWeight: Float) : Animation() {

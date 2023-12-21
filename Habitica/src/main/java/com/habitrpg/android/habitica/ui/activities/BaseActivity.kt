@@ -1,7 +1,5 @@
 package com.habitrpg.android.habitica.ui.activities
 
-import android.R.attr.bitmap
-import android.R.attr.name
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent

@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.extensions
+package com.habitrpg.common.habitica.extensions
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

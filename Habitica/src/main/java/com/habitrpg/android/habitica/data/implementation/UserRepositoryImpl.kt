@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
@@ -196,7 +195,7 @@ class UserRepositoryImpl(
         return apiClient.getNews()
     }
 
-    override suspend fun getNewsNotification(): Notification? {
+    override suspend fun getNewsNotification(): Notification {
         val baileyNews = apiClient.getNews()
         val baileyAnnouncement = (baileyNews?.first() as Map<*, *>)["title"] as String
         val notification = Notification()
@@ -369,15 +368,15 @@ class UserRepositoryImpl(
                 }
             }
         }
-        if (type == "background") {
+        return if (type == "background") {
             apiClient.unlockPath("background.$identifier")
-            return retrieveUser(false, true)
+            retrieveUser(false, true)
         } else {
             var updatePath = "preferences.$type"
             if (category != null) {
                 updatePath = "$updatePath.$category"
             }
-            return updateUser(updatePath, identifier)
+            updateUser(updatePath, identifier)
         }
     }
 

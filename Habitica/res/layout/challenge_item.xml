@@ -7,9 +7,11 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?selectableItemBackground"
     android:orientation="horizontal"
     android:baselineAligned="false"
+    android:paddingStart="0dp"
     android:paddingEnd="16dp">
 
     <LinearLayout

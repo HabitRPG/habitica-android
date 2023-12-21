@@ -1,6 +1,6 @@
 package com.habitrpg.shared.habitica.models.tasks
 
-enum class Frequency constructor(val value: String) {
+enum class Frequency(val value: String) {
     WEEKLY("weekly"),
     DAILY("daily"),
     MONTHLY("monthly"),

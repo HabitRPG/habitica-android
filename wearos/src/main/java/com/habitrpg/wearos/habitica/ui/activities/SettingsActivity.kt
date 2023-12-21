@@ -49,7 +49,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 .build()
             val client = GoogleSignIn.getClient(this, gso)
             client.signOut()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
 
         val intent = Intent(this, LoginActivity::class.java)

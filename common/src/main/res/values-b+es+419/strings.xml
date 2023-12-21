@@ -21,26 +21,22 @@
     <string name="password">Contraseña</string>
     <plurals name="x_rewards">
         <item quantity="one">%d Recompensa</item>
-        <item quantity="many">%d Recompensas</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Recompensas</item>
     </plurals>
     <string name="confirmpassword">Confirmar contraseña</string>
     <string name="logout">Cerrar sesión</string>
     <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
     <plurals name="x_habits">
         <item quantity="one">%d Hábito</item>
-        <item quantity="many">%d Hábitos</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Hábitos</item>
     </plurals>
     <plurals name="x_dailies">
         <item quantity="one">%d Tarea diaria</item>
-        <item quantity="many">%d Tareas diarias</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Tareas diarias</item>
     </plurals>
     <plurals name="x_todos">
         <item quantity="one">%d Quehacer</item>
-        <item quantity="many">%d Quehaceres</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d Quehaceres</item>
     </plurals>
     <string name="gems">Gemas</string>
     <string name="gold_plural">oro</string>

@@ -195,11 +195,10 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             )
 
             if (showAvatar[widgetId] == true) {
-                val finalRemoteViews = remoteViews
                 avatarView.setAvatar(user)
                 avatarView.onAvatarImageReady { bitmap ->
-                    finalRemoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
-                    appWidgetManager.partiallyUpdateAppWidget(widgetId, finalRemoteViews)
+                    remoteViews.setImageViewBitmap(R.id.avatar_view, bitmap)
+                    appWidgetManager.partiallyUpdateAppWidget(widgetId, remoteViews)
                 }
             }
 

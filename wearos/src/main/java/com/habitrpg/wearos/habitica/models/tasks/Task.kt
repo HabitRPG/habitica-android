@@ -15,7 +15,7 @@ import org.json.JSONException
 import java.util.Date
 
 @JsonClass(generateAdapter = true)
-open class Task constructor() : Parcelable, BaseTask {
+open class Task() : Parcelable, BaseTask {
 
     @Json(name = "_id")
     var id: String? = null
@@ -270,7 +270,7 @@ open class Task constructor() : Parcelable, BaseTask {
                         weeksOfMonth.add(obj.getInt(i))
                         i += 1
                     }
-                } catch (e: JSONException) {
+                } catch (_: JSONException) {
                 }
             }
             this.weeksOfMonth = weeksOfMonth.toList()
@@ -298,7 +298,7 @@ open class Task constructor() : Parcelable, BaseTask {
                         daysOfMonth.add(obj.getInt(i))
                         i += 1
                     }
-                } catch (e: JSONException) {
+                } catch (_: JSONException) {
                 }
             }
             this.daysOfMonth = daysOfMonth

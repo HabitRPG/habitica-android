@@ -1,4 +1,4 @@
-package com.habitrpg.android.habitica.extensions
+package com.habitrpg.common.habitica.extensions
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -6,8 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewTreeObserver
-import com.habitrpg.common.habitica.extensions.dpToPx
-import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 
 fun View.setScaledPadding(context: Context?, left: Int, top: Int, right: Int, bottom: Int) {
     this.setPadding(left.dpToPx(context), top.dpToPx(context), right.dpToPx(context), bottom.dpToPx(context))
@@ -54,4 +52,3 @@ fun View.flash() {
         originalColor?.let { setBackgroundColor(it) } ?: setBackgroundResource(0)
     }, 100)
 }
-

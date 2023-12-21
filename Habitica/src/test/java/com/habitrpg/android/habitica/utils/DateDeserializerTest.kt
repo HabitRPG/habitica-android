@@ -7,7 +7,7 @@ import java.util.Date
 
 class DateDeserializerTest : SerializerSpec({
     val deserializer = DateDeserializer()
-    val referenceTimestamp: Long = 1443445200000
+    val referenceTimestamp = 1443445200000
 
     "deserialize" should {
         "validate normal date" {
