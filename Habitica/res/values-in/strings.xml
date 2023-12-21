@@ -611,7 +611,6 @@
     <string name="party_invite_short">Mengundang Teman</string>
     <string name="login_incentive_count">Terbuka setelah mengecek Habitica %d kali.</string>
     <string name="warrior_description">Prajurit memberikan pukulan kritikal lebih banyak dan daya rusak yang besar terhadap Boss. Bermainlah sebagai Prajurit jika kamu ingin mengalahkan monster dengan mudah! Prajurit memiliki nilai plus dari stat Kekuatan yang tinggi.</string>
-    <string name="reset_account_description">Kamu akan kehilangan seluruh level, Koin Emas, dan poin pengalamanmu. Semua tugasmu dan data riwayatnya akan terhapus (tugas dari Tantangan tetap tersimpan). Kamu akan kehilangan seluruh perlengkapanmu, termasuk perlengkapan edisi terbatas dan perlengkapan berlangganan, tapi kamu masih dapat membelinya kembali (kamu perlu berada di pekerjaan yang sesuai untuk membeli perlengkapan spesifik untuk suatu perlengkapan). Kamu akan tetap memiliki pekerjaanmu saat ini, peliharaan, serta tungganganmu. Untuk konfirmasi, ketik RESET di kolom di bawah ini.</string>
     <string name="available_for">Tersedia untuk %s</string>
     <string name="reloaded_content">Memuat kembali Isi</string>
     <string name="rejoin_party">Kamu tidak dapat kembali bergabung dengan party ini kecuali diundang.</string>

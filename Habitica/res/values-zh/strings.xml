@@ -443,7 +443,6 @@
     <string name="int_abbrv">智力</string>
     <string name="con_abbrv">体质</string>
     <string name="reset_account">重置账户</string>
-    <string name="reset_account_description">你将丢失级别、金币、经验信息；永久删除所有任务及其历史记录（除挑战外）；丢失所有装备，包括限定装备和订阅者获得的神秘装备（重置后仍可购买获得，职业装备仍需达到级别才能重新购买）；同时保持当前职业，拥有宠物和坐骑。如果你要确定重置，在下方文本框输入“RESET”。</string>
     <string name="delete_account">删除账号</string>
     <string name="delete_account_description">这会永久地删除你的帐号，并且永远也无法恢复！已有的金钱和花掉的宝石无法被退费。如果你非常确定，在下面的文本框中输入你的密码。</string>
     <string name="reset_account_confirmation">重置我的账号</string>
@@ -1065,7 +1064,6 @@
     <string name="theme_color">主题颜色</string>
     <string name="theme_mode">主题模式</string>
     <string name="dark_mode">深色模式</string>
-    <string name="gems_promo_info_limitations">此促销活动为限时活动。该活动开始于%s（12:00 UTC），结束于%s（00:00 UTC）。仅在给自己购买宝石时提供促销优惠。</string>
     <string name="leave_challenges_delete_tasks">离开挑战并删除任务</string>
     <string name="inbox_messages_title_single">来自%1$s的新消息</string>
     <string name="rejoin_guild">你可以重新加入该公会：在公会页面的查找公会</string>
@@ -1083,7 +1081,6 @@
     <string name="subscribe_listitem3_description">现在订阅即可获得独家套装，每月还可获得新物品！</string>
     <string name="quest_items_found">你已找到%d个副本物品</string>
     <string name="g1g1_promo_info_prompt">为了纪念奉献的季节，我们带来了一个非常特别的促销活动。现在，当你送给别人一份订阅时，你可以为自己免费获得同样的订阅！</string>
-    <string name="g1g1_promo_info_limitations">该限时活动从%s (13:00 UTC)开始，于%s (1:00 UTC)结束。该促销活动只允许你将订阅赠送给另一位Habitica居民。如果你或你的礼物接受者当前的订阅尚未到期或取消，赠送所获得的订阅时长将进行顺延。</string>
     <string name="g1g1_promo_info_instructions">请先点击 \"赠送订阅\"，输入你想赠送账户的用户名。你需要选择赠送的时长并结账。此时，你的账户将自动获得与赠送的订阅级别相同的奖励。</string>
     <string name="claim_x_gems">获得 %d颗宝石</string>
     <string name="won_achievement_description_noname">恭喜你赢得了一项挑战！你的胜利已记录在成就中。</string>

@@ -449,7 +449,6 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="int_abbrv">INT</string>
     <string name="con_abbrv">CON</string>
     <string name="reset_account">Konto zurücksetzen</string>
-    <string name="reset_account_description">Du verlierst alle Deine Levels, Gold und Erfahrungspunkte. Alle Deine Aufgaben und deren Historie werden gelöscht (Herausforderungsaufgaben bleiben). Du verlierst die komplette Ausrüstung, inklusive Ausrüstung aus der limitierten Ausgabe oder Gegenstände für Abonnenten, hast aber die Möglichkeit, alles wieder zurückzukaufen (Du musst der passenden Klasse angehören, um klassenspezifische Ausrüstung zurückzukaufen). Du behältst Deine aktuelle Klasse sowie Haus- und Reittiere. Um das Zurücksetzen zu bestätigen, tippe unten ZURÜCKSETZEN ein.</string>
     <string name="delete_account">Konto löschen</string>
     <string name="delete_account_description">Dies wird Dein Konto für immer löschen, und es kann nicht wiederhergestellt werden! Vorhandene oder ausgegebene Edelsteine werden nicht zurückerstattet. Wenn Du Dir absolut sicher bist, tippe Dein Passwort unten in das Textfeld ein.</string>
     <string name="reset_account_confirmation">Konto zurücksetzen</string>
@@ -1094,11 +1093,9 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="end_challenge_description">Um eine Herausforderung zu beenden, logge dich auf der Habitica Seite ein und nutze dann den \"Beende die Herausforderung\" Knopf auf der rechten Seite der Herausforderung.</string>
     <string name="g1g1_promo_info_prompt">Zu Ehren der Jahreszeit des Gebens, präsentieren wir wieder eine ganz besondere Aktion. Wenn Du jetzt ein Abonnement verschenkst, erhältst Du für Dich selbst das gleiche Abo kostenlos!</string>
     <string name="g1g1_promo_info_instructions">Tippe auf \"Abonnement verschenken\" und trage den Benutzernamen des Benutzerkontos, an das Du verschenken möchtest, ein. Wähle anschließend die Abo-Länge, die du verschenken möchtest und geh zur Kasse. Dein Benutzerkonto erhält automatisch das gleiche Abonnement.</string>
-    <string name="g1g1_promo_info_limitations">Dies ist eine zeit-limitierte Aktion und beginnt am %s (13:00 UTC) und wird am %s (1:00 UTC) enden. Dieses Angebot kann nur genutzt werden, wenn Du an einen anderen Habitica Account verschenkst. Solltest du oder der Empfänger des Geschenkes bereits ein Abo haben, so wird dieses automatisch um die zusätzliche Zeit verlängert, sobald das aktuelle Abo abläuft oder gekündigt wird.</string>
     <string name="fortify_shop_description">Setze alle Aufgaben auf einen neutralen Wert zurück (gelbe Farbe) und stelle alle verlorene Gesundheit wieder her</string>
     <string name="won_achievement_description"><b>%s</b> hat dich als Gewinner gewählt! Dein Sieg wurde in deinen Erfolgen vermerkt.</string>
     <string name="quest_leave_message">Bist Du sicher, dass Du den Quest verlassen möchtest\? All Dein Fortschritt wird verloren gehen.</string>
-    <string name="gems_promo_info_limitations">Diese Promotion gilt nur während dem zeitlich limitierten Events. Dieses Event startet am %s (12:00 UTC) und wird am %s (00:00 UTC) enden. Das Angebot gilt nur wenn du Edelsteine für dich selbst kaufst.</string>
     <string name="user_is_blocked_explanation">Ein blockierter Nutzer kann dir keine privaten Nachrichten schicken, aber du wirst seine Nachrichten in der Taverne oder in Gilden weiterhin sehen.</string>
     <string name="launch_screen">Startbildschirm</string>
     <string name="something_new">Neuer</string>

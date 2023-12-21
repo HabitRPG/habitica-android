@@ -449,7 +449,6 @@
     <string name="int_abbrv">INT</string>
     <string name="con_abbrv">WEE</string>
     <string name="reset_account">Account Resetten</string>
-    <string name="reset_account_description">WAARSCHUWING! Dit stelt grote delen van je account opnieuw in. Het wordt ten zeerste afgeraden, maar sommige mensen vinden het handig in het begin, na kort met de site te hebben gespeeld. \n\nAl je taken (behalve die van uitdagingen) zullen permanent verwijderd worden, en je zult al hun historische data verliezen. Je zult al je uitrusting verliezen, maar je kunt ze allemaal terugkopen, inclusief alle uitrusting met beperkte oplage of Mysterievoorwerpen voor abonnees die je al bezit (je zul wel in de juiste klasse moeten zijn om klassegebonden uitrusting terug te kopen). Je zult je huidige klasse en je huisdieren en rijdieren behouden. Wellicht gebruik je liever een Bol der Hergeboorte in de plaats, aangzien het een veel veiligere optie is waarbij je alle taken en uitrusting behoudt. </string>
     <string name="delete_account">Verwijder Account</string>
     <string name="delete_account_description">Dit zal je account voor altijd wissen en het kan nooit meer hersteld worden! Resterende of uitgegeven Edelstenen zullen niet terugbetaald worden. Als je het zeker weet, typ je wachtwoord dan in het onderstaande tekstveld.</string>
     <string name="reset_account_confirmation">Mijn Account Resetten</string>

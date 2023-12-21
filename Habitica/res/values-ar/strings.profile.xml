@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="profile_send_message_to">أرسل رسالة إلى %s</string>
-    <string name="profile_level">مستوى:</string>
-    <string name="profile_class_bonus">مكافأة-الفئة:</string>
-    <string name="profile_loading_data">جارٍ تحميل بيانات العضو …</string>
-    <string name="profile_message_sent_to">تم إرسال الرسالة إلى %s</string>
-</resources>

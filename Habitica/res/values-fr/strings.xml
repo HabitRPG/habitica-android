@@ -451,7 +451,6 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Réinitialiser le compte</string>
-    <string name="reset_account_description">Vous perdrez tous vos niveaux, votre or et vos points d\'expérience. Toutes vos tâches et leurs données historiques seront supprimées (les tâches des défis resteront). Vous perdrez tout équipement, y compris l\'équipement en édition limitée et les objets d\'abonnement mais vous pourrez le racheter (vous aurez besoin d\'être de la classe correspondant à l\'équipement spécifique à une classe). Vous conserverez votre classe actuelle ainsi que vos familiers et montures. Pour confirmer la réinitialisation, écrivez RESET ci-dessous.</string>
     <string name="delete_account">Supprimer le compte</string>
     <string name="delete_account_description">Cela va supprimer votre compte définitivement et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous confirmez définitivement, tapez votre mot de passe dans le champ de texte ci-dessous.</string>
     <string name="reset_account_confirmation">Réinitialiser mon compte</string>
@@ -1075,7 +1074,6 @@
     <string name="three_months_one_time">Abonnement de 3 mois uniquement</string>
     <string name="one_month_one_time">Abonnement d\'un mois uniquement</string>
     <string name="gift_one_get_one_purchase_banner">Offrez un abonnement et recevez un abonnement gratuit jusqu\'au %s</string>
-    <string name="g1g1_promo_info_limitations">Il s\'agit d\'un événement limité dans le temps, qui démarre le %s (13h00 UTC) et qui finit le %s (01h00 UTC). Cette promotion ne s\'applique que lorsque vous offrez à quelqu\'un d\'autre. Si la personne désignée a déjà un abonnement, l\'abonnement offert ajoutera des mois d\'abonnement qui ne seront utilisés qu\'après la fin de leur abonnement actuel.</string>
     <string name="g1g1_promo_info_instructions">Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que celle que vous venez d\'offrir.</string>
     <string name="g1g1_promo_info_prompt">En l\'honneur de la saison des cadeaux, nous reprenons une promotion très spéciale. Désormais, lorsque vous offrez un abonnement à quelqu\'un, vous recevrez le même abonnement pour vous même !</string>
     <string name="claim_x_gems">Recevoir %d gemmes</string>
@@ -1102,7 +1100,6 @@
     <string name="theme_color">Couleur du thème</string>
     <string name="theme_mode">Type de thème</string>
     <string name="dark_mode">Mode sombre</string>
-    <string name="gems_promo_info_limitations">Cette promotion est limitée à la durée de l\'événement. Cet événement démarrera le %s (12:00 UTC) et se terminera le %s (00:00 UTC). Cette promotion n\'est disponible que si vous achetez des gemmes pour vous-même.</string>
     <string name="leave_challenges_delete_tasks">Quitter les défis et supprimer les tâches</string>
     <string name="inbox_messages_title_single">Nouveau message de %1$s</string>
     <string name="rejoin_guild">Vous pouvez rejoindre cette guilde depuis la page Guildes : Découvrir</string>

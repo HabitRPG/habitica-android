@@ -2,9 +2,7 @@
 <resources>
     <string name="sidebar_tasks">Sarcini</string>
     <string name="sidebar_inbox">Mesaje</string>
-    <string name="sidebar_guilds">Ghildă</string>
     <string name="sidebar_section_inventory">Inventar</string>
-    <string name="sidebar_tavern">Tavernă</string>
     <string name="sidebar_skills">Abilități</string>
     <string name="sidebar_subscription">Abonament</string>
     <string name="sidebar_about">Despre</string>

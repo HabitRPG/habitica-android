@@ -589,7 +589,6 @@
     <string name="subscribe_for_hourglasses">Subskrybuj w celu uzyskania Klepsydr</string>
     <string name="delete_oauth_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Nie otrzymasz zwrotu pieniędzy za zakupione i wydane dotąd klejnoty. Jeśli masz absolutną pewność, wpisz poniżej słowo DELETE.</string>
     <string name="delete_account_description">Spowoduje to usunięcie konta na zawsze i nie będzie możliwości jego przywrócenia! Nie otrzymasz zwrotu za posiadane lub wydane klejnoty. Jeśli masz całkowitą pewność, wpisz do pola tekstowego poniżej swoje hasło.</string>
-    <string name="reset_account_description">Stracisz wszystkie poziomy, całe Złoto i Doświadczenie. Wszystkie Twoje zadania (z wyjątkiem tych z Wyzwań) zostaną na zawsze usunięte, razem z historią ich wypełnienia. Stracisz także całe swoje wyposażenie, włączając w to przedmioty limitowane i tylko dla subskrybentów, choć będziesz mógł je kupić ponownie (aby odkupić wyposażenie przeznaczone dla konkretnej klasy, musisz do niej przynależeć). Zachowasz swoją klasę, Chowańce i Wierzchowce. Żeby potwierdzić reset, wpisz RESET w okienku pod spodem.</string>
     <string name="x_months">%d Miesięcy</string>
     <string name="skill_progress_title">Użycie umiejętności</string>
     <string name="authentication_error_body">Niepoprawna nazwa użytkownika i/lub hasło.</string>
@@ -1084,7 +1083,6 @@
     <string name="unblock_user">Odblokuj użytkownika</string>
     <string name="block_user_title">Zablokować %s\?</string>
     <string name="spooky_promo_info_instructions">Czas promocji: %s-%s. Kup dowolny pakiet Klejnotów, a otrzymasz promocyjną ilość w gratisie! Kup teraz i otrzymaj więcej Klejnotów na przedmioty i podarki w tej samej cenie!</string>
-    <string name="gems_promo_info_limitations">Promocja ograniczona czasowo. Obowiązuje przez cały czas wydarzenia, między %s (12:00 UTC) a %s (00:00 UTC). Promocja obejmuje tylko pakiety Klejnotów zakupione na własne konto.</string>
     <string name="g1g1_promo_info_instructions">Dotknij \"Podaruj Subskrybcję\" i wpisz nazwę użytkownika, któremu chcesz ją podarować. Następnie wybierz okres Subskrybcji i dokończ zakup. Twojemu kontu automatycznie zostanie przypisana Subskrybcja z takim samym okresem i korzyściami.</string>
     <string name="pms_disabled">Prywatne wiadomości są wyłączone</string>
     <string name="pms_disabled_description">Nadal jesteś w stanie wysyłać wiadomości, ale nie będziesz otrzymywać wiadomości od innych. Możesz to zmienić w dowolniej chwili w ustawieniach.</string>
@@ -1100,7 +1098,6 @@
     <string name="user_is_blocked">Ten użytkownik został zablokowany</string>
     <string name="user_is_blocked_explanation">Zablokowany użytkownik nie może napisać do Ciebie w wiadomości prywatnej, ale nadal będziesz widzieć jego posty.</string>
     <string name="finish">Zakończ</string>
-    <string name="g1g1_promo_info_limitations">Oferta ograniczona czasowo. Wydarzenie trwa od %s (13:00 UTC) do %s (1:00 UTC). Aby skorzystać z promocji, należy podarować Subskrybcję innemu użytkownikowi Habitica. Jeśli Ty lub osoba otrzymująca Twój prezent już posiada Subskrybcję, miesiące z tego zakupu zostaną wykorzystane dopiero po zakończeniu lub zrezygnowaniu z bieżącej Subskrybcji.</string>
     <string name="g1g1_promo_info_prompt">By uczcić ten świąteczny czas, przywracamy naszą wyjątkową promocję. Teraz kiedy podarujesz komuś Subskrybcję, samemu otrzymasz identyczny plan w gratisie!</string>
     <string name="hurray">Hurra!</string>
     <string name="usually_x_gems">Zwykle %d Klejnotów</string>

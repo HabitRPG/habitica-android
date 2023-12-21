@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="sidebar_skills">Ferdigheter</string>
-    <string name="sidebar_tasks">Oppgaver</string>
-    <string name="sidebar_stable">Kjæledyr og ridedyr</string>
-    <string name="sidebar_news">Nyheter</string>
-    <string name="sidebar_about">Om</string>
-</resources>

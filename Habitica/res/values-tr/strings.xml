@@ -449,7 +449,6 @@
     <string name="int_abbrv">Zeka</string>
     <string name="con_abbrv">Bünye</string>
     <string name="reset_account">Hesabı Sıfırla</string>
-    <string name="reset_account_description">Bütün seviyelerini, Altınını ve Deneyimini kaybedeceksin. Bütün görevlerin ve tarihî verileri silinecek (Mücadele görevleri hariç). Bütün ekipmanını kaybedeceksin, ve buna abonelik ekipmanı ve Sınırlı Sürüm ekipmanları da dahil, ama bunu geri alabileceksin (sınıfa özel ekipmanı yeniden almak için aynı sınıfı seçmelisin). Şimdiki sınıfını, Evcil Hayvanlarını ve Bineklerini kaybetmeyeceksin. Sıfırlamayı doğrulamak için, aşağıya RESET yaz.</string>
     <string name="delete_account">Hesabı Sil</string>
     <string name="delete_account_description">Bu hesabını kalıcı olarak silecek ve geri dönüşü asla olmayacak! Hesabında bulunan veya harcanmış Elmasların geri ödenmesi yapılmayacak. Eğer kesin olarak eminsen, aşağıdaki metin kutusuna şifreni gir.</string>
     <string name="reset_account_confirmation">Hesabımı Sıfırla</string>
@@ -1119,8 +1118,6 @@
     <string name="terms_of_service">Kullanım Şartları</string>
     <string name="theme_color">Tema Rengi</string>
     <string name="theme_mode">Tema Modu</string>
-    <string name="g1g1_promo_info_limitations">Bu, %s (13:00 UTC) tarihinde başlayan ve %s (01:00 UTC) ile sona erecek sınırlı süreli bir etkinliktir. Bu promosyon yalnızca başka bir Habitikalıya hediye verdiğinizde geçerlidir. Sizin veya hediye alıcınızın zaten bir aboneliği varsa, hediye edilen abonelik, yalnızca mevcut abonelik iptal edildikten veya sona erdikten sonra kullanılacak aylarca kredi ekler.</string>
-    <string name="gems_promo_info_limitations">Bu promosyon yalnızca sınırlı süreli etkinlik sırasında geçerlidir. Bu etkinlik %s (12:00 UTC) tarihinde başlar ve %s (00:00 UTC) ile biter. Promosyon teklifi yalnızca kendiniz için Mücevher satın alırken kullanılabilir.</string>
     <string name="purchase_immediately_description">Bu, satın aldıktan hemen sonra yürürlüğe girecek!</string>
     <string name="create_guild_description">Bir Lonca oluşturmak için Habitica web sitesine giriş yapın ve ardından \"Loncalarım\" ekranındaki \"Oluştur\" düğmesine dokunun.</string>
     <string name="todo_item_checkbox">Yapılacaklar Onay Kutusu</string>

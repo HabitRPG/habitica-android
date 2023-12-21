@@ -615,9 +615,7 @@
     <string name="reset_account_confirmation">Reiniciar a minha conta</string>
     <string name="delete_account_description">Isto irá eliminar a tua conta para sempre e ela não poderá ser restaurada! Gemas guardadas ou gastas não serão devolvidas. Se tiveres a certeza absoluta, digita a tua senha na caixa de texto abaixo.</string>
     <string name="delete_account">Eliminar Conta</string>
-    <string name="reset_account_description">CUIDADO!! Isto reinicia muitas partes da tua conta. Isto é fortemente desencorajado, mas algumas pessoas acham-no útil no início depois de brincar com o site por último curto período de tempo.
-\n
-\nTu irás perder todos os teus níveis, ouro e pontos de experiência. Todas as tuas tarefas (exceto as dos desafios) serão eliminadas permanentemente e tu irás perder todo o histórico delas. Vais perder todo o teu equipamento mas poderás comprá-lo de volta, incluindo todo o equipamento de edição limitada ou itens Mistério de assinantes que já tenhas (terás de ter a classe correta para comprar itens especificidades da classe). Vais manter a tua classe atual e os teus mascotes e montarias. Podes preferir usar um Orbe do Renascimento em vez de reiniciares a tua conta, uma opção muito mais segura que preserva as tuas tarefas e equipamentos.</string>
+
     <string name="reset_account">Reiniciar Conta</string>
     <string name="con_abbrv">Con</string>
     <string name="int_abbrv">Int</string>

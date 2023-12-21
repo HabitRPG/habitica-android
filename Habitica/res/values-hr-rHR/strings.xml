@@ -441,7 +441,6 @@
     <string name="int_abbrv">INT</string>
     <string name="con_abbrv">KON</string>
     <string name="reset_account">Resetiraj račun</string>
-    <string name="reset_account_description">Izgubit ćeš sve svoje levele, Zlatnike i Bodove iskustva. Svi tvoji zadaci i njihova povijest bit će izbrisani (zadaci iz Izazova će ostati). Izgubit ćeš svu svoju opremu, uključujući ograničena izdanja ili pretplatničku opremu, ali ćeš je moći ponovno kupiti (morat ćeš biti u odgovarajućoj klasi kako bi mogao/la ponovno kupiti komade opreme specifične za neku klasu). Zadržat ćeš svoju trenutnu klasu i svoje Ljubimce te Jahaće životinje. Za potvrdu resetiranja, upiši RESET ispod.</string>
     <string name="delete_account">Izbriši račun</string>
     <string name="delete_account_description">Ovo će zauvijek izbrisati tvoj račun i više se neće moći vratiti. Uloženi ili potrošeni Dragulji neće biti vraćeni. Ako si potpuno siguran/na, upiši svoju lozinku u tekstni okvir ispod.</string>
     <string name="reset_account_confirmation">Resetiraj moj Račun</string>
@@ -709,7 +708,6 @@
     <string name="reloaded_content">Ponovno učitan sadržaj</string>
     <string name="insufficientGoldTitle">Nema dovoljno Zlatnika</string>
     <string name="join_party_description_guild">Daj korisničko ime prijatelju ili odi u %s da upoznaš potencijalne drugove!</string>
-    <string name="invited_to_private_guild">Pozvan/a si da se pridružiš privatnom Cehu <b>%1$s</b></string>
     <string name="gift_confirmation_text_sub_g1g1">Poslao/la si %1$s Habitica pretplatu na %2$s mjesec(-a/-i) i ista pretplata je primijenjena na tvojem računu u našoj \"Pokloni Jednu - Dobij Jednu\" promociji!</string>
     <string name="gift_confirmation_text_sub">Poslao/la si @%1$s %2$s-mjesečnu pretplatu na Habiticu.</string>
     <string name="unallocated_stats_points">Imaš <b>%1$s neraspodjeljenih bodova</b></string>
@@ -1061,7 +1059,6 @@
     <string name="usually_x_gems">Obično %d Dragulja</string>
     <string name="spooky_promo_info_instructions">Između %s i %s, jednostavno kupi bilo koji paket Dragulja kao i obično i tvoj račun će biti nagrađen s promotivnom količinom Dragulja. Više Dragulja za potrošnju, dijeljenje, ili uštedu za bilo koja ubuduća izdanja!</string>
     <string name="x_to_y">%1$s do %2$s</string>
-    <string name="gems_promo_info_limitations">Ova promocija se primjenjuje samo tijekom ograničenog vremena događanja. Ovo događanje počinje %s (12:00 UTC) i završava %s (00:00 UTC). Promo ponuda je dostupna samo kod kupnje Dragulja za sebe.</string>
     <string name="dark_mode">Tamni Način Rada</string>
     <string name="submit_feedback">Pošalji povratne informacije</string>
     <string name="you">Ti</string>
@@ -1079,7 +1076,6 @@
     <string name="you_won_challenge">Pobijedio/la si u Izazovu</string>
     <string name="congratulations">Svaka čast!</string>
     <string name="g1g1_promo_info_instructions">Dotakni ‘Pokloni Pretplatu’ i upiši korisničko ime računa kojemu želiš pokloniti. Tada, odaberi dužinu pretplate koju želiš pokloniti i naplati. Tvoj račun će automatski biti nagrađen istom levelom pretplate koji si upravo poklonio/la.</string>
-    <string name="g1g1_promo_info_limitations">Ovo je vremenski ograničeno događanje koje počinje %s (13:00 UTC) i završava %s (01:00 UTC). Ova promocija se samo primjenjuje kada poklanjaš drugom Habiticanu. Ako ti ili tvoj primatelj poklona već imate pretplatu, poklonjena pretplata će dodati mjesece kredita koji će biti iskorišteni samo nakon što je trenutna pretplata otkazana ili kad istekne.</string>
     <string name="empty_equipment_description">Još nemaš ovakvu opremu. Možeš kupiti opremu iz dućana koristeći zlato koje si zaradio/la.</string>
     <string name="empty_challenge_list">Nisi član nikakvih Izazova.</string>
     <string name="damage_pending">%s štete čeka</string>

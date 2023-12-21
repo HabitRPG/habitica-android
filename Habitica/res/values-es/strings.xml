@@ -450,9 +450,7 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Restablecer Cuenta</string>
-    <string name="reset_account_description">¡ADVERTENCIA! Esta opción restablece muchas partes de tu cuenta. No lo recomendamos en absoluto, pero algunas personas lo encuentran útil al principio tras haber jugado durante un tiempo. 
-\n
-\nPerderás todos tus niveles, oro y puntos de experiencia. Todas tus tareas (con excepción de los de retos) se eliminarán permanentemente y perderás todos tus datos históricos. Perderás todo tu equipo pero podrás comprar todo de nuevo, incluyendo todo el equipo de edición limitada o artículos misteriosos de suscriptor que ya posees (tendrás que elegir la misma clase que tenías para volver a comprar el equipo específico de clase). Mantendrás tu clase actual, mascotas y monturas. Es posible que prefieras usar el Orbe de Renacimiento en su lugar, que es una opción mucho más segura y que preservará tus tareas y equipamiento.</string>
+
     <string name="delete_account">Borrar Cuenta</string>
     <string name="delete_account_description">¿Estás seguro\? ¡Esta opción eliminará tu cuenta para siempre, y nunca se podrá restaurar! Tendrás que registrar una nueva cuenta para usar Habitica nuevamente. Las Gemas depositadas o gastadas no serán reembolsadas. Si estás absolutamente seguro, escribe tu contraseña en el cuadro de abajo.</string>
     <string name="reset_account_confirmation">Reestablecer mi cuenta</string>
@@ -1081,7 +1079,6 @@
     <string name="empty_equipment_description">Aún no tienes ningún equipamiento de este tipo. Puedes comprar equipamiento en el mercado con el oro que has conseguido.</string>
     <string name="hatchedPetDescription">Hay muchas mascotas que coleccionar, pero sólo una puede ser tu favorita. Si las alimentas, puede que crezcan…</string>
     <string name="onboardingComplete_achievement_title">¡Has completado tus tareas de iniciación!</string>
-    <string name="gems_promo_info_limitations">Esta promoción sólo es válida durante el evento de duración limitada. El evento empieza el %s (12:00 UTC) y terminará en %s (00:00 UTC). La oferta promocional sólo está disponible si compras las gemas tú mismo.</string>
     <string name="finish">Terminar</string>
     <string name="something_new">Nuevo</string>
     <string name="survey_menu_description">¡Rellena este formulario de 5 minutos para ayudarnos a crecer y obtén por ello un logro!</string>
@@ -1095,7 +1092,6 @@
     <string name="twelve_months_one_time">Suscripción única de 12 meses</string>
     <string name="team_information">Información del equipo</string>
     <string name="congratulations">¡Enhorabuena!</string>
-    <string name="g1g1_promo_info_limitations">Este es un evento de tiempo limitado que empieza a las %s (13:00 UTC) y termina a las %s (01:00 UTC). Esta promoción solo surte efecto cuando se la regalas a otro Habiticano. Si tú o el destinatario del regalo ya tiene una suscripción, la suscripción regalada comenzará a aplicarse una vez se cancele o caduque la misma.</string>
     <string name="six_months_one_time">Suscripción única de 6 meses</string>
     <string name="end_challenge_description">Para lograr un desafío, inicia sesión en la página web de Habitica y luego pulsa sobre el botón \"Terminar Desafío\" de la pantalla del submenú \"Desafíos &gt; Mis Desafíos\".</string>
     <string name="empty_challenge_list">No eres miembro de ningún desafío.</string>

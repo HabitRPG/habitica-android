@@ -450,7 +450,6 @@
     <string name="int_abbrv">INT</string>
     <string name="con_abbrv">COS</string>
     <string name="reset_account">Resetta account</string>
-    <string name="reset_account_description">Perderai tutti i tuoi livelli, l\'oro e i punti esperienza. Tutte le tue attività e il relativo storico verranno cancellate in modo permanente (le sfide invece resteranno). Perderai inoltre tutto l\'equipaggiamento, compresi gli oggetti in edizione limitata e gli Oggetti Misteriosi che già possiedi, ma potrai ricomprarli (alcuni oggetti potrebbero richiedere l\'appartenenza ad una determinata classe per essere acquistati). Manterrai la tua classe, i tuoi animali e le cavalcature. Per confermare il ripristino scrivi RESET qui sotto.</string>
     <string name="delete_account">Elimina account</string>
     <string name="delete_account_description">Questo cancellerà per sempre il tuo account, e non potrà mai essere ripristinato! Le Gemme che possiedi e quelle spese non verranno rimborsate. Se sei assolutamente certo/a, digita la tua password nella casella di testo qui sotto.</string>
     <string name="reset_account_confirmation">Resetta il mio Account</string>
@@ -1043,7 +1042,6 @@
     <string name="usually_x_gems">Solitamente %d Gemme</string>
     <string name="user_is_blocked_explanation">Un utente bloccato non può mandarti Messaggi Privati ma vedrai i suoi messaggi nella Taverna o nelle Gilde.</string>
     <string name="user_is_blocked">Hai bloccato questo utente</string>
-    <string name="gems_promo_info_limitations">Questa promozione è attiva solo durante l\'evento a tempo limitato. Questo evento inizia il %s (12:00 UTC) e finisce il %s (00:00 UTC). La promozione è disponibile solo quando compri Gemme per te.</string>
     <string name="leave_challenges_delete_tasks">Lascia la Sfida ed Elimina le Attività</string>
     <string name="inbox_messages_title_single">Nuovo Messaggio da %1$s</string>
     <string name="rejoin_guild">Puoi unirti di nuovo a questa gilda dalla pagina Gilde: Esplora</string>
@@ -1107,7 +1105,6 @@
     <string name="three_months_one_time">3 mesi di abbonamento una tantum</string>
     <string name="one_month_one_time">1 mese di abbonamento una tantum</string>
     <string name="gift_one_get_one_purchase_banner">Regala un abbonamento e ne riceverai uno gratis fino a %s</string>
-    <string name="g1g1_promo_info_limitations">Questo è un evento a tempo limitato che inizia il %s alle 14:00 ora italiana (13:00 UTC) e terminerà il %s alle 2:00 ora italiana (1:00 UTC). Questa promozione si applica solo quando fai un regalo a un altro Habitante. Se tu o il destinatario del regalo avete già un abbonamento, l\'abbonamento in regalo aggiungerà mesi di credito che verranno utilizzati solo dopo l\'annullamento o la scadenza dell\'abbonamento corrente.</string>
     <string name="g1g1_promo_info_instructions">Tocca \"Regala un abbonamento\" e digita il nome utente dell\'account a cui lo desideri regalare. Da lì, scegli la durata che desideri regalare e prosegui. Il tuo account verrà automaticamente ricompensato con lo stesso livello di abbonamento che hai appena regalato.</string>
     <string name="todo_item_checkbox">Checkbox della cosa da fare</string>
     <string name="daily_item_checkbox">Checkbox della attività giornaliera</string>

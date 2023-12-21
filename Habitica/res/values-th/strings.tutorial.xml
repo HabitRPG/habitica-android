@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="tutorial_habits_2">ทุกครั้งที่คุณทำนิสัยที่ดี กด + เพื่อรับค่าประสบการณ์ และเหรียญทอง!</string>
-    <string name="tutorial_habits_1">อย่างแรกเลยคือนิสัย มันสามารถเป็นได้ทั้งนิสัยดีที่คุณต้องการพัฒนา หรือนิสัยไม่ดีที่คุณอยากเลิก</string>
-    <string name="tutorial_rewards_1">ซื้ออุปกรณ์ให้อวตารของคุณด้วยเหรียญทองที่คุณหามา!</string>
-    <string name="tutorial_rewards_2">คุณก็สามารถตั้งรางวัลในชีวิตจริงตามสิ่งที่สร้างแรงบันดาลใจให้คุณ ได้เช่นกัน</string>
-    <string name="tutorial_habits_4">ลองดูซักตั้ง! คุณสามารถสำรวจภารกิจอื่นๆได้ผ่านแถบนำทางด้านล่าง</string>
-</resources>

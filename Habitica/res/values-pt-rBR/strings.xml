@@ -452,7 +452,6 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Reiniciar Conta</string>
-    <string name="reset_account_description">Você irá perder todos os seus níveis, Ouro e pontos de Experiência. Todas as suas tarefas (exceto as de desafios) serão permanentemente deletadas e você irá perder todo o histórico delas. Você irá perder todo o seu equipamento mas ainda os poderá comprar de novo, incluindo todos os equipamentos de edição limitada ou os itens de assinante (você precisará ser da classe correta para comprar equipamentos específicos de classe). Você manterá sua classe atual e seus mascotes e montarias. Para confirmar o reinicio, escreva RESET abaixo.</string>
     <string name="delete_account">Deletar Conta</string>
     <string name="delete_account_description">Sua conta será deletada para sempre e nunca poderá ser restaurada! Gemas usadas ou guardas não serão reembolsadas. Se você tiver total certeza, digite sua senha abaixo.</string>
     <string name="reset_account_confirmation">resetar minha conta</string>
@@ -1063,7 +1062,6 @@
     <string name="three_months_one_time">Assinatura única de 3 meses</string>
     <string name="one_month_one_time">Assinatura única de 1 mês</string>
     <string name="gift_one_get_one_purchase_banner">Presenteie uma assinatura e receba uma assinatura de graça até %s</string>
-    <string name="g1g1_promo_info_limitations">Esse é um evento de tempo limitado que começa no dia %s (13:00 UTC) e acabará no dia %s (01:00 UTC). Esta promoção só se aplica quando você presenteia outro Habiticano. Se você ou o recipiente de seu presente já tiver uma assinatura, a assinatura presenteada adicionará meses de crédito que só serão usados após a assinatura atual ser cancelada ou expirar.</string>
     <string name="g1g1_promo_info_instructions">Clique em \"Dê uma assinatura de presente\" e escreva o nome de usuário da conta que você gostaria de presentar. Em seguida, escolha o plano que você deseja presentear e confira. Sua conta será automaticamente recompensada com o mesmo nível de assinatura que você acabou de presentear.</string>
     <string name="g1g1_promo_info_prompt">Em homenagem à temporada de doações, estamos trazendo de volta uma promoção muito especial. Agora, quando você dá uma assinatura de presente para alguém, você receberá uma igual gratuitamente!</string>
     <string name="claim_x_gems">Coletar %d Gemas</string>
@@ -1088,7 +1086,6 @@
     <string name="user_is_blocked">Você bloqueou este usuário</string>
     <string name="submit_feedback">Submeter feedback</string>
     <string name="dark_mode">Modo escuro</string>
-    <string name="gems_promo_info_limitations">Esta promoção só se aplica durante o evento de tempo limitado. Este evento começa em %s (12:00 UTC) e terminará em %s (00:00 UTC). A oferta promocional só está disponível na compra de Gemas para você mesmo.</string>
     <string name="reloaded_content">Conteúdo recarregado</string>
     <string name="is_open">Abrir</string>
     <string name="quest_items_found">Você encontrou %d itens de missão</string>

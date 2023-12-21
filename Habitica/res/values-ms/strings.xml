@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="thousand_abbrev">k</string>
-    <string name="million_abbrev">m</string>
-    <string name="billion_abbrev">b</string>
-    <string name="trillion_abbrev">t</string>
-</resources>

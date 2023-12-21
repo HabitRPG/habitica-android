@@ -450,7 +450,6 @@
     <string name="int_abbrv">知能</string>
     <string name="con_abbrv">体質</string>
     <string name="reset_account">アカウントをリセット</string>
-    <string name="reset_account_description">すべてのレベル、ゴールド、経験値が失われます。すべてのタスクとその履歴データは削除されます（チャレンジタスクは残ります）。限定装備や有料会員向け装備を含むすべての装備を失いますが、買い戻すことは可能です（クラス固有の装備を買い戻すには、正しいクラスになる必要があります）。現在のクラスとペットと乗騎は維持されます。リセットを続行するには、下に「RESET」と入力してください。</string>
     <string name="delete_account">アカウントを削除</string>
     <string name="delete_account_description">この操作であなたのアカウントは完全に削除され、決して復元はできません！貯めているジェム、使ったジェムは、返金できません。本当にアカウントを削除するなら、下のテキストボックスにパスワードを入力してください。</string>
     <string name="reset_account_confirmation">アカウントをリセット</string>
@@ -1067,7 +1066,6 @@
     <string name="user_is_blocked_explanation">ブロックしたユーザーはあなたにプライベートメッセージを送ることができません。ですが、ブロックしたユーザーがキャンプ場やギルドに書き込んだ書き込みはいままでどおり見ることができます。</string>
     <string name="user_is_blocked">このユーザーをブロックしています</string>
     <string name="submit_feedback">フィードバックを送る</string>
-    <string name="gems_promo_info_limitations">このキャンペーンは季節限定イベントの間のみの実施です。このイベントはの%s21:00時 (12:00 UTC)に始まり、%sの09:00時(00:00 UTC)に終了します。キャンペーンの対象は自分へのジェムを購入したときにのみ適用されます。</string>
     <string name="open_website">ウェブサイトを開く</string>
     <string name="create_guild_description">ギルドを作るにはHabiticaのウェブサイトにログインして「所属ギルド」画面の「作る」ボタンをタップしてください。</string>
     <string name="create_guild">ギルドを作成</string>
@@ -1092,7 +1090,6 @@
     <string name="three_months_one_time">3ヶ月間一度きりの有料プラン</string>
     <string name="one_month_one_time">1ヶ月間一度きりの有料プラン</string>
     <string name="gift_one_get_one_purchase_banner">%sまでに、有料プランをプレゼントして同じプランを無料でゲットしよう</string>
-    <string name="g1g1_promo_info_limitations">このイベントは日本時間で%sの22:00時(13:00 UTC)から%s10:00時(01:00 UTC)までの期間限定です。プロモーションは他のプレイヤーにギフトを贈った際にのみ適用されます。もしギフトを受け取った人がすでに有料会員の場合、有料会員期間が延長されます。この延長は、現在の有料会員期間を満了もしくはキャンセルした後にのみ適用されます。</string>
     <string name="g1g1_promo_info_instructions">「有料プランをプレゼントする」をタップして、贈る相手のユーザーネームを入力し、プレゼントする有料プランの期間を選択してください。自動的にあなたのアカウントにもプレゼントした分と同じ期間のプランが無料で適用されます。</string>
     <string name="g1g1_promo_info_prompt">贈り物の季節を祝して、特別なプロモーションを再び開催しています。いま誰かに有料プランをプレゼントすると、あなた自身も同じプランを無料で受けることができます！</string>
     <string name="claim_x_gems">%dジェムを請求する</string>
