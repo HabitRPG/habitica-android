@@ -835,6 +835,8 @@ class TaskFormActivity : BaseActivity() {
             task?.id?.let {
                 lifecycleScope.launch(Dispatchers.Main) {
                     taskRepository.deleteTask(it)
+                    val taskCopy = task
+                    taskCopy?.let { taskAlarmManager.removeAlarmsForTask(it) }
                 }
             }
             finish()

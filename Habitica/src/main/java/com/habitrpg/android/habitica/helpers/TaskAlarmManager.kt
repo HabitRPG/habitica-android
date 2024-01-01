@@ -72,10 +72,13 @@ class TaskAlarmManager(
     }
 
 
-    private fun removeAlarmsForTask(task: Task) {
-        task.reminders?.let {
-            for (reminder in it) {
-                this.removeAlarmForRemindersItem(reminder)
+    fun removeAlarmsForTask(task: Task) {
+        CoroutineScope(Dispatchers.IO).launch {
+            task.reminders?.let { reminders ->
+                // Remove not only the immediate reminder, but also the next however many (upcomingReminderOccurrencesToSchedule) reminders
+                reminders.forEachIndexed { index, reminder ->
+                    removeAlarmForRemindersItem(reminder, index)
+                }
             }
         }
     }
@@ -167,10 +170,10 @@ class TaskAlarmManager(
         }
     }
 
-    private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
+    private fun removeAlarmForRemindersItem(remindersItem: RemindersItem, occurrenceIndex: Int? = null) {
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
-        val intentId = remindersItem.id?.hashCode() ?: (0 and 0xfffffff)
+        val intentId = if (occurrenceIndex != null) (remindersItem.id?.hashCode() ?: (0 and 0xfffffff)) + occurrenceIndex else (remindersItem.id?.hashCode() ?: (0 and 0xfffffff))
         val sender = PendingIntent.getBroadcast(
             context,
             intentId,
