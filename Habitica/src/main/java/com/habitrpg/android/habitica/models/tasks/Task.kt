@@ -353,6 +353,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         if (remindersItem == null) return null
 
         val reminderTime = remindersItem.time?.parseToZonedDateTime() ?: return null
+        val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
         var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val frequency = this.frequency ?: return null
         val everyX = this.everyX ?: 1
@@ -380,6 +381,16 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                         dateTimeOccurenceToSchedule = startDate
                     } else {
                         var nextDueDate = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                        // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
+                        if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
+                            nextDueDate = nextDueDate.plusDays(1)
+                        }
+
+                        // If the reminder being scheduled is not the first iteration of the reminder, increment it by one day
+                        if (occurrencesList.size > 0) {
+                            nextDueDate = nextDueDate.plusDays(1)
+                        }
+
                         while (!nextDueDate.matchesRepeatDays(repeatDays)) {
                             nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         }
@@ -389,16 +400,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                             val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
                             nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
                             // Find the exact next due day within the valid interval
-                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                                nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                            }
-                        }
-
-                        // Ensure the next due date is in the future
-                        val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
-                        if (nextDueDate.isBefore(now)) {
-                            nextDueDate = nextDueDate.plusWeeks(everyX.toLong())
-                            // Find the next due day in the future
                             while (!nextDueDate.matchesRepeatDays(repeatDays)) {
                                 nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
                             }
