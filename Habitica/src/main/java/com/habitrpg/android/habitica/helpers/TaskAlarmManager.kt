@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
@@ -127,7 +128,6 @@ class TaskAlarmManager(
 
         val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
         val reminderZonedTime = remindersItem.getLocalZonedDateTimeInstant()
-
 
         if (reminderZonedTime == null || reminderZonedTime.isBefore(now)) {
             return
@@ -253,6 +253,7 @@ class TaskAlarmManager(
                 // For SDK >= Android 12, allows batching of reminders
                 try {
                     alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+                    Log.d("TaskAlarmManager", "setAlarm: Scheduling for $time using setAndAllowWhileIdle")
                 } catch (ex: Exception) {
                     when (ex) {
                         is IllegalStateException, is SecurityException -> {

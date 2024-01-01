@@ -375,40 +375,38 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     dateTimeOccurenceToSchedule
                 }
                 Frequency.WEEKLY -> {
+                    // Set to start date if current date is earlier
                     if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
                         dateTimeOccurenceToSchedule = startDate
                     } else {
-                        // Check if all days are selected
-                        if (repeatDays?.hasAnyDaySelected() == true) {
-                            // Simply increment by one day
-                            dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.plusDays(1)
-                        } else {
-                            // Logic for specific days selected
-                            var nextDueDate = dateTimeOccurenceToSchedule
-                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                                nextDueDate = nextDueDate.plusDays(1)
-                            }
-
-                            val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
-                            if (weeksSinceStart % everyX != 0L) {
-                                val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
-                                nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
-                                while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                                    nextDueDate = nextDueDate.plusDays(1)
-                                }
-                            }
-
-                            val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
-                            if (nextDueDate.isBefore(now)) {
-                                nextDueDate = nextDueDate.plusWeeks(everyX.toLong())
-                                while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                                    nextDueDate = nextDueDate.plusDays(1)
-                                }
-                            }
-
-                            dateTimeOccurenceToSchedule = nextDueDate
+                        var nextDueDate = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                        while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                            nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         }
+                        // Calculate weeks since start and adjust for the correct interval
+                        val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
+                        if (weeksSinceStart % everyX != 0L) {
+                            val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
+                            nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
+                            // Find the exact next due day within the valid interval
+                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            }
+                        }
+
+                        // Ensure the next due date is in the future
+                        val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
+                        if (nextDueDate.isBefore(now)) {
+                            nextDueDate = nextDueDate.plusWeeks(everyX.toLong())
+                            // Find the next due day in the future
+                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            }
+                        }
+
+                        dateTimeOccurenceToSchedule = nextDueDate
                     }
+                    // Set time to the reminder time
                     dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
                     dateTimeOccurenceToSchedule
                 }
