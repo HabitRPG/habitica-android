@@ -379,7 +379,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     // Set to start date if current date is earlier
                     if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
                         dateTimeOccurenceToSchedule = startDate
-                    } else {
+                    } else if (repeatDays?.hasAnyDaySelected() == true) {
+
                         var nextDueDate = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
                         // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
                         if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
