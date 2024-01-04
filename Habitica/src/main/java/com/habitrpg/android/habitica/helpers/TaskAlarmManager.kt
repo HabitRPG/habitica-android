@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.preference.PreferenceManager
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.extensions.withImmutableFlag
@@ -17,6 +18,8 @@ import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.shared.habitica.HLogger
 import com.habitrpg.shared.habitica.LogLevel
 import com.habitrpg.shared.habitica.models.tasks.TaskType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
@@ -34,24 +37,48 @@ class TaskAlarmManager(
     private var authenticationHandler: AuthenticationHandler
 ) {
     private val am: AlarmManager? = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+    private val upcomingReminderOccurrencesToSchedule = 3
 
+
+    /**
+     * Schedules multiple alarms for each reminder associated with a given task.
+     *
+     * This method iterates through all reminders of a task and schedules multiple upcoming alarms for each.
+     * It determines the upcoming reminder times based on the reminder's configuration (like frequency, repeat days, etc.)
+     * and schedules an alarm for each of these times.
+     *
+     * For each reminder, it updates the reminder's time to each upcoming occurrence and then calls
+     * `setAlarmForRemindersItem` to handle the actual alarm scheduling. This ensures that each reminder
+     * is scheduled accurately according to its specified rules and times.
+     *
+     * This method is particularly useful for reminders that need to be repeated at regular intervals
+     * (e.g., daily, weekly) or on specific days, as it schedules multiple occurrences in advance.
+     *
+     * @param task The task for which the alarms are being set. Each reminder in the task's reminder list
+     *             is processed to schedule the upcoming alarms.
+     */
     private fun setAlarmsForTask(task: Task) {
-        task.reminders?.let {
-            for (reminder in it) {
-                var currentReminder = reminder
-                if (task.type == TaskType.DAILY) {
-                    // Ensure that we set to the next available time
-                    currentReminder = this.setTimeForDailyReminder(currentReminder, task)
+        CoroutineScope(Dispatchers.IO).launch {
+            task.reminders?.let { reminders ->
+                for (reminder in reminders) {
+                    val upcomingReminders = task.getNextReminderOccurrences(reminder, upcomingReminderOccurrencesToSchedule)
+                    upcomingReminders?.forEachIndexed { index, reminderNextOccurrenceTime ->
+                        reminder?.time = reminderNextOccurrenceTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                        setAlarmForRemindersItem(task, reminder, index)
+                    }
                 }
-                this.setAlarmForRemindersItem(task, currentReminder)
             }
         }
     }
 
-    private fun removeAlarmsForTask(task: Task) {
-        task.reminders?.let {
-            for (reminder in it) {
-                this.removeAlarmForRemindersItem(reminder)
+
+    fun removeAlarmsForTask(task: Task) {
+        CoroutineScope(Dispatchers.IO).launch {
+            task.reminders?.let { reminders ->
+                // Remove not only the immediate reminder, but also the next however many (upcomingReminderOccurrencesToSchedule) reminders
+                reminders.forEachIndexed { index, reminder ->
+                    removeAlarmForRemindersItem(reminder, index)
+                }
             }
         }
     }
@@ -81,35 +108,43 @@ class TaskAlarmManager(
         setAlarmsForTask(task)
     }
 
-    private fun setTimeForDailyReminder(remindersItem: RemindersItem?, task: Task): RemindersItem? {
-        val newTime = task.getNextReminderOccurrence(remindersItem, context)
-        remindersItem?.time = newTime?.withZoneSameLocal(ZoneId.systemDefault())?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-
-        return remindersItem
-    }
-
     /**
-     * If reminderItem time is before now, a new reminder will not be created until the reminder passes.
-     * The exception to this is if the task & reminder was newly created for the same time,
-     * in which the alarm will be created -
-     * which is indicated by first nextDue being null (As the alarm is created before the API returns nextDue times)
+     * Schedules an alarm for a given reminder associated with a task.
+     *
+     * This method takes a task and its associated reminder item to schedule an alarm.
+     * It first checks if the reminder time is valid and not in the past. If the reminder time
+     * is valid, it prepares an intent for the alarm, uniquely identified by combining the reminder's ID
+     * and its scheduled time. This unique identifier ensures that each reminder occurrence is distinctly handled.
+     *
+     * If an alarm with the same identifier already exists, it is cancelled and replaced with the new one.
+     * This ensures that reminders are always up to date with their latest scheduled times.
+     *
+     * The alarm is scheduled to trigger at the exact time specified in the reminder. Upon triggering,
+     * it will send a broadcast to `TaskReceiver`, which should handle the reminder notification.
+     *
+     * @param reminderItemTask The task associated with the reminder.
+     * @param remindersItem The reminder item containing details like ID and the time for the reminder.
+     *                      If this is null, the method returns immediately without scheduling an alarm.
      */
-    private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?) {
+    private fun setAlarmForRemindersItem(reminderItemTask: Task, remindersItem: RemindersItem?,  occurrenceIndex: Int) {
+        if (remindersItem == null) return
+
         val now = ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
-        val zonedTime = remindersItem?.getLocalZonedDateTimeInstant()
-        if (remindersItem == null ||
-            (reminderItemTask.type == TaskType.DAILY && zonedTime?.isBefore(now) == true && reminderItemTask.nextDue?.firstOrNull() != null) ||
-            (reminderItemTask.type == TaskType.TODO && zonedTime?.isBefore(now) == true || zonedTime == null)
-        ) {
+        val reminderZonedTime = remindersItem.getLocalZonedDateTimeInstant()
+
+        if (reminderZonedTime == null || reminderZonedTime.isBefore(now)) {
             return
         }
+
 
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
         intent.putExtra(TASK_NAME_INTENT_KEY, reminderItemTask.text)
         intent.putExtra(TASK_ID_INTENT_KEY, reminderItemTask.id)
 
-        val intentId = remindersItem.id?.hashCode() ?: (0 and 0xfffffff)
+        // Create a unique identifier based on remindersItem.id and the occurrence index
+        val intentId = (remindersItem.id?.hashCode() ?: 0) + occurrenceIndex
+
         // Cancel alarm if already exists
         val previousSender = PendingIntent.getBroadcast(
             context,
@@ -129,13 +164,16 @@ class TaskAlarmManager(
             withImmutableFlag(PendingIntent.FLAG_CANCEL_CURRENT)
         )
 
-        setAlarm(context, zonedTime.toEpochMilli(), sender)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            setAlarm(context, reminderZonedTime.toEpochMilli(), sender)
+        }
     }
 
-    private fun removeAlarmForRemindersItem(remindersItem: RemindersItem) {
+    private fun removeAlarmForRemindersItem(remindersItem: RemindersItem, occurrenceIndex: Int? = null) {
         val intent = Intent(context, TaskReceiver::class.java)
         intent.action = remindersItem.id
-        val intentId = remindersItem.id?.hashCode() ?: (0 and 0xfffffff)
+        val intentId = if (occurrenceIndex != null) (remindersItem.id?.hashCode() ?: (0 and 0xfffffff)) + occurrenceIndex else (remindersItem.id?.hashCode() ?: (0 and 0xfffffff))
         val sender = PendingIntent.getBroadcast(
             context,
             intentId,
@@ -218,16 +256,20 @@ class TaskAlarmManager(
                 // For SDK >= Android 12, allows batching of reminders
                 try {
                     alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pendingIntent)
+                    Log.d("TaskAlarmManager", "setAlarm: Scheduling for $time using setAndAllowWhileIdle")
                 } catch (ex: Exception) {
                     when (ex) {
                         is IllegalStateException, is SecurityException -> {
-                            alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
+                            alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 600000, pendingIntent)
                         }
-                        else -> throw ex
+                        else -> {
+                            throw ex
+                        }
+
                     }
                 }
             } else {
-                alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 60000, pendingIntent)
+                alarmManager?.setWindow(AlarmManager.RTC_WAKEUP, time, 600000, pendingIntent)
             }
         }
     }
