@@ -45,8 +45,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
             showMount = true,
             showPet = true
         )
-        val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
-        avatarView.layoutParams = layoutParams
 
         MainScope().launchCatching {
             userRepository.getUser().collect {
@@ -69,8 +67,6 @@ class AvatarStatsWidgetProvider : BaseWidgetProvider() {
                 showMount = true,
                 showPet = true
             )
-            val layoutParams = ViewGroup.LayoutParams(140.dpToPx(context), 147.dpToPx(context))
-            avatarView.layoutParams = layoutParams
         }
         this.appWidgetManager = appWidgetManager
         this.context = context

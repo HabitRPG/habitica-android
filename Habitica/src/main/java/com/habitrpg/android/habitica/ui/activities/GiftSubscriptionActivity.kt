@@ -9,9 +9,11 @@ import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,8 +64,10 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
         giftedUserID = intent.getStringExtra("userID")
         giftedUsername = intent.getStringExtra("username")
-        if (giftedUserID == null && giftedUsername == null) {
+        if (giftedUserID.isNullOrBlank()) {
             giftedUserID = navArgs<GiftSubscriptionActivityArgs>().value.userID
+        }
+        if (giftedUsername.isNullOrBlank()) {
             giftedUsername = navArgs<GiftSubscriptionActivityArgs>().value.username
         }
 
@@ -71,7 +75,15 @@ class GiftSubscriptionActivity : PurchaseActivity() {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID) ?: return@launch
+            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID)
+            if (member == null) {
+                val dialog = HabiticaAlertDialog(this@GiftSubscriptionActivity)
+                dialog.setTitle(R.string.error_loading_member)
+                dialog.setMessage(R.string.error_loading_member_body)
+                dialog.addCloseButton { _, _ -> finish() }
+                dialog.show()
+                return@launch
+            }
             binding.avatarView.setAvatar(member)
             binding.displayNameTextView.username = member.profile?.name
             binding.displayNameTextView.tier = member.contributor?.level ?: 0

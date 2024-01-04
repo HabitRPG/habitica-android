@@ -1472,6 +1472,8 @@
     <string name="subscriber_benefit">SUBSCRIBER BENEFIT</string>
     <string name="no_saddles">You don\'t have any Saddles</string>
     <string name="purchase_saddles_in_market">Saddles instantly raise a Pet to a Mount. You can purchase one from the Market.</string>
+    <string name="error_loading_member">Error Loading Member</string>
+    <string name="error_loading_member_body">There was an error when loading this members data. Please try again later.</string>
 
 
     <plurals name="you_x_others">
