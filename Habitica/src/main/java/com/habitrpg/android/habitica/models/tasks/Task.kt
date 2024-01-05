@@ -397,7 +397,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                         }
                         // Calculate weeks since start and adjust for the correct interval
                         val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
-                        if (weeksSinceStart % everyX != 0L) {
+                        if (everyX > 0 && weeksSinceStart % everyX != 0L) {
                             val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
                             nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
                             // Find the exact next due day within the valid interval

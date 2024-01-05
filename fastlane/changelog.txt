@@ -1,10 +1,8 @@
-New in 4.3:
-
+New in 4.3.2:
+- Reminders should show more reliably now
+- Remaining Armoire equipment no longer counts unreleased items
+- Better error handling when gifting
+- Avatar widget now displays correctly
 - Pets just got cuter! Tap a Pet or Mount to see them in an environment that changes each month.
-- Pets bounce when fed
-- New Subscriber benefit: Buy one Armoire, get another free!
-- New Subscriber benefit: Get a second chance at life once a day when you run out of HP!
-- Tap your avatar to share your latest looks at any time
+- New Subscriber benefits: Buy one Armoire, get another free! Also, get a second chance at life once a day when you run out of HP!
 - See answers to common Quest mechanic questions under your active Quest
-- Updated Quest interface
-- The Quest shop now shows a check by completed Quests

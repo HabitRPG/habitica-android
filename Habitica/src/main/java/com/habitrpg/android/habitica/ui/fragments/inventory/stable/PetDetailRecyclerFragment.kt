@@ -133,11 +133,13 @@ class PetDetailRecyclerFragment :
                 val items = inventoryRepository.equip("pet", it)
                 adapter.currentPet = items?.currentPet
 
-                userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
-                    val parentActivity = mainActivity
-                    val totalCheckIns = user?.loginIncentives
-                    if (totalCheckIns != null && parentActivity != null) {
-                        reviewManager.requestReview(parentActivity, totalCheckIns)
+                if (isAdded) {
+                    userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                        val parentActivity = mainActivity
+                        val totalCheckIns = user?.loginIncentives
+                        if (totalCheckIns != null && parentActivity != null) {
+                            reviewManager.requestReview(parentActivity, totalCheckIns)
+                        }
                     }
                 }
             }

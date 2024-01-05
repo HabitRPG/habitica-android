@@ -59,11 +59,13 @@ class EquipmentDetailFragment :
             lifecycleScope.launchCatching {
                 inventoryRepository.equipGear(it, isCostume ?: false)
 
-                userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
-                    val parentActivity = mainActivity
-                    val totalCheckIns = user?.loginIncentives
-                    if (totalCheckIns != null && parentActivity != null) {
-                        reviewManager.requestReview(parentActivity, totalCheckIns)
+                if (this@EquipmentDetailFragment.isAdded) {
+                    userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                        val parentActivity = mainActivity
+                        val totalCheckIns = user?.loginIncentives
+                        if (totalCheckIns != null && parentActivity != null) {
+                            reviewManager.requestReview(parentActivity, totalCheckIns)
+                        }
                     }
                 }
             }

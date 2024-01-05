@@ -37,6 +37,7 @@
                 app:showPet="false"
                 app:showMount="false"
                 app:showSleeping="false"
+                android:clipChildren="false"
                 android:layout_gravity="center_horizontal"/>
             <com.habitrpg.android.habitica.ui.views.UsernameLabel
                 android:id="@+id/display_name_text_view"

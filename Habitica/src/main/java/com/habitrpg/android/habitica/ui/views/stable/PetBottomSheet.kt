@@ -266,6 +266,7 @@ fun PetBottomSheet(
                                 MainNavigationController.navigate(R.id.marketFragment)
                             }
                             dialog.addCloseButton()
+                            dialog.show()
                         }
                         onDismiss()
                     }, modifier = Modifier

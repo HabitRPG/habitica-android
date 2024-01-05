@@ -197,7 +197,7 @@ class UserRepositoryImpl(
 
     override suspend fun getNewsNotification(): Notification {
         val baileyNews = apiClient.getNews()
-        val baileyAnnouncement = (baileyNews?.first() as Map<*, *>)["title"] as String
+        val baileyAnnouncement = (baileyNews?.first() as? Map<*, *>)?.get("title") as? String
         val notification = Notification()
         notification.id = "custom-new-stuff-notification"
         notification.type = Notification.Type.NEW_STUFF.type

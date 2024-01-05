@@ -169,6 +169,9 @@ class PreferencesFragment :
                                 isPrimary = true,
                                 isDestructive = true
                             ) { _, _ ->
+                                lifecycleScope.launch {
+                                    userRepository.changeClass()
+                                }
                                 classSelectionResult.launch(
                                     intent
                                 )
