@@ -22,6 +22,7 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
+import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -366,72 +367,75 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
         while (occurrencesList.size < occurrences) {
             // Increment currentDate based on the frequency
-            dateTimeOccurenceToSchedule = when (frequency) {
-                Frequency.DAILY -> {
-                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        startDate
-                    } else {
-                        dateTimeOccurenceToSchedule.plusDays(everyX.toLong()).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+            try {
+                dateTimeOccurenceToSchedule = when (frequency) {
+                    Frequency.DAILY -> {
+                        dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                            startDate
+                        } else {
+                            dateTimeOccurenceToSchedule.plusDays(everyX.toLong()).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                        }
+                        dateTimeOccurenceToSchedule
                     }
-                    dateTimeOccurenceToSchedule
-                }
-                Frequency.WEEKLY -> {
-                    // Set to start date if current date is earlier
-                    if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        dateTimeOccurenceToSchedule = startDate
-                    } else if (repeatDays?.hasAnyDaySelected() == true) {
+                    Frequency.WEEKLY -> {
+                        // Set to start date if current date is earlier
+                        if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                            dateTimeOccurenceToSchedule = startDate
+                        } else if (repeatDays?.hasAnyDaySelected() == true) {
 
-                        var nextDueDate = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
-                        if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
-                            nextDueDate = nextDueDate.plusDays(1)
-                        }
+                            var nextDueDate = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                            // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
+                            if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
+                                nextDueDate = nextDueDate.plusDays(1)
+                            }
 
-                        // If the reminder being scheduled is not the first iteration of the reminder, increment it by one day
-                        if (occurrencesList.size > 0) {
-                            nextDueDate = nextDueDate.plusDays(1)
-                        }
+                            // If the reminder being scheduled is not the first iteration of the reminder, increment it by one day
+                            if (occurrencesList.size > 0) {
+                                nextDueDate = nextDueDate.plusDays(1)
+                            }
 
-                        while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                            nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        }
-                        // Calculate weeks since start and adjust for the correct interval
-                        val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
-                        if (everyX > 0 && weeksSinceStart % everyX != 0L) {
-                            val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
-                            nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
-                            // Find the exact next due day within the valid interval
                             while (!nextDueDate.matchesRepeatDays(repeatDays)) {
                                 nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
                             }
+                            // Calculate weeks since start and adjust for the correct interval
+                            val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
+                            if (everyX > 0 && weeksSinceStart % everyX != 0L) {
+                                val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
+                                nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
+                                // Find the exact next due day within the valid interval
+                                while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                    nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                                }
+                            }
+
+                            dateTimeOccurenceToSchedule = nextDueDate
                         }
+                        // Set time to the reminder time
+                        dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                        dateTimeOccurenceToSchedule
+                    }
 
-                        dateTimeOccurenceToSchedule = nextDueDate
+                    Frequency.MONTHLY -> {
+                        dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                            startDate
+                        } else {
+                            dateTimeOccurenceToSchedule.plusMonths(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                        }
+                        dateTimeOccurenceToSchedule
                     }
-                    // Set time to the reminder time
-                    dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                    dateTimeOccurenceToSchedule
-                }
-
-                Frequency.MONTHLY -> {
-                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        startDate
-                    } else {
-                        dateTimeOccurenceToSchedule.plusMonths(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                    Frequency.YEARLY -> {
+                        dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                            startDate
+                        } else {
+                            dateTimeOccurenceToSchedule.plusYears(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withMonth(startDate.monthValue).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                        }
+                        dateTimeOccurenceToSchedule
                     }
-                    dateTimeOccurenceToSchedule
                 }
-                Frequency.YEARLY -> {
-                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        startDate
-                    } else {
-                        dateTimeOccurenceToSchedule.plusYears(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withMonth(startDate.monthValue).withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                    }
-                    dateTimeOccurenceToSchedule
-                }
+                occurrencesList.add(dateTimeOccurenceToSchedule)
+            } catch (_: DateTimeException) {
+                // Invalid date like feb 30th
             }
-
-            occurrencesList.add(dateTimeOccurenceToSchedule)
         }
 
 
