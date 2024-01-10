@@ -134,11 +134,6 @@ class PushNotificationManager(
         fun displayNotification(remoteMessage: RemoteMessage, context: Context, pushNotificationManager: PushNotificationManager? = null) {
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
 
-            val notificationFactory = HabiticaLocalNotificationFactory()
-            val notification = notificationFactory.build(
-                remoteMessageIdentifier,
-                context
-            )
             if (pushNotificationManager?.userIsSubscribedToNotificationType(remoteMessageIdentifier) != false) {
                 if (remoteMessage.data.containsKey("sendAnalytics")) {
                     val additionalData = HashMap<String, Any>()
@@ -150,8 +145,23 @@ class PushNotificationManager(
                         additionalData
                     )
                 }
-                notification.setExtras(remoteMessage.data)
-                notification.notifyLocally(remoteMessage.data["title"], remoteMessage.data["body"], remoteMessage.data)
+                val notification = remoteMessage.notification
+                if (notification != null) {
+                    val notificationManager = NotificationManagerCompat.from(context)
+                    notificationManager.notify(notification.channelId, notification)
+                } else {
+                    val notificationFactory = HabiticaLocalNotificationFactory()
+                    val localNotification = notificationFactory.build(
+                        remoteMessageIdentifier,
+                        context
+                    )
+                    localNotification.setExtras(remoteMessage.data)
+                    localNotification.notifyLocally(
+                        remoteMessage.data["title"],
+                        remoteMessage.data["body"],
+                        remoteMessage.data
+                    )
+                }
             }
         }
     }
