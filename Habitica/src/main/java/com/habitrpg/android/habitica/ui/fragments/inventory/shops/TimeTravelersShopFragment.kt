@@ -36,7 +36,14 @@ class TimeTravelersShopFragment : ShopFragment() {
                 val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
                     eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
                 }
-                activity?.supportFragmentManager?.let { subscriptionBottomSheet.show(it, SubscriptionBottomSheetFragment.TAG) }
+                if (isAdded) {
+                    activity?.supportFragmentManager?.let {
+                        subscriptionBottomSheet.show(
+                            it,
+                            SubscriptionBottomSheetFragment.TAG
+                        )
+                    }
+                }
             }
         }
     }

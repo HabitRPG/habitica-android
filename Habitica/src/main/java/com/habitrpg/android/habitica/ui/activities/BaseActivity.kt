@@ -41,6 +41,7 @@ import com.habitrpg.common.habitica.helpers.LanguageHelper
 import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.OutputStream
 import java.util.Date
@@ -239,34 +240,39 @@ abstract class BaseActivity : AppCompatActivity() {
         if (message?.isNotBlank() == true) {
             sharingIntent.putExtra(Intent.EXTRA_TEXT, message)
         }
-        if (image != null) {
-            val fos: OutputStream
-            val uri: Uri
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                val resolver = contentResolver
-                val contentValues = ContentValues()
-                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "${Date()}.png")
-                contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
-                contentValues.put(
-                    MediaStore.MediaColumns.RELATIVE_PATH,
-                    Environment.DIRECTORY_PICTURES
-                )
-                uri =
-                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues) ?: return
-                fos = resolver.openOutputStream(uri, "wt") ?: return
-            } else {
-                val imagesDir =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                        .toString()
-                val file = File(imagesDir, "${Date()}.png")
-                uri = file.absoluteFile.toUri()
-                fos = FileOutputStream(file)
+        try {
+            if (image != null) {
+                val fos: OutputStream
+                val uri: Uri
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    val resolver = contentResolver
+                    val contentValues = ContentValues()
+                    contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "${Date()}.png")
+                    contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+                    contentValues.put(
+                        MediaStore.MediaColumns.RELATIVE_PATH,
+                        Environment.DIRECTORY_PICTURES
+                    )
+                    uri =
+                        resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                            ?: return
+                    fos = resolver.openOutputStream(uri, "wt") ?: return
+                } else {
+                    val imagesDir =
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                            .toString()
+                    val file = File(imagesDir, "${Date()}.png")
+                    uri = file.absoluteFile.toUri()
+                    fos = FileOutputStream(file)
+                }
+                image.compress(Bitmap.CompressFormat.PNG, 100, fos)
+                fos.close()
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
             }
-            image.compress(Bitmap.CompressFormat.PNG, 100, fos)
-            fos.close()
-            sharingIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
+        } catch (_: FileNotFoundException) {
+
         }
-        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
     }
 
     fun reload() {

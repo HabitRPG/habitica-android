@@ -145,17 +145,21 @@ class PushNotificationManager(
                         additionalData
                     )
                 }
+
+                val notificationFactory = HabiticaLocalNotificationFactory()
+                val localNotification = notificationFactory.build(
+                    remoteMessageIdentifier,
+                    context
+                )
+                localNotification.setExtras(remoteMessage.data)
                 val notification = remoteMessage.notification
                 if (notification != null) {
-                    val notificationManager = NotificationManagerCompat.from(context)
-                    notificationManager.notify(notification.channelId, notification)
-                } else {
-                    val notificationFactory = HabiticaLocalNotificationFactory()
-                    val localNotification = notificationFactory.build(
-                        remoteMessageIdentifier,
-                        context
+                    localNotification.notifyLocally(
+                        notification.title ?: remoteMessage.data["title"],
+                        notification.body ?: remoteMessage.data["body"],
+                        remoteMessage.data
                     )
-                    localNotification.setExtras(remoteMessage.data)
+                } else {
                     localNotification.notifyLocally(
                         remoteMessage.data["title"],
                         remoteMessage.data["body"],
