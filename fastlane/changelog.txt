@@ -1,4 +1,4 @@
-New in 4.3.2:
+New in 4.3.3:
 - Reminders should show more reliably now
 - Remaining Armoire equipment no longer counts unreleased items
 - Better error handling when gifting
