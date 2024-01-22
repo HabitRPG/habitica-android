@@ -78,14 +78,7 @@ class ChatRecyclerMessageViewHolder(
         }
         binding.likeBackgroundLayout.setOnClickListener {
             chatMessage?.let {
-                if (it.uuid != userId) {
-                    onLikeMessage?.invoke(it)
-                } else {
-                    (context as? SnackbarActivity)?.showSnackbar(
-                        content = context.getString(R.string.cant_like_own_message),
-                        displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE
-                    )
-                }
+                onLikeMessage?.invoke(it)
             }
         }
         binding.messageText.setOnClickListener { onShouldExpand?.invoke() }
