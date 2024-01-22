@@ -1474,6 +1474,7 @@
     <string name="purchase_saddles_in_market">Saddles instantly raise a Pet to a Mount. You can purchase one from the Market.</string>
     <string name="error_loading_member">Unable to find player</string>
     <string name="error_loading_member_body">There was an error when loading this player\'s data. Please make sure you typed their @username correctly.</string>
+    <string name="preference_email_content_release">Content releases + Events</string>
 
 
     <plurals name="you_x_others">

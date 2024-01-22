@@ -297,6 +297,11 @@
                     android:defaultValue="true"
                     android:title="@string/preference_push_joined_group_plan_mention"
                     android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_push_content_release"
+                    android:defaultValue="true"
+                    android:title="@string/preference_email_content_release"
+                    android:layout="@layout/preference_child_summary"/>
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -378,6 +383,11 @@
                     android:key="preference_email_subscription_reminder"
                     android:defaultValue="true"
                     android:title="@string/preference_email_subscription_reminder"
+                    android:layout="@layout/preference_child_summary"/>
+                <CheckBoxPreference
+                    android:key="preference_email_content_release"
+                    android:defaultValue="true"
+                    android:title="@string/preference_email_content_release"
                     android:layout="@layout/preference_child_summary"/>
             </PreferenceCategory>
         </PreferenceScreen>
