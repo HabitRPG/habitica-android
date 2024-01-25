@@ -144,7 +144,7 @@
     <string name="join">Приєднатись</string>
     <string name="leave">Зупинити пошук</string>
     <string name="guild">Гільдія</string>
-            <string name="setup_task_creativity_3">Завершити творчий проєкт</string>
+    <string name="setup_task_creativity_3">Завершити творчий проєкт</string>
     <string name="setup_task_creativity_2">Попрацювати над творчим проєктом</string>
     <string name="setup_task_creativity_1">Покращити навик володіння ремеслом</string>
     <string name="setup_task_chores_3">Скласти речі в шафі</string>
@@ -1293,4 +1293,15 @@
     <string name="promote_to_manager">Підвищення до менеджера</string>
     <string name="regular_access">Звичайний доступ</string>
     <string name="contrib_tier_description">Якщо ви бачите акаунт з кольоровим іменем та іконкою, це рівень контриб\'ютора! Рівні надаються людям, які допомагають у роботі Habitica: перекладають, кодують чи просто є корисними іншим чином. Чим вищий рівень, тим більший внесок зробив граве(ць/чиня).</string>
+    <string name="report_message_explanation">Варто скаржитись лише на пост, який порушує [Правила спільноти] (https://habitica.com/static/community-guidelines) та/або [Умови використання](https://habitica.com/static/terms). Відправлення неправдивої скарги є порушенням Правил спільноти Габітики.</string>
+    <string name="report_user_explanation">Варто скаржитись лише на пост, який порушує [Правила спільноти] (https://habitica.com/static/community-guidelines) та/або [Умови використання](https://habitica.com/static/terms). Відправлення неправдивої скарги є порушенням Правил спільноти Габітики.</string>
+    <string name="report_player_title">Поскаржитися на %s\?</string>
+    <string name="report_player">Поскаржитися на гравця</string>
+    <string name="report_hint">Причина скарги</string>
+    <string name="report_reason_title_player">Чому ви скаржитесь на цього гравця\?</string>
+    <string name="choosing_class_progress">Вибір класу</string>
+    <string name="enable_class_description">Оберіть клас для того, щоб активувати навички, статистику та ману</string>
+    <string name="subscribe_listitemFaint_description">У вас буде можливість отримати другий шанс, коли у вас закінчаться ОЗ.</string>
+    <string name="need_help_description">Ви можете зв\'язатись з нами, і член нашої команди зробить все можливе, щоб допомогти!</string>
+    <string name="challenges">Випробування</string>
 </resources>

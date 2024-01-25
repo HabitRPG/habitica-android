@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">手芸を習う</string>
     <string name="setup_task_creativity_2">創造的なプロジェクトで働く</string>
     <string name="setup_task_creativity_3">創造的なプロジェクトを完了する</string>
-            <string name="guild">ギルド</string>
+    <string name="guild">ギルド</string>
     <string name="leave">やめる</string>
     <string name="join">参加する</string>
     <string name="delete">削除</string>
@@ -229,7 +229,6 @@
     <string name="opt_out_class">選ばない</string>
     <string name="class_confirmation">%s になります。いいですか?</string>
     <string name="class_changed">あなたは%s に転職した！</string>
-
     <string name="choose_class">クラスを選ぶ</string>
     <string name="dialog_go_back">戻る</string>
     <string name="opt_out_confirmation">選ばないでいい?</string>
@@ -1288,4 +1287,21 @@
     <string name="member_list">メンバーリスト</string>
     <string name="not_set" tools:override="true">未セット</string>
     <string name="promote_to_manager">マネージャーへの昇格</string>
+    <string name="report_player_title">%sを報告しますか？</string>
+    <string name="report_reason_title_player">なぜこのプレーヤーを報告するのですか？</string>
+    <string name="report_user_description">\@%s もブロックします</string>
+    <string name="enable_class_description">クラスを選択して、スキル、ステータス、マナを有効にする</string>
+    <string name="choosing_class_progress">クラスの選択</string>
+    <string name="report_player">プレーヤーを報告する</string>
+    <string name="report_hint">通報の理由</string>
+    <string name="report_reason_title_message">このメッセージを報告する理由は何ですか？</string>
+    <string name="group_tags">グループ・タグ</string>
+    <string name="change_class_confirmation_message">これにより、ショップでアンロックされる装備が変わり、使用可能なスキルが変わります</string>
+    <string name="opt_out_description">この場合、割り当てられたクラスはありません。いつでも設定からクラスシステムを有効にすることで、再度クラスを選択することができます。</string>
+    <string name="subscribe_listitemFaint">HP1で頑張る！</string>
+    <string name="challenges">チャレンジ</string>
+    <string name="subscribe_listitemFaint_description">HPが尽きた場合、もう一度挑戦するオプションがあります。</string>
+    <string name="report_message_explanation">[コミュニティガイドライン](https://habitica.com/static/community-guidelines)および/または[利用規約](https://habitica.com/static/terms)に違反する投稿のみを報告してください。虚偽の報告はHabiticaのコミュニティガイドラインに違反します。</string>
+    <string name="report_user_explanation">[コミュニティガイドライン](https://habitica.com/static/community-guidelines)および/または[利用規約](https://habitica.com/static/terms)に違反するプレイヤーのみを報告してください。虚偽の報告はHabiticaのコミュニティガイドラインに違反します。</string>
+    <string name="need_help_description">ご連絡いただければ、チームのメンバーが最善を尽くします！</string>
 </resources>

@@ -156,7 +156,7 @@
     <string name="setup_task_creativity_1">Inspirez-vous du travail d\'un mentor</string>
     <string name="setup_task_creativity_2">Travailler sur un projet créatif</string>
     <string name="setup_task_creativity_3">Finir un projet créatif</string>
-            <string name="guild">Guilde</string>
+    <string name="guild">Guilde</string>
     <string name="leave">Quitter</string>
     <string name="join">Rejoindre</string>
     <string name="delete">Supprimer</string>
@@ -1268,4 +1268,34 @@
     <string name="x_checkins">%d Connexions</string>
     <string name="send_invite">Envoyer une invitation</string>
     <string name="subscription_credit_canceling">Vos <b>+%d</b> crédits de mois d\'abonnement s\'activeront après avoir annulé</string>
+    <string name="report_player_title">Signaler %s \?</string>
+    <string name="report_reason_title_player">Pourquoi signale tu ce joueur \?</string>
+    <string name="report_user_description">Cette action bloquera également @%s</string>
+    <string name="report_message">Signaler un message</string>
+    <string name="report_successful">%s Signaler</string>
+    <string name="report_failure">Echec du signalement, essaye plus tard</string>
+    <string name="report_player_toolbar_title">Signaler %s</string>
+    <string name="choosing_class_progress">Choisi une classe</string>
+    <string name="group_tags">Catégories de groupe</string>
+    <string name="need_help_description">Tu peut nous contacter et un membre de notre équipe fera de son mieux pour t\'aider!</string>
+    <string name="subscription_hourglasses_3month_timeframe">Sablier de 3 mois</string>
+    <string name="challenges">Défis</string>
+    <string name="report_player">Signaler un joueur</string>
+    <string name="report_hint">Raison du signalement</string>
+    <string name="report_reason_title_message">Pourquoi signale tu ce message \?</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="ban_user">Bannir le joueur</string>
+    <string name="your_tags">Tes catégories</string>
+    <string name="reset_account_description_new">Tu va perdre tout tes niveau, ton or et ton expérience. Toutes tes tâches et leur historique sera effacé (les tâches de défis resteront). Tu perdras tout ton équipement, sauf les items d\'abonné et tes objets commémoratifs, mais tu pourras les racheter. Tu auras besoin de reprendre la même classe et racheter tout son équipement. Tu garderas ta classe actuelle, tes succès, et tes familiers et montures. Pour confirmer le reset, écrit ton mot de passe en dessous.</string>
+    <string name="change_class_confirmation_message">Cela changera l\'équipement débloqué dans les magasins et change tes compétences disponibles</string>
+    <string name="not_set" tools:override="true">Non défini</string>
+    <string name="todo_summary_description_duedate">Ceci est une tâche **%1$s** qui doit être complétée avant le **%2$s**.</string>
+    <string name="assign_to">Assigner à…</string>
+    <string name="positive_and_negative">Positif et Négatif</string>
+    <string name="member_list">Liste des membres</string>
+    <string name="assigned_to">Assigné à</string>
+    <string name="completed_at">Complété à %s</string>
+    <string name="assign">Assigner</string>
+    <string name="manager">Gestionnaire</string>
 </resources>

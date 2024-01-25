@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="some_x">un po\' di %s</string>
+    <string name="ok">OK</string>
+    <string name="syncing_account">Sincronizzazione dell\'account dal telefono</string>
+    <string name="how_did_you_do">Come è andata\?</string>
+    <string name="you_found">Hai trovato…</string>
+    <string name="one_quest_item">1 oggetto della missione</string>
+    <string name="x_quest_item">%d Oggetti missione</string>
+    <string name="x_and_y">%1$s e %2$s</string>
+    <string name="edit_on_phone">Modifica sul telefono</string>
+    <string name="sign_in">Accedi</string>
+    <string name="sign_in_description">Crea elenchi di compiti e tieni traccia dei progressi con il tuo avatar gamificato</string>
+</resources>

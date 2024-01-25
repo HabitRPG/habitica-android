@@ -5,7 +5,7 @@
     <string name="billion_abbrev">十亿</string>
     <string name="trillion_abbrev">兆</string>
     <string name="mystic_hourglasses">神秘沙漏</string>
-    <string name="repeat_daily">每日</string>
+    <string name="repeat_daily">每日任务</string>
     <string name="monthly">每月</string>
     <string name="weekly">每周</string>
     <string name="daily">每日</string>
@@ -15,7 +15,7 @@
     <string name="action_cancel">取消</string>
     <string name="about_title">关于</string>
     <string name="are_you_sure">你确定吗？</string>
-    <string name="stats">统计</string>
+    <string name="stats">属性</string>
     <plurals name="x_rewards">
         <item quantity="other">%d个奖励</item>
     </plurals>

@@ -66,4 +66,6 @@
     <string name="login_btn_google">Iniciar sesión con Google</string>
     <string name="logout_description">Salir de tu cuenta</string>
     <string name="login_validation_error_title">Error de validación</string>
+    <string name="quadrillion_abbrev">Qd</string>
+    <string name="complete_task_title">Completar una Tarea</string>
 </resources>

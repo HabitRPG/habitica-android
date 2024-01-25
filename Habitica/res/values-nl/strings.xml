@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">Studeer een meester van het ambacht</string>
     <string name="setup_task_creativity_2">Aan een creatief project werken</string>
     <string name="setup_task_creativity_3">Een creatief project afronden</string>
-            <string name="guild">Gilde</string>
+    <string name="guild">Gilde</string>
     <string name="leave">Verlaten</string>
     <string name="join">Toetreden</string>
     <string name="delete">Verwijderen</string>
@@ -994,4 +994,6 @@
     <string name="positive_sentence">positief</string>
     <string name="negative_sentence">negatief</string>
     <string name="usernames_party">%s\'s Groep</string>
+    <string name="your_tags">Jouw tags</string>
+    <string name="challenge_tags">Uitdagingen tags</string>
 </resources>
