@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">Studia un artista</string>
     <string name="setup_task_creativity_2">Lavora su un progetto creativo</string>
     <string name="setup_task_creativity_3">Completa un progetto creativo</string>
-            <string name="guild">Gilda</string>
+    <string name="guild">Gilda</string>
     <string name="leave">Abbandona</string>
     <string name="join">Partecipa</string>
     <string name="delete">Elimina</string>
@@ -229,7 +229,6 @@
     <string name="opt_out_class">Rinuncia</string>
     <string name="class_confirmation">Vuoi davvero essere un %s?</string>
     <string name="class_changed">Ora sei un %s!</string>
-
     <string name="choose_class">Scegli classe</string>
     <string name="dialog_go_back">Ritorna</string>
     <string name="opt_out_confirmation">Vuoi davvero rinunciare?</string>
@@ -1250,4 +1249,5 @@
         <item quantity="one">Tu</item>
         <item quantity="other">Voi, %d altri</item>
     </plurals>
+    <string name="x_and_y">%1$s e %2$s</string>
 </resources>

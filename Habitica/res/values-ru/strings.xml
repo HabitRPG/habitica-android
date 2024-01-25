@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">Улучшить навык владения ремеслом</string>
     <string name="setup_task_creativity_2">Поработать над творческим проектом</string>
     <string name="setup_task_creativity_3">Закончить творческий проект</string>
-            <string name="guild">Гильдия</string>
+    <string name="guild">Гильдия</string>
     <string name="leave">Покинуть</string>
     <string name="join">Присоединиться</string>
     <string name="delete">Удалить</string>
@@ -226,7 +226,7 @@
     <string name="select_class">Выберите класс</string>
     <string name="opt_out_class">Отказаться</string>
     <string name="class_confirmation">Вы уверены, что хотите продолжить как %s\?</string>
-    <string name="class_changed">Теперь вы %s!</string>
+    <string name="class_changed">Вы %s!</string>
     <string name="choose_class">Выбрать класс</string>
     <string name="dialog_go_back">Вернуться назад</string>
     <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>

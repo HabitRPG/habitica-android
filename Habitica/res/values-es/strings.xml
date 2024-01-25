@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">Estudiar la técnica de un profesional</string>
     <string name="setup_task_creativity_2">Trabajar en proyecto creativo</string>
     <string name="setup_task_creativity_3">Terminar proyecto creativo</string>
-            <string name="guild">Gremio</string>
+    <string name="guild">Gremio</string>
     <string name="leave">Abandonar</string>
     <string name="join">Unirse</string>
     <string name="delete">Borrar</string>
@@ -229,18 +229,18 @@
     <string name="select_class">Elegir Clase</string>
     <string name="opt_out_class">No elegir</string>
     <string name="class_confirmation">¿Seguro que quieres ser %s?</string>
-    <string name="class_changed">¡Ahora eres un %s!</string>
+    <string name="class_changed">¡Eres un %s!</string>
     <string name="choose_class">Elegir clase</string>
     <string name="dialog_go_back">Volver</string>
-    <string name="opt_out_confirmation">¿Seguro que no quieres elegir?</string>
+    <string name="opt_out_confirmation">¿Seguro que no quieres elegir clase\?</string>
     <string name="change_class">Cambiar de clase</string>
     <string name="change_class_description">Cambia tu clase y reembolsa tus puntos de atributo por 3 gemas.</string>
     <string name="enable_class">Activar sistema de clases</string>
     <string name="changing_class_progress">Cambio de clase</string>
     <string name="by_email">Por correo electrónico</string>
-    <string name="invite_existing_users">Invitar a usuarios registrados</string>
+    <string name="invite_existing_users">Invitar a jugadores registrados</string>
     <string name="send">Enviar</string>
-    <string name="invite">Invitar a amigos</string>
+    <string name="invite">Buscar miembros</string>
     <string name="invite_username_description">Si tienes amigos que ya usan Habitica, invítalos indicando su nombre de usuario aquí.</string>
     <string name="invite_email_description">Si un amigo se apunta a Habitica a través del correo electrónico que le has enviado, ¡será automáticamente invitado a tu equipo!</string>
     <string name="add_invites">Añadir invitaciones</string>
@@ -250,13 +250,13 @@
     <string name="share_hatched">¡He criado un %1$s %2$s en Habitica realizando mis tareas diarias!</string>
     <string name="share_raised">¡He conseguido una montura de %1$s en #Habitica realizando mis tareas diarias!</string>
     <string name="open_in_store">Abrir en Play Store</string>
-    <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase? Te costará 3 gemas.</string>
-    <string name="change_class_equipment_warning">Aviso: Ya no podrás comprar equipamiento para la clase %s.</string>
+    <string name="change_class_confirmation">¿Seguro que quieres cambiar de clase\? Te costará 3 gemas.</string>
+    <string name="change_class_equipment_warning">Esto te devolverá todos los puntos de atributo y cambiará el equipamiento desbloqueado en las tiendas y las habilidades que posees</string>
     <string name="confirm">Confirmar</string>
     <string name="market">Mercado</string>
     <string name="timeTravelers">Viajeros del tiempo</string>
     <string name="seasonalShop">Tienda estacional</string>
-    <string name="empty_inbox">No tienes ningún mensaje. ¡Puedes enviar un mensaje nuevo a un usuario desde los mensajes de chat públicos que hayan enviado!</string>
+    <string name="empty_inbox">No tienes ningún mensaje. ¡Puedes enviar un mensaje nuevo a un jugador desde los mensajes de chat públicos que hayan enviado!</string>
     <string name="party_invite">Desbloquéala invitando a tus amigos</string>
     <string name="login_incentive">Desbloquear iniciando sesión en Habitica regularmente</string>
     <string name="create_account">Desbloquear creando una cuenta</string>
@@ -450,7 +450,6 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Restablecer Cuenta</string>
-
     <string name="delete_account">Borrar Cuenta</string>
     <string name="delete_account_description">¿Estás seguro\? ¡Esta opción eliminará tu cuenta para siempre, y nunca se podrá restaurar! Tendrás que registrar una nueva cuenta para usar Habitica nuevamente. Las Gemas depositadas o gastadas no serán reembolsadas. Si estás absolutamente seguro, escribe tu contraseña en el cuadro de abajo.</string>
     <string name="reset_account_confirmation">Reestablecer mi cuenta</string>
@@ -674,7 +673,7 @@
     <string name="create_account_short">Crear una cuenta</string>
     <string name="login_incentive_short_count">%d conexiones</string>
     <string name="login_incentive_short">Conéctate regularmente a Habitica</string>
-    <string name="party_invite_short">Invitar amigos</string>
+    <string name="party_invite_short">Buscar miembros</string>
     <string name="login_incentive_count">Desbloqueado al conectarse en Habitica %d veces.</string>
     <string name="user_level_with_class_unabbreviated">Nivel %1$d %2$s</string>
     <string name="thanks_for_supporting">Gracias por suscribirte</string>
@@ -1123,7 +1122,7 @@
     <string name="discard_changes_to_task_message">¿Está seguro de descartar los cambios de esta tarea\?</string>
     <string name="subscription_confirmation">Ahora estás suscrito por 1 mes</string>
     <string name="discard">Descartar</string>
-    <string name="class_confirmation_price">¿Quieres cambaria tu clase de %s por %d gemas\?</string>
+    <string name="class_confirmation_price">¿Quieres cambiar tu clase a %s por %d Gemas\?</string>
     <string name="use_item">Usa el objeto en un miebro del grupo</string>&gt;
     <string name="unsaved_changes">Cambios sin guardar</string>
     <string name="gift_confirmation_text_gems_new">Usted envió %s %s gemas.</string>
@@ -1133,7 +1132,7 @@
     <string name="quest_party_required_title">Tienes que estar en un equipo antes de empezar una misión</string>
     <string name="push_notification_system_settings_reminders">Permite las notificaciones de Habitica en Ajustes para recibir recordatorios</string>
     <string name="enable_notifications">Habilitar Notificaciones</string>
-    <string name="push_notification_system_settings_description">"Permitir las notificaciones de Habitica en los  Ajustes de la app para recibir notificaciones push"</string>
+    <string name="push_notification_system_settings_description">Permitir las notificaciones de Habitica en los Ajustes de la app para recibir notificaciones push</string>
     <string name="push_notification_system_settings_title">Notificaciones Desactivadas</string>
     <string name="title">Título</string>
     <string name="positive_sentence">positivo</string>
@@ -1143,4 +1142,16 @@
     <string name="armoireEquipment_new">¡Encontraste una pieza de equipamiento rara en el Armario!</string>
     <string name="armoireFood_new">Rebuscas en el Armario y encuentras comida. ¿Qué hace eso aquí\?</string>
     <string name="create_new_party">Crear un nuevo equipo</string>
+    <string name="opt_out_description">Esto hará que no tengas una clase asignada. Podrás elegir una clase en cualquier momento al activar el sistema de clase en el menú de Ajustes.</string>
+    <string name="enable_class_description">Elige una clase para activar habilidades, estadísticas y maná</string>
+    <string name="choosing_class_progress">Elegir una Clase</string>
+    <string name="change_class_message">Esto eliminará tu clase actual y te devolverá todos los puntos de atributo. Después podrás seleccionar una nueva clase</string>
+    <string name="change_class_confirmation_message">Esto cambiará el equipamiento desbloqueado en las tiendas y las habilidades que posees</string>
+    <string name="your_tags">Tus Etiquetas</string>
+    <string name="challenge_tags">Etiquetas de Desafío</string>
+    <string name="group_tags">Etiquetas de Grupo</string>
+    <string name="x_and_y">%1$s y %2$s</string>
+    <string name="level_abbreviated">Nivel %d</string>
+    <string name="change_class_selected_confirmation">¿Quieres cambiar tu clase a %1$s\?</string>
+    <string name="class_changed_description">Ahora puedes usar habilidades de %s y comprar equipamiento específico en las tiendas. Aumenta tu nivel para ganar puntos de atributo, que sirven para mejorar tus habilidades.</string>
 </resources>

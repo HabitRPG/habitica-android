@@ -3,17 +3,18 @@
     <string name="sidebar_tasks">任务</string>
     <string name="sidebar_skills">技能</string>
     <string name="sidebar_section_social">社交</string>
-    <string name="sidebar_inbox">讯息</string>
+    <string name="sidebar_inbox">信息</string>
     <string name="sidebar_party">队伍</string>
     <string name="sidebar_challenges">挑战</string>
-    <string name="sidebar_section_inventory">物品栏</string>
-    <string name="sidebar_avatar">头像自定义</string>
+    <string name="sidebar_section_inventory">背包</string>
+    <string name="sidebar_avatar">角色自定义</string>
     <string name="sidebar_equipment">装备</string>
-    <string name="sidebar_stable">宠物和坐骑</string>
+    <string name="sidebar_stable">宠物与坐骑</string>
     <string name="sidebar_news">新闻</string>
     <string name="sidebar_about">关于</string>
     <string name="sidebar_shops">商店</string>
-    <string name="sidebar_stats">统计</string>
+    <string name="sidebar_stats">属性</string>
     <string name="sidebar_subscription">订阅</string>
     <string name="sidebar_gems">购买宝石</string>
+    <string name="sidebar_avatar_equipment">角色与装备</string>
 </resources>

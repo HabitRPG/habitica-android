@@ -46,8 +46,9 @@
     <string name="login_validation_error_title">Errore di validazione</string>
     <string name="login_validation_error_fieldsmissing">Devi compilare tutti i campi.</string>
     <plurals name="x_rewards">
-        <item quantity="one">Aggiungi Ricompensa</item>
-        <item quantity="other"/>
+        <item quantity="one">%d Ricompensa</item>
+        <item quantity="many">%d Ricompense</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="create_task_title">Crea una Attività</string>
     <string name="complete_task_title">Completa una Attività</string>
