@@ -353,16 +353,21 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         if (remindersItem == null) return null
 
         val reminderTime = remindersItem.time?.parseToZonedDateTime() ?: return null
+        var dateTimeOccurenceToSchedule = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
+        val occurrencesList = mutableListOf<ZonedDateTime>()
+
+        // If the reminder is a todo, only schedule sole dueDate/time occurrence. Otherwise, schedule multiple occurrences in advance
+        if (this.type == TaskType.TODO) {
+            occurrencesList.add(this.dueDate?.toZonedDateTime()?.withHour(reminderTime.hour)?.withMinute(reminderTime.minute) ?: return null)
+            return occurrencesList
+        }
+
         val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
         var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val frequency = this.frequency ?: return null
         val everyX = this.everyX ?: 1
         val repeatDays = this.repeat
         startDate = startDate.withHour(reminderTime.hour).withMinute(reminderTime.minute)
-
-        var dateTimeOccurenceToSchedule = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
-
-        val occurrencesList = mutableListOf<ZonedDateTime>()
 
         while (occurrencesList.size < occurrences) {
             // Increment currentDate based on the frequency

@@ -59,9 +59,13 @@ class TaskAlarmManager(
      */
     private fun setAlarmsForTask(task: Task) {
         CoroutineScope(Dispatchers.IO).launch {
+            val reminderOccurencesToSchedule = if (task.type == TaskType.TODO) { 1 } else {
+                // For dailies, we schedule multiple reminders in advance
+                upcomingReminderOccurrencesToSchedule
+            }
             task.reminders?.let { reminders ->
                 for (reminder in reminders) {
-                    val upcomingReminders = task.getNextReminderOccurrences(reminder, upcomingReminderOccurrencesToSchedule)
+                    val upcomingReminders = task.getNextReminderOccurrences(reminder, reminderOccurencesToSchedule)
                     upcomingReminders?.forEachIndexed { index, reminderNextOccurrenceTime ->
                         reminder?.time = reminderNextOccurrenceTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                         setAlarmForRemindersItem(task, reminder, index)
