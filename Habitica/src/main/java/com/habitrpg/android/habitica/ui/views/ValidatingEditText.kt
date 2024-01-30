@@ -29,6 +29,7 @@ class ValidatingEditText @JvmOverloads constructor(
         get() = binding.editText.hint
         set(value) {
             binding.editText.hint = value
+            binding.inputLayout.hint = value
         }
     var validator: ((String?) -> Boolean)? = null
 
