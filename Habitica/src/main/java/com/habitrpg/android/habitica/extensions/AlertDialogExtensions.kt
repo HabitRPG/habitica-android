@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.extensions
 
-import android.content.DialogInterface
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 

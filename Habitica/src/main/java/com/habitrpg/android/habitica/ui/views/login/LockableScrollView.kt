@@ -11,7 +11,7 @@ class LockableScrollView(context: Context, attrs: AttributeSet) : NestedScrollVi
 
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         return if (ev.action == MotionEvent.ACTION_DOWN) {
-            if (isScrollable) super.onTouchEvent(ev) else isScrollable
+            if (isScrollable) super.onTouchEvent(ev) else false
         } else {
             super.onTouchEvent(ev)
         }

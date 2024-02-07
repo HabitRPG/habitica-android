@@ -16,4 +16,5 @@
     <string name="sidebar_stats">Statuswerte</string>
     <string name="sidebar_subscription">Abonnement</string>
     <string name="sidebar_gems">Kaufe Edelsteine</string>
+    <string name="sidebar_avatar_equipment">Avatar &amp; Austrüstung</string>
 </resources>

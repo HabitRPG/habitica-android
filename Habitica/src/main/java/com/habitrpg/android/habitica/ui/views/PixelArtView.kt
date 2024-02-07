@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views
 
-import android.graphics.Bitmap
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap

@@ -15,4 +15,63 @@
     <string name="action_cancel">Annuleren</string>
     <string name="about_title">Over</string>
     <string name="are_you_sure">Weet je het zeker\?</string>
+    <string name="stats">Statistieken</string>
+    <string name="trivial_sentence">triviaal</string>
+    <string name="email_username">Email/Gebruikersnaam</string>
+    <string name="password">Wachtwoord</string>
+    <string name="login_validation_error_fieldsmissing">Je moet alle velden invullen</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Gewoonte</item>
+        <item quantity="other">%d Gewoontes</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Dagelijkse taak</item>
+        <item quantity="other">%d Dagelijkse taken</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Taak</item>
+        <item quantity="other">%d Taken</item>
+    </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">%d keer gemarkeerd</item>
+        <item quantity="other">%d keren gemarkeerd, verstopt</item>
+    </plurals>
+    <string name="retry">Opnieuw</string>
+    <string name="gems">Edelstenen</string>
+    <string name="gold_capitalized">Goud</string>
+    <string name="trivial">Triviaal</string>
+    <string name="easy">Makkelijk</string>
+    <string name="medium">Middelmatig</string>
+    <string name="hard">Moeilijk</string>
+    <string name="new_task">Nieuwe Taak</string>
+    <string name="avatar">Personage</string>
+    <string name="gold_plural">goud</string>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Beloning</item>
+        <item quantity="other">%d Beloningen</item>
+    </plurals>
+    <string name="create_task_title">Maak een Taak</string>
+    <string name="complete_task_title">Maak een taak af</string>
+    <string name="create_task">Maak %s</string>
+    <string name="new_task_x">Nieuwe %s</string>
+    <string name="save_task_x">Sla %s op</string>
+    <string name="task">Taak</string>
+    <string name="medium_sentence">middelmatig</string>
+    <string name="habits">Gewoontes</string>
+    <string name="dailies">Dagelijks</string>
+    <string name="todos">Taken</string>
+    <string name="reward">Beloning</string>
+    <string name="todo">Taak</string>
+    <string name="hard_sentence">moeilijk</string>
+    <string name="rewards">Beloningen</string>
+    <string name="habit">Gewoonte</string>
+    <string name="LoginActivityName">Welkom</string>
+    <string name="easy_sentence">makkelijk</string>
+    <string name="emailAddress">Email adres</string>
+    <string name="confirmpassword">Bevestig wachtwoord</string>
+    <string name="login_btn_google">Inloggen met Google</string>
+    <string name="logout">Uitloggen</string>
+    <string name="user_level">Niveau %d</string>
+    <string name="register_btn">Registreren</string>
+    <string name="username">Gebruikersnaam</string>
 </resources>

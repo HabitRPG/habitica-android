@@ -37,8 +37,8 @@ class InboxViewModel @Inject constructor(
     userViewModel: MainUserViewModel,
     val socialRepository: SocialRepository
 ) : BaseViewModel(userRepository, userViewModel) {
-    val recipientID: String? = savedStateHandle.get("userID")
-    val recipientUsername: String? = savedStateHandle.get("username")
+    val recipientID: String? = savedStateHandle["userID"]
+    val recipientUsername: String? = savedStateHandle["username"]
 
     private var memberIDFlow = MutableStateFlow<String?>(null)
     val memberIDState: StateFlow<String?> = memberIDFlow
@@ -54,7 +54,6 @@ class InboxViewModel @Inject constructor(
         .filterNotNull()
         .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
         .asLiveData()
-    fun getMemberData(): LiveData<Member?> = member
 
     fun setMemberID(memberID: String) {
         if (memberID == memberIDState.value) return

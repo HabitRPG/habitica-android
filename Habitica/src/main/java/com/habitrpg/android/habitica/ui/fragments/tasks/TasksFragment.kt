@@ -23,7 +23,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
-import com.habitrpg.android.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType

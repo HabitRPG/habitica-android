@@ -205,7 +205,6 @@
     <string name="opt_out_class">Alege să nu iei parte</string>
     <string name="class_confirmation">Ești sigur că vrei să fii %s?</string>
     <string name="class_changed">De acum ești %s!</string>
-
     <string name="choose_class">Alege Clasa</string>
     <string name="dialog_go_back">Mergi înapoi</string>
     <string name="opt_out_confirmation">Ești sigur că vrei să nu iei parte?</string>
@@ -396,7 +395,6 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Resetează Contul</string>
-    <string name="reset_account_description">ATENȚIE! Urmează să resetezi multiple părți din contul tău. Descurajăm viguros acest lucru, însă unele persoane îl consideră folositor la început, după utilizarea pentru scurt timp a site-ului. \n\nÎți vei pierde nivelul, aurul și punctele de experiență. Toate sarcinile tale (cu excepția celor din provocări) vor fi șterse permanent și vei pierde tot istoricul. Îți vei pierde tot echipamentul, dar vei putea să îl cumperi din nou, incluzând echipamentul în ediție limitată și obiectele Misterioase pentru abonați pe care le deții deja (va fi nevoie să fii în clasa corectă pentru a putea re-cumpăra echipamentul specific clasei). Îți vei păstra clasa actuală, împreună cu animalele de companie și animalele de încălecat. E posibil să preferi utilizarea Globului Renașterii, opțiune mult mai sigură, care îți va păstra sarcinile și echipamentul. </string>
     <string name="delete_account">Șterge Contul</string>
     <string name="delete_account_description">Ești sigur(ă)? Această acțiune îți va șterge contul pentru totdeauna, cu imposibilitatea recuperării acestuia. Pentru a utiliza Habitica din nou, va fi necesar să te înregistrezi cu un cont nou. Nestematele deținute sau cheltuite nu vor fi restituite. Dacă ești absolut sigur(ă), introdu-ți parola în căsuța de mai jos. </string>
     <string name="reset_account_confirmation">resetează-mi contul</string>
@@ -505,4 +503,5 @@
     <string name="questShop_owner_long">Ian Ghidul Expedițiilor</string>
     <string name="seasonalShop_owner_long">Vrăjitoarea Sezonului</string>
     <string name="rage_attack">Atac furios:</string>
+    <string name="x_and_y">%1$s și %2$s</string>
 </resources>

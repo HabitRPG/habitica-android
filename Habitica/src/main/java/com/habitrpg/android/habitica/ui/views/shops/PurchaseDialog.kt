@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views.shops
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -27,7 +26,6 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.helpers.HitType
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.shops.Shop
 import com.habitrpg.android.habitica.models.shops.ShopItem
 import com.habitrpg.android.habitica.models.user.OwnedItem
@@ -47,6 +45,7 @@ import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientS
 import com.habitrpg.android.habitica.ui.views.tasks.form.StepperValueFormView
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.internal.managers.ViewComponentManager
 import kotlinx.coroutines.Dispatchers

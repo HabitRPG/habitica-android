@@ -25,7 +25,7 @@ class ScoreTaskLocallyInteractor {
 
             var nextDelta = 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
 
-            if (task.checklist?.size ?: 0 > 0) {
+            if ((task.checklist?.size ?: 0) > 0) {
                 if (task.type == TaskType.TODO) {
                     nextDelta *= 1 + (
                         task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }

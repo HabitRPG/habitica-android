@@ -345,11 +345,11 @@ class TaskSchedulingControls @JvmOverloads constructor(
     private fun generateSummary() {
         var frequencyQualifier = ""
 
-        when (frequency) {
-            Frequency.DAILY -> frequencyQualifier = if (everyX == 1) "day" else "days"
-            Frequency.WEEKLY -> frequencyQualifier = if (everyX == 1) "week" else "weeks"
-            Frequency.MONTHLY -> frequencyQualifier = if (everyX == 1) "month" else "months"
-            Frequency.YEARLY -> frequencyQualifier = if (everyX == 1) "year" else "years"
+        frequencyQualifier = when (frequency) {
+            Frequency.DAILY -> if (everyX == 1) "day" else "days"
+            Frequency.WEEKLY -> if (everyX == 1) "week" else "weeks"
+            Frequency.MONTHLY -> if (everyX == 1) "month" else "months"
+            Frequency.YEARLY -> if (everyX == 1) "year" else "years"
         }
 
         var weekdays = if (frequency == Frequency.WEEKLY) {

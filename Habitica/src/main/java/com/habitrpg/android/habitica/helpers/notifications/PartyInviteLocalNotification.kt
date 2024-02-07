@@ -18,7 +18,7 @@ class PartyInviteLocalNotification(context: Context, identifier: String?) : Habi
 
         val acceptInviteIntent = Intent(context, LocalNotificationActionReceiver::class.java)
         acceptInviteIntent.action = res.getString(R.string.accept_party_invite)
-        val groupID = data.get("groupID")
+        val groupID = data["groupID"]
         acceptInviteIntent.putExtra("groupID", groupID)
         acceptInviteIntent.putExtra("NOTIFICATION_ID", notificationId)
         val pendingIntentAccept = PendingIntent.getBroadcast(

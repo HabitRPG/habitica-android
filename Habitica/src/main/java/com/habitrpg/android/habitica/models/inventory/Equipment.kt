@@ -21,6 +21,7 @@ open class Equipment : RealmObject(), BaseMainObject {
     var con: Int = 0
     var str: Int = 0
     var per: Int = 0
+    var released: Boolean = true
 
     @SerializedName("int")
     var _int: Int = 0

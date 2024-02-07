@@ -50,6 +50,10 @@ abstract class HabiticaLocalNotification(
             notificationBuilder = notificationBuilder.setContentText(message)
         }
 
+        if (this.title == null && this.message == null) {
+            return
+        }
+
         val notificationId = getNotificationID(data)
         this.setNotificationActions(notificationId, data)
 

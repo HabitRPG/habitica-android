@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tutorial_overview">Eto nas! Ispunio sam nekoliko zadataka za tebe na osnovu tvojih interesa. Pokušaj dodati nekoliko vlastitih. Možeš urediti bilo koji zadatak klikom na njegov naziv.</string>
+    <string name="tutorial_overview">Eto nas! Ispunili smo nekoliko zadataka za tebe na osnovu tvojih interesa. Pokušaj dodati nekoliko vlastitih. Možeš urediti bilo koji zadatak klikom na njegov naziv.</string>
     <string name="tutorial_habits_1">Prve na redu su Navike. To mogu biti pozitivne Navike koje želiš poboljšati ili loše Navike koje želiš prekinuti.</string>
     <string name="tutorial_habits_2">Svaki put kad napraviš pozitivnu Naviku, klikni na + kako bi dobio/la iskustvo i zlatnike!</string>
     <string name="tutorial_habits_3">Ako popustiš i napraviš lošu Naviku, klikom na - ćeš umanjiti zdravlje svog avatara i time pomoći sebi da ostaneš odgovoran/na.</string>
@@ -15,4 +15,5 @@
     <string name="tutorial_skills">Vještine su posebne sposobnosti koje imaju jake učinke! Klikni na sposobnost kako bi ju iskoristio/la. Koštat će te mane (plava traka), koju zaradiš prijavljujući se svaki dan i izvršavajući svoje zadatke u stvarnom životu. Provjeri Često Postavljena Pitanja u meniju za više informacija!</string>
     <string name="tutorial_party">Ovo je mjesto gdje se ti i tvoji prijatelji možete držati svojih ciljeva i boriti protiv čudovišta pomoću svojih zadataka!</string>
     <string name="tutorial_stats">Klikni na sivi gumb kako bi raspodijelio/la mnoštvo svojih statističkih bodova odjednom, ili klikni na strelice kako bi ih dodavao/la jednog po jednog.</string>
+    <string name="tutorial_party_created">Dobrodošao/la u svoju Družinu! Možeš naći nove članove na popisu igrača koji traže Družinu ili pozvati prijatelje kako bi dobio/la Svitak za Bazi-Lista Pustolovinu.\n\nPosjeti Podršku kako bi naučio/la više o Družinama.</string>
 </resources>

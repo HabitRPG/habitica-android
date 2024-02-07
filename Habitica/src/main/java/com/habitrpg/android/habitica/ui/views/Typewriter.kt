@@ -24,7 +24,7 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
     private var delay: Long = 30
 
     val isAnimating: Boolean
-        get() = index < stringBuilder?.length ?: 0
+        get() = index < (stringBuilder?.length ?: 0)
 
     constructor(context: Context) : super(context) {
         setupTextColors(context)

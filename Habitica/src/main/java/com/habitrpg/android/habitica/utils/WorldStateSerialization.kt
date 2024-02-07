@@ -68,7 +68,7 @@ class WorldStateSerialization : JsonDeserializer<WorldState> {
                     state.events = events
                 }
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
 
         return state

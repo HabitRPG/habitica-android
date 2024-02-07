@@ -14,4 +14,58 @@
     <string name="action_cancel">Cancelar</string>
     <string name="about_title">Acerca de</string>
     <string name="are_you_sure">¿Estás seguro\?</string>
+    <string name="stats">Atributos</string>
+    <string name="rewards">Recompensas</string>
+    <string name="habit">Hábito</string>
+    <string name="reward">Recompensa</string>
+    <string name="password">Contraseña</string>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Recompensa</item>
+        <item quantity="other">%d Recompensas</item>
+    </plurals>
+    <string name="confirmpassword">Confirmar contraseña</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="login_validation_error_fieldsmissing">Tienes que rellenar todos los campos.</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Hábito</item>
+        <item quantity="other">%d Hábitos</item>
+    </plurals>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Tarea diaria</item>
+        <item quantity="other">%d Tareas diarias</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Quehacer</item>
+        <item quantity="other">%d Quehaceres</item>
+    </plurals>
+    <string name="gems">Gemas</string>
+    <string name="gold_plural">oro</string>
+    <string name="gold_capitalized">Oro</string>
+    <string name="trivial">Trivial</string>
+    <string name="easy">Fácil</string>
+    <string name="medium">Intermedio</string>
+    <string name="hard">Difícil</string>
+    <string name="habits">Hábitos</string>
+    <string name="dailies">Tareas diarias</string>
+    <string name="todos">Quehaceres</string>
+    <string name="user_level_long">Nivel %d</string>
+    <string name="login_btn">Iniciar sesión</string>
+    <string name="register_btn">Registrarse</string>
+    <string name="LoginActivityName">Bienvenido</string>
+    <string name="trivial_sentence">trivial</string>
+    <string name="easy_sentence">fácil</string>
+    <string name="medium_sentence">intermedio</string>
+    <string name="hard_sentence">difícil</string>
+    <string name="todo">Quehacer</string>
+    <string name="new_task">Nueva Tarea</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level">Nivel %d</string>
+    <string name="username">Usuario</string>
+    <string name="email_username">Correo/Usuario</string>
+    <string name="emailAddress">Correo electrónico</string>
+    <string name="login_btn_google">Iniciar sesión con Google</string>
+    <string name="logout_description">Salir de tu cuenta</string>
+    <string name="login_validation_error_title">Error de validación</string>
+    <string name="quadrillion_abbrev">Qd</string>
+    <string name="complete_task_title">Completar una Tarea</string>
 </resources>

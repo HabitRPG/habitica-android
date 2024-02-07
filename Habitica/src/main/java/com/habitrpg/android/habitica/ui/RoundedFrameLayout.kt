@@ -21,7 +21,7 @@ class RoundedFrameLayout @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         clipPath.reset()
-        val radius = if (isCirclular) (canvas.height / 2).toFloat() else radius
+        val radius = if (isCirclular) (height / 2).toFloat() else radius
         canvas.getClipBounds(bounds)
         clipPath.addRoundRect(bounds.toRectF(), radius, radius, Path.Direction.CW)
         canvas.clipPath(clipPath)

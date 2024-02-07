@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.dialogs
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
@@ -9,9 +8,9 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
-import com.habitrpg.common.habitica.extensions.dpToPx
 
 class HabiticaProgressDialog(context: Context) : HabiticaAlertDialog(context) {
 

@@ -51,12 +51,6 @@ class HabiticaRecyclerView @JvmOverloads constructor(
         }
     }
 
-    var emptyItem: EmptyItem?
-        get() = emptyAdapter.emptyItem
-        set(value) {
-            emptyAdapter.emptyItem = value
-        }
-
     var emptyViewBuilder: (() -> View)?
         get() = emptyAdapter.emptyViewBuilder
         set(value) {

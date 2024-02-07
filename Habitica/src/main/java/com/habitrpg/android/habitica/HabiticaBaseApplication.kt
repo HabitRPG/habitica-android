@@ -114,7 +114,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     override fun onCreate() {
         super.onCreate()
         lifecycleTracker = ApplicationLifecycleTracker(sharedPrefs)
-        ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleTracker);
+        ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleTracker)
 
         if (!BuildConfig.DEBUG) {
             try {

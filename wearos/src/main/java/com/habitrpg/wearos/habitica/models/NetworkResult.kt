@@ -2,12 +2,9 @@ package com.habitrpg.wearos.habitica.models
 
 sealed class NetworkResult<out T : Any> {
     val isResponseFresh: Boolean
-        get() = if (this is Success) {
-            this.isFresh
-        } else if (this is Error) {
-            this.isFresh
-        } else {
-            false
+        get() = when (this) {
+            is Success -> this.isFresh
+            is Error -> this.isFresh
         }
     val responseData: T?
         get() {

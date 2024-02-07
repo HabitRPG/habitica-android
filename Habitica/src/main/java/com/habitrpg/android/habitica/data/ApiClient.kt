@@ -248,7 +248,7 @@ interface ApiClient {
 
     suspend fun reroll(): User?
 
-    suspend fun resetAccount(): Void?
+    suspend fun resetAccount(password: String): Void?
     suspend fun deleteAccount(password: String): Void?
 
     suspend fun togglePinnedItem(pinType: String, path: String): Void?
@@ -283,4 +283,5 @@ interface ApiClient {
     suspend fun markTaskNeedsWork(taskID: String, userID: String): Task?
     suspend fun retrievePartySeekingUsers(page: Int): List<Member>?
     suspend fun getGroupInvites(groupId: String, includeAllPublicFields: Boolean?): List<Member>?
+    suspend fun syncUserStats(): User?
 }

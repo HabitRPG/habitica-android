@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">Studeer een meester van het ambacht</string>
     <string name="setup_task_creativity_2">Aan een creatief project werken</string>
     <string name="setup_task_creativity_3">Een creatief project afronden</string>
-            <string name="guild">Gilde</string>
+    <string name="guild">Gilde</string>
     <string name="leave">Verlaten</string>
     <string name="join">Toetreden</string>
     <string name="delete">Verwijderen</string>
@@ -230,7 +230,6 @@
     <string name="opt_out_class">Afmelden</string>
     <string name="class_confirmation">Weet je zeker dat je een %s wilt zijn?</string>
     <string name="class_changed">Je bent nu een %s!</string>
-
     <string name="choose_class">Kies een Klasse</string>
     <string name="dialog_go_back">Ga terug</string>
     <string name="opt_out_confirmation">Weet je zeker dat je je wil afmelden?</string>
@@ -450,7 +449,6 @@
     <string name="int_abbrv">INT</string>
     <string name="con_abbrv">WEE</string>
     <string name="reset_account">Account Resetten</string>
-    <string name="reset_account_description">WAARSCHUWING! Dit stelt grote delen van je account opnieuw in. Het wordt ten zeerste afgeraden, maar sommige mensen vinden het handig in het begin, na kort met de site te hebben gespeeld. \n\nAl je taken (behalve die van uitdagingen) zullen permanent verwijderd worden, en je zult al hun historische data verliezen. Je zult al je uitrusting verliezen, maar je kunt ze allemaal terugkopen, inclusief alle uitrusting met beperkte oplage of Mysterievoorwerpen voor abonnees die je al bezit (je zul wel in de juiste klasse moeten zijn om klassegebonden uitrusting terug te kopen). Je zult je huidige klasse en je huisdieren en rijdieren behouden. Wellicht gebruik je liever een Bol der Hergeboorte in de plaats, aangzien het een veel veiligere optie is waarbij je alle taken en uitrusting behoudt. </string>
     <string name="delete_account">Verwijder Account</string>
     <string name="delete_account_description">Dit zal je account voor altijd wissen en het kan nooit meer hersteld worden! Resterende of uitgegeven Edelstenen zullen niet terugbetaald worden. Als je het zeker weet, typ je wachtwoord dan in het onderstaande tekstveld.</string>
     <string name="reset_account_confirmation">Mijn Account Resetten</string>
@@ -987,4 +985,15 @@
     <string name="hourglasses_description">Mystieke zandlopers zijn een zeldzaam soort betaalmiddel dat je alleen ontvangt bij een abonnement op Habitica dat minstens drie opeenvolgende maanden duurt. Je kunt er in de Tijdreiziger\'s winkel voorafgaande uitrustingssets, huisdieren, rijdieren, geanimeerde acthergronden of zelfs speciale queestes voor kopen.
 \n
 \nJe kunt maximaal vier mystieke zandlopers per jaar ontvangen. Het tijdstip dat je ze krijgt hangt af van wanneer je abonnement wordt herniewd. Ze worden uitgezonden op de eerste dag van een nieuwe maand nadat je laatste abonnementsbetaling je heeft gequalificeerd voor een zandloper. Zie de [Abonnementen]-pagina voor meer details.</string>
+    <string name="level_abbreviated">NIV</string>
+    <string name="enable_notifications">Notificaties inschakelen</string>
+    <string name="push_notification_system_settings_description">Sta Habitica meldingen toe in Instellingen om pushnotificaties te ontvangen</string>
+    <string name="push_notification_system_settings_reminders">Sta Habitica meldingen toe in de Instellingen om herinneringen te ontvangen</string>
+    <string name="push_notification_system_settings_title">Pushnotificaties uitgeschakeld</string>
+    <string name="title">Titel</string>
+    <string name="positive_sentence">positief</string>
+    <string name="negative_sentence">negatief</string>
+    <string name="usernames_party">%s\'s Groep</string>
+    <string name="your_tags">Jouw tags</string>
+    <string name="challenge_tags">Uitdagingen tags</string>
 </resources>

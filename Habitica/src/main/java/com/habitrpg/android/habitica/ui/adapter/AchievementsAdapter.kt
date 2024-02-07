@@ -99,7 +99,7 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             achievementIconView.loadImage(iconName)
             achievementTitleView.text = achievement.title
             achievementDescriptionView?.text = achievement.text
-            if (achievement.optionalCount ?: 0 > 0) {
+            if ((achievement.optionalCount ?: 0) > 0) {
                 achievementCountView.visibility = View.VISIBLE
                 achievementCountView.text = achievement.optionalCount.toString()
             } else {

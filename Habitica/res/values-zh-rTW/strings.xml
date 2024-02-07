@@ -437,7 +437,6 @@
     <string name="int_abbrv">智力</string>
     <string name="con_abbrv">體質</string>
     <string name="reset_account">重置帳號</string>
-    <string name="reset_account_description">您將會失去所有的等級、金幣以及經驗值。您所有的任務及其相關的歷史數據將被刪除（挑戰任務將保留）。您將會失去所有的裝備，但您可透過購買將他們買回來，包含所有您已經擁有的限定版裝備或訂閱者專屬的神秘裝備 (但您需要相同的職業才能重從新購買職業限定的裝備)。您將會保留現有的職業、已擁有的寵物及坐騎。要確認重置，請在下方輸入RESET。</string>
     <string name="delete_account">刪除帳號</string>
     <string name="delete_account_description">這會永久地刪除你的帳號，並且永遠也無法恢復！已有的金錢和花掉的寶石無法被退費。如果你非常確定，請在下面的文本框輸入你的密碼。</string>
     <string name="reset_account_confirmation">重置我的帳號</string>
@@ -1087,7 +1086,6 @@
     <string name="g1g1_promo_info_instructions">點選‘贈送訂閱’ 和填入您將贈送給予的帳號之使用者名稱。從那您將選取贈送訂閱的長度並且完成結帳。您的帳號將會自動獲得同贈送等級的訂閱為獎勵。</string>
     <string name="login_disclaimer">透過註冊程序，您表示您已詳讀及同意其 <a href="https://habitica.com/static/terms">服務條款</a>和<a href="https://habitica.com/static/privacy">隱私權政策。</a></string>
     <string name="invitation_title_no_leader">您被邀請加入至一個隊伍</string>
-    <string name="g1g1_promo_info_limitations">這是一個開始於%s (13:00 UTC) 而將結束於%s (01:00 UTC)的限時活動。這個促銷僅適用於當您贈送給另一位Habitica使用者。如果您或您的贈禮接收者已有一份訂閱，此贈送訂閱將會儲值餘月份數至帳號並且需等當前的訂閱被取消或逾期後才能開始使用。</string>
     <string name="g1g1_promo_info_prompt">為了紀念這個隆重的聖誕佳節我們再次推出一個極特別的促銷。現在當您贈予給他人一份訂閱時，您也會得到一份免費相同的訂閱！</string>
     <string name="one_month_one_time">一次一個月的訂閱</string>
     <string name="three_months_one_time">一次三個月的訂閱</string>
@@ -1113,7 +1111,6 @@
     <string name="theme_mode">主題模式</string>
     <string name="dark_mode">深色模式</string>
     <string name="spooky_promo_info_prompt">此寶石折扣回歸去追尋今年最終的秋季節慶！這是一個最後的機會去擁有更多更多的寶石，所以當它還持續時請大量囤購吧！</string>
-    <string name="gems_promo_info_limitations">這個促銷僅提供於此限時活動。這活動開始於 %s (12:00 UTC) 而結束於 %s (00:00 UTC) 。此促銷優惠僅限於使用在當您購買寶石給自己。</string>
     <string name="view_gem_bundles">查看寶石組合包</string>
     <string name="fall_promo_info_prompt">此秋季節慶正在最高潮期所以我們認為這是個最好的時機去推出我們第一次的寶石折扣！現在你將會於每一次的購物上得到比之前更多的寶石。</string>
     <string name="spooky_promo_info_instructions">取決於 %s 和 %s，簡易的購物如同以往任何寶石組合包以及您的帳號將會被存入此促銷的寶石總數。有更多的寶石去消費，分享，或保存至未來給任何使用！</string>

@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="sidebar_tasks">Sarcini</string>
+    <string name="sidebar_inbox">Mesaje</string>
+    <string name="sidebar_section_inventory">Inventar</string>
+    <string name="sidebar_skills">Abilități</string>
+    <string name="sidebar_subscription">Abonament</string>
+    <string name="sidebar_about">Despre</string>
+    <string name="sidebar_shops">Magazine</string>
+    <string name="sidebar_section_social">Social</string>
+    <string name="sidebar_party">Echipă</string>
+    <string name="sidebar_gems">Cumpără nestemate</string>
+    <string name="sidebar_news">Noutăți</string>
+    <string name="sidebar_avatar">Personalizare avatar</string>
+    <string name="sidebar_challenges">Provocări</string>
+    <string name="sidebar_stats">Statistice</string>
+    <string name="sidebar_equipment">Echipament</string>
+    <string name="sidebar_avatar_equipment">Avatar și echipament</string>
+</resources>

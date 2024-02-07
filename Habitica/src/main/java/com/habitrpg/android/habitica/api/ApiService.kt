@@ -57,6 +57,9 @@ interface ApiService {
     @GET("user/")
     suspend fun getUser(): HabitResponse<User>
 
+    @GET("user/stat-sync")
+    suspend fun syncUserStats(): HabitResponse<User>
+
     @GET("inbox/messages")
     suspend fun getInboxMessages(@Query("conversation") uuid: String, @Query("page") page: Int): HabitResponse<List<ChatMessage>>
 
@@ -415,7 +418,7 @@ interface ApiService {
     suspend fun runCron(): HabitResponse<Void>
 
     @POST("user/reset")
-    suspend fun resetAccount(): HabitResponse<Void>
+    suspend fun resetAccount(@Body body: Map<String, String>): HabitResponse<Void>
 
     @HTTP(method = "DELETE", path = "user", hasBody = true)
     suspend fun deleteAccount(@Body body: Map<String, String>): HabitResponse<Void>

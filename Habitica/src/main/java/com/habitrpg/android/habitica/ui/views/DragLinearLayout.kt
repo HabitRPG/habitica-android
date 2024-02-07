@@ -427,9 +427,7 @@ open class DragLinearLayout @JvmOverloads constructor(context: Context, attrs: A
             val absTop = top - startScrollY + currentTop
             val height = containerScrollView!!.height
 
-            val delta: Int
-
-            delta = when {
+            val delta: Int = when {
                 absTop < scrollSensitiveHeight -> {
                     (-MAX_DRAG_SCROLL_SPEED * smootherStep(scrollSensitiveHeight.toFloat(), 0f, absTop.toFloat())).toInt()
                 }

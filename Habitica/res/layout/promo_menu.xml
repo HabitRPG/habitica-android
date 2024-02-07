@@ -41,6 +41,7 @@
             android:lineSpacingExtra="4dp"
             android:letterSpacing="0.015"
             android:textAlignment="center"
+            android:gravity="center"
             android:maxWidth="240dp"/>
         <Button
             android:id="@+id/button"

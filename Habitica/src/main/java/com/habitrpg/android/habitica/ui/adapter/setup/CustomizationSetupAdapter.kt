@@ -9,7 +9,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.databinding.SetupCustomizationItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.android.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 
@@ -113,10 +113,8 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
         override fun onClick(v: View) {
             customization?.let { selectedCustomization ->
                 if (selectedCustomization.path == "glasses") {
-                    val key = if (selectedCustomization.key.isEmpty()) {
+                    val key = selectedCustomization.key.ifEmpty {
                         user?.items?.gear?.equipped?.eyeWear
-                    } else {
-                        selectedCustomization.key
                     }
                     key?.let { onEquipGear?.invoke(it) }
                 } else {

@@ -268,6 +268,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground">
 
                 <LinearLayout
@@ -284,8 +285,6 @@
                         android:stretchColumns="0,1,2,3,4">
 
                         <TableRow android:layout_height="wrap_content">
-                            <!-- Headers -->
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">

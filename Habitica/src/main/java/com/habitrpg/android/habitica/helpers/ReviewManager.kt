@@ -51,12 +51,8 @@ class ReviewManager(context: Context, private val configManager: AppConfigManage
             return false
         }
 
-        if (lastReviewCheckin != -1 && currentCheckins - lastReviewCheckin < 5) {
-            // Less than 5 check-ins since the last review request, wait for more check-ins
-            return false
-        }
-
-        return true
+        // Less than 5 check-ins since the last review request, wait for more check-ins
+        return !(lastReviewCheckin != -1 && currentCheckins - lastReviewCheckin < 5)
     }
 
     fun requestReview(activity: AppCompatActivity, currentCheckins: Int) {

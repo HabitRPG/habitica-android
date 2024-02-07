@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="profile_pets_and_mounts">Mascotas y Monturas</string>
-    <string name="profile_pets_found">Mascotas Encontradas</string>
-    <string name="profile_mounts_tamed">Monturas Domesticadas</string>
-    <string name="profile_send_message_to">Enviar mensaje a %s</string>
-    <string name="profile_level">Nivel:</string>
-    <string name="profile_class_bonus">Bono de Clase:</string>
-    <string name="profile_achievements">Logros</string>
-    <string name="profile_loading_data">Cargando información de miembros…</string>
-    <string name="profile_message_sent_to">Mensaje enviado a %s</string>
-    <string name="profile_allocated">Asignado:</string>
-</resources>
+<resources></resources>

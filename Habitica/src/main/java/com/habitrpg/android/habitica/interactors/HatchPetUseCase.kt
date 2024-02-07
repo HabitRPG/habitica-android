@@ -30,7 +30,7 @@ constructor(
         return inventoryRepository.hatchPet(requestValues.egg, requestValues.potion) {
             val petWrapper = PetImageviewBinding.inflate(requestValues.context.layoutInflater)
             val petKey = requestValues.egg.key + "-" + requestValues.potion.key
-            petWrapper.petImageview.loadImage("stable_Pet-" + petKey)
+            petWrapper.petImageview.loadImage("stable_Pet-$petKey")
             val potionName = requestValues.potion.text
             val eggName = requestValues.egg.text
             val currentActivity =

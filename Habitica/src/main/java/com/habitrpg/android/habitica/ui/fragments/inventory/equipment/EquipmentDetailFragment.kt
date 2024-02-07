@@ -11,7 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
@@ -59,11 +59,13 @@ class EquipmentDetailFragment :
             lifecycleScope.launchCatching {
                 inventoryRepository.equipGear(it, isCostume ?: false)
 
-                userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
-                    val parentActivity = mainActivity
-                    val totalCheckIns = user?.loginIncentives
-                    if (totalCheckIns != null && parentActivity != null) {
-                        reviewManager.requestReview(parentActivity, totalCheckIns)
+                if (this@EquipmentDetailFragment.isAdded) {
+                    userViewModel.user.observeOnce(viewLifecycleOwner) { user ->
+                        val parentActivity = mainActivity
+                        val totalCheckIns = user?.loginIncentives
+                        if (totalCheckIns != null && parentActivity != null) {
+                            reviewManager.requestReview(parentActivity, totalCheckIns)
+                        }
                     }
                 }
             }
@@ -97,7 +99,7 @@ class EquipmentDetailFragment :
 
         binding?.recyclerView?.adapter = this.adapter
         binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity)
-        binding?.recyclerView?.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL))
+        binding?.recyclerView?.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         type?.let { type ->

@@ -1,23 +1,15 @@
 package com.habitrpg.android.habitica.ui.views.stable
 
-import com.habitrpg.android.habitica.models.inventory.Animal
-import com.habitrpg.android.habitica.models.inventory.Mount
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.StartOffset
 import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,37 +18,32 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.interactors.ShareMountUseCase
+import com.habitrpg.android.habitica.models.inventory.Animal
+import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.android.habitica.ui.theme.colors
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.MainScope
 import java.util.Calendar
-import kotlin.math.sin
 
 @Composable
 private fun getBackgroundPainter(): ImageBitmap {

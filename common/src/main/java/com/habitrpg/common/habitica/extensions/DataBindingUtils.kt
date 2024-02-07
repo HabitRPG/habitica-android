@@ -12,7 +12,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.habitrpg.android.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.R
 import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
@@ -27,19 +26,27 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
         }
         tag = fullname
         setImageDrawable(null)
-        DataBindingUtils.loadImage(context, imageName, imageFormat) {
-            if (tag == fullname) {
-                bitmap = if (fullname.endsWith("gif")) {
-                    setImageDrawable(it)
-                    if (it is Animatable) {
-                        it.start()
+        bitmap = null
+        DataBindingUtils.loadImage(context, imageName, imageFormat,
+            imageResult ={
+                if (tag == fullname) {
+                    bitmap = if (fullname.endsWith("gif")) {
+                        setImageDrawable(it)
+                        if (it is Animatable) {
+                            it.start()
+                        }
+                        null
+                    } else {
+                        it.toBitmap()
                     }
-                    null
-                } else {
-                    it.toBitmap()
                 }
+            },
+            imageError = {
+                tag = null
+                setImageDrawable(null)
+                bitmap = null
             }
-        }
+        )
     } else {
         tag = null
         setImageDrawable(null)
@@ -56,14 +63,22 @@ object DataBindingUtils {
         context: Context,
         imageName: String,
         imageFormat: String?,
-        imageResult: (Drawable) -> Unit
+        imageResult: (Drawable) -> Unit,
+        imageError:()->Unit = { }
     ) {
         val request = ImageRequest.Builder(context)
             .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
-            .target()
-            .target {
-                imageResult(it)
-            }
+            .target(
+                onStart = { _ ->
+
+                },
+                onSuccess = {
+                    imageResult(it)
+                },
+                onError = {
+                    imageError()
+                }
+            )
             .build()
         context.imageLoader.enqueue(request)
     }
@@ -92,10 +107,7 @@ object DataBindingUtils {
         if (imageName == null) {
             return false
         }
-        if (imageName == "shop_") {
-            return false
-        }
-        return true
+        return imageName != "shop_"
     }
 
     class LayoutWeightAnimation(internal var view: View, internal var targetWeight: Float) : Animation() {

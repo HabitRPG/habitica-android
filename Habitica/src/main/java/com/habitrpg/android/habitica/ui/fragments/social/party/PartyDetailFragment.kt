@@ -511,8 +511,10 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                         isDestructive = true
                     ) { _, _ ->
                         viewModel.leaveGroup(groupChallenges, false) {
-                            parentFragmentManager.popBackStack()
-                            MainNavigationController.navigate(R.id.noPartyFragment)
+                            if (isAdded) {
+                                parentFragmentManager.popBackStack()
+                                MainNavigationController.navigate(R.id.noPartyFragment)
+                            }
                         }
                     }
                     alert.setExtraCloseButtonVisibility(View.VISIBLE)

@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class NetworkResultTest : WordSpec({
     "isSuccess" should {
         "be true if it's successful" {
-            val response = NetworkResult.Success<String>("", true)
+            val response = NetworkResult.Success("", true)
             response.isSuccess shouldBe true
         }
 
@@ -23,19 +23,19 @@ class NetworkResultTest : WordSpec({
         }
 
         "be false if it's successful" {
-            val response = NetworkResult.Success<String>("", true)
+            val response = NetworkResult.Success("", true)
             response.isError shouldBe false
         }
     }
 
     "isResponseFresh" should {
         "be true if it's a fresh response" {
-            val response = NetworkResult.Success<String>("", true)
+            val response = NetworkResult.Success("", true)
             response.isResponseFresh shouldBe true
         }
 
         "be false if it errored" {
-            val response = NetworkResult.Success<String>("", false)
+            val response = NetworkResult.Success("", false)
             response.isResponseFresh shouldBe false
         }
     }

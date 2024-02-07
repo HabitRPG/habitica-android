@@ -15,4 +15,7 @@
     <string name="action_cancel">Avbryt</string>
     <string name="about_title">Om</string>
     <string name="are_you_sure">Är du säker\?</string>
+    <string name="gems">Juveler</string>
+    <string name="stats">Statistik</string>
+    <string name="trivial">Trival</string>
 </resources>

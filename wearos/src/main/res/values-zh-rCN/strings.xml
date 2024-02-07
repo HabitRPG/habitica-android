@@ -1,2 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="ok">好的</string>
+    <string name="x_and_y">%1$s和%2$s</string>
+    <string name="task_type">任务类型</string>
+    <string name="x_quest_item">%d个副本物品</string>
+    <string name="some_x">一些%s</string>
+    <string name="edit_on_phone">用手机编辑</string>
+    <string name="other_options">其他选项</string>
+    <string name="create_account">创建账号</string>
+    <string name="continue_text">继续</string>
+    <string name="faint_description">你损失了等级、经验和金币。不要放弃！</string>
+    <string name="check_on_phone">在手机上查看</string>
+    <string name="start_new_day">开始新的一天</string>
+    <string name="check_off_yesterday">勾选你昨天做过的任务：</string>
+    <string name="task_title_hint">输入任务标题</string>
+    <string name="save">保存</string>
+    <string name="hide_task_rewards">隐藏任务奖励</string>
+    <string name="log_out_of_habitica">登出Habitica？</string>
+    <string name="no_tasks">创建一个 %s 添加到此列表</string>
+    <string name="an_egg">一颗蛋</string>
+    <string name="some_food">一些食物</string>
+    <string name="levelup_description">你通过努力提升了自己的等级！</string>
+    <string name="a_potion">一瓶药水</string>
+    <string name="sign_in_description">创建任务列表，用你的游戏角色记录进度</string>
+    <string name="sign_in_on_phone">使用手机登录</string>
+    <string name="day_start">开始一天</string>
+    <string name="review_dailies">回顾日常任务</string>
+    <string name="checklist_disclaimer">任务的清单可在手机上查看</string>
+    <string name="continue_on_your_phone">在手机上继续</string>
+    <string name="all_done_today">今日任务已全部完成！</string>
+    <string name="syncing_account">通过手机同步账户</string>
+    <string name="how_did_you_do">做得怎么样？</string>
+    <string name="you_found">你找到了…</string>
+    <string name="one_quest_item">1个副本物品</string>
+    <string name="sign_in">登录</string>
+    <string name="sync_data">同步数据</string>
+    <string name="rya_description">昨天有未完成的每日任务</string>
+    <string name="starting_your_day">开始你的一天…</string>
+    <string name="disconnected">已断开连接</string>
+    <string name="version_info">版本%1$s (%2$d)</string>
+    <string name="you_ran_out_of_hp">你的生命值耗尽了</string>
+</resources>

@@ -117,9 +117,9 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
         notifyDataSetChanged()
     }
 
-    inner class ShopAdViewHolder(val binding: ShopAdBinding): RecyclerView.ViewHolder(binding.root)
+    inner class ShopAdViewHolder(val binding: ShopAdBinding): ViewHolder(binding.root)
 
-    inner class ItemViewHolder(val binding: ItemItemBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class ItemViewHolder(val binding: ItemItemBinding) : ViewHolder(binding.root), View.OnClickListener {
         private var ownedItem: OwnedItem? = null
         var item: Item? = null
 

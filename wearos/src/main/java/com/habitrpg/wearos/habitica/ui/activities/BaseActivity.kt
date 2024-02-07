@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Tasks
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
@@ -119,13 +120,17 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
             val nodeID = info.nodes.firstOrNull()
             if (nodeID != null) {
                 function?.invoke(true)
-                Tasks.await(
-                    messageClient.sendMessage(
-                        nodeID.id,
-                        url,
-                        data
+                try {
+                    Tasks.await(
+                        messageClient.sendMessage(
+                            nodeID.id,
+                            url,
+                            data
+                        )
                     )
-                )
+                } catch (_: ApiException) {
+                    // It's not connected
+                }
             } else {
                 function?.invoke(false)
             }

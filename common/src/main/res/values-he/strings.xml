@@ -8,4 +8,6 @@
     <string name="action_edit">עריכה</string>
     <string name="action_cancel">בטלו הזמנה</string>
     <string name="are_you_sure">האם אתם בטוחים\?</string>
+    <string name="stats">נתונים סטטיסטיים</string>
+    <string name="about_title">אודות</string>
 </resources>

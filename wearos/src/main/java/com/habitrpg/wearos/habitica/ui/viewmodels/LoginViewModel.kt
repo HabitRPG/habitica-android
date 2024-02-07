@@ -20,7 +20,6 @@ import com.google.android.gms.common.UserRecoverableException
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.habitrpg.common.habitica.helpers.KeyHelper
-import com.habitrpg.common.habitica.models.auth.UserAuth
 import com.habitrpg.common.habitica.models.auth.UserAuthResponse
 import com.habitrpg.common.habitica.models.auth.UserAuthSocial
 import com.habitrpg.common.habitica.models.auth.UserAuthSocialTokens

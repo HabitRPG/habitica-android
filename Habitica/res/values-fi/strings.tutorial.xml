@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="tutorial_overview">Tässä sitä ollaan! Olen täydentänyt joitakin tehtäviä sinulle perustuen kiinnostuksiisi. Kokeile lisätä muutama oma tehtävä. Voit muokata mitä tahansa tehtävää painamalla niiden otsikkoa.</string>
-    <string name="tutorial_habits_1">Ensin meillä on Tavat. Ne voivat olla positiivisia Tapoja, joita haluat kehittää, tai negatiivisia Tapoja, jotka haluat lopettaa.</string>
-    <string name="tutorial_habits_2">Joka kerta kun teet positiivisen Tavan, napauta + saadaksesi kokemuspisteitä ja kultaa!</string>
-</resources>

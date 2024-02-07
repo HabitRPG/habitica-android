@@ -1,18 +1,21 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="tutorial_overview">我们在这儿！我已经根据你的兴趣给你添加了几个任务~也试试自己添加几个吧！你还可以点击任务标题来修改它们。</string>
-  <string name="tutorial_habits_1">首先是习惯。它们可以是你想养成的积极习惯，也可以是你想停止的消极习惯。</string>
-  <string name="tutorial_habits_2">每当你完成一次积极的习惯，点击习惯前的加号，就可以获得经验和金币啦！</string>
-  <string name="tutorial_habits_3">如果你一不留神完成了一次消极习惯，点击减号，这会减少你的角色的生命值来帮助你保持责任感。</string>
-  <string name="tutorial_habits_4">试试看！你可以通过底部导航来探索其他类型的任务。</string>
-  <string name="tutorial_dailies_1">将需要定期完成、与时间息息相关的任务写入每日任务。</string>
-  <string name="tutorial_dailies_2">小心——如果你错过一个任务，你的虚拟化身就会彻夜受到伤害。坚持不懈地做完任务会带来巨大回报！</string>
-  <string name="tutorial_todos_1">使用待办事项记录你要做的一次性任务。</string>
-  <string name="tutorial_todos_2">如果你的待办事项有时间限制，那就设置一个到期日。看起来你可以完成一个了——继续吧！</string>
-  <string name="tutorial_rewards_1">用你获得的金币给你的人物购买装备！</string>
-  <string name="tutorial_rewards_2">你也可以根据你的动力源创造现实中的自定义奖励。</string>
-  <string name="tutorial_tasks_complete">暂时就是这么多了。如果你需要再次提醒，去看看FAQ部分。</string>
-    <string name="tutorial_skills">技能是有强大作用的特殊能力！点击技能来释放它。使用技能需要消耗魔法值(蓝色条)，魔力可由每日签到和完成现实任务来获得。更多信息请查询FAQ！</string>
-  <string name="tutorial_party">在这里，你和你的朋友可以互相督促完成目标并通过完成任务组团打小怪兽！</string>
-    <string name="tutorial_stats">按灰色按钮来一次分配你的属性，或者按箭头一次加一点。</string>
+    <string name="tutorial_overview">我们到了！我根据你的兴趣为你填写了一些任务。试试添加一些你自己的任务吧。点击标题即可编辑任务。</string>
+    <string name="tutorial_habits_1">首先是习惯。它们可以是你想改进的好习惯，也可以是你想戒掉的坏习惯。</string>
+    <string name="tutorial_habits_2">每当你完成一次好习惯时，点击 \"+\"就能获得经验和金币！</string>
+    <string name="tutorial_habits_3">如果你一不留神完成了一次消极习惯，点击\"-\"，通过减少你的角色的生命值以帮助你保持责任感。</string>
+    <string name="tutorial_habits_4">试试看！你可以通过底部导航探索其他的任务类型。</string>
+    <string name="tutorial_dailies_1">将需要定期完成的、时间紧迫的任务创建为日常任务。</string>
+    <string name="tutorial_dailies_2">小心——如果你有未完成的任务，你的角色将在夜间受到伤害。坚持完成这些任务会带来丰厚的回报！</string>
+    <string name="tutorial_todos_1">用待办事项来追踪你只需完成一次的任务。</string>
+    <string name="tutorial_todos_2">如果你的待办事项必须在特定时间之前完成，那就设定一个截止日期。看起来你已经可以勾选一项了——去吧！</string>
+    <string name="tutorial_rewards_1">用赚到的金币为你的角色购买装备！</string>
+    <string name="tutorial_rewards_2">你还可以根据自己的动力源，设定一个真实世界的自定义奖励。</string>
+    <string name="tutorial_tasks_complete">暂时就是这些。如果你想要了解更多，请查看常见问题界面。</string>
+    <string name="tutorial_skills">技能是具有强大效果的特殊能力！点击技能即可使用它。使用技能需要消耗法力值（蓝色条），你可以通过每天签到和完成现实任务获得法力值。更多信息请查看菜单中的常见问题！</string>
+    <string name="tutorial_party">在这里，你和你的朋友可以互相激励达成目标，并通过完成任务与怪物战斗！</string>
+    <string name="tutorial_stats">按下灰色按钮来一次性分配大量属性点，或者按箭头一次分配一个。</string>
+    <string name="tutorial_party_created">欢迎加入你的队伍！ 你可以从寻求组队的玩家列表中找到更多成员，或者直接邀请朋友来获得清单魔蛇副本卷轴。
+\n
+\n访问支持页面来了解更多有关队伍的信息。</string>
 </resources>

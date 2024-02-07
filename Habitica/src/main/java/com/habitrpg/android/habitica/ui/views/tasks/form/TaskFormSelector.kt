@@ -68,7 +68,6 @@ fun <V> TaskFormSelector(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun <V> TaskFormSelection(
     value: V,

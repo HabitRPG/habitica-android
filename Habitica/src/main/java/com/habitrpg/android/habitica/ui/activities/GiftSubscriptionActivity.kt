@@ -9,9 +9,11 @@ import com.android.billingclient.api.ProductDetails
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityGiftSubscriptionBinding
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
 import com.habitrpg.android.habitica.helpers.PurchaseTypes
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.reflect.InvocationTargetException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -62,16 +65,40 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
         giftedUserID = intent.getStringExtra("userID")
         giftedUsername = intent.getStringExtra("username")
-        if (giftedUserID == null && giftedUsername == null) {
-            giftedUserID = navArgs<GiftSubscriptionActivityArgs>().value.userID
-            giftedUsername = navArgs<GiftSubscriptionActivityArgs>().value.username
+        if (giftedUserID.isNullOrBlank()) {
+            try {
+                giftedUserID = navArgs<GiftSubscriptionActivityArgs>().value.userID
+            } catch (_: InvocationTargetException) {
+                // user ID wasn't passed as nav arg
+            }
+        }
+        if (giftedUsername.isNullOrBlank()) {
+            try {
+                giftedUsername = navArgs<GiftSubscriptionActivityArgs>().value.username
+            } catch (_: InvocationTargetException) {
+                // username wasn't passed as nav arg
+            }
+        }
+
+        if (giftedUsername.isNullOrBlank() && giftedUserID.isNullOrBlank()) {
+            showMemberLoadingErrorDialog()
+        }
+
+        if (giftedUsername?.isNotBlank() == true) {
+            binding.usernameTextView.text = "@${giftedUsername}"
         }
 
         binding.subscriptionButton.setOnClickListener {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID) ?: return@launch
+        lifecycleScope.launch(ExceptionHandler.coroutine {
+            showMemberLoadingErrorDialog()
+        }) {
+            val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID)
+            if (member == null) {
+                showMemberLoadingErrorDialog()
+                return@launch
+            }
             binding.avatarView.setAvatar(member)
             binding.displayNameTextView.username = member.profile?.name
             binding.displayNameTextView.tier = member.contributor?.level ?: 0
@@ -85,6 +112,14 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         } else {
             binding.giftSubscriptionContainer.visibility = View.GONE
         }
+    }
+
+    private fun showMemberLoadingErrorDialog() {
+        val dialog = HabiticaAlertDialog(this@GiftSubscriptionActivity)
+        dialog.setTitle(R.string.error_loading_member)
+        dialog.setMessage(R.string.error_loading_member_body)
+        dialog.addCloseButton(isPrimary = true) { _, _ -> finish() }
+        dialog.show()
     }
 
     override fun onStart() {

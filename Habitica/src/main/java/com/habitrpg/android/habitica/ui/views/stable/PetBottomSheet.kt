@@ -1,6 +1,5 @@
 package com.habitrpg.android.habitica.ui.views.stable
 
-import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -16,7 +15,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,16 +45,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.ImageShader
-import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -65,18 +55,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import com.habitrpg.android.habitica.R
-import com.habitrpg.android.habitica.interactors.ShareMountUseCase
+import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.interactors.SharePetUseCase
 import com.habitrpg.android.habitica.models.inventory.Food
 import com.habitrpg.android.habitica.models.inventory.Pet
 import com.habitrpg.android.habitica.ui.theme.colors
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.BackgroundScene
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -256,6 +247,7 @@ fun PetBottomSheet(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(bottom = 16.dp)
             ) {
+                val context = LocalContext.current
                 HabiticaButton(
                     Color(LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)),
                     HabiticaTheme.colors.textPrimary,
@@ -267,7 +259,14 @@ fun PetBottomSheet(
                                 onFeed?.invoke(pet, saddle)
                             }
                         } else {
-                            MainNavigationController.navigate(R.id.marketFragment)
+                            val dialog = HabiticaAlertDialog(context)
+                            dialog.setTitle(R.string.no_saddles)
+                            dialog.setMessage(R.string.purchase_saddles_in_market)
+                            dialog.addButton(R.string.visit_market, isPrimary = true) { _, _ ->
+                                MainNavigationController.navigate(R.id.marketFragment)
+                            }
+                            dialog.addCloseButton()
+                            dialog.show()
                         }
                         onDismiss()
                     }, modifier = Modifier

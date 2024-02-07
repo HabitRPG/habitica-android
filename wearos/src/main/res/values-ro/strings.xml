@@ -1,2 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="ok">OK</string>
+    <string name="syncing_account">Sincronizare cont de pe telefon</string>
+    <string name="you_found">Ai găsit…</string>
+    <string name="x_and_y">%1$s și %2$s</string>
+    <string name="some_x">niște %s</string>
+    <string name="edit_on_phone">Editare pe telefon</string>
+    <string name="sign_in">Conectează-te</string>
+    <string name="sign_in_on_phone">Conectează-te pe telefon</string>
+    <string name="other_options">Alte opțiuni</string>
+    <string name="create_account">Creare cont</string>
+    <string name="day_start">Începutul zilei</string>
+    <string name="rya_description">Nu există zilnice incomplete de ieri</string>
+    <string name="review_dailies">Verificare zilnice</string>
+    <string name="check_on_phone">Verifică pe telefon</string>
+    <string name="start_new_day">Începe ziua nouă</string>
+    <string name="check_off_yesterday">Bifează zilnicele pe care ai făcut ieri:</string>
+    <string name="one_quest_item">Un element de aventură</string>
+    <string name="x_quest_item">%d elemente de aventură</string>
+    <string name="continue_text">Continuă</string>
+    <string name="you_ran_out_of_hp">Ai rămas fără HP</string>
+    <string name="faint_description">Ai pierdut un nivel, exp și aur. Nu te dă bătut(ă)!</string>
+    <string name="save">Salvează</string>
+    <string name="task_type">Tip sarcină</string>
+    <string name="sync_data">Sincronizare Date</string>
+    <string name="hide_task_rewards">Ascunde recompensele sarcinilor</string>
+    <string name="version_info">Versiunea %1$s (%2$d)</string>
+    <string name="log_out_of_habitica">Deconectare de la Habitica\?</string>
+    <string name="no_tasks">Creează un/o %s pentru a adăuga la lista asta</string>
+    <string name="an_egg">un ou</string>
+    <string name="a_potion">o poțiune</string>
+    <string name="some_food">Niște mâncare</string>
+    <string name="continue_on_your_phone">Continuă pe telefon</string>
+    <string name="disconnected">Deconectat</string>
+    <string name="task_title_hint">Scrie numele sarcinii</string>
+</resources>

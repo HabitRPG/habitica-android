@@ -1,22 +1,18 @@
 package com.habitrpg.android.habitica.helpers
 
-import android.app.Activity
-import android.content.Context
-import android.content.SharedPreferences
-import android.provider.Settings
-import android.util.Log
-import androidx.core.content.edit
-import androidx.core.os.bundleOf
-import com.google.android.gms.ads.AdRequest
+/*import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback*/
+import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
+import android.provider.Settings
+import androidx.core.content.edit
 import com.habitrpg.android.habitica.BuildConfig
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
@@ -63,8 +59,8 @@ fun String.md5(): String? {
     }
 }
 
-class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boolean) -> Unit) : OnUserEarnedRewardListener {
-    private var rewardedAd: RewardedAd? = null
+class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boolean) -> Unit) {
+    //private var rewardedAd: RewardedAd? = null
 
     companion object {
         private enum class AdStatus {
@@ -108,19 +104,19 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             if (currentAdStatus != AdStatus.UNINITIALIZED) return
 
             if (BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.TESTING_LEVEL == "alpha") {
-                val android_id: String =
+                val androidId: String =
                     Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-                val deviceId: String = android_id.md5()?.uppercase() ?: ""
-                val configuration = RequestConfiguration.Builder().setTestDeviceIds(listOf(deviceId)).build()
-                MobileAds.setRequestConfiguration(configuration)
+                val deviceId: String = androidId.md5()?.uppercase() ?: ""
+                //val configuration = RequestConfiguration.Builder().setTestDeviceIds(listOf(deviceId)).build()
+                //MobileAds.setRequestConfiguration(configuration)
             }
 
             currentAdStatus = AdStatus.INITIALIZING
-            MobileAds.initialize(context) {
+            /*MobileAds.initialize(context) {
                 currentAdStatus = AdStatus.READY
                 onComplete()
                 FirebaseCrashlytics.getInstance().recordException(Throwable("Ads Initialized"))
-            }
+            }*/
         }
 
         fun whenAdsInitialized(context: Context, onComplete: () -> Unit) {
@@ -156,7 +152,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
 
     fun prepare(onComplete: ((Boolean) -> Unit)? = null) {
         whenAdsInitialized(activity) {
-            val adRequest = AdRequest.Builder()
+            /*val adRequest = AdRequest.Builder()
                 .build()
 
             if (BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.TESTING_LEVEL == "alpha") {
@@ -184,7 +180,7 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
                         onComplete?.invoke(true)
                     }
                 }
-            )
+            )*/
         }
     }
 
@@ -208,23 +204,23 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
         }
     }
 
-    private fun configureReward() {
-        rewardedAd?.run { }
-    }
+    //private fun configureReward() {
+        //rewardedAd?.run { }
+    //}
 
     private fun showRewardedAd() {
         if (nextAdAllowedDate(type)?.after(Date()) == true) {
             return
         }
-        if (rewardedAd != null) {
+        /*if (rewardedAd != null) {
             rewardedAd?.show(activity, this)
             setNextAllowedDate(type)
         } else {
             Log.d(TAG, "The rewarded ad wasn't ready yet.")
-        }
+        }*/
     }
 
-    override fun onUserEarnedReward(rewardItem: RewardItem) {
+    /*override fun onUserEarnedReward(rewardItem: RewardItem) {
         Analytics.sendEvent(
             "adRewardEarned",
             EventCategory.BEHAVIOUR,
@@ -240,5 +236,5 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             )
         )
         rewardAction(true)
-    }
+    }*/
 }

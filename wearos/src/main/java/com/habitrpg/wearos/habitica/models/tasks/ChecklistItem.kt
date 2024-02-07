@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 import java.util.UUID
 
 @JsonClass(generateAdapter = true)
-open class ChecklistItem constructor(
+open class ChecklistItem(
     var id: String? = UUID.randomUUID().toString(),
     var text: String? = null,
     var completed: Boolean = false

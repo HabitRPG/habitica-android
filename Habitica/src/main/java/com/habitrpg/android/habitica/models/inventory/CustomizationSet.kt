@@ -15,9 +15,6 @@ class CustomizationSet {
                 customization.price?.let { total += it }
             }
         }
-        if (total >= price) {
-            return true
-        }
-        return false
+        return total >= price
     }
 }

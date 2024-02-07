@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="ok">OK</string>
-    <string name="continue_text">Tiếp tục</string>
-    <string name="save">Lưu</string>
-    <string name="version_info">Phiên bản %1$s (%2$d)</string>
-</resources>

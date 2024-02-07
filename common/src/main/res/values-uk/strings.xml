@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="thousand_abbrev">тис.</string>
+    <string name="thousand_abbrev">тис</string>
     <string name="million_abbrev">млн</string>
     <string name="billion_abbrev">млрд</string>
     <string name="trillion_abbrev">трлн</string>
@@ -15,4 +15,78 @@
     <string name="action_cancel">Скасувати</string>
     <string name="about_title">Про нас</string>
     <string name="are_you_sure">Ви впевнені\?</string>
+    <string name="stats">Характеристики</string>
+    <string name="reward">Нагорода</string>
+    <string name="todo">Завдання</string>
+    <string name="dailies">Щоденки</string>
+    <string name="new_task">Нове завдання</string>
+    <string name="quadrillion_abbrev">квадрлн</string>
+    <string name="hard_sentence">важко</string>
+    <string name="habits">Звички</string>
+    <string name="user_level">Рівень %d</string>
+    <string name="login_validation_error_fieldsmissing">Необхідно заповнити всі поля.</string>
+    <string name="gems">Самоцвіти</string>
+    <string name="gold_plural">золото</string>
+    <string name="gold_capitalized">Золото</string>
+    <string name="easy">Легко</string>
+    <string name="rewards">Нагороди</string>
+    <string name="habit">Звичка</string>
+    <string name="login_btn">Увійти</string>
+    <string name="register_btn">Зареєструватися</string>
+    <string name="username">Ім\'я користувача</string>
+    <string name="password">Пароль</string>
+    <string name="emailAddress">Електронна пошта</string>
+    <string name="confirmpassword">Підтвердіть пароль</string>
+    <string name="login_btn_google">Приєднатися за допомогою Google</string>
+    <string name="logout">Вийти</string>
+    <string name="email_username">Електрона пошта/Ім\'я користувача</string>
+    <string name="logout_description">Вийти з акаунту</string>
+    <string name="LoginActivityName">Вітаємо</string>
+    <string name="login_validation_error_title">Виникла помилка при перевірці</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Звичка</item>
+        <item quantity="few">%d Звички</item>
+        <item quantity="many">%d Звичок</item>
+        <item quantity="other">%d Звичок</item>
+    </plurals>
+    <string name="medium">Помірно</string>
+    <string name="hard">Важко</string>
+    <string name="easy_sentence">легко</string>
+    <string name="todos">Завдання</string>
+    <string name="avatar">Аватар</string>
+    <string name="trivial_sentence">дрібниця</string>
+    <string name="medium_sentence">помірно</string>
+    <string name="trivial">Дрібниця</string>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Щоденка</item>
+        <item quantity="few">%d Щоденки</item>
+        <item quantity="many">%d Щоденок</item>
+        <item quantity="other">%d Щоденок</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="one">%d Завдання</item>
+        <item quantity="few">%d Завдання</item>
+        <item quantity="many">%d Завдань</item>
+        <item quantity="other">%d Завдань</item>
+    </plurals>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Нагорода</item>
+        <item quantity="few">%d Нагороди</item>
+        <item quantity="many">%d Нагород</item>
+        <item quantity="other">%d Нагород</item>
+    </plurals>
+    <string name="create_task">Створити %s</string>
+    <string name="complete_task_title">Виконати завдання</string>
+    <string name="save_task_x">Зберегти %s</string>
+    <string name="task">Завдання</string>
+    <string name="retry">Повторити спробу</string>
+    <string name="create_task_title">Створити завдання</string>
+    <string name="new_task_x">Новий %s</string>
+    <string name="failed">Не вдалося завантажити</string>
+    <plurals name="flagged_count">
+        <item quantity="one">Позначено %d раз</item>
+        <item quantity="few">Позначено %d разів, приховано</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>

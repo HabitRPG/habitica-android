@@ -40,12 +40,12 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     init {
         val metrics = DisplayMetrics()
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            viewHeight = windowManager.currentWindowMetrics.bounds.height()
+        viewHeight = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            windowManager.currentWindowMetrics.bounds.height()
         } else {
             @Suppress("DEPRECATION")
             windowManager.defaultDisplay.getMetrics(metrics)
-            viewHeight = (metrics.heightPixels * SIZE_FACTOR).toInt()
+            (metrics.heightPixels * SIZE_FACTOR).toInt()
         }
     }
 

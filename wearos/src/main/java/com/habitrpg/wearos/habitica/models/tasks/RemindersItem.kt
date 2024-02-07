@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-open class RemindersItem constructor() : Parcelable {
+open class RemindersItem() : Parcelable {
     var id: String? = null
     var startDate: String? = null
     var time: String? = null

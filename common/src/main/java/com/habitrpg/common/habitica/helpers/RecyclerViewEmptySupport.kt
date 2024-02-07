@@ -3,7 +3,6 @@ package com.habitrpg.common.habitica.helpers
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
-import android.widget.ProgressBar
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView

@@ -130,7 +130,7 @@ class TaskResultActivity : BaseActivity<ActivityTaskResultBinding, TaskResultVie
             chips.size == 5 -> TaskRewardChip.Size.SMALL
             else -> TaskRewardChip.Size.MEDIUM
         }
-        if (chips.size > 4 && hasDrop || (chips.size > 5 && !hasDrop)) {
+        if ((chips.size > 4 && hasDrop) || (chips.size > 5)) {
             chips = chips.subList(0, if (hasDrop) 4 else 5)
         }
         secondsToShow = max(chips.size, 2)

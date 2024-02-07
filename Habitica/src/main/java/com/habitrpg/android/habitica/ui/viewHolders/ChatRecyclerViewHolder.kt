@@ -13,7 +13,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatItemBinding
 import com.habitrpg.android.habitica.databinding.TavernChatIntroItemBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
-import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.user.Permission
@@ -76,16 +76,9 @@ class ChatRecyclerMessageViewHolder(
         itemView.setOnClickListener {
             onShouldExpand?.invoke()
         }
-        binding.tvLikes.setOnClickListener {
+        binding.likeBackgroundLayout.setOnClickListener {
             chatMessage?.let {
-                if (it.uuid != userId) {
-                    onLikeMessage?.invoke(it)
-                } else {
-                    (context as? SnackbarActivity)?.showSnackbar(
-                        content = context.getString(R.string.cant_like_own_message),
-                        displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE
-                    )
-                }
+                onLikeMessage?.invoke(it)
             }
         }
         binding.messageText.setOnClickListener { onShouldExpand?.invoke() }

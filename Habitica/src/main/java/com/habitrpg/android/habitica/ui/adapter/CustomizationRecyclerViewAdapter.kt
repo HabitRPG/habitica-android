@@ -22,7 +22,7 @@ import java.util.Date
 import java.util.EnumMap
 import kotlin.math.min
 
-class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
 
     var userSize: String? = null
     var hairColor: String? = null
@@ -34,9 +34,6 @@ class CustomizationRecyclerViewAdapter() : androidx.recyclerview.widget.Recycler
     private var customizationList: MutableList<Any> = ArrayList()
     var additionalSetItems: List<Customization> = ArrayList()
     var activeCustomization: String? = null
-        set(value) {
-            field = value
-        }
 
     var ownedCustomizations: List<String> = listOf()
     private var pinnedItemKeys: List<String> = ArrayList()

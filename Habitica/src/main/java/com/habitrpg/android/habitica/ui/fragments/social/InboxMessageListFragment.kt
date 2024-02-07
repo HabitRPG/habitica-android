@@ -16,13 +16,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
-import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentInboxMessageListBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.activities.MainActivity
@@ -75,7 +73,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
-        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.getActivity())
+        val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this.activity)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
@@ -193,10 +191,10 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun copyMessageToClipboard(chatMessage: ChatMessage) {
-        val clipMan = getActivity()?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+        val clipMan = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val messageText = ClipData.newPlainText("Chat message", chatMessage.text)
         clipMan?.setPrimaryClip(messageText)
-        val activity = getActivity() as? MainActivity
+        val activity = activity as? MainActivity
         if (activity != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
         }

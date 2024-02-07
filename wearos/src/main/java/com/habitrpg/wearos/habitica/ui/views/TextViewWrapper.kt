@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.wearable.timetext
+package com.habitrpg.wearos.habitica.ui.views
 
 import android.view.View
 import android.widget.TextView

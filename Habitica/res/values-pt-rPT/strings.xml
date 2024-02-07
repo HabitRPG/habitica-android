@@ -201,7 +201,7 @@
     <string name="mage">Mago</string>
     <string name="healer">Curandeiro</string>
     <string name="mage_description">Os Magos aprendem rápido, ganhando Experiência e Níveis mais depressa que as outras classes. Também possuem uma grande quantidade de Mana para usar habilidades especiais. Joga como Mago se gostas dos aspectos tácitos de Habitica, ou se te motivas ao subir níveis e desbloquear funcionalidades avançadas!</string>
-    <string name="rogue_description">Os bandidos gostam de acumular riqueza, ganhando mais Ouro do que qualquer um, e são peritos em encontrar objetos aleatórios. A sua capacidade de atuação furtiva icónica permite-lhes evitar as consequências das Tarefas Diárias perdidas. Jogue como Bandido se se sentir uma motivação forte das Recompensas e Conquistas, lutando por espólios e medalhas!</string>
+    <string name="rogue_description">Os bandidos gostam de acumular riqueza, ganhando mais Ouro do que qualquer um, e são peritos em encontrar objetos aleatórios. A sua capacidade de atuação furtiva icónica permite-lhes evitar as consequências das Tarefas Diárias perdidas. Jogue como Bandido se se sentir uma motivação forte das Recompensas e Conquistas, lutando por espólios e medalhas! Bandidos se beneficiam de valores altos do atributo Percepção.</string>
     <string name="healer_description">Curandeiros são impenetráveis contra o mal, e extendem essa protecção aos outros. Tarefas Diárias falhadas e maus Hábitos não incomodam muito, e eles têm formas de recuperar Vida quando falham. Joga como Curandeiro se gostares de ajudar os teus colegas de Equipe, ou se a ideia de enganar a Morte através de trabalho duro inspira-te!</string>
     <string name="select_class">Selecionar Classe</string>
     <string name="opt_out_class">Optar</string>
@@ -360,7 +360,6 @@
 \n • Seus itens de missão de dano ou coleta de chefe permanecerão pendentes até o check-out</string>
     <string name="warrior_description">Guerreiros obtêm mais Golpes Críticos e infligem maior dano aos Monstros. Joga como Guerreiro se quiseres derrotar Monstros mais facilmente! Guerreiros beneficiam de uma elevada estatística de Força.</string>
     <string name="opting_out_progress">Optando por</string>
-
     <string name="change_class_description">Mude sua classe e devolva seus pontos de status por 3 gemas.</string>
     <string name="notifications">Notificações</string>
     <string name="no_notifications_title">Já sabes tudo o que se passa!</string>
@@ -495,7 +494,7 @@
     <string name="world_boss_description_title">O que é um Chefão Mundial\?</string>
     <string name="insufficientSubscriberGems">Você comprou todas as gemas deste mês. Mais ficarão disponíveis nos primeiros três dias de cada mês. Grato pela assinatura!</string>
     <string name="join_party_title">Desejas entrar em um grupo\?</string>
-    <string name="join_party_description_guild">Dê o nome de usuário abaixo a um amigo ou vá para %s para encontrar companheiros em potencial!</string>
+    <string name="join_party_description_guild">Dá o nome de utilizador abaixo a um amigo ou vai a %s para encontrar potenciais companheiros!</string>
     <string name="join_party_description">Dê a um membro do Party o nome de usuário encontrado abaixo e ele poderá enviar-te um convite</string>
     <string name="no_party_title">Jogue Habitica em um Grupo</string>
     <string name="no_party_description">Participe de missões com amigos ou sozinho. Lute contra monstros, crie desafios e ajude-se a se manter responsável por meio de grupos.</string>
@@ -616,9 +615,7 @@
     <string name="reset_account_confirmation">Reiniciar a minha conta</string>
     <string name="delete_account_description">Isto irá eliminar a tua conta para sempre e ela não poderá ser restaurada! Gemas guardadas ou gastas não serão devolvidas. Se tiveres a certeza absoluta, digita a tua senha na caixa de texto abaixo.</string>
     <string name="delete_account">Eliminar Conta</string>
-    <string name="reset_account_description">CUIDADO!! Isto reinicia muitas partes da tua conta. Isto é fortemente desencorajado, mas algumas pessoas acham-no útil no início depois de brincar com o site por último curto período de tempo.
-\n
-\nTu irás perder todos os teus níveis, ouro e pontos de experiência. Todas as tuas tarefas (exceto as dos desafios) serão eliminadas permanentemente e tu irás perder todo o histórico delas. Vais perder todo o teu equipamento mas poderás comprá-lo de volta, incluindo todo o equipamento de edição limitada ou itens Mistério de assinantes que já tenhas (terás de ter a classe correta para comprar itens especificidades da classe). Vais manter a tua classe atual e os teus mascotes e montarias. Podes preferir usar um Orbe do Renascimento em vez de reiniciares a tua conta, uma opção muito mais segura que preserva as tuas tarefas e equipamentos.</string>
+
     <string name="reset_account">Reiniciar Conta</string>
     <string name="con_abbrv">Con</string>
     <string name="int_abbrv">Int</string>
@@ -711,4 +708,8 @@
     <string name="use_item">Usar item em membro de equipa</string>&gt;
     <string name="unsaved_changes">Alterações não gravadas</string>
     <string name="discard_changes_to_task_message">Tens a certeza de que queres descartar as alterações nesta tarefa\?</string>
+    <string name="enable_notifications">Permitir notificações</string>
+    <string name="push_notification_system_settings_description">Altera as tuas configurações da app para permitires notificações</string>
+    <string name="push_notification_system_settings_reminders">Altera as tuas configurações da app para permitires lembretes</string>
+    <string name="push_notification_system_settings_title">Notificações desativadas</string>
 </resources>

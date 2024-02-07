@@ -32,9 +32,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.res.use
 import androidx.core.os.ConfigurationCompat
 import androidx.core.view.isGone
-import com.example.android.wearable.timetext.CurvedTextViewWrapper
-import com.example.android.wearable.timetext.NormalTextViewWrapper
-import com.example.android.wearable.timetext.TextViewWrapper
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CurvedTimeTextBinding
 import com.habitrpg.android.habitica.databinding.StraightTimeTextBinding

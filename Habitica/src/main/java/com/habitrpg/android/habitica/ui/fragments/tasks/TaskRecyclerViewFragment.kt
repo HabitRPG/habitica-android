@@ -19,8 +19,8 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.android.habitica.extensions.observeOnce
-import com.habitrpg.android.habitica.extensions.setScaledPadding
+import com.habitrpg.common.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
@@ -70,7 +70,7 @@ open class TaskRecyclerViewFragment :
     private var taskFlowJob: Job? = null
     val viewModel: TasksViewModel by viewModels({ requireParentFragment() })
 
-    internal var canScoreTaks: Boolean = true
+    internal var canScoreTasks: Boolean = true
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
     override fun createBinding(
@@ -162,7 +162,7 @@ open class TaskRecyclerViewFragment :
         }
 
         viewModel.ownerID.observe(viewLifecycleOwner) {
-            canScoreTaks = viewModel.isPersonalBoard
+            canScoreTasks = viewModel.isPersonalBoard
             updateTaskSubscription(it)
         }
         lifecycleScope.launch {
@@ -324,7 +324,7 @@ open class TaskRecyclerViewFragment :
                     }
                     // Factor in if adventure guide is shown.
                     if (recyclerAdapter?.showAdventureGuide == true) {
-                        newPosition = newPosition - 1
+                        newPosition -= 1
                     }
                     lifecycleScope.launchCatching {
                         taskRepository.updateTaskPosition(

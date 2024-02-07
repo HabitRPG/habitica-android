@@ -15,7 +15,6 @@ import com.habitrpg.android.habitica.models.responses.UnlockResponse
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.social.GroupMembership
 import com.habitrpg.android.habitica.models.tasks.Task
-import com.habitrpg.android.habitica.models.user.OwnedItem
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.models.user.UserQuestStatus
@@ -51,6 +50,14 @@ class UserRepositoryImpl(
 
     override fun getUser(): Flow<User?> = authenticationHandler.userIDFlow.flatMapLatest { getUser(it) }
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
+
+    override suspend fun syncUserStats(): User? {
+        val user = apiClient.syncUserStats()
+        if (user != null) {
+            localRepository.saveUser(user)
+        }
+        return user
+    }
 
     private suspend fun updateUser(userID: String, updateData: Map<String, Any?>): User? {
         val networkUser = apiClient.updateUser(updateData) ?: return null
@@ -188,9 +195,9 @@ class UserRepositoryImpl(
         return apiClient.getNews()
     }
 
-    override suspend fun getNewsNotification(): Notification? {
+    override suspend fun getNewsNotification(): Notification {
         val baileyNews = apiClient.getNews()
-        val baileyAnnouncement = (baileyNews?.first() as Map<*, *>)["title"] as String
+        val baileyAnnouncement = (baileyNews?.first() as? Map<*, *>)?.get("title") as? String
         val notification = Notification()
         notification.id = "custom-new-stuff-notification"
         notification.type = Notification.Type.NEW_STUFF.type
@@ -229,8 +236,8 @@ class UserRepositoryImpl(
         return user
     }
 
-    override suspend fun resetAccount(): User? {
-        apiClient.resetAccount()
+    override suspend fun resetAccount(password: String): User? {
+        apiClient.resetAccount(password)
         return retrieveUser(withTasks = true, forced = true)
     }
 
@@ -361,15 +368,15 @@ class UserRepositoryImpl(
                 }
             }
         }
-        if (type == "background") {
+        return if (type == "background") {
             apiClient.unlockPath("background.$identifier")
-            return retrieveUser(false, true)
+            retrieveUser(false, true)
         } else {
             var updatePath = "preferences.$type"
             if (category != null) {
                 updatePath = "$updatePath.$category"
             }
-            return updateUser(updatePath, identifier)
+            updateUser(updatePath, identifier)
         }
     }
 

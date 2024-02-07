@@ -22,6 +22,7 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
+import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -140,7 +141,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     fun completeForUser(userID: String?, completed: Boolean) {
         if (isGroupTask && group?.assignedUsersDetail?.isNotEmpty() == true) {
             group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed = completed
-            if (group?.assignedUsersDetail?.filter { it.completed != completed }?.isEmpty() == true) {
+            if (group?.assignedUsersDetail?.none { it.completed != completed } == true) {
                 this.completed = completed
             }
         } else {
@@ -361,7 +362,6 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             occurrencesList.add(this.dueDate?.toZonedDateTime()?.withHour(reminderTime.hour)?.withMinute(reminderTime.minute) ?: return null)
             return occurrencesList
         }
-
         val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
         var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val frequency = this.frequency ?: return null
@@ -503,30 +503,36 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             attribute != task.attribute && attribute != null -> return true
             tags != task.tags -> return true
         }
-        if (type == TaskType.HABIT) {
-            return when {
-                up != task.up -> true
-                down != task.down -> true
-                frequency != task.frequency -> true
-                counterUp != task.counterUp -> true
-                counterDown != task.counterDown -> true
-                else -> false
+        when (type) {
+            TaskType.HABIT -> {
+                return when {
+                    up != task.up -> true
+                    down != task.down -> true
+                    frequency != task.frequency -> true
+                    counterUp != task.counterUp -> true
+                    counterDown != task.counterDown -> true
+                    else -> false
+                }
             }
-        } else if (type == TaskType.DAILY) {
-            return when {
-                startDate != task.startDate -> true
-                everyX != task.everyX -> true
-                frequency != task.frequency -> true
-                repeat != task.repeat -> true
-                streak != task.streak -> true
-                else -> false
+            TaskType.DAILY -> {
+                return when {
+                    startDate != task.startDate -> true
+                    everyX != task.everyX -> true
+                    frequency != task.frequency -> true
+                    repeat != task.repeat -> true
+                    streak != task.streak -> true
+                    else -> false
+                }
             }
-        } else if (type == TaskType.TODO) {
-            return (dueDate != task.dueDate && task.dueDate != null)
-        } else if (type == TaskType.REWARD) {
-            return value != task.value
-        } else {
-            return false
+            TaskType.TODO -> {
+                return (dueDate != task.dueDate && task.dueDate != null)
+            }
+            TaskType.REWARD -> {
+                return value != task.value
+            }
+            else -> {
+                return false
+            }
         }
     }
 

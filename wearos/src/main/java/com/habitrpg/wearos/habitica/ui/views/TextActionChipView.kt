@@ -29,7 +29,7 @@ open class TextActionChipView @JvmOverloads constructor(context: Context, attrs:
             binding.chipTextview.gravity = Gravity.START
             binding.chipImageview.isVisible = true
         } else {
-            binding.chipImageview.setImageDrawable(icon)
+            binding.chipImageview.setImageDrawable(null)
             binding.chipTextview.gravity = Gravity.START
             binding.chipImageview.isVisible = false
         }

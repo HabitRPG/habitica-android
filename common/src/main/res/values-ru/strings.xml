@@ -17,7 +17,7 @@
     <string name="are_you_sure">Вы уверены\?</string>
     <string name="gems">Самоцветы</string>
     <string name="gold_capitalized">Золото</string>
-    <string name="trivial">Пустяк</string>
+    <string name="trivial">Тривиальный</string>
     <string name="easy">Легко</string>
     <string name="medium">Нормально</string>
     <string name="hard">Сложно</string>
@@ -78,4 +78,9 @@
         <item quantity="other">%d Наград</item>
     </plurals>
     <string name="login_validation_error_title">Ошибка проверки</string>
+    <string name="quadrillion_abbrev">квадрлн</string>
+    <string name="medium_sentence">средний</string>
+    <string name="hard_sentence">сложный</string>
+    <string name="trivial_sentence">тривиальный</string>
+    <string name="easy_sentence">легкий</string>
 </resources>

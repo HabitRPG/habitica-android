@@ -18,4 +18,65 @@
     <string name="about_title">À propos</string>
     <string name="are_you_sure">Confirmez-vous \?</string>
     <string name="task">tâche</string>
+    <string name="avatar">Avatar</string>
+    <string name="user_level">Niv. %d</string>
+    <string name="login_btn">Identifiant</string>
+    <string name="register_btn">Inscrivez-vous</string>
+    <string name="create_task_title">Créer une tâche</string>
+    <string name="create_task">Créer %s</string>
+    <string name="new_task_x">Nouvelle %s</string>
+    <string name="dailies">Tâches quotidiennes</string>
+    <string name="todos">Tâches à faire</string>
+    <string name="save_task_x">Sauvegarder %s</string>
+    <string name="failed">Échec du chargement</string>
+    <string name="retry">Réessayer</string>
+    <plurals name="x_dailies">
+        <item quantity="one">%d Tâche quotidienne</item>
+        <item quantity="other">%d Tâches quotidiennes</item>
+    </plurals>
+    <string name="emailAddress">Adresse email</string>
+    <string name="confirmpassword">Confirmer le mot de passe</string>
+    <string name="login_btn_google">S\'identifier avec Google</string>
+    <string name="logout_description">Se déconnecter de votre compte</string>
+    <string name="LoginActivityName">Bienvenue</string>
+    <string name="login_validation_error_title">Erreur de validation</string>
+    <string name="new_task">Nouvelle tâche</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="login_validation_error_fieldsmissing">Vous devez remplir tous les champs.</string>
+    <plurals name="x_rewards">
+        <item quantity="one">%d Récompense</item>
+        <item quantity="other">%d Récompenses</item>
+    </plurals>
+    <plurals name="flagged_count">
+        <item quantity="one">Signalé %d fois</item>
+        <item quantity="other">Signalé %d fois, caché</item>
+    </plurals>
+    <string name="gems">Gemmes</string>
+    <string name="easy">Facile</string>
+    <string name="medium">Moyen</string>
+    <string name="hard">Difficile</string>
+    <string name="habits">Habitudes</string>
+    <string name="habit">Habitude</string>
+    <string name="reward">Récompense</string>
+    <string name="trivial_sentence">banal</string>
+    <string name="easy_sentence">facile</string>
+    <string name="medium_sentence">moyen</string>
+    <string name="hard_sentence">difficile</string>
+    <string name="rewards">Récompenses</string>
+    <string name="quadrillion_abbrev">q</string>
+    <string name="password">Mot de passe</string>
+    <string name="gold_plural">or</string>
+    <string name="gold_capitalized">Or</string>
+    <string name="trivial">Banal</string>
+    <plurals name="x_habits">
+        <item quantity="one">%d Habitude</item>
+        <item quantity="other">%d Habitudes</item>
+    </plurals>
+    <string name="username">Pseudo</string>
+    <plurals name="x_todos">
+        <item quantity="one">%d Tâche à faire</item>
+        <item quantity="other">%d Tâches à faire</item>
+    </plurals>
+    <string name="complete_task_title">Terminer une Tâche</string>
+    <string name="email_username">Email/Nom d\'Utilisateur</string>
 </resources>

@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">Улучшить навык владения ремеслом</string>
     <string name="setup_task_creativity_2">Поработать над творческим проектом</string>
     <string name="setup_task_creativity_3">Закончить творческий проект</string>
-            <string name="guild">Гильдия</string>
+    <string name="guild">Гильдия</string>
     <string name="leave">Покинуть</string>
     <string name="join">Присоединиться</string>
     <string name="delete">Удалить</string>
@@ -210,11 +210,11 @@
     <string name="world_quest">Мировой квест</string>
     <string name="inn_description">Нужен отдых\? Запишитесь в гостиницу Даниэля, чтобы остановить несколько сложных игровых механик страны Habitica:
 \n
-\n • Ваши пропущенные ежедневные дела не будут наносить вам урон (боссы все равно будут наносить урон от пропущенных ежедневных дел других членов команды).
-\n • Ваши серии задач и счетчики привычек не будут обнуляться
-\n • Ваш урон, нанесенный квестовому боссу или найденные квестовые предметы, останутся \"замороженными\" до тех пор, пока вы не выйдете из таверны</string>
+\n• Ваши пропущенные ежедневные дела не будут наносить вам урон (боссы все равно будут наносить урон от пропущенных ежедневных дел других членов команды)
+\n• Ваши серии задач и счетчики привычек не будут обнулятьс
+\n• Ваш урон, нанесенный квестовому боссу или найденные квестовые предметы, останутся \"замороженными\" до тех пор, пока вы не выйдете из таверны</string>
     <string name="empty_items">У вас нет %s</string>
-    <string name="user_level_with_class">Ур. %1$d - %2$s</string>
+    <string name="user_level_with_class">Ур. %1$d %2$s</string>
     <string name="warrior">Воин</string>
     <string name="rogue">Разбойник</string>
     <string name="mage">Маг</string>
@@ -226,8 +226,7 @@
     <string name="select_class">Выберите класс</string>
     <string name="opt_out_class">Отказаться</string>
     <string name="class_confirmation">Вы уверены, что хотите продолжить как %s\?</string>
-    <string name="class_changed">Теперь вы %s!</string>
-
+    <string name="class_changed">Вы %s!</string>
     <string name="choose_class">Выбрать класс</string>
     <string name="dialog_go_back">Вернуться назад</string>
     <string name="opt_out_confirmation">Вы уверены, что хотите отказаться?</string>
@@ -238,7 +237,7 @@
     <string name="by_email">По электронной почте</string>
     <string name="invite_existing_users">Пригласить существующих пользователей</string>
     <string name="send">Отправить</string>
-    <string name="invite">Пригласить друзей</string>
+    <string name="invite">Найти участников</string>
     <string name="invite_username_description">Если у вас уже есть друзья, которые пользуются Habitica, пригласите их используя имя пользователя.</string>
     <string name="invite_email_description">Если друг присоединится к Habitica, перейдя по ссылке в вашем письме, он автоматически будет приглашён в вашу команду!</string>
     <string name="add_invites">Добавить приглашенных</string>
@@ -248,7 +247,7 @@
     <string name="share_hatched">У меня только что вылупился питомец %1$s %2$s в #Habitica, потому что я выполнял(а) задачи в реальной жизни!</string>
     <string name="share_raised">Я только что получил(а) скакуна %1$s в #Habitica, выполняя задачи в реальной жизни!</string>
     <string name="open_in_store">Откройте в Play маркет</string>
-    <string name="change_class_confirmation">Вы уверены что хотите поменять класс? Это стоит 3 самоцвета.</string>
+    <string name="change_class_confirmation">Вы хотите сменить свой класс за 3 самоцвета\?</string>
     <string name="change_class_equipment_warning">Внимание: вы больше не можете покупать снаряжение класса %s.</string>
     <string name="confirm">Подтвердить</string>
     <string name="market">Магазин</string>
@@ -444,7 +443,6 @@
     <string name="int_abbrv">ИНТ</string>
     <string name="con_abbrv">ТЕЛ</string>
     <string name="reset_account">Сбросить аккаунт</string>
-    <string name="reset_account_description">Вы потеряете все ваши уровни, золото и опыт. Все ваши задачи и их история будут удалены (кроме задач испытаний). Вы потеряете все снаряжение, включая снаряжение ограниченного выпуска или подписчиков, но сможете купить его обратно (для повторной покупки снаряжения, относящегося к конкретному классу, вам нужно будет принадлежать к соответствующему классу). Вы сохраните свой текущий класс, а также своих питомцев и скакунов. Чтобы подтвердить сброс, введите RESET ниже.</string>
     <string name="delete_account">Удалить аккаунт</string>
     <string name="delete_account_description">Ваш аккаунт будет удален навсегда без возможности восстановления! Стоимость потраченных и находящихся в банке самоцветов не будет компенсирована. Если вы абсолютно уверены, напишите ваш пароль в текстовое поле.</string>
     <string name="reset_account_confirmation">Сбросить мой аккаунт</string>
@@ -632,7 +630,7 @@
     <string name="discover">Найти</string>
     <string name="due">Сегодня</string>
     <string name="gift_one_get_one_description">Подарите подписку и получите такую же бесплатно прямо сейчас!</string>
-    <string name="damage_paused">Урон остановлен</string>
+    <string name="damage_paused">Получение урона остановлено</string>
     <string name="preference_push_important_announcements">Важные объявления</string>
     <string name="create">Создать</string>
     <string name="only_leader_create_challenge">Только лидер может создавать испытания</string>
@@ -744,7 +742,7 @@
     <string name="x_months">%d мес.</string>
     <string name="create_account_short">Зарегистрироваться</string>
     <string name="login_incentive_short_count">%d входов в игру</string>
-    <string name="party_invite_short">Пригласить друзей</string>
+    <string name="party_invite_short">Найти участников</string>
     <string name="ago_weeks">%d нед. назад</string>
     <string name="ago_1week">1 неделю назад</string>
     <string name="ago_months">%d мес. назад</string>
@@ -941,7 +939,6 @@
     <string name="three_months_one_time">Одноразовая подписка на 3 месяца</string>
     <string name="one_month_one_time">Одноразовая подписка на 1 месяц</string>
     <string name="gift_one_get_one_purchase_banner">Подарите подписку и получите вторую бесплатно до %s</string>
-    <string name="g1g1_promo_info_limitations">Это ограниченное по времени событие начнется в %s (13:00 UTC) и закончится в %s (01:00 UTC). Акция действует только в том случае, если вы дарите подписку другому пользователю. Если вы или получатель уже имеете подписку, то вам добавятся месяцы подаренной подписки, которой можно будет воспользоваться при условии отмены или окончания текущей.</string>
     <string name="g1g1_promo_info_instructions">Нажмите на «Подарить подписку» и введите имя пользователя другой учетной записи, которому вы хотите сделать подарок. Дальше, выберите длительность подписки и оплатите её. Ваша учетная запись будет автоматически вознаграждена тем же уровнем подписки.</string>
     <string name="g1g1_promo_info_prompt">В честь сезона подарков возвращаем особую акцию. Теперь, когда вы дарите кому-нибудь подписку, вы получаете такую же для себя бесплатно!</string>
     <string name="claim_x_gems">Потребовать %d самоцветов</string>
@@ -969,7 +966,6 @@
     <string name="theme_mode">Режим (Темный/Светлый)</string>
     <string name="dark_mode">Темная тема</string>
     <string name="spooky_promo_info_prompt">Распродажа самоцветов возвращается до конца Осеннего фестиваля этого года! Это последний шанс, чтобы получить больше самоцветов, чем когда-либо, так что запасайтесь пока не поздно!</string>
-    <string name="gems_promo_info_limitations">Данная акция действует во время ограниченного по времени события. Событие начинается в %s (12:00 UTC) и закончится в %s (00:00 UTC). Это предложение действительно только при покупке самоцветов для себя.</string>
     <string name="spooky_promo_info_instructions">Между %s и %s, выберете как обычно любой набор самоцветов, и на вашу учетную запись будет зачислена их акционная сумма. Больше самоцветов, чтобы потратить их, поделиться с кем-то или сохранить для любых будущих обновлений!</string>
     <string name="view_gem_bundles">Посмотреть наборы самоцветов</string>
     <string name="fall_promo_info_prompt">Осенний фестиваль идет полным ходом, так что мы подумали, что это идеальное время, чтобы представить нашу первую в истории распродажу самоцветов! Теперь вы можете получить больше самоцветов с каждой покупки, чем когда-либо прежде.</string>
@@ -1253,10 +1249,39 @@
         <item quantity="many">%d человек</item>
         <item quantity="other">%d человек</item>
     </plurals>
-    <plurals name="you_x_others">
-        <item quantity="one"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
-    </plurals>
+    <string name="level_abbreviated">Ур. %d</string>
+    <string name="class_changed_description">Вы можете использовать навыки %s и покупать снаряжение в магазинах!</string>
+    <string name="change_class_selected_confirmation">Вы действительно хотите изменить свой класс на %1$s за 3 самоцвета\?</string>
+    <string name="subscription_credit_canceling">&lt;/b&gt;Ваша подписка на &lt;b&gt;+%d&lt;/b&gt; месяцев будет активирована после отмены</string>
+    <string name="insufficient_level_equipment_dialog">Этот предмет доступен только определенному классу.
+\nВыбрать класс можно по достижению 10-го уровня.</string>
+    <string name="push_notification_system_settings_reminders">В Настройках разрешите Habitica присылать вам уведомления, чтобы получать напоминания</string>
+    <string name="push_notification_system_settings_title">Уведомления выключены</string>
+    <string name="title">Заголовок</string>
+    <string name="enable_notifications">Включить уведомления</string>
+    <string name="push_notification_system_settings_description">В Настройках разрешите Habitica присылать вам уведомления, чтобы получать push-уведомления</string>
+    <string name="assign">Назначить</string>
+    <string name="pause_damage_summary">На данный момент урон активирован.
+\nПрочитать больше.</string>
+    <string name="habiticans_looking_party_empty">Здесь никого кто хочет вступить в команду сейчас. Можешь вернуться позже!</string>
+    <string name="seeking_party_description">Хотите вступить в команду вместе с остальными но не знаете никого\?Сообщите лидерам команд, что вы хотите вступить!</string>
+    <string name="positive_sentence">Полезная</string>
+    <string name="negative_sentence">Негативная</string>
+    <string name="positive_and_negative">полезная и плохая</string>
+    <string name="send_invite">Пригласить</string>
+    <string name="not_set" tools:override="true">Нет набора</string>
+    <string name="resume_damage_summary">На данный момент урон остановлен.</string>
+    <string name="pause_damage">Остановить получение урона</string>
+    <string name="pause_damage_1_title">"Ваши пропущенные Ежедневные задания не будут наносить вам урон "</string>
+    <string name="pause_damage_1_description">Боссы по прежнему будут наносить урон вызванный другими участниками команды пропустившие ежедневные задания</string>
+    <string name="pause_damage_2_title">Ваши достижения и счета не сбросятся</string>
+    <string name="list">Список</string>
+    <string name="by_invite">Приглашен</string>
+    <string name="habiticans_looking_party">Здесь список игроков которые хотят вступить в команду</string>
+    <string name="invited">Приглашен</string>
+    <string name="username_or_email">Имя пользователя или электронная почта</string>
+    <string name="seeking_party_title">Ищете команду\?</string>
+    <string name="change_class_to_x">Сменить класс на %s</string>
+    <string name="task_summary">Краткое описание задачи</string>
+    <string name="subscribers_mythic_hourglasses"><i>Подписчики получают мистические песочные часы в течение первых трех дней месяца.</i></string>
 </resources>

@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsSliderViewBinding
 import com.habitrpg.android.habitica.extensions.AfterChangeTextWatcher
-import com.habitrpg.android.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.extensions.styledAttributes
 import com.habitrpg.common.habitica.extensions.layoutInflater
 

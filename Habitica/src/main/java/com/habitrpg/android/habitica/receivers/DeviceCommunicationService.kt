@@ -19,9 +19,6 @@ class DeviceCommunicationService : WearableListenerService() {
 
     private val messageClient by lazy { Wearable.getMessageClient(this) }
 
-    init {
-    }
-
     override fun onMessageReceived(event: MessageEvent) {
         super.onMessageReceived(event)
         when (event.path) {

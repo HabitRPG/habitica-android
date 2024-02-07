@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:tint="@color/text_brand_neon"
+                    app:tint="@color/text_brand_neon"
                     android:src="@drawable/challenge_gem_add_button"/>
 
                 <ImageView
@@ -137,7 +137,7 @@
                     android:gravity="center"
                     android:inputType="number"
                     android:textColor="@color/text_secondary"
-                    android:text="0"
+                    tools:text="0"
                     android:id="@+id/create_challenge_prize"
                     android:textAlignment="center" />
 
@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:tint="@color/text_brand_neon"
+                    app:tint="@color/text_brand_neon"
                     android:src="@drawable/challenge_gem_remove_button"/>
 
             </LinearLayout>

@@ -46,7 +46,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentReportMessageBinding.inflate(inflater, container, false)
         return binding.root
     }

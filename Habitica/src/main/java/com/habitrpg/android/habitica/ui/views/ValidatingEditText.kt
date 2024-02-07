@@ -25,7 +25,12 @@ class ValidatingEditText @JvmOverloads constructor(
         set(value) {
             binding.errorText.text = value
         }
-
+    var hint: CharSequence?
+        get() = binding.editText.hint
+        set(value) {
+            binding.editText.hint = value
+            binding.inputLayout.hint = value
+        }
     var validator: ((String?) -> Boolean)? = null
 
     val isValid: Boolean

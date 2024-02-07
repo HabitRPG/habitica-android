@@ -62,7 +62,6 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
         }
 
     override fun snackbarContainer(): ViewGroup {
-        val v = findViewById<ViewGroup>(R.id.snackbar_container)
-        return v
+        return findViewById(R.id.snackbar_container)
     }
 }

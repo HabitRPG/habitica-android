@@ -83,7 +83,6 @@ class AvatarView : FrameLayout {
             )
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             imageViewHolder.forEach {
-                val lp = it.layoutParams
                 val bitmap = (it.drawable as? BitmapDrawable)?.bitmap ?: return@forEach
                 avatarCanvas?.drawBitmap(
                     bitmap,
@@ -208,8 +207,8 @@ class AvatarView : FrameLayout {
 
         if (resetHasAttributes) {
             hasPet = false
-            hasMount = hasPet
-            hasBackground = hasMount
+            hasMount = false
+            hasBackground = false
         }
 
         var mountName = avatar.currentMount

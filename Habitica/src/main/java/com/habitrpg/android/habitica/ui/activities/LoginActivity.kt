@@ -491,8 +491,6 @@ class LoginActivity : BaseActivity() {
     }
 
     companion object {
-        internal const val REQUEST_CODE_PICK_ACCOUNT = 1000
-
         fun show(v: View) {
             v.visibility = View.VISIBLE
         }

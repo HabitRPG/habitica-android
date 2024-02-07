@@ -19,4 +19,5 @@ open class EmailNotificationsPreference : RealmObject(), BaseObject {
     var subscriptionReminders: Boolean = false
     var onboarding: Boolean = false
     var kickedGroup: Boolean = false
+    var contentRelease: Boolean = false
 }

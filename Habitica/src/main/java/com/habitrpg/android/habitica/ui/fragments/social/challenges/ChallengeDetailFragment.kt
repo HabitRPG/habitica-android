@@ -175,7 +175,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_edit -> {
-                val intent = Intent(getActivity(), ChallengeFormActivity::class.java)
+                val intent = Intent(activity, ChallengeFormActivity::class.java)
                 val bundle = Bundle()
                 bundle.putString(ChallengeFormActivity.CHALLENGE_ID_KEY, challengeID)
                 intent.putExtras(bundle)

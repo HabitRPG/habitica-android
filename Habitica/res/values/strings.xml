@@ -569,7 +569,8 @@
     <string name="reset_account">Reset Account</string>
     <string name="reset_account_title">Are you sure you want to reset?</string>
     <string name="confirm_reset">Confirm reset</string>
-    <string name="reset_account_description">You will lose all your levels, Gold, and Experience. All your tasks and their historical data will be deleted (Challenge tasks will stay). You will lose all equipment, including limited edition or subscriber equipment, but you will be able to buy it back (you will need to be the correct class to re-buy class-specific gear). You will keep your current class and your Pets and Mounts. To confirm reset, type RESET below.</string>
+    <string name="reset_account_description_new">You will lose all your levels, Gold, and Experience. All your tasks and their historical data will be deleted (Challenge tasks will stay). You will lose all equipment, except Subscriber items and free commemorative items, but you will be able to buy it back. You will need to be the correct class to re-buy class-specific gear. You will keep your current class, Achievements, and your Pets and Mounts. To confirm reset, type your password below.</string>
+    <string name="reset_account_description_no_pw">You will lose all your levels, Gold, and Experience. All your tasks and their historical data will be deleted (Challenge tasks will stay). You will lose all equipment, except Subscriber items and free commemorative items, but you will be able to buy it back. You will need to be the correct class to re-buy class-specific gear. You will keep your current class, Achievements, and your Pets and Mounts. To confirm reset, type RESET below.</string>
     <string name="delete_caps" translatable="false">DELETE</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete_account_description">This will delete your account forever and it can never be restored! Banked or spent Gems will not be refunded. If you’re absolutely certain, type your password into the text box below.</string>
@@ -1351,6 +1352,7 @@
     <string name="for_for_free_description">To keep the party going, we’ll be giving away Party Robes, 20 Gems, and a limited edition Cape set and Background!</string>
     <string name="birthday_limitations">This is a limited time event that starts on %1$s and will end %2$s. The Limited Edition Jubilant Gryphatrice and ten Magic Hatching Potions will be available to buy during this time. The other Gifts listed in the Four for Free section will be automatically delivered to all accounts that were active in the 30 days prior to day the gift is sent. Accounts created after the gifts are sent will not be able to claim them.</string>
     <string name="visit_the_market">Visit the Market</string>
+    <string name="visit_market">Visit Market</string>
     <string name="exclusive_items_await">Exclusive items and gifts await</string>
     <string name="ends_in_x">Ends in %s</string>
     <string name="see_more">See More</string>
@@ -1468,6 +1470,11 @@
     <string name="subscribe_gems_for_gold_incentive_text">Subscribe to buy Gems with Gold and receive these other exclusive benefits!</string>
     <string name="subscribe_hourglass_incentive_text">Subscribers get Mystic Hourglasses to buy items in the Time Travelers Shop and these other exclusive benefits!</string>
     <string name="subscriber_benefit">SUBSCRIBER BENEFIT</string>
+    <string name="no_saddles">You don\'t have any Saddles</string>
+    <string name="purchase_saddles_in_market">Saddles instantly raise a Pet to a Mount. You can purchase one from the Market.</string>
+    <string name="error_loading_member">Unable to find player</string>
+    <string name="error_loading_member_body">There was an error when loading this player\'s data. Please make sure you typed their @username correctly.</string>
+    <string name="preference_email_content_release">Content releases + Events</string>
 
 
     <plurals name="you_x_others">

@@ -27,7 +27,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class BaseTaskViewHolder constructor(
+abstract class BaseTaskViewHolder(
     itemView: View,
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var openTaskFunc: ((Pair<Task, View>) -> Unit),

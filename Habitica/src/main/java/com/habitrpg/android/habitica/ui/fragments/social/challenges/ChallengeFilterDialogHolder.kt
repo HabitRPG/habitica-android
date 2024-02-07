@@ -50,8 +50,8 @@ internal class ChallengeFilterDialogHolder private constructor(
     private fun fillChallengeGroups() {
         binding.challengeFilterRecyclerView.layoutManager = LinearLayoutManager(context)
         adapter = ChallengesFilterRecyclerViewAdapter(filterGroups)
-        if (currentFilter != null && currentFilter?.showByGroups != null) {
-            adapter?.checkedEntries?.addAll(currentFilter?.showByGroups ?: emptyList())
+        currentFilter?.let { currentFilter ->
+            adapter?.checkedEntries?.addAll(currentFilter.showByGroups)
         }
 
         binding.challengeFilterRecyclerView.adapter = adapter

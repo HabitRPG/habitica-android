@@ -9,11 +9,12 @@
     <string name="sidebar_section_inventory">Inventar</string>
     <string name="sidebar_avatar">Uređivanje Avatara</string>
     <string name="sidebar_equipment">Oprema</string>
-    <string name="sidebar_stable">Ljubimci i jahače životinje</string>
+    <string name="sidebar_stable">Ljubimci i Životinje za jahanje</string>
     <string name="sidebar_news">Vijesti</string>
     <string name="sidebar_about">O nama</string>
     <string name="sidebar_shops">Dućani</string>
     <string name="sidebar_stats">Statistika</string>
     <string name="sidebar_gems">Kupi dragulje</string>
     <string name="sidebar_subscription">Pretplata</string>
+    <string name="sidebar_avatar_equipment">Avatar i oprema</string>
 </resources>

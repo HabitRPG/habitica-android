@@ -61,7 +61,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:background="@color/transparent"
-                    android:tint="@color/disabled_background"
+                    app:tint="@color/disabled_background"
                     android:src="@drawable/ic_send_grey_600_24dp"
                     android:contentDescription="@string/send"/>
             </LinearLayout>

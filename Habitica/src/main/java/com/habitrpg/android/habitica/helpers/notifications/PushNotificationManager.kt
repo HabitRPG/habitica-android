@@ -109,6 +109,7 @@ class PushNotificationManager(
             type?.contains(QUEST_INVITE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_invited_to_quest"
             type?.contains(QUEST_BEGUN_PUSH_NOTIFICATION_KEY) == true -> "preference_push_your_quest_has_begun"
             type?.contains(WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_you_won_challenge"
+            type?.contains(CONTENT_RELEASE_NOTIFICATION_KEY) == true -> "preference_push_content_release"
             else -> return true
         }
 
@@ -128,17 +129,13 @@ class PushNotificationManager(
         const val GIFT_ONE_GET_ONE_PUSH_NOTIFICATION_KEY = "gift1get1"
         const val CHAT_MENTION_NOTIFICATION_KEY = "chatMention"
         const val GROUP_ACTIVITY_NOTIFICATION_KEY = "groupActivity"
+        const val CONTENT_RELEASE_NOTIFICATION_KEY = "contentRelease"
         const val G1G1_PROMO_KEY = "g1g1Promo"
         private const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
 
         fun displayNotification(remoteMessage: RemoteMessage, context: Context, pushNotificationManager: PushNotificationManager? = null) {
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
 
-            val notificationFactory = HabiticaLocalNotificationFactory()
-            val notification = notificationFactory.build(
-                remoteMessageIdentifier,
-                context
-            )
             if (pushNotificationManager?.userIsSubscribedToNotificationType(remoteMessageIdentifier) != false) {
                 if (remoteMessage.data.containsKey("sendAnalytics")) {
                     val additionalData = HashMap<String, Any>()
@@ -150,8 +147,27 @@ class PushNotificationManager(
                         additionalData
                     )
                 }
-                notification.setExtras(remoteMessage.data)
-                notification.notifyLocally(remoteMessage.data["title"], remoteMessage.data["body"], remoteMessage.data)
+
+                val notificationFactory = HabiticaLocalNotificationFactory()
+                val localNotification = notificationFactory.build(
+                    remoteMessageIdentifier,
+                    context
+                )
+                localNotification.setExtras(remoteMessage.data)
+                val notification = remoteMessage.notification
+                if (notification != null) {
+                    localNotification.notifyLocally(
+                        notification.title ?: remoteMessage.data["title"],
+                        notification.body ?: remoteMessage.data["body"],
+                        remoteMessage.data
+                    )
+                } else {
+                    localNotification.notifyLocally(
+                        remoteMessage.data["title"],
+                        remoteMessage.data["body"],
+                        remoteMessage.data
+                    )
+                }
             }
         }
     }

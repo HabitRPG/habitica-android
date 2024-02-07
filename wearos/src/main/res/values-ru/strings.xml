@@ -33,4 +33,11 @@
     <string name="all_done_today">Все задачи сегодня выполнены!</string>
     <string name="sign_in_on_phone">Войти на телефоне</string>
     <string name="continue_on_your_phone">Продолжить на телефоне</string>
+    <string name="how_did_you_do">Как вы справились\?</string>
+    <string name="some_x">немного %s</string>
+    <string name="sign_in_description">Создавайте списки задач и отслеживайте прогресс с помощью своего игрового персонажа</string>
+    <string name="review_dailies">Обзор ежедневных дел</string>
+    <string name="some_food">Немного еды</string>
+    <string name="starting_your_day">Начните свой день...</string>
+    <string name="rya_description">Имеются невыполненные ежедневные дела за вчерашний день</string>
 </resources>

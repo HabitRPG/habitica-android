@@ -16,4 +16,5 @@
     <string name="sidebar_stats">Stats</string>
     <string name="sidebar_subscription">Abonnement</string>
     <string name="sidebar_gems">Acheter des gemmes</string>
+    <string name="sidebar_avatar_equipment">Avatar &amp; équipement</string>
 </resources>

@@ -20,4 +20,5 @@ open class PushNotificationsPreference : RealmObject(), BaseObject {
     var mentionParty: Boolean = false
     var mentionJoinedGuild: Boolean = false
     var mentionUnjoinedGuild: Boolean = false
+    var contentRelease: Boolean = false
 }

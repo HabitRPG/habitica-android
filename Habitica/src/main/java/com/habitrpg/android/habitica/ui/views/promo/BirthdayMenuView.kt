@@ -17,7 +17,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.views.PixelArtView
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import java.util.Date
@@ -145,7 +145,7 @@ fun TimeRemainingText(
     fontSize: TextUnit,
     fontWeight: FontWeight
 ) {
-    var value by remember { mutableStateOf(0) }
+    var value by remember { mutableIntStateOf(0) }
     LaunchedEffect(value) {
         val diff = endDate.time - Date().time
         if (diff.milliseconds > 1.hours) {

@@ -134,7 +134,7 @@ class NavigationDrawerAdapter(tintColor: Int, backgroundTintColor: Int) : Recycl
                 val promoView = PromoMenuView(parent.context)
                 promoView.layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    148.dpToPx(parent.context)
+                    118.dpToPx(parent.context)
                 )
                 PromoMenuViewHolder(promoView)
             }

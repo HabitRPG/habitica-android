@@ -1,2 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="sign_in_description">Buat daftar tugas dan lacak kemajuan dengan avatar yang seperti game</string>
+    <string name="sign_in_on_phone">Masuk dari ponsel</string>
+    <string name="edit_on_phone">Edit di ponsel</string>
+    <string name="sign_in">Masuk</string>
+    <string name="some_x">beberapa %s</string>
+    <string name="other_options">Pilihan lain</string>
+    <string name="ok">OK</string>
+    <string name="syncing_account">Menyinkronkan Akun dari Ponsel</string>
+    <string name="how_did_you_do">Bagaimana kabarmu\?</string>
+    <string name="you_found">Kamu menemukan…</string>
+    <string name="one_quest_item">1 item Misi</string>
+    <string name="x_quest_item">%d item Misi</string>
+    <string name="x_and_y">%1$s dan %2$s</string>
+    <string name="create_account">Buat akun</string>
+    <string name="continue_text">Lanjutkan</string>
+    <string name="you_ran_out_of_hp">Kamu kehabisan nyawa</string>
+    <string name="faint_description">Kamu kehilangan Level, Pengalaman, dan Koin Emas. Jangan menyerah!</string>
+    <string name="day_start">Permulaan hari</string>
+    <string name="rya_description">Ada keseharian yang tidak selesai kemarin</string>
+    <string name="review_dailies">Tinjau Keseharian</string>
+    <string name="check_on_phone">Periksa di ponsel</string>
+    <string name="checklist_disclaimer">Daftar ceklis tugas tersedia di ponsel</string>
+    <string name="start_new_day">Mulai hari baru</string>
+    <string name="version_info">Versi %1$s (%2$d)</string>
+    <string name="save">Simpan</string>
+    <string name="check_off_yesterday">Periksa semua yang kamu lakukan kemarin:</string>
+    <string name="task_type">Jenis Tugas</string>
+    <string name="task_title_hint">Masukkan Judul Tugas</string>
+    <string name="sync_data">Sinkronkan Data</string>
+    <string name="hide_task_rewards">Sembunyikan hadiah dari tugas</string>
+    <string name="log_out_of_habitica">Keluar dari Habitica\?</string>
+    <string name="no_tasks">Buat %s untuk ditambahkan ke daftar ini</string>
+    <string name="an_egg">sebutir Telur</string>
+    <string name="a_potion">sebuah Ramuan</string>
+    <string name="some_food">Makanan</string>
+    <string name="continue_on_your_phone">Lanjutkan di ponselmu</string>
+    <string name="levelup_description">Kamu naik level berkat semua kerja kerasmu!</string>
+    <string name="all_done_today">Semuanya selesai untuk hari ini!</string>
+    <string name="starting_your_day">Memulai harimu...</string>
+    <string name="disconnected">Terputus</string>
+</resources>

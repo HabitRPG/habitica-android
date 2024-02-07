@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="x_and_y">%1$s i %2$s</string>
+    <string name="sign_in_on_phone">Prijavi se na telefonu</string>
+    <string name="version_info">Verzija %1$s (%2$d)</string>
+    <string name="create_account">Stvori račun</string>
+    <string name="other_options">Ostale opcije</string>
+    <string name="continue_text">Nastavi</string>
+    <string name="you_ran_out_of_hp">Ponestalo ti je HP-a</string>
+    <string name="day_start">Početak dana</string>
+    <string name="task_type">Tip Zadatka</string>
+    <string name="task_title_hint">Unesi Ime Zadatka</string>
+    <string name="sync_data">Sinkroniziraj podatke</string>
+    <string name="hide_task_rewards">Sakrij nagrade zadataka</string>
+    <string name="log_out_of_habitica">Odjavi se iz Habitice\?</string>
+    <string name="continue_on_your_phone">Nastavi na telefonu</string>
+    <string name="all_done_today">Sve gotovo za danas!</string>
+    <string name="starting_your_day">Započinjanje tvog Dana...</string>
+    <string name="disconnected">Odspojeno</string>
+    <string name="one_quest_item">1 predmet iz Pustolovine</string>
+    <string name="x_quest_item">%d predmeta iz Pustolovina</string>
+    <string name="ok">OK</string>
+    <string name="how_did_you_do">Kako ti je pošlo za rukom\?</string>
+    <string name="you_found">Pronašao/la si…</string>
+    <string name="syncing_account">Sinkronizacija Računa s Telefona</string>
+    <string name="some_x">ponešto %s</string>
+    <string name="edit_on_phone">Uredi na telefonu</string>
+    <string name="sign_in">Prijavi se</string>
+    <string name="sign_in_description">Stvori popis zadataka i prati napredak sa svojim avatarom iz igre</string>
+    <string name="rya_description">Ima nedovršenih Dnevnih zadatka od jučer</string>
+    <string name="review_dailies">Pregledaj Dnevne zadatke</string>
+    <string name="check_on_phone">Provjeri na telefonu</string>
+    <string name="checklist_disclaimer">Kontrolne liste zadataka dostupne su na telefonu</string>
+    <string name="start_new_day">Započni novi dan</string>
+    <string name="check_off_yesterday">Označi što si riješio/la jučer:</string>
+    <string name="save">Spremi</string>
+    <string name="no_tasks">Stvori %s za dodavanje na ovaj popis</string>
+    <string name="an_egg">Jaje</string>
+    <string name="a_potion">Napitak</string>
+    <string name="some_food">Ponešto Hrane</string>
+    <string name="faint_description">Izgubio/la si Level, Iskustvo i Zlatnike. Ne odustaj!</string>
+    <string name="levelup_description">Zahvaljujući tvom napornom radu, prešao/la si na novu razinu!</string>
+</resources>

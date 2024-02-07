@@ -390,6 +390,8 @@ class ApiClientImpl(
 
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }
 
+    override suspend fun syncUserStats(): User? = process { apiService.syncUserStats() }
+
     override suspend fun getContent(language: String?): ContentResult? {
         return process { apiService.getContent(language ?: this.languageCode) }
     }
@@ -847,8 +849,10 @@ class ApiClientImpl(
 
     override suspend fun reroll(): User? = process { apiService.reroll() }
 
-    override suspend fun resetAccount(): Void? {
-        return process { apiService.resetAccount() }
+    override suspend fun resetAccount(password: String): Void? {
+        val updateObject = HashMap<String, String>()
+        updateObject["password"] = password
+        return process { apiService.resetAccount(updateObject) }
     }
 
     override suspend fun deleteAccount(password: String): Void? {

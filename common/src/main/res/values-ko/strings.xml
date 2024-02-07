@@ -17,9 +17,9 @@
     <string name="gold_plural">골드</string>
     <string name="gold_capitalized">골드</string>
     <string name="mystic_hourglasses">신비한 모래시계</string>
-    <string name="repeat_daily">일일 과제</string>
-    <string name="monthly">Monthly</string>
-    <string name="weekly">Weekly</string>
+    <string name="repeat_daily">매일</string>
+    <string name="monthly">매달</string>
+    <string name="weekly">매주</string>
     <string name="trivial">사소함</string>
     <string name="easy">쉬움</string>
     <string name="medium">보통</string>
@@ -54,4 +54,5 @@
     <string name="login_validation_error_title">검증 오류</string>
     <string name="login_validation_error_fieldsmissing">모든 항목을 채워주셔야 합니다.</string>
     <string name="failed">불러오기에 실패하였습니다</string>
+    <string name="quadrillion_abbrev">q</string>
 </resources>

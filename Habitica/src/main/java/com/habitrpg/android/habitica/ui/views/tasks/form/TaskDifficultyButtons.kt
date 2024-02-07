@@ -70,7 +70,6 @@ fun TaskDifficultySelector(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun TaskDifficultySelection(
     value: TaskDifficulty,

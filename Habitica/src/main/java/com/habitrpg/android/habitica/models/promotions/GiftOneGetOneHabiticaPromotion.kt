@@ -170,8 +170,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promptButton?.setOnClickListener {
             fragment.context?.let { context ->
                 SubscriptionFragment.showGiftSubscriptionDialog(
-                    context,
-                    true
+                    context
                 )
             }
         }
@@ -187,7 +186,7 @@ class GiftOneGetOneHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
             limitationsFormatter.format(startDate),
             utcTimeFormatter.format(startDate),
             limitationsFormatter.format(endDate),
-            utcTimeFormatter.format(startDate)
+            utcTimeFormatter.format(endDate)
         )
     }
 }

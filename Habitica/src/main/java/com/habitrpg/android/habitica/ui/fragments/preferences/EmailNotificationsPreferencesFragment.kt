@@ -40,6 +40,7 @@ class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedP
         updatePreference("preference_email_kicked_group", user?.preferences?.emailNotifications?.kickedGroup)
         updatePreference("preference_email_onboarding", user?.preferences?.emailNotifications?.onboarding)
         updatePreference("preference_email_subscription_reminders", user?.preferences?.emailNotifications?.subscriptionReminders)
+        updatePreference("preference_email_content_release", user?.preferences?.emailNotifications?.contentRelease)
         isSettingUser = false
         isInitialSet = false
     }
@@ -66,6 +67,7 @@ class EmailNotificationsPreferencesFragment : BasePreferencesFragment(), SharedP
             "preference_email_kicked_group" -> "kickedGroup"
             "preference_email_onboarding" -> "onboarding"
             "preference_email_subscription_reminders" -> "subscriptionReminders"
+            "preference_email_content_release" -> "contentRelease"
             else -> null
         }
         if (pathKey != null) {

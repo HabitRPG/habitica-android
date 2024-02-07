@@ -156,7 +156,7 @@
     <string name="setup_task_creativity_1">Inspirez-vous du travail d\'un mentor</string>
     <string name="setup_task_creativity_2">Travailler sur un projet créatif</string>
     <string name="setup_task_creativity_3">Finir un projet créatif</string>
-            <string name="guild">Guilde</string>
+    <string name="guild">Guilde</string>
     <string name="leave">Quitter</string>
     <string name="join">Rejoindre</string>
     <string name="delete">Supprimer</string>
@@ -216,7 +216,7 @@
 \n • Vos combos de tâches ou d\'habitude ne seront pas réinitialisés
 \n • Vos dégâts de boss ou objets de quêtes collectés resteront en cours jusqu\'à ce que vous quittiez l\'auberge</string>
     <string name="empty_items">Vous n\'avez pas de %s</string>
-    <string name="user_level_with_class">Niv %1$d - %2$s</string>
+    <string name="user_level_with_class">Niv. %1$d - %2$s</string>
     <string name="warrior">Guerrier</string>
     <string name="rogue">Voleur</string>
     <string name="mage">Mage</string>
@@ -229,7 +229,6 @@
     <string name="opt_out_class">Désactiver</string>
     <string name="class_confirmation">Êtes vous sûr de vouloir devenir un %s \?</string>
     <string name="class_changed">Vous êtes maintenant un %s !</string>
-
     <string name="choose_class">Choisissez une classe</string>
     <string name="dialog_go_back">Revenir</string>
     <string name="opt_out_confirmation">Confirmez-vous vouloir désactiver votre compte ?</string>
@@ -240,7 +239,7 @@
     <string name="by_email">Par email</string>
     <string name="invite_existing_users">Inviter des proches déjà inscrits</string>
     <string name="send">Envoyer</string>
-    <string name="invite">Inviter des proches</string>
+    <string name="invite">Trouver des membres</string>
     <string name="invite_username_description">Si vous avez des amis qui utilisent déjà Habitica, invitez les ici avec leur identifiant.</string>
     <string name="invite_email_description">Si des proches rejoignent Habitica via votre email, ils seront automatiquement invités à rejoindre votre équipe !</string>
     <string name="add_invites">Ajouter des invitations</string>
@@ -250,8 +249,8 @@
     <string name="share_hatched">Je viens de faire éclore un familier%1$s %2$s à Habitica en réalisant mes tâches quotidiennes !</string>
     <string name="share_raised">Je viens de faire éclore une monture %1$s à Habitica en réalisant mes tâches quotidiennes !</string>
     <string name="open_in_store">Ouvrir dans le Play Store</string>
-    <string name="change_class_confirmation">Êtes-vous sûr·e de vouloir changer de classe ? Cela vous coûtera 3 gemmes.</string>
-    <string name="change_class_equipment_warning">Attention : vous ne pourrez plus acheter l\'équipement de la classe %s.</string>
+    <string name="change_class_confirmation">Voulez-vous changer de classe pour 3 gemmes \?</string>
+    <string name="change_class_equipment_warning">Cela va remettre vos attributs à zéro, changer les équipements qui sont achetables dans les boutiques, et changer vos talents disponibles.</string>
     <string name="confirm">Confirmer</string>
     <string name="market">Marché</string>
     <string name="timeTravelers">Voyageurs temporels</string>
@@ -452,7 +451,6 @@
     <string name="int_abbrv">Int</string>
     <string name="con_abbrv">Con</string>
     <string name="reset_account">Réinitialiser le compte</string>
-    <string name="reset_account_description">Vous perdrez tous vos niveaux, votre or et vos points d\'expérience. Toutes vos tâches et leurs données historiques seront supprimées (les tâches des défis resteront). Vous perdrez tout équipement, y compris l\'équipement en édition limitée et les objets d\'abonnement mais vous pourrez le racheter (vous aurez besoin d\'être de la classe correspondant à l\'équipement spécifique à une classe). Vous conserverez votre classe actuelle ainsi que vos familiers et montures. Pour confirmer la réinitialisation, écrivez RESET ci-dessous.</string>
     <string name="delete_account">Supprimer le compte</string>
     <string name="delete_account_description">Cela va supprimer votre compte définitivement et il ne pourra pas être restauré ! Les gemmes sur votre compte ou celles dépensées ne seront pas remboursées. Si vous confirmez définitivement, tapez votre mot de passe dans le champ de texte ci-dessous.</string>
     <string name="reset_account_confirmation">Réinitialiser mon compte</string>
@@ -594,7 +592,7 @@
     <string name="week_reminder_title">Les choses avancent \?</string>
     <string name="week_reminder_text">Validez-lez dans Habitica maintenant pour du butin et de l\'expérience !</string>
     <string name="last_login">Dernière connexion</string>
-    <string name="total_checkins">Total de connexions</string>
+    <string name="total_checkins">Connexions totales</string>
     <string name="two_handed">Deux mains</string>
     <string name="usernamePromptTitle">Il est temps de choisir votre identifiant !</string>
     <string name="usernamePromptBody">Les identifiants sont maintenant uniques. Ils seront visibles sous votre pseudo, et seront utilisés pour les invitations, les @mentions et les discussions.</string>
@@ -816,7 +814,7 @@
     <string name="create_account_short">Créer un compte</string>
     <string name="login_incentive_short_count">%d connexions</string>
     <string name="login_incentive_short">Connectez-vous régulièrement à Habitica</string>
-    <string name="party_invite_short">Inviter des amis</string>
+    <string name="party_invite_short">Trouver des Membres</string>
     <string name="login_incentive_count">Débloqué en se connectant à Habitica %d fois.</string>
     <string name="id_copied">Identifiant copié dans le presse-papier</string>
     <string name="g1g1_duration">17 Déc jusqu\'au 6 Jan</string>
@@ -1076,7 +1074,6 @@
     <string name="three_months_one_time">Abonnement de 3 mois uniquement</string>
     <string name="one_month_one_time">Abonnement d\'un mois uniquement</string>
     <string name="gift_one_get_one_purchase_banner">Offrez un abonnement et recevez un abonnement gratuit jusqu\'au %s</string>
-    <string name="g1g1_promo_info_limitations">Il s\'agit d\'un événement limité dans le temps, qui démarre le %s (13h00 UTC) et qui finit le %s (01h00 UTC). Cette promotion ne s\'applique que lorsque vous offrez à quelqu\'un d\'autre. Si la personne désignée a déjà un abonnement, l\'abonnement offert ajoutera des mois d\'abonnement qui ne seront utilisés qu\'après la fin de leur abonnement actuel.</string>
     <string name="g1g1_promo_info_instructions">Choisissez \"Offrir un abonnement\", et entrez l\'identifiant du compte auquel vous voulez faire un cadeau. Puis choisissez la durée d\'abonnement que vous voulez offrir et validez. Vous recevrez automatiquement la même durée d\'abonnement que celle que vous venez d\'offrir.</string>
     <string name="g1g1_promo_info_prompt">En l\'honneur de la saison des cadeaux, nous reprenons une promotion très spéciale. Désormais, lorsque vous offrez un abonnement à quelqu\'un, vous recevrez le même abonnement pour vous même !</string>
     <string name="claim_x_gems">Recevoir %d gemmes</string>
@@ -1103,7 +1100,6 @@
     <string name="theme_color">Couleur du thème</string>
     <string name="theme_mode">Type de thème</string>
     <string name="dark_mode">Mode sombre</string>
-    <string name="gems_promo_info_limitations">Cette promotion est limitée à la durée de l\'événement. Cet événement démarrera le %s (12:00 UTC) et se terminera le %s (00:00 UTC). Cette promotion n\'est disponible que si vous achetez des gemmes pour vous-même.</string>
     <string name="leave_challenges_delete_tasks">Quitter les défis et supprimer les tâches</string>
     <string name="inbox_messages_title_single">Nouveau message de %1$s</string>
     <string name="rejoin_guild">Vous pouvez rejoindre cette guilde depuis la page Guildes : Découvrir</string>
@@ -1155,7 +1151,7 @@
     <string name="minimal">Minimal</string>
     <string name="task_list_mode">Mode liste de tâches</string>
     <string name="discard">Abandonner</string>
-    <string name="class_confirmation_price">Voulez-vous changer de classe et devenir %s pour %d gemmes \?</string>
+    <string name="class_confirmation_price">Voulez-vous changer de classe et devenir %s pour %d Gemmes \?</string>
     <string name="use_item">Utilisez l\'objet sur un allié</string>&gt;
     <string name="discard_changes_to_task_message">Voulez-vous vraiment abandonner les changements pour cette tâche \?</string>
     <string name="gift_confirmation_text_gems_new">Vous avez envoyé %s gemmes à %s.</string>
@@ -1256,4 +1252,50 @@
         <item quantity="one">%d personne</item>
         <item quantity="other">%d personnes</item>
     </plurals>
+    <string name="x_and_y">%1$s et %2$s</string>
+    <string name="level_abbreviated">Niv. %d</string>
+    <string name="change_class_selected_confirmation">Voulez-vous changer de classe en devenant %1$s pour 3 gemmes \?</string>
+    <string name="enable_notifications">Activer les Notifications</string>
+    <string name="push_notification_system_settings_description">Accepter les notifications Habitica dans les Paramètres de l\'application pour recevoir des notifications push</string>
+    <string name="push_notification_system_settings_title">Notifications Désactivées</string>
+    <string name="title">Titre</string>
+    <string name="push_notification_system_settings_reminders">Accepter les notifications Habitica dans les Paramètres de l\'application pour recevoir des rappels</string>
+    <string name="positive_sentence">positif</string>
+    <string name="negative_sentence">négatif</string>
+    <string name="class_changed_description">Vous pouvez utiliser %s talents et acheter del\'équipement depuis les boutiques !</string>
+    <string name="insufficient_level_equipment_dialog">Cet objet n\'est disponible que pour une certaine class.
+\nVous pouvez choisir votre classe après le niveau 10.</string>
+    <string name="x_checkins">%d Connexions</string>
+    <string name="send_invite">Envoyer une invitation</string>
+    <string name="subscription_credit_canceling">Vos <b>+%d</b> crédits de mois d\'abonnement s\'activeront après avoir annulé</string>
+    <string name="report_player_title">Signaler %s \?</string>
+    <string name="report_reason_title_player">Pourquoi signale tu ce joueur \?</string>
+    <string name="report_user_description">Cette action bloquera également @%s</string>
+    <string name="report_message">Signaler un message</string>
+    <string name="report_successful">%s Signaler</string>
+    <string name="report_failure">Echec du signalement, essaye plus tard</string>
+    <string name="report_player_toolbar_title">Signaler %s</string>
+    <string name="choosing_class_progress">Choisi une classe</string>
+    <string name="group_tags">Catégories de groupe</string>
+    <string name="need_help_description">Tu peut nous contacter et un membre de notre équipe fera de son mieux pour t\'aider!</string>
+    <string name="subscription_hourglasses_3month_timeframe">Sablier de 3 mois</string>
+    <string name="challenges">Défis</string>
+    <string name="report_player">Signaler un joueur</string>
+    <string name="report_hint">Raison du signalement</string>
+    <string name="report_reason_title_message">Pourquoi signale tu ce message \?</string>
+    <string name="report_formatted_name">%1$s
+\n@%2$s</string>
+    <string name="ban_user">Bannir le joueur</string>
+    <string name="your_tags">Tes catégories</string>
+    <string name="reset_account_description_new">Tu va perdre tout tes niveau, ton or et ton expérience. Toutes tes tâches et leur historique sera effacé (les tâches de défis resteront). Tu perdras tout ton équipement, sauf les items d\'abonné et tes objets commémoratifs, mais tu pourras les racheter. Tu auras besoin de reprendre la même classe et racheter tout son équipement. Tu garderas ta classe actuelle, tes succès, et tes familiers et montures. Pour confirmer le reset, écrit ton mot de passe en dessous.</string>
+    <string name="change_class_confirmation_message">Cela changera l\'équipement débloqué dans les magasins et change tes compétences disponibles</string>
+    <string name="not_set" tools:override="true">Non défini</string>
+    <string name="todo_summary_description_duedate">Ceci est une tâche **%1$s** qui doit être complétée avant le **%2$s**.</string>
+    <string name="assign_to">Assigner à…</string>
+    <string name="positive_and_negative">Positif et Négatif</string>
+    <string name="member_list">Liste des membres</string>
+    <string name="assigned_to">Assigné à</string>
+    <string name="completed_at">Complété à %s</string>
+    <string name="assign">Assigner</string>
+    <string name="manager">Gestionnaire</string>
 </resources>

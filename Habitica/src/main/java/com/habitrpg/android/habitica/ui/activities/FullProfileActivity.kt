@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.SharedPreferences
@@ -28,7 +29,6 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
 import com.habitrpg.android.habitica.helpers.ReviewManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
 import com.habitrpg.android.habitica.models.Achievement
@@ -39,16 +39,16 @@ import com.habitrpg.android.habitica.models.user.Permission
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.adapter.social.AchievementProfileAdapter
 import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.loadImage
-import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.RecyclerViewState
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.PixelArtView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -109,7 +109,7 @@ class FullProfileActivity : BaseActivity() {
 
         binding.avatarWithBars.setContent {
             HabiticaTheme {
-                AppHeaderView(member.value, isMyProfile = isMyProfile(), onMemberRowClicked = {}, onClassSelectionClicked = {})
+                AppHeaderView(member.value, isMyProfile = false, onMemberRowClicked = {}, onClassSelectionClicked = {})
             }
         }
 
@@ -768,6 +768,7 @@ class FullProfileActivity : BaseActivity() {
         return true
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         finish()
     }

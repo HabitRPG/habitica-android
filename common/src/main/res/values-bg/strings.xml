@@ -12,4 +12,5 @@
     <string name="settings">Настройки</string>
     <string name="action_edit">Редактиране</string>
     <string name="action_cancel">Отказ</string>
+    <string name="stats">Показатели</string>
 </resources>
