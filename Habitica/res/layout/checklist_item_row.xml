@@ -32,7 +32,8 @@
         style="@style/Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:paddingStart="16dp"
-        android:layout_gravity="center_vertical"/>
+        android:paddingVertical="5dp"
+        android:layout_marginHorizontal="@dimen/task_text_padding"
+        android:layout_gravity="center_vertical"
+        tools:text="Example checklist item" />
 </LinearLayout>
