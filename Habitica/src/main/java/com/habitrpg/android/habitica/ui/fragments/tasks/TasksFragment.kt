@@ -115,13 +115,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
     override fun onResume() {
         super.onResume()
-        bottomNavigation?.activeTaskType = when (binding?.viewPager?.currentItem) {
-            0 -> TaskType.HABIT
-            1 -> TaskType.DAILY
-            2 -> TaskType.TODO
-            3 -> TaskType.REWARD
-            else -> TaskType.HABIT
-        }
+        bottomNavigation?.activeTaskType = getActiveTaskType()
         binding?.viewPager?.currentItem = binding?.viewPager?.currentItem ?: 0
         bottomNavigation?.listener = this
         lifecycleScope.launchCatching {
@@ -149,7 +143,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
 
         filterMenuItem = menu.findItem(R.id.action_filter)
-        updateFilterIcon()
+        updateFilterIcon(taskType = getActiveTaskType())
 
         val item = menu.findItem(R.id.action_search)
         tintMenuIcon(item)
@@ -203,7 +197,7 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             val navigation = bottomNavigation ?: mainActivity?.binding?.content?.bottomNavigation
             val taskType = navigation?.activeTaskType ?: activeFragment?.taskType
 
-            dialog.setOnDismissListener { updateFilterIcon() }
+            dialog.setOnDismissListener { updateFilterIcon(taskType) }
 
             if (taskType != null) {
                 dialog.taskType = taskType
@@ -232,18 +226,18 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
         binding?.viewPager?.registerOnPageChangeCallback(object :
                 ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    bottomNavigation?.selectedPosition = position
-                    updateFilterIcon()
-                }
-            })
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                bottomNavigation?.selectedPosition = position
+                updateFilterIcon(getTaskTypeFromTabPosition(position))
+            }
+        })
     }
 
-    private fun updateFilterIcon() {
-        val filterCount = viewModel.filterCount(activeFragment?.taskType)
+    private fun updateFilterIcon(taskType: TaskType?) {
+        val filterCount = viewModel.filterCount(taskType)
 
-        filterMenuItem?.isVisible = activeFragment?.taskType != TaskType.REWARD
+        filterMenuItem?.isVisible = taskType != TaskType.REWARD
         if (filterCount == 0) {
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {
@@ -319,13 +313,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
 
         val additionalData = HashMap<String, Any>()
         additionalData["created task type"] = type
-        additionalData["viewed task type"] = when (binding?.viewPager?.currentItem) {
-            0 -> TaskType.HABIT
-            1 -> TaskType.DAILY
-            2 -> TaskType.TODO
-            3 -> TaskType.REWARD
-            else -> ""
-        }
+        additionalData["viewed task type"] =
+                getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: ""
         Analytics.sendEvent("open create task form", EventCategory.BEHAVIOUR, HitType.EVENT, additionalData)
 
         val bundle = Bundle()
@@ -344,11 +333,23 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
     }
 
+    private fun getTaskTypeFromTabPosition(position: Int?): TaskType? = when (position) {
+        0 -> TaskType.HABIT
+        1 -> TaskType.DAILY
+        2 -> TaskType.TODO
+        3 -> TaskType.REWARD
+        else -> null
+    }
+
+    private fun getActiveTaskType(): TaskType =
+            getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: TaskType.HABIT
+
     //endregion Events
 
     private val taskCreateResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         onTaskCreatedResult(it.resultCode, it.data)
     }
+
     private fun onTaskCreatedResult(resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
             val taskTypeValue = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
