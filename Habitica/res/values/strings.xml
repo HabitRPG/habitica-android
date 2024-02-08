@@ -775,6 +775,7 @@
     <string name="unallocated_stats_points"><![CDATA[You have <b>%1$s unallocated Stat Points</b>]]></string>
     <string name="new_subscriber_item"><![CDATA[You have new <b>Mystery Items</b>]]></string>
     <string name="invited_to_party_notification"><![CDATA[<font color=#925CF3>%2$s</font> has invited you to join the party <b>%1$s</b>]]></string>
+    <string name="invited_to_guild_notification"><![CDATA[<font color=#925CF3>%2$s</font> has invited you to join the group <b>%1$s</b>]]></string>
     <string name="invited_to_quest"><![CDATA[You were invited to the Quest <b>%1$s</b>]]></string>
     <string name="defeat">Defeat</string>
     <string name="create">Create</string>

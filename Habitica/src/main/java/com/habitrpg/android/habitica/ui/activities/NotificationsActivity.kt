@@ -35,6 +35,7 @@ import com.habitrpg.common.habitica.models.Notification
 import com.habitrpg.common.habitica.models.notifications.GroupTaskApprovedData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskNeedsWorkData
 import com.habitrpg.common.habitica.models.notifications.GroupTaskRequiresApprovalData
+import com.habitrpg.common.habitica.models.notifications.GuildInvitationData
 import com.habitrpg.common.habitica.models.notifications.ItemReceivedData
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import com.habitrpg.common.habitica.models.notifications.NewStuffData
@@ -178,6 +179,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
                     Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
                     Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
                     Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
+                    Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
                     else -> null
                 }
 
@@ -388,6 +390,22 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             return@withContext createActionableNotificationItem(
                 notification,
                 fromHtml(getString(R.string.invited_to_party_notification, data.invitation?.name, inviter?.formattedUsername)),
+                openable = true,
+                inviterId
+            )
+        } else {
+            return@withContext null
+        }
+    }
+
+    private suspend fun createGuildInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
+        val data = notification.data as? GuildInvitationData
+        val inviterId = data?.invitation?.inviter
+        if (inviterId != null) {
+            val inviter = socialRepository.retrieveMember(inviterId, fromHall = false)
+            return@withContext createActionableNotificationItem(
+                notification,
+                fromHtml(getString(R.string.invited_to_guild_notification, data.invitation?.name, inviter?.formattedUsername)),
                 openable = true,
                 inviterId
             )
