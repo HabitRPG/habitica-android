@@ -2,7 +2,7 @@
 <resources>
     <color name="tavern.nolikes.background">#0A0A0A</color>
     <color name="tavern.somelikes.background">#464646</color>
-    <color name="tavern.userliked.background">@color/text_green</color>
+    <color name="tavern.userliked.background">@color/green_50</color>
     <color name="tavern.nolikes.foreground">@color/gray_400</color>
     <color name="tavern.somelikes.foreground">@color/gray_700</color>
     <color name="tavern.userliked.foreground">@color/gray_700</color>

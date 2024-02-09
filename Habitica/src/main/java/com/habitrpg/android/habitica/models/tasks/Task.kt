@@ -359,7 +359,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
         // If the reminder is a todo, only schedule sole dueDate/time occurrence. Otherwise, schedule multiple occurrences in advance
         if (this.type == TaskType.TODO) {
-            occurrencesList.add(this.dueDate?.toZonedDateTime()?.withHour(reminderTime.hour)?.withMinute(reminderTime.minute) ?: return null)
+            occurrencesList.add((remindersItem.getZonedDateTime() ?: this.dueDate?.toZonedDateTime())?.withHour(reminderTime.hour)?.withMinute(reminderTime.minute) ?: return null)
             return occurrencesList
         }
         val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
