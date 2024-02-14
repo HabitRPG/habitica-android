@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.view.marginStart
@@ -48,6 +49,8 @@ class AvatarView : FrameLayout {
     private var avatarCanvas: Canvas? = null
     private var currentLayers: Map<LayerType, String>? = null
 
+    var configManager: AppConfigManager? = null
+
     private val layerMap: Map<LayerType, String>
         get() {
             val avatar = this.avatar ?: return emptyMap()
@@ -57,7 +60,8 @@ class AvatarView : FrameLayout {
     private var spriteSubstitutions: Map<String, Map<String, String>> = HashMap()
         get() {
             if (Date().time - (lastSubstitutionCheck?.time ?: 0) > 180000) {
-                field = AppConfigManager().spriteSubstitutions()
+                field = (configManager ?: AppConfigManager()).spriteSubstitutions()
+                Log.i("AvatarView", field.toString())
                 lastSubstitutionCheck = Date()
             }
             return field

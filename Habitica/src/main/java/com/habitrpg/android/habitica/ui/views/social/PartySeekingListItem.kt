@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.MainNavDirections
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.members.Member
@@ -53,7 +54,8 @@ fun PartySeekingListItem(
     isInvited: Boolean = false,
     showHeader: Boolean = false,
     showExtendedInfo: Boolean = true,
-    onInvite: (Member) -> Unit
+    configManager: AppConfigManager,
+    onInvite: (Member) -> Unit,
 ) {
     Column(
         modifier
@@ -72,6 +74,7 @@ fun PartySeekingListItem(
         ) {
             ComposableAvatarView(
                 user,
+                configManager,
                 Modifier
                     .size(94.dp, 98.dp)
                     .padding(top = 4.dp)
@@ -206,5 +209,5 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 @Preview
 @Composable
 private fun Preview(@PreviewParameter(MemberProvider::class) data: Member) {
-    PartySeekingListItem(user = data, onInvite = {})
+    PartySeekingListItem(user = data, onInvite = {}, configManager = AppConfigManager(null))
 }

@@ -41,6 +41,7 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityTaskFormBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.TaskAlarmManager
 import com.habitrpg.android.habitica.helpers.notifications.PushNotificationManager
 import com.habitrpg.android.habitica.models.Tag
@@ -114,6 +115,9 @@ class TaskFormActivity : BaseActivity() {
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
+    @Inject
+    lateinit var configManager: AppConfigManager
 
     private var challenge: Challenge? = null
 
@@ -325,6 +329,7 @@ class TaskFormActivity : BaseActivity() {
                                 task?.let { it1 -> taskRepository.markTaskNeedsWork(it1, it) }
                             }
                         },
+                        configManager = configManager,
                         showEditButton = true
                     )
                 }
@@ -962,6 +967,7 @@ class TaskFormActivity : BaseActivity() {
             AssignSheet(
                 groupMembers,
                 assignedIDs,
+                configManager,
                 {
                     if (assignedIDs.contains(it)) {
                         assignedIDs.remove(it)

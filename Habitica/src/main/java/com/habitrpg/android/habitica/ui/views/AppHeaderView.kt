@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
@@ -111,13 +112,15 @@ fun AppHeaderView(
     teamPlanMembers : List<Member>? = null,
     onAvatarClicked: (() -> Unit)? = null,
     onMemberRowClicked : () -> Unit,
-    onClassSelectionClicked: () -> Unit
+    onClassSelectionClicked: () -> Unit,
+    configManager: AppConfigManager
 ) {
     val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
     Column(modifier) {
         Row {
             ComposableAvatarView(
                 user,
+                configManager,
                 Modifier
                     .size(110.dp, 100.dp)
                     .padding(end = 16.dp)
@@ -278,6 +281,7 @@ fun AppHeaderView(
                                 ) {
                                     ComposableAvatarView(
                                         avatar = member,
+                                        configManager,
                                         Modifier
                                             .size(64.dp)
                                             .requiredSize(64.dp)
@@ -404,7 +408,8 @@ private fun Preview(@PreviewParameter(UserProvider::class) data: Pair<User, Team
                 .background(HabiticaTheme.colors.contentBackground)
                 .padding(8.dp),
             onMemberRowClicked = { },
-            onClassSelectionClicked = { }
+            onClassSelectionClicked = { },
+            configManager = AppConfigManager(null)
         )
     }
 }

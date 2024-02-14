@@ -47,6 +47,7 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.TaskDescriptionBuilder
 import com.habitrpg.android.habitica.models.members.Member
@@ -76,7 +77,8 @@ class TaskSummaryViewModel @Inject constructor(
     userRepository: UserRepository,
     userViewModel: MainUserViewModel,
     val taskRepository: TaskRepository,
-    val socialRepository: SocialRepository
+    val socialRepository: SocialRepository,
+    val configManager: AppConfigManager
 ) : BaseViewModel(userRepository, userViewModel) {
     val taskID: String = savedStateHandle[TaskFormActivity.TASK_ID_KEY] ?: ""
 
@@ -295,6 +297,7 @@ fun TaskSummaryView(viewModel: TaskSummaryViewModel) {
                                 .heightIn(min = 24.dp)
                                 .fillMaxWidth(),
                             color = darkestColor,
+                            configManager = viewModel.configManager,
                             extraContent = if (item.completed) {
                                 (
                                     {

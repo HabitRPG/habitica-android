@@ -311,7 +311,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                 verticalArrangement = Arrangement.spacedBy(4.dp),
                                 modifier = Modifier.padding(22.dp)
                             ) {
-                                ComposableAvatarView(avatar = user)
+                                ComposableAvatarView(avatar = user, configManager = appConfigManager)
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -370,7 +370,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                 null
                             )
                             val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
-                            GroupPlanMemberList(members, group) {
+                            GroupPlanMemberList(members, group, appConfigManager) {
                                 onClose()
                                 FullProfileActivity.open(it)
                             }
@@ -383,7 +383,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         val intent = Intent(this@MainActivity, ClassSelectionActivity::class.java)
                         intent.putExtras(bundle)
                         classSelectionResult.launch(intent)
-                    }
+                    },
+                    configManager = appConfigManager
                 )
             }
         }

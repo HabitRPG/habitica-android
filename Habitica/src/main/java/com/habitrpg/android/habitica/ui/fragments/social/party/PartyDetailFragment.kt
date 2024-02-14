@@ -21,6 +21,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentPartyDetailBinding
 import com.habitrpg.android.habitica.extensions.inflate
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.QuestContent
@@ -83,6 +84,9 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
+
     override fun onDestroyView() {
         inventoryRepository.close()
         super.onDestroyView()
@@ -136,6 +140,7 @@ class PartyDetailFragment : BaseFragment<FragmentPartyDetailBinding>() {
                             isInvited = true,
                             showHeader = true,
                             showExtendedInfo = false,
+                            configManager = appConfigManager,
                             onInvite = {
                                 viewModel.rescindInvite(invitedMember)
                             }

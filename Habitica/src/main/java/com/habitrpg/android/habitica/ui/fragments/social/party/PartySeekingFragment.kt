@@ -55,6 +55,7 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
 import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
 import com.habitrpg.android.habitica.models.invitations.InviteResponse
@@ -83,7 +84,8 @@ import kotlin.time.toDuration
 class PartySeekingViewModel @Inject constructor(
     userRepository: UserRepository,
     userViewModel: MainUserViewModel,
-    val socialRepository: SocialRepository
+    val socialRepository: SocialRepository,
+    val configManager: AppConfigManager
 ) : BaseViewModel(userRepository, userViewModel) {
     val isRefreshing = mutableStateOf(false)
     val seekingUsers: Flow<PagingData<Member>>
@@ -259,6 +261,7 @@ fun PartySeekingView(
                     user = item,
                     inviteState = viewModel.inviteStates[item.id]?.second ?: LoadingButtonState.CONTENT,
                     isInvited = viewModel.inviteStates[item.id]?.first ?: false,
+                    configManager = viewModel.configManager,
                     modifier = Modifier
                         .animateItemPlacement()
                         .padding(horizontal = 14.dp)

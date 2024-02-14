@@ -44,4 +44,5 @@ interface ChallengeRepository : BaseRepository {
     fun getChallengepMembership(id: String): Flow<ChallengeMembership>
     fun getChallengeMemberships(): Flow<List<ChallengeMembership>>
     fun isChallengeMember(challengeID: String): Flow<Boolean>
+    suspend fun reportChallenge(challengeid: String, updateData: Map<String, String>): Void?
 }

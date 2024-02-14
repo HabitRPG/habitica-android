@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Group
@@ -42,7 +43,8 @@ import kotlin.random.Random
 fun GroupPlanMemberList(
     members: List<Member>?,
     group: Group?,
-    onMemberClicked: (String) -> Unit
+    configManager: AppConfigManager,
+    onMemberClicked: (String) -> Unit,
 ) {
     LazyColumn {
         item {
@@ -73,6 +75,7 @@ fun GroupPlanMemberList(
                     member,
                     role,
                     onMemberClicked,
+                    configManager,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
             }
@@ -85,6 +88,7 @@ fun MemberItem(
     member: Member,
     role: String,
     onMemberClicked: (String) -> Unit,
+    configManager: AppConfigManager,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -93,7 +97,7 @@ fun MemberItem(
             .clip(HabiticaTheme.shapes.large)
             .background(HabiticaTheme.colors.windowBackground)
             .clickable {
-                member.id?.let { onMemberClicked(it) }
+                onMemberClicked(member.id)
             }
     ) {
         Row(
@@ -102,6 +106,7 @@ fun MemberItem(
         ) {
             ComposableAvatarView(
                 avatar = member,
+                configManager = configManager,
                 modifier = Modifier
                     .padding(6.dp)
                     .size(94.dp, 98.dp)
@@ -221,5 +226,5 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 @Composable
 @Preview
 private fun Preview(@PreviewParameter(MemberProvider::class) member: Member) {
-    MemberItem(member = member, role = "Manager", onMemberClicked = {})
+    MemberItem(member = member, role = "Manager", onMemberClicked = {}, AppConfigManager(null))
 }

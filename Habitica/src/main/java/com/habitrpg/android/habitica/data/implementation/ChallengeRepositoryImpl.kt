@@ -23,6 +23,13 @@ class ChallengeRepositoryImpl(
         return localRepository.isChallengeMember(currentUserID, challengeID)
     }
 
+    override suspend fun reportChallenge(
+        challengeid: String,
+        updateData: Map<String, String>
+    ): Void? {
+        return apiClient.reportChallenge(challengeid, updateData)
+    }
+
     override fun getChallengepMembership(id: String): Flow<ChallengeMembership> {
         return localRepository.getChallengeMembership(currentUserID, id)
     }

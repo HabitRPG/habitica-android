@@ -284,4 +284,5 @@ interface ApiClient {
     suspend fun retrievePartySeekingUsers(page: Int): List<Member>?
     suspend fun getGroupInvites(groupId: String, includeAllPublicFields: Boolean?): List<Member>?
     suspend fun syncUserStats(): User?
+    suspend fun reportChallenge(challengeid: String, updateData: Map<String, String>): Void?
 }

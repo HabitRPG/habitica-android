@@ -28,6 +28,7 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityFullProfileBinding
 import com.habitrpg.android.habitica.extensions.addCancelButton
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
@@ -83,6 +84,9 @@ class FullProfileActivity : BaseActivity() {
     @Inject
     lateinit var reviewManager: ReviewManager
 
+    @Inject
+    lateinit var configManager: AppConfigManager
+
     private var userID = ""
     private var username: String? = null
     private var userDisplayName: String? = null
@@ -109,7 +113,7 @@ class FullProfileActivity : BaseActivity() {
 
         binding.avatarWithBars.setContent {
             HabiticaTheme {
-                AppHeaderView(member.value, isMyProfile = false, onMemberRowClicked = {}, onClassSelectionClicked = {})
+                AppHeaderView(member.value, isMyProfile = false, onMemberRowClicked = {}, onClassSelectionClicked = {}, configManager = configManager)
             }
         }
 

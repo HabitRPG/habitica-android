@@ -391,6 +391,12 @@ class ApiClientImpl(
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }
 
     override suspend fun syncUserStats(): User? = process { apiService.syncUserStats() }
+    override suspend fun reportChallenge(
+        challengeid: String,
+        updateData: Map<String, String>
+    ): Void? {
+        return process { apiService.reportChallenge(challengeid, updateData) }
+    }
 
     override suspend fun getContent(language: String?): ContentResult? {
         return process { apiService.getContent(language ?: this.languageCode) }

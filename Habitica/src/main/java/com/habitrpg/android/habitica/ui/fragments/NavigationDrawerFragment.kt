@@ -133,6 +133,7 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = DrawerMainBinding.bind(view)
+        binding?.avatarView?.configManager = configManager
 
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.layoutManager =

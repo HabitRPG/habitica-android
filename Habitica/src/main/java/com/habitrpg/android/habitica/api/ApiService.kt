@@ -484,4 +484,7 @@ interface ApiService {
 
     @GET("looking-for-party")
     suspend fun retrievePartySeekingUsers(@Query("page") page: Int): HabitResponse<List<Member>>
+
+    @POST("challenges/{challengeId}/flag")
+    suspend fun reportChallenge(@Query("challengeId") challengeid: String, @Body updateData: Map<String, String>): HabitResponse<Void>
 }

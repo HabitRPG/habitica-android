@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.shared.habitica.models.Avatar
 
@@ -30,7 +31,8 @@ fun UserRow(
     mainContentModifier: Modifier = Modifier,
     extraContent: @Composable (() -> Unit)? = null,
     endContent: @Composable (() -> Unit)? = null,
-    color: Color? = null
+    color: Color? = null,
+    configManager: AppConfigManager
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxWidth()) {
         Box(
@@ -43,6 +45,7 @@ fun UserRow(
             if (avatar != null) {
                 ComposableAvatarView(
                     avatar = avatar,
+                    configManager,
                     Modifier
                         .size(96.dp)
                         .requiredSize(96.dp)

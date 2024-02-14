@@ -14,4 +14,6 @@
     <item
         android:id="@+id/action_share"
         android:title="@string/share"/>
+    <item android:id="@+id/action_report"
+        android:title="@string/report_challenge" />
 </menu>

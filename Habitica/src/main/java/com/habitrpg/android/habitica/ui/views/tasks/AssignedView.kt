@@ -26,11 +26,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.Assignable
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.CompletedAt
 import com.habitrpg.android.habitica.ui.views.UserRow
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import java.util.Date
 
 @Composable
@@ -41,6 +43,7 @@ fun AssignedView(
     color: Color,
     onEditClick: () -> Unit,
     onUndoClick: (String) -> Unit,
+    configManager: AppConfigManager,
     modifier: Modifier = Modifier,
     showEditButton: Boolean = false
 ) {
@@ -67,6 +70,7 @@ fun AssignedView(
                 extraContent = {
                     completedAt[assignable.id]?.let { CompletedAt(completedAt = it) }
                 },
+                configManager = configManager,
                 endContent = {
                     completedAt[assignable.id]?.let {
                         if (showEditButton) {

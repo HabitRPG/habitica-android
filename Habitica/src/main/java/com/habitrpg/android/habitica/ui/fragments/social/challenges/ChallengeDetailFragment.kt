@@ -26,6 +26,7 @@ import com.habitrpg.android.habitica.models.tasks.Task
 import com.habitrpg.android.habitica.ui.activities.ChallengeFormActivity
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.fragments.ReportBottomSheetFragment
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.DailyViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.HabitViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.tasks.RewardViewHolder
@@ -193,6 +194,9 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
             R.id.action_end_challenge -> {
                 showEndChallengeDialog()
             }
+            R.id.action_report -> {
+                showReportChallengeBottomSheet()
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -215,6 +219,17 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         }
         dialog.addCloseButton()
         dialog.show()
+    }
+
+    private fun showReportChallengeBottomSheet() {
+        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
+            reportType = ReportBottomSheetFragment.REPORT_TYPE_CHALLENGE,
+            challengeBeingReported = challengeID ?: "",
+            displayName = challenge?.name ?: "",
+            sourceView = this::class.simpleName ?: ""
+        )
+
+        activity?.supportFragmentManager?.let { reportBottomSheetFragment.show(it, ReportBottomSheetFragment.TAG) }
     }
 
     private fun refresh() {
