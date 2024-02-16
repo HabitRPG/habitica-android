@@ -142,6 +142,7 @@ public class GSonFactoryCreator {
                 .registerTypeAdapter(SocialAuthentication.class, new SocialAuthenticationDeserializer())
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                 .serializeNulls()
+                .setLenient()
                 .create();
     }
         public static GsonConverterFactory create() {

@@ -13,7 +13,6 @@ class ExceptionHandler {
     private var exceptionLogger: ((Throwable) -> Unit)? = null
 
     companion object {
-
         private var instance = ExceptionHandler()
 
         fun init(exceptionLogger: ((Throwable) -> Unit)? = null) {
@@ -34,10 +33,7 @@ class ExceptionHandler {
                 } catch (ignored: Exception) {
                 }
             } else {
-                if (throwable !is IOException &&
-                    throwable !is HttpException &&
-                    throwable !is CancellationException
-                ) {
+                if (throwable !is CancellationException) {
                     instance.exceptionLogger?.invoke(throwable)
                 }
             }

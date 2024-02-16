@@ -188,23 +188,30 @@ class RealmSocialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm)
     }
 
     override fun likeMessage(chatMessage: ChatMessage, userId: String, liked: Boolean) {
-        if (chatMessage.userLikesMessage(userId) == liked) {
+        val liveMessage = getLiveObject(chatMessage)
+        if (liveMessage == null) {
+            executeTransaction {
+                realm.insertOrUpdate(chatMessage)
+                return@executeTransaction
+            }
             return
         }
-        val liveMessage = getLiveObject(chatMessage)
+        if (liveMessage.userLikesMessage(userId) == liked) {
+            return
+        }
         if (liked) {
             executeTransaction {
-                liveMessage?.likes?.add(ChatMessageLike(userId))
-                liveMessage?.likeCount = liveMessage?.likes?.size ?: 0
+                liveMessage.likes?.add(ChatMessageLike(userId))
+                liveMessage.likeCount = liveMessage.likes?.size ?: 0
             }
         } else {
-            liveMessage?.likes?.filter { userId == it.id && it.isManaged }?.forEach { like ->
+            liveMessage.likes?.filter { userId == it.id && it.isManaged }?.forEach { like ->
                 executeTransaction {
                     like.deleteFromRealm()
                 }
             }
             executeTransaction {
-                liveMessage?.likeCount = liveMessage?.likes?.size ?: 0
+                liveMessage.likeCount = liveMessage.likes?.size ?: 0
             }
         }
     }

@@ -1,7 +1,6 @@
 New in 4.3.4:
-
-To Do reminders should show more reliably
-Added password reset option to the Account Reset and Account Delete screens
-Group Plan invites will show in the notification center
-Added the ability to report a Challenge for community violations
-Various other bug fixes and improvements
+- To Do reminders should show more reliably
+- Added password reset option to the Account Reset and Account Delete screens
+- Group Plan invites will show in the notification center
+- Added the ability to report a Challenge for community violations
+- Various other bug fixes and improvements

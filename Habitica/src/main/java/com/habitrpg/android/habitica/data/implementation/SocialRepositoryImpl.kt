@@ -109,7 +109,7 @@ class SocialRepositoryImpl(
         val message = apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
         message?.groupId = chatMessage.groupId
         message?.let { localRepository.save(it) }
-        return null
+        return message
     }
 
     override suspend fun deleteMessage(chatMessage: ChatMessage): Void? {

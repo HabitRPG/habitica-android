@@ -171,6 +171,8 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         editMenuItem?.isVisible = isCreator
         val endChallengeMenuItem = menu.findItem(R.id.action_end_challenge)
         endChallengeMenuItem?.isVisible = isCreator
+        val reportMenuItem = menu.findItem(R.id.action_report)
+        reportMenuItem?.isVisible = challenge?.official == false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -254,6 +256,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
 
         binding?.gemAmount?.text = challenge.prize.toString()
         binding?.participantCount?.text = challenge.memberCount.toString()
+        this.mainActivity?.invalidateOptionsMenu()
     }
 
     private fun set(creator: Member?) {
