@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals name="x_rewards">
-        <item quantity="other">보상 추가</item>
+        <item quantity="other">%d 보상 추가</item>
     </plurals>
     <string name="create_task_title">과제 만들기</string>
     <string name="complete_task_title">과제 끝내기</string>
@@ -55,4 +55,23 @@
     <string name="login_validation_error_fieldsmissing">모든 항목을 채워주셔야 합니다.</string>
     <string name="failed">불러오기에 실패하였습니다</string>
     <string name="quadrillion_abbrev">q</string>
+    <plurals name="x_dailies">
+        <item quantity="other">%d 매일 할 일</item>
+    </plurals>
+    <string name="email_username">이메일/아이디</string>
+    <plurals name="x_habits">
+        <item quantity="other">%d 해빗</item>
+    </plurals>
+    <plurals name="x_todos">
+        <item quantity="other">%d 할 일</item>
+    </plurals>
+    <string name="trivial_sentence">사소함</string>
+    <string name="easy_sentence">쉬움</string>
+    <string name="medium_sentence">보통</string>
+    <string name="hard_sentence">어려움</string>
+    <plurals name="flagged_count">
+        <item quantity="other">%d번 신고 됨, 숨김</item>
+    </plurals>
+    <string name="new_task_x">새로운 %s</string>
+    <string name="save_task_x">저장 %s</string>
 </resources>

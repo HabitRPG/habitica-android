@@ -153,7 +153,7 @@
     <string name="setup_task_creativity_1">공예 배우기</string>
     <string name="setup_task_creativity_2">창의적인 활동 하기</string>
     <string name="setup_task_creativity_3">창의적인 과제 끝내기</string>
-            <string name="guild">길드</string>
+    <string name="guild">길드</string>
     <string name="leave">나가기</string>
     <string name="join">가입하기</string>
     <string name="delete">삭제</string>
@@ -1262,4 +1262,5 @@
     <string name="negative_sentence">부정적</string>
     <string name="class_changed_description">%s 스킬을 사용할 수 있고 상점에서 장비를 구매할 수 있습니다!</string>
     <string name="change_class_selected_confirmation">보석 3개를 사용하여 %1$s 직업으로 변경하시겠습니까\?</string>
+    <string name="x_and_y">%1$s 와(과) %2$s</string>
 </resources>

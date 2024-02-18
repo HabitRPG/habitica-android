@@ -70,4 +70,8 @@
     <string name="trivial_sentence">ちょろい</string>
     <string name="hard_sentence">むずかしい</string>
     <string name="medium_sentence">ふつう</string>
+    <string name="quadrillion_abbrev">q</string>
+    <plurals name="flagged_count">
+        <item quantity="other">%d回のフラグ</item>
+    </plurals>
 </resources>

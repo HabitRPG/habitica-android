@@ -18,7 +18,7 @@
     <string name="an_egg">un Huevo</string>
     <string name="a_potion">una Poción</string>
     <string name="other_options">Otras opciones</string>
-    <string name="sign_in_on_phone">Registrarse con el teléfono</string>
+    <string name="sign_in_on_phone">Inicia sesión en tu teléfono</string>
     <string name="create_account">Crear una cuenta</string>
     <string name="day_start">Inicio del día</string>
     <string name="faint_description">Has perdido un Nivel, Experiencia y Oro. ¡No te rindas!</string>
@@ -37,7 +37,7 @@
     <string name="check_off_yesterday">Marca todo lo que hiciste ayer:</string>
     <string name="task_type">Tipo de tarea</string>
     <string name="task_title_hint">Añadir título de la Tarea</string>
-    <string name="edit_on_phone">Editar en el teléfono</string>
-    <string name="sign_in">Registrarse</string>
-    <string name="sign_in_description">Crea una lista de tareas y sigue tu progreso con tu avatar de juego</string>
+    <string name="edit_on_phone">Editar en móvil</string>
+    <string name="sign_in">Iniciar sesión</string>
+    <string name="sign_in_description">Crea listas de tareas y sigue tu progreso con tu avatar de juego</string>
 </resources>

@@ -83,4 +83,10 @@
     <string name="hard_sentence">сложный</string>
     <string name="trivial_sentence">тривиальный</string>
     <string name="easy_sentence">легкий</string>
+    <plurals name="flagged_count">
+        <item quantity="one">Отмечено %d раз</item>
+        <item quantity="few">Отмечено %d раза, скрыто</item>
+        <item quantity="many">Отмечено %d раз, скрыто</item>
+        <item quantity="other">Отмечено %d раз, скрыто</item>
+    </plurals>
 </resources>

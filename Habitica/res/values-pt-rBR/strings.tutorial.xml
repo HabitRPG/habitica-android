@@ -15,4 +15,7 @@
     <string name="tutorial_skills">Habilidades são especiais e têm efeitos poderosos! Selecione uma Habilidade para usá-la. Isso vai consumir Mana (a barra azul), que você consegue usando o Habitica todos os dias e completando suas tarefas da vida real. Confira as Perguntas Frequentes no menu para mais informações!</string>
     <string name="tutorial_party">É aqui que você e seus amigos podem se ajudar em seus objetivos e lutar contra monstros usando suas tarefas!</string>
     <string name="tutorial_stats">Toque no botão cinza para alocar todos seus atributos de uma vez ou toque nas setas para adicionar um ponto de cada vez.</string>
+    <string name="tutorial_party_created">Bem-vindo ao seu Grupo! Você pode encontrar mais membros em uma lista de jogadores procurando por um Grupo ou convidar amigos diretamente para ganhar o Pergaminho de Missão Basi-Lista.
+\n
+\nVisite o Suporte para saber mais sobre Grupos.</string>
 </resources>

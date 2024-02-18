@@ -1298,4 +1298,9 @@
     <string name="completed_at">Complété à %s</string>
     <string name="assign">Assigner</string>
     <string name="manager">Gestionnaire</string>
+    <string name="opt_out_description">Ceci vous laissera sans classe attitrée. Vous pourrez choisir une classe en activant le système de classes à n\'importe quel moment dans les Paramètres.</string>
+    <string name="enable_class_description">Sélectionnez une classe pour en activer les compétences, stats et mana</string>
+    <string name="change_class_message">Ceci va retirer votre classe actuelle et vous rembourser tous vos points de stats puis vous laissera sélectionner une nouvelle classe</string>
+    <string name="subscribe_listitemFaint_description">Vous aurez l\'option d\'une seconde chance après avoir été à court de PV.</string>
+    <string name="subscribe_listitemFaint">Tenez bon avec 1 PV !</string>
 </resources>

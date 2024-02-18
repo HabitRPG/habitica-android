@@ -1304,4 +1304,18 @@
     <string name="subscribe_listitemFaint_description">У вас буде можливість отримати другий шанс, коли у вас закінчаться ОЗ.</string>
     <string name="need_help_description">Ви можете зв\'язатись з нами, і член нашої команди зробить все можливе, щоб допомогти!</string>
     <string name="challenges">Випробування</string>
+    <string name="username_or_email">Ім\'я користувача або email</string>
+    <string name="fifth">п\'ятий</string>
+    <string name="fourth">четвертий</string>
+    <string name="limited_edition">Обмежене видання</string>
+    <string name="plenty_of_potions">Безліч зілля</string>
+    <string name="exclusive_items_await">Ексклюзивні предмети та подарунки чекають</string>
+    <string name="habiticans_looking_party_empty">На даний момент ніхто не шукає команду. Можете заглянути пізніше!</string>
+    <string name="second">другий</string>
+    <string name="third">третій</string>
+    <string name="animated_gryphatrice_pet">Улюбленець Радісний Грифолиск</string>
+    <string name="buy_for_x">Купити за %s</string>
+    <string name="visit_the_market">Відвідати ринок</string>
+    <string name="thanks_for_support">Вдячні за вашу підтримку!</string>
+    <string name="birthday_title_description">Святкуйте 10-річчя Habitica з подарунками та ексклюзивними речами нижче!</string>
 </resources>

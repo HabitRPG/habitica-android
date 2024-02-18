@@ -102,7 +102,7 @@
     <string name="avatar_size_slim">苗条</string>
     <string name="avatar_size_broad">强壮</string>
     <string name="avatar_background">背景</string>
-    <string name="purchase_customization">购买背景</string>
+    <string name="purchase_customization">购买自定义装扮</string>
     <string name="purchase_set_button">花费%d颗宝石解锁套装</string>
     <string name="purchase_button">购买</string>
     <string name="purchase_set_title">购买%s套装</string>
@@ -110,7 +110,7 @@
     <string name="quest_accept">接受</string>
     <string name="quest_reject">拒绝</string>
     <string name="quest_begin">开始副本</string>
-    <string name="quest_cancel">取消邀请</string>
+    <string name="quest_cancel">取消</string>
     <string name="quest_abort">放弃副本</string>
     <string name="version_info">版本%1$s (%2$d)</string>
     <string name="sidebar_help">支持</string>
@@ -151,7 +151,7 @@
     <string name="setup_task_teams_1">向团队报到</string>
     <string name="setup_task_teams_2">向团队汇报最新情况</string>
     <string name="setup_task_teams_3">完成团队项目</string>
-    <string name="setup_task_chores_1">10分钟的清洁</string>
+    <string name="setup_task_chores_1">打扫卫生10分钟</string>
     <string name="setup_task_chores_2">洗碗</string>
     <string name="setup_task_chores_3">整理衣橱</string>
     <string name="setup_task_creativity_1">学习大师的技艺</string>
@@ -356,7 +356,7 @@
     <string name="pending_approval">等待审批的任务</string>
     <string name="filters">筛选</string>
     <string name="done">完成</string>
-    <string name="groups">团队</string>
+    <string name="groups">小组</string>
     <string name="all">所有</string>
     <string name="none">无</string>
     <string name="owned">已拥有的</string>
@@ -535,9 +535,9 @@
     <string name="world_boss_description_1">完成任务就会伤害boss</string>
     <string name="questShop_owner_long">副本向导Ian</string>
     <string name="rage_attack">愤怒攻击:</string>
-    <string name="report">报告</string>
+    <string name="report">举报</string>
     <string name="reply">回复</string>
-    <string name="challenge_prize">挑战奖品</string>
+    <string name="challenge_prize">挑战奖励</string>
     <string name="created_challenge">新建挑战</string>
     <string name="public_challenge">公开挑战</string>
     <string name="same_day_reminder_title">你添加任务了么？</string>
@@ -800,7 +800,7 @@
     <string name="gift_confirmation_text_sub_g1g1">你送给%1$s一个%2$s个月的Habitica订阅，由于买一赠一促销活动，你也获得了同样时长的订阅！</string>
     <string name="gift_gems_subtitle">在下面选择你要赠送的宝石包！</string>
     <string name="subscription_credit">订阅奖金</string>
-    <string name="group_plan">团队计划</string>
+    <string name="group_plan">小组计划</string>
     <string name="empty_description_todos_filtered">无待办事项符合此筛选条件。</string>
     <string name="empty_description_dailies_filtered">你的筛选中没有任何每日任务。</string>
     <string name="empty_description_habits_filtered">你的筛选中没有任何习惯。</string>
@@ -824,8 +824,8 @@
     <string name="learn_more">了解更多</string>
     <string name="purchase_from_timetravel_shop">你可以在时空旅行者的商店买这个定制</string>
     <string name="go_shopping">去购买东西</string>
-    <string name="emails">电邮通知</string>
-    <string name="pref_emails_checkbox">用电邮通知</string>
+    <string name="emails">邮件通知</string>
+    <string name="pref_emails_checkbox">开启邮件通知</string>
     <string name="preference_email_subscription_reminder">订阅提醒</string>
     <string name="preference_email_kicked_group">已被小组踢出</string>
     <string name="preference_email_onboarding">设置你的Habitica帐户的指南</string>
@@ -1209,12 +1209,12 @@
 \n来自奖励</string>
     <string name="faint_loss_description">你会降至<b>%d</b>级，失去 <b>%d</b>金币，并失去<b>一个装备</b>！……只要努力，你就能把它们赚回来！</string>
     <string name="account_reset">账号重置</string>
-    <string name="avatar_skin_customization">人物皮肤定制</string>
-    <string name="avatar_shirt_customization">人物上衣定制</string>
+    <string name="avatar_skin_customization">自定义角色皮肤</string>
+    <string name="avatar_shirt_customization">自定义角色上衣</string>
     <string name="avatar_beard_customization">自定义角色下唇胡须</string>
     <string name="avatar_mustache_customization">自定义角色上唇胡须</string>
     <string name="avatar_bangs_customization">自定义角色刘海</string>
-    <string name="avatar_hair_color_customization">人物头发颜色定制</string>
+    <string name="avatar_hair_color_customization">自定义角色发色</string>
     <string name="avatar_hair_style_customization">自定义角色发型</string>
     <string name="display">表现</string>
     <string name="facial_hair_notes">这个套装包括所有的上唇和下唇胡须</string>
@@ -1242,7 +1242,7 @@
     <string name="getting_organized">井然有序</string>
     <string name="spirituality">精神</string>
     <string name="copy_tasks_description">在个人任务列表中显示已分配和打开的任务</string>
-    <string name="group_plan_settings">团队订阅设置</string>
+    <string name="group_plan_settings">小组计划设置</string>
     <string name="copy_shared_tasks">复制共享任务</string>
     <plurals name="you_x_others">
         <item quantity="other">您，其他%d人</item>
@@ -1284,7 +1284,7 @@
     <string name="your_tags">你的标签</string>
     <string name="challenge_tags">挑战标签</string>
     <string name="subscribe_listitemFaint">用1生命值撑住！</string>
-    <string name="reset_account_description_new">您将失去所有等级、金币和经验。您的所有任务及其历史数据都将被删除（挑战任务将保留）。您将失去除订阅物品和免费纪念物品外的所有装备，但您可以重新购买。您需要达到合适的等级才能重新购买特定等级的装备。您将保留当前等级、成就、宠物和坐骑。要确认重置，请在下面输入您的密码。</string>
+    <string name="reset_account_description_new">你将会失去所有的等级、金币和经验。你设置的所有任务及其任务历史数据将会被删除（挑战任务除外）。你将失去除了订阅者物品和免费纪念物品外的所有装备，但你之后可以重新购买被删除的物品。重新购买职业专属装备需要对应的职业。你当前的职业、成就、宠物和坐骑将会保留。如果你已确定要重置数据，请在下方输入你的密码。</string>
     <string name="need_help_description">您可以联系我们，我们的团队成员会尽力提供帮助！</string>
     <string name="report_player_title">举报%s？</string>
     <string name="report_player">举报玩家</string>
@@ -1340,7 +1340,7 @@
     <string name="visit_market">访问市场</string>
     <string name="exclusive_items_await">独家物品和礼品等着您</string>
     <string name="see_more">查看更多</string>
-    <string name="jubilant_gryphatrice_confirmation">你购买了欢腾的狮鹫蛇！</string>
+    <string name="jubilant_gryphatrice_confirmation">你购买了欢沁狮鹫蛇！</string>
     <plurals name="repeat_yearly">
         <item quantity="other">每%d年</item>
     </plurals>
@@ -1351,10 +1351,10 @@
         <item quantity="other">每%d周</item>
     </plurals>
     <plurals name="items_pending">
-        <item quantity="other">%d件待处理物品</item>
+        <item quantity="other">%d件待结算物品</item>
     </plurals>
     <string name="change_class_message">这将移除您当前的职业并退还所有属性点数，然后你可以选择一个新职业</string>
-    <string name="reset_account_description_no_pw">您将失去所有等级、金币和经验。您的所有任务及其历史数据都将被删除（挑战任务将保留）。您将失去除订阅物品和免费纪念物品外的所有装备，但您可以重新购买。您需要达到合适的等级才能重新购买特定等级的装备。您将保留当前等级、成就、宠物和坐骑。要确认重置，请在下面键入重置。</string>
+    <string name="reset_account_description_no_pw">你将会失去所有的等级、金币和经验。你设置的所有任务及其任务历史数据将会被删除（挑战任务除外）。你将失去除了订阅者物品和免费纪念物品外的所有装备，但你之后可以重新购买被删除的物品。重新购买职业专属装备需要对应的职业。你当前的职业、成就、宠物和坐骑将会保留。如果你已确定要重置数据，请在下方输入“RESET”。</string>
     <string name="report_message_explanation">您只能举报违反[社区准则](https://habitica.com/static/community-guidelines)和/或[服务条款](https://habitica.com/static/terms)的帖子。提交虚假报告违反了 Habitica 社区准则。</string>
     <string name="g1g1_promo_info_limitations_fixed">这是一个限时活动，从 %1$s (%2$s) 开始，到 %3$s (%4$s) 结束。此促销活动仅适用于您向另一位Habitican赠送礼物。如果您或您的收礼人已经订阅，则赠送的订阅将增加订阅月份，只有在当前订阅被取消或过期后才能使用。</string>
     <string name="todo_summary_description">这是一项没有截止日期的 **%1$s** 任务。</string>
@@ -1371,12 +1371,12 @@
     <string name="positive_and_negative">积极和消极</string>
     <string name="amazon">亚马逊</string>
     <string name="x_and_y">%1$s和%2$s</string>
-    <string name="animated_gryphatrice_pet">欢腾的狮鹫蛇宠物</string>
+    <string name="animated_gryphatrice_pet">欢沁狮鹫蛇宠物</string>
     <string name="birthday_title_description">收下以下的礼品和专属物品来庆祝 Habitica 十周年生日！</string>
     <string name="limited_edition">限定版</string>
     <string name="thanks_for_support">感谢你的支持！</string>
     <string name="plenty_of_potions">大量的药水</string>
-    <string name="for_for_free">免费赠送四个</string>
+    <string name="for_for_free">免费四件套</string>
     <string name="buy_for_x">以 %s 的价格购买</string>
     <string name="gryphatrice_description">罕见的欢腾的狮鹫蛇也加入了生日派对！千万不要错过拥有这只专属动画宠物的机会。</string>
     <string name="resume_damage_1_title">你错过的每日任务不会对你造成伤害</string>
@@ -1384,7 +1384,7 @@
     <string name="pause_damage_1_description">Boss仍会因其他队友未完成的日常任务而造成伤害</string>
     <string name="undo">撤销</string>
     <string name="you_equipped_x">你装备了%s</string>
-    <string name="jubilant_gryphatrice_confirmation_gift">你送出了欢腾的狮鹫蛇！</string>
+    <string name="jubilant_gryphatrice_confirmation_gift">你送出了欢沁狮鹫蛇！</string>
     <string name="open_settings">打开设定</string>
     <string name="day_x">第%d天</string>
     <string name="birthday_set">生日套装</string>
@@ -1404,7 +1404,14 @@
     <string name="pause_damage_2_title">您的连击次数和计数器将不会重置</string>
     <string name="pause_damage_2_description">每日任务连击数和习惯计数器只会在开启时计数</string>
     <string name="pause_damage_3_title">您的副本进度将保持待定状态</string>
-    <string name="a_party_robe">派对长袍</string>
+    <string name="a_party_robe">一件派对长袍</string>
     <string name="twenty_gems">20颗宝石</string>
     <string name="background">背景</string>
+    <string name="share_avatar">分享头像</string>
+    <string name="pause_damage_3_description">你对Boss造成的伤害和已收集的物品将被储存，直到你恢复伤害</string>
+    <plurals name="repeat_daily">
+        <item quantity="other">每%d天</item>
+    </plurals>
+    <string name="customize_avatar">自定义角色形象</string>
+    <string name="open_profile">打开个人资料</string>
 </resources>

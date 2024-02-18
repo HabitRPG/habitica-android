@@ -157,7 +157,7 @@
     <string name="setup_task_creativity_1">Lerne ein Handwerk</string>
     <string name="setup_task_creativity_2">An einem kreativem Projekt arbeiten</string>
     <string name="setup_task_creativity_3">Kreatives Projekt fertigstellen</string>
-            <string name="guild">Gilde</string>
+    <string name="guild">Gilde</string>
     <string name="leave">Verlassen</string>
     <string name="join">Beitreten</string>
     <string name="delete">Löschen</string>
@@ -216,7 +216,7 @@
 \n• Deine Aufgaben-Strähnen und Gewohnheits-Zähler werden nicht zurückgesetzt
 \n• Dein Schadensfortschritt oder Deine Sammelquest-Gegenstände bleiben ausständig, bis Du aus dem Gasthaus auscheckst</string>
     <string name="empty_items">Du hast kein/e %s</string>
-    <string name="user_level_with_class">Lvl %1$d %2$s</string>
+    <string name="user_level_with_class">Level %1$d %2$s</string>
     <string name="warrior">Krieger</string>
     <string name="rogue">Schurke</string>
     <string name="mage">Magier</string>
@@ -231,15 +231,15 @@
     <string name="class_changed">Du bist jetzt ein/eine %s!</string>
     <string name="choose_class">Klasse wählen</string>
     <string name="dialog_go_back">Zurück</string>
-    <string name="opt_out_confirmation">Bist Du sicher, dass Du Dich noch nicht entscheiden willst?</string>
+    <string name="opt_out_confirmation">Du möchtest keine Klasse auswählen\?</string>
     <string name="change_class">Deine Klasse ändern</string>
     <string name="change_class_description">Ändere Deine Klasse und erhalte Deine Attributspunkte für 3 Edelsteine zurück.</string>
     <string name="enable_class">Klassensystem freischalten</string>
     <string name="changing_class_progress">Klasse ändern</string>
     <string name="by_email">Per E-Mail</string>
-    <string name="invite_existing_users">Nutzer einladen</string>
+    <string name="invite_existing_users">Bestehende Spieler einladen</string>
     <string name="send">Senden</string>
-    <string name="invite">Freunde einladen</string>
+    <string name="invite">Mitglieder finden</string>
     <string name="invite_username_description">Wenn Deine Freunde bereits Habitica verwenden, lade sie hier mit ihrem Benutzernamen ein.</string>
     <string name="invite_email_description">Wenn Freunde Habitica mit Hilfe Deiner E-Mail beitreten, werden sie automatisch in Deine Party eingeladen!</string>
     <string name="add_invites">Einladungen hinzufügen</string>
@@ -249,13 +249,13 @@
     <string name="share_hatched">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %1$s %2$s Haustier in #Habitica ausgebrütet!</string>
     <string name="share_raised">Durch das Erfüllen meiner Real-Life-Aufgaben habe ich ein %s Reittier in Habitica erhalten!</string>
     <string name="open_in_store">Im Play Store öffnen</string>
-    <string name="change_class_confirmation">Bist Du sicher, dass Du Deine Klasse ändern willst? Es kostet 3 Edelsteine.</string>
+    <string name="change_class_confirmation">Möchtest du deine Klasse für 3 Edelsteine ändern\?</string>
     <string name="change_class_equipment_warning">Warnung: Du wirst keine Ausrüstung für die %s-Klasse mehr kaufen können.</string>
     <string name="confirm">Bestätigen</string>
     <string name="market">Marktplatz</string>
     <string name="timeTravelers">Mysteriöse Zeitreisende</string>
     <string name="seasonalShop">Jahreszeitenmarkt</string>
-    <string name="empty_inbox">Du hast keine Nachrichten. Du kannst einem anderen Benutzer eine neue Nachricht von deren öffentlichen Chatnachrichten aus senden!</string>
+    <string name="empty_inbox">Du hast keine Nachrichten. Du kannst einem anderen Spieler eine neue Nachricht von deren öffentlichen Chatnachrichten aus senden!</string>
     <string name="party_invite">Durch Einladen von Freunden freischalten</string>
     <string name="login_incentive">Freischalten durch regelmäßiges Einloggen bei Habitica</string>
     <string name="create_account">Freischalten durch die Erstellung eines Kontos</string>
@@ -303,7 +303,7 @@
     <string name="subscribe_prompt">Abonniere, um diese exklusiven Vorteile zu erhalten!</string>
     <string name="subscribe_listitem1">Gold gegen Edelsteine</string>
     <string name="subscribe_listitem2">Mystische Sanduhren</string>
-    <string name="subscribe_listitem3">Monatliche Überraschungsgegenstände</string>
+    <string name="subscribe_listitem3">Exklusive monatliche Ausrüstungssets</string>
     <string name="subscribe_listitem4">Spezielles Haustier für Abonnenten</string>
     <string name="subscriptions">Abonnements</string>
     <string name="subscription_duration">Alle %s wiederholen</string>
@@ -313,14 +313,14 @@
     <string name="subscribe_listitem2_description">Verdiene Dir Mystische Sanduhren, um im Laden der Zeitreisenden Gegenstände zu erwerben!</string>
     <string name="subscribe_listitem3_description">Abonniere jetzt, um direkt ein einzigartiges Set zu bekommen und jeden Monat neue Gegenstände zu erhalten!</string>
     <string name="subscribe_listitem4_description">Erhalte das Königlich purpurfarbene Wolpertinger Haustier wenn Du ein Abonnement abschließt.</string>
-    <string name="subscription_hourglasses">+%d Mystische Sanduhr</string>
+    <string name="subscription_hourglasses">%d Sanduhren</string>
     <string name="payment_method">Zahlungsmethode</string>
     <string name="subscription">Abonnement</string>
     <string name="active">Aktiv</string>
     <string name="due">Fällig</string>
     <string name="cancel_subscription">Abonnement kündigen</string>
     <string name="cancel_subscription_google_description">Du willst nicht länger Abonnent sein\? Du findest die Option zum Kündigen im Google Play Store unter \"Meine Apps und Spiele\". Deine zusätzlichen Abonnementguthaben-Monate werden nach Ablauf Deines Abonnements verwendet.</string>
-    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden\? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen und logge Dich in Deinen Account ein. Drücke das User Icon oben rechts und wähle \"Abonnement\". Übrige Abonnement-Credits werden übernommen, wenn Dein Abonnement endet. Wir vermissen Dich jetzt schon!</string>
+    <string name="cancel_subscription_notgoogle_description">Du möchtest Dein Abonnement beenden\? Aufgrund Deiner Zahlungsmethode kannst Du Dein Abonnement nur über die Webseite beenden. Benutze die Schaltfläche unten, um die Seite in Deinem Browser zu öffnen und logge Dich in Deinen Account ein. Drücke das Spieler-Icon oben rechts und wähle \"Abonnement\". Übrige Abonnement-Credits werden übernommen, wenn Dein Abonnement endet. Wir vermissen Dich jetzt schon!</string>
     <string name="visit_habitica_website">Habitica-Internetseite besuchen</string>
     <string name="current_bonuses">Aktuelle Boni</string>
     <string name="months_subscribed">Abonnierte Monate</string>
@@ -458,7 +458,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="deleting_account">Konto löschen</string>
     <string name="insufficientGold">Du musst mehr Aufgaben erledigen bevor Du Dir diesen Gegenstand leisten kannst!</string>
     <string name="insufficientGoldTitle">Nicht genug Gold</string>
-    <string name="insufficientGems">Du wirst mehr Edelsteine benötigen um diesen Gegenstand zu kaufen!</string>
+    <string name="insufficientGems">Du benötigst mehr Edelsteine, um diesen Gegenstand zu kaufen!</string>
     <string name="purchase_gems">Kaufe Edelsteine</string>
     <string name="insufficientHourglasses">Du wirst mehr mystische Sanduhren benötigen um diesen Gegenstand zu kaufen!</string>
     <string name="get_hourglasses">Kaufe Sanduhren</string>
@@ -521,7 +521,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="check_into_inn">Im Gasthaus erholen</string>
     <string name="community_guidelines">Community-Richtlinien</string>
     <string name="view_community_guidelines">Community-Richtlinien ansehen</string>
-    <string name="guidelines_description">Habitica versucht eine einladende Umgebung für Nutzer aller Altersgruppen und Herkünfte zu schaffen, besonders in öffentlichen Bereichen wie der Taverne. Wenn Du Fragen hast, sieh bitte in unseren Richtlinien nach.</string>
+    <string name="guidelines_description">Habitica versucht eine einladende Umgebung für Spieler aller Altersgruppen und Herkünfte zu schaffen. Wenn Du Fragen hast, sieh bitte in unseren Richtlinien nach.</string>
     <string name="helpful_links">Hilfreiche Links</string>
     <string name="view_faq">Häufige Fragen ansehen</string>
     <string name="report_bug">Melde einen Fehler</string>
@@ -623,10 +623,10 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="create">Erstellen</string>
     <string name="only_leader_create_challenge">Nur ein Party-Leiter kann Herausforderungen erstellen</string>
     <string name="opting_out_progress">Später entscheiden</string>
-    <string name="subscribe1month_gemcap">25 Edelstein Grenze</string>
-    <string name="subscribe3month_gemcap">30 Edelstein-Grenze</string>
-    <string name="subscribe6month_gemcap">35 Edelstein Grenze</string>
-    <string name="subscribe12month_gemcap">45 Edelstein Grenze</string>
+    <string name="subscribe1month_gemcap">25 Edelsteine pro Monat</string>
+    <string name="subscribe3month_gemcap">30 Edelsteine pro Monat</string>
+    <string name="subscribe6month_gemcap">35 Edelsteine pro Monat</string>
+    <string name="subscribe12month_gemcap">45 Edelsteine pro Monat</string>
     <string name="delete_oauth_account_description">Dies wird Dein Konto für immer löschen und es kann nicht wiederhergestellt werden! Vorhandene und ausgegebene Edelsteine werden nicht zurückerstattet. Wenn Du Dir absolut sicher bist, schreibe DELETE in das untere Textfeld.</string>
     <string name="daily_tip_7">Versuche Gegenstände aus dem Marktplatz an Deine Belohnungen anzuheften, um Dich zu motivieren sie Dir zu verdienen!</string>
     <string name="week_reminder_text">Hacke sie jetzt für Belohnungen und EP in Habitica ab!</string>
@@ -846,7 +846,7 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="create_account_short">Konto erstellen</string>
     <string name="login_incentive_short_count">%d Anmeldungen</string>
     <string name="login_incentive_short">regelmäßig bei Habitica einloggen</string>
-    <string name="party_invite_short">Freunde Einladen</string>
+    <string name="party_invite_short">Mitglieder finden</string>
     <string name="login_incentive_count">Freischalten durch %d-maliges Einloggen bei Habitica.</string>
     <string name="remaining_1hour">1 Stunde verbleibend</string>
     <string name="remaining_hours">%d Stunden verbleibend</string>
@@ -1202,7 +1202,8 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="buy_set">Set kaufen</string>
     <string name="tutorial_reset_confirmation">Deine Einführung wurde zurückgesetzt</string>
     <string name="death_description">Aber Du kannst sie alle mit harter Arbeit zurückerlangen! Viel Erfolg - Du wirst das schaffen.</string>
-    <string name="faint_broken_equipment">Zerstörte Ausrüstungsgegenstände können im Belohnungen-Bereich zurückgekauft werden</string>
+    <string name="faint_broken_equipment">Zerstörte Ausrüstungsgegenstände können 
+\nim Belohnungen-Bereich zurückgekauft werden</string>
     <string name="faint_loss_description">Du fällst zurück auf Level <b>%d</b>, verlierst <b>%d</b> Gold und <b>ein Ausrüstungsgegenstand</b> wird zerstört…</string>
     <string name="account_reset">Account zurücksetzen</string>
     <string name="avatar_skin_customization">Avatar Haut Anpassung</string>
@@ -1257,4 +1258,10 @@ Die Quest-Schriftrolle wird an den Quest-Besitzer zurückgegeben.</string>
     <string name="push_notification_system_settings_description">Erlaube Habitica in den Einstellungen Benachrichtigungen zu senden, um Push-Benachrichtigungen zu erhalten</string>
     <string name="push_notification_system_settings_reminders">Erlaube Benachrichtigungen von Habitica in den Systemeinstellungen um, Erinnerungen zu erhalten</string>
     <string name="push_notification_system_settings_title">Benachrichtigungen wurden deaktiviert</string>
+    <string name="class_changed_description">Du kannst nun deine Fertigkeit %s verwenden und Ausrüstungen im Shop erwerben. Erhöhe dein Level, um Punkte für die Aufwertung deiner Fertigkeiten zu erhalten.</string>
+    <string name="enable_notifications">Benachrichtigungen aktivieren</string>
+    <string name="subscription_credit_canceling">Deine <b>+%d</b> Monate Abonnement werden nach Abbruch aktiv</string>
+    <string name="positive_sentence">positiv</string>
+    <string name="title">Titel</string>
+    <string name="negative_sentence">negativ</string>
 </resources>

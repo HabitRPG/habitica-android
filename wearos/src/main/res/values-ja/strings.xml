@@ -31,4 +31,13 @@
     <string name="levelup_description">あなたは努力の積み重ねでレベルアップしました！</string>
     <string name="all_done_today">今日はすべて完了しました！</string>
     <string name="disconnected">接続を切断されました</string>
+    <string name="you_found">見つけました…</string>
+    <string name="review_dailies">日課を振り返る</string>
+    <string name="sign_in_description">ゲーム化されたアバターでタスクリストを作成し、進捗状況を確認できます</string>
+    <string name="day_start">一日の始まり</string>
+    <string name="rya_description">昨日の日課で未完了があります</string>
+    <string name="how_did_you_do">どうでしたか？</string>
+    <string name="check_on_phone">端末で確認する</string>
+    <string name="checklist_disclaimer">端末上でタスクのチェックリストが使えます</string>
+    <string name="starting_your_day">一日の始まり…</string>
 </resources>
