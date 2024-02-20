@@ -144,7 +144,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                 if (editable.isNullOrBlank()) {
                     ContextCompat.getColor(requireContext(), R.color.text_dimmed)
                 } else {
-                    ContextCompat.getColor(requireContext(), R.color.text_red)
+                    ContextCompat.getColor(requireContext(), R.color.maroon100_red100)
                 }
             )
         }
