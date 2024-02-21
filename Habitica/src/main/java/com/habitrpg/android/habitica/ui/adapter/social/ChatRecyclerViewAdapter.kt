@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,7 @@ class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObje
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldItem = oldList[oldItemPosition] as ChatMessage
         val newItem = newList[newItemPosition] as ChatMessage
+        Log.d("Compare", "${oldItem.id}-${oldItem.likeCount} , ${newItem.id}-${newItem.likeCount}")
         return oldItem.likeCount == newItem.likeCount && oldItem.id == newItem.id
     }
 }

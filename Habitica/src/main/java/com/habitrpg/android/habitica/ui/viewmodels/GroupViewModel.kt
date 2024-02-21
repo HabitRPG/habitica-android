@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
@@ -18,6 +17,7 @@ import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.views.LoadingButtonState
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.notifications.NewChatMessageData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -218,15 +218,16 @@ open class GroupViewModel @Inject constructor(
 
     fun likeMessage(message: ChatMessage) {
         viewModelScope.launchCatching {
-            val message = socialRepository.likeMessage(message)
-            val index = _chatMessages.value?.indexOfFirst { it.id == message?.id }
+            val newMessage = socialRepository.likeMessage(message)
+            val index = _chatMessages.value?.indexOfFirst { it.id == newMessage?.id }
             if (index == null || index < 0) {
                 retrieveGroupChat { }
                 return@launchCatching
             }
-            val list = _chatMessages.value?.toMutableList()
-            if (message != null) {
-                list?.set(index, message)
+            val list = mutableListOf<ChatMessage>()
+            _chatMessages.value?.let { list.addAll(it) }
+            if (newMessage != null) {
+                list[index] = newMessage
             }
             _chatMessages.postValue(list)
         }

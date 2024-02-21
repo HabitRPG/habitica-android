@@ -104,8 +104,6 @@ class SocialRepositoryImpl(
         if (chatMessage.id.isBlank()) {
             return null
         }
-        val liked = chatMessage.userLikesMessage(currentUserID)
-        localRepository.likeMessage(chatMessage, currentUserID, !liked)
         val message = apiClient.likeMessage(chatMessage.groupId ?: "", chatMessage.id)
         message?.groupId = chatMessage.groupId
         message?.let { localRepository.save(it) }
