@@ -1303,4 +1303,12 @@
     <string name="change_class_message">Ceci va retirer votre classe actuelle et vous rembourser tous vos points de stats puis vous laissera sélectionner une nouvelle classe</string>
     <string name="subscribe_listitemFaint_description">Vous aurez l\'option d\'une seconde chance après avoir été à court de PV.</string>
     <string name="subscribe_listitemFaint">Tenez bon avec 1 PV !</string>
+    <string name="invited_to_guild_notification">&lt;font color=#925CF3&gt;%2$s&lt;/font&gt; vous as invité à rejoindre le groupe &lt;b&gt;%1$s&lt;/b&gt;</string>
+    <string name="report_reason_title_challenge">Pourquoi signalez vous ce défi \?</string>
+    <string name="subscribers_mythic_hourglasses"><i> Les Abonnés reçoivent des Sabliers Mystiques dans les trois premiers jours du mois.</i></string>
+    <string name="ban_user_confirm">Voulez-vous bannir ce joueur \?</string>
+    <string name="challenge_tags">Tags de Défi</string>
+    <string name="promote_to_manager">Promouvoir à Gestionnaire</string>
+    <string name="task_summary">Sommaire des Tâches</string>
+    <string name="mute_user">Rendre muet le Joueur</string>
 </resources>

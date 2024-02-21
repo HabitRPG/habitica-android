@@ -17,4 +17,8 @@
     <string name="are_you_sure">你確定嗎？</string>
     <string name="gold_plural">金幣</string>
     <string name="stats">統計</string>
+    <string name="habits">習慣</string>
+    <plurals name="x_habits">
+        <item quantity="other">%d 個習慣</item>
+    </plurals>
 </resources>

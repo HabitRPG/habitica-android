@@ -257,7 +257,7 @@
     <string name="empty_inbox">你没有任何信息。你可以通过玩家的公共聊天信息向其发送新信息！</string>
     <string name="party_invite">通过邀请好友解锁</string>
     <string name="login_incentive">通过定期登录 Habitica 解锁</string>
-    <string name="create_account">通过创建帐户解锁</string>
+    <string name="create_account">通过创建帐号解锁</string>
     <string name="successful_purchase">已购买%1$s</string>
     <string name="chat_message_copied">信息已复制到剪贴板</string>
     <string name="edit_tag_btn_edit">编辑</string>
@@ -281,7 +281,7 @@
     <string name="gem_purchase_toolbartitle">购买</string>
     <string name="gem_purchase_title">购买宝石可为开发人员提供支持，并帮助Habitica维持运营</string>
     <string name="gem_purchase_subtitle">你可以使用宝石为自己的账户购买有趣的额外物品</string>
-    <string name="gem_purchase_listitem1">角色头象的炫酷装扮</string>
+    <string name="gem_purchase_listitem1">角色头像的炫酷装扮</string>
     <string name="gem_purchase_listitem2">超棒的背景</string>
     <string name="gem_purchase_listitem3">奖励宠物蛋的副本</string>
     <string name="gem_purchase_listitem4">可在100 级前更改职业</string>
@@ -309,7 +309,7 @@
     <string name="subscribe">订阅</string>
     <string name="subscribe_listitem1_description">你可以从市场上以每颗 20 金的价格购买宝石！</string>
     <string name="subscribe_listitem2_description">获得神秘沙漏，在时空旅行者商店购买物品！</string>
-    <string name="subscribe_listitem4_description">第一次成为新订阅者可获得紫御鹿角兔宠物。</string>
+    <string name="subscribe_listitem4_description">首次订阅可获得皇家紫色鹿角兔宠物。</string>
     <string name="subscribe1month_gemcap">每月25颗宝石</string>
     <string name="subscribe3month_gemcap">每月30颗宝石</string>
     <string name="subscribe6month_gemcap">每月35颗宝石</string>
@@ -320,13 +320,13 @@
     <string name="active">进行中</string>
     <string name="cancel_subscription">取消订阅</string>
     <string name="cancel_subscription_google_description">您可以通过 GooglePlay商店 应用程序取消订阅。任何结存的订阅将会在您的定期订阅结束后生效。</string>
-    <string name="cancel_subscription_notgoogle_description">不想继续订阅了？由于手机支付的限制，您只能通过我们的网站取消订阅。请点击下方按钮登录您的账户，点击右上角的用户头像，然后转到订阅。任结存的订阅都将在订阅结束后生效。我们会想念您的！</string>
-    <string name="visit_habitica_website">访问Habitica网站</string>
+    <string name="cancel_subscription_notgoogle_description">不想继续订阅了？由于手机支付的限制，您只能通过我们的网站取消订阅。请点击下方按钮登录您的账户，点击右上角的用户头像，然后转到订阅。任何结存的订阅都将在订阅结束后生效。我们会想念您的！</string>
+    <string name="visit_habitica_website">访问Habitica网页版</string>
     <string name="current_bonuses">当前奖励</string>
     <string name="months_subscribed">订阅的月数</string>
     <string name="current_hourclasses">当前神秘沙漏</string>
     <string name="monthly_gem_cap">每月宝石上限</string>
-    <string name="inactive">不活跃的</string>
+    <string name="inactive">不活跃</string>
     <string name="one_month">1个月</string>
     <string name="months">月</string>
     <string name="month">月</string>
@@ -547,7 +547,7 @@
     <string name="warrior_description">战士有更高的暴击率，可以对Boss打出更高伤害。如果你想轻松打败怪物，那就选择战士吧！战士可以从高力量属性中获益。</string>
     <string name="opting_out_progress">退出选择</string>
     <string name="subscription_duration_norenew">持续%s</string>
-    <string name="due">待办</string>
+    <string name="due">激活</string>
     <string name="dailyDueDefaultViewDescription">开启该选项，每日任务默认显示在“到期”页而不是“全部”页</string>
     <string name="thousand_abbrev">千</string>
     <string name="million_abbrev">百万</string>
@@ -846,7 +846,7 @@
     <string name="subscribe_listitem5_description">在Habitica发现更多的物品，每天享受双倍的物品掉落上限。</string>
     <string name="subscribe_listitem3_description_new">现在订阅，即可获得 %s 并每月收到新物品！</string>
     <string name="subscribe_listitem5">双倍掉落</string>
-    <string name="create_account_short">创建一个帐户</string>
+    <string name="create_account_short">创建一个帐号</string>
     <string name="login_incentive_short_count">%d次签到</string>
     <string name="login_incentive_short">定期登录Habitica</string>
     <string name="party_invite_short">寻找队友</string>
@@ -1076,7 +1076,7 @@
     <string name="party_challenges">你正在参加一个队伍挑战</string>
     <string name="guild_challenges">你正在参加一个公会挑战</string>
     <string name="leave_delete_tasks">放弃挑战并删除任务</string>
-    <string name="subscribe_listitem3_description">现在订阅，即可获得独家套装，并每月收到新物品！</string>
+    <string name="subscribe_listitem3_description">现在订阅，即可获得专属套装，还可以每月收到新物品！</string>
     <string name="quest_items_found">你已找到%d个副本物品</string>
     <string name="g1g1_promo_info_prompt">为了纪念奉献的季节，我们带来了一个非常特别的促销活动。现在，当你送给别人一份订阅时，你可以为自己免费获得同样的订阅！</string>
     <string name="g1g1_promo_info_instructions">请先点击 \"赠送订阅\"，输入你想赠送账户的用户名。你需要选择赠送的时长并结账。此时，你的账户将自动获得与赠送的订阅级别相同的奖励。</string>
@@ -1414,4 +1414,5 @@
     </plurals>
     <string name="customize_avatar">自定义角色形象</string>
     <string name="open_profile">打开个人资料</string>
+    <string name="list">清单</string>
 </resources>
