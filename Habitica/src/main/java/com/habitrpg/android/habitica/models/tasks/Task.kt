@@ -366,6 +366,9 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         var startDate = this.startDate?.toInstant()?.atZone(ZoneId.systemDefault()) ?: return null
         val frequency = this.frequency ?: return null
         val everyX = this.everyX ?: 1
+        if (everyX == 0) {
+            return null
+        }
         val repeatDays = this.repeat
         startDate = startDate.withHour(reminderTime.hour).withMinute(reminderTime.minute)
 
