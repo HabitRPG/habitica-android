@@ -26,7 +26,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.NullPointerException
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -93,14 +92,17 @@ object MarkdownParser {
         }
 
         val preProcessedInput = processMarkdown(input)
-
-        val hashCode = preProcessedInput.hashCode()
-        try {
-            if (cache.containsKey(hashCode)) {
-                return cache[hashCode] ?: SpannableString(preProcessedInput)
+        var hashCode: Int? = null
+        if (preProcessedInput.length < 500) {
+            // caching too large inputs. Since these are unlikely to be in a list, this is fine
+            hashCode = preProcessedInput.hashCode()
+            try {
+                if (cache.containsKey(hashCode)) {
+                    return cache[hashCode] ?: SpannableString(preProcessedInput)
+                }
+            } catch (_: NullPointerException) {
+                // Sometimes happens
             }
-        } catch (_: NullPointerException) {
-            // Sometimes happens
         }
         val text = EmojiParser.parseEmojis(preProcessedInput) ?: preProcessedInput
         // Adding this space here bc for some reason some markdown is not rendered correctly when the whole string is supposed to be formatted

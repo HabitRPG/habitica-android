@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.WindowManager.BadTokenException
 import android.view.animation.AccelerateInterpolator
 import android.widget.Button
 import android.widget.LinearLayout
@@ -328,10 +329,14 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         }
 
         private fun addToQueue(dialog: HabiticaAlertDialog) {
-            if (checkIfQueueAvailable()) {
-                dialog.show()
+            try {
+                if (checkIfQueueAvailable()) {
+                    dialog.show()
+                }
+                dialogQueue.add(dialog)
+            } catch (e: BadTokenException) {
+                // can't show anything
             }
-            dialogQueue.add(dialog)
         }
 
         private fun checkIfQueueAvailable(): Boolean {

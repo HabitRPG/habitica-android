@@ -17,7 +17,9 @@ interface Avatar {
         get() = if (username != null) "@$username" else null
 
     val gemCount: Int
-        get() = (this.balance * 4).toInt()
+        get() = if (this.isValid()) {
+            (this.balance * 4).toInt()
+        } else { 0 }
 
     val costume: AvatarOutfit?
         get() = items?.gear?.costume

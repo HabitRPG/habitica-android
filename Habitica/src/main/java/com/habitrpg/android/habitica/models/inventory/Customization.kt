@@ -51,6 +51,7 @@ open class Customization : RealmObject(), BaseObject {
     }
 
     fun getImageName(userSize: String?, hairColor: String?): String? {
+        if (!this.isValid()) { return null }
         if (identifier?.isNotBlank() != true || identifier == "none" || identifier == "0") return null
         return when (type) {
             "skin" -> return "skin_$identifier"

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
@@ -49,7 +50,6 @@ class StableRecyclerFragment :
 
     var adapter: StableRecyclerAdapter? = null
     var itemTypeText: String? = null
-    internal var layoutManager: androidx.recyclerview.widget.GridLayoutManager? = null
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
@@ -70,11 +70,11 @@ class StableRecyclerFragment :
         )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
-        layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+        val layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
+        layoutManager.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {
-                    layoutManager?.spanCount ?: 1
+                    layoutManager.spanCount
                 } else {
                     1
                 }
@@ -134,7 +134,7 @@ class StableRecyclerFragment :
         if (spanCount == 0) {
             spanCount = 1
         }
-        layoutManager?.spanCount = spanCount
+        (binding?.recyclerView?.layoutManager as? GridLayoutManager)?.spanCount = spanCount
     }
 
     private fun loadItems() {

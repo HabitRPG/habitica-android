@@ -30,7 +30,6 @@ import com.habitrpg.android.habitica.extensions.getMinuteOrSeconds
 import com.habitrpg.android.habitica.extensions.getRemainingString
 import com.habitrpg.android.habitica.extensions.getShortRemainingString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.WorldStateEvent
 import com.habitrpg.android.habitica.models.inventory.Item
 import com.habitrpg.android.habitica.models.promotions.HabiticaPromotion
@@ -45,8 +44,10 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
+import io.realm.kotlin.isValid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -58,7 +59,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
-import kotlin.time.ExperimentalTime
 import kotlin.time.toDuration
 
 @AndroidEntryPoint
@@ -238,7 +238,8 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun updateSeasonalMenuEntries(gearEvent: WorldStateEvent?, items: List<Item>) {
         val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return
-        if (items.isNotEmpty() && items.firstOrNull()?.event?.end?.after(Date()) == true) {
+        val item = items.firstOrNull()
+        if (item?.isValid() == true && item.event?.end?.after(Date()) == true) {
             market.pillText = context?.getString(R.string.something_new)
             market.subtitle = context?.getString(R.string.limited_potions_available)
         } else {

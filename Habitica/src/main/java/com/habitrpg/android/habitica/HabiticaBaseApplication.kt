@@ -25,6 +25,7 @@ import com.google.android.gms.wearable.Wearable
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.gu.toolargetool.TooLargeTool
 import com.habitrpg.android.habitica.data.ApiClient
 import com.habitrpg.android.habitica.extensions.DateUtils
 import com.habitrpg.android.habitica.helpers.AdHandler
@@ -113,10 +114,12 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     override fun onCreate() {
         super.onCreate()
+
         lifecycleTracker = ApplicationLifecycleTracker(sharedPrefs)
         ProcessLifecycleOwner.get().lifecycle.addObserver(lifecycleTracker)
 
         if (!BuildConfig.DEBUG) {
+            TooLargeTool.startLogging(this)
             try {
                 Analytics.initialize(this)
             } catch (ignored: Resources.NotFoundException) {

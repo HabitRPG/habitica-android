@@ -25,23 +25,31 @@ import javax.inject.Inject
 class MainUserViewModel @Inject constructor(private val authenticationHandler: AuthenticationHandler, val userRepository: UserRepository, val socialRepository: SocialRepository) {
 
     val formattedUsername: CharSequence?
-        get() = user.value?.formattedUsername
+        get() = validatedUser?.formattedUsername
     val userID: String
-        get() = user.value?.id ?: authenticationHandler.currentUserID ?: ""
+        get() = validatedUser?.id ?: authenticationHandler.currentUserID ?: ""
     val username: CharSequence
-        get() = user.value?.username ?: ""
+        get() = validatedUser?.username ?: ""
     val displayName: CharSequence
-        get() = user.value?.profile?.name ?: ""
+        get() = validatedUser?.profile?.name ?: ""
     val partyID: String?
-        get() = user.value?.party?.id
+        get() = validatedUser?.party?.id
     val isUserFainted: Boolean
-        get() = (user.value?.stats?.hp ?: 1.0) == 0.0
+        get() = (validatedUser?.stats?.hp ?: 1.0) == 0.0
     val isUserInParty: Boolean
-        get() = user.value?.hasParty == true
+        get() = validatedUser?.hasParty == true
     val mirrorGroupTasks: List<String>
-        get() = user.value?.preferences?.tasks?.mirrorGroupTasks ?: emptyList()
+        get() = validatedUser?.preferences?.tasks?.mirrorGroupTasks ?: emptyList()
 
     val user: LiveData<User?> = userRepository.getUser().asLiveData()
+    private val validatedUser: User?
+        get() {
+        val u = this.user.value
+        if (u?.isValid() == true) {
+            return u
+        }
+        return null
+    }
     var currentTeamPlan = MutableSharedFlow<TeamPlan?>(
         replay = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST

@@ -14,10 +14,10 @@ import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
 import com.habitrpg.android.habitica.databinding.ActivityWrapperBinding
+import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.wearos.habitica.ui.views.IndeterminateProgressView
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -110,7 +110,7 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
         data: ByteArray?,
         function: ((Boolean) -> Unit)? = null
     ) {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launchCatching {
             val info = Tasks.await(
                 capabilityClient.getCapability(
                     permission,

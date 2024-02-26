@@ -119,11 +119,13 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
 
     fun activePromo(): HabiticaPromotion? {
         var promo: HabiticaPromotion? = null
-        for (event in worldState?.events ?: listOf(worldState?.currentEvent)) {
-            if (event == null) return null
-            val thisPromo = getHabiticaPromotionFromKey(event.promo ?: event.eventKey ?: "", event.start, event.end)
-            if (thisPromo != null) {
-                promo = thisPromo
+        if (worldState?.isValid == true) {
+            for (event in worldState?.events ?: listOf(worldState?.currentEvent)) {
+                if (event == null) return null
+                val thisPromo = getHabiticaPromotionFromKey(event.promo ?: event.eventKey ?: "", event.start, event.end)
+                if (thisPromo != null) {
+                    promo = thisPromo
+                }
             }
         }
         if (promo == null && remoteConfig.getString("activePromo").isNotBlank()) {

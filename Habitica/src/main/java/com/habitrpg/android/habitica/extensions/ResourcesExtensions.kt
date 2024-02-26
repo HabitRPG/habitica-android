@@ -17,5 +17,9 @@ fun Resources.forceLocale(activity: BaseActivity, locale: Locale) {
     }
     updateConfiguration(configuration, displayMetrics)
 
-    Firebase.crashlytics.setCustomKey("language", locale.toLanguageTag())
+    try {
+        Firebase.crashlytics.setCustomKey("language", locale.toLanguageTag())
+    } catch (_: IllegalStateException) {
+        // issue with getting firebase
+    }
 }
