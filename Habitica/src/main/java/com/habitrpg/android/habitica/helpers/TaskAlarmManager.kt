@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import java.time.DateTimeException
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -65,10 +66,16 @@ class TaskAlarmManager(
             }
             task.reminders?.let { reminders ->
                 for (reminder in reminders) {
-                    val upcomingReminders = task.getNextReminderOccurrences(reminder, reminderOccurencesToSchedule)
-                    upcomingReminders?.forEachIndexed { index, reminderNextOccurrenceTime ->
-                        reminder?.time = reminderNextOccurrenceTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-                        setAlarmForRemindersItem(task, reminder, index)
+                    try {
+                        val upcomingReminders =
+                            task.getNextReminderOccurrences(reminder, reminderOccurencesToSchedule)
+                        upcomingReminders?.forEachIndexed { index, reminderNextOccurrenceTime ->
+                            reminder?.time =
+                                reminderNextOccurrenceTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                            setAlarmForRemindersItem(task, reminder, index)
+                        }
+                    } catch (_: DateTimeException) {
+                        // code accidentally generated an invalid date
                     }
                 }
             }
