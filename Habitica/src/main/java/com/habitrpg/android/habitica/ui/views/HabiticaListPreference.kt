@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.preference.ListPreference
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.setScaledPadding
+import kotlin.math.max
 import kotlin.math.min
 
 class HabiticaListPreference : ListPreference {
@@ -24,10 +25,8 @@ class HabiticaListPreference : ListPreference {
         val subtitleText = TextView(context)
         subtitleText.setText(R.string.cds_subtitle)
         val builder = AlertDialog.Builder(context).setSingleChoiceItems(entries, getValueIndex() + 1) { dialog, index ->
-            val actualIndex = min(0, index - 1)
-            if (callChangeListener(entryValues[actualIndex].toString())) {
-                setValueIndex(actualIndex)
-            }
+            val actualIndex = max(0, index - 1)
+            setValueIndex(actualIndex)
             dialog.dismiss()
         }
             .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }

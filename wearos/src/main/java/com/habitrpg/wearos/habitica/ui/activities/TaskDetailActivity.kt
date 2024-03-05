@@ -30,7 +30,7 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
     }
 
     private fun openEditFormOnPhone() {
-        sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray())
+        sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray()) {}
         startActivity(
             Intent(this, ContinuePhoneActivity::class.java)
         )

@@ -2,6 +2,7 @@ package com.habitrpg.wearos.habitica.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
@@ -18,6 +19,7 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.wearos.habitica.managers.AppStateManager
 import com.habitrpg.wearos.habitica.ui.viewmodels.BaseViewModel
 import com.habitrpg.wearos.habitica.ui.views.IndeterminateProgressView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -95,7 +97,7 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
     }
 
     internal fun openRemoteActivity(url: String, keepActive: Boolean = false) {
-        sendMessage("open_activity", url, null)
+        sendMessage("open_activity", url, null) {}
         startActivity(
             Intent(this, ContinuePhoneActivity::class.java)
                 .apply {
@@ -108,9 +110,12 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
         permission: String,
         url: String,
         data: ByteArray?,
-        function: ((Boolean) -> Unit)? = null
+        function: ((Boolean) -> Unit)
     ) {
-        lifecycleScope.launchCatching {
+        lifecycleScope.launchCatching({
+            Log.e("BaseActivity", "Error sending message", it)
+            function(false)
+        }, Dispatchers.IO) {
             val info = Tasks.await(
                 capabilityClient.getCapability(
                     permission,
@@ -119,7 +124,7 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
             )
             val nodeID = info.nodes.firstOrNull()
             if (nodeID != null) {
-                function?.invoke(true)
+                function(true)
                 try {
                     Tasks.await(
                         messageClient.sendMessage(
@@ -130,9 +135,10 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
                     )
                 } catch (_: ApiException) {
                     // It's not connected
+                    function(false)
                 }
             } else {
-                function?.invoke(false)
+                function(false)
             }
         }
     }

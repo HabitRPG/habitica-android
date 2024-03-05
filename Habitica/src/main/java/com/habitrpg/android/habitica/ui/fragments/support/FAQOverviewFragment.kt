@@ -40,6 +40,7 @@ import com.jaredrummler.android.device.DeviceName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.max
 import kotlin.math.min
 
 @AndroidEntryPoint
@@ -144,7 +145,7 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 ds.isUnderlineText = false
             }
         }
-        val startIndex = min(0, fullText.indexOf(clickableText))
+        val startIndex = max(0, fullText.indexOf(clickableText))
         val endIndex = startIndex + clickableText.length
         spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 

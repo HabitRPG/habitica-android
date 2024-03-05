@@ -79,7 +79,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
             } else {
                 stopAnimatingProgress()
             }
-            delay(90.toDuration(DurationUnit.SECONDS))
+            delay(40.toDuration(DurationUnit.SECONDS))
             if (isActive) {
                 // the sync attempt has timed out
                 startLoginActivity()

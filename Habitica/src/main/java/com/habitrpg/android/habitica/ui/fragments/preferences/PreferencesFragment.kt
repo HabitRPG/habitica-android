@@ -7,7 +7,9 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -95,6 +97,7 @@ class PreferencesFragment :
         timePreference = findPreference("reminder_time") as? TimePreference
         val useReminder = preferenceManager.sharedPreferences?.getBoolean("use_reminder", false)
         timePreference?.isEnabled = useReminder ?: false
+        timePreference?.let { updatePreferenceEnabledView(it) }
 
         classSelectionPreference = findPreference("choose_class")
 
@@ -121,6 +124,11 @@ class PreferencesFragment :
         } else {
             taskDisplayPreference?.isVisible = false
         }
+    }
+
+    private fun updatePreferenceEnabledView(preference: Preference) {
+        val isEnabled = preference.isEnabled
+        preference.layoutResource = if (isEnabled) R.layout.preference_child_summary else R.layout.preference_child_summary_disabled
     }
 
     override fun onResume() {
@@ -262,6 +270,7 @@ class PreferencesFragment :
             "use_reminder" -> {
                 val useReminder = sharedPreferences.getBoolean(key, false)
                 timePreference?.isEnabled = useReminder
+                timePreference?.let { updatePreferenceEnabledView(it) }
                 if (useReminder) {
                     TaskAlarmManager.scheduleDailyReminder(context)
                 } else {
@@ -279,6 +288,7 @@ class PreferencesFragment :
                     pushNotificationManager.notificationPermissionEnabled()
                 val usePushNotifications = sharedPreferences.getBoolean(key, true)
                 pushNotificationsPreference?.isEnabled = usePushNotifications
+                pushNotificationsPreference?.let { updatePreferenceEnabledView(it) }
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.pushNotifications.unsubscribeFromAll",
@@ -301,6 +311,7 @@ class PreferencesFragment :
             "useEmails" -> {
                 val useEmailNotifications = sharedPreferences.getBoolean(key, true)
                 emailNotificationsPreference?.isEnabled = useEmailNotifications
+                emailNotificationsPreference?.let { updatePreferenceEnabledView(it) }
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.emailNotifications.unsubscribeFromAll",
@@ -490,6 +501,7 @@ class PreferencesFragment :
         val usePushNotifications =
             !(user?.preferences?.pushNotifications?.unsubscribeFromAll ?: false)
         pushNotificationsPreference?.isEnabled = usePushNotifications
+        pushNotificationsPreference?.let { updatePreferenceEnabledView(it) }
         usePushPreference?.isChecked = (usePushNotifications && notifPermissionEnabled)
         if (!notifPermissionEnabled) {
             usePushPreference?.summary =
@@ -502,6 +514,7 @@ class PreferencesFragment :
         val useEmailNotifications =
             !(user?.preferences?.emailNotifications?.unsubscribeFromAll ?: false)
         emailNotificationsPreference?.isEnabled = useEmailNotifications
+        emailNotificationsPreference?.let { updatePreferenceEnabledView(it) }
         useEmailPreference?.isChecked = useEmailNotifications
 
         lifecycleScope.launch {
