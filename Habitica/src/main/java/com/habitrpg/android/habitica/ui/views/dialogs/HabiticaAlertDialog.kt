@@ -207,7 +207,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         } else {
             val button = binding.buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as? Button
             if (isDestructive) {
-                button?.setTextColor(ContextCompat.getColor(context, R.color.text_red))
+                button?.setTextColor(ContextCompat.getColor(context, R.color.maroon_100))
             }
             button
         } ?: Button(context)
