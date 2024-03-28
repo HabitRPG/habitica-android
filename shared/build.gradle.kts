@@ -17,6 +17,12 @@ kotlin {
     android()
     ios()
 
+    js(IR) {
+        browser()
+        nodejs()
+        binaries.library()
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {

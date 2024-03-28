@@ -97,7 +97,6 @@ if (propFile.canRead()) {
     }
 } else {
     println 'signing.properties not found'
-    android.buildTypes.release.signingConfig = null
 }
 
 detekt {
