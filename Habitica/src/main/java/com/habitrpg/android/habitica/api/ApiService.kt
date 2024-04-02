@@ -57,7 +57,7 @@ interface ApiService {
     @GET("user/")
     suspend fun getUser(): HabitResponse<User>
 
-    @GET("user/stat-sync")
+    @POST("user/stat-sync")
     suspend fun syncUserStats(): HabitResponse<User>
 
     @GET("inbox/messages")
