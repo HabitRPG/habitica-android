@@ -137,5 +137,9 @@
         <key>hideChallenges</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>reviewCheckingMinCount</key>
+        <value>2</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

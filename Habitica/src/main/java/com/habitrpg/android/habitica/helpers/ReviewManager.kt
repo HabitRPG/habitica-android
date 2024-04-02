@@ -39,6 +39,10 @@ class ReviewManager(context: Context, private val configManager: AppConfigManage
             return true
         }
 
+        if (currentCheckins < configManager.reviewCheckingMinCount()) {
+            return false
+        }
+
         val requestCount = sharedPref.getInt(REVIEW_REQUEST_COUNT_KEY, 0)
 
         if (requestCount >= 5) {

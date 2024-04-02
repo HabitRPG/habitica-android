@@ -173,6 +173,10 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
         return remoteConfig.getBoolean("enableReviewPrompt")
     }
 
+    fun reviewCheckingMinCount(): Long {
+        return remoteConfig.getLong("reviewCheckingMinCount")
+    }
+
     fun getBirthdayEvent(): WorldStateEvent? {
         val events = ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
