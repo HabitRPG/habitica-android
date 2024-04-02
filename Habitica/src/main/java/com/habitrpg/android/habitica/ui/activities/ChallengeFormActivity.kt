@@ -23,7 +23,6 @@ import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityCreateChallengeBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -37,6 +36,7 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
@@ -486,6 +486,7 @@ class ChallengeFormActivity : BaseActivity() {
         taskList.remove(addTodo)
         taskList.remove(addReward)
 
+        c.id = UUID.randomUUID().toString()
         return challengeRepository.createChallenge(c, taskList)
     }
 
