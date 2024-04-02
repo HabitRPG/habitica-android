@@ -17,6 +17,7 @@ class Shop {
             QUEST_SHOP -> R.string.questShop_owner
             SEASONAL_SHOP -> R.string.seasonalShop_owner
             TIME_TRAVELERS_SHOP -> R.string.timetravelers_owner
+            CUSTOMIZATIONS -> R.string.customizations_owner
             else -> R.string.market_owner
         }
 
@@ -27,5 +28,6 @@ class Shop {
         const val QUEST_SHOP = "questShop"
         const val TIME_TRAVELERS_SHOP = "timeTravelersShop"
         const val SEASONAL_SHOP = "seasonalShop"
+        const val CUSTOMIZATIONS = "customizations"
     }
 }

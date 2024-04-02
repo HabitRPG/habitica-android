@@ -468,6 +468,13 @@
         <deepLink app:uri="habitica.com/shops/time" />
     </fragment>
     <fragment
+        android:id="@+id/customizationsShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.CuostimzationsShopFragment"
+        android:label="@string/customizations">
+        <deepLink app:uri="habitica.com/inventory/customizations" />
+        <deepLink app:uri="habitica.com/shops/customizations" />
+    </fragment>
+    <fragment
         android:id="@+id/supportMainFragment"
         android:name="com.habitrpg.android.habitica.ui.fragments.support.SupportMainFragment"
         android:label="@string/support" >

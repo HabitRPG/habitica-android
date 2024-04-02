@@ -416,6 +416,15 @@ class NavigationDrawerFragment : DialogFragment() {
                     context.getString(R.string.questShop)
                 )
             )
+            if (configManager.enableCustomizationShop()) {
+                items.add(
+                    HabiticaDrawerItem(
+                        R.id.customizationsShopFragment,
+                        SIDEBAR_SHOPS_CUSTOMIZATIONS,
+                        context.getString(R.string.customizations)
+                    )
+                )
+            }
             val seasonalShopEntry = HabiticaDrawerItem(
                 R.id.seasonalShopFragment,
                 SIDEBAR_SHOPS_SEASONAL,
@@ -791,6 +800,7 @@ class NavigationDrawerFragment : DialogFragment() {
         const val SIDEBAR_INVENTORY = "inventory"
         const val SIDEBAR_SHOPS_MARKET = "market"
         const val SIDEBAR_SHOPS_QUEST = "questShop"
+        const val SIDEBAR_SHOPS_CUSTOMIZATIONS = "customizationsShop"
         const val SIDEBAR_SHOPS_SEASONAL = "seasonalShop"
         const val SIDEBAR_SHOPS_TIMETRAVEL = "timeTravelersShop"
         const val SIDEBAR_AVATAR = "avatar"

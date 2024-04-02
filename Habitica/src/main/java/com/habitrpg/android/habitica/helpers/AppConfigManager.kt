@@ -181,4 +181,8 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
         val events = ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
     }
+
+    fun enableCustomizationShop(): Boolean {
+        return remoteConfig.getBoolean("enableCustomizationShop")
+    }
 }

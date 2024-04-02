@@ -141,5 +141,9 @@
         <key>reviewCheckingMinCount</key>
         <value>2</value>
     </entry>
+    <entry>
+        <key>enableCustomizationShop</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

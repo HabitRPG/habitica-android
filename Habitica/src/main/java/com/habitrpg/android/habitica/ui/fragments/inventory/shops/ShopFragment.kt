@@ -304,6 +304,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             Shop.QUEST_SHOP -> "quests"
             Shop.TIME_TRAVELERS_SHOP -> "time-travelers"
             Shop.SEASONAL_SHOP -> "seasonal"
+            Shop.CUSTOMIZATIONS -> "customizations"
             else -> ""
         }
         lifecycleScope.launchCatching({
