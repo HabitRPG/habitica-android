@@ -21,4 +21,19 @@ open class WorldState : RealmObject(), BaseObject {
 
     @SerializedName("currentEventList")
     var events: RealmList<WorldStateEvent> = RealmList()
+
+    fun findNpcImageSuffix(): String? {
+        if (!npcImageSuffix.isNullOrBlank()) {
+            return npcImageSuffix
+        } else if (!currentEvent?.npcImageSuffix.isNullOrBlank()) {
+            return currentEvent?.npcImageSuffix
+        } else {
+            for (event in events) {
+                if (!event.npcImageSuffix.isNullOrBlank()) {
+                    return event.npcImageSuffix
+                }
+            }
+        }
+        return null
+    }
 }

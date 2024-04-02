@@ -21,7 +21,10 @@ class NPCBannerView(context: Context, attrs: AttributeSet?) : FrameLayout(contex
 
     var shopSpriteSuffix: String? = null
         set(value) {
-            field = if (value.isNullOrEmpty() || value.startsWith("_")) {
+
+            field = if (value.isNullOrEmpty()) {
+                ""
+            } else if (value.startsWith("_")) {
                 value
             } else {
                 "_$value"
