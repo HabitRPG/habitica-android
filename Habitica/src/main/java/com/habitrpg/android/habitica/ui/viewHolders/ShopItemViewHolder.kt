@@ -68,7 +68,7 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
             binding.priceLabel.visibility = View.GONE
             binding.unlockLabel.visibility = View.VISIBLE
         }
-        val isLimited = item.isLimited || item.event?.end != null
+        val isLimited = item.isLimited || item.availableUntil != null
         if (numberOwned > 0) {
             binding.itemDetailIndicator.text = numberOwned.toString()
             binding.itemDetailIndicator.background =

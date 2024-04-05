@@ -12,6 +12,7 @@ import com.habitrpg.android.habitica.models.user.User
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.Date
 
 open class ShopItem : RealmObject(), BaseObject {
     @PrimaryKey
@@ -53,6 +54,12 @@ open class ShopItem : RealmObject(), BaseObject {
     @SerializedName("lvl")
     var level: Int? = null
     var event: ItemEvent? = null
+    var endDate: Date? = null
+
+    val availableUntil: Date?
+        get() {
+            return endDate ?: event?.end
+        }
 
     var setImageNames = RealmList<String>()
 

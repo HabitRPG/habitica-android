@@ -231,7 +231,7 @@ class AvatarView : FrameLayout {
         }
 
         var backgroundName = avatar.preferences?.background
-        if (preview != null) {
+        if (!preview.isNullOrEmpty()) {
             layerMap[preview?.keys?.first()] = preview?.values?.first()
             if (resetHasAttributes) hasBackground = true
         } else if (showBackground && backgroundName?.isNotEmpty() == true) {

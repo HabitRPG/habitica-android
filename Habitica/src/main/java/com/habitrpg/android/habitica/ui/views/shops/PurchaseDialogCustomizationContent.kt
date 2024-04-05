@@ -5,13 +5,16 @@ import android.widget.TextView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationBinding
 import com.habitrpg.android.habitica.models.shops.ShopItem
+import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.views.AvatarView
 import com.habitrpg.common.habitica.views.PixelArtView
+import java.util.EnumMap
 
 class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogContent(context) {
     val binding = DialogPurchaseCustomizationBinding.inflate(context.layoutInflater, this)
     override val imageView: PixelArtView
-        get() = binding.imageView
+        get() = PixelArtView(context)
     override val titleTextView: TextView
         get() = binding.titleTextView
 
@@ -23,7 +26,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
     }
 
     private fun buildCustomizationTitle(item: ShopItem): CharSequence? {
-        val path = item.unlockPath ?: return null
+        val path = item.unlockPath ?: item.path ?: return null
         return when {
             path.contains("skin") -> context.getString(R.string.avatar_skin_customization)
             path.contains("shirt") -> context.getString(R.string.avatar_shirt_customization)
@@ -34,5 +37,25 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
             path.contains("mustache") -> context.getString(R.string.avatar_mustache_customization)
             else -> null
         }
+    }
+
+    fun setAvatarWithPreview(user: User, shopItem: ShopItem) {
+        val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
+        val path = shopItem.unlockPath ?: shopItem.path ?: ""
+        val layerName = when {
+            path.contains("skin") -> AvatarView.LayerType.SKIN
+            path.contains("shirt") -> AvatarView.LayerType.SHIRT
+            path.contains("color") -> AvatarView.LayerType.HAIR_BANGS
+            path.contains("base") -> AvatarView.LayerType.HAIR_BASE
+            path.contains("bangs") -> AvatarView.LayerType.HAIR_BANGS
+            path.contains("beard") -> AvatarView.LayerType.HAIR_BEARD
+            path.contains("mustache") -> AvatarView.LayerType.HAIR_MUSTACHE
+            else -> null
+        }
+        layerName?.let {
+            layerMap[it] = shopItem.imageName
+        }
+
+        binding.avatarView.setAvatar(user, layerMap)
     }
 }

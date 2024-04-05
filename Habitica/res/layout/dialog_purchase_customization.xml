@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:parentTag="android.widget.LinearLayout">
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/shopitem_dialog_content_inset"
+    android:paddingEnd="@dimen/shopitem_dialog_content_inset"
+    tools:parentTag="LinearLayout"
+    tools:orientation="vertical">
 
-    <com.habitrpg.common.habitica.views.PixelArtView
-        android:layout_width="@dimen/customization_width"
-        android:layout_height="@dimen/customization_width"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/layout_rounded_bg_window"
-        android:layout_marginTop="24dp"
-        android:scaleType="center"/>
+    <com.habitrpg.common.habitica.views.AvatarView
+        android:id="@+id/avatar_view"
+        android:layout_width="@dimen/avatar_width"
+        android:layout_height="@dimen/avatar_height"
+        android:layout_marginTop="24dp"/>
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
@@ -24,4 +24,12 @@
         android:gravity="center"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="4dp"/>
+    <TextView
+        android:id="@+id/notesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Body2"
+        android:textColor="@color/text_ternary"
+        tools:text="These are the notes"
+        android:gravity="center"/>
 </merge>

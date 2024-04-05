@@ -11,36 +11,64 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
-import androidx.core.view.doOnLayout
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.flexbox.AlignItems
-import com.google.android.flexbox.FlexDirection.ROW
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.CustomizationRepository
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
-import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.common.habitica.extensions.setTintWith
+import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.user.OwnedCustomization
 import com.habitrpg.android.habitica.models.user.User
-import com.habitrpg.android.habitica.ui.adapter.CustomizationRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
-import com.habitrpg.android.habitica.ui.helpers.MarginDecoration
-import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
+import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
-import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialog
-import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -48,16 +76,52 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+class CustomizationViewModel : ViewModel() {
+    var type: String? = null
+    var category: String? = null
+
+    val customizations = mutableStateListOf<Customization>()
+    val activeCustomization = mutableStateOf<String?>(null)
+
+    val userSize = mutableStateOf("slim")
+    val hairColor = mutableStateOf<String?>(null)
+
+    val typeNameId: Int
+        get() = when (type) {
+            "shirt" -> R.string.avatar_shirts
+            "skin" -> R.string.avatar_skins
+            "hair" -> {
+                when (category) {
+                    "color" -> R.string.avatar_hair_colors
+                    "base" -> R.string.avatar_hair_styles
+                    "bangs" -> R.string.avatar_hair_bangs
+                    "mustache" -> R.string.avatar_mustaches
+                    "beard" -> R.string.avatar_beards
+                    "flower" -> R.string.avatar_accents
+                    else -> R.string.avatar_hair
+                }
+            }
+
+            "background" -> R.string.standard_backgrounds
+            else -> R.string.customizations
+        }
+}
+
 @AndroidEntryPoint
 class AvatarCustomizationFragment :
-    BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+    BaseMainFragment<FragmentComposeBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
     private var filterMenuItem: MenuItem? = null
-    override var binding: FragmentRefreshRecyclerviewBinding? = null
+    override var binding: FragmentComposeBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
-        return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
+    private val viewModel: CustomizationViewModel by viewModels()
+
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentComposeBinding {
+        return FragmentComposeBinding.inflate(inflater, container, false)
     }
 
     @Inject
@@ -73,9 +137,6 @@ class AvatarCustomizationFragment :
     var category: String? = null
     private var activeCustomization: String? = null
 
-    internal var adapter: CustomizationRecyclerViewAdapter = CustomizationRecyclerViewAdapter()
-    internal var layoutManager: FlexboxLayoutManager = FlexboxLayoutManager(mainActivity, ROW)
-
     private val currentFilter = MutableStateFlow(CustomizationFilter(false, true))
     private val ownedCustomizations = MutableStateFlow<List<OwnedCustomization>>(emptyList())
 
@@ -85,34 +146,35 @@ class AvatarCustomizationFragment :
         savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
-        adapter.onCustomizationSelected = { customization ->
-            lifecycleScope.launchCatching {
-                if (customization.identifier?.isNotBlank() != true) {
-                    userRepository.useCustomization(customization.type ?: "", customization.category, activeCustomization ?: "")
-                } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
-                    userRepository.unlockPath(customization)
-                    userRepository.retrieveUser(false, true, true)
-                } else {
-                    userRepository.useCustomization(
-                        customization.type ?: "",
-                        customization.category,
-                        customization.identifier ?: ""
-                    )
+
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        binding?.composeView?.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                HabiticaTheme {
+                    val userSize by viewModel.userSize
+                    val hairColor by viewModel.hairColor
+                    val activeCustomization by viewModel.activeCustomization
+                    AvatarCustomizationView(viewModel.customizations, userSize, hairColor, stringResource(viewModel.typeNameId), activeCustomization) { customization ->
+                        lifecycleScope.launchCatching {
+                            if (customization.identifier?.isNotBlank() != true) {
+                                userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
+                            } else if (customization.type == "background" && ownedCustomizations.value.firstOrNull { it.key == customization.identifier } == null) {
+                                userRepository.unlockPath(customization)
+                                userRepository.retrieveUser(false, true, true)
+                            } else {
+                                userRepository.useCustomization(
+                                    customization.type ?: "",
+                                    customization.category,
+                                    customization.identifier ?: ""
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
-        adapter.onShowPurchaseDialog = { item ->
-            val dialog = PurchaseDialog(requireContext(), userRepository, inventoryRepository, item)
-            dialog.show()
-        }
-
-        lifecycleScope.launchCatching {
-            inventoryRepository.getInAppRewards()
-                .map { rewards -> rewards.map { it.key } }
-                .collect { adapter.setPinnedItemKeys(it) }
-        }
-
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -120,29 +182,16 @@ class AvatarCustomizationFragment :
         arguments?.let {
             val args = AvatarCustomizationFragmentArgs.fromBundle(it)
             type = args.type
+            viewModel.type = type
             if (args.category.isNotEmpty()) {
                 category = args.category
+                viewModel.category = category
             }
             currentFilter.value.ascending = type != "background"
         }
-        adapter.customizationType = type
-        binding?.refreshLayout?.setOnRefreshListener(this)
-        layoutManager = FlexboxLayoutManager(mainActivity, ROW)
-        layoutManager.justifyContent = JustifyContent.CENTER
-        layoutManager.alignItems = AlignItems.FLEX_START
-        binding?.recyclerView?.layoutManager = layoutManager
-
-        binding?.recyclerView?.addItemDecoration(MarginDecoration(context))
-
-        binding?.recyclerView?.adapter = adapter
-        binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         this.loadCustomizations()
 
         userViewModel.user.observe(viewLifecycleOwner) { updateUser(it) }
-
-        binding?.recyclerView?.doOnLayout {
-            adapter.columnCount = it.width / (80.dpToPx(context))
-        }
 
         lifecycleScope.launchCatching {
             currentFilter.collect {
@@ -163,7 +212,11 @@ class AvatarCustomizationFragment :
         inflater.inflate(R.menu.menu_list_customizations, menu)
 
         filterMenuItem = menu.findItem(R.id.action_filter)
-        updateFilterIcon()
+        if (type == "background") {
+            updateFilterIcon()
+        } else {
+            filterMenuItem?.isVisible = false
+        }
     }
 
     private fun updateFilterIcon() {
@@ -191,7 +244,6 @@ class AvatarCustomizationFragment :
                 return true
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -200,50 +252,37 @@ class AvatarCustomizationFragment :
         lifecycleScope.launchCatching {
             customizationRepository.getCustomizations(type, category, false)
                 .combine(currentFilter) { customizations, filter -> Pair(customizations, filter) }
-                .combine(ownedCustomizations) { pair, ownedCustomizations -> Triple(pair.first, pair.second, ownedCustomizations) }
-                .collect { (customizations, filter, ownedCustomizations) ->
-                    adapter.ownedCustomizations =
-                        ownedCustomizations.map { it.key + "_" + it.type + "_" + it.category }
+                .combine(ownedCustomizations) { pair, ownedCustomizations ->
+                    val ownedKeys = ownedCustomizations.map { it.key }
+                    return@combine Pair(pair.first.filter { ownedKeys.contains(it.identifier) || (it.price ?: 0) == 0 }, pair.second)
+                }
+                .map { (customizations, filter) ->
+                    var displayedCustomizations = customizations
                     if (filter.isFiltering) {
-                        val displayedCustomizations = mutableListOf<Customization>()
+                        displayedCustomizations = mutableListOf<Customization>()
                         for (customization in customizations) {
-                            if (shouldSkip(filter, ownedCustomizations, customization)) continue
+                            if (shouldSkip(filter, customization)) continue
                             displayedCustomizations.add(customization)
                         }
-                        adapter.setCustomizations(
-                            if (!filter.ascending) {
-                                displayedCustomizations.reversed()
-                            } else {
-                                displayedCustomizations
-                            }
-                        )
+                    }
+                    if (!filter.ascending) {
+                        displayedCustomizations.reversed()
                     } else {
-                        adapter.setCustomizations(
-                            if (!filter.ascending) {
-                                customizations.reversed()
-                            } else {
-                                customizations
-                            }
-                        )
+                        displayedCustomizations
                     }
                 }
-        }
-        if (type == "hair" && (category == "beard" || category == "mustache")) {
-            val otherCategory = if (category == "mustache") "beard" else "mustache"
-            lifecycleScope.launchCatching {
-                customizationRepository.getCustomizations(type, otherCategory, true).collect {
-                    adapter.additionalSetItems = it
+                .collect { customizations ->
+                    viewModel.customizations.clear()
+                    viewModel.customizations.addAll(customizations)
                 }
-            }
         }
     }
 
     private fun shouldSkip(
         filter: CustomizationFilter,
-        ownedCustomizations: List<OwnedCustomization>,
         customization: Customization
     ): Boolean {
-        return if (filter.onlyPurchased && ownedCustomizations.find { it.key == customization.identifier } == null) {
+        return if (filter.onlyPurchased) {
             true
         } else {
             filter.months.isNotEmpty() && !filter.months.contains(customization.customizationSet?.substringAfter('.'))
@@ -254,11 +293,8 @@ class AvatarCustomizationFragment :
         if (user == null) return
         this.updateActiveCustomization(user)
         ownedCustomizations.value = user.purchased?.customizations?.filter { it.type == this.type && it.purchased } ?: emptyList()
-        this.adapter.userSize = user.preferences?.size
-        this.adapter.hairColor = user.preferences?.hair?.color
-        this.adapter.gemBalance = user.gemCount
-        this.adapter.avatar = user
-        adapter.notifyDataSetChanged()
+        viewModel.userSize.value = user.preferences?.size ?: "slim"
+        viewModel.hairColor.value = user.preferences?.hair?.color
     }
 
     private fun updateActiveCustomization(user: User) {
@@ -280,22 +316,22 @@ class AvatarCustomizationFragment :
                 "mustache" -> prefs?.hair?.mustache.toString()
                 else -> ""
             }
+
             else -> ""
         }
         if (activeCustomization != null) {
             this.activeCustomization = activeCustomization
-            this.adapter.activeCustomization = activeCustomization
+            viewModel.activeCustomization.value = activeCustomization
         }
     }
 
     override fun onRefresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.retrieveUser(true, true)
-            binding?.refreshLayout?.isRefreshing = false
         }
     }
 
-    fun showFilterDialog() {
+    private fun showFilterDialog() {
         val filter = currentFilter.value
         val context = context ?: return
         val dialog = HabiticaBottomSheetDialog(context)
@@ -356,6 +392,50 @@ class AvatarCustomizationFragment :
                 newFilter.months.add(identifier)
             }
             currentFilter.value = newFilter
+        }
+    }
+}
+
+@Composable
+private fun AvatarCustomizationView(customizations: List<Customization>, userSize: String, hairColor: String?, typeName: String, activeCustomization: String?, onSelect: (Customization) -> Unit) {
+    val nestedScrollInterop = rememberNestedScrollInteropConnection()
+    val totalWidth = LocalConfiguration.current.screenWidthDp.dp
+    val horizontalPadding = (totalWidth - (84.dp * 3)) / 2
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(76.dp),
+        horizontalArrangement = Arrangement.Center,
+        contentPadding = PaddingValues(horizontal = horizontalPadding),
+        modifier = Modifier.nestedScroll(nestedScrollInterop)
+    ) {
+        item(span = { GridItemSpan(3) }) {
+            Text(
+                typeName.uppercase(),
+                fontSize = 12.sp,
+                color = colorResource(id = R.color.text_ternary),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+        items(customizations) { customization ->
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .border(if (activeCustomization == customization.identifier) 2.dp else 0.dp, if (activeCustomization == customization.identifier) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable {
+                        onSelect(customization)
+                    }
+                    .background(colorResource(id = R.color.window_background))) {
+                if (customization.identifier.isNullOrBlank() || customization.identifier == "0") {
+                    Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
+                } else {
+                    PixelArtView(
+                        imageName = customization.getImageName(userSize, hairColor),
+                        Modifier.size(68.dp)
+                    )
+                }
+            }
         }
     }
 }

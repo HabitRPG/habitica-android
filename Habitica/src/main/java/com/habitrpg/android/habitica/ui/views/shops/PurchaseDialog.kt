@@ -330,6 +330,8 @@ class PurchaseDialog(
 
         if (additionalContentView is PurchaseDialogBackgroundContent) {
             (additionalContentView as PurchaseDialogBackgroundContent).setAvatarWithBackgroundPreview(userRepository.getUnmanagedCopy(user), shopItem)
+        } else if (additionalContentView is PurchaseDialogCustomizationContent) {
+            (additionalContentView as PurchaseDialogCustomizationContent).setAvatarWithPreview(userRepository.getUnmanagedCopy(user), shopItem)
         }
     }
 

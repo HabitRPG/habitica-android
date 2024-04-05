@@ -19,7 +19,8 @@ import com.habitrpg.android.habitica.ui.views.CurrencyView
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val label: TextView = itemView.findViewById(R.id.label)
-    private val selectionSpinner: Spinner? = itemView.findViewById(R.id.classSelectionSpinner)
+    private val switchesInLabel: TextView? = itemView.findViewById(R.id.switches_in_label)
+    private val selectionSpinner: Spinner? = itemView.findViewById(R.id.class_selection_spinner)
     val switchClassButton: LinearLayout? = itemView.findViewById(R.id.change_class_button)
     val switchClassLabel: TextView? = itemView.findViewById(R.id.change_class_label)
     val switchClassDescription: TextView? = itemView.findViewById(R.id.change_class_description)

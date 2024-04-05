@@ -1481,6 +1481,14 @@
     <string name="report_challenge">Report Challenge</string>
     <string name="customizations_owner">Felicitus</string>
     <string name="customizations">Customizations</string>
+    <string name="avatar_shirts">Shirts</string>
+    <string name="avatar_skins">Skins</string>
+    <string name="avatar_accents">Accents</string>
+    <string name="avatar_hair_styles">Hair Styles</string>
+    <string name="avatar_mustaches">Mustaches</string>
+    <string name="avatar_beards">Beards</string>
+    <string name="standard_backgrounds">Standard Backgrounds</string>
+    <string name="avatar_hair_colors">Hair Colors</string>
 
 
     <plurals name="you_x_others">

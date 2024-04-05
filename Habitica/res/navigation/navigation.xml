@@ -469,7 +469,7 @@
     </fragment>
     <fragment
         android:id="@+id/customizationsShopFragment"
-        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.CuostimzationsShopFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.shops.CustomizationsShopFragment"
         android:label="@string/customizations">
         <deepLink app:uri="habitica.com/inventory/customizations" />
         <deepLink app:uri="habitica.com/shops/customizations" />
