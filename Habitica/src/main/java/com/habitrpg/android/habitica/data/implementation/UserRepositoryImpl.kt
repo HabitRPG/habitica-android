@@ -53,7 +53,8 @@ class UserRepositoryImpl(
 
     override suspend fun syncUserStats(): User? {
         val user = apiClient.syncUserStats()
-        if (user?.stats?.toNextLevel != null) {
+        if (user != null && (user.stats?.toNextLevel ?: 0) > 1
+            && (user.stats?.maxMP ?: 0) > 1) {
             localRepository.saveUser(user)
         } else {
             retrieveUser(false, true)

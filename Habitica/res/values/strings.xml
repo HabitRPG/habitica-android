@@ -1489,6 +1489,10 @@
     <string name="avatar_beards">Beards</string>
     <string name="standard_backgrounds">Standard Backgrounds</string>
     <string name="avatar_hair_colors">Hair Colors</string>
+    <string name="looking_for_more">Looking for more?</string>
+    <string name="customization_shop_more">Check out the Customization Shop for even more ways to customize your avatar!</string>
+    <string name="customizations_no_owned">You don’t own any of these items</string>
+    <string name="customization_shop_check_out">Head over to the Customization Shop to browse the many ways you can customize your avatar!</string>
 
 
     <plurals name="you_x_others">

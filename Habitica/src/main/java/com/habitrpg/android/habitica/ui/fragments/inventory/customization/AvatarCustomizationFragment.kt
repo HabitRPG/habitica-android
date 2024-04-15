@@ -17,7 +17,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -28,6 +31,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -41,6 +45,7 @@ import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,11 +60,13 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.BottomSheetBackgroundsFilterBinding
 import com.habitrpg.android.habitica.databinding.FragmentComposeBinding
 import com.habitrpg.android.habitica.helpers.Analytics
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.CustomizationFilter
 import com.habitrpg.android.habitica.models.inventory.Customization
 import com.habitrpg.android.habitica.models.user.OwnedCustomization
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
+import com.habitrpg.android.habitica.ui.helpers.ToolbarColorHelper
 import com.habitrpg.android.habitica.ui.theme.colors
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.PixelArtView
@@ -67,8 +74,11 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.theme.HabiticaTheme
+import com.habitrpg.common.habitica.views.ComposableAvatarView
+import com.habitrpg.shared.habitica.models.Avatar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -125,6 +135,9 @@ class AvatarCustomizationFragment :
     }
 
     @Inject
+    lateinit var configManager: AppConfigManager
+
+    @Inject
     lateinit var customizationRepository: CustomizationRepository
 
     @Inject
@@ -146,6 +159,7 @@ class AvatarCustomizationFragment :
         savedInstanceState: Bundle?
     ): View? {
         showsBackButton = true
+        hidesToolbar = true
 
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding?.composeView?.apply {
@@ -155,7 +169,8 @@ class AvatarCustomizationFragment :
                     val userSize by viewModel.userSize
                     val hairColor by viewModel.hairColor
                     val activeCustomization by viewModel.activeCustomization
-                    AvatarCustomizationView(viewModel.customizations, userSize, hairColor, stringResource(viewModel.typeNameId), activeCustomization) { customization ->
+                    val avatar by userViewModel.user.observeAsState()
+                    AvatarCustomizationView(avatar = avatar, configManager = configManager, viewModel.customizations, userSize, hairColor, type, stringResource(viewModel.typeNameId), activeCustomization) { customization ->
                         lifecycleScope.launchCatching {
                             if (customization.identifier?.isNotBlank() != true) {
                                 userRepository.useCustomization(type ?: "", category, activeCustomization ?: "")
@@ -216,6 +231,12 @@ class AvatarCustomizationFragment :
             updateFilterIcon()
         } else {
             filterMenuItem?.isVisible = false
+        }
+
+        mainActivity?.toolbar?.let {
+            val color = ContextCompat.getColor(requireContext(), R.color.window_background)
+            ToolbarColorHelper.colorizeToolbar(it, mainActivity, backgroundColor = color)
+            requireActivity().window.statusBarColor = color
         }
     }
 
@@ -397,43 +418,80 @@ class AvatarCustomizationFragment :
 }
 
 @Composable
-private fun AvatarCustomizationView(customizations: List<Customization>, userSize: String, hairColor: String?, typeName: String, activeCustomization: String?, onSelect: (Customization) -> Unit) {
+private fun AvatarCustomizationView(avatar: Avatar?, configManager: AppConfigManager, customizations: List<Customization>, userSize: String, hairColor: String?, type: String?, typeName: String, activeCustomization: String?, onSelect: (Customization) -> Unit) {
     val nestedScrollInterop = rememberNestedScrollInteropConnection()
     val totalWidth = LocalConfiguration.current.screenWidthDp.dp
     val horizontalPadding = (totalWidth - (84.dp * 3)) / 2
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(76.dp),
-        horizontalArrangement = Arrangement.Center,
-        contentPadding = PaddingValues(horizontal = horizontalPadding),
-        modifier = Modifier.nestedScroll(nestedScrollInterop)
-    ) {
-        item(span = { GridItemSpan(3) }) {
-            Text(
-                typeName.uppercase(),
-                fontSize = 12.sp,
-                color = colorResource(id = R.color.text_ternary),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(10.dp)
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.background(colorResource(R.color.window_background))) {
+            ComposableAvatarView(
+                avatar = avatar, configManager = configManager, modifier = Modifier
+                    .padding(vertical = 24.dp)
+                    .size(140.dp, 147.dp)
+            )
+            Box(
+                Modifier
+                    .background(colorResource(R.color.content_background), RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                    .fillMaxWidth()
+                    .height(22.dp)
             )
         }
-        items(customizations) { customization ->
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .border(if (activeCustomization == customization.identifier) 2.dp else 0.dp, if (activeCustomization == customization.identifier) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable {
-                        onSelect(customization)
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(76.dp),
+            horizontalArrangement = Arrangement.Center,
+            contentPadding = PaddingValues(horizontal = horizontalPadding),
+            modifier = Modifier
+                .nestedScroll(nestedScrollInterop)
+                .background(colorResource(R.color.content_background))
+        ) {
+            item(span = { GridItemSpan(3) }) {
+                Text(
+                    typeName.uppercase(),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = colorResource(id = R.color.text_ternary),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            if (customizations.size > 1) {
+                items(customizations) { customization ->
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .border(if (activeCustomization == customization.identifier) 2.dp else 0.dp, if (activeCustomization == customization.identifier) HabiticaTheme.colors.tintedUiMain else colorResource(R.color.transparent), RoundedCornerShape(8.dp))
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable {
+                                onSelect(customization)
+                            }
+                            .background(colorResource(id = R.color.window_background))) {
+                        if (customization.identifier.isNullOrBlank() || customization.identifier == "0") {
+                            Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
+                        } else {
+                            PixelArtView(
+                                imageName = customization.getImageName(userSize, hairColor),
+                                Modifier.size(68.dp)
+                            )
+                        }
                     }
-                    .background(colorResource(id = R.color.window_background))) {
-                if (customization.identifier.isNullOrBlank() || customization.identifier == "0") {
-                    Image(painterResource(R.drawable.empty_slot), contentDescription = null, contentScale = ContentScale.None, modifier = Modifier.size(68.dp))
-                } else {
-                    PixelArtView(
-                        imageName = customization.getImageName(userSize, hairColor),
-                        Modifier.size(68.dp)
+                }
+            }
+            item(span = { GridItemSpan(3) }) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 40.dp).clickable {
+                    MainNavigationController.navigate(R.id.customizationsShopFragment)
+                }) {
+                    Image(
+                        painterResource(if (type == "backgrounds") R.drawable.customization_background else R.drawable.customization_mix),
+                        null, modifier = Modifier.padding(bottom = 12.dp)
                     )
+                    if (customizations.size <= 1) {
+                        Text(stringResource(R.string.customizations_no_owned), fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = colorResource(R.color.text_secondary))
+                        Text(stringResource(R.string.customization_shop_check_out), fontSize = 13.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+                    } else {
+                        Text(stringResource(R.string.looking_for_more), fontSize = 13.sp, fontWeight = FontWeight.SemiBold, color = colorResource(R.color.text_secondary))
+                        Text(stringResource(R.string.customization_shop_more), fontSize = 13.sp, color = colorResource(R.color.text_ternary), textAlign = TextAlign.Center)
+                    }
                 }
             }
         }
