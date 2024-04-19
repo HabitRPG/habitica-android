@@ -10,15 +10,19 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.lifecycleScope
-import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentNewsBinding
-import com.habitrpg.common.habitica.helpers.MainNavigationController
+import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
+
+    @Inject
+    lateinit var hostConfig: HostConfig
 
     override var binding: FragmentNewsBinding? = null
 
@@ -52,14 +56,13 @@ class NewsFragment : BaseMainFragment<FragmentNewsBinding>() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val address = context?.getString(R.string.base_url)
         val webSettings = binding?.newsWebview?.settings
         webSettings?.javaScriptEnabled = true
         webSettings?.domStorageEnabled = true
         binding?.newsWebview?.webViewClient = webviewClient
         binding?.newsWebview?.webChromeClient = object : WebChromeClient() {
         }
-        binding?.newsWebview?.loadUrl("$address/static/new-stuff")
+        binding?.newsWebview?.loadUrl("${hostConfig.address}/static/new-stuff")
     }
 
     override fun onResume() {

@@ -106,6 +106,9 @@
         android:label="@string/sidebar_avatar" >
         <deepLink app:uri="habitica.com/user/avatar" />
         <action
+            android:id="@+id/openComposeAvatarDetail"
+            app:destination="@id/ComposeAvatarCustomizationFragment" />
+        <action
             android:id="@+id/openAvatarDetail"
             app:destination="@id/avatarCustomizationFragment" />
         <action
@@ -132,7 +135,7 @@
         android:label="@string/sidebar_equipment" >
         <action
             android:id="@+id/openAvatarDetail"
-            app:destination="@id/avatarCustomizationFragment" />
+            app:destination="@id/ComposeAvatarCustomizationFragment" />
         <action
             android:id="@+id/openEquipmentDetail"
             app:destination="@id/equipmentDetailFragment" />
@@ -297,6 +300,17 @@
             android:name="tabToOpen"
             app:argType="integer"
             android:defaultValue="0"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ComposeAvatarCustomizationFragment"
+        android:name="com.habitrpg.android.habitica.ui.fragments.inventory.customization.ComposeAvatarCustomizationFragment"
+        android:label="@string/sidebar_avatar" >
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/avatarCustomizationFragment"

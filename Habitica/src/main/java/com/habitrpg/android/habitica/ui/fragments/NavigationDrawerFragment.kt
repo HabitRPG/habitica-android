@@ -160,6 +160,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 .collect { pair ->
                     val gearEvent = pair.first.events.firstOrNull { it.gear }
                     createUpdatingJob("seasonal", {
+                        if (gearEvent?.isValid == false) return@createUpdatingJob false
                         gearEvent?.isCurrentlyActive == true || pair.second.isNotEmpty()
                     }, {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time

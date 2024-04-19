@@ -29,6 +29,7 @@ import androidx.lifecycle.map
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentComposeScrollingBinding
+import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.interactors.ShareAvatarUseCase
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
@@ -55,6 +56,9 @@ open class AvatarOverviewFragment :
 
     @Inject
     lateinit var inventoryRepository: InventoryRepository
+
+    @Inject
+    lateinit var appConfigManager: AppConfigManager
 
     override var binding: FragmentComposeScrollingBinding? = null
 
@@ -119,12 +123,21 @@ open class AvatarOverviewFragment :
     }
 
     private fun displayCustomizationFragment(type: String, category: String?) {
-        MainNavigationController.navigate(
-            AvatarOverviewFragmentDirections.openAvatarDetail(
-                type,
-                category ?: ""
+        if (appConfigManager.enableCustomizationShop()) {
+            MainNavigationController.navigate(
+                AvatarOverviewFragmentDirections.openComposeAvatarDetail(
+                    type,
+                    category ?: ""
+                )
             )
-        )
+        } else {
+            MainNavigationController.navigate(
+                AvatarOverviewFragmentDirections.openAvatarDetail(
+                    type,
+                    category ?: ""
+                )
+            )
+        }
     }
 
     private fun displayAvatarEquipmentFragment(type: String, category: String?) {

@@ -230,13 +230,14 @@ class UserRepositoryImpl(
     override suspend fun changeCustomDayStart(dayStartTime: Int): User? {
         val updateObject = HashMap<String, Any>()
         updateObject["dayStart"] = dayStartTime
-        return apiClient.changeCustomDayStart(updateObject)
+        val newUser = apiClient.changeCustomDayStart(updateObject)
+        return mergeWithExistingUser(newUser)
     }
 
     override suspend fun updateLanguage(languageCode: String): User? {
         val user = updateUser("preferences.language", languageCode)
         apiClient.languageCode = languageCode
-        return user
+        return mergeWithExistingUser(user)
     }
 
     override suspend fun resetAccount(password: String): User? {
@@ -437,6 +438,14 @@ class UserRepositoryImpl(
     private suspend fun getLiveUser(): User? {
         val user = localRepository.getUser(currentUserID).firstOrNull() ?: return null
         return localRepository.getLiveObject(user)
+    }
+
+    private suspend fun mergeWithExistingUser(newUser: User?): User? {
+        val oldUser = localRepository.getUser(currentUserID).firstOrNull()
+        if (newUser == null) {
+            return oldUser
+        }
+        return mergeUser(oldUser, newUser)
     }
 
     private fun mergeUser(oldUser: User?, newUser: User): User {

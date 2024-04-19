@@ -53,7 +53,7 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
             else -> null
         }
         layerName?.let {
-            layerMap[it] = shopItem.imageName
+            layerMap[it] = shopItem.imageName?.replace("shop_", "")?.replace("icon_", "")
         }
 
         binding.avatarView.setAvatar(user, layerMap)

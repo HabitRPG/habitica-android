@@ -1,6 +1,7 @@
-New in 4.3.4:
-- To Do reminders should show more reliably
-- Added password reset option to the Account Reset and Account Delete screens
-- Group Plan invites will show in the notification center
-- Added the ability to report a Challenge for community violations
+New in 4.3.7:
+- Experience and level should update automatically after finishing a Quest
+- Shop banners should now show properly during seasonal events
+- Fixed an issue that would prevent the creation of new Challenges
+- Fixed an issue with Settings not properly displaying selected changes
+- Adjusted the conditions for when a review prompt will show
 - Various other bug fixes and improvements
