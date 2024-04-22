@@ -52,11 +52,13 @@ import javax.inject.Inject
 class AvatarCustomizationFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-
     private var filterMenuItem: MenuItem? = null
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -82,7 +84,7 @@ class AvatarCustomizationFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         showsBackButton = true
         adapter.onCustomizationSelected = { customization ->
@@ -96,7 +98,7 @@ class AvatarCustomizationFragment :
                     userRepository.useCustomization(
                         customization.type ?: "",
                         customization.category,
-                        customization.identifier ?: ""
+                        customization.identifier ?: "",
                     )
                 }
             }
@@ -115,7 +117,10 @@ class AvatarCustomizationFragment :
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             val args = AvatarCustomizationFragmentArgs.fromBundle(it)
@@ -158,7 +163,10 @@ class AvatarCustomizationFragment :
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_customizations, menu)
 
@@ -215,7 +223,7 @@ class AvatarCustomizationFragment :
                                 displayedCustomizations.reversed()
                             } else {
                                 displayedCustomizations
-                            }
+                            },
                         )
                     } else {
                         adapter.setCustomizations(
@@ -223,7 +231,7 @@ class AvatarCustomizationFragment :
                                 customizations.reversed()
                             } else {
                                 customizations
-                            }
+                            },
                         )
                     }
                 }
@@ -241,7 +249,7 @@ class AvatarCustomizationFragment :
     private fun shouldSkip(
         filter: CustomizationFilter,
         ownedCustomizations: List<OwnedCustomization>,
-        customization: Customization
+        customization: Customization,
     ): Boolean {
         return if (filter.onlyPurchased && ownedCustomizations.find { it.key == customization.identifier } == null) {
             true
@@ -266,22 +274,24 @@ class AvatarCustomizationFragment :
             return
         }
         val prefs = user.preferences
-        val activeCustomization = when (this.type) {
-            "skin" -> prefs?.skin
-            "shirt" -> prefs?.shirt
-            "background" -> prefs?.background
-            "chair" -> prefs?.chair
-            "hair" -> when (this.category) {
-                "bangs" -> prefs?.hair?.bangs.toString()
-                "base" -> prefs?.hair?.base.toString()
-                "color" -> prefs?.hair?.color
-                "flower" -> prefs?.hair?.flower.toString()
-                "beard" -> prefs?.hair?.beard.toString()
-                "mustache" -> prefs?.hair?.mustache.toString()
+        val activeCustomization =
+            when (this.type) {
+                "skin" -> prefs?.skin
+                "shirt" -> prefs?.shirt
+                "background" -> prefs?.background
+                "chair" -> prefs?.chair
+                "hair" ->
+                    when (this.category) {
+                        "bangs" -> prefs?.hair?.bangs.toString()
+                        "base" -> prefs?.hair?.base.toString()
+                        "color" -> prefs?.hair?.color
+                        "flower" -> prefs?.hair?.flower.toString()
+                        "beard" -> prefs?.hair?.beard.toString()
+                        "mustache" -> prefs?.hair?.mustache.toString()
+                        else -> ""
+                    }
                 else -> ""
             }
-            else -> ""
-        }
         if (activeCustomization != null) {
             this.activeCustomization = activeCustomization
             this.adapter.activeCustomization = activeCustomization
@@ -340,7 +350,11 @@ class AvatarCustomizationFragment :
         dialog.show()
     }
 
-    private fun configureMonthFilterButton(button: CheckBox, value: Int, filter: CustomizationFilter) {
+    private fun configureMonthFilterButton(
+        button: CheckBox,
+        value: Int,
+        filter: CustomizationFilter,
+    ) {
         val identifier = value.toString().padStart(2, '0')
         button.isChecked = filter.months.contains(identifier)
         button.text

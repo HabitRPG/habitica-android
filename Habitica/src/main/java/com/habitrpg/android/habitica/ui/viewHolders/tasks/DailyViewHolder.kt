@@ -15,9 +15,8 @@ class DailyViewHolder(
     scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?
+    assignedTextProvider: GroupPlanInfoProvider?,
 ) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
-
     override val taskIconWrapperIsVisible: Boolean
         get() {
             var isVisible: Boolean = super.taskIconWrapperIsVisible
@@ -31,7 +30,7 @@ class DailyViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?
+        ownerID: String?,
     ) {
         this.task = data
         setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
@@ -42,18 +41,19 @@ class DailyViewHolder(
             reminderTextView.visibility = View.VISIBLE
             val now = Date()
             val calendar = Calendar.getInstance()
-            val nextReminder = data.reminders?.firstOrNull {
-                calendar.time = now
-                calendar.set(
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DATE),
-                    it.getZonedDateTime()?.hour ?: 0,
-                    it.getZonedDateTime()?.minute ?: 0,
-                    0
-                )
-                now < calendar.time
-            } ?: data.reminders?.first()
+            val nextReminder =
+                data.reminders?.firstOrNull {
+                    calendar.time = now
+                    calendar.set(
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DATE),
+                        it.getZonedDateTime()?.hour ?: 0,
+                        it.getZonedDateTime()?.minute ?: 0,
+                        0,
+                    )
+                    now < calendar.time
+                } ?: data.reminders?.first()
 
             var reminderString = ""
             if (nextReminder?.time != null) {
@@ -69,7 +69,10 @@ class DailyViewHolder(
         super.bind(data, position, displayMode, ownerID)
     }
 
-    override fun shouldDisplayAsActive(task: Task?, userID: String?): Boolean {
+    override fun shouldDisplayAsActive(
+        task: Task?,
+        userID: String?,
+    ): Boolean {
         return task?.isDisplayedActiveForUser(userID) ?: false
     }
 

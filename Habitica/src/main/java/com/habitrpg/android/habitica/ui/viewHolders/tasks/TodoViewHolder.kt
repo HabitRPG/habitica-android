@@ -15,14 +15,13 @@ class TodoViewHolder(
     scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
     openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
-    assignedTextProvider: GroupPlanInfoProvider?
+    assignedTextProvider: GroupPlanInfoProvider?,
 ) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
-
     override fun bind(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?
+        ownerID: String?,
     ) {
         this.task = data
         setChecklistIndicatorBackgroundActive(data.isChecklistDisplayActive)
@@ -50,7 +49,10 @@ class TodoViewHolder(
         }
     }
 
-    override fun shouldDisplayAsActive(task: Task?, userID: String?): Boolean {
+    override fun shouldDisplayAsActive(
+        task: Task?,
+        userID: String?,
+    ): Boolean {
         return task?.completed(userID) != true
     }
 }

@@ -63,7 +63,6 @@ import kotlin.time.toDuration
 
 @AndroidEntryPoint
 class NavigationDrawerFragment : DialogFragment() {
-
     private var binding: DrawerMainBinding? = null
 
     @Inject
@@ -104,14 +103,15 @@ class NavigationDrawerFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val context = context
-        adapter = if (context != null) {
-            NavigationDrawerAdapter(
-                context.getThemeColor(R.attr.colorPrimaryText),
-                context.getThemeColor(R.attr.colorPrimaryOffset)
-            )
-        } else {
-            NavigationDrawerAdapter(0, 0)
-        }
+        adapter =
+            if (context != null) {
+                NavigationDrawerAdapter(
+                    context.getThemeColor(R.attr.colorPrimaryText),
+                    context.getThemeColor(R.attr.colorPrimaryOffset),
+                )
+            } else {
+                NavigationDrawerAdapter(0, 0)
+            }
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {
@@ -125,12 +125,15 @@ class NavigationDrawerFragment : DialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? = inflater.inflate(R.layout.drawer_main, container, false) as? ViewGroup
 
     private var updatingJobs = mutableMapOf<String, Job>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding = DrawerMainBinding.bind(view)
         binding?.avatarView?.configManager = configManager
@@ -155,7 +158,7 @@ class NavigationDrawerFragment : DialogFragment() {
         lifecycleScope.launchCatching {
             contentRepository.getWorldState()
                 .combine(
-                    inventoryRepository.getAvailableLimitedItems()
+                    inventoryRepository.getAvailableLimitedItems(),
                 ) { state, items -> Pair(state, items) }
                 .collect { pair ->
                     val gearEvent = pair.first.events.firstOrNull { it.gear }
@@ -166,7 +169,7 @@ class NavigationDrawerFragment : DialogFragment() {
                         val diff = (gearEvent?.end?.time ?: 0) - Date().time
                         if (diff < (1.toDuration(DurationUnit.HOURS).inWholeMilliseconds)) {
                             1.toDuration(
-                                DurationUnit.SECONDS
+                                DurationUnit.SECONDS,
                             )
                         } else {
                             1.toDuration(DurationUnit.MINUTES)
@@ -205,7 +208,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 R.id.inboxFragment,
                 null,
                 true,
-                preventReselection = false
+                preventReselection = false,
             )
         }
         binding?.settingsButtonWrapper?.setOnClickListener {
@@ -213,7 +216,7 @@ class NavigationDrawerFragment : DialogFragment() {
                 R.id.prefsActivity,
                 null,
                 true,
-                preventReselection = false
+                preventReselection = false,
             )
         }
         binding?.notificationsButtonWrapper?.setOnClickListener { startNotificationsActivity() }
@@ -223,21 +226,25 @@ class NavigationDrawerFragment : DialogFragment() {
         key: String,
         endingCondition: () -> Boolean,
         delayFunc: () -> Duration,
-        function: () -> Unit
+        function: () -> Unit,
     ) {
         function()
         if (updatingJobs[key]?.isActive == true) {
             updatingJobs[key]?.cancel()
         }
-        updatingJobs[key] = lifecycleScope.launch(Dispatchers.Main) {
-            while (endingCondition()) {
-                function()
-                delay(delayFunc())
+        updatingJobs[key] =
+            lifecycleScope.launch(Dispatchers.Main) {
+                while (endingCondition()) {
+                    function()
+                    delay(delayFunc())
+                }
             }
-        }
     }
 
-    private fun updateSeasonalMenuEntries(gearEvent: WorldStateEvent?, items: List<Item>) {
+    private fun updateSeasonalMenuEntries(
+        gearEvent: WorldStateEvent?,
+        items: List<Item>,
+    ) {
         val market = getItemWithIdentifier(SIDEBAR_SHOPS_MARKET) ?: return
         val item = items.firstOrNull()
         if (item?.isValid() == true && item.event?.end?.after(Date()) == true) {
@@ -283,8 +290,8 @@ class NavigationDrawerFragment : DialogFragment() {
                 item.isVisible = false
             } else {
                 if ((
-                    user.stats?.lvl
-                        ?: 0
+                        user.stats?.lvl
+                            ?: 0
                     ) < HabiticaSnackbar.MIN_LEVEL_FOR_SKILLS && (!hasSpecialItems)
                 ) {
                     item.pillText = getString(R.string.unlock_lvl_11)
@@ -320,11 +327,12 @@ class NavigationDrawerFragment : DialogFragment() {
                 context?.let {
                     subscriptionItem?.subtitle =
                         user.purchased?.plan?.dateTerminated?.getRemainingString(it.resources)
-                    subscriptionItem?.subtitleTextColor = when {
-                        daysDiff <= 2 -> ContextCompat.getColor(it, R.color.red_100)
-                        daysDiff <= 7 -> ContextCompat.getColor(it, R.color.brand_400)
-                        else -> it.getThemeColor(R.attr.textColorSecondary)
-                    }
+                    subscriptionItem?.subtitleTextColor =
+                        when {
+                            daysDiff <= 2 -> ContextCompat.getColor(it, R.color.red_100)
+                            daysDiff <= 7 -> ContextCompat.getColor(it, R.color.brand_400)
+                            else -> it.getThemeColor(R.attr.textColorSecondary)
+                        }
                 }
             }
         } else if (user.isSubscribed) {
@@ -370,29 +378,29 @@ class NavigationDrawerFragment : DialogFragment() {
                 HabiticaDrawerItem(
                     R.id.tasksFragment,
                     SIDEBAR_TASKS,
-                    context.getString(R.string.sidebar_tasks)
-                )
+                    context.getString(R.string.sidebar_tasks),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.skillsFragment,
                     SIDEBAR_SKILLS,
-                    context.getString(R.string.sidebar_skills)
-                )
+                    context.getString(R.string.sidebar_skills),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.statsFragment,
                     SIDEBAR_STATS,
-                    context.getString(R.string.sidebar_stats)
-                )
+                    context.getString(R.string.sidebar_stats),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.achievementsFragment,
                     SIDEBAR_ACHIEVEMENTS,
-                    context.getString(R.string.sidebar_achievements)
-                )
+                    context.getString(R.string.sidebar_achievements),
+                ),
             )
 
             items.add(
@@ -400,45 +408,46 @@ class NavigationDrawerFragment : DialogFragment() {
                     0,
                     SIDEBAR_INVENTORY,
                     context.getString(R.string.sidebar_shops),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.marketFragment,
                     SIDEBAR_SHOPS_MARKET,
-                    context.getString(R.string.market)
-                )
+                    context.getString(R.string.market),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.questShopFragment,
                     SIDEBAR_SHOPS_QUEST,
-                    context.getString(R.string.questShop)
-                )
+                    context.getString(R.string.questShop),
+                ),
             )
             if (configManager.enableCustomizationShop()) {
                 items.add(
                     HabiticaDrawerItem(
                         R.id.customizationsShopFragment,
                         SIDEBAR_SHOPS_CUSTOMIZATIONS,
-                        context.getString(R.string.customizations)
-                    )
+                        context.getString(R.string.customizations),
+                    ),
                 )
             }
-            val seasonalShopEntry = HabiticaDrawerItem(
-                R.id.seasonalShopFragment,
-                SIDEBAR_SHOPS_SEASONAL,
-                context.getString(R.string.seasonalShop)
-            )
+            val seasonalShopEntry =
+                HabiticaDrawerItem(
+                    R.id.seasonalShopFragment,
+                    SIDEBAR_SHOPS_SEASONAL,
+                    context.getString(R.string.seasonalShop),
+                )
             seasonalShopEntry.isVisible = false
             items.add(seasonalShopEntry)
             items.add(
                 HabiticaDrawerItem(
                     R.id.timeTravelersShopFragment,
                     SIDEBAR_SHOPS_TIMETRAVEL,
-                    context.getString(R.string.timeTravelers)
-                )
+                    context.getString(R.string.timeTravelers),
+                ),
             )
 
             items.add(
@@ -446,73 +455,73 @@ class NavigationDrawerFragment : DialogFragment() {
                     0,
                     SIDEBAR_INVENTORY,
                     context.getString(R.string.sidebar_section_inventory),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.avatarOverviewFragment,
                     SIDEBAR_AVATAR,
-                    context.getString(R.string.sidebar_avatar)
-                )
+                    context.getString(R.string.sidebar_avatar),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.equipmentOverviewFragment,
                     SIDEBAR_EQUIPMENT,
-                    context.getString(R.string.sidebar_equipment)
-                )
+                    context.getString(R.string.sidebar_equipment),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.itemsFragment,
                     SIDEBAR_ITEMS,
-                    context.getString(R.string.sidebar_items)
-                )
+                    context.getString(R.string.sidebar_items),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.stableFragment,
                     SIDEBAR_STABLE,
-                    context.getString(R.string.sidebar_stable)
-                )
+                    context.getString(R.string.sidebar_stable),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.gemPurchaseActivity,
                     SIDEBAR_GEMS,
-                    context.getString(R.string.sidebar_gems)
-                )
+                    context.getString(R.string.sidebar_gems),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.subscriptionPurchaseActivity,
                     SIDEBAR_SUBSCRIPTION,
-                    context.getString(R.string.sidebar_subscription)
-                )
+                    context.getString(R.string.sidebar_subscription),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     0,
                     SIDEBAR_SOCIAL,
                     context.getString(R.string.sidebar_section_social),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.partyFragment,
                     SIDEBAR_PARTY,
-                    context.getString(R.string.sidebar_party)
-                )
+                    context.getString(R.string.sidebar_party),
+                ),
             )
             if (!configManager.hideChallenges()) {
                 items.add(
                     HabiticaDrawerItem(
                         R.id.challengesOverviewFragment,
                         SIDEBAR_CHALLENGES,
-                        context.getString(R.string.sidebar_challenges)
-                    )
+                        context.getString(R.string.sidebar_challenges),
+                    ),
                 )
             }
 
@@ -521,29 +530,29 @@ class NavigationDrawerFragment : DialogFragment() {
                     0,
                     SIDEBAR_ABOUT_HEADER,
                     context.getString(R.string.sidebar_about),
-                    isHeader = true
-                )
+                    isHeader = true,
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.newsFragment,
                     SIDEBAR_NEWS,
-                    context.getString(R.string.sidebar_news)
-                )
+                    context.getString(R.string.sidebar_news),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.supportMainFragment,
                     SIDEBAR_HELP,
-                    context.getString(R.string.sidebar_help)
-                )
+                    context.getString(R.string.sidebar_help),
+                ),
             )
             items.add(
                 HabiticaDrawerItem(
                     R.id.aboutFragment,
                     SIDEBAR_ABOUT,
-                    context.getString(R.string.sidebar_about)
-                )
+                    context.getString(R.string.sidebar_about),
+                ),
             )
         }
 
@@ -565,7 +574,7 @@ class NavigationDrawerFragment : DialogFragment() {
         transitionId: Int?,
         bundle: Bundle? = null,
         openSelection: Boolean = true,
-        preventReselection: Boolean = true
+        preventReselection: Boolean = true,
     ) {
         if (!isTabletUI) {
             closeDrawer()
@@ -605,7 +614,7 @@ class NavigationDrawerFragment : DialogFragment() {
             if (it.resultCode == Activity.RESULT_OK) {
                 (activity as? MainActivity)?.notificationsViewModel?.click(
                     it.data?.getStringExtra("notificationId") ?: "",
-                    MainNavigationController
+                    MainNavigationController,
                 )
             }
         }
@@ -619,7 +628,7 @@ class NavigationDrawerFragment : DialogFragment() {
     fun setUp(
         fragmentId: Int,
         drawerLayout: DrawerLayout,
-        viewModel: NotificationsViewModel
+        viewModel: NotificationsViewModel,
     ) {
         fragmentContainerView = activity?.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
@@ -705,11 +714,12 @@ class NavigationDrawerFragment : DialogFragment() {
 
     private fun setNotificationsSeen(allSeen: Boolean) {
         context?.let {
-            val color = if (allSeen) {
-                ContextCompat.getColor(it, R.color.gray_200)
-            } else {
-                it.getThemeColor(R.attr.colorAccent)
-            }
+            val color =
+                if (allSeen) {
+                    ContextCompat.getColor(it, R.color.gray_200)
+                } else {
+                    it.getThemeColor(R.attr.colorAccent)
+                }
 
             val bg = binding?.notificationsBadge?.background as? GradientDrawable
             bg?.color = ColorStateList.valueOf(color)
@@ -723,11 +733,12 @@ class NavigationDrawerFragment : DialogFragment() {
             binding?.messagesBadge?.visibility = View.VISIBLE
             binding?.messagesBadge?.text = numOfUnreadMessages.toString()
             context?.let {
-                val color = if (inbox?.hasUserSeenInbox != true) {
-                    it.getThemeColor(R.attr.colorAccent)
-                } else {
-                    ContextCompat.getColor(it, R.color.gray_200)
-                }
+                val color =
+                    if (inbox?.hasUserSeenInbox != true) {
+                        it.getThemeColor(R.attr.colorAccent)
+                    } else {
+                        ContextCompat.getColor(it, R.color.gray_200)
+                    }
                 val background = binding?.messagesBadge?.background as? GradientDrawable
                 background?.color = ColorStateList.valueOf(color)
                 binding?.messagesBadge?.setTextColor(ContextCompat.getColor(it, R.color.white))
@@ -772,10 +783,11 @@ class NavigationDrawerFragment : DialogFragment() {
                 1.toDuration(diff.getMinuteOrSeconds())
             }) {
                 if (activePromo.isActive) {
-                    promotedItem.subtitle = context?.getString(
-                        R.string.sale_ends_in,
-                        activePromo.endDate.getShortRemainingString()
-                    )
+                    promotedItem.subtitle =
+                        context?.getString(
+                            R.string.sale_ends_in,
+                            activePromo.endDate.getShortRemainingString(),
+                        )
                     adapter.updateItem(promotedItem)
                 } else {
                     promotedItem.subtitle = null
@@ -790,7 +802,6 @@ class NavigationDrawerFragment : DialogFragment() {
     }
 
     companion object {
-
         const val SIDEBAR_TASKS = "tasks"
         const val SIDEBAR_SKILLS = "skills"
         const val SIDEBAR_STATS = "stats"

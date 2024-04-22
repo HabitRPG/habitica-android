@@ -42,19 +42,20 @@ class UserRepositoryImpl(
     private val taskRepository: TaskRepository,
     private val appConfigManager: AppConfigManager,
 ) : BaseRepositoryImpl<UserLocalRepository>(localRepository, apiClient, authenticationHandler), UserRepository {
-
     companion object {
         private var lastReadNotification: String? = null
         private var lastSync: Date? = null
     }
 
     override fun getUser(): Flow<User?> = authenticationHandler.userIDFlow.flatMapLatest { getUser(it) }
+
     override fun getUser(userID: String): Flow<User?> = localRepository.getUser(userID)
 
     override suspend fun syncUserStats(): User? {
         val user = apiClient.syncUserStats()
-        if (user != null && (user.stats?.toNextLevel ?: 0) > 1
-            && (user.stats?.maxMP ?: 0) > 1) {
+        if (user != null && (user.stats?.toNextLevel ?: 0) > 1 &&
+            (user.stats?.maxMP ?: 0) > 1
+        ) {
             localRepository.saveUser(user)
         } else {
             retrieveUser(false, true)
@@ -62,13 +63,20 @@ class UserRepositoryImpl(
         return user
     }
 
-    private suspend fun updateUser(userID: String, updateData: Map<String, Any?>): User? {
+    private suspend fun updateUser(
+        userID: String,
+        updateData: Map<String, Any?>,
+    ): User? {
         val networkUser = apiClient.updateUser(updateData) ?: return null
         val oldUser = localRepository.getUser(userID).firstOrNull()
         return mergeUser(oldUser, networkUser)
     }
 
-    private suspend fun updateUser(userID: String, key: String, value: Any?): User? {
+    private suspend fun updateUser(
+        userID: String,
+        key: String,
+        value: Any?,
+    ): User? {
         return updateUser(userID, mapOf(key to value))
     }
 
@@ -76,12 +84,19 @@ class UserRepositoryImpl(
         return updateUser(currentUserID, updateData)
     }
 
-    override suspend fun updateUser(key: String, value: Any?): User? {
+    override suspend fun updateUser(
+        key: String,
+        value: Any?,
+    ): User? {
         return updateUser(currentUserID, key, value)
     }
 
     @Suppress("ReturnCount")
-    override suspend fun retrieveUser(withTasks: Boolean, forced: Boolean, overrideExisting: Boolean): User? {
+    override suspend fun retrieveUser(
+        withTasks: Boolean,
+        forced: Boolean,
+        overrideExisting: Boolean,
+    ): User? {
         // Only retrieve again after 3 minutes or it's forced.
         if (forced || lastSync == null || Date().time - (lastSync?.time ?: 0) > 180000) {
             val user = apiClient.retrieveUser(withTasks) ?: return null
@@ -115,9 +130,10 @@ class UserRepositoryImpl(
         val currentUser = localRepository.getLiveUser(currentUserID)
         var brokenItem: Equipment? = null
         if (items != null && currentUser != null) {
-            brokenItem = items.gear?.owned?.filter { it.owned == false }?.firstOrNull { equipment ->
-                currentUser.items?.gear?.owned?.firstOrNull { it.key == equipment.key && it.owned == true } != null
-            }
+            brokenItem =
+                items.gear?.owned?.filter { it.owned == false }?.firstOrNull { equipment ->
+                    currentUser.items?.gear?.owned?.firstOrNull { it.key == equipment.key && it.owned == true } != null
+                }
         }
         retrieveUser(false, true)
         return brokenItem
@@ -145,7 +161,11 @@ class UserRepositoryImpl(
 
     override fun getSpecialItems(user: User) = localRepository.getSpecialItems(user)
 
-    override suspend fun useSkill(key: String, target: String?, taskId: String): SkillResponse? {
+    override suspend fun useSkill(
+        key: String,
+        target: String?,
+        taskId: String,
+    ): SkillResponse? {
         val response = apiClient.useSkill(key, target ?: "", taskId) ?: return null
         val user = getLiveUser() ?: return response
         response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
@@ -156,7 +176,10 @@ class UserRepositoryImpl(
         return response
     }
 
-    override suspend fun useSkill(key: String, target: String?): SkillResponse? {
+    override suspend fun useSkill(
+        key: String,
+        target: String?,
+    ): SkillResponse? {
         val response = apiClient.useSkill(key, target ?: "") ?: return null
         val user = getLiveUser() ?: return response
         response.hpDiff = (response.user?.stats?.hp ?: 0.0) - (user.stats?.hp ?: 0.0)
@@ -178,7 +201,10 @@ class UserRepositoryImpl(
         return unlockPath(customization.path, customization.price ?: 0)
     }
 
-    override suspend fun unlockPath(path: String, price: Int): UnlockResponse? {
+    override suspend fun unlockPath(
+        path: String,
+        price: Int,
+    ): UnlockResponse? {
         val unlockResponse = apiClient.unlockPath(path) ?: return null
         val user = localRepository.getUser(currentUserID).firstOrNull() ?: return unlockResponse
         localRepository.modify(user) { liveUser ->
@@ -215,6 +241,7 @@ class UserRepositoryImpl(
         lastReadNotification = id
         return apiClient.readNotification(id)
     }
+
     override fun getUserQuestStatus(): Flow<UserQuestStatus> {
         return localRepository.getUserQuestStatus(currentUserID)
     }
@@ -255,7 +282,10 @@ class UserRepositoryImpl(
 
     override suspend fun sendPasswordResetEmail(email: String) = apiClient.sendPasswordResetEmail(email)
 
-    override suspend fun updateLoginName(newLoginName: String, password: String?): User? {
+    override suspend fun updateLoginName(
+        newLoginName: String,
+        password: String?,
+    ): User? {
         if (!password.isNullOrEmpty()) {
             apiClient.updateLoginName(newLoginName.trim(), password.trim())
         } else {
@@ -271,12 +301,15 @@ class UserRepositoryImpl(
 
     override suspend fun verifyUsername(username: String) = apiClient.verifyUsername(username.trim())
 
-    override suspend fun updateEmail(newEmail: String, password: String) = apiClient.updateEmail(newEmail.trim(), password)
+    override suspend fun updateEmail(
+        newEmail: String,
+        password: String,
+    ) = apiClient.updateEmail(newEmail.trim(), password)
 
     override suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String
+        newPasswordConfirmation: String,
     ) = apiClient.updatePassword(oldPassword.trim(), newPassword.trim(), newPasswordConfirmation.trim())
 
     override suspend fun allocatePoint(stat: Attribute): Stats? {
@@ -310,14 +343,15 @@ class UserRepositoryImpl(
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int
+        perception: Int,
     ): Stats? {
-        val stats = apiClient.bulkAllocatePoints(
-            strength,
-            intelligence,
-            constitution,
-            perception
-        ) ?: return null
+        val stats =
+            apiClient.bulkAllocatePoints(
+                strength,
+                intelligence,
+                constitution,
+                perception,
+            ) ?: return null
         val user = getLiveUser()
         if (user != null) {
             localRepository.modify(user) { liveUser ->
@@ -354,7 +388,11 @@ class UserRepositoryImpl(
         retrieveUser(true, true)
     }
 
-    override suspend fun useCustomization(type: String, category: String?, identifier: String): User? {
+    override suspend fun useCustomization(
+        type: String,
+        category: String?,
+        identifier: String,
+    ): User? {
         if (appConfigManager.enableLocalChanges()) {
             val liveUser = getLiveUser()
             if (liveUser != null) {
@@ -428,7 +466,7 @@ class UserRepositoryImpl(
         localRepository.save(
             members.map {
                 GroupMembership(it.id, id)
-            }
+            },
         )
         members.let { localRepository.save(members) }
         return team
@@ -454,15 +492,19 @@ class UserRepositoryImpl(
         return mergeUser(oldUser, newUser)
     }
 
-    private fun mergeUser(oldUser: User?, newUser: User): User {
+    private fun mergeUser(
+        oldUser: User?,
+        newUser: User,
+    ): User {
         if (oldUser == null || !oldUser.isValid) {
             return oldUser ?: newUser
         }
-        val copiedUser: User = if (oldUser.isManaged) {
-            localRepository.getUnmanagedCopy(oldUser)
-        } else {
-            oldUser
-        }
+        val copiedUser: User =
+            if (oldUser.isManaged) {
+                localRepository.getUnmanagedCopy(oldUser)
+            } else {
+                oldUser
+            }
         if (newUser.inbox != null) {
             copiedUser.inbox = newUser.inbox
         }

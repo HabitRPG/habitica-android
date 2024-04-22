@@ -78,12 +78,16 @@ open class ShopItem : RealmObject(), BaseObject {
     val canPurchaseBulk: Boolean
         get() = "eggs" == purchaseType || "hatchingPotions" == purchaseType || "food" == purchaseType || "gems" == purchaseType
 
-    fun canAfford(user: User?, quantity: Int): Boolean = when (currency) {
-        "gold" -> (value * quantity) <= (user?.stats?.gp ?: 0.0)
-        "gems" -> (value * quantity) <= (user?.gemCount ?: 0)
-        "hourglasses" -> (value * quantity) <= (user?.hourglassCount ?: 0)
-        else -> true
-    }
+    fun canAfford(
+        user: User?,
+        quantity: Int,
+    ): Boolean =
+        when (currency) {
+            "gold" -> (value * quantity) <= (user?.stats?.gp ?: 0.0)
+            "gems" -> (value * quantity) <= (user?.gemCount ?: 0)
+            "hourglasses" -> (value * quantity) <= (user?.hourglassCount ?: 0)
+            else -> true
+        }
 
     override fun equals(other: Any?): Boolean {
         if (other != null && ShopItem::class.java.isAssignableFrom(other.javaClass)) {
@@ -138,7 +142,6 @@ open class ShopItem : RealmObject(), BaseObject {
     }
 
     companion object {
-
         private const val GEM_FOR_GOLD = "gem"
 
         fun makeGemItem(res: Resources?): ShopItem {
@@ -169,7 +172,11 @@ open class ShopItem : RealmObject(), BaseObject {
             return item
         }
 
-        fun fromCustomization(customization: Customization, userSize: String?, hairColor: String?): ShopItem {
+        fun fromCustomization(
+            customization: Customization,
+            userSize: String?,
+            hairColor: String?,
+        ): ShopItem {
             val item = ShopItem()
             item.key = customization.identifier ?: ""
             item.text = customization.text
@@ -193,7 +200,7 @@ open class ShopItem : RealmObject(), BaseObject {
             set: CustomizationSet,
             additionalSetItems: List<Customization>?,
             userSize: String?,
-            hairColor: String?
+            hairColor: String?,
         ): ShopItem {
             val item = ShopItem()
             var path = ""

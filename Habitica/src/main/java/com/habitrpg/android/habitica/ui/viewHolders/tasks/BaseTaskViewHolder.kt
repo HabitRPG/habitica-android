@@ -32,7 +32,7 @@ abstract class BaseTaskViewHolder(
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var openTaskFunc: ((Task, View) -> Unit),
     var brokenTaskFunc: ((Task) -> Unit),
-    var assignedTextProvider: GroupPlanInfoProvider?
+    var assignedTextProvider: GroupPlanInfoProvider?,
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
     private val scope = MainScope()
 
@@ -111,17 +111,19 @@ abstract class BaseTaskViewHolder(
                 if (task?.challengeBroken?.isNotBlank() == true) brokenTaskFunc(t)
             }
         }
-        notesTextView?.addEllipsesListener(object : EllipsisTextView.EllipsisListener {
-            override fun ellipsisStateChanged(ellipses: Boolean) {
-                scope.launch(Dispatchers.Main.immediate) {
-                    if (ellipses && notesTextView.maxLines != 3) {
-                        notesTextView.maxLines = 3
+        notesTextView?.addEllipsesListener(
+            object : EllipsisTextView.EllipsisListener {
+                override fun ellipsisStateChanged(ellipses: Boolean) {
+                    scope.launch(Dispatchers.Main.immediate) {
+                        if (ellipses && notesTextView.maxLines != 3) {
+                            notesTextView.maxLines = 3
+                        }
+                        expandNotesButton?.visibility =
+                            if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                     }
-                    expandNotesButton?.visibility =
-                        if (ellipses || notesExpanded) View.VISIBLE else View.GONE
                 }
-            }
-        })
+            },
+        )
         context = itemView.context
     }
 
@@ -136,7 +138,11 @@ abstract class BaseTaskViewHolder(
         }
     }
 
-    override fun bind(data: Task, position: Int, displayMode: String) {
+    override fun bind(
+        data: Task,
+        position: Int,
+        displayMode: String,
+    ) {
         bind(data, position, displayMode, null)
     }
 
@@ -144,7 +150,7 @@ abstract class BaseTaskViewHolder(
         data: Task,
         position: Int,
         displayMode: String,
-        ownerID: String?
+        ownerID: String?,
     ) {
         notesExpanded = false
         task = data
@@ -226,10 +232,11 @@ abstract class BaseTaskViewHolder(
         }
 
         if (data.group?.assignedUsers?.isNotEmpty() == true) {
-            assignedTextView.text = assignedTextProvider?.assignedTextForTask(
-                context.resources,
-                data.group?.assignedUsers ?: emptyList()
-            )
+            assignedTextView.text =
+                assignedTextProvider?.assignedTextForTask(
+                    context.resources,
+                    data.group?.assignedUsers ?: emptyList(),
+                )
             assignedTextView.visibility = View.VISIBLE
         } else {
             assignedTextView.visibility = View.GONE
@@ -254,9 +261,13 @@ abstract class BaseTaskViewHolder(
     }
 
     open fun onLeftActionTouched() {}
+
     open fun onRightActionTouched() {}
 
-    override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
+    override fun onTouch(
+        view: View?,
+        motionEvent: MotionEvent?,
+    ): Boolean {
         if (motionEvent != null) {
             if (motionEvent.action != MotionEvent.ACTION_UP) return true
             if (motionEvent.y <= mainTaskWrapper.height + 5.dpToPx(context)) {
@@ -298,7 +309,10 @@ abstract class BaseTaskViewHolder(
         return true
     }
 
-    open fun setDisabled(openTaskDisabled: Boolean, taskActionsDisabled: Boolean) {
+    open fun setDisabled(
+        openTaskDisabled: Boolean,
+        taskActionsDisabled: Boolean,
+    ) {
         this.openTaskDisabled = openTaskDisabled
         this.taskActionsDisabled = taskActionsDisabled
     }

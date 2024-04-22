@@ -18,7 +18,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 class RewardsRecyclerViewAdapter(
     private var customRewards: List<Task>?,
     private val layoutResource: Int,
-    val viewModel: TasksViewModel
+    val viewModel: TasksViewModel,
 ) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     override var user: User? = null
         set(value) {
@@ -65,7 +65,10 @@ class RewardsRecyclerViewAdapter(
         return LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return if (viewType == VIEWTYPE_CUSTOM_REWARD) {
             RewardViewHolder(
                 getContentView(parent),
@@ -81,7 +84,7 @@ class RewardsRecyclerViewAdapter(
                         task ->
                     brokenTaskEvents?.invoke(task)
                 },
-                viewModel
+                viewModel,
             )
         } else {
             val viewHolder = ShopItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.row_shopitem, parent, false))
@@ -91,7 +94,10 @@ class RewardsRecyclerViewAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (customRewards != null && position < customRewardCount) {
             val reward = customRewards?.get(position) ?: return
             val gold = user?.stats?.gp ?: 0.0

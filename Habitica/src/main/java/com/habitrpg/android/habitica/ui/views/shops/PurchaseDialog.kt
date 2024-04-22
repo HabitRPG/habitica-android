@@ -65,9 +65,8 @@ class PurchaseDialog(
     private val userRepository: UserRepository,
     private val inventoryRepository: InventoryRepository,
     val item: ShopItem,
-    private val parentActivity: AppCompatActivity? = null
+    private val parentActivity: AppCompatActivity? = null,
 ) : HabiticaAlertDialog(context) {
-
     private val customHeader: View by lazy {
         DialogPurchaseShopitemHeaderBinding.inflate(context.layoutInflater).root
     }
@@ -205,28 +204,30 @@ class PurchaseDialog(
         if (user == null) return
         val userLvl = user?.stats?.lvl ?: 0
         if (shopItem.habitClass != null && shopItem.habitClass != "special" && shopItem.habitClass != "armoire" && user?.stats?.habitClass != shopItem.habitClass) {
-            limitedTextView.text = if (userLvl >= 10) {
-                context.getString(R.string.class_equipment_shop_dialog)
-            } else {
-                context.getString(R.string.insufficient_level_equipment_dialog)
-            }
+            limitedTextView.text =
+                if (userLvl >= 10) {
+                    context.getString(R.string.class_equipment_shop_dialog)
+                } else {
+                    context.getString(R.string.insufficient_level_equipment_dialog)
+                }
             limitedTextView.visibility = View.VISIBLE
             limitedTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.inverted_background))
         } else if (shopItem.event?.end != null) {
             limitedTextViewJob?.cancel()
-            limitedTextViewJob = MainScope().launch(Dispatchers.Main) {
-                limitedTextView.visibility = View.VISIBLE
-                while (shopItem.event?.end?.after(Date()) == true) {
-                    limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
-                    val diff = (shopItem.event?.end?.time ?: 0) - Date().time
-                    delay(1.toDuration(if (diff < (60 * 60 * 1000)) DurationUnit.SECONDS else DurationUnit.MINUTES))
+            limitedTextViewJob =
+                MainScope().launch(Dispatchers.Main) {
+                    limitedTextView.visibility = View.VISIBLE
+                    while (shopItem.event?.end?.after(Date()) == true) {
+                        limitedTextView.text = context.getString(R.string.available_for, shopItem.event?.end?.getShortRemainingString())
+                        val diff = (shopItem.event?.end?.time ?: 0) - Date().time
+                        delay(1.toDuration(if (diff < (60 * 60 * 1000)) DurationUnit.SECONDS else DurationUnit.MINUTES))
+                    }
+                    if (shopItem.event?.end?.before(Date()) == true) {
+                        limitedTextView.text = context.getString(R.string.no_longer_available)
+                        limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
+                        limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                    }
                 }
-                if (shopItem.event?.end?.before(Date()) == true) {
-                    limitedTextView.text = context.getString(R.string.no_longer_available)
-                    limitedTextView.background = ContextCompat.getColor(context, R.color.offset_background).toDrawable()
-                    limitedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
-                }
-            }
         } else if (shopItem.locked) {
             buyLabel.text = context.getString(R.string.locked)
             limitedTextView.visibility = View.GONE
@@ -273,9 +274,10 @@ class PurchaseDialog(
         pinTextView = customHeader.findViewById(R.id.pin_text)
 
         addCloseButton()
-        buyButton = addButton(DialogPurchaseShopitemButtonBinding.inflate(layoutInflater).root, autoDismiss = false) { _, _ ->
-            onBuyButtonClicked()
-        }
+        buyButton =
+            addButton(DialogPurchaseShopitemButtonBinding.inflate(layoutInflater).root, autoDismiss = false) { _, _ ->
+                onBuyButtonClicked()
+            }
         priceLabel = buyButton.findViewById(R.id.priceLabel)
         priceLabel.animationDuration = 0L
         buyLabel = buyButton.findViewById(R.id.buy_label)
@@ -376,9 +378,10 @@ class PurchaseDialog(
                         if (user?.isSubscribed == true) {
                             InsufficientHourglassesDialog(context).show()
                         } else {
-                            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                                eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
-                            }
+                            val subscriptionBottomSheet =
+                                EventOutcomeSubscriptionBottomSheetFragment().apply {
+                                    eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                                }
                             parentActivity?.let { activity -> subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG) }
                         }
                     }
@@ -396,18 +399,19 @@ class PurchaseDialog(
             bundleOf(
                 Pair("shop", shopIdentifier),
                 Pair("type", shopItem.purchaseType),
-                Pair("key", shopItem.key)
-            )
+                Pair("key", shopItem.key),
+            ),
         )
         HapticFeedbackManager.tap(buyButton)
         val snackbarText = arrayOf("")
         val observable: (suspend () -> Any?)
         if (shopIdentifier != null && shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses") {
-            observable = if (shopItem.purchaseType == "gear") {
-                { inventoryRepository.purchaseMysterySet(shopItem.key) }
-            } else {
-                { inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key) }
-            }
+            observable =
+                if (shopItem.purchaseType == "gear") {
+                    { inventoryRepository.purchaseMysterySet(shopItem.key) }
+                } else {
+                    { inventoryRepository.purchaseHourglassItem(shopItem.purchaseType, shopItem.key) }
+                }
         } else if (shopItem.purchaseType == "fortify") {
             observable = { userRepository.reroll() }
         } else if (shopItem.purchaseType == "quests" && shopItem.currency == "gold") {
@@ -432,8 +436,8 @@ class PurchaseDialog(
                             buyResponse.armoire["type"] ?: "",
                             buyResponse.armoire["dropText"] ?: "",
                             buyResponse.armoire["dropKey"] ?: "",
-                            buyResponse.armoire["value"] ?: ""
-                        ).arguments
+                            buyResponse.armoire["value"] ?: "",
+                        ).arguments,
                     )
                 }
             }
@@ -442,26 +446,28 @@ class PurchaseDialog(
         }
         lifecycleScope.launchCatching {
             observable()
-            val text = snackbarText[0].ifBlank {
-                if (shopItem.text?.isNotBlank() == true) {
-                    context.getString(R.string.successful_purchase, shopItem.text)
-                } else {
-                    context.getString(R.string.purchased)
+            val text =
+                snackbarText[0].ifBlank {
+                    if (shopItem.text?.isNotBlank() == true) {
+                        context.getString(R.string.successful_purchase, shopItem.text)
+                    } else {
+                        context.getString(R.string.purchased)
+                    }
                 }
-            }
-            val rightTextColor = when (item.currency) {
-                "gold" -> ContextCompat.getColor(context, R.color.yellow_5)
-                "gems" -> ContextCompat.getColor(context, R.color.green_10)
-                "hourglasses" -> ContextCompat.getColor(context, R.color.brand_300)
-                else -> 0
-            }
+            val rightTextColor =
+                when (item.currency) {
+                    "gold" -> ContextCompat.getColor(context, R.color.yellow_5)
+                    "gems" -> ContextCompat.getColor(context, R.color.green_10)
+                    "hourglasses" -> ContextCompat.getColor(context, R.color.brand_300)
+                    else -> 0
+                }
             val a = (application?.currentActivity?.get() ?: getActivity() ?: ownerActivity)
             (a as? SnackbarActivity)?.showSnackbar(
                 content = text,
                 rightIcon = priceLabel.compoundDrawables[0],
                 rightTextColor = rightTextColor,
                 rightText = "-" + priceLabel.text,
-                isCelebratory = true
+                isCelebratory = true,
             )
             inventoryRepository.retrieveInAppRewards()
             userRepository.retrieveUser(forced = true)
@@ -497,9 +503,10 @@ class PurchaseDialog(
         val alert = HabiticaAlertDialog(context)
         alert.setTitle(R.string.excess_items)
         alert.setMessage(context.getString(R.string.excessItemsNoneLeft, item.text, purchaseQuantity, item.text))
-        alert.addButton(context.getString(R.string.purchaseX, purchaseQuantity),
+        alert.addButton(
+            context.getString(R.string.purchaseX, purchaseQuantity),
             isPrimary = true,
-            isDestructive = false
+            isDestructive = false,
         ) { _, _ ->
             buyItem(purchaseQuantity)
         }
@@ -516,12 +523,13 @@ class PurchaseDialog(
             shouldWarn = inventoryRepository.getPets(item.key, "quest", null).firstOrNull()?.isNotEmpty() ?: false
             ownedItems = inventoryRepository.getOwnedItems("eggs").firstOrNull()
         } else if (item.purchaseType == "hatchingPotions") {
-            totalCount = if (item.path?.contains("wacky") == true) {
-                // Wacky pets can't be raised to mounts, so only need half as many
-                9
-            } else {
-                18
-            }
+            totalCount =
+                if (item.path?.contains("wacky") == true) {
+                    // Wacky pets can't be raised to mounts, so only need half as many
+                    9
+                } else {
+                    18
+                }
             shouldWarn = inventoryRepository.getPets().firstOrNull()?.any { pet ->
                 pet.animal == item.key && (pet.type == "premium" || pet.type == "wacky")
             } ?: false

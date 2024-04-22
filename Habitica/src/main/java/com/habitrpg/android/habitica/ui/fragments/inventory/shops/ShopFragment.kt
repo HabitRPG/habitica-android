@@ -45,7 +45,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>() {
-
     internal val currencyView: ComposeView by lazy {
         return@lazy ComposeView(requireContext())
     }
@@ -75,14 +74,17 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -95,7 +97,10 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
         super.onDestroyView()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         initializeCurrencyViews()
         toolbarAccessoryContainer?.addView(currencyView)
@@ -118,20 +123,22 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
             adapter?.onShowPurchaseDialog = { item, isPinned ->
                 if (item.key == "gem" && userViewModel.user.value?.isSubscribed != true) {
                     Analytics.sendEvent("View gems for gold CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
-                    val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                        eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
-                    }
+                    val subscriptionBottomSheet =
+                        EventOutcomeSubscriptionBottomSheetFragment().apply {
+                            eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_GEMS_FOR_GOLD
+                        }
                     activity?.let { activity ->
                         subscriptionBottomSheet.show(activity.supportFragmentManager, SubscriptionBottomSheetFragment.TAG)
                     }
                 } else {
-                    val dialog = PurchaseDialog(
-                        requireContext(),
-                        userRepository,
-                        inventoryRepository,
-                        item,
-                        mainActivity
-                    )
+                    val dialog =
+                        PurchaseDialog(
+                            requireContext(),
+                            userRepository,
+                            inventoryRepository,
+                            item,
+                            mainActivity,
+                        )
                     dialog.shopIdentifier = shopIdentifier
                     dialog.isPinned = isPinned
                     dialog.onShopNeedsRefresh = {
@@ -166,15 +173,16 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
 
         if (binding?.recyclerView?.layoutManager == null) {
             layoutManager = GridLayoutManager(context, 2)
-            layoutManager?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return if ((adapter?.getItemViewType(position) ?: 0) < 4) {
-                        layoutManager?.spanCount ?: 1
-                    } else {
-                        1
+            layoutManager?.spanSizeLookup =
+                object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return if ((adapter?.getItemViewType(position) ?: 0) < 4) {
+                            layoutManager?.spanCount ?: 1
+                        } else {
+                            1
+                        }
                     }
                 }
-            }
             binding?.recyclerView?.layoutManager = layoutManager
         }
 
@@ -254,11 +262,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     alert.setTitle(getString(R.string.change_class_selected_confirmation, classIdentifier))
                     alert.setMessage(getString(R.string.change_class_equipment_warning))
                     alert.addButton(R.string.choose_class, true) { _, _ ->
-                        val dialog = HabiticaProgressDialog.show(
-                            requireActivity(),
-                            getString(R.string.changing_class_progress),
-                            300
-                        )
+                        val dialog =
+                            HabiticaProgressDialog.show(
+                                requireActivity(),
+                                getString(R.string.changing_class_progress),
+                                300,
+                            )
                         lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
                             dialog.dismiss()
@@ -272,11 +281,12 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     val alert = HabiticaAlertDialog(context)
                     alert.setTitle(getString(R.string.class_confirmation, classIdentifier))
                     alert.addButton(R.string.choose_class, true) { _, _ ->
-                        val dialog = HabiticaProgressDialog.show(
-                            requireActivity(),
-                            getString(R.string.changing_class_progress),
-                            300
-                        )
+                        val dialog =
+                            HabiticaProgressDialog.show(
+                                requireActivity(),
+                                getString(R.string.changing_class_progress),
+                                300,
+                            )
                         lifecycleScope.launch(Dispatchers.Main) {
                             userRepository.changeClass(classIdentifier)
                             dialog.dismiss()
@@ -299,14 +309,15 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     }
 
     private fun loadShopInventory() {
-        val shopUrl = when (this.shopIdentifier) {
-            Shop.MARKET -> "market"
-            Shop.QUEST_SHOP -> "quests"
-            Shop.TIME_TRAVELERS_SHOP -> "time-travelers"
-            Shop.SEASONAL_SHOP -> "seasonal"
-            Shop.CUSTOMIZATIONS -> "customizations"
-            else -> ""
-        }
+        val shopUrl =
+            when (this.shopIdentifier) {
+                Shop.MARKET -> "market"
+                Shop.QUEST_SHOP -> "quests"
+                Shop.TIME_TRAVELERS_SHOP -> "time-travelers"
+                Shop.SEASONAL_SHOP -> "seasonal"
+                Shop.CUSTOMIZATIONS -> "customizations"
+                else -> ""
+            }
         lifecycleScope.launchCatching({
             binding?.recyclerView?.state = RecyclerViewState.FAILED
         }) {
@@ -333,7 +344,7 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
                     shop1.categories.sortWith(
                         compareBy<ShopCategory> { it.items.firstOrNull()?.currency != "gold" }
                             .thenByDescending { it.items.firstOrNull()?.event?.end }
-                            .thenBy { it.items.firstOrNull()?.locked }
+                            .thenBy { it.items.firstOrNull()?.locked },
                     )
                 }
             }
@@ -371,12 +382,14 @@ open class ShopFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>()
     private fun loadMarketGear() {
         lifecycleScope.launchCatching {
             val shop = inventoryRepository.retrieveMarketGear()
-            val equipment = inventoryRepository.getOwnedEquipment()
-                .map { equipment -> equipment.map { it.key } }.firstOrNull()
+            val equipment =
+                inventoryRepository.getOwnedEquipment()
+                    .map { equipment -> equipment.map { it.key } }.firstOrNull()
             for (category in shop?.categories ?: emptyList()) {
-                val items = category.items.asSequence().filter {
-                    equipment?.contains(it.key) == false
-                }.sortedBy { it.locked }.toList()
+                val items =
+                    category.items.asSequence().filter {
+                        equipment?.contains(it.key) == false
+                    }.sortedBy { it.locked }.toList()
                 category.items.clear()
                 category.items.addAll(items)
             }

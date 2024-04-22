@@ -39,19 +39,23 @@ class PurchaseDialogCustomizationContent(context: Context) : PurchaseDialogConte
         }
     }
 
-    fun setAvatarWithPreview(user: User, shopItem: ShopItem) {
+    fun setAvatarWithPreview(
+        user: User,
+        shopItem: ShopItem,
+    ) {
         val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
         val path = shopItem.unlockPath ?: shopItem.path ?: ""
-        val layerName = when {
-            path.contains("skin") -> AvatarView.LayerType.SKIN
-            path.contains("shirt") -> AvatarView.LayerType.SHIRT
-            path.contains("color") -> AvatarView.LayerType.HAIR_BANGS
-            path.contains("base") -> AvatarView.LayerType.HAIR_BASE
-            path.contains("bangs") -> AvatarView.LayerType.HAIR_BANGS
-            path.contains("beard") -> AvatarView.LayerType.HAIR_BEARD
-            path.contains("mustache") -> AvatarView.LayerType.HAIR_MUSTACHE
-            else -> null
-        }
+        val layerName =
+            when {
+                path.contains("skin") -> AvatarView.LayerType.SKIN
+                path.contains("shirt") -> AvatarView.LayerType.SHIRT
+                path.contains("color") -> AvatarView.LayerType.HAIR_BANGS
+                path.contains("base") -> AvatarView.LayerType.HAIR_BASE
+                path.contains("bangs") -> AvatarView.LayerType.HAIR_BANGS
+                path.contains("beard") -> AvatarView.LayerType.HAIR_BEARD
+                path.contains("mustache") -> AvatarView.LayerType.HAIR_MUSTACHE
+                else -> null
+            }
         layerName?.let {
             layerMap[it] = shopItem.imageName?.replace("shop_", "")?.replace("icon_", "")
         }

@@ -34,7 +34,6 @@ import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.HabiticaAlertDialogTheme) {
-
     var buttonAxis: Int = LinearLayout.VERTICAL
         set(value) {
             field = value
@@ -186,7 +185,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         isPrimary: Boolean,
         isDestructive: Boolean = false,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
     ): Button {
         return addButton(context.getString(stringRes), isPrimary, isDestructive, autoDismiss, function)
     }
@@ -196,21 +195,22 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
         isPrimary: Boolean,
         isDestructive: Boolean = false,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
     ): Button {
-        val button: Button = if (isPrimary) {
-            if (isDestructive) {
-                binding.buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
+        val button: Button =
+            if (isPrimary) {
+                if (isDestructive) {
+                    binding.buttonsWrapper.inflate(R.layout.dialog_habitica_primary_destructive_button) as? Button
+                } else {
+                    binding.buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as? Button
+                }
             } else {
-                binding.buttonsWrapper.inflate(R.layout.dialog_habitica_primary_button) as? Button
-            }
-        } else {
-            val button = binding.buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as? Button
-            if (isDestructive) {
-                button?.setTextColor(ContextCompat.getColor(context, R.color.maroon_100))
-            }
-            button
-        } ?: Button(context)
+                val button = binding.buttonsWrapper.inflate(R.layout.dialog_habitica_secondary_button) as? Button
+                if (isDestructive) {
+                    button?.setTextColor(ContextCompat.getColor(context, R.color.maroon_100))
+                }
+                button
+            } ?: Button(context)
         button.text = string
         button.elevation = 0f
         return addButton(button, autoDismiss, function) as Button
@@ -219,7 +219,7 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     fun addButton(
         buttonView: View,
         autoDismiss: Boolean = true,
-        function: ((HabiticaAlertDialog, Int) -> Unit)? = null
+        function: ((HabiticaAlertDialog, Int) -> Unit)? = null,
     ): View {
         val weakThis = WeakReference(this)
         val buttonIndex = binding.buttonsWrapper.childCount
@@ -241,13 +241,14 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
     }
 
     private fun configureButtonLayoutParams(buttonView: View) {
-        val layoutParams = if (isScrollingLayout) {
-            val params = LinearLayout.LayoutParams(0, 48.dpToPx(context))
-            params.weight = 1f
-            params
-        } else {
-            LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 48.dpToPx(context))
-        }
+        val layoutParams =
+            if (isScrollingLayout) {
+                val params = LinearLayout.LayoutParams(0, 48.dpToPx(context))
+                params.weight = 1f
+                params
+            } else {
+                LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 48.dpToPx(context))
+            }
         buttonView.layoutParams = layoutParams
         buttonView.elevation = 10f
 
@@ -317,8 +318,8 @@ open class HabiticaAlertDialog(context: Context) : AlertDialog(context, R.style.
                     (dialogQueue[0].context as? BaseActivity)?.lifecycleScope?.launch(context = Dispatchers.Main) {
                         delay(500L)
                         if (dialogQueue.size > 0 && (
-                            (dialogQueue[0].context as? Activity)?.isFinishing == false ||
-                                ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
+                                (dialogQueue[0].context as? Activity)?.isFinishing == false ||
+                                    ((dialogQueue[0].context as? ContextThemeWrapper)?.baseContext as? Activity)?.isFinishing == false
                             )
                         ) {
                             dialogQueue[0].show()
