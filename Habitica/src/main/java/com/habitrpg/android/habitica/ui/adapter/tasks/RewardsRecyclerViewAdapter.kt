@@ -74,7 +74,9 @@ class RewardsRecyclerViewAdapter(
                         taskScoreEvents?.invoke(task, direction)
                     }
                 },
-                { task -> taskOpenEvents?.invoke(task.first, task.second) },
+                { task, view ->
+                    taskOpenEvents?.invoke(task, view)
+                },
                 {
                         task ->
                     brokenTaskEvents?.invoke(task)

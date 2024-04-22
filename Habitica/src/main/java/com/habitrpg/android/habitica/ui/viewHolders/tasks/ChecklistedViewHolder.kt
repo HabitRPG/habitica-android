@@ -31,7 +31,7 @@ abstract class ChecklistedViewHolder(
     itemView: View,
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     var scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
-    openTaskFunc: ((Pair<Task, View>) -> Unit),
+    openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
     assignedTextProvider: GroupPlanInfoProvider?
 ) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {

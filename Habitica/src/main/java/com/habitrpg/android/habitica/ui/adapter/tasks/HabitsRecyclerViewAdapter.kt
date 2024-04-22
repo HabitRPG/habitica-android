@@ -12,12 +12,10 @@ class HabitsRecyclerViewAdapter(layoutResource: Int, viewModel: TasksViewModel) 
             HabitViewHolder(
                 getContentView(parent),
                 { task, direction -> taskScoreEvents?.invoke(task, direction) },
-                {
-                        task ->
-                    taskOpenEvents?.invoke(task.first, task.second)
+                { task, view ->
+                    taskOpenEvents?.invoke(task, view)
                 },
-                {
-                        task ->
+                { task ->
                     brokenTaskEvents?.invoke(task)
                 },
                 viewModel

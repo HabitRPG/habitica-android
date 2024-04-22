@@ -30,7 +30,7 @@ import kotlinx.coroutines.withContext
 abstract class BaseTaskViewHolder(
     itemView: View,
     var scoreTaskFunc: ((Task, TaskDirection) -> Unit),
-    var openTaskFunc: ((Pair<Task, View>) -> Unit),
+    var openTaskFunc: ((Task, View) -> Unit),
     var brokenTaskFunc: ((Task) -> Unit),
     var assignedTextProvider: GroupPlanInfoProvider?
 ) : BindableViewHolder<Task>(itemView), View.OnTouchListener {
@@ -292,7 +292,9 @@ abstract class BaseTaskViewHolder(
                 }
             }
         }
-        task?.let { openTaskFunc(Pair(it, mainTaskWrapper)) }
+        task?.let {
+            openTaskFunc(it, mainTaskWrapper)
+        }
         return true
     }
 

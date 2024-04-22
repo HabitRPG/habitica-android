@@ -134,7 +134,7 @@ class ChallengeFormActivity : BaseActivity() {
             val dialog = HabiticaProgressDialog.show(this, R.string.saving)
 
             lifecycleScope.launchCatching({
-                dialog?.dismiss()
+                dialog.dismiss()
                 savingInProgress = false
                 ExceptionHandler.reportError(it)
             }) {
@@ -147,7 +147,7 @@ class ChallengeFormActivity : BaseActivity() {
                 challengeId = challenge?.id
                 challengeRepository.retrieveChallenges(0, true)
 
-                dialog?.dismiss()
+                dialog.dismiss()
                 savingInProgress = false
                 finish()
                 if (!editMode) {
@@ -250,6 +250,8 @@ class ChallengeFormActivity : BaseActivity() {
 
         if (challengeId != null) {
             fillControlsByChallenge()
+        } else {
+            binding.createChallengePrize.setText("0")
         }
 
         userViewModel.user.observe(this) { user = it }
@@ -381,7 +383,6 @@ class ChallengeFormActivity : BaseActivity() {
             }
         binding.createChallengePrize.setOnKeyListener { _, _, _ ->
             checkPrizeAndMinimumForTavern()
-
             false
         }
 

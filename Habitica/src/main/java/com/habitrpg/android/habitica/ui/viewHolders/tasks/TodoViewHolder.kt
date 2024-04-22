@@ -13,7 +13,7 @@ class TodoViewHolder(
     itemView: View,
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
     scoreChecklistItemFunc: ((Task, ChecklistItem) -> Unit),
-    openTaskFunc: ((Pair<Task, View>) -> Unit),
+    openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
     assignedTextProvider: GroupPlanInfoProvider?
 ) : ChecklistedViewHolder(itemView, scoreTaskFunc, scoreChecklistItemFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {

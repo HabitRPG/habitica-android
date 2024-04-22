@@ -282,7 +282,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until habits.size) {
             val task = habits[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.habit_item_card)
-            val viewHolder = HabitViewHolder(entry, { _, _ -> }, {}, {}, null)
+            val viewHolder = HabitViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true
             viewHolder.bind(task, i, "normal")
             groupBinding.tasksLayout.addView(entry)
@@ -297,7 +297,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until dailies.size) {
             val task = dailies[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.daily_item_card)
-            val viewHolder = DailyViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {}, null)
+            val viewHolder = DailyViewHolder(entry, { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true
             viewHolder.bind(task, i, "normal")
             groupBinding.tasksLayout.addView(entry)
@@ -312,7 +312,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until todos.size) {
             val task = todos[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.todo_item_card)
-            val viewHolder = TodoViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, {}, null)
+            val viewHolder = TodoViewHolder(entry, { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true
             viewHolder.bind(task, i, "normal")
             groupBinding.tasksLayout.addView(entry)
@@ -327,7 +327,7 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         for (i in 0 until rewards.size) {
             val task = rewards[i]
             val entry = groupBinding.tasksLayout.inflate(R.layout.reward_item_card)
-            val viewHolder = RewardViewHolder(entry, { _, _ -> }, {}, {}, null)
+            val viewHolder = RewardViewHolder(entry, { _, _ -> }, { _, _ -> }, {}, null)
             viewHolder.isLocked = true
             viewHolder.bind(task, i, true, "normal", null)
             groupBinding.tasksLayout.addView(entry)

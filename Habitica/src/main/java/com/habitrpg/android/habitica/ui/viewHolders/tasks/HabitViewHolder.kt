@@ -14,7 +14,7 @@ import com.habitrpg.shared.habitica.models.responses.TaskDirection
 class HabitViewHolder(
     itemView: View,
     scoreTaskFunc: ((Task, TaskDirection) -> Unit),
-    openTaskFunc: ((Pair<Task, View>) -> Unit),
+    openTaskFunc: ((Task, View) -> Unit),
     brokenTaskFunc: ((Task) -> Unit),
     assignedTextProvider: GroupPlanInfoProvider?
 ) : BaseTaskViewHolder(itemView, scoreTaskFunc, openTaskFunc, brokenTaskFunc, assignedTextProvider) {
