@@ -320,7 +320,7 @@ interface ApiService {
     suspend fun validateNoRenewSubscription(@Body request: PurchaseValidationRequest): HabitResponse<Void>
 
     @POST("user/custom-day-start")
-    suspend fun changeCustomDayStart(@Body updateObject: Map<String, Any>): HabitResponse<User>
+    suspend fun changeCustomDayStart(@Body updateObject: Map<String, Any>): HabitResponse<Void>
 
     // Members URL
     @GET("members/{mid}")

@@ -189,7 +189,7 @@ interface ApiClient {
 
     suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult?
 
-    suspend fun changeCustomDayStart(updateObject: Map<String, Any>): User?
+    suspend fun changeCustomDayStart(updateObject: Map<String, Any>): Void?
 
     // Members URL
     suspend fun getMember(memberId: String): Member?

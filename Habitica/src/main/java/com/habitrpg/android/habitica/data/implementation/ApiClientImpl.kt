@@ -735,7 +735,7 @@ class ApiClientImpl(
         }
     }
 
-    override suspend fun changeCustomDayStart(updateObject: Map<String, Any>): User? {
+    override suspend fun changeCustomDayStart(updateObject: Map<String, Any>): Void? {
         return process { apiService.changeCustomDayStart(updateObject) }
     }
 

@@ -230,8 +230,14 @@ class UserRepositoryImpl(
     override suspend fun changeCustomDayStart(dayStartTime: Int): User? {
         val updateObject = HashMap<String, Any>()
         updateObject["dayStart"] = dayStartTime
-        val newUser = apiClient.changeCustomDayStart(updateObject)
-        return mergeWithExistingUser(newUser)
+        apiClient.changeCustomDayStart(updateObject)
+        val liveUser = getLiveUser()
+        if (liveUser != null) {
+            localRepository.executeTransaction {
+                liveUser.preferences?.dayStart = dayStartTime
+            }
+        }
+        return liveUser
     }
 
     override suspend fun updateLanguage(languageCode: String): User? {
