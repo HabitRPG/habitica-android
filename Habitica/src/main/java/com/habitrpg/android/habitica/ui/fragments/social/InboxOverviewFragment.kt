@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.databinding.DialogChooseMessageRecipientBin
 import com.habitrpg.android.habitica.databinding.FragmentInboxBinding
 import com.habitrpg.android.habitica.extensions.getAgoString
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.InboxConversation
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
@@ -26,6 +25,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.UsernameLabel
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.views.AvatarView
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,8 +33,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
-
+class InboxOverviewFragment :
+    BaseMainFragment<FragmentInboxBinding>(),
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener,
+    View.OnClickListener {
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -46,14 +48,17 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
 
     override var binding: FragmentInboxBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentInboxBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentInboxBinding {
         return FragmentInboxBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         lifecycleScope.launchCatching {
@@ -62,13 +67,17 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.inboxRefreshLayout?.setOnRefreshListener(this)
 
         userViewModel.user.observe(viewLifecycleOwner) {
-            binding?.optOutView?.visibility = if (it?.inbox?.optOut == true) View.VISIBLE else View.GONE
+            binding?.optOutView?.visibility =
+                if (it?.inbox?.optOut == true) View.VISIBLE else View.GONE
         }
 
         loadMessages()
@@ -88,7 +97,10 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         this.mainActivity?.menuInflater?.inflate(R.menu.inbox, menu)
         val item = menu.findItem(R.id.send_message)
         tintMenuIcon(item)
@@ -117,7 +129,7 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
                 getString(R.string.action_continue),
                 true,
                 isDestructive = false,
-                autoDismiss = false
+                autoDismiss = false,
             ) { _, _ ->
                 binding.errorTextView.visibility = View.GONE
                 binding.progressCircular.visibility = View.VISIBLE
@@ -169,10 +181,12 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         if (messages.isNotEmpty()) {
             for (message in messages) {
-                val entry = inflater?.inflate(R.layout.item_inbox_overview, binding?.inboxMessages, false)
+                val entry =
+                    inflater?.inflate(R.layout.item_inbox_overview, binding?.inboxMessages, false)
                 val avatarView = entry?.findViewById(R.id.avatar_view) as? AvatarView
                 message.userStyles?.let { avatarView?.setAvatar(it) }
-                val displayNameTextView = entry?.findViewById(R.id.display_name_textview) as? UsernameLabel
+                val displayNameTextView =
+                    entry?.findViewById(R.id.display_name_textview) as? UsernameLabel
                 displayNameTextView?.username = message.user
                 displayNameTextView?.tier = message.contributor?.level ?: 0
                 val timestampTextView = entry?.findViewById(R.id.timestamp_textview) as? TextView
@@ -202,7 +216,15 @@ class InboxOverviewFragment : BaseMainFragment<FragmentInboxBinding>(), androidx
         openInboxMessages(v.tag.toString(), replyToUserName)
     }
 
-    private fun openInboxMessages(userID: String, username: String) {
-        MainNavigationController.navigate(InboxOverviewFragmentDirections.openInboxDetail(userID, username))
+    private fun openInboxMessages(
+        userID: String,
+        username: String,
+    ) {
+        MainNavigationController.navigate(
+            InboxOverviewFragmentDirections.openInboxDetail(
+                userID,
+                username,
+            ),
+        )
     }
 }

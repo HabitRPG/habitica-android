@@ -10,7 +10,11 @@ import kotlin.time.toDuration
  * Created by phillip on 01.02.18.
  */
 
-fun runDelayed(interval: Long, timeUnit: DurationUnit, function: () -> Unit) {
+fun runDelayed(
+    interval: Long,
+    timeUnit: DurationUnit,
+    function: () -> Unit,
+) {
     MainScope().launchCatching {
         delay(interval.toDuration(timeUnit))
         function()

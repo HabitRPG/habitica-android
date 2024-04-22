@@ -32,11 +32,11 @@ import dagger.hilt.components.SingletonComponent
 import java.util.Locale
 
 class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
-
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface PetSuggestHatchDialogEntryPoint {
         fun useCase(): HatchPetUseCase
+
         fun mainUserViewModel(): MainUserViewModel
     }
 
@@ -51,7 +51,11 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         setAdditionalContentView(binding.root)
         binding.shimmerView.startShimmer()
 
-        val hiltEntryPoint = EntryPointAccessors.fromApplication(context, PetSuggestHatchDialogEntryPoint::class.java)
+        val hiltEntryPoint =
+            EntryPointAccessors.fromApplication(
+                context,
+                PetSuggestHatchDialogEntryPoint::class.java,
+            )
         hatchPetUseCase = hiltEntryPoint.useCase()
         userViewModel = hiltEntryPoint.mainUserViewModel()
     }
@@ -73,7 +77,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         potionCount: Int,
         hasUnlockedEgg: Boolean,
         hasUnlockedPotion: Boolean,
-        hasMount: Boolean
+        hasMount: Boolean,
     ) {
         binding.eggView.loadImage("Pet_Egg_${pet.animal}")
         binding.hatchingPotionView.loadImage("Pet_HatchingPotion_${pet.color}")
@@ -85,24 +89,26 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         binding.eggView.alpha = if (hasEgg) 1.0f else 0.5f
         binding.hatchingPotionView.alpha = if (hasPotion) 1.0f else 0.5f
 
-        val eggName = egg?.text ?: pet.animal.replaceFirstChar {
-            if (it.isLowerCase()) {
-                it.titlecase(
-                    Locale.getDefault()
-                )
-            } else {
-                it.toString()
+        val eggName =
+            egg?.text ?: pet.animal.replaceFirstChar {
+                if (it.isLowerCase()) {
+                    it.titlecase(
+                        Locale.getDefault(),
+                    )
+                } else {
+                    it.toString()
+                }
             }
-        }
-        val potionName = potion?.text ?: pet.color.replaceFirstChar {
-            if (it.isLowerCase()) {
-                it.titlecase(
-                    Locale.getDefault()
-                )
-            } else {
-                it.toString()
+        val potionName =
+            potion?.text ?: pet.color.replaceFirstChar {
+                if (it.isLowerCase()) {
+                    it.titlecase(
+                        Locale.getDefault(),
+                    )
+                } else {
+                    it.toString()
+                }
             }
-        }
 
         if (hasEgg) {
             binding.eggCountView.visibility = View.VISIBLE
@@ -118,11 +124,12 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         }
 
         if (hasEgg && hasPotion) {
-            binding.descriptionView.text = context.getString(
-                R.string.can_hatch_pet,
-                eggName,
-                potionName
-            )
+            binding.descriptionView.text =
+                context.getString(
+                    R.string.can_hatch_pet,
+                    eggName,
+                    potionName,
+                )
             addButton(R.string.hatch, true, false) { _, _ ->
                 val thisPotion = potion ?: return@addButton
                 val thisEgg = egg ?: return@addButton
@@ -138,19 +145,36 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         } else {
             if (hasMount) {
                 if (!hasEgg && !hasPotion) {
-                    binding.descriptionView.text = context.getString(R.string.suggest_pet_hatch_again_missing_both, eggName, potionName)
+                    binding.descriptionView.text =
+                        context.getString(
+                            R.string.suggest_pet_hatch_again_missing_both,
+                            eggName,
+                            potionName,
+                        )
                 } else if (!hasEgg) {
-                    binding.descriptionView.text = context.getString(R.string.suggest_pet_hatch_again_missing_egg, eggName)
+                    binding.descriptionView.text =
+                        context.getString(R.string.suggest_pet_hatch_again_missing_egg, eggName)
                 } else {
-                    binding.descriptionView.text = context.getString(R.string.suggest_pet_hatch_again_missing_potion, potionName)
+                    binding.descriptionView.text =
+                        context.getString(
+                            R.string.suggest_pet_hatch_again_missing_potion,
+                            potionName,
+                        )
                 }
             } else {
                 if (!hasEgg && !hasPotion) {
-                    binding.descriptionView.text = context.getString(R.string.suggest_pet_hatch_missing_both, eggName, potionName)
+                    binding.descriptionView.text =
+                        context.getString(
+                            R.string.suggest_pet_hatch_missing_both,
+                            eggName,
+                            potionName,
+                        )
                 } else if (!hasEgg) {
-                    binding.descriptionView.text = context.getString(R.string.suggest_pet_hatch_missing_egg, eggName)
+                    binding.descriptionView.text =
+                        context.getString(R.string.suggest_pet_hatch_missing_egg, eggName)
                 } else {
-                    binding.descriptionView.text = context.getString(R.string.suggest_pet_hatch_missing_potion, potionName)
+                    binding.descriptionView.text =
+                        context.getString(R.string.suggest_pet_hatch_missing_potion, potionName)
                 }
             }
 
@@ -169,10 +193,20 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                 binding.currencyView.currency = "gems"
                 binding.currencyView.setTextColor(ContextCompat.getColor(context, R.color.white))
                 addButton(binding.root, true) { _, _ ->
-                    val activity = (getActivity() as? MainActivity) ?: (HabiticaBaseApplication.getInstance(context)?.currentActivity?.get() as? MainActivity) ?: return@addButton
+                    val activity =
+                        (getActivity() as? MainActivity) ?: (
+                            HabiticaBaseApplication.getInstance(
+                                context,
+                            )?.currentActivity?.get() as? MainActivity
+                        ) ?: return@addButton
                     if ((userViewModel.user.value?.gemCount ?: hatchPrice) < hatchPrice) {
                         InsufficientGemsDialog(activity, hatchPrice).show()
-                        Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "pet suggest modal"))
+                        Analytics.sendEvent(
+                            "show insufficient gems modal",
+                            EventCategory.BEHAVIOUR,
+                            HitType.EVENT,
+                            mapOf("reason" to "pet suggest modal"),
+                        )
                         return@addButton
                     }
                     val thisPotion = potion ?: return@addButton
@@ -185,7 +219,7 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
                             activity.inventoryRepository.purchaseItem(
                                 "hatchingPotions",
                                 thisPotion.key,
-                                1
+                                1,
                             )
                         }
                         activity.userRepository.retrieveUser(true, forced = true)
@@ -202,26 +236,34 @@ class PetSuggestHatchDialog(context: Context) : HabiticaAlertDialog(context) {
         val imageName = "stable_Pet-${pet.animal}-${pet.color}"
         DataBindingUtils.loadImage(context, imageName) {
             val resources = context.resources ?: return@loadImage
-            val drawable = if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
+            val drawable =
+                if (hasMount) it else BitmapDrawable(resources, it.toBitmap().extractAlpha())
             lifecycleScope.launchCatching {
                 binding.petView.bitmap = drawable.toBitmap()
             }
         }
     }
 
-    private fun hatchPet(potion: HatchingPotion, egg: Egg) {
+    private fun hatchPet(
+        potion: HatchingPotion,
+        egg: Egg,
+    ) {
         longLivingScope.launchCatching {
             hatchPetUseCase.callInteractor(
                 HatchPetUseCase.RequestValues(
                     potion,
                     egg,
-                    context
-                )
+                    context,
+                ),
             )
         }
     }
 
-    private fun getItemPrice(pet: Animal, item: Item?, hasUnlocked: Boolean): Int {
+    private fun getItemPrice(
+        pet: Animal,
+        item: Item?,
+        hasUnlocked: Boolean,
+    ): Int {
         if (pet.type == "drop" || (pet.type == "quest" && hasUnlocked)) {
             return item?.value ?: 0
         }

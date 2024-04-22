@@ -14,15 +14,14 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentAboutBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
-
     @Inject
     lateinit var appConfigManager: AppConfigManager
 
@@ -39,14 +38,17 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
         startActivity(intent)
     }
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAboutBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentAboutBinding {
         return FragmentAboutBinding.inflate(layoutInflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -58,15 +60,24 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
         binding?.versionInfo?.setOnClickListener {
             versionNumberTappedCount += 1
             when (versionNumberTappedCount) {
-                1 -> context?.let { context ->
-                    Toast.makeText(context, "Oh! You tapped me!", Toast.LENGTH_SHORT).show()
-                }
-                in 5..7 -> context?.let { context ->
-                    Toast.makeText(context, "Only ${8 - versionNumberTappedCount} taps left!", Toast.LENGTH_SHORT).show()
-                }
+                1 ->
+                    context?.let { context ->
+                        Toast.makeText(context, "Oh! You tapped me!", Toast.LENGTH_SHORT).show()
+                    }
+
+                in 5..7 ->
+                    context?.let { context ->
+                        Toast.makeText(
+                            context,
+                            "Only ${8 - versionNumberTappedCount} taps left!",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+
                 8 -> {
                     context?.let { context ->
-                        Toast.makeText(context, "You were blessed with cats!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "You were blessed with cats!", Toast.LENGTH_SHORT)
+                            .show()
                     }
                     doTheThing()
                 }
@@ -77,7 +88,10 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     private val versionName: String by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionName ?: ""
+            mainActivity?.packageManager?.getPackageInfo(
+                mainActivity?.packageName ?: "",
+                0,
+            )?.versionName ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
         }
@@ -86,20 +100,31 @@ class AboutFragment : BaseMainFragment<FragmentAboutBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionCode ?: 0
+            mainActivity?.packageManager?.getPackageInfo(
+                mainActivity?.packageName ?: "",
+                0,
+            )?.versionCode ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.versionInfo?.text = getString(R.string.version_info, versionName, versionCode)
 
         if (appConfigManager.lastVersionCode() > versionCode) {
             binding?.updateAvailableWrapper?.visibility = View.VISIBLE
-            binding?.updateAvailableTextview?.text = getString(R.string.update_available, appConfigManager.lastVersionNumber(), appConfigManager.lastVersionCode())
+            binding?.updateAvailableTextview?.text =
+                getString(
+                    R.string.update_available,
+                    appConfigManager.lastVersionNumber(),
+                    appConfigManager.lastVersionCode(),
+                )
         } else {
             binding?.updateAvailableWrapper?.visibility = View.GONE
         }

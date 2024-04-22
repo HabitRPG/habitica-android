@@ -22,7 +22,8 @@ class BottomSheetMenu(context: Context) : HabiticaBottomSheetDialog(context), Vi
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         binding.menuItems.children.forEachIndexed { index, view ->
-            val anim = TranslateAnimation(0f, 0f, 10f.dpToPx(context) + (5f.dpToPx(context) * index), 0f)
+            val anim =
+                TranslateAnimation(0f, 0f, 10f.dpToPx(context) + (5f.dpToPx(context) * index), 0f)
             anim.startOffset = 300 + (20 * index).toLong()
             anim.fillBefore = true
             anim.fillAfter = true

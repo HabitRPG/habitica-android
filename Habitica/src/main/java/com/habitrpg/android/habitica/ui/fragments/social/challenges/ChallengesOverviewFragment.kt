@@ -24,13 +24,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() {
-
     @Inject
     internal lateinit var challengeRepository: ChallengeRepository
 
     override var binding: FragmentViewpagerBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
@@ -41,14 +43,17 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         userChallengesFragment?.setViewUserChallengesOnly(true)
@@ -67,12 +72,16 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_list_challenges, menu)
 
         @Suppress("Deprecation")
-        val badgeLayout = MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as? RelativeLayout
+        val badgeLayout =
+            MenuItemCompat.getActionView(menu.findItem(R.id.action_search)) as? RelativeLayout
         if (badgeLayout != null) {
             val filterCountTextView = badgeLayout.findViewById<TextView>(R.id.badge_textview)
             filterCountTextView.text = null
@@ -89,10 +98,12 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
                 startActivity(intent)
                 return true
             }
+
             R.id.action_reload -> {
                 getActiveFragment()?.retrieveChallengesPage()
                 return true
             }
+
             R.id.action_search -> {
                 getActiveFragment()?.showFilterDialog()
                 return true
@@ -113,29 +124,30 @@ class ChallengesOverviewFragment : BaseMainFragment<FragmentViewpagerBinding>() 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        statePagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
+        statePagerAdapter =
+            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    return if (position == 0) {
+                        userChallengesFragment
+                    } else {
+                        availableChallengesFragment
+                    } ?: Fragment()
+                }
 
-            override fun createFragment(position: Int): Fragment {
-                return if (position == 0) {
-                    userChallengesFragment
-                } else {
-                    availableChallengesFragment
-                } ?: Fragment()
+                override fun getItemCount(): Int {
+                    return 2
+                }
             }
-
-            override fun getItemCount(): Int {
-                return 2
-            }
-        }
         binding?.viewPager?.adapter = statePagerAdapter
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = when (position) {
-                        0 -> getString(R.string.my_challenges)
-                        1 -> getString(R.string.discover)
-                        else -> ""
-                    }
+                    tab.text =
+                        when (position) {
+                            0 -> getString(R.string.my_challenges)
+                            1 -> getString(R.string.discover)
+                            else -> ""
+                        }
                 }.attach()
             }
         }

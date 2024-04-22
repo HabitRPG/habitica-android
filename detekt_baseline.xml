@@ -13,19 +13,20 @@
     <ID>ComplexCondition:LoginActivity.kt$LoginActivity$username.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPassword.isEmpty()</ID>
     <ID>ComplexCondition:LoginBackgroundView.kt$LoginBackgroundView$viewWidth &lt;= 0 || viewHeight &lt;= 0 || didLayoutStars || starViews?.size == 0</ID>
     <ID>ComplexCondition:NavigationDrawerFragment.kt$NavigationDrawerFragment$adapter.selectedItem != null &amp;&amp; adapter.selectedItem == transitionId &amp;&amp; bundle == null &amp;&amp; preventReselection</ID>
+    <ID>ComplexCondition:PartyInviteFragment.kt$viewModel.invites.size &gt; index &amp;&amp; viewModel.invites[index].isBlank() &amp;&amp; viewModel.invites.size - 1 != index &amp;&amp; viewModel.invites.size &gt; 1</ID>
     <ID>ComplexCondition:PurchaseDialog.kt$PurchaseDialog$(shopItem.currency != "gold" || shopItem.canAfford(user, purchaseQuantity)) &amp;&amp; !shopItem.locked &amp;&amp; purchaseQuantity &gt;= 1</ID>
     <ID>ComplexCondition:PurchaseDialog.kt$PurchaseDialog$shopIdentifier != null &amp;&amp; shopIdentifier == Shop.TIME_TRAVELERS_SHOP || "mystery_set" == shopItem.purchaseType || shopItem.currency == "hourglasses"</ID>
     <ID>ComplexCondition:PurchaseDialog.kt$PurchaseDialog$shopItem.habitClass != null &amp;&amp; shopItem.habitClass != "special" &amp;&amp; shopItem.habitClass != "armoire" &amp;&amp; user?.stats?.habitClass != shopItem.habitClass</ID>
     <ID>ComplexCondition:PurchaseDialog.kt$PurchaseDialog$shopItem.purchaseType == "customization" || shopItem.purchaseType == "background" || shopItem.purchaseType == "backgrounds" || shopItem.purchaseType == "customizationSet"</ID>
-    <ID>ComplexCondition:QuestProgressView.kt$QuestProgressView$quest == null || progress == null || !quest.isValid || !progress.isValid</ID>
     <ID>ComplexCondition:RealmTaskLocalRepository.kt$RealmTaskLocalRepository$firstTask != null &amp;&amp; secondTask != null &amp;&amp; firstTask.isValid &amp;&amp; secondTask.isValid</ID>
     <ID>ComplexCondition:RewardsRecyclerViewAdapter.kt$RewardsRecyclerViewAdapter$(customRewards != null &amp;&amp; position &lt; customRewardCount) || (customRewardCount == 0 &amp;&amp; inAppRewardCount == 0)</ID>
     <ID>ComplexCondition:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$!removalsPending &amp;&amp; !movesPending &amp;&amp; !additionsPending &amp;&amp; !changesPending</ID>
+    <ID>ComplexCondition:SubscriptionBottomSheetFragment.kt$SubscriptionBottomSheetFragment$user?.purchased?.plan?.paymentMethod == "Google" &amp;&amp; user?.purchased?.plan?.isActive == true &amp;&amp; user?.purchased?.plan?.dateTerminated == null &amp;&amp; (newestSubscription?.isAutoRenewing != true)</ID>
     <ID>ComplexCondition:SubscriptionFragment.kt$SubscriptionFragment$user?.purchased?.plan?.paymentMethod == "Google" &amp;&amp; user?.purchased?.plan?.isActive == true &amp;&amp; user?.purchased?.plan?.dateTerminated == null &amp;&amp; (newestSubscription?.isAutoRenewing != true)</ID>
     <ID>ComplexCondition:Task.kt$Task$counterUp != null &amp;&amp; (counterUp ?: 0) &gt; 0 &amp;&amp; counterDown != null &amp;&amp; (counterDown ?: 0) &gt; 0</ID>
-    <ID>ComplexCondition:TaskAlarmManager.kt$TaskAlarmManager$remindersItem == null || (reminderItemTask.type == TaskType.DAILY &amp;&amp; zonedTime?.isBefore(now) == true &amp;&amp; reminderItemTask.nextDue?.firstOrNull() != null) || (reminderItemTask.type == TaskType.TODO &amp;&amp; zonedTime?.isBefore(now) == true)</ID>
     <ID>ComplexMethod:AccountPreferenceFragment.kt$AccountPreferenceFragment$override fun onPreferenceTreeClick(preference: Preference): Boolean</ID>
-    <ID>ComplexMethod:AppHeaderView.kt$@Composable fun AppHeaderView( user: Avatar?, teamPlan: TeamPlan? = null, teamPlanMembers: List&lt;Member&gt;? = null, onMemberRowClicked: () -&gt; Unit )</ID>
+    <ID>ComplexMethod:ApiClientImpl.kt$ApiClientImpl$fun accept(throwable: Throwable)</ID>
+    <ID>ComplexMethod:AppHeaderView.kt$@Composable fun AppHeaderView( user : Avatar?, modifier : Modifier = Modifier, isMyProfile : Boolean = false, teamPlan : TeamPlan? = null, teamPlanMembers : List&lt;Member&gt;? = null, onAvatarClicked: (() -&gt; Unit)? = null, onMemberRowClicked : () -&gt; Unit, onClassSelectionClicked: () -&gt; Unit, configManager: AppConfigManager )</ID>
     <ID>ComplexMethod:AvatarStatsWidgetProvider.kt$AvatarStatsWidgetProvider$private fun updateData(widgetIds: IntArray? = null)</ID>
     <ID>ComplexMethod:BaseActivity.kt$BaseActivity$internal open fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean = false)</ID>
     <ID>ComplexMethod:BaseTaskViewHolder.kt$BaseTaskViewHolder$open fun bind( data: Task, position: Int, displayMode: String, ownerID: String? )</ID>
@@ -36,7 +37,9 @@
     <ID>ComplexMethod:CustomizationSetupAdapter.kt$CustomizationSetupAdapter$private fun isCustomizationActive(customization: SetupCustomization): Boolean</ID>
     <ID>ComplexMethod:EquipmentOverviewView.kt$@Composable fun AvatarCustomizationOverviewView( preferences: Preferences?, outfit: Outfit?, onCustomizationTap: (String, String?) -&gt; Unit, onAvatarEquipmentTap: (String, String?) -&gt; Unit, modifier: Modifier = Modifier )</ID>
     <ID>ComplexMethod:GroupSerialization.kt$GroupSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Group</ID>
+    <ID>ComplexMethod:ItemDialogFragment.kt$ItemDialogFragment$override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
     <ID>ComplexMethod:ItemRecyclerAdapter.kt$ItemRecyclerAdapter.ItemViewHolder$override fun onClick(v: View)</ID>
+    <ID>ComplexMethod:LoadingButton.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun LoadingButton( state: LoadingButtonState, onClick: () -&gt; Unit, modifier: Modifier = Modifier, type: LoadingButtonType = LoadingButtonType.NORMAL, elevation: ButtonElevation? = ButtonDefaults.elevation(0.dp), shape: Shape = MaterialTheme.shapes.medium, border: BorderStroke? = null, colors: ButtonColors? = null, contentPadding: PaddingValues = ButtonDefaults.ContentPadding, successContent: (@Composable RowScope.() -&gt; Unit)? = null, failedContent: (@Composable RowScope.() -&gt; Unit)? = null, content: @Composable RowScope.() -&gt; Unit )</ID>
     <ID>ComplexMethod:LocalNotificationActionReceiver.kt$LocalNotificationActionReceiver$private fun handleLocalNotificationAction(action: String?)</ID>
     <ID>ComplexMethod:MemberSerialization.kt$MemberSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Member</ID>
     <ID>ComplexMethod:NavigationDrawerFragment.kt$NavigationDrawerFragment$private fun updateUser(user: User)</ID>
@@ -49,10 +52,12 @@
     <ID>ComplexMethod:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun runPendingAnimations()</ID>
     <ID>ComplexMethod:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$fun score(user: User, task: Task, direction: TaskDirection): TaskDirectionData?</ID>
     <ID>ComplexMethod:SetupCustomizationRepositoryImpl.kt$SetupCustomizationRepositoryImpl$override fun getCustomizations(type: String, subtype: String?, user: User): List&lt;SetupCustomization&gt;</ID>
+    <ID>ComplexMethod:ShopRecyclerAdapter.kt$ShopRecyclerAdapter$@Suppress("ReturnCount") override fun onBindViewHolder( holder: ViewHolder, position: Int )</ID>
     <ID>ComplexMethod:ShowNotificationInteractor.kt$ShowNotificationInteractor$fun handleNotification(notification: Notification): Boolean</ID>
     <ID>ComplexMethod:StableViewModel.kt$StableViewModel$private fun mapAnimals(unsortedAnimals: List&lt;Animal&gt;, ownedAnimals: Map&lt;String, OwnedObject&gt;): ArrayList&lt;Any&gt;</ID>
     <ID>ComplexMethod:StatsFragment.kt$StatsFragment$private fun updateStats(user: User)</ID>
     <ID>ComplexMethod:SubscriptionDetailsView.kt$SubscriptionDetailsView$fun setPlan(plan: SubscriptionPlan)</ID>
+    <ID>ComplexMethod:Task.kt$Task$ fun getNextReminderOccurrences(remindersItem: RemindersItem?, occurrences: Int): List&lt;ZonedDateTime&gt;?</ID>
     <ID>ComplexMethod:Task.kt$Task$fun isBeingEdited(task: Task): Boolean</ID>
     <ID>ComplexMethod:TaskDescriptionBuilder.kt$TaskDescriptionBuilder$private fun describeRepeatDays(task: Task): Any</ID>
     <ID>ComplexMethod:TaskFormActivity.kt$TaskFormActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
@@ -67,10 +72,6 @@
     <ID>ConstructorParameterNaming:Days.kt$Days$`in`: Parcel</ID>
     <ID>ConstructorParameterNaming:Task.kt$Task$`in`: Parcel</ID>
     <ID>DuplicateCaseInWhenExpression:ShowNotificationInteractor.kt$ShowNotificationInteractor$when (notification.type) { Notification.Type.LOGIN_INCENTIVE.type -&gt; showCheckinDialog(notification) Notification.Type.ACHIEVEMENT_PARTY_UP.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_PARTY_ON.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_BEAST_MASTER.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -&gt; showAchievementDialog(notification) Notification.Type.WON_CHALLENGE.type -&gt; showWonChallengeDialog(notification) Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_TICKLED_PINK.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_SEEING_RED.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_GENERIC.type -&gt; showAchievementDialog(notification) Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -&gt; showAchievementDialog(notification) Notification.Type.FIRST_DROP.type -&gt; showFirstDropDialog(notification) else -&gt; return false }</ID>
-    <ID>EmptyCatchBlock:SoundFile.kt$SoundFile${ }</ID>
-    <ID>EmptyCatchBlock:WorldStateSerialization.kt$WorldStateSerialization${ }</ID>
-    <ID>EmptyDefaultConstructor:AuthenticationViewModel.kt$AuthenticationViewModel$()</ID>
-    <ID>EmptyDefaultConstructor:CustomizationRecyclerViewAdapter.kt$CustomizationRecyclerViewAdapter$()</ID>
     <ID>EmptyFunctionBlock:AccountPreferenceFragment.kt$AccountPreferenceFragment${ }</ID>
     <ID>EmptyFunctionBlock:FallExtraGemsHabiticaPromotion.kt$FallExtraGemsHabiticaPromotion${ }</ID>
     <ID>EmptyFunctionBlock:GiftOneGetOneHabiticaPromotion.kt$GiftOneGetOneHabiticaPromotion${ }</ID>
@@ -82,64 +83,80 @@
     <ID>EmptyFunctionBlock:SpookyExtraGemsHabiticaPromotion.kt$SpookyExtraGemsHabiticaPromotion${ }</ID>
     <ID>EmptyFunctionBlock:Survey2021Promotion.kt$Survey2021Promotion${ }</ID>
     <ID>ForbiddenComment:ShopItem.kt$ShopItem.Companion$// TODO: Needs a way to be translated.</ID>
-    <ID>ForbiddenComment:ShopRecyclerAdapter.kt$ShopRecyclerAdapter$// TODO: Enable this again when we have a nicer design</ID>
-    <ID>ForbiddenComment:SubscriptionDetailsView.kt$SubscriptionDetailsView$// TODO: Unhide once we figured out discrepancies.</ID>
     <ID>FunctionParameterNaming:BaseLocalRepository.kt$BaseLocalRepository$`object`: T</ID>
     <ID>FunctionParameterNaming:DragLinearLayout.kt$DragLinearLayout.Companion$`val`: Float</ID>
     <ID>FunctionParameterNaming:FullProfileActivity.kt$FullProfileActivity$`val`: Float</ID>
+    <ID>LargeClass:ApiClientImpl.kt$ApiClientImpl : ApiClient</ID>
+    <ID>LargeClass:FullProfileActivity.kt$FullProfileActivity : BaseActivity</ID>
     <ID>LargeClass:NavigationDrawerFragment.kt$NavigationDrawerFragment : DialogFragment</ID>
     <ID>LargeClass:TaskFormActivity.kt$TaskFormActivity : BaseActivity</ID>
-    <ID>LongMethod:AppHeaderView.kt$@Composable fun AppHeaderView( user: Avatar?, teamPlan: TeamPlan? = null, teamPlanMembers: List&lt;Member&gt;? = null, onMemberRowClicked: () -&gt; Unit )</ID>
-    <ID>LongMethod:AvatarOverviewFragment.kt$@Composable fun AvatarOverviewView( userViewModel: MainUserViewModel, showCustomization: Boolean = true, showEquipment: Boolean = true, battleGearTwoHanded: Boolean = false, costumeTwoHanded: Boolean = false, onCustomizationTap: (String, String?) -&gt; Unit, onAvatarEquipmentTap: (String, String?) -&gt; Unit, onEquipmentTap: (String, String?, Boolean) -&gt; Unit )</ID>
+    <ID>LongMethod:AppHeaderView.kt$@Composable fun AppHeaderView( user : Avatar?, modifier : Modifier = Modifier, isMyProfile : Boolean = false, teamPlan : TeamPlan? = null, teamPlanMembers : List&lt;Member&gt;? = null, onAvatarClicked: (() -&gt; Unit)? = null, onMemberRowClicked : () -&gt; Unit, onClassSelectionClicked: () -&gt; Unit, configManager: AppConfigManager )</ID>
+    <ID>LongMethod:ArmoireActivity.kt$ArmoireActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:AvatarOverviewFragment.kt$@Composable fun AvatarOverviewView( userViewModel: MainUserViewModel, showCustomization: Boolean = true, showEquipment: Boolean = true, battleGearTwoHanded: Boolean = false, costumeTwoHanded: Boolean = false, onCustomizationTap: (String, String?) -&gt; Unit, onAvatarEquipmentTap: (String, String?) -&gt; Unit, onEquipmentTap: (String, String?, Boolean) -&gt; Unit, )</ID>
     <ID>LongMethod:AvatarStatsWidgetProvider.kt$AvatarStatsWidgetProvider$private fun updateData(widgetIds: IntArray? = null)</ID>
     <ID>LongMethod:BaseTaskViewHolder.kt$BaseTaskViewHolder$open fun bind( data: Task, position: Int, displayMode: String, ownerID: String? )</ID>
     <ID>LongMethod:BirthdayActivity.kt$@Composable fun BirthdayActivityView( scaffoldState: ScaffoldState, isPurchasing: Boolean, hasGryphatrice: Boolean, hasEquipped: Boolean, price: String, startDate: Date, endDate: Date, onPurchaseClick: () -&gt; Unit, onGemPurchaseClick: () -&gt; Unit, onEquipClick: () -&gt; Unit )</ID>
+    <ID>LongMethod:BirthdayMenuView.kt$@Composable fun BirthdayBanner(endDate: Date, modifier: Modifier = Modifier)</ID>
     <ID>LongMethod:ChatRecyclerViewHolder.kt$ChatRecyclerMessageViewHolder$fun bind(msg: ChatMessage, uuid: String, user: User?, isExpanded: Boolean)</ID>
     <ID>LongMethod:ContentDeserializer.kt$ContentDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ContentResult</ID>
     <ID>LongMethod:CustomizationDeserializer.kt$CustomizationDeserializer$@Throws(JsonParseException::class) override fun deserialize( json: JsonElement, typeOfT: Type, context: JsonDeserializationContext ): List&lt;Customization&gt;</ID>
+    <ID>LongMethod:DeathActivity.kt$DeathActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
     <ID>LongMethod:EquipmentOverviewView.kt$@Composable fun AvatarCustomizationOverviewView( preferences: Preferences?, outfit: Outfit?, onCustomizationTap: (String, String?) -&gt; Unit, onAvatarEquipmentTap: (String, String?) -&gt; Unit, modifier: Modifier = Modifier )</ID>
-    <ID>LongMethod:GroupPlanMemberList.kt$@Composable fun MemberItem( member: Member, role: String, onMemberClicked: (String) -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:FullProfileActivity.kt$FullProfileActivity$override fun onOptionsItemSelected(item: MenuItem): Boolean</ID>
+    <ID>LongMethod:GroupPlanMemberList.kt$@Composable fun MemberItem( member: Member, role: String, onMemberClicked: (String) -&gt; Unit, configManager: AppConfigManager, modifier: Modifier = Modifier )</ID>
     <ID>LongMethod:GroupSerialization.kt$GroupSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Group</ID>
     <ID>LongMethod:HabitViewHolder.kt$HabitViewHolder$override fun bind( data: Task, position: Int, displayMode: String, ownerID: String? )</ID>
     <ID>LongMethod:ItemRecyclerAdapter.kt$ItemRecyclerAdapter.ItemViewHolder$override fun onClick(v: View)</ID>
+    <ID>LongMethod:LabeledBar.kt$@Composable fun LabeledBar( modifier: Modifier = Modifier, icon: Bitmap? = null, label: String? = null, color: Color = colorResource(R.color.brand), barColor: Color = HabiticaTheme.colors.windowBackground, value: Double, maxValue: Double, displayCompact: Boolean = false, barHeight: Dp = 8.dp, disabled: Boolean = false, abbreviateValue: Boolean = true, abbreviateMax: Boolean = true, animated: Boolean = true )</ID>
+    <ID>LongMethod:LoadingButton.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun LoadingButton( state: LoadingButtonState, onClick: () -&gt; Unit, modifier: Modifier = Modifier, type: LoadingButtonType = LoadingButtonType.NORMAL, elevation: ButtonElevation? = ButtonDefaults.elevation(0.dp), shape: Shape = MaterialTheme.shapes.medium, border: BorderStroke? = null, colors: ButtonColors? = null, contentPadding: PaddingValues = ButtonDefaults.ContentPadding, successContent: (@Composable RowScope.() -&gt; Unit)? = null, failedContent: (@Composable RowScope.() -&gt; Unit)? = null, content: @Composable RowScope.() -&gt; Unit )</ID>
     <ID>LongMethod:LocalNotificationActionReceiver.kt$LocalNotificationActionReceiver$private fun handleLocalNotificationAction(action: String?)</ID>
+    <ID>LongMethod:MainActivity.kt$MainActivity$public override fun onCreate(savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:MountBottomSheet.kt$@Composable fun MountBottomSheet( mount: Mount, isCurrentMount: Boolean, onEquip: ((String) -&gt; Unit)?, onDismiss: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:NavigationDrawerFragment.kt$NavigationDrawerFragment$override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
     <ID>LongMethod:NavigationDrawerFragment.kt$NavigationDrawerFragment$private fun initializeMenuItems()</ID>
     <ID>LongMethod:NavigationDrawerFragment.kt$NavigationDrawerFragment$private fun updateUser(user: User)</ID>
-    <ID>LongMethod:NoPartyFragmentFragment.kt$NoPartyFragmentFragment$override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
+    <ID>LongMethod:PartyInviteFragment.kt$@OptIn(ExperimentalFoundationApi::class) @Composable fun PartyInviteView( viewModel: PartyInviteViewModel, dismiss: () -&gt; Unit )</ID>
+    <ID>LongMethod:PartySeekingFragment.kt$@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class) @Composable fun PartySeekingView( viewModel: PartySeekingViewModel, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:PartySeekingListItem.kt$@Composable fun PartySeekingListItem( user: Member, modifier: Modifier = Modifier, inviteState: LoadingButtonState = LoadingButtonState.LOADING, isInvited: Boolean = false, showHeader: Boolean = false, showExtendedInfo: Boolean = true, configManager: AppConfigManager, onInvite: (Member) -&gt; Unit, )</ID>
+    <ID>LongMethod:PauseResumeDamageView.kt$@Composable fun PauseResumeDamageView( isPaused: Boolean, onClick: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:PetBottomSheet.kt$@Composable fun PetBottomSheet( pet: Pet, trained: Int, isCurrentPet: Boolean, canRaiseToMount: Boolean, ownsSaddles: Boolean, onEquip: ((String) -&gt; Unit)?, onFeed: (suspend (Pet, Food?) -&gt; FeedResponse?)?, onDismiss: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
     <ID>LongMethod:PetSuggestHatchDialog.kt$PetSuggestHatchDialog$fun configure( pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean )</ID>
     <ID>LongMethod:PreferencesFragment.kt$PreferencesFragment$override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?)</ID>
     <ID>LongMethod:PreferencesFragment.kt$PreferencesFragment$override fun setUser(user: User?)</ID>
+    <ID>LongMethod:PurchaseDialog.kt$PurchaseDialog$private fun buyItem(quantity: Int)</ID>
     <ID>LongMethod:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun endAnimations()</ID>
     <ID>LongMethod:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun runPendingAnimations()</ID>
     <ID>LongMethod:SegmentedControl.kt$ @Composable fun SegmentedControl( items: List&lt;String&gt;, defaultSelectedItemIndex: Int = 0, useFixedWidth: Boolean = false, itemWidth: Dp = 120.dp, cornerRadius: Int = 10, onItemSelection: (selectedItemIndex: Int) -&gt; Unit )</ID>
+    <ID>LongMethod:ShopFragment.kt$ShopFragment$override fun onViewCreated(view: View, savedInstanceState: Bundle?)</ID>
     <ID>LongMethod:SubscriptionDetailsView.kt$SubscriptionDetailsView$fun setPlan(plan: SubscriptionPlan)</ID>
     <ID>LongMethod:TaskFormActivity.kt$TaskFormActivity$override fun onCreate(savedInstanceState: Bundle?)</ID>
     <ID>LongMethod:TaskSummaryActivity.kt$@Composable fun TaskSummaryView(viewModel: TaskSummaryViewModel)</ID>
     <ID>LongMethod:UserDeserializer.kt$UserDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): User</ID>
     <ID>LongMethod:UserStatComputer.kt$UserStatComputer$fun computeClassBonus(equipmentList: List&lt;Equipment&gt;?, user: Avatar): List&lt;StatsRow&gt;</ID>
-    <ID>LongParameterList:AssignedView.kt$( assigned: List&lt;Assignable&gt;, completedAt: Map&lt;String, Date&gt;, backgroundColor: Color, color: Color, onEditClick: () -&gt; Unit, onUndoClick: (String) -&gt; Unit, modifier: Modifier = Modifier, showEditButton: Boolean = false )</ID>
+    <ID>LongParameterList:AssignedView.kt$( assigned: List&lt;Assignable&gt;, completedAt: Map&lt;String, Date&gt;, backgroundColor: Color, color: Color, onEditClick: () -&gt; Unit, onUndoClick: (String) -&gt; Unit, configManager: AppConfigManager, modifier: Modifier = Modifier, showEditButton: Boolean = false )</ID>
     <ID>LongParameterList:BirthdayActivity.kt$( scaffoldState: ScaffoldState, isPurchasing: Boolean, hasGryphatrice: Boolean, hasEquipped: Boolean, price: String, startDate: Date, endDate: Date, onPurchaseClick: () -&gt; Unit, onGemPurchaseClick: () -&gt; Unit, onEquipClick: () -&gt; Unit )</ID>
     <ID>LongParameterList:FullProfileActivity.kt$FullProfileActivity$( label: String, strVal: Float, intVal: Float, conVal: Float, perVal: Float, roundDown: Boolean, isSummary: Boolean )</ID>
-    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$( container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int?, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false )</ID>
-    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$( container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int?, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false )</ID>
-    <ID>LongParameterList:HabiticaTheme.kt$HabiticaColors$( val windowBackground: Color, val contentBackground: Color, val contentBackgroundOffset: Color, val textPrimary: Color, val textSecondary: Color, val textTertiary: Color, val textQuad: Color, val textDimmed: Color, val tintedUiMain: Color, val tintedUiSub: Color, val tintedUiDetails: Color, val pixelArtBackground: Color )</ID>
+    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$( container: ViewGroup, leftImage: Drawable?, title: CharSequence?, content: CharSequence?, specialView: View?, rightIcon: Drawable?, rightTextColor: Int?, rightText: String?, displayType: SnackbarDisplayType, isCelebratory: Boolean = false, isSubscriberBenefit: Boolean = false, duration: Int = Snackbar.LENGTH_LONG )</ID>
+    <ID>LongParameterList:HabiticaSnackbar.kt$HabiticaSnackbar.Companion$( container: ViewGroup, title: CharSequence?, content: CharSequence?, rightIcon: Drawable, rightTextColor: Int?, rightText: String, displayType: SnackbarDisplayType, isCelebratory: Boolean = false, isSubscriberBenefit: Boolean = false, duration: Int = Snackbar.LENGTH_LONG )</ID>
+    <ID>LongParameterList:MainActivityViewModel.kt$MainActivityViewModel$( userRepository: UserRepository, userViewModel: MainUserViewModel, val hostConfig: HostConfig, val pushNotificationManager: PushNotificationManager, val sharedPreferences: SharedPreferences, val contentRepository: ContentRepository, val taskRepository: TaskRepository, val inventoryRepository: InventoryRepository, val taskAlarmManager: TaskAlarmManager, val maintenanceService: MaintenanceApiService )</ID>
     <ID>LongParameterList:NotifyUserUseCase.kt$NotifyUserUseCase.Companion$( context: Context, xp: Double?, hp: Double?, gold: Double?, mp: Double?, questDamage: Double?, user: User? )</ID>
     <ID>LongParameterList:NotifyUserUseCase.kt$NotifyUserUseCase.RequestValues$( val context: BaseActivity, val snackbarTargetView: ViewGroup, val user: User?, val xp: Double?, val hp: Double?, val gold: Double?, val mp: Double?, val questDamage: Double?, val hasLeveledUp: Boolean?, val level: Int? )</ID>
-    <ID>LongParameterList:PetDetailRecyclerAdapter.kt$PetDetailRecyclerAdapter.CanHatchViewHolder$( item: Pet, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean, )</ID>
+    <ID>LongParameterList:PetBottomSheet.kt$( pet: Pet, trained: Int, isCurrentPet: Boolean, canRaiseToMount: Boolean, ownsSaddles: Boolean, onEquip: ((String) -&gt; Unit)?, onFeed: (suspend (Pet, Food?) -&gt; FeedResponse?)?, onDismiss: () -&gt; Unit, modifier: Modifier = Modifier )</ID>
+    <ID>LongParameterList:PetDetailRecyclerAdapter.kt$PetDetailRecyclerAdapter.CanHatchViewHolder$( item: Pet, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean )</ID>
     <ID>LongParameterList:PetSuggestHatchDialog.kt$PetSuggestHatchDialog$( pet: Animal, egg: Egg?, potion: HatchingPotion?, eggCount: Int, potionCount: Int, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean )</ID>
     <ID>LongParameterList:PetViewHolder.kt$PetViewHolder$( item: Pet, trained: Int, eggCount: Int, potionCount: Int, canRaiseToMount: Boolean, ownsSaddles: Boolean, hasUnlockedEgg: Boolean, hasUnlockedPotion: Boolean, hasMount: Boolean, currentPet: String? )</ID>
     <ID>LongParameterList:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$( result: TaskDirectionData, delta: Double, stats: Stats, computedStats: Stats, task: Task, direction: TaskDirection )</ID>
     <ID>LongParameterList:SocialRepository.kt$SocialRepository$( name: String?, description: String?, leader: String?, type: String?, privacy: String?, leaderCreateChallenge: Boolean? )</ID>
     <ID>LongParameterList:StatsView.kt$( statText: String, statColor: Color, levelValue: Int, equipmentValue: Int, buffValue: Int, allocatedValue: Int, canAllocate: Boolean, allocateAction: () -&gt; Unit )</ID>
-    <ID>LongParameterList:UserRepositoryModule.kt$UserRepositoryModule$( localRepository: UserLocalRepository, apiClient: ApiClient, @Named(AppModule.NAMED_USER_ID) userId: String, taskRepository: TaskRepository, appConfigManager: AppConfigManager, analyticsManager: AnalyticsManager )</ID>
+    <ID>LongParameterList:TaskListFactory.kt$TaskListFactory$( val context: Context, intent: Intent, private val taskType: TaskType, private val listItemResId: Int, private val listItemTextResId: Int, val taskRepository: TaskRepository, val userRepository: UserRepository )</ID>
     <ID>LoopWithTooManyJumpStatements:CustomizationRecyclerViewAdapter.kt$CustomizationRecyclerViewAdapter$for (customization in newCustomizationList) { val isOwned = ownedCustomizations.contains(customization.id) val isUsable = customization.isUsable(isOwned) if (customization.availableFrom != null || customization.availableUntil != null) { if (( ( customization.availableFrom?.compareTo(today) ?: 0 ) &gt; 0 || ( customization.availableUntil?.compareTo(today) ?: 0 ) &lt; 0 ) &amp;&amp; !isUsable ) { continue } } if (customization.identifier?.contains("birthday_bash") == true &amp;&amp; !isOwned) { continue } if (customization.customizationSet != null &amp;&amp; customization.customizationSet != lastSet.identifier) { if (lastSet.hasPurchasable &amp;&amp; lastSet.price &gt; 0) { customizationList.add(lastSet) } val set = CustomizationSet() set.identifier = customization.customizationSet set.text = customization.customizationSetName set.price = customization.setPrice ?: 0 set.hasPurchasable = true lastSet = set customizationList.add(set) } customizationList.add(customization) lastSet.customizations.add(customization) if (isUsable &amp;&amp; lastSet.hasPurchasable) { lastSet.ownedCustomizations.add(customization) if (!lastSet.isSetDeal()) { lastSet.hasPurchasable = false } } }</ID>
-    <ID>MatchingDeclarationName:Date-Extensions.kt$DateUtils</ID>
+    <ID>MatchingDeclarationName:DateExtensions.kt$DateUtils</ID>
     <ID>MatchingDeclarationName:TaskFormSelector.kt$LabeledValue&lt;V&gt;</ID>
+    <ID>MemberNameEqualsClassName:ReviewManager.kt$ReviewManager$private val reviewManager = ReviewManagerFactory.create(context)</ID>
     <ID>NestedBlockDepth:BaseTaskViewHolder.kt$BaseTaskViewHolder$override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean</ID>
     <ID>NestedBlockDepth:ChallengeDeserializer.kt$ChallengeDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Challenge</ID>
     <ID>NestedBlockDepth:ChecklistedViewHolder.kt$ChecklistedViewHolder$private fun updateChecklistDisplay()</ID>
     <ID>NestedBlockDepth:CustomizationDeserializer.kt$CustomizationDeserializer$@Throws(JsonParseException::class) override fun deserialize( json: JsonElement, typeOfT: Type, context: JsonDeserializationContext ): List&lt;Customization&gt;</ID>
-    <ID>NestedBlockDepth:CustomizationRecyclerViewAdapter.kt$CustomizationRecyclerViewAdapter.CustomizationViewHolder$override fun onClick(v: View)</ID>
     <ID>NestedBlockDepth:GroupSerialization.kt$GroupSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Group</ID>
     <ID>NestedBlockDepth:ItemRecyclerAdapter.kt$ItemRecyclerAdapter.ItemViewHolder$override fun onClick(v: View)</ID>
     <ID>NestedBlockDepth:MemberSerialization.kt$MemberSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Member</ID>
@@ -148,11 +165,13 @@
     <ID>NestedBlockDepth:PreferencesFragment.kt$PreferencesFragment$override fun onPreferenceTreeClick(preference: Preference): Boolean</ID>
     <ID>NestedBlockDepth:PurchaseDialog.kt$PurchaseDialog$private fun onBuyButtonClicked()</ID>
     <ID>NestedBlockDepth:PurchaseDialog.kt$PurchaseDialog$private suspend fun remainingPurchaseQuantity(onResult: (Int) -&gt; Unit)</ID>
-    <ID>NestedBlockDepth:PurchaseHandler.kt$PurchaseHandler$private fun processPurchases(result: BillingResult, purchases: List&lt;Purchase&gt;)</ID>
     <ID>NestedBlockDepth:QuestDetailFragment.kt$QuestDetailFragment$private fun setQuestParticipants(participants: List&lt;Member&gt;?)</ID>
     <ID>NestedBlockDepth:QuestDropItemsListSerialization.kt$QuestDropItemsListSerialization$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): RealmList&lt;QuestDropItem&gt;</ID>
     <ID>NestedBlockDepth:SafeDefaultItemAnimator.kt$SafeDefaultItemAnimator$override fun endAnimation(item: RecyclerView.ViewHolder)</ID>
-    <ID>NestedBlockDepth:ShopRecyclerAdapter.kt$ShopRecyclerAdapter$@Suppress("ReturnCount") override fun onBindViewHolder( holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int )</ID>
+    <ID>NestedBlockDepth:ShopRecyclerAdapter.kt$ShopRecyclerAdapter$@Suppress("ReturnCount") override fun onBindViewHolder( holder: ViewHolder, position: Int )</ID>
+    <ID>NestedBlockDepth:StableRecyclerAdapter.kt$StableRecyclerAdapter$override fun getItemViewType(position: Int): Int</ID>
+    <ID>NestedBlockDepth:StableRecyclerAdapter.kt$StableRecyclerAdapter$override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int)</ID>
+    <ID>NestedBlockDepth:Task.kt$Task$ fun getNextReminderOccurrences(remindersItem: RemindersItem?, occurrences: Int): List&lt;ZonedDateTime&gt;?</ID>
     <ID>NestedBlockDepth:Task.kt$Task$fun getDaysOfMonth(): List&lt;Int&gt;?</ID>
     <ID>NestedBlockDepth:Task.kt$Task$fun getWeeksOfMonth(): List&lt;Int&gt;?</ID>
     <ID>NestedBlockDepth:TaskFormActivity.kt$TaskFormActivity$private fun saveTask()</ID>
@@ -163,18 +182,21 @@
     <ID>NestedBlockDepth:UserDeserializer.kt$UserDeserializer$@Throws(JsonParseException::class) override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): User</ID>
     <ID>NestedBlockDepth:WorldStateSerialization.kt$WorldStateSerialization$override fun deserialize( json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext? ): WorldState</ID>
     <ID>ReturnCount:BaseTaskViewHolder.kt$BaseTaskViewHolder$override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean</ID>
-    <ID>ReturnCount:Customization.kt$Customization$fun getImageName(userSize: String?, hairColor: String?): String</ID>
+    <ID>ReturnCount:Customization.kt$Customization$fun getImageName(userSize: String?, hairColor: String?): String?</ID>
     <ID>ReturnCount:DragLinearLayout.kt$DragLinearLayout$override fun onInterceptTouchEvent(event: MotionEvent): Boolean</ID>
     <ID>ReturnCount:DragLinearLayout.kt$DragLinearLayout$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
     <ID>ReturnCount:RealmBaseLocalRepository.kt$RealmBaseLocalRepository$override fun &lt;T : BaseObject&gt; getLiveObject(obj: T): T?</ID>
+    <ID>ReturnCount:ReviewManager.kt$ReviewManager$private fun canRequestReview(currentCheckins: Int): Boolean</ID>
+    <ID>ReturnCount:Task.kt$Task$ fun getNextReminderOccurrences(remindersItem: RemindersItem?, occurrences: Int): List&lt;ZonedDateTime&gt;?</ID>
     <ID>ReturnCount:Task.kt$Task$fun isBeingEdited(task: Task): Boolean</ID>
+    <ID>SpreadOperator:Analytics.kt$Analytics$(*data.toList().toTypedArray())</ID>
     <ID>ThrowingExceptionsWithoutMessageOrCause:EllipsisTextView.kt$EllipsisTextView$NullPointerException()</ID>
     <ID>TooGenericExceptionCaught:ApiClientImpl.kt$ApiClientImpl$throwable: Throwable</ID>
     <ID>TooGenericExceptionCaught:AuthenticationViewModel.kt$AuthenticationViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:CustomizationDeserializer.kt$CustomizationDeserializer$e: Exception</ID>
     <ID>TooGenericExceptionCaught:LoginActivity.kt$LoginActivity$e: Exception</ID>
     <ID>TooGenericExceptionCaught:MainActivityViewModel.kt$MainActivityViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:MainNavigationController.kt$MainNavigationController$error: Exception</ID>
+    <ID>TooGenericExceptionCaught:PartySeekingFragment.kt$PartySeekingPagingSource$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PurchaseHandler.kt$PurchaseHandler$throwable: Throwable</ID>
     <ID>TooGenericExceptionCaught:SectionViewHolder.kt$SectionViewHolder$e: Exception</ID>
     <ID>TooGenericExceptionCaught:SetupCustomizationRepositoryImpl.kt$SetupCustomizationRepositoryImpl$e: Exception</ID>
@@ -182,7 +204,7 @@
     <ID>TooGenericExceptionCaught:TaskAlarmManager.kt$TaskAlarmManager.Companion$ex: Exception</ID>
     <ID>TooGenericExceptionCaught:TaskListDeserializer.kt$TaskListDeserializer$e: RuntimeException</ID>
     <ID>TooGenericExceptionCaught:TaskTagDeserializer.kt$TaskTagDeserializer$e: RuntimeException</ID>
-    <ID>TooGenericExceptionCaught:WorldStateSerialization.kt$WorldStateSerialization$e: Exception</ID>
+    <ID>TooGenericExceptionThrown:PurchaseHandler.kt$PurchaseHandler$throw Exception("Failed to consume purchase after multiple attempts")</ID>
     <ID>TooManyFunctions:ApiClient.kt$ApiClient</ID>
     <ID>TooManyFunctions:ApiClientImpl.kt$ApiClientImpl : ApiClient</ID>
     <ID>TooManyFunctions:ApiService.kt$ApiService</ID>
@@ -193,26 +215,28 @@
     <ID>TooManyFunctions:UserRepository.kt$UserRepository : BaseRepository</ID>
     <ID>TooManyFunctions:UserRepositoryImpl.kt$UserRepositoryImpl : BaseRepositoryImplUserRepository</ID>
     <ID>UnnecessaryAbstractClass:HabiticaLocalNotification.kt$HabiticaLocalNotification</ID>
-    <ID>UnusedPrivateMember:ApiClientImpl.kt$ApiClientImpl$private fun hideConnectionProblemDialog()</ID>
+    <ID>UnusedPrivateMember:AdHandler.kt$AdHandler$onComplete: ((Boolean) -&gt; Unit)? = null</ID>
+    <ID>UnusedPrivateMember:AdHandler.kt$AdHandler.Companion$onComplete: () -&gt; Unit</ID>
+    <ID>UnusedPrivateMember:AdHandler.kt$AdHandler.Companion$val deviceId: String = androidId.md5()?.uppercase() ?: ""</ID>
     <ID>UnusedPrivateMember:BaseTasksRecyclerViewAdapter.kt$BaseTasksRecyclerViewAdapter$private fun updateTask(task: Task)</ID>
     <ID>UnusedPrivateMember:BaseTasksRecyclerViewAdapter.kt$BaseTasksRecyclerViewAdapter$private val userID: String?</ID>
     <ID>UnusedPrivateMember:BirthdayMenuView.kt$value: Int</ID>
+    <ID>UnusedPrivateMember:ClassSelectionActivity.kt$ClassSelectionActivity$selectedClass: String</ID>
     <ID>UnusedPrivateMember:DragLinearLayout.kt$DragLinearLayout.Companion$`val`: Float</ID>
     <ID>UnusedPrivateMember:FullProfileActivity.kt$FullProfileActivity$`val`: Float</ID>
     <ID>UnusedPrivateMember:GroupFormActivity.kt$GroupFormActivity$private var autocompleteAdapter: AutocompleteAdapter? = null</ID>
+    <ID>UnusedPrivateMember:GuildDetailFragment.kt$GuildDetailFragment$private val sendInvitesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { if (it.resultCode == Activity.RESULT_OK) { val inviteData = HashMap&lt;String, Any&gt;() inviteData["inviter"] = viewModel.user.value?.profile?.name ?: "" val emails = it.data?.getStringArrayExtra(GroupInviteActivity.EMAILS_KEY) if (!emails.isNullOrEmpty()) { val invites = ArrayList&lt;HashMap&lt;String, String&gt;&gt;() emails.forEach { email -&gt; val invite = HashMap&lt;String, String&gt;() invite["name"] = "" invite["email"] = email invites.add(invite) } inviteData["emails"] = invites } val userIDs = it.data?.getStringArrayExtra(GroupInviteActivity.USER_IDS_KEY) if (!userIDs.isNullOrEmpty()) { val invites = ArrayList&lt;String&gt;() userIDs.forEach { invites.add(it) } inviteData["usernames"] = invites } viewModel.inviteToGroup(inviteData) } }</ID>
     <ID>UnusedPrivateMember:GuildFragment.kt$GuildFragment$group: Group?</ID>
+    <ID>UnusedPrivateMember:MountBottomSheet.kt$@Composable private fun getBackgroundPainter(): ImageBitmap</ID>
     <ID>UnusedPrivateMember:NotificationOpenHandler.kt$NotificationOpenHandler.Companion$private fun openQuestDetailSCreen()</ID>
     <ID>UnusedPrivateMember:PurchaseHandler.kt$PurchaseHandler$purchase: Purchase</ID>
     <ID>UnusedPrivateMember:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$direction: TaskDirection</ID>
     <ID>UnusedPrivateMember:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$task: Task</ID>
     <ID>UnusedPrivateMember:ScoreTaskLocallyInteractor.kt$ScoreTaskLocallyInteractor.Companion$user: User</ID>
     <ID>UnusedPrivateMember:StableFragment.kt$StableFragment$private val viewModel: StableViewModel by viewModels()</ID>
-    <ID>UnusedPrivateMember:SubscriptionFragment.kt$SubscriptionFragment.Companion$iSG1G1: Boolean</ID>
-    <ID>UnusedPrivateMember:TaskAlarmManager.kt$TaskAlarmManager$private fun removeAlarmsForTask(task: Task)</ID>
-    <ID>UnusedPrivateMember:UserRepositoryImpl.kt$UserRepositoryImpl$private val analyticsManager: AnalyticsManager</ID>
-    <ID>UnusedPrivateMember:UserRepositoryModule.kt$UserRepositoryModule$context: Context?</ID>
+    <ID>UnusedPrivateMember:TaskAlarmManager.kt$TaskAlarmManager$private var authenticationHandler: AuthenticationHandler</ID>
     <ID>UtilityClassWithPublicConstructor:AprilFoolsHandler.kt$AprilFoolsHandler</ID>
-    <ID>UtilityClassWithPublicConstructor:Date-Extensions.kt$DateUtils</ID>
+    <ID>UtilityClassWithPublicConstructor:DateExtensions.kt$DateUtils</ID>
     <ID>UtilityClassWithPublicConstructor:HapticFeedbackManager.kt$HapticFeedbackManager</ID>
     <ID>UtilityClassWithPublicConstructor:KeyboardUtil.kt$KeyboardUtil</ID>
     <ID>UtilityClassWithPublicConstructor:NotificationOpenHandler.kt$NotificationOpenHandler</ID>

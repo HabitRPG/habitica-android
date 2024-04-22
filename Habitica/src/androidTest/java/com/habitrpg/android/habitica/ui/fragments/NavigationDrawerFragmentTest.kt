@@ -23,9 +23,10 @@ class MainItem(parent: Matcher<View>) : KRecyclerItem<MainItem>(parent) {
 }
 
 class NavigationDrawerScreen : Screen<NavigationDrawerScreen>() {
-    val recycler: KRecyclerView = KRecyclerView({
-        withId(R.id.recyclerView)
-    }, itemTypeBuilder = {
+    val recycler: KRecyclerView =
+        KRecyclerView({
+            withId(R.id.recyclerView)
+        }, itemTypeBuilder = {
             itemType(::SectionHeaderItem)
             itemType(::MainItem)
         })
@@ -38,9 +39,10 @@ internal class NavigationDrawerFragmentTest : FragmentTestCase<NavigationDrawerF
     }
 
     override fun launchFragment(args: Bundle?) {
-        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
-            return@launchFragmentInContainer fragment
-        }
+        scenario =
+            launchFragmentInContainer(args, R.style.MainAppTheme) {
+                return@launchFragmentInContainer fragment
+            }
     }
 
     override val screen = NavigationDrawerScreen()

@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey
  */
 
 open class QuestColors : RealmObject(), BaseObject {
-
     @PrimaryKey
     var key: String? = null
     var dark: String? = null

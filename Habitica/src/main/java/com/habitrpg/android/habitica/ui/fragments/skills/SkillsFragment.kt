@@ -42,14 +42,17 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRecyclerviewBinding {
         return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         adapter = SkillsRecyclerViewAdapter()
         adapter?.onUseSkill = { onSkillSelected(it) }
@@ -59,12 +62,16 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.user.observe(viewLifecycleOwner) { user ->
             user?.let { checkUserLoadSkills(it) }
         }
-        binding?.recyclerView?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mainActivity)
+        binding?.recyclerView?.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(mainActivity)
         binding?.recyclerView?.adapter = adapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
     }
@@ -98,21 +105,30 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                 val intent = Intent(mainActivity, SkillMemberActivity::class.java)
                 memberSelectionResult.launch(intent)
             }
+
             skill.target == "task" -> {
                 selectedSkill = skill
                 val intent = Intent(mainActivity, SkillTasksActivity::class.java)
                 taskSelectionResult.launch(intent)
             }
+
             else -> useSkill(skill)
         }
     }
 
-    private fun displaySkillResult(usedSkill: Skill?, response: SkillResponse) {
+    private fun displaySkillResult(
+        usedSkill: Skill?,
+        response: SkillResponse,
+    ) {
         if (!isAdded) return
         adapter?.mana = response.user?.stats?.mp ?: 0.0
         val activity = mainActivity ?: return
         if ("special" == usedSkill?.habitClass) {
-            showSnackbar(activity.snackbarContainer, context?.getString(R.string.used_skill_without_mana, usedSkill.text), HabiticaSnackbar.SnackbarDisplayType.BLUE)
+            showSnackbar(
+                activity.snackbarContainer,
+                context?.getString(R.string.used_skill_without_mana, usedSkill.text),
+                HabiticaSnackbar.SnackbarDisplayType.BLUE,
+            )
         } else {
             context?.let {
                 showSnackbar(
@@ -122,7 +138,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfMagic()),
                     ContextCompat.getColor(it, R.color.blue_10),
                     "-" + usedSkill?.mana,
-                    HabiticaSnackbar.SnackbarDisplayType.BLUE
+                    HabiticaSnackbar.SnackbarDisplayType.BLUE,
                 )
             }
         }
@@ -137,7 +153,7 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfDamage()),
                     ContextCompat.getColor(activity, R.color.green_10),
                     "+%.01f".format(response.damage),
-                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                 )
             }
         }
@@ -146,28 +162,34 @@ class SkillsFragment : BaseMainFragment<FragmentRecyclerviewBinding>() {
         }
     }
 
-    private val taskSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            useSkill(selectedSkill, it.data?.getStringExtra("taskID"))
+    private val taskSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                useSkill(selectedSkill, it.data?.getStringExtra("taskID"))
+            }
         }
-    }
 
-    private val memberSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            useSkill(selectedSkill, it.data?.getStringExtra("member_id"))
+    private val memberSelectionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                useSkill(selectedSkill, it.data?.getStringExtra("member_id"))
+            }
         }
-    }
 
-    private fun useSkill(skill: Skill?, taskId: String? = null) {
+    private fun useSkill(
+        skill: Skill?,
+        taskId: String? = null,
+    ) {
         if (skill == null) {
             return
         }
         lifecycleScope.launchCatching {
-            val skillResponse = if (taskId != null) {
-                userRepository.useSkill(skill.key, skill.target, taskId)
-            } else {
-                userRepository.useSkill(skill.key, skill.target)
-            }
+            val skillResponse =
+                if (taskId != null) {
+                    userRepository.useSkill(skill.key, skill.target, taskId)
+                } else {
+                    userRepository.useSkill(skill.key, skill.target)
+                }
             if (skillResponse != null) {
                 displaySkillResult(skill, skillResponse)
             }

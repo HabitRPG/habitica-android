@@ -11,9 +11,9 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsSliderViewBinding
 import com.habitrpg.android.habitica.extensions.AfterChangeTextWatcher
-import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.extensions.styledAttributes
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.setTintWith
 
 class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     private val binding = StatsSliderViewBinding.inflate(context.layoutInflater, this)
@@ -48,9 +48,15 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
         val attributes = attrs?.styledAttributes(context, R.styleable.StatsSliderView)
 
         if (attributes != null) {
-            binding.statTypeTitle.text = attributes.getString(R.styleable.StatsSliderView_statsTitle)
+            binding.statTypeTitle.text =
+                attributes.getString(R.styleable.StatsSliderView_statsTitle)
             val statColor = attributes.getColor(R.styleable.StatsSliderView_statsColor, 0)
-            binding.statTypeTitle.setTextColor(attributes.getColor(R.styleable.StatsSliderView_statsTextColor, 0))
+            binding.statTypeTitle.setTextColor(
+                attributes.getColor(
+                    R.styleable.StatsSliderView_statsTextColor,
+                    0,
+                ),
+            )
             binding.statsSeekBar.progressTintList = ColorStateList.valueOf(statColor)
             val thumbDrawable = ContextCompat.getDrawable(context, R.drawable.seekbar_thumb)
             thumbDrawable?.setTintWith(statColor, PorterDuff.Mode.MULTIPLY)
@@ -59,11 +65,12 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
 
         binding.valueEditText.addTextChangedListener(
             AfterChangeTextWatcher { s ->
-                val newValue = try {
-                    s.toString().toInt()
-                } catch (e: NumberFormatException) {
-                    0
-                }
+                val newValue =
+                    try {
+                        s.toString().toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
                 if (newValue != currentValue && newValue <= maxValue && newValue > 0) {
                     currentValue = newValue
                     allocateAction?.invoke(currentValue)
@@ -71,21 +78,29 @@ class StatsSliderView(context: Context, attrs: AttributeSet?) : LinearLayout(con
                     binding.valueEditText.setText(currentValue.toString())
                     binding.valueEditText.setSelection(binding.valueEditText.length())
                 }
-            }
+            },
         )
 
-        binding.statsSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                currentValue = progress
-                if (fromUser) {
-                    allocateAction?.invoke(currentValue)
+        binding.statsSeekBar.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean,
+                ) {
+                    currentValue = progress
+                    if (fromUser) {
+                        allocateAction?.invoke(currentValue)
+                    }
                 }
-            }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) { /* no-on */ }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) { // no-on
+                }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) { /* no-on */ }
-        })
+                override fun onStopTrackingTouch(seekBar: SeekBar?) { // no-on
+                }
+            },
+        )
 
         currentValue = 0
     }

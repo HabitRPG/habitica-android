@@ -19,7 +19,6 @@ class IntroActivityScreen : Screen<IntroActivityScreen>() {
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class IntroActivityTest : ActivityTestCase() {
-
     @Rule
     @JvmField
     var mActivityTestRule = ActivityScenarioRule(IntroActivity::class.java)

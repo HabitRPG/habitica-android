@@ -9,16 +9,18 @@ import java.util.UUID
 open class ChecklistItem(
     var id: String? = UUID.randomUUID().toString(),
     var text: String? = null,
-    var completed: Boolean = false
+    var completed: Boolean = false,
 ) : Parcelable {
-
     var position: Int = 0
 
     override fun describeContents(): Int {
         return 0
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    override fun writeToParcel(
+        dest: Parcel,
+        flags: Int,
+    ) {
         dest.writeString(id)
         dest.writeString(text)
         dest.writeByte(if (completed) 1.toByte() else 0.toByte())

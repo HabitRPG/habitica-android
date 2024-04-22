@@ -10,7 +10,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentStatsBinding
 import com.habitrpg.android.habitica.extensions.addOkButton
-import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.UserStatComputer
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
@@ -19,6 +18,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.stats.BulkAllocateStatsDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.Attribute
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,12 +28,11 @@ import kotlin.math.min
 
 @AndroidEntryPoint
 class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
-
     override var binding: FragmentStatsBinding? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentStatsBinding {
         return FragmentStatsBinding.inflate(inflater, container, false)
     }
@@ -70,7 +69,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         tutorialStepIdentifier = "stats"
         tutorialTexts = listOf(getString(R.string.tutorial_stats))
@@ -83,7 +82,10 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         super.onDestroy()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.leftSparklesView?.setImageBitmap(HabiticaIconsHelper.imageOfAttributeSparklesLeft())
@@ -92,18 +94,18 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             val color = it.getThemeColor(R.attr.colorPrimaryOffset)
             binding?.distributeEvenlyHelpButton?.setImageBitmap(
                 HabiticaIconsHelper.imageOfInfoIcon(
-                    color
-                )
+                    color,
+                ),
             )
             binding?.distributeClassHelpButton?.setImageBitmap(
                 HabiticaIconsHelper.imageOfInfoIcon(
-                    color
-                )
+                    color,
+                ),
             )
             binding?.distributeTaskHelpButton?.setImageBitmap(
                 HabiticaIconsHelper.imageOfInfoIcon(
-                    color
-                )
+                    color,
+                ),
             )
         }
 
@@ -166,7 +168,7 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
         lifecycleScope.launchCatching {
             userRepository.updateUser(
                 "preferences.allocationMode",
-                allocationMode
+                allocationMode,
             )
         }
         binding?.distributeEvenlyButton?.isChecked = allocationMode == Stats.AUTO_ALLOCATE_FLAT
@@ -218,8 +220,8 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
                 binding?.numberOfPointsTextView?.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.white
-                    )
+                        R.color.white,
+                    ),
                 )
                 binding?.numberOfPointsTextView?.background =
                     ContextCompat.getDrawable(context, R.drawable.button_gray_100)
@@ -230,14 +232,14 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
                 binding?.numberOfPointsTextView?.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.text_quad
-                    )
+                        R.color.text_quad,
+                    ),
                 )
                 binding?.numberOfPointsTextView?.setBackgroundColor(
                     ContextCompat.getColor(
                         context,
-                        R.color.transparent
-                    )
+                        R.color.transparent,
+                    ),
                 )
                 binding?.leftSparklesView?.visibility = View.GONE
                 binding?.rightSparklesView?.visibility = View.GONE
@@ -275,12 +277,12 @@ class StatsFragment : BaseMainFragment<FragmentStatsBinding>() {
             binding?.perceptionStatsView?.levelValue = levelStat
 
             totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
-            totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
+            totalIntelligence += user.stats?.buffs?.intelligence?.toInt() ?: 0
             totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
             totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
             binding?.strengthStatsView?.buffValue = user.stats?.buffs?.str?.toInt() ?: 0
             binding?.intelligenceStatsView?.buffValue =
-                user.stats?.buffs?._int?.toInt() ?: 0
+                user.stats?.buffs?.intelligence?.toInt() ?: 0
             binding?.constitutionStatsView?.buffValue =
                 user.stats?.buffs?.con?.toInt() ?: 0
             binding?.perceptionStatsView?.buffValue =

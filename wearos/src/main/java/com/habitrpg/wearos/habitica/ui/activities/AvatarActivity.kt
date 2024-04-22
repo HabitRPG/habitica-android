@@ -38,15 +38,16 @@ class AvatarActivity : BaseActivity<ActivityAvatarBinding, AvatarViewModel>() {
 
     private fun scaleAvatar() {
         val params = binding.root.layoutParams as FrameLayout.LayoutParams
-        val maxSize = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            max(
-                windowManager.currentWindowMetrics.bounds.bottom,
-                windowManager.currentWindowMetrics.bounds.right
-            )
-        } else {
-            @Suppress("DEPRECATION")
-            max(windowManager.defaultDisplay.width, windowManager.defaultDisplay.height)
-        }
+        val maxSize =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                max(
+                    windowManager.currentWindowMetrics.bounds.bottom,
+                    windowManager.currentWindowMetrics.bounds.right,
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                max(windowManager.defaultDisplay.width, windowManager.defaultDisplay.height)
+            }
         var factor = (maxSize / 46f) / 3f
         var viewSize = 138 * factor.roundToInt()
         if (maxSize - viewSize > 20.dpToPx(this)) {

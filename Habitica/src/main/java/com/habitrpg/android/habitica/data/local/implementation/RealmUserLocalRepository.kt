@@ -44,6 +44,7 @@ class RealmUserLocalRepository(realm: Realm) :
                     it.quest?.members?.find { questMember -> questMember.key == userID } === null -> UserQuestStatus.NO_QUEST
                     it.quest?.progress?.collect?.isNotEmpty()
                         ?: false -> UserQuestStatus.QUEST_COLLECT
+
                     (it.quest?.progress?.hp ?: 0.0) > 0.0 -> UserQuestStatus.QUEST_BOSS
                     else -> UserQuestStatus.QUEST_UNKNOWN
                 }
@@ -81,11 +82,15 @@ class RealmUserLocalRepository(realm: Realm) :
             .map { users -> users.first() }
     }
 
-    override fun saveUser(user: User, overrideExisting: Boolean) {
+    override fun saveUser(
+        user: User,
+        overrideExisting: Boolean,
+    ) {
         if (realm.isClosed) return
-        val oldUser = realm.where(User::class.java)
-            .equalTo("id", user.id)
-            .findFirst()
+        val oldUser =
+            realm.where(User::class.java)
+                .equalTo("id", user.id)
+                .findFirst()
         if (oldUser != null && oldUser.isValid) {
             if (user.needsCron && !oldUser.needsCron) {
                 if (user.lastCron?.before(oldUser.lastCron) == true) {
@@ -101,7 +106,10 @@ class RealmUserLocalRepository(realm: Realm) :
         removeOldTags(user.id ?: "", user.tags)
     }
 
-    private fun removeOldTags(userId: String, onlineTags: List<Tag>) {
+    private fun removeOldTags(
+        userId: String,
+        onlineTags: List<Tag>,
+    ) {
         val tags = realm.where(Tag::class.java).equalTo("userId", userId).findAll().createSnapshot()
         val tagsToDelete = tags.filterNot { onlineTags.contains(it) }
         executeTransaction {

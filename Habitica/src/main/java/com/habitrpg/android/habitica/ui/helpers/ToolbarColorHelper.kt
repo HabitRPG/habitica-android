@@ -26,8 +26,8 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.ActionMenuView
 import androidx.appcompat.widget.Toolbar
 import com.habitrpg.android.habitica.R
-import com.habitrpg.common.habitica.extensions.waitForLayout
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.waitForLayout
 
 /**
  * Helper class that iterates through Toolbar views, and sets dynamically icons and texts color
@@ -43,10 +43,12 @@ object ToolbarColorHelper {
         toolbar: Toolbar,
         activity: Activity?,
         iconColor: Int? = null,
-        backgroundColor: Int? = null
+        backgroundColor: Int? = null,
     ) {
         if (activity == null) return
-        toolbar.setBackgroundColor(backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor))
+        toolbar.setBackgroundColor(
+            backgroundColor ?: activity.getThemeColor(R.attr.headerBackgroundColor),
+        )
         val toolbarIconsColor = iconColor ?: activity.getThemeColor(R.attr.headerTextColor)
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             activity.window.statusBarColor = activity.getThemeColor(R.attr.colorPrimaryDark)
@@ -57,11 +59,13 @@ object ToolbarColorHelper {
                 is ImageButton -> {
                     v.drawable.colorFilter = colorFilter
                 }
+
                 is ActionMenuView -> {
                     for (j in 0 until v.childCount) {
                         colorizeChild(v.getChildAt(j), toolbarIconsColor, colorFilter)
                     }
                 }
+
                 is TextView -> {
                     v.setTextColor(toolbarIconsColor)
                 }
@@ -77,7 +81,7 @@ object ToolbarColorHelper {
     private fun colorizeChild(
         innerView: View,
         toolbarIconsColor: Int,
-        colorFilter: PorterDuffColorFilter
+        colorFilter: PorterDuffColorFilter,
     ) {
         if (innerView is ActionMenuItemView) {
             innerView.setTextColor(toolbarIconsColor)
@@ -97,14 +101,17 @@ object ToolbarColorHelper {
      * @param activity
      * @param color
      */
-    private fun setOverflowButtonColor(activity: Activity, color: Int) {
+    private fun setOverflowButtonColor(
+        activity: Activity,
+        color: Int,
+    ) {
         val overflowDescription = activity.getString(R.string.abc_action_menu_overflow_description)
         activity.window.decorView.waitForLayout {
             val outViews = ArrayList<View>()
             findViewsWithText(
                 outViews,
                 overflowDescription,
-                View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION
+                View.FIND_VIEWS_WITH_CONTENT_DESCRIPTION,
             )
             if (outViews.isEmpty()) {
                 return@waitForLayout

@@ -25,7 +25,8 @@ class PurchaseDialogCustomizationSetContent(context: Context) : PurchaseDialogCo
             val imageView = PixelArtView(context)
             imageView.setBackgroundResource(R.drawable.layout_rounded_bg_window)
             imageView.loadImage(it)
-            imageView.layoutParams = FlexboxLayout.LayoutParams(76.dpToPx(context), 76.dpToPx(context))
+            imageView.layoutParams =
+                FlexboxLayout.LayoutParams(76.dpToPx(context), 76.dpToPx(context))
             binding.imageViewWrapper.addView(imageView)
         }
         if (item.key == "facialHair") {

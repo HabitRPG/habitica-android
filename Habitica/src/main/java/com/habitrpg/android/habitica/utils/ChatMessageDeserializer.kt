@@ -15,14 +15,19 @@ import java.util.Date
 
 class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ChatMessage {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): ChatMessage {
         val message = ChatMessage()
         val obj = json.asJsonObject
         if (obj.has("text") && !obj.get("text").isJsonNull && obj.get("text").isJsonPrimitive) {
             message.text = obj.get("text").asString
         }
         if (obj.has("timestamp")) {
-            message.timestamp = context.deserialize<Date>(obj.get("timestamp"), Date::class.java).time
+            message.timestamp =
+                context.deserialize<Date>(obj.get("timestamp"), Date::class.java).time
         }
         if (obj.has("likes")) {
             message.likes = RealmList()
@@ -44,7 +49,11 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
         if (obj.has("contributor")) {
             if (!obj.get("contributor").isJsonNull) {
                 if (obj.get("contributor").isJsonObject) {
-                    message.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
+                    message.contributor =
+                        context.deserialize<ContributorInfo>(
+                            obj.get("contributor"),
+                            ContributorInfo::class.java,
+                        )
                 } else {
                     val contributor = ContributorInfo()
                     contributor.text = obj.get("contributor").asString
@@ -70,7 +79,8 @@ class ChatMessageDeserializer : JsonDeserializer<ChatMessage> {
         }
 
         if (obj.has("userStyles")) {
-            message.userStyles = context.deserialize<UserStyles>(obj.get("userStyles"), UserStyles::class.java)
+            message.userStyles =
+                context.deserialize<UserStyles>(obj.get("userStyles"), UserStyles::class.java)
         }
         if (obj.has("id")) {
             message.id = obj.get("id").asString

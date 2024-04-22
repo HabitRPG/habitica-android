@@ -22,7 +22,6 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 import org.json.JSONArray
 import org.json.JSONException
-import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -56,13 +55,17 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     var notes: String? = null
     override var type: TaskType?
         get() = TaskType.from(typeValue)
-        set(value) { typeValue = value?.value }
+        set(value) {
+            typeValue = value?.value
+        }
     private var typeValue: String? = null
     var challengeID: String? = null
     var challengeBroken: String? = null
     var attribute: Attribute?
         get() = Attribute.from(attributeValue)
-        set(value) { attributeValue = value?.value }
+        set(value) {
+            attributeValue = value?.value
+        }
     var attributeValue: String? = Attribute.STRENGTH.value
     var value: Double = 0.0
     var tags: RealmList<Tag>? = RealmList()
@@ -84,7 +87,9 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     // dailies
     var frequency: Frequency?
         get() = Frequency.from(frequencyValue)
-        set(value) { frequencyValue = value?.value }
+        set(value) {
+            frequencyValue = value?.value
+        }
     var frequencyValue: String? = null
     var everyX: Int? = 0
     override var streak: Int? = 0
@@ -108,7 +113,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     val isUpdatedToday: Boolean
         get() {
             val updatedAt = updatedAt ?: return false
-            return ZonedDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()).toLocalDate()
+            return ZonedDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault())
+                .toLocalDate()
                 .equals(ZonedDateTime.now().withZoneSameLocal(ZoneId.systemDefault()).toLocalDate())
         }
 
@@ -132,15 +138,20 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     fun completed(byUserID: String?): Boolean {
         return if (isGroupTask) {
-            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == byUserID }?.completed ?: completed
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == byUserID }?.completed
+                ?: completed
         } else {
             completed
         }
     }
 
-    fun completeForUser(userID: String?, completed: Boolean) {
+    fun completeForUser(
+        userID: String?,
+        completed: Boolean,
+    ) {
         if (isGroupTask && group?.assignedUsersDetail?.isNotEmpty() == true) {
-            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed = completed
+            group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == userID }?.completed =
+                completed
             if (group?.assignedUsersDetail?.none { it.completed != completed } == true) {
                 this.completed = completed
             }
@@ -171,7 +182,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     val streakString: String?
         get() {
-            return if (counterUp != null && (counterUp ?: 0) > 0 && counterDown != null && (counterDown ?: 0) > 0) {
+            return if (counterUp != null && (
+                    counterUp
+                        ?: 0
+                ) > 0 && counterDown != null && (counterDown ?: 0) > 0
+            ) {
                 "+" + counterUp.toString() + " | -" + counterDown?.toString()
             } else if (counterUp != null && (counterUp ?: 0) > 0) {
                 "+" + counterUp.toString()
@@ -327,7 +342,8 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
     val isPendingApproval: Boolean
         get() = (group?.approvalRequired == true && group?.approvalRequested == true && group?.approvalApproved == false)
 
-    fun containsAllTagIds(tagIdList: List<String>): Boolean = tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
+    fun containsAllTagIds(tagIdList: List<String>): Boolean =
+        tags?.mapTo(ArrayList()) { it.id }?.containsAll(tagIdList) ?: false
 
     fun checkIfDue(): Boolean = isDue == true
 
@@ -350,16 +366,24 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
      * @return A list of ZonedDateTime instances, each representing an upcoming reminder occurrence.
      *         Returns null if the reminder item is null or essential information for calculation is missing.
      */
-    fun getNextReminderOccurrences(remindersItem: RemindersItem?, occurrences: Int): List<ZonedDateTime>? {
+    fun getNextReminderOccurrences(
+        remindersItem: RemindersItem?,
+        occurrences: Int,
+    ): List<ZonedDateTime>? {
         if (remindersItem == null) return null
 
         val reminderTime = remindersItem.time?.parseToZonedDateTime() ?: return null
-        var dateTimeOccurenceToSchedule = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
+        var dateTimeOccurenceToSchedule =
+            ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
         val occurrencesList = mutableListOf<ZonedDateTime>()
 
         // If the reminder is a todo, only schedule sole dueDate/time occurrence. Otherwise, schedule multiple occurrences in advance
         if (this.type == TaskType.TODO) {
-            occurrencesList.add((remindersItem.getZonedDateTime() ?: this.dueDate?.toZonedDateTime())?.withHour(reminderTime.hour)?.withMinute(reminderTime.minute) ?: return null)
+            occurrencesList.add(
+                (remindersItem.getZonedDateTime() ?: this.dueDate?.toZonedDateTime())?.withHour(
+                    reminderTime.hour,
+                )?.withMinute(reminderTime.minute) ?: return null,
+            )
             return occurrencesList
         }
         val now = ZonedDateTime.now().withZoneSameInstant(ZoneId.systemDefault())
@@ -374,74 +398,96 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
         while (occurrencesList.size < occurrences) {
             // Increment currentDate based on the frequency
-            dateTimeOccurenceToSchedule = when (frequency) {
-                Frequency.DAILY -> {
-                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        startDate
-                    } else {
-                        dateTimeOccurenceToSchedule.plusDays(everyX.toLong()).withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                    }
-                    dateTimeOccurenceToSchedule
-                }
-                Frequency.WEEKLY -> {
-                    // Set to start date if current date is earlier
-                    if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        dateTimeOccurenceToSchedule = startDate
-                    } else if (repeatDays?.hasAnyDaySelected() == true) {
-
-                        var nextDueDate = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
-                        if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
-                            nextDueDate = nextDueDate.plusDays(1)
-                        }
-
-                        // If the reminder being scheduled is not the first iteration of the reminder, increment it by one day
-                        if (occurrencesList.size > 0) {
-                            nextDueDate = nextDueDate.plusDays(1)
-                        }
-
-                        while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                            nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                        }
-                        // Calculate weeks since start and adjust for the correct interval
-                        val weeksSinceStart = ChronoUnit.WEEKS.between(startDate.toLocalDate(), nextDueDate.toLocalDate())
-                        if (weeksSinceStart % everyX != 0L) {
-                            val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
-                            nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
-                            // Find the exact next due day within the valid interval
-                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
-                                nextDueDate = nextDueDate.plusDays(1).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+            dateTimeOccurenceToSchedule =
+                when (frequency) {
+                    Frequency.DAILY -> {
+                        dateTimeOccurenceToSchedule =
+                            if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                                startDate
+                            } else {
+                                dateTimeOccurenceToSchedule.plusDays(everyX.toLong())
+                                    .withHour(reminderTime.hour).withMinute(reminderTime.minute)
                             }
+                        dateTimeOccurenceToSchedule
+                    }
+
+                    Frequency.WEEKLY -> {
+                        // Set to start date if current date is earlier
+                        if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                            dateTimeOccurenceToSchedule = startDate
+                        } else if (repeatDays?.hasAnyDaySelected() == true) {
+                            var nextDueDate =
+                                dateTimeOccurenceToSchedule.withHour(reminderTime.hour)
+                                    .withMinute(reminderTime.minute)
+                            // If the next due date already happened for today, increment it by one day. Otherwise, it will be scheduled for today.
+                            if (nextDueDate.isBefore(now) && occurrencesList.size == 0) {
+                                nextDueDate = nextDueDate.plusDays(1)
+                            }
+
+                            // If the reminder being scheduled is not the first iteration of the reminder, increment it by one day
+                            if (occurrencesList.size > 0) {
+                                nextDueDate = nextDueDate.plusDays(1)
+                            }
+
+                            while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                nextDueDate =
+                                    nextDueDate.plusDays(1).withHour(reminderTime.hour)
+                                        .withMinute(reminderTime.minute)
+                            }
+                            // Calculate weeks since start and adjust for the correct interval
+                            val weeksSinceStart =
+                                ChronoUnit.WEEKS.between(
+                                    startDate.toLocalDate(),
+                                    nextDueDate.toLocalDate(),
+                                )
+                            if (weeksSinceStart % everyX != 0L) {
+                                val weeksToNextValidInterval = everyX - (weeksSinceStart % everyX)
+                                nextDueDate = nextDueDate.plusWeeks(weeksToNextValidInterval)
+                                // Find the exact next due day within the valid interval
+                                while (!nextDueDate.matchesRepeatDays(repeatDays)) {
+                                    nextDueDate =
+                                        nextDueDate.plusDays(1).withHour(reminderTime.hour)
+                                            .withMinute(reminderTime.minute)
+                                }
+                            }
+
+                            dateTimeOccurenceToSchedule = nextDueDate
                         }
+                        // Set time to the reminder time
+                        dateTimeOccurenceToSchedule =
+                            dateTimeOccurenceToSchedule.withHour(reminderTime.hour)
+                                .withMinute(reminderTime.minute)
+                        dateTimeOccurenceToSchedule
+                    }
 
-                        dateTimeOccurenceToSchedule = nextDueDate
+                    Frequency.MONTHLY -> {
+                        dateTimeOccurenceToSchedule =
+                            if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                                startDate
+                            } else {
+                                dateTimeOccurenceToSchedule.plusMonths(everyX.toLong())
+                                    .withDayOfMonth(startDate.dayOfMonth).withHour(reminderTime.hour)
+                                    .withMinute(reminderTime.minute)
+                            }
+                        dateTimeOccurenceToSchedule
                     }
-                    // Set time to the reminder time
-                    dateTimeOccurenceToSchedule = dateTimeOccurenceToSchedule.withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                    dateTimeOccurenceToSchedule
-                }
 
-                Frequency.MONTHLY -> {
-                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        startDate
-                    } else {
-                        dateTimeOccurenceToSchedule.plusMonths(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withHour(reminderTime.hour).withMinute(reminderTime.minute)
+                    Frequency.YEARLY -> {
+                        dateTimeOccurenceToSchedule =
+                            if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
+                                startDate
+                            } else {
+                                dateTimeOccurenceToSchedule.plusYears(everyX.toLong())
+                                    .withDayOfMonth(startDate.dayOfMonth)
+                                    .withMonth(startDate.monthValue).withHour(reminderTime.hour)
+                                    .withMinute(reminderTime.minute)
+                            }
+                        dateTimeOccurenceToSchedule
                     }
-                    dateTimeOccurenceToSchedule
                 }
-                Frequency.YEARLY -> {
-                    dateTimeOccurenceToSchedule = if (dateTimeOccurenceToSchedule.isBefore(startDate)) {
-                        startDate
-                    } else {
-                        dateTimeOccurenceToSchedule.plusYears(everyX.toLong()).withDayOfMonth(startDate.dayOfMonth).withMonth(startDate.monthValue).withHour(reminderTime.hour).withMinute(reminderTime.minute)
-                    }
-                    dateTimeOccurenceToSchedule
-                }
-            }
 
             occurrencesList.add(dateTimeOccurenceToSchedule)
         }
-
 
         return occurrencesList
     }
@@ -500,8 +546,12 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
             notes != task.notes -> return true
             reminders?.size != task.reminders?.size -> return true
             checklist?.size != task.checklist?.size -> return true
-            reminders?.mapIndexed { index, remindersItem -> task.reminders?.get(index) != remindersItem }?.contains(true) == true -> return true
-            checklist?.mapIndexed { index, item -> task.checklist?.get(index) != item }?.contains(true) == true -> return true
+            reminders?.mapIndexed { index, remindersItem -> task.reminders?.get(index) != remindersItem }
+                ?.contains(true) == true -> return true
+
+            checklist?.mapIndexed { index, item -> task.checklist?.get(index) != item }
+                ?.contains(true) == true -> return true
+
             priority != task.priority -> return true
             attribute != task.attribute && attribute != null -> return true
             tags != task.tags -> return true
@@ -517,6 +567,7 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     else -> false
                 }
             }
+
             TaskType.DAILY -> {
                 return when {
                     startDate != task.startDate -> true
@@ -527,12 +578,15 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
                     else -> false
                 }
             }
+
             TaskType.TODO -> {
                 return (dueDate != task.dueDate && task.dueDate != null)
             }
+
             TaskType.REWARD -> {
                 return value != task.value
             }
+
             else -> {
                 return false
             }
@@ -545,7 +599,10 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
 
     override fun describeContents(): Int = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    override fun writeToParcel(
+        dest: Parcel,
+        flags: Int,
+    ) {
         dest.writeString(this.ownerID)
         dest.writeValue(this.priority)
         dest.writeString(this.text)
@@ -688,10 +745,11 @@ open class Task : RealmObject, BaseMainObject, Parcelable, BaseTask {
         const val FILTER_COMPLETED = "completed"
 
         @JvmField
-        val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {
-            override fun createFromParcel(source: Parcel): Task = Task(source)
+        val CREATOR: Parcelable.Creator<Task> =
+            object : Parcelable.Creator<Task> {
+                override fun createFromParcel(source: Parcel): Task = Task(source)
 
-            override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
-        }
+                override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+            }
     }
 }

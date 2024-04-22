@@ -25,7 +25,7 @@ class UserStatComputerTest : StringSpec({
     equipment.key = key
     equipment.text = text
     equipment.str = str
-    equipment._int = intStat
+    equipment.intelligence = intStat
     equipment.per = per
     equipment.con = con
     equipmentList.add(equipment)

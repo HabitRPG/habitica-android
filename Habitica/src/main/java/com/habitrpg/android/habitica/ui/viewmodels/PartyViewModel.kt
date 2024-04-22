@@ -18,69 +18,78 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PartyViewModel @Inject constructor(
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel,
-    challengeRepository: ChallengeRepository,
-    socialRepository: SocialRepository,
-    notificationsManager: NotificationsManager
-) : GroupViewModel(userRepository, userViewModel, challengeRepository, socialRepository, notificationsManager) {
+class PartyViewModel
+    @Inject
+    constructor(
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+        challengeRepository: ChallengeRepository,
+        socialRepository: SocialRepository,
+        notificationsManager: NotificationsManager,
+    ) : GroupViewModel(
+            userRepository,
+            userViewModel,
+            challengeRepository,
+            socialRepository,
+            notificationsManager,
+        ) {
+        internal val isQuestActive: Boolean
+            get() = getGroupData().value?.quest?.active == true
 
-    internal val isQuestActive: Boolean
-        get() = getGroupData().value?.quest?.active == true
+        internal val isUserOnQuest: Boolean
+            get() =
+                !(
+                    getGroupData().value?.quest?.members?.none { it.key == user.value?.id }
+                        ?: true
+                )
 
-    internal val isUserOnQuest: Boolean
-        get() = !(
-            getGroupData().value?.quest?.members?.none { it.key == user.value?.id }
-                ?: true
-            )
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val membersFlow = groupIDFlow
-        .filterNotNull()
-        .flatMapLatest { socialRepository.getPartyMembers(it) }
-    private val members = membersFlow.asLiveData()
-
-    init {
-        groupViewType = GroupViewType.PARTY
-    }
-
-    fun getMembersData() = members
-
-    fun acceptQuest() {
-        groupID?.let { groupID ->
-            viewModelScope.launchCatching {
-                socialRepository.acceptQuest(null, groupID)
-                socialRepository.retrieveGroup(groupID)
-                userRepository.retrieveUser()
-            }
-        }
-    }
-
-    fun rejectQuest() {
-        groupID?.let { groupID ->
-            viewModelScope.launchCatching {
-                socialRepository.rejectQuest(null, groupID)
-                socialRepository.retrieveGroup(groupID)
-                userRepository.retrieveUser()
-            }
-        }
-    }
-
-    fun showParticipantButtons(): Boolean {
-        val user = user.value
-        return !(user?.party == null || user.party?.quest == null) && !isQuestActive && user.party?.quest?.RSVPNeeded == true
-    }
-
-    fun loadPartyID() {
-        viewModelScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.getUser()
-                .map { it?.party?.id }
-                .distinctUntilChanged()
+        @OptIn(ExperimentalCoroutinesApi::class)
+        private val membersFlow =
+            groupIDFlow
                 .filterNotNull()
-                .collect {
-                    setGroupID(it)
+                .flatMapLatest { socialRepository.getPartyMembers(it) }
+        private val members = membersFlow.asLiveData()
+
+        init {
+            groupViewType = GroupViewType.PARTY
+        }
+
+        fun getMembersData() = members
+
+        fun acceptQuest() {
+            groupID?.let { groupID ->
+                viewModelScope.launchCatching {
+                    socialRepository.acceptQuest(null, groupID)
+                    socialRepository.retrieveGroup(groupID)
+                    userRepository.retrieveUser()
                 }
+            }
+        }
+
+        fun rejectQuest() {
+            groupID?.let { groupID ->
+                viewModelScope.launchCatching {
+                    socialRepository.rejectQuest(null, groupID)
+                    socialRepository.retrieveGroup(groupID)
+                    userRepository.retrieveUser()
+                }
+            }
+        }
+
+        fun showParticipantButtons(): Boolean {
+            val user = user.value
+            return !(user?.party == null || user.party?.quest == null) && !isQuestActive && user.party?.quest?.RSVPNeeded == true
+        }
+
+        fun loadPartyID() {
+            viewModelScope.launch(ExceptionHandler.coroutine()) {
+                userRepository.getUser()
+                    .map { it?.party?.id }
+                    .distinctUntilChanged()
+                    .filterNotNull()
+                    .collect {
+                        setGroupID(it)
+                    }
+            }
         }
     }
-}

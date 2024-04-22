@@ -8,10 +8,12 @@ import kotlin.math.abs
 private const val MAX_ICON_PROGRESS = 0.8f
 
 class HabiticaScrollingLayoutCallback : WearableLinearLayoutManager.LayoutCallback() {
-
     private var progressToCenter: Float = 0f
 
-    override fun onLayoutFinished(child: View, parent: RecyclerView) {
+    override fun onLayoutFinished(
+        child: View,
+        parent: RecyclerView,
+    ) {
         child.apply {
             // Figure out % progress from top to bottom
             val centerOffset = height.toFloat() / 2.0f / parent.height.toFloat()

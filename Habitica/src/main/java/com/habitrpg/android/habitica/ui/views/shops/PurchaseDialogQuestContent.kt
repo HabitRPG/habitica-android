@@ -66,17 +66,28 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
             }
 
             if ((questContent.drop?.exp ?: 0) > 0) {
-                val view = inflater?.inflate(R.layout.row_quest_reward_imageview, binding.rewardsList, false) as? ViewGroup
+                val view =
+                    inflater?.inflate(
+                        R.layout.row_quest_reward_imageview,
+                        binding.rewardsList,
+                        false,
+                    ) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfExperienceReward())
                 val titleTextView = view?.findViewById<TextView>(R.id.titleTextView)
-                titleTextView?.text = context.getString(R.string.experience_reward, questContent.drop?.exp)
+                titleTextView?.text =
+                    context.getString(R.string.experience_reward, questContent.drop?.exp)
                 binding.rewardsList.addView(view)
             }
 
             if ((questContent.drop?.gp ?: 0) > 0) {
-                val view = inflater?.inflate(R.layout.row_quest_reward_imageview, binding.rewardsList, false) as? ViewGroup
+                val view =
+                    inflater?.inflate(
+                        R.layout.row_quest_reward_imageview,
+                        binding.rewardsList,
+                        false,
+                    ) as? ViewGroup
                 val imageView = view?.findViewById<ImageView>(R.id.imageView)
                 imageView?.scaleType = ImageView.ScaleType.CENTER
                 imageView?.setImageBitmap(HabiticaIconsHelper.imageOfGoldReward())
@@ -90,14 +101,15 @@ class PurchaseDialogQuestContent(context: Context) : PurchaseDialogContent(conte
     private fun addRewardsRow(
         inflater: LayoutInflater?,
         item: QuestDropItem,
-        containerView: ViewGroup?
+        containerView: ViewGroup?,
     ) {
         val view = inflater?.inflate(R.layout.row_quest_reward, containerView, false) as? ViewGroup
         val imageView = view?.findViewById(R.id.imageView) as? PixelArtView
         val titleTextView = view?.findViewById(R.id.titleTextView) as? TextView
         imageView?.loadImage(item.imageName)
         if (item.count > 1) {
-            titleTextView?.text = context.getString(R.string.quest_reward_count, item.text, item.count)
+            titleTextView?.text =
+                context.getString(R.string.quest_reward_count, item.text, item.count)
         } else {
             titleTextView?.text = item.text
         }

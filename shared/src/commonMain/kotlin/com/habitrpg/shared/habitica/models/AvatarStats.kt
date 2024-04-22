@@ -17,7 +17,7 @@ interface AvatarStats {
         get() {
             return (buffs?.str ?: 0f) > 0 ||
                 (buffs?.con ?: 0f) > 0 ||
-                (buffs?._int ?: 0f) > 0 ||
+                (buffs?.intelligence ?: 0f) > 0 ||
                 (buffs?.per ?: 0f) > 0
         }
 }

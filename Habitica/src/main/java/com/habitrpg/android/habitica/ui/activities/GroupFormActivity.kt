@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GroupFormActivity : BaseActivity() {
-
     private lateinit var binding: ActivityGroupFormBinding
     private var groupID: String? = null
     private var groupType: String? = null
@@ -96,7 +95,10 @@ class GroupFormActivity : BaseActivity() {
         val bundle = Bundle()
         bundle.putString("name", name)
         bundle.putString("groupType", groupType)
-        bundle.putString("description", MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text.toString()))
+        bundle.putString(
+            "description",
+            MarkdownParser.parseCompiled(binding.groupDescriptionEditText.text.toString()),
+        )
         bundle.putBoolean("leaderOnlyChallenges", binding.leaderCreateChallengeSwitch.isChecked)
         bundle.putString("leader", this.groupLeader)
         resultIntent.putExtras(bundle)
@@ -106,7 +108,6 @@ class GroupFormActivity : BaseActivity() {
     }
 
     companion object {
-
         const val GROUP_FORM_ACTIVITY = 11
     }
 }

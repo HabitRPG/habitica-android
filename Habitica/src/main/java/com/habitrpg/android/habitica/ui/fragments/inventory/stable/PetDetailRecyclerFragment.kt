@@ -9,7 +9,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.ReviewManager
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -24,6 +23,7 @@ import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.inventory.items.ItemDialogFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
@@ -40,7 +40,6 @@ import kotlin.coroutines.suspendCoroutine
 class PetDetailRecyclerFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -63,7 +62,7 @@ class PetDetailRecyclerFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -71,7 +70,7 @@ class PetDetailRecyclerFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = false
         if (savedInstanceState != null) {
@@ -85,7 +84,10 @@ class PetDetailRecyclerFragment :
         super.onDestroy()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
@@ -104,7 +106,7 @@ class PetDetailRecyclerFragment :
             object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (adapter.getItemViewType(position) == 0 || adapter.getItemViewType(
-                            position
+                            position,
                         ) == 1
                     ) {
                         layoutManager?.spanCount ?: 1
@@ -116,8 +118,9 @@ class PetDetailRecyclerFragment :
         binding?.recyclerView?.layoutManager = layoutManager
         adapter.animalIngredientsRetriever = { animal, callback ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
-                    .firstOrNull()?.firstOrNull() as? Egg
+                val egg =
+                    inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
+                        .firstOrNull()?.firstOrNull() as? Egg
                 val potion =
                     inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color))
                         .firstOrNull()?.firstOrNull() as? HatchingPotion
@@ -148,7 +151,7 @@ class PetDetailRecyclerFragment :
         adapter.onFeed = { pet, food ->
             showFeedingDialog(
                 pet,
-                food
+                food,
             )
         }
 
@@ -193,14 +196,16 @@ class PetDetailRecyclerFragment :
                 inventoryRepository.getOwnedItems(true).collect { adapter.setOwnedItems(it) }
             }
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                val mounts = inventoryRepository.getMounts(
-                    animalType,
-                    animalGroup,
-                    animalColor
-                ).firstOrNull() ?: emptyList()
+                val mounts =
+                    inventoryRepository.getMounts(
+                        animalType,
+                        animalGroup,
+                        animalColor,
+                    ).firstOrNull() ?: emptyList()
                 adapter.setExistingMounts(mounts)
-                val pets = inventoryRepository.getPets(animalType, animalGroup, animalColor)
-                    .firstOrNull() ?: emptyList()
+                val pets =
+                    inventoryRepository.getPets(animalType, animalGroup, animalColor)
+                        .firstOrNull() ?: emptyList()
                 inventoryRepository.getOwnedPets()
                     .map { ownedPets ->
                         val petMap = mutableMapOf<String, OwnedPet>()
@@ -217,7 +222,7 @@ class PetDetailRecyclerFragment :
                                 currentSection =
                                     StableSection(
                                         pet.type,
-                                        "pets"
+                                        "pets",
                                     )
                                 items.add(currentSection)
                             }
@@ -236,15 +241,18 @@ class PetDetailRecyclerFragment :
         }
     }
 
-    private suspend fun showFeedingDialog(pet: Pet, food: Food?): FeedResponse? {
+    private suspend fun showFeedingDialog(
+        pet: Pet,
+        food: Food?,
+    ): FeedResponse? {
         if (food != null) {
             val context = mainActivity ?: context ?: return null
             return feedPetUseCase.callInteractor(
                 FeedPetUseCase.RequestValues(
                     pet,
                     food,
-                    context
-                )
+                    context,
+                ),
             )
         }
         return suspendCoroutine { cont ->

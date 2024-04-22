@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
-class RealmTutorialLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), TutorialLocalRepository {
-
+class RealmTutorialLocalRepository(realm: Realm) :
+    RealmBaseLocalRepository(realm),
+    TutorialLocalRepository {
     override fun getTutorialStep(key: String): Flow<TutorialStep> {
         if (realm.isClosed) return emptyFlow()
         return realm.where(TutorialStep::class.java).equalTo("identifier", key)

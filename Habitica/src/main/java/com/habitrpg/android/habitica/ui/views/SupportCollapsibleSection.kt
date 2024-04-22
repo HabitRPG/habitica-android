@@ -21,25 +21,39 @@ class SupportCollapsibleSection : LinearLayout {
         init(attrs, 0)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle,
+    ) {
         init(attrs, defStyle)
     }
 
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
+    private fun init(
+        attrs: AttributeSet?,
+        defStyle: Int,
+    ) {
         val binding = SupportCollapsibleSectionBinding.inflate(context.layoutInflater, this)
-        val a = context.obtainStyledAttributes(
-            attrs,
-            R.styleable.SupportCollapsibleSection,
-            defStyle,
-            0
-        )
+        val a =
+            context.obtainStyledAttributes(
+                attrs,
+                R.styleable.SupportCollapsibleSection,
+                defStyle,
+                0,
+            )
 
         orientation = VERTICAL
 
         binding.titleView.text = a.getString(R.styleable.SupportCollapsibleSection_title)
         binding.subtitleView.text = a.getString(R.styleable.SupportCollapsibleSection_subtitle)
-        binding.descriptionView.text = MarkdownParser.parseMarkdown(a.getString(R.styleable.SupportCollapsibleSection_description))
-        binding.titleView.setTextColor(a.getColor(R.styleable.SupportCollapsibleSection_titleColor, ContextCompat.getColor(context, R.color.text_primary)))
+        binding.descriptionView.text =
+            MarkdownParser.parseMarkdown(a.getString(R.styleable.SupportCollapsibleSection_description))
+        binding.titleView.setTextColor(
+            a.getColor(
+                R.styleable.SupportCollapsibleSection_titleColor,
+                ContextCompat.getColor(context, R.color.text_primary),
+            ),
+        )
 
         background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
 

@@ -4,7 +4,6 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 open class Tag : RealmObject(), BaseObject {
-
     @PrimaryKey
     var id: String = ""
 

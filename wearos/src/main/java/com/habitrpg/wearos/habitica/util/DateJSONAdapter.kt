@@ -12,46 +12,47 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-var customDateAdapter: Any = object : Any() {
-
-    @ToJson
-    @Synchronized
-    fun dateToJson(d: Date?): String? {
-        return d?.let { dateFormats[0].format(it) }
-    }
-
-    @FromJson
-    @Synchronized
-    @Throws(ParseException::class)
-    fun dateFromJson(s: String?): Date? {
-        var date: Date? = null
-        var index = 0
-        while (index < dateFormats.size && date == null) {
-            try {
-                date = s?.let { dateFormats[index].parse(it) }
-            } catch (_: ParseException) {}
-            index += 1
+var customDateAdapter: Any =
+    object : Any() {
+        @ToJson
+        @Synchronized
+        fun dateToJson(d: Date?): String? {
+            return d?.let { dateFormats[0].format(it) }
         }
-        return date
-    }
 
-    private var dateFormats = mutableListOf<DateFormat>()
+        @FromJson
+        @Synchronized
+        @Throws(ParseException::class)
+        fun dateFromJson(s: String?): Date? {
+            var date: Date? = null
+            var index = 0
+            while (index < dateFormats.size && date == null) {
+                try {
+                    date = s?.let { dateFormats[index].parse(it) }
+                } catch (_: ParseException) {
+                }
+                index += 1
+            }
+            return date
+        }
 
-    init {
-        addFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-        addFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        addFormat("E MMM dd yyyy HH:mm:ss zzzz")
-        addFormat("yyyy-MM-dd'T'HH:mm:sszzz")
-        addFormat("yyyy-MM-dd'T'HH:mmX")
-        addFormat("yyyy-MM-dd")
-    }
+        private var dateFormats = mutableListOf<DateFormat>()
 
-    private fun addFormat(s: String) {
-        val dateFormat = SimpleDateFormat(s, Locale.US)
-        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
-        dateFormats.add(dateFormat)
+        init {
+            addFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            addFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            addFormat("E MMM dd yyyy HH:mm:ss zzzz")
+            addFormat("yyyy-MM-dd'T'HH:mm:sszzz")
+            addFormat("yyyy-MM-dd'T'HH:mmX")
+            addFormat("yyyy-MM-dd")
+        }
+
+        private fun addFormat(s: String) {
+            val dateFormat = SimpleDateFormat(s, Locale.US)
+            dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+            dateFormats.add(dateFormat)
+        }
     }
-}
 
 class FrequencyAdapter {
     @ToJson

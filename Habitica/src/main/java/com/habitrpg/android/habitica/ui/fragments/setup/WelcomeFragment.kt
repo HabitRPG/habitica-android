@@ -28,7 +28,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
-
     var onNameValid: ((Boolean?) -> Unit)? = null
 
     @Inject
@@ -38,7 +37,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentWelcomeBinding {
         return FragmentWelcomeBinding.inflate(inflater, container, false)
     }
@@ -52,8 +51,8 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                 resources,
                 HabiticaIconsHelper.imageOfCheckmark(
                     ContextCompat.getColor(it, R.color.green_50),
-                    1f
-                )
+                    1f,
+                ),
             )
         } ?: VectorDrawable()
     }
@@ -65,7 +64,10 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     val displayName: String
         get() = binding?.displayNameEditText?.text?.toString() ?: ""
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.speechBubble?.animateText(context?.getString(R.string.welcome_text) ?: "")
@@ -75,12 +77,12 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         binding?.displayNameEditText?.addTextChangedListener(
             OnChangeTextWatcher { p0, _, _, _ ->
                 displayNameVerificationEvents.value = p0.toString()
-            }
+            },
         )
         binding?.usernameEditText?.addTextChangedListener(
             OnChangeTextWatcher { p0, _, _, _ ->
                 usernameVerificationEvents.value = p0.toString()
-            }
+            },
         )
 
         lifecycleScope.launchCatching {
@@ -92,7 +94,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                             null,
                             null,
                             checkmarkIcon,
-                            null
+                            null,
                         )
                         binding?.issuesTextView?.visibility = View.GONE
                     } else {
@@ -100,7 +102,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                             null,
                             null,
                             alertIcon,
-                            null
+                            null,
                         )
                         binding?.issuesTextView?.visibility = View.VISIBLE
                         binding?.issuesTextView?.text =
@@ -119,7 +121,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                             null,
                             null,
                             checkmarkIcon,
-                            null
+                            null,
                         )
                         binding?.issuesTextView?.visibility = View.GONE
                     } else {
@@ -127,7 +129,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                             null,
                             null,
                             alertIcon,
-                            null
+                            null,
                         )
                         binding?.issuesTextView?.visibility = View.VISIBLE
                         binding?.issuesTextView?.text = it?.issues?.joinToString("\n")

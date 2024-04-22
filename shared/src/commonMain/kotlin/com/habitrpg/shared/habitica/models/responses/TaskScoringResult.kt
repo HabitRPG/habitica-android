@@ -15,9 +15,8 @@ data class TaskScoringResult(
     var hasLeveledUp: Boolean = false,
     var level: Int = 0,
     var questDamage: Double? = null,
-    var questItemsFound: Int? = null
+    var questItemsFound: Int? = null,
 ) : HParcelable {
-
     constructor(data: TaskDirectionData, stats: AvatarStats?) : this(
         data.hp <= 0.0,
         data._tmp?.drop,
@@ -32,6 +31,6 @@ data class TaskScoringResult(
         data.lvl > (stats?.lvl ?: 0),
         data.lvl,
         data._tmp?.quest?.progressDelta,
-        data._tmp?.quest?.collection
+        data._tmp?.quest?.collection,
     )
 }

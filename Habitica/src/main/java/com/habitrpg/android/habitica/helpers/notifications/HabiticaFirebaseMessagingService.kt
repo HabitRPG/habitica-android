@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HabiticaFirebaseMessagingService : FirebaseMessagingService() {
-
     @Inject
     internal lateinit var pushNotificationManager: PushNotificationManager
 

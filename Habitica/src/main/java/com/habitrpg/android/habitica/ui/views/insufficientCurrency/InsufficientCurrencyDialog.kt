@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
  */
 
 abstract class InsufficientCurrencyDialog(context: Context) : HabiticaAlertDialog(context) {
-
     protected lateinit var imageView: ImageView
     protected lateinit var textView: TextView
 

@@ -19,19 +19,21 @@ object ProjectConfig : AbstractProjectConfig() {
     }
 
     private fun setupLiveData() {
-        ArchTaskExecutor.getInstance().setDelegate(object : TaskExecutor() {
-            override fun executeOnDiskIO(runnable: Runnable) {
-                runnable.run()
-            }
+        ArchTaskExecutor.getInstance().setDelegate(
+            object : TaskExecutor() {
+                override fun executeOnDiskIO(runnable: Runnable) {
+                    runnable.run()
+                }
 
-            override fun postToMainThread(runnable: Runnable) {
-                runnable.run()
-            }
+                override fun postToMainThread(runnable: Runnable) {
+                    runnable.run()
+                }
 
-            override fun isMainThread(): Boolean {
-                return true
-            }
-        })
+                override fun isMainThread(): Boolean {
+                    return true
+                }
+            },
+        )
     }
 
     private fun resetLiveData() {

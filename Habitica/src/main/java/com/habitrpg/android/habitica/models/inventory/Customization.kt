@@ -32,6 +32,7 @@ open class Customization : RealmObject(), BaseObject {
     var setPrice: Int? = null
     var availableFrom: Date? = null
     var availableUntil: Date? = null
+
     private fun updateID() {
         id = identifier + "_" + type + "_" + this.category
     }
@@ -46,23 +47,32 @@ open class Customization : RealmObject(), BaseObject {
             return !(availableUntil != null && !availableUntil!!.after(today))
         }
 
-    fun getIconName(userSize: String?, hairColor: String?): String? {
+    fun getIconName(
+        userSize: String?,
+        hairColor: String?,
+    ): String? {
         return "icon_" + (getImageName(userSize, hairColor) ?: return null)
     }
 
-    fun getImageName(userSize: String?, hairColor: String?): String? {
-        if (!this.isValid()) { return null }
+    fun getImageName(
+        userSize: String?,
+        hairColor: String?,
+    ): String? {
+        if (!this.isValid) {
+            return null
+        }
         if (identifier?.isNotBlank() != true || identifier == "none" || identifier == "0") return null
         return when (type) {
             "skin" -> return "skin_$identifier"
             "shirt" -> return userSize + "_shirt_" + identifier
             "hair" -> {
-                    when (this.category) {
-                        "color" -> "hair_bangs_1_$identifier"
-                        "flower" -> "hair_flower_$identifier"
-                        else -> "hair_" + this.category + "_" + identifier + "_" + hairColor
-                    }
+                when (this.category) {
+                    "color" -> "hair_bangs_1_$identifier"
+                    "flower" -> "hair_flower_$identifier"
+                    else -> "hair_" + this.category + "_" + identifier + "_" + hairColor
+                }
             }
+
             "background" -> return "background_$identifier"
             "chair" -> return "chair_$identifier"
             else -> null
@@ -77,11 +87,16 @@ open class Customization : RealmObject(), BaseObject {
         get() {
             var path = if (type == "background") "backgrounds.backgrounds" else type
             if (this.customizationSet != null) {
-                path = if (type == "background") {
-                    path + this.customizationSet?.substring(5, 7) + this.customizationSet?.substring(0, 4)
-                } else {
-                    path + "." + this.customizationSet
-                }
+                path =
+                    if (type == "background") {
+                        path +
+                            this.customizationSet?.substring(
+                                5,
+                                7,
+                            ) + this.customizationSet?.substring(0, 4)
+                    } else {
+                        path + "." + this.customizationSet
+                    }
             } else if (this.category != null) {
                 path = path + "." + this.category
             }

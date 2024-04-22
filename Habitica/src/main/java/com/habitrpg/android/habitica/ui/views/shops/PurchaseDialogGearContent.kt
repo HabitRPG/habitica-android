@@ -27,7 +27,7 @@ internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogConte
             configureFieldsForValue(binding.strLabel, binding.strValue, equipment.str)
             configureFieldsForValue(binding.perLabel, binding.perValue, equipment.per)
             configureFieldsForValue(binding.conLabel, binding.conValue, equipment.con)
-            configureFieldsForValue(binding.intLabel, binding.intValue, equipment._int)
+            configureFieldsForValue(binding.intLabel, binding.intValue, equipment.intelligence)
         } else {
             configureFieldsForValue(binding.strLabel, binding.strValue, 0)
             configureFieldsForValue(binding.perLabel, binding.perValue, 0)
@@ -36,7 +36,11 @@ internal class PurchaseDialogGearContent(context: Context) : PurchaseDialogConte
         }
     }
 
-    private fun configureFieldsForValue(labelView: TextView?, valueTextView: TextView?, value: Int) {
+    private fun configureFieldsForValue(
+        labelView: TextView?,
+        valueTextView: TextView?,
+        value: Int,
+    ) {
         valueTextView?.text = "+$value"
         if (value == 0) {
             labelView?.setTextColor(ContextCompat.getColor(context, R.color.text_dimmed))

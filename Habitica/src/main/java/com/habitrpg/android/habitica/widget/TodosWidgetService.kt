@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TodosWidgetService : RemoteViewsService() {
-
     @Inject
     lateinit var taskRepository: TaskRepository
 

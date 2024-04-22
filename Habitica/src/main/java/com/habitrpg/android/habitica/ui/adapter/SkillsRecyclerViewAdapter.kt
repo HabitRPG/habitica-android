@@ -17,8 +17,8 @@ import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.extensions.loadImage
 import io.realm.RealmList
 
-class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
-
+class SkillsRecyclerViewAdapter :
+    RecyclerView.Adapter<SkillsRecyclerViewAdapter.SkillViewHolder>() {
     var onUseSkill: ((Skill) -> Unit)? = null
 
     var mana: Double = 0.0
@@ -43,11 +43,17 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): SkillViewHolder {
         return SkillViewHolder(parent.inflate(R.layout.skill_list_item))
     }
 
-    override fun onBindViewHolder(holder: SkillViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: SkillViewHolder,
+        position: Int,
+    ) {
         holder.bind(skillList[position])
     }
 
@@ -55,7 +61,9 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         return skillList.size
     }
 
-    inner class SkillViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class SkillViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         private val binding = SkillListItemBinding.bind(itemView)
         private val magicDrawable: Drawable
         private val lockDrawable: Drawable
@@ -67,7 +75,16 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
         init {
             binding.buttonWrapper.setOnClickListener(this)
             magicDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfMagic())
-            lockDrawable = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfLocked(ContextCompat.getColor(context, R.color.text_dimmed)))
+            lockDrawable =
+                BitmapDrawable(
+                    context.resources,
+                    HabiticaIconsHelper.imageOfLocked(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.text_dimmed,
+                        ),
+                    ),
+                )
         }
 
         fun bind(skill: Skill) {
@@ -85,36 +102,81 @@ class SkillsRecyclerViewAdapter : RecyclerView.Adapter<SkillsRecyclerViewAdapter
                 binding.countLabel.text = getOwnedCount(skill.key).toString()
                 binding.priceLabel.setText(R.string.skill_transformation_use)
                 if (context.isUsingNightModeResources()) {
-                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.brand_500))
+                    binding.priceLabel.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.brand_500,
+                        ),
+                    )
                 } else {
-                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.color_accent))
+                    binding.priceLabel.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.color_accent,
+                        ),
+                    )
                 }
                 binding.buttonIconView.setImageDrawable(null)
-                binding.buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
+                binding.buttonWrapper.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.offset_background,
+                    ),
+                )
                 binding.buttonIconView.alpha = 1.0f
                 binding.priceLabel.alpha = 1.0f
             } else {
                 binding.countLabel.visibility = View.GONE
                 binding.priceLabel.text = skill.mana?.toString()
                 if (context.isUsingNightModeResources()) {
-                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.blue_500))
+                    binding.priceLabel.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.blue_500,
+                        ),
+                    )
                 } else {
-                    binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.blue_10))
+                    binding.priceLabel.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.blue_10,
+                        ),
+                    )
                 }
                 binding.buttonIconView.setImageDrawable(magicDrawable)
 
                 if ((skill.mana ?: 0) > mana) {
-                    binding.buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
+                    binding.buttonWrapper.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.offset_background,
+                        ),
+                    )
                     binding.buttonIconView.alpha = 0.3f
                     binding.priceLabel.alpha = 0.3f
                 } else {
-                    binding.buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.blue_500_24))
+                    binding.buttonWrapper.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.blue_500_24,
+                        ),
+                    )
                     binding.buttonIconView.alpha = 1.0f
                     binding.priceLabel.alpha = 1.0f
                 }
                 if ((skill.lvl ?: 0) > level) {
-                    binding.buttonWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background))
-                    binding.skillText.setTextColor(ContextCompat.getColor(context, R.color.text_dimmed))
+                    binding.buttonWrapper.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.offset_background,
+                        ),
+                    )
+                    binding.skillText.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.text_dimmed,
+                        ),
+                    )
                     binding.skillText.text = context.getString(R.string.skill_unlocks_at, skill.lvl)
                     binding.skillNotes.visibility = View.GONE
                     binding.buttonIconView.setImageDrawable(lockDrawable)

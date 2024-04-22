@@ -39,13 +39,14 @@ class TaskRepositoryImplTest : WordSpec({
             slot.captured(mockk(relaxed = true))
         }
         val authenticationHandler = mockk<AuthenticationHandler>()
-        repository = TaskRepositoryImpl(
-            localRepository,
-            apiClient,
-            authenticationHandler,
-            mockk(relaxed = true),
-            mockk(relaxed = true)
-        )
+        repository =
+            TaskRepositoryImpl(
+                localRepository,
+                apiClient,
+                authenticationHandler,
+                mockk(relaxed = true),
+                mockk(relaxed = true),
+            )
         val liveObjectSlot = slot<BaseObject>()
         every { localRepository.getLiveObject(capture(liveObjectSlot)) } answers {
             liveObjectSlot.captured

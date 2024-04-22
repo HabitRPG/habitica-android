@@ -11,7 +11,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 
 class StarView : AppCompatImageView {
-
     private var blinkDurations: List<Int>? = null
     private var blinkIndex = 0
 
@@ -26,9 +25,11 @@ class StarView : AppCompatImageView {
             0 -> {
                 this.setImageBitmap(HabiticaIconsHelper.imageOfStarSmall())
             }
+
             1 -> {
                 this.setImageBitmap(HabiticaIconsHelper.imageOfStarMedium())
             }
+
             2 -> {
                 this.setImageBitmap(HabiticaIconsHelper.imageOfStarLarge())
             }
@@ -49,12 +50,14 @@ class StarView : AppCompatImageView {
         animator.startDelay = blinkDurations?.get(blinkIndex)?.toLong() ?: 0
         animator.repeatCount = 1
         animator.repeatMode = ValueAnimator.REVERSE
-        animator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                blinkIndex++
-                runBlink()
-            }
-        })
+        animator.addListener(
+            object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    blinkIndex++
+                    runBlink()
+                }
+            },
+        )
         try {
             animator.start()
         } catch (ignored: NullPointerException) {

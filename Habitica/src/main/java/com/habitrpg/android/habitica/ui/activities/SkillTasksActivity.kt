@@ -43,34 +43,36 @@ class SkillTasksActivity : BaseActivity() {
     }
 
     private fun loadTaskLists() {
-        val statePagerAdapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
-
-            override fun createFragment(position: Int): Fragment {
-                val fragment = SkillTasksRecyclerViewFragment()
-                fragment.taskType = when (position) {
-                    0 -> TaskType.HABIT
-                    1 -> TaskType.DAILY
-                    else -> TaskType.TODO
+        val statePagerAdapter =
+            object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    val fragment = SkillTasksRecyclerViewFragment()
+                    fragment.taskType =
+                        when (position) {
+                            0 -> TaskType.HABIT
+                            1 -> TaskType.DAILY
+                            else -> TaskType.TODO
+                        }
+                    fragment.onTaskSelection = {
+                        taskSelected(it)
+                    }
+                    viewFragmentsDictionary.put(position, fragment)
+                    return fragment
                 }
-                fragment.onTaskSelection = {
-                    taskSelected(it)
-                }
-                viewFragmentsDictionary.put(position, fragment)
-                return fragment
-            }
 
-            override fun getItemCount(): Int {
-                return 3
+                override fun getItemCount(): Int {
+                    return 3
+                }
             }
-        }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> getString(R.string.habits)
-                1 -> getString(R.string.dailies)
-                2 -> getString(R.string.todos)
-                else -> ""
-            }
+            tab.text =
+                when (position) {
+                    0 -> getString(R.string.habits)
+                    1 -> getString(R.string.dailies)
+                    2 -> getString(R.string.todos)
+                    else -> ""
+                }
         }.attach()
         statePagerAdapter.notifyDataSetChanged()
     }

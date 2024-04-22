@@ -28,14 +28,13 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
-
     private var showCustomRewards: Boolean = true
     private var selectedCard: ShopItem? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         lifecycleScope.launchCatching {
             inventoryRepository.retrieveInAppRewards()
@@ -43,22 +42,31 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
-        (layoutManager as? GridLayoutManager)?.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if ((recyclerAdapter?.getItemViewType(position) ?: 0) < 3) {
-                    (layoutManager as? GridLayoutManager)?.spanCount ?: 1
-                } else {
-                    1
+        (layoutManager as? GridLayoutManager)?.spanSizeLookup =
+            object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if ((recyclerAdapter?.getItemViewType(position) ?: 0) < 3) {
+                        (layoutManager as? GridLayoutManager)?.spanCount ?: 1
+                    } else {
+                        1
+                    }
                 }
             }
-        }
 
         view.post { setGridSpanCount(view.width) }
         context?.let {
-            binding?.recyclerView?.setBackgroundColor(ContextCompat.getColor(it, R.color.content_background))
+            binding?.recyclerView?.setBackgroundColor(
+                ContextCompat.getColor(
+                    it,
+                    R.color.content_background,
+                ),
+            )
         }
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
@@ -66,11 +74,12 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
             lifecycleScope.launchCatching {
                 inventoryRepository.getInAppRewards().collect {
                     val user = viewModel.user.value
-                    (recyclerAdapter as? RewardsRecyclerViewAdapter)?.goldGemsLeft = if (user?.isSubscribed == true) {
-                        user.purchased?.plan?.numberOfGemsLeft
-                    } else {
-                        -1
-                    }
+                    (recyclerAdapter as? RewardsRecyclerViewAdapter)?.goldGemsLeft =
+                        if (user?.isSubscribed == true) {
+                            user.purchased?.plan?.numberOfGemsLeft
+                        } else {
+                            -1
+                        }
                     (recyclerAdapter as? RewardsRecyclerViewAdapter)?.updateItemRewards(it)
                 }
             }
@@ -128,33 +137,44 @@ class RewardsRecyclerviewFragment : TaskRecyclerViewFragment() {
         (layoutManager as? GridLayoutManager)?.spanCount = spanCount
     }
 
-    private val cardSelectedResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            lifecycleScope.launchCatching {
-                userRepository.useSkill(
-                    selectedCard?.key ?: "",
-                    "member",
-                    it.data?.getStringExtra("member_id") ?: ""
-                )
-                val activity = (activity as? MainActivity) ?: return@launchCatching
-                HabiticaSnackbar.showSnackbar(
-                    activity.snackbarContainer,
-                    context?.getString(R.string.sent_card, selectedCard?.text),
-                    HabiticaSnackbar.SnackbarDisplayType.BLUE
-                )
+    private val cardSelectedResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                lifecycleScope.launchCatching {
+                    userRepository.useSkill(
+                        selectedCard?.key ?: "",
+                        "member",
+                        it.data?.getStringExtra("member_id") ?: "",
+                    )
+                    val activity = (activity as? MainActivity) ?: return@launchCatching
+                    HabiticaSnackbar.showSnackbar(
+                        activity.snackbarContainer,
+                        context?.getString(R.string.sent_card, selectedCard?.text),
+                        HabiticaSnackbar.SnackbarDisplayType.BLUE,
+                    )
+                }
             }
         }
-    }
 
     companion object {
-        fun newInstance(context: Context?, classType: TaskType, showCustomRewards: Boolean): RewardsRecyclerviewFragment {
+        fun newInstance(
+            context: Context?,
+            classType: TaskType,
+            showCustomRewards: Boolean,
+        ): RewardsRecyclerviewFragment {
             val fragment = RewardsRecyclerviewFragment()
             fragment.taskType = classType
             fragment.showCustomRewards = showCustomRewards
 
             if (context != null) {
                 fragment.tutorialStepIdentifier = "rewards"
-                fragment.tutorialTexts = ArrayList(listOf(context.getString(R.string.tutorial_rewards_1), context.getString(R.string.tutorial_rewards_2)))
+                fragment.tutorialTexts =
+                    ArrayList(
+                        listOf(
+                            context.getString(R.string.tutorial_rewards_1),
+                            context.getString(R.string.tutorial_rewards_2),
+                        ),
+                    )
             }
             fragment.tutorialCanBeDeferred = false
 

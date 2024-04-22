@@ -48,14 +48,16 @@ import java.lang.ref.WeakReference
 import java.util.Date
 import javax.inject.Inject
 
-class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferences): DefaultLifecycleObserver {
+class ApplicationLifecycleTracker(private val sharedPreferences: SharedPreferences) :
+    DefaultLifecycleObserver {
     private var lastResumeTime = 0L
-    override fun onResume(owner : LifecycleOwner) {
+
+    override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
         lastResumeTime = Date().time
     }
 
-    override fun onPause(owner : LifecycleOwner) {
+    override fun onPause(owner: LifecycleOwner) {
         super.onPause(owner)
         val duration = Date().time - lastResumeTime
         addDurationToDay(duration / 1000)
@@ -107,9 +109,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     private lateinit var lifecycleTracker: ApplicationLifecycleTracker
 
-    /**
-     * For better performance billing class should be used as singleton
-     */
     // endregion
 
     override fun onCreate() {
@@ -148,7 +147,6 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         checkIfNewVersion()
     }
 
-
     private fun setupAdHandler() {
         AdHandler.setup(sharedPrefs)
     }
@@ -158,8 +156,8 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         val configuration: Configuration = resources.configuration
         val languageHelper = LanguageHelper(sharedPrefs.getString("language", "en"))
         if (if (SDK_INT >= Build.VERSION_CODES.N) {
-            configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
-        } else {
+                configuration.locales.isEmpty || configuration.locales[0] != languageHelper.locale
+            } else {
                 @Suppress("DEPRECATION")
                 configuration.locale != languageHelper.locale
             }
@@ -171,15 +169,16 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     protected open fun setupRealm() {
         Realm.init(this)
-        val builder = RealmConfiguration.Builder()
-            .schemaVersion(1)
-            .deleteRealmIfMigrationNeeded()
-            .allowWritesOnUiThread(true)
-            .compactOnLaunch { totalBytes, usedBytes ->
-                // Compact if the file is over 100MB in size and less than 50% 'used'
-                val oneHundredMB = 50 * 1024 * 1024
-                (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5
-            }
+        val builder =
+            RealmConfiguration.Builder()
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                .allowWritesOnUiThread(true)
+                .compactOnLaunch { totalBytes, usedBytes ->
+                    // Compact if the file is over 100MB in size and less than 50% 'used'
+                    val oneHundredMB = 50 * 1024 * 1024
+                    (totalBytes > oneHundredMB) && (usedBytes / totalBytes) < 0.5
+                }
         try {
             Realm.setDefaultConfiguration(builder.build())
         } catch (ignored: UnsatisfiedLinkError) {
@@ -212,7 +211,7 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
     override fun openOrCreateDatabase(
         name: String,
         mode: Int,
-        factory: SQLiteDatabase.CursorFactory?
+        factory: SQLiteDatabase.CursorFactory?,
     ): SQLiteDatabase {
         return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory)
     }
@@ -221,9 +220,14 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         name: String,
         mode: Int,
         factory: SQLiteDatabase.CursorFactory?,
-        errorHandler: DatabaseErrorHandler?
+        errorHandler: DatabaseErrorHandler?,
     ): SQLiteDatabase {
-        return super.openOrCreateDatabase(getDatabasePath(name).absolutePath, mode, factory, errorHandler)
+        return super.openOrCreateDatabase(
+            getDatabasePath(name).absolutePath,
+            mode,
+            factory,
+            errorHandler,
+        )
     }
 
     // endregion
@@ -241,9 +245,10 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
 
     private fun setupRemoteConfig() {
         val remoteConfig = FirebaseRemoteConfig.getInstance()
-        val configSettings = FirebaseRemoteConfigSettings.Builder()
-            .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
-            .build()
+        val configSettings =
+            FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 3600)
+                .build()
         remoteConfig.setConfigSettingsAsync(configSettings)
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.fetchAndActivate()
@@ -278,13 +283,19 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
         }
     }
 
-    override fun onActivityCreated(p0: Activity, p1: Bundle?) {
+    override fun onActivityCreated(
+        p0: Activity,
+        p1: Bundle?,
+    ) {
     }
 
     override fun onActivityDestroyed(p0: Activity) {
     }
 
-    override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {
+    override fun onActivitySaveInstanceState(
+        p0: Activity,
+        p1: Bundle,
+    ) {
     }
 
     override fun onActivityStopped(p0: Activity) {
@@ -319,7 +330,10 @@ abstract class HabiticaBaseApplication : Application(), Application.ActivityLife
             }
         }
 
-        private fun startActivity(activityClass: Class<*>, context: Context) {
+        private fun startActivity(
+            activityClass: Class<*>,
+            context: Context,
+        ) {
             val intent = Intent(context, activityClass)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)

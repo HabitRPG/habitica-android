@@ -44,20 +44,22 @@ class AdventureGuideActivity : BaseActivity() {
 
         setupToolbar(binding.toolbar)
 
-        achievementTitles = mapOf(
-            Pair("createdTask", getString(R.string.create_task_title)),
-            Pair("completedTask", getString(R.string.complete_task_title)),
-            Pair("hatchedPet", getString(R.string.hatch_pet_title)),
-            Pair("fedPet", getString(R.string.feedPet_title)),
-            Pair("purchasedEquipment", getString(R.string.purchase_equipment_title))
-        )
-        achievementDescriptions = mapOf(
-            Pair("createdTask", getString(R.string.create_task_description)),
-            Pair("completedTask", getString(R.string.complete_task_description)),
-            Pair("hatchedPet", getString(R.string.hatch_pet_description)),
-            Pair("fedPet", getString(R.string.feedPet_description)),
-            Pair("purchasedEquipment", getString(R.string.purchase_equipment_description))
-        )
+        achievementTitles =
+            mapOf(
+                Pair("createdTask", getString(R.string.create_task_title)),
+                Pair("completedTask", getString(R.string.complete_task_title)),
+                Pair("hatchedPet", getString(R.string.hatch_pet_title)),
+                Pair("fedPet", getString(R.string.feedPet_title)),
+                Pair("purchasedEquipment", getString(R.string.purchase_equipment_title)),
+            )
+        achievementDescriptions =
+            mapOf(
+                Pair("createdTask", getString(R.string.create_task_description)),
+                Pair("completedTask", getString(R.string.complete_task_description)),
+                Pair("hatchedPet", getString(R.string.hatch_pet_description)),
+                Pair("fedPet", getString(R.string.feedPet_description)),
+                Pair("purchasedEquipment", getString(R.string.purchase_equipment_description)),
+            )
 
         val descriptionText = getString(R.string.adventure_guide_description_new)
         binding.descriptionView.setText(descriptionText.fromHtml(), TextView.BufferType.SPANNABLE)
@@ -90,28 +92,59 @@ class AdventureGuideActivity : BaseActivity() {
         }
 
         if (completed > 0) {
-            binding.progressTextview.text = getString(R.string.percent_completed, ((completed / achievements.size.toFloat()) * 100).toInt())
+            binding.progressTextview.text =
+                getString(
+                    R.string.percent_completed,
+                    ((completed / achievements.size.toFloat()) * 100).toInt(),
+                )
         }
 
         binding.achievementContainer.removeAllViews()
         for (achievement in achievements) {
-            val itemBinding = AdventureGuideItemBinding.inflate(layoutInflater, binding.achievementContainer, true)
+            val itemBinding =
+                AdventureGuideItemBinding.inflate(
+                    layoutInflater,
+                    binding.achievementContainer,
+                    true,
+                )
             itemBinding.titleView.text = achievementTitles[achievement.key]
             itemBinding.descriptionView.text = achievementDescriptions[achievement.key]
 
-            val iconName = if (achievement.earned) {
-                "achievement-" + achievement.key + "2x"
-            } else {
-                "achievement-unearned2x"
-            }
+            val iconName =
+                if (achievement.earned) {
+                    "achievement-" + achievement.key + "2x"
+                } else {
+                    "achievement-unearned2x"
+                }
             itemBinding.iconView.loadImage(iconName)
             if (achievement.earned) {
-                itemBinding.titleView.paintFlags = itemBinding.titleView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                itemBinding.titleView.setTextColor(ContextCompat.getColor(this, R.color.text_ternary))
-                itemBinding.descriptionView.setTextColor(ContextCompat.getColor(this, R.color.text_ternary))
+                itemBinding.titleView.paintFlags =
+                    itemBinding.titleView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                itemBinding.titleView.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_ternary,
+                    ),
+                )
+                itemBinding.descriptionView.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_ternary,
+                    ),
+                )
             } else {
-                itemBinding.titleView.setTextColor(ContextCompat.getColor(this, R.color.text_primary))
-                itemBinding.descriptionView.setTextColor(ContextCompat.getColor(this, R.color.text_primary))
+                itemBinding.titleView.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_primary,
+                    ),
+                )
+                itemBinding.descriptionView.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_primary,
+                    ),
+                )
                 itemBinding.iconView.alpha = 0.5f
             }
         }

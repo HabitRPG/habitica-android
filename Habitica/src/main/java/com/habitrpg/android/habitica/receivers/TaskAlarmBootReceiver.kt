@@ -15,19 +15,26 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TaskAlarmBootReceiver : BroadcastReceiver() {
-
     @Inject
     lateinit var taskAlarmManager: TaskAlarmManager
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED) {
             return
         }
         MainScope().launch(ExceptionHandler.coroutine()) {
-            taskAlarmManager.scheduleAllSavedAlarms(sharedPreferences.getBoolean("preventDailyReminder", false))
+            taskAlarmManager.scheduleAllSavedAlarms(
+                sharedPreferences.getBoolean(
+                    "preventDailyReminder",
+                    false,
+                ),
+            )
         }
         HLogger.log(LogLevel.INFO, this::javaClass.name, "onReceive")
     }

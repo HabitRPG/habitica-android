@@ -1,14 +1,11 @@
 package com.habitrpg.common.habitica.helpers
 
 import android.util.Log
-import coil.network.HttpException
 import com.habitrpg.common.habitica.BuildConfig
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -44,11 +41,15 @@ class ExceptionHandler {
     }
 }
 
-fun CoroutineScope.launchCatching(errorHandler: ((Throwable) -> Unit)? = null, context: CoroutineContext = EmptyCoroutineContext, function: suspend CoroutineScope.() -> Unit) {
+fun CoroutineScope.launchCatching(
+    errorHandler: ((Throwable) -> Unit)? = null,
+    context: CoroutineContext = EmptyCoroutineContext,
+    function: suspend CoroutineScope.() -> Unit,
+) {
     launch(
         ExceptionHandler.coroutine {
             errorHandler?.invoke(it)
         } + context,
-        block = function
+        block = function,
     )
 }

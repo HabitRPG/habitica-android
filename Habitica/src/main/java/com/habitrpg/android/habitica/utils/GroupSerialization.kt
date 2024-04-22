@@ -20,7 +20,11 @@ import java.lang.reflect.Type
 
 class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Group {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): Group {
         val group = Group()
         val obj = json.asJsonObject
         group.id = obj.get("_id").asString
@@ -77,7 +81,10 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
             if (questObject.has("members")) {
                 val members = obj.getAsJsonObject("quest").getAsJsonObject("members")
                 val realm = Realm.getDefaultInstance()
-                val dbMembers = realm.copyFromRealm(realm.where(Member::class.java).equalTo("party.id", group.id).findAll())
+                val dbMembers =
+                    realm.copyFromRealm(
+                        realm.where(Member::class.java).equalTo("party.id", group.id).findAll(),
+                    )
                 realm.close()
                 dbMembers.forEach { member ->
                     if (members.has(member.id)) {
@@ -106,7 +113,8 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
             }
 
             if (questObject.has("extra") && questObject["extra"].asJsonObject.has("worldDmg")) {
-                val worldDamageObject = questObject.getAsJsonObject("extra").getAsJsonObject("worldDmg")
+                val worldDamageObject =
+                    questObject.getAsJsonObject("extra").getAsJsonObject("worldDmg")
                 worldDamageObject.entrySet().forEach { (key, value) ->
                     val rageStrike = QuestRageStrike(key, value.asBoolean)
                     group.quest?.addRageStrike(rageStrike)
@@ -138,7 +146,11 @@ class GroupSerialization : JsonDeserializer<Group>, JsonSerializer<Group> {
         return group
     }
 
-    override fun serialize(src: Group, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
+    override fun serialize(
+        src: Group,
+        typeOfSrc: Type,
+        context: JsonSerializationContext,
+    ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("name", src.name)
         obj.addProperty("description", src.description)

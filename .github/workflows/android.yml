@@ -25,6 +25,11 @@ jobs:
 
   unit-test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - "common"
+          - "Habitica"
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 17
@@ -38,7 +43,7 @@ jobs:
     - name: Run with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: testProdDebugUnitTest
+        arguments: ${{ matrix.module }}:testProdDebugUnitTest
 
 #  ui-test:
 #    runs-on: ubuntu-latest

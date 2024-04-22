@@ -34,7 +34,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
-
     private var _binding: FragmentBottomsheetSubscriptionBinding? = null
     val binding get() = _binding!!
 
@@ -56,12 +55,19 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentBottomsheetSubscriptionBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.subscriptionOptions.visibility = View.GONE
@@ -110,20 +116,28 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
             skus = subscriptions
             withContext(Dispatchers.Main) {
                 for (sku in subscriptions) {
-                    updateButtonLabel(sku, sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice ?: "")
+                    updateButtonLabel(
+                        sku,
+                        sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+                            ?: "",
+                    )
                 }
                 subscriptions
                     .filter { buttonForSku(it)?.isVisible == true }
                     .minByOrNull {
-                    it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros ?: 0
-                }?.let { selectSubscription(it) }
+                        it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
+                            ?: 0
+                    }?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
         }
     }
 
-    private fun updateButtonLabel(sku: ProductDetails, price: String) {
+    private fun updateButtonLabel(
+        sku: ProductDetails,
+        price: String,
+    ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
             matchingView.setPriceText(price)
@@ -151,9 +165,9 @@ open class SubscriptionBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
         return when (sku) {
-            PurchaseTypes.Subscription1Month -> binding.subscription1month
-            PurchaseTypes.Subscription3Month -> binding.subscription3month
-            PurchaseTypes.Subscription12Month -> binding.subscription12month
+            PurchaseTypes.SUBSCRIPTION_1_MONTH -> binding.subscription1month
+            PurchaseTypes.SUBSCRIPTION_3_MONTH -> binding.subscription3month
+            PurchaseTypes.SUBSCRIPTION_12_MONTH -> binding.subscription12month
             else -> null
         }
     }

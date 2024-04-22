@@ -23,7 +23,8 @@ class KeyboardUtil {
     companion object {
         fun dismissKeyboard(act: Activity?) {
             if (act != null && act.currentFocus != null) {
-                val inputMethodManager = act.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
+                val inputMethodManager =
+                    act.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
                 inputMethodManager?.hideSoftInputFromWindow(act.currentFocus?.windowToken, 0)
             }
         }

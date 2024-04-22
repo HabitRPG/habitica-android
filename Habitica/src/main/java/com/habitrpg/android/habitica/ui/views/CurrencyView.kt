@@ -34,18 +34,21 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     private var currencyContentDescription: String? = null
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        val attributes = context.theme?.obtainStyledAttributes(
-            attrs,
-            R.styleable.CurrencyView,
-            0,
-            0
-        )
+        val attributes =
+            context.theme?.obtainStyledAttributes(
+                attrs,
+                R.styleable.CurrencyView,
+                0,
+                0,
+            )
         val fallBackLight = !context.isUsingNightModeResources()
-        lightBackground = try {
-            attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, fallBackLight) ?: fallBackLight
-        } catch (_: ArrayIndexOutOfBoundsException) {
-            !context.isUsingNightModeResources()
-        }
+        lightBackground =
+            try {
+                attributes?.getBoolean(R.styleable.CurrencyView_hasLightBackground, fallBackLight)
+                    ?: fallBackLight
+            } catch (_: ArrayIndexOutOfBoundsException) {
+                !context.isUsingNightModeResources()
+            }
         currency = attributes?.getString(R.styleable.CurrencyView_currency)
         visibility = GONE
         setSingleLine()
@@ -63,7 +66,10 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         when (currency) {
             "gold" -> this.currencyContentDescription = context.getString(R.string.gold_plural)
             "gems" -> this.currencyContentDescription = context.getString(R.string.gems)
-            "hourglasses" -> this.currencyContentDescription = context.getString(R.string.mystic_hourglasses)
+            "hourglasses" ->
+                this.currencyContentDescription =
+                    context.getString(R.string.mystic_hourglasses)
+
             else -> this.currencyContentDescription = ""
         }
     }
@@ -105,13 +111,14 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
                     drawable,
                     null,
                     null,
-                    null
+                    null,
                 )
-                val padding = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    6f,
-                    context.resources.displayMetrics
-                ).toInt()
+                val padding =
+                    TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        6f,
+                        context.resources.displayMetrics,
+                    ).toInt()
                 compoundDrawablePadding = padding
                 this.gravity = Gravity.CENTER_VERTICAL
             }
@@ -123,7 +130,13 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
     var animationDelay = 0L
 
     private fun update(value: Double) {
-        text = NumberAbbreviator.abbreviate(context, value, decimals, minForAbbrevation = minForAbbrevation)
+        text =
+            NumberAbbreviator.abbreviate(
+                context,
+                value,
+                decimals,
+                minForAbbrevation = minForAbbrevation,
+            )
     }
 
     private fun endUpdate() {
@@ -170,10 +183,11 @@ class CurrencyView : androidx.appcompat.widget.AppCompatTextView {
         }
 
     private fun updateVisibility() {
-        visibility = if (hideWhenEmpty) {
-            if ("0" == text) View.GONE else View.VISIBLE
-        } else {
-            View.VISIBLE
-        }
+        visibility =
+            if (hideWhenEmpty) {
+                if ("0" == text) View.GONE else View.VISIBLE
+            } else {
+                View.VISIBLE
+            }
     }
 }

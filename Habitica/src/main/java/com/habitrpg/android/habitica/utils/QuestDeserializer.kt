@@ -13,7 +13,11 @@ import java.lang.reflect.Type
 
 class QuestDeserializer : JsonDeserializer<Quest> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Quest {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): Quest {
         val obj = json.asJsonObject
         val quest = Quest()
 

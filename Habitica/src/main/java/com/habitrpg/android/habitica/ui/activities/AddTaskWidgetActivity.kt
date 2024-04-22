@@ -14,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddTaskWidgetActivity : AppCompatActivity() {
-
     private var widgetId: Int = 0
 
     private lateinit var binding: WidgetConfigureAddTaskBinding
@@ -28,7 +27,11 @@ class AddTaskWidgetActivity : AppCompatActivity() {
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
-            widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+            widgetId =
+                extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID,
+                )
         }
 
         // If this activity was started with an intent without an app widget ID,
@@ -67,7 +70,13 @@ class AddTaskWidgetActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, resultValue)
         finish()
 
-        val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, AddTaskWidgetProvider::class.java)
+        val intent =
+            Intent(
+                AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+                null,
+                this,
+                AddTaskWidgetProvider::class.java,
+            )
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
         sendBroadcast(intent)
     }

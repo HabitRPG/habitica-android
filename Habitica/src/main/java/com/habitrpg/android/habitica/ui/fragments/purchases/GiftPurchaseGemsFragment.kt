@@ -21,13 +21,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() {
-
     @Inject
     lateinit var socialRepository: SocialRepository
 
     override var binding: FragmentGiftGemPurchaseBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGiftGemPurchaseBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentGiftGemPurchaseBinding {
         return FragmentGiftGemPurchaseBinding.inflate(inflater, container, false)
     }
 
@@ -60,14 +62,18 @@ class GiftPurchaseGemsFragment : BaseFragment<FragmentGiftGemPurchaseBinding>() 
         this.purchaseHandler = handler
     }
 
-    private fun updateButtonLabel(sku: ProductDetails, price: String) {
-        val matchingView: GemPurchaseOptionsView? = when (sku.productId) {
-            PurchaseTypes.Purchase4Gems -> binding?.gems4View
-            PurchaseTypes.Purchase21Gems -> binding?.gems21View
-            PurchaseTypes.Purchase42Gems -> binding?.gems42View
-            PurchaseTypes.Purchase84Gems -> binding?.gems84View
-            else -> return
-        }
+    private fun updateButtonLabel(
+        sku: ProductDetails,
+        price: String,
+    ) {
+        val matchingView: GemPurchaseOptionsView? =
+            when (sku.productId) {
+                PurchaseTypes.PURCHASE_4_GEMS -> binding?.gems4View
+                PurchaseTypes.PURCHASE_21_GEMS -> binding?.gems21View
+                PurchaseTypes.PURCHASE_42_GEMS -> binding?.gems42View
+                PurchaseTypes.PURCHASE_84_GEMS -> binding?.gems84View
+                else -> return
+            }
         if (matchingView != null) {
             matchingView.setPurchaseButtonText(price)
             matchingView.setOnPurchaseClickListener {

@@ -11,15 +11,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.ReviewManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.adapter.inventory.EquipmentRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,18 +29,21 @@ import javax.inject.Inject
 class EquipmentDetailFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
+
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
     @Inject
     lateinit var reviewManager: ReviewManager
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -53,7 +56,7 @@ class EquipmentDetailFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         adapter.onEquip = {
             lifecycleScope.launchCatching {
@@ -73,7 +76,10 @@ class EquipmentDetailFragment :
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
@@ -85,13 +91,14 @@ class EquipmentDetailFragment :
         }
         binding?.refreshLayout?.setOnRefreshListener(this)
         binding?.recyclerView?.onRefresh = { onRefresh() }
-        binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_title),
-            getString(R.string.empty_equipment_description),
-            null,
-        ) {
-            MainNavigationController.navigate(R.id.marketFragment)
-        }
+        binding?.recyclerView?.emptyItem =
+            EmptyItem(
+                getString(R.string.empty_title),
+                getString(R.string.empty_equipment_description),
+                null,
+            ) {
+                MainNavigationController.navigate(R.id.marketFragment)
+            }
 
         this.adapter.equippedGear = this.equippedGear
         this.adapter.isCostume = this.isCostume
@@ -99,7 +106,12 @@ class EquipmentDetailFragment :
 
         binding?.recyclerView?.adapter = this.adapter
         binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity)
-        binding?.recyclerView?.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        binding?.recyclerView?.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                DividerItemDecoration.VERTICAL,
+            ),
+        )
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
         type?.let { type ->

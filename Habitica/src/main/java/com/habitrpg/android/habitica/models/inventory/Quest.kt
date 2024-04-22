@@ -1,5 +1,6 @@
 package com.habitrpg.android.habitica.models.inventory
 
+import com.google.gson.annotations.SerializedName
 import com.habitrpg.android.habitica.models.BaseObject
 import com.habitrpg.android.habitica.models.members.Member
 import io.realm.RealmList
@@ -20,7 +21,9 @@ open class Quest : RealmObject(), BaseObject {
         }
     var active: Boolean = false
     var leader: String? = null
-    var RSVPNeeded: Boolean = false
+
+    @SerializedName("RSVPNeeded")
+    var rsvpNeeded: Boolean = false
 
     var members: RealmList<QuestMember>? = null
     var progress: QuestProgress? = null

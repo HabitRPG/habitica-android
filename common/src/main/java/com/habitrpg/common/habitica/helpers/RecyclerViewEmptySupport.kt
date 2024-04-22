@@ -21,14 +21,14 @@ data class EmptyItem(
     var text: String? = null,
     var iconResource: Int? = null,
     var tintedIcon: Boolean = true,
-    var onButtonTap: (() -> Unit)? = null
+    var onButtonTap: (() -> Unit)? = null,
 )
 
 enum class RecyclerViewState {
     LOADING,
     EMPTY,
     DISPLAYING_DATA,
-    FAILED
+    FAILED,
 }
 
 class FailedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -47,7 +47,6 @@ class FailedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 class HolderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     private val binding = EmptyItemBinding.bind(itemView)
 
     fun bind(emptyItem: EmptyItem?) {
@@ -55,9 +54,9 @@ class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             binding.emptyIconView.setColorFilter(
                 ContextCompat.getColor(
                     itemView.context,
-                    R.color.text_dimmed
+                    R.color.text_dimmed,
                 ),
-                android.graphics.PorterDuff.Mode.MULTIPLY
+                android.graphics.PorterDuff.Mode.MULTIPLY,
             )
         }
         emptyItem?.iconResource?.let { binding.emptyIconView.setImageResource(it) }
@@ -84,7 +83,10 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
             notifyItemChanged(0)
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> {
                 val view = parent.inflate(R.layout.loading_item)
@@ -101,15 +103,19 @@ class RecyclerViewStateAdapter(val showLoadingAsEmpty: Boolean = false) : Recycl
                 object : RecyclerView.ViewHolder(view) {}
             }
             1 -> FailedViewHolder(parent.inflate(R.layout.failed_item))
-            else -> if (emptyViewBuilder != null) {
-                HolderViewHolder(emptyViewBuilder?.invoke() ?: View(parent.context))
-            } else {
-                EmptyViewHolder(parent.inflate(R.layout.empty_item))
-            }
+            else ->
+                if (emptyViewBuilder != null) {
+                    HolderViewHolder(emptyViewBuilder?.invoke() ?: View(parent.context))
+                } else {
+                    EmptyViewHolder(parent.inflate(R.layout.empty_item))
+                }
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (holder is EmptyViewHolder) {
             holder.bind(emptyItem)
         } else if (holder is FailedViewHolder) {

@@ -17,7 +17,8 @@ internal class PurchaseDialogGemsContent(context: Context) : PurchaseDialogConte
         get() = binding.titleTextView
 
     init {
-        binding.stepperView.iconDrawable = HabiticaIconsHelper.imageOfGem().asDrawable(context.resources)
+        binding.stepperView.iconDrawable =
+            HabiticaIconsHelper.imageOfGem().asDrawable(context.resources)
     }
 
     override fun setItem(item: ShopItem) {

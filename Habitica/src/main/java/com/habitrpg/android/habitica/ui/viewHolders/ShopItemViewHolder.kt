@@ -45,7 +45,11 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         binding.pinIndicator.setImageBitmap(HabiticaIconsHelper.imageOfPinnedItem())
     }
 
-    fun bind(item: ShopItem, canBuy: Boolean, numberOwned: Int) {
+    fun bind(
+        item: ShopItem,
+        canBuy: Boolean,
+        numberOwned: Int,
+    ) {
         this.item = item
         binding.buyButton.visibility = View.VISIBLE
 
@@ -75,23 +79,31 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
                 AppCompatResources.getDrawable(context, R.drawable.pill_bg_gray)
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (item.locked) {
-            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.shop_locked)
+            binding.itemDetailIndicator.background =
+                AppCompatResources.getDrawable(context, R.drawable.shop_locked)
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (isLimited) {
             if (numberOwned == 0) {
-                binding.itemDetailIndicator.background = BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfItemIndicatorLimited())
+                binding.itemDetailIndicator.background =
+                    BitmapDrawable(
+                        context.resources,
+                        HabiticaIconsHelper.imageOfItemIndicatorLimited(),
+                    )
             } else {
-                binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_purple_300)
+                binding.itemDetailIndicator.background =
+                    AppCompatResources.getDrawable(context, R.drawable.pill_bg_purple_300)
             }
             binding.itemDetailIndicator.visibility = View.VISIBLE
         }
 
         val limitedLeft = item.limitedNumberLeft ?: limitedNumberLeft
         if (item.key == "gem" && limitedLeft == -1) {
-            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.item_indicator_subscribe)
+            binding.itemDetailIndicator.background =
+                AppCompatResources.getDrawable(context, R.drawable.item_indicator_subscribe)
             binding.itemDetailIndicator.visibility = View.VISIBLE
         } else if (item.key == "gem") {
-            binding.itemDetailIndicator.background = AppCompatResources.getDrawable(context, R.drawable.pill_bg_green)
+            binding.itemDetailIndicator.background =
+                AppCompatResources.getDrawable(context, R.drawable.pill_bg_green)
             binding.itemDetailIndicator.text = "$limitedLeft"
             binding.itemDetailIndicator.setTextColor(ContextCompat.getColor(context, R.color.white))
             binding.itemDetailIndicator.visibility = View.VISIBLE
@@ -99,11 +111,12 @@ class ShopItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
 
         if (binding.itemDetailIndicator.visibility == View.VISIBLE) {
             val layoutParams = binding.itemDetailIndicator.layoutParams
-            layoutParams.width = if (binding.itemDetailIndicator.text.isBlank()) {
-                24.dpToPx(context)
-            } else {
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            }
+            layoutParams.width =
+                if (binding.itemDetailIndicator.text.isBlank()) {
+                    24.dpToPx(context)
+                } else {
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                }
             binding.itemDetailIndicator.layoutParams = layoutParams
         }
 

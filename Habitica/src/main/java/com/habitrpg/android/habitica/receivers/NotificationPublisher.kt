@@ -29,7 +29,6 @@ import javax.inject.Inject
 // https://gist.github.com/BrandonSmith/6679223
 @AndroidEntryPoint
 class NotificationPublisher : BroadcastReceiver() {
-
     @Inject
     lateinit var taskRepository: TaskRepository
 
@@ -42,7 +41,10 @@ class NotificationPublisher : BroadcastReceiver() {
     private var wasInjected = false
     private var context: Context? = null
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         this.context = context
         if (!wasInjected) {
             wasInjected = true
@@ -59,7 +61,8 @@ class NotificationPublisher : BroadcastReceiver() {
         val checkDailies = intent.getBooleanExtra(CHECK_DAILIES, false)
         if (checkDailies) {
             MainScope().launchCatching {
-                val tasks = taskRepository.getTasks(TaskType.DAILY, null, emptyArray()).firstOrNull()
+                val tasks =
+                    taskRepository.getTasks(TaskType.DAILY, null, emptyArray()).firstOrNull()
                 val user = userRepository.getUser().firstOrNull()
                 var showNotifications = false
                 for (task in tasks ?: emptyList()) {
@@ -69,7 +72,10 @@ class NotificationPublisher : BroadcastReceiver() {
                     }
                 }
                 if (showNotifications) {
-                    notify(intent, buildNotification(wasInactive, user?.authentication?.timestamps?.createdAt))
+                    notify(
+                        intent,
+                        buildNotification(wasInactive, user?.authentication?.timestamps?.createdAt),
+                    )
                 }
             }
         } else {
@@ -77,13 +83,19 @@ class NotificationPublisher : BroadcastReceiver() {
         }
     }
 
-    private fun notify(intent: Intent, notification: Notification?) {
+    private fun notify(
+        intent: Intent,
+        notification: Notification?,
+    ) {
         val notificationManager = context?.let { NotificationManagerCompat.from(it) }
         val id = intent.getIntExtra(NOTIFICATION_ID, 0)
         notification?.let { notificationManager?.notify(id, it) }
     }
 
-    private fun buildNotification(wasInactive: Boolean, registrationDate: Date? = null): Notification? {
+    private fun buildNotification(
+        wasInactive: Boolean,
+        registrationDate: Date? = null,
+    ): Notification? {
         val thisContext = context ?: return null
         val notification: Notification
         val builder = NotificationCompat.Builder(thisContext, "default")
@@ -96,11 +108,11 @@ class NotificationPublisher : BroadcastReceiver() {
             val isSameDay = (
                 registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
                     registrationCal.get(Calendar.DAY_OF_YEAR) == todayCal.get(Calendar.DAY_OF_YEAR)
-                )
+            )
             val isPreviousDay = (
                 registrationCal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) &&
                     registrationCal.get(Calendar.DAY_OF_YEAR) == (todayCal.get(Calendar.DAY_OF_YEAR) - 1)
-                )
+            )
             if (isSameDay) {
                 builder.setContentTitle(thisContext.getString(R.string.same_day_reminder_title))
                 notificationText = thisContext.getString(R.string.same_day_reminder_text)
@@ -122,12 +134,13 @@ class NotificationPublisher : BroadcastReceiver() {
 
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
-        val intent = PendingIntent.getActivity(
-            thisContext,
-            0,
-            notificationIntent,
-            withImmutableFlag(0)
-        )
+        val intent =
+            PendingIntent.getActivity(
+                thisContext,
+                0,
+                notificationIntent,
+                withImmutableFlag(0),
+            )
         builder.setContentIntent(intent)
 
         builder.color = ContextCompat.getColor(thisContext, R.color.brand_300)
@@ -135,7 +148,8 @@ class NotificationPublisher : BroadcastReceiver() {
         notification = builder.build()
         notification.defaults = notification.defaults or Notification.DEFAULT_LIGHTS
 
-        notification.flags = notification.flags or (Notification.FLAG_AUTO_CANCEL or Notification.FLAG_SHOW_LIGHTS)
+        notification.flags =
+            notification.flags or (Notification.FLAG_AUTO_CANCEL or Notification.FLAG_SHOW_LIGHTS)
         return notification
     }
 
@@ -157,7 +171,7 @@ class NotificationPublisher : BroadcastReceiver() {
     }
 
     companion object {
-        var NOTIFICATION_ID = "notification-id"
-        var CHECK_DAILIES = "check-dailies"
+        const val NOTIFICATION_ID = "notification-id"
+        const val CHECK_DAILIES = "check-dailies"
     }
 }

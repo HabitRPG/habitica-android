@@ -45,7 +45,6 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
-
     private lateinit var binding: ActivitySetupBinding
 
     @Inject
@@ -65,7 +64,11 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     private var createdTasks = false
 
     private val isLastPage: Boolean
-        get() = binding.viewPager.adapter == null || binding.viewPager.currentItem == (binding.viewPager.adapter?.count ?: 0) - 1
+        get() =
+            binding.viewPager.adapter == null || binding.viewPager.currentItem == (
+                binding.viewPager.adapter?.count
+                    ?: 0
+            ) - 1
 
     override fun getLayoutResId(): Int {
         return R.layout.activity_setup
@@ -111,15 +114,13 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 window.insetsController?.setSystemBarsAppearance(
                     0,
-                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
                 )
             } else {
                 @Suppress("DEPRECATION")
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
         }
-
-
     }
 
     override fun onDestroy() {
@@ -179,7 +180,12 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             binding.previousButton.text = null
             leftDrawable = AppCompatResources.getDrawable(this, R.drawable.back_arrow_disabled)
         }
-        binding.previousButton.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null)
+        binding.previousButton.setCompoundDrawablesWithIntrinsicBounds(
+            leftDrawable,
+            null,
+            null,
+            null,
+        )
     }
 
     private fun setNextButtonEnabled(enabled: Boolean) {
@@ -195,7 +201,12 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         binding.nextButton.setCompoundDrawablesWithIntrinsicBounds(null, null, rightDrawable, null)
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+    override fun onPageScrolled(
+        position: Int,
+        positionOffset: Float,
+        positionOffsetPixels: Int,
+    ) =
+        Unit
 
     override fun onPageSelected(position: Int) {
         when {
@@ -203,10 +214,12 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                 this.setPreviousButtonEnabled(false)
                 binding.nextButton.text = this.getString(R.string.next_button)
             }
+
             isLastPage -> {
                 this.setPreviousButtonEnabled(true)
                 binding.nextButton.text = this.getString(R.string.finish)
             }
+
             else -> {
                 this.setPreviousButtonEnabled(true)
                 binding.nextButton.text = this.getString(R.string.next_button)
@@ -217,6 +230,7 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
     override fun onPageScrollStateChanged(state: Int) = Unit
 
     private var hasCompleted = false
+
     private fun onUserReceived(user: User?) {
         if (completedSetup && !hasCompleted) {
             val additionalData = HashMap<String, Any>()
@@ -245,15 +259,18 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
         finish()
     }
 
-    private fun confirmNames(displayName: String, username: String) {
+    private fun confirmNames(
+        displayName: String,
+        username: String,
+    ) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser("profile.name", displayName)
             userRepository.updateLoginName(username)
         }
     }
 
-    private inner class ViewPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
-
+    private inner class ViewPageAdapter(fm: FragmentManager) :
+        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 1 -> {
@@ -264,12 +281,14 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                     avatarSetupFragment = fragment
                     fragment
                 }
+
                 2 -> {
                     val fragment = TaskSetupFragment()
                     fragment.setUser(user)
                     taskSetupFragment = fragment
                     fragment
                 }
+
                 else -> {
                     val fragment = WelcomeFragment()
                     welcomeFragment = fragment
@@ -279,7 +298,10 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
             }
         }
 
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        override fun instantiateItem(
+            container: ViewGroup,
+            position: Int,
+        ): Any {
             val item = super.instantiateItem(container, position)
             when (item) {
                 is AvatarSetupFragment -> {
@@ -288,10 +310,12 @@ class SetupActivity : BaseActivity(), ViewPager.OnPageChangeListener {
                     item.setUser(user)
                     item.width = binding.viewPager.width
                 }
+
                 is TaskSetupFragment -> {
                     taskSetupFragment = item
                     item.setUser(user)
                 }
+
                 is WelcomeFragment -> {
                     welcomeFragment = item
                     item.onNameValid = { setNextButtonEnabled(it == true) }

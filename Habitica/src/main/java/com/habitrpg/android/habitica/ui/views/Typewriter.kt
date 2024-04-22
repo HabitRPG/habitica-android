@@ -46,18 +46,24 @@ class Typewriter : androidx.appcompat.widget.AppCompatTextView {
 
     fun animateText(text: CharSequence) {
         stringBuilder = SpannableStringBuilder(text)
-        stringBuilder?.setSpan(hiddenSpan, 0, stringBuilder?.length ?: 0, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+        stringBuilder?.setSpan(
+            hiddenSpan,
+            0,
+            stringBuilder?.length ?: 0,
+            Spannable.SPAN_INCLUSIVE_EXCLUSIVE,
+        )
         index = 0
 
         setText(stringBuilder)
         job?.cancel()
-        job = MainScope().launch(Dispatchers.Main) {
-            while (index <= (stringBuilder?.length ?: 0)) {
-                stringBuilder?.setSpan(visibleSpan, 0, index++, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-                setText(stringBuilder)
-                delay(delay)
+        job =
+            MainScope().launch(Dispatchers.Main) {
+                while (index <= (stringBuilder?.length ?: 0)) {
+                    stringBuilder?.setSpan(visibleSpan, 0, index++, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+                    setText(stringBuilder)
+                    delay(delay)
+                }
             }
-        }
     }
 
     fun stopTextAnimation() {

@@ -21,7 +21,7 @@ import java.util.Date
 
 enum class Permission {
     MODERATOR,
-    USER_SUPPORT
+    USER_SUPPORT,
 }
 
 open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
@@ -140,6 +140,7 @@ open class User : RealmObject(), BaseMainObject, Avatar, VersionedObject {
         }
 
     companion object {
-        val ONBOARDING_ACHIEVEMENT_KEYS = listOf("createdTask", "completedTask", "hatchedPet", "fedPet", "purchasedEquipment")
+        val ONBOARDING_ACHIEVEMENT_KEYS =
+            listOf("createdTask", "completedTask", "hatchedPet", "fedPet", "purchasedEquipment")
     }
 }

@@ -19,13 +19,16 @@ class TimeTravelersShopFragment : ShopFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         shopIdentifier = Shop.TIME_TRAVELERS_SHOP
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         initializeCurrencyViews()
 
@@ -33,14 +36,16 @@ class TimeTravelersShopFragment : ShopFragment() {
             val user = userViewModel.user.value
             if (user?.isSubscribed != true) {
                 delay(2.seconds)
-                val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                    eventType = EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
-                }
+                val subscriptionBottomSheet =
+                    EventOutcomeSubscriptionBottomSheetFragment().apply {
+                        eventType =
+                            EventOutcomeSubscriptionBottomSheetFragment.EVENT_HOURGLASS_SHOP_OPENED
+                    }
                 if (isAdded) {
                     activity?.supportFragmentManager?.let {
                         subscriptionBottomSheet.show(
                             it,
-                            SubscriptionBottomSheetFragment.TAG
+                            SubscriptionBottomSheetFragment.TAG,
                         )
                     }
                 }

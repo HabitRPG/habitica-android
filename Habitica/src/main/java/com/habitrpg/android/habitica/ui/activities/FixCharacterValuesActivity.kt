@@ -9,17 +9,16 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityFixcharacterBinding
-import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
+import com.habitrpg.common.habitica.extensions.setTintWith
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class FixCharacterValuesActivity : BaseActivity() {
-
     private lateinit var binding: ActivityFixcharacterBinding
 
     @Inject
@@ -42,23 +41,23 @@ class FixCharacterValuesActivity : BaseActivity() {
 
         setIconBackground(
             binding.healthIconBackgroundView,
-            ContextCompat.getColor(this, R.color.red_500)
+            ContextCompat.getColor(this, R.color.red_500),
         )
         setIconBackground(
             binding.experienceIconBackgroundView,
-            ContextCompat.getColor(this, R.color.yellow_500)
+            ContextCompat.getColor(this, R.color.yellow_500),
         )
         setIconBackground(
             binding.manaIconBackgroundView,
-            ContextCompat.getColor(this, R.color.blue_500)
+            ContextCompat.getColor(this, R.color.blue_500),
         )
         setIconBackground(
             binding.goldIconBackgroundView,
-            ContextCompat.getColor(this, R.color.yellow_500)
+            ContextCompat.getColor(this, R.color.yellow_500),
         )
         setIconBackground(
             binding.streakIconBackgroundView,
-            ContextCompat.getColor(this, R.color.separator)
+            ContextCompat.getColor(this, R.color.separator),
         )
 
         binding.healthIconView.setImageBitmap(HabiticaIconsHelper.imageOfHeartLightBg())
@@ -113,35 +112,41 @@ class FixCharacterValuesActivity : BaseActivity() {
             Stats.WARRIOR -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.red_500)
+                    ContextCompat.getColor(this, R.color.red_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
             }
+
             Stats.MAGE -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.blue_500)
+                    ContextCompat.getColor(this, R.color.blue_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
             }
+
             Stats.HEALER -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.yellow_500)
+                    ContextCompat.getColor(this, R.color.yellow_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
             }
+
             Stats.ROGUE -> {
                 setIconBackground(
                     binding.levelIconBackgroundView,
-                    ContextCompat.getColor(this, R.color.brand_500)
+                    ContextCompat.getColor(this, R.color.brand_500),
                 )
                 binding.levelIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
         }
     }
 
-    private fun setIconBackground(view: View, color: Int) {
+    private fun setIconBackground(
+        view: View,
+        color: Int,
+    ) {
         val backgroundDrawable = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg)
         backgroundDrawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
         backgroundDrawable?.alpha = 50

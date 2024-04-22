@@ -16,16 +16,16 @@ import kotlinx.coroutines.flow.Flow
 class ChallengeRepositoryImpl(
     localRepository: ChallengeLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler
-) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, authenticationHandler), ChallengeRepository {
-
+    authenticationHandler: AuthenticationHandler,
+) : BaseRepositoryImpl<ChallengeLocalRepository>(localRepository, apiClient, authenticationHandler),
+    ChallengeRepository {
     override fun isChallengeMember(challengeID: String): Flow<Boolean> {
         return localRepository.isChallengeMember(currentUserID, challengeID)
     }
 
     override suspend fun reportChallenge(
         challengeid: String,
-        updateData: Map<String, String>
+        updateData: Map<String, String>,
     ): Void? {
         return apiClient.reportChallenge(challengeid, updateData)
     }
@@ -83,14 +83,29 @@ class ChallengeRepositoryImpl(
         return tasksOrder
     }
 
-    private suspend fun addChallengeTasks(challenge: Challenge, addedTaskList: List<Task>) {
+    private suspend fun addChallengeTasks(
+        challenge: Challenge,
+        addedTaskList: List<Task>,
+    ) {
         when {
-            addedTaskList.count() == 1 -> apiClient.createChallengeTask(challenge.id ?: "", addedTaskList[0])
-            addedTaskList.count() > 1 -> apiClient.createChallengeTasks(challenge.id ?: "", addedTaskList)
+            addedTaskList.count() == 1 ->
+                apiClient.createChallengeTask(
+                    challenge.id ?: "",
+                    addedTaskList[0],
+                )
+
+            addedTaskList.count() > 1 ->
+                apiClient.createChallengeTasks(
+                    challenge.id ?: "",
+                    addedTaskList,
+                )
         }
     }
 
-    override suspend fun createChallenge(challenge: Challenge, taskList: List<Task>): Challenge? {
+    override suspend fun createChallenge(
+        challenge: Challenge,
+        taskList: List<Task>,
+    ): Challenge? {
         challenge.tasksOrder = getTaskOrders(taskList)
 
         val createdChallenge = apiClient.createChallenge(challenge)
@@ -105,7 +120,7 @@ class ChallengeRepositoryImpl(
         fullTaskList: List<Task>,
         addedTaskList: List<Task>,
         updatedTaskList: List<Task>,
-        removedTaskList: List<String>
+        removedTaskList: List<String>,
     ): Challenge? {
         updatedTaskList
             .map { localRepository.getUnmanagedCopy(it) }
@@ -141,7 +156,10 @@ class ChallengeRepositoryImpl(
         return localRepository.getUserChallenges(userId ?: currentUserID)
     }
 
-    override suspend fun retrieveChallenges(page: Int, memberOnly: Boolean): List<Challenge>? {
+    override suspend fun retrieveChallenges(
+        page: Int,
+        memberOnly: Boolean,
+    ): List<Challenge>? {
         val challenges = apiClient.getUserChallenges(page, memberOnly)
         if (challenges != null) {
             localRepository.saveChallenges(challenges, page == 0, memberOnly, currentUserID)
@@ -149,7 +167,10 @@ class ChallengeRepositoryImpl(
         return challenges
     }
 
-    override suspend fun leaveChallenge(challenge: Challenge, keepTasks: String): Void? {
+    override suspend fun leaveChallenge(
+        challenge: Challenge,
+        keepTasks: String,
+    ): Void? {
         apiClient.leaveChallenge(challenge.id ?: "", LeaveChallengeBody(keepTasks))
         localRepository.setParticipating(currentUserID, challenge.id ?: "", false)
         return null

@@ -39,7 +39,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
-
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -53,7 +52,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentQuestDetailBinding {
         return FragmentQuestDetailBinding.inflate(inflater, container, false)
     }
@@ -68,13 +67,16 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
@@ -148,7 +150,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         // We need to do this, because the quest description can contain markdown AND HTML.
         binding?.descriptionView?.setText(
             MarkdownParser.parseMarkdown(questContent.notes).toHtml().fromHtml(),
-            TextView.BufferType.SPANNABLE
+            TextView.BufferType.SPANNABLE,
         )
 
         binding?.questScrollImageView?.loadImage("inventory_quest_scroll_" + questContent.key)
@@ -178,26 +180,28 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_ternary
-                                )
+                                    R.color.text_ternary,
+                                ),
                             )
                         }
+
                         true -> {
                             statusTextView?.setText(R.string.accepted)
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_green
-                                )
+                                    R.color.text_green,
+                                ),
                             )
                         }
+
                         else -> {
                             statusTextView?.setText(R.string.declined)
                             statusTextView?.setTextColor(
                                 ContextCompat.getColor(
                                     it,
-                                    R.color.text_red
-                                )
+                                    R.color.text_red,
+                                ),
                             )
                         }
                     }
@@ -256,17 +260,18 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
         HapticFeedbackManager.tap(requireView())
         context?.let {
             if (isQuestActive) {
-                val builder = AlertDialog.Builder(activity)
-                    .setMessage(R.string.quest_abort_message)
-                    .setPositiveButton(R.string.yes) { _, _ ->
-                        party?.id?.let { partyID ->
-                            lifecycleScope.launchCatching {
-                                socialRepository.abortQuest(partyID)
-                                userRepository.retrieveUser(true)
-                                activity?.supportFragmentManager?.popBackStack()
+                val builder =
+                    AlertDialog.Builder(activity)
+                        .setMessage(R.string.quest_abort_message)
+                        .setPositiveButton(R.string.yes) { _, _ ->
+                            party?.id?.let { partyID ->
+                                lifecycleScope.launchCatching {
+                                    socialRepository.abortQuest(partyID)
+                                    userRepository.retrieveUser(true)
+                                    activity?.supportFragmentManager?.popBackStack()
+                                }
                             }
-                        }
-                    }.setNegativeButton(R.string.no) { _, _ -> }
+                        }.setNegativeButton(R.string.no) { _, _ -> }
                 builder.show()
             } else {
                 val alert = HabiticaAlertDialog(it)
@@ -288,18 +293,19 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
     private fun onQuestLeave() {
         HapticFeedbackManager.tap(requireView())
-        val builder = AlertDialog.Builder(activity)
-            .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
-            .setPositiveButton(R.string.yes) { _, _ ->
-                party?.id?.let { partyID ->
-                    lifecycleScope.launchCatching {
-                        socialRepository.leaveQuest(partyID)
-                        socialRepository.retrieveGroup(partyID)
-                        userRepository.retrieveUser(true)
-                        activity?.supportFragmentManager?.popBackStack()
+        val builder =
+            AlertDialog.Builder(activity)
+                .setMessage(if (quest?.active == true) R.string.quest_leave_message else R.string.quest_leave_message_nostart)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    party?.id?.let { partyID ->
+                        lifecycleScope.launchCatching {
+                            socialRepository.leaveQuest(partyID)
+                            socialRepository.retrieveGroup(partyID)
+                            userRepository.retrieveUser(true)
+                            activity?.supportFragmentManager?.popBackStack()
+                        }
                     }
-                }
-            }.setNegativeButton(R.string.no) { _, _ -> }
+                }.setNegativeButton(R.string.no) { _, _ -> }
         builder.show()
     }
 }

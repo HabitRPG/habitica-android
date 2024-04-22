@@ -7,9 +7,11 @@ import com.google.gson.stream.JsonWriter
 import java.io.IOException
 
 class BooleanAsIntAdapter : TypeAdapter<Boolean>() {
-
     @Throws(IOException::class)
-    override fun write(out: JsonWriter, value: Boolean?) {
+    override fun write(
+        out: JsonWriter,
+        value: Boolean?,
+    ) {
         if (value == null) {
             out.nullValue()
         } else {
@@ -25,6 +27,7 @@ class BooleanAsIntAdapter : TypeAdapter<Boolean>() {
                 `in`.nextNull()
                 null
             }
+
             JsonToken.NUMBER -> `in`.nextInt() != 0
             JsonToken.STRING -> java.lang.Boolean.parseBoolean(`in`.nextString())
             else -> throw IllegalStateException("Expected BOOLEAN or NUMBER but was $peek")

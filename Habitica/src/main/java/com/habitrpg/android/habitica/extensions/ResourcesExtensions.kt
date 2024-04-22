@@ -8,7 +8,10 @@ import com.google.firebase.ktx.Firebase
 import com.habitrpg.android.habitica.ui.activities.BaseActivity
 import java.util.Locale
 
-fun Resources.forceLocale(activity: BaseActivity, locale: Locale) {
+fun Resources.forceLocale(
+    activity: BaseActivity,
+    locale: Locale,
+) {
     Locale.setDefault(locale)
     val configuration = Configuration()
     configuration.setLocale(locale)

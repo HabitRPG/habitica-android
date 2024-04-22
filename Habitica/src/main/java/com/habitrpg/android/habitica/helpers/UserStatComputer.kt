@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.shared.habitica.models.Avatar
 
 class UserStatComputer {
-
     interface StatsRow
 
     inner class AttributeRow : StatsRow {
@@ -25,7 +24,10 @@ class UserStatComputer {
         var stats: String? = null
     }
 
-    fun computeClassBonus(equipmentList: List<Equipment>?, user: Avatar): List<StatsRow> {
+    fun computeClassBonus(
+        equipmentList: List<Equipment>?,
+        user: Avatar,
+    ): List<StatsRow> {
         val skillRows = ArrayList<StatsRow>()
 
         var strAttributes = 0f
@@ -41,7 +43,7 @@ class UserStatComputer {
         // Summarize stats and fill equipment table
         for (i in equipmentList ?: emptyList()) {
             val strength = i.str
-            val intelligence = i._int
+            val intelligence = i.intelligence
             val constitution = i.con
             val perception = i.per
 
@@ -88,8 +90,10 @@ class UserStatComputer {
             }
 
             var classBonus = 0.5f
-            val userClassMatchesGearClass = !classDoesNotExist && itemClass == user.stats?.habitClass
-            val userClassMatchesGearSpecialClass = !specialClassDoesNotExist && itemSpecialClass == user.stats?.habitClass
+            val userClassMatchesGearClass =
+                !classDoesNotExist && itemClass == user.stats?.habitClass
+            val userClassMatchesGearSpecialClass =
+                !specialClassDoesNotExist && itemSpecialClass == user.stats?.habitClass
 
             if (!userClassMatchesGearClass && !userClassMatchesGearSpecialClass) classBonus = 0f
 
@@ -102,14 +106,17 @@ class UserStatComputer {
                     strClassBonus += strength * classBonus
                     perClassBonus += perception * classBonus
                 }
+
                 Stats.HEALER -> {
                     conClassBonus += constitution * classBonus
                     intClassBonus += intelligence * classBonus
                 }
+
                 Stats.WARRIOR -> {
                     strClassBonus += strength * classBonus
                     conClassBonus += constitution * classBonus
                 }
+
                 Stats.MAGE -> {
                     intClassBonus += intelligence * classBonus
                     perClassBonus += perception * classBonus

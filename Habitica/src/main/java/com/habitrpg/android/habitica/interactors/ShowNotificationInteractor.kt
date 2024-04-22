@@ -28,9 +28,8 @@ import kotlinx.coroutines.launch
 
 class ShowNotificationInteractor(
     private val activity: Activity,
-    private val lifecycleScope: LifecycleCoroutineScope
+    private val lifecycleScope: LifecycleCoroutineScope,
 ) {
-
     fun handleNotification(notification: Notification): Boolean {
         when (notification.type) {
             Notification.Type.LOGIN_INCENTIVE.type -> showCheckinDialog(notification)
@@ -40,28 +39,60 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_MOUNT_MASTER.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_TRIAD_BINGO.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_GUILD_JOINED.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_CHALLENGE_JOINED.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
             Notification.Type.ACHIEVEMENT_INVITED_FRIEND.type -> showAchievementDialog(notification)
             Notification.Type.WON_CHALLENGE.type -> showWonChallengeDialog(notification)
 
             Notification.Type.ACHIEVEMENT_ALL_YOUR_BASE.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_BACK_TO_BASICS.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_JUST_ADD_WATER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_LOST_MASTERCLASSER.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
+            Notification.Type.ACHIEVEMENT_MIND_OVER_MATTER.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
             Notification.Type.ACHIEVEMENT_DUST_DEVIL.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_ARID_AUTHORITY.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_MONSTER_MAGUS.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_UNDEAD_UNDERTAKER.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
+            Notification.Type.ACHIEVEMENT_PRIMED_FOR_PAINTING.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
             Notification.Type.ACHIEVEMENT_PEARLY_PRO.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_TICKLED_PINK.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_ROSY_OUTLOOK.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_BUG_BONANZA.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_BARE_NECESSITIES.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
+            Notification.Type.ACHIEVEMENT_FRESHWATER_FRIENDS.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
             Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_ALL_THAT_GLITTERS.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
             Notification.Type.ACHIEVEMENT_GOOD_AS_GOLD.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_BONE_COLLECTOR.type -> showAchievementDialog(notification)
             Notification.Type.ACHIEVEMENT_SKELETON_CREW.type -> showAchievementDialog(notification)
@@ -69,7 +100,11 @@ class ShowNotificationInteractor(
             Notification.Type.ACHIEVEMENT_RED_LETTER_DAY.type -> showAchievementDialog(notification)
 
             Notification.Type.ACHIEVEMENT_GENERIC.type -> showAchievementDialog(notification)
-            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type -> showAchievementDialog(notification)
+            Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type ->
+                showAchievementDialog(
+                    notification,
+                )
+
             Notification.Type.FIRST_DROP.type -> showFirstDropDialog(notification)
             else -> return false
         }
@@ -78,7 +113,8 @@ class ShowNotificationInteractor(
 
     fun showCheckinDialog(notification: Notification) {
         val notificationData = notification.data as? LoginIncentiveData
-        val nextUnlockText = activity.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
+        val nextUnlockText =
+            activity.getString(R.string.nextPrizeUnlocks, notificationData?.nextRewardAt)
         if (notificationData?.rewardKey != null) {
             val title = notificationData.message
 
@@ -92,7 +128,8 @@ class ShowNotificationInteractor(
             }
             imageView?.loadImage(imageKey)
 
-            val youEarnedMessage = activity.getString(R.string.checkInRewardEarned, notificationData.rewardText)
+            val youEarnedMessage =
+                activity.getString(R.string.checkInRewardEarned, notificationData.rewardText)
             val youEarnedTexView = view.findViewById(R.id.you_earned_message) as? TextView
             youEarnedTexView?.text = youEarnedMessage
 
@@ -115,7 +152,7 @@ class ShowNotificationInteractor(
             (activity as? SnackbarActivity)?.showSnackbar(
                 title = notificationData?.message,
                 content = nextUnlockText,
-                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE
+                displayType = HabiticaSnackbar.SnackbarDisplayType.BLUE,
             )
         }
     }
@@ -123,11 +160,12 @@ class ShowNotificationInteractor(
     fun showAchievementDialog(notification: Notification) {
         val data = (notification.data as? AchievementData) ?: return
         val achievement = data.achievement ?: notification.type ?: ""
-        val delayTime: Long = if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
-            1000
-        } else {
-            200
-        }
+        val delayTime: Long =
+            if (achievement == "createdTask" || achievement == Notification.Type.ACHIEVEMENT_ONBOARDING_COMPLETE.type) {
+                1000
+            } else {
+                200
+            }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             delay(delayTime)
             lifecycleScope.launch(context = Dispatchers.Main) {

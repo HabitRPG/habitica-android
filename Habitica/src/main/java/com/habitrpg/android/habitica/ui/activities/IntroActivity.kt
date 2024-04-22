@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChangeListener {
-
     private lateinit var binding: ActivityIntroBinding
 
     @Inject
@@ -75,7 +74,12 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         finish()
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) { /* no-on */ }
+    override fun onPageScrolled(
+        position: Int,
+        positionOffset: Float,
+        positionOffsetPixels: Int,
+    ) { // no-on
+    }
 
     override fun onPageSelected(position: Int) {
         if (position == 2) {
@@ -85,10 +89,11 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) { /* no-on */ }
+    override fun onPageScrollStateChanged(state: Int) { // no-on
+    }
 
-    private inner class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
-
+    private inner class PagerAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT), IconPagerAdapter {
         override fun getItem(position: Int): Fragment {
             val fragment = IntroFragment()
             configureFragment(fragment, position)
@@ -103,7 +108,10 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
             return 3
         }
 
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        override fun instantiateItem(
+            container: ViewGroup,
+            position: Int,
+        ): Any {
             val item = super.instantiateItem(container, position)
             if (item is IntroFragment) {
                 configureFragment(item, position)
@@ -112,28 +120,59 @@ class IntroActivity : BaseActivity(), View.OnClickListener, ViewPager.OnPageChan
         }
     }
 
-    private fun configureFragment(fragment: IntroFragment, position: Int) {
+    private fun configureFragment(
+        fragment: IntroFragment,
+        position: Int,
+    ) {
         when (position) {
             0 -> {
                 fragment.setImage(ResourcesCompat.getDrawable(resources, R.drawable.intro_1, null))
                 fragment.setSubtitle(getString(R.string.intro_1_subtitle))
-                fragment.setTitleImage(ResourcesCompat.getDrawable(resources, R.drawable.intro_1_title, null))
-                fragment.setDescription(getString(R.string.intro_1_description, getString(R.string.habitica_user_count)))
-                fragment.setBackgroundColor(ContextCompat.getColor(this@IntroActivity, R.color.brand_300))
+                fragment.setTitleImage(
+                    ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.intro_1_title,
+                        null,
+                    ),
+                )
+                fragment.setDescription(
+                    getString(
+                        R.string.intro_1_description,
+                        getString(R.string.habitica_user_count),
+                    ),
+                )
+                fragment.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this@IntroActivity,
+                        R.color.brand_300,
+                    ),
+                )
             }
+
             1 -> {
                 fragment.setImage(ResourcesCompat.getDrawable(resources, R.drawable.intro_2, null))
                 fragment.setSubtitle(getString(R.string.intro_2_subtitle))
                 fragment.setTitle(getString(R.string.intro_2_title))
                 fragment.setDescription(getString(R.string.intro_2_description))
-                fragment.setBackgroundColor(ContextCompat.getColor(this@IntroActivity, R.color.blue_10))
+                fragment.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this@IntroActivity,
+                        R.color.blue_10,
+                    ),
+                )
             }
+
             2 -> {
                 fragment.setImage(ResourcesCompat.getDrawable(resources, R.drawable.intro_3, null))
                 fragment.setSubtitle(getString(R.string.intro_3_subtitle))
                 fragment.setTitle(getString(R.string.intro_3_title))
                 fragment.setDescription(getString(R.string.intro_3_description))
-                fragment.setBackgroundColor(ContextCompat.getColor(this@IntroActivity, R.color.red_100))
+                fragment.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this@IntroActivity,
+                        R.color.red_100,
+                    ),
+                )
             }
         }
     }

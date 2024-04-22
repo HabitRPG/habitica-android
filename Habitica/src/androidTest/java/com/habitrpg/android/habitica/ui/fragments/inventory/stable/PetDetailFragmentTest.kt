@@ -21,9 +21,10 @@ import kotlinx.coroutines.flow.flowOf
 import org.junit.Test
 
 class PetDetailScreen : Screen<PetDetailScreen>() {
-    val recycler: KRecyclerView = KRecyclerView({
-        withId(R.id.recyclerView)
-    }, itemTypeBuilder = {
+    val recycler: KRecyclerView =
+        KRecyclerView({
+            withId(R.id.recyclerView)
+        }, itemTypeBuilder = {
             itemType(::SectionItem)
             itemType(::PetItem)
         })
@@ -37,23 +38,25 @@ internal class PetDetailRecyclerFragmentTest :
         every { inventoryRepository.getOwnedItems("food") } returns flowOf(user.items?.food!!.filter { it.numberOwned > 0 })
         val saddle = OwnedItem()
         saddle.numberOwned = 1
-        every { inventoryRepository.getOwnedItems(true) } returns flowOf(
-            mapOf(
-                Pair(
-                    "Saddle-food",
-                    saddle
-                )
+        every { inventoryRepository.getOwnedItems(true) } returns
+            flowOf(
+                mapOf(
+                    Pair(
+                        "Saddle-food",
+                        saddle,
+                    ),
+                ),
             )
-        )
 
         fragment = spyk()
         fragment.shouldInitializeComponent = false
     }
 
     override fun launchFragment(args: Bundle?) {
-        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
-            return@launchFragmentInContainer fragment
-        }
+        scenario =
+            launchFragmentInContainer(args, R.style.MainAppTheme) {
+                return@launchFragmentInContainer fragment
+            }
     }
 
     override val screen = PetDetailScreen()
@@ -66,18 +69,18 @@ internal class PetDetailRecyclerFragmentTest :
             inventoryRepository.getPets(
                 any(),
                 any(),
-                any()
+                any(),
             )
         } returns flowOf(content.pets.filter { it.animal == "Cactus" })
         every {
             inventoryRepository.getMounts(
                 any(),
                 any(),
-                any()
+                any(),
             )
         } returns flowOf(content.mounts.filter { it.animal == "Cactus" })
         launchFragment(
-            PetDetailRecyclerFragmentArgs.Builder("cactus", "drop", "").build().toBundle()
+            PetDetailRecyclerFragmentArgs.Builder("cactus", "drop", "").build().toBundle(),
         )
         screen {
             recycler {
@@ -99,14 +102,14 @@ internal class PetDetailRecyclerFragmentTest :
             inventoryRepository.getPets(
                 any(),
                 any(),
-                any()
+                any(),
             )
         } returns flowOf(content.pets.filter { it.animal == "Fox" })
         every {
             inventoryRepository.getMounts(
                 any(),
                 any(),
-                any()
+                any(),
             )
         } returns flowOf(content.mounts.filter { it.animal == "Fox" })
         launchFragment(PetDetailRecyclerFragmentArgs.Builder("fox", "drop", "").build().toBundle())

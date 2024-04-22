@@ -15,7 +15,11 @@ import java.util.Date
 
 class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challenge> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Challenge {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): Challenge {
         val jsonObject = json.asJsonObject
 
         val challenge = Challenge()
@@ -83,10 +87,14 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
         if (tasksOrderElement != null && !tasksOrderElement.isJsonNull) {
             val tasksOrderObj = tasksOrderElement.asJsonObject
 
-            challenge.todoList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_TODOS)
-            challenge.dailyList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_DAILYS)
-            challenge.habitList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_HABITS)
-            challenge.rewardList = getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_REWARDS)
+            challenge.todoList =
+                getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_TODOS)
+            challenge.dailyList =
+                getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_DAILYS)
+            challenge.habitList =
+                getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_HABITS)
+            challenge.rewardList =
+                getTaskArrayAsString(context, tasksOrderObj, Challenge.TASK_ORDER_REWARDS)
         }
 
         return challenge
@@ -95,12 +103,13 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
     private fun getTaskArrayAsString(
         context: JsonDeserializationContext,
         tasksOrderObj: JsonObject,
-        taskType: String
+        taskType: String,
     ): String {
         if (tasksOrderObj.has(taskType)) {
             val jsonElement = tasksOrderObj.get(taskType)
 
-            val taskArray = context.deserialize<Array<String>>(jsonElement, Array<String>::class.java)
+            val taskArray =
+                context.deserialize<Array<String>>(jsonElement, Array<String>::class.java)
 
             return TextUtils.join(",", taskArray)
         }
@@ -108,7 +117,11 @@ class ChallengeDeserializer : JsonDeserializer<Challenge>, JsonSerializer<Challe
         return ""
     }
 
-    override fun serialize(src: Challenge, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
+    override fun serialize(
+        src: Challenge,
+        typeOfSrc: Type,
+        context: JsonSerializationContext,
+    ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("id", src.id)
         obj.addProperty("name", src.name)

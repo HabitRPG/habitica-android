@@ -16,11 +16,17 @@ import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolde
 
 class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObject>) :
     DiffCallback<ChatMessage>(oldList, newList) {
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+    override fun areItemsTheSame(
+        oldItemPosition: Int,
+        newItemPosition: Int,
+    ): Boolean {
         return oldList[oldItemPosition].primaryIdentifier == newList[newItemPosition].primaryIdentifier
     }
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+    override fun areContentsTheSame(
+        oldItemPosition: Int,
+        newItemPosition: Int,
+    ): Boolean {
         val oldItem = oldList[oldItemPosition] as ChatMessage
         val newItem = newList[newItemPosition] as ChatMessage
         Log.d("Compare", "${oldItem.id}-${oldItem.likeCount} , ${newItem.id}-${newItem.likeCount}")
@@ -28,7 +34,8 @@ class ChatDiffCallback(oldList: List<BaseMainObject>, newList: List<BaseMainObje
     }
 }
 
-class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : BaseRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>() {
+class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) :
+    BaseRecyclerViewAdapter<ChatMessage, RecyclerView.ViewHolder>() {
     internal var user = user
         set(value) {
             field = value
@@ -46,7 +53,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
 
     override fun getDiffCallback(
         oldList: List<ChatMessage>,
-        newList: List<ChatMessage>
+        newList: List<ChatMessage>,
     ): DiffCallback<ChatMessage> {
         return ChatDiffCallback(oldList, newList)
     }
@@ -55,7 +62,10 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
         this.uuid = user?.id ?: ""
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             SystemChatMessageViewHolder(parent.inflate(R.layout.system_chat_message))
         } else {
@@ -63,13 +73,16 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (data[position].isSystemMessage) {
             val sysChatHolder = holder as? SystemChatMessageViewHolder ?: return
             val message = data[position]
             sysChatHolder.bind(
                 message,
-                expandedMessageId == data[position].id
+                expandedMessageId == data[position].id,
             )
             sysChatHolder.onShouldExpand = { expandMessage(message, position) }
         } else {
@@ -79,7 +92,7 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
                 message,
                 uuid,
                 user,
-                expandedMessageId == message.id
+                expandedMessageId == message.id,
             )
             chatHolder.onShouldExpand = { expandMessage(message, position) }
             chatHolder.onLikeMessage = onMessageLike
@@ -96,12 +109,16 @@ class ChatRecyclerViewAdapter(user: User?, private val isTavern: Boolean) : Base
         return if (data[position].isSystemMessage) 0 else 1
     }
 
-    private fun expandMessage(message: ChatMessage, position: Int?) {
-        expandedMessageId = if (expandedMessageId == message.id) {
-            null
-        } else {
-            message.id
-        }
+    private fun expandMessage(
+        message: ChatMessage,
+        position: Int?,
+    ) {
+        expandedMessageId =
+            if (expandedMessageId == message.id) {
+                null
+            } else {
+                message.id
+            }
         notifyItemChanged(position ?: data.indexOf(message))
     }
 }
@@ -118,10 +135,14 @@ class SystemChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(item
         }
     }
 
-    fun bind(chatMessage: ChatMessage?, isExpanded: Boolean) {
+    fun bind(
+        chatMessage: ChatMessage?,
+        isExpanded: Boolean,
+    ) {
         binding.textView.text = chatMessage?.text?.removePrefix("`")?.removeSuffix("`")
-        binding.systemMessageTimestamp.text = chatMessage?.timestamp?.let { java.util.Date(it) }
-            ?.let { dateTime.format(it) }
+        binding.systemMessageTimestamp.text =
+            chatMessage?.timestamp?.let { java.util.Date(it) }
+                ?.let { dateTime.format(it) }
         if (isExpanded) {
             binding.systemMessageTimestamp.visibility = View.VISIBLE
         } else {

@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.habitrpg.android.habitica.R
 
 class InsufficientGoldDialog(context: Context) : InsufficientCurrencyDialog(context) {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         imageView.setImageResource(R.drawable.gold_multiple)

@@ -39,17 +39,33 @@ class TaskRepositoryImpl(
     apiClient: ApiClient,
     authenticationHandler: AuthenticationHandler,
     val appConfigManager: AppConfigManager,
-) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler), TaskRepository {
+) : BaseRepositoryImpl<TaskLocalRepository>(localRepository, apiClient, authenticationHandler),
+    TaskRepository {
     private var lastTaskAction: Long = 0
 
-    override fun getTasks(taskType: TaskType, userID: String?, includedGroupIDs: Array<String>): Flow<List<Task>> =
-        this.localRepository.getTasks(taskType, userID ?: authenticationHandler.currentUserID ?: "", includedGroupIDs)
+    override fun getTasks(
+        taskType: TaskType,
+        userID: String?,
+        includedGroupIDs: Array<String>,
+    ): Flow<List<Task>> =
+        this.localRepository.getTasks(
+            taskType,
+            userID ?: authenticationHandler.currentUserID ?: "",
+            includedGroupIDs,
+        )
 
-    override fun saveTasks(userId: String, order: TasksOrder, tasks: TaskList) {
+    override fun saveTasks(
+        userId: String,
+        order: TasksOrder,
+        tasks: TaskList,
+    ) {
         localRepository.saveTasks(userId, order, tasks)
     }
 
-    override suspend fun retrieveTasks(userId: String, tasksOrder: TasksOrder): TaskList? {
+    override suspend fun retrieveTasks(
+        userId: String,
+        tasksOrder: TasksOrder,
+    ): TaskList? {
         val tasks = apiClient.getTasks() ?: return null
         this.localRepository.saveTasks(userId, tasksOrder, tasks)
         return tasks
@@ -58,11 +74,18 @@ class TaskRepositoryImpl(
     override suspend fun retrieveCompletedTodos(userId: String?): TaskList? {
         val taskList = this.apiClient.getTasks("completedTodos") ?: return null
         val tasks = taskList.tasks
-        this.localRepository.saveCompletedTodos(userId ?: authenticationHandler.currentUserID ?: "", tasks.values)
+        this.localRepository.saveCompletedTodos(
+            userId ?: authenticationHandler.currentUserID ?: "",
+            tasks.values,
+        )
         return taskList
     }
 
-    override suspend fun retrieveTasks(userId: String, tasksOrder: TasksOrder, dueDate: Date): TaskList? {
+    override suspend fun retrieveTasks(
+        userId: String,
+        tasksOrder: TasksOrder,
+        dueDate: Date,
+    ): TaskList? {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
         val taskList = this.apiClient.getTasks("dailys", formatter.format(dueDate)) ?: return null
         this.localRepository.saveTasks(userId, tasksOrder, taskList)
@@ -75,13 +98,18 @@ class TaskRepositoryImpl(
         task: Task,
         up: Boolean,
         force: Boolean,
-        notifyFunc: ((TaskScoringResult) -> Unit)?
+        notifyFunc: ((TaskScoringResult) -> Unit)?,
     ): TaskScoringResult? {
-        val localData = if (user != null && appConfigManager.enableLocalTaskScoring()) {
-            ScoreTaskLocallyInteractor.score(user, task, if (up) TaskDirection.UP else TaskDirection.DOWN)
-        } else {
-            null
-        }
+        val localData =
+            if (user != null && appConfigManager.enableLocalTaskScoring()) {
+                ScoreTaskLocallyInteractor.score(
+                    user,
+                    task,
+                    if (up) TaskDirection.UP else TaskDirection.DOWN,
+                )
+            } else {
+                null
+            }
         if (user != null && localData != null) {
             val stats = user.stats
             val result = TaskScoringResult(localData, stats)
@@ -96,9 +124,15 @@ class TaskRepositoryImpl(
         }
 
         lastTaskAction = now
-        val res = this.apiClient.postTaskDirection(id, (if (up) TaskDirection.UP else TaskDirection.DOWN).text) ?: return null
+        val res =
+            this.apiClient.postTaskDirection(
+                id,
+                (if (up) TaskDirection.UP else TaskDirection.DOWN).text,
+            ) ?: return null
         // There are cases where the user object is not set correctly. So the app refetches it as a fallback
-        val thisUser = user ?: localRepository.getUser(authenticationHandler.currentUserID ?: "").firstOrNull() ?: return null
+        val thisUser =
+            user ?: localRepository.getUser(authenticationHandler.currentUserID ?: "").firstOrNull()
+                ?: return null
         // save local task changes
 
         Analytics.sendEvent(
@@ -108,8 +142,8 @@ class TaskRepositoryImpl(
             mapOf(
                 "type" to (task.type ?: ""),
                 "scored_up" to up,
-                "value" to task.value
-            )
+                "value" to task.value,
+            ),
         )
         if (res.lvl == 0) {
             // Team tasks that require approval have weird data that we should just ignore.
@@ -132,7 +166,7 @@ class TaskRepositoryImpl(
         res: TaskDirectionData,
         task: Task,
         up: Boolean,
-        localDelta: Float
+        localDelta: Float,
     ) {
         this.localRepository.executeTransaction {
             val bgTask = localRepository.getLiveObject(task) ?: return@executeTransaction
@@ -157,7 +191,8 @@ class TaskRepositoryImpl(
                 }
 
                 if (bgTask.isGroupTask) {
-                    val entry = bgTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == user.id }
+                    val entry =
+                        bgTask.group?.assignedUsersDetail?.firstOrNull { it.assignedUserID == user.id }
                     entry?.completed = up
                     if (up) {
                         entry?.completedDate = Date()
@@ -167,12 +202,15 @@ class TaskRepositoryImpl(
                 }
             }
             res._tmp?.drop?.key?.let { key ->
-                val type = when (res._tmp?.drop?.type?.lowercase(Locale.US)) {
-                    "hatchingpotion" -> "hatchingPotions"
-                    "egg" -> "eggs"
-                    else -> res._tmp?.drop?.type?.lowercase(Locale.US)
-                }
-                var item = it.where(OwnedItem::class.java).equalTo("itemType", type).equalTo("key", key).findFirst()
+                val type =
+                    when (res._tmp?.drop?.type?.lowercase(Locale.US)) {
+                        "hatchingpotion" -> "hatchingPotions"
+                        "egg" -> "eggs"
+                        else -> res._tmp?.drop?.type?.lowercase(Locale.US)
+                    }
+                var item =
+                    it.where(OwnedItem::class.java).equalTo("itemType", type).equalTo("key", key)
+                        .findFirst()
                 if (item == null) {
                     item = OwnedItem()
                     item.key = key
@@ -197,11 +235,14 @@ class TaskRepositoryImpl(
             bgUser.party?.quest?.progress?.up = (
                 bgUser.party?.quest?.progress?.up
                     ?: 0F
-                ) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
+            ) + (res._tmp?.quest?.progressDelta?.toFloat() ?: 0F)
         }
     }
 
-    override suspend fun markTaskNeedsWork(task: Task, userID: String) {
+    override suspend fun markTaskNeedsWork(
+        task: Task,
+        userID: String,
+    ) {
         val savedTask = apiClient.markTaskNeedsWork(task.id ?: "", userID)
         if (savedTask != null) {
             savedTask.id = task.id
@@ -219,13 +260,16 @@ class TaskRepositoryImpl(
         taskId: String,
         up: Boolean,
         force: Boolean,
-        notifyFunc: ((TaskScoringResult) -> Unit)?
+        notifyFunc: ((TaskScoringResult) -> Unit)?,
     ): TaskScoringResult? {
         val task = localRepository.getTask(taskId).firstOrNull() ?: return null
         return taskChecked(user, task, up, force, notifyFunc)
     }
 
-    override suspend fun scoreChecklistItem(taskId: String, itemId: String): Task? {
+    override suspend fun scoreChecklistItem(
+        taskId: String,
+        itemId: String,
+    ): Task? {
         val task = apiClient.scoreChecklistItem(taskId, itemId)
         val updatedItem: ChecklistItem? = task?.checklist?.lastOrNull { itemId == it.id }
         if (updatedItem != null) {
@@ -238,7 +282,10 @@ class TaskRepositoryImpl(
 
     override fun getTaskCopy(taskId: String) = localRepository.getTaskCopy(taskId)
 
-    override suspend fun createTask(task: Task, force: Boolean): Task? {
+    override suspend fun createTask(
+        task: Task,
+        force: Boolean,
+    ): Task? {
         val now = Date().time
         if (lastTaskAction > now - 500 && !force) {
             return null
@@ -248,21 +295,23 @@ class TaskRepositoryImpl(
         task.isSaving = true
         task.isCreating = true
         task.hasErrored = false
-        task.ownerID = if (task.isGroupTask) {
-            task.group?.groupID ?: ""
-        } else {
-            authenticationHandler.currentUserID ?: ""
-        }
+        task.ownerID =
+            if (task.isGroupTask) {
+                task.group?.groupID ?: ""
+            } else {
+                authenticationHandler.currentUserID ?: ""
+            }
         if (task.id == null) {
             task.id = UUID.randomUUID().toString()
         }
         localRepository.save(task)
 
-        val savedTask = if (task.isGroupTask) {
-            apiClient.createGroupTask(task.group?.groupID ?: "", task)
-        } else {
-            apiClient.createTask(task)
-        }
+        val savedTask =
+            if (task.isGroupTask) {
+                apiClient.createGroupTask(task.group?.groupID ?: "", task)
+            } else {
+                apiClient.createTask(task)
+            }
         savedTask?.dateCreated = Date()
         if (savedTask != null) {
             savedTask.tags = task.tags
@@ -276,7 +325,10 @@ class TaskRepositoryImpl(
     }
 
     @Suppress("ReturnCount")
-    override suspend fun updateTask(task: Task, force: Boolean): Task? {
+    override suspend fun updateTask(
+        task: Task,
+        force: Boolean,
+    ): Task? {
         val now = Date().time
         if ((lastTaskAction > now - 500 && !force) || !task.isValid) {
             return task
@@ -314,41 +366,64 @@ class TaskRepositoryImpl(
 
     override suspend fun createTasks(newTasks: List<Task>) = apiClient.createTasks(newTasks)
 
-    override fun markTaskCompleted(taskId: String, isCompleted: Boolean) {
+    override fun markTaskCompleted(
+        taskId: String,
+        isCompleted: Boolean,
+    ) {
         localRepository.markTaskCompleted(taskId, isCompleted)
     }
 
-    override fun <T : BaseMainObject> modify(obj: T, transaction: (T) -> Unit) {
+    override fun <T : BaseMainObject> modify(
+        obj: T,
+        transaction: (T) -> Unit,
+    ) {
         localRepository.modify(obj, transaction)
     }
 
-    override fun swapTaskPosition(firstPosition: Int, secondPosition: Int) {
+    override fun swapTaskPosition(
+        firstPosition: Int,
+        secondPosition: Int,
+    ) {
         localRepository.swapTaskPosition(firstPosition, secondPosition)
     }
 
-    override suspend fun updateTaskPosition(taskType: TaskType, taskID: String, newPosition: Int): List<String>? {
+    override suspend fun updateTaskPosition(
+        taskType: TaskType,
+        taskID: String,
+        newPosition: Int,
+    ): List<String>? {
         val positions = apiClient.postTaskNewPosition(taskID, newPosition) ?: return null
         localRepository.updateTaskPositions(positions)
         return positions
     }
 
-    override fun getUnmanagedTask(taskid: String) = getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
+    override fun getUnmanagedTask(taskid: String) =
+        getTask(taskid).map { localRepository.getUnmanagedCopy(it) }
 
-    override fun updateTaskInBackground(task: Task, assignChanges: Map<String, MutableList<String>>) {
+    override fun updateTaskInBackground(
+        task: Task,
+        assignChanges: Map<String, MutableList<String>>,
+    ) {
         MainScope().launchCatching {
             val updatedTask = updateTask(task) ?: return@launchCatching
             handleAssignmentChanges(updatedTask, assignChanges)
         }
     }
 
-    override fun createTaskInBackground(task: Task, assignChanges: Map<String, MutableList<String>>) {
+    override fun createTaskInBackground(
+        task: Task,
+        assignChanges: Map<String, MutableList<String>>,
+    ) {
         MainScope().launchCatching {
             val createdTask = createTask(task) ?: return@launchCatching
             handleAssignmentChanges(createdTask, assignChanges)
         }
     }
 
-    private suspend fun handleAssignmentChanges(task: Task, assignChanges: Map<String, MutableList<String>>) {
+    private suspend fun handleAssignmentChanges(
+        task: Task,
+        assignChanges: Map<String, MutableList<String>>,
+    ) {
         val taskID = task.id ?: return
         assignChanges["assign"]?.let { assignments ->
             if (assignments.isEmpty()) return@let
@@ -373,11 +448,13 @@ class TaskRepositoryImpl(
         }
     }
 
-    override fun getTaskCopies(): Flow<List<Task>> = authenticationHandler.userIDFlow.flatMapLatest {
-        localRepository.getTasks(it)
-    }.map { localRepository.getUnmanagedCopy(it) }
+    override fun getTaskCopies(): Flow<List<Task>> =
+        authenticationHandler.userIDFlow.flatMapLatest {
+            localRepository.getTasks(it)
+        }.map { localRepository.getUnmanagedCopy(it) }
 
-    override fun getTaskCopies(tasks: List<Task>): List<Task> = localRepository.getUnmanagedCopy(tasks)
+    override fun getTaskCopies(tasks: List<Task>): List<Task> =
+        localRepository.getUnmanagedCopy(tasks)
 
     override suspend fun retrieveDailiesFromDate(date: Date): TaskList? {
         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZZZZ", Locale.US)
@@ -385,7 +462,7 @@ class TaskRepositoryImpl(
     }
 
     override suspend fun syncErroredTasks(): List<Task>? {
-        val tasks = localRepository.getErroredTasks(currentUserID ?: "").firstOrNull()
+        val tasks = localRepository.getErroredTasks(currentUserID).firstOrNull()
         return tasks?.map { localRepository.getUnmanagedCopy(it) }?.mapNotNull {
             if (it.isCreating) {
                 createTask(it, true)
@@ -395,11 +472,14 @@ class TaskRepositoryImpl(
         }
     }
 
-    override suspend fun unlinkAllTasks(challengeID: String?, keepOption: String): Void? {
+    override suspend fun unlinkAllTasks(
+        challengeID: String?,
+        keepOption: String,
+    ): Void? {
         return apiClient.unlinkAllTasks(challengeID, keepOption)
     }
 
     override fun getTasksForChallenge(challengeID: String?): Flow<List<Task>> {
-        return localRepository.getTasksForChallenge(challengeID, currentUserID ?: "")
+        return localRepository.getTasksForChallenge(challengeID, currentUserID)
     }
 }

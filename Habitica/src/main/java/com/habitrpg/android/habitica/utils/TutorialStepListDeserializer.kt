@@ -10,7 +10,11 @@ import java.lang.reflect.Type
 
 class TutorialStepListDeserializer : JsonDeserializer<List<TutorialStep>> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List<TutorialStep> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): List<TutorialStep> {
         val steps = RealmList<TutorialStep>()
         for (group in listOf("common", "android")) {
             if (json.asJsonObject.has(group)) {
@@ -23,7 +27,10 @@ class TutorialStepListDeserializer : JsonDeserializer<List<TutorialStep>> {
         return steps
     }
 
-    private fun parseStep(group: String, entry: MutableMap.MutableEntry<String, JsonElement>): TutorialStep {
+    private fun parseStep(
+        group: String,
+        entry: MutableMap.MutableEntry<String, JsonElement>,
+    ): TutorialStep {
         val article = TutorialStep()
         article.tutorialGroup = group
         article.identifier = entry.key

@@ -17,7 +17,6 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
-
     var isModal: Boolean = false
     abstract var binding: VB?
 
@@ -33,12 +32,15 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
-    abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+    abstract fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = createBinding(inflater, container)
         return binding?.root
@@ -59,7 +61,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
                     mainActivity.displayTutorialStep(
                         step,
                         tutorialTexts,
-                        tutorialCanBeDeferred
+                        tutorialCanBeDeferred,
                     )
                 }
             }
@@ -74,7 +76,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onDestroy() {
         try {
             tutorialRepository.close()
-        } catch (exception: UninitializedPropertyAccessException) { /* no-on */ }
+        } catch (exception: UninitializedPropertyAccessException) {
+            // no-on
+        }
         super.onDestroy()
     }
 

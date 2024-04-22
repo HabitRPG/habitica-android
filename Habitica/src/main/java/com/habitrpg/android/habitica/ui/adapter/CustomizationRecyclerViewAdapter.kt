@@ -22,8 +22,8 @@ import java.util.Date
 import java.util.EnumMap
 import kotlin.math.min
 
-class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
-
+class CustomizationRecyclerViewAdapter :
+    androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var userSize: String? = null
     var hairColor: String? = null
     var avatar: Avatar? = null
@@ -41,24 +41,32 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
     var onCustomizationSelected: ((Customization) -> Unit)? = null
     var onShowPurchaseDialog: ((ShopItem) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.customization_section_header, parent, false)
+                val view =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.customization_section_header, parent, false)
                 SectionViewHolder(view)
             }
+
             1 -> {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.customization_section_footer, parent, false)
+                val view =
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.customization_section_footer, parent, false)
                 SectionFooterViewHolder(view)
             }
+
             else -> {
-                val viewID: Int = if (customizationType == "background") {
-                    R.layout.customization_grid_background_item
-                } else {
-                    R.layout.customization_grid_item
-                }
+                val viewID: Int =
+                    if (customizationType == "background") {
+                        R.layout.customization_grid_background_item
+                    } else {
+                        R.layout.customization_grid_item
+                    }
 
                 val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
                 CustomizationViewHolder(view)
@@ -68,7 +76,7 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         val obj = customizationList[position]
         if (getItemViewType(position) == 0) {
@@ -76,8 +84,10 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         } else if (getItemViewType(position) == 1) {
             (holder as SectionFooterViewHolder).bind(obj as CustomizationSet)
             val count = min(columnCount, obj.customizations.size)
-            holder.buttonWidth = (count * 76.dpToPx(holder.itemView.context)) + ((count - 1) * 12.dpToPx(holder.itemView.context))
-            holder.additionalSetItems = additionalSetItems.filter { it.purchasable && (it.price ?: 0) > 0 }
+            holder.buttonWidth =
+                (count * 76.dpToPx(holder.itemView.context)) + ((count - 1) * 12.dpToPx(holder.itemView.context))
+            holder.additionalSetItems =
+                additionalSetItems.filter { it.purchasable && (it.price ?: 0) > 0 }
         } else {
             (holder as CustomizationViewHolder).bind(customizationList[position] as Customization)
         }
@@ -110,12 +120,12 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
             val isUsable = customization.isUsable(isOwned)
             if (customization.availableFrom != null || customization.availableUntil != null) {
                 if ((
-                    (
-                        customization.availableFrom?.compareTo(today)
-                            ?: 0
+                        (
+                            customization.availableFrom?.compareTo(today)
+                                ?: 0
                         ) > 0 || (
-                        customization.availableUntil?.compareTo(today)
-                            ?: 0
+                            customization.availableUntil?.compareTo(today)
+                                ?: 0
                         ) < 0
                     ) && !isUsable
                 ) {
@@ -157,8 +167,8 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         if (customizationList.size > 0) this.notifyDataSetChanged()
     }
 
-    internal inner class CustomizationViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
+    internal inner class CustomizationViewHolder(itemView: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val binding = CustomizationGridItemBinding.bind(itemView)
         var customization: Customization? = null
 
@@ -189,11 +199,17 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                 }
                 binding.priceLabel.value = customization.price?.toDouble() ?: 0.0
             }
-            val identifier = if (customization.type == "chair") "chair_${customization.identifier}" else customization.identifier
+            val identifier =
+                if (customization.type == "chair") "chair_${customization.identifier}" else customization.identifier
             if (activeCustomization == identifier) {
-                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window_tint_border)
+                binding.wrapper.background =
+                    ContextCompat.getDrawable(
+                        itemView.context,
+                        R.drawable.layout_rounded_bg_window_tint_border,
+                    )
             } else {
-                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
+                binding.wrapper.background =
+                    ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
             }
         }
 
@@ -212,7 +228,13 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
                     dialog.show()
                 } else {
                     customization?.let {
-                        onShowPurchaseDialog?.invoke(ShopItem.fromCustomization(it, userSize, hairColor))
+                        onShowPurchaseDialog?.invoke(
+                            ShopItem.fromCustomization(
+                                it,
+                                userSize,
+                                hairColor,
+                            ),
+                        )
                     }
                 }
                 return
@@ -224,11 +246,22 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
             if (customization?.type == "background") {
                 val alert = HabiticaAlertDialog(context = itemView.context)
-                val purchasedCustomizationView: View = LayoutInflater.from(itemView.context).inflate(R.layout.purchased_equip_dialog, null)
-                val layerMap = EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
+                val purchasedCustomizationView: View =
+                    LayoutInflater.from(itemView.context)
+                        .inflate(R.layout.purchased_equip_dialog, null)
+                val layerMap =
+                    EnumMap<AvatarView.LayerType, String>(AvatarView.LayerType::class.java)
                 avatar?.let { avatar ->
-                    layerMap[AvatarView.LayerType.BACKGROUND] = customization?.let { ShopItem.fromCustomization(it, userSize, hairColor).imageName }
-                    purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view).setAvatar(avatar, layerMap)
+                    layerMap[AvatarView.LayerType.BACKGROUND] =
+                        customization?.let {
+                            ShopItem.fromCustomization(
+                                it,
+                                userSize,
+                                hairColor,
+                            ).imageName
+                        }
+                    purchasedCustomizationView.findViewById<AvatarView>(R.id.avatar_view)
+                        .setAvatar(avatar, layerMap)
                 }
                 alert.setAdditionalContentView(purchasedCustomizationView)
                 alert.setTitle(customization?.text)
@@ -250,8 +283,8 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         }
     }
 
-    internal inner class SectionViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-
+    internal inner class SectionViewHolder(itemView: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         private val binding = CustomizationSectionHeaderBinding.bind(itemView)
 
         fun bind(set: CustomizationSet) {
@@ -259,8 +292,8 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
         }
     }
 
-    internal inner class SectionFooterViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
+    internal inner class SectionFooterViewHolder(itemView: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val binding = CustomizationSectionFooterBinding.bind(itemView)
         var context: Context = itemView.context
         private var set: CustomizationSet? = null
@@ -291,7 +324,14 @@ class CustomizationRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerVi
 
         override fun onClick(v: View) {
             set?.let {
-                onShowPurchaseDialog?.invoke(ShopItem.fromCustomizationSet(it, additionalSetItems, userSize, hairColor))
+                onShowPurchaseDialog?.invoke(
+                    ShopItem.fromCustomizationSet(
+                        it,
+                        additionalSetItems,
+                        userSize,
+                        hairColor,
+                    ),
+                )
             }
         }
     }

@@ -8,8 +8,8 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.DialogChallengeFilterGroupItemBinding
 import com.habitrpg.android.habitica.models.social.Group
 
-class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) : RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
-
+class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) :
+    RecyclerView.Adapter<ChallengesFilterRecyclerViewAdapter.ChallengeViewHolder>() {
     private val entries: List<Group>
     val checkedEntries: MutableList<Group> = mutableListOf()
 
@@ -17,13 +17,20 @@ class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) : RecyclerView.A
         this.entries = ArrayList(entries)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.dialog_challenge_filter_group_item, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ChallengeViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.dialog_challenge_filter_group_item, parent, false)
         return ChallengeViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ChallengeViewHolder,
+        position: Int,
+    ) {
         holder.bind(entries[position], checkedEntries)
     }
 
@@ -34,7 +41,10 @@ class ChallengesFilterRecyclerViewAdapter(entries: List<Group>) : RecyclerView.A
     class ChallengeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = DialogChallengeFilterGroupItemBinding.bind(itemView)
 
-        fun bind(group: Group, checkedEntries: MutableList<Group>) {
+        fun bind(
+            group: Group,
+            checkedEntries: MutableList<Group>,
+        ) {
             binding.root.text = group.name
             binding.root.isChecked = checkedEntries.contains(group)
             binding.root.setOnCheckedChangeListener { _, isChecked ->

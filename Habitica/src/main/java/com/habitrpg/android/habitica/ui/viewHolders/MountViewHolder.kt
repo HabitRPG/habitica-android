@@ -15,7 +15,9 @@ import com.habitrpg.android.habitica.ui.views.stable.MountBottomSheet
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import dagger.hilt.android.internal.managers.ViewComponentManager
 
-class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)), View.OnClickListener {
+class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)?) :
+    androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.mount_overview_item)),
+    View.OnClickListener {
     private var binding: MountOverviewItemBinding = MountOverviewItemBinding.bind(itemView)
     private var owned: Boolean = false
     var animal: Mount? = null
@@ -27,7 +29,11 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
         itemView.setOnClickListener(this)
     }
 
-    fun bind(item: Mount, owned: Boolean, currentMount: String?) {
+    fun bind(
+        item: Mount,
+        owned: Boolean,
+        currentMount: String?,
+    ) {
         animal = item
         this.owned = owned
         this.currentMount = currentMount
@@ -39,10 +45,19 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
             binding.imageView.alpha = 0.2f
         }
         binding.imageView.background = null
-        binding.activeIndicator.visibility = if (currentMount.equals(animal?.key)) View.VISIBLE else View.GONE
+        binding.activeIndicator.visibility =
+            if (currentMount.equals(animal?.key)) View.VISIBLE else View.GONE
         binding.imageView.tag = imageName
         DataBindingUtils.loadImage(itemView.context, imageName) {
-            val drawable = if (owned) it else BitmapDrawable(itemView.context.resources, it.toBitmap().extractAlpha())
+            val drawable =
+                if (owned) {
+                    it
+                } else {
+                    BitmapDrawable(
+                        itemView.context.resources,
+                        it.toBitmap().extractAlpha(),
+                    )
+                }
             if (binding.imageView.tag == imageName) {
                 binding.imageView.bitmap = drawable.toBitmap()
             }
@@ -55,16 +70,18 @@ class MountViewHolder(parent: ViewGroup, private val onEquip: ((String) -> Unit)
         }
         val context = itemView.context
         animal?.let { pet ->
-            (if (context is ViewComponentManager.FragmentContextWrapper) {
-                context.baseContext
-            } else {
-                context
-            }as Activity).showAsBottomSheet {
+            (
+                if (context is ViewComponentManager.FragmentContextWrapper) {
+                    context.baseContext
+                } else {
+                    context
+                } as Activity
+            ).showAsBottomSheet {
                 MountBottomSheet(
                     pet,
                     currentMount.equals(animal?.key),
                     onEquip,
-                    it
+                    it,
                 )
             }
         }

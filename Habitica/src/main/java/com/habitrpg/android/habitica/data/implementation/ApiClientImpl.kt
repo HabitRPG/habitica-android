@@ -73,9 +73,8 @@ class ApiClientImpl(
     private val converter: Converter.Factory,
     override val hostConfig: HostConfig,
     private val notificationsManager: NotificationsManager,
-    private val context: Context
+    private val context: Context,
 ) : ApiClient {
-
     private lateinit var retrofitAdapter: Retrofit
 
     // I think we don't need the ApiClientImpl anymore we could just use ApiService
@@ -114,72 +113,78 @@ class ApiClientImpl(
 
         val calendar = GregorianCalendar()
         val timeZone = calendar.timeZone
-        val timezoneOffset = -TimeUnit.MINUTES.convert(
-            timeZone.getOffset(calendar.timeInMillis).toLong(),
-            TimeUnit.MILLISECONDS
-        )
+        val timezoneOffset =
+            -TimeUnit.MINUTES.convert(
+                timeZone.getOffset(calendar.timeInMillis).toLong(),
+                TimeUnit.MILLISECONDS,
+            )
 
         val cacheSize: Long = 10 * 1024 * 1024 // 10 MB
 
         val cache = Cache(File(context.cacheDir, "http_cache"), cacheSize)
 
-        val client = OkHttpClient.Builder()
-            .cache(cache)
-            .addNetworkInterceptor { chain ->
-                val original = chain.request()
-                var builder: Request.Builder = original.newBuilder()
-                if (this.hostConfig.hasAuthentication()) {
-                    builder = builder
-                        .header("x-api-key", this.hostConfig.apiKey)
-                        .header("x-api-user", this.hostConfig.userID)
-                }
-                builder = builder.header("x-client", "habitica-android")
-                    .header("x-user-timezoneOffset", timezoneOffset.toString())
-                if (userAgent != null) {
-                    builder = builder.header("user-agent", userAgent)
-                }
-                if (BuildConfig.STAGING_KEY.isNotEmpty()) {
-                    builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY)
-                }
-                val request = builder.method(original.method, original.body)
-                    .build()
-                lastAPICallURL = original.url.toString()
-                val response = chain.proceed(request)
-                if (response.isSuccessful) {
-                    hideConnectionProblemDialog()
-                    return@addNetworkInterceptor response
-                } else {
-                    // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
-                    if (response.code in 400..599) {
-                        when (response.code) {
-                            404 -> {
-                                // The server is returning a 404 error, which means the requested resource was not found.
-                                // In this case - we want to actually cache the response, and handle it in the app
-                                // to prevent a niche HttpException/potential network crash
-                                return@addNetworkInterceptor response
-                            }
-
-                            else -> {
-                                return@addNetworkInterceptor response.newBuilder()
-                                    .header("Cache-Control", "no-store").build()
-                            }
-                        }
-                    } else {
+        val client =
+            OkHttpClient.Builder()
+                .cache(cache)
+                .addNetworkInterceptor { chain ->
+                    val original = chain.request()
+                    var builder: Request.Builder = original.newBuilder()
+                    if (this.hostConfig.hasAuthentication()) {
+                        builder =
+                            builder
+                                .header("x-api-key", this.hostConfig.apiKey)
+                                .header("x-api-user", this.hostConfig.userID)
+                    }
+                    builder =
+                        builder.header("x-client", "habitica-android")
+                            .header("x-user-timezoneOffset", timezoneOffset.toString())
+                    if (userAgent != null) {
+                        builder = builder.header("user-agent", userAgent)
+                    }
+                    if (BuildConfig.STAGING_KEY.isNotEmpty()) {
+                        builder = builder.header("Authorization", "Basic " + BuildConfig.STAGING_KEY)
+                    }
+                    val request =
+                        builder.method(original.method, original.body)
+                            .build()
+                    lastAPICallURL = original.url.toString()
+                    val response = chain.proceed(request)
+                    if (response.isSuccessful) {
+                        hideConnectionProblemDialog()
                         return@addNetworkInterceptor response
+                    } else {
+                        // Modify cache control for 4xx or 5xx range - effectively "do not cache", preventing caching of 4xx and 5xx responses
+                        if (response.code in 400..599) {
+                            when (response.code) {
+                                404 -> {
+                                    // The server is returning a 404 error, which means the requested resource was not found.
+                                    // In this case - we want to actually cache the response, and handle it in the app
+                                    // to prevent a niche HttpException/potential network crash
+                                    return@addNetworkInterceptor response
+                                }
+
+                                else -> {
+                                    return@addNetworkInterceptor response.newBuilder()
+                                        .header("Cache-Control", "no-store").build()
+                                }
+                            }
+                        } else {
+                            return@addNetworkInterceptor response
+                        }
                     }
                 }
-            }
-            .addInterceptor(logging)
-            .readTimeout(2400, TimeUnit.SECONDS)
-            .build()
+                .addInterceptor(logging)
+                .readTimeout(2400, TimeUnit.SECONDS)
+                .build()
 
         val server = Server(this.hostConfig.address)
 
-        retrofitAdapter = Retrofit.Builder()
-            .client(client)
-            .baseUrl(server.toString())
-            .addConverterFactory(converter)
-            .build()
+        retrofitAdapter =
+            Retrofit.Builder()
+                .client(client)
+                .baseUrl(server.toString())
+                .addConverterFactory(converter)
+                .build()
 
         this.apiService = retrofitAdapter.create(ApiService::class.java)
     }
@@ -195,7 +200,7 @@ class ApiClientImpl(
         username: String,
         email: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
     ): UserAuthResponse? {
         val auth = UserAuth()
         auth.username = username
@@ -205,7 +210,10 @@ class ApiClientImpl(
         return process { this.apiService.registerUser(auth) }
     }
 
-    override suspend fun connectUser(username: String, password: String): UserAuthResponse? {
+    override suspend fun connectUser(
+        username: String,
+        password: String,
+    ): UserAuthResponse? {
         val auth = UserAuth()
         auth.username = username
         auth.password = password
@@ -215,7 +223,7 @@ class ApiClientImpl(
     override suspend fun connectSocial(
         network: String,
         userId: String,
-        accessToken: String
+        accessToken: String,
     ): UserAuthResponse? {
         val auth = UserAuthSocial()
         auth.network = network
@@ -243,14 +251,14 @@ class ApiClientImpl(
 
         var isUserInputCall = false
         @Suppress("DEPRECATION")
-        if (SocketException::class.java.isAssignableFrom(throwableClass)
-            || SSLException::class.java.isAssignableFrom(throwableClass)
+        if (SocketException::class.java.isAssignableFrom(throwableClass) ||
+            SSLException::class.java.isAssignableFrom(throwableClass)
         ) {
             this.showConnectionProblemDialog(R.string.internal_error_api, isUserInputCall)
         } else if (throwableClass == SocketTimeoutException::class.java || UnknownHostException::class.java == throwableClass || IOException::class.java == throwableClass) {
             this.showConnectionProblemDialog(
                 R.string.network_error_no_network_body,
-                isUserInputCall
+                isUserInputCall,
             )
         } else if (HttpException::class.java.isAssignableFrom(throwable.javaClass)) {
             val error = throwable as HttpException
@@ -258,10 +266,11 @@ class ApiClientImpl(
             val status = error.code()
             val requestUrl = error.response()?.raw()?.request?.url
             val path = requestUrl?.encodedPath?.removePrefix("/api/v4") ?: ""
-            isUserInputCall = when {
-                path.startsWith("/groups") && path.endsWith("invite") -> true
-                else -> false
-            }
+            isUserInputCall =
+                when {
+                    path.startsWith("/groups") && path.endsWith("invite") -> true
+                    else -> false
+                }
 
             if (res.message != null && res.message == "RECEIPT_ALREADY_USED") {
                 return
@@ -278,7 +287,7 @@ class ApiClientImpl(
                     showConnectionProblemDialog(
                         R.string.authentication_error_title,
                         R.string.authentication_error_body,
-                        isUserInputCall
+                        isUserInputCall,
                     )
                 }
             } else if (status in 500..599) {
@@ -295,15 +304,16 @@ class ApiClientImpl(
 
     override suspend fun updateMember(
         memberID: String,
-        updateData: Map<String, Map<String, Boolean>>
+        updateData: Map<String, Map<String, Boolean>>,
     ): Member? {
         return process { apiService.updateUser(memberID, updateData) }
     }
 
     override fun getErrorResponse(throwable: HttpException): ErrorResponse {
         val errorResponse = throwable.response()?.errorBody() ?: return ErrorResponse()
-        val errorConverter = converter
-            .responseBodyConverter(ErrorResponse::class.java, arrayOfNulls(0), retrofitAdapter)
+        val errorConverter =
+            converter
+                .responseBodyConverter(ErrorResponse::class.java, arrayOfNulls(0), retrofitAdapter)
         return try {
             errorConverter?.convert(errorResponse) as ErrorResponse
         } catch (e: IOException) {
@@ -319,7 +329,10 @@ class ApiClientImpl(
         return user
     }
 
-    override suspend fun retrieveInboxMessages(uuid: String, page: Int): List<ChatMessage>? {
+    override suspend fun retrieveInboxMessages(
+        uuid: String,
+        page: Int,
+    ): List<ChatMessage>? {
         return process { apiService.getInboxMessages(uuid, page) }
     }
 
@@ -333,7 +346,7 @@ class ApiClientImpl(
 
     private fun showConnectionProblemDialog(
         resourceMessageString: Int,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         showConnectionProblemDialog(null, context.getString(resourceMessageString), isFromUserInput)
     }
@@ -341,38 +354,41 @@ class ApiClientImpl(
     private fun showConnectionProblemDialog(
         resourceTitleString: Int,
         resourceMessageString: Int,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         showConnectionProblemDialog(
             context.getString(resourceTitleString),
             context.getString(resourceMessageString),
-            isFromUserInput
+            isFromUserInput,
         )
     }
 
     private var erroredRequestCount = 0
+
     private fun showConnectionProblemDialog(
         resourceTitleString: String?,
         resourceMessageString: String,
-        isFromUserInput: Boolean
+        isFromUserInput: Boolean,
     ) {
         erroredRequestCount += 1
-        val application = (context as? HabiticaBaseApplication)
-            ?: (context.applicationContext as? HabiticaBaseApplication)
+        val application =
+            (context as? HabiticaBaseApplication)
+                ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
             ?.showConnectionProblem(
                 erroredRequestCount,
                 resourceTitleString,
                 resourceMessageString,
-                isFromUserInput
+                isFromUserInput,
             )
     }
 
     private fun hideConnectionProblemDialog() {
         if (erroredRequestCount == 0) return
         erroredRequestCount = 0
-        val application = (context as? HabiticaBaseApplication)
-            ?: (context.applicationContext as? HabiticaBaseApplication)
+        val application =
+            (context as? HabiticaBaseApplication)
+                ?: (context.applicationContext as? HabiticaBaseApplication)
         application?.currentActivity?.get()
             ?.hideConnectionProblem()
     }
@@ -382,7 +398,10 @@ class ApiClientImpl(
      See here for more info: http://blog.danlew.net/2015/03/02/dont-break-the-chain/
      */
 
-    override fun updateAuthenticationCredentials(userID: String?, apiToken: String?) {
+    override fun updateAuthenticationCredentials(
+        userID: String?,
+        apiToken: String?,
+    ) {
         this.hostConfig.userID = userID ?: ""
         this.hostConfig.apiKey = apiToken ?: ""
         Analytics.setUserID(hostConfig.userID)
@@ -391,9 +410,10 @@ class ApiClientImpl(
     override suspend fun getStatus(): Status? = process { apiService.getStatus() }
 
     override suspend fun syncUserStats(): User? = process { apiService.syncUserStats() }
+
     override suspend fun reportChallenge(
         challengeid: String,
-        updateData: Map<String, String>
+        updateData: Map<String, String>,
     ): Void? {
         return process { apiService.reportChallenge(challengeid, updateData) }
     }
@@ -414,15 +434,24 @@ class ApiClientImpl(
         return process { apiService.retrieveInAppRewards() }
     }
 
-    override suspend fun equipItem(type: String, itemKey: String): Items? {
+    override suspend fun equipItem(
+        type: String,
+        itemKey: String,
+    ): Items? {
         return process { apiService.equipItem(type, itemKey) }
     }
 
-    override suspend fun buyItem(itemKey: String, purchaseQuantity: Int): BuyResponse? {
+    override suspend fun buyItem(
+        itemKey: String,
+        purchaseQuantity: Int,
+    ): BuyResponse? {
         return process { apiService.buyItem(itemKey, mapOf(Pair("quantity", purchaseQuantity))) }
     }
 
-    override suspend fun unlinkAllTasks(challengeID: String?, keepOption: String): Void? {
+    override suspend fun unlinkAllTasks(
+        challengeID: String?,
+        keepOption: String,
+    ): Void? {
         return process { apiService.unlinkAllTasks(challengeID, keepOption) }
     }
 
@@ -430,17 +459,22 @@ class ApiClientImpl(
         return process { apiService.blockMember(userID) }
     }
 
-    override suspend fun purchaseItem(type: String, itemKey: String, purchaseQuantity: Int): Void? {
+    override suspend fun purchaseItem(
+        type: String,
+        itemKey: String,
+        purchaseQuantity: Int,
+    ): Void? {
         return process {
             apiService.purchaseItem(
                 type,
                 itemKey,
-                mapOf(Pair("quantity", purchaseQuantity))
+                mapOf(Pair("quantity", purchaseQuantity)),
             )
         }
     }
 
     val lastSubscribeCall: Date? = null
+
     override suspend fun validateSubscription(request: PurchaseValidationRequest): Any? {
         return if (lastSubscribeCall == null || Date().time - lastSubscribeCall.time > 60000) {
             process { apiService.validateSubscription(request) }
@@ -461,7 +495,10 @@ class ApiClientImpl(
         return processResponse(apiService.cancelSubscription())
     }
 
-    override suspend fun purchaseHourglassItem(type: String, itemKey: String): Void? {
+    override suspend fun purchaseHourglassItem(
+        type: String,
+        itemKey: String,
+    ): Void? {
         return process { apiService.purchaseHourglassItem(type, itemKey) }
     }
 
@@ -477,17 +514,26 @@ class ApiClientImpl(
         return process { apiService.purchaseSpecialSpell(key) }
     }
 
-    override suspend fun sellItem(itemType: String, itemKey: String): User? {
+    override suspend fun sellItem(
+        itemType: String,
+        itemKey: String,
+    ): User? {
         return process { apiService.sellItem(itemType, itemKey) }
     }
 
-    override suspend fun feedPet(petKey: String, foodKey: String): FeedResponse? {
+    override suspend fun feedPet(
+        petKey: String,
+        foodKey: String,
+    ): FeedResponse? {
         val response = apiService.feedPet(petKey, foodKey)
         response.data?.message = response.message
         return process { response }
     }
 
-    override suspend fun hatchPet(eggKey: String, hatchingPotionKey: String): Items? {
+    override suspend fun hatchPet(
+        eggKey: String,
+        hatchingPotionKey: String,
+    ): Items? {
         return process { apiService.hatchPet(eggKey, hatchingPotionKey) }
     }
 
@@ -497,7 +543,10 @@ class ApiClientImpl(
         return process { apiService.getTasks(type) }
     }
 
-    override suspend fun getTasks(type: String, dueDate: String): TaskList? {
+    override suspend fun getTasks(
+        type: String,
+        dueDate: String,
+    ): TaskList? {
         return process { apiService.getTasks(type, dueDate) }
     }
 
@@ -513,7 +562,10 @@ class ApiClientImpl(
         return process { apiService.getTask(id) }
     }
 
-    override suspend fun postTaskDirection(id: String, direction: String): TaskDirectionData? {
+    override suspend fun postTaskDirection(
+        id: String,
+        direction: String,
+    ): TaskDirectionData? {
         return process { apiService.postTaskDirection(id, direction) }
     }
 
@@ -521,11 +573,17 @@ class ApiClientImpl(
         return process { apiService.bulkScoreTasks(data) }
     }
 
-    override suspend fun postTaskNewPosition(id: String, position: Int): List<String>? {
+    override suspend fun postTaskNewPosition(
+        id: String,
+        position: Int,
+    ): List<String>? {
         return process { apiService.postTaskNewPosition(id, position) }
     }
 
-    override suspend fun scoreChecklistItem(taskId: String, itemId: String): Task? {
+    override suspend fun scoreChecklistItem(
+        taskId: String,
+        itemId: String,
+    ): Task? {
         return process { apiService.scoreChecklistItem(taskId, itemId) }
     }
 
@@ -533,7 +591,10 @@ class ApiClientImpl(
         return process { apiService.createTask(item) }
     }
 
-    override suspend fun createGroupTask(groupId: String, item: Task): Task? {
+    override suspend fun createGroupTask(
+        groupId: String,
+        item: Task,
+    ): Task? {
         return process { apiService.createGroupTask(groupId, item) }
     }
 
@@ -541,7 +602,10 @@ class ApiClientImpl(
         return process { apiService.createTasks(tasks) }
     }
 
-    override suspend fun updateTask(id: String, item: Task): Task? {
+    override suspend fun updateTask(
+        id: String,
+        item: Task,
+    ): Task? {
         return process { apiService.updateTask(id, item) }
     }
 
@@ -553,7 +617,10 @@ class ApiClientImpl(
         return process { apiService.createTag(tag) }
     }
 
-    override suspend fun updateTag(id: String, tag: Tag): Tag? {
+    override suspend fun updateTag(
+        id: String,
+        tag: Tag,
+    ): Tag? {
         return process { apiService.updateTag(id, tag) }
     }
 
@@ -568,12 +635,15 @@ class ApiClientImpl(
     override suspend fun useSkill(
         skillName: String,
         targetType: String,
-        targetId: String
+        targetId: String,
     ): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType, targetId) }
     }
 
-    override suspend fun useSkill(skillName: String, targetType: String): SkillResponse? {
+    override suspend fun useSkill(
+        skillName: String,
+        targetType: String,
+    ): SkillResponse? {
         return process { apiService.useSkill(skillName, targetType) }
     }
 
@@ -605,11 +675,17 @@ class ApiClientImpl(
         return processResponse(apiService.createGroup(group))
     }
 
-    override suspend fun updateGroup(id: String, item: Group): Group? {
+    override suspend fun updateGroup(
+        id: String,
+        item: Group,
+    ): Group? {
         return processResponse(apiService.updateGroup(id, item))
     }
 
-    override suspend fun removeMemberFromGroup(groupID: String, userID: String): Void? {
+    override suspend fun removeMemberFromGroup(
+        groupID: String,
+        userID: String,
+    ): Void? {
         return processResponse(apiService.removeMemberFromGroup(groupID, userID))
     }
 
@@ -621,18 +697,24 @@ class ApiClientImpl(
         return processResponse(apiService.joinGroup(groupId))
     }
 
-    override suspend fun leaveGroup(groupId: String, keepChallenges: String): Void? {
+    override suspend fun leaveGroup(
+        groupId: String,
+        keepChallenges: String,
+    ): Void? {
         return processResponse(apiService.leaveGroup(groupId, keepChallenges))
     }
 
     override suspend fun postGroupChat(
         groupId: String,
-        message: Map<String, String>
+        message: Map<String, String>,
     ): PostChatMessageResult? {
         return process { apiService.postGroupChat(groupId, message) }
     }
 
-    override suspend fun deleteMessage(groupId: String, messageId: String): Void? {
+    override suspend fun deleteMessage(
+        groupId: String,
+        messageId: String,
+    ): Void? {
         return process { apiService.deleteMessage(groupId, messageId) }
     }
 
@@ -642,7 +724,7 @@ class ApiClientImpl(
 
     override suspend fun getGroupMembers(
         groupId: String,
-        includeAllPublicFields: Boolean?
+        includeAllPublicFields: Boolean?,
     ): List<Member>? {
         return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields))
     }
@@ -650,28 +732,37 @@ class ApiClientImpl(
     override suspend fun getGroupMembers(
         groupId: String,
         includeAllPublicFields: Boolean?,
-        lastId: String
+        lastId: String,
     ): List<Member>? {
         return processResponse(apiService.getGroupMembers(groupId, includeAllPublicFields, lastId))
     }
 
-    override suspend fun likeMessage(groupId: String, mid: String): ChatMessage? {
+    override suspend fun likeMessage(
+        groupId: String,
+        mid: String,
+    ): ChatMessage? {
         return process { apiService.likeMessage(groupId, mid) }
     }
 
-    override suspend fun reportMember(mid: String, data: Map<String, String>): Void? {
+    override suspend fun reportMember(
+        mid: String,
+        data: Map<String, String>,
+    ): Void? {
         return process { apiService.reportMember(mid, data) }
     }
 
     override suspend fun flagMessage(
         groupId: String,
         mid: String,
-        data: MutableMap<String, String>
+        data: MutableMap<String, String>,
     ): Void? {
         return process { apiService.flagMessage(groupId, mid, data) }
     }
 
-    override suspend fun flagInboxMessage(mid: String, data: MutableMap<String, String>): Void? {
+    override suspend fun flagInboxMessage(
+        mid: String,
+        data: MutableMap<String, String>,
+    ): Void? {
         return process { apiService.flagInboxMessage(mid, data) }
     }
 
@@ -681,7 +772,7 @@ class ApiClientImpl(
 
     override suspend fun inviteToGroup(
         groupId: String,
-        inviteData: Map<String, Any>
+        inviteData: Map<String, Any>,
     ): List<InviteResponse>? {
         return process { apiService.inviteToGroup(groupId, inviteData) }
     }
@@ -692,7 +783,7 @@ class ApiClientImpl(
 
     override suspend fun getGroupInvites(
         groupId: String,
-        includeAllPublicFields: Boolean?
+        includeAllPublicFields: Boolean?,
     ): List<Member>? {
         return process { apiService.getGroupInvites(groupId, includeAllPublicFields) }
     }
@@ -709,11 +800,17 @@ class ApiClientImpl(
         return process { apiService.cancelQuest(groupId) }
     }
 
-    override suspend fun forceStartQuest(groupId: String, group: Group): Quest? {
+    override suspend fun forceStartQuest(
+        groupId: String,
+        group: Group,
+    ): Quest? {
         return process { apiService.forceStartQuest(groupId, group) }
     }
 
-    override suspend fun inviteToQuest(groupId: String, questKey: String): Quest? {
+    override suspend fun inviteToQuest(
+        groupId: String,
+        questKey: String,
+    ): Quest? {
         return process { apiService.inviteToQuest(groupId, questKey) }
     }
 
@@ -726,6 +823,7 @@ class ApiClientImpl(
     }
 
     private val lastPurchaseValidation: Date? = null
+
     override suspend fun validatePurchase(request: PurchaseValidationRequest): PurchaseValidationResult? {
         // make sure a purchase attempt doesn't happen
         return if (lastPurchaseValidation == null || Date().time - lastPurchaseValidation.time > 5000) {
@@ -739,7 +837,10 @@ class ApiClientImpl(
         return process { apiService.changeCustomDayStart(updateObject) }
     }
 
-    override suspend fun markTaskNeedsWork(taskID: String, userID: String): Task? {
+    override suspend fun markTaskNeedsWork(
+        taskID: String,
+        userID: String,
+    ): Task? {
         return process { apiService.markTaskNeedsWork(taskID, userID) }
     }
 
@@ -760,7 +861,7 @@ class ApiClientImpl(
     override suspend fun findUsernames(
         username: String,
         context: String?,
-        id: String?
+        id: String?,
     ): List<FindUsernameResult>? {
         return process { apiService.findUsernames(username, context, id) }
     }
@@ -781,7 +882,10 @@ class ApiClientImpl(
         return process { apiService.deletePushDevice(regId) }
     }
 
-    override suspend fun getUserChallenges(page: Int, memberOnly: Boolean): List<Challenge>? {
+    override suspend fun getUserChallenges(
+        page: Int,
+        memberOnly: Boolean,
+    ): List<Challenge>? {
         return if (memberOnly) {
             process { apiService.getUserChallenges(page, memberOnly) }
         } else {
@@ -801,7 +905,10 @@ class ApiClientImpl(
         return process { apiService.joinChallenge(challengeId) }
     }
 
-    override suspend fun leaveChallenge(challengeId: String, body: LeaveChallengeBody): Void? {
+    override suspend fun leaveChallenge(
+        challengeId: String,
+        body: LeaveChallengeBody,
+    ): Void? {
         return process { apiService.leaveChallenge(challengeId, body) }
     }
 
@@ -809,11 +916,17 @@ class ApiClientImpl(
         return process { apiService.createChallenge(challenge) }
     }
 
-    override suspend fun createChallengeTasks(challengeId: String, tasks: List<Task>): List<Task>? {
+    override suspend fun createChallengeTasks(
+        challengeId: String,
+        tasks: List<Task>,
+    ): List<Task>? {
         return process { apiService.createChallengeTasks(challengeId, tasks) }
     }
 
-    override suspend fun createChallengeTask(challengeId: String, task: Task): Task? {
+    override suspend fun createChallengeTask(
+        challengeId: String,
+        task: Task,
+    ): Task? {
         return process { apiService.createChallengeTask(challengeId, task) }
     }
 
@@ -867,7 +980,10 @@ class ApiClientImpl(
         return process { apiService.deleteAccount(updateObject) }
     }
 
-    override suspend fun togglePinnedItem(pinType: String, path: String): Void? {
+    override suspend fun togglePinnedItem(
+        pinType: String,
+        path: String,
+    ): Void? {
         return process { apiService.togglePinnedItem(pinType, path) }
     }
 
@@ -877,7 +993,10 @@ class ApiClientImpl(
         return process { apiService.sendPasswordResetEmail(data) }
     }
 
-    override suspend fun updateLoginName(newLoginName: String, password: String): Void? {
+    override suspend fun updateLoginName(
+        newLoginName: String,
+        password: String,
+    ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["username"] = newLoginName
         updateObject["password"] = password
@@ -896,7 +1015,10 @@ class ApiClientImpl(
         return process { this.apiService.verifyUsername(updateObject) }
     }
 
-    override suspend fun updateEmail(newEmail: String, password: String): Void? {
+    override suspend fun updateEmail(
+        newEmail: String,
+        password: String,
+    ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["newEmail"] = newEmail
         if (password.isNotBlank()) {
@@ -908,7 +1030,7 @@ class ApiClientImpl(
     override suspend fun updatePassword(
         oldPassword: String,
         newPassword: String,
-        newPasswordConfirmation: String
+        newPasswordConfirmation: String,
     ): Void? {
         val updateObject = HashMap<String, String>()
         updateObject["password"] = oldPassword
@@ -921,13 +1043,16 @@ class ApiClientImpl(
         return process { apiService.allocatePoint(stat) }
     }
 
-    override suspend fun transferGems(giftedID: String, amount: Int): Void? {
+    override suspend fun transferGems(
+        giftedID: String,
+        amount: Int,
+    ): Void? {
         return process {
             apiService.transferGems(
                 mapOf(
                     Pair("toUserId", giftedID),
-                    Pair("gemAmount", amount)
-                )
+                    Pair("gemAmount", amount),
+                ),
             )
         }
     }
@@ -940,11 +1065,17 @@ class ApiClientImpl(
         return processResponse(apiService.getTeamPlanTasks(teamID))
     }
 
-    override suspend fun assignToTask(taskId: String, ids: List<String>): Task? {
+    override suspend fun assignToTask(
+        taskId: String,
+        ids: List<String>,
+    ): Task? {
         return process { apiService.assignToTask(taskId, ids) }
     }
 
-    override suspend fun unassignFromTask(taskId: String, userID: String): Task? {
+    override suspend fun unassignFromTask(
+        taskId: String,
+        userID: String,
+    ): Task? {
         return process { apiService.unassignFromTask(taskId, userID) }
     }
 
@@ -952,7 +1083,7 @@ class ApiClientImpl(
         strength: Int,
         intelligence: Int,
         constitution: Int,
-        perception: Int
+        perception: Int,
     ): Stats? {
         val body = HashMap<String, Map<String, Int>>()
         val stats = HashMap<String, Int>()

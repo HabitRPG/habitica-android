@@ -12,7 +12,7 @@ open class Training : RealmObject(), BaseObject {
     var per: Float = 0f
 
     @SerializedName("int")
-    var _int: Float = 0f
+    var intelligence: Float = 0f
 
     fun merge(stats: Training?) {
         if (stats == null) {
@@ -21,6 +21,6 @@ open class Training : RealmObject(), BaseObject {
         con = stats.con
         str = stats.str
         per = stats.per
-        _int = stats._int
+        intelligence = stats.intelligence
     }
 }

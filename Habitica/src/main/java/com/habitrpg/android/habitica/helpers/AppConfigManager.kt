@@ -17,8 +17,8 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import kotlinx.coroutines.MainScope
 import java.util.Date
 
-class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.common.habitica.helpers.AppConfigManager() {
-
+class AppConfigManager(contentRepository: ContentRepository?) :
+    com.habitrpg.common.habitica.helpers.AppConfigManager() {
     private var worldState: WorldState? = null
 
     init {
@@ -122,7 +122,12 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
         if (worldState?.isValid == true) {
             for (event in worldState?.events ?: listOf(worldState?.currentEvent)) {
                 if (event == null) return null
-                val thisPromo = getHabiticaPromotionFromKey(event.promo ?: event.eventKey ?: "", event.start, event.end)
+                val thisPromo =
+                    getHabiticaPromotionFromKey(
+                        event.promo ?: event.eventKey ?: "",
+                        event.start,
+                        event.end,
+                    )
                 if (thisPromo != null) {
                     promo = thisPromo
                 }
@@ -178,7 +183,8 @@ class AppConfigManager(contentRepository: ContentRepository?) : com.habitrpg.com
     }
 
     fun getBirthdayEvent(): WorldStateEvent? {
-        val events = ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
+        val events =
+            ((worldState?.events as? List<WorldStateEvent>) ?: listOf(worldState?.currentEvent))
         return events.firstOrNull { it?.eventKey == "birthday10" && it.end?.after(Date()) == true }
     }
 

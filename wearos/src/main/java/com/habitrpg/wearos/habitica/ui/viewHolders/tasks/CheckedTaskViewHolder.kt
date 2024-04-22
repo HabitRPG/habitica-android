@@ -21,23 +21,25 @@ abstract class CheckedTaskViewHolder(itemView: View) : TaskViewHolder(itemView) 
             checkbox.setImageResource(R.drawable.checkmark)
             checkboxWrapper.backgroundTintList =
                 ColorStateList.valueOf(ContextCompat.getColor(itemView.context, R.color.transparent))
-            checkbox.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    itemView.context,
-                    R.color.gray_300
+            checkbox.backgroundTintList =
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.gray_300,
+                    ),
                 )
-            )
         } else {
             checkbox.setImageDrawable(null)
 
             checkboxWrapper.backgroundTintList =
                 ColorStateList.valueOf(ContextCompat.getColor(itemView.context, data.lightTaskColor))
-            checkbox.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    itemView.context,
-                    data.extraLightTaskColor
+            checkbox.backgroundTintList =
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        data.extraLightTaskColor,
+                    ),
                 )
-            )
         }
     }
 }

@@ -17,7 +17,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
-class BulkAllocateStatsDialog(context: Context, private val userRepository: UserRepository) : AlertDialog(context) {
+class BulkAllocateStatsDialog(context: Context, private val userRepository: UserRepository) :
+    AlertDialog(context) {
     private val binding = DialogBulkAllocateBinding.inflate(context.layoutInflater)
 
     private val allocatedPoints: Int
@@ -57,7 +58,7 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
                 binding.strengthSliderView.currentValue,
                 binding.intelligenceSliderView.currentValue,
                 binding.constitutionSliderView.currentValue,
-                binding.perceptionSliderView.currentValue
+                binding.perceptionSliderView.currentValue,
             )
             dismiss()
         }
@@ -103,13 +104,16 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
                 highestSlider = getSliderWithHigherValue(null, binding.strengthSliderView)
             }
             if (excludedSlider != binding.intelligenceSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, binding.intelligenceSliderView)
+                highestSlider =
+                    getSliderWithHigherValue(highestSlider, binding.intelligenceSliderView)
             }
             if (excludedSlider != binding.constitutionSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, binding.constitutionSliderView)
+                highestSlider =
+                    getSliderWithHigherValue(highestSlider, binding.constitutionSliderView)
             }
             if (excludedSlider != binding.perceptionSliderView) {
-                highestSlider = getSliderWithHigherValue(highestSlider, binding.perceptionSliderView)
+                highestSlider =
+                    getSliderWithHigherValue(highestSlider, binding.perceptionSliderView)
             }
             if (highestSlider != null) {
                 highestSlider.currentValue -= diff
@@ -119,7 +123,7 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
 
     private fun getSliderWithHigherValue(
         firstSlider: StatsSliderView?,
-        secondSlider: StatsSliderView?
+        secondSlider: StatsSliderView?,
     ): StatsSliderView? {
         return if ((firstSlider?.currentValue ?: 0) > (secondSlider?.currentValue ?: 0)) {
             firstSlider
@@ -134,7 +138,12 @@ class BulkAllocateStatsDialog(context: Context, private val userRepository: User
         if (allocatedPoints > 0) {
             binding.titleView.setBackgroundColor(context.getThemeColor(R.attr.colorAccent))
         } else {
-            binding.titleView.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_background))
+            binding.titleView.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.disabled_background,
+                ),
+            )
         }
 
         getButton(BUTTON_POSITIVE).isEnabled = allocatedPoints > 0

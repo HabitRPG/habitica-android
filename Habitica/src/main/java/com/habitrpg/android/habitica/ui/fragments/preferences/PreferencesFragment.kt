@@ -7,9 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
@@ -54,7 +52,6 @@ import javax.inject.Inject
 class PreferencesFragment :
     BasePreferencesFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-
     @Inject
     lateinit var contentRepository: ContentRepository
 
@@ -84,7 +81,10 @@ class PreferencesFragment :
             }
         }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         listView.itemAnimator = null
 
@@ -128,7 +128,8 @@ class PreferencesFragment :
 
     private fun updatePreferenceEnabledView(preference: Preference) {
         val isEnabled = preference.isEnabled
-        preference.layoutResource = if (isEnabled) R.layout.preference_child_summary else R.layout.preference_child_summary_disabled
+        preference.layoutResource =
+            if (isEnabled) R.layout.preference_child_summary else R.layout.preference_child_summary_disabled
     }
 
     override fun onResume() {
@@ -175,13 +176,13 @@ class PreferencesFragment :
                             dialog.addButton(
                                 R.string.change_class,
                                 isPrimary = true,
-                                isDestructive = true
+                                isDestructive = true,
                             ) { _, _ ->
                                 lifecycleScope.launch {
                                     userRepository.changeClass()
                                 }
                                 classSelectionResult.launch(
-                                    intent
+                                    intent,
                                 )
                             }
                             dialog.addButton(R.string.close, false)
@@ -190,7 +191,12 @@ class PreferencesFragment :
                     } else {
                         activity?.let { activity ->
                             val dialog = InsufficientGemsDialog(activity, 3)
-                            Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "class change"))
+                            Analytics.sendEvent(
+                                "show insufficient gems modal",
+                                EventCategory.BEHAVIOUR,
+                                HitType.EVENT,
+                                mapOf("reason" to "class change"),
+                            )
                             dialog.show()
                         }
                     }
@@ -205,7 +211,7 @@ class PreferencesFragment :
 
             "reload_content" -> {
                 (activity as? SnackbarActivity)?.showSnackbar(
-                    content = context?.getString(R.string.reloading_content)
+                    content = context?.getString(R.string.reloading_content),
                 )
                 reloadContent(true)
             }
@@ -219,7 +225,7 @@ class PreferencesFragment :
             if (withConfirmation) {
                 (activity as? SnackbarActivity)?.showSnackbar(
                     content = context?.getString(R.string.reloaded_content),
-                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                 )
             }
         }
@@ -238,34 +244,42 @@ class PreferencesFragment :
         }
     }
 
-    private val notificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) {
-            val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
-            usePushPreference?.isChecked = true
-            pushNotificationManager.addPushDeviceUsingStoredToken()
-        } else {
-            // If user denies notification settings originally - they must manually enable it through notification settings.
-            val alert = context?.let { HabiticaAlertDialog(it) }
-            alert?.setTitle(R.string.push_notification_system_settings_title)
-            alert?.setMessage(R.string.push_notification_system_settings_description)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                alert?.addButton(R.string.open_settings, true, false) { _, _ ->
-                    val notifSettingIntent: Intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        .putExtra(Settings.EXTRA_APP_PACKAGE, context?.applicationContext?.packageName)
-                    startActivity(notifSettingIntent)
+    private val notificationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { granted ->
+            if (granted) {
+                val usePushPreference = findPreference("usePushNotifications") as? CheckBoxPreference
+                usePushPreference?.isChecked = true
+                pushNotificationManager.addPushDeviceUsingStoredToken()
+            } else {
+                // If user denies notification settings originally - they must manually enable it through notification settings.
+                val alert = context?.let { HabiticaAlertDialog(it) }
+                alert?.setTitle(R.string.push_notification_system_settings_title)
+                alert?.setMessage(R.string.push_notification_system_settings_description)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    alert?.addButton(R.string.open_settings, true, false) { _, _ ->
+                        val notifSettingIntent: Intent =
+                            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                .putExtra(
+                                    Settings.EXTRA_APP_PACKAGE,
+                                    context?.applicationContext?.packageName,
+                                )
+                        startActivity(notifSettingIntent)
+                    }
                 }
+                alert?.addButton(R.string.cancel, false) { _, _ ->
+                    alert.dismiss()
+                }
+                alert?.show()
             }
-            alert?.addButton(R.string.cancel, false) { _, _ ->
-                alert.dismiss()
-            }
-            alert?.show()
         }
-    }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+    override fun onSharedPreferenceChanged(
+        sharedPreferences: SharedPreferences,
+        key: String?,
+    ) {
         when (key) {
             "use_reminder" -> {
                 val useReminder = sharedPreferences.getBoolean(key, false)
@@ -292,7 +306,7 @@ class PreferencesFragment :
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.pushNotifications.unsubscribeFromAll",
-                        !usePushNotifications
+                        !usePushNotifications,
                     )
                 }
                 if (usePushNotifications) {
@@ -315,7 +329,7 @@ class PreferencesFragment :
                 lifecycleScope.launchCatching {
                     userRepository.updateUser(
                         "preferences.emailNotifications.unsubscribeFromAll",
-                        !useEmailNotifications
+                        !useEmailNotifications,
                     )
                 }
             }
@@ -339,7 +353,7 @@ class PreferencesFragment :
                 @Suppress("DEPRECATION")
                 activity?.resources?.updateConfiguration(
                     configuration,
-                    activity?.resources?.displayMetrics
+                    activity?.resources?.displayMetrics,
                 )
 
                 if (user?.preferences?.language == languageHelper.languageCode) {
@@ -421,27 +435,28 @@ class PreferencesFragment :
         super.setUser(user)
 
         val pauseDamagePreference = findPreference<Preference>("pause_damage")
-        pauseDamagePreference?.title = getString(
-            if (user?.preferences?.sleep == true) {
-                R.string.resume_damage
-            } else {
-                R.string.pause_damage
-            }
-        )
-        pauseDamagePreference?.summary = getString(
-            if (user?.preferences?.sleep == true) {
-                R.string.resume_damage_summary
-            } else {
-                R.string.pause_damage_summary
-            }
-        )
+        pauseDamagePreference?.title =
+            getString(
+                if (user?.preferences?.sleep == true) {
+                    R.string.resume_damage
+                } else {
+                    R.string.pause_damage
+                },
+            )
+        pauseDamagePreference?.summary =
+            getString(
+                if (user?.preferences?.sleep == true) {
+                    R.string.resume_damage_summary
+                } else {
+                    R.string.pause_damage_summary
+                },
+            )
 
         val themePreference = findPreference("theme_name") as? ListPreference
         if (themePreference?.value == "Default") themePreference.value = "purple"
 
         val themeModePreference = findPreference("theme_mode") as? ListPreference
         if (themeModePreference?.value == "Follow System") themeModePreference.value = "system"
-
 
         if (10 <= (user?.stats?.lvl ?: 0)) {
             if (user?.flags?.classSelected == true) {
@@ -488,7 +503,10 @@ class PreferencesFragment :
         }
 
         val launchScreenPreference = findPreference<ListPreference>("launch_screen")
-        if (launchScreenPreference?.value == "habits") launchScreenPreference.value = "/user/tasks/habits"
+        if (launchScreenPreference?.value == "habits") {
+            launchScreenPreference.value =
+                "/user/tasks/habits"
+        }
 
         val disablePMsPreference = findPreference("disablePMs") as? CheckBoxPreference
         val inbox = user?.inbox
@@ -547,7 +565,7 @@ class PreferencesFragment :
                             lifecycleScope.launchCatching {
                                 userRepository.updateUser(
                                     "preferences.tasks.mirrorGroupTasks",
-                                    currentIds
+                                    currentIds,
                                 )
                             }
                             true

@@ -24,7 +24,7 @@ class FaintActivity : BaseActivity<ActivityFaintBinding, FaintViewModel>() {
                 CoroutineExceptionHandler { _, _ ->
                     stopAnimatingProgress()
                     binding.continueButton.isEnabled = true
-                }
+                },
             ) {
                 viewModel.revive()
                 finish()

@@ -28,34 +28,40 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
-
     internal val viewModel: GroupViewModel by viewModels()
     private var guildInformationFragment: GuildDetailFragment? = null
     private var chatFragment: ChatFragment? = null
 
     override var binding: FragmentViewpagerBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.groupViewType = GroupViewType.GUILD
         viewModel.getGroupData().observe(viewLifecycleOwner) { setGroup(it) }
-        viewModel.getIsMemberData().observe(viewLifecycleOwner) { mainActivity?.invalidateOptionsMenu() }
+        viewModel.getIsMemberData()
+            .observe(viewLifecycleOwner) { mainActivity?.invalidateOptionsMenu() }
 
         arguments?.let {
             val args = GuildFragmentArgs.fromBundle(it)
@@ -66,7 +72,9 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         setFragments()
 
         if (viewModel.groupID == "f2db2a7f-13c5-454d-b3ee-ea1f5089e601") {
-            context?.let { FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null) }
+            context?.let {
+                FirebaseAnalytics.getInstance(it).logEvent("opened_no_party_guild", null)
+            }
         }
 
         viewModel.retrieveGroup { }
@@ -93,7 +101,10 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         if (this.mainActivity != null) {
             if (viewModel.isMember) {
                 if (viewModel.isLeader) {
@@ -115,14 +126,17 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 viewModel.joinGroup()
                 return true
             }
+
             R.id.menu_guild_leave -> {
                 guildInformationFragment?.leaveGuild()
                 return true
             }
+
             R.id.menu_guild_edit -> {
                 this.displayEditForm()
                 return true
             }
+
             R.id.menu_guild_refresh -> {
                 viewModel.retrieveGroupChat { }
                 viewModel.retrieveGroup { }
@@ -135,57 +149,63 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
+        binding?.viewPager?.adapter =
+            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    val fragment: Fragment?
 
-            override fun createFragment(position: Int): Fragment {
-                val fragment: Fragment?
+                    when (position) {
+                        0 -> {
+                            guildInformationFragment = GuildDetailFragment.newInstance()
+                            fragment = guildInformationFragment
+                        }
 
-                when (position) {
-                    0 -> {
-                        guildInformationFragment = GuildDetailFragment.newInstance()
-                        fragment = guildInformationFragment
+                        1 -> {
+                            chatFragment = ChatFragment()
+                            fragment = chatFragment
+                        }
+
+                        else -> fragment = Fragment()
                     }
-                    1 -> {
-                        chatFragment = ChatFragment()
-                        fragment = chatFragment
+
+                    return fragment ?: Fragment()
+                }
+
+                override fun getItemCount(): Int {
+                    return 2
+                }
+            }
+
+        binding?.viewPager?.registerOnPageChangeCallback(
+            object :
+                ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int,
+                ) {
+                    if (position == 1) {
+                        chatFragment?.setNavigatedToFragment()
                     }
-                    else -> fragment = Fragment()
                 }
 
-                return fragment ?: Fragment()
-            }
-
-            override fun getItemCount(): Int {
-                return 2
-            }
-        }
-
-        binding?.viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                if (position == 1) {
-                    chatFragment?.setNavigatedToFragment()
+                override fun onPageSelected(position: Int) {
+                    if (position == 1) {
+                        chatFragment?.setNavigatedToFragment()
+                    }
                 }
-            }
-
-            override fun onPageSelected(position: Int) {
-                if (position == 1) {
-                    chatFragment?.setNavigatedToFragment()
-                }
-            }
-        })
+            },
+        )
 
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = when (position) {
-                        0 -> context?.getString(R.string.guild)
-                        1 -> context?.getString(R.string.chat)
-                        else -> ""
-                    }
+                    tab.text =
+                        when (position) {
+                            0 -> context?.getString(R.string.guild)
+                            1 -> context?.getString(R.string.chat)
+                            else -> ""
+                        }
                 }.attach()
             }
         }
@@ -207,12 +227,13 @@ class GuildFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         groupFormResult.launch(intent)
     }
 
-    private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val bundle = it?.data?.extras
-            viewModel.updateGroup(bundle)
+    private val groupFormResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val bundle = it?.data?.extras
+                viewModel.updateGroup(bundle)
+            }
         }
-    }
 
     private fun setGroup(group: Group?) {
         this.mainActivity?.invalidateOptionsMenu()

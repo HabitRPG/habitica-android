@@ -23,17 +23,17 @@ import androidx.viewpager2.widget.ViewPager2
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.TagRepository
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
-import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.activities.TaskFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.navigation.HabiticaBottomNavigationViewListener
 import com.habitrpg.android.habitica.ui.views.tasks.TaskFilterDialog
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.extensions.setTintWith
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,14 +42,20 @@ import java.util.WeakHashMap
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.OnQueryTextListener, HabiticaBottomNavigationViewListener {
+class TasksFragment :
+    BaseMainFragment<FragmentViewpagerBinding>(),
+    SearchView.OnQueryTextListener,
+    HabiticaBottomNavigationViewListener {
     @Inject
     lateinit var tagRepository: TagRepository
 
     internal val viewModel: TasksViewModel by viewModels()
     override var binding: FragmentViewpagerBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
@@ -63,7 +69,8 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             var fragment = viewFragmentsDictionary?.get(binding?.viewPager?.currentItem)
             if (fragment == null) {
                 if (isAdded) {
-                    fragment = (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + binding?.viewPager?.currentItem) as? TaskRecyclerViewFragment)
+                    fragment =
+                        (childFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + binding?.viewPager?.currentItem) as? TaskRecyclerViewFragment)
                 }
             }
             return fragment
@@ -72,14 +79,17 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = false
         this.usesBottomNavigation = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         loadTaskLists()
         arguments?.let {
@@ -134,7 +144,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         super.onPause()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         if (viewModel.isPersonalBoard) {
             inflater.inflate(R.menu.menu_main_activity, menu)
@@ -150,18 +163,20 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         val sv = item.actionView as? SearchView
         sv?.setOnQueryTextListener(this)
         sv?.setIconifiedByDefault(false)
-        item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-                return true
-            }
+        item.setOnActionExpandListener(
+            object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+                    return true
+                }
 
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                // Do something when expanded
-                filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-                return true
-            }
-        })
+                override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    // Do something when expanded
+                    filterMenuItem?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+                    return true
+                }
+            },
+        )
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -179,11 +194,13 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 showFilterDialog()
                 true
             }
+
             R.id.action_reload -> {
                 refreshItem = item
                 viewModel.refreshData { }
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -209,29 +226,33 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     private fun loadTaskLists() {
         val fragmentManager = childFragmentManager
 
-        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
-            override fun createFragment(position: Int): Fragment {
-                val fragment: TaskRecyclerViewFragment = when (position) {
-                    0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT)
-                    1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY)
-                    3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true)
-                    else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO)
+        binding?.viewPager?.adapter =
+            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    val fragment: TaskRecyclerViewFragment =
+                        when (position) {
+                            0 -> TaskRecyclerViewFragment.newInstance(context, TaskType.HABIT)
+                            1 -> TaskRecyclerViewFragment.newInstance(context, TaskType.DAILY)
+                            3 -> RewardsRecyclerviewFragment.newInstance(context, TaskType.REWARD, true)
+                            else -> TaskRecyclerViewFragment.newInstance(context, TaskType.TODO)
+                        }
+                    viewFragmentsDictionary?.put(position, fragment)
+                    return fragment
                 }
-                viewFragmentsDictionary?.put(position, fragment)
-                return fragment
+
+                override fun getItemCount(): Int = 4
             }
 
-            override fun getItemCount(): Int = 4
-        }
-
-        binding?.viewPager?.registerOnPageChangeCallback(object :
+        binding?.viewPager?.registerOnPageChangeCallback(
+            object :
                 ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                bottomNavigation?.selectedPosition = position
-                updateFilterIcon(getTaskTypeFromTabPosition(position))
-            }
-        })
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    bottomNavigation?.selectedPosition = position
+                    updateFilterIcon(getTaskTypeFromTabPosition(position))
+                }
+            },
+        )
     }
 
     private fun updateFilterIcon(taskType: TaskType?) {
@@ -242,13 +263,19 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
             filterMenuItem?.setIcon(R.drawable.ic_action_filter_list)
             context?.let {
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_action_filter_list)
-                filterIcon?.setTintWith(it.getThemeColor(R.attr.headerTextColor), PorterDuff.Mode.MULTIPLY)
+                filterIcon?.setTintWith(
+                    it.getThemeColor(R.attr.headerTextColor),
+                    PorterDuff.Mode.MULTIPLY,
+                )
                 filterMenuItem?.setIcon(filterIcon)
             }
         } else {
             context?.let {
                 val filterIcon = ContextCompat.getDrawable(it, R.drawable.ic_filters_active)
-                filterIcon?.setTintWith(it.getThemeColor(R.attr.textColorPrimaryDark), PorterDuff.Mode.MULTIPLY)
+                filterIcon?.setTintWith(
+                    it.getThemeColor(R.attr.textColorPrimaryDark),
+                    PorterDuff.Mode.MULTIPLY,
+                )
                 filterMenuItem?.setIcon(filterIcon)
             }
         }
@@ -264,25 +291,30 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                     val activeTutorialFragments = ArrayList<TaskType>()
                     for (step in tutorialSteps) {
                         var id = -1
-                        val taskType = when (step.identifier) {
-                            "habits" -> {
-                                id = R.id.habits_tab
-                                TaskType.HABIT
+                        val taskType =
+                            when (step.identifier) {
+                                "habits" -> {
+                                    id = R.id.habits_tab
+                                    TaskType.HABIT
+                                }
+
+                                "dailies" -> {
+                                    id = R.id.dailies_tab
+                                    TaskType.DAILY
+                                }
+
+                                "todos" -> {
+                                    id = R.id.todos_tab
+                                    TaskType.TODO
+                                }
+
+                                "rewards" -> {
+                                    id = R.id.rewards_tab
+                                    TaskType.REWARD
+                                }
+
+                                else -> TaskType.HABIT
                             }
-                            "dailies" -> {
-                                id = R.id.dailies_tab
-                                TaskType.DAILY
-                            }
-                            "todos" -> {
-                                id = R.id.todos_tab
-                                TaskType.TODO
-                            }
-                            "rewards" -> {
-                                id = R.id.rewards_tab
-                                TaskType.REWARD
-                            }
-                            else -> TaskType.HABIT
-                        }
                         val tab = bottomNavigation?.tabWithId(id)
                         if (step.shouldDisplay) {
                             tab?.badgeCount = 1
@@ -314,8 +346,13 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         val additionalData = HashMap<String, Any>()
         additionalData["created task type"] = type
         additionalData["viewed task type"] =
-                getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: ""
-        Analytics.sendEvent("open create task form", EventCategory.BEHAVIOUR, HitType.EVENT, additionalData)
+            getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: ""
+        Analytics.sendEvent(
+            "open create task form",
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
+            additionalData,
+        )
 
         val bundle = Bundle()
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type.value)
@@ -333,24 +370,29 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         }
     }
 
-    private fun getTaskTypeFromTabPosition(position: Int?): TaskType? = when (position) {
-        0 -> TaskType.HABIT
-        1 -> TaskType.DAILY
-        2 -> TaskType.TODO
-        3 -> TaskType.REWARD
-        else -> null
-    }
+    private fun getTaskTypeFromTabPosition(position: Int?): TaskType? =
+        when (position) {
+            0 -> TaskType.HABIT
+            1 -> TaskType.DAILY
+            2 -> TaskType.TODO
+            3 -> TaskType.REWARD
+            else -> null
+        }
 
     private fun getActiveTaskType(): TaskType =
-            getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: TaskType.HABIT
+        getTaskTypeFromTabPosition(binding?.viewPager?.currentItem) ?: TaskType.HABIT
 
     //endregion Events
 
-    private val taskCreateResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        onTaskCreatedResult(it.resultCode, it.data)
-    }
+    private val taskCreateResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            onTaskCreatedResult(it.resultCode, it.data)
+        }
 
-    private fun onTaskCreatedResult(resultCode: Int, data: Intent?) {
+    private fun onTaskCreatedResult(
+        resultCode: Int,
+        data: Intent?,
+    ) {
         if (resultCode == Activity.RESULT_OK) {
             val taskTypeValue = data?.getStringExtra(TaskFormActivity.TASK_TYPE_KEY)
             if (taskTypeValue != null) {
@@ -364,11 +406,17 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
                 }
             }
 
-            if (!DateUtils.isToday(viewModel.sharedPreferences.getLong("last_creation_reporting", 0))) {
+            if (!DateUtils.isToday(
+                    viewModel.sharedPreferences.getLong(
+                        "last_creation_reporting",
+                        0,
+                    ),
+                )
+            ) {
                 Analytics.sendEvent(
                     "task created",
                     EventCategory.BEHAVIOUR,
-                    HitType.EVENT
+                    HitType.EVENT,
                 )
                 viewModel.sharedPreferences.edit {
                     putLong("last_creation_reporting", Date().time)
@@ -406,14 +454,18 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
         var lastTaskFormOpen: Date? = null
     }
 
-    override fun onTabSelected(taskType: TaskType, smooth: Boolean) {
-        val newItem = when (taskType) {
-            TaskType.HABIT -> 0
-            TaskType.DAILY -> 1
-            TaskType.TODO -> 2
-            TaskType.REWARD -> 3
-            else -> 0
-        }
+    override fun onTabSelected(
+        taskType: TaskType,
+        smooth: Boolean,
+    ) {
+        val newItem =
+            when (taskType) {
+                TaskType.HABIT -> 0
+                TaskType.DAILY -> 1
+                TaskType.TODO -> 2
+                TaskType.REWARD -> 3
+                else -> 0
+            }
         binding?.viewPager?.setCurrentItem(newItem, smooth)
         updateBottomBarBadges()
     }
@@ -425,7 +477,10 @@ class TasksFragment : BaseMainFragment<FragmentViewpagerBinding>(), SearchView.O
     private fun updateBoardDisplay() {
         if (viewModel.ownerTitle.isNotBlank()) {
             mainActivity?.title = viewModel.ownerTitle
-            MainNavigationController.updateLabel(R.id.tasksFragment, viewModel.ownerTitle.toString())
+            MainNavigationController.updateLabel(
+                R.id.tasksFragment,
+                viewModel.ownerTitle.toString(),
+            )
         }
         val teamPlan = viewModel.teamPlans[viewModel.ownerID.value]
         viewModel.userViewModel.currentTeamPlan.tryEmit(teamPlan)

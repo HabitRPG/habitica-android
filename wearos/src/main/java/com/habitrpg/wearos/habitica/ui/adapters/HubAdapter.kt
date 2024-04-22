@@ -8,7 +8,10 @@ import com.habitrpg.wearos.habitica.models.user.MenuItem
 import com.habitrpg.wearos.habitica.ui.viewHolders.HubViewHolder
 
 class HubAdapter : BaseAdapter<MenuItem>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         val inflater = parent.context.layoutInflater
         return if (viewType == 1) {
             HubViewHolder(RowHubBinding.inflate(inflater, parent, false).root)
@@ -17,7 +20,10 @@ class HubAdapter : BaseAdapter<MenuItem>() {
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (holder is HubViewHolder) {
             holder.bind(getItemAt(position))
         } else {

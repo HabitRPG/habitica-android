@@ -4,7 +4,6 @@ import com.habitrpg.shared.habitica.HParcelable
 import com.habitrpg.shared.habitica.HParcelize
 
 class TaskDirectionDataTemp {
-
     var drop: TaskDirectionDataDrop? = null
     var quest: TaskDirectionDataQuest? = null
     var crit: Float? = null
@@ -20,5 +19,5 @@ data class TaskDirectionDataDrop(
     var value: Int,
     var key: String?,
     var type: String?,
-    var dialog: String?
+    var dialog: String?,
 ) : HParcelable

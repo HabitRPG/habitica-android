@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.views.shops.PurchaseDialogQuestContent
 
 class DetailDialog(context: Context) : HabiticaAlertDialog(context) {
-
     var quest: QuestContent? = null
         set(value) {
             field = value

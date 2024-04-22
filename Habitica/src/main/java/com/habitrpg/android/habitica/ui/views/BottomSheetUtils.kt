@@ -50,7 +50,7 @@ fun Fragment.showAsBottomSheet(content: @Composable (() -> Unit) -> Unit) {
 // Helper method
 private fun addContentToView(
     viewGroup: ViewGroup,
-    content: @Composable (() -> Unit) -> Unit
+    content: @Composable (() -> Unit) -> Unit,
 ) {
     viewGroup.addView(
         ComposeView(viewGroup.context).apply {
@@ -59,7 +59,7 @@ private fun addContentToView(
                     BottomSheetWrapper(viewGroup, this, content)
                 }
             }
-        }
+        },
     )
 }
 
@@ -68,10 +68,11 @@ private fun addContentToView(
 private fun BottomSheetWrapper(
     parent: ViewGroup,
     composeView: ComposeView,
-    content: @Composable (() -> Unit) -> Unit
+    content: @Composable (() -> Unit) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val modalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden, skipHalfExpanded = true)
+    val modalBottomSheetState =
+        rememberModalBottomSheetState(ModalBottomSheetValue.Hidden, skipHalfExpanded = true)
     var isSheetOpened by remember { mutableStateOf(false) }
 
     val systemUiController = rememberSystemUiController()
@@ -90,19 +91,21 @@ private fun BottomSheetWrapper(
         sheetContent = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(horizontal = 4.dp)
-                    .background(
-                        HabiticaTheme.colors.windowBackground,
-                        RoundedCornerShape(topStart = radius, topEnd = radius)
-                    )
-                    .padding(vertical = 8.dp)
+                modifier =
+                    Modifier
+                        .padding(horizontal = 4.dp)
+                        .background(
+                            HabiticaTheme.colors.windowBackground,
+                            RoundedCornerShape(topStart = radius, topEnd = radius),
+                        )
+                        .padding(vertical = 8.dp),
             ) {
                 Box(
-                    modifier = Modifier
-                        .padding(bottom = 16.dp)
-                        .background(colorResource(R.color.content_background_offset))
-                        .size(24.dp, 3.dp)
+                    modifier =
+                        Modifier
+                            .padding(bottom = 16.dp)
+                            .background(colorResource(R.color.content_background_offset))
+                            .size(24.dp, 3.dp),
                 )
                 content {
                     // Action passed for clicking close button in the content
@@ -111,7 +114,7 @@ private fun BottomSheetWrapper(
                     }
                 }
             }
-        }
+        },
     ) {}
 
     BackHandler {
@@ -129,6 +132,7 @@ private fun BottomSheetWrapper(
                         systemUiController.setStatusBarColor(statusBarColor, darkIcons = false)
                         parent.removeView(composeView)
                     }
+
                     else -> {
                         isSheetOpened = true
                         coroutineScope.launch {
@@ -138,6 +142,7 @@ private fun BottomSheetWrapper(
                     }
                 }
             }
+
             else -> {
             }
         }

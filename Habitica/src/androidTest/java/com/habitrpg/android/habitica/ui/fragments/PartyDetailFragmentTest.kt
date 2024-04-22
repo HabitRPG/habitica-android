@@ -50,9 +50,10 @@ class PartyDetailFragmentTest : FragmentTestCase<PartyDetailFragment, FragmentPa
     }
 
     override fun launchFragment(args: Bundle?) {
-        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
-            return@launchFragmentInContainer fragment
-        }
+        scenario =
+            launchFragmentInContainer(args, R.style.MainAppTheme) {
+                return@launchFragmentInContainer fragment
+            }
     }
 
     @Test

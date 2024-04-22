@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.setTintWith
 
 class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
-
     private val icon: Drawable?
     private val textView: TextView
 
@@ -20,12 +19,13 @@ class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(
         View.inflate(context, R.layout.avatar_category, this)
 
         textView = findViewById(R.id.text_view)
-        val a = context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.AvatarCategoryView,
-            0,
-            0
-        )
+        val a =
+            context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.AvatarCategoryView,
+                0,
+                0,
+            )
 
         textView.text = a.getText(R.styleable.AvatarCategoryView_categoryTitle)
 
@@ -37,11 +37,12 @@ class AvatarCategoryView(context: Context, attrs: AttributeSet?) : LinearLayout(
     }
 
     fun setActive(active: Boolean) {
-        val color: Int = if (active) {
-            ContextCompat.getColor(context, R.color.white)
-        } else {
-            ContextCompat.getColor(context, R.color.white_50_alpha)
-        }
+        val color: Int =
+            if (active) {
+                ContextCompat.getColor(context, R.color.white)
+            } else {
+                ContextCompat.getColor(context, R.color.white_50_alpha)
+            }
         textView.setTextColor(color)
         if (icon != null) {
             icon.setTintWith(color, PorterDuff.Mode.MULTIPLY)

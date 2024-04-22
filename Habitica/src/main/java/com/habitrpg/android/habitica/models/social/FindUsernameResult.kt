@@ -6,7 +6,6 @@ import com.habitrpg.android.habitica.models.user.ContributorInfo
 import com.habitrpg.android.habitica.models.user.Profile
 
 class FindUsernameResult {
-
     @SerializedName("_id")
     var id: String? = null
 

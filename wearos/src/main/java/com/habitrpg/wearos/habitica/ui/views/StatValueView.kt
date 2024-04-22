@@ -9,41 +9,48 @@ import com.habitrpg.android.habitica.databinding.StatValueLayoutBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
 
-class StatValueView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyle: Int = 0
-) :
+class StatValueView
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyle: Int = 0,
+    ) :
     ConstraintLayout(
-        context,
-        attrs,
-        defStyle
-    ) {
+            context,
+            attrs,
+            defStyle,
+        ) {
+        var binding = StatValueLayoutBinding.inflate(context.layoutInflater, this)
 
-    var binding = StatValueLayoutBinding.inflate(context.layoutInflater, this)
+        fun setStatValues(
+            maxValue: Int,
+            currentValue: Int,
+        ) {
+            binding.currentValue.text = currentValue.toString()
+            binding.maxValue.text = "/$maxValue"
+            invalidate()
 
-    fun setStatValues(maxValue: Int, currentValue: Int) {
-        binding.currentValue.text = currentValue.toString()
-        binding.maxValue.text = "/$maxValue"
-        invalidate()
-
-        startUpdateCountAnimation(currentValue)
-    }
-
-    fun setStatValueResources(resId: Int, bitmapColor: Int) {
-        binding.bitmap.setImageResource(resId)
-        binding.currentValue.setTextColor(
-            context?.resources?.getColor(bitmapColor, null) ?: Color.WHITE
-        )
-    }
-
-    private fun startUpdateCountAnimation(statValue: Int) {
-        val animator = ValueAnimator.ofInt(0, statValue)
-        animator.duration = 1000
-        animator.addUpdateListener { animation ->
-            binding.currentValue.text =
-                (NumberAbbreviator.abbreviate(context, animation.animatedValue.toString().toDouble(), 0))
+            startUpdateCountAnimation(currentValue)
         }
-        animator.start()
+
+        fun setStatValueResources(
+            resId: Int,
+            bitmapColor: Int,
+        ) {
+            binding.bitmap.setImageResource(resId)
+            binding.currentValue.setTextColor(
+                context?.resources?.getColor(bitmapColor, null) ?: Color.WHITE,
+            )
+        }
+
+        private fun startUpdateCountAnimation(statValue: Int) {
+            val animator = ValueAnimator.ofInt(0, statValue)
+            animator.duration = 1000
+            animator.addUpdateListener { animation ->
+                binding.currentValue.text =
+                    (NumberAbbreviator.abbreviate(context, animation.animatedValue.toString().toDouble(), 0))
+            }
+            animator.start()
+        }
     }
-}

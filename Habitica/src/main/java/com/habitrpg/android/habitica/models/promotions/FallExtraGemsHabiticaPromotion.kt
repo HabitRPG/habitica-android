@@ -54,14 +54,14 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         view.setSubtitleImage(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.fall_promo_menu_description
-            )
+                R.drawable.fall_promo_menu_description,
+            ),
         )
         view.setSubtitleText(null)
 
         view.setDecoration(
             ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_left),
-            ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_right)
+            ContextCompat.getDrawable(context, R.drawable.fall_promo_menu_right),
         )
 
         view.binding.button.backgroundTintList =
@@ -84,27 +84,28 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         binding.promoBannerLeftImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.fall_promo_banner_left
-            )
+                R.drawable.fall_promo_banner_left,
+            ),
         )
         binding.promoBannerRightImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.fall_promo_banner_right
-            )
+                R.drawable.fall_promo_banner_right,
+            ),
         )
         binding.promoBannerTitleImage.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.fall_promo_title
-            )
+                R.drawable.fall_promo_title,
+            ),
         )
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        binding.promoBannerDurationView.text = context.getString(
-            R.string.x_to_y,
-            formatter.format(startDate),
-            formatter.format(endDate)
-        )
+        binding.promoBannerDurationView.text =
+            context.getString(
+                R.string.x_to_y,
+                formatter.format(startDate),
+                formatter.format(endDate),
+            )
         binding.promoBannerDurationView.setTextColor(Color.parseColor("#FEE2B6"))
     }
 
@@ -112,7 +113,10 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
     }
 
     @SuppressLint("SetTextI18n")
-    override fun configureGemView(binding: PurchaseGemViewBinding, regularAmount: Int) {
+    override fun configureGemView(
+        binding: PurchaseGemViewBinding,
+        regularAmount: Int,
+    ) {
         val context = binding.root.context
         binding.root.background = promoBackgroundDrawable(context)
         binding.purchaseButton.background = buttonDrawable(context)
@@ -152,34 +156,35 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promoBannerLeftImage?.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.fall_promo_info_left
-            )
+                R.drawable.fall_promo_info_left,
+            ),
         )
         fragment.binding?.promoBannerRightImage?.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.fall_promo_info_right
-            )
+                R.drawable.fall_promo_info_right,
+            ),
         )
         fragment.binding?.promoBannerTitleImage?.setImageDrawable(
             ContextCompat.getDrawable(
                 context,
-                R.drawable.fall_promo_title
-            )
+                R.drawable.fall_promo_title,
+            ),
         )
         fragment.binding?.promoBannerSubtitleView?.setText(R.string.limited_event)
         fragment.binding?.promoBannerDurationView?.setTextColor(Color.parseColor("#FEE2B6"))
         val formatter = SimpleDateFormat("MMM d", Locale.getDefault())
-        fragment.binding?.promoBannerDurationView?.text = context.getString(
-            R.string.x_to_y,
-            formatter.format(startDate),
-            formatter.format(endDate)
-        )
+        fragment.binding?.promoBannerDurationView?.text =
+            context.getString(
+                R.string.x_to_y,
+                formatter.format(startDate),
+                formatter.format(endDate),
+            )
         fragment.binding?.promoBannerDurationView?.setTextColor(
             ContextCompat.getColor(
                 context,
-                R.color.white
-            )
+                R.color.white,
+            ),
         )
         fragment.binding?.promptText?.setText(R.string.fall_promo_info_prompt)
         fragment.binding?.promptText?.setTextColor(Color.parseColor("#F78E2F"))
@@ -188,21 +193,23 @@ class FallExtraGemsHabiticaPromotion(startDate: Date?, endDate: Date?) : Habitic
         fragment.binding?.promptButton?.setTextColor(ContextCompat.getColor(context, R.color.white))
         fragment.binding?.promptButton?.setOnClickListener { MainNavigationController.navigate(R.id.gemPurchaseActivity) }
 
-        fragment.binding?.instructionDescriptionView?.text = context.getString(
-            R.string.fall_promo_info_instructions,
-            formatter.format(startDate),
-            formatter.format(endDate)
-        )
+        fragment.binding?.instructionDescriptionView?.text =
+            context.getString(
+                R.string.fall_promo_info_instructions,
+                formatter.format(startDate),
+                formatter.format(endDate),
+            )
         val limitationsFormatter =
             SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.LONG)
         val utcTimeFormatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.LONG)
         utcTimeFormatter.timeZone = TimeZone.getTimeZone("UTC")
-        fragment.binding?.limitationsDescriptionView?.text = context.getString(
-            R.string.gems_promo_info_limitations_fixed,
-            limitationsFormatter.format(startDate),
-            utcTimeFormatter.format(startDate),
-            limitationsFormatter.format(endDate),
-            utcTimeFormatter.format(endDate)
-        )
+        fragment.binding?.limitationsDescriptionView?.text =
+            context.getString(
+                R.string.gems_promo_info_limitations_fixed,
+                limitationsFormatter.format(startDate),
+                utcTimeFormatter.format(startDate),
+                limitationsFormatter.format(endDate),
+                utcTimeFormatter.format(endDate),
+            )
     }
 }

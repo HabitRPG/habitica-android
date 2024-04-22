@@ -8,7 +8,7 @@ class Buffs : AvatarBuffs {
     override var con: Float? = null
     override var str: Float? = null
     override var per: Float? = null
-    override var _int: Float? = null
+    override var intelligence: Float? = null
     override var seafoam: Boolean? = null
     override var spookySparkles: Boolean? = null
     override var shinySeed: Boolean? = null

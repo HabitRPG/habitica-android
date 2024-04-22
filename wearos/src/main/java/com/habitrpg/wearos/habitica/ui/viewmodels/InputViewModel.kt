@@ -9,13 +9,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class InputViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder,
-    appStateManager: AppStateManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-    val title = savedStateHandle.get<String>("title") ?: ""
-    val existingInput = savedStateHandle.get<String>("input")
-}
+class InputViewModel
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+        userRepository: UserRepository,
+        taskRepository: TaskRepository,
+        exceptionBuilder: ExceptionHandlerBuilder,
+        appStateManager: AppStateManager,
+    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+        val title = savedStateHandle.get<String>("title") ?: ""
+        val existingInput = savedStateHandle.get<String>("input")
+    }

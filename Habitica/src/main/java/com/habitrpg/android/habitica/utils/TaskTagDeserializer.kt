@@ -11,7 +11,11 @@ import java.lang.reflect.Type
 
 class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List<Tag> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): List<Tag> {
         val tags = RealmList<Tag>()
         var databaseTags: List<Tag>
         try {
@@ -48,7 +52,10 @@ class TaskTagDeserializer : JsonDeserializer<List<Tag>> {
         return tags
     }
 
-    private fun alreadyContainsTag(list: List<Tag>, idToCheck: String): Boolean {
+    private fun alreadyContainsTag(
+        list: List<Tag>,
+        idToCheck: String,
+    ): Boolean {
         for (t in list) {
             if (t.id == idToCheck) {
                 return true

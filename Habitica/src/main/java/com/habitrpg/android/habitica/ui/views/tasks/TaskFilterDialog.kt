@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.WindowManager
-import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -31,7 +30,11 @@ import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.tasks.TaskType
 import java.util.UUID
 
-class TaskFilterDialog(context: Context, private val repository: TagRepository, private val showTags: Boolean) : HabiticaBottomSheetDialog(context) {
+class TaskFilterDialog(
+    context: Context,
+    private val repository: TagRepository,
+    private val showTags: Boolean,
+) : HabiticaBottomSheetDialog(context) {
     lateinit var viewModel: TasksViewModel
     private val binding = DialogTaskFilterBinding.inflate(layoutInflater)
 
@@ -45,18 +48,21 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
                     binding.secondTaskFilter.setText(R.string.weak)
                     binding.thirdTaskFilter.setText(R.string.strong)
                 }
+
                 TaskType.DAILY -> {
                     binding.taskTypeTitle.setText(R.string.dailies)
                     binding.allTaskFilter.setText(R.string.all)
                     binding.secondTaskFilter.setText(R.string.due)
                     binding.thirdTaskFilter.setText(R.string.gray)
                 }
+
                 TaskType.TODO -> {
                     binding.taskTypeTitle.setText(R.string.todos)
                     binding.allTaskFilter.setText(R.string.active)
                     binding.secondTaskFilter.setText(R.string.dated)
                     binding.thirdTaskFilter.setText(R.string.completed)
                 }
+
                 TaskType.REWARD -> {
                 }
             }
@@ -124,18 +130,29 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
 
     private fun createTagViews() {
         binding.tagsList.removeAllViews()
-        val colorStateList = ColorStateList(
-            arrayOf(
-                intArrayOf(-android.R.attr.state_checked), // disabled
-                intArrayOf(android.R.attr.state_checked) // enabled
-            ),
-            intArrayOf(
-                Color.LTGRAY, // disabled
-                context.getThemeColor(R.attr.colorAccent) // enabled
+        val colorStateList =
+            ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_checked), // disabled
+                    intArrayOf(android.R.attr.state_checked), // enabled
+                ),
+                intArrayOf(
+                    Color.LTGRAY, // disabled
+                    context.getThemeColor(R.attr.colorAccent), // enabled
+                ),
             )
-        )
-        val leftPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, context.resources.displayMetrics).toInt()
-        val verticalPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, context.resources.displayMetrics).toInt()
+        val leftPadding =
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                12f,
+                context.resources.displayMetrics,
+            ).toInt()
+        val verticalPadding =
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                8f,
+                context.resources.displayMetrics,
+            ).toInt()
         sortTagPositions()
         for (tag in tags) {
             if (tag.id.isBlank()) {
@@ -154,7 +171,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
                     tagCheckbox.paddingLeft + leftPadding,
                     verticalPadding,
                     tagCheckbox.paddingRight,
-                    verticalPadding
+                    verticalPadding,
                 )
                 tagCheckbox.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
                 CompoundButtonCompat.setButtonTintList(tagCheckbox, colorStateList)
@@ -179,7 +196,8 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         button.iconTint = ColorStateList.valueOf(context.getThemeColor(R.attr.colorAccent))
         button.iconGravity = MaterialButton.ICON_GRAVITY_START
         button.elevation = 0f
-        button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.gray700_gray10))
+        button.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, R.color.gray700_gray10))
         button.setStrokeColorResource(R.color.content_background)
         button.strokeWidth = 0
         button.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
@@ -187,7 +205,6 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
 
         binding.tagsList.addView(button)
     }
-
 
     private fun createTag() {
         val tag = Tag()
@@ -212,7 +229,6 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         val emptyTagsToRemove = createdTags.values.filter { it.name.isBlank() }
         createdTags.values.removeAll(emptyTagsToRemove.toSet())
         tags.removeAll(emptyTagsToRemove)
-
 
         isEditingTags = false
         binding.tagsList.removeAllViews()
@@ -241,7 +257,11 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         createAddTagButton()
     }
 
-    private fun createTagEditView(inflater: LayoutInflater, index: Int, tag: Tag) {
+    private fun createTagEditView(
+        inflater: LayoutInflater,
+        index: Int,
+        tag: Tag,
+    ) {
         if (tag.id.isBlank()) {
             // This is a title tag ("Challenge", "Group", "Your Tags", etc)
             val view = TextView(context)
@@ -255,7 +275,12 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
                 val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
                 editBinding.editText.setText(tag.name)
                 editBinding.editText.isEnabled = false
-                editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.disabled_background))
+                editBinding.editText.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.disabled_background,
+                    ),
+                )
                 editBinding.deleteButton.isEnabled = false
                 editBinding.deleteButton.alpha = .50f
                 binding.tagsList.addView(editBinding.root)
@@ -263,7 +288,12 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
                 // All tags (except group tags) are editable
                 val editBinding = EditTagItemBinding.inflate(inflater, binding.tagsList, false)
                 editBinding.editText.setText(tag.name)
-                editBinding.editText.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                editBinding.editText.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.text_secondary,
+                    ),
+                )
                 editBinding.editText.addTextChangedListener(
                     OnChangeTextWatcher { s, _, _, _ ->
                         if (index >= tags.size) {
@@ -277,7 +307,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
                             editedTags[changedTag.id] = changedTag
                         }
                         tags[index] = changedTag
-                    }
+                    },
                 )
                 editBinding.deleteButton.setOnClickListener {
                     deletedTags.add(tag.id)
@@ -295,7 +325,6 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
             }
         }
     }
-
 
     private fun setActiveTags(tagIds: MutableList<String>?) {
         if (tagIds == null) {
@@ -333,38 +362,51 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
             when (activeFilter) {
                 Task.FILTER_ALL -> checkedId = R.id.all_task_filter
                 Task.FILTER_WEAK, Task.FILTER_DATED -> checkedId = R.id.second_task_filter
-                Task.FILTER_STRONG, Task.FILTER_GRAY, Task.FILTER_COMPLETED -> checkedId = R.id.third_task_filter
-                Task.FILTER_ACTIVE -> checkedId = if (taskType == TaskType.DAILY) {
-                    R.id.second_task_filter
-                } else {
-                    R.id.all_task_filter
-                }
+                Task.FILTER_STRONG, Task.FILTER_GRAY, Task.FILTER_COMPLETED ->
+                    checkedId =
+                        R.id.third_task_filter
+
+                Task.FILTER_ACTIVE ->
+                    checkedId =
+                        if (taskType == TaskType.DAILY) {
+                            R.id.second_task_filter
+                        } else {
+                            R.id.all_task_filter
+                        }
             }
         }
         binding.taskFilterWrapper.check(checkedId)
         filtersChanged()
     }
 
-    private fun onCheckedChanged(@IdRes checkedId: Int) {
-        val newFilter = when (checkedId) {
-            R.id.second_task_filter -> when (taskType) {
-                TaskType.HABIT -> Task.FILTER_WEAK
-                TaskType.DAILY -> Task.FILTER_ACTIVE
-                TaskType.TODO -> Task.FILTER_DATED
-                else -> Task.FILTER_ALL
+    private fun onCheckedChanged(
+        @IdRes checkedId: Int,
+    ) {
+        val newFilter =
+            when (checkedId) {
+                R.id.second_task_filter ->
+                    when (taskType) {
+                        TaskType.HABIT -> Task.FILTER_WEAK
+                        TaskType.DAILY -> Task.FILTER_ACTIVE
+                        TaskType.TODO -> Task.FILTER_DATED
+                        else -> Task.FILTER_ALL
+                    }
+
+                R.id.third_task_filter ->
+                    when (taskType) {
+                        TaskType.HABIT -> Task.FILTER_STRONG
+                        TaskType.DAILY -> Task.FILTER_GRAY
+                        TaskType.TODO -> Task.FILTER_COMPLETED
+                        else -> Task.FILTER_ALL
+                    }
+
+                else ->
+                    if (taskType != TaskType.TODO) {
+                        Task.FILTER_ALL
+                    } else {
+                        Task.FILTER_ACTIVE
+                    }
             }
-            R.id.third_task_filter -> when (taskType) {
-                TaskType.HABIT -> Task.FILTER_STRONG
-                TaskType.DAILY -> Task.FILTER_GRAY
-                TaskType.TODO -> Task.FILTER_COMPLETED
-                else -> Task.FILTER_ALL
-            }
-            else -> if (taskType != TaskType.TODO) {
-                Task.FILTER_ALL
-            } else {
-                Task.FILTER_ACTIVE
-            }
-        }
         viewModel.setActiveFilter(taskType, newFilter)
         filtersChanged()
     }
@@ -413,7 +455,6 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
         tags = sortedTagList
     }
 
-
     private fun editButtonClicked() {
         isEditingTags = !isEditingTags
         if (isEditingTags) {
@@ -430,7 +471,7 @@ class TaskFilterDialog(context: Context, private val repository: TagRepository, 
                 context.getThemeColor(R.attr.colorAccent)
             } else {
                 ContextCompat.getColor(context, R.color.text_dimmed)
-            }
+            },
         )
     }
 }

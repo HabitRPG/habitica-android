@@ -6,7 +6,6 @@ import androidx.core.content.edit
 import com.google.android.play.core.review.ReviewManagerFactory
 
 class ReviewManager(context: Context, private val configManager: AppConfigManager) {
-
     private val reviewManager = ReviewManagerFactory.create(context)
     private val sharedPref = context.getSharedPreferences("ReviewPrefs", Context.MODE_PRIVATE)
 
@@ -59,7 +58,10 @@ class ReviewManager(context: Context, private val configManager: AppConfigManage
         return !(lastReviewCheckin != -1 && currentCheckins - lastReviewCheckin < 5)
     }
 
-    fun requestReview(activity: AppCompatActivity, currentCheckins: Int) {
+    fun requestReview(
+        activity: AppCompatActivity,
+        currentCheckins: Int,
+    ) {
         if (!canRequestReview(currentCheckins)) return
 
         val request = reviewManager.requestReviewFlow()

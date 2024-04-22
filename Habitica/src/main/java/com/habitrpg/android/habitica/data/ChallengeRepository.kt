@@ -7,15 +7,25 @@ import com.habitrpg.android.habitica.models.tasks.TaskList
 import kotlinx.coroutines.flow.Flow
 
 interface ChallengeRepository : BaseRepository {
+    suspend fun retrieveChallenges(
+        page: Int = 0,
+        memberOnly: Boolean,
+    ): List<Challenge>?
 
-    suspend fun retrieveChallenges(page: Int = 0, memberOnly: Boolean): List<Challenge>?
     fun getChallenges(): Flow<List<Challenge>>
+
     fun getChallenge(challengeId: String): Flow<Challenge>
+
     fun getChallengeTasks(challengeId: String): Flow<List<Task>>
 
     suspend fun retrieveChallenge(challengeID: String): Challenge?
+
     suspend fun retrieveChallengeTasks(challengeID: String): TaskList?
-    suspend fun createChallenge(challenge: Challenge, taskList: List<Task>): Challenge?
+
+    suspend fun createChallenge(
+        challenge: Challenge,
+        taskList: List<Task>,
+    ): Challenge?
 
     /**
      *
@@ -31,18 +41,28 @@ interface ChallengeRepository : BaseRepository {
         fullTaskList: List<Task>,
         addedTaskList: List<Task>,
         updatedTaskList: List<Task>,
-        removedTaskList: List<String>
+        removedTaskList: List<String>,
     ): Challenge?
 
     suspend fun deleteChallenge(challengeId: String): Void?
+
     fun getUserChallenges(userId: String? = null): Flow<List<Challenge>>
 
-    suspend fun leaveChallenge(challenge: Challenge, keepTasks: String): Void?
+    suspend fun leaveChallenge(
+        challenge: Challenge,
+        keepTasks: String,
+    ): Void?
 
     suspend fun joinChallenge(challenge: Challenge): Challenge?
 
     fun getChallengepMembership(id: String): Flow<ChallengeMembership>
+
     fun getChallengeMemberships(): Flow<List<ChallengeMembership>>
+
     fun isChallengeMember(challengeID: String): Flow<Boolean>
-    suspend fun reportChallenge(challengeid: String, updateData: Map<String, String>): Void?
+
+    suspend fun reportChallenge(
+        challengeid: String,
+        updateData: Map<String, String>,
+    ): Void?
 }

@@ -42,25 +42,26 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
             layoutManager =
                 WearableLinearLayoutManager(
                     this@TaskListActivity,
-                    HabiticaScrollingLayoutCallback()
+                    HabiticaScrollingLayoutCallback(),
                 )
             adapter = this@TaskListActivity.adapter
             emptyViewBuilder = {
                 val emptyBinding = EmptyTaskListBinding.inflate(layoutInflater)
                 emptyBinding.disconnected.root.isVisible = !appStateManager.isAppConnected.value
                 emptyBinding.header.textView.text = getTitle(viewModel.taskCount.value)
-                emptyBinding.descriptionView.text = getString(
-                    R.string.no_tasks,
+                emptyBinding.descriptionView.text =
                     getString(
-                        when (viewModel.taskType) {
-                            TaskType.HABIT -> R.string.habit
-                            TaskType.DAILY -> R.string.daily
-                            TaskType.TODO -> R.string.todo
-                            TaskType.REWARD -> R.string.reward
-                            else -> R.string.task
-                        }
+                        R.string.no_tasks,
+                        getString(
+                            when (viewModel.taskType) {
+                                TaskType.HABIT -> R.string.habit
+                                TaskType.DAILY -> R.string.daily
+                                TaskType.TODO -> R.string.todo
+                                TaskType.REWARD -> R.string.reward
+                                else -> R.string.task
+                            },
+                        ),
                     )
-                )
                 emptyBinding.root
             }
             onRefresh = {
@@ -96,7 +97,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         startActivity(
             Intent(this, TaskDetailActivity::class.java).apply {
                 putExtra("task_id", task.id)
-            }
+            },
         )
     }
 
@@ -104,9 +105,10 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
     private val habitDirectionIntentLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val direction = result.data?.getStringExtra("direction")
-                    ?.let { TaskDirection.valueOf(it) }
-                    ?: TaskDirection.UP
+                val direction =
+                    result.data?.getStringExtra("direction")
+                        ?.let { TaskDirection.valueOf(it) }
+                        ?: TaskDirection.UP
 
                 taskToScore?.let { task ->
                     viewModel.scoreTask(task, direction) {
@@ -126,10 +128,10 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
                 habitDirectionIntentLauncher.launch(
                     Intent(
                         this,
-                        HabitDirectionActivity::class.java
+                        HabitDirectionActivity::class.java,
                     ).apply {
                         putExtra("task_id", task.id)
-                    }
+                    },
                 )
                 return
             } else if (task.up != true && task.down != true) {
@@ -155,7 +157,7 @@ class TaskListActivity : BaseActivity<ActivityTasklistBinding, TaskListViewModel
         startActivity(
             Intent(this, TaskFormActivity::class.java).apply {
                 putExtra("task_type", viewModel.taskType?.value)
-            }
+            },
         )
         overridePendingTransition(R.anim.scale_up, 0)
     }

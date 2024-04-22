@@ -27,6 +27,7 @@ fun Context.isUsingNightModeResources(): Boolean {
         else -> false
     }
 }
+
 fun Context.forceLocale(locale: Locale): Context {
     Locale.setDefault(locale)
     val config = Configuration(resources.configuration)

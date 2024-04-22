@@ -63,9 +63,7 @@ import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.PurchaseHandler
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.CurrencyText
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
@@ -73,7 +71,9 @@ import com.habitrpg.android.habitica.ui.views.PixelArtView
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.insufficientCurrency.InsufficientGemsDialog
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -132,7 +132,12 @@ class BirthdayActivity : BaseActivity() {
                         }) {
                             if ((userViewModel.user.value?.gemCount ?: 0) < 60) {
                                 val dialog = InsufficientGemsDialog(this@BirthdayActivity, 3)
-                                Analytics.sendEvent("show insufficient gems modal", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("reason" to "birthday"))
+                                Analytics.sendEvent(
+                                    "show insufficient gems modal",
+                                    EventCategory.BEHAVIOUR,
+                                    HitType.EVENT,
+                                    mapOf("reason" to "birthday"),
+                                )
                                 dialog.show()
                                 return@launchCatching
                             }
@@ -141,12 +146,12 @@ class BirthdayActivity : BaseActivity() {
                             dialog.setTitle(
                                 getString(
                                     R.string.purchase_gryphatrice_confirmation,
-                                    60
-                                )
+                                    60,
+                                ),
                             )
                             dialog.addButton(
                                 getString(R.string.buy_for_x, "60 Gems"),
-                                true
+                                true,
                             ) { _, _ ->
                                 lifecycleScope.launchCatching {
                                     purchaseWithGems()
@@ -157,7 +162,7 @@ class BirthdayActivity : BaseActivity() {
                             }
                             dialog.show()
                         }
-                    }
+                    },
                 ) {
                     lifecycleScope.launchCatching {
                         inventoryRepository.equip("pet", "Gryphatrice-Jubilant")
@@ -198,15 +203,17 @@ class BirthdayActivity : BaseActivity() {
 fun BirthdayTitle(text: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp, bottom = 8.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp, bottom = 8.dp),
     ) {
         Box(
-            modifier = Modifier
-                .height(1.dp)
-                .weight(1f)
-                .background(colorResource(id = R.color.brand_50))
+            modifier =
+                Modifier
+                    .height(1.dp)
+                    .weight(1f)
+                    .background(colorResource(id = R.color.brand_50)),
         )
         Image(painterResource(id = R.drawable.birthday_textdeco_left), null)
         Text(
@@ -214,14 +221,15 @@ fun BirthdayTitle(text: String) {
             fontSize = 16.sp,
             color = Color.White,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
         Image(painterResource(id = R.drawable.birthday_textdeco_right), null)
         Box(
-            modifier = Modifier
-                .height(1.dp)
-                .weight(1f)
-                .background(colorResource(id = R.color.brand_50))
+            modifier =
+                Modifier
+                    .height(1.dp)
+                    .weight(1f)
+                    .background(colorResource(id = R.color.brand_50)),
         )
     }
 }
@@ -237,7 +245,7 @@ fun BirthdayActivityView(
     endDate: Date,
     onPurchaseClick: () -> Unit,
     onGemPurchaseClick: () -> Unit,
-    onEquipClick: () -> Unit
+    onEquipClick: () -> Unit,
 ) {
     val activity = LocalContext.current as? Activity
     val dateFormat = SimpleDateFormat("MMM dd", java.util.Locale.getDefault())
@@ -256,20 +264,21 @@ fun BirthdayActivityView(
     }
 
     Scaffold(
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
     ) { padding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .background(
-                    Brush.verticalGradient(
-                        Pair(0.0f, colorResource(id = R.color.brand_300)),
-                        Pair(1.0f, colorResource(id = R.color.brand_200))
+            modifier =
+                Modifier
+                    .background(
+                        Brush.verticalGradient(
+                            Pair(0.0f, colorResource(id = R.color.brand_300)),
+                            Pair(1.0f, colorResource(id = R.color.brand_200)),
+                        ),
                     )
-                )
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(padding)
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(padding),
         ) {
             Button(
                 onClick = {
@@ -281,55 +290,57 @@ fun BirthdayActivityView(
                 },
                 colors = ButtonDefaults.textButtonColors(contentColor = textColor),
                 elevation = ButtonDefaults.elevation(0.dp, 0.dp),
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier.align(Alignment.Start),
             ) {
                 Image(
                     painterResource(R.drawable.arrow_back),
                     stringResource(R.string.action_back),
-                    colorFilter = ColorFilter.tint(
-                        textColor
-                    )
+                    colorFilter =
+                        ColorFilter.tint(
+                            textColor,
+                        ),
                 )
             }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth()
+                modifier =
+                    Modifier
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth(),
             ) {
                 Image(
                     painterResource(R.drawable.birthday_header),
                     null,
-                    Modifier.padding(bottom = 8.dp)
+                    Modifier.padding(bottom = 8.dp),
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(painterResource(R.drawable.birthday_gifts), null)
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.padding(horizontal = 22.dp)
+                        modifier = Modifier.padding(horizontal = 22.dp),
                     ) {
                         Text(
                             stringResource(id = R.string.limited_event).toUpperCase(Locale.current),
                             fontSize = 12.sp,
                             color = specialTextColor,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                         Text(
                             stringResource(
                                 R.string.x_to_y,
                                 dateFormat.format(startDate),
-                                dateFormat.format(endDate)
+                                dateFormat.format(endDate),
                             ),
                             fontSize = 12.sp,
                             color = textColor,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
                         )
                     }
                     // right image should be flipped
                     Image(
                         painterResource(id = R.drawable.birthday_gifts),
                         null,
-                        modifier = Modifier.scale(-1f, 1f)
+                        modifier = Modifier.scale(-1f, 1f),
                     )
                 }
                 Text(
@@ -338,26 +349,27 @@ fun BirthdayActivityView(
                     color = specialTextColor,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 22.dp)
+                    modifier = Modifier.padding(top = 22.dp),
                 )
                 BirthdayTitle(stringResource(id = R.string.animated_gryphatrice_pet))
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .padding(vertical = 20.dp)
-                        .size(161.dp, 129.dp)
-                        .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))
+                    modifier =
+                        Modifier
+                            .padding(vertical = 20.dp)
+                            .size(161.dp, 129.dp)
+                            .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp)),
                 ) {
                     PixelArtView(
                         imageName = "stable_Pet-Gryphatrice-Jubilant",
-                        Modifier.size(104.dp)
+                        Modifier.size(104.dp),
                     )
                 }
                 Text(
                     stringResource(R.string.limited_edition).toUpperCase(Locale.current),
                     fontSize = 12.sp,
                     color = specialTextColor,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
                 Text(
                     stringResource(R.string.gryphatrice_description),
@@ -365,14 +377,14 @@ fun BirthdayActivityView(
                     color = textColor,
                     textAlign = TextAlign.Center,
                     lineHeight = 20.sp,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier.padding(bottom = 16.dp),
                 )
                 if (hasGryphatrice) {
                     Text(
                         stringResource(R.string.thanks_for_support),
                         fontSize = 12.sp,
                         color = textColor,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
                     )
                     HabiticaButton(
                         Color.White,
@@ -380,11 +392,11 @@ fun BirthdayActivityView(
                         {
                             onEquipClick()
                         },
-                        modifier = Modifier.padding(top = 20.dp)
+                        modifier = Modifier.padding(top = 20.dp),
                     ) {
                         Text(
                             stringResource(if (hasEquipped) R.string.unequip else R.string.equip),
-                            fontSize = 18.sp
+                            fontSize = 18.sp,
                         )
                     }
                 } else if (isPurchasing) {
@@ -401,7 +413,7 @@ fun BirthdayActivityView(
                                 append("60 Gems")
                             }
                         },
-                        color = Color.White
+                        color = Color.White,
                     )
                     HabiticaButton(
                         Color.White,
@@ -409,7 +421,7 @@ fun BirthdayActivityView(
                         {
                             onPurchaseClick()
                         },
-                        modifier = Modifier.padding(top = 20.dp)
+                        modifier = Modifier.padding(top = 20.dp),
                     ) {
                         Text(stringResource(R.string.buy_for_x, price), fontSize = 18.sp)
                     }
@@ -419,11 +431,11 @@ fun BirthdayActivityView(
                         {
                             onGemPurchaseClick()
                         },
-                        modifier = Modifier.padding(top = 20.dp)
+                        modifier = Modifier.padding(top = 20.dp),
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
                         ) {
                             Text(stringResource(R.string.buy_for), fontSize = 18.sp)
                             CurrencyText(currency = "gems", value = 60, fontSize = 18.sp)
@@ -436,7 +448,7 @@ fun BirthdayActivityView(
                     fontSize = 16.sp,
                     color = textColor,
                     textAlign = TextAlign.Center,
-                    lineHeight = 20.sp
+                    lineHeight = 20.sp,
                 )
                 PotionGrid()
                 HabiticaButton(
@@ -449,7 +461,7 @@ fun BirthdayActivityView(
                             MainNavigationController.navigate(R.id.marketFragment)
                         }
                     },
-                    modifier = Modifier.padding(top = 20.dp)
+                    modifier = Modifier.padding(top = 20.dp),
                 ) {
                     Text(stringResource(R.string.visit_the_market), fontSize = 18.sp)
                 }
@@ -459,73 +471,74 @@ fun BirthdayActivityView(
                     fontSize = 16.sp,
                     color = textColor,
                     textAlign = TextAlign.Center,
-                    lineHeight = 20.sp
+                    lineHeight = 20.sp,
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(14.dp),
-                    modifier = Modifier.padding(vertical = 20.dp)
+                    modifier = Modifier.padding(vertical = 20.dp),
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(14.dp),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         FourFreeItem(
                             day = 1,
                             title = stringResource(R.string.a_party_robe),
                             imageName = "birthday10_robes",
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
                         )
                         FourFreeItem(
                             day = 1,
                             title = stringResource(R.string.twenty_gems),
                             image = painterResource(R.drawable.birthday_gems),
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
                         )
                     }
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(14.dp),
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         FourFreeItem(
                             day = 5,
                             title = stringResource(R.string.birthday_set),
                             imageName = "birthday10_hero",
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
                         )
                         FourFreeItem(
                             day = 10,
                             title = stringResource(R.string.background),
                             imageName = "birthday10_background",
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
                         )
                     }
                 }
             }
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(top = 20.dp)
-                    .background(colorResource(R.color.brand_50))
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 20.dp, bottom = 60.dp)
+                modifier =
+                    Modifier
+                        .padding(top = 20.dp)
+                        .background(colorResource(R.color.brand_50))
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 20.dp, bottom = 60.dp),
             ) {
                 Text(
                     stringResource(R.string.limitations),
                     fontSize = 16.sp,
                     color = colorResource(R.color.brand_600),
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
                 Text(
                     stringResource(
                         R.string.birthday_limitations,
                         complexDateFormat.format(startDate),
-                        complexDateFormat.format(endDate)
+                        complexDateFormat.format(endDate),
                     ),
                     fontSize = 14.sp,
                     color = colorResource(R.color.brand_600),
                     lineHeight = 20.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         }
@@ -534,22 +547,23 @@ fun BirthdayActivityView(
 
 @Composable
 fun PotionGrid() {
-    val potions = listOf(
-        "Porcelain",
-        "Vampire",
-        "Aquatic",
-        "StainedGlass",
-        "Celestial",
-        "Glow",
-        "AutumnLeaf",
-        "SandSculpture",
-        "Peppermint",
-        "Shimmer"
-    ).windowed(4, 4, true)
+    val potions =
+        listOf(
+            "Porcelain",
+            "Vampire",
+            "Aquatic",
+            "StainedGlass",
+            "Celestial",
+            "Glow",
+            "AutumnLeaf",
+            "SandSculpture",
+            "Peppermint",
+            "Shimmer",
+        ).windowed(4, 4, true)
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(top = 20.dp)
+        modifier = Modifier.padding(top = 20.dp),
     ) {
         for (potionGroup in potions) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -557,14 +571,16 @@ fun PotionGrid() {
                     Box(
                         Modifier
                             .size(68.dp)
-                            .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp))
+                            .background(colorResource(R.color.brand_50), RoundedCornerShape(8.dp)),
                     ) {
                         AsyncImage(
-                            model = DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(
-                                "Pet_HatchingPotion_$potion"
-                            ),
+                            model =
+                                DataBindingUtils.BASE_IMAGE_URL +
+                                    DataBindingUtils.getFullFilename(
+                                        "Pet_HatchingPotion_$potion",
+                                    ),
                             null,
-                            Modifier.size(68.dp)
+                            Modifier.size(68.dp),
                         )
                     }
                 }
@@ -579,26 +595,28 @@ fun FourFreeItem(
     title: String,
     modifier: Modifier = Modifier,
     imageName: String? = null,
-    image: Painter? = null
+    image: Painter? = null,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(18.dp),
-        modifier = modifier
-            .background(colorResource(R.color.brand_50), HabiticaTheme.shapes.medium)
-            .padding(16.dp)
+        modifier =
+            modifier
+                .background(colorResource(R.color.brand_50), HabiticaTheme.shapes.medium)
+                .padding(16.dp),
     ) {
         Text(
             stringResource(R.string.day_x, day).uppercase(),
             color = colorResource(R.color.yellow_50),
             fontSize = 12.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(121.dp, 84.dp)
-                .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium)
+            modifier =
+                Modifier
+                    .size(121.dp, 84.dp)
+                    .background(colorResource(R.color.brand_100), HabiticaTheme.shapes.medium),
         ) {
             if (image != null) {
                 Image(image, null)
@@ -606,7 +624,7 @@ fun FourFreeItem(
                 PixelArtView(
                     imageName,
                     Modifier
-                        .size(84.dp)
+                        .size(84.dp),
                 )
             }
         }

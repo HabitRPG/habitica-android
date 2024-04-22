@@ -49,7 +49,7 @@ fun AssignSheet(
     configManager: AppConfigManager,
     onAssignClick: (String) -> Unit,
     onCloseClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
         Box {
@@ -59,21 +59,27 @@ fun AssignSheet(
                 fontWeight = FontWeight.Medium,
                 color = colorResource(R.color.gray_200),
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
             )
             TextButton(
                 onClick = onCloseClick,
                 colors = ButtonDefaults.textButtonColors(),
-                modifier = Modifier.align(Alignment.CenterEnd)
+                modifier = Modifier.align(Alignment.CenterEnd),
             ) {
                 Text(stringResource(R.string.done))
             }
         }
         for (member in members) {
             val isAssigned = assignedMembers.contains(member.id)
-            AssignSheetRow(member = member, isAssigned = isAssigned, configManager, onAssignClick = onAssignClick)
+            AssignSheetRow(
+                member = member,
+                isAssigned = isAssigned,
+                configManager,
+                onAssignClick = onAssignClick,
+            )
         }
     }
 }
@@ -84,7 +90,7 @@ fun AssignSheetRow(
     isAssigned: Boolean,
     configManager: AppConfigManager,
     onAssignClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     UserRow(
         username = member.displayName,
@@ -93,70 +99,76 @@ fun AssignSheetRow(
         extraContent = {
             Text(
                 member.formattedUsername ?: "",
-                color = colorResource(R.color.text_ternary)
+                color = colorResource(R.color.text_ternary),
             )
         },
         endContent = {
             IsAssignedIndicator(isAssigned = isAssigned)
         },
         configManager = configManager,
-        modifier = modifier
-            .clickable {
-                onAssignClick(member.id)
-            }
-            .padding(30.dp, 12.dp)
-            .heightIn(min = 24.dp)
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .clickable {
+                    onAssignClick(member.id)
+                }
+                .padding(30.dp, 12.dp)
+                .heightIn(min = 24.dp)
+                .fillMaxWidth(),
     )
 }
 
 @Composable
 private fun IsAssignedIndicator(
     isAssigned: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val transition = updateTransition(isAssigned, label = "isAssigned")
-    val rotation = transition.animateFloat(
-        label = "isAssigned",
-        transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow) }
-    ) {
-        if (it) 0f else 135f
-    }
-    val backgroundColor = transition.animateColor(
-        label = "isAssigned",
-        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }
-    ) {
-        if (it) MaterialTheme.colors.primary else colorResource(id = R.color.transparent)
-    }
-    val color = transition.animateColor(
-        label = "isAssigned",
-        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }
-    ) {
-        colorResource(if (it) R.color.white else R.color.text_dimmed)
-    }
-    val borderColor = transition.animateColor(
-        label = "isAssigned",
-        transitionSpec = { tween(450, easing = FastOutLinearInEasing) }
-    ) {
-        if (it) MaterialTheme.colors.primary else colorResource(id = R.color.text_dimmed)
-    }
+    val rotation =
+        transition.animateFloat(
+            label = "isAssigned",
+            transitionSpec = { spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow) },
+        ) {
+            if (it) 0f else 135f
+        }
+    val backgroundColor =
+        transition.animateColor(
+            label = "isAssigned",
+            transitionSpec = { tween(450, easing = FastOutLinearInEasing) },
+        ) {
+            if (it) MaterialTheme.colors.primary else colorResource(id = R.color.transparent)
+        }
+    val color =
+        transition.animateColor(
+            label = "isAssigned",
+            transitionSpec = { tween(450, easing = FastOutLinearInEasing) },
+        ) {
+            colorResource(if (it) R.color.white else R.color.text_dimmed)
+        }
+    val borderColor =
+        transition.animateColor(
+            label = "isAssigned",
+            transitionSpec = { tween(450, easing = FastOutLinearInEasing) },
+        ) {
+            if (it) MaterialTheme.colors.primary else colorResource(id = R.color.text_dimmed)
+        }
     Image(
         painterResource(R.drawable.ic_close_white_24dp),
         null,
         colorFilter = ColorFilter.tint(color.value),
-        modifier = modifier
-            .rotate(rotation.value)
-            .size(24.dp)
-            .background(
-                backgroundColor.value,
-                CircleShape
-            )
-            .border(
-                2.dp,
-                borderColor.value,
-                CircleShape
-            )
-            .padding(3.dp)
+        modifier =
+            modifier
+                .rotate(rotation.value)
+                .size(24.dp)
+                .background(
+                    backgroundColor.value,
+                    CircleShape,
+                )
+                .border(
+                    2.dp,
+                    borderColor.value,
+                    CircleShape,
+                )
+                .padding(3.dp),
     )
 }
 

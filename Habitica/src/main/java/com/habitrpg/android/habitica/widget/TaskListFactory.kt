@@ -26,7 +26,7 @@ abstract class TaskListFactory internal constructor(
     private val listItemResId: Int,
     private val listItemTextResId: Int,
     val taskRepository: TaskRepository,
-    val userRepository: UserRepository
+    val userRepository: UserRepository,
 ) : RemoteViewsService.RemoteViewsFactory {
     private val job = SupervisorJob()
 
@@ -40,20 +40,27 @@ abstract class TaskListFactory internal constructor(
 
     private fun loadData() {
         CoroutineScope(Dispatchers.Main + job).launch(ExceptionHandler.coroutine()) {
-            val mirroredTasks = userRepository.getUser().firstOrNull()?.preferences?.tasks?.mirrorGroupTasks?.toTypedArray()
-            val tasks = taskRepository.getTasks(taskType, null, mirroredTasks ?: emptyArray()).firstOrNull()?.filter { task ->
-                task.type == TaskType.TODO && !task.completed || task.isDisplayedActive
-            } ?: return@launch
+            val mirroredTasks =
+                userRepository.getUser()
+                    .firstOrNull()?.preferences?.tasks?.mirrorGroupTasks?.toTypedArray()
+            val tasks =
+                taskRepository.getTasks(taskType, null, mirroredTasks ?: emptyArray()).firstOrNull()
+                    ?.filter { task ->
+                        task.type == TaskType.TODO && !task.completed || task.isDisplayedActive
+                    } ?: return@launch
             taskList = taskRepository.getTaskCopies(tasks)
             reloadData = false
-            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)
+            AppWidgetManager.getInstance(context)
+                .notifyAppWidgetViewDataChanged(widgetId, R.id.list_view)
         }
     }
 
     override fun onCreate() {
         this.loadData()
     }
-    override fun onDestroy() { /* no-op */ }
+
+    override fun onDestroy() { // no-op
+    }
 
     override fun onDataSetChanged() {
         if (this.reloadData) {
@@ -76,7 +83,11 @@ abstract class TaskListFactory internal constructor(
             val builder = SpannableStringBuilder(parsedText)
 
             remoteView.setTextViewText(listItemTextResId, builder)
-            remoteView.setInt(R.id.checkbox_background, "setBackgroundResource", task.lightTaskColor)
+            remoteView.setInt(
+                R.id.checkbox_background,
+                "setBackgroundResource",
+                task.lightTaskColor,
+            )
             val fillInIntent = Intent()
             fillInIntent.putExtra(TaskListWidgetProvider.TASK_ID_ITEM, task.id)
             remoteView.setOnClickFillInIntent(R.id.checkbox_background, fillInIntent)

@@ -43,7 +43,11 @@ class HabitButtonWidgetService : Service() {
     private var taskMapping = mutableMapOf<String, Int>()
     private var allWidgetIds: IntArray? = null
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent,
+        flags: Int,
+        startId: Int,
+    ): Int {
         this.appWidgetManager = AppWidgetManager.getInstance(this)
         val thisWidget = ComponentName(this, HabitButtonWidgetProvider::class.java)
         allWidgetIds = appWidgetManager?.getAppWidgetIds(thisWidget)
@@ -67,23 +71,40 @@ class HabitButtonWidgetService : Service() {
             val parsedText = MarkdownParser.parseMarkdown(task.text)
 
             val builder = SpannableStringBuilder(parsedText)
-            remoteViews.setTextViewText(R.id.habit_title, builder.substring(0, min(builder.length, 70)))
+            remoteViews.setTextViewText(
+                R.id.habit_title,
+                builder.substring(0, min(builder.length, 70)),
+            )
 
             if (task.up != true) {
                 remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.GONE)
                 remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, null)
             } else {
                 remoteViews.setViewVisibility(R.id.btnPlusWrapper, View.VISIBLE)
-                remoteViews.setInt(R.id.btnPlus, "setBackgroundColor", ContextCompat.getColor(context, task.lightTaskColor))
-                remoteViews.setOnClickPendingIntent(R.id.btnPlusWrapper, getPendingIntent(task.id, TaskDirection.UP.text, taskMapping[task.id]!!))
+                remoteViews.setInt(
+                    R.id.btnPlus,
+                    "setBackgroundColor",
+                    ContextCompat.getColor(context, task.lightTaskColor),
+                )
+                remoteViews.setOnClickPendingIntent(
+                    R.id.btnPlusWrapper,
+                    getPendingIntent(task.id, TaskDirection.UP.text, taskMapping[task.id]!!),
+                )
             }
             if (task.down != true) {
                 remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.GONE)
                 remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, null)
             } else {
                 remoteViews.setViewVisibility(R.id.btnMinusWrapper, View.VISIBLE)
-                remoteViews.setInt(R.id.btnMinus, "setBackgroundColor", ContextCompat.getColor(context, task.mediumTaskColor))
-                remoteViews.setOnClickPendingIntent(R.id.btnMinusWrapper, getPendingIntent(task.id, TaskDirection.DOWN.text, taskMapping[task.id]!!))
+                remoteViews.setInt(
+                    R.id.btnMinus,
+                    "setBackgroundColor",
+                    ContextCompat.getColor(context, task.mediumTaskColor),
+                )
+                remoteViews.setOnClickPendingIntent(
+                    R.id.btnMinusWrapper,
+                    getPendingIntent(task.id, TaskDirection.DOWN.text, taskMapping[task.id]!!),
+                )
             }
             if (taskMapping[task.id] != null) {
                 appWidgetManager?.updateAppWidget(taskMapping[task.id]!!, remoteViews)
@@ -109,7 +130,11 @@ class HabitButtonWidgetService : Service() {
         return sharedPreferences.getString("habit_button_widget_$widgetId", "") ?: ""
     }
 
-    private fun getPendingIntent(taskId: String?, direction: String, widgetId: Int): PendingIntent {
+    private fun getPendingIntent(
+        taskId: String?,
+        direction: String,
+        widgetId: Int,
+    ): PendingIntent {
         val taskIntent = Intent(context, HabitButtonWidgetProvider::class.java)
         taskIntent.action = HabitButtonWidgetProvider.HABIT_ACTION
         taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
@@ -119,7 +144,7 @@ class HabitButtonWidgetService : Service() {
             context,
             widgetId + direction.hashCode(),
             taskIntent,
-            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
         )
     }
 }

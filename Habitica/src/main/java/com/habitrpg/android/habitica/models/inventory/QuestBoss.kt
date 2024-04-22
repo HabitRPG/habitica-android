@@ -5,7 +5,6 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 open class QuestBoss : RealmObject(), BaseObject {
-
     @PrimaryKey
     var key: String? = null
         set(value) {

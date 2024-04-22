@@ -20,33 +20,35 @@ fun ClassText(
     hasClass: Boolean,
     fontSize: TextUnit,
     modifier: Modifier = Modifier,
-    iconSize: Dp? = null
+    iconSize: Dp? = null,
 ) {
     if (!hasClass) return
-    val classColor = colorResource(
-        when (className) {
-            "warrior" -> R.color.text_red
-            "wizard" -> R.color.text_blue
-            "rogue" -> R.color.text_brand
-            "healer" -> R.color.text_yellow
-            else -> R.color.text_primary
-        }
-    )
+    val classColor =
+        colorResource(
+            when (className) {
+                "warrior" -> R.color.text_red
+                "wizard" -> R.color.text_blue
+                "rogue" -> R.color.text_brand
+                "healer" -> R.color.text_yellow
+                else -> R.color.text_primary
+            },
+        )
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         ClassIcon(
             className = className,
             hasClass = true,
-            modifier = Modifier.size(
-                iconSize ?: with(LocalDensity.current) {
-                    fontSize.toDp()
-                }
-            )
+            modifier =
+                Modifier.size(
+                    iconSize ?: with(LocalDensity.current) {
+                        fontSize.toDp()
+                    },
+                ),
         )
         Text(
             getTranslatedClassName(LocalContext.current.resources, className),
             fontSize = fontSize,
             fontWeight = FontWeight.SemiBold,
-            color = classColor
+            color = classColor,
         )
     }
 }

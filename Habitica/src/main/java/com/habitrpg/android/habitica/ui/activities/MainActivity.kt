@@ -49,8 +49,6 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.databinding.ActivityMainBinding
 import com.habitrpg.android.habitica.extensions.hideKeyboard
-import com.habitrpg.common.habitica.extensions.observeOnce
-import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.extensions.updateStatusBarColor
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.AppConfigManager
@@ -70,11 +68,9 @@ import com.habitrpg.android.habitica.models.user.UserQuestStatus
 import com.habitrpg.android.habitica.ui.TutorialView
 import com.habitrpg.android.habitica.ui.fragments.NavigationDrawerFragment
 import com.habitrpg.android.habitica.ui.theme.colors
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.viewmodels.MainActivityViewModel
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
 import com.habitrpg.android.habitica.ui.views.AppHeaderView
-import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.android.habitica.ui.views.GroupPlanMemberList
 import com.habitrpg.android.habitica.ui.views.HabiticaButton
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
@@ -90,10 +86,14 @@ import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
+import com.habitrpg.common.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.AvatarView
+import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.shared.habitica.models.responses.MaintenanceResponse
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -169,15 +169,16 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private var userQuestStatus = UserQuestStatus.NO_QUEST
     private var lastNotificationOpen: Long? = null
 
-    private val notificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { granted ->
-        if (granted) {
-            viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
-        } else {
-            viewModel.updateAllowPushNotifications(false)
+    private val notificationPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { granted ->
+            if (granted) {
+                viewModel.pushNotificationManager.addPushDeviceUsingStoredToken()
+            } else {
+                viewModel.updateAllowPushNotifications(false)
+            }
         }
-    }
 
     private val classSelectionResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -240,51 +241,57 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             supportFragmentManager.findFragmentById(R.id.navigation_drawer) as? NavigationDrawerFragment
         drawerFragment?.setUp(R.id.navigation_drawer, drawerLayout, notificationsViewModel)
 
-        drawerToggle = object : ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        ) {}
+        drawerToggle =
+            object : ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close,
+            ) {}
         // Set the drawer toggle as the DrawerListener
         drawerToggle?.let { drawerLayout.addDrawerListener(it) }
-        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
-            private var isOpeningDrawer: Boolean? = null
+        drawerLayout.addDrawerListener(
+            object : DrawerLayout.DrawerListener {
+                private var isOpeningDrawer: Boolean? = null
 
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                if (!isUsingNightModeResources()) {
-                    if (slideOffset < 0.5f && isOpeningDrawer == null) {
-                        window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
-                        isOpeningDrawer = true
-                    } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
-                        window.updateStatusBarColor(
-                            getThemeColor(R.attr.headerBackgroundColor),
-                            true
-                        )
-                        isOpeningDrawer = false
+                override fun onDrawerSlide(
+                    drawerView: View,
+                    slideOffset: Float,
+                ) {
+                    if (!isUsingNightModeResources()) {
+                        if (slideOffset < 0.5f && isOpeningDrawer == null) {
+                            window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                            isOpeningDrawer = true
+                        } else if (slideOffset > 0.5f && isOpeningDrawer == null) {
+                            window.updateStatusBarColor(
+                                getThemeColor(R.attr.headerBackgroundColor),
+                                true,
+                            )
+                            isOpeningDrawer = false
+                        }
                     }
                 }
-            }
 
-            override fun onDrawerOpened(drawerView: View) {
-                hideKeyboard()
-                if (!isUsingNightModeResources()) {
-                    window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                override fun onDrawerOpened(drawerView: View) {
+                    hideKeyboard()
+                    if (!isUsingNightModeResources()) {
+                        window.updateStatusBarColor(getThemeColor(R.attr.colorPrimaryDark), false)
+                    }
+                    isOpeningDrawer = null
+                    drawerFragment?.updatePromo()
                 }
-                isOpeningDrawer = null
-                drawerFragment?.updatePromo()
-            }
 
-            override fun onDrawerClosed(drawerView: View) {
-                if (!isUsingNightModeResources()) {
-                    window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
+                override fun onDrawerClosed(drawerView: View) {
+                    if (!isUsingNightModeResources()) {
+                        window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
+                    }
+                    isOpeningDrawer = null
                 }
-                isOpeningDrawer = null
-            }
 
-            override fun onDrawerStateChanged(newState: Int) {
-            }
-        })
+                override fun onDrawerStateChanged(newState: Int) {
+                }
+            },
+        )
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
@@ -295,7 +302,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             HabiticaTheme {
                 val user by viewModel.user.observeAsState(null)
                 val teamPlan by viewModel.userViewModel.currentTeamPlan.collectAsStateLifecycleAware(
-                    null
+                    null,
                 )
                 val teamPlanMembers by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
                 val canShowTeamHeader: Boolean by viewModel.canShowTeamPlanHeader
@@ -309,9 +316,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.spacedBy(4.dp),
-                                modifier = Modifier.padding(22.dp)
+                                modifier = Modifier.padding(22.dp),
                             ) {
-                                ComposableAvatarView(avatar = user, configManager = appConfigManager)
+                                ComposableAvatarView(
+                                    avatar = user,
+                                    configManager = appConfigManager,
+                                )
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -322,8 +332,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         modifier = Modifier.height(48.dp),
                                         onClick = {
                                             dismiss()
-                                            MainNavigationController.navigate(MainNavDirections.openProfileActivity(user?.id ?: ""))
-                                        }) {
+                                            MainNavigationController.navigate(
+                                                MainNavDirections.openProfileActivity(
+                                                    user?.id ?: "",
+                                                ),
+                                            )
+                                        },
+                                    ) {
                                         Text(stringResource(id = R.string.open_profile))
                                     }
 
@@ -334,7 +349,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                         onClick = {
                                             dismiss()
                                             MainNavigationController.navigate(R.id.avatarOverviewFragment)
-                                        }) {
+                                        },
+                                    ) {
                                         Text(stringResource(id = R.string.customize_avatar))
                                     }
 
@@ -352,12 +368,13 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                                                             this@MainActivity,
                                                             it,
                                                             "Check out my avatar on Habitica!",
-                                                            "avatar_bottomsheet"
-                                                        )
+                                                            "avatar_bottomsheet",
+                                                        ),
                                                     )
                                                 }
                                             }
-                                        }) {
+                                        },
+                                    ) {
                                         Text(stringResource(id = R.string.share_avatar))
                                     }
                                 }
@@ -367,7 +384,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     onMemberRowClicked = {
                         showAsBottomSheet { onClose ->
                             val group by viewModel.userViewModel.currentTeamPlanGroup.collectAsState(
-                                null
+                                null,
                             )
                             val members by viewModel.userViewModel.currentTeamPlanMembers.observeAsState()
                             GroupPlanMemberList(members, group, appConfigManager) {
@@ -384,7 +401,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         intent.putExtras(bundle)
                         classSelectionResult.launch(intent)
                     },
-                    configManager = appConfigManager
+                    configManager = appConfigManager,
                 )
             }
         }
@@ -400,7 +417,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         binding.content.toolbarTitle.text = getString(titleId)
     }
 
-    private fun updateToolbarTitle(destination: NavDestination, arguments: Bundle?) {
+    private fun updateToolbarTitle(
+        destination: NavDestination,
+        arguments: Bundle?,
+    ) {
         viewModel.getToolbarTitle(destination.id, destination.label, arguments?.getString("type")) {
             title = it
         }
@@ -416,11 +436,12 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private fun setupNotifications() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "default"
-            val channel = NotificationChannel(
-                channelId,
-                "Habitica Notifications",
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
+            val channel =
+                NotificationChannel(
+                    channelId,
+                    "Habitica Notifications",
+                    NotificationManager.IMPORTANCE_DEFAULT,
+                )
             val manager = getSystemService(NotificationManager::class.java)
             manager?.createNotificationChannel(channel)
         }
@@ -433,7 +454,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     0,
                     0,
                     0,
-                    binding.content.bottomNavigation.barHeight + 12.dpToPx(this)
+                    binding.content.bottomNavigation.barHeight + 12.dpToPx(this),
                 )
             } else {
                 snackbarContainer.setPadding(0, 0, 0, 0)
@@ -481,7 +502,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         navigationController.addOnDestinationChangedListener { _, destination, arguments ->
             updateToolbarTitle(
                 destination,
-                arguments
+                arguments,
             )
         }
 
@@ -504,9 +525,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
         resumeFromActivity = false
 
-        if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen != intent.getLongExtra(
+        if ((intent.hasExtra("notificationIdentifier") || intent.hasExtra("openURL")) && lastNotificationOpen !=
+            intent.getLongExtra(
                 "notificationTimeStamp",
-                0
+                0,
             )
         ) {
             lastNotificationOpen = intent.getLongExtra("notificationTimeStamp", 0)
@@ -518,7 +540,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     "open notification",
                     EventCategory.BEHAVIOUR,
                     HitType.EVENT,
-                    additionalData
+                    additionalData,
                 )
             }
             retrieveUser(true)
@@ -553,7 +575,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         super.startActivity(intent)
     }
 
-    override fun startActivity(intent: Intent?, options: Bundle?) {
+    override fun startActivity(
+        intent: Intent?,
+        options: Bundle?,
+    ) {
         resumeFromActivity = true
         super.startActivity(intent, options)
     }
@@ -568,8 +593,9 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private fun updateWidget(widgetClass: Class<*>) {
         val intent = Intent(this, widgetClass)
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-        val ids = AppWidgetManager.getInstance(application)
-            .getAppWidgetIds(ComponentName(application, widgetClass))
+        val ids =
+            AppWidgetManager.getInstance(application)
+                .getAppWidgetIds(ComponentName(application, widgetClass))
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         sendBroadcast(intent)
     }
@@ -602,7 +628,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         inventoryRepository.getQuestContent(user.party?.quest?.completed ?: "")
                             .firstOrNull()
                     if (questContent != null) {
-                        QuestCompletedDialog.showWithQuest(this@MainActivity, questContent, userRepository)
+                        QuestCompletedDialog.showWithQuest(
+                            this@MainActivity,
+                            questContent,
+                            userRepository,
+                        )
                     }
                     viewModel.updateUser("party.quest.completed", "")
                 }
@@ -644,10 +674,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     internal fun displayTaskScoringResponse(data: TaskScoringResult?) {
         if (viewModel.user.value != null && data != null) {
-            val damageValue = when (userQuestStatus) {
-                UserQuestStatus.QUEST_BOSS -> data.questDamage
-                else -> 0.0
-            }
+            val damageValue =
+                when (userQuestStatus) {
+                    UserQuestStatus.QUEST_BOSS -> data.questDamage
+                    else -> 0.0
+                }
             lifecycleScope.launchCatching {
                 notifyUserUseCase.callInteractor(
                     NotifyUserUseCase.RequestValues(
@@ -660,8 +691,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                         data.manaDelta,
                         damageValue,
                         data.hasLeveledUp,
-                        data.level
-                    )
+                        data.level,
+                    ),
                 )
             }
         }
@@ -673,8 +704,8 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
                     data,
                     this@MainActivity,
                     snackbarContainer,
-                    showItemsFound
-                )
+                    showItemsFound,
+                ),
             )
         }
     }
@@ -696,7 +727,10 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         }
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             drawerFragment?.openDrawer()
             return true
@@ -709,7 +743,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
         viewModel.retrieveUser(forced)
     }
 
-    fun displayTutorialStep(step: TutorialStep, texts: List<String>, canBeDeferred: Boolean) {
+    fun displayTutorialStep(
+        step: TutorialStep,
+        texts: List<String>,
+        canBeDeferred: Boolean,
+    ) {
         val view = TutorialView(this, step, viewModel)
         view.setTutorialTexts(texts)
         view.setCanBeDeferred(canBeDeferred)
@@ -746,7 +784,7 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private fun createMaintenanceIntent(
         maintenanceResponse: MaintenanceResponse,
-        isDeprecationNotice: Boolean
+        isDeprecationNotice: Boolean,
     ): Intent {
         val intent = Intent(this, MaintenanceActivity::class.java)
         val data = Bundle()
@@ -764,9 +802,18 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
 
     private var errorJob: Job? = null
 
-    override fun showConnectionProblem(errorCount: Int, title: String?, message: String, isFromUserInput: Boolean) {
+    override fun showConnectionProblem(
+        errorCount: Int,
+        title: String?,
+        message: String,
+        isFromUserInput: Boolean,
+    ) {
         if (errorCount == 1 && !isFromUserInput) {
-            showSnackbar(title = title, content = message, displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE)
+            showSnackbar(
+                title = title,
+                content = message,
+                displayType = HabiticaSnackbar.SnackbarDisplayType.FAILURE,
+            )
         } else if (title != null) {
             super.showConnectionProblem(errorCount, title, message, isFromUserInput)
         } else {
@@ -776,10 +823,11 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
             }
             binding.content.connectionIssueView.visibility = View.VISIBLE
             binding.content.connectionIssueTextview.text = message
-            errorJob = lifecycleScope.launch(Dispatchers.Main) {
-                delay(1.toDuration(DurationUnit.MINUTES))
-                binding.content.connectionIssueView.visibility = View.GONE
-            }
+            errorJob =
+                lifecycleScope.launch(Dispatchers.Main) {
+                    delay(1.toDuration(DurationUnit.MINUTES))
+                    binding.content.connectionIssueView.visibility = View.GONE
+                }
         }
     }
 
@@ -807,5 +855,4 @@ open class MainActivity : BaseActivity(), SnackbarActivity {
     private fun checkForReviewPrompt(user: User) {
         reviewManager.requestReview(this, user.loginIncentives)
     }
-
 }

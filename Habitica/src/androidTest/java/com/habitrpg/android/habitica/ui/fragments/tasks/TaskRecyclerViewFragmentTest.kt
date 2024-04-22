@@ -28,15 +28,15 @@ open class TaskItem(val parent: Matcher<View>) : KRecyclerItem<TaskItem>(parent)
 }
 
 class TaskListScreen : Screen<TaskListScreen>() {
-    val recycler: KRecyclerView = KRecyclerView({
-        withId(R.id.recyclerView)
-    }, itemTypeBuilder = {
+    val recycler: KRecyclerView =
+        KRecyclerView({
+            withId(R.id.recyclerView)
+        }, itemTypeBuilder = {
             itemType(::TaskItem)
         })
 }
 
 internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewFragment, FragmentRefreshRecyclerviewBinding, TaskListScreen>(false) {
-
     lateinit var tasks: MutableCollection<Task>
 
     override fun makeFragment() {
@@ -46,9 +46,10 @@ internal class TaskRecyclerViewFragmentTest : FragmentTestCase<TaskRecyclerViewF
     }
 
     override fun launchFragment(args: Bundle?) {
-        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
-            return@launchFragmentInContainer fragment
-        }
+        scenario =
+            launchFragmentInContainer(args, R.style.MainAppTheme) {
+                return@launchFragmentInContainer fragment
+            }
     }
 
     override val screen = TaskListScreen()

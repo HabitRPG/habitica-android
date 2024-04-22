@@ -10,7 +10,6 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
 open class ChatMessage : RealmObject(), BaseMainObject {
-
     override val realmClass: Class<ChatMessage>
         get() = ChatMessage::class.java
     override val primaryIdentifier: String?

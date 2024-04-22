@@ -11,16 +11,16 @@ import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.CustomizationGridItemBinding
 import com.habitrpg.android.habitica.databinding.DialogPurchaseCustomizationBinding
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.CustomizationSet
 import com.habitrpg.android.habitica.models.inventory.Equipment
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
-
+class CustomizationEquipmentRecyclerViewAdapter :
+    androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var gemBalance: Int? = null
     var equipmentList: MutableList<Equipment> =
         ArrayList()
@@ -37,7 +37,10 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
     var onSelect: ((Equipment) -> Unit)? = null
     var onUnlock: ((Equipment) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         val viewID: Int = R.layout.customization_grid_item
 
         val view = LayoutInflater.from(parent.context).inflate(viewID, parent, false)
@@ -46,7 +49,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         (holder as EquipmentViewHolder).bind(equipmentList[position])
     }
@@ -71,8 +74,8 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
         this.notifyDataSetChanged()
     }
 
-    internal inner class EquipmentViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
+    internal inner class EquipmentViewHolder(itemView: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val binding = CustomizationGridItemBinding.bind(itemView)
         var equipment: Equipment? = null
 
@@ -94,29 +97,39 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
             } else {
                 binding.buyButton.visibility = View.VISIBLE
                 binding.priceLabel.currency = "gems"
-                binding.priceLabel.value = if (equipment.gearSet == "animal") {
-                    2.0
-                } else {
-                    equipment.value
-                }
+                binding.priceLabel.value =
+                    if (equipment.gearSet == "animal") {
+                        2.0
+                    } else {
+                        equipment.value
+                    }
             }
 
             if (activeEquipment == equipment.key || (activeEquipment?.contains("base_0") == true && equipment.key?.isNotBlank() != true)) {
-                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window_tint_border)
+                binding.wrapper.background =
+                    ContextCompat.getDrawable(
+                        itemView.context,
+                        R.drawable.layout_rounded_bg_window_tint_border,
+                    )
             } else {
-                binding.wrapper.background = ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
+                binding.wrapper.background =
+                    ContextCompat.getDrawable(itemView.context, R.drawable.layout_rounded_bg_window)
             }
         }
 
         override fun onClick(v: View) {
-            val itemValue = if (equipment?.gearSet == "animal") {
-                2.0
-            } else {
-                equipment?.value
-            }
+            val itemValue =
+                if (equipment?.gearSet == "animal") {
+                    2.0
+                } else {
+                    equipment?.value
+                }
             if (equipment?.owned != true && (itemValue ?: 0.0) > 0.0) {
                 val dialogContent = LinearLayout(itemView.context)
-                DialogPurchaseCustomizationBinding.inflate(LayoutInflater.from(itemView.context), dialogContent)
+                DialogPurchaseCustomizationBinding.inflate(
+                    LayoutInflater.from(itemView.context),
+                    dialogContent,
+                )
 
                 val imageView = dialogContent.findViewById<PixelArtView>(R.id.imageView)
                 imageView.loadImage("shop_" + this.equipment?.key)
@@ -125,7 +138,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                 priceLabel?.text = itemValue.toString()
 
                 (dialogContent.findViewById<View>(R.id.gem_icon) as? ImageView)?.setImageBitmap(
-                    HabiticaIconsHelper.imageOfGem()
+                    HabiticaIconsHelper.imageOfGem(),
                 )
 
                 val dialog = HabiticaAlertDialog(itemView.context)
@@ -134,7 +147,7 @@ class CustomizationEquipmentRecyclerViewAdapter : androidx.recyclerview.widget.R
                         if ((itemValue ?: 0.0) > it) {
                             MainNavigationController.navigate(
                                 R.id.gemPurchaseActivity,
-                                bundleOf(Pair("openSubscription", false))
+                                bundleOf(Pair("openSubscription", false)),
                             )
                             return@addButton
                         }

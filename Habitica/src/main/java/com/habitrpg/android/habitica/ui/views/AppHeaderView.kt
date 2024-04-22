@@ -3,7 +3,6 @@ package com.habitrpg.android.habitica.ui.views
 import android.content.res.Resources
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -51,7 +50,6 @@ import androidx.compose.ui.unit.sp
 import androidx.core.os.bundleOf
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.TeamPlan
 import com.habitrpg.android.habitica.models.auth.LocalAuthentication
 import com.habitrpg.android.habitica.models.members.Member
@@ -66,34 +64,39 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.theme.basicButtonColor
 import com.habitrpg.android.habitica.ui.theme.basicTextColor
 import com.habitrpg.android.habitica.ui.theme.colors
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.views.ComposableAvatarView
 import com.habitrpg.shared.habitica.models.Avatar
 import kotlin.random.Random
 
 @Composable
-fun UserLevelText(user : Avatar) {
-    val text = if (user.hasClass) {
-        stringResource(
-            id = R.string.user_level_with_class,
-            user.stats?.lvl ?: 0,
-            getTranslatedClassName(
-                LocalContext.current.resources,
-                user.stats?.habitClass
+fun UserLevelText(user: Avatar) {
+    val text =
+        if (user.hasClass) {
+            stringResource(
+                id = R.string.user_level_with_class,
+                user.stats?.lvl ?: 0,
+                getTranslatedClassName(
+                    LocalContext.current.resources,
+                    user.stats?.habitClass,
+                ),
             )
-        )
-    } else {
-        stringResource(id = R.string.user_level, user.stats?.lvl ?: 0)
-    }
+        } else {
+            stringResource(id = R.string.user_level, user.stats?.lvl ?: 0)
+        }
     Text(
         text,
         fontSize = 12.sp,
         fontWeight = FontWeight.SemiBold,
-        color = colorResource(R.color.text_primary)
+        color = colorResource(R.color.text_primary),
     )
 }
 
-fun getTranslatedClassName(resources : Resources, className : String?) : String {
+fun getTranslatedClassName(
+    resources: Resources,
+    className: String?,
+): String {
     return when (className) {
         Stats.HEALER -> resources.getString(R.string.healer)
         Stats.ROGUE -> resources.getString(R.string.rogue)
@@ -105,15 +108,15 @@ fun getTranslatedClassName(resources : Resources, className : String?) : String 
 
 @Composable
 fun AppHeaderView(
-    user : Avatar?,
-    modifier : Modifier = Modifier,
-    isMyProfile : Boolean = false,
-    teamPlan : TeamPlan? = null,
-    teamPlanMembers : List<Member>? = null,
+    user: Avatar?,
+    modifier: Modifier = Modifier,
+    isMyProfile: Boolean = false,
+    teamPlan: TeamPlan? = null,
+    teamPlanMembers: List<Member>? = null,
     onAvatarClicked: (() -> Unit)? = null,
-    onMemberRowClicked : () -> Unit,
+    onMemberRowClicked: () -> Unit,
     onClassSelectionClicked: () -> Unit,
-    configManager: AppConfigManager
+    configManager: AppConfigManager,
 ) {
     val isPlayerOptedOutOfClass = user?.preferences?.disableClasses ?: false
     Column(modifier) {
@@ -126,7 +129,7 @@ fun AppHeaderView(
                     .padding(end = 16.dp)
                     .clickable {
                         onAvatarClicked?.invoke()
-                    }
+                    },
             )
             val animationValue =
                 animateFloatAsState(targetValue = if (teamPlan != null) 1f else 0f).value
@@ -134,8 +137,8 @@ fun AppHeaderView(
                 Column(
                     Modifier.padding(
                         bottom = (animationValue * 48f).dp,
-                        end = (animationValue * 80f).dp
-                    )
+                        end = (animationValue * 80f).dp,
+                    ),
                 ) {
                     LabeledBar(
                         icon = HabiticaIconsHelper.imageOfHeartLightBg(),
@@ -144,7 +147,7 @@ fun AppHeaderView(
                         value = user?.stats?.hp ?: 0.0,
                         maxValue = user?.stats?.maxHealth?.toDouble() ?: 0.0,
                         displayCompact = teamPlan != null,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                     LabeledBar(
                         icon = HabiticaIconsHelper.imageOfExperience(),
@@ -155,7 +158,7 @@ fun AppHeaderView(
                         displayCompact = teamPlan != null,
                         abbreviateValue = false,
                         abbreviateMax = false,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                     if (user?.hasClass == true) {
                         LabeledBar(
@@ -167,11 +170,12 @@ fun AppHeaderView(
                             displayCompact = teamPlan != null,
                             abbreviateValue = false,
                             abbreviateMax = false,
-                            modifier = Modifier
-                                .weight(1f)
-                                .clickable {
-                                    MainNavigationController.navigate(R.id.skillsFragment)
-                                }
+                            modifier =
+                                Modifier
+                                    .weight(1f)
+                                    .clickable {
+                                        MainNavigationController.navigate(R.id.skillsFragment)
+                                    },
                         )
                     } else if ((user?.stats?.lvl ?: 0) < 10) {
                         LabeledBar(
@@ -182,7 +186,7 @@ fun AppHeaderView(
                             maxValue = 1.0,
                             displayCompact = teamPlan != null,
                             disabled = true,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
                         )
                     } else if (user?.hasClass == false && isMyProfile && !isPlayerOptedOutOfClass) {
                         HabiticaButton(
@@ -193,11 +197,11 @@ fun AppHeaderView(
                             },
                             contentPadding = PaddingValues(0.dp),
                             fontSize = 14.sp,
-                            modifier = Modifier.height(28.dp)
+                            modifier = Modifier.height(28.dp),
                         ) {
                             Text(
                                 text = stringResource(R.string.choose_class),
-                                color = HabiticaTheme.colors.basicTextColor()
+                                color = HabiticaTheme.colors.basicTextColor(),
                             )
                         }
                     } else {
@@ -209,31 +213,34 @@ fun AppHeaderView(
                     visible = teamPlan != null,
                     enter = slideInHorizontally { animWidth } + fadeIn(),
                     exit = slideOutHorizontally { animWidth } + fadeOut(),
-                    modifier = Modifier.align(Alignment.TopEnd)
+                    modifier = Modifier.align(Alignment.TopEnd),
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(start = 12.dp)
-                            .width(72.dp)
-                            .height(48.dp)
-                            .clip(MaterialTheme.shapes.medium)
-                            .background(
-                                colorResource(R.color.window_background)
-                            )
-                            .clickable {
-                                MainNavigationController.navigate(
-                                    R.id.guildFragment,
-                                    bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1)
+                        modifier =
+                            Modifier
+                                .padding(start = 12.dp)
+                                .width(72.dp)
+                                .height(48.dp)
+                                .clip(MaterialTheme.shapes.medium)
+                                .background(
+                                    colorResource(R.color.window_background),
                                 )
-                            }
+                                .clickable {
+                                    MainNavigationController.navigate(
+                                        R.id.guildFragment,
+                                        bundleOf("groupID" to teamPlan?.id, "tabToOpen" to 1),
+                                    )
+                                },
                     ) {
                         Image(
-                            painterResource(R.drawable.icon_chat), null,
-                            colorFilter = ColorFilter.tint(
-                                colorResource(R.color.text_ternary)
-                            )
+                            painterResource(R.drawable.icon_chat),
+                            null,
+                            colorFilter =
+                                ColorFilter.tint(
+                                    colorResource(R.color.text_ternary),
+                                ),
                         )
                     }
                 }
@@ -242,49 +249,61 @@ fun AppHeaderView(
                     visible = teamPlan != null,
                     enter = slideInVertically { animHeight } + fadeIn(),
                     exit = slideOutVertically { animHeight } + fadeOut(),
-                    modifier = Modifier.align(Alignment.BottomCenter)
+                    modifier = Modifier.align(Alignment.BottomCenter),
                 ) {
-                    AnimatedContent(targetState = teamPlanMembers?.filter { it.id != user?.id },
+                    AnimatedContent(
+                        targetState = teamPlanMembers?.filter { it.id != user?.id },
                         transitionSpec = {
                             ContentTransform(
-                                targetContentEnter =  fadeIn(animationSpec = tween(200, easing = FastOutSlowInEasing)) + slideInVertically { height -> height },
-                                initialContentExit = fadeOut(animationSpec = tween(200)) + slideOutVertically { height -> -height }
+                                targetContentEnter =
+                                    fadeIn(
+                                        animationSpec =
+                                            tween(
+                                                200,
+                                                easing = FastOutSlowInEasing,
+                                            ),
+                                    ) + slideInVertically { height -> height },
+                                initialContentExit = fadeOut(animationSpec = tween(200)) + slideOutVertically { height -> -height },
                             )
-                        }) {members ->
+                        },
+                    ) { members ->
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(
-                                12.dp,
-                                Alignment.CenterHorizontally
-                            ),
+                            horizontalArrangement =
+                                Arrangement.spacedBy(
+                                    12.dp,
+                                    Alignment.CenterHorizontally,
+                                ),
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(40.dp)
-                                .width(72.dp)
-                                .clip(MaterialTheme.shapes.medium)
-                                .background(
-                                    colorResource(R.color.window_background)
-                                )
-                                .padding(start = 12.dp, end = 12.dp)
-                                .clickable {
-                                    onMemberRowClicked()
-                                }
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(40.dp)
+                                    .width(72.dp)
+                                    .clip(MaterialTheme.shapes.medium)
+                                    .background(
+                                        colorResource(R.color.window_background),
+                                    )
+                                    .padding(start = 12.dp, end = 12.dp)
+                                    .clickable {
+                                        onMemberRowClicked()
+                                    },
                         ) {
                             for (member in members
                                 ?.sortedByDescending { it.authentication?.timestamps?.lastLoggedIn }
                                 ?.take(6) ?: emptyList()) {
                                 Box(
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .size(26.dp)
-                                        .padding(end = 6.dp, top = 4.dp)
+                                    modifier =
+                                        Modifier
+                                            .clip(CircleShape)
+                                            .size(26.dp)
+                                            .padding(end = 6.dp, top = 4.dp),
                                 ) {
                                     ComposableAvatarView(
                                         avatar = member,
                                         configManager,
                                         Modifier
                                             .size(64.dp)
-                                            .requiredSize(64.dp)
+                                            .requiredSize(64.dp),
                                     )
                                 }
                             }
@@ -295,12 +314,12 @@ fun AppHeaderView(
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.defaultMinSize(minHeight = 28.dp)
+            modifier = Modifier.defaultMinSize(minHeight = 28.dp),
         ) {
             ClassIcon(
                 className = user?.stats?.habitClass,
                 hasClass = user?.hasClass ?: false,
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier.padding(4.dp),
             )
             user?.let { UserLevelText(it) }
             Spacer(Modifier.weight(1f))
@@ -309,12 +328,13 @@ fun AppHeaderView(
                     CurrencyText(
                         "hourglasses",
                         user.hourglassCount.toDouble(),
-                        modifier = Modifier
-                            .padding(end = 12.dp)
-                            .clickable {
-                                MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
-                            },
-                        decimals = 0
+                        modifier =
+                            Modifier
+                                .padding(end = 12.dp)
+                                .clickable {
+                                    MainNavigationController.navigate(R.id.subscriptionPurchaseActivity)
+                                },
+                        decimals = 0,
                     )
                 }
                 CurrencyText(
@@ -322,15 +342,16 @@ fun AppHeaderView(
                     user.stats?.gp ?: 0.0,
                     modifier = Modifier.padding(end = 12.dp),
                     decimals = 0,
-                    minForAbbreviation = 10000
+                    minForAbbreviation = 10000,
                 )
                 CurrencyText(
                     "gems",
                     user.gemCount.toDouble(),
-                    modifier = Modifier.clickable {
-                        MainNavigationController.navigate(R.id.gemPurchaseActivity)
-                    },
-                    decimals = 0
+                    modifier =
+                        Modifier.clickable {
+                            MainNavigationController.navigate(R.id.gemPurchaseActivity)
+                        },
+                    decimals = 0,
                 )
             }
         }
@@ -338,8 +359,7 @@ fun AppHeaderView(
 }
 
 private class UserProvider : PreviewParameterProvider<Pair<User, TeamPlan?>> {
-
-    private fun generateMember() : User {
+    private fun generateMember(): User {
         val member = User()
         member.profile = Profile()
         member.profile?.name = "User"
@@ -364,7 +384,7 @@ private class UserProvider : PreviewParameterProvider<Pair<User, TeamPlan?>> {
         return member
     }
 
-    override val values : Sequence<Pair<User, TeamPlan?>>
+    override val values: Sequence<Pair<User, TeamPlan?>>
         get() {
             val list = mutableListOf<Pair<User, TeamPlan?>>()
             val earlyMember = generateMember()
@@ -399,17 +419,20 @@ private class UserProvider : PreviewParameterProvider<Pair<User, TeamPlan?>> {
 
 @Composable
 @Preview
-private fun Preview(@PreviewParameter(UserProvider::class) data: Pair<User, TeamPlan>) {
+private fun Preview(
+    @PreviewParameter(UserProvider::class) data: Pair<User, TeamPlan>,
+) {
     HabiticaTheme {
         AppHeaderView(
             data.first,
             teamPlan = data.second,
-            modifier = Modifier
-                .background(HabiticaTheme.colors.contentBackground)
-                .padding(8.dp),
+            modifier =
+                Modifier
+                    .background(HabiticaTheme.colors.contentBackground)
+                    .padding(8.dp),
             onMemberRowClicked = { },
             onClassSelectionClicked = { },
-            configManager = AppConfigManager(null)
+            configManager = AppConfigManager(null),
         )
     }
 }

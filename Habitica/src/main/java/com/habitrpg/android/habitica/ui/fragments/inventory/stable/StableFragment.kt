@@ -16,26 +16,31 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
-
     override var binding: FragmentViewpagerBinding? = null
 
     private val viewModel: StableViewModel by viewModels()
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.viewPager?.currentItem = 0
 
@@ -45,20 +50,21 @@ class StableFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
+        binding?.viewPager?.adapter =
+            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+                override fun createFragment(position: Int): androidx.fragment.app.Fragment {
+                    val fragment = StableRecyclerFragment()
+                    fragment.arguments =
+                        bundleOf(StableRecyclerFragment.ITEM_TYPE_KEY to if (position == 0) "pets" else "mounts")
+                    fragment.itemTypeText = getPageTitle(position)
 
-            override fun createFragment(position: Int): androidx.fragment.app.Fragment {
-                val fragment = StableRecyclerFragment()
-                fragment.arguments = bundleOf(StableRecyclerFragment.ITEM_TYPE_KEY to if (position == 0) "pets" else "mounts")
-                fragment.itemTypeText = getPageTitle(position)
+                    return fragment
+                }
 
-                return fragment
+                override fun getItemCount(): Int {
+                    return 2
+                }
             }
-
-            override fun getItemCount(): Int {
-                return 2
-            }
-        }
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->

@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -34,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.extensions.getThemeColor
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 
 data class LabeledValue<V>(val label: String, val value: V)
 
@@ -46,12 +45,12 @@ fun <V> TaskFormSelector(
     onSelect: (V) -> Unit,
     modifier: Modifier = Modifier,
     columnSize: Int = 2,
-    spacing: Dp = 10.dp
+    spacing: Dp = 10.dp,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(spacing), modifier = modifier) {
         for (row in values.chunked(columnSize)) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(spacing)
+                horizontalArrangement = Arrangement.spacedBy(spacing),
             ) {
                 for (value in row)
                     TaskFormSelection(
@@ -59,9 +58,10 @@ fun <V> TaskFormSelector(
                         selected = selected == value.value,
                         text = value.label,
                         onSelect = onSelect,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
                     )
             }
         }
@@ -74,35 +74,37 @@ private fun <V> TaskFormSelection(
     selected: Boolean,
     text: String,
     onSelect: (V) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val selectedState = updateTransition(selected)
     val context = LocalContext.current
-    val textColor = selectedState.animateColor {
-        if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
-    }
+    val textColor =
+        selectedState.animateColor {
+            if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
+        }
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
-            .background(
-                Color(
-                    LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)
-                ),
-                MaterialTheme.shapes.medium
-            )
-            .clip(MaterialTheme.shapes.medium)
-            .clickable { onSelect(value) }
+        modifier =
+            modifier
+                .background(
+                    Color(
+                        LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset),
+                    ),
+                    MaterialTheme.shapes.medium,
+                )
+                .clip(MaterialTheme.shapes.medium)
+                .clickable { onSelect(value) },
     ) {
         AnimatedVisibility(
             selected,
             enter = scaleIn(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
             exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
-            modifier = Modifier.matchParentSize()
+            modifier = Modifier.matchParentSize(),
         ) {
             Box(
                 Modifier
                     .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
-                    .matchParentSize()
+                    .matchParentSize(),
             )
         }
         Text(
@@ -110,7 +112,7 @@ private fun <V> TaskFormSelection(
             fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
             fontSize = 16.sp,
             color = textColor.value,
-            modifier = Modifier.padding(15.dp)
+            modifier = Modifier.padding(15.dp),
         )
     }
 }
@@ -127,9 +129,9 @@ private fun TaskFormSelectorPreview() {
             LabeledValue("Third", "third"),
             LabeledValue("Fourth", "fourth"),
             LabeledValue("Fifth", "Fifth"),
-            LabeledValue("Sixth", "sixth")
+            LabeledValue("Sixth", "sixth"),
         ),
         { selected.value = it },
-        Modifier.width(300.dp)
+        Modifier.width(300.dp),
     )
 }

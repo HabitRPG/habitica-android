@@ -4,7 +4,7 @@ interface AvatarBuffs {
     var con: Float?
     var str: Float?
     var per: Float?
-    var _int: Float?
+    var intelligence: Float?
 
     var seafoam: Boolean?
     var spookySparkles: Boolean?

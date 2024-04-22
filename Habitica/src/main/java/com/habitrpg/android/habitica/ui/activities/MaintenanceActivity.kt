@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MaintenanceActivity : BaseActivity() {
-
     private lateinit var binding: ActivityMaintenanceBinding
 
     @Inject
@@ -76,7 +75,12 @@ class MaintenanceActivity : BaseActivity() {
         try {
             startActivity(Intent(Intent.ACTION_VIEW, "market://details?id=$appPackageName".toUri()))
         } catch (anfe: android.content.ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$appPackageName".toUri()))
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    "https://play.google.com/store/apps/details?id=$appPackageName".toUri(),
+                ),
+            )
         }
     }
 }

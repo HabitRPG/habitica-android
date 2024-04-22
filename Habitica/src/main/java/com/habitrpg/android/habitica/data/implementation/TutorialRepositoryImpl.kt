@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.Flow
 class TutorialRepositoryImpl(
     localRepository: TutorialLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler
-) : BaseRepositoryImpl<TutorialLocalRepository>(localRepository, apiClient, authenticationHandler), TutorialRepository {
-
+    authenticationHandler: AuthenticationHandler,
+) : BaseRepositoryImpl<TutorialLocalRepository>(localRepository, apiClient, authenticationHandler),
+    TutorialRepository {
     override fun getTutorialStep(key: String): Flow<TutorialStep> =
         localRepository.getTutorialStep(key)
 

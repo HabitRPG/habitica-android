@@ -10,7 +10,11 @@ import java.lang.reflect.Type
 
 class QuestDropItemsListSerialization : JsonDeserializer<RealmList<QuestDropItem>> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): RealmList<QuestDropItem> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): RealmList<QuestDropItem> {
         val items = RealmList<QuestDropItem>()
         val keys = ArrayList<String>()
 

@@ -49,7 +49,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChallengeFormActivity : BaseActivity() {
-
     private lateinit var binding: ActivityCreateChallengeBinding
 
     @Inject
@@ -138,11 +137,12 @@ class ChallengeFormActivity : BaseActivity() {
                 savingInProgress = false
                 ExceptionHandler.reportError(it)
             }) {
-                val challenge = if (editMode) {
-                    updateChallenge()
-                } else {
-                    createChallenge()
-                }
+                val challenge =
+                    if (editMode) {
+                        updateChallenge()
+                    } else {
+                        createChallenge()
+                    }
 
                 challengeId = challenge?.id
                 challengeRepository.retrieveChallenges(0, true)
@@ -155,8 +155,8 @@ class ChallengeFormActivity : BaseActivity() {
                         delay(500L)
                         MainNavigationController.navigate(
                             ChallengesOverviewFragmentDirections.openChallengeDetail(
-                                challengeId ?: ""
-                            )
+                                challengeId ?: "",
+                            ),
                         )
                     }
                 }
@@ -232,7 +232,7 @@ class ChallengeFormActivity : BaseActivity() {
             this,
             "",
             openTaskDisabled = false,
-            taskActionsDisabled = true
+            taskActionsDisabled = true,
         ).also { challengeTasks = it }
 
         challengeTasks.onTaskOpen = {
@@ -302,11 +302,12 @@ class ChallengeFormActivity : BaseActivity() {
             inputValue = "0"
         }
 
-        val currentVal = try {
-            Integer.parseInt(inputValue)
-        } catch (_: NumberFormatException) {
-            0
-        }
+        val currentVal =
+            try {
+                Integer.parseInt(inputValue)
+            } catch (_: NumberFormatException) {
+                0
+            }
 
         // 0 is Tavern
         val selectedLocation = binding.challengeLocationSpinner.selectedItemPosition
@@ -345,14 +346,16 @@ class ChallengeFormActivity : BaseActivity() {
 
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val groups = socialRepository.getUserGroups("guild").firstOrNull()?.toMutableList()
-                ?: return@launch
+            val groups =
+                socialRepository.getUserGroups("guild").firstOrNull()?.toMutableList()
+                    ?: return@launch
             val partyID = userRepository.getUser().firstOrNull()?.party?.id
-            val party = if (partyID?.isNotBlank() == true) {
-                socialRepository.retrieveGroup(partyID)
-            } else {
-                null
-            }
+            val party =
+                if (partyID?.isNotBlank() == true) {
+                    socialRepository.retrieveGroup(partyID)
+                } else {
+                    null
+                }
             if (groups.firstOrNull { it.id == "00000000-0000-4000-A000-000000000000" } == null) {
                 val tavern = Group()
                 tavern.id = "00000000-0000-4000-A000-000000000000"
@@ -373,12 +376,12 @@ class ChallengeFormActivity : BaseActivity() {
                     adapterView: AdapterView<*>,
                     view: View?,
                     i: Int,
-                    l: Long
+                    l: Long,
                 ) {
                     checkPrizeAndMinimumForTavern()
                 }
 
-                override fun onNothingSelected(adapterView: AdapterView<*>) { /* no-on */
+                override fun onNothingSelected(adapterView: AdapterView<*>) { // no-on
                 }
             }
         binding.createChallengePrize.setOnKeyListener { _, _, _ ->
@@ -402,16 +405,18 @@ class ChallengeFormActivity : BaseActivity() {
             }
         }
 
-        binding.createChallengeTaskList.addOnItemTouchListener(object :
+        binding.createChallengeTaskList.addOnItemTouchListener(
+            object :
                 androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener() {
                 override fun onInterceptTouchEvent(
                     rv: androidx.recyclerview.widget.RecyclerView,
-                    e: MotionEvent
+                    e: MotionEvent,
                 ): Boolean {
                     // Stop only scrolling.
                     return rv.scrollState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
                 }
-            })
+            },
+        )
         binding.createChallengeTaskList.adapter = challengeTasks
         binding.createChallengeTaskList.layoutManager =
             androidx.recyclerview.widget.LinearLayoutManager(this)
@@ -450,7 +455,10 @@ class ChallengeFormActivity : BaseActivity() {
         }
     }
 
-    private fun openNewTaskActivity(type: TaskType?, task: Task?) {
+    private fun openNewTaskActivity(
+        type: TaskType?,
+        task: Task?,
+    ) {
         val bundle = Bundle()
 
         bundle.putString(TaskFormActivity.TASK_TYPE_KEY, type?.value ?: "")
@@ -505,18 +513,22 @@ class ChallengeFormActivity : BaseActivity() {
             taskList,
             ArrayList(addedTasks.values),
             ArrayList(updatedTasks.values),
-            ArrayList(removedTasks.keys)
+            ArrayList(removedTasks.keys),
         )
     }
 
-    private fun addOrUpdateTaskInList(task: Task, isExistingTask: Boolean = false) {
+    private fun addOrUpdateTaskInList(
+        task: Task,
+        isExistingTask: Boolean = false,
+    ) {
         if (!challengeTasks.replaceTask(task)) {
-            val taskAbove = when (task.type) {
-                TaskType.HABIT -> addHabit
-                TaskType.DAILY -> addDaily
-                TaskType.TODO -> addTodo
-                else -> addReward
-            }
+            val taskAbove =
+                when (task.type) {
+                    TaskType.HABIT -> addHabit
+                    TaskType.DAILY -> addDaily
+                    TaskType.TODO -> addTodo
+                    else -> addReward
+                }
             if (!isExistingTask) {
                 // If the task is new we create a unique id for it
                 // Doing it we solve the issue #1278
@@ -542,14 +554,21 @@ class ChallengeFormActivity : BaseActivity() {
 
     private class GroupArrayAdapter(context: Context) :
         ArrayAdapter<Group>(context, android.R.layout.simple_spinner_item) {
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        override fun getView(
+            position: Int,
+            convertView: View?,
+            parent: ViewGroup,
+        ): View {
             val checkedTextView = super.getView(position, convertView, parent) as? TextView
             checkedTextView?.text = getItem(position)?.name
             return checkedTextView ?: View(context)
         }
 
-        override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+        override fun getDropDownView(
+            position: Int,
+            convertView: View?,
+            parent: ViewGroup,
+        ): View {
             val checkedTextView =
                 super.getDropDownView(position, convertView, parent) as? AppCompatCheckedTextView
             checkedTextView?.text = getItem(position)?.name

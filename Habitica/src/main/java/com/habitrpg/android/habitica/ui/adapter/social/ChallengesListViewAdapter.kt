@@ -16,20 +16,29 @@ import io.realm.OrderedRealmCollection
 
 class ChallengesListViewAdapter(
     private val viewUserChallengesOnly: Boolean,
-    private val userId: String
+    private val userId: String,
 ) : BaseRecyclerViewAdapter<Challenge, ChallengesListViewAdapter.ChallengeViewHolder>() {
     private var unfilteredData: List<Challenge>? = null
     private var challengeMemberships: List<ChallengeMembership>? = null
 
     var onOpenChallengeFragment: ((String) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChallengeViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ChallengeViewHolder {
         return ChallengeViewHolder(parent.inflate(R.layout.challenge_item), viewUserChallengesOnly)
     }
 
-    override fun onBindViewHolder(holder: ChallengeViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ChallengeViewHolder,
+        position: Int,
+    ) {
         data[position].let { challenge ->
-            holder.bind(challenge, challengeMemberships?.first { challenge.id == it.challengeID } != null)
+            holder.bind(
+                challenge,
+                challengeMemberships?.first { challenge.id == it.challengeID } != null,
+            )
             holder.itemView.setOnClickListener {
                 if (challenge.isManaged && challenge.isValid) {
                     challenge.id?.let {
@@ -61,11 +70,12 @@ class ChallengesListViewAdapter(
         }
 
         if (filterOptions.showOwned != filterOptions.notOwned) {
-            query = if (filterOptions.showOwned) {
-                query?.equalTo("leaderId", userId)
-            } else {
-                query?.notEqualTo("leaderId", userId)
-            }
+            query =
+                if (filterOptions.showOwned) {
+                    query?.equalTo("leaderId", userId)
+                } else {
+                    query?.notEqualTo("leaderId", userId)
+                }
         }
 
         query?.let {
@@ -75,7 +85,7 @@ class ChallengesListViewAdapter(
 
     class ChallengeViewHolder internal constructor(
         itemView: View,
-        private val viewUserChallengesOnly: Boolean
+        private val viewUserChallengesOnly: Boolean,
     ) : RecyclerView.ViewHolder(itemView) {
         private val binding = ChallengeItemBinding.bind(itemView)
 
@@ -85,13 +95,17 @@ class ChallengesListViewAdapter(
             binding.gemIcon.setImageBitmap(HabiticaIconsHelper.imageOfGem())
         }
 
-        fun bind(challenge: Challenge, isParticipating: Boolean) {
+        fun bind(
+            challenge: Challenge,
+            isParticipating: Boolean,
+        ) {
             this.challenge = challenge
 
             binding.challengeName.text = EmojiParser.parseEmojis(challenge.name?.trim { it <= ' ' })
             binding.challengeShorttext.text = challenge.summary
 
-            binding.officialChallengeView.visibility = if (challenge.official) View.VISIBLE else View.GONE
+            binding.officialChallengeView.visibility =
+                if (challenge.official) View.VISIBLE else View.GONE
 
             if (viewUserChallengesOnly) {
                 binding.isJoinedLabel.visibility = View.GONE

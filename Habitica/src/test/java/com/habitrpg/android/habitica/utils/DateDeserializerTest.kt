@@ -11,20 +11,22 @@ class DateDeserializerTest : SerializerSpec({
 
     "deserialize" should {
         "validate normal date" {
-            val date = deserializer.deserialize(
-                JsonPrimitive("2015-09-28T13:00:00.000Z"),
-                Date::class.java,
-                deserializationContext
-            )
+            val date =
+                deserializer.deserialize(
+                    JsonPrimitive("2015-09-28T13:00:00.000Z"),
+                    Date::class.java,
+                    deserializationContext,
+                )
             date shouldBe Date(referenceTimestamp)
         }
 
         "validate timestamp" {
-            val date = deserializer.deserialize(
-                JsonPrimitive(referenceTimestamp),
-                Date::class.java,
-                deserializationContext
-            )
+            val date =
+                deserializer.deserialize(
+                    JsonPrimitive(referenceTimestamp),
+                    Date::class.java,
+                    deserializationContext,
+                )
             date shouldBe Date(referenceTimestamp)
         }
 
@@ -37,13 +39,14 @@ class DateDeserializerTest : SerializerSpec({
 
     "serialize" should {
         "serialize normal date" {
-            val dateElement: JsonElement = deserializer.serialize(
-                Date(
-                    referenceTimestamp
-                ),
-                Date::class.java,
-                serializationContext
-            )
+            val dateElement: JsonElement =
+                deserializer.serialize(
+                    Date(
+                        referenceTimestamp,
+                    ),
+                    Date::class.java,
+                    serializationContext,
+                )
             dateElement.asString shouldBe "2015-09-28T13:00:00.000Z"
         }
 

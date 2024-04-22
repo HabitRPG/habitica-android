@@ -10,7 +10,11 @@ import java.lang.reflect.Type
 
 class SocialAuthenticationDeserializer : JsonDeserializer<SocialAuthentication> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): SocialAuthentication {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): SocialAuthentication {
         val authentication = SocialAuthentication()
         val obj = json.asJsonObject
         if (obj.has("emails") && obj.get("emails").isJsonArray) {

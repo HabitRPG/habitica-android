@@ -27,7 +27,6 @@ import javax.inject.Inject
 class AvatarEquipmentFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -36,7 +35,10 @@ class AvatarEquipmentFragment :
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -44,19 +46,24 @@ class AvatarEquipmentFragment :
     var category: String? = null
     private var activeEquipment: String? = null
 
-    internal var adapter: CustomizationEquipmentRecyclerViewAdapter = CustomizationEquipmentRecyclerViewAdapter()
+    internal var adapter: CustomizationEquipmentRecyclerViewAdapter =
+        CustomizationEquipmentRecyclerViewAdapter()
     internal var layoutManager: GridLayoutManager = GridLayoutManager(mainActivity, 2)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         showsBackButton = true
         adapter.onSelect = { equipment ->
-            val key = (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
+            val key =
+                (if (equipment.key?.isNotBlank() != true) activeEquipment else equipment.key) ?: ""
             lifecycleScope.launchCatching {
-                inventoryRepository.equip(if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped", key)
+                inventoryRepository.equip(
+                    if (userViewModel.user.value?.preferences?.costume == true) "costume" else "equipped",
+                    key,
+                )
             }
         }
         adapter.onUnlock = { equipment ->
@@ -68,7 +75,10 @@ class AvatarEquipmentFragment :
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -81,15 +91,16 @@ class AvatarEquipmentFragment :
         binding?.refreshLayout?.setOnRefreshListener(this)
         setGridSpanCount(view.width)
         val layoutManager = GridLayoutManager(mainActivity, 4)
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter.getItemViewType(position) == 0) {
-                    layoutManager.spanCount
-                } else {
-                    1
+        layoutManager.spanSizeLookup =
+            object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (adapter.getItemViewType(position) == 0) {
+                        layoutManager.spanCount
+                    } else {
+                        1
+                    }
                 }
             }
-        }
         binding?.recyclerView?.layoutManager = layoutManager
         binding?.recyclerView?.addItemDecoration(MarginDecoration(context))
 
@@ -130,13 +141,15 @@ class AvatarEquipmentFragment :
         if (this.type == null || user?.preferences == null) {
             return
         }
-        val outfit = if (user.preferences?.costume == true) user.items?.gear?.costume else user.items?.gear?.equipped
-        val activeEquipment = when (this.type) {
-            "headAccessory" -> outfit?.headAccessory
-            "back" -> outfit?.back
-            "eyewear" -> outfit?.eyeWear
-            else -> ""
-        }
+        val outfit =
+            if (user.preferences?.costume == true) user.items?.gear?.costume else user.items?.gear?.equipped
+        val activeEquipment =
+            when (this.type) {
+                "headAccessory" -> outfit?.headAccessory
+                "back" -> outfit?.back
+                "eyewear" -> outfit?.eyeWear
+                else -> ""
+            }
         if (activeEquipment != null) {
             this.activeEquipment = activeEquipment
             this.adapter.activeEquipment = activeEquipment

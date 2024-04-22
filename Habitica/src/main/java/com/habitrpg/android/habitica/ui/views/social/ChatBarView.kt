@@ -9,15 +9,14 @@ import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ChatBarViewBinding
 import com.habitrpg.android.habitica.extensions.OnChangeTextWatcher
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteAdapter
 import com.habitrpg.android.habitica.ui.helpers.AutocompleteTokenizer
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class ChatBarView : LinearLayout {
-
     var hasAcceptedGuidelines: Boolean = false
         set(value) {
             field = value
@@ -74,7 +73,7 @@ class ChatBarView : LinearLayout {
             OnChangeTextWatcher { _, _, _, _ ->
                 setSendButtonEnabled(binding.chatEditText.text.isNotEmpty() && binding.chatEditText.text.length <= maxChatLength)
                 updateTextIndicator(binding.chatEditText.text.toString())
-            }
+            },
         )
 
         binding.sendButton.setOnClickListener { sendButtonPressed() }
@@ -97,11 +96,12 @@ class ChatBarView : LinearLayout {
             binding.textIndicator.visibility = View.VISIBLE
             binding.indicatorSpacing.visibility = View.VISIBLE
             binding.textIndicator.text = "${text.length}/$maxChatLength"
-            val color = when {
-                text.length > maxChatLength -> R.color.text_red
-                text.length > (maxChatLength * 0.95) -> R.color.text_yellow
-                else -> R.color.text_dimmed
-            }
+            val color =
+                when {
+                    text.length > maxChatLength -> R.color.text_red
+                    text.length > (maxChatLength * 0.95) -> R.color.text_yellow
+                    else -> R.color.text_dimmed
+                }
             binding.textIndicator.setTextColor(ContextCompat.getColor(context, color))
         } else {
             binding.textIndicator.visibility = View.GONE
@@ -110,11 +110,12 @@ class ChatBarView : LinearLayout {
     }
 
     private fun setSendButtonEnabled(enabled: Boolean) {
-        val tintColor: Int = if (enabled) {
-            context.getThemeColor(R.attr.colorAccent)
-        } else {
-            ContextCompat.getColor(context, R.color.disabled_background)
-        }
+        val tintColor: Int =
+            if (enabled) {
+                context.getThemeColor(R.attr.colorAccent)
+            } else {
+                ContextCompat.getColor(context, R.color.disabled_background)
+            }
         binding.sendButton.setColorFilter(tintColor)
         binding.sendButton.isEnabled = enabled
     }

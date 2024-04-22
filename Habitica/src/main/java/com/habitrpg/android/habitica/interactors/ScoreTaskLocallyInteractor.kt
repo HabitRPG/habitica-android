@@ -16,40 +16,65 @@ class ScoreTaskLocallyInteractor {
         const val MIN_TASK_VALUE = -47.27
         const val CLOSE_ENOUGH = 0.00001
 
-        private fun calculateDelta(task: Task, direction: TaskDirection): Double {
-            val currentValue = when {
-                task.value < MIN_TASK_VALUE -> MIN_TASK_VALUE
-                task.value > MAX_TASK_VALUE -> MAX_TASK_VALUE
-                else -> task.value
-            }
+        private fun calculateDelta(
+            task: Task,
+            direction: TaskDirection,
+        ): Double {
+            val currentValue =
+                when {
+                    task.value < MIN_TASK_VALUE -> MIN_TASK_VALUE
+                    task.value > MAX_TASK_VALUE -> MAX_TASK_VALUE
+                    else -> task.value
+                }
 
-            var nextDelta = 0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
+            var nextDelta =
+                0.9747.pow(currentValue) * if (direction == TaskDirection.DOWN) -1 else 1
 
             if ((task.checklist?.size ?: 0) > 0) {
                 if (task.type == TaskType.TODO) {
                     nextDelta *= 1 + (
                         task.checklist?.map { if (it.completed) 1 else 0 }?.reduce { _, _ -> 0 }
                             ?: 0
-                        )
+                    )
                 }
             }
 
             return nextDelta
         }
 
-        private fun scoreHabit(user: User, task: Task, direction: TaskDirection) {
+        private fun scoreHabit(
+            user: User,
+            task: Task,
+            direction: TaskDirection,
+        ) {
         }
 
-        private fun scoreDaily(user: User, task: Task, direction: TaskDirection) {
+        private fun scoreDaily(
+            user: User,
+            task: Task,
+            direction: TaskDirection,
+        ) {
         }
 
-        private fun scoreToDo(user: User, task: Task, direction: TaskDirection) {
+        private fun scoreToDo(
+            user: User,
+            task: Task,
+            direction: TaskDirection,
+        ) {
         }
 
-        private fun scoreReward(user: User, task: Task, direction: TaskDirection) {
+        private fun scoreReward(
+            user: User,
+            task: Task,
+            direction: TaskDirection,
+        ) {
         }
 
-        fun score(user: User, task: Task, direction: TaskDirection): TaskDirectionData? {
+        fun score(
+            user: User,
+            task: Task,
+            direction: TaskDirection,
+        ): TaskDirectionData? {
             return if (task.type == TaskType.HABIT || direction == TaskDirection.UP) {
                 val stats = user.stats ?: return null
                 val computedStats = computeStats(user)
@@ -96,7 +121,7 @@ class ScoreTaskLocallyInteractor {
             delta: Double,
             stats: Stats,
             computedStats: Stats,
-            task: Task
+            task: Task,
         ) {
             var conBonus = 1f - ((computedStats.constitution?.toFloat() ?: 0f) / 250f)
             if (conBonus < 0.1) {
@@ -112,26 +137,27 @@ class ScoreTaskLocallyInteractor {
             stats: Stats,
             computedStats: Stats,
             task: Task,
-            direction: TaskDirection
+            direction: TaskDirection,
         ) {
             val intBonus = 1f + ((computedStats.intelligence?.toFloat() ?: 0f) * 0.025f)
             result.exp = (
                 stats.exp
                     ?: 0.0
-                ) + (delta * intBonus * task.priority * 6).roundToLong().toDouble()
+            ) + (delta * intBonus * task.priority * 6).roundToLong().toDouble()
 
             val perBonus = 1f + ((computedStats.per?.toFloat() ?: 0f) * 0.02f)
             val goldMod = delta * task.priority * perBonus
 
             val streak = task.streak ?: 0
-            result.gp = (stats.gp ?: 0.0) + if (task.streak != null) {
-                val currentStreak = if (direction == TaskDirection.DOWN) streak - 1 else streak
-                val streakBonus = (currentStreak / 100) * 1
-                val afterStreak = goldMod * streakBonus
-                afterStreak
-            } else {
-                goldMod
-            }
+            result.gp = (stats.gp ?: 0.0) +
+                if (task.streak != null) {
+                    val currentStreak = if (direction == TaskDirection.DOWN) streak - 1 else streak
+                    val streakBonus = (currentStreak / 100) * 1
+                    val afterStreak = goldMod * streakBonus
+                    afterStreak
+                } else {
+                    goldMod
+                }
         }
 
         private fun computeStats(user: User): Stats {
@@ -143,7 +169,7 @@ class ScoreTaskLocallyInteractor {
             var totalPerception = levelStat
 
             totalStrength += user.stats?.buffs?.str?.toInt() ?: 0
-            totalIntelligence += user.stats?.buffs?._int?.toInt() ?: 0
+            totalIntelligence += user.stats?.buffs?.intelligence?.toInt() ?: 0
             totalConstitution += user.stats?.buffs?.con?.toInt() ?: 0
             totalPerception += user.stats?.buffs?.per?.toInt() ?: 0
 

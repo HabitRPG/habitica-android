@@ -15,30 +15,40 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ChallengeLocalRepository {
+class RealmChallengeLocalRepository(realm: Realm) :
+    RealmBaseLocalRepository(realm),
+    ChallengeLocalRepository {
+    override fun isChallengeMember(
+        userID: String,
+        challengeID: String,
+    ): Flow<Boolean> =
+        realm.where(ChallengeMembership::class.java)
+            .equalTo("userID", userID)
+            .equalTo("challengeID", challengeID)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
+            .map { it.count() > 0 }
 
-    override fun isChallengeMember(userID: String, challengeID: String): Flow<Boolean> = realm.where(ChallengeMembership::class.java)
-        .equalTo("userID", userID)
-        .equalTo("challengeID", challengeID)
-        .findAll()
-        .toFlow()
-        .filter { it.isLoaded }
-        .map { it.count() > 0 }
+    override fun getChallengeMembership(
+        userId: String,
+        id: String,
+    ) =
+        realm.where(ChallengeMembership::class.java)
+            .equalTo("userID", userId)
+            .equalTo("challengeID", id)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
+            .map { it.first() }
+            .filterNotNull()
 
-    override fun getChallengeMembership(userId: String, id: String) = realm.where(ChallengeMembership::class.java)
-        .equalTo("userID", userId)
-        .equalTo("challengeID", id)
-        .findAll()
-        .toFlow()
-        .filter { it.isLoaded }
-        .map { it.first() }
-        .filterNotNull()
-
-    override fun getChallengeMemberships(userId: String) = realm.where(ChallengeMembership::class.java)
-        .equalTo("userID", userId)
-        .findAll()
-        .toFlow()
-        .filter { it.isLoaded }
+    override fun getChallengeMemberships(userId: String) =
+        realm.where(ChallengeMembership::class.java)
+            .equalTo("userID", userId)
+            .findAll()
+            .toFlow()
+            .filter { it.isLoaded }
 
     override fun getChallenge(id: String): Flow<Challenge> {
         return realm.where(Challenge::class.java)
@@ -59,12 +69,13 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
     }
 
     override val challenges: Flow<List<Challenge>>
-        get() = realm.where(Challenge::class.java)
-            .isNotNull("name")
-            .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        get() =
+            realm.where(Challenge::class.java)
+                .isNotNull("name")
+                .sort("official", Sort.DESCENDING, "createdAt", Sort.DESCENDING)
+                .findAll()
+                .toFlow()
+                .filter { it.isLoaded }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUserChallenges(userId: String): Flow<List<Challenge>> {
@@ -74,9 +85,10 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
             .toFlow()
             .filter { it.isLoaded }
             .flatMapLatest { it ->
-                val ids = it.map {
-                    return@map it.challengeID
-                }.toTypedArray()
+                val ids =
+                    it.map {
+                        return@map it.challengeID
+                    }.toTypedArray()
                 realm.where(Challenge::class.java)
                     .isNotNull("name")
                     .beginGroup()
@@ -91,13 +103,19 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
             }
     }
 
-    override fun setParticipating(userID: String, challengeID: String, isParticipating: Boolean) {
+    override fun setParticipating(
+        userID: String,
+        challengeID: String,
+        isParticipating: Boolean,
+    ) {
         val user = realm.where(User::class.java).equalTo("id", userID).findFirst() ?: return
         executeTransaction {
             if (isParticipating) {
                 user.challenges?.add(ChallengeMembership(userID, challengeID))
             } else {
-                val membership = user.challenges?.firstOrNull { it.challengeID == challengeID } ?: return@executeTransaction
+                val membership =
+                    user.challenges?.firstOrNull { it.challengeID == challengeID }
+                        ?: return@executeTransaction
                 user.challenges?.remove(membership)
             }
         }
@@ -107,7 +125,7 @@ class RealmChallengeLocalRepository(realm: Realm) : RealmBaseLocalRepository(rea
         challenges: List<Challenge>,
         clearChallenges: Boolean,
         memberOnly: Boolean,
-        userID: String
+        userID: String,
     ) {
         if (clearChallenges || memberOnly) {
             val localChallenges = realm.where(Challenge::class.java).findAll().createSnapshot()

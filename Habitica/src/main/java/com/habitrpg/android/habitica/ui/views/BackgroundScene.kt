@@ -39,7 +39,7 @@ private fun getBackgroundPainter(): ImageBitmap {
             Calendar.NOVEMBER -> R.drawable.stable_tile_november
             Calendar.DECEMBER -> R.drawable.stable_tile_december
             else -> R.drawable.stable_tile_may
-        }
+        },
     )
 }
 
@@ -47,27 +47,33 @@ private fun getBackgroundPainter(): ImageBitmap {
 fun BackgroundScene(modifier: Modifier = Modifier) {
     val image = getBackgroundPainter()
     Canvas(
-        modifier = modifier
-            .height(124.dp)
-            .fillMaxWidth()
-            .zIndex(1f), onDraw = {
-            val bitmap = Bitmap.createScaledBitmap(
-                image.asAndroidBitmap(),
-                image.width.dp.roundToPx(),
-                124.dp.roundToPx(),
-                false
-            )
-            val paint = Paint().asFrameworkPaint().apply {
-                isAntiAlias = true
-                shader = ImageShader(
-                    bitmap.asImageBitmap(),
-                    TileMode.Repeated,
-                    TileMode.Repeated
+        modifier =
+            modifier
+                .height(124.dp)
+                .fillMaxWidth()
+                .zIndex(1f),
+        onDraw = {
+            val bitmap =
+                Bitmap.createScaledBitmap(
+                    image.asAndroidBitmap(),
+                    image.width.dp.roundToPx(),
+                    124.dp.roundToPx(),
+                    false,
                 )
-            }
+            val paint =
+                Paint().asFrameworkPaint().apply {
+                    isAntiAlias = true
+                    shader =
+                        ImageShader(
+                            bitmap.asImageBitmap(),
+                            TileMode.Repeated,
+                            TileMode.Repeated,
+                        )
+                }
             drawIntoCanvas {
                 it.nativeCanvas.drawPaint(paint)
             }
             paint.reset()
-        })
+        },
+    )
 }

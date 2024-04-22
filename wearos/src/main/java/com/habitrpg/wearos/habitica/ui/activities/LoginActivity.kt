@@ -16,8 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     enum class State {
         INITIAL,
-        OTHER
+        OTHER,
     }
+
     override val viewModel: LoginViewModel by viewModels()
     private var currentState: State = State.INITIAL
         set(value) {
@@ -71,19 +72,21 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         viewModel.handleGoogleLogin(this, pickAccountResult)
     }
 
-    private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-        viewModel.handleGoogleLoginResult(this, task, recoverFromPlayServicesErrorResult)
-    }
-
-    private val recoverFromPlayServicesErrorResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode != Activity.RESULT_CANCELED) {
+    private val pickAccountResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            viewModel.handleGoogleLoginResult(this, task, null)
+            viewModel.handleGoogleLoginResult(this, task, recoverFromPlayServicesErrorResult)
         }
-    }
+
+    private val recoverFromPlayServicesErrorResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) {
+            if (it.resultCode != Activity.RESULT_CANCELED) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                viewModel.handleGoogleLoginResult(this, task, null)
+            }
+        }
 
     private fun startMainActivity() {
         val intent = Intent(this@LoginActivity, MainActivity::class.java)

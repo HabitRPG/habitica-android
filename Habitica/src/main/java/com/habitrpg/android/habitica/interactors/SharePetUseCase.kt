@@ -22,7 +22,7 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 
-class SharePetUseCase: UseCase<SharePetUseCase.RequestValues, Unit>() {
+class SharePetUseCase : UseCase<SharePetUseCase.RequestValues, Unit>() {
     class RequestValues(val petKey: String, val message: String, val context: Context) :
         UseCase.RequestValues
 
@@ -44,13 +44,15 @@ class SharePetUseCase: UseCase<SharePetUseCase.RequestValues, Unit>() {
             petWrapper.root.setViewTreeSavedStateRegistryOwner(currentActivity)
             petWrapper.root.setViewTreeLifecycleOwner(currentActivity)
         }
-        val width = if (petWrapper.root.width > 0) petWrapper.root.width else 300.dpToPx(requestValues.context)
+        val width =
+            if (petWrapper.root.width > 0) petWrapper.root.width else 300.dpToPx(requestValues.context)
         val height = 124.dpToPx(requestValues.context)
-        val sharedImage = Bitmap.createBitmap(
-            width,
-            height,
-            Bitmap.Config.ARGB_8888
-        )
+        val sharedImage =
+            Bitmap.createBitmap(
+                width,
+                height,
+                Bitmap.Config.ARGB_8888,
+            )
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (petWrapper.petImageview.bitmap == null && attempts < 200) {
@@ -59,9 +61,11 @@ class SharePetUseCase: UseCase<SharePetUseCase.RequestValues, Unit>() {
         }
         petWrapper.root.doOnNextLayout {
             petWrapper.root.draw(canvas)
-            ((requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
-                requestValues.context
-            )?.currentActivity?.get())?.shareContent("pet", requestValues.message, sharedImage)
+            (
+                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
+                    requestValues.context,
+                )?.currentActivity?.get()
+            )?.shareContent("pet", requestValues.message, sharedImage)
             containerView?.removeView(petWrapper.root)
         }
         val m = FrameLayout.LayoutParams(width, height)

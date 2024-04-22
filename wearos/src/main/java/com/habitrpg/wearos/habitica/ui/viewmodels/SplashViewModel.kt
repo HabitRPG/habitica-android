@@ -16,65 +16,70 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(
-    userRepository: UserRepository,
-    taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder,
-    val apiClient: ApiClient,
-    val sharedPreferences: SharedPreferences,
-    val keyHelper: KeyHelper?,
-    appStateManager: AppStateManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager), MessageClient.OnMessageReceivedListener {
-    lateinit var onLoginCompleted: (Boolean) -> Unit
-    val hasAuthentication: Boolean
-        get() {
-            return apiClient.hasAuthentication()
-        }
-
-    override fun onMessageReceived(event: MessageEvent) {
-        when (event.path) {
-            "/auth" -> authDataReceived(event)
-        }
-    }
-
-    private fun authDataReceived(event: MessageEvent) {
-        viewModelScope.launch(
-            exceptionBuilder.silent {
-                onLoginCompleted(false)
+class SplashViewModel
+    @Inject
+    constructor(
+        userRepository: UserRepository,
+        taskRepository: TaskRepository,
+        exceptionBuilder: ExceptionHandlerBuilder,
+        val apiClient: ApiClient,
+        val sharedPreferences: SharedPreferences,
+        val keyHelper: KeyHelper?,
+        appStateManager: AppStateManager,
+    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager), MessageClient.OnMessageReceivedListener {
+        lateinit var onLoginCompleted: (Boolean) -> Unit
+        val hasAuthentication: Boolean
+            get() {
+                return apiClient.hasAuthentication()
             }
-        ) {
-            val (userID, apiKey) = String(event.data).split(":")
-            try {
-                if (userID.isBlank() || apiKey.isBlank()) {
+
+        override fun onMessageReceived(event: MessageEvent) {
+            when (event.path) {
+                "/auth" -> authDataReceived(event)
+            }
+        }
+
+        private fun authDataReceived(event: MessageEvent) {
+            viewModelScope.launch(
+                exceptionBuilder.silent {
+                    onLoginCompleted(false)
+                },
+            ) {
+                val (userID, apiKey) = String(event.data).split(":")
+                try {
+                    if (userID.isBlank() || apiKey.isBlank()) {
+                        return@launch
+                    }
+                    saveTokens(apiKey, userID)
+                } catch (e: Exception) {
+                    onLoginCompleted(false)
                     return@launch
                 }
-                saveTokens(apiKey, userID)
-            } catch (e: Exception) {
-                onLoginCompleted(false)
-                return@launch
+                userRepository.retrieveUser()
+                onLoginCompleted(true)
             }
-            userRepository.retrieveUser()
-            onLoginCompleted(true)
         }
-    }
 
-    @Throws(Exception::class)
-    private fun saveTokens(api: String, user: String) {
-        this.apiClient.updateAuthenticationCredentials(user, api)
-        sharedPreferences.edit {
-            putString("UserID", user)
-            val encryptedKey =
-                try {
-                    keyHelper?.encrypt(api)
-                } catch (e: Exception) {
-                    null
+        @Throws(Exception::class)
+        private fun saveTokens(
+            api: String,
+            user: String,
+        ) {
+            this.apiClient.updateAuthenticationCredentials(user, api)
+            sharedPreferences.edit {
+                putString("UserID", user)
+                val encryptedKey =
+                    try {
+                        keyHelper?.encrypt(api)
+                    } catch (e: Exception) {
+                        null
+                    }
+                if ((encryptedKey?.length ?: 0) > 5) {
+                    putString(user, encryptedKey)
+                } else {
+                    // Something might have gone wrong with encryption, so fall back to this.
+                    putString("APIToken", api)
                 }
-            if ((encryptedKey?.length ?: 0) > 5) {
-                putString(user, encryptedKey)
-            } else {
-                // Something might have gone wrong with encryption, so fall back to this.
-                putString("APIToken", api)
             }
         }
     }
-}

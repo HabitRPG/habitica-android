@@ -10,15 +10,17 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HabitDirectionViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder,
-    appStateManager: AppStateManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-    val taskID = savedStateHandle.get<String>("task_id")
-    val task = taskRepository.getTask(taskID).asLiveData()
+class HabitDirectionViewModel
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+        userRepository: UserRepository,
+        taskRepository: TaskRepository,
+        exceptionBuilder: ExceptionHandlerBuilder,
+        appStateManager: AppStateManager,
+    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+        val taskID = savedStateHandle.get<String>("task_id")
+        val task = taskRepository.getTask(taskID).asLiveData()
 
-    val user = userRepository.getUser().asLiveData()
-}
+        val user = userRepository.getUser().asLiveData()
+    }

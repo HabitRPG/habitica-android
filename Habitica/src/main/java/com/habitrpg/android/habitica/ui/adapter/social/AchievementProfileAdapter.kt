@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.ui.views.dialogs.AchievementDetailDialog
 import com.habitrpg.common.habitica.extensions.loadImage
 
 class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     var itemType: String? = null
     var activity: MainActivity? = null
     private var itemList: List<Any> = emptyList()
@@ -23,7 +22,10 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             SectionViewHolder(parent.inflate(R.layout.profile_achievement_category))
         } else {
@@ -31,7 +33,10 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         val obj = this.itemList[position]
         if (obj.javaClass == String::class.java) {
             (holder as? SectionViewHolder)?.bind(obj as String)
@@ -53,7 +58,9 @@ class AchievementProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         return itemList.size
     }
 
-    internal class AchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal class AchievementViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         private val binding = ProfileAchievementItemBinding.bind(itemView)
         private var achievement: Achievement? = null
 

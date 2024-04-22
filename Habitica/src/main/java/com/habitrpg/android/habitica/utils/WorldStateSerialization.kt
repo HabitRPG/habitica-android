@@ -12,11 +12,10 @@ import io.realm.RealmList
 import java.lang.reflect.Type
 
 class WorldStateSerialization : JsonDeserializer<WorldState> {
-
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?
+        context: JsonDeserializationContext?,
     ): WorldState {
         val state = WorldState()
         val obj = json?.asJsonObject ?: return state
@@ -63,7 +62,8 @@ class WorldStateSerialization : JsonDeserializer<WorldState> {
                 if (obj.has("currentEventList")) {
                     val events = RealmList<WorldStateEvent>()
                     for (element in obj.getAsJsonArray("currentEventList")) {
-                        context?.deserialize<WorldStateEvent>(element, WorldStateEvent::class.java)?.let { events.add(it) }
+                        context?.deserialize<WorldStateEvent>(element, WorldStateEvent::class.java)
+                            ?.let { events.add(it) }
                     }
                     state.events = events
                 }

@@ -19,7 +19,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GroupInviteActivity : BaseActivity() {
-
     private lateinit var binding: ActivityPartyInviteBinding
 
     @Inject
@@ -58,10 +57,12 @@ class GroupInviteActivity : BaseActivity() {
                 dismissKeyboard()
                 true
             }
+
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -75,24 +76,26 @@ class GroupInviteActivity : BaseActivity() {
     private fun setViewPagerAdapter() {
         val fragmentManager = supportFragmentManager
 
-        val statePagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
-            override fun createFragment(position: Int): Fragment {
-                val fragment = PartyInviteFragment()
-                fragments.add(fragment)
-                return fragment
-            }
+        val statePagerAdapter =
+            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    val fragment = PartyInviteFragment()
+                    fragments.add(fragment)
+                    return fragment
+                }
 
-            override fun getItemCount(): Int {
-                return 2
+                override fun getItemCount(): Int {
+                    return 2
+                }
             }
-        }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> getString(R.string.invite_existing_users)
-                1 -> getString(R.string.by_email)
-                else -> ""
-            }
+            tab.text =
+                when (position) {
+                    0 -> getString(R.string.invite_existing_users)
+                    1 -> getString(R.string.by_email)
+                    else -> ""
+                }
         }.attach()
         statePagerAdapter.notifyDataSetChanged()
     }

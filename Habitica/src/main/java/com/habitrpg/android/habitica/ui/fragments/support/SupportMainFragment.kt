@@ -11,10 +11,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.FAQRepository
 import com.habitrpg.android.habitica.databinding.FragmentSupportMainBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,7 +23,10 @@ import javax.inject.Inject
 class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
     override var binding: FragmentSupportMainBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSupportMainBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentSupportMainBinding {
         return FragmentSupportMainBinding.inflate(inflater, container, false)
     }
 
@@ -36,13 +39,16 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.usingHabiticaWrapper?.setOnClickListener {
             MainNavigationController.navigate(R.id.FAQOverviewFragment)
@@ -61,7 +67,12 @@ class SupportMainFragment : BaseMainFragment<FragmentSupportMainBinding>() {
         binding?.resetTutorialButton?.setOnClickListener {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 userRepository.resetTutorial()
-                mainActivity?.showSnackbar(null, null, getString(R.string.tutorial_reset_confirmation), displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS)
+                mainActivity?.showSnackbar(
+                    null,
+                    null,
+                    getString(R.string.tutorial_reset_confirmation),
+                    displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
+                )
             }
         }
     }

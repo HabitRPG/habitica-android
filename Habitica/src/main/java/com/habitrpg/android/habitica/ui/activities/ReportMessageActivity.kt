@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReportMessageActivity : BaseActivity() {
-
     private lateinit var binding: ActivityReportMessageBinding
 
     @Inject
@@ -57,20 +56,28 @@ class ReportMessageActivity : BaseActivity() {
         binding.reportExplanationTextview.setMarkdown(getString(R.string.report_explanation))
 
         BottomSheetBehavior.from<View>(binding.bottomSheet)
-            .addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                @SuppressLint("SwitchIntDef")
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    when (newState) {
-                        BottomSheetBehavior.STATE_HIDDEN -> finish()
-                        BottomSheetBehavior.STATE_EXPANDED -> setStatusBarDim(false)
-                        else -> setStatusBarDim(true)
+            .addBottomSheetCallback(
+                object : BottomSheetBehavior.BottomSheetCallback() {
+                    @SuppressLint("SwitchIntDef")
+                    override fun onStateChanged(
+                        bottomSheet: View,
+                        newState: Int,
+                    ) {
+                        when (newState) {
+                            BottomSheetBehavior.STATE_HIDDEN -> finish()
+                            BottomSheetBehavior.STATE_EXPANDED -> setStatusBarDim(false)
+                            else -> setStatusBarDim(true)
+                        }
                     }
-                }
 
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    // no op
-                }
-            })
+                    override fun onSlide(
+                        bottomSheet: View,
+                        slideOffset: Float,
+                    ) {
+                        // no op
+                    }
+                },
+            )
 
         val args = navArgs<ReportMessageActivityArgs>().value
         messageID = args.messageID
@@ -96,9 +103,13 @@ class ReportMessageActivity : BaseActivity() {
             lifecycleScope.launch(
                 ExceptionHandler.coroutine {
                     isReporting = false
-                }
+                },
             ) {
-                socialRepository.flagMessage(messageID ?: "", binding.additionalInfoEdittext.text.toString(), groupID)
+                socialRepository.flagMessage(
+                    messageID ?: "",
+                    binding.additionalInfoEdittext.text.toString(),
+                    groupID,
+                )
                 finish()
             }
         }
@@ -132,6 +143,7 @@ class ReportMessageActivity : BaseActivity() {
         // Fetch the current flags.
         val lFlags = window.decorView.systemUiVisibility
         // Update the SystemUiVisibility dependening on whether we want a Light or Dark theme.
-        window.decorView.systemUiVisibility = if (isDark) lFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() else lFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.decorView.systemUiVisibility =
+            if (isDark) lFlags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv() else lFlags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
     }
 }

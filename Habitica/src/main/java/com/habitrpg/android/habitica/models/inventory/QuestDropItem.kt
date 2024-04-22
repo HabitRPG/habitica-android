@@ -23,11 +23,12 @@ open class QuestDropItem : RealmObject(), BaseObject {
     var count = 0
 
     val imageName: String
-        get() = when (type) {
-            "quests" -> "inventory_quest_scroll_$key"
-            "eggs" -> "Pet_Egg_$key"
-            "food" -> "Pet_Food_$key"
-            "hatchingPotions" -> "Pet_HatchingPotion_$key"
-            else -> "shop_$key"
-        }
+        get() =
+            when (type) {
+                "quests" -> "inventory_quest_scroll_$key"
+                "eggs" -> "Pet_Egg_$key"
+                "food" -> "Pet_Food_$key"
+                "hatchingPotions" -> "Pet_HatchingPotion_$key"
+                else -> "shop_$key"
+            }
 }

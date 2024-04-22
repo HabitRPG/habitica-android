@@ -81,11 +81,11 @@ open class SubscriptionPlan : RealmObject(), BaseObject {
         }
 
     companion object {
-        var PLANID_BASIC = "basic"
-        var PLANID_BASICEARNED = "basic_earned"
-        var PLANID_BASIC3MONTH = "basic_3mo"
-        var PLANID_BASIC6MONTH = "basic_6mo"
-        var PLANID_GOOGLE6MONTH = "google_6mo"
-        var PLANID_BASIC12MONTH = "basic_12mo"
+        const val PLANID_BASIC = "basic"
+        const val PLANID_BASICEARNED = "basic_earned"
+        const val PLANID_BASIC3MONTH = "basic_3mo"
+        const val PLANID_BASIC6MONTH = "basic_6mo"
+        const val PLANID_GOOGLE6MONTH = "google_6mo"
+        const val PLANID_BASIC12MONTH = "basic_12mo"
     }
 }

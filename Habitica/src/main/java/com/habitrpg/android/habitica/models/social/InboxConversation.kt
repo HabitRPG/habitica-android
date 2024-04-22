@@ -7,7 +7,6 @@ import io.realm.annotations.PrimaryKey
 import java.util.Date
 
 open class InboxConversation : RealmObject(), BaseObject {
-
     @PrimaryKey
     var combinedID: String = ""
     var uuid: String = ""

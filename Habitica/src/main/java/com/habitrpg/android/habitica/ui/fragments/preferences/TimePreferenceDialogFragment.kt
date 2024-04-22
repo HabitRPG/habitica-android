@@ -13,7 +13,6 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
-
     lateinit var picker: TimePicker
 
     private val timePreference: TimePreference
@@ -73,9 +72,10 @@ class TimePreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
     companion object {
         val TAG = TimePreferenceDialogFragment::class.java.simpleName
+
         fun newInstance(
             preferenceFragment: PreferenceFragmentCompat,
-            key: String
+            key: String,
         ): TimePreferenceDialogFragment {
             val fragment = TimePreferenceDialogFragment()
             val arguments = Bundle(1)

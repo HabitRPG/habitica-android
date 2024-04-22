@@ -15,7 +15,6 @@ import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
 import javax.inject.Inject
 
 abstract class BaseWidgetProvider : AppWidgetProvider() {
-
     @Inject
     lateinit var userRepository: UserRepository
 
@@ -40,29 +39,34 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetId: Int,
-        newOptions: Bundle
+        newOptions: Bundle,
     ) {
         this.context = context
         val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
 
         appWidgetManager.partiallyUpdateAppWidget(
             appWidgetId,
-            sizeRemoteViews(context, options, appWidgetId)
+            sizeRemoteViews(context, options, appWidgetId),
         )
 
         super.onAppWidgetOptionsChanged(
             context,
             appWidgetManager,
             appWidgetId,
-            newOptions
+            newOptions,
         )
     }
 
-    fun sizeRemoteViews(context: Context?, options: Bundle, widgetId: Int): RemoteViews {
+    fun sizeRemoteViews(
+        context: Context?,
+        options: Bundle,
+        widgetId: Int,
+    ): RemoteViews {
         this.context = context
         val minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
-        val minHeight = options
-            .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
+        val minHeight =
+            options
+                .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
 
         // First find out rows and columns based on width provided.
         val rows = getCellsForSize(minHeight)
@@ -72,9 +76,18 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         return configureRemoteViews(remoteViews, widgetId, columns, rows)
     }
 
-    protected fun showToastForTaskDirection(context: Context, data: TaskScoringResult?) {
+    protected fun showToastForTaskDirection(
+        context: Context,
+        data: TaskScoringResult?,
+    ) {
         if (data != null) {
-            val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(data.experienceDelta, data.healthDelta, data.goldDelta, data.manaDelta)
+            val pair =
+                NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
+                    data.experienceDelta,
+                    data.healthDelta,
+                    data.goldDelta,
+                    data.manaDelta,
+                )
             val toast = Toast.makeText(context, pair.first, Toast.LENGTH_LONG)
             toast.show()
         }
@@ -86,20 +99,33 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         remoteViews: RemoteViews,
         widgetId: Int,
         columns: Int,
-        rows: Int
+        rows: Int,
     ): RemoteViews
 
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         val additionalData = HashMap<String, Any>()
         additionalData["identifier"] = this.javaClass.simpleName
-        Analytics.sendEvent("widgets", EventCategory.BEHAVIOUR, HitType.CREATE_WIDGET, additionalData)
+        Analytics.sendEvent(
+            "widgets",
+            EventCategory.BEHAVIOUR,
+            HitType.CREATE_WIDGET,
+            additionalData,
+        )
     }
 
-    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+    override fun onDeleted(
+        context: Context,
+        appWidgetIds: IntArray,
+    ) {
         val additionalData = HashMap<String, Any>()
         additionalData["identifier"] = this.javaClass.simpleName
-        Analytics.sendEvent("widgets", EventCategory.BEHAVIOUR, HitType.REMOVE_WIDGET, additionalData)
+        Analytics.sendEvent(
+            "widgets",
+            EventCategory.BEHAVIOUR,
+            HitType.REMOVE_WIDGET,
+            additionalData,
+        )
         super.onDeleted(context, appWidgetIds)
     }
 }

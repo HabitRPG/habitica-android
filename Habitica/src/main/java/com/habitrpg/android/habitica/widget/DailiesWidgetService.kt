@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DailiesWidgetService : RemoteViewsService() {
-
     @Inject
     lateinit var taskRepository: TaskRepository
 

@@ -7,7 +7,6 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 open class Equipment : RealmObject(), BaseMainObject {
-
     var value: Double = 0.toDouble()
     var type: String? = ""
 
@@ -24,7 +23,7 @@ open class Equipment : RealmObject(), BaseMainObject {
     var released: Boolean = true
 
     @SerializedName("int")
-    var _int: Int = 0
+    var intelligence: Int = 0
     var owned: Boolean? = null
     var twoHanded = false
     var mystery = ""

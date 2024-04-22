@@ -10,8 +10,8 @@ import com.habitrpg.android.habitica.databinding.SkillTaskItemCardBinding
 import com.habitrpg.android.habitica.models.tasks.Task
 import java.util.UUID
 
-class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
-
+class SkillTasksRecyclerViewAdapter :
+    BaseRecyclerViewAdapter<Task, SkillTasksRecyclerViewAdapter.TaskViewHolder>() {
     var onTaskSelection: ((Task) -> Unit)? = null
 
     override fun getItemId(position: Int): Long {
@@ -22,17 +22,26 @@ class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRe
         return UUID.randomUUID().mostSignificantBits
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.skill_task_item_card, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): TaskViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.skill_task_item_card, parent, false)
         return TaskViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TaskViewHolder,
+        position: Int,
+    ) {
         holder.bindHolder(data[position])
     }
 
-    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class TaskViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         private val binding = SkillTaskItemCardBinding.bind(itemView)
         var task: Task? = null
 
@@ -50,7 +59,12 @@ class SkillTasksRecyclerViewAdapter : BaseRecyclerViewAdapter<Task, SkillTasksRe
                 binding.notesTextView.visibility = View.VISIBLE
                 binding.notesTextView.text = task.markdownNotes { binding.notesTextView.text = it }
             }
-            binding.rightBorderView.setBackgroundColor(ContextCompat.getColor(itemView.context, task.lightTaskColor))
+            binding.rightBorderView.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    task.lightTaskColor,
+                ),
+            )
         }
 
         override fun onClick(v: View) {

@@ -30,7 +30,10 @@ class DeviceCommunicationService : WearableListenerService() {
         }
     }
 
-    private fun openActivity(event: MessageEvent, activityClass: Class<*>) {
+    private fun openActivity(
+        event: MessageEvent,
+        activityClass: Class<*>,
+    ) {
         val intent = Intent(this, activityClass)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
@@ -39,9 +42,10 @@ class DeviceCommunicationService : WearableListenerService() {
 
     private fun openTaskForm(event: MessageEvent) {
         val taskID = String(event.data)
-        val startIntent = Intent(this, TaskFormActivity::class.java).apply {
-            putExtra(TaskFormActivity.TASK_ID_KEY, taskID)
-        }
+        val startIntent =
+            Intent(this, TaskFormActivity::class.java).apply {
+                putExtra(TaskFormActivity.TASK_ID_KEY, taskID)
+            }
         startIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(startIntent)
         messageClient.sendMessage(event.sourceNodeId, "/action_completed", null)
@@ -51,7 +55,7 @@ class DeviceCommunicationService : WearableListenerService() {
         messageClient.sendMessage(
             event.sourceNodeId,
             "/auth",
-            "${hostConfig.userID}:${hostConfig.apiKey}".toByteArray()
+            "${hostConfig.userID}:${hostConfig.apiKey}".toByteArray(),
         )
     }
 }

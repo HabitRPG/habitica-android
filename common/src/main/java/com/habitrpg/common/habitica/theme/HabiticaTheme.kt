@@ -17,101 +17,117 @@ import com.google.accompanist.themeadapter.material.createMdcTheme
 
 @Composable
 fun HabiticaTheme(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
     val layoutDirection = LocalLayoutDirection.current
-    val (colors, _, _) = createMdcTheme(
-        context = context,
-        layoutDirection = layoutDirection,
-        setTextColors = true
-    )
+    val (colors, _, _) =
+        createMdcTheme(
+            context = context,
+            layoutDirection = layoutDirection,
+            setTextColors = true,
+        )
     MaterialTheme(
         colors = colors ?: MaterialTheme.colors,
-        typography = Typography(
-            defaultFontFamily = FontFamily.Default,
-            h1 = TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 20.sp,
-                letterSpacing = (0.05).sp
+        typography =
+            Typography(
+                defaultFontFamily = FontFamily.Default,
+                h1 =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 20.sp,
+                        letterSpacing = (0.05).sp,
+                    ),
+                h2 =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 28.sp,
+                        letterSpacing = (0.05).sp,
+                    ),
+                subtitle1 =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 16.sp,
+                    ),
+                subtitle2 =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        letterSpacing = 0.1.sp,
+                    ),
+                body1 =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        letterSpacing = 0.35.sp,
+                        lineHeight = 16.sp,
+                    ),
+                body2 =
+                    TextStyle(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        letterSpacing = 0.2.sp,
+                        lineHeight = 16.sp,
+                    ),
+                button =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        letterSpacing = 1.25.sp,
+                    ),
+                caption =
+                    TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp,
+                    ),
+                overline =
+                    TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 10.sp,
+                        letterSpacing = 1.5.sp,
+                    ),
             ),
-            h2 = TextStyle(
-                fontWeight = FontWeight.Normal,
-                fontSize = 28.sp,
-                letterSpacing = (0.05).sp
+        shapes =
+            Shapes(
+                RoundedCornerShape(4.dp),
+                RoundedCornerShape(8.dp),
+                RoundedCornerShape(12.dp),
             ),
-            subtitle1 = TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 16.sp
-            ),
-            subtitle2 = TextStyle(
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
-                letterSpacing = 0.1.sp
-            ),
-            body1 = TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-                letterSpacing = 0.35.sp,
-                lineHeight = 16.sp
-            ),
-            body2 = TextStyle(
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                letterSpacing = 0.2.sp,
-                lineHeight = 16.sp
-            ),
-            button = TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-                letterSpacing = 1.25.sp
-            ),
-            caption = TextStyle(
-                fontWeight = FontWeight.Bold,
-                fontSize = 12.sp
-            ),
-            overline = TextStyle(
-                fontWeight = FontWeight.Medium,
-                fontSize = 10.sp,
-                letterSpacing = 1.5.sp
-            )
-        ),
-        shapes = Shapes(
-            RoundedCornerShape(4.dp),
-            RoundedCornerShape(8.dp),
-            RoundedCornerShape(12.dp)
-        ),
-        content = content
+        content = content,
     )
 }
 
 val Typography.caption1
     get() = caption
 val Typography.caption2
-    get() = TextStyle(
-        fontWeight = FontWeight.Medium,
-        fontSize = 12.sp,
-        letterSpacing = 0.4.sp
-    )
+    get() =
+        TextStyle(
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp,
+            letterSpacing = 0.4.sp,
+        )
 val Typography.caption3
-    get() = TextStyle(
-        fontWeight = FontWeight.Medium,
-        fontSize = 12.sp,
-        letterSpacing = 0.3.sp,
-        lineHeight = 14.sp
-    )
+    get() =
+        TextStyle(
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.sp,
+            letterSpacing = 0.3.sp,
+            lineHeight = 14.sp,
+        )
 val Typography.caption4
-    get() = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        letterSpacing = 0.35.sp
-    )
+    get() =
+        TextStyle(
+            fontWeight = FontWeight.Normal,
+            fontSize = 12.sp,
+            letterSpacing = 0.35.sp,
+        )
 val Typography.subtitle3
-    get() = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        letterSpacing = 0.15.sp
-    )
+    get() =
+        TextStyle(
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            letterSpacing = 0.15.sp,
+        )
 
 object HabiticaTheme {
     val typography: Typography
@@ -140,7 +156,7 @@ class HabiticaColors(
     val errorBackground: Color,
     val errorColor: Color,
     val successBackground: Color,
-    val successColor: Color
+    val successColor: Color,
 )
 
 class HabiticaTypography

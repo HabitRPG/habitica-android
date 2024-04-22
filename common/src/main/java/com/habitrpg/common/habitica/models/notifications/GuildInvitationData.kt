@@ -1,7 +1,6 @@
 package com.habitrpg.common.habitica.models.notifications
 
 open class GuildInvitationData : NotificationData {
-
     var invitation: GuildInvite? = null
 }
 

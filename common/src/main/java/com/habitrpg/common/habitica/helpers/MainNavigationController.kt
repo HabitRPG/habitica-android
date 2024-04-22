@@ -18,7 +18,9 @@ object MainNavigationController {
     private var controllerReference: WeakReference<NavController>? = null
 
     private val navController: NavController?
-        get() { return controllerReference?.get() }
+        get() {
+            return controllerReference?.get()
+        }
 
     val isReady: Boolean
         get() = controllerReference?.get() != null
@@ -27,11 +29,17 @@ object MainNavigationController {
         controllerReference = WeakReference(navController)
     }
 
-    fun updateLabel(destinationID: Int, label: String) {
+    fun updateLabel(
+        destinationID: Int,
+        label: String,
+    ) {
         navController?.findDestination(destinationID)?.label = label
     }
 
-    fun navigate(transactionId: Int, args: Bundle? = null) {
+    fun navigate(
+        transactionId: Int,
+        args: Bundle? = null,
+    ) {
         if (abs((lastNavigation?.time ?: 0) - Date().time) > 500) {
             lastNavigation = Date()
             try {
@@ -49,7 +57,8 @@ object MainNavigationController {
             lastNavigation = Date()
             try {
                 navController?.navigate(directions)
-            } catch (_: IllegalArgumentException) {}
+            } catch (_: IllegalArgumentException) {
+            }
         }
     }
 

@@ -16,26 +16,32 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
 class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     var useGridLayout: Boolean = false
     var entries = listOf<Any>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return when (viewType) {
             0 -> SectionViewHolder(parent.inflate(R.layout.achievement_section_header))
             3 -> QuestAchievementViewHolder(parent.inflate(R.layout.achievement_quest_item))
             4 -> ChallengeAchievementViewHolder(parent.inflate(R.layout.achievement_challenge_item))
-            else -> AchievementViewHolder(
-                if (useGridLayout) {
-                    parent.inflate(R.layout.achievement_grid_item)
-                } else {
-                    parent.inflate(R.layout.achievement_list_item)
-                }
-            )
+            else ->
+                AchievementViewHolder(
+                    if (useGridLayout) {
+                        parent.inflate(R.layout.achievement_grid_item)
+                    } else {
+                        parent.inflate(R.layout.achievement_list_item)
+                    },
+                )
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         when (val entry = entries[position]) {
             is Achievement -> (holder as? AchievementViewHolder)?.bind(entry)
             is QuestAchievement -> (holder as? QuestAchievementViewHolder)?.bind(entry)
@@ -71,7 +77,9 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class AchievementViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class AchievementViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         private var achievement: Achievement? = null
 
         private val achievementContainer: ViewGroup?
@@ -91,11 +99,12 @@ class AchievementsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         fun bind(achievement: Achievement) {
             this.achievement = achievement
-            val iconName = if (achievement.earned) {
-                achievement.icon + "2x"
-            } else {
-                "achievement-unearned2x"
-            }
+            val iconName =
+                if (achievement.earned) {
+                    achievement.icon + "2x"
+                } else {
+                    "achievement-unearned2x"
+                }
             achievementIconView.loadImage(iconName)
             achievementTitleView.text = achievement.title
             achievementDescriptionView?.text = achievement.text

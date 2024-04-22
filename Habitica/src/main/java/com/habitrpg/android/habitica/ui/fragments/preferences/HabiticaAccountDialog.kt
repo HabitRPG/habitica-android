@@ -32,11 +32,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialogFragment(R.layout.dialog_habitica_account) {
+class HabiticaAccountDialog(private var thisContext: Context) :
+    BottomSheetDialogFragment(R.layout.dialog_habitica_account) {
     @Inject
     lateinit var userRepository: UserRepository
-    private var _binding: DialogHabiticaAccountBinding? = null
-    private val binding get() = _binding!!
+    private var viewBinding: DialogHabiticaAccountBinding? = null
+    private val binding get() = viewBinding!!
 
     var accountAction: String? = null
     var accountUpdateConfirmed: AccountUpdateConfirmed? = null
@@ -47,12 +48,19 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
         setStyle(STYLE_NO_TITLE, R.style.HabiticaAlertDialogTheme)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = DialogHabiticaAccountBinding.inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        viewBinding = DialogHabiticaAccountBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let { _ ->
@@ -78,10 +86,11 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
         input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         input.hint = getString(R.string.forgot_password_hint_example)
         input.textSize = 16f
-        val lp = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT
-        )
+        val lp =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+            )
         input.layoutParams = lp
         val alertDialog = HabiticaAlertDialog(requireContext())
         alertDialog.setTitle(R.string.forgot_password_title)
@@ -119,36 +128,69 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
         binding.warningDescriptionTextview.setText(R.string.reset_account_description_new)
         binding.confirmationTextInputLayout.setHint(R.string.password)
         if (user?.authentication?.hasPassword != true) {
-            binding.warningDescriptionTextview.text = context?.getString(R.string.reset_account_description_no_pw)
+            binding.warningDescriptionTextview.text =
+                context?.getString(R.string.reset_account_description_no_pw)
             binding.confirmationTextInputLayout.setHint(R.string.confirm_reset)
             binding.confirmationInputEdittext.inputType = InputType.TYPE_CLASS_TEXT
             binding.forgotPassword.isVisible = false
         }
         binding.confirmActionTextview.setText(R.string.reset_account)
 
-        binding.confirmationInputEdittext.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
-                binding.confirmActionTextview.alpha = .4f
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
-                    if ((user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.reset_caps)) ||
-                        user?.authentication?.hasPassword == true
-                    ) {
-                        binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
-                        binding.confirmActionTextview.alpha = 1.0f
-                    }
-                } else {
-                    binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
+        binding.confirmationInputEdittext.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {
+                    binding.confirmActionTextview.setTextColor(
+                        ContextCompat.getColor(
+                            thisContext,
+                            R.color.gray_300,
+                        ),
+                    )
                     binding.confirmActionTextview.alpha = .4f
                 }
-            }
 
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
+                override fun onTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {
+                    if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
+                        if ((
+                                user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
+                                    context?.getString(
+                                        R.string.reset_caps,
+                                    )
+                            ) ||
+                            user?.authentication?.hasPassword == true
+                        ) {
+                            binding.confirmActionTextview.setTextColor(
+                                ContextCompat.getColor(
+                                    thisContext,
+                                    R.color.red_100,
+                                ),
+                            )
+                            binding.confirmActionTextview.alpha = 1.0f
+                        }
+                    } else {
+                        binding.confirmActionTextview.setTextColor(
+                            ContextCompat.getColor(
+                                thisContext,
+                                R.color.gray_300,
+                            ),
+                        )
+                        binding.confirmActionTextview.alpha = .4f
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+            },
+        )
 
         binding.confirmActionTextview.setOnClickListener {
             val confirmationString = binding.confirmationInputEdittext.text.toString()
@@ -168,37 +210,71 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
         binding.titleTextview.setText(R.string.are_you_sure_you_want_to_delete)
         binding.confirmationTextInputLayout.setHint(R.string.password)
         binding.confirmActionTextview.setText(R.string.delete_account)
-        binding.warningDescriptionTextview.text = context?.getString(R.string.delete_account_description)
+        binding.warningDescriptionTextview.text =
+            context?.getString(R.string.delete_account_description)
         if (user?.authentication?.hasPassword != true) {
-            binding.warningDescriptionTextview.text = context?.getString(R.string.delete_oauth_account_description)
+            binding.warningDescriptionTextview.text =
+                context?.getString(R.string.delete_oauth_account_description)
             binding.confirmationTextInputLayout.setHint(R.string.confirm_deletion)
             binding.confirmationInputEdittext.inputType = InputType.TYPE_CLASS_TEXT
             binding.forgotPassword.isVisible = false
         }
 
-        binding.confirmationInputEdittext.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
-                binding.confirmActionTextview.alpha = .4f
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
-                    if ((user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() == context?.getString(R.string.delete_caps)) ||
-                        user?.authentication?.hasPassword == true
-                    ) {
-                        binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.red_100))
-                        binding.confirmActionTextview.alpha = 1.0f
-                    }
-                } else {
-                    binding.confirmActionTextview.setTextColor(ContextCompat.getColor(thisContext, R.color.gray_300))
+        binding.confirmationInputEdittext.addTextChangedListener(
+            object : TextWatcher {
+                override fun beforeTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {
+                    binding.confirmActionTextview.setTextColor(
+                        ContextCompat.getColor(
+                            thisContext,
+                            R.color.gray_300,
+                        ),
+                    )
                     binding.confirmActionTextview.alpha = .4f
                 }
-            }
 
-            override fun afterTextChanged(p0: Editable?) {
-            }
-        })
+                override fun onTextChanged(
+                    p0: CharSequence?,
+                    p1: Int,
+                    p2: Int,
+                    p3: Int,
+                ) {
+                    if (binding.confirmationInputEdittext.text.toString().isNotEmpty()) {
+                        if ((
+                                user?.authentication?.hasPassword != true && binding.confirmationInputEdittext.text.toString() ==
+                                    context?.getString(
+                                        R.string.delete_caps,
+                                    )
+                            ) ||
+                            user?.authentication?.hasPassword == true
+                        ) {
+                            binding.confirmActionTextview.setTextColor(
+                                ContextCompat.getColor(
+                                    thisContext,
+                                    R.color.red_100,
+                                ),
+                            )
+                            binding.confirmActionTextview.alpha = 1.0f
+                        }
+                    } else {
+                        binding.confirmActionTextview.setTextColor(
+                            ContextCompat.getColor(
+                                thisContext,
+                                R.color.gray_300,
+                            ),
+                        )
+                        binding.confirmActionTextview.alpha = .4f
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+            },
+        )
         binding.confirmActionTextview.setOnClickListener {
             val confirmationString = binding.confirmationInputEdittext.text.toString()
             if (user?.authentication?.hasPassword != true) {
@@ -219,6 +295,7 @@ class HabiticaAccountDialog(private var thisContext: Context) : BottomSheetDialo
 
     interface AccountUpdateConfirmed {
         fun resetConfirmedClicked(confirmationString: String)
+
         fun deletionConfirmClicked(confirmationString: String)
     }
 

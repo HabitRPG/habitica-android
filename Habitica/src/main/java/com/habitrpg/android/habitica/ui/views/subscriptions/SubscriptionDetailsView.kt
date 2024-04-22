@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class SubscriptionDetailsView : LinearLayout {
-
     lateinit var binding: SubscriptionDetailsBinding
 
     private var plan: SubscriptionPlan? = null
@@ -39,7 +38,12 @@ class SubscriptionDetailsView : LinearLayout {
     private fun setupView() {
         binding = SubscriptionDetailsBinding.inflate(context.layoutInflater, this, true)
         binding.changeSubscriptionButton.setOnClickListener { changeSubscriptionButtonTapped() }
-        binding.heartIcon.setImageDrawable(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfHeartLightBg()))
+        binding.heartIcon.setImageDrawable(
+            BitmapDrawable(
+                context.resources,
+                HabiticaIconsHelper.imageOfHeartLightBg(),
+            ),
+        )
     }
 
     fun setPlan(plan: SubscriptionPlan) {
@@ -54,12 +58,15 @@ class SubscriptionDetailsView : LinearLayout {
                 SubscriptionPlan.PLANID_BASIC, SubscriptionPlan.PLANID_BASICEARNED -> {
                     duration = resources.getString(R.string.month)
                 }
+
                 SubscriptionPlan.PLANID_BASIC3MONTH -> {
                     duration = resources.getString(R.string.three_months)
                 }
+
                 SubscriptionPlan.PLANID_BASIC6MONTH, SubscriptionPlan.PLANID_GOOGLE6MONTH -> {
                     duration = resources.getString(R.string.six_months)
                 }
+
                 SubscriptionPlan.PLANID_BASIC12MONTH -> {
                     duration = resources.getString(R.string.twelve_months)
                 }
@@ -67,17 +74,27 @@ class SubscriptionDetailsView : LinearLayout {
         }
 
         when {
-            duration != null -> binding.subscriptionDurationTextView.text = resources.getString(R.string.subscription_duration, duration)
+            duration != null ->
+                binding.subscriptionDurationTextView.text =
+                    resources.getString(R.string.subscription_duration, duration)
+
             plan.isGroupPlanSub -> binding.subscriptionDurationTextView.setText(R.string.member_group_plan)
-            plan.dateTerminated != null -> binding.subscriptionDurationTextView.text = resources.getString(R.string.ending_on, DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()))
+            plan.dateTerminated != null ->
+                binding.subscriptionDurationTextView.text =
+                    resources.getString(
+                        R.string.ending_on,
+                        DateFormat.getDateInstance().format(plan.dateTerminated ?: Date()),
+                    )
         }
 
         if ((plan.extraMonths ?: 0) > 0) {
             binding.subscriptionCreditCard.visibility = View.VISIBLE
             if (plan.extraMonths == 1) {
-                binding.subscriptionCreditTextView.text = resources.getString(R.string.subscription_credit_canceling, 1)
+                binding.subscriptionCreditTextView.text =
+                    resources.getString(R.string.subscription_credit_canceling, 1)
             } else {
-                binding.subscriptionCreditTextView.text = resources.getString(R.string.subscription_credit_canceling, plan.extraMonths)
+                binding.subscriptionCreditTextView.text =
+                    resources.getString(R.string.subscription_credit_canceling, plan.extraMonths)
             }
         } else {
             binding.subscriptionCreditCard.visibility = View.GONE
@@ -88,26 +105,35 @@ class SubscriptionDetailsView : LinearLayout {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_amazon)
                 binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.amazon)
             }
+
             "Apple" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_apple)
-                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.apple_pay)
+                binding.subscriptionPaymentMethodTextview.text =
+                    context.getString(R.string.apple_pay)
             }
+
             "Google" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_google)
-                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.google_pay)
+                binding.subscriptionPaymentMethodTextview.text =
+                    context.getString(R.string.google_pay)
             }
+
             "PayPal" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_paypal)
                 binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.paypal)
             }
+
             "Stripe" -> {
                 binding.paymentProcessorImageView.setImageResource(R.drawable.payment_stripe)
-                binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.stripe_payment)
+                binding.subscriptionPaymentMethodTextview.text =
+                    context.getString(R.string.stripe_payment)
             }
+
             else -> {
                 if (plan.isGiftedSub) {
                     binding.paymentProcessorImageView.setImageResource(R.drawable.payment_gift)
-                    binding.subscriptionPaymentMethodTextview.text = context.getString(R.string.gifted)
+                    binding.subscriptionPaymentMethodTextview.text =
+                        context.getString(R.string.gifted)
                 } else {
                     binding.paymentProcessorWrapper.visibility = View.GONE
                 }
@@ -120,12 +146,14 @@ class SubscriptionDetailsView : LinearLayout {
 
         if (plan.isActive && plan.dateTerminated == null) {
             val now = LocalDate.now()
-            val nextHourglassDate = LocalDate.now().plusMonths(plan.monthsUntilNextHourglass.toLong())
-            val format = if (now.year != nextHourglassDate.year) {
-                "MMM YYYY"
-            } else {
-                "MMMM"
-            }
+            val nextHourglassDate =
+                LocalDate.now().plusMonths(plan.monthsUntilNextHourglass.toLong())
+            val format =
+                if (now.year != nextHourglassDate.year) {
+                    "MMM YYYY"
+                } else {
+                    "MMMM"
+                }
             val nextHourglassMonth = nextHourglassDate.format(DateTimeFormatter.ofPattern(format))
             nextHourglassMonth?.let { binding.nextHourglassTextview.text = it }
         } else {
@@ -195,11 +223,12 @@ class SubscriptionDetailsView : LinearLayout {
 
     private fun changeSubscriptionButtonTapped() {
         if (plan?.paymentMethod != null && plan?.dateTerminated == null) {
-            val url = if (plan?.paymentMethod == "Google") {
-                "https://play.google.com/store/account/subscriptions"
-            } else {
-                context.getString(R.string.base_url) + "/"
-            }
+            val url =
+                if (plan?.paymentMethod == "Google") {
+                    "https://play.google.com/store/account/subscriptions"
+                } else {
+                    context.getString(R.string.base_url) + "/"
+                }
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } else if (plan?.dateTerminated != null) {
             onShowSubscriptionOptions?.invoke()

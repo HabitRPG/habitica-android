@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.StatsViewBinding
-import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.extensions.setTintWith
 
 @Composable
 fun StatsViewComposable(
@@ -48,12 +48,12 @@ fun StatsViewComposable(
     buffValue: Int,
     allocatedValue: Int,
     canAllocate: Boolean,
-    allocateAction: () -> Unit
+    allocateAction: () -> Unit,
 ) {
     Column(
         Modifier
             .background(colorResource(R.color.window_background))
-            .clip(MaterialTheme.shapes.large)
+            .clip(MaterialTheme.shapes.large),
     ) {
         Row(
             Modifier
@@ -62,38 +62,74 @@ fun StatsViewComposable(
                 .background(statColor)
                 .padding(horizontal = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(statText, color = colorResource(R.color.white))
-            Text("${levelValue + equipmentValue + buffValue + allocatedValue}", color = colorResource(R.color.white))
+            Text(
+                "${levelValue + equipmentValue + buffValue + allocatedValue}",
+                color = colorResource(R.color.white),
+            )
         }
         Row(
             Modifier.height(61.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center,
+                Alignment.CenterHorizontally,
+            ) {
                 Text(text = "$levelValue", fontSize = 20.sp)
-                Text(text = stringResource(R.string.level), color = colorResource(R.color.text_quad), fontSize = 12.sp)
-            }
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally) {
-                Text(text = "$equipmentValue", fontSize = 20.sp)
-                Text(text = stringResource(R.string.sidebar_equipment), color = colorResource(R.color.text_quad), fontSize = 12.sp)
-            }
-            Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Center, Alignment.CenterHorizontally) {
-                Text(text = "$buffValue", fontSize = 20.sp)
-                Text(text = stringResource(R.string.buffs), color = colorResource(R.color.text_quad), fontSize = 12.sp)
+                Text(
+                    text = stringResource(R.string.level),
+                    color = colorResource(R.color.text_quad),
+                    fontSize = 12.sp,
+                )
             }
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .background(colorResource(if (canAllocate) R.color.offset_background_30 else R.color.window_background)),
+                modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center,
-                Alignment.CenterHorizontally
+                Alignment.CenterHorizontally,
             ) {
-                Text(text = "$allocatedValue", fontSize = 20.sp, color = if (canAllocate) statColor else colorResource(R.color.text_primary))
-                Text(text = stringResource(R.string.allocated), color = if (canAllocate) statColor else colorResource(R.color.text_quad), fontSize = 12.sp)
+                Text(text = "$equipmentValue", fontSize = 20.sp)
+                Text(
+                    text = stringResource(R.string.sidebar_equipment),
+                    color = colorResource(R.color.text_quad),
+                    fontSize = 12.sp,
+                )
+            }
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center,
+                Alignment.CenterHorizontally,
+            ) {
+                Text(text = "$buffValue", fontSize = 20.sp)
+                Text(
+                    text = stringResource(R.string.buffs),
+                    color = colorResource(R.color.text_quad),
+                    fontSize = 12.sp,
+                )
+            }
+            Column(
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
+                        .background(colorResource(if (canAllocate) R.color.offset_background_30 else R.color.window_background)),
+                verticalArrangement = Arrangement.Center,
+                Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = "$allocatedValue",
+                    fontSize = 20.sp,
+                    color = if (canAllocate) statColor else colorResource(R.color.text_primary),
+                )
+                Text(
+                    text = stringResource(R.string.allocated),
+                    color = if (canAllocate) statColor else colorResource(R.color.text_quad),
+                    fontSize = 12.sp,
+                )
             }
             AnimatedVisibility(visible = canAllocate) {
                 TextButton(
@@ -102,10 +138,13 @@ fun StatsViewComposable(
                         .width(48.dp)
                         .fillMaxHeight()
                         .background(
-                            colorResource(id = R.color.offset_background_30)
-                        )
+                            colorResource(id = R.color.offset_background_30),
+                        ),
                 ) {
-                    Image(HabiticaIconsHelper.imageOfAttributeAllocateButton().asImageBitmap(), null)
+                    Image(
+                        HabiticaIconsHelper.imageOfAttributeAllocateButton().asImageBitmap(),
+                        null,
+                    )
                 }
             }
         }
@@ -123,7 +162,7 @@ fun StatsViewPreview() {
             equipmentValue = 5,
             buffValue = 4,
             allocatedValue = 8,
-            canAllocate = false
+            canAllocate = false,
         ) {}
         StatsViewComposable(
             statText = "Intelligence",
@@ -132,7 +171,7 @@ fun StatsViewPreview() {
             equipmentValue = 5,
             buffValue = 4,
             allocatedValue = 20,
-            canAllocate = true
+            canAllocate = true,
         ) {}
     }
 }
@@ -172,15 +211,35 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
             field = value
             binding.allocateButton.visibility = if (value) View.VISIBLE else View.GONE
             if (value) {
-                binding.allocatedWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background_30))
-                binding.allocateButton.setBackgroundColor(ContextCompat.getColor(context, R.color.offset_background_30))
+                binding.allocatedWrapper.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.offset_background_30,
+                    ),
+                )
+                binding.allocateButton.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.offset_background_30,
+                    ),
+                )
                 binding.allocatedValueTextView.setTextColor(statColor)
                 binding.allocatedLabelView.setTextColor(statColor)
             } else {
                 binding.allocatedWrapper.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
                 binding.allocateButton.setBackgroundColor(context.getThemeColor(R.attr.colorWindowBackground))
-                binding.allocatedValueTextView.setTextColor(ContextCompat.getColor(context, R.color.text_primary))
-                binding.allocatedLabelView.setTextColor(ContextCompat.getColor(context, R.color.text_quad))
+                binding.allocatedValueTextView.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.text_primary,
+                    ),
+                )
+                binding.allocatedLabelView.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.text_quad,
+                    ),
+                )
             }
         }
 
@@ -189,17 +248,25 @@ class StatsView(context: Context, attrs: AttributeSet?) : LinearLayout(context, 
     private var statColor: Int = 0
 
     init {
-        val attributes = context.theme?.obtainStyledAttributes(
-            attrs,
-            R.styleable.StatsView,
-            0,
-            0
-        )
+        val attributes =
+            context.theme?.obtainStyledAttributes(
+                attrs,
+                R.styleable.StatsView,
+                0,
+                0,
+            )
 
-        val backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg_white)
+        val backgroundDrawable =
+            ContextCompat.getDrawable(context, R.drawable.layout_top_rounded_bg_white)
         if (attributes != null) {
             statColor = attributes.getColor(R.styleable.StatsView_statsColor, 0)
-            backgroundDrawable?.setTintWith(attributes.getColor(R.styleable.StatsView_titleBackgroundColor, 0), PorterDuff.Mode.MULTIPLY)
+            backgroundDrawable?.setTintWith(
+                attributes.getColor(
+                    R.styleable.StatsView_titleBackgroundColor,
+                    0,
+                ),
+                PorterDuff.Mode.MULTIPLY,
+            )
             binding.titleTextView.text = attributes.getString(R.styleable.StatsView_statsTitle)
         }
         binding.titleWrapper.background = backgroundDrawable

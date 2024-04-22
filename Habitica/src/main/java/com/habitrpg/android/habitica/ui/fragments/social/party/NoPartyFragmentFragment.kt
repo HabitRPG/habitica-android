@@ -18,12 +18,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentNoPartyBinding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.extensions.DataBindingUtils
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -33,7 +33,6 @@ import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
-
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -45,20 +44,26 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
 
     override var binding: FragmentNoPartyBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentNoPartyBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentNoPartyBinding {
         return FragmentNoPartyBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.refreshLayout?.setOnRefreshListener { this.refresh() }
@@ -71,7 +76,7 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                 parentFragmentManager.popBackStack()
                 MainNavigationController.navigate(
                     R.id.partyFragment,
-                    bundleOf(Pair("partyID", userViewModel.partyID))
+                    bundleOf(Pair("partyID", userViewModel.partyID)),
                 )
             }
         }
@@ -129,7 +134,11 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
                 val aspectRatio = bitmap.width / bitmap.height.toFloat()
                 val height = context.resources.getDimension(R.dimen.shop_height).toInt()
                 val width = (height * aspectRatio).roundToInt()
-                val bitmapDrawable = BitmapDrawable(context.resources, Bitmap.createScaledBitmap(bitmap, width, height, false))
+                val bitmapDrawable =
+                    BitmapDrawable(
+                        context.resources,
+                        Bitmap.createScaledBitmap(bitmap, width, height, false),
+                    )
                 bitmapDrawable.tileModeX = Shader.TileMode.REPEAT
                 if (binding?.noPartyBackground != null) {
                     binding?.noPartyBackground?.background = bitmapDrawable
@@ -138,31 +147,33 @@ class NoPartyFragmentFragment : BaseMainFragment<FragmentNoPartyBinding>() {
         }
     }
 
-    private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val bundle = it.data?.extras
-            if (bundle?.getString("groupType") == "party") {
-                lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    val group = socialRepository.createGroup(
-                        bundle.getString("name"),
-                        bundle.getString("description"),
-                        bundle.getString("leader"),
-                        "party",
-                        bundle.getString("privacy"),
-                        bundle.getBoolean("leaderCreateChallenge")
-                    )
-                    userRepository.retrieveUser(false, true)
-                    if (isAdded) {
-                        parentFragmentManager.popBackStack()
+    private val groupFormResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val bundle = it.data?.extras
+                if (bundle?.getString("groupType") == "party") {
+                    lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                        val group =
+                            socialRepository.createGroup(
+                                bundle.getString("name"),
+                                bundle.getString("description"),
+                                bundle.getString("leader"),
+                                "party",
+                                bundle.getString("privacy"),
+                                bundle.getBoolean("leaderCreateChallenge"),
+                            )
+                        userRepository.retrieveUser(false, true)
+                        if (isAdded) {
+                            parentFragmentManager.popBackStack()
+                        }
+                        MainNavigationController.navigate(
+                            R.id.partyFragment,
+                            bundleOf(Pair("partyID", group?.id)),
+                        )
                     }
-                    MainNavigationController.navigate(
-                        R.id.partyFragment,
-                        bundleOf(Pair("partyID", group?.id))
-                    )
                 }
             }
         }
-    }
 
     private fun refresh() {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {

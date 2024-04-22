@@ -9,7 +9,11 @@ import java.lang.reflect.Type
 
 class FeedResponseDeserializer : JsonDeserializer<FeedResponse> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): FeedResponse {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): FeedResponse {
         val response = FeedResponse()
         response.value = json.asInt
         return response

@@ -6,10 +6,12 @@ import androidx.core.view.isVisible
 import com.habitrpg.android.habitica.R
 
 class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragment() {
-
     var eventType: String = ""
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         when (eventType) {
             EVENT_ARMOIRE_OPENED -> setArmoireEventSubscriptionViews()
@@ -17,7 +19,6 @@ class EventOutcomeSubscriptionBottomSheetFragment : SubscriptionBottomSheetFragm
             EVENT_GEMS_FOR_GOLD -> setGemsForGoldEventSubscriptionViews()
             EVENT_HOURGLASS_SHOP_OPENED -> setHourglassShopEventSubscriptionViews()
         }
-
     }
 
     private fun setArmoireEventSubscriptionViews() {

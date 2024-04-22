@@ -27,7 +27,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GiftGemsActivity : PurchaseActivity() {
-
     private lateinit var binding: ActivityGiftGemsBinding
 
     internal val currencyView: CurrencyView by lazy {
@@ -93,9 +92,11 @@ class GiftGemsActivity : PurchaseActivity() {
 
         setViewPagerAdapter()
 
-        lifecycleScope.launch(ExceptionHandler.coroutine {
-            showMemberLoadingErrorDialog()
-        }) {
+        lifecycleScope.launch(
+            ExceptionHandler.coroutine {
+                showMemberLoadingErrorDialog()
+            },
+        ) {
             val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID)
             if (member == null) {
                 showMemberLoadingErrorDialog()
@@ -121,34 +122,36 @@ class GiftGemsActivity : PurchaseActivity() {
     }
 
     private fun setViewPagerAdapter() {
-        val statePagerAdapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
-            override fun createFragment(position: Int): Fragment {
-                return if (position == 0) {
-                    val fragment = GiftPurchaseGemsFragment()
-                    fragment.setPurchaseHandler(purchaseHandler)
-                    fragment.setupCheckout()
-                    purchaseFragment = fragment
-                    purchaseFragment?.giftedMember = giftedMember
-                    fragment
-                } else {
-                    val fragment = GiftBalanceGemsFragment()
-                    balanceFragment = fragment
-                    balanceFragment?.giftedMember = giftedMember
-                    fragment
+        val statePagerAdapter =
+            object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    return if (position == 0) {
+                        val fragment = GiftPurchaseGemsFragment()
+                        fragment.setPurchaseHandler(purchaseHandler)
+                        fragment.setupCheckout()
+                        purchaseFragment = fragment
+                        purchaseFragment?.giftedMember = giftedMember
+                        fragment
+                    } else {
+                        val fragment = GiftBalanceGemsFragment()
+                        balanceFragment = fragment
+                        balanceFragment?.giftedMember = giftedMember
+                        fragment
+                    }
+                }
+
+                override fun getItemCount(): Int {
+                    return 2
                 }
             }
-
-            override fun getItemCount(): Int {
-                return 2
-            }
-        }
         binding.viewPager.adapter = statePagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> getString(R.string.purchase)
-                1 -> getString(R.string.from_balance)
-                else -> ""
-            }
+            tab.text =
+                when (position) {
+                    0 -> getString(R.string.purchase)
+                    1 -> getString(R.string.from_balance)
+                    else -> ""
+                }
         }.attach()
         statePagerAdapter.notifyDataSetChanged()
     }

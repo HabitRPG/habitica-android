@@ -8,7 +8,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class QuestCompletedDialog(context: Context) : HabiticaAlertDialog(context) {
-
     lateinit var userRepository: UserRepository
 
     var quest: QuestContent? = null
@@ -32,7 +31,11 @@ class QuestCompletedDialog(context: Context) : HabiticaAlertDialog(context) {
     companion object {
         private var isShowingDialog = false
 
-        fun showWithQuest(context: Context, quest: QuestContent, userRepository: UserRepository) {
+        fun showWithQuest(
+            context: Context,
+            quest: QuestContent,
+            userRepository: UserRepository,
+        ) {
             if (isShowingDialog) return
 
             val dialog = QuestCompletedDialog(context)

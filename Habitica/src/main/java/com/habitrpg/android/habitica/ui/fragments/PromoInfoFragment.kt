@@ -11,10 +11,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
-
     override var binding: FragmentPromoInfoBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentPromoInfoBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentPromoInfoBinding {
         return FragmentPromoInfoBinding.inflate(inflater, container, false)
     }
 
@@ -24,13 +26,16 @@ class PromoInfoFragment : BaseMainFragment<FragmentPromoInfoBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val promo = configManager.activePromo()
         promo?.configureInfoFragment(this)

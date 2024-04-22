@@ -18,27 +18,34 @@ class PromoWebFragment : BaseMainFragment<FragmentNewsBinding>() {
 
     override var binding: FragmentNewsBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentNewsBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentNewsBinding {
         return FragmentNewsBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val webSettings = binding?.newsWebview?.settings
         webSettings?.javaScriptEnabled = true
         webSettings?.domStorageEnabled = true
-        binding?.newsWebview?.webChromeClient = object : WebChromeClient() {
-        }
+        binding?.newsWebview?.webChromeClient =
+            object : WebChromeClient() {
+            }
         arguments?.let {
             val args = PromoWebFragmentArgs.fromBundle(it)
             var url = args.url

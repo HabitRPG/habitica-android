@@ -22,7 +22,8 @@ import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 
-class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class PetDetailRecyclerAdapter :
+    androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var onFeed: (suspend (Pet, Food?) -> FeedResponse?)? = null
     var onEquip: ((String) -> Unit)? = null
     private var existingMounts: List<Mount>? = null
@@ -43,7 +44,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         this.notifyDataSetChanged()
     }
 
-    var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
+    var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? =
+        null
 
     private fun canRaiseToMount(pet: Pet): Boolean {
         if (pet.type == "special") return false
@@ -58,11 +60,15 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
     private fun eggCount(pet: Pet): Int {
         return ownedItems?.get(pet.animal + "-eggs")?.numberOwned ?: 0
     }
+
     private fun potionCount(pet: Pet): Int {
         return ownedItems?.get(pet.color + "-hatchingPotions")?.numberOwned ?: 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): androidx.recyclerview.widget.RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
             2 -> CanHatchViewHolder(parent, animalIngredientsRetriever)
@@ -71,14 +77,15 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         when (val obj = this.itemList[position]) {
             is StableSection -> {
                 (holder as? SectionViewHolder)?.bind(obj)
             }
+
             is Pet -> {
-                val trained = ownedPets?.get(obj.key ?: "")?.trained ?: 0
+                val trained = ownedPets?.get(obj.key)?.trained ?: 0
                 val eggCount = eggCount(obj)
                 val potionCount = potionCount(obj)
                 if (trained <= 0 && eggCount > 0 && potionCount > 0) {
@@ -88,7 +95,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                         potionCount,
                         ownedItems?.get(obj.animal + "-eggs") != null,
                         ownedItems?.get(obj.color + "-hatchingPotions") != null,
-                        ownedMounts?.containsKey(obj.key) == true
+                        ownedMounts?.containsKey(obj.key) == true,
                     )
                 } else {
                     (holder as? PetViewHolder)?.bind(
@@ -101,7 +108,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                         ownedItems?.get(obj.animal + "-eggs") != null,
                         ownedItems?.get(obj.color + "-hatchingPotions") != null,
                         ownedMounts?.containsKey(obj.key) == true,
-                        currentPet
+                        currentPet,
                     )
                 }
             }
@@ -115,8 +122,8 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
         } else {
             val pet = itemList[position] as Pet
             if ((
-                ownedPets?.get(pet.key)?.trained
-                    ?: 0
+                    ownedPets?.get(pet.key)?.trained
+                        ?: 0
                 ) <= 0 && eggCount(pet) > 0 && potionCount(pet) > 0
             ) {
                 2
@@ -144,13 +151,21 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0) > 0 else false
+        ownsSaddles =
+            if (ownedItems.containsKey("Saddle-food")) {
+                (
+                    ownedItems["Saddle-food"]?.numberOwned
+                        ?: 0
+                ) > 0
+            } else {
+                false
+            }
         notifyDataSetChanged()
     }
 
     class CanHatchViewHolder(
         parent: ViewGroup,
-        private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?
+        private val ingredientsReceiver: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)?,
     ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(parent.inflate(R.layout.can_hatch_item)),
         View.OnClickListener {
         private var binding = CanHatchItemBinding.bind(itemView)
@@ -172,7 +187,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
             potionCount: Int,
             hasUnlockedEgg: Boolean,
             hasUnlockedPotion: Boolean,
-            hasMount: Boolean
+            hasMount: Boolean,
         ) {
             this.animal = item
             this.eggCount = eggCount
@@ -201,7 +216,7 @@ class PetDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapt
                         potionCount,
                         hasUnlockedEgg,
                         hasUnlockedPotion,
-                        hasMount
+                        hasMount,
                     )
                     dialog.show()
                 }

@@ -15,19 +15,26 @@ class CurrencyViews : LinearLayout {
             gemTextView.lightBackground = value
             goldTextView.lightBackground = value
         }
-    private val hourglassTextView: CurrencyView = CurrencyView(context, "hourglasses", lightBackground)
+    private val hourglassTextView: CurrencyView =
+        CurrencyView(context, "hourglasses", lightBackground)
     private val goldTextView: CurrencyView = CurrencyView(context, "gold", lightBackground)
     private val gemTextView: CurrencyView = CurrencyView(context, "gems", lightBackground)
 
     var gold: Double
         get() = goldTextView.value
-        set(value) { goldTextView.value = value }
+        set(value) {
+            goldTextView.value = value
+        }
     var gems: Double
         get() = gemTextView.value
-        set(value) { gemTextView.value = value }
+        set(value) {
+            gemTextView.value = value
+        }
     var hourglasses: Double
         get() = hourglassTextView.value
-        set(value) { hourglassTextView.value = value }
+        set(value) {
+            hourglassTextView.value = value
+        }
 
     var hourglassVisibility
         get() = hourglassTextView.visibility
@@ -37,21 +44,28 @@ class CurrencyViews : LinearLayout {
         }
     var goldVisibility: Int
         get() = goldTextView.visibility
-        set(value) { goldTextView.visibility = value }
+        set(value) {
+            goldTextView.visibility = value
+        }
     var gemVisibility
         get() = gemTextView.visibility
-        set(value) { gemTextView.visibility = value }
+        set(value) {
+            gemTextView.visibility = value
+        }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        val attributes = context.theme?.obtainStyledAttributes(
-            attrs,
-            R.styleable.CurrencyViews,
-            0,
-            0
-        )
+        val attributes =
+            context.theme?.obtainStyledAttributes(
+                attrs,
+                R.styleable.CurrencyViews,
+                0,
+                0,
+            )
         setupViews()
         val fallBackLight = !context.isUsingNightModeResources()
-        lightBackground = attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, fallBackLight) ?: fallBackLight
+        lightBackground =
+            attributes?.getBoolean(R.styleable.CurrencyViews_hasLightBackground, fallBackLight)
+                ?: fallBackLight
     }
 
     constructor(context: Context?) : super(context) {
@@ -59,13 +73,21 @@ class CurrencyViews : LinearLayout {
     }
 
     private fun setupViews() {
-        val margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12f, context.resources.displayMetrics).toInt()
+        val margin =
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                12f,
+                context.resources.displayMetrics,
+            ).toInt()
         setupView(hourglassTextView, margin)
         setupView(goldTextView, margin)
         setupView(gemTextView, margin)
     }
 
-    private fun setupView(view: CurrencyView, margin: Int) {
+    private fun setupView(
+        view: CurrencyView,
+        margin: Int,
+    ) {
         this.addView(view)
         view.textSize = 12f
         val params = view.layoutParams as? LayoutParams

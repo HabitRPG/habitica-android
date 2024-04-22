@@ -56,10 +56,12 @@ open class Stats : RealmObject(), AvatarStats, BaseObject {
         if (stats == null) {
             return
         }
-        this.constitution = if (stats.constitution != null) stats.constitution else this.constitution
+        this.constitution =
+            if (stats.constitution != null) stats.constitution else this.constitution
         this.strength = if (stats.strength != null) stats.strength else this.strength
         this.per = if (stats.per != null) stats.per else this.per
-        this.intelligence = if (stats.intelligence != null) stats.intelligence else this.intelligence
+        this.intelligence =
+            if (stats.intelligence != null) stats.intelligence else this.intelligence
         this.training?.merge(stats.training)
         this.buffs?.merge(stats.buffs)
         this.points = if (stats.points != null) stats.points else this.points

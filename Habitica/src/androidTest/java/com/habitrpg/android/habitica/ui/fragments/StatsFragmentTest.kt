@@ -21,32 +21,35 @@ import org.junit.runner.RunWith
 
 class StatsScreen : Screen<StatsScreen>() {
     val strengthStatsView = KView { withId(R.id.strengthStatsView) }
-    val strengthAllocateButton = KButton {
-        withId(R.id.allocateButton)
-        isDescendantOfA { withId(R.id.strengthStatsView) }
-    }
+    val strengthAllocateButton =
+        KButton {
+            withId(R.id.allocateButton)
+            isDescendantOfA { withId(R.id.strengthStatsView) }
+        }
     val intelligenceStatsView = KView { withId(R.id.intelligenceStatsView) }
-    val intelligenceAllocateButton = KButton {
-        withId(R.id.allocateButton)
-        isDescendantOfA { withId(R.id.intelligenceStatsView) }
-    }
+    val intelligenceAllocateButton =
+        KButton {
+            withId(R.id.allocateButton)
+            isDescendantOfA { withId(R.id.intelligenceStatsView) }
+        }
     val constitutionStatsView = KView { withId(R.id.constitutionStatsView) }
-    val constitutionAllocateButton = KButton {
-        withId(R.id.allocateButton)
-        isDescendantOfA { withId(R.id.constitutionStatsView) }
-    }
+    val constitutionAllocateButton =
+        KButton {
+            withId(R.id.allocateButton)
+            isDescendantOfA { withId(R.id.constitutionStatsView) }
+        }
     val perceptionStatsView = KView { withId(R.id.perceptionStatsView) }
-    val perceptionAllocateButton = KButton {
-        withId(R.id.allocateButton)
-        isDescendantOfA { withId(R.id.perceptionStatsView) }
-    }
+    val perceptionAllocateButton =
+        KButton {
+            withId(R.id.allocateButton)
+            isDescendantOfA { withId(R.id.perceptionStatsView) }
+        }
     val bulkAllocateButton = KView { withId(R.id.statsAllocationButton) }
 }
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, StatsScreen>() {
-
     override val screen = StatsScreen()
 
     override fun makeFragment() {
@@ -55,9 +58,10 @@ class StatsFragmentTest : FragmentTestCase<StatsFragment, FragmentStatsBinding, 
     }
 
     override fun launchFragment(args: Bundle?) {
-        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
-            return@launchFragmentInContainer fragment
-        }
+        scenario =
+            launchFragmentInContainer(args, R.style.MainAppTheme) {
+                return@launchFragmentInContainer fragment
+            }
     }
 
     @Before

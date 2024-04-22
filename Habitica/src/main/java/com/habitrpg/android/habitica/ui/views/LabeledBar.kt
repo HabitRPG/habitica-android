@@ -43,8 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.common.habitica.helpers.NumberAbbreviator
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import java.text.NumberFormat
 
 @Composable
@@ -61,44 +61,47 @@ fun LabeledBar(
     disabled: Boolean = false,
     abbreviateValue: Boolean = true,
     abbreviateMax: Boolean = true,
-    animated: Boolean = true
+    animated: Boolean = true,
 ) {
     val cleanedMaxValue = java.lang.Double.max(1.0, maxValue)
 
-    val animatedValue = if (animated) {
-        animateFloatAsState(
-            targetValue = value.toFloat(),
-            animationSpec = spring()
-        ).value
-    } else {
-        value.toFloat()
-    }
+    val animatedValue =
+        if (animated) {
+            animateFloatAsState(
+                targetValue = value.toFloat(),
+                animationSpec = spring(),
+            ).value
+        } else {
+            value.toFloat()
+        }
     val formatter = NumberFormat.getNumberInstance()
     formatter.minimumFractionDigits = 0
     formatter.maximumFractionDigits = 2
 
-    val animatedPadding = animateDpAsState(
-        targetValue = if (displayCompact) {
-            0.dp
-        } else {
-            24.dp
-        }
-    )
+    val animatedPadding =
+        animateDpAsState(
+            targetValue =
+                if (displayCompact) {
+                    0.dp
+                } else {
+                    24.dp
+                },
+        )
 
     Box(
-        modifier = modifier.alpha(if (disabled) 0.5f else 1.0f)
+        modifier = modifier.alpha(if (disabled) 0.5f else 1.0f),
     ) {
         icon?.let {
             AnimatedVisibility(
                 visible = !displayCompact,
                 enter = fadeIn() + slideInHorizontally { -18 },
                 exit = fadeOut() + slideOutHorizontally { -18 },
-                modifier = Modifier.align(Alignment.CenterStart)
+                modifier = Modifier.align(Alignment.CenterStart),
             ) {
                 Image(
                     it.asImageBitmap(),
                     null,
-                    modifier = Modifier
+                    modifier = Modifier,
                 )
             }
         }
@@ -110,36 +113,38 @@ fun LabeledBar(
                     .clip(CircleShape)
                     .height(barHeight),
                 backgroundColor = barColor,
-                color = color
+                color = color,
             )
             AnimatedVisibility(visible = !displayCompact) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(top = 2.dp)
+                    modifier = Modifier.padding(top = 2.dp),
                 ) {
                     if (!disabled) {
-                        val currentValueText = if (abbreviateValue) {
-                            NumberAbbreviator.abbreviate(
-                                LocalContext.current,
-                                animatedValue,
-                                0
-                            )
-                        } else {
-                            formatter.format(animatedValue)
-                        }
-                        val maxValueText = if (abbreviateMax) {
-                            NumberAbbreviator.abbreviate(
-                                LocalContext.current,
-                                cleanedMaxValue,
-                                0
-                            )
-                        } else {
-                            formatter.format(cleanedMaxValue)
-                        }
+                        val currentValueText =
+                            if (abbreviateValue) {
+                                NumberAbbreviator.abbreviate(
+                                    LocalContext.current,
+                                    animatedValue,
+                                    0,
+                                )
+                            } else {
+                                formatter.format(animatedValue)
+                            }
+                        val maxValueText =
+                            if (abbreviateMax) {
+                                NumberAbbreviator.abbreviate(
+                                    LocalContext.current,
+                                    cleanedMaxValue,
+                                    0,
+                                )
+                            } else {
+                                formatter.format(cleanedMaxValue)
+                            }
                         Text(
                             "$currentValueText / $maxValueText",
                             fontSize = 12.sp,
-                            color = colorResource(R.color.text_ternary)
+                            color = colorResource(R.color.text_ternary),
                         )
                     }
                     Spacer(Modifier.weight(1f))
@@ -158,12 +163,13 @@ private fun Preview() {
     var compact: Boolean by remember { mutableStateOf(false) }
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier
-            .width(240.dp)
-            .padding(8.dp)
-            .clickable {
-                compact = !compact
-            }
+        modifier =
+            Modifier
+                .width(240.dp)
+                .padding(8.dp)
+                .clickable {
+                    compact = !compact
+                },
     ) {
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfHeartLightBg(),
@@ -171,7 +177,7 @@ private fun Preview() {
             color = colorResource(R.color.hpColor),
             value = 10.0,
             maxValue = 50.0,
-            displayCompact = compact
+            displayCompact = compact,
         )
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfExperience(),
@@ -180,7 +186,7 @@ private fun Preview() {
             value = 100123.0,
             maxValue = 50000000000000.0,
             displayCompact = compact,
-            abbreviateValue = false
+            abbreviateValue = false,
         )
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfExperience(),
@@ -190,7 +196,7 @@ private fun Preview() {
             maxValue = 500000000000.0,
             displayCompact = compact,
             abbreviateValue = false,
-            abbreviateMax = false
+            abbreviateMax = false,
         )
         LabeledBar(
             icon = HabiticaIconsHelper.imageOfMagic(),
@@ -199,7 +205,7 @@ private fun Preview() {
             value = 10.0,
             maxValue = 5000.0,
             displayCompact = compact,
-            disabled = false
+            disabled = false,
         )
     }
 }

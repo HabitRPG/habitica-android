@@ -7,7 +7,8 @@ import com.habitrpg.android.habitica.models.user.OwnedMount
 import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 
-class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class MountDetailRecyclerAdapter :
+    androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
     var onEquip: ((String) -> Unit)? = null
     private var ownedMounts: Map<String, OwnedMount>? = null
 
@@ -24,7 +25,10 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): androidx.recyclerview.widget.RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
             else -> MountViewHolder(parent, onEquip)
@@ -32,15 +36,21 @@ class MountDetailRecyclerAdapter : androidx.recyclerview.widget.RecyclerView.Ada
 
     override fun onBindViewHolder(
         holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
-        position: Int
+        position: Int,
     ) {
         when (val obj = this.itemList[position]) {
             is StableSection -> (holder as? SectionViewHolder)?.bind(obj)
-            is Mount -> (holder as? MountViewHolder)?.bind(obj, ownedMounts?.get(obj.key ?: "")?.owned == true, currentMount)
+            is Mount ->
+                (holder as? MountViewHolder)?.bind(
+                    obj,
+                    ownedMounts?.get(obj.key)?.owned == true,
+                    currentMount,
+                )
         }
     }
 
-    override fun getItemViewType(position: Int): Int = if (itemList.size > position && itemList[position] is StableSection) 1 else 2
+    override fun getItemViewType(position: Int): Int =
+        if (itemList.size > position && itemList[position] is StableSection) 1 else 2
 
     override fun getItemCount(): Int = itemList.size
 

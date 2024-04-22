@@ -1,7 +1,7 @@
 package com.habitrpg.android.habitica.ui.adapter.social
 
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.extensions.inflate
@@ -12,10 +12,9 @@ import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerIntroViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerMessageViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.ChatRecyclerViewHolder
 
-class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
+class InboxAdapter(private var user: User?) :
+    PagingDataAdapter<ChatMessage, ChatRecyclerViewHolder>(DIFF_CALLBACK) {
     internal var replyToUser: Member? = null
-    private val FIRST_MESSAGE = 0
-    private val NORMAL_MESSAGE = 1
 
     private var expandedMessageId: String? = null
     var onOpenProfile: ((String) -> Unit)? = null
@@ -40,15 +39,24 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
         return if (isPositionIntroMessage(position)) ChatMessage() else super.getItem(position)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRecyclerViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ChatRecyclerViewHolder {
         return if (viewType == FIRST_MESSAGE) {
-            ChatRecyclerIntroViewHolder(parent.inflate(R.layout.tavern_chat_intro_item), replyToUser?.id ?: "")
+            ChatRecyclerIntroViewHolder(
+                parent.inflate(R.layout.tavern_chat_intro_item),
+                replyToUser?.id ?: "",
+            )
         } else {
             ChatRecyclerMessageViewHolder(parent.inflate(R.layout.chat_item), user?.id ?: "", false)
         }
     }
 
-    override fun onBindViewHolder(holder: ChatRecyclerViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ChatRecyclerViewHolder,
+        position: Int,
+    ) {
         val firstMessage: Boolean = getItemViewType(position) == FIRST_MESSAGE
         if (firstMessage) {
             val introHolder = holder as ChatRecyclerIntroViewHolder
@@ -61,7 +69,7 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
                 message,
                 user?.id ?: "",
                 user,
-                expandedMessageId == message.id
+                expandedMessageId == message.id,
             )
             messageHolder.onShouldExpand = { expandMessage(message.id, position) }
             messageHolder.onOpenProfile = onOpenProfile
@@ -72,32 +80,40 @@ class InboxAdapter(private var user: User?) : PagedListAdapter<ChatMessage, Chat
         }
     }
 
-    private fun expandMessage(id: String, position: Int) {
+    private fun expandMessage(
+        id: String,
+        position: Int,
+    ) {
         if (isPositionIntroMessage(position)) {
             return
         }
-        expandedMessageId = if (expandedMessageId == id) {
-            null
-        } else {
-            id
-        }
+        expandedMessageId =
+            if (expandedMessageId == id) {
+                null
+            } else {
+                id
+            }
         notifyItemChanged(position)
     }
 
     companion object {
-        private val DIFF_CALLBACK = object :
-            DiffUtil.ItemCallback<ChatMessage>() {
-            // Concert details may have changed if reloaded from the database,
-            // but ID is fixed.
-            override fun areItemsTheSame(
-                oldConcert: ChatMessage,
-                newConcert: ChatMessage
-            ) = oldConcert.id == newConcert.id
+        private const val FIRST_MESSAGE = 0
+        private const val NORMAL_MESSAGE = 1
 
-            override fun areContentsTheSame(
-                oldConcert: ChatMessage,
-                newConcert: ChatMessage
-            ) = oldConcert.text == newConcert.text
-        }
+        private val DIFF_CALLBACK =
+            object :
+                DiffUtil.ItemCallback<ChatMessage>() {
+                // Concert details may have changed if reloaded from the database,
+                // but ID is fixed.
+                override fun areItemsTheSame(
+                    oldConcert: ChatMessage,
+                    newConcert: ChatMessage,
+                ) = oldConcert.id == newConcert.id
+
+                override fun areContentsTheSame(
+                    oldConcert: ChatMessage,
+                    newConcert: ChatMessage,
+                ) = oldConcert.text == newConcert.text
+            }
     }
 }

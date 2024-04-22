@@ -64,7 +64,7 @@ private fun getBackgroundPainter(): ImageBitmap {
             Calendar.NOVEMBER -> R.drawable.stable_tile_november
             Calendar.DECEMBER -> R.drawable.stable_tile_december
             else -> R.drawable.stable_tile_may
-        }
+        },
     )
 }
 
@@ -74,26 +74,27 @@ fun MountBottomSheet(
     isCurrentMount: Boolean,
     onEquip: ((String) -> Unit)?,
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val infiniteTransition = rememberInfiniteTransition()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(horizontal = 22.dp)
+        modifier = modifier.padding(horizontal = 22.dp),
     ) {
         Text(
             mount.text ?: "",
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
-            color = HabiticaTheme.colors.textTertiary
+            color = HabiticaTheme.colors.textTertiary,
         )
         Box(
-            modifier = Modifier
-                .padding(top = 9.dp, bottom = 16.dp)
-                .fillMaxWidth()
-                .height(124.dp)
-                .clip(HabiticaTheme.shapes.medium)
+            modifier =
+                Modifier
+                    .padding(top = 9.dp, bottom = 16.dp)
+                    .fillMaxWidth()
+                    .height(124.dp)
+                    .clip(HabiticaTheme.shapes.medium),
         ) {
             BackgroundScene()
 
@@ -104,38 +105,50 @@ fun MountBottomSheet(
                 infiniteTransition.animateFloat(
                     initialValue = 4f,
                     targetValue = 0f,
-                    animationSpec = infiniteRepeatable(
-                        tween(
-                            2500,
-                            easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f)
-                        ), RepeatMode.Reverse
-                    ),
-                    label = "animalPosition"
+                    animationSpec =
+                        infiniteRepeatable(
+                            tween(
+                                2500,
+                                easing = CubicBezierEasing(0.3f, 0.0f, 0.2f, 1.0f),
+                            ),
+                            RepeatMode.Reverse,
+                        ),
+                    label = "animalPosition",
                 )
             } else {
                 infiniteTransition.animateFloat(
                     initialValue = regularPosition,
                     targetValue = highJump,
-                    animationSpec = infiniteRepeatable(animation = keyframes {
-                        durationMillis = 6000
-                        regularPosition at 0 with LinearOutSlowInEasing
-                        highJump at 150 with LinearOutSlowInEasing
-                        regularPosition at 300 with FastOutSlowInEasing
-                        regularPosition at 1800 with FastOutSlowInEasing
-                        lowJump at 1850 with LinearOutSlowInEasing
-                        regularPosition at 1900 with LinearOutSlowInEasing
-                        regularPosition at 2100 with FastOutSlowInEasing
-                        lowJump at 2200 with LinearOutSlowInEasing
-                        regularPosition at 2350 with LinearOutSlowInEasing
-                        regularPosition at 6000
-                    }, RepeatMode.Restart, StartOffset(1500)), label = "animalPosition"
+                    animationSpec =
+                        infiniteRepeatable(
+                            animation =
+                                keyframes {
+                                    durationMillis = 6000
+                                    regularPosition at 0 using LinearOutSlowInEasing
+                                    highJump at 150 using LinearOutSlowInEasing
+                                    regularPosition at 300 using FastOutSlowInEasing
+                                    regularPosition at 1800 using FastOutSlowInEasing
+                                    lowJump at 1850 using LinearOutSlowInEasing
+                                    regularPosition at 1900 using LinearOutSlowInEasing
+                                    regularPosition at 2100 using FastOutSlowInEasing
+                                    lowJump at 2200 using LinearOutSlowInEasing
+                                    regularPosition at 2350 using LinearOutSlowInEasing
+                                    regularPosition at 6000
+                                },
+                            RepeatMode.Restart,
+                            StartOffset(1500),
+                        ),
+                    label = "animalPosition",
                 )
             }
-            MountView(mount, modifier = Modifier
-                    .offset(0.dp, position.dp)
-                    .size(81.dp, 99.dp)
-                    .align(Alignment.TopCenter)
-                    .zIndex(2f)
+            MountView(
+                mount,
+                modifier =
+                    Modifier
+                        .offset(0.dp, position.dp)
+                        .size(81.dp, 99.dp)
+                        .align(Alignment.TopCenter)
+                        .zIndex(2f),
             )
         }
         val context = LocalContext.current
@@ -150,11 +163,13 @@ fun MountBottomSheet(
                         ShareMountUseCase.RequestValues(
                             mount.key,
                             "",
-                            context
-                        ))
+                            context,
+                        ),
+                    )
                 }
                 onDismiss()
-            }) {
+            },
+        ) {
             Text(stringResource(id = R.string.share))
         }
         HabiticaButton(
@@ -164,7 +179,8 @@ fun MountBottomSheet(
             onClick = {
                 onEquip?.invoke(mount.key)
                 onDismiss()
-            }) {
+            },
+        ) {
             if (isCurrentMount) {
                 Text(stringResource(id = R.string.unequip))
             } else {
@@ -177,14 +193,16 @@ fun MountBottomSheet(
 fun isAnimalFlying(animal: Animal): Boolean {
     if (listOf(
             "FlyingPig",
-            "Bee"
+            "Bee",
         ).contains(animal.animal)
-    ) return true
+    ) {
+        return true
+    }
     return listOf(
         "Ghost",
         "Cupid",
         "Fairy",
         "SolarSystem",
-        "Vampire"
+        "Vampire",
     ).contains(animal.color)
 }

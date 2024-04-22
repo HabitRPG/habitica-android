@@ -17,7 +17,10 @@ import com.habitrpg.common.habitica.helpers.AppConfigManager
 import com.habitrpg.common.habitica.views.PixelArtView
 import java.util.Date
 
-fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
+fun PixelArtView.loadImage(
+    imageName: String?,
+    imageFormat: String? = null,
+) {
     val shouldLoadImage = DataBindingUtils.existsAsImage(imageName)
     if (shouldLoadImage && imageName != null) {
         val fullname = DataBindingUtils.getFullFilename(imageName, imageFormat)
@@ -27,25 +30,29 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
         tag = fullname
         setImageDrawable(null)
         bitmap = null
-        DataBindingUtils.loadImage(context, imageName, imageFormat,
-            imageResult ={
+        DataBindingUtils.loadImage(
+            context,
+            imageName,
+            imageFormat,
+            imageResult = {
                 if (tag == fullname) {
-                    bitmap = if (fullname.endsWith("gif")) {
-                        setImageDrawable(it)
-                        if (it is Animatable) {
-                            it.start()
+                    bitmap =
+                        if (fullname.endsWith("gif")) {
+                            setImageDrawable(it)
+                            if (it is Animatable) {
+                                it.start()
+                            }
+                            null
+                        } else {
+                            it.toBitmap()
                         }
-                        null
-                    } else {
-                        it.toBitmap()
-                    }
                 }
             },
             imageError = {
                 tag = null
                 setImageDrawable(null)
                 bitmap = null
-            }
+            },
         )
     } else {
         tag = null
@@ -55,7 +62,11 @@ fun PixelArtView.loadImage(imageName: String?, imageFormat: String? = null) {
 }
 
 object DataBindingUtils {
-    fun loadImage(context: Context, imageName: String, imageResult: (Drawable) -> Unit) {
+    fun loadImage(
+        context: Context,
+        imageName: String,
+        imageResult: (Drawable) -> Unit,
+    ) {
         loadImage(context, imageName, null, imageResult)
     }
 
@@ -64,40 +75,48 @@ object DataBindingUtils {
         imageName: String,
         imageFormat: String?,
         imageResult: (Drawable) -> Unit,
-        imageError:()->Unit = { }
+        imageError: () -> Unit = { },
     ) {
-        val request = ImageRequest.Builder(context)
-            .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
-            .target(
-                onStart = { _ ->
-
-                },
-                onSuccess = {
-                    imageResult(it)
-                },
-                onError = {
-                    imageError()
-                }
-            )
-            .build()
+        val request =
+            ImageRequest.Builder(context)
+                .data(BASE_IMAGE_URL + getFullFilename(imageName, imageFormat))
+                .target(
+                    onStart = { _ ->
+                    },
+                    onSuccess = {
+                        imageResult(it)
+                    },
+                    onError = {
+                        imageError()
+                    },
+                )
+                .build()
         context.imageLoader.enqueue(request)
     }
 
-    fun getFullFilename(imageName: String, imageFormat: String? = null): String {
-        val name = when {
-            spriteSubstitutions.containsKey(imageName) -> spriteSubstitutions[imageName]
-            FILENAME_MAP.containsKey(imageName) -> FILENAME_MAP[imageName]
-            imageName.startsWith("handleless") -> "chair_$imageName"
-            else -> imageName
-        }
-        return name + if (imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
-            "." + FILEFORMAT_MAP[imageName]
-        } else {
-            ".${imageFormat ?: "png"}"
-        }
+    fun getFullFilename(
+        imageName: String,
+        imageFormat: String? = null,
+    ): String {
+        val name =
+            when {
+                spriteSubstitutions.containsKey(imageName) -> spriteSubstitutions[imageName]
+                FILENAME_MAP.containsKey(imageName) -> FILENAME_MAP[imageName]
+                imageName.startsWith("handleless") -> "chair_$imageName"
+                else -> imageName
+            }
+        return name +
+            if (imageFormat == null && FILEFORMAT_MAP.containsKey(imageName)) {
+                "." + FILEFORMAT_MAP[imageName]
+            } else {
+                ".${imageFormat ?: "png"}"
+            }
     }
 
-    fun setRoundedBackground(view: View, color: Int) {
+    fun setRoundedBackground(
+        view: View,
+        color: Int,
+    ) {
         val drawable = ResourcesCompat.getDrawable(view.resources, R.drawable.layout_rounded_bg, null)
         drawable?.setTintWith(color, PorterDuff.Mode.MULTIPLY)
         view.background = drawable
@@ -119,7 +138,10 @@ object DataBindingUtils {
             initializeWeight = layoutParams.weight
         }
 
-        override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
+        override fun applyTransformation(
+            interpolatedTime: Float,
+            t: Transformation,
+        ) {
             layoutParams.weight = initializeWeight + (targetWeight - initializeWeight) * interpolatedTime
 
             view.requestLayout()

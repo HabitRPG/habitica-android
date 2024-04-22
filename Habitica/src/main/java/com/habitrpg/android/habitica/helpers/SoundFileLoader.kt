@@ -20,7 +20,9 @@ class SoundFileLoader(private val context: Context) {
 
     private val externalCacheDir: String?
         get() {
-            val cacheDir = HabiticaBaseApplication.getInstance(context)?.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS)
+            val cacheDir =
+                HabiticaBaseApplication.getInstance(context)
+                    ?.getExternalFilesDir(Environment.DIRECTORY_NOTIFICATIONS)
             return cacheDir?.path
         }
 

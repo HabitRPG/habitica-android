@@ -18,8 +18,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class GroupActivityNotification(context: Context, identifier: String?) : HabiticaLocalNotification(context, identifier) {
-
+class GroupActivityNotification(context: Context, identifier: String?) :
+    HabiticaLocalNotification(context, identifier) {
     override fun getNotificationID(data: MutableMap<String, String>): Int {
         return data["groupID"].hashCode()
     }
@@ -27,17 +27,22 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
     override fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val user = Person.Builder().setName("You").build()
         val message = makeMessageFromData(data)
-        var style = NotificationCompat.MessagingStyle(user)
-            .setGroupConversation(true)
-            .setConversationTitle(data["groupName"])
+        var style =
+            NotificationCompat.MessagingStyle(user)
+                .setGroupConversation(true)
+                .setConversationTitle(data["groupName"])
 
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
-        val existingNotifications = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
-        } else {
-            null
-        }
-        val oldMessages = existingNotifications?.firstOrNull()?.notification?.extras?.getBundle("messages")?.get("messages") as? ArrayList<Map<String, String>> ?: arrayListOf()
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+        val existingNotifications =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                notificationManager?.activeNotifications?.filter { it.id == getNotificationID(data) }
+            } else {
+                null
+            }
+        val oldMessages =
+            existingNotifications?.firstOrNull()?.notification?.extras?.getBundle("messages")
+                ?.get("messages") as? ArrayList<Map<String, String>> ?: arrayListOf()
         for (oldMessage in oldMessages) {
             style = style.addMessage(makeMessageFromData(oldMessage))
         }
@@ -57,20 +62,24 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
         return NotificationCompat.MessagingStyle.Message(
             messageText,
             timestamp.time,
-            sender
+            sender,
         )
     }
 
-    override fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
+    override fun setNotificationActions(
+        notificationId: Int,
+        data: Map<String, String>,
+    ) {
         super.setNotificationActions(notificationId, data)
         val groupID = data["groupID"] ?: return
 
         val actionName = context.getString(R.string.group_message_reply)
         val replyLabel: String = context.getString(R.string.reply)
-        val remoteInput: RemoteInput = RemoteInput.Builder(actionName).run {
-            setLabel(replyLabel)
-            build()
-        }
+        val remoteInput: RemoteInput =
+            RemoteInput.Builder(actionName).run {
+                setLabel(replyLabel)
+                build()
+            }
         val intent = Intent(context, LocalNotificationActionReceiver::class.java)
         intent.action = actionName
         intent.putExtra("groupID", groupID)
@@ -80,14 +89,14 @@ class GroupActivityNotification(context: Context, identifier: String?) : Habitic
                 context,
                 groupID.hashCode(),
                 intent,
-                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
+                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
             )
 
         val action: NotificationCompat.Action =
             NotificationCompat.Action.Builder(
                 R.drawable.ic_send_grey_600_24dp,
                 context.getString(R.string.reply),
-                replyPendingIntent
+                replyPendingIntent,
             )
                 .addRemoteInput(remoteInput)
                 .build()

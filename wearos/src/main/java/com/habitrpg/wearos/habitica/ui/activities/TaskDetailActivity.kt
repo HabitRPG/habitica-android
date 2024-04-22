@@ -15,7 +15,6 @@ import java.text.DateFormat
 
 @AndroidEntryPoint
 class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailViewModel>() {
-
     override val viewModel: TaskDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,24 +31,25 @@ class TaskDetailActivity : BaseActivity<ActivityTaskDetailBinding, TaskDetailVie
     private fun openEditFormOnPhone() {
         sendMessage("edit_task", "/tasks/edit", viewModel.taskID?.toByteArray()) {}
         startActivity(
-            Intent(this, ContinuePhoneActivity::class.java)
+            Intent(this, ContinuePhoneActivity::class.java),
         )
     }
 
     private fun subscribeUI() {
         viewModel.task.observe(this) { task ->
-            binding.taskTypeView.text = when (task?.type) {
-                TaskType.HABIT -> getString(R.string.habit)
-                TaskType.DAILY -> getString(R.string.daily)
-                TaskType.TODO -> getString(R.string.todo)
-                TaskType.REWARD -> getString(R.string.reward)
-                null -> ""
-            }
+            binding.taskTypeView.text =
+                when (task?.type) {
+                    TaskType.HABIT -> getString(R.string.habit)
+                    TaskType.DAILY -> getString(R.string.daily)
+                    TaskType.TODO -> getString(R.string.todo)
+                    TaskType.REWARD -> getString(R.string.reward)
+                    null -> ""
+                }
             binding.taskTypeView.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    task?.extraLightTaskColor ?: R.color.watch_white
-                )
+                    task?.extraLightTaskColor ?: R.color.watch_white,
+                ),
             )
             binding.taskTextView.text = task?.text
             if (task?.notes?.isNotBlank() == true) {

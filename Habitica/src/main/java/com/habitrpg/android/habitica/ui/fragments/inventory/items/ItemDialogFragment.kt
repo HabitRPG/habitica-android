@@ -12,11 +12,9 @@ import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentItemsDialogBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
-import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.Analytics
 import com.habitrpg.android.habitica.helpers.EventCategory
 import com.habitrpg.android.habitica.helpers.HitType
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
 import com.habitrpg.android.habitica.interactors.HatchPetUseCase
 import com.habitrpg.android.habitica.models.inventory.Egg
@@ -35,8 +33,10 @@ import com.habitrpg.android.habitica.ui.helpers.SafeDefaultItemAnimator
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.dialogs.OpenedMysteryitemDialog
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +48,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
-
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -80,7 +79,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
     override var binding: FragmentItemsDialogBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentItemsDialogBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentItemsDialogBinding {
         return FragmentItemsDialogBinding.inflate(inflater, container, false)
     }
 
@@ -92,15 +94,17 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         when {
             this.isHatching -> {
                 dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
             }
+
             this.isFeeding -> {
                 dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
             }
+
             else -> {
             }
         }
@@ -110,40 +114,50 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val buttonMethod = {
-            Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
-                "area" to "empty",
-                "type" to (itemType ?: "")
-            ))
+            Analytics.sendEvent(
+                "Items CTA tap",
+                EventCategory.BEHAVIOUR,
+                HitType.EVENT,
+                mapOf(
+                    "area" to "empty",
+                    "type" to (itemType ?: ""),
+                ),
+            )
             if (itemType == "quests") {
                 MainNavigationController.navigate(R.id.questShopFragment)
             } else {
                 openMarket()
             }
         }
-        binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.no_x, itemTypeText ?: itemType),
-            when (itemType) {
-                "food" -> getString(R.string.empty_food_description)
-                "quests" -> getString(R.string.empty_quests_description)
-                "special" -> getString(R.string.empty_special_description_subscribed)
-                "eggs" -> getString(R.string.empty_eggs_description)
-                "hatchingPotions" -> getString(R.string.empty_potions_description)
-                else -> ""
-            },
-            when (itemType) {
-                "eggs" -> R.drawable.icon_eggs
-                "hatchingPotions" -> R.drawable.icon_hatchingpotions
-                "food" -> R.drawable.icon_food
-                "quests" -> R.drawable.icon_quests
-                "special" -> R.drawable.icon_special
-                else -> null
-            },
-            false,
-            if (itemType == "special") null else buttonMethod)
+        binding?.recyclerView?.emptyItem =
+            EmptyItem(
+                getString(R.string.no_x, itemTypeText ?: itemType),
+                when (itemType) {
+                    "food" -> getString(R.string.empty_food_description)
+                    "quests" -> getString(R.string.empty_quests_description)
+                    "special" -> getString(R.string.empty_special_description_subscribed)
+                    "eggs" -> getString(R.string.empty_eggs_description)
+                    "hatchingPotions" -> getString(R.string.empty_potions_description)
+                    else -> ""
+                },
+                when (itemType) {
+                    "eggs" -> R.drawable.icon_eggs
+                    "hatchingPotions" -> R.drawable.icon_hatchingpotions
+                    "food" -> R.drawable.icon_food
+                    "quests" -> R.drawable.icon_quests
+                    "special" -> R.drawable.icon_special
+                    else -> null
+                },
+                false,
+                if (itemType == "special") null else buttonMethod,
+            )
 
         layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         binding?.recyclerView?.layoutManager = layoutManager
@@ -163,13 +177,17 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
 
         when {
             this.isHatching -> {
-                binding?.titleTextView?.text = getString(R.string.hatch_with, this.hatchingItem?.text)
+                binding?.titleTextView?.text =
+                    getString(R.string.hatch_with, this.hatchingItem?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
             }
+
             this.isFeeding -> {
-                binding?.titleTextView?.text = getString(R.string.dialog_feeding, this.feedingPet?.text)
+                binding?.titleTextView?.text =
+                    getString(R.string.dialog_feeding, this.feedingPet?.text)
                 binding?.titleTextView?.visibility = View.VISIBLE
             }
+
             else -> {
                 binding?.titleTextView?.visibility = View.GONE
             }
@@ -232,10 +250,15 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
             adapter?.onFeedPet = { food -> feedPet(food) }
 
             adapter?.onOpenShop = {
-                Analytics.sendEvent("Items CTA tap", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf(
-                    "area" to "bottom",
-                    "type" to (itemType ?: "")
-                ))
+                Analytics.sendEvent(
+                    "Items CTA tap",
+                    EventCategory.BEHAVIOUR,
+                    HitType.EVENT,
+                    mapOf(
+                        "area" to "bottom",
+                        "type" to (itemType ?: ""),
+                    ),
+                )
                 if (itemType == "quests") {
                     MainNavigationController.navigate(R.id.questShopFragment)
                 } else {
@@ -249,13 +272,14 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         val pet = feedingPet ?: return
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
-            val result = feedPetUseCase.callInteractor(
-                FeedPetUseCase.RequestValues(
-                    pet,
-                    food,
-                    activity
+            val result =
+                feedPetUseCase.callInteractor(
+                    FeedPetUseCase.RequestValues(
+                        pet,
+                        food,
+                        activity,
+                    ),
                 )
-            )
             onFeedResult?.invoke(result)
         }
     }
@@ -276,7 +300,10 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
         outState.putString(ITEM_TYPE_KEY, this.itemType)
     }
 
-    private fun hatchPet(potion: HatchingPotion, egg: Egg) {
+    private fun hatchPet(
+        potion: HatchingPotion,
+        egg: Egg,
+    ) {
         dismiss()
         val activity = activity ?: return
         activity.lifecycleScope.launchCatching {
@@ -284,34 +311,38 @@ class ItemDialogFragment : BaseDialogFragment<FragmentItemsDialogBinding>() {
                 HatchPetUseCase.RequestValues(
                     potion,
                     egg,
-                    activity
-                )
+                    activity,
+                ),
             )
         }
     }
 
     private fun loadItems() {
-        val itemClass: Class<out Item> = when (itemType) {
-            "eggs" -> Egg::class.java
-            "hatchingPotions" -> HatchingPotion::class.java
-            "food" -> Food::class.java
-            "quests" -> QuestContent::class.java
-            "special" -> SpecialItem::class.java
-            else -> Egg::class.java
-        }
+        val itemClass: Class<out Item> =
+            when (itemType) {
+                "eggs" -> Egg::class.java
+                "hatchingPotions" -> HatchingPotion::class.java
+                "food" -> Food::class.java
+                "quests" -> QuestContent::class.java
+                "special" -> SpecialItem::class.java
+                else -> Egg::class.java
+            }
         itemType?.let { type ->
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
                 inventoryRepository.getOwnedItems(type)
                     .onEach { items ->
-                        val filteredItems = if (isFeeding) {
-                            items.filter { it.key != "Saddle" }.distinctBy { it.key }
-                        } else {
-                            items.distinctBy { it.key }
-                        }
+                        val filteredItems =
+                            if (isFeeding) {
+                                items.filter { it.key != "Saddle" }.distinctBy { it.key }
+                            } else {
+                                items.distinctBy { it.key }
+                            }
                         adapter?.data = filteredItems
                     }
                     .map { items -> items.mapNotNull { it.key } }
-                    .map { inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull() }
+                    .map {
+                        inventoryRepository.getItems(itemClass, it.toTypedArray()).firstOrNull()
+                    }
                     .collect {
                         val itemMap = mutableMapOf<String, Item>()
                         for (item in it ?: emptyList()) {

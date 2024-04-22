@@ -22,7 +22,6 @@ class MainActivityScreen : Screen<MainActivityScreen>() {
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest : ActivityTestCase() {
-
     val screen = MainActivityScreen()
 
     lateinit var scenario: ActivityScenario<MainActivity>

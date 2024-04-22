@@ -20,14 +20,15 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 import kotlinx.coroutines.delay
 
-class ShareMountUseCase: UseCase<ShareMountUseCase.RequestValues, Unit>() {
+class ShareMountUseCase : UseCase<ShareMountUseCase.RequestValues, Unit>() {
     class RequestValues(val mountKey: String, val message: String, val context: Context) :
         UseCase.RequestValues
 
     override suspend fun run(requestValues: RequestValues) {
         val mountWrapper = MountImageviewBinding.inflate(requestValues.context.layoutInflater)
         mountWrapper.root.visibility = View.INVISIBLE
-        val width = if (mountWrapper.root.width > 0) mountWrapper.root.width else 300.dpToPx(requestValues.context)
+        val width =
+            if (mountWrapper.root.width > 0) mountWrapper.root.width else 300.dpToPx(requestValues.context)
         val height = 124.dpToPx(requestValues.context)
         mountWrapper.root.layout(0, 0, width, height)
         mountWrapper.mountImageview.setMount(requestValues.mountKey)
@@ -47,11 +48,12 @@ class ShareMountUseCase: UseCase<ShareMountUseCase.RequestValues, Unit>() {
         }
         mountWrapper.backgroundView.layout(0, 0, width, height)
         mountWrapper.mountImageview.layout(0, 0, width, height)
-        val sharedImage = Bitmap.createBitmap(
-            width,
-            height,
-            Bitmap.Config.ARGB_8888
-        )
+        val sharedImage =
+            Bitmap.createBitmap(
+                width,
+                height,
+                Bitmap.Config.ARGB_8888,
+            )
         val canvas = Canvas(sharedImage)
         var attempts = 0
         while (!mountWrapper.mountImageview.hasLoadedImages && attempts < 200) {
@@ -61,9 +63,11 @@ class ShareMountUseCase: UseCase<ShareMountUseCase.RequestValues, Unit>() {
         // Draw it to the canvas once it's layouted
         mountWrapper.root.doOnNextLayout {
             mountWrapper.root.draw(canvas)
-            ((requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
-                requestValues.context
-            )?.currentActivity?.get())?.shareContent("pet", requestValues.message, sharedImage)
+            (
+                (requestValues.context as? BaseActivity) ?: HabiticaBaseApplication.getInstance(
+                    requestValues.context,
+                )?.currentActivity?.get()
+            )?.shareContent("pet", requestValues.message, sharedImage)
             containerView?.removeView(mountWrapper.root)
         }
         // trigger layout

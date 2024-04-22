@@ -9,9 +9,8 @@ import com.habitrpg.android.habitica.modules.AuthenticationHandler
 abstract class BaseRepositoryImpl<T : BaseLocalRepository>(
     protected val localRepository: T,
     protected val apiClient: ApiClient,
-    protected val authenticationHandler: AuthenticationHandler
+    protected val authenticationHandler: AuthenticationHandler,
 ) : BaseRepository {
-
     val currentUserID: String
         get() = authenticationHandler.currentUserID ?: ""
 

@@ -23,11 +23,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val viewModel: MainViewModel by viewModels()
-    private val adapter = HubAdapter().apply {
-        onRefresh = {
-            viewModel.retrieveFullUserData()
+    private val adapter =
+        HubAdapter().apply {
+            onRefresh = {
+                viewModel.retrieveFullUserData()
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -46,72 +47,73 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onStart() {
         super.onStart()
-        adapter.data = listOf(
-            MenuItem(
-                "createTask",
-                getString(R.string.new_task),
-                AppCompatResources.getDrawable(this, R.drawable.icon_plus),
-                ContextCompat.getColor(this, R.color.watch_purple_100),
-                ContextCompat.getColor(this, R.color.black),
-                true
-            ) {
-                openTaskFormActivity()
-            },
-            MenuItem(
-                TaskType.DAILY.value,
-                getString(R.string.dailies),
-                AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
-            ) {
-                openTasklist(TaskType.DAILY)
-            },
-            MenuItem(
-                TaskType.TODO.value,
-                getString(R.string.todos),
-                AppCompatResources.getDrawable(this, R.drawable.icon_todos),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
-            ) {
-                openTasklist(TaskType.TODO)
-            },
-            MenuItem(
-                TaskType.HABIT.value,
-                getString(R.string.habits),
-                AppCompatResources.getDrawable(this, R.drawable.icon_habits),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
-            ) {
-                openTasklist(TaskType.HABIT)
-            },
-            MenuItem(
-                "stats",
-                getString(R.string.stats),
-                AppCompatResources.getDrawable(this, R.drawable.icon_stats),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
-            ) {
-                openStatsActivity()
-            },
-            MenuItem(
-                "avatar",
-                getString(R.string.avatar),
-                AppCompatResources.getDrawable(this, R.drawable.icon_avatar),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
-            ) {
-                openAvatarActivity()
-            },
-            MenuItem(
-                "settings",
-                getString(R.string.settings),
-                AppCompatResources.getDrawable(this, R.drawable.icon_settings),
-                ContextCompat.getColor(this, R.color.watch_purple_200),
-                ContextCompat.getColor(this, R.color.watch_purple_700)
-            ) {
-                openSettingsActivity()
-            }
-        )
+        adapter.data =
+            listOf(
+                MenuItem(
+                    "createTask",
+                    getString(R.string.new_task),
+                    AppCompatResources.getDrawable(this, R.drawable.icon_plus),
+                    ContextCompat.getColor(this, R.color.watch_purple_100),
+                    ContextCompat.getColor(this, R.color.black),
+                    true,
+                ) {
+                    openTaskFormActivity()
+                },
+                MenuItem(
+                    TaskType.DAILY.value,
+                    getString(R.string.dailies),
+                    AppCompatResources.getDrawable(this, R.drawable.icon_dailies),
+                    ContextCompat.getColor(this, R.color.watch_purple_200),
+                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                ) {
+                    openTasklist(TaskType.DAILY)
+                },
+                MenuItem(
+                    TaskType.TODO.value,
+                    getString(R.string.todos),
+                    AppCompatResources.getDrawable(this, R.drawable.icon_todos),
+                    ContextCompat.getColor(this, R.color.watch_purple_200),
+                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                ) {
+                    openTasklist(TaskType.TODO)
+                },
+                MenuItem(
+                    TaskType.HABIT.value,
+                    getString(R.string.habits),
+                    AppCompatResources.getDrawable(this, R.drawable.icon_habits),
+                    ContextCompat.getColor(this, R.color.watch_purple_200),
+                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                ) {
+                    openTasklist(TaskType.HABIT)
+                },
+                MenuItem(
+                    "stats",
+                    getString(R.string.stats),
+                    AppCompatResources.getDrawable(this, R.drawable.icon_stats),
+                    ContextCompat.getColor(this, R.color.watch_purple_200),
+                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                ) {
+                    openStatsActivity()
+                },
+                MenuItem(
+                    "avatar",
+                    getString(R.string.avatar),
+                    AppCompatResources.getDrawable(this, R.drawable.icon_avatar),
+                    ContextCompat.getColor(this, R.color.watch_purple_200),
+                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                ) {
+                    openAvatarActivity()
+                },
+                MenuItem(
+                    "settings",
+                    getString(R.string.settings),
+                    AppCompatResources.getDrawable(this, R.drawable.icon_settings),
+                    ContextCompat.getColor(this, R.color.watch_purple_200),
+                    ContextCompat.getColor(this, R.color.watch_purple_700),
+                ) {
+                    openSettingsActivity()
+                },
+            )
         lifecycleScope.launch {
             viewModel.user
                 .filterNotNull()
@@ -142,14 +144,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         viewModel.periodicUserRefresh()
     }
 
-    private val openTaskForm = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val taskType = result.data?.getStringExtra("task_type")?.let { TaskType.from(it) }
-            if (taskType != null) {
-                openTasklist(taskType)
+    private val openTaskForm =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val taskType = result.data?.getStringExtra("task_type")?.let { TaskType.from(it) }
+                if (taskType != null) {
+                    openTasklist(taskType)
+                }
             }
         }
-    }
 
     private fun openTaskFormActivity() {
         openTaskForm.launch(Intent(this, TaskFormActivity::class.java))
@@ -168,9 +171,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun openTasklist(type: TaskType) {
-        val intent = Intent(this, TaskListActivity::class.java).apply {
-            putExtra("task_type", type.value)
-        }
+        val intent =
+            Intent(this, TaskListActivity::class.java).apply {
+                putExtra("task_type", type.value)
+            }
         startActivity(intent)
     }
 }

@@ -70,7 +70,7 @@ class Notification {
         // Custom notification types (created by this app)
         GUILD_INVITATION("GUILD_INVITATION"),
         PARTY_INVITATION("PARTY_INVITATION"),
-        QUEST_INVITATION("QUEST_INVITATION")
+        QUEST_INVITATION("QUEST_INVITATION"),
     }
 
     var id: String = ""

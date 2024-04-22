@@ -41,7 +41,10 @@ class HostConfig {
         this.apiKey = loadAPIKey(sharedPreferences, keyHelper)
     }
 
-    private fun loadAPIKey(sharedPreferences: SharedPreferences, keyHelper: KeyHelper?): String {
+    private fun loadAPIKey(
+        sharedPreferences: SharedPreferences,
+        keyHelper: KeyHelper?,
+    ): String {
         return if (sharedPreferences.contains(userID)) {
             val encryptedKey = sharedPreferences.getString(userID, null)
             if (encryptedKey?.isNotBlank() == true) {

@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.databinding.ActivityArmoireBinding
-import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AdHandler
 import com.habitrpg.android.habitica.helpers.AdType
 import com.habitrpg.android.habitica.helpers.Analytics
@@ -26,12 +25,13 @@ import com.habitrpg.android.habitica.ui.fragments.purchases.EventOutcomeSubscrip
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.ads.AdButton
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaBottomSheetDialog
-import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.Animations
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.views.HabiticaCircularProgressView
 import com.plattysoft.leonids.ParticleSystem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
@@ -43,7 +43,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ArmoireActivity : BaseActivity() {
-
     private var equipmentKey: String? = null
     private var gold: Double? = null
     private var hasAnimatedChanges: Boolean = false
@@ -93,12 +92,13 @@ class ArmoireActivity : BaseActivity() {
         }
 
         if (appConfigManager.enableArmoireAds()) {
-            val handler = AdHandler(this, AdType.ARMOIRE) {
-                if (!it) {
-                    return@AdHandler
+            val handler =
+                AdHandler(this, AdType.ARMOIRE) {
+                    if (!it) {
+                        return@AdHandler
+                    }
+                    giveUserArmoire()
                 }
-                giveUserArmoire()
-            }
             handler.prepare {
                 if (it && binding.adButton.state == AdButton.State.LOADING) {
                     binding.adButton.state = AdButton.State.READY
@@ -144,10 +144,14 @@ class ArmoireActivity : BaseActivity() {
 
         binding.subscribeModalButton.setOnClickListener {
             Analytics.sendEvent("View armoire sub CTA", EventCategory.BEHAVIOUR, HitType.EVENT)
-            val subscriptionBottomSheet = EventOutcomeSubscriptionBottomSheetFragment().apply {
-                eventType = EVENT_ARMOIRE_OPENED
-            }
-            subscriptionBottomSheet.show(supportFragmentManager, EventOutcomeSubscriptionBottomSheetFragment.TAG)
+            val subscriptionBottomSheet =
+                EventOutcomeSubscriptionBottomSheetFragment().apply {
+                    eventType = EVENT_ARMOIRE_OPENED
+                }
+            subscriptionBottomSheet.show(
+                supportFragmentManager,
+                EventOutcomeSubscriptionBottomSheetFragment.TAG,
+            )
         }
 
         binding.closeButton.setOnClickListener {
@@ -224,7 +228,7 @@ class ArmoireActivity : BaseActivity() {
                 buyResponse.armoire["type"] ?: "",
                 buyResponse.armoire["dropKey"] ?: "",
                 buyResponse.armoire["dropText"] ?: "",
-                buyResponse.armoire["value"] ?: ""
+                buyResponse.armoire["value"] ?: "",
             )
             hasAnimatedChanges = false
             gold = null
@@ -267,7 +271,7 @@ class ArmoireActivity : BaseActivity() {
                 createParticles(container, R.drawable.confetti_yellow)
                 createParticles(container, R.drawable.confetti_purple)
             },
-            500
+            500,
         )
 
         binding.iconView.startAnimation(Animations.bobbingAnimation())
@@ -297,12 +301,15 @@ class ArmoireActivity : BaseActivity() {
         hasAnimatedChanges = true
     }
 
-    private fun createParticles(container: FrameLayout, resource: Int) {
+    private fun createParticles(
+        container: FrameLayout,
+        resource: Int,
+    ) {
         ParticleSystem(
             container,
             30,
             ContextCompat.getDrawable(this, resource),
-            6000
+            6000,
         )
             .setRotationSpeed(144f)
             .setScaleRange(1.0f, 1.6f)
@@ -311,18 +318,26 @@ class ArmoireActivity : BaseActivity() {
             .emitWithGravity(binding.confettiAnchor, Gravity.TOP, 15, 2000)
     }
 
-    fun configure(type: String, key: String, text: String, value: String? = "") {
-        binding.titleView.text = text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+    fun configure(
+        type: String,
+        key: String,
+        text: String,
+        value: String? = "",
+    ) {
+        binding.titleView.text =
+            text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         binding.equipButton.visibility = if (type == "gear") View.VISIBLE else View.GONE
         when (type) {
             "gear" -> {
                 binding.subtitleView.text = getString(R.string.armoireEquipment_new)
                 binding.iconView.loadImage("shop_$key")
             }
+
             "food" -> {
                 binding.subtitleView.text = getString(R.string.armoireFood_new)
                 binding.iconView.loadImage("Pet_Food_$key")
             }
+
             else -> {
                 @SuppressLint("SetTextI18n")
                 binding.titleView.text = "+$value ${binding.titleView.text}"

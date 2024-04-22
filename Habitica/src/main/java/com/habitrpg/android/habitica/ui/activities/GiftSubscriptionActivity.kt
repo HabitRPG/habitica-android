@@ -26,7 +26,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GiftSubscriptionActivity : PurchaseActivity() {
-
     private lateinit var binding: ActivityGiftSubscriptionBinding
 
     @Inject
@@ -85,15 +84,17 @@ class GiftSubscriptionActivity : PurchaseActivity() {
         }
 
         if (giftedUsername?.isNotBlank() == true) {
-            binding.usernameTextView.text = "@${giftedUsername}"
+            binding.usernameTextView.text = "@$giftedUsername"
         }
 
         binding.subscriptionButton.setOnClickListener {
             selectedSubscriptionSku?.let { sku -> purchaseSubscription(sku) }
         }
-        lifecycleScope.launch(ExceptionHandler.coroutine {
-            showMemberLoadingErrorDialog()
-        }) {
+        lifecycleScope.launch(
+            ExceptionHandler.coroutine {
+                showMemberLoadingErrorDialog()
+            },
+        ) {
             val member = socialRepository.retrieveMember(giftedUsername ?: giftedUserID)
             if (member == null) {
                 showMemberLoadingErrorDialog()
@@ -131,10 +132,12 @@ class GiftSubscriptionActivity : PurchaseActivity() {
                 for (sku in skus) {
                     updateButtonLabel(sku)
                 }
-                skus.minByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }?.let { selectSubscription(it) }
+                skus.minByOrNull { it.oneTimePurchaseOfferDetails?.priceAmountMicros ?: 0 }
+                    ?.let { selectSubscription(it) }
             }
         }
     }
+
     private fun updateButtonLabel(sku: ProductDetails) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
@@ -160,10 +163,10 @@ class GiftSubscriptionActivity : PurchaseActivity() {
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
         return when (sku) {
-            PurchaseTypes.Subscription1MonthNoRenew -> binding.subscription1MonthView
-            PurchaseTypes.Subscription3MonthNoRenew -> binding.subscription3MonthView
-            PurchaseTypes.Subscription6MonthNoRenew -> binding.subscription6MonthView
-            PurchaseTypes.Subscription12MonthNoRenew -> binding.subscription12MonthView
+            PurchaseTypes.SUBSCRIPTION_1_MONTH_NORENEW -> binding.subscription1MonthView
+            PurchaseTypes.SUBSCRIPTION_3_MONTH_NORENEW -> binding.subscription3MonthView
+            PurchaseTypes.SUBSCRIPTION_6_MONTH_NORENEW -> binding.subscription6MonthView
+            PurchaseTypes.SUBSCRIPTION_12_MONTH_NORENEW -> binding.subscription12MonthView
             else -> null
         }
     }

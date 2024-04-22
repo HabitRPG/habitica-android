@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import androidx.core.widget.NestedScrollView
 
 class LockableScrollView(context: Context, attrs: AttributeSet) : NestedScrollView(context, attrs) {
-
     var isScrollable = true
 
     override fun onTouchEvent(ev: MotionEvent): Boolean {

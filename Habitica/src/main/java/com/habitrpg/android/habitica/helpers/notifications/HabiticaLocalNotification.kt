@@ -18,16 +18,16 @@ import java.util.Date
  */
 abstract class HabiticaLocalNotification(
     protected var context: Context,
-    protected var identifier: String?
+    protected var identifier: String?,
 ) {
-
     protected var data: Map<String, String>? = null
     protected var title: String? = null
     protected var message: String? = null
 
-    protected var notificationBuilder = NotificationCompat.Builder(context, "default")
-        .setSmallIcon(R.drawable.ic_gryphon_white)
-        .setAutoCancel(true)
+    protected var notificationBuilder =
+        NotificationCompat.Builder(context, "default")
+            .setSmallIcon(R.drawable.ic_gryphon_white)
+            .setAutoCancel(true)
 
     open fun configureNotificationBuilder(data: MutableMap<String, String>): NotificationCompat.Builder {
         val path = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -37,7 +37,11 @@ abstract class HabiticaLocalNotification(
     }
 
     @CallSuper
-    open fun notifyLocally(title: String?, message: String?, data: MutableMap<String, String>) {
+    open fun notifyLocally(
+        title: String?,
+        message: String?,
+        data: MutableMap<String, String>,
+    ) {
         this.title = title
         this.message = message
 
@@ -65,16 +69,20 @@ abstract class HabiticaLocalNotification(
         this.data = data
     }
 
-    protected open fun setNotificationActions(notificationId: Int, data: Map<String, String>) {
+    protected open fun setNotificationActions(
+        notificationId: Int,
+        data: Map<String, String>,
+    ) {
         val intent = Intent(context, MainActivity::class.java)
         configureMainIntent(intent)
         intent.putExtra("NOTIFICATION_ID", notificationId)
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            3000,
-            intent,
-            withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
-        )
+        val pendingIntent =
+            PendingIntent.getActivity(
+                context,
+                3000,
+                intent,
+                withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+            )
         notificationBuilder.setContentIntent(pendingIntent)
     }
 

@@ -6,7 +6,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.BottomSheetWrapperBinding
 
-open class HabiticaBottomSheetDialog(context: Context) : BottomSheetDialog(context, R.style.SheetDialog) {
+open class HabiticaBottomSheetDialog(context: Context) :
+    BottomSheetDialog(context, R.style.SheetDialog) {
     private val wrapperBinding = BottomSheetWrapperBinding.inflate(layoutInflater)
 
     init {

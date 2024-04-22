@@ -8,12 +8,11 @@ import com.habitrpg.android.habitica.models.Skill
 import java.lang.reflect.Type
 
 class SkillDeserializer : JsonDeserializer<List<Skill>> {
-
     @Throws(JsonParseException::class)
     override fun deserialize(
         json: JsonElement,
         type: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): List<Skill> {
         val jsonObject = json.asJsonObject
         val skills = ArrayList<Skill>()

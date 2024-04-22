@@ -13,40 +13,41 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(
-    userRepository: UserRepository,
-    taskRepository: TaskRepository,
-    exceptionBuilder: ExceptionHandlerBuilder,
-    private val apiClient: ApiClient,
-    private val sharedPreferences: SharedPreferences,
-    appStateManager: AppStateManager
-) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
-
-    fun logout() {
-        sharedPreferences.edit {
-            clear()
+class SettingsViewModel
+    @Inject
+    constructor(
+        userRepository: UserRepository,
+        taskRepository: TaskRepository,
+        exceptionBuilder: ExceptionHandlerBuilder,
+        private val apiClient: ApiClient,
+        private val sharedPreferences: SharedPreferences,
+        appStateManager: AppStateManager,
+    ) : BaseViewModel(userRepository, taskRepository, exceptionBuilder, appStateManager) {
+        fun logout() {
+            sharedPreferences.edit {
+                clear()
+            }
+            apiClient.updateAuthenticationCredentials(null, null)
+            userRepository.clearData()
+            taskRepository.clearData()
         }
-        apiClient.updateAuthenticationCredentials(null, null)
-        userRepository.clearData()
-        taskRepository.clearData()
-    }
 
-    fun resyncData() {
-        viewModelScope.launch(exceptionBuilder.userFacing(this)) {
-            appStateManager.startLoading()
-            val user = userRepository.retrieveUser(true)
-            taskRepository.retrieveTasks(user?.tasksOrder, true)
-            appStateManager.endLoading()
+        fun resyncData() {
+            viewModelScope.launch(exceptionBuilder.userFacing(this)) {
+                appStateManager.startLoading()
+                val user = userRepository.retrieveUser(true)
+                taskRepository.retrieveTasks(user?.tasksOrder, true)
+                appStateManager.endLoading()
+            }
+        }
+
+        fun setHideTaskResults(hide: Boolean) {
+            sharedPreferences.edit {
+                putBoolean("hide_task_results", hide)
+            }
+        }
+
+        fun isTaskResultHidden(): Boolean {
+            return sharedPreferences.getBoolean("hide_task_results", false)
         }
     }
-
-    fun setHideTaskResults(hide: Boolean) {
-        sharedPreferences.edit {
-            putBoolean("hide_task_results", hide)
-        }
-    }
-
-    fun isTaskResultHidden(): Boolean {
-        return sharedPreferences.getBoolean("hide_task_results", false)
-    }
-}

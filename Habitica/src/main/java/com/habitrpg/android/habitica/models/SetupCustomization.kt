@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.models
 
 class SetupCustomization {
-
     var key: String = ""
     var drawableId: Int? = null
     var colorId: Int? = null
@@ -11,8 +10,11 @@ class SetupCustomization {
     var subcategory: String = ""
 
     companion object {
-
-        fun createSize(key: String, drawableId: Int, text: String): SetupCustomization {
+        fun createSize(
+            key: String,
+            drawableId: Int,
+            text: String,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.drawableId = drawableId
@@ -23,7 +25,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createShirt(key: String, drawableId: Int): SetupCustomization {
+        fun createShirt(
+            key: String,
+            drawableId: Int,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.drawableId = drawableId
@@ -33,7 +38,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createSkin(key: String, colorId: Int?): SetupCustomization {
+        fun createSkin(
+            key: String,
+            colorId: Int?,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.colorId = colorId
@@ -42,7 +50,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createHairColor(key: String, colorId: Int?): SetupCustomization {
+        fun createHairColor(
+            key: String,
+            colorId: Int?,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.colorId = colorId
@@ -52,7 +63,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createHairBangs(key: String, drawableId: Int?): SetupCustomization {
+        fun createHairBangs(
+            key: String,
+            drawableId: Int?,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.drawableId = drawableId
@@ -62,7 +76,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createHairPonytail(key: String, drawableId: Int?): SetupCustomization {
+        fun createHairPonytail(
+            key: String,
+            drawableId: Int?,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.drawableId = drawableId
@@ -72,7 +89,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createGlasses(key: String, drawableId: Int?): SetupCustomization {
+        fun createGlasses(
+            key: String,
+            drawableId: Int?,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.drawableId = drawableId
@@ -82,7 +102,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createFlower(key: String, drawableId: Int?): SetupCustomization {
+        fun createFlower(
+            key: String,
+            drawableId: Int?,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.drawableId = drawableId
@@ -92,7 +115,10 @@ class SetupCustomization {
             return customization
         }
 
-        fun createWheelchair(key: String, drawableId: Int?): SetupCustomization {
+        fun createWheelchair(
+            key: String,
+            drawableId: Int?,
+        ): SetupCustomization {
             val customization = SetupCustomization()
             customization.key = key
             customization.drawableId = drawableId

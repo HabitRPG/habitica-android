@@ -46,7 +46,7 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         if (this.usesBottomNavigation) {
             bottomNavigation?.visibility = View.VISIBLE
@@ -68,7 +68,10 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
             enableToolbarScrolling()
         }
         context?.let {
-            FirebaseAnalytics.getInstance(it).logEvent("fragment_view", bundleOf(Pair("fragment", this::class.java.canonicalName)))
+            FirebaseAnalytics.getInstance(it).logEvent(
+                "fragment_view",
+                bundleOf(Pair("fragment", this::class.java.canonicalName)),
+            )
         }
 
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -85,7 +88,10 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
         mainActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         mainActivity?.toolbar?.let { ToolbarColorHelper.colorizeToolbar(it, mainActivity) }
         updateToolbarInteractivity()
@@ -126,7 +132,8 @@ abstract class BaseMainFragment<VB : ViewBinding> : BaseFragment<VB>() {
 
     private fun enableToolbarScrolling() {
         val params = collapsingToolbar?.layoutParams as? AppBarLayout.LayoutParams
-        params?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+        params?.scrollFlags =
+            AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
     }
 
     protected fun tintMenuIcon(item: MenuItem?) {

@@ -89,11 +89,11 @@ class AccountPreferenceFragment :
         val user = user ?: return
         configurePreference(
             findPreference("username"),
-            user.authentication?.localAuthentication?.username
+            user.authentication?.localAuthentication?.username,
         )
         configurePreference(
             findPreference("email"),
-            user.authentication?.localAuthentication?.email ?: getString(R.string.not_set)
+            user.authentication?.localAuthentication?.email ?: getString(R.string.not_set),
         )
         findPreference<Preference>("confirm_username")?.isVisible =
             user.flags?.verifiedUsername != true
@@ -145,7 +145,10 @@ class AccountPreferenceFragment :
         configurePreference(findPreference("UserID"), user.id)
     }
 
-    private fun configurePreference(preference: Preference?, value: String?) {
+    private fun configurePreference(
+        preference: Preference?,
+        value: String?,
+    ) {
         (preference as? EditTextPreference)?.let {
             it.text = value
         }
@@ -182,17 +185,19 @@ class AccountPreferenceFragment :
                 return true
             }
 
-            "display_name" -> updateUser(
-                "profile.name",
-                user?.profile?.name,
-                getString(R.string.display_name)
-            )
+            "display_name" ->
+                updateUser(
+                    "profile.name",
+                    user?.profile?.name,
+                    getString(R.string.display_name),
+                )
 
-            "photo_url" -> updateUser(
-                "profile.imageUrl",
-                user?.profile?.imageUrl,
-                getString(R.string.photo_url)
-            )
+            "photo_url" ->
+                updateUser(
+                    "profile.imageUrl",
+                    user?.profile?.imageUrl,
+                    getString(R.string.photo_url),
+                )
 
             "about" -> updateUser("profile.blurb", user?.profile?.blurb, getString(R.string.about))
             "google_auth" -> {
@@ -221,7 +226,10 @@ class AccountPreferenceFragment :
         return super.onPreferenceTreeClick(preference)
     }
 
-    private fun disconnect(network: String, networkName: String) {
+    private fun disconnect(
+        network: String,
+        networkName: String,
+    ) {
         context?.let { context ->
             val dialog = HabiticaAlertDialog(context)
             dialog.setTitle(R.string.are_you_sure)
@@ -244,7 +252,7 @@ class AccountPreferenceFragment :
                 activity?.let { it1 ->
                     viewModel.handleGoogleLoginResult(
                         it1,
-                        recoverFromPlayServicesErrorResult
+                        recoverFromPlayServicesErrorResult,
                     ) { _ ->
                         displayAuthenticationSuccess(getString(R.string.google))
                     }
@@ -255,30 +263,35 @@ class AccountPreferenceFragment :
     private fun displayAuthenticationSuccess(network: String) {
         (activity as? SnackbarActivity)?.showSnackbar(
             content = context?.getString(R.string.added_social_auth, network),
-            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
         )
     }
 
     private fun displayDisconnectSuccess(network: String) {
         (activity as? SnackbarActivity)?.showSnackbar(
             content = context?.getString(R.string.removed_social_auth, network),
-            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+            displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
         )
     }
 
-    private val recoverFromPlayServicesErrorResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode != Activity.RESULT_CANCELED) {
-            activity?.let { it1 ->
-                viewModel.handleGoogleLoginResult(it1, null) { _ ->
-                    displayAuthenticationSuccess(getString(R.string.google))
+    private val recoverFromPlayServicesErrorResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) {
+            if (it.resultCode != Activity.RESULT_CANCELED) {
+                activity?.let { it1 ->
+                    viewModel.handleGoogleLoginResult(it1, null) { _ ->
+                        displayAuthenticationSuccess(getString(R.string.google))
+                    }
                 }
             }
         }
-    }
 
-    private fun updateUser(path: String, value: String?, title: String) {
+    private fun updateUser(
+        path: String,
+        value: String?,
+        title: String,
+    ) {
         showSingleEntryDialog(value, title) {
             if (value != it) {
                 lifecycleScope.launchCatching {
@@ -312,11 +325,11 @@ class AccountPreferenceFragment :
                     userRepository.updatePassword(
                         oldPasswordEditText?.text ?: "",
                         passwordEditText.text ?: "",
-                        passwordRepeatEditText.text ?: ""
+                        passwordRepeatEditText.text ?: "",
                     )
                     (activity as? SnackbarActivity)?.showSnackbar(
                         content = context.getString(R.string.password_changed),
-                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                     )
                 }
                 d.dismiss()
@@ -362,11 +375,11 @@ class AccountPreferenceFragment :
                         user?.username ?: "",
                         email ?: "",
                         passwordEditText.text ?: "",
-                        passwordRepeatEditText.text ?: ""
+                        passwordRepeatEditText.text ?: "",
                     )
                     (activity as? SnackbarActivity)?.showSnackbar(
                         content = context.getString(R.string.password_added),
-                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                        displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
                     )
                 }
                 dialog.dismiss()
@@ -400,7 +413,7 @@ class AccountPreferenceFragment :
                 lifecycleScope.launchCatching {
                     userRepository.updateEmail(
                         emailEditText.text.toString(),
-                        passwordEditText?.text.toString()
+                        passwordEditText?.text.toString(),
                     )
                     lifecycleScope.launch(ExceptionHandler.coroutine()) {
                         userRepository.retrieveUser(true, true)
@@ -435,7 +448,7 @@ class AccountPreferenceFragment :
         value: String?,
         title: String,
         validator: ((String?) -> Boolean)? = null,
-        onChange: (String?) -> Unit
+        onChange: (String?) -> Unit,
     ) {
         val inflater = context?.layoutInflater
         val view = inflater?.inflate(R.layout.dialog_edittext, null)
@@ -526,7 +539,7 @@ class AccountPreferenceFragment :
         dialog.addButton(R.string.confirm, true) { _, _ ->
             lifecycleScope.launchCatching {
                 userRepository.updateLoginName(
-                    user?.authentication?.localAuthentication?.username ?: ""
+                    user?.authentication?.localAuthentication?.username ?: "",
                 )
             }
         }
@@ -543,19 +556,25 @@ class AccountPreferenceFragment :
         }
     }
 
-    private fun copyValue(name: String, value: CharSequence?) {
+    private fun copyValue(
+        name: String,
+        value: CharSequence?,
+    ) {
         val clipboard: ClipboardManager? =
             context?.let { getSystemService(it, ClipboardManager::class.java) }
         clipboard?.setPrimaryClip(ClipData.newPlainText(name, value))
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
             (activity as? SnackbarActivity)?.showSnackbar(
                 content = context?.getString(R.string.copied_to_clipboard, name),
-                displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS
+                displayType = HabiticaSnackbar.SnackbarDisplayType.SUCCESS,
             )
         }
     }
 
-    override fun onSharedPreferenceChanged(p0: SharedPreferences?, p1: String?) {
+    override fun onSharedPreferenceChanged(
+        p0: SharedPreferences?,
+        p1: String?,
+    ) {
     }
 
     override fun resetConfirmedClicked(confirmationString: String) {

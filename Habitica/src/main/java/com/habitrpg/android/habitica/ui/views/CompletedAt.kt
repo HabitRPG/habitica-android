@@ -18,27 +18,36 @@ import java.text.DateFormat
 import java.util.Date
 
 val completedTimeFormatToday: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT)
-val completedTimeFormat: DateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+val completedTimeFormat: DateFormat =
+    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
 
 @Composable
 fun CompletedAt(
-    completedAt: Date?
+    completedAt: Date?,
 ) {
     val completedToday = completedAt?.time?.let { DateUtils.isToday(it) } ?: false
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(top = 4.dp)
+        modifier = Modifier.padding(top = 4.dp),
     ) {
         Image(painterResource(R.drawable.completed), null)
         Text(
             stringResource(
                 R.string.completed_at,
-                completedAt?.let { if (completedToday) completedTimeFormatToday.format(it) else completedTimeFormat.format(it) }
-                    ?: ""
+                completedAt?.let {
+                    if (completedToday) {
+                        completedTimeFormatToday.format(it)
+                    } else {
+                        completedTimeFormat.format(
+                            it,
+                        )
+                    }
+                }
+                    ?: "",
             ),
             fontSize = 14.sp,
             color = if (completedToday) colorResource(R.color.green_10) else colorResource(R.color.text_secondary),
-            modifier = Modifier.padding(start = 4.dp)
+            modifier = Modifier.padding(start = 4.dp),
         )
     }
 }

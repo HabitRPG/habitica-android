@@ -6,15 +6,18 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserLocalRepository @Inject constructor() {
-    private val user = MutableStateFlow<User?>(null)
-    fun getUser() = user
+class UserLocalRepository
+    @Inject
+    constructor() {
+        private val user = MutableStateFlow<User?>(null)
 
-    fun saveUser(user: User) {
-        this.user.value = user
-    }
+        fun getUser() = user
 
-    fun clearData() {
-        user.value = null
+        fun saveUser(user: User) {
+            this.user.value = user
+        }
+
+        fun clearData() {
+            user.value = null
+        }
     }
-}

@@ -46,7 +46,10 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
     private var context: Context? = null
     private var intent: Intent? = null
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         this.intent = intent
         this.context = context
         handleLocalNotificationAction(intent.action)
@@ -64,6 +67,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     }
                 }
             }
+
             context?.getString(R.string.reject_party_invite) -> {
                 groupID?.let {
                     MainScope().launchCatching {
@@ -71,16 +75,19 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     }
                 }
             }
+
             context?.getString(R.string.accept_quest_invite) -> {
                 MainScope().launchCatching {
                     socialRepository.acceptQuest(user)
                 }
             }
+
             context?.getString(R.string.reject_quest_invite) -> {
                 MainScope().launchCatching {
                     socialRepository.rejectQuest(user)
                 }
             }
+
             context?.getString(R.string.accept_guild_invite) -> {
                 groupID?.let {
                     MainScope().launch(ExceptionHandler.coroutine()) {
@@ -88,6 +95,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     }
                 }
             }
+
             context?.getString(R.string.reject_guild_invite) -> {
                 groupID?.let {
                     MainScope().launchCatching {
@@ -95,6 +103,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     }
                 }
             }
+
             context?.getString(R.string.group_message_reply) -> {
                 groupID?.let {
                     getMessageText(context?.getString(R.string.group_message_reply))?.let { message ->
@@ -107,6 +116,7 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     }
                 }
             }
+
             context?.getString(R.string.inbox_message_reply) -> {
                 senderID?.let {
                     getMessageText(context?.getString(R.string.inbox_message_reply))?.let { message ->
@@ -116,16 +126,18 @@ class LocalNotificationActionReceiver : BroadcastReceiver() {
                     }
                 }
             }
+
             context?.getString(R.string.complete_task_action) -> {
                 taskID?.let {
                     MainScope().launch(ExceptionHandler.coroutine()) {
                         taskRepository.taskChecked(null, it, up = true, force = false) {
-                            val pair = NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
-                                it.experienceDelta,
-                                it.healthDelta,
-                                it.goldDelta,
-                                it.manaDelta
-                            )
+                            val pair =
+                                NotifyUserUseCase.getNotificationAndAddStatsToUserAsText(
+                                    it.experienceDelta,
+                                    it.healthDelta,
+                                    it.goldDelta,
+                                    it.manaDelta,
+                                )
                             showToast(pair.first)
                         }
                     }

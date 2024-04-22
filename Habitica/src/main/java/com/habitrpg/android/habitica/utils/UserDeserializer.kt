@@ -37,7 +37,11 @@ import java.util.Date
 
 class UserDeserializer : JsonDeserializer<User> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): User {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): User {
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("UserDeserialize")
         deserializeTrace.start()
         val user = User()
@@ -82,7 +86,9 @@ class UserDeserializer : JsonDeserializer<User> {
                 }
                 if (partyObj.getAsJsonObject("quest").has("completed")) {
                     if (!partyObj.getAsJsonObject("quest").get("completed").isJsonNull) {
-                        user.party?.quest?.completed = obj.getAsJsonObject("party").getAsJsonObject("quest").get("completed").asString
+                        user.party?.quest?.completed =
+                            obj.getAsJsonObject("party").getAsJsonObject("quest")
+                                .get("completed").asString
                     }
                 }
             }
@@ -91,7 +97,9 @@ class UserDeserializer : JsonDeserializer<User> {
             user.purchased = context.deserialize(obj.get("purchased"), Purchases::class.java)
             if (obj.getAsJsonObject("purchased").has("plan")) {
                 if (obj.getAsJsonObject("purchased").getAsJsonObject("plan").has("mysteryItems")) {
-                    user.purchased?.plan?.mysteryItemCount = obj.getAsJsonObject("purchased").getAsJsonObject("plan").getAsJsonArray("mysteryItems").size()
+                    user.purchased?.plan?.mysteryItemCount =
+                        obj.getAsJsonObject("purchased").getAsJsonObject("plan")
+                            .getAsJsonArray("mysteryItems").size()
                 }
             }
         }
@@ -112,7 +120,8 @@ class UserDeserializer : JsonDeserializer<User> {
             user.flags = context.deserialize(obj.get("flags"), Flags::class.java)
         }
         if (obj.has("contributor")) {
-            user.contributor = context.deserialize(obj.get("contributor"), ContributorInfo::class.java)
+            user.contributor =
+                context.deserialize(obj.get("contributor"), ContributorInfo::class.java)
         }
         if (obj.has("backer")) {
             user.backer = context.deserialize<Backer>(obj.get("backer"), Backer::class.java)
@@ -121,11 +130,12 @@ class UserDeserializer : JsonDeserializer<User> {
             user.invitations = context.deserialize(obj.get("invitations"), Invitations::class.java)
         }
         if (obj.has("tags")) {
-            user.tags = context.deserialize(
-                obj.get("tags"),
-                object : TypeToken<RealmList<Tag>>() {
-                }.type
-            )
+            user.tags =
+                context.deserialize(
+                    obj.get("tags"),
+                    object : TypeToken<RealmList<Tag>>() {
+                    }.type,
+                )
             for (tag in user.tags) {
                 tag.userId = user.id
             }

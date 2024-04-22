@@ -19,7 +19,6 @@ open class SpecialItem : RealmObject(), Item {
     var isMysteryItem: Boolean = false
 
     companion object {
-
         fun makeMysteryItem(context: Context): SpecialItem {
             val item = SpecialItem()
             item.text = context.getString(R.string.mystery_item)

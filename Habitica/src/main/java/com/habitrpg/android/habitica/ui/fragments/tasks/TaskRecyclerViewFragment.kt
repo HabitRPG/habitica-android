@@ -19,11 +19,8 @@ import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.databinding.FragmentRefreshRecyclerviewBinding
-import com.habitrpg.common.habitica.extensions.observeOnce
-import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.models.tasks.ChecklistItem
@@ -43,8 +40,11 @@ import com.habitrpg.android.habitica.ui.viewmodels.TasksViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.observeOnce
+import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.common.habitica.helpers.EmptyItem
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.shared.habitica.models.responses.TaskDirection
 import com.habitrpg.shared.habitica.models.responses.TaskScoringResult
@@ -75,7 +75,7 @@ open class TaskRecyclerViewFragment :
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
@@ -117,17 +117,20 @@ open class TaskRecyclerViewFragment :
             return
         }
         viewModel.let { viewModel ->
-            val adapter: BaseRecyclerViewAdapter<*, *>? = when (this.taskType) {
-                TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
-                TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, viewModel)
-                TaskType.TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, viewModel)
-                TaskType.REWARD -> RewardsRecyclerViewAdapter(
-                    null,
-                    R.layout.reward_item_card,
-                    viewModel
-                )
-                else -> null
-            }
+            val adapter: BaseRecyclerViewAdapter<*, *>? =
+                when (this.taskType) {
+                    TaskType.HABIT -> HabitsRecyclerViewAdapter(R.layout.habit_item_card, viewModel)
+                    TaskType.DAILY -> DailiesRecyclerViewHolder(R.layout.daily_item_card, viewModel)
+                    TaskType.TODO -> TodosRecyclerViewAdapter(R.layout.todo_item_card, viewModel)
+                    TaskType.REWARD ->
+                        RewardsRecyclerViewAdapter(
+                            null,
+                            R.layout.reward_item_card,
+                            viewModel,
+                        )
+
+                    else -> null
+                }
 
             recyclerAdapter = adapter as? TaskRecyclerViewAdapter
             binding?.recyclerView?.adapter = adapter
@@ -157,7 +160,7 @@ open class TaskRecyclerViewFragment :
         recyclerAdapter?.brokenTaskEvents = { showBrokenChallengeDialog(it) }
         recyclerAdapter?.adventureGuideOpenEvents = {
             MainNavigationController.navigate(
-                R.id.adventureGuideActivity
+                R.id.adventureGuideActivity,
             )
         }
 
@@ -176,13 +179,19 @@ open class TaskRecyclerViewFragment :
         }
     }
 
-    private fun scoreChecklistItem(task: Task, item: ChecklistItem) {
+    private fun scoreChecklistItem(
+        task: Task,
+        item: ChecklistItem,
+    ) {
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             taskRepository.scoreChecklistItem(task.id ?: "", item.id ?: "")
         }
     }
 
-    private fun handleTaskResult(result: TaskScoringResult, value: Int) {
+    private fun handleTaskResult(
+        result: TaskScoringResult,
+        value: Int,
+    ) {
         if (taskType == TaskType.REWARD) {
             (activity as? MainActivity)?.let { activity ->
                 HabiticaSnackbar.showSnackbar(
@@ -192,7 +201,7 @@ open class TaskRecyclerViewFragment :
                     BitmapDrawable(resources, HabiticaIconsHelper.imageOfGold()),
                     ContextCompat.getColor(activity, R.color.yellow_10),
                     "-$value",
-                    HabiticaSnackbar.SnackbarDisplayType.DROP
+                    HabiticaSnackbar.SnackbarDisplayType.DROP,
                 )
             }
         } else {
@@ -202,13 +211,14 @@ open class TaskRecyclerViewFragment :
 
     private fun playSound(direction: TaskDirection) {
         HapticFeedbackManager.tap(requireView())
-        val soundName = when (taskType) {
-            TaskType.HABIT -> if (direction == TaskDirection.UP) SoundManager.SoundPlusHabit else SoundManager.SoundMinusHabit
-            TaskType.DAILY -> SoundManager.SoundDaily
-            TaskType.TODO -> SoundManager.SoundTodo
-            TaskType.REWARD -> SoundManager.SoundReward
-            else -> null
-        }
+        val soundName =
+            when (taskType) {
+                TaskType.HABIT -> if (direction == TaskDirection.UP) SoundManager.SOUND_PLUS_HABIT else SoundManager.SOUND_MINUS_HABIT
+                TaskType.DAILY -> SoundManager.SOUND_DAILY
+                TaskType.TODO -> SoundManager.SOUND_TODO
+                TaskType.REWARD -> SoundManager.SOUND_REWARD
+                else -> null
+            }
         soundName?.let { soundManager.loadAndPlayAudio(it) }
     }
 
@@ -231,7 +241,10 @@ open class TaskRecyclerViewFragment :
         super.onDestroy()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let {
             this.taskType =
@@ -241,101 +254,109 @@ open class TaskRecyclerViewFragment :
         this.setInnerAdapter()
         recyclerAdapter?.filter()
 
-        itemTouchCallback = object : ItemTouchHelper.Callback() {
-            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                super.onSelectedChanged(viewHolder, actionState)
-                if (viewHolder == null || viewHolder.bindingAdapterPosition == NO_POSITION) return
-                val taskViewHolder = viewHolder as? BaseTaskViewHolder
-                if (taskViewHolder != null) {
-                    taskViewHolder.movingFromPosition = viewHolder.bindingAdapterPosition
-                }
-                binding?.refreshLayout?.isEnabled = false
-            }
-
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                recyclerAdapter?.notifyItemMoved(
-                    viewHolder.bindingAdapterPosition,
-                    target.bindingAdapterPosition
-                )
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) { /* no-on */
-            }
-
-            // defines the enabled move directions in each state (idle, swiping, dragging).
-            override fun getMovementFlags(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ): Int {
-                return if ((
-                    recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
-                        ?: 0
-                    ) != 0
+        itemTouchCallback =
+            object : ItemTouchHelper.Callback() {
+                override fun onSelectedChanged(
+                    viewHolder: RecyclerView.ViewHolder?,
+                    actionState: Int,
                 ) {
-                    makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
-                } else {
-                    makeFlag(
-                        ItemTouchHelper.ACTION_STATE_DRAG,
-                        ItemTouchHelper.DOWN or ItemTouchHelper.UP
+                    super.onSelectedChanged(viewHolder, actionState)
+                    if (viewHolder == null || viewHolder.bindingAdapterPosition == NO_POSITION) return
+                    val taskViewHolder = viewHolder as? BaseTaskViewHolder
+                    if (taskViewHolder != null) {
+                        taskViewHolder.movingFromPosition = viewHolder.bindingAdapterPosition
+                    }
+                    binding?.refreshLayout?.isEnabled = false
+                }
+
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder,
+                ): Boolean {
+                    recyclerAdapter?.notifyItemMoved(
+                        viewHolder.bindingAdapterPosition,
+                        target.bindingAdapterPosition,
                     )
+                    return true
                 }
-            }
 
-            override fun isItemViewSwipeEnabled(): Boolean = false
-
-            override fun isLongPressDragEnabled(): Boolean = true
-
-            override fun clearView(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ) {
-                super.clearView(recyclerView, viewHolder)
-                binding?.refreshLayout?.isEnabled = true
-
-                if (viewHolder.bindingAdapterPosition == NO_POSITION) return
-                val taskViewHolder = viewHolder as? BaseTaskViewHolder
-                val validTaskId = taskViewHolder?.task?.takeIf { it.isValid }?.id
-                if (viewHolder.bindingAdapterPosition != taskViewHolder?.movingFromPosition) {
-                    taskViewHolder?.movingFromPosition = null
-                    updateTaskInRepository(validTaskId, viewHolder)
+                override fun onSwiped(
+                    viewHolder: RecyclerView.ViewHolder,
+                    direction: Int,
+                ) { // no-on
                 }
-            }
 
-            private fun updateTaskInRepository(
-                validTaskId: String?,
-                viewHolder: RecyclerView.ViewHolder
-            ) {
-                if (validTaskId != null) {
-                    var newPosition = viewHolder.bindingAdapterPosition
-                    if (viewModel.filterCount(taskType) > 0) {
-                        newPosition = if ((newPosition + 1) >= (recyclerAdapter?.data?.size ?: 0)) {
-                            recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
-                        } else {
-                            (
-                                recyclerAdapter?.data?.get(newPosition + 1)?.position
-                                    ?: newPosition
-                                ) - 1
-                        }
-                    }
-                    // Factor in if adventure guide is shown.
-                    if (recyclerAdapter?.showAdventureGuide == true) {
-                        newPosition -= 1
-                    }
-                    lifecycleScope.launchCatching {
-                        taskRepository.updateTaskPosition(
-                            taskType,
-                            validTaskId,
-                            newPosition
+                // defines the enabled move directions in each state (idle, swiping, dragging).
+                override fun getMovementFlags(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                ): Int {
+                    return if ((
+                            recyclerAdapter?.getItemViewType(viewHolder.bindingAdapterPosition)
+                                ?: 0
+                        ) != 0
+                    ) {
+                        makeFlag(ItemTouchHelper.ACTION_STATE_IDLE, 0)
+                    } else {
+                        makeFlag(
+                            ItemTouchHelper.ACTION_STATE_DRAG,
+                            ItemTouchHelper.DOWN or ItemTouchHelper.UP,
                         )
                     }
                 }
+
+                override fun isItemViewSwipeEnabled(): Boolean = false
+
+                override fun isLongPressDragEnabled(): Boolean = true
+
+                override fun clearView(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                ) {
+                    super.clearView(recyclerView, viewHolder)
+                    binding?.refreshLayout?.isEnabled = true
+
+                    if (viewHolder.bindingAdapterPosition == NO_POSITION) return
+                    val taskViewHolder = viewHolder as? BaseTaskViewHolder
+                    val validTaskId = taskViewHolder?.task?.takeIf { it.isValid }?.id
+                    if (viewHolder.bindingAdapterPosition != taskViewHolder?.movingFromPosition) {
+                        taskViewHolder?.movingFromPosition = null
+                        updateTaskInRepository(validTaskId, viewHolder)
+                    }
+                }
+
+                private fun updateTaskInRepository(
+                    validTaskId: String?,
+                    viewHolder: RecyclerView.ViewHolder,
+                ) {
+                    if (validTaskId != null) {
+                        var newPosition = viewHolder.bindingAdapterPosition
+                        if (viewModel.filterCount(taskType) > 0) {
+                            newPosition =
+                                if ((newPosition + 1) >= (recyclerAdapter?.data?.size ?: 0)) {
+                                    recyclerAdapter?.data?.get(newPosition - 1)?.position ?: newPosition
+                                } else {
+                                    (
+                                        recyclerAdapter?.data?.get(newPosition + 1)?.position
+                                            ?: newPosition
+                                    ) - 1
+                                }
+                        }
+                        // Factor in if adventure guide is shown.
+                        if (recyclerAdapter?.showAdventureGuide == true) {
+                            newPosition -= 1
+                        }
+                        lifecycleScope.launchCatching {
+                            taskRepository.updateTaskPosition(
+                                taskType,
+                                validTaskId,
+                                newPosition,
+                            )
+                        }
+                    }
+                }
             }
-        }
 
         binding?.recyclerView?.setScaledPadding(context, 0, 0, 0, 108)
 
@@ -350,15 +371,20 @@ open class TaskRecyclerViewFragment :
 
         setEmptyLabels()
 
-        binding?.recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    binding?.refreshLayout?.isEnabled =
-                        (activity as? MainActivity)?.isAppBarExpanded ?: false
+        binding?.recyclerView?.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(
+                    recyclerView: RecyclerView,
+                    newState: Int,
+                ) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        binding?.refreshLayout?.isEnabled =
+                            (activity as? MainActivity)?.isAppBarExpanded ?: false
+                    }
                 }
-            }
-        })
+            },
+        )
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             userRepository.getUser()
@@ -378,11 +404,12 @@ open class TaskRecyclerViewFragment :
         }
         val additionalGroupIDs =
             if (ownerID == viewModel.userViewModel.userID) viewModel.userViewModel.mirrorGroupTasks.toTypedArray() else emptyArray()
-        taskFlowJob = lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            taskRepository.getTasks(taskType, ownerID, additionalGroupIDs).collect {
-                recyclerAdapter?.updateUnfilteredData(it)
+        taskFlowJob =
+            lifecycleScope.launch(ExceptionHandler.coroutine()) {
+                taskRepository.getTasks(taskType, ownerID, additionalGroupIDs).collect {
+                    recyclerAdapter?.updateUnfilteredData(it)
+                }
             }
-        }
     }
 
     protected fun showBrokenChallengeDialog(task: Task) {
@@ -391,20 +418,21 @@ open class TaskRecyclerViewFragment :
                 return
             }
             lifecycleScope.launchCatching {
-                val tasks = taskRepository.getTasksForChallenge(task.challengeID).firstOrNull()
-                    ?: return@launchCatching
+                val tasks =
+                    taskRepository.getTasksForChallenge(task.challengeID).firstOrNull()
+                        ?: return@launchCatching
                 val taskCount = tasks.size
                 val dialog = HabiticaAlertDialog(it)
                 dialog.setTitle(R.string.broken_challenge)
                 dialog.setMessage(
                     it.getString(
                         R.string.broken_challenge_description,
-                        taskCount
-                    )
+                        taskCount,
+                    ),
                 )
                 dialog.addButton(
                     it.getString(R.string.keep_x_tasks, taskCount),
-                    true
+                    true,
                 ) { _, _ ->
                     if (!task.isValid) return@addButton
                     lifecycleScope.launch {
@@ -415,7 +443,7 @@ open class TaskRecyclerViewFragment :
                 dialog.addButton(
                     it.getString(R.string.delete_x_tasks, taskCount),
                     isPrimary = false,
-                    isDestructive = true
+                    isDestructive = true,
                 ) { _, _ ->
                     if (!task.isValid) return@addButton
                     lifecycleScope.launch {
@@ -430,74 +458,86 @@ open class TaskRecyclerViewFragment :
     }
 
     private fun setEmptyLabels() {
-        binding?.recyclerView?.emptyItem = if (viewModel.filterCount(taskType) > 0) {
-            when (this.taskType) {
-                TaskType.HABIT -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_habits_filtered),
-                        getString(R.string.empty_description_habits_filtered),
-                        R.drawable.icon_habits
-                    )
+        binding?.recyclerView?.emptyItem =
+            if (viewModel.filterCount(taskType) > 0) {
+                when (this.taskType) {
+                    TaskType.HABIT -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_habits_filtered),
+                            getString(R.string.empty_description_habits_filtered),
+                            R.drawable.icon_habits,
+                        )
+                    }
+
+                    TaskType.DAILY -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_dailies_filtered),
+                            getString(R.string.empty_description_dailies_filtered),
+                            R.drawable.icon_dailies,
+                        )
+                    }
+
+                    TaskType.TODO -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_todos_filtered),
+                            getString(R.string.empty_description_todos_filtered),
+                            R.drawable.icon_todos,
+                        )
+                    }
+
+                    TaskType.REWARD -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_rewards_filtered),
+                            null,
+                            R.drawable.icon_rewards,
+                        )
+                    }
+
+                    else -> EmptyItem("")
                 }
-                TaskType.DAILY -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_dailies_filtered),
-                        getString(R.string.empty_description_dailies_filtered),
-                        R.drawable.icon_dailies
-                    )
+            } else {
+                when (this.taskType) {
+                    TaskType.HABIT -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_habits),
+                            getString(R.string.empty_description_habits),
+                            R.drawable.icon_habits,
+                        )
+                    }
+
+                    TaskType.DAILY -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_dailies),
+                            getString(R.string.empty_description_dailies),
+                            R.drawable.icon_dailies,
+                        )
+                    }
+
+                    TaskType.TODO -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_todos),
+                            getString(R.string.empty_description_todos),
+                            R.drawable.icon_todos,
+                        )
+                    }
+
+                    TaskType.REWARD -> {
+                        EmptyItem(
+                            getString(R.string.empty_title_rewards),
+                            null,
+                            R.drawable.icon_rewards,
+                        )
+                    }
+
+                    else -> EmptyItem("")
                 }
-                TaskType.TODO -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_todos_filtered),
-                        getString(R.string.empty_description_todos_filtered),
-                        R.drawable.icon_todos
-                    )
-                }
-                TaskType.REWARD -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_rewards_filtered),
-                        null,
-                        R.drawable.icon_rewards
-                    )
-                }
-                else -> EmptyItem("")
             }
-        } else {
-            when (this.taskType) {
-                TaskType.HABIT -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_habits),
-                        getString(R.string.empty_description_habits),
-                        R.drawable.icon_habits
-                    )
-                }
-                TaskType.DAILY -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_dailies),
-                        getString(R.string.empty_description_dailies),
-                        R.drawable.icon_dailies
-                    )
-                }
-                TaskType.TODO -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_todos),
-                        getString(R.string.empty_description_todos),
-                        R.drawable.icon_todos
-                    )
-                }
-                TaskType.REWARD -> {
-                    EmptyItem(
-                        getString(R.string.empty_title_rewards),
-                        null,
-                        R.drawable.icon_rewards
-                    )
-                }
-                else -> EmptyItem("")
-            }
-        }
     }
 
-    private fun scoreTask(task: Task, direction: TaskDirection) {
+    private fun scoreTask(
+        task: Task,
+        direction: TaskDirection,
+    ) {
         viewModel.scoreTask(task, direction) { result, value ->
             handleTaskResult(result, value)
         }
@@ -541,10 +581,12 @@ open class TaskRecyclerViewFragment :
         viewModel.userViewModel.user.observeOnce(this) {
             if (it != null) {
                 when (taskType) {
-                    TaskType.TODO -> viewModel.setActiveFilter(
-                        TaskType.TODO,
-                        Task.FILTER_ACTIVE
-                    )
+                    TaskType.TODO ->
+                        viewModel.setActiveFilter(
+                            TaskType.TODO,
+                            Task.FILTER_ACTIVE,
+                        )
+
                     TaskType.DAILY -> {
                         if (!viewModel.initialPreferenceFilterSet) {
                             viewModel.initialPreferenceFilterSet = true
@@ -553,6 +595,7 @@ open class TaskRecyclerViewFragment :
                             }
                         }
                     }
+
                     else -> {}
                 }
             }
@@ -561,8 +604,8 @@ open class TaskRecyclerViewFragment :
 
     private fun openTaskForm(task: Task) {
         if (Date().time - (
-            TasksFragment.lastTaskFormOpen?.time
-                ?: 0
+                TasksFragment.lastTaskFormOpen?.time
+                    ?: 0
             ) < 2000 || !task.isValid
         ) {
             return
@@ -575,11 +618,12 @@ open class TaskRecyclerViewFragment :
         bundle.putDouble(TaskFormActivity.TASK_VALUE_KEY, task.value)
 
         lifecycleScope.launchCatching {
-            val id = if (viewModel.canEditTask(task)) {
-                R.id.taskFormActivity
-            } else {
-                R.id.taskSummaryActivity
-            }
+            val id =
+                if (viewModel.canEditTask(task)) {
+                    R.id.taskFormActivity
+                } else {
+                    R.id.taskSummaryActivity
+                }
             withContext(Dispatchers.Main) {
                 MainNavigationController.navigate(id, bundle)
             }
@@ -590,7 +634,10 @@ open class TaskRecyclerViewFragment :
     companion object {
         private const val CLASS_TYPE_KEY = "CLASS_TYPE_KEY"
 
-        fun newInstance(context: Context?, classType: TaskType): TaskRecyclerViewFragment {
+        fun newInstance(
+            context: Context?,
+            classType: TaskType,
+        ): TaskRecyclerViewFragment {
             val fragment = TaskRecyclerViewFragment()
             fragment.taskType = classType
             var tutorialTexts: List<String>? = null
@@ -598,34 +645,41 @@ open class TaskRecyclerViewFragment :
                 when (fragment.taskType) {
                     TaskType.HABIT -> {
                         fragment.tutorialStepIdentifier = "habits"
-                        tutorialTexts = listOf(
-                            context.getString(R.string.tutorial_overview),
-                            context.getString(R.string.tutorial_habits_1),
-                            context.getString(R.string.tutorial_habits_2),
-                            context.getString(R.string.tutorial_habits_3),
-                            context.getString(R.string.tutorial_habits_4)
-                        )
+                        tutorialTexts =
+                            listOf(
+                                context.getString(R.string.tutorial_overview),
+                                context.getString(R.string.tutorial_habits_1),
+                                context.getString(R.string.tutorial_habits_2),
+                                context.getString(R.string.tutorial_habits_3),
+                                context.getString(R.string.tutorial_habits_4),
+                            )
                     }
+
                     TaskType.DAILY -> {
                         fragment.tutorialStepIdentifier = "dailies"
-                        tutorialTexts = listOf(
-                            context.getString(R.string.tutorial_dailies_1),
-                            context.getString(R.string.tutorial_dailies_2)
-                        )
+                        tutorialTexts =
+                            listOf(
+                                context.getString(R.string.tutorial_dailies_1),
+                                context.getString(R.string.tutorial_dailies_2),
+                            )
                     }
+
                     TaskType.TODO -> {
                         fragment.tutorialStepIdentifier = "todos"
-                        tutorialTexts = listOf(
-                            context.getString(R.string.tutorial_todos_1),
-                            context.getString(R.string.tutorial_todos_2)
-                        )
+                        tutorialTexts =
+                            listOf(
+                                context.getString(R.string.tutorial_todos_1),
+                                context.getString(R.string.tutorial_todos_2),
+                            )
                     }
+
                     TaskType.REWARD -> {
                         fragment.tutorialStepIdentifier = "rewards"
-                        tutorialTexts = listOf(
-                            context.getString(R.string.tutorial_rewards_1),
-                            context.getString(R.string.tutorial_rewards_2)
-                        )
+                        tutorialTexts =
+                            listOf(
+                                context.getString(R.string.tutorial_rewards_1),
+                                context.getString(R.string.tutorial_rewards_2),
+                            )
                     }
                 }
             }

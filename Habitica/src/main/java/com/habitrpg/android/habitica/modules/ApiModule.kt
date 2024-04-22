@@ -28,7 +28,7 @@ open class ApiModule {
     fun providesHostConfig(
         sharedPreferences: SharedPreferences,
         keyHelper: KeyHelper?,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): HostConfig {
         return HostConfig(sharedPreferences, keyHelper, context)
     }
@@ -50,24 +50,26 @@ open class ApiModule {
         gsonConverter: GsonConverterFactory,
         hostConfig: HostConfig,
         notificationsManager: NotificationsManager,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): ApiClient {
-        val apiClient = ApiClientImpl(
-            gsonConverter,
-            hostConfig,
-            notificationsManager,
-            context
-        )
+        val apiClient =
+            ApiClientImpl(
+                gsonConverter,
+                hostConfig,
+                notificationsManager,
+                context,
+            )
         notificationsManager.apiClient = WeakReference(apiClient)
         return apiClient
     }
 
     @Provides
     fun providesMaintenanceApiService(gsonConverter: GsonConverterFactory): MaintenanceApiService {
-        val adapter = Retrofit.Builder()
-            .baseUrl("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
-            .addConverterFactory(gsonConverter)
-            .build()
+        val adapter =
+            Retrofit.Builder()
+                .baseUrl("https://habitica-assets.s3.amazonaws.com/mobileApp/endpoint/")
+                .addConverterFactory(gsonConverter)
+                .build()
         return adapter.create(MaintenanceApiService::class.java)
     }
 }

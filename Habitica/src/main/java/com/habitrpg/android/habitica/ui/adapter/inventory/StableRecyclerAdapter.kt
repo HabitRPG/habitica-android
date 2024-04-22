@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ShopHeaderBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.inventory.Animal
 import com.habitrpg.android.habitica.models.inventory.Egg
 import com.habitrpg.android.habitica.models.inventory.Food
@@ -25,14 +24,15 @@ import com.habitrpg.android.habitica.ui.viewHolders.MountViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.PetViewHolder
 import com.habitrpg.android.habitica.ui.viewHolders.SectionViewHolder
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.views.PixelArtView
 import com.habitrpg.shared.habitica.models.responses.FeedResponse
 
 class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     var shopSpriteSuffix: String? = null
     private var eggs: Map<String, Egg> = mapOf()
-    var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? = null
+    var animalIngredientsRetriever: ((Animal, ((Pair<Egg?, HatchingPotion?>) -> Unit)) -> Unit)? =
+        null
     var onFeed: (suspend (Pet, Food?) -> FeedResponse?)? = null
     var itemType: String? = null
     var currentPet: String? = null
@@ -83,7 +83,15 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setOwnedItems(ownedItems: Map<String, OwnedItem>) {
         this.ownedItems = ownedItems
-        ownsSaddles = if (ownedItems.containsKey("Saddle-food")) (ownedItems["Saddle-food"]?.numberOwned ?: 0) > 0 else false
+        ownsSaddles =
+            if (ownedItems.containsKey("Saddle-food")) {
+                (
+                    ownedItems["Saddle-food"]?.numberOwned
+                        ?: 0
+                ) > 0
+            } else {
+                false
+            }
         notifyDataSetChanged()
     }
 
@@ -97,7 +105,10 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder =
         when (viewType) {
             1 -> SectionViewHolder(parent)
             4 -> StableViewHolder(parent.inflate(R.layout.pet_overview_item))
@@ -108,7 +119,10 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             else -> StableHeaderViewHolder(parent)
         }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         when (val item = this.itemList[position]) {
             "header" -> (holder as? StableHeaderViewHolder)?.bind()
             is StableSection -> {
@@ -119,11 +133,12 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 }
                 (holder as? SectionViewHolder)?.bind(item)
             }
+
             is Animal -> {
                 val isIndividualAnimal = item.type == "special" || item.type == "wacky"
                 if (isIndividualAnimal) {
                     if (item is Pet) {
-                        val trained = ownedPets?.get(item.key ?: "")?.trained ?: 0
+                        val trained = ownedPets?.get(item.key)?.trained ?: 0
                         val eggCount = eggCount(item)
                         val potionCount = potionCount(item)
                         if (trained <= 0 && eggCount > 0 && potionCount > 0) {
@@ -133,7 +148,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                                 potionCount,
                                 ownedItems?.get(item.animal + "-eggs") != null,
                                 ownedItems?.get(item.color + "-hatchingPotions") != null,
-                                ownedMounts?.containsKey(item.key) == true
+                                ownedMounts?.containsKey(item.key) == true,
                             )
                         } else {
                             (holder as? PetViewHolder)?.bind(
@@ -146,7 +161,7 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                                 ownedItems?.get(item.animal + "-eggs") != null,
                                 ownedItems?.get(item.color + "-hatchingPotions") != null,
                                 ownedMounts?.containsKey(item.key) == true,
-                                currentPet
+                                currentPet,
                             )
                         }
                     } else if (item is Mount) {
@@ -160,7 +175,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (itemList.size <= position) { return 0 }
+        if (itemList.size <= position) {
+            return 0
+        }
         val item = itemList[position]
         return if (item == "header") {
             0
@@ -171,8 +188,8 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             if (isIndividualAnimal) {
                 if (item is Pet) {
                     if ((
-                        ownedPets?.get(item.key ?: "")?.trained
-                            ?: 0
+                            ownedPets?.get(item.key)?.trained
+                                ?: 0
                         ) <= 0 && eggCount(item) > 0 && potionCount(item) > 0
                     ) {
                         22
@@ -201,11 +218,17 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    internal inner class StableHeaderViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
+    internal inner class StableHeaderViewHolder(parent: ViewGroup) :
+        RecyclerView.ViewHolder(parent.inflate(R.layout.shop_header)) {
         private var binding: ShopHeaderBinding = ShopHeaderBinding.bind(itemView)
 
         init {
-            binding.root.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.window_background))
+            binding.root.setBackgroundColor(
+                ContextCompat.getColor(
+                    itemView.context,
+                    R.color.window_background,
+                ),
+            )
         }
 
         fun bind() {
@@ -216,7 +239,9 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    internal inner class StableViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class StableViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         private var animal: Animal? = null
 
         private val imageView: PixelArtView = itemView.findViewById(R.id.imageView)
@@ -231,34 +256,47 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             this.animal = item
             val context = itemView.context
             val egg = eggs[item.animal]
-            titleView.text = if (egg != null) {
-                if (item.type == "drop" || itemType == "mounts") egg.mountText else egg.text
-            } else {
-                item.animal
-            }
+            titleView.text =
+                if (egg != null) {
+                    if (item.type == "drop" || itemType == "mounts") egg.mountText else egg.text
+                } else {
+                    item.animal
+                }
             ownedTextView.visibility = View.VISIBLE
 
-            val imageName = if (itemType == "pets") {
-                "Pet_Egg_" + item.animal
-            } else {
-                "Mount_Icon_" + item.animal + "-Base"
-            }
+            val imageName =
+                if (itemType == "pets") {
+                    "Pet_Egg_" + item.animal
+                } else {
+                    "Mount_Icon_" + item.animal + "-Base"
+                }
 
-            this.ownedTextView.text = context.getString(R.string.pet_ownership_fraction, item.numberOwned, item.totalNumber)
-            this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_shopitem_price)
+            this.ownedTextView.text =
+                context.getString(
+                    R.string.pet_ownership_fraction,
+                    item.numberOwned,
+                    item.totalNumber,
+                )
+            this.ownedTextView.background =
+                ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_shopitem_price)
 
             this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
 
             ownedTextView.visibility = View.VISIBLE
             imageView.loadImage(imageName)
 
-            val alpha = if (item.numberOwned <= 0 && (ownedItems?.containsKey(item.animal + "-eggs") != true || itemType == "mounts")) 0.2f else 1.0f
+            val alpha =
+                if (item.numberOwned <= 0 && (ownedItems?.containsKey(item.animal + "-eggs") != true || itemType == "mounts")) 0.2f else 1.0f
             this.imageView.alpha = alpha
             this.titleView.alpha = alpha
             this.ownedTextView.alpha = alpha
 
             if (item.numberOwned == item.totalNumber) {
-                this.ownedTextView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_animalitem_complete)
+                this.ownedTextView.background =
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.layout_rounded_bg_animalitem_complete,
+                    )
                 this.ownedTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
 
@@ -270,9 +308,21 @@ class StableRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             if (animal != null) {
                 val color = if (animal.type == "special") animal.color else null
                 if (itemType == "pets") {
-                    MainNavigationController.navigate(StableFragmentDirections.openPetDetail(animal.animal, animal.type ?: "", color))
+                    MainNavigationController.navigate(
+                        StableFragmentDirections.openPetDetail(
+                            animal.animal,
+                            animal.type ?: "",
+                            color,
+                        ),
+                    )
                 } else {
-                    MainNavigationController.navigate(StableFragmentDirections.openMountDetail(animal.animal, animal.type ?: "", color))
+                    MainNavigationController.navigate(
+                        StableFragmentDirections.openMountDetail(
+                            animal.animal,
+                            animal.type ?: "",
+                            color,
+                        ),
+                    )
                 }
             }
         }

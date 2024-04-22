@@ -13,7 +13,6 @@ import com.habitrpg.android.habitica.data.TaskRepository
 import com.habitrpg.android.habitica.data.TutorialRepository
 import com.habitrpg.android.habitica.data.UserRepository
 import com.habitrpg.android.habitica.helpers.AppConfigManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.helpers.NotificationsManager
 import com.habitrpg.android.habitica.helpers.SoundManager
 import com.habitrpg.android.habitica.interactors.FeedPetUseCase
@@ -28,6 +27,7 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.common.habitica.api.HostConfig
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -104,7 +104,10 @@ open class HabiticaTestCase : TestCase() {
         every { inventoryRepository.getItems(QuestContent::class.java, any()) } returns flowOf(content.quests)
     }
 
-    internal fun <T> loadJsonFile(s: String, type: Type): T {
+    internal fun <T> loadJsonFile(
+        s: String,
+        type: Type,
+    ): T {
         val userStream = javaClass.classLoader?.getResourceAsStream("$s.json")
         return gson.fromJson(gson.newJsonReader(InputStreamReader(userStream)), type)
     }
@@ -132,7 +135,11 @@ open class HabiticaTestCase : TestCase() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun <P, C> assign(it: KCallable<*>, obj: C, value: P) {
+    private fun <P, C> assign(
+        it: KCallable<*>,
+        obj: C,
+        value: P,
+    ) {
         if ((it as KMutableProperty1<C, P>).javaField!!.get(obj) == null) {
             it.set(obj, value)
         }

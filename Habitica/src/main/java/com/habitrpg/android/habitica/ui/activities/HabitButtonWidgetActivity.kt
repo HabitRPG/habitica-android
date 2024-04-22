@@ -50,7 +50,11 @@ class HabitButtonWidgetActivity : BaseActivity() {
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
-            widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+            widgetId =
+                extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID,
+                )
         }
 
         // If this activity was started with an intent without an app widget ID,
@@ -59,7 +63,8 @@ class HabitButtonWidgetActivity : BaseActivity() {
             finish()
         }
 
-        var layoutManager: LinearLayoutManager? = binding.recyclerView.layoutManager as? LinearLayoutManager
+        var layoutManager: LinearLayoutManager? =
+            binding.recyclerView.layoutManager as? LinearLayoutManager
 
         if (layoutManager == null) {
             layoutManager = LinearLayoutManager(this)
@@ -74,7 +79,8 @@ class HabitButtonWidgetActivity : BaseActivity() {
         binding.recyclerView.adapter = adapter
 
         CoroutineScope(Dispatchers.Main + job).launch(ExceptionHandler.coroutine()) {
-            adapter?.data = taskRepository.getTasks(TaskType.HABIT, includedGroupIDs = emptyArray()).firstOrNull() ?: listOf()
+            adapter?.data = taskRepository.getTasks(TaskType.HABIT, includedGroupIDs = emptyArray())
+                .firstOrNull() ?: listOf()
         }
     }
 
@@ -90,7 +96,13 @@ class HabitButtonWidgetActivity : BaseActivity() {
         setResult(Activity.RESULT_OK, resultValue)
         finish()
 
-        val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, HabitButtonWidgetProvider::class.java)
+        val intent =
+            Intent(
+                AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+                null,
+                this,
+                HabitButtonWidgetProvider::class.java,
+            )
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(widgetId))
         sendBroadcast(intent)
     }

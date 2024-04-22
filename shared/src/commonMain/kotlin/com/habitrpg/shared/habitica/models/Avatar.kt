@@ -9,6 +9,7 @@ interface Avatar {
     val flags: AvatarFlags?
     val items: AvatarItems?
     val hourglassCount: Int
+
     fun isValid(): Boolean
 
     val username: String?
@@ -17,9 +18,12 @@ interface Avatar {
         get() = if (username != null) "@$username" else null
 
     val gemCount: Int
-        get() = if (this.isValid()) {
-            (this.balance * 4).toInt()
-        } else { 0 }
+        get() =
+            if (this.isValid()) {
+                (this.balance * 4).toInt()
+            } else {
+                0
+            }
 
     val costume: AvatarOutfit?
         get() = items?.gear?.costume

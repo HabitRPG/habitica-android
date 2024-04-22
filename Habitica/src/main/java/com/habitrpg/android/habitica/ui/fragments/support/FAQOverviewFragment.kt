@@ -41,11 +41,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.max
-import kotlin.math.min
 
 @AndroidEntryPoint
 class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
-
     private var deviceInfo: DeviceName.DeviceInfo? = null
     override var binding: FragmentFaqOverviewBinding? = null
 
@@ -55,7 +53,10 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFaqOverviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentFaqOverviewBinding {
         return FragmentFaqOverviewBinding.inflate(inflater, container, false)
     }
 
@@ -67,7 +68,10 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
     private val versionName: String by lazy {
         try {
-            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionName
+            mainActivity?.packageManager?.getPackageInfo(
+                mainActivity?.packageName ?: "",
+                0,
+            )?.versionName
                 ?: ""
         } catch (e: PackageManager.NameNotFoundException) {
             ""
@@ -77,7 +81,10 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     private val versionCode: Int by lazy {
         try {
             @Suppress("DEPRECATION")
-            mainActivity?.packageManager?.getPackageInfo(mainActivity?.packageName ?: "", 0)?.versionCode
+            mainActivity?.packageManager?.getPackageInfo(
+                mainActivity?.packageName ?: "",
+                0,
+            )?.versionCode
                 ?: 0
         } catch (e: PackageManager.NameNotFoundException) {
             0
@@ -87,14 +94,17 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         showsBackButton = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.npcHeader?.npcBannerView?.shopSpriteSuffix = configManager.shopSpriteSuffix()
@@ -109,45 +119,53 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         }
 
         binding?.healthSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHeartLarge()
+            HabiticaIconsHelper.imageOfHeartLarge(),
         )
         binding?.experienceSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfExperienceReward()
+            HabiticaIconsHelper.imageOfExperienceReward(),
         )
         binding?.manaSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfMagicLarge()
+            HabiticaIconsHelper.imageOfMagicLarge(),
         )
         binding?.goldSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGoldReward()
+            HabiticaIconsHelper.imageOfGoldReward(),
         )
         binding?.gemsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfGem()
+            HabiticaIconsHelper.imageOfGem(),
         )
         binding?.hourglassesSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfHourglassLarge()
+            HabiticaIconsHelper.imageOfHourglassLarge(),
         )
         binding?.statsSection?.findViewById<ImageView>(R.id.icon_view)?.setImageBitmap(
-            HabiticaIconsHelper.imageOfStats()
+            HabiticaIconsHelper.imageOfStats(),
         )
 
-        binding?.contribTierSection?.findViewById<ImageView>(R.id.icon_view)?.setImageResource(R.drawable.contributor_icon)
+        binding?.contribTierSection?.findViewById<ImageView>(R.id.icon_view)
+            ?.setImageResource(R.drawable.contributor_icon)
         addPlayerTiers()
 
         val fullText = getString(R.string.need_help_description)
         val clickableText = "contact us"
         val spannableString = SpannableStringBuilder(fullText)
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                sendEmail("[Android] Question")
+        val clickableSpan =
+            object : ClickableSpan() {
+                override fun onClick(textView: View) {
+                    sendEmail("[Android] Question")
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.isUnderlineText = false
+                }
             }
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.isUnderlineText = false
-            }
-        }
         val startIndex = max(0, fullText.indexOf(clickableText))
         val endIndex = startIndex + clickableText.length
-        spannableString.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(
+            clickableSpan,
+            startIndex,
+            endIndex,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+        )
 
         binding?.moreHelpTextView?.text = spannableString
         binding?.moreHelpTextView?.movementMethod = LinkMovementMethod.getInstance()
@@ -166,11 +184,12 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 val context = context ?: return@collect
                 if (binding?.faqLinearLayout == null) return@collect
                 for (article in it) {
-                    val binding = SupportFaqItemBinding.inflate(
-                        context.layoutInflater,
-                        binding?.faqLinearLayout,
-                        true
-                    )
+                    val binding =
+                        SupportFaqItemBinding.inflate(
+                            context.layoutInflater,
+                            binding?.faqLinearLayout,
+                            true,
+                        )
                     binding.textView.text = article.question
                     binding.root.setOnClickListener {
                         val direction = FAQOverviewFragmentDirections.openFAQDetail(null, null)
@@ -187,15 +206,18 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
         val deviceName = deviceInfo?.name ?: DeviceName.getDeviceName()
         val manufacturer = deviceInfo?.manufacturer ?: Build.MANUFACTURER
         val newLine = "%0D%0A"
-        var bodyOfEmail = Uri.encode("Device: $manufacturer $deviceName") +
-            newLine + Uri.encode("Android Version: $version") +
-            newLine + Uri.encode(
-            "AppVersion: " + getString(
-                R.string.version_info,
-                versionName,
-                versionCode
-            )
-        )
+        var bodyOfEmail =
+            Uri.encode("Device: $manufacturer $deviceName") +
+                newLine + Uri.encode("Android Version: $version") +
+                newLine +
+                Uri.encode(
+                    "AppVersion: " +
+                        getString(
+                            R.string.version_info,
+                            versionName,
+                            versionCode,
+                        ),
+                )
 
         if (appConfigManager.testingLevel().name != AppTestingLevel.PRODUCTION.name) {
             bodyOfEmail += " " + Uri.encode(appConfigManager.testingLevel().name)
@@ -204,33 +226,36 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
 
         userViewModel.user.value?.let { user ->
             bodyOfEmail += newLine + Uri.encode("Level: " + (user.stats?.lvl ?: 0)) +
-                newLine + Uri.encode(
-                "Class: " + (
-                    if (user.preferences?.disableClasses == true) {
-                        "Disabled"
-                    } else {
-                        (
-                            user.stats?.habitClass
-                                ?: "None"
+                newLine +
+                Uri.encode(
+                    "Class: " + (
+                        if (user.preferences?.disableClasses == true) {
+                            "Disabled"
+                        } else {
+                            (
+                                user.stats?.habitClass
+                                    ?: "None"
                             )
-                    }
-                    )
-            ) +
+                        }
+                    ),
+                ) +
                 newLine + Uri.encode("Is in Inn: " + (user.preferences?.sleep ?: false)) +
                 newLine + Uri.encode("Uses Costume: " + (user.preferences?.costume ?: false)) +
                 newLine + Uri.encode("Custom Day Start: " + (user.preferences?.dayStart ?: 0)) +
-                newLine + Uri.encode(
-                "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0)
-            )
+                newLine +
+                Uri.encode(
+                    "Timezone Offset: " + (user.preferences?.timezoneOffset ?: 0),
+                )
         }
 
         bodyOfEmail += "%0D%0ADetails:%0D%0A%0D%0A"
 
         mainActivity?.let {
             val emailIntent = Intent(Intent.ACTION_SENDTO)
-            val mailto = "mailto:" + appConfigManager.supportEmail() +
-                "?subject=" + Uri.encode(subject) +
-                "&body=" + bodyOfEmail
+            val mailto =
+                "mailto:" + appConfigManager.supportEmail() +
+                    "?subject=" + Uri.encode(subject) +
+                    "&body=" + bodyOfEmail
             emailIntent.data = Uri.parse(mailto)
 
             startActivity(Intent.createChooser(emailIntent, "Choose an Email client:"))
@@ -248,16 +273,22 @@ class FAQOverviewFragment : BaseMainFragment<FragmentFaqOverviewBinding>() {
                 val label = UsernameLabel(it, null)
                 label.tier = tier.id
                 label.username = tier.title
-                val params = FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    FrameLayout.LayoutParams.WRAP_CONTENT,
-                    Gravity.CENTER
-                )
+                val params =
+                    FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        Gravity.CENTER,
+                    )
                 container.addView(label, params)
                 container.isVisible = false
                 binding?.contribTierSection?.addView(container)
                 val containerParams = container.layoutParams as LinearLayout.LayoutParams
-                containerParams.setMargins(12.dpToPx(context), 0, 12.dpToPx(context), if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context))
+                containerParams.setMargins(
+                    12.dpToPx(context),
+                    0,
+                    12.dpToPx(context),
+                    if (tiers.last() == tier) 12.dpToPx(context) else 6.dpToPx(context),
+                )
                 val padding = context?.resources?.getDimension(R.dimen.spacing_medium)?.toInt() ?: 0
                 container.setPadding(0, padding, 0, padding)
             }

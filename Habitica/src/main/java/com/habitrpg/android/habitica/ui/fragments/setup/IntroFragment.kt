@@ -11,10 +11,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class IntroFragment : BaseFragment<FragmentIntroBinding>() {
-
     override var binding: FragmentIntroBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentIntroBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentIntroBinding {
         return FragmentIntroBinding.inflate(inflater, container, false)
     }
 
@@ -25,7 +27,10 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>() {
     private var description: String? = null
     private var backgroundColor: Int? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         if (this.image != null) {

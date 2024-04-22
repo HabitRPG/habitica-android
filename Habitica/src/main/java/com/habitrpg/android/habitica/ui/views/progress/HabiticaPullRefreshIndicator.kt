@@ -36,12 +36,12 @@ fun HabiticaPullRefreshIndicator(
     state: PullRefreshState,
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colors.surface,
-    scale: Boolean = true
+    scale: Boolean = true,
 ) {
     AnimatedVisibility(
         visible = isInitial && isRefreshing,
         enter = fadeIn(),
-        exit = fadeOut()
+        exit = fadeOut(),
     ) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             HabiticaCircularProgressView(Modifier)
@@ -49,26 +49,28 @@ fun HabiticaPullRefreshIndicator(
     }
     if (!isInitial) {
         Surface(
-            modifier = modifier
-                .pullRefreshIndicatorTransform(state, scale),
+            modifier =
+                modifier
+                    .pullRefreshIndicatorTransform(state, scale),
             shape = CircleShape,
             color = backgroundColor,
-            elevation = if (isRefreshing) 6.dp else (min(1f, state.progress * 2) * 6f).dp
+            elevation = if (isRefreshing) 6.dp else (min(1f, state.progress * 2) * 6f).dp,
         ) {
             AnimatedVisibility(
                 visible = isRefreshing || state.progress > 0f,
                 enter = fadeIn(),
-                exit = fadeOut()
+                exit = fadeOut(),
             ) {
                 HabiticaCircularProgressView(
                     partialDisplay = if (isRefreshing) 1f else state.progress,
                     animate = isRefreshing,
                     indicatorSize = 40.dp,
                     strokeWidth = 6.dp,
-                    modifier = Modifier
-                        .border(1.dp, HabiticaTheme.colors.windowBackground, CircleShape)
-                        .padding(4.dp)
-                        .background(MaterialTheme.colors.surface, CircleShape)
+                    modifier =
+                        Modifier
+                            .border(1.dp, HabiticaTheme.colors.windowBackground, CircleShape)
+                            .padding(4.dp)
+                            .background(MaterialTheme.colors.surface, CircleShape),
                 )
             }
         }

@@ -29,7 +29,6 @@ import kotlin.time.toDuration
 
 @HiltAndroidApp
 class MainApplication : Application() {
-
     @Inject lateinit var userRepository: UserRepository
 
     @Inject lateinit var taskRepository: TaskRepository

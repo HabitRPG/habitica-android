@@ -9,12 +9,12 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SetupCustomizationRepository
 import com.habitrpg.android.habitica.databinding.SetupCustomizationItemBinding
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.extensions.setTintWith
 import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
+import com.habitrpg.common.habitica.extensions.setTintWith
 
-internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
-
+internal class CustomizationSetupAdapter :
+    RecyclerView.Adapter<CustomizationSetupAdapter.CustomizationViewHolder>() {
     var userSize: String? = null
     var user: User? = null
     private var customizationList: List<SetupCustomization> = emptyList()
@@ -27,11 +27,17 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
         this.notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomizationViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): CustomizationViewHolder {
         return CustomizationViewHolder(parent.inflate(R.layout.setup_customization_item))
     }
 
-    override fun onBindViewHolder(holder: CustomizationViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: CustomizationViewHolder,
+        position: Int,
+    ) {
         holder.bind(customizationList[position])
     }
 
@@ -49,29 +55,45 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
                     else -> false
                 }
             }
+
             SetupCustomizationRepository.CATEGORY_SKIN -> customization.key == prefs.skin
             SetupCustomizationRepository.CATEGORY_HAIR -> {
                 when (customization.subcategory) {
                     SetupCustomizationRepository.SUBCATEGORY_BANGS -> Integer.parseInt(customization.key) == prefs.hair?.bangs
-                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL -> Integer.parseInt(customization.key) == prefs.hair?.base
+                    SetupCustomizationRepository.SUBCATEGORY_PONYTAIL ->
+                        Integer.parseInt(
+                            customization.key,
+                        ) == prefs.hair?.base
+
                     SetupCustomizationRepository.SUBCATEGORY_COLOR -> customization.key == prefs.hair?.color
-                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> Integer.parseInt(customization.key) == prefs.hair?.flower
+                    SetupCustomizationRepository.SUBCATEGORY_FLOWER ->
+                        Integer.parseInt(
+                            customization.key,
+                        ) == prefs.hair?.flower
+
                     else -> false
                 }
             }
+
             SetupCustomizationRepository.CATEGORY_EXTRAS -> {
                 when (customization.subcategory) {
                     SetupCustomizationRepository.SUBCATEGORY_GLASSES -> customization.key == this.user?.items?.gear?.equipped?.eyeWear || "eyewear_base_0" == this.user?.items?.gear?.equipped?.eyeWear && customization.key.isEmpty()
-                    SetupCustomizationRepository.SUBCATEGORY_FLOWER -> Integer.parseInt(customization.key) == prefs.hair?.flower
+                    SetupCustomizationRepository.SUBCATEGORY_FLOWER ->
+                        Integer.parseInt(
+                            customization.key,
+                        ) == prefs.hair?.flower
+
                     SetupCustomizationRepository.SUBCATEGORY_WHEELCHAIR -> "chair_" + customization.key == prefs.chair || customization.key == prefs.chair || customization.key == "none" && prefs.chair == null
                     else -> false
                 }
             }
+
             else -> false
         }
     }
 
-    internal inner class CustomizationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    internal inner class CustomizationViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val binding = SetupCustomizationItemBinding.bind(itemView)
 
         var customization: SetupCustomization? = null
@@ -84,12 +106,27 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
             this.customization = customization
 
             when {
-                customization.drawableId != null -> binding.imageView.setImageResource(customization.drawableId ?: 0)
+                customization.drawableId != null ->
+                    binding.imageView.setImageResource(
+                        customization.drawableId ?: 0,
+                    )
+
                 customization.colorId != null -> {
-                    val drawable = ContextCompat.getDrawable(itemView.context, R.drawable.setup_customization_circle)
-                    drawable?.setTintWith(ContextCompat.getColor(itemView.context, customization.colorId ?: 0), PorterDuff.Mode.MULTIPLY)
+                    val drawable =
+                        ContextCompat.getDrawable(
+                            itemView.context,
+                            R.drawable.setup_customization_circle,
+                        )
+                    drawable?.setTintWith(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            customization.colorId ?: 0,
+                        ),
+                        PorterDuff.Mode.MULTIPLY,
+                    )
                     binding.imageView.setImageDrawable(drawable)
                 }
+
                 else -> binding.imageView.setImageDrawable(null)
             }
             binding.textView.text = customization.text
@@ -102,10 +139,20 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
             } else {
                 if (isCustomizationActive(customization)) {
                     binding.imageView.setBackgroundResource(R.drawable.setup_customization_bg_selected)
-                    binding.textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white))
+                    binding.textView.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.white,
+                        ),
+                    )
                 } else {
                     binding.imageView.setBackgroundResource(R.drawable.setup_customization_bg)
-                    binding.textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white_50_alpha))
+                    binding.textView.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.white_50_alpha,
+                        ),
+                    )
                 }
             }
         }
@@ -113,9 +160,10 @@ internal class CustomizationSetupAdapter : RecyclerView.Adapter<CustomizationSet
         override fun onClick(v: View) {
             customization?.let { selectedCustomization ->
                 if (selectedCustomization.path == "glasses") {
-                    val key = selectedCustomization.key.ifEmpty {
-                        user?.items?.gear?.equipped?.eyeWear
-                    }
+                    val key =
+                        selectedCustomization.key.ifEmpty {
+                            user?.items?.gear?.equipped?.eyeWear
+                        }
                     key?.let { onEquipGear?.invoke(it) }
                 } else {
                     val updateData = HashMap<String, Any>()

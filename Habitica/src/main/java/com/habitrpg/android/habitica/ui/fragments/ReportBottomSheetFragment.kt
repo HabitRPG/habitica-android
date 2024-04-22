@@ -20,7 +20,6 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.ChallengeRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentReportMessageBinding
-import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
@@ -30,11 +29,11 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReportBottomSheetFragment : BottomSheetDialogFragment() {
-
     private lateinit var binding: FragmentReportMessageBinding
 
     @Inject
     lateinit var socialRepository: SocialRepository
+
     @Inject
     lateinit var challengeRepository: ChallengeRepository
 
@@ -52,7 +51,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentReportMessageBinding.inflate(inflater, container, false)
         return binding.root
@@ -68,7 +67,10 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         return bottomSheetDialog
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         reportType = arguments?.getString(REPORT_TYPE)
@@ -80,7 +82,6 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         reportingUserId = arguments?.getString(REPORTING_USER_ID)
         reportingChallengeId = arguments?.getString(REPORTING_CHALLENGE_ID)
         source = arguments?.getString(SOURCE_VIEW)
-
 
         binding.messageTextView.text = arguments?.getString(messageText)
         binding.reportButton.setOnClickListener {
@@ -100,8 +101,8 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             binding.additionalExplanationTextview.setMarkdown(
                 getString(
                     R.string.report_user_description,
-                    profileName
-                )
+                    profileName,
+                ),
             )
             binding.reportExplanationTextview.setMarkdown(getString(R.string.report_user_explanation))
             val formattedString =
@@ -111,13 +112,13 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                 TypefaceSpan("sans-serif-medium"),
                 0,
                 displayName?.length ?: 0,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
             spannable.setSpan(
                 TypefaceSpan("sans-serif"),
                 displayName?.length ?: 0,
                 formattedString.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE,
             )
             binding.messageTextView.text = spannable
             binding.reportReasonTitle.text = getString(R.string.report_reason_title_player)
@@ -145,7 +146,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
                     ContextCompat.getColor(requireContext(), R.color.text_dimmed)
                 } else {
                     ContextCompat.getColor(requireContext(), R.color.maroon100_red100)
-                }
+                },
             )
         }
     }
@@ -159,12 +160,12 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             lifecycleScope.launch(
                 ExceptionHandler.coroutine {
                     isReporting = false
-                }
+                },
             ) {
                 socialRepository.flagMessage(
                     messageID ?: "",
                     binding.additionalInfoEdittext.text.toString(),
-                    groupID
+                    groupID,
                 )
                 dismiss()
             }
@@ -182,10 +183,11 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         isReporting = true
         lifecycleScope.launchCatching {
             val reportReasonInfo = binding.additionalInfoEdittext.text.toString()
-            val updateData = mapOf(
-                "comment" to reportReasonInfo,
-                "source" to (source ?: "")
-            )
+            val updateData =
+                mapOf(
+                    "comment" to reportReasonInfo,
+                    "source" to (source ?: ""),
+                )
             socialRepository.reportMember(userIdBeingReported, updateData)
             socialRepository.blockMember(userIdBeingReported)
             Toast.makeText(context, "$profileName Reported", Toast.LENGTH_SHORT).show()
@@ -204,10 +206,11 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         isReporting = true
         lifecycleScope.launchCatching {
             val reportReasonInfo = binding.additionalInfoEdittext.text.toString()
-            val updateData = mapOf(
-                "comment" to reportReasonInfo,
-                "source" to (source ?: "")
-            )
+            val updateData =
+                mapOf(
+                    "comment" to reportReasonInfo,
+                    "source" to (source ?: ""),
+                )
             challengeRepository.reportChallenge(challengeId, updateData)
             Toast.makeText(context, "$displayName Reported", Toast.LENGTH_SHORT).show()
             dismiss()
@@ -230,7 +233,6 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
         private const val GROUP_ID = "group_id"
         private const val SOURCE_VIEW = "source_view"
 
-
         fun newInstance(
             reportType: String,
             profileName: String = "",
@@ -240,7 +242,7 @@ class ReportBottomSheetFragment : BottomSheetDialogFragment() {
             messageId: String = "",
             messageText: String = "",
             groupId: String = "",
-            sourceView: String
+            sourceView: String,
         ): ReportBottomSheetFragment {
             val args = Bundle()
             args.putString(REPORT_TYPE, reportType)

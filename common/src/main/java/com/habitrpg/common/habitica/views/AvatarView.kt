@@ -30,7 +30,6 @@ import java.util.EnumMap
 import java.util.concurrent.atomic.AtomicInteger
 
 class AvatarView : FrameLayout {
-
     private var showBackground = true
     private var showMount = true
     private var showPet = true
@@ -69,7 +68,14 @@ class AvatarView : FrameLayout {
     private var lastSubstitutionCheck: Date? = null
 
     private val originalRect: Rect
-        get() = if (showMount || showPet) FULL_HERO_RECT else if (showBackground) COMPACT_HERO_RECT else HERO_ONLY_RECT
+        get() =
+            if (showMount || showPet) {
+                FULL_HERO_RECT
+            } else if (showBackground) {
+                COMPACT_HERO_RECT
+            } else {
+                HERO_ONLY_RECT
+            }
 
     private val avatarImage: Bitmap?
         get() {
@@ -80,11 +86,12 @@ class AvatarView : FrameLayout {
             val viewHeight = if (height > 0) height else (layoutParams?.height ?: 147)
             val canvasRect = Rect(0, 0, if (viewWidth > 0) viewWidth else 140.dpToPx(context), if (viewHeight > 0) viewHeight else 147.dpToPx(context))
             if (canvasRect.isEmpty) return null
-            avatarBitmap = Bitmap.createBitmap(
-                canvasRect.width(),
-                canvasRect.height(),
-                Bitmap.Config.ARGB_8888
-            )
+            avatarBitmap =
+                Bitmap.createBitmap(
+                    canvasRect.width(),
+                    canvasRect.height(),
+                    Bitmap.Config.ARGB_8888,
+                )
             avatarBitmap?.let { avatarCanvas = Canvas(it) }
             imageViewHolder.forEach {
                 val bitmap = (it.drawable as? BitmapDrawable)?.bitmap ?: return@forEach
@@ -92,7 +99,7 @@ class AvatarView : FrameLayout {
                     bitmap,
                     Rect(0, 0, bitmap.width, bitmap.height),
                     Rect(it.marginStart, it.marginTop, bitmap.width + it.marginStart, bitmap.height + it.marginTop),
-                    null
+                    null,
                 )
             }
 
@@ -117,14 +124,18 @@ class AvatarView : FrameLayout {
         this.showPet = showPet
     }
 
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
+    private fun init(
+        attrs: AttributeSet?,
+        defStyle: Int,
+    ) {
         // Load attributes
-        val a = context.obtainStyledAttributes(
-            attrs,
-            R.styleable.AvatarView,
-            defStyle,
-            0
-        )
+        val a =
+            context.obtainStyledAttributes(
+                attrs,
+                R.styleable.AvatarView,
+                defStyle,
+                0,
+            )
 
         try {
             showBackground = a.getBoolean(R.styleable.AvatarView_showBackground, true)
@@ -148,15 +159,16 @@ class AvatarView : FrameLayout {
         for ((layerKey, layerName) in layerMap) {
             val layerNumber = i++
 
-            val imageView = if (imageViewHolder.size <= layerNumber) {
-                val newImageView = ImageView(context)
-                newImageView.scaleType = ImageView.ScaleType.MATRIX
-                addView(newImageView)
-                imageViewHolder.add(newImageView)
-                newImageView
-            } else {
-                imageViewHolder[layerNumber]
-            }
+            val imageView =
+                if (imageViewHolder.size <= layerNumber) {
+                    val newImageView = ImageView(context)
+                    newImageView.scaleType = ImageView.ScaleType.MATRIX
+                    addView(newImageView)
+                    imageViewHolder.add(newImageView)
+                    newImageView
+                } else {
+                    imageViewHolder[layerNumber]
+                }
 
             if (imageView.tag == layerName) {
                 continue
@@ -166,36 +178,39 @@ class AvatarView : FrameLayout {
             imageView.setImageResource(0)
 
             imageView.load(
-                DataBindingUtils.BASE_IMAGE_URL + DataBindingUtils.getFullFilename(
-                    layerName
-                )
+                DataBindingUtils.BASE_IMAGE_URL +
+                    DataBindingUtils.getFullFilename(
+                        layerName,
+                    ),
             ) {
                 allowHardware(false)
-                target(object : coil.target.Target {
-                    override fun onError(error: Drawable?) {
-                        super.onError(error)
-                        imageView.setImageDrawable(error)
-                        onLayerComplete()
-                    }
-
-                    override fun onSuccess(result: Drawable) {
-                        result.isFilterBitmap = false
-                        super.onSuccess(result)
-                        imageView.setImageDrawable(result)
-                        if (result is Animatable) {
-                            result.start()
+                target(
+                    object : coil.target.Target {
+                        override fun onError(error: Drawable?) {
+                            super.onError(error)
+                            imageView.setImageDrawable(error)
+                            onLayerComplete()
                         }
-                        val bounds = getLayerBounds(layerKey, layerName, result)
-                        imageView.imageMatrix = avatarMatrix
-                        val layoutParams = imageView.layoutParams as? LayoutParams
-                        layoutParams?.topMargin = bounds.top
-                        layoutParams?.marginStart = bounds.left
-                        layoutParams?.width = bounds.right
-                        layoutParams?.height = bounds.bottom
-                        imageView.layoutParams = layoutParams
-                        onLayerComplete()
-                    }
-                })
+
+                        override fun onSuccess(result: Drawable) {
+                            result.isFilterBitmap = false
+                            super.onSuccess(result)
+                            imageView.setImageDrawable(result)
+                            if (result is Animatable) {
+                                result.start()
+                            }
+                            val bounds = getLayerBounds(layerKey, layerName, result)
+                            imageView.imageMatrix = avatarMatrix
+                            val layoutParams = imageView.layoutParams as? LayoutParams
+                            layoutParams?.topMargin = bounds.top
+                            layoutParams?.marginStart = bounds.left
+                            layoutParams?.width = bounds.right
+                            layoutParams?.height = bounds.bottom
+                            imageView.layoutParams = layoutParams
+                            onLayerComplete()
+                        }
+                    },
+                )
             }
         }
         while (i < (imageViewHolder.size)) {
@@ -206,7 +221,10 @@ class AvatarView : FrameLayout {
         }
     }
 
-    private fun getLayerMap(avatar: Avatar, resetHasAttributes: Boolean): Map<LayerType, String> {
+    private fun getLayerMap(
+        avatar: Avatar,
+        resetHasAttributes: Boolean,
+    ): Map<LayerType, String> {
         val layerMap = getAvatarLayerMap(avatar, spriteSubstitutions)
 
         if (resetHasAttributes) {
@@ -247,7 +265,10 @@ class AvatarView : FrameLayout {
         return layerMap
     }
 
-    private fun substituteOrReturn(substitutions: Map<String, String>?, name: String): String {
+    private fun substituteOrReturn(
+        substitutions: Map<String, String>?,
+        name: String,
+    ): String {
         for (key in substitutions?.keys ?: arrayListOf()) {
             if (name.contains(key)) {
                 return substitutions?.get(key) ?: name
@@ -257,7 +278,10 @@ class AvatarView : FrameLayout {
     }
 
     @Suppress("ReturnCount")
-    private fun getAvatarLayerMap(avatar: Avatar, substitutions: Map<String, Map<String, String>>): EnumMap<LayerType, String> {
+    private fun getAvatarLayerMap(
+        avatar: Avatar,
+        substitutions: Map<String, Map<String, String>>,
+    ): EnumMap<LayerType, String> {
         val layerMap = EnumMap<LayerType, String>(LayerType::class.java)
 
         if (!avatar.isValid()) {
@@ -265,11 +289,12 @@ class AvatarView : FrameLayout {
         }
 
         val prefs = avatar.preferences ?: return layerMap
-        val outfit = if (prefs.costume) {
-            avatar.costume
-        } else {
-            avatar.equipped
-        }
+        val outfit =
+            if (prefs.costume) {
+                avatar.costume
+            } else {
+                avatar.equipped
+            }
 
         var hasVisualBuffs = false
 
@@ -363,53 +388,63 @@ class AvatarView : FrameLayout {
         return layerMap
     }
 
-    private fun getLayerBounds(layerType: LayerType, layerName: String, drawable: Drawable): Rect {
+    private fun getLayerBounds(
+        layerType: LayerType,
+        layerName: String,
+        drawable: Drawable,
+    ): Rect {
         var offset: PointF? = null
         val bounds = Rect(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
         val boundsF = RectF(bounds)
 
         // lookup layer specific offset
         when (layerName) {
-            "weapon_special_critical" -> offset = if (showMount || showPet) {
-                // full hero box
-                when {
-                    hasMount -> PointF(13.0f, 12.0f)
-                    hasPet -> PointF(13.0f, 24.5f + 12.0f)
-                    else -> PointF(13.0f, 28.0f + 12.0f)
-                }
-            } else if (showBackground) {
-                // compact hero box
-                PointF(-12.0f, 18.0f + 12.0f)
-            } else {
-                // hero only box
-                PointF(-12.0f, 12.0f)
-            }
+            "weapon_special_critical" ->
+                offset =
+                    if (showMount || showPet) {
+                        // full hero box
+                        when {
+                            hasMount -> PointF(13.0f, 12.0f)
+                            hasPet -> PointF(13.0f, 24.5f + 12.0f)
+                            else -> PointF(13.0f, 28.0f + 12.0f)
+                        }
+                    } else if (showBackground) {
+                        // compact hero box
+                        PointF(-12.0f, 18.0f + 12.0f)
+                    } else {
+                        // hero only box
+                        PointF(-12.0f, 12.0f)
+                    }
         }
 
         // otherwise lookup default layer type based offset
         if (offset == null) {
             when (layerType) {
-                LayerType.BACKGROUND -> if (!(showMount || showPet)) {
-                    offset = PointF(-25.0f, 0.0f) // compact hero box
-                }
+                LayerType.BACKGROUND ->
+                    if (!(showMount || showPet)) {
+                        offset = PointF(-25.0f, 0.0f) // compact hero box
+                    }
                 LayerType.MOUNT_BODY, LayerType.MOUNT_HEAD ->
                     offset =
                         PointF(24.0f, 18.0f) // full hero box
-                LayerType.CHAIR, LayerType.BACK, LayerType.SKIN, LayerType.SHIRT, LayerType.ARMOR, LayerType.BODY, LayerType.HEAD_0, LayerType.HAIR_BASE, LayerType.HAIR_BANGS, LayerType.HAIR_MUSTACHE, LayerType.HAIR_BEARD, LayerType.EYEWEAR, LayerType.VISUAL_BUFF, LayerType.HEAD, LayerType.HEAD_ACCESSORY, LayerType.HAIR_FLOWER, LayerType.SHIELD, LayerType.WEAPON, LayerType.ZZZ -> if (showMount || showPet) {
-                    // full hero box
-                    offset = when {
-                        hasMount -> if (layerMap[LayerType.MOUNT_HEAD]?.contains("Kangaroo") == true) {
-                            PointF(24.0f, 18f)
-                        } else {
-                            PointF(24.0f, 0f)
-                        }
-                        hasPet -> PointF(24.0f, 24f)
-                        else -> PointF(24.0f, 28.0f)
+                LayerType.CHAIR, LayerType.BACK, LayerType.SKIN, LayerType.SHIRT, LayerType.ARMOR, LayerType.BODY, LayerType.HEAD_0, LayerType.HAIR_BASE, LayerType.HAIR_BANGS, LayerType.HAIR_MUSTACHE, LayerType.HAIR_BEARD, LayerType.EYEWEAR, LayerType.VISUAL_BUFF, LayerType.HEAD, LayerType.HEAD_ACCESSORY, LayerType.HAIR_FLOWER, LayerType.SHIELD, LayerType.WEAPON, LayerType.ZZZ ->
+                    if (showMount || showPet) {
+                        // full hero box
+                        offset =
+                            when {
+                                hasMount ->
+                                    if (layerMap[LayerType.MOUNT_HEAD]?.contains("Kangaroo") == true) {
+                                        PointF(24.0f, 18f)
+                                    } else {
+                                        PointF(24.0f, 0f)
+                                    }
+                                hasPet -> PointF(24.0f, 24f)
+                                else -> PointF(24.0f, 28.0f)
+                            }
+                    } else if (showBackground) {
+                        // compact hero box
+                        offset = PointF(0.0f, 18.0f)
                     }
-                } else if (showBackground) {
-                    // compact hero box
-                    offset = PointF(0.0f, 18.0f)
-                }
                 LayerType.PET ->
                     offset =
                         PointF(0f, (FULL_HERO_RECT.height() - bounds.height()).toFloat())
@@ -453,7 +488,10 @@ class AvatarView : FrameLayout {
         }
     }
 
-    fun setAvatar(avatar: Avatar, preview: Map<LayerType, String>? = null) {
+    fun setAvatar(
+        avatar: Avatar,
+        preview: Map<LayerType, String>? = null,
+    ) {
         val oldUser = this.avatar
         this.avatar = avatar
         preview?.let { this.preview = preview }
@@ -525,7 +563,7 @@ class AvatarView : FrameLayout {
         WEAPON,
         MOUNT_HEAD,
         ZZZ,
-        PET
+        PET,
     }
 
     companion object {

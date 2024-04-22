@@ -29,7 +29,6 @@ import javax.inject.Inject
 class MountDetailRecyclerFragment :
     BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-
     @Inject
     internal lateinit var inventoryRepository: InventoryRepository
 
@@ -44,14 +43,17 @@ class MountDetailRecyclerFragment :
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = false
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -62,7 +64,10 @@ class MountDetailRecyclerFragment :
         super.onDestroy()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,15 +82,19 @@ class MountDetailRecyclerFragment :
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         layoutManager = androidx.recyclerview.widget.GridLayoutManager(mainActivity, 4)
-        layoutManager?.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {
-                    layoutManager?.spanCount ?: 1
-                } else {
-                    1
+        layoutManager?.spanSizeLookup =
+            object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
+                            position,
+                        ) == 1
+                    ) {
+                        layoutManager?.spanCount ?: 1
+                    } else {
+                        1
+                    }
                 }
             }
-        }
         binding?.recyclerView?.layoutManager = layoutManager
 
         adapter = binding?.recyclerView?.adapter as? MountDetailRecyclerAdapter
@@ -134,7 +143,9 @@ class MountDetailRecyclerFragment :
     private fun loadItems() {
         if (animalType != null || animalGroup != null) {
             lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                val mounts = inventoryRepository.getMounts(animalType, animalGroup, animalColor).firstOrNull() ?: emptyList()
+                val mounts =
+                    inventoryRepository.getMounts(animalType, animalGroup, animalColor)
+                        .firstOrNull() ?: emptyList()
                 inventoryRepository.getOwnedMounts().map { ownedMounts ->
                     val mountMap = mutableMapOf<String, OwnedMount>()
                     ownedMounts.forEach { mountMap[it.key ?: ""] = it }

@@ -36,10 +36,11 @@ class SoundFile(val theme: String, private val fileName: String) {
 
         try {
             player?.setDataSource(file?.path)
-            val attributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-                .build()
+            val attributes =
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setLegacyStreamType(AudioManager.STREAM_MUSIC)
+                    .build()
             player?.setAudioAttributes(attributes)
             player?.prepare()
 

@@ -21,7 +21,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
     override fun deserialize(
         json: JsonElement,
         typeOfT: Type,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): List<Customization> {
         val jsonObject = json.asJsonObject
         val customizations = RealmList<Customization>()
@@ -47,8 +47,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                                 customization.type,
                                 customization.category,
                                 customization.identifier,
-                                nestedObject.get(customization.identifier).asJsonObject
-                            )
+                                nestedObject.get(customization.identifier).asJsonObject,
+                            ),
                         )
                         nestedObject.remove(customization.identifier)
                     }
@@ -63,8 +63,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                             type,
                             null,
                             key,
-                            value.asJsonObject
-                        )
+                            value.asJsonObject,
+                        ),
                     )
                 }
             }
@@ -77,8 +77,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                             "hair",
                             key,
                             key1,
-                            value1.asJsonObject
-                        )
+                            value1.asJsonObject,
+                        ),
                     )
                 }
             }
@@ -94,8 +94,8 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                                 customization.customizationSet ?: "",
                                 keyList.indexOf(customization.customizationSet),
                                 customization.identifier,
-                                nestedObject.get(customization.identifier).asJsonObject
-                            )
+                                nestedObject.get(customization.identifier).asJsonObject,
+                            ),
                         )
                         nestedObject.remove(customization.identifier)
                     }
@@ -104,7 +104,15 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
 
             for ((key, value) in jsonObject.entrySet()) {
                 for ((key1, value1) in value.asJsonObject.entrySet()) {
-                    customizations.add(this.parseBackground(null, key, keyList.indexOf(key), key1, value1.asJsonObject))
+                    customizations.add(
+                        this.parseBackground(
+                            null,
+                            key,
+                            keyList.indexOf(key),
+                            key1,
+                            value1.asJsonObject,
+                        ),
+                    )
                 }
             }
         }
@@ -119,7 +127,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         type: String?,
         category: String?,
         key: String?,
-        entry: JsonObject
+        entry: JsonObject,
     ): Customization {
         var customization = existingCustomizaion
         if (customization == null) {
@@ -166,7 +174,7 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
         setName: String,
         setCount: Int,
         key: String?,
-        entry: JsonObject
+        entry: JsonObject,
     ): Customization {
         var customization = existingCustomization
 
@@ -183,26 +191,30 @@ class CustomizationDeserializer : JsonDeserializer<List<Customization>> {
                 customization.setPrice = 0
                 customization.isBuyable = false
             }
+
             "incentiveBackgrounds" -> {
                 customization.customizationSetName = "PLAIN BACKGROUND SET"
                 customization.price = 0
                 customization.setPrice = 0
                 customization.isBuyable = false
             }
+
             "timeTravelBackgrounds" -> {
                 customization.customizationSetName = "STEAMPUNK BACKGROUNDS"
                 customization.price = 1
                 customization.setPrice = 0
                 customization.isBuyable = false
             }
+
             else -> {
                 val readableSetName = "SET ${setCount + 1}: ${
-                getMonthName(
-                    setName.substring(11, 13).toInt() - 1
-                )
+                    getMonthName(
+                        setName.substring(11, 13).toInt() - 1,
+                    )
                 } ${setName.substring(13, 17)}"
                 customization.customizationSetName = readableSetName
-                customization.customizationSet = setName.substring(13, 17) + "." + setName.substring(11, 13)
+                customization.customizationSet =
+                    setName.substring(13, 17) + "." + setName.substring(11, 13)
                 customization.price = 7
                 customization.setPrice = 15
             }

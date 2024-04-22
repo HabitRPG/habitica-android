@@ -18,7 +18,6 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
 class EllipsisTextView : AppCompatTextView {
-
     private val ellipsesListeners = ArrayList<EllipsisListener>()
 
     private var ellipses: Boolean = false
@@ -31,7 +30,11 @@ class EllipsisTextView : AppCompatTextView {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle,
+    )
 
     fun addEllipsesListener(listener: EllipsisListener?) {
         if (listener == null) {
@@ -48,7 +51,12 @@ class EllipsisTextView : AppCompatTextView {
         return ellipses
     }
 
-    override fun layout(l: Int, t: Int, r: Int, b: Int) {
+    override fun layout(
+        l: Int,
+        t: Int,
+        r: Int,
+        b: Int,
+    ) {
         super.layout(l, t, r, b)
 
         ellipses = false

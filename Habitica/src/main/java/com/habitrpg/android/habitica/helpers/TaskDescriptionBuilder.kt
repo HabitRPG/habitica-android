@@ -15,34 +15,38 @@ import java.util.Date
 import java.util.Locale
 
 class TaskDescriptionBuilder(private val context: Context) {
-
     fun describe(task: Task): String {
         return when (task.type) {
-            TaskType.HABIT -> context.getString(
-                R.string.habit_summary_description,
-                describeHabitDirections(task.up ?: false, task.down ?: false),
-                describeDifficulty(task.priority)
-            )
+            TaskType.HABIT ->
+                context.getString(
+                    R.string.habit_summary_description,
+                    describeHabitDirections(task.up ?: false, task.down ?: false),
+                    describeDifficulty(task.priority),
+                )
+
             TaskType.TODO -> {
                 if (task.dueDate != null) {
                     context.getString(
                         R.string.todo_summary_description_duedate,
                         describeDifficulty(task.priority),
-                        describeDate(task.dueDate!!)
+                        describeDate(task.dueDate!!),
                     )
                 } else {
                     context.getString(
                         R.string.todo_summary_description,
-                        describeDifficulty(task.priority)
+                        describeDifficulty(task.priority),
                     )
                 }
             }
-            TaskType.DAILY -> context.getString(
-                R.string.daily_summary_description,
-                describeDifficulty(task.priority),
-                describeRepeatInterval(task.frequency, task.everyX ?: 1),
-                describeRepeatDays(task)
-            )
+
+            TaskType.DAILY ->
+                context.getString(
+                    R.string.daily_summary_description,
+                    describeDifficulty(task.priority),
+                    describeRepeatInterval(task.frequency, task.everyX ?: 1),
+                    describeRepeatDays(task),
+                )
+
             else -> ""
         }
     }
@@ -59,48 +63,61 @@ class TaskDescriptionBuilder(private val context: Context) {
         }
         return when (task.frequency) {
             Frequency.WEEKLY -> {
-                " " + if (task.repeat?.isEveryDay == true) {
-                    context.getString(R.string.on_every_day_of_week)
-                } else {
-                    if (task.repeat?.isOnlyWeekdays == true) {
-                        context.getString(R.string.on_weekdays)
-                    } else if (task.repeat?.isOnlyWeekends == true) {
-                        context.getString(R.string.on_weekends)
+                " " +
+                    if (task.repeat?.isEveryDay == true) {
+                        context.getString(R.string.on_every_day_of_week)
                     } else {
-                        val dayStrings = task.repeat?.dayStrings(context) ?: listOf()
-                        joinToCount(dayStrings)
+                        if (task.repeat?.isOnlyWeekdays == true) {
+                            context.getString(R.string.on_weekdays)
+                        } else if (task.repeat?.isOnlyWeekends == true) {
+                            context.getString(R.string.on_weekends)
+                        } else {
+                            val dayStrings = task.repeat?.dayStrings(context) ?: listOf()
+                            joinToCount(dayStrings)
+                        }
                     }
-                }
             }
-            Frequency.MONTHLY -> {
-                " " + if (task.getDaysOfMonth()?.isNotEmpty() == true) {
-                    val dayList = task.getDaysOfMonth()?.map {
-                        withOrdinal(it)
-                    }
-                    context.getString(R.string.on_the_x, joinToCount(dayList))
-                } else if (task.getWeeksOfMonth()?.isNotEmpty() == true) {
-                    val occurrence = when (task.getWeeksOfMonth()?.first()) {
-                        0 -> context.getString(R.string.first)
-                        1 -> context.getString(R.string.second)
-                        2 -> context.getString(R.string.third)
-                        3 -> context.getString(R.string.fourth)
-                        4 -> context.getString(R.string.fifth)
-                        else -> return ""
-                    }
-                    val dayStrings = task.repeat?.dayStrings(context) ?: listOf()
 
-                    context.getString(R.string.on_the_x_of_month, occurrence, joinToCount(dayStrings))
-                } else {
-                    ""
-                }
+            Frequency.MONTHLY -> {
+                " " +
+                    if (task.getDaysOfMonth()?.isNotEmpty() == true) {
+                        val dayList =
+                            task.getDaysOfMonth()?.map {
+                                withOrdinal(it)
+                            }
+                        context.getString(R.string.on_the_x, joinToCount(dayList))
+                    } else if (task.getWeeksOfMonth()?.isNotEmpty() == true) {
+                        val occurrence =
+                            when (task.getWeeksOfMonth()?.first()) {
+                                0 -> context.getString(R.string.first)
+                                1 -> context.getString(R.string.second)
+                                2 -> context.getString(R.string.third)
+                                3 -> context.getString(R.string.fourth)
+                                4 -> context.getString(R.string.fifth)
+                                else -> return ""
+                            }
+                        val dayStrings = task.repeat?.dayStrings(context) ?: listOf()
+
+                        context.getString(
+                            R.string.on_the_x_of_month,
+                            occurrence,
+                            joinToCount(dayStrings),
+                        )
+                    } else {
+                        ""
+                    }
             }
-            Frequency.YEARLY -> " " + context.getString(
-                R.string.on_x,
-                task.startDate?.let {
-                    val flags = DateUtils.FORMAT_SHOW_DATE + DateUtils.FORMAT_NO_YEAR
-                    DateUtils.formatDateTime(context, it.time, flags)
-                } ?: ""
-            )
+
+            Frequency.YEARLY ->
+                " " +
+                    context.getString(
+                        R.string.on_x,
+                        task.startDate?.let {
+                            val flags = DateUtils.FORMAT_SHOW_DATE + DateUtils.FORMAT_NO_YEAR
+                            DateUtils.formatDateTime(context, it.time, flags)
+                        } ?: "",
+                    )
+
             else -> ""
         }
     }
@@ -121,24 +138,50 @@ class TaskDescriptionBuilder(private val context: Context) {
         }
     }
 
-    private fun describeRepeatInterval(interval: Frequency?, everyX: Int): String {
+    private fun describeRepeatInterval(
+        interval: Frequency?,
+        everyX: Int,
+    ): String {
         if (everyX == 0) {
             return context.getString(R.string.never)
         }
         return when (interval) {
-            Frequency.DAILY -> context.resources.getQuantityString(R.plurals.repeat_daily, everyX, everyX)
-            Frequency.WEEKLY -> context.resources.getQuantityString(R.plurals.repeat_weekly, everyX, everyX)
-            Frequency.MONTHLY -> context.resources.getQuantityString(
-                R.plurals.repeat_monthly,
-                everyX,
-                everyX
-            )
-            Frequency.YEARLY -> context.resources.getQuantityString(R.plurals.repeat_yearly, everyX, everyX)
+            Frequency.DAILY ->
+                context.resources.getQuantityString(
+                    R.plurals.repeat_daily,
+                    everyX,
+                    everyX,
+                )
+
+            Frequency.WEEKLY ->
+                context.resources.getQuantityString(
+                    R.plurals.repeat_weekly,
+                    everyX,
+                    everyX,
+                )
+
+            Frequency.MONTHLY ->
+                context.resources.getQuantityString(
+                    R.plurals.repeat_monthly,
+                    everyX,
+                    everyX,
+                )
+
+            Frequency.YEARLY ->
+                context.resources.getQuantityString(
+                    R.plurals.repeat_yearly,
+                    everyX,
+                    everyX,
+                )
+
             null -> ""
         }
     }
 
-    private fun describeHabitDirections(up: Boolean, down: Boolean): String {
+    private fun describeHabitDirections(
+        up: Boolean,
+        down: Boolean,
+    ): String {
         return if (up && down) {
             context.getString(R.string.positive_and_negative)
         } else if (up) {

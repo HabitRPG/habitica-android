@@ -55,7 +55,9 @@ import javax.inject.Singleton
 @Module
 class UserRepositoryModule {
     @Provides
-    fun providesSetupCustomizationRepository(@ApplicationContext context: Context): SetupCustomizationRepository {
+    fun providesSetupCustomizationRepository(
+        @ApplicationContext context: Context,
+    ): SetupCustomizationRepository {
         return SetupCustomizationRepositoryImpl(context)
     }
 
@@ -75,7 +77,7 @@ class UserRepositoryModule {
             localRepository,
             apiClient,
             authenticationHandler,
-            appConfigManager
+            appConfigManager,
         )
     }
 
@@ -88,7 +90,7 @@ class UserRepositoryModule {
     fun providesTagRepository(
         localRepository: TagLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler: AuthenticationHandler
+        authenticationHandler: AuthenticationHandler,
     ): TagRepository {
         return TagRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -102,7 +104,7 @@ class UserRepositoryModule {
     fun providesChallengeRepository(
         localRepository: ChallengeLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler: AuthenticationHandler
+        authenticationHandler: AuthenticationHandler,
     ): ChallengeRepository {
         return ChallengeRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -138,14 +140,14 @@ class UserRepositoryModule {
     fun providesSocialRepository(
         localRepository: SocialLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler: AuthenticationHandler
+        authenticationHandler: AuthenticationHandler,
     ): SocialRepository {
         return SocialRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
 
     @Provides
     fun providesInventoryLocalRepository(
-        realm: Realm
+        realm: Realm,
     ): InventoryLocalRepository {
         return RealmInventoryLocalRepository(realm)
     }
@@ -155,9 +157,14 @@ class UserRepositoryModule {
         localRepository: InventoryLocalRepository,
         apiClient: ApiClient,
         authenticationHandler: AuthenticationHandler,
-        remoteConfig: AppConfigManager
+        remoteConfig: AppConfigManager,
     ): InventoryRepository {
-        return InventoryRepositoryImpl(localRepository, apiClient, authenticationHandler, remoteConfig)
+        return InventoryRepositoryImpl(
+            localRepository,
+            apiClient,
+            authenticationHandler,
+            remoteConfig,
+        )
     }
 
     @Provides
@@ -169,7 +176,7 @@ class UserRepositoryModule {
     fun providesFAQRepository(
         localRepository: FAQLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler: AuthenticationHandler
+        authenticationHandler: AuthenticationHandler,
     ): FAQRepository {
         return FAQRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -183,7 +190,7 @@ class UserRepositoryModule {
     fun providesTutorialRepository(
         localRepository: TutorialLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler: AuthenticationHandler
+        authenticationHandler: AuthenticationHandler,
     ): TutorialRepository {
         return TutorialRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -197,7 +204,7 @@ class UserRepositoryModule {
     fun providesCustomizationRepository(
         localRepository: CustomizationLocalRepository,
         apiClient: ApiClient,
-        authenticationHandler: AuthenticationHandler
+        authenticationHandler: AuthenticationHandler,
     ): CustomizationRepository {
         return CustomizationRepositoryImpl(localRepository, apiClient, authenticationHandler)
     }
@@ -207,7 +214,7 @@ class UserRepositoryModule {
     fun providesPurchaseHandler(
         @ApplicationContext context: Context,
         apiClient: ApiClient,
-        userViewModel: MainUserViewModel
+        userViewModel: MainUserViewModel,
     ): PurchaseHandler {
         return PurchaseHandler(context, apiClient, userViewModel)
     }

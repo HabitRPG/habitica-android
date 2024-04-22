@@ -26,15 +26,16 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
             updateTaskTypeButton(binding.todoButton, TaskType.TODO)
             updateTaskTypeButton(binding.dailyButton, TaskType.DAILY)
             updateTaskTypeButton(binding.habitButton, TaskType.HABIT)
-            val typeName = getString(
-                when (value) {
-                    TaskType.HABIT -> R.string.habit
-                    TaskType.DAILY -> R.string.daily
-                    TaskType.TODO -> R.string.todo
-                    TaskType.REWARD -> R.string.reward
-                    else -> R.string.task
-                }
-            )
+            val typeName =
+                getString(
+                    when (value) {
+                        TaskType.HABIT -> R.string.habit
+                        TaskType.DAILY -> R.string.daily
+                        TaskType.TODO -> R.string.todo
+                        TaskType.REWARD -> R.string.reward
+                        else -> R.string.task
+                    },
+                )
             binding.confirmationTitle.text = getString(R.string.new_task_x, typeName)
             binding.saveButton.setChipText(getString(R.string.save_task_x, typeName))
         }
@@ -67,7 +68,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
                     binding.saveButton.isEnabled = true
                     binding.editTaskWrapper.isVisible = true
                     binding.taskConfirmationWrapper.isVisible = false
-                }
+                },
             ) {
                 viewModel.saveTask(binding.editText.text, taskType)
                 val data = Intent()
@@ -78,7 +79,7 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
                 parent.startActivity(
                     Intent(parent, TaskListActivity::class.java).apply {
                         putExtra("task_type", taskType?.value)
-                    }
+                    },
                 )
             }
         }
@@ -94,25 +95,30 @@ class TaskFormActivity : BaseActivity<ActivityTaskFormBinding, TaskFormViewModel
         }
     }
 
-    private val inputResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        val input = it.data?.getStringExtra("input")
-        if (input?.isNotBlank() == true) {
-            binding.editTaskWrapper.isVisible = false
-            binding.taskConfirmationWrapper.isVisible = true
-            binding.confirmationText.text = input
-            binding.editText.setText(input)
+    private val inputResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val input = it.data?.getStringExtra("input")
+            if (input?.isNotBlank() == true) {
+                binding.editTaskWrapper.isVisible = false
+                binding.taskConfirmationWrapper.isVisible = true
+                binding.confirmationText.text = input
+                binding.editText.setText(input)
+            }
         }
-    }
 
     private fun requestInput() {
-        val intent = Intent(this, InputActivity::class.java).apply {
-            putExtra("title", getString(R.string.task_title_hint))
-            putExtra("input", binding.editText.text.toString())
-        }
+        val intent =
+            Intent(this, InputActivity::class.java).apply {
+                putExtra("title", getString(R.string.task_title_hint))
+                putExtra("input", binding.editText.text.toString())
+            }
         inputResult.launch(intent)
     }
 
-    private fun updateTaskTypeButton(button: TextView, thisType: TaskType) {
+    private fun updateTaskTypeButton(
+        button: TextView,
+        thisType: TaskType,
+    ) {
         if (taskType == thisType) {
             button.backgroundTintList =
                 ColorStateList.valueOf(ContextCompat.getColor(this, R.color.watch_purple_10))

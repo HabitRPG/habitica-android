@@ -12,30 +12,46 @@ import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.theme.HabiticaColors
 import com.habitrpg.common.habitica.theme.HabiticaTheme
 
-
 @Composable
 fun HabiticaColors.textPrimaryFor(task: Task?): Color {
-    return colorResource((if (isSystemInDarkTheme()) task?.extraExtraLightTaskColor else task?.extraDarkTaskColor) ?: R.color.text_primary)
+    return colorResource(
+        (if (isSystemInDarkTheme()) task?.extraExtraLightTaskColor else task?.extraDarkTaskColor)
+            ?: R.color.text_primary,
+    )
 }
 
 @Composable
 fun HabiticaColors.textSecondaryFor(task: Task?): Color {
-    return colorResource((if (isSystemInDarkTheme()) task?.extraLightTaskColor else task?.lowSaturationTaskColor) ?: R.color.brand_sub_text)
+    return colorResource(
+        (if (isSystemInDarkTheme()) task?.extraLightTaskColor else task?.lowSaturationTaskColor)
+            ?: R.color.brand_sub_text,
+    )
 }
 
 @Composable
 fun HabiticaColors.primaryBackgroundFor(task: Task?): Color {
-    return colorResource((if (isSystemInDarkTheme()) task?.mediumTaskColor else task?.lightTaskColor) ?: R.color.brand_400)
+    return colorResource(
+        (if (isSystemInDarkTheme()) task?.mediumTaskColor else task?.lightTaskColor)
+            ?: R.color.brand_400,
+    )
 }
 
 @Composable
 fun HabiticaColors.windowBackgroundFor(task: Task?): Color {
-    return (if (isSystemInDarkTheme()) task?.extraExtraDarkTaskColor else task?.extraExtraLightTaskColor)?.let { colorResource(it) } ?: windowBackground
+    return (if (isSystemInDarkTheme()) task?.extraExtraDarkTaskColor else task?.extraExtraLightTaskColor)?.let {
+        colorResource(
+            it,
+        )
+    } ?: windowBackground
 }
 
 @Composable
 fun HabiticaColors.contentBackgroundFor(task: Task?): Color {
-    return (if (isSystemInDarkTheme()) task?.darkestTaskColor else task?.lightestTaskColor)?.let { colorResource(it) } ?: windowBackground
+    return (if (isSystemInDarkTheme()) task?.darkestTaskColor else task?.lightestTaskColor)?.let {
+        colorResource(
+            it,
+        )
+    } ?: windowBackground
 }
 
 @Composable
@@ -78,6 +94,6 @@ val HabiticaTheme.colors: HabiticaColors
             errorBackground = Color(ContextCompat.getColor(context, R.color.background_red)),
             errorColor = Color(ContextCompat.getColor(context, R.color.text_red)),
             successBackground = Color(ContextCompat.getColor(context, R.color.background_green)),
-            successColor = Color(ContextCompat.getColor(context, R.color.text_green))
+            successColor = Color(ContextCompat.getColor(context, R.color.text_green)),
         )
     }

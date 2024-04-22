@@ -26,9 +26,17 @@ fun CurrencyText(
     fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
-    animated: Boolean = true
+    animated: Boolean = true,
 ) {
-    CurrencyText(currency = currency, value = value.toDouble(), modifier, fontSize, decimals, minForAbbreviation, animated)
+    CurrencyText(
+        currency = currency,
+        value = value.toDouble(),
+        modifier,
+        fontSize,
+        decimals,
+        minForAbbreviation,
+        animated,
+    )
 }
 
 @Composable
@@ -39,16 +47,17 @@ fun CurrencyText(
     fontSize: TextUnit = 12.sp,
     decimals: Int = 0,
     minForAbbreviation: Int = 0,
-    animated: Boolean = true
+    animated: Boolean = true,
 ) {
-    val animatedValue = if (animated) {
-        animateFloatAsState(
-            targetValue = value.toFloat(),
-            animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
-        ).value
-    } else {
-        value.toFloat()
-    }
+    val animatedValue =
+        if (animated) {
+            animateFloatAsState(
+                targetValue = value.toFloat(),
+                animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
+            ).value
+        } else {
+            value.toFloat()
+        }
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
         when (currency) {
             "gold" -> HabiticaIconsHelper.imageOfGold()
@@ -58,14 +67,15 @@ fun CurrencyText(
         }?.asImageBitmap()?.let { Image(it, null, Modifier.padding(end = 5.dp)) }
         Text(
             NumberAbbreviator.abbreviate(null, animatedValue, decimals, minForAbbreviation),
-            color = when (currency) {
-                "gold" -> colorResource(R.color.text_gold)
-                "gems" -> colorResource(R.color.text_green)
-                "hourglasses" -> colorResource(R.color.text_brand)
-                else -> colorResource(R.color.text_primary)
-            },
+            color =
+                when (currency) {
+                    "gold" -> colorResource(R.color.text_gold)
+                    "gems" -> colorResource(R.color.text_green)
+                    "hourglasses" -> colorResource(R.color.text_brand)
+                    else -> colorResource(R.color.text_primary)
+                },
             fontSize = fontSize,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
         )
     }
 }

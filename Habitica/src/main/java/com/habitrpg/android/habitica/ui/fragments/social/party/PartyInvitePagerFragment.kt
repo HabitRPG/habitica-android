@@ -17,14 +17,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
-
     override var binding: FragmentViewpagerBinding? = null
 
     internal val viewModel: PartyViewModel by viewModels()
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
@@ -32,7 +31,7 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
@@ -49,7 +48,10 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         setViewPagerAdapter()
@@ -58,37 +60,39 @@ class PartyInvitePagerFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
-        binding?.viewPager?.adapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
-            override fun createFragment(position: Int): Fragment {
-                return when (position) {
-                    0 -> {
-                        if (viewModel.isLeader) {
-                            PartySeekingFragment()
-                        } else {
+        binding?.viewPager?.adapter =
+            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    return when (position) {
+                        0 -> {
+                            if (viewModel.isLeader) {
+                                PartySeekingFragment()
+                            } else {
+                                PartyInviteFragment()
+                            }
+                        }
+
+                        1 -> {
                             PartyInviteFragment()
                         }
-                    }
 
-                    1 -> {
-                        PartyInviteFragment()
+                        else -> Fragment()
                     }
+                }
 
-                    else -> Fragment()
+                override fun getItemCount(): Int {
+                    return if (viewModel.isLeader) 2 else 1
                 }
             }
-
-            override fun getItemCount(): Int {
-                return if (viewModel.isLeader) 2 else 1
-            }
-        }
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = when (position) {
-                        0 -> context?.getString(R.string.list)
-                        1 -> context?.getString(R.string.by_invite)
-                        else -> ""
-                    }
+                    tab.text =
+                        when (position) {
+                            0 -> context?.getString(R.string.list)
+                            1 -> context?.getString(R.string.by_invite)
+                            else -> ""
+                        }
                 }.attach()
             }
         }

@@ -33,7 +33,6 @@ import javax.inject.Inject
 class StableRecyclerFragment :
     BaseFragment<FragmentRefreshRecyclerviewBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
-
     private val viewModel: StableViewModel by viewModels()
 
     @Inject
@@ -53,7 +52,10 @@ class StableRecyclerFragment :
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -62,24 +64,32 @@ class StableRecyclerFragment :
         super.onDestroy()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.recyclerView?.emptyItem = EmptyItem(
-            getString(R.string.empty_items, itemTypeText ?: viewModel.itemType)
-        )
+        binding?.recyclerView?.emptyItem =
+            EmptyItem(
+                getString(R.string.empty_items, itemTypeText ?: viewModel.itemType),
+            )
         binding?.refreshLayout?.setOnRefreshListener(this)
 
-        val layoutManager = androidx.recyclerview.widget.GridLayoutManager(activity, 4)
-        layoutManager.spanSizeLookup = object : androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(position) == 1) {
-                    layoutManager.spanCount
-                } else {
-                    1
+        val layoutManager = GridLayoutManager(activity, 4)
+        layoutManager.spanSizeLookup =
+            object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (adapter?.getItemViewType(position) == 0 || adapter?.getItemViewType(
+                            position,
+                        ) == 1
+                    ) {
+                        layoutManager.spanCount
+                    } else {
+                        1
+                    }
                 }
             }
-        }
 
         binding?.recyclerView?.layoutManager = layoutManager
         activity?.let {
@@ -91,8 +101,14 @@ class StableRecyclerFragment :
             adapter = StableRecyclerAdapter()
             adapter?.animalIngredientsRetriever = { animal, callback ->
                 lifecycleScope.launch(ExceptionHandler.coroutine()) {
-                    val egg = inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal)).firstOrNull()?.firstOrNull() as? Egg
-                    val potion = inventoryRepository.getItems(HatchingPotion::class.java, arrayOf(animal.color)).firstOrNull()?.firstOrNull() as? HatchingPotion
+                    val egg =
+                        inventoryRepository.getItems(Egg::class.java, arrayOf(animal.animal))
+                            .firstOrNull()?.firstOrNull() as? Egg
+                    val potion =
+                        inventoryRepository.getItems(
+                            HatchingPotion::class.java,
+                            arrayOf(animal.color),
+                        ).firstOrNull()?.firstOrNull() as? HatchingPotion
                     callback(Pair(egg, potion))
                 }
             }
@@ -104,7 +120,10 @@ class StableRecyclerFragment :
             adapter?.let {
                 it.onEquip = {
                     lifecycleScope.launchCatching {
-                        inventoryRepository.equip(if (viewModel.itemType == "pets") "pet" else "mount", it)
+                        inventoryRepository.equip(
+                            if (viewModel.itemType == "pets") "pet" else "mount",
+                            it,
+                        )
                     }
                 }
             }
@@ -126,7 +145,8 @@ class StableRecyclerFragment :
     private fun setGridSpanCount(width: Int) {
         var spanCount = 0
         if (context != null && context?.resources != null) {
-            val animalWidth = if (viewModel.itemType == "pets") R.dimen.pet_width else R.dimen.mount_width
+            val animalWidth =
+                if (viewModel.itemType == "pets") R.dimen.pet_width else R.dimen.mount_width
             val itemWidth: Float = context?.resources?.getDimension(animalWidth) ?: 0.toFloat()
 
             spanCount = (width / itemWidth).toInt()

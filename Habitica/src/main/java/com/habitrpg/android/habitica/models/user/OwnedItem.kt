@@ -6,7 +6,6 @@ import io.realm.annotations.RealmClass
 
 @RealmClass(embedded = true)
 open class OwnedItem : RealmObject(), BaseMainObject, OwnedObject {
-
     override val realmClass: Class<OwnedItem>
         get() = OwnedItem::class.java
     override val primaryIdentifier: String?

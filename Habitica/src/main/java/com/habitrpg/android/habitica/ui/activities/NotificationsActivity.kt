@@ -21,14 +21,14 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.InventoryRepository
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.ActivityNotificationsBinding
-import com.habitrpg.common.habitica.extensions.fadeInAnimation
-import com.habitrpg.common.habitica.extensions.flash
-import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.HapticFeedbackManager
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.ui.viewmodels.NotificationsViewModel
+import com.habitrpg.common.habitica.extensions.fadeInAnimation
+import com.habitrpg.common.habitica.extensions.flash
 import com.habitrpg.common.habitica.extensions.fromHtml
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.models.Notification
@@ -55,8 +55,9 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
-
+class NotificationsActivity :
+    BaseActivity(),
+    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
     private lateinit var binding: ActivityNotificationsBinding
 
     @Inject
@@ -101,9 +102,9 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             viewModel.getNotifications()
                 .debounce(250)
                 .collect {
-                setNotifications(it)
-                viewModel.markNotificationsAsSeen(it)
-            }
+                    setNotifications(it)
+                    viewModel.markNotificationsAsSeen(it)
+                }
         }
 
         lifecycleScope.launchCatching {
@@ -155,33 +156,57 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
     private fun displayNoNotificationsView() {
         binding.notificationItems.removeAllViewsInLayout()
         binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_NONE
-        binding.notificationItems.addView(inflater?.inflate(R.layout.no_notifications, binding.notificationItems, false))
+        binding.notificationItems.addView(
+            inflater?.inflate(
+                R.layout.no_notifications,
+                binding.notificationItems,
+                false,
+            ),
+        )
         binding.progressView.isVisible = false
     }
 
-
     private fun displayNotificationsListView(notifications: List<Notification>) {
-        binding.notificationItems.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
+        binding.notificationItems.showDividers =
+            LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_END
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val currentViews = mutableSetOf<View>().apply {
-                addAll(binding.notificationItems.children)
-            }
-            notifications.forEach {
-                val item: View? = when (it.type) {
-                    Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
-                    Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
-                    Notification.Type.UNALLOCATED_STATS_POINTS.type -> createUnallocatedStatsNotification(it)
-                    Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
-                    Notification.Type.GROUP_TASK_NEEDS_WORK.type -> createGroupTaskNeedsWorkNotification(it)
-                    Notification.Type.GROUP_TASK_APPROVED.type -> createGroupTaskApprovedNotification(it)
-                    Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type -> createGroupTaskNeedsApprovalNotification(it)
-                    Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
-                    Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
-                    Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
-                    Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
-                    else -> null
+            val currentViews =
+                mutableSetOf<View>().apply {
+                    addAll(binding.notificationItems.children)
                 }
+            notifications.forEach {
+                val item: View? =
+                    when (it.type) {
+                        Notification.Type.NEW_CHAT_MESSAGE.type -> createNewChatMessageNotification(it)
+                        Notification.Type.NEW_STUFF.type -> createNewStuffNotification(it)
+                        Notification.Type.UNALLOCATED_STATS_POINTS.type ->
+                            createUnallocatedStatsNotification(
+                                it,
+                            )
+
+                        Notification.Type.NEW_MYSTERY_ITEMS.type -> createMysteryItemsNotification(it)
+                        Notification.Type.GROUP_TASK_NEEDS_WORK.type ->
+                            createGroupTaskNeedsWorkNotification(
+                                it,
+                            )
+
+                        Notification.Type.GROUP_TASK_APPROVED.type ->
+                            createGroupTaskApprovedNotification(
+                                it,
+                            )
+
+                        Notification.Type.GROUP_TASK_REQUIRES_APPROVAL.type ->
+                            createGroupTaskNeedsApprovalNotification(
+                                it,
+                            )
+
+                        Notification.Type.PARTY_INVITATION.type -> createPartyInvitationNotification(it)
+                        Notification.Type.QUEST_INVITATION.type -> createQuestInvitationNotification(it)
+                        Notification.Type.ITEM_RECEIVED.type -> createItemReceivedNotification(it)
+                        Notification.Type.GUILD_INVITATION.type -> createGuildInvitationNotification(it)
+                        else -> null
+                    }
 
                 item?.let { view ->
                     if (!currentViews.removeIf { it.tag == view.tag }) {
@@ -217,11 +242,12 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
 
     private fun createNewChatMessageNotification(notification: Notification): View? {
         val data = notification.data as? NewChatMessageData
-        val stringId = if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild
+        val stringId =
+            if (viewModel.isPartyMessage(data)) R.string.new_msg_party else R.string.new_msg_guild
 
         return createDismissableNotificationItem(
             notification,
-            fromHtml(getString(stringId, data?.group?.name))
+            fromHtml(getString(stringId, data?.group?.name)),
         )
     }
 
@@ -230,34 +256,36 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return createDismissableNotificationItem(
             notification,
             fromHtml("<b>" + data?.title + "</b><br>" + data?.text),
-            imageName = data?.icon
+            imageName = data?.icon,
         )
     }
 
     private var baileyNewsNotification: Notification? = null
 
-    private suspend fun createNewStuffNotification(notification: Notification): View? = withContext(Dispatchers.IO) {
-        var baileyNotification = notification
-        val data = notification.data as? NewStuffData
-        val text = if (data?.title != null) {
-            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
-        } else {
-            baileyNotification = baileyNewsNotification ?: userRepository.getNewsNotification() ?: notification
-            baileyNewsNotification = baileyNotification
-            val baileyNewsData = baileyNotification.data as? NewStuffData
-            fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
-        }
-        baileyNotification.id = notification.id
+    private suspend fun createNewStuffNotification(notification: Notification): View? =
+        withContext(Dispatchers.IO) {
+            var baileyNotification = notification
+            val data = notification.data as? NewStuffData
+            val text =
+                if (data?.title != null) {
+                    fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + data.title)
+                } else {
+                    baileyNotification =
+                        baileyNewsNotification ?: userRepository.getNewsNotification() ?: notification
+                    baileyNewsNotification = baileyNotification
+                    val baileyNewsData = baileyNotification.data as? NewStuffData
+                    fromHtml("<b>" + getString(R.string.new_bailey_update) + "</b><br>" + baileyNewsData?.title)
+                }
+            baileyNotification.id = notification.id
 
-        return@withContext withContext(Dispatchers.Main) {
-            createDismissableNotificationItem(
-                baileyNotification,
-                text,
-                R.drawable.notifications_bailey
-            )
+            return@withContext withContext(Dispatchers.Main) {
+                createDismissableNotificationItem(
+                    baileyNotification,
+                    text,
+                    R.drawable.notifications_bailey,
+                )
+            }
         }
-    }
-
 
     private fun createUnallocatedStatsNotification(notification: Notification): View? {
         val level = userLvl ?: return null
@@ -267,7 +295,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             createDismissableNotificationItem(
                 notification,
                 fromHtml(getString(R.string.unallocated_stats_points, data?.points.toString())),
-                R.drawable.notification_stat_sparkles
+                R.drawable.notification_stat_sparkles,
             )
         } else {
             null
@@ -278,7 +306,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return createDismissableNotificationItem(
             notification,
             fromHtml(getString(R.string.new_subscriber_item)),
-            R.drawable.notification_mystery_item
+            R.drawable.notification_mystery_item,
         )
     }
 
@@ -290,7 +318,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             notification,
             fromHtml(message),
             null,
-            textColor = R.color.yellow_5
+            textColor = R.color.yellow_5,
         )
     }
 
@@ -302,7 +330,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
             notification,
             fromHtml(message),
             null,
-            textColor = R.color.green_10
+            textColor = R.color.green_10,
         )
     }
 
@@ -310,10 +338,11 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         val data = notification.data as? GroupTaskRequiresApprovalData
         val message = convertGroupMessageHtml(data?.message ?: "")
 
-        val item = createActionableNotificationItem(
-            notification,
-            fromHtml(message)
-        )
+        val item =
+            createActionableNotificationItem(
+                notification,
+                fromHtml(message),
+            )
         // Hide for now
         item?.visibility = View.GONE
         return item
@@ -337,7 +366,7 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         messageText: CharSequence,
         imageResourceId: Int? = null,
         imageName: String? = null,
-        textColor: Int? = null
+        textColor: Int? = null,
     ): View? {
         val item = inflater?.inflate(R.layout.notification_item, binding.notificationItems, false)
         item?.tag = notification.id
@@ -382,37 +411,51 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return item
     }
 
-    private suspend fun createPartyInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
-        val data = notification.data as? PartyInvitationData
-        val inviterId = data?.invitation?.inviter
-        if (inviterId != null) {
-            val inviter = socialRepository.retrieveMember(inviterId, fromHall = false)
-            return@withContext createActionableNotificationItem(
-                notification,
-                fromHtml(getString(R.string.invited_to_party_notification, data.invitation?.name, inviter?.formattedUsername)),
-                openable = true,
-                inviterId
-            )
-        } else {
-            return@withContext null
+    private suspend fun createPartyInvitationNotification(notification: Notification): View? =
+        withContext(ExceptionHandler.coroutine()) {
+            val data = notification.data as? PartyInvitationData
+            val inviterId = data?.invitation?.inviter
+            if (inviterId != null) {
+                val inviter = socialRepository.retrieveMember(inviterId, fromHall = false)
+                return@withContext createActionableNotificationItem(
+                    notification,
+                    fromHtml(
+                        getString(
+                            R.string.invited_to_party_notification,
+                            data.invitation?.name,
+                            inviter?.formattedUsername,
+                        ),
+                    ),
+                    openable = true,
+                    inviterId,
+                )
+            } else {
+                return@withContext null
+            }
         }
-    }
 
-    private suspend fun createGuildInvitationNotification(notification: Notification): View? = withContext(ExceptionHandler.coroutine()) {
-        val data = notification.data as? GuildInvitationData
-        val inviterId = data?.invitation?.inviter
-        if (inviterId != null) {
-            val inviter = socialRepository.retrieveMember(inviterId, fromHall = false)
-            return@withContext createActionableNotificationItem(
-                notification,
-                fromHtml(getString(R.string.invited_to_guild_notification, data.invitation?.name, inviter?.formattedUsername)),
-                openable = true,
-                inviterId
-            )
-        } else {
-            return@withContext null
+    private suspend fun createGuildInvitationNotification(notification: Notification): View? =
+        withContext(ExceptionHandler.coroutine()) {
+            val data = notification.data as? GuildInvitationData
+            val inviterId = data?.invitation?.inviter
+            if (inviterId != null) {
+                val inviter = socialRepository.retrieveMember(inviterId, fromHall = false)
+                return@withContext createActionableNotificationItem(
+                    notification,
+                    fromHtml(
+                        getString(
+                            R.string.invited_to_guild_notification,
+                            data.invitation?.name,
+                            inviter?.formattedUsername,
+                        ),
+                    ),
+                    openable = true,
+                    inviterId,
+                )
+            } else {
+                return@withContext null
+            }
         }
-    }
 
     private fun createQuestInvitationNotification(notification: Notification): View? {
         val data = notification.data as? QuestInvitationData
@@ -423,7 +466,8 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         view?.visibility = View.GONE
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            val questContent = inventoryRepository.getQuestContent(data?.questKey ?: "").firstOrNull()
+            val questContent =
+                inventoryRepository.getQuestContent(data?.questKey ?: "").firstOrNull()
             if (questContent != null) {
                 updateQuestInvitationView(view, questContent)
             }
@@ -432,7 +476,10 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         return view
     }
 
-    private fun updateQuestInvitationView(view: View?, questContent: QuestContent) {
+    private fun updateQuestInvitationView(
+        view: View?,
+        questContent: QuestContent,
+    ) {
         val messageTextView = view?.findViewById(R.id.message_text) as? TextView
         messageTextView?.text = fromHtml(getString(R.string.invited_to_quest, questContent.text))
 
@@ -466,9 +513,14 @@ class NotificationsActivity : BaseActivity(), androidx.swiperefreshlayout.widget
         notification: Notification,
         messageText: CharSequence,
         openable: Boolean = false,
-        inviterId: String? = null
+        inviterId: String? = null,
     ): View? {
-        val item = inflater?.inflate(R.layout.notification_item_actionable, binding.notificationItems, false)
+        val item =
+            inflater?.inflate(
+                R.layout.notification_item_actionable,
+                binding.notificationItems,
+                false,
+            )
         item?.tag = notification.id
 
         if (openable) {

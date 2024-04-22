@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
-
     @Inject
     lateinit var socialRepository: SocialRepository
 
@@ -39,7 +38,7 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentGiftGemBalanceBinding {
         return FragmentGiftGemBalanceBinding.inflate(inflater, container, false)
     }
@@ -61,7 +60,10 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
         binding?.usernameTextview?.text = it.formattedUsername
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding?.giftButton?.setOnClickListener { sendGift() }
         updateMemberViews()
@@ -84,8 +86,8 @@ class GiftBalanceGemsFragment : BaseFragment<FragmentGiftGemBalanceBinding>() {
                         getString(
                             R.string.gift_confirmation_text_gems_new,
                             giftedMember?.username,
-                            amount.toString()
-                        )
+                            amount.toString(),
+                        ),
                     )
                     dialog?.addCloseButton { _, _ ->
                         activity?.finish()

@@ -23,7 +23,8 @@ import kotlin.time.toDuration
 enum class AdType {
     ARMOIRE,
     SPELL,
-    FAINT;
+    FAINT,
+    ;
 
     val adUnitID: String
         get() {
@@ -60,14 +61,14 @@ fun String.md5(): String? {
 }
 
 class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boolean) -> Unit) {
-    //private var rewardedAd: RewardedAd? = null
+    // private var rewardedAd: RewardedAd? = null
 
     companion object {
         private enum class AdStatus {
             UNINITIALIZED,
             INITIALIZING,
             READY,
-            DISABLED
+            DISABLED,
         }
 
         private lateinit var sharedPreferences: SharedPreferences
@@ -100,15 +101,18 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             }
         }
 
-        fun initialize(context: Context, onComplete: () -> Unit) {
+        fun initialize(
+            context: Context,
+            onComplete: () -> Unit,
+        ) {
             if (currentAdStatus != AdStatus.UNINITIALIZED) return
 
             if (BuildConfig.DEBUG || BuildConfig.TESTING_LEVEL == "staff" || BuildConfig.TESTING_LEVEL == "alpha") {
                 val androidId: String =
                     Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
                 val deviceId: String = androidId.md5()?.uppercase() ?: ""
-                //val configuration = RequestConfiguration.Builder().setTestDeviceIds(listOf(deviceId)).build()
-                //MobileAds.setRequestConfiguration(configuration)
+                // val configuration = RequestConfiguration.Builder().setTestDeviceIds(listOf(deviceId)).build()
+                // MobileAds.setRequestConfiguration(configuration)
             }
 
             currentAdStatus = AdStatus.INITIALIZING
@@ -119,19 +123,25 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             }*/
         }
 
-        fun whenAdsInitialized(context: Context, onComplete: () -> Unit) {
+        fun whenAdsInitialized(
+            context: Context,
+            onComplete: () -> Unit,
+        ) {
             when (currentAdStatus) {
                 AdStatus.READY -> {
                     onComplete()
                 }
+
                 AdStatus.DISABLED -> {
                     return
                 }
+
                 AdStatus.UNINITIALIZED -> {
                     initialize(context) {
                         onComplete()
                     }
                 }
+
                 AdStatus.INITIALIZING -> {
                     return
                 }
@@ -189,24 +199,27 @@ class AdHandler(val activity: Activity, val type: AdType, val rewardAction: (Boo
             AdStatus.READY -> {
                 showRewardedAd()
             }
+
             AdStatus.DISABLED -> {
                 rewardAction(false)
                 return
             }
+
             AdStatus.UNINITIALIZED -> {
                 initialize(activity) {
                     showRewardedAd()
                 }
             }
+
             AdStatus.INITIALIZING -> {
                 return
             }
         }
     }
 
-    //private fun configureReward() {
-        //rewardedAd?.run { }
-    //}
+    // private fun configureReward() {
+    // rewardedAd?.run { }
+    // }
 
     private fun showRewardedAd() {
         if (nextAdAllowedDate(type)?.after(Date()) == true) {

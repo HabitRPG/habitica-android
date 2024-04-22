@@ -8,7 +8,6 @@ import androidx.preference.ListPreference
 import com.habitrpg.android.habitica.R
 import com.habitrpg.common.habitica.extensions.setScaledPadding
 import kotlin.math.max
-import kotlin.math.min
 
 class HabiticaListPreference : ListPreference {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) :
@@ -24,13 +23,15 @@ class HabiticaListPreference : ListPreference {
     override fun onClick() {
         val subtitleText = TextView(context)
         subtitleText.setText(R.string.cds_subtitle)
-        val builder = AlertDialog.Builder(context).setSingleChoiceItems(entries, getValueIndex() + 1) { dialog, index ->
-            val actualIndex = max(0, index - 1)
-            setValueIndex(actualIndex)
-            dialog.dismiss()
-        }
-            .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
-            .setTitle(title)
+        val builder =
+            AlertDialog.Builder(context)
+                .setSingleChoiceItems(entries, getValueIndex() + 1) { dialog, index ->
+                    val actualIndex = max(0, index - 1)
+                    setValueIndex(actualIndex)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
+                .setTitle(title)
 
         val dialog = builder.create()
         subtitleText.setScaledPadding(context, 24, 0, 24, 8)

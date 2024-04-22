@@ -13,7 +13,11 @@ import kotlin.time.toDuration
 
 class DateUtils {
     companion object {
-        fun createDate(year: Int, month: Int, day: Int): Date {
+        fun createDate(
+            year: Int,
+            month: Int,
+            day: Int,
+        ): Date {
             val cal = Calendar.getInstance()
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
@@ -25,7 +29,10 @@ class DateUtils {
             return cal.time
         }
 
-        fun isSameDay(date1 : Date, date2 : Date) : Boolean {
+        fun isSameDay(
+            date1: Date,
+            date2: Date,
+        ): Boolean {
             val cal1 = Calendar.getInstance()
             val cal2 = Calendar.getInstance()
             cal1.time = date1
@@ -50,26 +57,34 @@ fun Long.getAgoString(res: Resources): String {
     val diffMonths = diffDays / 30
 
     return when {
-        diffMonths != 0L -> if (diffMonths == 1L) {
-            res.getString(R.string.ago_1month)
-        } else {
-            res.getString(R.string.ago_months, diffMonths)
-        }
-        diffWeeks != 0L -> if (diffWeeks == 1L) {
-            res.getString(R.string.ago_1week)
-        } else {
-            res.getString(R.string.ago_weeks, diffWeeks)
-        }
-        diffDays != 0L -> if (diffDays == 1L) {
-            res.getString(R.string.ago_1day)
-        } else {
-            res.getString(R.string.ago_days, diffDays)
-        }
-        diffHours != 0L -> if (diffHours == 1L) {
-            res.getString(R.string.ago_1hour)
-        } else {
-            res.getString(R.string.ago_hours, diffHours)
-        }
+        diffMonths != 0L ->
+            if (diffMonths == 1L) {
+                res.getString(R.string.ago_1month)
+            } else {
+                res.getString(R.string.ago_months, diffMonths)
+            }
+
+        diffWeeks != 0L ->
+            if (diffWeeks == 1L) {
+                res.getString(R.string.ago_1week)
+            } else {
+                res.getString(R.string.ago_weeks, diffWeeks)
+            }
+
+        diffDays != 0L ->
+            if (diffDays == 1L) {
+                res.getString(R.string.ago_1day)
+            } else {
+                res.getString(R.string.ago_days, diffDays)
+            }
+
+        diffHours != 0L ->
+            if (diffHours == 1L) {
+                res.getString(R.string.ago_1hour)
+            } else {
+                res.getString(R.string.ago_hours, diffHours)
+            }
+
         diffMinutes == 1L -> res.getString(R.string.ago_1Minute)
         else -> res.getString(R.string.ago_minutes, diffMinutes)
     }
@@ -89,26 +104,34 @@ fun Long.getRemainingString(res: Resources): String {
     val diffMonths = diffDays / 30
 
     return when {
-        diffMonths != 0L -> if (diffMonths == 1L) {
-            res.getString(R.string.remaining_1month)
-        } else {
-            res.getString(R.string.remaining_months, diffMonths)
-        }
-        diffWeeks != 0L -> if (diffWeeks == 1L) {
-            res.getString(R.string.remaining_1week)
-        } else {
-            res.getString(R.string.remaining_weeks, diffWeeks)
-        }
-        diffDays != 0L -> if (diffDays == 1L) {
-            res.getString(R.string.remaining_1day)
-        } else {
-            res.getString(R.string.remaining_days, diffDays)
-        }
-        diffHours != 0L -> if (diffHours == 1L) {
-            res.getString(R.string.remaining_1hour)
-        } else {
-            res.getString(R.string.remaining_hours, diffHours)
-        }
+        diffMonths != 0L ->
+            if (diffMonths == 1L) {
+                res.getString(R.string.remaining_1month)
+            } else {
+                res.getString(R.string.remaining_months, diffMonths)
+            }
+
+        diffWeeks != 0L ->
+            if (diffWeeks == 1L) {
+                res.getString(R.string.remaining_1week)
+            } else {
+                res.getString(R.string.remaining_weeks, diffWeeks)
+            }
+
+        diffDays != 0L ->
+            if (diffDays == 1L) {
+                res.getString(R.string.remaining_1day)
+            } else {
+                res.getString(R.string.remaining_days, diffDays)
+            }
+
+        diffHours != 0L ->
+            if (diffHours == 1L) {
+                res.getString(R.string.remaining_1hour)
+            } else {
+                res.getString(R.string.remaining_hours, diffHours)
+            }
+
         diffMinutes == 1L -> res.getString(R.string.remaining_1Minute)
         else -> res.getString(R.string.remaining_minutes, diffMinutes)
     }
@@ -151,11 +174,12 @@ fun Duration.getMinuteOrSeconds(): DurationUnit {
 
 fun Date.formatForLocale(): String {
     val locale = Locale.getDefault()
-    val dateFormatter: DateFormat = if (locale == Locale.US || locale == Locale.ENGLISH) {
-        SimpleDateFormat("M/d/yy", locale)
-    } else {
-        SimpleDateFormat.getDateInstance(DateFormat.LONG, locale)
-    }
+    val dateFormatter: DateFormat =
+        if (locale == Locale.US || locale == Locale.ENGLISH) {
+            SimpleDateFormat("M/d/yy", locale)
+        } else {
+            SimpleDateFormat.getDateInstance(DateFormat.LONG, locale)
+        }
 
     return dateFormatter.format(this)
 }

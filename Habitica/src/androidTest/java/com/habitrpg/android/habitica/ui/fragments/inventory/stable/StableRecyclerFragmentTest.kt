@@ -5,8 +5,8 @@ import android.view.View
 import androidx.fragment.app.testing.launchFragmentInContainer
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentRecyclerviewBinding
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.FragmentTestCase
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import io.github.kakaocup.kakao.common.views.KView
 import io.github.kakaocup.kakao.recycler.KRecyclerItem
 import io.github.kakaocup.kakao.recycler.KRecyclerView
@@ -30,9 +30,10 @@ class SectionItem(parent: Matcher<View>) : KRecyclerItem<PetItem>(parent) {
 }
 
 class StableScreen : Screen<StableScreen>() {
-    val recycler: KRecyclerView = KRecyclerView({
-        withId(R.id.recyclerView)
-    }, itemTypeBuilder = {
+    val recycler: KRecyclerView =
+        KRecyclerView({
+            withId(R.id.recyclerView)
+        }, itemTypeBuilder = {
             itemType(::SectionItem)
             itemType(::PetItem)
         })
@@ -48,9 +49,10 @@ internal class StableRecyclerFragmentTest : FragmentTestCase<StableRecyclerFragm
     }
 
     override fun launchFragment(args: Bundle?) {
-        scenario = launchFragmentInContainer(args, R.style.MainAppTheme) {
-            return@launchFragmentInContainer fragment
-        }
+        scenario =
+            launchFragmentInContainer(args, R.style.MainAppTheme) {
+                return@launchFragmentInContainer fragment
+            }
     }
 
     override val screen = StableScreen()

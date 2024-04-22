@@ -34,18 +34,19 @@ object MarkdownParser {
     internal var markwon: Markwon? = null
 
     fun setup(context: Context) {
-        markwon = Markwon.builder(context)
-            .usePlugin(StrikethroughPlugin.create())
-            .usePlugin(
-                ImagesPlugin.create {
-                    it.addSchemeHandler(OkHttpNetworkSchemeHandler.create())
-                        .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
-                }
-            )
-            .usePlugin(createImageSizeResolverScaleDpiPlugin(context))
-            .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
-            .usePlugin(LinkifyPlugin.create(Linkify.WEB_URLS))
-            .build()
+        markwon =
+            Markwon.builder(context)
+                .usePlugin(StrikethroughPlugin.create())
+                .usePlugin(
+                    ImagesPlugin.create {
+                        it.addSchemeHandler(OkHttpNetworkSchemeHandler.create())
+                            .addSchemeHandler(FileSchemeHandler.createWithAssets(context.assets))
+                    },
+                )
+                .usePlugin(createImageSizeResolverScaleDpiPlugin(context))
+                .usePlugin(MovementMethodPlugin.create(LinkMovementMethod.getInstance()))
+                .usePlugin(LinkifyPlugin.create(Linkify.WEB_URLS))
+                .build()
     }
 
     /**
@@ -54,28 +55,30 @@ object MarkdownParser {
     private fun createImageSizeResolverScaleDpiPlugin(context: Context): MarkwonPlugin {
         return object : AbstractMarkwonPlugin() {
             override fun configureConfiguration(builder: MarkwonConfiguration.Builder) {
-                builder.imageSizeResolver(object : ImageSizeResolverDef() {
-                    override fun resolveImageSize(
-                        imageSize: ImageSize?,
-                        imageBounds: Rect,
-                        canvasWidth: Int,
-                        textSize: Float
-                    ): Rect {
-                        val dpi = context.resources.displayMetrics.density
-                        var width = imageBounds.width()
-                        if (dpi > 1) {
-                            width = (dpi * width.toFloat()).toInt()
-                        }
-                        if (width > canvasWidth) {
-                            width = canvasWidth
-                        }
+                builder.imageSizeResolver(
+                    object : ImageSizeResolverDef() {
+                        override fun resolveImageSize(
+                            imageSize: ImageSize?,
+                            imageBounds: Rect,
+                            canvasWidth: Int,
+                            textSize: Float,
+                        ): Rect {
+                            val dpi = context.resources.displayMetrics.density
+                            var width = imageBounds.width()
+                            if (dpi > 1) {
+                                width = (dpi * width.toFloat()).toInt()
+                            }
+                            if (width > canvasWidth) {
+                                width = canvasWidth
+                            }
 
-                        val ratio = imageBounds.width().toFloat() / imageBounds.height()
-                        val height = (width / ratio + .5f).toInt()
+                            val ratio = imageBounds.width().toFloat() / imageBounds.height()
+                            val height = (width / ratio + .5f).toInt()
 
-                        return Rect(0, 0, width, height)
-                    }
-                })
+                            return Rect(0, 0, width, height)
+                        }
+                    },
+                )
             }
         }
     }
@@ -160,7 +163,10 @@ object MarkdownParser {
         return sb.toString()
     }
 
-    fun parseMarkdownAsync(input: String?, onSuccess: (Spanned) -> Unit) {
+    fun parseMarkdownAsync(
+        input: String?,
+        onSuccess: (Spanned) -> Unit,
+    ) {
         CoroutineScope(Dispatchers.IO).launch {
             val result = parseMarkdown(input)
             withContext(Dispatchers.Main) {
@@ -193,6 +199,7 @@ object MarkdownParser {
     private val markdownRegex = ".*[*#_\\[`~].*".toRegex()
     private val imageMarkdownRegex = """!\[.*?]\(.*?".*?"\)""".toRegex()
     private val markdownLinkRegex = "\\[([^\\]]+)\\]\\(([^\\)]+)\\)".toRegex()
+
     fun containsMarkdown(text: String): Boolean {
         return text.matches(markdownRegex) ||
             text.contains(imageMarkdownRegex) ||
@@ -218,15 +225,19 @@ fun TextView.setParsedMarkdown(input: Spanned?) {
     }
 }
 
-private fun handleUrlClicks(context: Context, url: String) {
-    val webpage = if (url.startsWith("/")) {
-        Uri.parse("${context.getString(R.string.base_url)}$url")
-    } else {
-        if (Uri.parse(url).scheme == null) {
-            Uri.parse("http://$url")
+private fun handleUrlClicks(
+    context: Context,
+    url: String,
+) {
+    val webpage =
+        if (url.startsWith("/")) {
+            Uri.parse("${context.getString(R.string.base_url)}$url")
         } else {
-            Uri.parse(url)
+            if (Uri.parse(url).scheme == null) {
+                Uri.parse("http://$url")
+            } else {
+                Uri.parse(url)
+            }
         }
-    }
     MainNavigationController.navigate(webpage)
 }

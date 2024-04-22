@@ -6,22 +6,27 @@ import android.text.TextUtils
 import android.widget.MultiAutoCompleteTextView
 
 class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.Tokenizer {
-
-    override fun findTokenStart(text: CharSequence, cursor: Int): Int {
+    override fun findTokenStart(
+        text: CharSequence,
+        cursor: Int,
+    ): Int {
         var i = cursor
 
-        while (i > 0 && text[i - 1] != ' ' && !tokens.contains(text[i-1])) {
+        while (i > 0 && text[i - 1] != ' ' && !tokens.contains(text[i - 1])) {
             i--
         }
 
-        return if (i < 1 || !tokens.contains(text[i-1])) {
+        return if (i < 1 || !tokens.contains(text[i - 1])) {
             cursor
         } else {
             i - 1
         }
     }
 
-    override fun findTokenEnd(text: CharSequence, cursor: Int): Int {
+    override fun findTokenEnd(
+        text: CharSequence,
+        cursor: Int,
+    ): Int {
         var i = cursor
         val len = text.length
 
@@ -54,7 +59,7 @@ class AutocompleteTokenizer(val tokens: List<Char>) : MultiAutoCompleteTextView.
                     text.length,
                     Any::class.java,
                     sp,
-                    0
+                    0,
                 )
                 sp
             } else {

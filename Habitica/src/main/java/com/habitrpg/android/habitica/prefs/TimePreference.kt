@@ -10,17 +10,22 @@ import java.util.Locale
 
 class TimePreference(ctxt: Context, attrs: AttributeSet?) : DialogPreference(ctxt, attrs) {
     private var timeval: String? = null
-    override fun onGetDefaultValue(a: TypedArray, index: Int): Any {
+
+    override fun onGetDefaultValue(
+        a: TypedArray,
+        index: Int,
+    ): Any {
         return a.getString(index)!!
     }
 
     override fun onSetInitialValue(defaultValue: Any?) {
         timeval = null
-        timeval = if (defaultValue == null) {
-            getPersistedString("19:00")
-        } else {
-            getPersistedString(defaultValue.toString())
-        }
+        timeval =
+            if (defaultValue == null) {
+                getPersistedString("19:00")
+            } else {
+                getPersistedString(defaultValue.toString())
+            }
         summary = timeval ?: ""
     }
 

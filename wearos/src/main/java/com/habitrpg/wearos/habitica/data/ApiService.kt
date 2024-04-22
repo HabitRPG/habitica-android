@@ -30,10 +30,14 @@ interface ApiService {
     suspend fun getUserForced(): Response<WearableHabitResponse<User>>
 
     @PUT("user/")
-    suspend fun updateUser(@Body updateDictionary: Map<String, Any>): Response<WearableHabitResponse<User>>
+    suspend fun updateUser(
+        @Body updateDictionary: Map<String, Any>,
+    ): Response<WearableHabitResponse<User>>
 
     @PUT("user/")
-    suspend fun registrationLanguage(@Header("Accept-Language") registrationLanguage: String): Response<WearableHabitResponse<User>>
+    suspend fun registrationLanguage(
+        @Header("Accept-Language") registrationLanguage: String,
+    ): Response<WearableHabitResponse<User>>
 
     @GET("tasks/user")
     suspend fun getTasks(): Response<WearableHabitResponse<TaskList>>
@@ -43,52 +47,89 @@ interface ApiService {
     suspend fun getTasksForced(): Response<WearableHabitResponse<TaskList>>
 
     @GET("tasks/user")
-    suspend fun getTasks(@Query("type") type: String): Response<WearableHabitResponse<TaskList>>
+    suspend fun getTasks(
+        @Query("type") type: String,
+    ): Response<WearableHabitResponse<TaskList>>
 
     @GET("tasks/user")
-    suspend fun getTasks(@Query("type") type: String, @Query("dueDate") dueDate: String): Response<WearableHabitResponse<TaskList>>
+    suspend fun getTasks(
+        @Query("type") type: String,
+        @Query("dueDate") dueDate: String,
+    ): Response<WearableHabitResponse<TaskList>>
 
     @GET("tasks/{id}")
-    suspend fun getTask(@Path("id") id: String): Response<WearableHabitResponse<Task>>
+    suspend fun getTask(
+        @Path("id") id: String,
+    ): Response<WearableHabitResponse<Task>>
 
     @POST("tasks/{id}/score/{direction}")
-    suspend fun scoreTask(@Path("id") id: String, @Path("direction") direction: String): Response<WearableHabitResponse<TaskDirectionData>>
+    suspend fun scoreTask(
+        @Path("id") id: String,
+        @Path("direction") direction: String,
+    ): Response<WearableHabitResponse<TaskDirectionData>>
 
     @POST("tasks/bulk-score")
-    suspend fun bulkScoreTasks(@Body data: List<Map<String, String>>): Response<WearableHabitResponse<BulkTaskScoringData>>
+    suspend fun bulkScoreTasks(
+        @Body data: List<Map<String, String>>,
+    ): Response<WearableHabitResponse<BulkTaskScoringData>>
 
     @POST("tasks/{id}/move/to/{position}")
-    suspend fun postTaskNewPosition(@Path("id") id: String, @Path("position") position: Int): Response<WearableHabitResponse<List<String>>>
+    suspend fun postTaskNewPosition(
+        @Path("id") id: String,
+        @Path("position") position: Int,
+    ): Response<WearableHabitResponse<List<String>>>
 
     @POST("tasks/{taskId}/checklist/{itemId}/score")
-    suspend fun scoreChecklistItem(@Path("taskId") taskId: String, @Path("itemId") itemId: String): Response<WearableHabitResponse<Task>>
+    suspend fun scoreChecklistItem(
+        @Path("taskId") taskId: String,
+        @Path("itemId") itemId: String,
+    ): Response<WearableHabitResponse<Task>>
 
     @POST("tasks/user")
-    suspend fun createTask(@Body item: Task): Response<WearableHabitResponse<Task>>
+    suspend fun createTask(
+        @Body item: Task,
+    ): Response<WearableHabitResponse<Task>>
 
     @POST("tasks/user")
-    suspend fun createTasks(@Body tasks: List<Task>): Response<WearableHabitResponse<List<Task>>>
+    suspend fun createTasks(
+        @Body tasks: List<Task>,
+    ): Response<WearableHabitResponse<List<Task>>>
 
     @PUT("tasks/{id}")
-    suspend fun updateTask(@Path("id") id: String, @Body item: Task): Response<WearableHabitResponse<Task>>
+    suspend fun updateTask(
+        @Path("id") id: String,
+        @Body item: Task,
+    ): Response<WearableHabitResponse<Task>>
 
     @DELETE("tasks/{id}")
-    suspend fun deleteTask(@Path("id") id: String): Response<WearableHabitResponse<Void>>
+    suspend fun deleteTask(
+        @Path("id") id: String,
+    ): Response<WearableHabitResponse<Void>>
 
     @POST("user/auth/local/register")
-    suspend fun registerUser(@Body auth: UserAuth): Response<WearableHabitResponse<UserAuthResponse>>
+    suspend fun registerUser(
+        @Body auth: UserAuth,
+    ): Response<WearableHabitResponse<UserAuthResponse>>
 
     @POST("user/auth/local/login")
-    suspend fun connectLocal(@Body auth: UserAuth): Response<WearableHabitResponse<UserAuthResponse>>
+    suspend fun connectLocal(
+        @Body auth: UserAuth,
+    ): Response<WearableHabitResponse<UserAuthResponse>>
 
     @POST("user/auth/social")
-    suspend fun connectSocial(@Body auth: UserAuthSocial): Response<WearableHabitResponse<UserAuthResponse>>
+    suspend fun connectSocial(
+        @Body auth: UserAuthSocial,
+    ): Response<WearableHabitResponse<UserAuthResponse>>
 
     @DELETE("user/auth/social/{network}")
-    suspend fun disconnectSocial(@Path("network") network: String): Response<WearableHabitResponse<Void>>
+    suspend fun disconnectSocial(
+        @Path("network") network: String,
+    ): Response<WearableHabitResponse<Void>>
 
     @POST("user/auth/apple")
-    suspend fun loginApple(@Body auth: Map<String, Any>): Response<WearableHabitResponse<UserAuthResponse>>
+    suspend fun loginApple(
+        @Body auth: Map<String, Any>,
+    ): Response<WearableHabitResponse<UserAuthResponse>>
 
     @POST("user/sleep")
     suspend fun sleep(): Response<WearableHabitResponse<Boolean>>
@@ -98,10 +139,14 @@ interface ApiService {
 
     // Push notifications
     @POST("user/push-devices")
-    suspend fun addPushDevice(@Body pushDeviceData: Map<String, String>): Response<WearableHabitResponse<List<Void>>>
+    suspend fun addPushDevice(
+        @Body pushDeviceData: Map<String, String>,
+    ): Response<WearableHabitResponse<List<Void>>>
 
     @DELETE("user/push-devices/{regId}")
-    suspend fun removePushDevice(@Path("regId") regId: String): Response<WearableHabitResponse<List<Void>>>
+    suspend fun removePushDevice(
+        @Path("regId") regId: String,
+    ): Response<WearableHabitResponse<List<Void>>>
 
     @POST("cron")
     suspend fun runCron(): Response<WearableHabitResponse<EmptyResponse>>

@@ -99,7 +99,6 @@ class FullProfileActivity : BaseActivity() {
     private val dateFormatter = SimpleDateFormat.getDateInstance()
     private lateinit var binding: ActivityFullProfileBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupToolbar(binding.toolbar)
@@ -113,7 +112,13 @@ class FullProfileActivity : BaseActivity() {
 
         binding.avatarWithBars.setContent {
             HabiticaTheme {
-                AppHeaderView(member.value, isMyProfile = false, onMemberRowClicked = {}, onClassSelectionClicked = {}, configManager = configManager)
+                AppHeaderView(
+                    member.value,
+                    isMyProfile = false,
+                    onMemberRowClicked = {},
+                    onClassSelectionClicked = {},
+                    configManager = configManager,
+                )
             }
         }
 
@@ -124,13 +129,13 @@ class FullProfileActivity : BaseActivity() {
         binding.giftGemsButton.setOnClickListener {
             MainNavigationController.navigate(
                 R.id.giftGemsActivity,
-                bundleOf(Pair("userID", userID), Pair("username", null))
+                bundleOf(Pair("userID", userID), Pair("username", null)),
             )
         }
         binding.giftSubscriptionButton.setOnClickListener {
             MainNavigationController.navigate(
                 R.id.giftSubscriptionActivity,
-                bundleOf(Pair("userID", userID), Pair("username", null))
+                bundleOf(Pair("userID", userID), Pair("username", null)),
             )
         }
         lifecycleScope.launchCatching {
@@ -147,8 +152,6 @@ class FullProfileActivity : BaseActivity() {
                         refresh(true)
                     }
                     invalidateOptionsMenu()
-
-
                 }
         }
         lifecycleScope.launchCatching {
@@ -196,27 +199,30 @@ class FullProfileActivity : BaseActivity() {
         }
         menu.setGroupVisible(R.id.admin_items, isModerator)
         if (isModerator || isUserSupport) {
-            menu.findItem(R.id.ban_user)?.title = getString(
-                if (member.value?.authentication?.blocked == true) {
-                    R.string.unban_user
-                } else {
-                    R.string.ban_user
-                }
-            )
-            menu.findItem(R.id.shadow_mute_user)?.title = getString(
-                if (member.value?.flags?.chatShadowMuted == true) {
-                    R.string.unshadowmute_user
-                } else {
-                    R.string.shadow_mute_user
-                }
-            )
-            menu.findItem(R.id.mute_user)?.title = getString(
-                if (member.value?.flags?.chatRevoked == true) {
-                    R.string.unmute_user
-                } else {
-                    R.string.mute_user
-                }
-            )
+            menu.findItem(R.id.ban_user)?.title =
+                getString(
+                    if (member.value?.authentication?.blocked == true) {
+                        R.string.unban_user
+                    } else {
+                        R.string.ban_user
+                    },
+                )
+            menu.findItem(R.id.shadow_mute_user)?.title =
+                getString(
+                    if (member.value?.flags?.chatShadowMuted == true) {
+                        R.string.unshadowmute_user
+                    } else {
+                        R.string.shadow_mute_user
+                    },
+                )
+            menu.findItem(R.id.mute_user)?.title =
+                getString(
+                    if (member.value?.flags?.chatRevoked == true) {
+                        R.string.unmute_user
+                    } else {
+                        R.string.mute_user
+                    },
+                )
         }
         return super.onCreateOptionsMenu(menu)
     }
@@ -235,6 +241,7 @@ class FullProfileActivity : BaseActivity() {
                 finish()
                 true
             }
+
             R.id.copy_username -> {
                 val clipboard =
                     this.getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
@@ -244,11 +251,12 @@ class FullProfileActivity : BaseActivity() {
                     HabiticaSnackbar.showSnackbar(
                         this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
                         String.format(getString(R.string.username_copied), userDisplayName),
-                        SnackbarDisplayType.NORMAL
+                        SnackbarDisplayType.NORMAL,
                     )
                 }
                 true
             }
+
             R.id.copy_userid -> {
                 val clipboard =
                     this.getSystemService(CLIPBOARD_SERVICE) as? ClipboardManager
@@ -258,11 +266,12 @@ class FullProfileActivity : BaseActivity() {
                     HabiticaSnackbar.showSnackbar(
                         this@FullProfileActivity.binding.scrollView.getChildAt(0) as ViewGroup,
                         String.format(getString(R.string.id_copied), userDisplayName),
-                        SnackbarDisplayType.NORMAL
+                        SnackbarDisplayType.NORMAL,
                     )
                 }
                 true
             }
+
             R.id.block_user -> {
                 if (blocks.contains(userID)) {
                     useBlock()
@@ -271,42 +280,48 @@ class FullProfileActivity : BaseActivity() {
                 }
                 true
             }
+
             R.id.report_player -> {
                 showReportUserBottomSheet(
                     userIdBeingReported = userID,
                     usernameBeingReported = username ?: "",
-                    userDisplayName = userDisplayName ?: ""
+                    userDisplayName = userDisplayName ?: "",
                 )
                 true
             }
+
             R.id.ban_user -> {
                 banUser()
                 true
             }
+
             R.id.shadow_mute_user -> {
                 shadowMuteUser()
                 true
             }
+
             R.id.mute_user -> {
                 muteUser()
                 true
             }
+
             R.id.share_avatar -> {
                 member.value?.let {
                     val usecase = ShareAvatarUseCase()
                     lifecycleScope.launchCatching {
                         usecase.callInteractor(
-                                ShareAvatarUseCase.RequestValues(
-                                    this@FullProfileActivity,
-                                    it,
-                                    "Check out my avatar on Habitica!",
-                                    "avatar_profile"
-                                )
+                            ShareAvatarUseCase.RequestValues(
+                                this@FullProfileActivity,
+                                it,
+                                "Check out my avatar on Habitica!",
+                                "avatar_profile",
+                            ),
                         )
                     }
                 }
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -351,17 +366,22 @@ class FullProfileActivity : BaseActivity() {
         alert.show()
     }
 
-    private fun showReportUserBottomSheet(userIdBeingReported : String, usernameBeingReported: String, userDisplayName: String) {
-        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
-            reportType = ReportBottomSheetFragment.REPORT_TYPE_USER,
-            profileName = usernameBeingReported,
-            displayName = userDisplayName,
-            messageId = "",
-            messageText = "",
-            groupId = "",
-            userIdBeingReported = userIdBeingReported,
-            sourceView = this::class.simpleName ?: ""
-        )
+    private fun showReportUserBottomSheet(
+        userIdBeingReported: String,
+        usernameBeingReported: String,
+        userDisplayName: String,
+    ) {
+        val reportBottomSheetFragment =
+            ReportBottomSheetFragment.newInstance(
+                reportType = ReportBottomSheetFragment.REPORT_TYPE_USER,
+                profileName = usernameBeingReported,
+                displayName = userDisplayName,
+                messageId = "",
+                messageText = "",
+                groupId = "",
+                userIdBeingReported = userIdBeingReported,
+                sourceView = this::class.simpleName ?: "",
+            )
 
         reportBottomSheetFragment.show(supportFragmentManager, ReportBottomSheetFragment.TAG)
     }
@@ -411,7 +431,7 @@ class FullProfileActivity : BaseActivity() {
             delay(500L)
             MainNavigationController.navigate(
                 R.id.inboxMessageListFragment,
-                bundleOf(Pair("username", username), Pair("userID", userID))
+                bundleOf(Pair("username", username), Pair("userID", userID)),
             )
         }
     }
@@ -482,7 +502,12 @@ class FullProfileActivity : BaseActivity() {
             binding.adminStatusTextview.setTextColor(ContextCompat.getColor(this, R.color.text_red))
         } else {
             binding.adminStatusTextview.text = getString(R.string.regular_access)
-            binding.adminStatusTextview.setTextColor(ContextCompat.getColor(this, R.color.text_green))
+            binding.adminStatusTextview.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.text_green,
+                ),
+            )
         }
     }
 
@@ -499,17 +524,17 @@ class FullProfileActivity : BaseActivity() {
         fillAchievements(
             R.string.basic_achievements,
             achievements.filter { it.category == "basic" },
-            items
+            items,
         )
         fillAchievements(
             R.string.seasonal_achievements,
             achievements.filter { it.category == "seasonal" },
-            items
+            items,
         )
         fillAchievements(
             R.string.special_achievements,
             achievements.filter { it.category == "special" },
-            items
+            items,
         )
 
         val adapter = AchievementProfileAdapter()
@@ -535,7 +560,7 @@ class FullProfileActivity : BaseActivity() {
     private fun fillAchievements(
         labelID: Int,
         achievements: List<Achievement>,
-        targetList: MutableList<Any>
+        targetList: MutableList<Any>,
     ) {
         // Order by ID first
         val achievementList = ArrayList(achievements)
@@ -547,7 +572,10 @@ class FullProfileActivity : BaseActivity() {
         targetList.addAll(achievementList)
     }
 
-    private fun getFloorValueString(`val`: Float, roundDown: Boolean): String {
+    private fun getFloorValueString(
+        `val`: Float,
+        roundDown: Boolean,
+    ): String {
         return if (roundDown) {
             floor(`val`.toDouble()).toString()
         } else {
@@ -559,7 +587,10 @@ class FullProfileActivity : BaseActivity() {
         }
     }
 
-    private fun getFloorValue(value: Float, roundDown: Boolean): Float {
+    private fun getFloorValue(
+        value: Float,
+        roundDown: Boolean,
+    ): Float {
         return if (roundDown) {
             floor(value.toDouble()).toFloat()
         } else {
@@ -571,7 +602,7 @@ class FullProfileActivity : BaseActivity() {
         table: TableLayout,
         gearKey: String?,
         text: String?,
-        stats: String?
+        stats: String?,
     ) {
         val gearRow =
             layoutInflater.inflate(R.layout.profile_gear_tablerow, table, false) as? TableRow
@@ -603,7 +634,7 @@ class FullProfileActivity : BaseActivity() {
             byLevelStat,
             byLevelStat,
             roundDown = true,
-            isSummary = false
+            isSummary = false,
         )
     }
 
@@ -622,7 +653,10 @@ class FullProfileActivity : BaseActivity() {
         return inventoryRepository.getEquipment(outfitList)
     }
 
-    private fun gotGear(equipmentList: List<Equipment>, user: Member) {
+    private fun gotGear(
+        equipmentList: List<Equipment>,
+        user: Member,
+    ) {
         val userStatComputer = UserStatComputer()
         val statsRows = userStatComputer.computeClassBonus(equipmentList, user)
 
@@ -647,7 +681,7 @@ class FullProfileActivity : BaseActivity() {
                     row.conVal,
                     row.perVal,
                     row.roundDown,
-                    row.summary
+                    row.summary,
                 )
             }
         }
@@ -673,17 +707,17 @@ class FullProfileActivity : BaseActivity() {
             stats.constitution?.toFloat() ?: 0f,
             stats.per?.toFloat() ?: 0f,
             roundDown = true,
-            isSummary = false
+            isSummary = false,
         )
         addAttributeRow(
             getString(R.string.buffs),
             buffs?.str
                 ?: 0f,
-            buffs?._int ?: 0f,
+            buffs?.intelligence ?: 0f,
             buffs?.con ?: 0f,
             buffs?.per ?: 0f,
             roundDown = true,
-            isSummary = false
+            isSummary = false,
         )
 
         // Summary row
@@ -694,7 +728,7 @@ class FullProfileActivity : BaseActivity() {
             attributeConSum,
             attributePerSum,
             roundDown = false,
-            isSummary = true
+            isSummary = true,
         )
     }
 
@@ -705,13 +739,14 @@ class FullProfileActivity : BaseActivity() {
         conVal: Float,
         perVal: Float,
         roundDown: Boolean,
-        isSummary: Boolean
+        isSummary: Boolean,
     ) {
-        val tableRow = layoutInflater.inflate(
-            R.layout.profile_attributetablerow,
-            binding.attributesTableLayout,
-            false
-        ) as? TableRow ?: return
+        val tableRow =
+            layoutInflater.inflate(
+                R.layout.profile_attributetablerow,
+                binding.attributesTableLayout,
+                false,
+            ) as? TableRow ?: return
         val keyTextView = tableRow.findViewById<TextView>(R.id.tv_attribute_type)
         keyTextView?.text = label
 
@@ -754,8 +789,8 @@ class FullProfileActivity : BaseActivity() {
                     R.drawable.ic_keyboard_arrow_right_black_24dp
                 } else {
                     R.drawable.ic_keyboard_arrow_down_black_24dp
-                }
-            )
+                },
+            ),
         )
 
         for (row in attributeRows) {
@@ -791,7 +826,6 @@ class FullProfileActivity : BaseActivity() {
     }
 
     companion object {
-
         fun open(userId: String) {
             if (userId == "system") {
                 return

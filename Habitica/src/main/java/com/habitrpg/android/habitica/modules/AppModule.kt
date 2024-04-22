@@ -31,7 +31,9 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+    fun provideSharedPreferences(
+        @ApplicationContext context: Context,
+    ): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(context)
     }
 
@@ -57,7 +59,7 @@ class AppModule {
     fun provideKeyHelper(
         @ApplicationContext context: Context,
         sharedPreferences: SharedPreferences,
-        keyStore: KeyStore?
+        keyStore: KeyStore?,
     ): KeyHelper? {
         return if (keyStore == null) {
             null
@@ -77,12 +79,16 @@ class AppModule {
     }
 
     @Provides
-    fun providesResources(@ApplicationContext context: Context): Resources {
+    fun providesResources(
+        @ApplicationContext context: Context,
+    ): Resources {
         return context.resources
     }
 
     @Provides
-    fun providesSoundFileLoader(@ApplicationContext context: Context): SoundFileLoader {
+    fun providesSoundFileLoader(
+        @ApplicationContext context: Context,
+    ): SoundFileLoader {
         return SoundFileLoader(context)
     }
 
@@ -91,7 +97,7 @@ class AppModule {
     fun pushNotificationManager(
         apiClient: ApiClient,
         sharedPreferences: SharedPreferences,
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): PushNotificationManager {
         return PushNotificationManager(apiClient, sharedPreferences, context)
     }
@@ -103,7 +109,10 @@ class AppModule {
     }
 
     @Provides
-    fun providesReviewManager(@ApplicationContext context: Context, configManager: AppConfigManager): ReviewManager {
+    fun providesReviewManager(
+        @ApplicationContext context: Context,
+        configManager: AppConfigManager,
+    ): ReviewManager {
         return ReviewManager(context, configManager)
     }
 }

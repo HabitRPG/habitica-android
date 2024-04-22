@@ -25,7 +25,7 @@ class AutocompleteAdapter(
     val socialRepository: SocialRepository? = null,
     var autocompleteContext: String? = null,
     var groupID: String? = null,
-    val remoteAutocomplete: Boolean = false
+    val remoteAutocomplete: Boolean = false,
 ) : BaseAdapter(), Filterable {
     var chatMessages: List<ChatMessage> = arrayListOf()
     private var userResults: List<FindUsernameResult> = arrayListOf()
@@ -55,25 +55,30 @@ class AutocompleteAdapter(
                     } else if (constraint[0] == '@') {
                         lastAutocomplete = Date().time
                         isAutocompletingUsers = true
-                        userResults = chatMessages
-                            .filter { it.isValid }
-                            .distinctBy {
-                                it.username
-                            }.filter { it.username?.startsWith(constraint.toString().drop(1)) ?: false }.map { message ->
-                                val result = FindUsernameResult()
-                                result.authentication = Authentication()
-                                result.authentication?.localAuthentication = LocalAuthentication()
-                                result.authentication?.localAuthentication?.username = message.username
-                                result.contributor = message.contributor
-                                result.profile = Profile()
-                                result.profile?.name = message.user
-                                result
-                            }
+                        userResults =
+                            chatMessages
+                                .filter { it.isValid }
+                                .distinctBy {
+                                    it.username
+                                }.filter {
+                                    it.username?.startsWith(constraint.toString().drop(1)) ?: false
+                                }.map { message ->
+                                    val result = FindUsernameResult()
+                                    result.authentication = Authentication()
+                                    result.authentication?.localAuthentication = LocalAuthentication()
+                                    result.authentication?.localAuthentication?.username =
+                                        message.username
+                                    result.contributor = message.contributor
+                                    result.profile = Profile()
+                                    result.profile?.name = message.user
+                                    result
+                                }
                         filterResults.values = userResults
                         filterResults.count = userResults.size
                     } else if (constraint[0] == ':') {
                         isAutocompletingUsers = false
-                        emojiResults = EmojiMap.invertedEmojiMap.keys.filter { it.startsWith(constraint) }
+                        emojiResults =
+                            EmojiMap.invertedEmojiMap.keys.filter { it.startsWith(constraint) }
                         filterResults.values = emojiResults
                         filterResults.count = emojiResults.size
                     }
@@ -81,7 +86,10 @@ class AutocompleteAdapter(
                 return filterResults
             }
 
-            override fun publishResults(contraint: CharSequence?, results: FilterResults?) {
+            override fun publishResults(
+                contraint: CharSequence?,
+                results: FilterResults?,
+            ) {
                 if (results != null && results.count > 0) {
                     notifyDataSetChanged()
                 } else {
@@ -91,7 +99,11 @@ class AutocompleteAdapter(
         }
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+    override fun getView(
+        position: Int,
+        convertView: View?,
+        parent: ViewGroup?,
+    ): View {
         return if (isAutocompletingUsers) {
             val view = parent?.inflate(R.layout.autocomplete_username)
             val result = getItem(position) as? FindUsernameResult
@@ -111,7 +123,13 @@ class AutocompleteAdapter(
     }
 
     override fun getItem(position: Int): Any? {
-        return if (isAutocompletingUsers) userResults.getOrNull(position) else emojiResults.getOrNull(position)
+        return if (isAutocompletingUsers) {
+            userResults.getOrNull(position)
+        } else {
+            emojiResults.getOrNull(
+                position,
+            )
+        }
     }
 
     override fun getItemId(position: Int): Long {

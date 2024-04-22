@@ -24,9 +24,12 @@ import io.realm.RealmList
 import java.lang.reflect.Type
 
 class ContentDeserializer : JsonDeserializer<ContentResult> {
-
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): ContentResult {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): ContentResult {
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("ContentDeserialize")
         deserializeTrace.start()
         val result = ContentResult()
@@ -109,8 +112,16 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
             }
         }
 
-        result.appearances = context.deserialize(obj.get("appearances"), object : TypeToken<RealmList<Customization>>() {}.type)
-        result.backgrounds = context.deserialize(obj.get("backgrounds"), object : TypeToken<RealmList<Customization>>() {}.type)
+        result.appearances =
+            context.deserialize(
+                obj.get("appearances"),
+                object : TypeToken<RealmList<Customization>>() {}.type,
+            )
+        result.backgrounds =
+            context.deserialize(
+                obj.get("backgrounds"),
+                object : TypeToken<RealmList<Customization>>() {}.type,
+            )
         val noBackground = Customization()
         noBackground.customizationSet = "incentiveBackgrounds"
         noBackground.customizationSetName = "Login Incentive"
@@ -119,7 +130,8 @@ class ContentDeserializer : JsonDeserializer<ContentResult> {
         noBackground.type = "background"
         result.backgrounds.add(noBackground)
 
-        result.faq = context.deserialize(obj.get("faq"), object : TypeToken<RealmList<FAQArticle>>() {}.type)
+        result.faq =
+            context.deserialize(obj.get("faq"), object : TypeToken<RealmList<FAQArticle>>() {}.type)
         deserializeTrace.stop()
         return result
     }

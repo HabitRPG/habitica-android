@@ -1,8 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.Material3.DayNight">
-        <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle</item>
+        <item name="android:listSeparatorTextViewStyle">@style/MyOwnListSeperatorTextViewStyle
+        </item>
 
         <item name="android:elevation">0dp</item>
         <item name="elevation">0dp</item>
@@ -69,8 +70,7 @@
         <item name="headerTextColor">@color/text_title</item>
     </style>
 
-    <style name="MainAppTheme" parent="AppTheme">
-    </style>
+    <style name="MainAppTheme" parent="AppTheme"></style>
 
     <style name="MainAppTheme.Dark">
         <item name="colorPrimary">@color/brand_400</item>
@@ -541,7 +541,7 @@
 
     <style name="SubscriptionListTitle" parent="GemPurchaseListItem">
         <item name="android:layout_gravity">left|center_vertical</item>
-        <item name="android:fontFamily" >@string/font_family_medium</item>
+        <item name="android:fontFamily">@string/font_family_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="paddingEnd">32dp</item>
     </style>
@@ -581,6 +581,7 @@
     <style name="Pill.Content" parent="Pill">
         <item name="android:background">@drawable/pill_bg_content</item>
     </style>
+
     <style name="Pill.Purple">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/pill_bg_purple_300</item>
@@ -618,7 +619,7 @@
 
     <style name="subscriptionBoxText.Title">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily" >
+        <item name="android:fontFamily">
             @string/font_family_medium
         </item>
         <item name="android:textColor">@color/text_primary</item>
@@ -627,7 +628,7 @@
 
     <style name="subscriptionBoxText.Subtitle">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily" >
+        <item name="android:fontFamily">
             @string/font_family_regular
         </item>
         <item name="android:textColor">@color/text_primary</item>
@@ -635,7 +636,7 @@
 
     <style name="SubscriptionListDescription" parent="GemPurchaseListItemDescription">
         <item name="android:layout_marginBottom">24dp</item>
-        <item name="android:fontFamily" >
+        <item name="android:fontFamily">
             @string/font_family_condensed
         </item>
         <item name="android:textSize">14sp</item>
@@ -881,12 +882,15 @@
     <style name="RedTextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/red_10</item>
     </style>
+
     <style name="YellowTextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/yellow_5</item>
     </style>
+
     <style name="BlueTextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/blue_10</item>
     </style>
+
     <style name="PurpleTextLabel" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/brand_300</item>
     </style>
@@ -917,7 +921,6 @@
         <item name="android:alpha">.8</item>
         <item name="android:lineSpacingExtra">5dp</item>
     </style>
-
 
 
     <style name="TaskFormTextInputLayoutAppearance" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
@@ -1021,6 +1024,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="ActiveLabel">
         <item name="android:background">@drawable/pill_bg_teal_100</item>
         <item name="android:paddingStart">4dp</item>

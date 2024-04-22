@@ -10,7 +10,6 @@ import io.realm.annotations.PrimaryKey
 import java.util.Date
 
 open class Challenge : RealmObject(), BaseMainObject {
-
     @PrimaryKey
     var id: String? = null
     var name: String? = null
@@ -42,19 +41,23 @@ open class Challenge : RealmObject(), BaseMainObject {
         val map = HashMap<String, Array<String>>()
 
         if (dailyList?.isNotEmpty() == true) {
-            dailyList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()?.let { map[TASK_ORDER_DAILYS] }
+            dailyList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+                ?.let { map[TASK_ORDER_DAILYS] }
         }
 
         if (habitList?.isNotEmpty() == true) {
-            habitList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()?.let { map[TASK_ORDER_HABITS] }
+            habitList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+                ?.let { map[TASK_ORDER_HABITS] }
         }
 
         if (rewardList?.isNotEmpty() == true) {
-            rewardList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()?.let { map[TASK_ORDER_REWARDS] }
+            rewardList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+                ?.let { map[TASK_ORDER_REWARDS] }
         }
 
         if (todoList?.isNotEmpty() == true) {
-            todoList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()?.let { map[TASK_ORDER_TODOS] }
+            todoList?.split(",".toRegex())?.dropLastWhile { it.isEmpty() }?.toTypedArray()
+                ?.let { map[TASK_ORDER_TODOS] }
         }
 
         return map
@@ -80,7 +83,6 @@ open class Challenge : RealmObject(), BaseMainObject {
     }
 
     companion object {
-
         const val TASK_ORDER_HABITS = "habits"
         const val TASK_ORDER_TODOS = "todos"
         const val TASK_ORDER_DAILYS = "dailys"

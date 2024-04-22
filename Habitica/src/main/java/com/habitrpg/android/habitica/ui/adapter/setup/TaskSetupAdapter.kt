@@ -14,7 +14,6 @@ import com.habitrpg.android.habitica.extensions.inflate
 import com.habitrpg.common.habitica.extensions.setTintWith
 
 class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>() {
-
     var checkedList: MutableList<Boolean> = mutableListOf()
     private var taskList: List<List<String>> = emptyList()
 
@@ -26,11 +25,17 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): TaskViewHolder {
         return TaskViewHolder(parent.inflate(R.layout.task_setup_item))
     }
 
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: TaskViewHolder,
+        position: Int,
+    ) {
         holder.bind(this.taskList[position], this.checkedList[position])
     }
 
@@ -38,8 +43,9 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
         return this.taskList.size
     }
 
-    inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
+    inner class TaskViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         private val icon: Drawable?
         private val textView: TextView = itemView.findViewById(R.id.textView)
 
@@ -51,11 +57,18 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
         init {
             itemView.setOnClickListener(this)
 
-            icon = VectorDrawableCompat.create(context.resources, R.drawable.ic_check_white_18dp, null)
-            icon?.setTintWith(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY)
+            icon =
+                VectorDrawableCompat.create(context.resources, R.drawable.ic_check_white_18dp, null)
+            icon?.setTintWith(
+                ContextCompat.getColor(context, R.color.brand_100),
+                PorterDuff.Mode.MULTIPLY,
+            )
         }
 
-        fun bind(taskGroup: List<String>, isChecked: Boolean?) {
+        fun bind(
+            taskGroup: List<String>,
+            isChecked: Boolean?,
+        ) {
             this.taskGroup = taskGroup
             this.isChecked = isChecked
 
@@ -64,11 +77,17 @@ class TaskSetupAdapter : RecyclerView.Adapter<TaskSetupAdapter.TaskViewHolder>()
             }
             if (this.isChecked == true) {
                 this.textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null)
-                textView.background.setTintWith(ContextCompat.getColor(context, R.color.white), PorterDuff.Mode.MULTIPLY)
+                textView.background.setTintWith(
+                    ContextCompat.getColor(context, R.color.white),
+                    PorterDuff.Mode.MULTIPLY,
+                )
                 textView.setTextColor(ContextCompat.getColor(context, R.color.brand_100))
             } else {
                 this.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                textView.background.setTintWith(ContextCompat.getColor(context, R.color.brand_100), PorterDuff.Mode.MULTIPLY)
+                textView.background.setTintWith(
+                    ContextCompat.getColor(context, R.color.brand_100),
+                    PorterDuff.Mode.MULTIPLY,
+                )
                 textView.setTextColor(ContextCompat.getColor(context, R.color.white))
             }
         }

@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.OverlayTutorialBinding
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.TutorialStep
 import com.habitrpg.common.habitica.extensions.layoutInflater
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 
 class TutorialView(
     context: Context,
     val step: TutorialStep,
-    private val onReaction: OnTutorialReaction
+    private val onReaction: OnTutorialReaction,
 ) : FrameLayout(context) {
     private val binding = OverlayTutorialBinding.inflate(context.layoutInflater, this, true)
     private var tutorialTexts: List<String> = emptyList()
@@ -24,11 +24,13 @@ class TutorialView(
 
     init {
         binding.speechBubbleView.setConfirmationButtonVisibility(View.GONE)
-        binding.speechBubbleView.setShowNextListener(object : SpeechBubbleView.ShowNextListener {
-            override fun showNextStep() {
-                displayNextTutorialText()
-            }
-        })
+        binding.speechBubbleView.setShowNextListener(
+            object : SpeechBubbleView.ShowNextListener {
+                override fun showNextStep() {
+                    displayNextTutorialText()
+                }
+            },
+        )
 
         binding.speechBubbleView.binding.completeButton.setOnClickListener { completeButtonClicked() }
         binding.speechBubbleView.binding.dismissButton.setOnClickListener { dismissButtonClicked() }
@@ -55,7 +57,8 @@ class TutorialView(
     }
 
     fun setCanBeDeferred(canBeDeferred: Boolean) {
-        binding.speechBubbleView.binding.dismissButton.visibility = if (canBeDeferred) View.VISIBLE else View.GONE
+        binding.speechBubbleView.binding.dismissButton.visibility =
+            if (canBeDeferred) View.VISIBLE else View.GONE
     }
 
     private fun displayNextTutorialText() {
@@ -98,6 +101,7 @@ class TutorialView(
 
     interface OnTutorialReaction {
         fun onTutorialCompleted(step: TutorialStep)
+
         fun onTutorialDeferred(step: TutorialStep)
     }
 }

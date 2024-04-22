@@ -18,9 +18,8 @@ import java.io.IOException
 class PushNotificationManager(
     var apiClient: ApiClient,
     private val sharedPreferences: SharedPreferences,
-    private val context: Context
+    private val context: Context,
 ) {
-
     var refreshedToken: String = ""
         set(value) {
             if (value.isEmpty()) {
@@ -100,18 +99,19 @@ class PushNotificationManager(
     }
 
     private fun userIsSubscribedToNotificationType(type: String?): Boolean {
-        val key = when {
-            type == PARTY_INVITE_PUSH_NOTIFICATION_KEY -> "preference_push_invited_to_party"
-            type?.contains(RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_received_a_private_message"
-            type?.contains(RECEIVED_GEMS_PUSH_NOTIFICATION_KEY) == true -> "preference_push_gifted_gems"
-            type?.contains(RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY) == true -> "preference_push_gifted_subscription"
-            type?.contains(GUILD_INVITE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_invited_to_guild"
-            type?.contains(QUEST_INVITE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_invited_to_quest"
-            type?.contains(QUEST_BEGUN_PUSH_NOTIFICATION_KEY) == true -> "preference_push_your_quest_has_begun"
-            type?.contains(WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_you_won_challenge"
-            type?.contains(CONTENT_RELEASE_NOTIFICATION_KEY) == true -> "preference_push_content_release"
-            else -> return true
-        }
+        val key =
+            when {
+                type == PARTY_INVITE_PUSH_NOTIFICATION_KEY -> "preference_push_invited_to_party"
+                type?.contains(RECEIVED_PRIVATE_MESSAGE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_received_a_private_message"
+                type?.contains(RECEIVED_GEMS_PUSH_NOTIFICATION_KEY) == true -> "preference_push_gifted_gems"
+                type?.contains(RECEIVED_SUBSCRIPTION_GIFT_PUSH_NOTIFICATION_KEY) == true -> "preference_push_gifted_subscription"
+                type?.contains(GUILD_INVITE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_invited_to_guild"
+                type?.contains(QUEST_INVITE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_invited_to_quest"
+                type?.contains(QUEST_BEGUN_PUSH_NOTIFICATION_KEY) == true -> "preference_push_your_quest_has_begun"
+                type?.contains(WON_CHALLENGE_PUSH_NOTIFICATION_KEY) == true -> "preference_push_you_won_challenge"
+                type?.contains(CONTENT_RELEASE_NOTIFICATION_KEY) == true -> "preference_push_content_release"
+                else -> return true
+            }
 
         return sharedPreferences.getBoolean(key, true)
     }
@@ -133,7 +133,11 @@ class PushNotificationManager(
         const val G1G1_PROMO_KEY = "g1g1Promo"
         private const val DEVICE_TOKEN_PREFERENCE_KEY = "device-token-preference"
 
-        fun displayNotification(remoteMessage: RemoteMessage, context: Context, pushNotificationManager: PushNotificationManager? = null) {
+        fun displayNotification(
+            remoteMessage: RemoteMessage,
+            context: Context,
+            pushNotificationManager: PushNotificationManager? = null,
+        ) {
             val remoteMessageIdentifier = remoteMessage.data["identifier"]
 
             if (pushNotificationManager?.userIsSubscribedToNotificationType(remoteMessageIdentifier) != false) {
@@ -144,28 +148,29 @@ class PushNotificationManager(
                         "receive notification",
                         EventCategory.BEHAVIOUR,
                         HitType.EVENT,
-                        additionalData
+                        additionalData,
                     )
                 }
 
                 val notificationFactory = HabiticaLocalNotificationFactory()
-                val localNotification = notificationFactory.build(
-                    remoteMessageIdentifier,
-                    context
-                )
+                val localNotification =
+                    notificationFactory.build(
+                        remoteMessageIdentifier,
+                        context,
+                    )
                 localNotification.setExtras(remoteMessage.data)
                 val notification = remoteMessage.notification
                 if (notification != null) {
                     localNotification.notifyLocally(
                         notification.title ?: remoteMessage.data["title"],
                         notification.body ?: remoteMessage.data["body"],
-                        remoteMessage.data
+                        remoteMessage.data,
                     )
                 } else {
                     localNotification.notifyLocally(
                         remoteMessage.data["title"],
                         remoteMessage.data["body"],
-                        remoteMessage.data
+                        remoteMessage.data,
                     )
                 }
             }

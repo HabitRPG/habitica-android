@@ -1,5 +1,6 @@
 package com.habitrpg.shared.habitica.models.responses
 
+@Suppress("PropertyName")
 class TaskDirectionData {
     var delta: Float = 0.toFloat()
     var _tmp: TaskDirectionDataTemp? = null

@@ -8,7 +8,10 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel(val userRepository: UserRepository, val userViewModel: MainUserViewModel) : ViewModel() {
+abstract class BaseViewModel(
+    val userRepository: UserRepository,
+    val userViewModel: MainUserViewModel,
+) : ViewModel() {
     val user: LiveData<User?> by lazy {
         userViewModel.user
     }
@@ -18,7 +21,10 @@ abstract class BaseViewModel(val userRepository: UserRepository, val userViewMod
         super.onCleared()
     }
 
-    fun updateUser(path: String, value: Any) {
+    fun updateUser(
+        path: String,
+        value: Any,
+    ) {
         viewModelScope.launch(ExceptionHandler.coroutine()) {
             userRepository.updateUser(path, value)
         }

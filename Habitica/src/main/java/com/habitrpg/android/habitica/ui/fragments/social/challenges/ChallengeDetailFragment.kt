@@ -19,7 +19,6 @@ import com.habitrpg.android.habitica.databinding.DialogChallengeDetailTaskGroupB
 import com.habitrpg.android.habitica.databinding.FragmentChallengeDetailBinding
 import com.habitrpg.android.habitica.extensions.addCloseButton
 import com.habitrpg.android.habitica.extensions.inflate
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.Challenge
 import com.habitrpg.android.habitica.models.tasks.Task
@@ -36,6 +35,7 @@ import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.common.habitica.helpers.EmojiParser
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
 import com.habitrpg.shared.habitica.models.tasks.TaskType
@@ -47,7 +47,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>() {
-
     @Inject
     lateinit var challengeRepository: ChallengeRepository
 
@@ -59,7 +58,10 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
 
     override var binding: FragmentChallengeDetailBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentChallengeDetailBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentChallengeDetailBinding {
         return FragmentChallengeDetailBinding.inflate(inflater, container, false)
     }
 
@@ -70,14 +72,17 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     @Suppress("ReturnCount")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
@@ -164,7 +169,10 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         refresh()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_challenge_details, menu)
         val editMenuItem = menu.findItem(R.id.action_edit)
@@ -185,17 +193,29 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                 startActivity(intent)
                 return true
             }
+
             R.id.action_share -> {
-                val shareGuildIntent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "${context?.getString(R.string.base_url)}/challenges/$challengeID")
-                    type = "text/plain"
-                }
-                startActivity(Intent.createChooser(shareGuildIntent, context?.getString(R.string.share_challenge_with)))
+                val shareGuildIntent =
+                    Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            "${context?.getString(R.string.base_url)}/challenges/$challengeID",
+                        )
+                        type = "text/plain"
+                    }
+                startActivity(
+                    Intent.createChooser(
+                        shareGuildIntent,
+                        context?.getString(R.string.share_challenge_with),
+                    ),
+                )
             }
+
             R.id.action_end_challenge -> {
                 showEndChallengeDialog()
             }
+
             R.id.action_report -> {
                 showReportChallengeBottomSheet()
             }
@@ -212,7 +232,11 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         dialog.addButton(R.string.open_website, true, false) { _, _ ->
             val uriUrl = "https://habitica.com/challenges/$challengeID".toUri()
             val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
-            val l = context.packageManager.queryIntentActivities(launchBrowser, PackageManager.MATCH_DEFAULT_ONLY)
+            val l =
+                context.packageManager.queryIntentActivities(
+                    launchBrowser,
+                    PackageManager.MATCH_DEFAULT_ONLY,
+                )
             val notHabitica = l.firstOrNull { !it.activityInfo.processName.contains("habitica") }
             if (notHabitica != null) {
                 launchBrowser.setPackage(notHabitica.activityInfo.processName)
@@ -224,14 +248,20 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     }
 
     private fun showReportChallengeBottomSheet() {
-        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
-            reportType = ReportBottomSheetFragment.REPORT_TYPE_CHALLENGE,
-            challengeBeingReported = challengeID ?: "",
-            displayName = challenge?.name ?: "",
-            sourceView = this::class.simpleName ?: ""
-        )
+        val reportBottomSheetFragment =
+            ReportBottomSheetFragment.newInstance(
+                reportType = ReportBottomSheetFragment.REPORT_TYPE_CHALLENGE,
+                challengeBeingReported = challengeID ?: "",
+                displayName = challenge?.name ?: "",
+                sourceView = this::class.simpleName ?: "",
+            )
 
-        activity?.supportFragmentManager?.let { reportBottomSheetFragment.show(it, ReportBottomSheetFragment.TAG) }
+        activity?.supportFragmentManager?.let {
+            reportBottomSheetFragment.show(
+                it,
+                ReportBottomSheetFragment.TAG,
+            )
+        }
     }
 
     private fun refresh() {
@@ -276,8 +306,14 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     }
 
     private fun addHabits(habits: ArrayList<Task>) {
-        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
-        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, habits.size)
+        val groupBinding =
+            DialogChallengeDetailTaskGroupBinding.inflate(
+                layoutInflater,
+                binding?.taskGroupLayout,
+                true,
+            )
+        groupBinding.taskGroupName.text =
+            getLabelByTypeAndCount(Challenge.TASK_ORDER_HABITS, habits.size)
         groupBinding.taskCountView.text = habits.size.toString()
         for (i in 0 until habits.size) {
             val task = habits[i]
@@ -290,8 +326,14 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     }
 
     private fun addDailys(dailies: ArrayList<Task>) {
-        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
-        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_DAILYS, dailies.size)
+        val groupBinding =
+            DialogChallengeDetailTaskGroupBinding.inflate(
+                layoutInflater,
+                binding?.taskGroupLayout,
+                true,
+            )
+        groupBinding.taskGroupName.text =
+            getLabelByTypeAndCount(Challenge.TASK_ORDER_DAILYS, dailies.size)
         groupBinding.taskCountView.text = dailies.size.toString()
 
         for (i in 0 until dailies.size) {
@@ -305,8 +347,14 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     }
 
     private fun addTodos(todos: ArrayList<Task>) {
-        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
-        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_TODOS, todos.size)
+        val groupBinding =
+            DialogChallengeDetailTaskGroupBinding.inflate(
+                layoutInflater,
+                binding?.taskGroupLayout,
+                true,
+            )
+        groupBinding.taskGroupName.text =
+            getLabelByTypeAndCount(Challenge.TASK_ORDER_TODOS, todos.size)
         groupBinding.taskCountView.text = todos.size.toString()
 
         for (i in 0 until todos.size) {
@@ -320,8 +368,14 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
     }
 
     private fun addRewards(rewards: ArrayList<Task>) {
-        val groupBinding = DialogChallengeDetailTaskGroupBinding.inflate(layoutInflater, binding?.taskGroupLayout, true)
-        groupBinding.taskGroupName.text = getLabelByTypeAndCount(Challenge.TASK_ORDER_REWARDS, rewards.size)
+        val groupBinding =
+            DialogChallengeDetailTaskGroupBinding.inflate(
+                layoutInflater,
+                binding?.taskGroupLayout,
+                true,
+            )
+        groupBinding.taskGroupName.text =
+            getLabelByTypeAndCount(Challenge.TASK_ORDER_REWARDS, rewards.size)
         groupBinding.taskCountView.text = rewards.size.toString()
 
         for (i in 0 until rewards.size) {
@@ -334,7 +388,10 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
         }
     }
 
-    private fun getLabelByTypeAndCount(type: String, count: Int): String {
+    private fun getLabelByTypeAndCount(
+        type: String,
+        count: Int,
+    ): String {
         return when (type) {
             Challenge.TASK_ORDER_DAILYS -> context?.getString(if (count == 1) R.string.daily else R.string.dailies)
             Challenge.TASK_ORDER_HABITS -> context?.getString(if (count == 1) R.string.habit else R.string.habits)
@@ -354,7 +411,11 @@ class ChallengeDetailFragment : BaseMainFragment<FragmentChallengeDetailBinding>
                 challengeRepository.leaveChallenge(challenge, "keep-all")
             }
         }
-        alert.addButton(R.string.leave_delete_tasks, isPrimary = false, isDestructive = true) { _, _ ->
+        alert.addButton(
+            R.string.leave_delete_tasks,
+            isPrimary = false,
+            isDestructive = true,
+        ) { _, _ ->
             val challenge = challenge ?: return@addButton
             lifecycleScope.launchCatching {
                 challengeRepository.leaveChallenge(challenge, "remove-all")

@@ -12,7 +12,6 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import javax.inject.Inject
 
 abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
-
     @Inject
     lateinit var userRepository: UserRepository
 
@@ -24,7 +23,7 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         userViewModel.user.observe(viewLifecycleOwner) { setUser(it) }
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -35,7 +34,10 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat() {
         super.onDestroy()
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreatePreferences(
+        savedInstanceState: Bundle?,
+        rootKey: String?,
+    ) {
         setPreferencesFromResource(R.xml.preferences_fragment, rootKey)
         setupPreferences()
     }

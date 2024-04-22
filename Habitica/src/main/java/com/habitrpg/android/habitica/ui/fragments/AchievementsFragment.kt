@@ -27,8 +27,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding>(), SwipeRefreshLayout.OnRefreshListener {
-
+class AchievementsFragment :
+    BaseMainFragment<FragmentRefreshRecyclerviewBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
     @Inject
     lateinit var inventoryRepository: InventoryRepository
 
@@ -37,7 +38,10 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
 
     override var binding: FragmentRefreshRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRefreshRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRefreshRecyclerviewBinding {
         return FragmentRefreshRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -53,7 +57,7 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         hidesToolbar = true
         adapter = AchievementsAdapter()
@@ -71,78 +75,90 @@ class AchievementsFragment : BaseMainFragment<FragmentRefreshRecyclerviewBinding
         super.onSaveInstanceState(outState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = GridLayoutManager(mainActivity, 2)
         binding?.recyclerView?.layoutManager = layoutManager
         binding?.recyclerView?.adapter = adapter
         adapter.useGridLayout = useGridLayout
-        context?.let { binding?.recyclerView?.background = ColorDrawable(ContextCompat.getColor(it, R.color.content_background)) }
+        context?.let {
+            binding?.recyclerView?.background =
+                ColorDrawable(ContextCompat.getColor(it, R.color.content_background))
+        }
 
-        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if (adapter.getItemViewType(position) == 1) {
-                    1
-                } else {
-                    2
+        layoutManager.spanSizeLookup =
+            object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return if (adapter.getItemViewType(position) == 1) {
+                        1
+                    } else {
+                        2
+                    }
                 }
             }
-        }
 
         binding?.refreshLayout?.setOnRefreshListener(this)
 
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            userRepository.getAchievements().combine(userRepository.getQuestAchievements()) { achievements, questAchievements ->
-                return@combine Pair(achievements, questAchievements)
-            }.combine(
-                userRepository.getQuestAchievements()
-                    .map { it.mapNotNull { achievement -> achievement.questKey } }
-                    .map { inventoryRepository.getQuestContent(it).firstOrNull() }
-            ) { achievements, content ->
-                Pair(achievements, content)
-            }.collect {
-                val achievements = it.first.first
-                val entries = mutableListOf<Any>()
-                var lastCategory = ""
-                achievements.forEach { achievement ->
-                    val categoryIdentifier = achievement.category ?: ""
-                    if (categoryIdentifier != lastCategory) {
-                        val category = Pair(
-                            categoryIdentifier,
-                            achievements.count { check ->
-                                check.category == categoryIdentifier && check.earned
-                            }
-                        )
-                        entries.add(category)
-                        lastCategory = categoryIdentifier
+            userRepository.getAchievements()
+                .combine(userRepository.getQuestAchievements()) { achievements, questAchievements ->
+                    return@combine Pair(achievements, questAchievements)
+                }.combine(
+                    userRepository.getQuestAchievements()
+                        .map { it.mapNotNull { achievement -> achievement.questKey } }
+                        .map { inventoryRepository.getQuestContent(it).firstOrNull() },
+                ) { achievements, content ->
+                    Pair(achievements, content)
+                }.collect {
+                    val achievements = it.first.first
+                    val entries = mutableListOf<Any>()
+                    var lastCategory = ""
+                    achievements.forEach { achievement ->
+                        val categoryIdentifier = achievement.category ?: ""
+                        if (categoryIdentifier != lastCategory) {
+                            val category =
+                                Pair(
+                                    categoryIdentifier,
+                                    achievements.count { check ->
+                                        check.category == categoryIdentifier && check.earned
+                                    },
+                                )
+                            entries.add(category)
+                            lastCategory = categoryIdentifier
+                        }
+                        entries.add(achievement)
                     }
-                    entries.add(achievement)
-                }
-                val questAchievements = it.first.second
-                entries.add(Pair("Quests completed", questAchievements.size))
-                entries.addAll(
-                    questAchievements.map { achievement ->
-                        val questContent = it.second?.firstOrNull { achievement.questKey == it.key }
-                        achievement.title = questContent?.text
-                        achievement
+                    val questAchievements = it.first.second
+                    entries.add(Pair("Quests completed", questAchievements.size))
+                    entries.addAll(
+                        questAchievements.map { achievement ->
+                            val questContent = it.second?.firstOrNull { achievement.questKey == it.key }
+                            achievement.title = questContent?.text
+                            achievement
+                        },
+                    )
+
+                    val user = userViewModel.user.value
+                    val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
+                    if (challengeAchievementCount > 0) {
+                        entries.add(Pair("Challenges won", challengeAchievementCount))
+                        user?.challengeAchievements?.let { it1 -> entries.addAll(it1) }
                     }
-                )
 
-                val user = userViewModel.user.value
-                val challengeAchievementCount = user?.challengeAchievements?.size ?: 0
-                if (challengeAchievementCount > 0) {
-                    entries.add(Pair("Challenges won", challengeAchievementCount))
-                    user?.challengeAchievements?.let { it1 -> entries.addAll(it1) }
+                    adapter.entries = entries
+                    adapter.notifyDataSetChanged()
                 }
-
-                adapter.entries = entries
-                adapter.notifyDataSetChanged()
-            }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         if (useGridLayout) {
             val menuItem = menu.add(R.string.switch_to_list_view)
             menuID = menuItem?.itemId ?: 0

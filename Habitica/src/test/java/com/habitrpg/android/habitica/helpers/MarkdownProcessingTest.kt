@@ -41,7 +41,6 @@ class MarkdownProcessingTest : WordSpec({
             output shouldBe "![img](https://habitica-assets.s3.amazonaws.com/mobileApp/images/gold.png\"Habitica Gold\")"
         }
     }
-
 }) {
     companion object {
         fun processMarkdown(input: String): String {
@@ -82,5 +81,3 @@ class MarkdownProcessingTest : WordSpec({
         }
     }
 }
-
-

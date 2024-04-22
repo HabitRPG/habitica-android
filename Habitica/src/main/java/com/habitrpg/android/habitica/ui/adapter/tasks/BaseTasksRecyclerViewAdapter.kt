@@ -15,7 +15,7 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
     private val viewModel: TasksViewModel,
     private val layoutResource: Int,
     newContext: Context,
-    private val userID: String?
+    private val userID: String?,
 ) : BaseRecyclerViewAdapter<Task, VH>() {
     protected var content: MutableList<Task>? = null
     protected var filteredContent: MutableList<Task>? = null
@@ -25,7 +25,10 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
         this.filteredContent = ArrayList()
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) {
+    override fun onBindViewHolder(
+        holder: VH,
+        position: Int,
+    ) {
         val item = filteredContent?.get(position)
         if (item != null) {
             holder.bind(item, position, "normal")
@@ -41,7 +44,10 @@ abstract class BaseTasksRecyclerViewAdapter<VH : BindableViewHolder<Task>>(
 
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
 
-    protected fun getContentView(parent: ViewGroup, layoutResource: Int): View =
+    protected fun getContentView(
+        parent: ViewGroup,
+        layoutResource: Int,
+    ): View =
         LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     private fun updateTask(task: Task) {

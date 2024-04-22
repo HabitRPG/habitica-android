@@ -9,7 +9,11 @@ import java.lang.reflect.Type
 
 class NotificationDeserializer : JsonDeserializer<Notification> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Notification {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): Notification {
         val notification = Notification()
         val obj = json.asJsonObject
 

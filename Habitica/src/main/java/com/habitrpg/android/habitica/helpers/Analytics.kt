@@ -13,12 +13,12 @@ import com.habitrpg.android.habitica.R
 
 enum class AnalyticsTarget {
     AMPLITUDE,
-    FIREBASE
+    FIREBASE,
 }
 
 enum class EventCategory(val key: String) {
     BEHAVIOUR("behaviour"),
-    NAVIGATION("navigation")
+    NAVIGATION("navigation"),
 }
 
 enum class HitType(val key: String) {
@@ -26,7 +26,7 @@ enum class HitType(val key: String) {
     PAGEVIEW("pageview"),
     CREATE_WIDGET("create"),
     REMOVE_WIDGET("remove"),
-    UPDATE_WIDGET("update")
+    UPDATE_WIDGET("update"),
 }
 
 object Analytics {
@@ -39,17 +39,18 @@ object Analytics {
         category: EventCategory?,
         hitType: HitType?,
         additionalData: Map<String, Any>? = null,
-        target: AnalyticsTarget? = null
+        target: AnalyticsTarget? = null,
     ) {
         if (BuildConfig.DEBUG) {
             return
         }
-        val data = mutableMapOf<String, Any?>(
-            "eventAction" to eventAction,
-            "eventCategory" to category?.key,
-            "hitType" to hitType?.key,
-            "status" to "displayed"
-        )
+        val data =
+            mutableMapOf<String, Any?>(
+                "eventAction" to eventAction,
+                "eventCategory" to category?.key,
+                "hitType" to hitType?.key,
+                "status" to "displayed",
+            )
         if (additionalData != null) {
             data.putAll(additionalData)
         }
@@ -74,18 +75,20 @@ object Analytics {
     }
 
     fun initialize(context: Context) {
-        amplitude = Amplitude(
-            Configuration(
-                context.getString(R.string.amplitude_app_id),
-                context
+        amplitude =
+            Amplitude(
+                Configuration(
+                    context.getString(R.string.amplitude_app_id),
+                    context,
+                ),
             )
-        )
         firebase = FirebaseAnalytics.getInstance(context)
     }
 
     fun identify(sharedPrefs: SharedPreferences) {
-        val identify = Identify()
-            .setOnce("androidStore", BuildConfig.STORE)
+        val identify =
+            Identify()
+                .setOnce("androidStore", BuildConfig.STORE)
         sharedPrefs.getString("launch_screen", "")?.let {
             identify.set("launch_screen", it)
         }
@@ -104,7 +107,10 @@ object Analytics {
         }
     }
 
-    fun setUserProperty(identifier: String, value: Any?) {
+    fun setUserProperty(
+        identifier: String,
+        value: Any?,
+    ) {
         if (this::amplitude.isInitialized) {
             amplitude.identify(mapOf(identifier to value))
         }

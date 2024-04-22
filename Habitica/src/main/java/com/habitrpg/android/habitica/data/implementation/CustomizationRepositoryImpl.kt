@@ -10,10 +10,18 @@ import kotlinx.coroutines.flow.Flow
 class CustomizationRepositoryImpl(
     localRepository: CustomizationLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler
-) : BaseRepositoryImpl<CustomizationLocalRepository>(localRepository, apiClient, authenticationHandler), CustomizationRepository {
-
-    override fun getCustomizations(type: String, category: String?, onlyAvailable: Boolean): Flow<List<Customization>> {
+    authenticationHandler: AuthenticationHandler,
+) : BaseRepositoryImpl<CustomizationLocalRepository>(
+        localRepository,
+        apiClient,
+        authenticationHandler,
+    ),
+    CustomizationRepository {
+    override fun getCustomizations(
+        type: String,
+        category: String?,
+        onlyAvailable: Boolean,
+    ): Flow<List<Customization>> {
         return localRepository.getCustomizations(type, category, onlyAvailable)
     }
 }

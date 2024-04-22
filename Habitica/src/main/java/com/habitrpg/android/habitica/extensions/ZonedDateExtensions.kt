@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.extensions
 
 import com.habitrpg.android.habitica.models.tasks.Days
-import com.habitrpg.shared.habitica.models.tasks.Frequency
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -9,17 +8,17 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.TextStyle
-import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAccessor
 import java.util.Date
 import java.util.Locale
 
 fun String.parseToZonedDateTime(): ZonedDateTime? {
-    val parsed: TemporalAccessor = formatter().parseBest(
-        this,
-        ZonedDateTime::from,
-        LocalDateTime::from
-    )
+    val parsed: TemporalAccessor =
+        formatter().parseBest(
+            this,
+            ZonedDateTime::from,
+            LocalDateTime::from,
+        )
     return if (parsed is ZonedDateTime) {
         parsed
     } else {
@@ -46,7 +45,6 @@ fun formatter(): DateTimeFormatter =
         .appendPattern("[XX]")
         .toFormatter()
 
-
 fun ZonedDateTime.matchesRepeatDays(repeatDays: Days?): Boolean {
     repeatDays ?: return true // If no repeatDays specified, assume it matches
 
@@ -61,7 +59,3 @@ fun ZonedDateTime.matchesRepeatDays(repeatDays: Days?): Boolean {
         else -> false
     }
 }
-
-
-
-

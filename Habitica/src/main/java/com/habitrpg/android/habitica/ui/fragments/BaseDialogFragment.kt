@@ -18,7 +18,6 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment() {
-
     var isModal: Boolean = false
     abstract var binding: VB?
 
@@ -32,12 +31,15 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
     open val displayedClassName: String?
         get() = this.javaClass.simpleName
 
-    abstract fun createBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+    abstract fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         Analytics.sendNavigationEvent(this.javaClass.simpleName)
 
@@ -61,7 +63,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
                         mainActivity.displayTutorialStep(
                             step,
                             tutorialTexts,
-                            tutorialCanBeDeferred
+                            tutorialCanBeDeferred,
                         )
                     }
                 }
@@ -77,7 +79,9 @@ abstract class BaseDialogFragment<VB : ViewBinding> : BottomSheetDialogFragment(
     override fun onDestroy() {
         try {
             tutorialRepository.close()
-        } catch (exception: UninitializedPropertyAccessException) { /* no-on */ }
+        } catch (exception: UninitializedPropertyAccessException) {
+            // no-on
+        }
         super.onDestroy()
     }
 

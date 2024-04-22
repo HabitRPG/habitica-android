@@ -6,9 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.habitrpg.android.habitica.models.Achievement;
 import com.habitrpg.android.habitica.models.ContentResult;
 import com.habitrpg.android.habitica.models.FAQArticle;
-import com.habitrpg.android.habitica.models.tasks.GroupAssignedDetails;
-import com.habitrpg.android.habitica.utils.AssignedDetailsDeserializer;
-import com.habitrpg.common.habitica.models.Notification;
 import com.habitrpg.android.habitica.models.Skill;
 import com.habitrpg.android.habitica.models.Tag;
 import com.habitrpg.android.habitica.models.TutorialStep;
@@ -19,11 +16,11 @@ import com.habitrpg.android.habitica.models.inventory.Quest;
 import com.habitrpg.android.habitica.models.inventory.QuestCollect;
 import com.habitrpg.android.habitica.models.inventory.QuestDropItem;
 import com.habitrpg.android.habitica.models.members.Member;
-import com.habitrpg.shared.habitica.models.responses.FeedResponse;
 import com.habitrpg.android.habitica.models.social.Challenge;
 import com.habitrpg.android.habitica.models.social.ChatMessage;
 import com.habitrpg.android.habitica.models.social.FindUsernameResult;
 import com.habitrpg.android.habitica.models.social.Group;
+import com.habitrpg.android.habitica.models.tasks.GroupAssignedDetails;
 import com.habitrpg.android.habitica.models.tasks.Task;
 import com.habitrpg.android.habitica.models.tasks.TaskList;
 import com.habitrpg.android.habitica.models.user.OwnedItem;
@@ -33,6 +30,7 @@ import com.habitrpg.android.habitica.models.user.Purchases;
 import com.habitrpg.android.habitica.models.user.User;
 import com.habitrpg.android.habitica.models.user.auth.SocialAuthentication;
 import com.habitrpg.android.habitica.utils.AchievementListDeserializer;
+import com.habitrpg.android.habitica.utils.AssignedDetailsDeserializer;
 import com.habitrpg.android.habitica.utils.BooleanAsIntAdapter;
 import com.habitrpg.android.habitica.utils.ChallengeDeserializer;
 import com.habitrpg.android.habitica.utils.ChallengeListDeserializer;
@@ -62,6 +60,8 @@ import com.habitrpg.android.habitica.utils.TaskTagDeserializer;
 import com.habitrpg.android.habitica.utils.TutorialStepListDeserializer;
 import com.habitrpg.android.habitica.utils.UserDeserializer;
 import com.habitrpg.android.habitica.utils.WorldStateSerialization;
+import com.habitrpg.common.habitica.models.Notification;
+import com.habitrpg.shared.habitica.models.responses.FeedResponse;
 
 import java.lang.reflect.Type;
 import java.util.Date;
@@ -145,7 +145,8 @@ public class GSonFactoryCreator {
                 .setLenient()
                 .create();
     }
-        public static GsonConverterFactory create() {
-            return GsonConverterFactory.create(createGson());
+
+    public static GsonConverterFactory create() {
+        return GsonConverterFactory.create(createGson());
     }
 }

@@ -54,9 +54,10 @@ fun GroupPlanMemberList(
                 fontWeight = FontWeight.Medium,
                 color = HabiticaTheme.colors.textTertiary,
                 textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 20.dp),
             )
         }
         for (
@@ -64,19 +65,20 @@ fun GroupPlanMemberList(
             ?: emptyList()
         ) {
             item {
-                val role = if (group?.isLeader(member.id) == true) {
-                    stringResource(R.string.owner)
-                } else if (group?.isManager(member.id) == true) {
-                    stringResource(R.string.manager)
-                } else {
-                    stringResource(R.string.member)
-                }
+                val role =
+                    if (group?.isLeader(member.id) == true) {
+                        stringResource(R.string.owner)
+                    } else if (group?.isManager(member.id) == true) {
+                        stringResource(R.string.manager)
+                    } else {
+                        stringResource(R.string.member)
+                    }
                 MemberItem(
                     member,
                     role,
                     onMemberClicked,
                     configManager,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                 )
             }
         }
@@ -89,7 +91,7 @@ fun MemberItem(
     role: String,
     onMemberClicked: (String) -> Unit,
     configManager: AppConfigManager,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier
@@ -98,54 +100,56 @@ fun MemberItem(
             .background(HabiticaTheme.colors.windowBackground)
             .clickable {
                 onMemberClicked(member.id)
-            }
+            },
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp),
         ) {
             ComposableAvatarView(
                 avatar = member,
                 configManager = configManager,
-                modifier = Modifier
-                    .padding(6.dp)
-                    .size(94.dp, 98.dp)
+                modifier =
+                    Modifier
+                        .padding(6.dp)
+                        .size(94.dp, 98.dp),
             )
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .height(104.dp)
-                    .padding(end = 6.dp)
+                modifier =
+                    Modifier
+                        .height(104.dp)
+                        .padding(end = 6.dp),
             ) {
                 Text(
                     member.displayName,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    color = HabiticaTheme.colors.textPrimary
+                    color = HabiticaTheme.colors.textPrimary,
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         member.formattedUsername ?: "",
-                        color = HabiticaTheme.colors.textTertiary
+                        color = HabiticaTheme.colors.textTertiary,
                     )
                     Spacer(
                         Modifier
-                            .weight(1.0f)
+                            .weight(1.0f),
                     )
                     ClassIcon(
                         member.stats?.habitClass,
                         member.hasClass,
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(18.dp),
                     )
                     BuffIcon(member.stats?.isBuffed)
                     CurrencyText(
                         currency = "gold",
                         value = (member.stats?.gp) ?: 0.0,
                         decimals = 0,
-                        animated = false
+                        animated = false,
                     )
                 }
                 LabeledBar(
@@ -155,7 +159,7 @@ fun MemberItem(
                     maxValue = (member.stats?.maxHealth ?: 0).toDouble(),
                     displayCompact = true,
                     barHeight = 5.dp,
-                    animated = false
+                    animated = false,
                 )
                 LabeledBar(
                     color = colorResource(R.color.xpColor),
@@ -164,7 +168,7 @@ fun MemberItem(
                     maxValue = (member.stats?.toNextLevel ?: 0).toDouble(),
                     displayCompact = true,
                     barHeight = 5.dp,
-                    animated = false
+                    animated = false,
                 )
                 if (member.hasClass) {
                     LabeledBar(
@@ -174,7 +178,7 @@ fun MemberItem(
                         maxValue = (member.stats?.maxMP ?: 0).toDouble(),
                         displayCompact = true,
                         barHeight = 5.dp,
-                        animated = false
+                        animated = false,
                     )
                 }
                 Row(horizontalArrangement = Arrangement.SpaceBetween) {
@@ -182,14 +186,14 @@ fun MemberItem(
                         stringResource(R.string.level_unabbreviated, member.stats?.lvl ?: 0),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal,
-                        color = HabiticaTheme.colors.textTertiary
+                        color = HabiticaTheme.colors.textTertiary,
                     )
                     Spacer(Modifier.weight(1f))
                     Text(
                         role,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 14.sp,
-                        color = HabiticaTheme.colors.textSecondary
+                        color = HabiticaTheme.colors.textSecondary,
                     )
                 }
             }
@@ -225,6 +229,8 @@ private class MemberProvider : PreviewParameterProvider<Member> {
 
 @Composable
 @Preview
-private fun Preview(@PreviewParameter(MemberProvider::class) member: Member) {
+private fun Preview(
+    @PreviewParameter(MemberProvider::class) member: Member,
+) {
     MemberItem(member = member, role = "Manager", onMemberClicked = {}, AppConfigManager(null))
 }

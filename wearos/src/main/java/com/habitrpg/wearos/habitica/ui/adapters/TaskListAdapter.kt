@@ -12,7 +12,10 @@ open class TaskListAdapter : BaseAdapter<Any>() {
     var onTaskScore: ((Task) -> Unit)? = null
     var onTaskTapped: ((Task) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return if (viewType == TYPE_HEADER) {
             val inflater = parent.context.layoutInflater
             HeaderTaskViewHolder(RowTaskHeaderBinding.inflate(inflater, parent, false).root)
@@ -21,7 +24,10 @@ open class TaskListAdapter : BaseAdapter<Any>() {
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (holder is TaskViewHolder) {
             val item = getItemAt(position) as Task
             holder.bind(item)

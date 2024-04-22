@@ -26,7 +26,10 @@ open class RemindersItem : RealmObject, Parcelable {
         return 0
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    override fun writeToParcel(
+        dest: Parcel,
+        flags: Int,
+    ) {
         dest.writeString(id)
         dest.writeString(startDate)
         dest.writeString(time)
@@ -71,11 +74,12 @@ open class RemindersItem : RealmObject, Parcelable {
                 .appendPattern("[XX]")
                 .toFormatter()
 
-        val parsed: TemporalAccessor = formatter.parseBest(
-            time,
-            ZonedDateTime::from,
-            LocalDateTime::from
-        )
+        val parsed: TemporalAccessor =
+            formatter.parseBest(
+                time,
+                ZonedDateTime::from,
+                LocalDateTime::from,
+            )
         return if (parsed is ZonedDateTime) {
             parsed
         } else {
@@ -92,16 +96,18 @@ open class RemindersItem : RealmObject, Parcelable {
                 .appendPattern("[XX]")
                 .toFormatter()
 
-        val parsed: TemporalAccessor = formatter.parseBest(
-            time,
-            ZonedDateTime::from,
-            LocalDateTime::from
-        )
+        val parsed: TemporalAccessor =
+            formatter.parseBest(
+                time,
+                ZonedDateTime::from,
+                LocalDateTime::from,
+            )
         return if (parsed is ZonedDateTime) {
             parsed.withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
         } else {
             val defaultZone: ZoneId = ZoneId.of("UTC")
-            (parsed as LocalDateTime).atZone(defaultZone).withZoneSameLocal(ZoneId.systemDefault())?.toInstant()
+            (parsed as LocalDateTime).atZone(defaultZone).withZoneSameLocal(ZoneId.systemDefault())
+                ?.toInstant()
         }
     }
 }

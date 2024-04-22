@@ -22,7 +22,11 @@ import java.lang.reflect.Type
 
 class MemberSerialization : JsonDeserializer<Member> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Member {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): Member {
         val obj = json.asJsonObject
         val id = obj.get("_id").asString
 
@@ -46,7 +50,11 @@ class MemberSerialization : JsonDeserializer<Member> {
             member.inbox = context.deserialize<Inbox>(obj.get("inbox"), Inbox::class.java)
         }
         if (obj.has("preferences")) {
-            member.preferences = context.deserialize<MemberPreferences>(obj.get("preferences"), MemberPreferences::class.java)
+            member.preferences =
+                context.deserialize<MemberPreferences>(
+                    obj.get("preferences"),
+                    MemberPreferences::class.java,
+                )
         }
         if (obj.has("profile")) {
             member.profile = context.deserialize<Profile>(obj.get("profile"), Profile::class.java)
@@ -87,13 +95,18 @@ class MemberSerialization : JsonDeserializer<Member> {
             }
         }
         if (obj.has("contributor")) {
-            member.contributor = context.deserialize<ContributorInfo>(obj.get("contributor"), ContributorInfo::class.java)
+            member.contributor =
+                context.deserialize<ContributorInfo>(
+                    obj.get("contributor"),
+                    ContributorInfo::class.java,
+                )
         }
         if (obj.has("backer")) {
             member.backer = context.deserialize<Backer>(obj.get("backer"), Backer::class.java)
         }
         if (obj.has("auth")) {
-            member.authentication = context.deserialize<Authentication>(obj.get("auth"), Authentication::class.java)
+            member.authentication =
+                context.deserialize<Authentication>(obj.get("auth"), Authentication::class.java)
         }
         if (obj.has("loginIncentives")) {
             member.loginIncentives = obj.get("loginIncentives").asInt

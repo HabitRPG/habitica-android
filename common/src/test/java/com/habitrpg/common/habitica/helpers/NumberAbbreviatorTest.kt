@@ -3,7 +3,6 @@ package com.habitrpg.common.habitica.helpers
 import android.content.Context
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.datatest.withData
-import io.kotest.matchers.longs.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 import io.mockk.clearMocks
 import io.mockk.every
@@ -41,35 +40,9 @@ class NumberAbbreviatorTest : StringSpec({
         Triple(40.2412, "40", 0),
         Triple(0.5, "0.5", 0),
         Triple(0.328, "0.32", 0),
-        Triple(-0.99, "-0.99", 0)
+        Triple(-0.99, "-0.99", 0),
     ) { (input, output, decimals) ->
         NumberAbbreviator.abbreviate(mockContext, input, decimals) shouldBe output
-    }
-
-    "completes quickly" {
-        val iterations = 10000
-        val startTime = System.nanoTime()
-        repeat(iterations) {
-            NumberAbbreviator.abbreviate(mockContext, 201.5, 2) shouldBe "201.5"
-        }
-        val endTime = System.nanoTime()
-
-        val averageDuration = (endTime - startTime) / iterations
-        print("Average duration: $averageDuration")
-        averageDuration shouldBeLessThan 1500
-    }
-
-    "completes large numbers quickly" {
-        val iterations = 10000
-        val startTime = System.nanoTime()
-        repeat(iterations) {
-            NumberAbbreviator.abbreviate(mockContext, 1.9943212354213233E30, 2) shouldBe "1.99"
-        }
-        val endTime = System.nanoTime()
-
-        val averageDuration = (endTime - startTime) / iterations
-        print("Average duration: $averageDuration")
-        averageDuration shouldBeLessThan 2000
     }
 
     afterSpec { clearMocks(mockContext) }

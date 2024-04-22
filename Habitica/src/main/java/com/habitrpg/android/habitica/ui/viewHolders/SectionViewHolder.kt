@@ -17,7 +17,6 @@ import com.habitrpg.android.habitica.models.inventory.StableSection
 import com.habitrpg.android.habitica.ui.views.CurrencyView
 
 class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     private val label: TextView = itemView.findViewById(R.id.label)
     private val switchesInLabel: TextView? = itemView.findViewById(R.id.switches_in_label)
     private val selectionSpinner: Spinner? = itemView.findViewById(R.id.class_selection_spinner)
@@ -34,25 +33,27 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     constructor(parent: ViewGroup) : this(parent.inflate(R.layout.customization_section_header))
 
     init {
-        selectionSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                spinnerSelectionChanged?.invoke()
-            }
+        selectionSpinner?.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    spinnerSelectionChanged?.invoke()
+                }
 
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                spinnerSelectionChanged?.invoke()
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    spinnerSelectionChanged?.invoke()
+                }
             }
-        }
     }
 
     fun bind(title: String) {
         try {
-            val stringID = context.resources.getIdentifier("section$title", "string", context.packageName)
+            val stringID =
+                context.resources.getIdentifier("section$title", "string", context.packageName)
             this.label.text = context.getString(stringID)
         } catch (e: Exception) {
             this.label.text = title
@@ -60,18 +61,27 @@ class SectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun bind(section: StableSection) {
-        label.text = if (section.type == "pets") {
-            context.getString(R.string.pet_category, getTranslatedAnimalType(context, section.key))
-        } else {
-            context.getString(R.string.mount_category, getTranslatedAnimalType(context, section.key))
-        }
+        label.text =
+            if (section.type == "pets") {
+                context.getString(R.string.pet_category, getTranslatedAnimalType(context, section.key))
+            } else {
+                context.getString(
+                    R.string.mount_category,
+                    getTranslatedAnimalType(context, section.key),
+                )
+            }
         if (section.key == "special") {
             countPill?.visibility = View.GONE
         } else {
             countPill?.visibility = View.VISIBLE
         }
         label.gravity = Gravity.START
-        countPill?.text = itemView.context.getString(R.string.pet_ownership_fraction, section.ownedCount, section.totalCount)
+        countPill?.text =
+            itemView.context.getString(
+                R.string.pet_ownership_fraction,
+                section.ownedCount,
+                section.totalCount,
+            )
     }
 
     var spinnerAdapter: ArrayAdapter<CharSequence>? = null

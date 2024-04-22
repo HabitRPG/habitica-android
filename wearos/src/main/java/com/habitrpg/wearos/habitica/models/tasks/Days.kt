@@ -14,7 +14,10 @@ open class Days() : Parcelable {
     var s: Boolean = true
     var su: Boolean = true
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    override fun writeToParcel(
+        dest: Parcel,
+        flags: Int,
+    ) {
         dest.writeByte(if (m) 1.toByte() else 0.toByte())
         dest.writeByte(if (t) 1.toByte() else 0.toByte())
         dest.writeByte(if (w) 1.toByte() else 0.toByte())

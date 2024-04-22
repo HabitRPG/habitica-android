@@ -12,9 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ActivityClassSelectionBinding
-import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.ReviewManager
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.user.Gear
 import com.habitrpg.android.habitica.models.user.Items
 import com.habitrpg.android.habitica.models.user.Outfit
@@ -24,7 +22,9 @@ import com.habitrpg.android.habitica.ui.viewmodels.MainUserViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaProgressDialog
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +32,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ClassSelectionActivity : BaseActivity() {
-
     @Inject
     lateinit var userViewModel: MainUserViewModel
 
@@ -152,7 +151,10 @@ class ClassSelectionActivity : BaseActivity() {
         binding.warriorButton.setCompoundDrawablesWithIntrinsicBounds(warriorIcon, null, null, null)
     }
 
-    private fun makeUser(preferences: Preferences, outfit: Outfit): User {
+    private fun makeUser(
+        preferences: Preferences,
+        outfit: Outfit,
+    ): User {
         val user = User()
         user.preferences = preferences
         user.items = Items()
@@ -164,49 +166,109 @@ class ClassSelectionActivity : BaseActivity() {
     private fun healerSelected() {
         className = getString(R.string.healer)
         binding.selectedDescriptionTextView.text = getString(R.string.healer_description)
-        binding.selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.yellow_100))
+        binding.selectedWrapperView.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                R.color.yellow_100,
+            ),
+        )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
-        binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.dark_brown))
+        binding.selectedDescriptionTextView.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.dark_brown,
+            ),
+        )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_yellow_10)
-        updateButtonBackgrounds(binding.healerButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border))
+        updateButtonBackgrounds(
+            binding.healerButton,
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_yellow_border),
+        )
     }
 
     private fun mageSelected() {
         className = getString(R.string.mage)
         binding.selectedDescriptionTextView.text = getString(R.string.mage_description)
-        binding.selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.blue_10))
+        binding.selectedWrapperView.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                R.color.blue_10,
+            ),
+        )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.selectedDescriptionTextView.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white,
+            ),
+        )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(binding.mageButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border))
+        updateButtonBackgrounds(
+            binding.mageButton,
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_blue_border),
+        )
     }
 
     private fun rogueSelected() {
         className = getString(R.string.rogue)
         binding.selectedDescriptionTextView.text = getString(R.string.rogue_description)
-        binding.selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.brand_200))
+        binding.selectedWrapperView.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                R.color.brand_200,
+            ),
+        )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.selectedDescriptionTextView.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white,
+            ),
+        )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(binding.rogueButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border))
+        updateButtonBackgrounds(
+            binding.rogueButton,
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_brand_border),
+        )
     }
 
     private fun warriorSelected() {
         className = getString(R.string.warrior)
         binding.selectedDescriptionTextView.text = getString(R.string.warrior_description)
-        binding.selectedWrapperView.setBackgroundColor(ContextCompat.getColor(this, R.color.maroon_50))
+        binding.selectedWrapperView.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                R.color.maroon_50,
+            ),
+        )
         binding.selectedTitleTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
-        binding.selectedDescriptionTextView.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.selectedDescriptionTextView.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white,
+            ),
+        )
         binding.selectedButton.setBackgroundResource(R.drawable.layout_rounded_bg_gray_alpha)
-        updateButtonBackgrounds(binding.warriorButton, ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border))
+        updateButtonBackgrounds(
+            binding.warriorButton,
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window_red_border),
+        )
     }
 
-    private fun updateButtonBackgrounds(selectedButton: TextView, background: Drawable?) {
-        val deselectedBackground = ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window)
-        binding.healerButton.background = if (binding.healerButton == selectedButton) background else deselectedBackground
-        binding.mageButton.background = if (binding.mageButton == selectedButton) background else deselectedBackground
-        binding.rogueButton.background = if (binding.rogueButton == selectedButton) background else deselectedBackground
-        binding.warriorButton.background = if (binding.warriorButton == selectedButton) background else deselectedBackground
+    private fun updateButtonBackgrounds(
+        selectedButton: TextView,
+        background: Drawable?,
+    ) {
+        val deselectedBackground =
+            ContextCompat.getDrawable(this, R.drawable.layout_rounded_bg_window)
+        binding.healerButton.background =
+            if (binding.healerButton == selectedButton) background else deselectedBackground
+        binding.mageButton.background =
+            if (binding.mageButton == selectedButton) background else deselectedBackground
+        binding.rogueButton.background =
+            if (binding.rogueButton == selectedButton) background else deselectedBackground
+        binding.warriorButton.background =
+            if (binding.warriorButton == selectedButton) background else deselectedBackground
     }
 
     private fun optOutSelected() {

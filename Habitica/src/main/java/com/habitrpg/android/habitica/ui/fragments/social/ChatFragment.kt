@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.databinding.FragmentChatBinding
-import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.android.habitica.helpers.AppConfigManager
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.android.habitica.ui.activities.FullProfileActivity
@@ -30,6 +29,7 @@ import com.habitrpg.android.habitica.ui.viewmodels.GroupViewModel
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.Companion.showSnackbar
 import com.habitrpg.android.habitica.ui.views.HabiticaSnackbar.SnackbarDisplayType
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
+import com.habitrpg.common.habitica.extensions.observeOnce
 import com.habitrpg.common.habitica.helpers.launchCatching
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -39,18 +39,17 @@ import kotlin.time.toDuration
 
 @AndroidEntryPoint
 open class ChatFragment : BaseFragment<FragmentChatBinding>() {
-
     override var binding: FragmentChatBinding? = null
 
     override fun createBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): FragmentChatBinding {
         return FragmentChatBinding.inflate(inflater, container, false)
     }
 
     open val viewModel: GroupViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+        ownerProducer = { requireParentFragment() },
     )
 
     @Inject
@@ -65,7 +64,10 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private var isFirstRefresh = true
     var autocompleteContext: String = ""
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(context)
@@ -87,28 +89,31 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
         binding?.chatBarView?.maxChatLength = configManager.maxChatLength()
         binding?.chatBarView?.autocompleteContext = "party"
         binding?.chatBarView?.groupID = viewModel.getGroupData().value?.id
-        binding?.chatBarView?.autocompleteAdapter = AutocompleteAdapter(
-            requireContext(),
-            socialRepository,
-            autocompleteContext,
-            viewModel.groupID,
-            configManager.enableUsernameAutocomplete()
-        )
+        binding?.chatBarView?.autocompleteAdapter =
+            AutocompleteAdapter(
+                requireContext(),
+                socialRepository,
+                autocompleteContext,
+                viewModel.groupID,
+                configManager.enableUsernameAutocomplete(),
+            )
 
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
 
-        binding?.recyclerView?.addOnScrollListener(object :
+        binding?.recyclerView?.addOnScrollListener(
+            object :
                 androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
                 override fun onScrolled(
                     recyclerView: androidx.recyclerview.widget.RecyclerView,
                     dx: Int,
-                    dy: Int
+                    dy: Int,
                 ) {
                     super.onScrolled(recyclerView, dx, dy)
                     isScrolledToBottom = layoutManager.findFirstVisibleItemPosition() == 0
                 }
-            })
+            },
+        )
 
         viewModel.chatmessages.observe(viewLifecycleOwner) { setChatMessages(it) }
 
@@ -175,21 +180,22 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
             showSnackbar(
                 activity.snackbarContainer,
                 getString(R.string.chat_message_copied),
-                SnackbarDisplayType.NORMAL
+                SnackbarDisplayType.NORMAL,
             )
         }
     }
 
-    private fun showFlagMessageBottomSheet(chatMessage : ChatMessage) {
-        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
-            reportType = ReportBottomSheetFragment.REPORT_TYPE_MESSAGE,
-            profileName = chatMessage.username ?: "",
-            messageId = chatMessage.id,
-            messageText = chatMessage.text ?: "",
-            groupId = chatMessage.groupId ?: "",
-            userIdBeingReported = chatMessage.userID ?: "",
-            sourceView = this::class.simpleName ?: ""
-        )
+    private fun showFlagMessageBottomSheet(chatMessage: ChatMessage) {
+        val reportBottomSheetFragment =
+            ReportBottomSheetFragment.newInstance(
+                reportType = ReportBottomSheetFragment.REPORT_TYPE_MESSAGE,
+                profileName = chatMessage.username ?: "",
+                messageId = chatMessage.id,
+                messageText = chatMessage.text ?: "",
+                groupId = chatMessage.groupId ?: "",
+                userIdBeingReported = chatMessage.userID ?: "",
+                sourceView = this::class.simpleName ?: "",
+            )
 
         reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)
     }
@@ -219,7 +225,7 @@ open class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private fun sendChatMessage(chatText: String) {
         viewModel.postGroupChat(
             chatText,
-            { binding?.recyclerView?.scrollToPosition(0) }
+            { binding?.recyclerView?.scrollToPosition(0) },
         ) { binding?.chatBarView?.message = chatText }
     }
 }

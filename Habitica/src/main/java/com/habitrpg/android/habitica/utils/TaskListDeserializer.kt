@@ -14,7 +14,11 @@ import io.realm.RealmList
 import java.lang.reflect.Type
 
 class TaskListDeserializer : JsonDeserializer<TaskList> {
-    override fun deserialize(json: JsonElement, typeOfT: Type, ctx: JsonDeserializationContext): TaskList {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        ctx: JsonDeserializationContext,
+    ): TaskList {
         val tasks = TaskList()
         val taskMap = HashMap<String, Task>()
         val deserializeTrace = FirebasePerformance.getInstance().newTrace("TaskListDeserialize")
@@ -50,7 +54,7 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
     private fun handleTags(
         databaseTags: List<Tag>,
         json: JsonArray?,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): RealmList<Tag> {
         val tags = RealmList<Tag>()
         for (tagElement in json ?: listOf<JsonElement>()) {
@@ -75,7 +79,10 @@ class TaskListDeserializer : JsonDeserializer<TaskList> {
         return tags
     }
 
-    private fun alreadyContainsTag(list: List<Tag>, idToCheck: String): Boolean {
+    private fun alreadyContainsTag(
+        list: List<Tag>,
+        idToCheck: String,
+    ): Boolean {
         for (t in list) {
             if (t.id == idToCheck) {
                 return true

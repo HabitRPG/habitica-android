@@ -40,13 +40,14 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     init {
         val metrics = DisplayMetrics()
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        viewHeight = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            windowManager.currentWindowMetrics.bounds.height()
-        } else {
-            @Suppress("DEPRECATION")
-            windowManager.defaultDisplay.getMetrics(metrics)
-            (metrics.heightPixels * SIZE_FACTOR).toInt()
-        }
+        viewHeight =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                windowManager.currentWindowMetrics.bounds.height()
+            } else {
+                @Suppress("DEPRECATION")
+                windowManager.defaultDisplay.getMetrics(metrics)
+                (metrics.heightPixels * SIZE_FACTOR).toInt()
+            }
     }
 
     override fun onFinishInflate() {
@@ -59,17 +60,22 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     }
 
     private fun animateClouds() {
-        val leftAnimator = ObjectAnimator.ofFloat(leftCloudView, View.TRANSLATION_Y, 10.0f).setDuration(5000)
+        val leftAnimator =
+            ObjectAnimator.ofFloat(leftCloudView, View.TRANSLATION_Y, 10.0f).setDuration(5000)
         leftAnimator.repeatCount = ValueAnimator.INFINITE
         leftAnimator.repeatMode = ValueAnimator.REVERSE
         leftAnimator.start()
-        val rightAnimator = ObjectAnimator.ofFloat(rightCloudView, View.TRANSLATION_Y, -10.0f).setDuration(8000)
+        val rightAnimator =
+            ObjectAnimator.ofFloat(rightCloudView, View.TRANSLATION_Y, -10.0f).setDuration(8000)
         rightAnimator.repeatCount = ValueAnimator.INFINITE
         rightAnimator.repeatMode = ValueAnimator.REVERSE
         rightAnimator.start()
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onMeasure(
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int,
+    ) {
         this.viewWidth = MeasureSpec.getSize(widthMeasureSpec)
         this.setMeasuredDimension(viewWidth, viewHeight)
         params.width = viewWidth
@@ -78,7 +84,13 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+    override fun onLayout(
+        changed: Boolean,
+        l: Int,
+        t: Int,
+        r: Int,
+        b: Int,
+    ) {
         super.onLayout(changed, l, t, r, b)
         updateStarLayoutParams()
     }
@@ -87,7 +99,11 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
         generateStars(1, 12, 25)
     }
 
-    private fun generateStars(largeCount: Int, mediumCount: Int, smallCount: Int) {
+    private fun generateStars(
+        largeCount: Int,
+        mediumCount: Int,
+        smallCount: Int,
+    ) {
         removeStarViews()
         repeat((0 until largeCount).count()) { generateStar(2) }
         repeat((0 until mediumCount).count()) { generateStar(1) }
@@ -127,7 +143,6 @@ class LoginBackgroundView(context: Context, attrs: AttributeSet?) : RelativeLayo
     }
 
     companion object {
-
         private const val SIZE_FACTOR = 1.5f
         private const val STAR_SIZE = 30
     }

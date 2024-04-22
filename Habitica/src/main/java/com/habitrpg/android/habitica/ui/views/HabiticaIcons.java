@@ -21,7 +21,6 @@ import android.text.TextPaint;
 import java.util.Stack;
 
 
-
 /**
  * Created by Phillip Thelen on 9. Apr 2021.
  * Copyright © 2021 HabitRPG Inc.. All rights reserved.
@@ -35,7 +34,7 @@ public class HabiticaIcons {
         static PaintCodeBitmap rageStrikeNPC = new PaintCodeBitmap();
         static PorterDuffXfermode blendModeSourceIn = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     }
-    
+
     // Resizing Behavior
     public enum ResizingBehavior {
         AspectFit, //!< The content is proportionally resized to fit into the target rectangle.
@@ -43,10 +42,10 @@ public class HabiticaIcons {
         Stretch, //!< The content is stretched to match the entire target rectangle.
         Center, //!< The content is centered in the target rectangle, but it is NOT resized.
     }
-    
+
     // Canvas Drawings
     // Tab
-    
+
     private static class CacheForHeart {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -74,15 +73,15 @@ public class HabiticaIcons {
         private static final RectF bezier11Rect = new RectF();
         private static final Path bezier11Path = new Path();
     }
-    
+
     public static void drawHeart(Canvas canvas, boolean darkBackground) {
         HabiticaIcons.drawHeart(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit, darkBackground);
     }
-    
+
     public static void drawHeart(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, boolean darkBackground) {
         // General Declarations
         Paint paint = CacheForHeart.paint;
-        
+
         // Local Colors
         int fillColor6 = Color.argb(128, 181, 36, 40);
         int fillColor4 = Color.argb(89, 181, 36, 40);
@@ -91,17 +90,17 @@ public class HabiticaIcons {
         int fillColor5 = Color.argb(64, 255, 255, 255);
         int heartDarkBackground = Color.argb(178, 255, 255, 255);
         int heartLightBackground = Color.argb(255, 247, 78, 82);
-        
+
         // Local Variables
         int expression = darkBackground ? heartDarkBackground : heartLightBackground;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForHeart.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForHeart.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Group 2
         {
             // Bezier
@@ -121,14 +120,14 @@ public class HabiticaIcons {
             bezierPath.lineTo(2f, 9f);
             bezierPath.lineTo(2f, 3.75f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(expression);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForHeart.bezier2Rect;
             bezier2Rect.set(3.17f, 3.34f, 14.83f, 14.54f);
@@ -146,14 +145,14 @@ public class HabiticaIcons {
             bezier2Path.lineTo(9f, 14.54f);
             bezier2Path.lineTo(5.73f, 12.27f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier2Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor2);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForHeart.bezier3Rect;
             bezier3Rect.set(9f, 10.46f, 12.27f, 14.54f);
@@ -164,14 +163,14 @@ public class HabiticaIcons {
             bezier3Path.lineTo(9f, 14.54f);
             bezier3Path.lineTo(9f, 10.46f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier3Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForHeart.bezier4Rect;
             bezier4Rect.set(5.73f, 10.46f, 9f, 14.54f);
@@ -182,14 +181,14 @@ public class HabiticaIcons {
             bezier4Path.lineTo(9f, 14.54f);
             bezier4Path.lineTo(9f, 10.46f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier4Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor4);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForHeart.bezier5Rect;
             bezier5Rect.set(3.17f, 8.65f, 9f, 12.27f);
@@ -200,14 +199,14 @@ public class HabiticaIcons {
             bezier5Path.lineTo(9f, 10.46f);
             bezier5Path.lineTo(5.73f, 12.27f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier5Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForHeart.bezier6Rect;
             bezier6Rect.set(9f, 8.65f, 14.83f, 12.27f);
@@ -218,14 +217,14 @@ public class HabiticaIcons {
             bezier6Path.lineTo(9f, 10.46f);
             bezier6Path.lineTo(12.27f, 12.27f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor6);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForHeart.bezier7Rect;
             bezier7Rect.set(9f, 3.34f, 14.83f, 10.46f);
@@ -237,14 +236,14 @@ public class HabiticaIcons {
             bezier7Path.lineTo(14.83f, 8.65f);
             bezier7Path.lineTo(9f, 10.46f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier7Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor4);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForHeart.bezier8Rect;
             bezier8Rect.set(3.17f, 3.34f, 9f, 10.46f);
@@ -256,14 +255,14 @@ public class HabiticaIcons {
             bezier8Path.lineTo(3.17f, 8.65f);
             bezier8Path.lineTo(9f, 10.46f);
             bezier8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier8Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor6);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForHeart.bezier9Rect;
             bezier9Rect.set(4.92f, 3.34f, 9f, 10.46f);
@@ -274,14 +273,14 @@ public class HabiticaIcons {
             bezier9Path.lineTo(9f, 5.56f);
             bezier9Path.lineTo(9f, 10.46f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier9Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier9Path, paint);
-            
+
             // Bezier 10
             RectF bezier10Rect = CacheForHeart.bezier10Rect;
             bezier10Rect.set(9f, 3.34f, 13.08f, 10.46f);
@@ -292,14 +291,14 @@ public class HabiticaIcons {
             bezier10Path.lineTo(9f, 5.56f);
             bezier10Path.lineTo(9f, 10.46f);
             bezier10Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier10Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier10Path, paint);
-            
+
             // Bezier 11
             RectF bezier11Rect = CacheForHeart.bezier11Rect;
             bezier11Rect.set(4.92f, 5.38f, 13.08f, 12.44f);
@@ -317,7 +316,7 @@ public class HabiticaIcons {
             bezier11Path.lineTo(9f, 12.44f);
             bezier11Path.lineTo(7.02f, 10.98f);
             bezier11Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier11Path.setFillType(Path.FillType.EVEN_ODD);
@@ -325,10 +324,10 @@ public class HabiticaIcons {
             paint.setColor(fillColor3);
             canvas.drawPath(bezier11Path, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForExperience {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -354,29 +353,29 @@ public class HabiticaIcons {
         private static final RectF star2Rect = new RectF();
         private static final Path star2Path = new Path();
     }
-    
+
     public static void drawExperience(Canvas canvas) {
         HabiticaIcons.drawExperience(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawExperience(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForExperience.paint;
-        
+
         // Local Colors
         int fillColor12 = Color.argb(128, 191, 125, 26);
         int fillColor3 = Color.argb(128, 255, 255, 255);
         int fillColor11 = Color.argb(64, 191, 125, 26);
         int fillColor5 = Color.argb(64, 255, 255, 255);
         int fillColor10 = Color.argb(255, 255, 166, 35);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForExperience.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForExperience.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Star
         RectF starRect = CacheForExperience.starRect;
         starRect.set(0f, 0f, 18f, 18f);
@@ -392,13 +391,13 @@ public class HabiticaIcons {
         starPath.lineTo(5.99f, 5.99f);
         starPath.lineTo(9f, 0f);
         starPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor10);
         canvas.drawPath(starPath, paint);
-        
+
         // Bezier
         RectF bezierRect = CacheForExperience.bezierRect;
         bezierRect.set(3.38f, 7.13f, 9f, 9f);
@@ -409,14 +408,14 @@ public class HabiticaIcons {
         bezierPath.lineTo(9f, 9f);
         bezierPath.lineTo(3.38f, 9f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor5);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForExperience.bezier2Rect;
         bezier2Rect.set(7.13f, 9f, 9f, 14.63f);
@@ -427,14 +426,14 @@ public class HabiticaIcons {
         bezier2Path.lineTo(9f, 9f);
         bezier2Path.lineTo(9f, 14.63f);
         bezier2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier2Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor5);
         canvas.drawPath(bezier2Path, paint);
-        
+
         // Bezier 3
         RectF bezier3Rect = CacheForExperience.bezier3Rect;
         bezier3Rect.set(9f, 9f, 14.63f, 10.88f);
@@ -445,14 +444,14 @@ public class HabiticaIcons {
         bezier3Path.lineTo(9f, 9f);
         bezier3Path.lineTo(14.63f, 9f);
         bezier3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier3Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor5);
         canvas.drawPath(bezier3Path, paint);
-        
+
         // Bezier 4
         RectF bezier4Rect = CacheForExperience.bezier4Rect;
         bezier4Rect.set(9f, 3.38f, 10.88f, 9f);
@@ -463,14 +462,14 @@ public class HabiticaIcons {
         bezier4Path.lineTo(9f, 9f);
         bezier4Path.lineTo(9f, 3.38f);
         bezier4Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier4Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor5);
         canvas.drawPath(bezier4Path, paint);
-        
+
         // Bezier 5
         RectF bezier5Rect = CacheForExperience.bezier5Rect;
         bezier5Rect.set(9f, 7.13f, 14.63f, 9f);
@@ -481,14 +480,14 @@ public class HabiticaIcons {
         bezier5Path.lineTo(9f, 9f);
         bezier5Path.lineTo(14.63f, 9f);
         bezier5Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier5Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor11);
         canvas.drawPath(bezier5Path, paint);
-        
+
         // Bezier 6
         RectF bezier6Rect = CacheForExperience.bezier6Rect;
         bezier6Rect.set(9f, 9f, 10.88f, 14.63f);
@@ -499,14 +498,14 @@ public class HabiticaIcons {
         bezier6Path.lineTo(9f, 9f);
         bezier6Path.lineTo(9f, 14.63f);
         bezier6Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier6Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor12);
         canvas.drawPath(bezier6Path, paint);
-        
+
         // Bezier 7
         RectF bezier7Rect = CacheForExperience.bezier7Rect;
         bezier7Rect.set(3.38f, 9f, 9f, 10.88f);
@@ -517,14 +516,14 @@ public class HabiticaIcons {
         bezier7Path.lineTo(9f, 9f);
         bezier7Path.lineTo(3.38f, 9f);
         bezier7Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier7Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor3);
         canvas.drawPath(bezier7Path, paint);
-        
+
         // Bezier 8
         RectF bezier8Rect = CacheForExperience.bezier8Rect;
         bezier8Rect.set(7.13f, 3.38f, 9f, 9f);
@@ -535,14 +534,14 @@ public class HabiticaIcons {
         bezier8Path.lineTo(9f, 9f);
         bezier8Path.lineTo(9f, 3.38f);
         bezier8Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier8Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor3);
         canvas.drawPath(bezier8Path, paint);
-        
+
         // Star 2
         RectF star2Rect = CacheForExperience.star2Rect;
         star2Rect.set(6.35f, 6.35f, 11.65f, 11.65f);
@@ -558,16 +557,16 @@ public class HabiticaIcons {
         star2Path.lineTo(8.12f, 8.12f);
         star2Path.lineTo(9f, 6.35f);
         star2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor3);
         canvas.drawPath(star2Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForMagic {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -585,29 +584,29 @@ public class HabiticaIcons {
         private static final RectF bezier6Rect = new RectF();
         private static final Path bezier6Path = new Path();
     }
-    
+
     public static void drawMagic(Canvas canvas) {
         HabiticaIcons.drawMagic(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawMagic(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForMagic.paint;
-        
+
         // Local Colors
         int fillColor5 = Color.argb(64, 255, 255, 255);
         int fillColor9 = Color.argb(64, 31, 112, 154);
         int fillColor8 = Color.argb(255, 80, 181, 233);
         int fillColor7 = Color.argb(255, 41, 149, 205);
         int fillColor3 = Color.argb(128, 255, 255, 255);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForMagic.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForMagic.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Bezier
         RectF bezierRect = CacheForMagic.bezierRect;
         bezierRect.set(2f, 1f, 16f, 18f);
@@ -619,14 +618,14 @@ public class HabiticaIcons {
         bezierPath.lineTo(9f, 1f);
         bezierPath.lineTo(16f, 11.63f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor7);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForMagic.bezier2Rect;
         bezier2Rect.set(3.82f, 9.29f, 9f, 16.09f);
@@ -637,14 +636,14 @@ public class HabiticaIcons {
         bezier2Path.lineTo(9f, 16.09f);
         bezier2Path.lineTo(3.82f, 11.41f);
         bezier2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier2Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor8);
         canvas.drawPath(bezier2Path, paint);
-        
+
         // Bezier 3
         RectF bezier3Rect = CacheForMagic.bezier3Rect;
         bezier3Rect.set(9f, 9.29f, 14.18f, 16.09f);
@@ -655,14 +654,14 @@ public class HabiticaIcons {
         bezier3Path.lineTo(9f, 16.09f);
         bezier3Path.lineTo(9f, 9.29f);
         bezier3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier3Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor9);
         canvas.drawPath(bezier3Path, paint);
-        
+
         // Bezier 4
         RectF bezier4Rect = CacheForMagic.bezier4Rect;
         bezier4Rect.set(9f, 3.55f, 14.18f, 11.41f);
@@ -673,14 +672,14 @@ public class HabiticaIcons {
         bezier4Path.lineTo(14.18f, 11.41f);
         bezier4Path.lineTo(9f, 9.29f);
         bezier4Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier4Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor5);
         canvas.drawPath(bezier4Path, paint);
-        
+
         // Bezier 5
         RectF bezier5Rect = CacheForMagic.bezier5Rect;
         bezier5Rect.set(3.82f, 3.55f, 9f, 11.41f);
@@ -691,14 +690,14 @@ public class HabiticaIcons {
         bezier5Path.lineTo(9f, 9.29f);
         bezier5Path.lineTo(3.82f, 11.41f);
         bezier5Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier5Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor3);
         canvas.drawPath(bezier5Path, paint);
-        
+
         // Bezier 6
         RectF bezier6Rect = CacheForMagic.bezier6Rect;
         bezier6Rect.set(5.64f, 6.1f, 12.36f, 14.17f);
@@ -710,17 +709,17 @@ public class HabiticaIcons {
         bezier6Path.lineTo(9f, 14.17f);
         bezier6Path.lineTo(5.64f, 11.13f);
         bezier6Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier6Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor3);
         canvas.drawPath(bezier6Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForGold {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -736,29 +735,29 @@ public class HabiticaIcons {
         private static final RectF bezier5Rect = new RectF();
         private static final Path bezier5Path = new Path();
     }
-    
+
     public static void drawGold(Canvas canvas) {
         HabiticaIcons.drawGold(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawGold(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForGold.paint;
-        
+
         // Local Colors
         int fillColor12 = Color.argb(128, 191, 125, 26);
         int fillColor5 = Color.argb(64, 255, 255, 255);
         int fillColor3 = Color.argb(128, 255, 255, 255);
         int fillColor10 = Color.argb(255, 255, 166, 35);
         int fillColor13 = Color.argb(191, 191, 125, 26);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForGold.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForGold.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Bezier
         RectF bezierRect = CacheForGold.bezierRect;
         bezierRect.set(0f, 0f, 18f, 18f);
@@ -770,14 +769,14 @@ public class HabiticaIcons {
         bezierPath.cubicTo(4.03f, 0f, 0f, 4.03f, 0f, 9f);
         bezierPath.cubicTo(0f, 13.97f, 4.03f, 18f, 9f, 18f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor10);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForGold.bezier2Rect;
         bezier2Rect.set(2.98f, 3.06f, 13.2f, 13.28f);
@@ -786,14 +785,14 @@ public class HabiticaIcons {
         bezier2Path.moveTo(4.72f, 13.28f);
         bezier2Path.cubicTo(2.4f, 10.95f, 2.4f, 7.13f, 4.72f, 4.8f);
         bezier2Path.cubicTo(7.05f, 2.48f, 10.88f, 2.48f, 13.2f, 4.8f);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier2Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor3);
         canvas.drawPath(bezier2Path, paint);
-        
+
         // Bezier 3
         RectF bezier3Rect = CacheForGold.bezier3Rect;
         bezier3Rect.set(4.8f, 4.72f, 15.02f, 14.94f);
@@ -802,14 +801,14 @@ public class HabiticaIcons {
         bezier3Path.moveTo(13.28f, 4.72f);
         bezier3Path.cubicTo(15.6f, 7.05f, 15.6f, 10.88f, 13.28f, 13.2f);
         bezier3Path.cubicTo(10.95f, 15.53f, 7.13f, 15.53f, 4.8f, 13.2f);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier3Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor5);
         canvas.drawPath(bezier3Path, paint);
-        
+
         // Bezier 4
         RectF bezier4Rect = CacheForGold.bezier4Rect;
         bezier4Rect.set(1.5f, 1.5f, 16.5f, 16.5f);
@@ -829,14 +828,14 @@ public class HabiticaIcons {
         bezier4Path.cubicTo(15f, 12.3f, 12.3f, 15f, 9f, 15f);
         bezier4Path.lineTo(9f, 15f);
         bezier4Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier4Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor12);
         canvas.drawPath(bezier4Path, paint);
-        
+
         // Bezier 5
         RectF bezier5Rect = CacheForGold.bezier5Rect;
         bezier5Rect.set(6.75f, 6.75f, 11.25f, 11.25f);
@@ -856,17 +855,17 @@ public class HabiticaIcons {
         bezier5Path.lineTo(11.25f, 6.75f);
         bezier5Path.lineTo(9.75f, 6.75f);
         bezier5Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier5Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor13);
         canvas.drawPath(bezier5Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForGem {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -890,28 +889,28 @@ public class HabiticaIcons {
         private static final RectF bezier9Rect = new RectF();
         private static final Path bezier9Path = new Path();
     }
-    
+
     public static void drawGem(Canvas canvas) {
         HabiticaIcons.drawGem(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawGem(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForGem.paint;
-        
+
         // Local Colors
         int fillColor3 = Color.argb(128, 255, 255, 255);
         int fillColor15 = Color.argb(89, 27, 153, 107);
         int fillColor14 = Color.argb(255, 36, 204, 143);
         int fillColor5 = Color.argb(64, 255, 255, 255);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForGem.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForGem.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Group
         {
             // Bezier
@@ -926,14 +925,14 @@ public class HabiticaIcons {
             bezierPath.lineTo(9f, 16.5f);
             bezierPath.lineTo(0f, 6.75f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor14);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForGem.bezier2Rect;
             bezier2Rect.set(4.5f, 3f, 9f, 6.6f);
@@ -944,14 +943,14 @@ public class HabiticaIcons {
             bezier2Path.lineTo(9f, 3f);
             bezier2Path.lineTo(5.25f, 6.6f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier2Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForGem.bezier3Rect;
             bezier3Rect.set(9f, 3f, 13.5f, 6.6f);
@@ -962,14 +961,14 @@ public class HabiticaIcons {
             bezier3Path.lineTo(9f, 3f);
             bezier3Path.lineTo(12.75f, 6.6f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier3Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForGem.bezier4Rect;
             bezier4Rect.set(5.25f, 3f, 12.75f, 6.6f);
@@ -980,14 +979,14 @@ public class HabiticaIcons {
             bezier4Path.lineTo(12.75f, 6.6f);
             bezier4Path.lineTo(5.25f, 6.6f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier4Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForGem.bezier5Rect;
             bezier5Rect.set(1.95f, 3f, 5.25f, 6.6f);
@@ -998,14 +997,14 @@ public class HabiticaIcons {
             bezier5Path.lineTo(5.25f, 6.6f);
             bezier5Path.lineTo(1.95f, 6.6f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier5Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForGem.bezier6Rect;
             bezier6Rect.set(12.75f, 3f, 16.05f, 6.6f);
@@ -1016,14 +1015,14 @@ public class HabiticaIcons {
             bezier6Path.lineTo(12.75f, 6.6f);
             bezier6Path.lineTo(16.05f, 6.6f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor15);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForGem.bezier7Rect;
             bezier7Rect.set(1.95f, 6.6f, 9f, 14.33f);
@@ -1034,14 +1033,14 @@ public class HabiticaIcons {
             bezier7Path.lineTo(9f, 14.33f);
             bezier7Path.lineTo(1.95f, 6.6f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier7Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor15);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForGem.bezier8Rect;
             bezier8Rect.set(9f, 6.6f, 16.05f, 14.33f);
@@ -1052,14 +1051,14 @@ public class HabiticaIcons {
             bezier8Path.lineTo(9f, 14.33f);
             bezier8Path.lineTo(16.05f, 6.6f);
             bezier8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier8Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForGem.bezier9Rect;
             bezier9Rect.set(5.25f, 6.6f, 12.75f, 14.33f);
@@ -1070,7 +1069,7 @@ public class HabiticaIcons {
             bezier9Path.lineTo(9f, 14.33f);
             bezier9Path.lineTo(5.25f, 6.6f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier9Path.setFillType(Path.FillType.EVEN_ODD);
@@ -1078,10 +1077,10 @@ public class HabiticaIcons {
             paint.setColor(fillColor5);
             canvas.drawPath(bezier9Path, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForHourglass {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -1099,28 +1098,28 @@ public class HabiticaIcons {
         private static final RectF bezier6Rect = new RectF();
         private static final Path bezier6Path = new Path();
     }
-    
+
     public static void drawHourglass(Canvas canvas) {
         HabiticaIcons.drawHourglass(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawHourglass(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForHourglass.paint;
-        
+
         // Local Colors
         int fillColor18 = Color.argb(255, 154, 98, 255);
         int fillColor19 = Color.argb(255, 79, 42, 147);
         int fillColor17 = Color.argb(230, 255, 255, 255);
         int fillColor16 = Color.argb(204, 169, 220, 246);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForHourglass.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForHourglass.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Group
         {
             // Bezier
@@ -1146,14 +1145,14 @@ public class HabiticaIcons {
             bezierPath.cubicTo(5.8f, 8.75f, 5.8f, 9.37f, 5.38f, 9.68f);
             bezierPath.cubicTo(3.95f, 10.73f, 3f, 12.5f, 3f, 14.35f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor16);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForHourglass.bezier2Rect;
             bezier2Rect.set(4.51f, 1.51f, 12.06f, 16.61f);
@@ -1177,14 +1176,14 @@ public class HabiticaIcons {
             bezier2Path.lineTo(4.51f, 2.18f);
             bezier2Path.cubicTo(5.23f, 1.82f, 6.57f, 1.51f, 8.29f, 1.51f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier2Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor17);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForHourglass.bezier3Rect;
             bezier3Rect.set(5.79f, 2.64f, 10.98f, 5.83f);
@@ -1198,14 +1197,14 @@ public class HabiticaIcons {
             bezier3Path.cubicTo(10.86f, 4.19f, 10.99f, 3.44f, 10.98f, 3.14f);
             bezier3Path.cubicTo(10.97f, 2.73f, 9.75f, 2.64f, 8.46f, 2.64f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier3Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor18);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForHourglass.bezier4Rect;
             bezier4Rect.set(8.88f, 2.66f, 10.98f, 5.7f);
@@ -1219,14 +1218,14 @@ public class HabiticaIcons {
             bezier4Path.cubicTo(8.93f, 5.55f, 8.98f, 5.63f, 9.04f, 5.7f);
             bezier4Path.cubicTo(9.32f, 5.5f, 9.5f, 5.12f, 10.05f, 4.75f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier4Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor19);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForHourglass.bezier5Rect;
             bezier5Rect.set(5.62f, 10.44f, 10.81f, 14.86f);
@@ -1241,14 +1240,14 @@ public class HabiticaIcons {
             bezier5Path.cubicTo(10.66f, 12.79f, 10.28f, 12.34f, 9.58f, 11.82f);
             bezier5Path.cubicTo(8.9f, 11.32f, 8.68f, 10.44f, 8.29f, 10.44f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier5Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor18);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForHourglass.bezier6Rect;
             bezier6Rect.set(5.66f, 13.3f, 10.76f, 14.86f);
@@ -1262,7 +1261,7 @@ public class HabiticaIcons {
             bezier6Path.cubicTo(6.75f, 13.62f, 5.65f, 14.07f, 5.66f, 14.57f);
             bezier6Path.cubicTo(5.7f, 14.67f, 5.77f, 14.7f, 5.85f, 14.72f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
@@ -1270,10 +1269,10 @@ public class HabiticaIcons {
             paint.setColor(fillColor19);
             canvas.drawPath(bezier6Path, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForWarrior {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 32f, 32f);
@@ -1383,13 +1382,13 @@ public class HabiticaIcons {
         private static final RectF rectangle10Rect = new RectF();
         private static final Path rectangle10Path = new Path();
     }
-    
+
     public static void drawWarrior(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, boolean darkBackground) {
         // General Declarations
         Stack<Matrix> currentTransformation = new Stack<>();
         currentTransformation.push(new Matrix());
         Paint paint = CacheForWarrior.paint;
-        
+
         // Local Colors
         int fillColor42 = Color.argb(255, 255, 149, 152);
         int fillColor23 = Color.argb(255, 229, 65, 77);
@@ -1399,17 +1398,17 @@ public class HabiticaIcons {
         int fillColor21 = Color.argb(255, 255, 182, 184);
         int fillColor43 = Color.argb(255, 200, 43, 43);
         int fillColor22 = Color.argb(255, 242, 123, 134);
-        
+
         // Local Variables
         boolean lightBackground = !darkBackground;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForWarrior.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForWarrior.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Group 2
         if (darkBackground) {
             // Bezier
@@ -1430,14 +1429,14 @@ public class HabiticaIcons {
             bezierPath.cubicTo(10.67f, 15.76f, 10.93f, 15.93f, 11.06f, 16.2f);
             bezierPath.lineTo(12.58f, 19.5f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForWarrior.bezier2Rect;
             bezier2Rect.set(3.18f, 4.9f, 27.18f, 28.91f);
@@ -1467,14 +1466,14 @@ public class HabiticaIcons {
             bezier2Path.lineTo(4.6f, 27.48f);
             bezier2Path.lineTo(4.6f, 27.48f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier2Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor20);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Rectangle
             canvas.save();
             canvas.translate(9f, 23.05f);
@@ -1490,14 +1489,14 @@ public class HabiticaIcons {
             rectanglePath.lineTo(rectangleRect.right, rectangleRect.bottom);
             rectanglePath.lineTo(rectangleRect.left, rectangleRect.bottom);
             rectanglePath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(rectanglePath, paint);
             canvas.restore();
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForWarrior.bezier3Rect;
             bezier3Rect.set(4.76f, 23.66f, 8.42f, 27.32f);
@@ -1511,14 +1510,14 @@ public class HabiticaIcons {
             bezier3Path.lineTo(6.61f, 27.32f);
             bezier3Path.lineTo(4.76f, 25.47f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier3Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForWarrior.bezier4Rect;
             bezier4Rect.set(20.67f, 7.02f, 25.05f, 11.25f);
@@ -1529,14 +1528,14 @@ public class HabiticaIcons {
             bezier4Path.lineTo(25.05f, 7.03f);
             bezier4Path.cubicTo(24.98f, 6.95f, 21.79f, 7.32f, 20.67f, 7.92f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier4Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor41);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForWarrior.bezier5Rect;
             bezier5Rect.set(11.68f, 7.92f, 20.83f, 18.12f);
@@ -1549,14 +1548,14 @@ public class HabiticaIcons {
             bezier5Path.lineTo(20.67f, 7.92f);
             bezier5Path.cubicTo(20.65f, 7.93f, 20.6f, 7.96f, 20.6f, 7.96f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier5Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForWarrior.bezier6Rect;
             bezier6Rect.set(11.6f, 17.32f, 13.96f, 19.51f);
@@ -1568,14 +1567,14 @@ public class HabiticaIcons {
             bezier6Path.lineTo(13.96f, 18.12f);
             bezier6Path.lineTo(11.68f, 17.32f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForWarrior.bezier7Rect;
             bezier7Rect.set(20.83f, 7.03f, 25.06f, 11.41f);
@@ -1586,14 +1585,14 @@ public class HabiticaIcons {
             bezier7Path.lineTo(25.05f, 7.03f);
             bezier7Path.cubicTo(25.13f, 7.1f, 24.76f, 10.29f, 24.16f, 11.41f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier7Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForWarrior.bezier8Rect;
             bezier8Rect.set(13.96f, 11.25f, 24.16f, 20.4f);
@@ -1606,14 +1605,14 @@ public class HabiticaIcons {
             bezier8Path.lineTo(24.16f, 11.41f);
             bezier8Path.cubicTo(24.14f, 11.43f, 24.12f, 11.48f, 24.12f, 11.48f);
             bezier8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier8Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForWarrior.bezier9Rect;
             bezier9Rect.set(12.57f, 18.12f, 14.76f, 20.48f);
@@ -1625,14 +1624,14 @@ public class HabiticaIcons {
             bezier9Path.lineTo(13.96f, 18.12f);
             bezier9Path.lineTo(14.76f, 20.4f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier9Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(bezier9Path, paint);
-            
+
             // Bezier 10
             RectF bezier10Rect = CacheForWarrior.bezier10Rect;
             bezier10Rect.set(4.89f, 23.66f, 6.58f, 25.09f);
@@ -1643,14 +1642,14 @@ public class HabiticaIcons {
             bezier10Path.lineTo(4.89f, 23.79f);
             bezier10Path.lineTo(6.58f, 23.66f);
             bezier10Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier10Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor42);
             canvas.drawPath(bezier10Path, paint);
-            
+
             // Bezier 11
             RectF bezier11Rect = CacheForWarrior.bezier11Rect;
             bezier11Rect.set(6.99f, 25.5f, 8.42f, 27.19f);
@@ -1661,14 +1660,14 @@ public class HabiticaIcons {
             bezier11Path.lineTo(8.29f, 27.19f);
             bezier11Path.lineTo(8.42f, 25.5f);
             bezier11Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier11Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor42);
             canvas.drawPath(bezier11Path, paint);
-            
+
             // Bezier 12
             RectF bezier12Rect = CacheForWarrior.bezier12Rect;
             bezier12Rect.set(6.19f, 23.66f, 8.42f, 25.89f);
@@ -1680,14 +1679,14 @@ public class HabiticaIcons {
             bezier12Path.lineTo(6.19f, 25.09f);
             bezier12Path.lineTo(6.58f, 23.66f);
             bezier12Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier12Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor42);
             canvas.drawPath(bezier12Path, paint);
-            
+
             // Bezier 13
             RectF bezier13Rect = CacheForWarrior.bezier13Rect;
             bezier13Rect.set(4.76f, 23.79f, 6.19f, 25.48f);
@@ -1698,14 +1697,14 @@ public class HabiticaIcons {
             bezier13Path.lineTo(4.89f, 23.79f);
             bezier13Path.lineTo(4.76f, 25.48f);
             bezier13Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier13Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier13Path, paint);
-            
+
             // Bezier 14
             RectF bezier14Rect = CacheForWarrior.bezier14Rect;
             bezier14Rect.set(6.6f, 25.89f, 8.29f, 27.32f);
@@ -1716,14 +1715,14 @@ public class HabiticaIcons {
             bezier14Path.lineTo(8.29f, 27.19f);
             bezier14Path.lineTo(6.6f, 27.32f);
             bezier14Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier14Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier14Path, paint);
-            
+
             // Bezier 15
             RectF bezier15Rect = CacheForWarrior.bezier15Rect;
             bezier15Rect.set(4.76f, 25.09f, 6.99f, 27.32f);
@@ -1735,14 +1734,14 @@ public class HabiticaIcons {
             bezier15Path.lineTo(6.19f, 25.09f);
             bezier15Path.lineTo(4.76f, 25.48f);
             bezier15Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier15Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier15Path, paint);
-            
+
             // Rectangle 2
             canvas.save();
             canvas.translate(10.3f, 21.8f);
@@ -1758,14 +1757,14 @@ public class HabiticaIcons {
             rectangle2Path.lineTo(rectangle2Rect.right, rectangle2Rect.bottom);
             rectangle2Path.lineTo(rectangle2Rect.left, rectangle2Rect.bottom);
             rectangle2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(rectangle2Path, paint);
             canvas.restore();
-            
+
             // Rectangle 3
             canvas.save();
             canvas.translate(9.15f, 22.9f);
@@ -1781,14 +1780,14 @@ public class HabiticaIcons {
             rectangle3Path.lineTo(rectangle3Rect.right, rectangle3Rect.bottom);
             rectangle3Path.lineTo(rectangle3Rect.left, rectangle3Rect.bottom);
             rectangle3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(rectangle3Path, paint);
             canvas.restore();
-            
+
             // Rectangle 4
             canvas.save();
             canvas.translate(8.05f, 24f);
@@ -1804,14 +1803,14 @@ public class HabiticaIcons {
             rectangle4Path.lineTo(rectangle4Rect.right, rectangle4Rect.bottom);
             rectangle4Path.lineTo(rectangle4Rect.left, rectangle4Rect.bottom);
             rectangle4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(rectangle4Path, paint);
             canvas.restore();
-            
+
             // Bezier 16
             RectF bezier16Rect = CacheForWarrior.bezier16Rect;
             bezier16Rect.set(7.75f, 15.19f, 12.58f, 20.49f);
@@ -1828,14 +1827,14 @@ public class HabiticaIcons {
             bezier16Path.lineTo(12.58f, 19.5f);
             bezier16Path.lineTo(12.58f, 19.5f);
             bezier16Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier16Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor42);
             canvas.drawPath(bezier16Path, paint);
-            
+
             // Bezier 17
             RectF bezier17Rect = CacheForWarrior.bezier17Rect;
             bezier17Rect.set(7.65f, 15.37f, 11.6f, 21.59f);
@@ -1849,14 +1848,14 @@ public class HabiticaIcons {
             bezier17Path.lineTo(11.6f, 20.49f);
             bezier17Path.lineTo(9.97f, 17.26f);
             bezier17Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier17Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(bezier17Path, paint);
-            
+
             // Bezier 18
             RectF bezier18Rect = CacheForWarrior.bezier18Rect;
             bezier18Rect.set(11.6f, 19.5f, 16.89f, 24.33f);
@@ -1873,14 +1872,14 @@ public class HabiticaIcons {
             bezier18Path.lineTo(16.72f, 24.33f);
             bezier18Path.cubicTo(16.83f, 24.25f, 16.9f, 24.11f, 16.89f, 23.95f);
             bezier18Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier18Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier18Path, paint);
-            
+
             // Bezier 19
             RectF bezier19Rect = CacheForWarrior.bezier19Rect;
             bezier19Rect.set(10.5f, 20.49f, 16.72f, 24.43f);
@@ -1894,20 +1893,20 @@ public class HabiticaIcons {
             bezier19Path.lineTo(11.6f, 20.49f);
             bezier19Path.lineTo(14.82f, 22.12f);
             bezier19Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier19Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(bezier19Path, paint);
-            
+
             // Group 3
             {
                 RectF group3 = CacheForWarrior.group3;
                 group3.set(15.81f, 9.27f, 19.35f, 16.27f);
                 canvas.save();
-                
+
                 // Clip
                 Path clipPath = CacheForWarrior.clipPath;
                 clipPath.reset();
@@ -1919,7 +1918,7 @@ public class HabiticaIcons {
                 clipPath.lineTo(19.35f, 9.27f);
                 clipPath.close();
                 canvas.clipPath(clipPath);
-                
+
                 // Bezier 20
                 RectF bezier20Rect = CacheForWarrior.bezier20Rect;
                 bezier20Rect.set(18.35f, 9f, 18.86f, 16.65f);
@@ -1932,13 +1931,13 @@ public class HabiticaIcons {
                 bezier20Path.cubicTo(18.86f, 11.56f, 18.86f, 16.65f, 18.86f, 16.65f);
                 bezier20Path.lineTo(18.86f, 16.61f);
                 bezier20Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 paint.setStyle(Paint.Style.FILL);
                 paint.setColor(fillColor42);
                 canvas.drawPath(bezier20Path, paint);
-                
+
                 // Rectangle 5
                 RectF rectangle5Rect = CacheForWarrior.rectangle5Rect;
                 rectangle5Rect.set(15.8f, 9.88f, 17.3f, 17.02f);
@@ -1949,17 +1948,17 @@ public class HabiticaIcons {
                 rectangle5Path.lineTo(rectangle5Rect.right, rectangle5Rect.bottom);
                 rectangle5Path.lineTo(rectangle5Rect.left, rectangle5Rect.bottom);
                 rectangle5Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 paint.setStyle(Paint.Style.FILL);
                 paint.setColor(fillColor42);
                 canvas.drawPath(rectangle5Path, paint);
-                
+
                 canvas.restore();
             }
         }
-        
+
         // Group 4
         if (lightBackground) {
             // Bezier 21
@@ -1980,14 +1979,14 @@ public class HabiticaIcons {
             bezier21Path.cubicTo(10.67f, 15.76f, 10.93f, 15.93f, 11.06f, 16.2f);
             bezier21Path.lineTo(12.58f, 19.5f);
             bezier21Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier21Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(bezier21Path, paint);
-            
+
             // Bezier 22
             RectF bezier22Rect = CacheForWarrior.bezier22Rect;
             bezier22Rect.set(3.18f, 4.9f, 27.18f, 28.91f);
@@ -2017,14 +2016,14 @@ public class HabiticaIcons {
             bezier22Path.lineTo(4.6f, 27.48f);
             bezier22Path.lineTo(4.6f, 27.48f);
             bezier22Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier22Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor43);
             canvas.drawPath(bezier22Path, paint);
-            
+
             // Rectangle 6
             canvas.save();
             canvas.translate(9f, 23.05f);
@@ -2040,14 +2039,14 @@ public class HabiticaIcons {
             rectangle6Path.lineTo(rectangle6Rect.right, rectangle6Rect.bottom);
             rectangle6Path.lineTo(rectangle6Rect.left, rectangle6Rect.bottom);
             rectangle6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(rectangle6Path, paint);
             canvas.restore();
-            
+
             // Bezier 23
             RectF bezier23Rect = CacheForWarrior.bezier23Rect;
             bezier23Rect.set(4.76f, 23.66f, 8.42f, 27.32f);
@@ -2061,14 +2060,14 @@ public class HabiticaIcons {
             bezier23Path.lineTo(6.61f, 27.32f);
             bezier23Path.lineTo(4.76f, 25.47f);
             bezier23Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier23Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(bezier23Path, paint);
-            
+
             // Bezier 24
             RectF bezier24Rect = CacheForWarrior.bezier24Rect;
             bezier24Rect.set(20.67f, 7.02f, 25.05f, 11.25f);
@@ -2079,14 +2078,14 @@ public class HabiticaIcons {
             bezier24Path.lineTo(25.05f, 7.03f);
             bezier24Path.cubicTo(24.98f, 6.95f, 21.79f, 7.32f, 20.67f, 7.92f);
             bezier24Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier24Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor21);
             canvas.drawPath(bezier24Path, paint);
-            
+
             // Bezier 25
             RectF bezier25Rect = CacheForWarrior.bezier25Rect;
             bezier25Rect.set(11.68f, 7.92f, 20.83f, 18.12f);
@@ -2099,14 +2098,14 @@ public class HabiticaIcons {
             bezier25Path.lineTo(20.67f, 7.92f);
             bezier25Path.cubicTo(20.65f, 7.93f, 20.6f, 7.96f, 20.6f, 7.96f);
             bezier25Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier25Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier25Path, paint);
-            
+
             // Bezier 26
             RectF bezier26Rect = CacheForWarrior.bezier26Rect;
             bezier26Rect.set(11.6f, 17.32f, 13.96f, 19.51f);
@@ -2118,14 +2117,14 @@ public class HabiticaIcons {
             bezier26Path.lineTo(13.96f, 18.12f);
             bezier26Path.lineTo(11.68f, 17.32f);
             bezier26Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier26Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier26Path, paint);
-            
+
             // Bezier 27
             RectF bezier27Rect = CacheForWarrior.bezier27Rect;
             bezier27Rect.set(20.83f, 7.03f, 25.06f, 11.41f);
@@ -2136,14 +2135,14 @@ public class HabiticaIcons {
             bezier27Path.lineTo(25.05f, 7.03f);
             bezier27Path.cubicTo(25.13f, 7.1f, 24.76f, 10.29f, 24.16f, 11.41f);
             bezier27Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier27Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier27Path, paint);
-            
+
             // Bezier 28
             RectF bezier28Rect = CacheForWarrior.bezier28Rect;
             bezier28Rect.set(13.96f, 11.25f, 24.16f, 20.4f);
@@ -2156,14 +2155,14 @@ public class HabiticaIcons {
             bezier28Path.lineTo(24.16f, 11.41f);
             bezier28Path.cubicTo(24.14f, 11.43f, 24.12f, 11.48f, 24.12f, 11.48f);
             bezier28Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier28Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(bezier28Path, paint);
-            
+
             // Bezier 29
             RectF bezier29Rect = CacheForWarrior.bezier29Rect;
             bezier29Rect.set(12.57f, 18.12f, 14.76f, 20.48f);
@@ -2175,14 +2174,14 @@ public class HabiticaIcons {
             bezier29Path.lineTo(13.96f, 18.12f);
             bezier29Path.lineTo(14.76f, 20.4f);
             bezier29Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier29Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(bezier29Path, paint);
-            
+
             // Bezier 30
             RectF bezier30Rect = CacheForWarrior.bezier30Rect;
             bezier30Rect.set(4.89f, 23.66f, 6.58f, 25.09f);
@@ -2193,14 +2192,14 @@ public class HabiticaIcons {
             bezier30Path.lineTo(4.89f, 23.79f);
             bezier30Path.lineTo(6.58f, 23.66f);
             bezier30Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier30Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor21);
             canvas.drawPath(bezier30Path, paint);
-            
+
             // Bezier 31
             RectF bezier31Rect = CacheForWarrior.bezier31Rect;
             bezier31Rect.set(6.99f, 25.5f, 8.42f, 27.19f);
@@ -2211,14 +2210,14 @@ public class HabiticaIcons {
             bezier31Path.lineTo(8.29f, 27.19f);
             bezier31Path.lineTo(8.42f, 25.5f);
             bezier31Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier31Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor21);
             canvas.drawPath(bezier31Path, paint);
-            
+
             // Bezier 32
             RectF bezier32Rect = CacheForWarrior.bezier32Rect;
             bezier32Rect.set(6.19f, 23.66f, 8.42f, 25.89f);
@@ -2230,14 +2229,14 @@ public class HabiticaIcons {
             bezier32Path.lineTo(6.19f, 25.09f);
             bezier32Path.lineTo(6.58f, 23.66f);
             bezier32Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier32Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor21);
             canvas.drawPath(bezier32Path, paint);
-            
+
             // Bezier 33
             RectF bezier33Rect = CacheForWarrior.bezier33Rect;
             bezier33Rect.set(4.76f, 23.79f, 6.19f, 25.48f);
@@ -2248,14 +2247,14 @@ public class HabiticaIcons {
             bezier33Path.lineTo(4.89f, 23.79f);
             bezier33Path.lineTo(4.76f, 25.48f);
             bezier33Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier33Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier33Path, paint);
-            
+
             // Bezier 34
             RectF bezier34Rect = CacheForWarrior.bezier34Rect;
             bezier34Rect.set(6.6f, 25.89f, 8.29f, 27.32f);
@@ -2266,14 +2265,14 @@ public class HabiticaIcons {
             bezier34Path.lineTo(8.29f, 27.19f);
             bezier34Path.lineTo(6.6f, 27.32f);
             bezier34Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier34Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier34Path, paint);
-            
+
             // Bezier 35
             RectF bezier35Rect = CacheForWarrior.bezier35Rect;
             bezier35Rect.set(4.76f, 25.09f, 6.99f, 27.32f);
@@ -2285,14 +2284,14 @@ public class HabiticaIcons {
             bezier35Path.lineTo(6.19f, 25.09f);
             bezier35Path.lineTo(4.76f, 25.48f);
             bezier35Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier35Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier35Path, paint);
-            
+
             // Rectangle 7
             canvas.save();
             canvas.translate(10.3f, 21.8f);
@@ -2308,14 +2307,14 @@ public class HabiticaIcons {
             rectangle7Path.lineTo(rectangle7Rect.right, rectangle7Rect.bottom);
             rectangle7Path.lineTo(rectangle7Rect.left, rectangle7Rect.bottom);
             rectangle7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(rectangle7Path, paint);
             canvas.restore();
-            
+
             // Rectangle 8
             canvas.save();
             canvas.translate(9.15f, 22.9f);
@@ -2331,14 +2330,14 @@ public class HabiticaIcons {
             rectangle8Path.lineTo(rectangle8Rect.right, rectangle8Rect.bottom);
             rectangle8Path.lineTo(rectangle8Rect.left, rectangle8Rect.bottom);
             rectangle8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(rectangle8Path, paint);
             canvas.restore();
-            
+
             // Rectangle 9
             canvas.save();
             canvas.translate(8.05f, 24f);
@@ -2354,14 +2353,14 @@ public class HabiticaIcons {
             rectangle9Path.lineTo(rectangle9Rect.right, rectangle9Rect.bottom);
             rectangle9Path.lineTo(rectangle9Rect.left, rectangle9Rect.bottom);
             rectangle9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(rectangle9Path, paint);
             canvas.restore();
-            
+
             // Bezier 36
             RectF bezier36Rect = CacheForWarrior.bezier36Rect;
             bezier36Rect.set(7.75f, 15.19f, 12.58f, 20.49f);
@@ -2378,14 +2377,14 @@ public class HabiticaIcons {
             bezier36Path.lineTo(12.58f, 19.5f);
             bezier36Path.lineTo(12.58f, 19.5f);
             bezier36Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier36Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor21);
             canvas.drawPath(bezier36Path, paint);
-            
+
             // Bezier 37
             RectF bezier37Rect = CacheForWarrior.bezier37Rect;
             bezier37Rect.set(7.65f, 15.37f, 11.6f, 21.59f);
@@ -2399,14 +2398,14 @@ public class HabiticaIcons {
             bezier37Path.lineTo(11.6f, 20.49f);
             bezier37Path.lineTo(9.97f, 17.26f);
             bezier37Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier37Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor);
             canvas.drawPath(bezier37Path, paint);
-            
+
             // Bezier 38
             RectF bezier38Rect = CacheForWarrior.bezier38Rect;
             bezier38Rect.set(11.6f, 19.5f, 16.89f, 24.33f);
@@ -2423,14 +2422,14 @@ public class HabiticaIcons {
             bezier38Path.lineTo(16.72f, 24.33f);
             bezier38Path.cubicTo(16.83f, 24.25f, 16.9f, 24.11f, 16.89f, 23.95f);
             bezier38Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier38Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor22);
             canvas.drawPath(bezier38Path, paint);
-            
+
             // Bezier 39
             RectF bezier39Rect = CacheForWarrior.bezier39Rect;
             bezier39Rect.set(10.5f, 20.49f, 16.72f, 24.43f);
@@ -2444,20 +2443,20 @@ public class HabiticaIcons {
             bezier39Path.lineTo(11.6f, 20.49f);
             bezier39Path.lineTo(14.82f, 22.12f);
             bezier39Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier39Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor23);
             canvas.drawPath(bezier39Path, paint);
-            
+
             // Group 5
             {
                 RectF group5 = CacheForWarrior.group5;
                 group5.set(15.81f, 9.27f, 19.35f, 16.27f);
                 canvas.save();
-                
+
                 // Clip 2
                 Path clip2Path = CacheForWarrior.clip2Path;
                 clip2Path.reset();
@@ -2469,7 +2468,7 @@ public class HabiticaIcons {
                 clip2Path.lineTo(19.35f, 9.27f);
                 clip2Path.close();
                 canvas.clipPath(clip2Path);
-                
+
                 // Bezier 40
                 RectF bezier40Rect = CacheForWarrior.bezier40Rect;
                 bezier40Rect.set(18.35f, 9f, 18.86f, 16.65f);
@@ -2482,13 +2481,13 @@ public class HabiticaIcons {
                 bezier40Path.cubicTo(18.86f, 11.56f, 18.86f, 16.65f, 18.86f, 16.65f);
                 bezier40Path.lineTo(18.86f, 16.61f);
                 bezier40Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 paint.setStyle(Paint.Style.FILL);
                 paint.setColor(fillColor21);
                 canvas.drawPath(bezier40Path, paint);
-                
+
                 // Rectangle 10
                 RectF rectangle10Rect = CacheForWarrior.rectangle10Rect;
                 rectangle10Rect.set(15.8f, 9.88f, 17.3f, 17.02f);
@@ -2499,20 +2498,20 @@ public class HabiticaIcons {
                 rectangle10Path.lineTo(rectangle10Rect.right, rectangle10Rect.bottom);
                 rectangle10Path.lineTo(rectangle10Rect.left, rectangle10Rect.bottom);
                 rectangle10Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 paint.setStyle(Paint.Style.FILL);
                 paint.setColor(fillColor21);
                 canvas.drawPath(rectangle10Path, paint);
-                
+
                 canvas.restore();
             }
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForStarSmall {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 9f, 9f);
@@ -2528,94 +2527,94 @@ public class HabiticaIcons {
         private static final RectF rectangle5Rect = new RectF();
         private static final Path rectangle5Path = new Path();
     }
-    
+
     public static void drawStarSmall(Canvas canvas) {
         HabiticaIcons.drawStarSmall(canvas, new RectF(0f, 0f, 9f, 9f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawStarSmall(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForStarSmall.paint;
-        
+
         // Local Colors
         int fillColor26 = Color.argb(102, 229, 220, 255);
         int fillColor27 = Color.argb(255, 229, 220, 255);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForStarSmall.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForStarSmall.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 9f, resizedFrame.height() / 9f);
-        
+
         // Rectangle
         RectF rectangleRect = CacheForStarSmall.rectangleRect;
         rectangleRect.set(3f, 0f, 6f, 3f);
         Path rectanglePath = CacheForStarSmall.rectanglePath;
         rectanglePath.reset();
         rectanglePath.addRect(rectangleRect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor26);
         canvas.drawPath(rectanglePath, paint);
-        
+
         // Rectangle 2
         RectF rectangle2Rect = CacheForStarSmall.rectangle2Rect;
         rectangle2Rect.set(6f, 3f, 9f, 6f);
         Path rectangle2Path = CacheForStarSmall.rectangle2Path;
         rectangle2Path.reset();
         rectangle2Path.addRect(rectangle2Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor26);
         canvas.drawPath(rectangle2Path, paint);
-        
+
         // Rectangle 3
         RectF rectangle3Rect = CacheForStarSmall.rectangle3Rect;
         rectangle3Rect.set(0f, 3f, 3f, 6f);
         Path rectangle3Path = CacheForStarSmall.rectangle3Path;
         rectangle3Path.reset();
         rectangle3Path.addRect(rectangle3Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor26);
         canvas.drawPath(rectangle3Path, paint);
-        
+
         // Rectangle 4
         RectF rectangle4Rect = CacheForStarSmall.rectangle4Rect;
         rectangle4Rect.set(3f, 6f, 6f, 9f);
         Path rectangle4Path = CacheForStarSmall.rectangle4Path;
         rectangle4Path.reset();
         rectangle4Path.addRect(rectangle4Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor26);
         canvas.drawPath(rectangle4Path, paint);
-        
+
         // Rectangle 5
         RectF rectangle5Rect = CacheForStarSmall.rectangle5Rect;
         rectangle5Rect.set(3f, 3f, 6f, 6f);
         Path rectangle5Path = CacheForStarSmall.rectangle5Path;
         rectangle5Path.reset();
         rectangle5Path.addRect(rectangle5Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor27);
         canvas.drawPath(rectangle5Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForStarLarge {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 27f, 27f);
@@ -2671,29 +2670,29 @@ public class HabiticaIcons {
         private static final RectF rectangle24Rect = new RectF();
         private static final Path rectangle24Path = new Path();
     }
-    
+
     public static void drawStarLarge(Canvas canvas) {
         HabiticaIcons.drawStarLarge(canvas, new RectF(0f, 0f, 27f, 27f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawStarLarge(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForStarLarge.paint;
-        
+
         // Local Colors
         int fillColor31 = Color.argb(191, 229, 220, 255);
         int fillColor28 = Color.argb(64, 229, 220, 255);
         int fillColor30 = Color.argb(166, 229, 220, 255);
         int fillColor29 = Color.argb(128, 229, 220, 255);
         int fillColor27 = Color.argb(255, 229, 220, 255);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForStarLarge.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForStarLarge.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 27f, resizedFrame.height() / 27f);
-        
+
         // Bezier
         RectF bezierRect = CacheForStarLarge.bezierRect;
         bezierRect.set(9f, 9f, 18f, 18f);
@@ -2713,329 +2712,329 @@ public class HabiticaIcons {
         bezierPath.lineTo(9f, 15f);
         bezierPath.lineTo(9f, 12f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor27);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Rectangle
         RectF rectangleRect = CacheForStarLarge.rectangleRect;
         rectangleRect.set(9f, 6f, 12f, 9f);
         Path rectanglePath = CacheForStarLarge.rectanglePath;
         rectanglePath.reset();
         rectanglePath.addRect(rectangleRect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectanglePath, paint);
-        
+
         // Rectangle 2
         RectF rectangle2Rect = CacheForStarLarge.rectangle2Rect;
         rectangle2Rect.set(12f, 0f, 15f, 3f);
         Path rectangle2Path = CacheForStarLarge.rectangle2Path;
         rectangle2Path.reset();
         rectangle2Path.addRect(rectangle2Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle2Path, paint);
-        
+
         // Rectangle 3
         RectF rectangle3Rect = CacheForStarLarge.rectangle3Rect;
         rectangle3Rect.set(12f, 3f, 15f, 6f);
         Path rectangle3Path = CacheForStarLarge.rectangle3Path;
         rectangle3Path.reset();
         rectangle3Path.addRect(rectangle3Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor29);
         canvas.drawPath(rectangle3Path, paint);
-        
+
         // Rectangle 4
         RectF rectangle4Rect = CacheForStarLarge.rectangle4Rect;
         rectangle4Rect.set(21f, 12f, 24f, 15f);
         Path rectangle4Path = CacheForStarLarge.rectangle4Path;
         rectangle4Path.reset();
         rectangle4Path.addRect(rectangle4Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor29);
         canvas.drawPath(rectangle4Path, paint);
-        
+
         // Rectangle 5
         RectF rectangle5Rect = CacheForStarLarge.rectangle5Rect;
         rectangle5Rect.set(3f, 12f, 6f, 15f);
         Path rectangle5Path = CacheForStarLarge.rectangle5Path;
         rectangle5Path.reset();
         rectangle5Path.addRect(rectangle5Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor29);
         canvas.drawPath(rectangle5Path, paint);
-        
+
         // Rectangle 6
         RectF rectangle6Rect = CacheForStarLarge.rectangle6Rect;
         rectangle6Rect.set(12f, 21f, 15f, 24f);
         Path rectangle6Path = CacheForStarLarge.rectangle6Path;
         rectangle6Path.reset();
         rectangle6Path.addRect(rectangle6Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor29);
         canvas.drawPath(rectangle6Path, paint);
-        
+
         // Rectangle 7
         RectF rectangle7Rect = CacheForStarLarge.rectangle7Rect;
         rectangle7Rect.set(9f, 15f, 12f, 18f);
         Path rectangle7Path = CacheForStarLarge.rectangle7Path;
         rectangle7Path.reset();
         rectangle7Path.addRect(rectangle7Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor30);
         canvas.drawPath(rectangle7Path, paint);
-        
+
         // Rectangle 8
         RectF rectangle8Rect = CacheForStarLarge.rectangle8Rect;
         rectangle8Rect.set(15f, 15f, 18f, 18f);
         Path rectangle8Path = CacheForStarLarge.rectangle8Path;
         rectangle8Path.reset();
         rectangle8Path.addRect(rectangle8Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor30);
         canvas.drawPath(rectangle8Path, paint);
-        
+
         // Rectangle 9
         RectF rectangle9Rect = CacheForStarLarge.rectangle9Rect;
         rectangle9Rect.set(15f, 9f, 18f, 12f);
         Path rectangle9Path = CacheForStarLarge.rectangle9Path;
         rectangle9Path.reset();
         rectangle9Path.addRect(rectangle9Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor30);
         canvas.drawPath(rectangle9Path, paint);
-        
+
         // Rectangle 10
         RectF rectangle10Rect = CacheForStarLarge.rectangle10Rect;
         rectangle10Rect.set(9f, 9f, 12f, 12f);
         Path rectangle10Path = CacheForStarLarge.rectangle10Path;
         rectangle10Path.reset();
         rectangle10Path.addRect(rectangle10Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor30);
         canvas.drawPath(rectangle10Path, paint);
-        
+
         // Rectangle 11
         RectF rectangle11Rect = CacheForStarLarge.rectangle11Rect;
         rectangle11Rect.set(12f, 18f, 15f, 21f);
         Path rectangle11Path = CacheForStarLarge.rectangle11Path;
         rectangle11Path.reset();
         rectangle11Path.addRect(rectangle11Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor31);
         canvas.drawPath(rectangle11Path, paint);
-        
+
         // Rectangle 12
         RectF rectangle12Rect = CacheForStarLarge.rectangle12Rect;
         rectangle12Rect.set(6f, 12f, 9f, 15f);
         Path rectangle12Path = CacheForStarLarge.rectangle12Path;
         rectangle12Path.reset();
         rectangle12Path.addRect(rectangle12Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor31);
         canvas.drawPath(rectangle12Path, paint);
-        
+
         // Rectangle 13
         RectF rectangle13Rect = CacheForStarLarge.rectangle13Rect;
         rectangle13Rect.set(12f, 6f, 15f, 9f);
         Path rectangle13Path = CacheForStarLarge.rectangle13Path;
         rectangle13Path.reset();
         rectangle13Path.addRect(rectangle13Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor31);
         canvas.drawPath(rectangle13Path, paint);
-        
+
         // Rectangle 14
         RectF rectangle14Rect = CacheForStarLarge.rectangle14Rect;
         rectangle14Rect.set(18f, 12f, 21f, 15f);
         Path rectangle14Path = CacheForStarLarge.rectangle14Path;
         rectangle14Path.reset();
         rectangle14Path.addRect(rectangle14Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor31);
         canvas.drawPath(rectangle14Path, paint);
-        
+
         // Rectangle 15
         RectF rectangle15Rect = CacheForStarLarge.rectangle15Rect;
         rectangle15Rect.set(9f, 18f, 12f, 21f);
         Path rectangle15Path = CacheForStarLarge.rectangle15Path;
         rectangle15Path.reset();
         rectangle15Path.addRect(rectangle15Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle15Path, paint);
-        
+
         // Rectangle 16
         RectF rectangle16Rect = CacheForStarLarge.rectangle16Rect;
         rectangle16Rect.set(15f, 18f, 18f, 21f);
         Path rectangle16Path = CacheForStarLarge.rectangle16Path;
         rectangle16Path.reset();
         rectangle16Path.addRect(rectangle16Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle16Path, paint);
-        
+
         // Rectangle 17
         RectF rectangle17Rect = CacheForStarLarge.rectangle17Rect;
         rectangle17Rect.set(12f, 24f, 15f, 27f);
         Path rectangle17Path = CacheForStarLarge.rectangle17Path;
         rectangle17Path.reset();
         rectangle17Path.addRect(rectangle17Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle17Path, paint);
-        
+
         // Rectangle 18
         RectF rectangle18Rect = CacheForStarLarge.rectangle18Rect;
         rectangle18Rect.set(15f, 6f, 18f, 9f);
         Path rectangle18Path = CacheForStarLarge.rectangle18Path;
         rectangle18Path.reset();
         rectangle18Path.addRect(rectangle18Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle18Path, paint);
-        
+
         // Rectangle 19
         RectF rectangle19Rect = CacheForStarLarge.rectangle19Rect;
         rectangle19Rect.set(6f, 9f, 9f, 12f);
         Path rectangle19Path = CacheForStarLarge.rectangle19Path;
         rectangle19Path.reset();
         rectangle19Path.addRect(rectangle19Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle19Path, paint);
-        
+
         // Rectangle 20
         RectF rectangle20Rect = CacheForStarLarge.rectangle20Rect;
         rectangle20Rect.set(6f, 15f, 9f, 18f);
         Path rectangle20Path = CacheForStarLarge.rectangle20Path;
         rectangle20Path.reset();
         rectangle20Path.addRect(rectangle20Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle20Path, paint);
-        
+
         // Rectangle 21
         RectF rectangle21Rect = CacheForStarLarge.rectangle21Rect;
         rectangle21Rect.set(0f, 12f, 3f, 15f);
         Path rectangle21Path = CacheForStarLarge.rectangle21Path;
         rectangle21Path.reset();
         rectangle21Path.addRect(rectangle21Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle21Path, paint);
-        
+
         // Rectangle 22
         RectF rectangle22Rect = CacheForStarLarge.rectangle22Rect;
         rectangle22Rect.set(18f, 15f, 21f, 18f);
         Path rectangle22Path = CacheForStarLarge.rectangle22Path;
         rectangle22Path.reset();
         rectangle22Path.addRect(rectangle22Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle22Path, paint);
-        
+
         // Rectangle 23
         RectF rectangle23Rect = CacheForStarLarge.rectangle23Rect;
         rectangle23Rect.set(24f, 12f, 27f, 15f);
         Path rectangle23Path = CacheForStarLarge.rectangle23Path;
         rectangle23Path.reset();
         rectangle23Path.addRect(rectangle23Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle23Path, paint);
-        
+
         // Rectangle 24
         RectF rectangle24Rect = CacheForStarLarge.rectangle24Rect;
         rectangle24Rect.set(18f, 9f, 21f, 12f);
         Path rectangle24Path = CacheForStarLarge.rectangle24Path;
         rectangle24Path.reset();
         rectangle24Path.addRect(rectangle24Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor28);
         canvas.drawPath(rectangle24Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForStarMedium {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 21f, 21f);
@@ -3075,252 +3074,252 @@ public class HabiticaIcons {
         private static final RectF rectangle17Rect = new RectF();
         private static final Path rectangle17Path = new Path();
     }
-    
+
     public static void drawStarMedium(Canvas canvas) {
         HabiticaIcons.drawStarMedium(canvas, new RectF(0f, 0f, 21f, 21f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawStarMedium(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForStarMedium.paint;
-        
+
         // Local Colors
         int fillColor27 = Color.argb(255, 229, 220, 255);
         int fillColor33 = Color.argb(77, 229, 220, 255);
         int fillColor32 = Color.argb(153, 229, 220, 255);
         int fillColor34 = Color.argb(38, 229, 220, 255);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForStarMedium.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForStarMedium.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 21f, resizedFrame.height() / 21f);
-        
+
         // Rectangle
         RectF rectangleRect = CacheForStarMedium.rectangleRect;
         rectangleRect.set(9f, 6f, 12f, 9f);
         Path rectanglePath = CacheForStarMedium.rectanglePath;
         rectanglePath.reset();
         rectanglePath.addRect(rectangleRect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor32);
         canvas.drawPath(rectanglePath, paint);
-        
+
         // Rectangle 2
         RectF rectangle2Rect = CacheForStarMedium.rectangle2Rect;
         rectangle2Rect.set(12f, 9f, 15f, 12f);
         Path rectangle2Path = CacheForStarMedium.rectangle2Path;
         rectangle2Path.reset();
         rectangle2Path.addRect(rectangle2Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor32);
         canvas.drawPath(rectangle2Path, paint);
-        
+
         // Rectangle 3
         RectF rectangle3Rect = CacheForStarMedium.rectangle3Rect;
         rectangle3Rect.set(6f, 9f, 9f, 12f);
         Path rectangle3Path = CacheForStarMedium.rectangle3Path;
         rectangle3Path.reset();
         rectangle3Path.addRect(rectangle3Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor32);
         canvas.drawPath(rectangle3Path, paint);
-        
+
         // Rectangle 4
         RectF rectangle4Rect = CacheForStarMedium.rectangle4Rect;
         rectangle4Rect.set(9f, 12f, 12f, 15f);
         Path rectangle4Path = CacheForStarMedium.rectangle4Path;
         rectangle4Path.reset();
         rectangle4Path.addRect(rectangle4Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor32);
         canvas.drawPath(rectangle4Path, paint);
-        
+
         // Rectangle 5
         RectF rectangle5Rect = CacheForStarMedium.rectangle5Rect;
         rectangle5Rect.set(9f, 15f, 12f, 18f);
         Path rectangle5Path = CacheForStarMedium.rectangle5Path;
         rectangle5Path.reset();
         rectangle5Path.addRect(rectangle5Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle5Path, paint);
-        
+
         // Rectangle 6
         RectF rectangle6Rect = CacheForStarMedium.rectangle6Rect;
         rectangle6Rect.set(6f, 12f, 9f, 15f);
         Path rectangle6Path = CacheForStarMedium.rectangle6Path;
         rectangle6Path.reset();
         rectangle6Path.addRect(rectangle6Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle6Path, paint);
-        
+
         // Rectangle 7
         RectF rectangle7Rect = CacheForStarMedium.rectangle7Rect;
         rectangle7Rect.set(6f, 6f, 9f, 9f);
         Path rectangle7Path = CacheForStarMedium.rectangle7Path;
         rectangle7Path.reset();
         rectangle7Path.addRect(rectangle7Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle7Path, paint);
-        
+
         // Rectangle 8
         RectF rectangle8Rect = CacheForStarMedium.rectangle8Rect;
         rectangle8Rect.set(12f, 6f, 15f, 9f);
         Path rectangle8Path = CacheForStarMedium.rectangle8Path;
         rectangle8Path.reset();
         rectangle8Path.addRect(rectangle8Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle8Path, paint);
-        
+
         // Rectangle 9
         RectF rectangle9Rect = CacheForStarMedium.rectangle9Rect;
         rectangle9Rect.set(12f, 12f, 15f, 15f);
         Path rectangle9Path = CacheForStarMedium.rectangle9Path;
         rectangle9Path.reset();
         rectangle9Path.addRect(rectangle9Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle9Path, paint);
-        
+
         // Rectangle 10
         RectF rectangle10Rect = CacheForStarMedium.rectangle10Rect;
         rectangle10Rect.set(9f, 3f, 12f, 6f);
         Path rectangle10Path = CacheForStarMedium.rectangle10Path;
         rectangle10Path.reset();
         rectangle10Path.addRect(rectangle10Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle10Path, paint);
-        
+
         // Rectangle 11
         RectF rectangle11Rect = CacheForStarMedium.rectangle11Rect;
         rectangle11Rect.set(15f, 9f, 18f, 12f);
         Path rectangle11Path = CacheForStarMedium.rectangle11Path;
         rectangle11Path.reset();
         rectangle11Path.addRect(rectangle11Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle11Path, paint);
-        
+
         // Rectangle 12
         RectF rectangle12Rect = CacheForStarMedium.rectangle12Rect;
         rectangle12Rect.set(3f, 9f, 6f, 12f);
         Path rectangle12Path = CacheForStarMedium.rectangle12Path;
         rectangle12Path.reset();
         rectangle12Path.addRect(rectangle12Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor33);
         canvas.drawPath(rectangle12Path, paint);
-        
+
         // Rectangle 13
         RectF rectangle13Rect = CacheForStarMedium.rectangle13Rect;
         rectangle13Rect.set(0f, 9f, 3f, 12f);
         Path rectangle13Path = CacheForStarMedium.rectangle13Path;
         rectangle13Path.reset();
         rectangle13Path.addRect(rectangle13Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor34);
         canvas.drawPath(rectangle13Path, paint);
-        
+
         // Rectangle 14
         RectF rectangle14Rect = CacheForStarMedium.rectangle14Rect;
         rectangle14Rect.set(9f, 0f, 12f, 3f);
         Path rectangle14Path = CacheForStarMedium.rectangle14Path;
         rectangle14Path.reset();
         rectangle14Path.addRect(rectangle14Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor34);
         canvas.drawPath(rectangle14Path, paint);
-        
+
         // Rectangle 15
         RectF rectangle15Rect = CacheForStarMedium.rectangle15Rect;
         rectangle15Rect.set(18f, 9f, 21f, 12f);
         Path rectangle15Path = CacheForStarMedium.rectangle15Path;
         rectangle15Path.reset();
         rectangle15Path.addRect(rectangle15Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor34);
         canvas.drawPath(rectangle15Path, paint);
-        
+
         // Rectangle 16
         RectF rectangle16Rect = CacheForStarMedium.rectangle16Rect;
         rectangle16Rect.set(9f, 18f, 12f, 21f);
         Path rectangle16Path = CacheForStarMedium.rectangle16Path;
         rectangle16Path.reset();
         rectangle16Path.addRect(rectangle16Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor34);
         canvas.drawPath(rectangle16Path, paint);
-        
+
         // Rectangle 17
         RectF rectangle17Rect = CacheForStarMedium.rectangle17Rect;
         rectangle17Rect.set(9f, 9f, 12f, 12f);
         Path rectangle17Path = CacheForStarMedium.rectangle17Path;
         rectangle17Path.reset();
         rectangle17Path.addRect(rectangle17Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor27);
         canvas.drawPath(rectangle17Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForPinnedItem {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 16f, 16f);
@@ -3328,25 +3327,25 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawPinnedItem(Canvas canvas) {
         HabiticaIcons.drawPinnedItem(canvas, new RectF(0f, 0f, 16f, 16f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawPinnedItem(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForPinnedItem.paint;
-        
+
         // Local Colors
         int fillColor35 = Color.argb(255, 195, 192, 199);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForPinnedItem.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForPinnedItem.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 16f);
-        
+
         // Bezier
         RectF bezierRect = CacheForPinnedItem.bezierRect;
         bezierRect.set(2f, 1f, 15f, 14f);
@@ -3383,17 +3382,17 @@ public class HabiticaIcons {
         bezierPath.cubicTo(15.1f, 6.8f, 15.1f, 6.14f, 14.69f, 5.73f);
         bezierPath.lineTo(14.69f, 5.73f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForAddRemovePin {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 24f, 24f);
@@ -3405,29 +3404,29 @@ public class HabiticaIcons {
         private static final RectF bezier3Rect = new RectF();
         private static final Path bezier3Path = new Path();
     }
-    
+
     public static void drawAddRemovePin(Canvas canvas, boolean addPin) {
         HabiticaIcons.drawAddRemovePin(canvas, new RectF(0f, 0f, 24f, 24f), ResizingBehavior.AspectFit, addPin);
     }
-    
+
     public static void drawAddRemovePin(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, boolean addPin) {
         // General Declarations
         Paint paint = CacheForAddRemovePin.paint;
-        
+
         // Local Colors
         int fillColor2 = Color.argb(255, 255, 97, 101);
         int fillColor36 = Color.argb(255, 97, 51, 180);
-        
+
         // Local Variables
         int pinColor = addPin ? fillColor36 : fillColor2;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForAddRemovePin.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForAddRemovePin.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 24f, resizedFrame.height() / 24f);
-        
+
         // Bezier
         RectF bezierRect = CacheForAddRemovePin.bezierRect;
         bezierRect.set(2f, 4f, 8f, 4f);
@@ -3435,7 +3434,7 @@ public class HabiticaIcons {
         bezierPath.reset();
         bezierPath.moveTo(8f, 4f);
         bezierPath.lineTo(2f, 4f);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(2f);
@@ -3446,7 +3445,7 @@ public class HabiticaIcons {
         paint.setColor(pinColor);
         canvas.drawPath(bezierPath, paint);
         canvas.restore();
-        
+
         // Bezier 2
         if (addPin) {
             RectF bezier2Rect = CacheForAddRemovePin.bezier2Rect;
@@ -3455,7 +3454,7 @@ public class HabiticaIcons {
             bezier2Path.reset();
             bezier2Path.moveTo(5f, 1f);
             bezier2Path.lineTo(5f, 7f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(2f);
@@ -3467,7 +3466,7 @@ public class HabiticaIcons {
             canvas.drawPath(bezier2Path, paint);
             canvas.restore();
         }
-        
+
         // Bezier 3
         RectF bezier3Rect = CacheForAddRemovePin.bezier3Rect;
         bezier3Rect.set(4f, 4f, 24f, 24f);
@@ -3513,17 +3512,17 @@ public class HabiticaIcons {
         bezier3Path.cubicTo(24.11f, 11.73f, 24.11f, 11.03f, 23.68f, 10.6f);
         bezier3Path.lineTo(23.68f, 10.6f);
         bezier3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier3Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(pinColor);
         canvas.drawPath(bezier3Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForItemIndicator {
         private static final Paint paint = new Paint();
         private static final Paint shadowPaint = new Paint();
@@ -3539,47 +3538,47 @@ public class HabiticaIcons {
         private static final RectF symbolRect = new RectF();
         private static final RectF symbolTargetRect = new RectF();
     }
-    
+
     public static void drawItemIndicator(Canvas canvas, int indicatorLocked, int lockColor, int indicatorLockedDark, int itemIndicatorColorBackground, boolean isLocked, boolean isLimited, boolean isDark) {
         HabiticaIcons.drawItemIndicator(canvas, new RectF(0f, 0f, 28f, 28f), ResizingBehavior.AspectFit, indicatorLocked, lockColor, indicatorLockedDark, itemIndicatorColorBackground, isLocked, isLimited, isDark);
     }
-    
+
     public static void drawItemIndicator(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int indicatorLocked, int lockColor, int indicatorLockedDark, int itemIndicatorColorBackground, boolean isLocked, boolean isLimited, boolean isDark) {
         // General Declarations
         Paint paint = CacheForItemIndicator.paint;
-        
+
         // Local Colors
         int shadowTint = Color.argb(255, 26, 24, 29);
         int fillColor39 = Color.argb(255, 189, 168, 255);
         int strokeColor2 = Color.argb(255, 189, 168, 255);
         int strokeColor = Color.argb(255, 97, 51, 180);
-        
+
         // Local Shadows
         PaintCodeShadow shadow = CacheForItemIndicator.shadow.get(PaintCodeColor.colorByChangingAlpha(shadowTint, (int) (Color.alpha(shadowTint) * 0.12f * 255f)));
-        
+
         // Local Variables
         int itemIndicatorColor = isLocked ? (isDark ? indicatorLockedDark : indicatorLocked) : (isLimited ? strokeColor : (isDark ? indicatorLockedDark : itemIndicatorColorBackground));
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForItemIndicator.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForItemIndicator.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 28f, resizedFrame.height() / 28f);
-        
+
         // Oval 2
         RectF oval2Rect = CacheForItemIndicator.oval2Rect;
         oval2Rect.set(2f, 2f, 26f, 26f);
         Path oval2Path = CacheForItemIndicator.oval2Path;
         oval2Path.reset();
         oval2Path.addOval(oval2Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         canvas.saveLayerAlpha(null, 255, Canvas.ALL_SAVE_FLAG);
         {
             canvas.translate(shadow.dx, shadow.dy);
-            
+
             Paint shadowPaint = CacheForItemIndicator.shadowPaint;
             shadowPaint.set(paint);
             shadow.setBlurOfPaint(shadowPaint);
@@ -3595,7 +3594,7 @@ public class HabiticaIcons {
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(itemIndicatorColor);
         canvas.drawPath(oval2Path, paint);
-        
+
         // Group 2
         if (isLimited) {
             // Bezier
@@ -3615,14 +3614,14 @@ public class HabiticaIcons {
             bezierPath.cubicTo(10.69f, 20f, 8f, 17.31f, 8f, 14f);
             bezierPath.cubicTo(8f, 10.69f, 10.69f, 8f, 14f, 8f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor39);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForItemIndicator.bezier2Rect;
             bezier2Rect.set(14f, 11f, 16f, 16f);
@@ -3631,7 +3630,7 @@ public class HabiticaIcons {
             bezier2Path.moveTo(14f, 11f);
             bezier2Path.lineTo(14f, 14.03f);
             bezier2Path.lineTo(16f, 16f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(2f);
@@ -3643,7 +3642,7 @@ public class HabiticaIcons {
             canvas.drawPath(bezier2Path, paint);
             canvas.restore();
         }
-        
+
         // Symbol
         if (isLocked) {
             RectF symbolRect = CacheForItemIndicator.symbolRect;
@@ -3656,7 +3655,7 @@ public class HabiticaIcons {
             HabiticaIcons.drawLocked(canvas, symbolTargetRect, ResizingBehavior.Stretch, lockColor);
             canvas.restore();
         }
-        
+
         canvas.restore();
     }
 
@@ -3666,11 +3665,11 @@ public class HabiticaIcons {
         private static final RectF symbolRect = new RectF();
         private static final RectF symbolTargetRect = new RectF();
     }
-    
+
     public static void drawWarriorLightBg(Canvas canvas) {
         HabiticaIcons.drawWarriorLightBg(canvas, new RectF(0f, 0f, 32f, 32f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawWarriorLightBg(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // Resize to Target Frame
         canvas.save();
@@ -3678,7 +3677,7 @@ public class HabiticaIcons {
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForWarriorLightBg.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Symbol
         RectF symbolRect = CacheForWarriorLightBg.symbolRect;
         symbolRect.set(0f, 0f, 32f, 32f);
@@ -3689,7 +3688,7 @@ public class HabiticaIcons {
         symbolTargetRect.set(0f, 0f, symbolRect.width(), symbolRect.height());
         HabiticaIcons.drawWarrior(canvas, symbolTargetRect, ResizingBehavior.Stretch, false);
         canvas.restore();
-        
+
         canvas.restore();
     }
 
@@ -3759,13 +3758,13 @@ public class HabiticaIcons {
         private static final Path bezier27Path = new Path();
     }
 
-    
+
     public static void drawRogue(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, boolean darkBackground) {
         // General Declarations
         Stack<Matrix> currentTransformation = new Stack<>();
         currentTransformation.push(new Matrix());
         Paint paint = CacheForRogue.paint;
-        
+
         // Local Colors
         int fillColor19 = Color.argb(255, 79, 42, 147);
         int fillColor47 = Color.argb(255, 198, 182, 228);
@@ -3774,17 +3773,17 @@ public class HabiticaIcons {
         int fillColor45 = Color.argb(255, 155, 129, 226);
         int fillColor46 = Color.argb(255, 122, 84, 192);
         int fillColor44 = Color.argb(255, 204, 190, 237);
-        
+
         // Local Variables
         boolean lightBackground = !darkBackground;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForRogue.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForRogue.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Group 2
         if (darkBackground) {
             // Bezier
@@ -3818,14 +3817,14 @@ public class HabiticaIcons {
             bezierPath.lineTo(26.6f, 21.59f);
             bezierPath.lineTo(24.35f, 22.01f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor44);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForRogue.bezier2Rect;
             bezier2Rect.set(7.21f, 7.84f, 16.8f, 18.7f);
@@ -3836,14 +3835,14 @@ public class HabiticaIcons {
             bezier2Path.lineTo(16.8f, 17.4f);
             bezier2Path.lineTo(7.24f, 7.84f);
             bezier2Path.cubicTo(7.16f, 7.93f, 7.27f, 8.19f, 7.43f, 8.5f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier2Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor45);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForRogue.bezier3Rect;
             bezier3Rect.set(13.14f, 17.4f, 19.07f, 20.1f);
@@ -3856,14 +3855,14 @@ public class HabiticaIcons {
             bezier3Path.lineTo(16.8f, 17.4f);
             bezier3Path.lineTo(13.14f, 18.71f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier3Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor46);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForRogue.bezier4Rect;
             bezier4Rect.set(7.24f, 7.81f, 18.11f, 17.4f);
@@ -3874,14 +3873,14 @@ public class HabiticaIcons {
             bezier4Path.lineTo(16.8f, 17.4f);
             bezier4Path.lineTo(7.24f, 7.84f);
             bezier4Path.cubicTo(7.33f, 7.76f, 7.58f, 7.86f, 7.89f, 8.01f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier4Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor36);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForRogue.bezier5Rect;
             bezier5Rect.set(16.8f, 13.74f, 19.5f, 19.67f);
@@ -3894,14 +3893,14 @@ public class HabiticaIcons {
             bezier5Path.lineTo(16.8f, 17.4f);
             bezier5Path.lineTo(18.11f, 13.74f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier5Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor19);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForRogue.bezier6Rect;
             bezier6Rect.set(20.38f, 20.33f, 21.32f, 22.57f);
@@ -3913,14 +3912,14 @@ public class HabiticaIcons {
             bezier6Path.lineTo(21.32f, 21.05f);
             bezier6Path.lineTo(21.1f, 22.57f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor46);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForRogue.bezier7Rect;
             bezier7Rect.set(21.82f, 21.77f, 22.76f, 24f);
@@ -3932,14 +3931,14 @@ public class HabiticaIcons {
             bezier7Path.lineTo(22.76f, 22.48f);
             bezier7Path.lineTo(22.53f, 24f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier7Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor46);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForRogue.bezier8Rect;
             bezier8Rect.set(18.63f, 19.23f, 19.89f, 21.14f);
@@ -3949,14 +3948,14 @@ public class HabiticaIcons {
             bezier8Path.lineTo(19.89f, 19.62f);
             bezier8Path.lineTo(19.67f, 21.14f);
             bezier8Path.lineTo(18.63f, 20.1f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier8Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor46);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForRogue.bezier9Rect;
             bezier9Rect.set(19.67f, 19.62f, 20.61f, 21.86f);
@@ -3968,14 +3967,14 @@ public class HabiticaIcons {
             bezier9Path.lineTo(20.61f, 20.33f);
             bezier9Path.lineTo(20.38f, 21.86f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier9Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor19);
             canvas.drawPath(bezier9Path, paint);
-            
+
             // Bezier 10
             RectF bezier10Rect = CacheForRogue.bezier10Rect;
             bezier10Rect.set(21.1f, 21.05f, 22.04f, 23.29f);
@@ -3987,14 +3986,14 @@ public class HabiticaIcons {
             bezier10Path.lineTo(22.04f, 21.77f);
             bezier10Path.lineTo(21.82f, 23.29f);
             bezier10Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier10Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor19);
             canvas.drawPath(bezier10Path, paint);
-            
+
             // Bezier 11
             RectF bezier11Rect = CacheForRogue.bezier11Rect;
             bezier11Rect.set(22.53f, 22.48f, 24.12f, 24.72f);
@@ -4006,14 +4005,14 @@ public class HabiticaIcons {
             bezier11Path.lineTo(24.12f, 23.85f);
             bezier11Path.lineTo(23.25f, 24.72f);
             bezier11Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier11Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor19);
             canvas.drawPath(bezier11Path, paint);
-            
+
             // Star
             canvas.save();
             canvas.translate(19.05f, 19.65f);
@@ -4030,14 +4029,14 @@ public class HabiticaIcons {
             starPath.lineTo(-0.5f, 0f);
             starPath.lineTo(0f, -0.6f);
             starPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor45);
             canvas.drawPath(starPath, paint);
             canvas.restore();
-            
+
             // Star 2
             canvas.save();
             canvas.translate(23.8f, 24.4f);
@@ -4054,7 +4053,7 @@ public class HabiticaIcons {
             star2Path.lineTo(-0.95f, 0f);
             star2Path.lineTo(0f, -1.4f);
             star2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
@@ -4062,7 +4061,7 @@ public class HabiticaIcons {
             canvas.drawPath(star2Path, paint);
             canvas.restore();
         }
-        
+
         // Group 3
         if (lightBackground) {
             // Bezier 12
@@ -4089,14 +4088,14 @@ public class HabiticaIcons {
             bezier12Path.lineTo(4.86f, 21.95f);
             bezier12Path.lineTo(7.11f, 22.37f);
             bezier12Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier12Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor19);
             canvas.drawPath(bezier12Path, paint);
-            
+
             // Bezier 13
             RectF bezier13Rect = CacheForRogue.bezier13Rect;
             bezier13Rect.set(5.27f, 6.25f, 26.46f, 27.45f);
@@ -4121,14 +4120,14 @@ public class HabiticaIcons {
             bezier13Path.lineTo(20.86f, 27.45f);
             bezier13Path.lineTo(21.27f, 25.2f);
             bezier13Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier13Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor19);
             canvas.drawPath(bezier13Path, paint);
-            
+
             // Bezier 14
             RectF bezier14Rect = CacheForRogue.bezier14Rect;
             bezier14Rect.set(7.08f, 8.09f, 16.66f, 18.96f);
@@ -4139,14 +4138,14 @@ public class HabiticaIcons {
             bezier14Path.lineTo(16.66f, 17.65f);
             bezier14Path.lineTo(7.11f, 8.09f);
             bezier14Path.cubicTo(7.03f, 8.18f, 7.13f, 8.44f, 7.29f, 8.75f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier14Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor47);
             canvas.drawPath(bezier14Path, paint);
-            
+
             // Bezier 15
             RectF bezier15Rect = CacheForRogue.bezier15Rect;
             bezier15Rect.set(13f, 17.65f, 18.93f, 20.36f);
@@ -4159,14 +4158,14 @@ public class HabiticaIcons {
             bezier15Path.lineTo(16.66f, 17.65f);
             bezier15Path.lineTo(13f, 18.96f);
             bezier15Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier15Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor48);
             canvas.drawPath(bezier15Path, paint);
-            
+
             // Bezier 16
             RectF bezier16Rect = CacheForRogue.bezier16Rect;
             bezier16Rect.set(7.11f, 8.07f, 17.97f, 17.65f);
@@ -4177,14 +4176,14 @@ public class HabiticaIcons {
             bezier16Path.lineTo(16.67f, 17.65f);
             bezier16Path.lineTo(7.11f, 8.09f);
             bezier16Path.cubicTo(7.19f, 8.02f, 7.45f, 8.11f, 7.75f, 8.27f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier16Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor46);
             canvas.drawPath(bezier16Path, paint);
-            
+
             // Bezier 17
             RectF bezier17Rect = CacheForRogue.bezier17Rect;
             bezier17Rect.set(16.67f, 13.99f, 19.37f, 19.92f);
@@ -4197,14 +4196,14 @@ public class HabiticaIcons {
             bezier17Path.lineTo(16.67f, 17.65f);
             bezier17Path.lineTo(17.97f, 13.99f);
             bezier17Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier17Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor36);
             canvas.drawPath(bezier17Path, paint);
-            
+
             // Bezier 18
             RectF bezier18Rect = CacheForRogue.bezier18Rect;
             bezier18Rect.set(20.25f, 20.59f, 21.19f, 22.82f);
@@ -4216,14 +4215,14 @@ public class HabiticaIcons {
             bezier18Path.lineTo(21.19f, 21.3f);
             bezier18Path.lineTo(20.96f, 22.82f);
             bezier18Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier18Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor48);
             canvas.drawPath(bezier18Path, paint);
-            
+
             // Bezier 19
             RectF bezier19Rect = CacheForRogue.bezier19Rect;
             bezier19Rect.set(21.68f, 22.02f, 22.62f, 24.26f);
@@ -4235,14 +4234,14 @@ public class HabiticaIcons {
             bezier19Path.lineTo(22.62f, 22.73f);
             bezier19Path.lineTo(22.4f, 24.26f);
             bezier19Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier19Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor48);
             canvas.drawPath(bezier19Path, paint);
-            
+
             // Bezier 20
             RectF bezier20Rect = CacheForRogue.bezier20Rect;
             bezier20Rect.set(18.49f, 19.48f, 19.76f, 21.39f);
@@ -4252,14 +4251,14 @@ public class HabiticaIcons {
             bezier20Path.lineTo(19.76f, 19.87f);
             bezier20Path.lineTo(19.53f, 21.39f);
             bezier20Path.lineTo(18.49f, 20.36f);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier20Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor48);
             canvas.drawPath(bezier20Path, paint);
-            
+
             // Bezier 21
             RectF bezier21Rect = CacheForRogue.bezier21Rect;
             bezier21Rect.set(19.53f, 19.87f, 20.47f, 22.11f);
@@ -4271,14 +4270,14 @@ public class HabiticaIcons {
             bezier21Path.lineTo(20.47f, 20.59f);
             bezier21Path.lineTo(20.25f, 22.11f);
             bezier21Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier21Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor36);
             canvas.drawPath(bezier21Path, paint);
-            
+
             // Bezier 22
             RectF bezier22Rect = CacheForRogue.bezier22Rect;
             bezier22Rect.set(20.96f, 21.3f, 21.9f, 23.54f);
@@ -4290,14 +4289,14 @@ public class HabiticaIcons {
             bezier22Path.lineTo(21.9f, 22.02f);
             bezier22Path.lineTo(21.68f, 23.54f);
             bezier22Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier22Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor36);
             canvas.drawPath(bezier22Path, paint);
-            
+
             // Bezier 23
             RectF bezier23Rect = CacheForRogue.bezier23Rect;
             bezier23Rect.set(22.4f, 22.73f, 23.98f, 24.97f);
@@ -4309,14 +4308,14 @@ public class HabiticaIcons {
             bezier23Path.lineTo(23.98f, 24.1f);
             bezier23Path.lineTo(23.11f, 24.97f);
             bezier23Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier23Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor36);
             canvas.drawPath(bezier23Path, paint);
-            
+
             // Star 3
             canvas.save();
             canvas.translate(18.95f, 19.9f);
@@ -4333,14 +4332,14 @@ public class HabiticaIcons {
             star3Path.lineTo(-0.5f, 0f);
             star3Path.lineTo(0f, -0.6f);
             star3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor47);
             canvas.drawPath(star3Path, paint);
             canvas.restore();
-            
+
             // Bezier 24
             RectF bezier24Rect = CacheForRogue.bezier24Rect;
             bezier24Rect.set(22.69f, 23.98f, 23.66f, 25.62f);
@@ -4352,14 +4351,14 @@ public class HabiticaIcons {
             bezier24Path.lineTo(23.66f, 24.65f);
             bezier24Path.lineTo(22.99f, 23.98f);
             bezier24Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier24Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor47);
             canvas.drawPath(bezier24Path, paint);
-            
+
             // Bezier 25
             RectF bezier25Rect = CacheForRogue.bezier25Rect;
             bezier25Rect.set(22.99f, 23.67f, 24.64f, 24.65f);
@@ -4370,14 +4369,14 @@ public class HabiticaIcons {
             bezier25Path.lineTo(23.66f, 24.65f);
             bezier25Path.lineTo(24.64f, 23.67f);
             bezier25Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier25Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor47);
             canvas.drawPath(bezier25Path, paint);
-            
+
             // Bezier 26
             RectF bezier26Rect = CacheForRogue.bezier26Rect;
             bezier26Rect.set(22.69f, 24.65f, 24.33f, 25.62f);
@@ -4388,14 +4387,14 @@ public class HabiticaIcons {
             bezier26Path.lineTo(24.33f, 25.32f);
             bezier26Path.lineTo(23.66f, 24.65f);
             bezier26Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier26Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor47);
             canvas.drawPath(bezier26Path, paint);
-            
+
             // Bezier 27
             RectF bezier27Rect = CacheForRogue.bezier27Rect;
             bezier27Rect.set(23.66f, 23.67f, 24.64f, 25.32f);
@@ -4407,7 +4406,7 @@ public class HabiticaIcons {
             bezier27Path.lineTo(23.66f, 24.65f);
             bezier27Path.lineTo(24.33f, 25.32f);
             bezier27Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier27Path.setFillType(Path.FillType.EVEN_ODD);
@@ -4415,21 +4414,21 @@ public class HabiticaIcons {
             paint.setColor(fillColor47);
             canvas.drawPath(bezier27Path, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForRogueLightBg {
         private static final RectF originalFrame = new RectF(0f, 0f, 32f, 32f);
         private static final RectF resizedFrame = new RectF();
         private static final RectF symbolRect = new RectF();
         private static final RectF symbolTargetRect = new RectF();
     }
-    
+
     public static void drawRogueLightBg(Canvas canvas) {
         HabiticaIcons.drawRogueLightBg(canvas, new RectF(0f, 0f, 32f, 32f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawRogueLightBg(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // Resize to Target Frame
         canvas.save();
@@ -4437,7 +4436,7 @@ public class HabiticaIcons {
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForRogueLightBg.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Symbol
         RectF symbolRect = CacheForRogueLightBg.symbolRect;
         symbolRect.set(0f, 0f, 32f, 32f);
@@ -4448,7 +4447,7 @@ public class HabiticaIcons {
         symbolTargetRect.set(0f, 0f, symbolRect.width(), symbolRect.height());
         HabiticaIcons.drawRogue(canvas, symbolTargetRect, ResizingBehavior.Stretch, false);
         canvas.restore();
-        
+
         canvas.restore();
     }
 
@@ -4521,11 +4520,11 @@ public class HabiticaIcons {
         private static final RectF bezier32Rect = new RectF();
         private static final Path bezier32Path = new Path();
     }
-    
+
     public static void drawHealer(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, boolean darkBackground) {
         // General Declarations
         Paint paint = CacheForHealer.paint;
-        
+
         // Local Colors
         int fillColor53 = Color.argb(255, 206, 129, 41);
         int fillColor51 = Color.argb(255, 229, 144, 37);
@@ -4539,17 +4538,17 @@ public class HabiticaIcons {
         int fillColor56 = Color.argb(255, 255, 166, 35);
         int fillColor49 = Color.argb(255, 255, 215, 168);
         int fillColor10 = Color.argb(255, 255, 166, 35);
-        
+
         // Local Variables
         boolean lightBackground = !darkBackground;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForHealer.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForHealer.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Group 2
         if (darkBackground) {
             // Bezier
@@ -4575,14 +4574,14 @@ public class HabiticaIcons {
             bezierPath.cubicTo(16.19f, 28.41f, 15.26f, 28.79f, 15.26f, 28.79f);
             bezierPath.cubicTo(15.26f, 28.79f, 14.32f, 28.41f, 13.91f, 28.2f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor49);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForHealer.bezier2Rect;
             bezier2Rect.set(7.21f, 7.04f, 15.26f, 12.42f);
@@ -4598,14 +4597,14 @@ public class HabiticaIcons {
             bezier2Path.lineTo(9.05f, 12.42f);
             bezier2Path.lineTo(9.05f, 12.41f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier2Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor50);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForHealer.bezier3Rect;
             bezier3Rect.set(6.94f, 7.03f, 15.26f, 26.56f);
@@ -4622,14 +4621,14 @@ public class HabiticaIcons {
             bezier3Path.lineTo(15.26f, 7.03f);
             bezier3Path.cubicTo(15.1f, 7.03f, 14.95f, 7.06f, 14.81f, 7.13f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier3Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor10);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForHealer.bezier4Rect;
             bezier4Rect.set(15.26f, 7.03f, 23.57f, 26.56f);
@@ -4645,14 +4644,14 @@ public class HabiticaIcons {
             bezier4Path.cubicTo(15.42f, 26.56f, 15.58f, 26.52f, 15.73f, 26.45f);
             bezier4Path.lineTo(15.82f, 26.4f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier4Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor51);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForHealer.bezier5Rect;
             bezier5Rect.set(7.21f, 7.03f, 15.26f, 12.41f);
@@ -4668,14 +4667,14 @@ public class HabiticaIcons {
             bezier5Path.lineTo(9.05f, 12.41f);
             bezier5Path.lineTo(9.05f, 12.4f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier5Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor52);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForHealer.bezier6Rect;
             bezier6Rect.set(15.26f, 7.03f, 23.3f, 12.41f);
@@ -4691,14 +4690,14 @@ public class HabiticaIcons {
             bezier6Path.lineTo(23.3f, 11.1f);
             bezier6Path.cubicTo(23.2f, 10.96f, 23.08f, 10.85f, 22.92f, 10.78f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor10);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForHealer.bezier7Rect;
             bezier7Rect.set(6.94f, 11.1f, 15.26f, 26.56f);
@@ -4718,14 +4717,14 @@ public class HabiticaIcons {
             bezier7Path.lineTo(15.26f, 24.3f);
             bezier7Path.cubicTo(15.2f, 24.3f, 15.15f, 24.28f, 15.05f, 24.24f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier7Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor51);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForHealer.bezier8Rect;
             bezier8Rect.set(15.26f, 11.09f, 23.57f, 26.56f);
@@ -4744,14 +4743,14 @@ public class HabiticaIcons {
             bezier8Path.lineTo(21.47f, 12.41f);
             bezier8Path.cubicTo(21.53f, 14.25f, 21.43f, 17.91f, 20.35f, 19.95f);
             bezier8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier8Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor53);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForHealer.bezier9Rect;
             bezier9Rect.set(10.81f, 15.31f, 15.26f, 16.79f);
@@ -4762,14 +4761,14 @@ public class HabiticaIcons {
             bezier9Path.lineTo(15.26f, 16.79f);
             bezier9Path.lineTo(10.81f, 16.79f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier9Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor52);
             canvas.drawPath(bezier9Path, paint);
-            
+
             // Bezier 10
             RectF bezier10Rect = CacheForHealer.bezier10Rect;
             bezier10Rect.set(13.77f, 16.79f, 15.26f, 21.24f);
@@ -4780,14 +4779,14 @@ public class HabiticaIcons {
             bezier10Path.lineTo(15.26f, 16.79f);
             bezier10Path.lineTo(15.26f, 21.24f);
             bezier10Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier10Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor52);
             canvas.drawPath(bezier10Path, paint);
-            
+
             // Bezier 11
             RectF bezier11Rect = CacheForHealer.bezier11Rect;
             bezier11Rect.set(15.26f, 16.79f, 19.7f, 18.28f);
@@ -4798,14 +4797,14 @@ public class HabiticaIcons {
             bezier11Path.lineTo(15.26f, 16.79f);
             bezier11Path.lineTo(19.7f, 16.79f);
             bezier11Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier11Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor53);
             canvas.drawPath(bezier11Path, paint);
-            
+
             // Bezier 12
             RectF bezier12Rect = CacheForHealer.bezier12Rect;
             bezier12Rect.set(15.26f, 12.35f, 16.74f, 16.79f);
@@ -4816,14 +4815,14 @@ public class HabiticaIcons {
             bezier12Path.lineTo(15.26f, 16.79f);
             bezier12Path.lineTo(15.26f, 12.35f);
             bezier12Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier12Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor53);
             canvas.drawPath(bezier12Path, paint);
-            
+
             // Bezier 13
             RectF bezier13Rect = CacheForHealer.bezier13Rect;
             bezier13Rect.set(15.26f, 15.31f, 19.7f, 16.79f);
@@ -4834,14 +4833,14 @@ public class HabiticaIcons {
             bezier13Path.lineTo(15.26f, 16.79f);
             bezier13Path.lineTo(19.7f, 16.79f);
             bezier13Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier13Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor53);
             canvas.drawPath(bezier13Path, paint);
-            
+
             // Bezier 14
             RectF bezier14Rect = CacheForHealer.bezier14Rect;
             bezier14Rect.set(15.26f, 16.79f, 16.74f, 21.24f);
@@ -4852,14 +4851,14 @@ public class HabiticaIcons {
             bezier14Path.lineTo(15.26f, 16.79f);
             bezier14Path.lineTo(15.26f, 21.24f);
             bezier14Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier14Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor53);
             canvas.drawPath(bezier14Path, paint);
-            
+
             // Bezier 15
             RectF bezier15Rect = CacheForHealer.bezier15Rect;
             bezier15Rect.set(10.81f, 16.79f, 15.26f, 18.28f);
@@ -4870,14 +4869,14 @@ public class HabiticaIcons {
             bezier15Path.lineTo(15.26f, 16.79f);
             bezier15Path.lineTo(10.81f, 16.79f);
             bezier15Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier15Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor52);
             canvas.drawPath(bezier15Path, paint);
-            
+
             // Bezier 16
             RectF bezier16Rect = CacheForHealer.bezier16Rect;
             bezier16Rect.set(13.77f, 12.35f, 15.26f, 16.79f);
@@ -4888,7 +4887,7 @@ public class HabiticaIcons {
             bezier16Path.lineTo(15.26f, 16.79f);
             bezier16Path.lineTo(15.26f, 12.35f);
             bezier16Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier16Path.setFillType(Path.FillType.EVEN_ODD);
@@ -4896,7 +4895,7 @@ public class HabiticaIcons {
             paint.setColor(fillColor52);
             canvas.drawPath(bezier16Path, paint);
         }
-        
+
         // Group 3
         if (lightBackground) {
             // Bezier 17
@@ -4922,14 +4921,14 @@ public class HabiticaIcons {
             bezier17Path.lineTo(16.6f, 28.2f);
             bezier17Path.cubicTo(16.19f, 28.41f, 15.26f, 28.79f, 15.26f, 28.79f);
             bezier17Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier17Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor54);
             canvas.drawPath(bezier17Path, paint);
-            
+
             // Bezier 18
             RectF bezier18Rect = CacheForHealer.bezier18Rect;
             bezier18Rect.set(7.21f, 7.04f, 15.26f, 12.42f);
@@ -4945,14 +4944,14 @@ public class HabiticaIcons {
             bezier18Path.lineTo(9.05f, 12.42f);
             bezier18Path.lineTo(9.05f, 12.41f);
             bezier18Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier18Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor50);
             canvas.drawPath(bezier18Path, paint);
-            
+
             // Bezier 19
             RectF bezier19Rect = CacheForHealer.bezier19Rect;
             bezier19Rect.set(6.94f, 7.03f, 15.26f, 26.56f);
@@ -4969,14 +4968,14 @@ public class HabiticaIcons {
             bezier19Path.lineTo(15.26f, 7.03f);
             bezier19Path.cubicTo(15.1f, 7.03f, 14.95f, 7.06f, 14.81f, 7.13f);
             bezier19Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier19Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor55);
             canvas.drawPath(bezier19Path, paint);
-            
+
             // Bezier 20
             RectF bezier20Rect = CacheForHealer.bezier20Rect;
             bezier20Rect.set(15.26f, 7.03f, 23.57f, 26.56f);
@@ -4992,14 +4991,14 @@ public class HabiticaIcons {
             bezier20Path.lineTo(15.26f, 26.56f);
             bezier20Path.cubicTo(15.42f, 26.56f, 15.58f, 26.52f, 15.73f, 26.45f);
             bezier20Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier20Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor56);
             canvas.drawPath(bezier20Path, paint);
-            
+
             // Bezier 21
             RectF bezier21Rect = CacheForHealer.bezier21Rect;
             bezier21Rect.set(7.21f, 7.03f, 15.26f, 12.41f);
@@ -5015,14 +5014,14 @@ public class HabiticaIcons {
             bezier21Path.lineTo(9.05f, 12.41f);
             bezier21Path.lineTo(9.05f, 12.4f);
             bezier21Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier21Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor57);
             canvas.drawPath(bezier21Path, paint);
-            
+
             // Bezier 22
             RectF bezier22Rect = CacheForHealer.bezier22Rect;
             bezier22Rect.set(15.26f, 7.03f, 23.3f, 12.41f);
@@ -5038,14 +5037,14 @@ public class HabiticaIcons {
             bezier22Path.lineTo(23.3f, 11.1f);
             bezier22Path.cubicTo(23.2f, 10.96f, 23.08f, 10.85f, 22.92f, 10.78f);
             bezier22Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier22Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor55);
             canvas.drawPath(bezier22Path, paint);
-            
+
             // Bezier 23
             RectF bezier23Rect = CacheForHealer.bezier23Rect;
             bezier23Rect.set(6.94f, 11.1f, 15.26f, 26.56f);
@@ -5065,14 +5064,14 @@ public class HabiticaIcons {
             bezier23Path.lineTo(15.26f, 24.3f);
             bezier23Path.cubicTo(15.2f, 24.3f, 15.15f, 24.28f, 15.05f, 24.24f);
             bezier23Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier23Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor56);
             canvas.drawPath(bezier23Path, paint);
-            
+
             // Bezier 24
             RectF bezier24Rect = CacheForHealer.bezier24Rect;
             bezier24Rect.set(15.26f, 11.09f, 23.57f, 26.56f);
@@ -5091,14 +5090,14 @@ public class HabiticaIcons {
             bezier24Path.lineTo(21.47f, 12.41f);
             bezier24Path.cubicTo(21.53f, 14.25f, 21.43f, 17.91f, 20.35f, 19.95f);
             bezier24Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier24Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor58);
             canvas.drawPath(bezier24Path, paint);
-            
+
             // Bezier 25
             RectF bezier25Rect = CacheForHealer.bezier25Rect;
             bezier25Rect.set(10.81f, 15.31f, 15.26f, 16.79f);
@@ -5109,14 +5108,14 @@ public class HabiticaIcons {
             bezier25Path.lineTo(15.26f, 16.79f);
             bezier25Path.lineTo(10.81f, 16.79f);
             bezier25Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier25Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor59);
             canvas.drawPath(bezier25Path, paint);
-            
+
             // Bezier 26
             RectF bezier26Rect = CacheForHealer.bezier26Rect;
             bezier26Rect.set(13.77f, 16.79f, 15.26f, 21.24f);
@@ -5127,14 +5126,14 @@ public class HabiticaIcons {
             bezier26Path.lineTo(15.26f, 16.79f);
             bezier26Path.lineTo(15.26f, 21.24f);
             bezier26Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier26Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor59);
             canvas.drawPath(bezier26Path, paint);
-            
+
             // Bezier 27
             RectF bezier27Rect = CacheForHealer.bezier27Rect;
             bezier27Rect.set(15.26f, 16.79f, 19.7f, 18.28f);
@@ -5145,14 +5144,14 @@ public class HabiticaIcons {
             bezier27Path.lineTo(15.26f, 16.79f);
             bezier27Path.lineTo(19.7f, 16.79f);
             bezier27Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier27Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor58);
             canvas.drawPath(bezier27Path, paint);
-            
+
             // Bezier 28
             RectF bezier28Rect = CacheForHealer.bezier28Rect;
             bezier28Rect.set(15.26f, 12.35f, 16.74f, 16.79f);
@@ -5163,14 +5162,14 @@ public class HabiticaIcons {
             bezier28Path.lineTo(15.26f, 16.79f);
             bezier28Path.lineTo(15.26f, 12.35f);
             bezier28Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier28Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor58);
             canvas.drawPath(bezier28Path, paint);
-            
+
             // Bezier 29
             RectF bezier29Rect = CacheForHealer.bezier29Rect;
             bezier29Rect.set(15.26f, 15.31f, 19.7f, 16.79f);
@@ -5181,14 +5180,14 @@ public class HabiticaIcons {
             bezier29Path.lineTo(15.26f, 16.79f);
             bezier29Path.lineTo(19.7f, 16.79f);
             bezier29Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier29Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor58);
             canvas.drawPath(bezier29Path, paint);
-            
+
             // Bezier 30
             RectF bezier30Rect = CacheForHealer.bezier30Rect;
             bezier30Rect.set(15.26f, 16.79f, 16.74f, 21.24f);
@@ -5199,14 +5198,14 @@ public class HabiticaIcons {
             bezier30Path.lineTo(15.26f, 16.79f);
             bezier30Path.lineTo(15.26f, 21.24f);
             bezier30Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier30Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor58);
             canvas.drawPath(bezier30Path, paint);
-            
+
             // Bezier 31
             RectF bezier31Rect = CacheForHealer.bezier31Rect;
             bezier31Rect.set(10.81f, 16.79f, 15.26f, 18.28f);
@@ -5217,14 +5216,14 @@ public class HabiticaIcons {
             bezier31Path.lineTo(15.26f, 16.79f);
             bezier31Path.lineTo(10.81f, 16.79f);
             bezier31Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier31Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor59);
             canvas.drawPath(bezier31Path, paint);
-            
+
             // Bezier 32
             RectF bezier32Rect = CacheForHealer.bezier32Rect;
             bezier32Rect.set(13.77f, 12.35f, 15.26f, 16.79f);
@@ -5235,7 +5234,7 @@ public class HabiticaIcons {
             bezier32Path.lineTo(15.26f, 16.79f);
             bezier32Path.lineTo(15.26f, 12.35f);
             bezier32Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier32Path.setFillType(Path.FillType.EVEN_ODD);
@@ -5243,21 +5242,21 @@ public class HabiticaIcons {
             paint.setColor(fillColor59);
             canvas.drawPath(bezier32Path, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForHealerLightBg {
         private static final RectF originalFrame = new RectF(0f, 0f, 32f, 32f);
         private static final RectF resizedFrame = new RectF();
         private static final RectF symbolRect = new RectF();
         private static final RectF symbolTargetRect = new RectF();
     }
-    
+
     public static void drawHealerLightBg(Canvas canvas) {
         HabiticaIcons.drawHealerLightBg(canvas, new RectF(0f, 0f, 32f, 32f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawHealerLightBg(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // Resize to Target Frame
         canvas.save();
@@ -5265,7 +5264,7 @@ public class HabiticaIcons {
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForHealerLightBg.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Symbol
         RectF symbolRect = CacheForHealerLightBg.symbolRect;
         symbolRect.set(0f, 0f, 32f, 32f);
@@ -5276,10 +5275,10 @@ public class HabiticaIcons {
         symbolTargetRect.set(0f, 0f, symbolRect.width(), symbolRect.height());
         HabiticaIcons.drawHealer(canvas, symbolTargetRect, ResizingBehavior.Stretch, false);
         canvas.restore();
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForMage {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 32f, 32f);
@@ -5325,7 +5324,7 @@ public class HabiticaIcons {
     public static void drawMage(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, boolean darkBackground) {
         // General Declarations
         Paint paint = CacheForMage.paint;
-        
+
         // Local Colors
         int fillColor64 = Color.argb(255, 77, 178, 214);
         int fillColor61 = Color.argb(255, 39, 138, 191);
@@ -5338,17 +5337,17 @@ public class HabiticaIcons {
         int fillColor62 = Color.argb(255, 83, 180, 229);
         int fillColor68 = Color.argb(255, 31, 110, 162);
         int fillColor60 = Color.argb(255, 182, 225, 247);
-        
+
         // Local Variables
         boolean lightBackground = !darkBackground;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForMage.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForMage.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Group 2
         if (darkBackground) {
             // Bezier
@@ -5370,14 +5369,14 @@ public class HabiticaIcons {
             bezierPath.cubicTo(19.55f, 12.69f, 17.66f, 7.01f, 15.74f, 5.08f);
             bezierPath.lineTo(15.74f, 5.08f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor60);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForMage.bezier2Rect;
             bezier2Rect.set(15.74f, 18.72f, 25.66f, 26.81f);
@@ -5394,14 +5393,14 @@ public class HabiticaIcons {
             bezier2Path.lineTo(15.74f, 26.81f);
             bezier2Path.lineTo(15.74f, 21.2f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier2Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor61);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForMage.bezier3Rect;
             bezier3Rect.set(20.73f, 16.3f, 25.66f, 20.13f);
@@ -5416,14 +5415,14 @@ public class HabiticaIcons {
             bezier3Path.cubicTo(21.89f, 17.81f, 21f, 18.56f, 20.78f, 18.22f);
             bezier3Path.cubicTo(20.47f, 17.73f, 21.84f, 16.58f, 21.96f, 16.48f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier3Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor62);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForMage.bezier4Rect;
             bezier4Rect.set(11f, 8.04f, 15.74f, 23.26f);
@@ -5435,14 +5434,14 @@ public class HabiticaIcons {
             bezier4Path.lineTo(15.74f, 8.04f);
             bezier4Path.cubicTo(15.55f, 8.04f, 15.37f, 8.15f, 15.29f, 8.38f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier4Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor63);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForMage.bezier5Rect;
             bezier5Rect.set(15.74f, 8.04f, 20.48f, 23.26f);
@@ -5454,14 +5453,14 @@ public class HabiticaIcons {
             bezier5Path.lineTo(20.48f, 20.78f);
             bezier5Path.cubicTo(20.48f, 20.78f, 19f, 16.41f, 16.19f, 8.38f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier5Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor61);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForMage.bezier6Rect;
             bezier6Rect.set(5.82f, 18.72f, 15.74f, 26.81f);
@@ -5478,14 +5477,14 @@ public class HabiticaIcons {
             bezier6Path.lineTo(15.74f, 26.81f);
             bezier6Path.lineTo(15.74f, 21.2f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor64);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForMage.bezier7Rect;
             bezier7Rect.set(5.82f, 16.3f, 10.75f, 20.13f);
@@ -5500,14 +5499,14 @@ public class HabiticaIcons {
             bezier7Path.cubicTo(9.59f, 17.81f, 10.48f, 18.56f, 10.7f, 18.22f);
             bezier7Path.cubicTo(11.01f, 17.73f, 9.64f, 16.58f, 9.52f, 16.48f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier7Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor65);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForMage.bezier8Rect;
             bezier8Rect.set(11.22f, 17.9f, 15.74f, 22.71f);
@@ -5519,14 +5518,14 @@ public class HabiticaIcons {
             bezier8Path.lineTo(11.22f, 20.01f);
             bezier8Path.lineTo(15.74f, 22.71f);
             bezier8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier8Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor66);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForMage.bezier9Rect;
             bezier9Rect.set(15.74f, 17.9f, 20.27f, 22.71f);
@@ -5538,7 +5537,7 @@ public class HabiticaIcons {
             bezier9Path.lineTo(20.27f, 20.01f);
             bezier9Path.lineTo(15.74f, 22.71f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier9Path.setFillType(Path.FillType.EVEN_ODD);
@@ -5546,7 +5545,7 @@ public class HabiticaIcons {
             paint.setColor(fillColor67);
             canvas.drawPath(bezier9Path, paint);
         }
-        
+
         // Group 3
         if (lightBackground) {
             // Bezier 10
@@ -5568,14 +5567,14 @@ public class HabiticaIcons {
             bezier10Path.cubicTo(19.55f, 12.69f, 17.66f, 7.01f, 15.74f, 5.08f);
             bezier10Path.lineTo(15.74f, 5.08f);
             bezier10Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier10Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor68);
             canvas.drawPath(bezier10Path, paint);
-            
+
             // Bezier 11
             RectF bezier11Rect = CacheForMage.bezier11Rect;
             bezier11Rect.set(15.74f, 18.72f, 25.66f, 26.81f);
@@ -5592,14 +5591,14 @@ public class HabiticaIcons {
             bezier11Path.lineTo(15.74f, 26.81f);
             bezier11Path.lineTo(15.74f, 21.2f);
             bezier11Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier11Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor61);
             canvas.drawPath(bezier11Path, paint);
-            
+
             // Bezier 12
             RectF bezier12Rect = CacheForMage.bezier12Rect;
             bezier12Rect.set(20.73f, 16.3f, 25.66f, 20.13f);
@@ -5614,14 +5613,14 @@ public class HabiticaIcons {
             bezier12Path.cubicTo(21.89f, 17.81f, 21f, 18.56f, 20.78f, 18.22f);
             bezier12Path.cubicTo(20.47f, 17.73f, 21.84f, 16.58f, 21.96f, 16.48f);
             bezier12Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier12Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor62);
             canvas.drawPath(bezier12Path, paint);
-            
+
             // Bezier 13
             RectF bezier13Rect = CacheForMage.bezier13Rect;
             bezier13Rect.set(11f, 8.04f, 15.74f, 23.26f);
@@ -5633,14 +5632,14 @@ public class HabiticaIcons {
             bezier13Path.lineTo(15.74f, 8.04f);
             bezier13Path.cubicTo(15.55f, 8.04f, 15.37f, 8.15f, 15.29f, 8.38f);
             bezier13Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier13Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor63);
             canvas.drawPath(bezier13Path, paint);
-            
+
             // Bezier 14
             RectF bezier14Rect = CacheForMage.bezier14Rect;
             bezier14Rect.set(15.74f, 8.04f, 20.48f, 23.26f);
@@ -5652,14 +5651,14 @@ public class HabiticaIcons {
             bezier14Path.lineTo(20.48f, 20.78f);
             bezier14Path.cubicTo(20.48f, 20.78f, 19f, 16.41f, 16.19f, 8.38f);
             bezier14Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier14Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor61);
             canvas.drawPath(bezier14Path, paint);
-            
+
             // Bezier 15
             RectF bezier15Rect = CacheForMage.bezier15Rect;
             bezier15Rect.set(5.82f, 18.72f, 15.74f, 26.81f);
@@ -5676,14 +5675,14 @@ public class HabiticaIcons {
             bezier15Path.lineTo(15.74f, 26.81f);
             bezier15Path.lineTo(15.74f, 21.2f);
             bezier15Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier15Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor64);
             canvas.drawPath(bezier15Path, paint);
-            
+
             // Bezier 16
             RectF bezier16Rect = CacheForMage.bezier16Rect;
             bezier16Rect.set(5.82f, 16.3f, 10.75f, 20.13f);
@@ -5698,14 +5697,14 @@ public class HabiticaIcons {
             bezier16Path.cubicTo(9.59f, 17.81f, 10.48f, 18.56f, 10.7f, 18.22f);
             bezier16Path.cubicTo(11.01f, 17.73f, 9.64f, 16.58f, 9.52f, 16.48f);
             bezier16Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier16Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor65);
             canvas.drawPath(bezier16Path, paint);
-            
+
             // Bezier 17
             RectF bezier17Rect = CacheForMage.bezier17Rect;
             bezier17Rect.set(11.22f, 17.9f, 15.74f, 22.71f);
@@ -5717,14 +5716,14 @@ public class HabiticaIcons {
             bezier17Path.lineTo(11.22f, 20.01f);
             bezier17Path.lineTo(15.74f, 22.71f);
             bezier17Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier17Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor69);
             canvas.drawPath(bezier17Path, paint);
-            
+
             // Bezier 18
             RectF bezier18Rect = CacheForMage.bezier18Rect;
             bezier18Rect.set(15.74f, 17.9f, 20.27f, 22.71f);
@@ -5736,7 +5735,7 @@ public class HabiticaIcons {
             bezier18Path.lineTo(20.27f, 20.01f);
             bezier18Path.lineTo(15.74f, 22.71f);
             bezier18Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier18Path.setFillType(Path.FillType.EVEN_ODD);
@@ -5744,21 +5743,21 @@ public class HabiticaIcons {
             paint.setColor(fillColor70);
             canvas.drawPath(bezier18Path, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForMageLightBg {
         private static final RectF originalFrame = new RectF(0f, 0f, 32f, 32f);
         private static final RectF resizedFrame = new RectF();
         private static final RectF symbolRect = new RectF();
         private static final RectF symbolTargetRect = new RectF();
     }
-    
+
     public static void drawMageLightBg(Canvas canvas) {
         HabiticaIcons.drawMageLightBg(canvas, new RectF(0f, 0f, 32f, 32f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawMageLightBg(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // Resize to Target Frame
         canvas.save();
@@ -5766,7 +5765,7 @@ public class HabiticaIcons {
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForMageLightBg.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 32f, resizedFrame.height() / 32f);
-        
+
         // Symbol
         RectF symbolRect = CacheForMageLightBg.symbolRect;
         symbolRect.set(0f, 0f, 32f, 32f);
@@ -5777,10 +5776,10 @@ public class HabiticaIcons {
         symbolTargetRect.set(0f, 0f, symbolRect.width(), symbolRect.height());
         HabiticaIcons.drawMage(canvas, symbolTargetRect, ResizingBehavior.Stretch, false);
         canvas.restore();
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForCheckmark {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 16f, 12f);
@@ -5789,25 +5788,25 @@ public class HabiticaIcons {
         private static final Path bezierPath = new Path();
         private static final PaintCodeDashPathEffect bezierPathDashEffect = new PaintCodeDashPathEffect();
     }
-    
+
     public static void drawCheckmark(Canvas canvas, int checkmarkColor, float percentage) {
         HabiticaIcons.drawCheckmark(canvas, new RectF(0f, 0f, 16f, 12f), ResizingBehavior.AspectFit, checkmarkColor, percentage);
     }
-    
+
     public static void drawCheckmark(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int checkmarkColor, float percentage) {
         // General Declarations
         Paint paint = CacheForCheckmark.paint;
-        
+
         // Local Variables
         float checkmarkVisibility = percentage * 20f;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForCheckmark.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForCheckmark.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 12f);
-        
+
         // Bezier
         RectF bezierRect = CacheForCheckmark.bezierRect;
         bezierRect.set(1f, 1f, 15f, 10f);
@@ -5816,7 +5815,7 @@ public class HabiticaIcons {
         bezierPath.moveTo(1f, 5f);
         bezierPath.lineTo(6f, 10f);
         bezierPath.lineTo(15f, 1f);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(2f);
@@ -5827,10 +5826,10 @@ public class HabiticaIcons {
         paint.setColor(checkmarkColor);
         canvas.drawPath(bezierPath, paint);
         canvas.restore();
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForHourglassShop {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 42f, 53f);
@@ -5854,28 +5853,28 @@ public class HabiticaIcons {
         private static final RectF bezier6Rect = new RectF();
         private static final Path bezier6Path = new Path();
     }
-    
+
     public static void drawHourglassShop(Canvas canvas) {
         HabiticaIcons.drawHourglassShop(canvas, new RectF(0f, 0f, 42f, 53f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawHourglassShop(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForHourglassShop.paint;
-        
+
         // Local Colors
         int fillColor18 = Color.argb(255, 154, 98, 255);
         int fillColor19 = Color.argb(255, 79, 42, 147);
         int fillColor17 = Color.argb(230, 255, 255, 255);
         int fillColor16 = Color.argb(204, 169, 220, 246);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForHourglassShop.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForHourglassShop.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 42f, resizedFrame.height() / 53f);
-        
+
         // Rectangle
         RectF rectangleRect = CacheForHourglassShop.rectangleRect;
         rectangleRect.set(19f, 0f, 22f, 10f);
@@ -5891,13 +5890,13 @@ public class HabiticaIcons {
         rectanglePath.cubicTo(19.63f, 0f, 19f, 0.63f, 19f, 1.4f);
         rectanglePath.lineTo(19f, 8.6f);
         rectanglePath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(rectanglePath, paint);
-        
+
         // Clip
         RectF clipRect = CacheForHourglassShop.clipRect;
         clipRect.set(1f, 6f, 9.03f, 14.03f);
@@ -5913,13 +5912,13 @@ public class HabiticaIcons {
         clipPath.cubicTo(2.98f, 5.86f, 2.1f, 5.86f, 1.55f, 6.41f);
         clipPath.lineTo(1.41f, 6.55f);
         clipPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(clipPath, paint);
-        
+
         // Clip 2
         RectF clip2Rect = CacheForHourglassShop.clip2Rect;
         clip2Rect.set(33f, 6f, 41.03f, 14.03f);
@@ -5935,13 +5934,13 @@ public class HabiticaIcons {
         clip2Path.cubicTo(32.86f, 12.05f, 32.86f, 12.93f, 33.41f, 13.48f);
         clip2Path.lineTo(33.55f, 13.62f);
         clip2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(clip2Path, paint);
-        
+
         // Bezier
         RectF bezierRect = CacheForHourglassShop.bezierRect;
         bezierRect.set(10f, 16f, 31.14f, 52.24f);
@@ -5965,14 +5964,14 @@ public class HabiticaIcons {
         bezierPath.cubicTo(15.6f, 33.51f, 15.6f, 34.73f, 14.76f, 35.35f);
         bezierPath.cubicTo(11.89f, 37.46f, 10f, 41f, 10f, 44.69f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor16);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForHourglassShop.bezier2Rect;
         bezier2Rect.set(13.02f, 19.02f, 28.12f, 49.22f);
@@ -5996,14 +5995,14 @@ public class HabiticaIcons {
         bezier2Path.lineTo(13.02f, 20.36f);
         bezier2Path.cubicTo(14.46f, 19.64f, 17.14f, 19.02f, 20.57f, 19.02f);
         bezier2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier2Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor17);
         canvas.drawPath(bezier2Path, paint);
-        
+
         // Bezier 3
         RectF bezier3Rect = CacheForHourglassShop.bezier3Rect;
         bezier3Rect.set(15.58f, 21.29f, 25.96f, 27.66f);
@@ -6017,14 +6016,14 @@ public class HabiticaIcons {
         bezier3Path.cubicTo(25.72f, 24.38f, 25.98f, 22.88f, 25.96f, 22.29f);
         bezier3Path.cubicTo(25.94f, 21.46f, 23.49f, 21.29f, 20.92f, 21.29f);
         bezier3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier3Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(bezier3Path, paint);
-        
+
         // Bezier 4
         RectF bezier4Rect = CacheForHourglassShop.bezier4Rect;
         bezier4Rect.set(21.76f, 21.32f, 25.96f, 27.39f);
@@ -6038,14 +6037,14 @@ public class HabiticaIcons {
         bezier4Path.cubicTo(21.86f, 27.09f, 21.96f, 27.26f, 22.08f, 27.39f);
         bezier4Path.cubicTo(22.64f, 27.01f, 23.01f, 26.25f, 24.11f, 25.49f);
         bezier4Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier4Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor19);
         canvas.drawPath(bezier4Path, paint);
-        
+
         // Bezier 5
         RectF bezier5Rect = CacheForHourglassShop.bezier5Rect;
         bezier5Rect.set(15.23f, 36.87f, 25.61f, 45.73f);
@@ -6060,14 +6059,14 @@ public class HabiticaIcons {
         bezier5Path.cubicTo(25.33f, 41.59f, 24.56f, 40.68f, 23.15f, 39.63f);
         bezier5Path.cubicTo(21.8f, 38.63f, 21.36f, 36.87f, 20.57f, 36.87f);
         bezier5Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier5Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(bezier5Path, paint);
-        
+
         // Bezier 6
         RectF bezier6Rect = CacheForHourglassShop.bezier6Rect;
         bezier6Rect.set(15.32f, 42.59f, 25.52f, 45.73f);
@@ -6081,17 +6080,17 @@ public class HabiticaIcons {
         bezier6Path.cubicTo(17.51f, 43.24f, 15.31f, 44.14f, 15.32f, 45.15f);
         bezier6Path.cubicTo(15.4f, 45.33f, 15.54f, 45.39f, 15.7f, 45.44f);
         bezier6Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier6Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor19);
         canvas.drawPath(bezier6Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForAttributeSparklesLeft {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 77f, 24f);
@@ -6105,28 +6104,28 @@ public class HabiticaIcons {
         private static final RectF star4Rect = new RectF();
         private static final Path star4Path = new Path();
     }
-    
+
     public static void drawAttributeSparklesLeft(Canvas canvas) {
         HabiticaIcons.drawAttributeSparklesLeft(canvas, new RectF(0f, 0f, 77f, 24f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawAttributeSparklesLeft(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForAttributeSparklesLeft.paint;
-        
+
         // Local Colors
         int fillColor18 = Color.argb(255, 154, 98, 255);
         int fillColor71 = Color.argb(255, 80, 181, 233);
         int fillColor73 = Color.argb(255, 255, 180, 69);
         int fillColor72 = Color.argb(255, 255, 97, 101);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForAttributeSparklesLeft.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForAttributeSparklesLeft.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 77f, resizedFrame.height() / 24f);
-        
+
         // Star
         RectF starRect = CacheForAttributeSparklesLeft.starRect;
         starRect.set(36f, 0f, 49f, 13f);
@@ -6142,13 +6141,13 @@ public class HabiticaIcons {
         starPath.lineTo(40.34f, 4.34f);
         starPath.lineTo(42.5f, 0f);
         starPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor71);
         canvas.drawPath(starPath, paint);
-        
+
         // Star 2
         RectF star2Rect = CacheForAttributeSparklesLeft.star2Rect;
         star2Rect.set(61f, 6f, 77f, 22f);
@@ -6164,13 +6163,13 @@ public class HabiticaIcons {
         star2Path.lineTo(66.35f, 11.35f);
         star2Path.lineTo(69f, 6f);
         star2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(star2Path, paint);
-        
+
         // Star 3
         RectF star3Rect = CacheForAttributeSparklesLeft.star3Rect;
         star3Rect.set(17f, 14f, 27f, 24f);
@@ -6186,13 +6185,13 @@ public class HabiticaIcons {
         star3Path.lineTo(20.34f, 17.34f);
         star3Path.lineTo(22f, 14f);
         star3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor72);
         canvas.drawPath(star3Path, paint);
-        
+
         // Star 4
         RectF star4Rect = CacheForAttributeSparklesLeft.star4Rect;
         star4Rect.set(0f, 9f, 7f, 16f);
@@ -6208,16 +6207,16 @@ public class HabiticaIcons {
         star4Path.lineTo(2.33f, 11.33f);
         star4Path.lineTo(3.5f, 9f);
         star4Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor73);
         canvas.drawPath(star4Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForAttributeSparklesRight {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 77f, 24f);
@@ -6231,28 +6230,28 @@ public class HabiticaIcons {
         private static final RectF star4Rect = new RectF();
         private static final Path star4Path = new Path();
     }
-    
+
     public static void drawAttributeSparklesRight(Canvas canvas) {
         HabiticaIcons.drawAttributeSparklesRight(canvas, new RectF(0f, 0f, 77f, 24f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawAttributeSparklesRight(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForAttributeSparklesRight.paint;
-        
+
         // Local Colors
         int fillColor18 = Color.argb(255, 154, 98, 255);
         int fillColor74 = Color.argb(255, 255, 190, 93);
         int fillColor72 = Color.argb(255, 255, 97, 101);
         int fillColor71 = Color.argb(255, 80, 181, 233);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForAttributeSparklesRight.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForAttributeSparklesRight.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 77f, resizedFrame.height() / 24f);
-        
+
         // Star
         RectF starRect = CacheForAttributeSparklesRight.starRect;
         starRect.set(28f, 0f, 41f, 13f);
@@ -6268,13 +6267,13 @@ public class HabiticaIcons {
         starPath.lineTo(32.34f, 4.34f);
         starPath.lineTo(34.5f, 0f);
         starPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor72);
         canvas.drawPath(starPath, paint);
-        
+
         // Star 2
         RectF star2Rect = CacheForAttributeSparklesRight.star2Rect;
         star2Rect.set(0f, 6f, 16f, 22f);
@@ -6290,13 +6289,13 @@ public class HabiticaIcons {
         star2Path.lineTo(5.35f, 11.35f);
         star2Path.lineTo(8f, 6f);
         star2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor74);
         canvas.drawPath(star2Path, paint);
-        
+
         // Star 3
         RectF star3Rect = CacheForAttributeSparklesRight.star3Rect;
         star3Rect.set(50f, 14f, 60f, 24f);
@@ -6312,13 +6311,13 @@ public class HabiticaIcons {
         star3Path.lineTo(53.34f, 17.34f);
         star3Path.lineTo(55f, 14f);
         star3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(star3Path, paint);
-        
+
         // Star 4
         RectF star4Rect = CacheForAttributeSparklesRight.star4Rect;
         star4Rect.set(70f, 9f, 77f, 16f);
@@ -6334,16 +6333,16 @@ public class HabiticaIcons {
         star4Path.lineTo(72.33f, 11.33f);
         star4Path.lineTo(73.5f, 9f);
         star4Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor71);
         canvas.drawPath(star4Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForAttributeAllocateButton {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 24f, 15f);
@@ -6351,25 +6350,25 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawAttributeAllocateButton(Canvas canvas) {
         HabiticaIcons.drawAttributeAllocateButton(canvas, new RectF(0f, 0f, 24f, 15f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawAttributeAllocateButton(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForAttributeAllocateButton.paint;
-        
+
         // Local Colors
         int fillColor75 = Color.argb(255, 135, 129, 144);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForAttributeAllocateButton.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForAttributeAllocateButton.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 24f, resizedFrame.height() / 15f);
-        
+
         // Bezier
         RectF bezierRect = CacheForAttributeAllocateButton.bezierRect;
         bezierRect.set(0f, 0f, 24f, 15f);
@@ -6380,17 +6379,17 @@ public class HabiticaIcons {
         bezierPath.lineTo(24f, 15f);
         bezierPath.lineTo(0f, 15f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor75);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForInfoIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 20f, 20f);
@@ -6398,22 +6397,22 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawInfoIcon(Canvas canvas, int infoIconColor) {
         HabiticaIcons.drawInfoIcon(canvas, new RectF(0f, 0f, 20f, 20f), ResizingBehavior.AspectFit, infoIconColor);
     }
-    
+
     public static void drawInfoIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int infoIconColor) {
         // General Declarations
         Paint paint = CacheForInfoIcon.paint;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForInfoIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForInfoIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 20f, resizedFrame.height() / 20f);
-        
+
         // Bezier
         RectF bezierRect = CacheForInfoIcon.bezierRect;
         bezierRect.set(0f, 0f, 20f, 20f);
@@ -6445,17 +6444,17 @@ public class HabiticaIcons {
         bezierPath.lineTo(9f, 9f);
         bezierPath.lineTo(9f, 15f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(infoIconColor);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForContributorBadge {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 16f, 16f);
@@ -6481,17 +6480,17 @@ public class HabiticaIcons {
         private static final RectF bezier4Rect = new RectF();
         private static final Path bezier4Path = new Path();
     }
-    
+
     public static void drawContributorBadge(Canvas canvas, float _1, boolean isNPC) {
         HabiticaIcons.drawContributorBadge(canvas, new RectF(0f, 0f, 16f, 16f), ResizingBehavior.AspectFit, _1, isNPC);
     }
-    
+
     public static void drawContributorBadge(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, float _1, boolean isNPC) {
         // General Declarations
         Stack<Matrix> currentTransformation = new Stack<>();
         currentTransformation.push(new Matrix());
         Paint paint = CacheForContributorBadge.paint;
-        
+
         // Local Colors
         int strokeColor3 = Color.argb(255, 253, 124, 127);
         int fillColor83 = Color.argb(255, 119, 244, 199);
@@ -6513,7 +6512,7 @@ public class HabiticaIcons {
         int strokeColor10 = Color.argb(255, 5, 112, 168);
         int strokeColor4 = Color.argb(255, 136, 10, 10);
         int fillColor76 = Color.argb(255, 255, 182, 184);
-        
+
         // Local Variables
         boolean isTier1 = _1 == 1f && !isNPC;
         boolean isTier2 = _1 == 2f && !isNPC;
@@ -6524,14 +6523,14 @@ public class HabiticaIcons {
         boolean isTier7 = _1 == 7f && !isNPC;
         boolean isTier8 = _1 == 8f && !isNPC;
         boolean isTier9 = _1 == 9f && !isNPC;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForContributorBadge.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForContributorBadge.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 16f);
-        
+
         // Tier1
         if (isTier1) {
             RectF tier1Rect = CacheForContributorBadge.tier1Rect;
@@ -6546,13 +6545,13 @@ public class HabiticaIcons {
             tier1Path.lineTo(3.6f, 6.25f);
             tier1Path.lineTo(7.5f, 4f);
             tier1Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor76);
             canvas.drawPath(tier1Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6563,7 +6562,7 @@ public class HabiticaIcons {
             canvas.drawPath(tier1Path, paint);
             canvas.restore();
         }
-        
+
         // Tier2
         if (isTier2) {
             RectF tier2Rect = CacheForContributorBadge.tier2Rect;
@@ -6578,13 +6577,13 @@ public class HabiticaIcons {
             tier2Path.lineTo(3.6f, 6.25f);
             tier2Path.lineTo(7.5f, 4f);
             tier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor77);
             canvas.drawPath(tier2Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6595,7 +6594,7 @@ public class HabiticaIcons {
             canvas.drawPath(tier2Path, paint);
             canvas.restore();
         }
-        
+
         // Tier3
         if (isTier3) {
             RectF tier3Rect = CacheForContributorBadge.tier3Rect;
@@ -6607,13 +6606,13 @@ public class HabiticaIcons {
             tier3Path.lineTo(3.5f, 12.5f);
             tier3Path.lineTo(8f, 3.5f);
             tier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor2);
             canvas.drawPath(tier3Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6624,7 +6623,7 @@ public class HabiticaIcons {
             canvas.drawPath(tier3Path, paint);
             canvas.restore();
         }
-        
+
         // Tier4
         if (isTier4) {
             RectF tier4Rect = CacheForContributorBadge.tier4Rect;
@@ -6636,13 +6635,13 @@ public class HabiticaIcons {
             tier4Path.lineTo(3.5f, 12.5f);
             tier4Path.lineTo(8f, 3.5f);
             tier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor78);
             canvas.drawPath(tier4Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6653,7 +6652,7 @@ public class HabiticaIcons {
             canvas.drawPath(tier4Path, paint);
             canvas.restore();
         }
-        
+
         // Tier5
         if (isTier5) {
             RectF tier5Rect = CacheForContributorBadge.tier5Rect;
@@ -6665,13 +6664,13 @@ public class HabiticaIcons {
             tier5Path.lineTo(tier5Rect.right, tier5Rect.bottom);
             tier5Path.lineTo(tier5Rect.left, tier5Rect.bottom);
             tier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor79);
             canvas.drawPath(tier5Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6682,7 +6681,7 @@ public class HabiticaIcons {
             canvas.drawPath(tier5Path, paint);
             canvas.restore();
         }
-        
+
         // Tier6
         if (isTier6) {
             RectF tier6Rect = CacheForContributorBadge.tier6Rect;
@@ -6694,13 +6693,13 @@ public class HabiticaIcons {
             tier6Path.lineTo(tier6Rect.right, tier6Rect.bottom);
             tier6Path.lineTo(tier6Rect.left, tier6Rect.bottom);
             tier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor80);
             canvas.drawPath(tier6Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6711,7 +6710,7 @@ public class HabiticaIcons {
             canvas.drawPath(tier6Path, paint);
             canvas.restore();
         }
-        
+
         // Tier7
         if (isTier7) {
             canvas.save();
@@ -6724,13 +6723,13 @@ public class HabiticaIcons {
             Path tier7Path = CacheForContributorBadge.tier7Path;
             tier7Path.reset();
             tier7Path.addRect(tier7Rect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor81);
             canvas.drawPath(tier7Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6742,7 +6741,7 @@ public class HabiticaIcons {
             canvas.restore();
             canvas.restore();
         }
-        
+
         // TierMod
         if (isTier8) {
             RectF tierModRect = CacheForContributorBadge.tierModRect;
@@ -6761,13 +6760,13 @@ public class HabiticaIcons {
             tierModPath.lineTo(5.56f, 5.83f);
             tierModPath.lineTo(7.5f, 2.5f);
             tierModPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor7);
             canvas.drawPath(tierModPath, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6778,7 +6777,7 @@ public class HabiticaIcons {
             canvas.drawPath(tierModPath, paint);
             canvas.restore();
         }
-        
+
         // TierStaff
         if (isTier9) {
             RectF tierStaffRect = CacheForContributorBadge.tierStaffRect;
@@ -6794,13 +6793,13 @@ public class HabiticaIcons {
             tierStaffPath.lineTo(5.5f, 7.5f);
             tierStaffPath.lineTo(2.5f, 4.5f);
             tierStaffPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor82);
             canvas.drawPath(tierStaffPath, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6811,7 +6810,7 @@ public class HabiticaIcons {
             canvas.drawPath(tierStaffPath, paint);
             canvas.restore();
         }
-        
+
         // Bezier 4
         if (isNPC) {
             RectF bezier4Rect = CacheForContributorBadge.bezier4Rect;
@@ -6828,13 +6827,13 @@ public class HabiticaIcons {
             bezier4Path.lineTo(7.5f, 3.5f);
             bezier4Path.lineTo(11.5f, 3.5f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor83);
             canvas.drawPath(bezier4Path, paint);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(1f);
@@ -6845,10 +6844,10 @@ public class HabiticaIcons {
             canvas.drawPath(bezier4Path, paint);
             canvas.restore();
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForQuestBackground {
         private static final Paint paint = new Paint();
         private static final RectF rectangleRect = new RectF();
@@ -6886,18 +6885,18 @@ public class HabiticaIcons {
         private static final RectF rectangle15Rect = new RectF();
         private static final Path rectangle15Path = new Path();
     }
-    
-    
+
+
     public static void drawQuestBackground(Canvas canvas, RectF frame, int bossColorDark, int bossColorMedium, int bossColorLight) {
         // General Declarations
         Paint paint = CacheForQuestBackground.paint;
-        
+
         // Rectangle
         RectF rectangleRect = CacheForQuestBackground.rectangleRect;
         rectangleRect.set(frame.left,
-            frame.top,
-            frame.left + (float) Math.floor(frame.width() + 0.5f),
-            frame.top + (float) Math.floor(frame.height() + 0.5f));
+                frame.top,
+                frame.left + (float) Math.floor(frame.width() + 0.5f),
+                frame.top + (float) Math.floor(frame.height() + 0.5f));
         Path rectanglePath = CacheForQuestBackground.rectanglePath;
         rectanglePath.reset();
         rectanglePath.moveTo(rectangleRect.left, rectangleRect.top);
@@ -6905,27 +6904,27 @@ public class HabiticaIcons {
         rectanglePath.lineTo(rectangleRect.right, rectangleRect.bottom);
         rectanglePath.lineTo(rectangleRect.left, rectangleRect.bottom);
         rectanglePath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(bossColorMedium);
         canvas.drawPath(rectanglePath, paint);
-        
+
         // Group
         {
             RectF group = CacheForQuestBackground.group;
             group.set(frame.left + 2f,
-                frame.bottom - 8f,
-                frame.left + 8f,
-                frame.bottom - 2f);
-            
+                    frame.bottom - 8f,
+                    frame.left + 8f,
+                    frame.bottom - 2f);
+
             // Rectangle 2
             RectF rectangle2Rect = CacheForQuestBackground.rectangle2Rect;
             rectangle2Rect.set(group.left,
-                group.top,
-                group.left + (float) Math.floor(group.width() + 0.5f),
-                group.top + (float) Math.floor(group.height() + 0.5f));
+                    group.top,
+                    group.left + (float) Math.floor(group.width() + 0.5f),
+                    group.top + (float) Math.floor(group.height() + 0.5f));
             Path rectangle2Path = CacheForQuestBackground.rectangle2Path;
             rectangle2Path.reset();
             rectangle2Path.moveTo(rectangle2Rect.left, rectangle2Rect.top);
@@ -6933,19 +6932,19 @@ public class HabiticaIcons {
             rectangle2Path.lineTo(rectangle2Rect.right, rectangle2Rect.bottom);
             rectangle2Path.lineTo(rectangle2Rect.left, rectangle2Rect.bottom);
             rectangle2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorLight);
             canvas.drawPath(rectangle2Path, paint);
-            
+
             // Rectangle 3
             RectF rectangle3Rect = CacheForQuestBackground.rectangle3Rect;
             rectangle3Rect.set(group.left + (float) Math.floor(group.width() * 0.33333f + 0.5f),
-                group.top + (float) Math.floor(group.height() * 0.33333f + 0.5f),
-                group.left + (float) Math.floor(group.width() * 0.66667f + 0.5f),
-                group.top + (float) Math.floor(group.height() * 0.66667f + 0.5f));
+                    group.top + (float) Math.floor(group.height() * 0.33333f + 0.5f),
+                    group.left + (float) Math.floor(group.width() * 0.66667f + 0.5f),
+                    group.top + (float) Math.floor(group.height() * 0.66667f + 0.5f));
             Path rectangle3Path = CacheForQuestBackground.rectangle3Path;
             rectangle3Path.reset();
             rectangle3Path.moveTo(rectangle3Rect.left, rectangle3Rect.top);
@@ -6953,28 +6952,28 @@ public class HabiticaIcons {
             rectangle3Path.lineTo(rectangle3Rect.right, rectangle3Rect.bottom);
             rectangle3Path.lineTo(rectangle3Rect.left, rectangle3Rect.bottom);
             rectangle3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorDark);
             canvas.drawPath(rectangle3Path, paint);
         }
-        
+
         // Group 2
         {
             RectF group2 = CacheForQuestBackground.group2;
             group2.set(frame.left + 2f,
-                frame.top + 2f,
-                frame.left + 8f,
-                frame.top + 8f);
-            
+                    frame.top + 2f,
+                    frame.left + 8f,
+                    frame.top + 8f);
+
             // Rectangle 4
             RectF rectangle4Rect = CacheForQuestBackground.rectangle4Rect;
             rectangle4Rect.set(group2.left,
-                group2.top,
-                group2.left + (float) Math.floor(group2.width() + 0.5f),
-                group2.top + (float) Math.floor(group2.height() + 0.5f));
+                    group2.top,
+                    group2.left + (float) Math.floor(group2.width() + 0.5f),
+                    group2.top + (float) Math.floor(group2.height() + 0.5f));
             Path rectangle4Path = CacheForQuestBackground.rectangle4Path;
             rectangle4Path.reset();
             rectangle4Path.moveTo(rectangle4Rect.left, rectangle4Rect.top);
@@ -6982,19 +6981,19 @@ public class HabiticaIcons {
             rectangle4Path.lineTo(rectangle4Rect.right, rectangle4Rect.bottom);
             rectangle4Path.lineTo(rectangle4Rect.left, rectangle4Rect.bottom);
             rectangle4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorLight);
             canvas.drawPath(rectangle4Path, paint);
-            
+
             // Rectangle 5
             RectF rectangle5Rect = CacheForQuestBackground.rectangle5Rect;
             rectangle5Rect.set(group2.left + (float) Math.floor(group2.width() * 0.33333f + 0.5f),
-                group2.top + (float) Math.floor(group2.height() * 0.33333f + 0.5f),
-                group2.left + (float) Math.floor(group2.width() * 0.66667f + 0.5f),
-                group2.top + (float) Math.floor(group2.height() * 0.66667f + 0.5f));
+                    group2.top + (float) Math.floor(group2.height() * 0.33333f + 0.5f),
+                    group2.left + (float) Math.floor(group2.width() * 0.66667f + 0.5f),
+                    group2.top + (float) Math.floor(group2.height() * 0.66667f + 0.5f));
             Path rectangle5Path = CacheForQuestBackground.rectangle5Path;
             rectangle5Path.reset();
             rectangle5Path.moveTo(rectangle5Rect.left, rectangle5Rect.top);
@@ -7002,28 +7001,28 @@ public class HabiticaIcons {
             rectangle5Path.lineTo(rectangle5Rect.right, rectangle5Rect.bottom);
             rectangle5Path.lineTo(rectangle5Rect.left, rectangle5Rect.bottom);
             rectangle5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorDark);
             canvas.drawPath(rectangle5Path, paint);
         }
-        
+
         // Group 3
         {
             RectF group3 = CacheForQuestBackground.group3;
             group3.set(frame.right - 8f,
-                frame.top + 2f,
-                frame.right - 2f,
-                frame.top + 8f);
-            
+                    frame.top + 2f,
+                    frame.right - 2f,
+                    frame.top + 8f);
+
             // Rectangle 6
             RectF rectangle6Rect = CacheForQuestBackground.rectangle6Rect;
             rectangle6Rect.set(group3.left,
-                group3.top,
-                group3.left + (float) Math.floor(group3.width() + 0.5f),
-                group3.top + (float) Math.floor(group3.height() + 0.5f));
+                    group3.top,
+                    group3.left + (float) Math.floor(group3.width() + 0.5f),
+                    group3.top + (float) Math.floor(group3.height() + 0.5f));
             Path rectangle6Path = CacheForQuestBackground.rectangle6Path;
             rectangle6Path.reset();
             rectangle6Path.moveTo(rectangle6Rect.left, rectangle6Rect.top);
@@ -7031,19 +7030,19 @@ public class HabiticaIcons {
             rectangle6Path.lineTo(rectangle6Rect.right, rectangle6Rect.bottom);
             rectangle6Path.lineTo(rectangle6Rect.left, rectangle6Rect.bottom);
             rectangle6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorLight);
             canvas.drawPath(rectangle6Path, paint);
-            
+
             // Rectangle 7
             RectF rectangle7Rect = CacheForQuestBackground.rectangle7Rect;
             rectangle7Rect.set(group3.left + (float) Math.floor(group3.width() * 0.33333f + 0.5f),
-                group3.top + (float) Math.floor(group3.height() * 0.33333f + 0.5f),
-                group3.left + (float) Math.floor(group3.width() * 0.66667f + 0.5f),
-                group3.top + (float) Math.floor(group3.height() * 0.66667f + 0.5f));
+                    group3.top + (float) Math.floor(group3.height() * 0.33333f + 0.5f),
+                    group3.left + (float) Math.floor(group3.width() * 0.66667f + 0.5f),
+                    group3.top + (float) Math.floor(group3.height() * 0.66667f + 0.5f));
             Path rectangle7Path = CacheForQuestBackground.rectangle7Path;
             rectangle7Path.reset();
             rectangle7Path.moveTo(rectangle7Rect.left, rectangle7Rect.top);
@@ -7051,28 +7050,28 @@ public class HabiticaIcons {
             rectangle7Path.lineTo(rectangle7Rect.right, rectangle7Rect.bottom);
             rectangle7Path.lineTo(rectangle7Rect.left, rectangle7Rect.bottom);
             rectangle7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorDark);
             canvas.drawPath(rectangle7Path, paint);
         }
-        
+
         // Group 4
         {
             RectF group4 = CacheForQuestBackground.group4;
             group4.set(frame.right - 8f,
-                frame.bottom - 8f,
-                frame.right - 2f,
-                frame.bottom - 2f);
-            
+                    frame.bottom - 8f,
+                    frame.right - 2f,
+                    frame.bottom - 2f);
+
             // Rectangle 8
             RectF rectangle8Rect = CacheForQuestBackground.rectangle8Rect;
             rectangle8Rect.set(group4.left,
-                group4.top,
-                group4.left + (float) Math.floor(group4.width() + 0.5f),
-                group4.top + (float) Math.floor(group4.height() + 0.5f));
+                    group4.top,
+                    group4.left + (float) Math.floor(group4.width() + 0.5f),
+                    group4.top + (float) Math.floor(group4.height() + 0.5f));
             Path rectangle8Path = CacheForQuestBackground.rectangle8Path;
             rectangle8Path.reset();
             rectangle8Path.moveTo(rectangle8Rect.left, rectangle8Rect.top);
@@ -7080,19 +7079,19 @@ public class HabiticaIcons {
             rectangle8Path.lineTo(rectangle8Rect.right, rectangle8Rect.bottom);
             rectangle8Path.lineTo(rectangle8Rect.left, rectangle8Rect.bottom);
             rectangle8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorLight);
             canvas.drawPath(rectangle8Path, paint);
-            
+
             // Rectangle 9
             RectF rectangle9Rect = CacheForQuestBackground.rectangle9Rect;
             rectangle9Rect.set(group4.left + (float) Math.floor(group4.width() * 0.33333f + 0.5f),
-                group4.top + (float) Math.floor(group4.height() * 0.33333f + 0.5f),
-                group4.left + (float) Math.floor(group4.width() * 0.66667f + 0.5f),
-                group4.top + (float) Math.floor(group4.height() * 0.66667f + 0.5f));
+                    group4.top + (float) Math.floor(group4.height() * 0.33333f + 0.5f),
+                    group4.left + (float) Math.floor(group4.width() * 0.66667f + 0.5f),
+                    group4.top + (float) Math.floor(group4.height() * 0.66667f + 0.5f));
             Path rectangle9Path = CacheForQuestBackground.rectangle9Path;
             rectangle9Path.reset();
             rectangle9Path.moveTo(rectangle9Rect.left, rectangle9Rect.top);
@@ -7100,20 +7099,20 @@ public class HabiticaIcons {
             rectangle9Path.lineTo(rectangle9Rect.right, rectangle9Rect.bottom);
             rectangle9Path.lineTo(rectangle9Rect.left, rectangle9Rect.bottom);
             rectangle9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(bossColorDark);
             canvas.drawPath(rectangle9Path, paint);
         }
-        
+
         // Rectangle 10
         RectF rectangle10Rect = CacheForQuestBackground.rectangle10Rect;
         rectangle10Rect.set(frame.right - 4f,
-            frame.top + 10f,
-            frame.right - 2f,
-            frame.bottom - 10f);
+                frame.top + 10f,
+                frame.right - 2f,
+                frame.bottom - 10f);
         Path rectangle10Path = CacheForQuestBackground.rectangle10Path;
         rectangle10Path.reset();
         rectangle10Path.moveTo(rectangle10Rect.left, rectangle10Rect.top);
@@ -7121,19 +7120,19 @@ public class HabiticaIcons {
         rectangle10Path.lineTo(rectangle10Rect.right, rectangle10Rect.bottom);
         rectangle10Path.lineTo(rectangle10Rect.left, rectangle10Rect.bottom);
         rectangle10Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(bossColorLight);
         canvas.drawPath(rectangle10Path, paint);
-        
+
         // Rectangle 11
         RectF rectangle11Rect = CacheForQuestBackground.rectangle11Rect;
         rectangle11Rect.set(frame.left + 10f,
-            frame.bottom - 4f,
-            frame.right - 10f,
-            frame.bottom - 2f);
+                frame.bottom - 4f,
+                frame.right - 10f,
+                frame.bottom - 2f);
         Path rectangle11Path = CacheForQuestBackground.rectangle11Path;
         rectangle11Path.reset();
         rectangle11Path.moveTo(rectangle11Rect.left, rectangle11Rect.top);
@@ -7141,19 +7140,19 @@ public class HabiticaIcons {
         rectangle11Path.lineTo(rectangle11Rect.right, rectangle11Rect.bottom);
         rectangle11Path.lineTo(rectangle11Rect.left, rectangle11Rect.bottom);
         rectangle11Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(bossColorLight);
         canvas.drawPath(rectangle11Path, paint);
-        
+
         // Rectangle 12
         RectF rectangle12Rect = CacheForQuestBackground.rectangle12Rect;
         rectangle12Rect.set(frame.left + 10f,
-            frame.top + 2f,
-            frame.right - 10f,
-            frame.top + 4f);
+                frame.top + 2f,
+                frame.right - 10f,
+                frame.top + 4f);
         Path rectangle12Path = CacheForQuestBackground.rectangle12Path;
         rectangle12Path.reset();
         rectangle12Path.moveTo(rectangle12Rect.left, rectangle12Rect.top);
@@ -7161,19 +7160,19 @@ public class HabiticaIcons {
         rectangle12Path.lineTo(rectangle12Rect.right, rectangle12Rect.bottom);
         rectangle12Path.lineTo(rectangle12Rect.left, rectangle12Rect.bottom);
         rectangle12Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(bossColorLight);
         canvas.drawPath(rectangle12Path, paint);
-        
+
         // Rectangle 13
         RectF rectangle13Rect = CacheForQuestBackground.rectangle13Rect;
         rectangle13Rect.set(frame.left + 10f,
-            frame.top + 4f,
-            frame.right - 10f,
-            frame.bottom - 4f);
+                frame.top + 4f,
+                frame.right - 10f,
+                frame.bottom - 4f);
         Path rectangle13Path = CacheForQuestBackground.rectangle13Path;
         rectangle13Path.reset();
         rectangle13Path.moveTo(rectangle13Rect.left, rectangle13Rect.top);
@@ -7181,19 +7180,19 @@ public class HabiticaIcons {
         rectangle13Path.lineTo(rectangle13Rect.right, rectangle13Rect.bottom);
         rectangle13Path.lineTo(rectangle13Rect.left, rectangle13Rect.bottom);
         rectangle13Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(bossColorDark);
         canvas.drawPath(rectangle13Path, paint);
-        
+
         // Rectangle 14
         RectF rectangle14Rect = CacheForQuestBackground.rectangle14Rect;
         rectangle14Rect.set(frame.left + 4f,
-            frame.top + 10f,
-            frame.right - 4f,
-            frame.bottom - 10f);
+                frame.top + 10f,
+                frame.right - 4f,
+                frame.bottom - 10f);
         Path rectangle14Path = CacheForQuestBackground.rectangle14Path;
         rectangle14Path.reset();
         rectangle14Path.moveTo(rectangle14Rect.left, rectangle14Rect.top);
@@ -7201,19 +7200,19 @@ public class HabiticaIcons {
         rectangle14Path.lineTo(rectangle14Rect.right, rectangle14Rect.bottom);
         rectangle14Path.lineTo(rectangle14Rect.left, rectangle14Rect.bottom);
         rectangle14Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(bossColorDark);
         canvas.drawPath(rectangle14Path, paint);
-        
+
         // Rectangle 15
         RectF rectangle15Rect = CacheForQuestBackground.rectangle15Rect;
         rectangle15Rect.set(frame.left + 2f,
-            frame.top + 10f,
-            frame.left + 4f,
-            frame.bottom - 10f);
+                frame.top + 10f,
+                frame.left + 4f,
+                frame.bottom - 10f);
         Path rectangle15Path = CacheForQuestBackground.rectangle15Path;
         rectangle15Path.reset();
         rectangle15Path.moveTo(rectangle15Rect.left, rectangle15Rect.top);
@@ -7221,14 +7220,14 @@ public class HabiticaIcons {
         rectangle15Path.lineTo(rectangle15Rect.right, rectangle15Rect.bottom);
         rectangle15Path.lineTo(rectangle15Rect.left, rectangle15Rect.bottom);
         rectangle15Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(bossColorLight);
         canvas.drawPath(rectangle15Path, paint);
     }
-    
+
     private static class CacheForDamage {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -7276,17 +7275,17 @@ public class HabiticaIcons {
         private static final RectF bezier16Rect = new RectF();
         private static final Path bezier16Path = new Path();
     }
-    
+
     public static void drawDamage(Canvas canvas) {
         HabiticaIcons.drawDamage(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawDamage(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Stack<Matrix> currentTransformation = new Stack<>();
         currentTransformation.push(new Matrix());
         Paint paint = CacheForDamage.paint;
-        
+
         // Local Colors
         int fillColor37 = Color.argb(255, 255, 255, 255);
         int fillColor84 = Color.argb(255, 240, 97, 102);
@@ -7300,14 +7299,14 @@ public class HabiticaIcons {
         int fillColor88 = Color.argb(255, 179, 98, 19);
         int fillColor87 = Color.argb(255, 189, 168, 255);
         int fillColor35 = Color.argb(255, 195, 192, 199);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForDamage.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForDamage.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Group 2
         {
             // Bezier
@@ -7330,13 +7329,13 @@ public class HabiticaIcons {
             bezierPath.cubicTo(12.47f, 8.46f, 12.29f, 8.59f, 12.2f, 8.79f);
             bezierPath.lineTo(11.1f, 11.16f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor84);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForDamage.bezier2Rect;
             bezier2Rect.set(0.59f, 0.65f, 17.87f, 17.93f);
@@ -7366,13 +7365,13 @@ public class HabiticaIcons {
             bezier2Path.lineTo(16.85f, 16.91f);
             bezier2Path.lineTo(16.85f, 16.91f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor90);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Rectangle
             canvas.save();
             canvas.translate(13.65f, 13.75f);
@@ -7388,14 +7387,14 @@ public class HabiticaIcons {
             rectanglePath.lineTo(rectangleRect.right, rectangleRect.bottom);
             rectanglePath.lineTo(rectangleRect.left, rectangleRect.bottom);
             rectanglePath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor84);
             canvas.drawPath(rectanglePath, paint);
             canvas.restore();
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForDamage.bezier3Rect;
             bezier3Rect.set(14.1f, 14.15f, 16.73f, 16.79f);
@@ -7409,13 +7408,13 @@ public class HabiticaIcons {
             bezier3Path.lineTo(15.4f, 16.79f);
             bezier3Path.lineTo(16.73f, 15.46f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor84);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForDamage.bezier4Rect;
             bezier4Rect.set(2.12f, 2.17f, 5.27f, 5.22f);
@@ -7426,13 +7425,13 @@ public class HabiticaIcons {
             bezier4Path.lineTo(2.12f, 2.18f);
             bezier4Path.cubicTo(2.18f, 2.13f, 4.47f, 2.39f, 5.27f, 2.82f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor37);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForDamage.bezier5Rect;
             bezier5Rect.set(5.16f, 2.82f, 11.75f, 10.16f);
@@ -7445,13 +7444,13 @@ public class HabiticaIcons {
             bezier5Path.lineTo(5.27f, 2.82f);
             bezier5Path.lineTo(5.33f, 2.85f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor85);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForDamage.bezier6Rect;
             bezier6Rect.set(2.12f, 2.18f, 11.81f, 11.17f);
@@ -7469,13 +7468,13 @@ public class HabiticaIcons {
             bezier6Path.lineTo(2.12f, 2.18f);
             bezier6Path.cubicTo(2.07f, 2.24f, 2.33f, 4.53f, 2.77f, 5.33f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor85);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForDamage.bezier7Rect;
             bezier7Rect.set(2.77f, 5.22f, 10.11f, 11.81f);
@@ -7488,13 +7487,13 @@ public class HabiticaIcons {
             bezier7Path.lineTo(2.77f, 5.33f);
             bezier7Path.cubicTo(2.78f, 5.35f, 2.79f, 5.37f, 2.79f, 5.39f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor25);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForDamage.bezier8Rect;
             bezier8Rect.set(9.53f, 10.17f, 11.11f, 11.87f);
@@ -7507,13 +7506,13 @@ public class HabiticaIcons {
             bezier8Path.lineTo(9.53f, 11.81f);
             bezier8Path.lineTo(9.53f, 11.81f);
             bezier8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor25);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForDamage.bezier9Rect;
             bezier9Rect.set(14.1f, 14.15f, 16.64f, 16.69f);
@@ -7529,13 +7528,13 @@ public class HabiticaIcons {
             bezier9Path.lineTo(14.19f, 16.69f);
             bezier9Path.lineTo(14.1f, 15.48f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor86);
             canvas.drawPath(bezier9Path, paint);
-            
+
             // Bezier 10
             RectF bezier10Rect = CacheForDamage.bezier10Rect;
             bezier10Rect.set(14.1f, 14.15f, 15.71f, 15.76f);
@@ -7547,13 +7546,13 @@ public class HabiticaIcons {
             bezier10Path.lineTo(15.71f, 15.18f);
             bezier10Path.lineTo(15.43f, 14.15f);
             bezier10Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor87);
             canvas.drawPath(bezier10Path, paint);
-            
+
             // Bezier 11
             RectF bezier11Rect = CacheForDamage.bezier11Rect;
             bezier11Rect.set(14.19f, 14.25f, 16.73f, 16.79f);
@@ -7569,13 +7568,13 @@ public class HabiticaIcons {
             bezier11Path.lineTo(14.19f, 16.7f);
             bezier11Path.lineTo(15.41f, 16.79f);
             bezier11Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor87);
             canvas.drawPath(bezier11Path, paint);
-            
+
             // Bezier 12
             RectF bezier12Rect = CacheForDamage.bezier12Rect;
             bezier12Rect.set(15.12f, 15.18f, 16.73f, 16.79f);
@@ -7587,13 +7586,13 @@ public class HabiticaIcons {
             bezier12Path.lineTo(15.7f, 15.18f);
             bezier12Path.lineTo(16.73f, 15.46f);
             bezier12Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor86);
             canvas.drawPath(bezier12Path, paint);
-            
+
             // Rectangle 2
             canvas.save();
             canvas.translate(12.75f, 12.8f);
@@ -7609,14 +7608,14 @@ public class HabiticaIcons {
             rectangle2Path.lineTo(rectangle2Rect.right, rectangle2Rect.bottom);
             rectangle2Path.lineTo(rectangle2Rect.left, rectangle2Rect.bottom);
             rectangle2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor88);
             canvas.drawPath(rectangle2Path, paint);
             canvas.restore();
-            
+
             // Rectangle 3
             canvas.save();
             canvas.translate(13.55f, 13.6f);
@@ -7632,14 +7631,14 @@ public class HabiticaIcons {
             rectangle3Path.lineTo(rectangle3Rect.right, rectangle3Rect.bottom);
             rectangle3Path.lineTo(rectangle3Rect.left, rectangle3Rect.bottom);
             rectangle3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor89);
             canvas.drawPath(rectangle3Path, paint);
             canvas.restore();
-            
+
             // Rectangle 4
             canvas.save();
             canvas.translate(14.35f, 14.4f);
@@ -7655,14 +7654,14 @@ public class HabiticaIcons {
             rectangle4Path.lineTo(rectangle4Rect.right, rectangle4Rect.bottom);
             rectangle4Path.lineTo(rectangle4Rect.left, rectangle4Rect.bottom);
             rectangle4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor88);
             canvas.drawPath(rectangle4Path, paint);
             canvas.restore();
-            
+
             // Bezier 13
             RectF bezier13Rect = CacheForDamage.bezier13Rect;
             bezier13Rect.set(11.1f, 8.06f, 14.58f, 11.87f);
@@ -7680,13 +7679,13 @@ public class HabiticaIcons {
             bezier13Path.lineTo(11.1f, 11.16f);
             bezier13Path.lineTo(11.1f, 11.16f);
             bezier13Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor35);
             canvas.drawPath(bezier13Path, paint);
-            
+
             // Bezier 14
             RectF bezier14Rect = CacheForDamage.bezier14Rect;
             bezier14Rect.set(8f, 8.19f, 14.65f, 14.64f);
@@ -7711,13 +7710,13 @@ public class HabiticaIcons {
             bezier14Path.lineTo(8.12f, 14.64f);
             bezier14Path.cubicTo(8.04f, 14.58f, 7.99f, 14.47f, 8f, 14.37f);
             bezier14Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor40);
             canvas.drawPath(bezier14Path, paint);
-            
+
             // Bezier 15
             RectF bezier15Rect = CacheForDamage.bezier15Rect;
             bezier15Rect.set(8.12f, 11.87f, 12.6f, 14.71f);
@@ -7732,19 +7731,19 @@ public class HabiticaIcons {
             bezier15Path.lineTo(9.49f, 13.04f);
             bezier15Path.lineTo(9.49f, 13.04f);
             bezier15Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor75);
             canvas.drawPath(bezier15Path, paint);
-            
+
             // Group 3
             {
                 RectF group3 = CacheForDamage.group3;
                 group3.set(6.23f, 3.79f, 8.78f, 8.83f);
                 canvas.save();
-                
+
                 // Clip
                 Path clipPath = CacheForDamage.clipPath;
                 clipPath.reset();
@@ -7755,7 +7754,7 @@ public class HabiticaIcons {
                 clipPath.lineTo(6.23f, 3.79f);
                 clipPath.close();
                 canvas.clipPath(clipPath);
-                
+
                 // Bezier 16
                 RectF bezier16Rect = CacheForDamage.bezier16Rect;
                 bezier16Rect.set(6.58f, 3f, 8.78f, 9f);
@@ -7775,20 +7774,20 @@ public class HabiticaIcons {
                 bezier16Path.cubicTo(6.95f, 4.34f, 6.95f, 8.3f, 6.95f, 9f);
                 bezier16Path.lineTo(6.95f, 8.96f);
                 bezier16Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 paint.setStyle(Paint.Style.FILL);
                 paint.setColor(fillColor37);
                 canvas.drawPath(bezier16Path, paint);
-                
+
                 canvas.restore();
             }
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForCaret {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 16f, 16f);
@@ -7796,27 +7795,27 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawCaret(Canvas canvas, int caretColor, boolean pointsUp) {
         HabiticaIcons.drawCaret(canvas, new RectF(0f, 0f, 16f, 16f), ResizingBehavior.AspectFit, caretColor, pointsUp);
     }
-    
+
     public static void drawCaret(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int caretColor, boolean pointsUp) {
         // General Declarations
         Stack<Matrix> currentTransformation = new Stack<>();
         currentTransformation.push(new Matrix());
         Paint paint = CacheForCaret.paint;
-        
+
         // Local Variables
         float caretRotation = pointsUp ? 180f : 0f;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForCaret.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForCaret.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 16f);
-        
+
         // Bezier
         canvas.saveLayerAlpha(null, 138, Canvas.ALL_SAVE_FLAG);
         {
@@ -7836,7 +7835,7 @@ public class HabiticaIcons {
             bezierPath.lineTo(0f, 0.9f);
             bezierPath.lineTo(4.6f, -3.7f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezierPath.setFillType(Path.FillType.EVEN_ODD);
@@ -7845,10 +7844,10 @@ public class HabiticaIcons {
             canvas.drawPath(bezierPath, paint);
         }
         canvas.restore();
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForRageStrikeInactive {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 63f, 82f);
@@ -7862,28 +7861,28 @@ public class HabiticaIcons {
         private static final RectF labelRect = new RectF();
         private static final Path labelPath = new Path();
     }
-    
+
     public static void drawRageStrikeInactive(Canvas canvas) {
         HabiticaIcons.drawRageStrikeInactive(canvas, new RectF(0f, 0f, 63f, 82f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawRageStrikeInactive(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForRageStrikeInactive.paint;
-        
+
         // Local Colors
         int strokeColor14 = Color.argb(255, 255, 148, 76);
         int strokeColor13 = Color.argb(255, 244, 120, 37);
         int fillColor91 = Color.argb(255, 255, 200, 167);
         int textForeground = Color.argb(255, 183, 90, 28);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForRageStrikeInactive.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForRageStrikeInactive.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 63f, resizedFrame.height() / 82f);
-        
+
         // Group 3
         {
             // Bezier 2
@@ -7901,7 +7900,7 @@ public class HabiticaIcons {
             bezier2Path.lineTo(31f, 61f);
             bezier2Path.lineTo(17f, 48.08f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(16f);
@@ -7911,7 +7910,7 @@ public class HabiticaIcons {
             paint.setColor(strokeColor13);
             canvas.drawPath(bezier2Path, paint);
             canvas.restore();
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForRageStrikeInactive.bezier4Rect;
             bezier4Rect.set(17f, 21f, 45f, 61f);
@@ -7927,7 +7926,7 @@ public class HabiticaIcons {
             bezier4Path.lineTo(31f, 61f);
             bezier4Path.lineTo(17f, 48.08f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(8f);
@@ -7937,7 +7936,7 @@ public class HabiticaIcons {
             paint.setColor(strokeColor14);
             canvas.drawPath(bezier4Path, paint);
             canvas.restore();
-            
+
             // Bezier
             RectF bezierRect = CacheForRageStrikeInactive.bezierRect;
             bezierRect.set(17f, 21f, 45f, 61f);
@@ -7953,13 +7952,13 @@ public class HabiticaIcons {
             bezierPath.lineTo(31f, 61f);
             bezierPath.lineTo(17f, 48.08f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor91);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Label
             RectF labelRect = CacheForRageStrikeInactive.labelRect;
             labelRect.set(27.1f, 34.38f, 35.8f, 49f);
@@ -8005,17 +8004,17 @@ public class HabiticaIcons {
             labelPath.cubicTo(27.89f, 36.18f, 27.6f, 36.69f, 27.39f, 37.28f);
             labelPath.cubicTo(27.18f, 37.87f, 27.09f, 38.5f, 27.1f, 39.18f);
             labelPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(textForeground);
             canvas.drawPath(labelPath, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForRageStrikeActive {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 63f, 82f);
@@ -8027,30 +8026,30 @@ public class HabiticaIcons {
         private static final RectF bezier2Rect = new RectF();
         private static final Path bezier2Path = new Path();
     }
-    
+
     public static void drawRageStrikeActive(Canvas canvas, Context context, Bitmap rageStrikeNPC) {
         HabiticaIcons.drawRageStrikeActive(canvas, context, new RectF(0f, 0f, 63f, 82f), ResizingBehavior.AspectFit, rageStrikeNPC);
     }
-    
+
     public static void drawRageStrikeActive(Canvas canvas, Context context, RectF targetFrame, ResizingBehavior resizing, Bitmap rageStrikeNPC) {
         // General Declarations
         float displayDensity = context.getResources().getDisplayMetrics().density;
         Paint paint = CacheForRageStrikeActive.paint;
-        
+
         // Local Colors
         int strokeColor14 = Color.argb(255, 255, 148, 76);
         int strokeColor13 = Color.argb(255, 244, 120, 37);
-        
+
         // Local Images
         PaintCodeBitmap pc_rageStrikeNPC = GlobalCache.rageStrikeNPC.get(rageStrikeNPC);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForRageStrikeActive.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForRageStrikeActive.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 63f, resizedFrame.height() / 82f);
-        
+
         // Bezier
         RectF bezierRect = CacheForRageStrikeActive.bezierRect;
         bezierRect.set(10.39f, 10.89f, 52.39f, 70.89f);
@@ -8066,7 +8065,7 @@ public class HabiticaIcons {
         bezierPath.lineTo(31.39f, 70.89f);
         bezierPath.lineTo(10.39f, 51.5f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(16f);
@@ -8076,7 +8075,7 @@ public class HabiticaIcons {
         paint.setColor(strokeColor13);
         canvas.drawPath(bezierPath, paint);
         canvas.restore();
-        
+
         // Bezier 3
         RectF bezier3Rect = CacheForRageStrikeActive.bezier3Rect;
         bezier3Rect.set(10.39f, 10.89f, 52.39f, 70.89f);
@@ -8092,7 +8091,7 @@ public class HabiticaIcons {
         bezier3Path.lineTo(31.39f, 70.89f);
         bezier3Path.lineTo(10.39f, 51.5f);
         bezier3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(8f);
@@ -8102,7 +8101,7 @@ public class HabiticaIcons {
         paint.setColor(strokeColor14);
         canvas.drawPath(bezier3Path, paint);
         canvas.restore();
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForRageStrikeActive.bezier2Rect;
         bezier2Rect.set(10f, 11f, 52f, 71f);
@@ -8118,11 +8117,11 @@ public class HabiticaIcons {
         bezier2Path.lineTo(31f, 71f);
         bezier2Path.lineTo(10f, 51.61f);
         bezier2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setShader(pc_rageStrikeNPC.getShader());
-        
+
         canvas.save();
         canvas.clipPath(bezier2Path);
         canvas.translate(bezier2Rect.left - 27f, bezier2Rect.top - 18f);
@@ -8130,10 +8129,10 @@ public class HabiticaIcons {
         canvas.clipRect(pc_rageStrikeNPC.getBounds());
         canvas.drawPaint(paint);
         canvas.restore();
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForRage {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 18f, 18f);
@@ -8167,15 +8166,15 @@ public class HabiticaIcons {
         private static final RectF bezier14Rect = new RectF();
         private static final Path bezier14Path = new Path();
     }
-    
+
     public static void drawRage(Canvas canvas) {
         HabiticaIcons.drawRage(canvas, new RectF(0f, 0f, 18f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawRage(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForRage.paint;
-        
+
         // Local Colors
         int fillColor14 = Color.argb(255, 36, 204, 143);
         int fillColor93 = Color.argb(255, 244, 120, 37);
@@ -8184,14 +8183,14 @@ public class HabiticaIcons {
         int fillColor92 = Color.argb(255, 90, 228, 178);
         int fillColor5 = Color.argb(64, 255, 255, 255);
         int fillColor15 = Color.argb(89, 27, 153, 107);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForRage.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForRage.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 18f, resizedFrame.height() / 18f);
-        
+
         // Group
         {
             // Bezier
@@ -8205,13 +8204,13 @@ public class HabiticaIcons {
             bezierPath.lineTo(8.67f, 17f);
             bezierPath.lineTo(2f, 7f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor14);
             canvas.drawPath(bezierPath, paint);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForRage.bezier2Rect;
             bezier2Rect.set(2f, 1f, 15.33f, 17f);
@@ -8223,13 +8222,13 @@ public class HabiticaIcons {
             bezier2Path.lineTo(8.67f, 17f);
             bezier2Path.lineTo(2f, 7f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor14);
             canvas.drawPath(bezier2Path, paint);
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForRage.bezier3Rect;
             bezier3Rect.set(8.67f, 2.8f, 13.6f, 7.2f);
@@ -8240,13 +8239,13 @@ public class HabiticaIcons {
             bezier3Path.lineTo(8.67f, 2.8f);
             bezier3Path.lineTo(13.6f, 7.2f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier3Path, paint);
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForRage.bezier4Rect;
             bezier4Rect.set(3.73f, 2.8f, 8.67f, 7.2f);
@@ -8257,13 +8256,13 @@ public class HabiticaIcons {
             bezier4Path.lineTo(8.67f, 2.8f);
             bezier4Path.lineTo(8.67f, 6.2f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier4Path, paint);
-            
+
             // Bezier 5
             RectF bezier5Rect = CacheForRage.bezier5Rect;
             bezier5Rect.set(3.73f, 6.2f, 8.67f, 14.6f);
@@ -8274,13 +8273,13 @@ public class HabiticaIcons {
             bezier5Path.lineTo(3.73f, 7.2f);
             bezier5Path.lineTo(8.67f, 6.2f);
             bezier5Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor92);
             canvas.drawPath(bezier5Path, paint);
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForRage.bezier6Rect;
             bezier6Rect.set(8.67f, 6.2f, 13.6f, 14.6f);
@@ -8291,13 +8290,13 @@ public class HabiticaIcons {
             bezier6Path.lineTo(8.67f, 6.2f);
             bezier6Path.lineTo(13.6f, 7.2f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor15);
             canvas.drawPath(bezier6Path, paint);
-            
+
             // Bezier 7
             RectF bezier7Rect = CacheForRage.bezier7Rect;
             bezier7Rect.set(2f, 1f, 15.33f, 17f);
@@ -8313,13 +8312,13 @@ public class HabiticaIcons {
             bezier7Path.lineTo(14f, 9f);
             bezier7Path.lineTo(15.33f, 7f);
             bezier7Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor93);
             canvas.drawPath(bezier7Path, paint);
-            
+
             // Bezier 8
             RectF bezier8Rect = CacheForRage.bezier8Rect;
             bezier8Rect.set(8.67f, 2.8f, 13.6f, 7.2f);
@@ -8330,13 +8329,13 @@ public class HabiticaIcons {
             bezier8Path.lineTo(8.67f, 2.8f);
             bezier8Path.lineTo(13.6f, 7.2f);
             bezier8Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier8Path, paint);
-            
+
             // Bezier 9
             RectF bezier9Rect = CacheForRage.bezier9Rect;
             bezier9Rect.set(3.73f, 2.8f, 8.67f, 7.2f);
@@ -8347,13 +8346,13 @@ public class HabiticaIcons {
             bezier9Path.lineTo(8.67f, 2.8f);
             bezier9Path.lineTo(8.67f, 6.2f);
             bezier9Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier9Path, paint);
-            
+
             // Bezier 10
             RectF bezier10Rect = CacheForRage.bezier10Rect;
             bezier10Rect.set(3.73f, 3.4f, 13.6f, 14.6f);
@@ -8371,13 +8370,13 @@ public class HabiticaIcons {
             bezier10Path.lineTo(13.6f, 10.8f);
             bezier10Path.lineTo(8.67f, 11.8f);
             bezier10Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier10Path, paint);
-            
+
             // Bezier 11
             RectF bezier11Rect = CacheForRage.bezier11Rect;
             bezier11Rect.set(3.73f, 6.2f, 13.6f, 15.2f);
@@ -8393,13 +8392,13 @@ public class HabiticaIcons {
             bezier11Path.lineTo(8.67f, 15.2f);
             bezier11Path.lineTo(3.73f, 10.8f);
             bezier11Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor94);
             canvas.drawPath(bezier11Path, paint);
-            
+
             // Bezier 12
             RectF bezier12Rect = CacheForRage.bezier12Rect;
             bezier12Rect.set(8.67f, 10.8f, 13.6f, 15.2f);
@@ -8410,13 +8409,13 @@ public class HabiticaIcons {
             bezier12Path.lineTo(8.67f, 15.2f);
             bezier12Path.lineTo(8.67f, 11.8f);
             bezier12Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier12Path, paint);
-            
+
             // Bezier 13
             RectF bezier13Rect = CacheForRage.bezier13Rect;
             bezier13Rect.set(3.73f, 3.4f, 8.67f, 11.8f);
@@ -8427,13 +8426,13 @@ public class HabiticaIcons {
             bezier13Path.lineTo(8.67f, 11.8f);
             bezier13Path.lineTo(3.73f, 10.8f);
             bezier13Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor5);
             canvas.drawPath(bezier13Path, paint);
-            
+
             // Bezier 14
             RectF bezier14Rect = CacheForRage.bezier14Rect;
             bezier14Rect.set(5.5f, 4.67f, 11.83f, 13.33f);
@@ -8449,17 +8448,17 @@ public class HabiticaIcons {
             bezier14Path.lineTo(8.67f, 13.33f);
             bezier14Path.lineTo(5.5f, 10.53f);
             bezier14Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(fillColor3);
             canvas.drawPath(bezier14Path, paint);
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForTaskDifficultyStars {
         private static final RectF originalFrame = new RectF(0f, 0f, 36f, 36f);
         private static final RectF resizedFrame = new RectF();
@@ -8484,25 +8483,25 @@ public class HabiticaIcons {
         private static final RectF symbolRect = new RectF();
         private static final RectF symbolTargetRect = new RectF();
     }
-    
+
     public static void drawTaskDifficultyStars(Canvas canvas, int taskTintColor, float difficulty, boolean isActive) {
         HabiticaIcons.drawTaskDifficultyStars(canvas, new RectF(0f, 0f, 36f, 36f), ResizingBehavior.AspectFit, taskTintColor, difficulty, isActive);
     }
-    
+
     public static void drawTaskDifficultyStars(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int taskTintColor, float difficulty, boolean isActive) {
         // Local Variables
         boolean isHard = difficulty == 2f;
         boolean isMedium = difficulty == 1.5f;
         boolean isEasy = difficulty == 1f;
         boolean isTrivial = difficulty == 0.1f;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForTaskDifficultyStars.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForTaskDifficultyStars.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 36f, resizedFrame.height() / 36f);
-        
+
         // Group
         if (isEasy) {
             // Symbol 2
@@ -8515,7 +8514,7 @@ public class HabiticaIcons {
             symbol2TargetRect.set(0f, 0f, symbol2Rect.width(), symbol2Rect.height());
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol2TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
-            
+
             // Symbol 3
             RectF symbol3Rect = CacheForTaskDifficultyStars.symbol3Rect;
             symbol3Rect.set(20f, 9f, 36f, 25f);
@@ -8527,7 +8526,7 @@ public class HabiticaIcons {
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol3TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
         }
-        
+
         // Group 2
         if (isMedium) {
             // Symbol 4
@@ -8540,7 +8539,7 @@ public class HabiticaIcons {
             symbol4TargetRect.set(0f, 0f, symbol4Rect.width(), symbol4Rect.height());
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol4TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
-            
+
             // Symbol 5
             RectF symbol5Rect = CacheForTaskDifficultyStars.symbol5Rect;
             symbol5Rect.set(20f, 13f, 36f, 29f);
@@ -8551,7 +8550,7 @@ public class HabiticaIcons {
             symbol5TargetRect.set(0f, 0f, symbol5Rect.width(), symbol5Rect.height());
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol5TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
-            
+
             // Symbol 6
             RectF symbol6Rect = CacheForTaskDifficultyStars.symbol6Rect;
             symbol6Rect.set(0f, 13f, 16f, 29f);
@@ -8563,7 +8562,7 @@ public class HabiticaIcons {
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol6TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
         }
-        
+
         // Group 3
         if (isHard) {
             // Symbol 7
@@ -8576,7 +8575,7 @@ public class HabiticaIcons {
             symbol7TargetRect.set(0f, 0f, symbol7Rect.width(), symbol7Rect.height());
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol7TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
-            
+
             // Symbol 8
             RectF symbol8Rect = CacheForTaskDifficultyStars.symbol8Rect;
             symbol8Rect.set(20f, 0f, 36f, 16f);
@@ -8587,7 +8586,7 @@ public class HabiticaIcons {
             symbol8TargetRect.set(0f, 0f, symbol8Rect.width(), symbol8Rect.height());
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol8TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
-            
+
             // Symbol 9
             RectF symbol9Rect = CacheForTaskDifficultyStars.symbol9Rect;
             symbol9Rect.set(0f, 20f, 16f, 36f);
@@ -8598,7 +8597,7 @@ public class HabiticaIcons {
             symbol9TargetRect.set(0f, 0f, symbol9Rect.width(), symbol9Rect.height());
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol9TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
-            
+
             // Symbol 10
             RectF symbol10Rect = CacheForTaskDifficultyStars.symbol10Rect;
             symbol10Rect.set(20f, 20f, 36f, 36f);
@@ -8610,7 +8609,7 @@ public class HabiticaIcons {
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbol10TargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
         }
-        
+
         // Symbol
         if (isTrivial) {
             RectF symbolRect = CacheForTaskDifficultyStars.symbolRect;
@@ -8623,10 +8622,10 @@ public class HabiticaIcons {
             HabiticaIcons.drawTaskFormDifficultyStar(canvas, symbolTargetRect, ResizingBehavior.Stretch, taskTintColor, isActive);
             canvas.restore();
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForTaskFormDifficultyStar {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 16f, 16f);
@@ -8638,22 +8637,22 @@ public class HabiticaIcons {
     public static void drawTaskFormDifficultyStar(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int taskTintColor, boolean isActive) {
         // General Declarations
         Paint paint = CacheForTaskFormDifficultyStar.paint;
-        
+
         // Local Colors
         int transparent = Color.argb(0, 204, 82, 82);
         int strokeColor15 = Color.argb(255, 195, 192, 199);
-        
+
         // Local Variables
         int starFillColor = isActive ? taskTintColor : transparent;
         int borderColor = isActive ? taskTintColor : strokeColor15;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForTaskFormDifficultyStar.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForTaskFormDifficultyStar.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 16f);
-        
+
         // Star 3
         RectF star3Rect = CacheForTaskFormDifficultyStar.star3Rect;
         star3Rect.set(1f, 1f, 15f, 15f);
@@ -8669,13 +8668,13 @@ public class HabiticaIcons {
         star3Path.lineTo(5.67f, 5.67f);
         star3Path.lineTo(8f, 1f);
         star3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(starFillColor);
         canvas.drawPath(star3Path, paint);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(1f);
@@ -8685,10 +8684,10 @@ public class HabiticaIcons {
         paint.setColor(borderColor);
         canvas.drawPath(star3Path, paint);
         canvas.restore();
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForLocked {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 15f, 17f);
@@ -8708,14 +8707,14 @@ public class HabiticaIcons {
     public static void drawLocked(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, int lockColor) {
         // General Declarations
         Paint paint = CacheForLocked.paint;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForLocked.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForLocked.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 15f, resizedFrame.height() / 17f);
-        
+
         // Group 3
         {
             // Rectangle
@@ -8724,19 +8723,19 @@ public class HabiticaIcons {
             Path rectanglePath = CacheForLocked.rectanglePath;
             rectanglePath.reset();
             rectanglePath.addRect(rectangleRect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(lockColor);
             canvas.drawPath(rectanglePath, paint);
-            
+
             // Group
             {
                 RectF group = CacheForLocked.group;
                 group.set(0f, 6f, 15f, 17f);
                 canvas.save();
-                
+
                 // Clip
                 Path clipPath = CacheForLocked.clipPath;
                 clipPath.reset();
@@ -8751,7 +8750,7 @@ public class HabiticaIcons {
                 clipPath.cubicTo(0f, 6.9f, 0.9f, 6f, 2f, 6f);
                 clipPath.close();
                 canvas.clipPath(clipPath);
-                
+
                 // Bezier
                 RectF bezierRect = CacheForLocked.bezierRect;
                 bezierRect.set(0f, 6f, 15f, 17f);
@@ -8767,7 +8766,7 @@ public class HabiticaIcons {
                 bezierPath.lineTo(0f, 8f);
                 bezierPath.cubicTo(0f, 6.9f, 0.9f, 6f, 2f, 6f);
                 bezierPath.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 paint.setStrokeWidth(4f);
@@ -8777,16 +8776,16 @@ public class HabiticaIcons {
                 paint.setColor(lockColor);
                 canvas.drawPath(bezierPath, paint);
                 canvas.restore();
-                
+
                 canvas.restore();
             }
-            
+
             // Group 2
             {
                 RectF group2 = CacheForLocked.group2;
                 group2.set(2f, 0f, 13f, 8f);
                 canvas.save();
-                
+
                 // Clip 2
                 Path clip2Path = CacheForLocked.clip2Path;
                 clip2Path.reset();
@@ -8799,7 +8798,7 @@ public class HabiticaIcons {
                 clip2Path.cubicTo(2f, 2.46f, 4.46f, 0f, 7.5f, 0f);
                 clip2Path.close();
                 canvas.clipPath(clip2Path);
-                
+
                 // Bezier 3
                 RectF bezier3Rect = CacheForLocked.bezier3Rect;
                 bezier3Rect.set(2f, 0f, 13f, 8f);
@@ -8813,7 +8812,7 @@ public class HabiticaIcons {
                 bezier3Path.lineTo(2f, 5.5f);
                 bezier3Path.cubicTo(2f, 2.46f, 4.46f, 0f, 7.5f, 0f);
                 bezier3Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 paint.setStrokeWidth(4f);
@@ -8823,14 +8822,14 @@ public class HabiticaIcons {
                 paint.setColor(lockColor);
                 canvas.drawPath(bezier3Path, paint);
                 canvas.restore();
-                
+
                 canvas.restore();
             }
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForGuildCrest {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 40f, 38f);
@@ -8877,11 +8876,11 @@ public class HabiticaIcons {
         private static final TextPaint labelTextPaint = new TextPaint();
         private static final PaintCodeStaticLayout labelStaticLayout = new PaintCodeStaticLayout();
     }
-    
+
     public static void drawGuildCrest(Canvas canvas, boolean isOwner, boolean isPublic, float memberCount, String memberCountLabel) {
         HabiticaIcons.drawGuildCrest(canvas, new RectF(0f, 0f, 40f, 38f), ResizingBehavior.AspectFit, isOwner, isPublic, memberCount, memberCountLabel);
     }
-    
+
     public static void drawGuildCrest(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, boolean isOwner, boolean isPublic, float memberCount, String memberCountLabel) {
         // General Declarations
         Stack<Matrix> currentTransformation = new Stack<>();
@@ -8907,7 +8906,7 @@ public class HabiticaIcons {
         int crestSilver4 = Color.argb(255, 175, 175, 175);
         int crestSilver6 = Color.argb(255, 141, 141, 141);
         int crestGold2 = Color.argb(255, 255, 210, 145);
-        
+
         // Local Variables
         int crestColor4 = memberCount < 100f ? crestBronze4 : (memberCount < 1000f ? crestSilver4 : crestGold4);
         int crestColor3 = memberCount < 100f ? crestBronze3 : (memberCount < 1000f ? crestSilver3 : crestGold3);
@@ -8916,20 +8915,20 @@ public class HabiticaIcons {
         int crestColor6 = memberCount < 100f ? crestBronze6 : (memberCount < 1000f ? crestSilver6 : crestGold6);
         int crestColor5 = memberCount < 100f ? crestBronze5 : (memberCount < 1000f ? crestSilver5 : crestGold5);
         boolean isPrivate = !isPublic;
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForGuildCrest.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForGuildCrest.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 40f, resizedFrame.height() / 38f);
-        
+
         // Group
         if (isPublic) {
             RectF group = CacheForGuildCrest.group;
             group.set(0f, 0f, 40f, 38f);
             canvas.save();
-            
+
             // Clip 5
             Path clip5Path = CacheForGuildCrest.clip5Path;
             clip5Path.reset();
@@ -8942,20 +8941,20 @@ public class HabiticaIcons {
             clip5Path.lineTo(20.5f, 38f);
             clip5Path.close();
             canvas.clipPath(clip5Path);
-            
+
             // Rectangle
             RectF rectangleRect = CacheForGuildCrest.rectangleRect;
             rectangleRect.set(-5f, -5f, 45f, 43f);
             Path rectanglePath = CacheForGuildCrest.rectanglePath;
             rectanglePath.reset();
             rectanglePath.addRect(rectangleRect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor1);
             canvas.drawPath(rectanglePath, paint);
-            
+
             // Rectangle 2
             canvas.save();
             canvas.translate(23.03f, 23.53f);
@@ -8971,14 +8970,14 @@ public class HabiticaIcons {
             rectangle2Path.lineTo(rectangle2Rect.right, rectangle2Rect.bottom);
             rectangle2Path.lineTo(rectangle2Rect.left, rectangle2Rect.bottom);
             rectangle2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor2);
             canvas.drawPath(rectangle2Path, paint);
             canvas.restore();
-            
+
             // Rectangle 4
             canvas.save();
             canvas.translate(35f, 22f);
@@ -8990,14 +8989,14 @@ public class HabiticaIcons {
             Path rectangle4Path = CacheForGuildCrest.rectangle4Path;
             rectangle4Path.reset();
             rectangle4Path.addRect(rectangle4Rect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor2);
             canvas.drawPath(rectangle4Path, paint);
             canvas.restore();
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForGuildCrest.bezier2Rect;
             bezier2Rect.set(0f, 0f, 40f, 38f);
@@ -9011,7 +9010,7 @@ public class HabiticaIcons {
             bezier2Path.cubicTo(6.19f, 13.48f, 6.99f, 22.28f, 6.86f, 30.6f);
             bezier2Path.lineTo(20.5f, 38f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(10f);
@@ -9021,7 +9020,7 @@ public class HabiticaIcons {
             paint.setColor(crestColor3);
             canvas.drawPath(bezier2Path, paint);
             canvas.restore();
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForGuildCrest.bezier4Rect;
             bezier4Rect.set(0f, -0f, 40f, 38f);
@@ -9035,7 +9034,7 @@ public class HabiticaIcons {
             bezier4Path.cubicTo(6.19f, 13.48f, 6.99f, 22.28f, 6.86f, 30.6f);
             bezier4Path.lineTo(20.5f, 38f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(6f);
@@ -9045,7 +9044,7 @@ public class HabiticaIcons {
             paint.setColor(crestColor4);
             canvas.drawPath(bezier4Path, paint);
             canvas.restore();
-            
+
             // Bezier 7
             if (isOwner) {
                 RectF bezier7Rect = CacheForGuildCrest.bezier7Rect;
@@ -9069,7 +9068,7 @@ public class HabiticaIcons {
                 bezier7Path.cubicTo(15.04f, 13.09f, 14.72f, 13.32f, 14.23f, 13.05f);
                 bezier7Path.lineTo(13.3f, 12.54f);
                 bezier7Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 bezier7Path.setFillType(Path.FillType.EVEN_ODD);
@@ -9077,7 +9076,7 @@ public class HabiticaIcons {
                 paint.setColor(crestColor6);
                 canvas.drawPath(bezier7Path, paint);
             }
-            
+
             // Bezier 8
             if (isOwner) {
                 RectF bezier8Rect = CacheForGuildCrest.bezier8Rect;
@@ -9101,7 +9100,7 @@ public class HabiticaIcons {
                 bezier8Path.cubicTo(28.44f, 13.09f, 28.12f, 13.32f, 27.63f, 13.05f);
                 bezier8Path.lineTo(26.7f, 12.54f);
                 bezier8Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 bezier8Path.setFillType(Path.FillType.EVEN_ODD);
@@ -9109,16 +9108,16 @@ public class HabiticaIcons {
                 paint.setColor(crestColor6);
                 canvas.drawPath(bezier8Path, paint);
             }
-            
+
             canvas.restore();
         }
-        
+
         // Group 8
         if (isPrivate) {
             RectF group8 = CacheForGuildCrest.group8;
             group8.set(3f, 0f, 37f, 38f);
             canvas.save();
-            
+
             // Clip 14
             Path clip14Path = CacheForGuildCrest.clip14Path;
             clip14Path.reset();
@@ -9129,20 +9128,20 @@ public class HabiticaIcons {
             clip14Path.lineTo(20f, 0f);
             clip14Path.close();
             canvas.clipPath(clip14Path);
-            
+
             // Rectangle 3
             RectF rectangle3Rect = CacheForGuildCrest.rectangle3Rect;
             rectangle3Rect.set(2f, 0f, 37f, 38f);
             Path rectangle3Path = CacheForGuildCrest.rectangle3Path;
             rectangle3Path.reset();
             rectangle3Path.addRect(rectangle3Rect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor1);
             canvas.drawPath(rectangle3Path, paint);
-            
+
             // Rectangle 8
             canvas.save();
             canvas.translate(23.7f, 10.7f);
@@ -9154,14 +9153,14 @@ public class HabiticaIcons {
             Path rectangle8Path = CacheForGuildCrest.rectangle8Path;
             rectangle8Path.reset();
             rectangle8Path.addRect(rectangle8Rect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor2);
             canvas.drawPath(rectangle8Path, paint);
             canvas.restore();
-            
+
             // Rectangle 5
             canvas.save();
             canvas.translate(17.73f, 24f);
@@ -9173,14 +9172,14 @@ public class HabiticaIcons {
             Path rectangle5Path = CacheForGuildCrest.rectangle5Path;
             rectangle5Path.reset();
             rectangle5Path.addRect(rectangle5Rect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor2);
             canvas.drawPath(rectangle5Path, paint);
             canvas.restore();
-            
+
             // Bezier 3
             RectF bezier3Rect = CacheForGuildCrest.bezier3Rect;
             bezier3Rect.set(3f, 0f, 37f, 38f);
@@ -9192,7 +9191,7 @@ public class HabiticaIcons {
             bezier3Path.cubicTo(34.93f, 31.47f, 37f, 22.85f, 37f, 7.62f);
             bezier3Path.lineTo(20f, 0f);
             bezier3Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(10f);
@@ -9202,7 +9201,7 @@ public class HabiticaIcons {
             paint.setColor(crestColor3);
             canvas.drawPath(bezier3Path, paint);
             canvas.restore();
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForGuildCrest.bezier6Rect;
             bezier6Rect.set(3f, 0f, 37f, 38f);
@@ -9214,7 +9213,7 @@ public class HabiticaIcons {
             bezier6Path.cubicTo(34.93f, 31.47f, 37f, 22.85f, 37f, 7.62f);
             bezier6Path.lineTo(20f, 0f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(6f);
@@ -9224,7 +9223,7 @@ public class HabiticaIcons {
             paint.setColor(crestColor4);
             canvas.drawPath(bezier6Path, paint);
             canvas.restore();
-            
+
             // Bezier 14
             if (isOwner) {
                 RectF bezier14Rect = CacheForGuildCrest.bezier14Rect;
@@ -9248,7 +9247,7 @@ public class HabiticaIcons {
                 bezier14Path.cubicTo(30.04f, 15.69f, 29.72f, 15.92f, 29.23f, 15.65f);
                 bezier14Path.lineTo(28.3f, 15.14f);
                 bezier14Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 bezier14Path.setFillType(Path.FillType.EVEN_ODD);
@@ -9256,7 +9255,7 @@ public class HabiticaIcons {
                 paint.setColor(crestColor6);
                 canvas.drawPath(bezier14Path, paint);
             }
-            
+
             // Bezier 15
             if (isOwner) {
                 RectF bezier15Rect = CacheForGuildCrest.bezier15Rect;
@@ -9280,7 +9279,7 @@ public class HabiticaIcons {
                 bezier15Path.cubicTo(13.44f, 15.69f, 13.12f, 15.92f, 12.63f, 15.65f);
                 bezier15Path.lineTo(11.7f, 15.14f);
                 bezier15Path.close();
-                
+
                 paint.reset();
                 paint.setFlags(Paint.ANTI_ALIAS_FLAG);
                 bezier15Path.setFillType(Path.FillType.EVEN_ODD);
@@ -9288,10 +9287,10 @@ public class HabiticaIcons {
                 paint.setColor(crestColor6);
                 canvas.drawPath(bezier15Path, paint);
             }
-            
+
             canvas.restore();
         }
-        
+
         // Bezier 13
         RectF bezier13Rect = CacheForGuildCrest.bezier13Rect;
         bezier13Rect.set(15f, 7f, 25f, 17f);
@@ -9310,14 +9309,14 @@ public class HabiticaIcons {
         bezier13Path.cubicTo(21.18f, 11.29f, 22.14f, 10.33f, 22.14f, 9.14f);
         bezier13Path.cubicTo(22.14f, 7.96f, 21.18f, 7f, 20f, 7f);
         bezier13Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier13Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(crestColor6);
         canvas.drawPath(bezier13Path, paint);
-        
+
         // Bezier 10
         RectF bezier10Rect = CacheForGuildCrest.bezier10Rect;
         bezier10Rect.set(2f, 19f, 38f, 34f);
@@ -9333,14 +9332,14 @@ public class HabiticaIcons {
         bezier10Path.cubicTo(5.36f, 34f, 2f, 30.63f, 2f, 26.5f);
         bezier10Path.lineTo(2f, 26.5f);
         bezier10Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier10Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.WHITE);
         canvas.drawPath(bezier10Path, paint);
-        
+
         // Bezier 11
         RectF bezier11Rect = CacheForGuildCrest.bezier11Rect;
         bezier11Rect.set(2f, 19f, 38f, 34f);
@@ -9356,7 +9355,7 @@ public class HabiticaIcons {
         bezier11Path.cubicTo(5.36f, 34f, 2f, 30.63f, 2f, 26.5f);
         bezier11Path.lineTo(2f, 26.5f);
         bezier11Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStrokeWidth(2f);
@@ -9366,7 +9365,7 @@ public class HabiticaIcons {
         paint.setColor(crestColor3);
         canvas.drawPath(bezier11Path, paint);
         canvas.restore();
-        
+
         // Label
         RectF labelRect = CacheForGuildCrest.labelRect;
         labelRect.set(4f, 20f, 36f, 33f);
@@ -9381,40 +9380,40 @@ public class HabiticaIcons {
         canvas.translate(labelRect.left, labelRect.top + (labelRect.height() - labelStaticLayout.getHeight()) / 2f);
         labelStaticLayout.draw(canvas);
         canvas.restore();
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForGuildCrestMedium {
-        private static Paint paint = new Paint();
-        private static RectF originalFrame = new RectF(0f, 0f, 30f, 34f);
-        private static RectF resizedFrame = new RectF();
-        private static RectF group = new RectF();
-        private static Path clip5Path = new Path();
-        private static RectF rectangleRect = new RectF();
-        private static Path rectanglePath = new Path();
-        private static RectF rectangle2Rect = new RectF();
-        private static Path rectangle2Path = new Path();
-        private static RectF rectangle4Rect = new RectF();
-        private static Path rectangle4Path = new Path();
-        private static RectF bezier2Rect = new RectF();
-        private static Path bezier2Path = new Path();
-        private static RectF bezier4Rect = new RectF();
-        private static Path bezier4Path = new Path();
-        private static RectF bezier6Rect = new RectF();
-        private static Path bezier6Path = new Path();
+        private static final Paint paint = new Paint();
+        private static final RectF originalFrame = new RectF(0f, 0f, 30f, 34f);
+        private static final RectF resizedFrame = new RectF();
+        private static final RectF group = new RectF();
+        private static final Path clip5Path = new Path();
+        private static final RectF rectangleRect = new RectF();
+        private static final Path rectanglePath = new Path();
+        private static final RectF rectangle2Rect = new RectF();
+        private static final Path rectangle2Path = new Path();
+        private static final RectF rectangle4Rect = new RectF();
+        private static final Path rectangle4Path = new Path();
+        private static final RectF bezier2Rect = new RectF();
+        private static final Path bezier2Path = new Path();
+        private static final RectF bezier4Rect = new RectF();
+        private static final Path bezier4Path = new Path();
+        private static final RectF bezier6Rect = new RectF();
+        private static final Path bezier6Path = new Path();
     }
-    
+
     public static void drawGuildCrestMedium(Canvas canvas, float memberCount) {
         HabiticaIcons.drawGuildCrestMedium(canvas, new RectF(0f, 0f, 30f, 34f), ResizingBehavior.AspectFit, memberCount);
     }
-    
+
     public static void drawGuildCrestMedium(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, float memberCount) {
         // General Declarations
         Stack<Matrix> currentTransformation = new Stack<Matrix>();
         currentTransformation.push(new Matrix());
         Paint paint = CacheForGuildCrestMedium.paint;
-        
+
         // Local Colors
         int crestBronze2 = Color.argb(255, 244, 165, 89);
         int crestGold4 = Color.argb(255, 255, 166, 35);
@@ -9431,27 +9430,27 @@ public class HabiticaIcons {
         int crestSilver4 = Color.argb(255, 175, 175, 175);
         int crestSilver6 = Color.argb(255, 141, 141, 141);
         int crestGold2 = Color.argb(255, 255, 210, 145);
-        
+
         // Local Variables
         int crestColor6 = memberCount < 100f ? crestBronze6 : (memberCount < 1000f ? crestSilver6 : crestGold6);
         int crestColor1 = memberCount < 100f ? crestBronze1 : (memberCount < 1000f ? crestSilver1 : crestGold1);
         int crestColor2 = memberCount < 100f ? crestBronze2 : (memberCount < 1000f ? crestSilver2 : crestGold2);
         int crestColor3 = memberCount < 100f ? crestBronze3 : (memberCount < 1000f ? crestSilver3 : crestGold3);
         int crestColor4 = memberCount < 100f ? crestBronze4 : (memberCount < 1000f ? crestSilver4 : crestGold4);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForGuildCrestMedium.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForGuildCrestMedium.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 30f, resizedFrame.height() / 34f);
-        
+
         // Group
         {
             RectF group = CacheForGuildCrestMedium.group;
             group.set(0f, 0f, 30f, 34f);
             canvas.save();
-            
+
             // Clip 5
             Path clip5Path = CacheForGuildCrestMedium.clip5Path;
             clip5Path.reset();
@@ -9462,20 +9461,20 @@ public class HabiticaIcons {
             clip5Path.lineTo(15f, 0f);
             clip5Path.close();
             canvas.clipPath(clip5Path);
-            
+
             // Rectangle
             RectF rectangleRect = CacheForGuildCrestMedium.rectangleRect;
             rectangleRect.set(-5f, -5f, 35f, 39f);
             Path rectanglePath = CacheForGuildCrestMedium.rectanglePath;
             rectanglePath.reset();
             rectanglePath.addRect(rectangleRect, Path.Direction.CW);
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor1);
             canvas.drawPath(rectanglePath, paint);
-            
+
             // Rectangle 2
             canvas.save();
             canvas.translate(14.44f, 17.06f);
@@ -9491,14 +9490,14 @@ public class HabiticaIcons {
             rectangle2Path.lineTo(rectangle2Rect.right, rectangle2Rect.bottom);
             rectangle2Path.lineTo(rectangle2Rect.left, rectangle2Rect.bottom);
             rectangle2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor2);
             canvas.drawPath(rectangle2Path, paint);
             canvas.restore();
-            
+
             // Rectangle 4
             canvas.save();
             canvas.translate(17.86f, 10.71f);
@@ -9514,14 +9513,14 @@ public class HabiticaIcons {
             rectangle4Path.lineTo(rectangle4Rect.right, rectangle4Rect.bottom);
             rectangle4Path.lineTo(rectangle4Rect.left, rectangle4Rect.bottom);
             rectangle4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor2);
             canvas.drawPath(rectangle4Path, paint);
             canvas.restore();
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForGuildCrestMedium.bezier2Rect;
             bezier2Rect.set(0f, 0f, 30f, 34f);
@@ -9533,7 +9532,7 @@ public class HabiticaIcons {
             bezier2Path.cubicTo(29f, 28f, 30f, 21f, 30f, 7f);
             bezier2Path.lineTo(15f, 0f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(10f);
@@ -9543,7 +9542,7 @@ public class HabiticaIcons {
             paint.setColor(crestColor3);
             canvas.drawPath(bezier2Path, paint);
             canvas.restore();
-            
+
             // Bezier 4
             RectF bezier4Rect = CacheForGuildCrestMedium.bezier4Rect;
             bezier4Rect.set(0f, 0f, 30f, 34f);
@@ -9555,7 +9554,7 @@ public class HabiticaIcons {
             bezier4Path.cubicTo(29f, 28f, 30f, 21f, 30f, 7f);
             bezier4Path.lineTo(15f, 0f);
             bezier4Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(6f);
@@ -9565,7 +9564,7 @@ public class HabiticaIcons {
             paint.setColor(crestColor4);
             canvas.drawPath(bezier4Path, paint);
             canvas.restore();
-            
+
             // Bezier 6
             RectF bezier6Rect = CacheForGuildCrestMedium.bezier6Rect;
             bezier6Rect.set(10f, 11f, 20f, 21f);
@@ -9584,20 +9583,20 @@ public class HabiticaIcons {
             bezier6Path.cubicTo(16.18f, 15.29f, 17.14f, 14.33f, 17.14f, 13.14f);
             bezier6Path.cubicTo(17.14f, 11.96f, 16.18f, 11f, 15f, 11f);
             bezier6Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             bezier6Path.setFillType(Path.FillType.EVEN_ODD);
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(crestColor6);
             canvas.drawPath(bezier6Path, paint);
-            
+
             canvas.restore();
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForGuildCrestSmall {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 16f, 16f);
@@ -9607,31 +9606,31 @@ public class HabiticaIcons {
         private static final RectF bezier2Rect = new RectF();
         private static final Path bezier2Path = new Path();
     }
-    
+
     public static void drawGuildCrestSmall(Canvas canvas, float memberCount) {
         HabiticaIcons.drawGuildCrestSmall(canvas, new RectF(0f, 0f, 16f, 16f), ResizingBehavior.AspectFit, memberCount);
     }
-    
+
     public static void drawGuildCrestSmall(Canvas canvas, RectF targetFrame, ResizingBehavior resizing, float memberCount) {
         // General Declarations
         Paint paint = CacheForGuildCrestSmall.paint;
-        
+
         // Local Colors
         int crestGold4 = Color.argb(255, 255, 166, 35);
         int fillColor37 = Color.argb(255, 255, 255, 255);
         int crestSilver4 = Color.argb(255, 175, 175, 175);
         int crestBronze4 = Color.argb(255, 215, 122, 32);
-        
+
         // Local Variables
         int crestColor4 = memberCount < 100f ? crestBronze4 : (memberCount < 1000f ? crestSilver4 : crestGold4);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForGuildCrestSmall.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForGuildCrestSmall.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 16f);
-        
+
         // Bezier
         RectF bezierRect = CacheForGuildCrestSmall.bezierRect;
         bezierRect.set(0f, 0f, 16f, 16f);
@@ -9646,14 +9645,14 @@ public class HabiticaIcons {
         bezierPath.cubicTo(7.65f, 16.05f, 8.35f, 16.07f, 8.9f, 15.81f);
         bezierPath.cubicTo(16.95f, 12.24f, 15.98f, 5.65f, 15.94f, 3.41f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(crestColor4);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForGuildCrestSmall.bezier2Rect;
         bezier2Rect.set(4f, 3f, 12f, 11f);
@@ -9672,17 +9671,17 @@ public class HabiticaIcons {
         bezier2Path.cubicTo(8.95f, 6.43f, 9.71f, 5.66f, 9.71f, 4.71f);
         bezier2Path.cubicTo(9.71f, 3.77f, 8.95f, 3f, 8f, 3f);
         bezier2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier2Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor37);
         canvas.drawPath(bezier2Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForTwoHandedIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 15f, 15f);
@@ -9690,25 +9689,25 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawTwoHandedIcon(Canvas canvas) {
         HabiticaIcons.drawTwoHandedIcon(canvas, new RectF(0f, 0f, 15f, 15f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawTwoHandedIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForTwoHandedIcon.paint;
-        
+
         // Local Colors
         int fillColor39 = Color.argb(255, 189, 168, 255);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForTwoHandedIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForTwoHandedIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 15f, resizedFrame.height() / 15f);
-        
+
         // Bezier
         RectF bezierRect = CacheForTwoHandedIcon.bezierRect;
         bezierRect.set(0f, 0f, 14.85f, 14.59f);
@@ -9790,14 +9789,14 @@ public class HabiticaIcons {
         bezierPath.lineTo(14.85f, 4.9f);
         bezierPath.cubicTo(14.85f, 4.13f, 14.22f, 3.5f, 13.45f, 3.5f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor39);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
 
@@ -9810,39 +9809,39 @@ public class HabiticaIcons {
         private static final RectF bezier2Rect = new RectF();
         private static final Path bezier2Path = new Path();
     }
-    
+
     public static void drawBuffIcon(Canvas canvas) {
         HabiticaIcons.drawBuffIcon(canvas, new RectF(0f, 0f, 15f, 15f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawBuffIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForBuffIcon.paint;
-        
+
         // Local Colors
         int fillColor18 = Color.argb(255, 154, 98, 255);
         int fillColor85 = Color.argb(255, 237, 236, 238);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForBuffIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForBuffIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 15f, resizedFrame.height() / 15f);
-        
+
         // Rectangle
         RectF rectangleRect = CacheForBuffIcon.rectangleRect;
         rectangleRect.set(0f, 0f, 15f, 15f);
         Path rectanglePath = CacheForBuffIcon.rectanglePath;
         rectanglePath.reset();
         rectanglePath.addRoundRect(rectangleRect, 2f, 2f, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor85);
         canvas.drawPath(rectanglePath, paint);
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForBuffIcon.bezier2Rect;
         bezier2Rect.set(3.75f, 3f, 11.25f, 12f);
@@ -9869,17 +9868,17 @@ public class HabiticaIcons {
         bezier2Path.lineTo(6f, 12f);
         bezier2Path.lineTo(6f, 11.25f);
         bezier2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier2Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor18);
         canvas.drawPath(bezier2Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForParticipantsIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 20f, 20f);
@@ -9891,27 +9890,27 @@ public class HabiticaIcons {
         private static final RectF bezier3Rect = new RectF();
         private static final Path bezier3Path = new Path();
     }
-    
+
     public static void drawParticipantsIcon(Canvas canvas) {
         HabiticaIcons.drawParticipantsIcon(canvas, new RectF(0f, 0f, 20f, 20f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawParticipantsIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForParticipantsIcon.paint;
-        
+
         // Local Colors
         int fillColor104 = Color.argb(255, 249, 249, 249);
         int fillColor39 = Color.argb(255, 189, 168, 255);
         int fillColor25 = Color.argb(255, 225, 224, 227);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForParticipantsIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForParticipantsIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 20f, resizedFrame.height() / 20f);
-        
+
         // Bezier
         RectF bezierRect = CacheForParticipantsIcon.bezierRect;
         bezierRect.set(1f, 3f, 13f, 17f);
@@ -9933,14 +9932,14 @@ public class HabiticaIcons {
         bezierPath.lineTo(7f, 3f);
         bezierPath.lineTo(5f, 3f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor104);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Bezier 2
         RectF bezier2Rect = CacheForParticipantsIcon.bezier2Rect;
         bezier2Rect.set(10f, 3f, 19f, 17f);
@@ -9962,14 +9961,14 @@ public class HabiticaIcons {
         bezier2Path.lineTo(13f, 3f);
         bezier2Path.lineTo(15f, 3f);
         bezier2Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier2Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor25);
         canvas.drawPath(bezier2Path, paint);
-        
+
         // Bezier 3
         RectF bezier3Rect = CacheForParticipantsIcon.bezier3Rect;
         bezier3Rect.set(0f, 2f, 20f, 18f);
@@ -10019,17 +10018,17 @@ public class HabiticaIcons {
         bezier3Path.cubicTo(20f, 13.58f, 18.57f, 11.5f, 16.51f, 10.56f);
         bezier3Path.lineTo(16.51f, 10.56f);
         bezier3Path.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezier3Path.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor39);
         canvas.drawPath(bezier3Path, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForChatReplyIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 17f, 17f);
@@ -10039,31 +10038,31 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawChatReplyIcon(Canvas canvas) {
         HabiticaIcons.drawChatReplyIcon(canvas, new RectF(0f, 0f, 17f, 17f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawChatReplyIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForChatReplyIcon.paint;
-        
+
         // Local Colors
         int strokeColor15 = Color.argb(255, 195, 192, 199);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForChatReplyIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForChatReplyIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 17f, resizedFrame.height() / 17f);
-        
+
         // Group
         {
             RectF group = CacheForChatReplyIcon.group;
             group.set(-10f, -9f, 27f, 26f);
             canvas.save();
-            
+
             // Clip
             Path clipPath = CacheForChatReplyIcon.clipPath;
             clipPath.reset();
@@ -10082,7 +10081,7 @@ public class HabiticaIcons {
             clipPath.lineTo(6.54f, 3f);
             clipPath.close();
             canvas.clipPath(clipPath);
-            
+
             // Bezier
             RectF bezierRect = CacheForChatReplyIcon.bezierRect;
             bezierRect.set(2f, 3f, 15f, 14f);
@@ -10096,7 +10095,7 @@ public class HabiticaIcons {
             bezierPath.cubicTo(15.57f, 8.67f, 12.78f, 6.15f, 6.54f, 6.44f);
             bezierPath.lineTo(6.54f, 3f);
             bezierPath.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(4f);
@@ -10107,13 +10106,13 @@ public class HabiticaIcons {
             paint.setColor(strokeColor15);
             canvas.drawPath(bezierPath, paint);
             canvas.restore();
-            
+
             canvas.restore();
         }
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForChatCopyIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 17f, 17f);
@@ -10121,25 +10120,25 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawChatCopyIcon(Canvas canvas) {
         HabiticaIcons.drawChatCopyIcon(canvas, new RectF(0f, 0f, 17f, 17f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawChatCopyIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForChatCopyIcon.paint;
-        
+
         // Local Colors
         int fillColor35 = Color.argb(255, 195, 192, 199);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForChatCopyIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForChatCopyIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 17f, resizedFrame.height() / 17f);
-        
+
         // Bezier
         RectF bezierRect = CacheForChatCopyIcon.bezierRect;
         bezierRect.set(0f, 1f, 16f, 17f);
@@ -10173,17 +10172,17 @@ public class HabiticaIcons {
         bezierPath.cubicTo(16f, 3.9f, 15.11f, 3f, 14f, 3f);
         bezierPath.lineTo(14f, 3f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForChatReportIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 17f, 18f);
@@ -10191,25 +10190,25 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawChatReportIcon(Canvas canvas) {
         HabiticaIcons.drawChatReportIcon(canvas, new RectF(0f, 0f, 17f, 18f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawChatReportIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForChatReportIcon.paint;
-        
+
         // Local Colors
         int fillColor35 = Color.argb(255, 195, 192, 199);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForChatReportIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForChatReportIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 17f, resizedFrame.height() / 18f);
-        
+
         // Bezier
         RectF bezierRect = CacheForChatReportIcon.bezierRect;
         bezierRect.set(0f, 1f, 16f, 17f);
@@ -10250,17 +10249,17 @@ public class HabiticaIcons {
         bezierPath.cubicTo(16f, 5.9f, 15.11f, 5f, 14f, 5f);
         bezierPath.lineTo(14f, 5f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForChatDeleteIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 17f, 17f);
@@ -10268,25 +10267,25 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawChatDeleteIcon(Canvas canvas) {
         HabiticaIcons.drawChatDeleteIcon(canvas, new RectF(0f, 0f, 17f, 17f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawChatDeleteIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForChatDeleteIcon.paint;
-        
+
         // Local Colors
         int fillColor35 = Color.argb(255, 195, 192, 199);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForChatDeleteIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForChatDeleteIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 17f, resizedFrame.height() / 17f);
-        
+
         // Bezier
         RectF bezierRect = CacheForChatDeleteIcon.bezierRect;
         bezierRect.set(1f, 1f, 15f, 17f);
@@ -10330,17 +10329,17 @@ public class HabiticaIcons {
         bezierPath.lineTo(6f, 7f);
         bezierPath.lineTo(6f, 13f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
-    
+
     private static class CacheForAlertIcon {
         private static final Paint paint = new Paint();
         private static final RectF originalFrame = new RectF(0f, 0f, 16f, 16f);
@@ -10348,25 +10347,25 @@ public class HabiticaIcons {
         private static final RectF bezierRect = new RectF();
         private static final Path bezierPath = new Path();
     }
-    
+
     public static void drawAlertIcon(Canvas canvas) {
         HabiticaIcons.drawAlertIcon(canvas, new RectF(0f, 0f, 16f, 16f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawAlertIcon(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForAlertIcon.paint;
-        
+
         // Local Colors
         int fillColor105 = Color.argb(255, 255, 97, 101);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForAlertIcon.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForAlertIcon.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 16f, resizedFrame.height() / 16f);
-        
+
         // Bezier
         RectF bezierRect = CacheForAlertIcon.bezierRect;
         bezierRect.set(0.01f, 0.05f, 16.01f, 16.05f);
@@ -10402,14 +10401,14 @@ public class HabiticaIcons {
         bezierPath.lineTo(7.01f, 12.05f);
         bezierPath.lineTo(7.01f, 10.05f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor105);
         canvas.drawPath(bezierPath, paint);
-        
+
         canvas.restore();
     }
 
@@ -10446,15 +10445,15 @@ public class HabiticaIcons {
         private static final RectF rectangle11Rect = new RectF();
         private static final Path rectangle11Path = new Path();
     }
-    
+
     public static void drawStats(Canvas canvas) {
         HabiticaIcons.drawStats(canvas, new RectF(0f, 0f, 30f, 22f), ResizingBehavior.AspectFit);
     }
-    
+
     public static void drawStats(Canvas canvas, RectF targetFrame, ResizingBehavior resizing) {
         // General Declarations
         Paint paint = CacheForStats.paint;
-        
+
         // Local Colors
         int fillColor35 = Color.argb(255, 195, 192, 199);
         int fillColor25 = Color.argb(255, 225, 224, 227);
@@ -10463,14 +10462,14 @@ public class HabiticaIcons {
         int strokeColor21 = Color.argb(255, 135, 129, 144);
         int fillColor106 = Color.argb(255, 216, 216, 216);
         int fillColor40 = Color.argb(255, 165, 161, 172);
-        
+
         // Resize to Target Frame
         canvas.save();
         RectF resizedFrame = CacheForStats.resizedFrame;
         HabiticaIcons.resizingBehaviorApply(resizing, CacheForStats.originalFrame, targetFrame, resizedFrame);
         canvas.translate(resizedFrame.left, resizedFrame.top);
         canvas.scale(resizedFrame.width() / 30f, resizedFrame.height() / 22f);
-        
+
         // Bezier
         RectF bezierRect = CacheForStats.bezierRect;
         bezierRect.set(1.75f, 1.75f, 28.25f, 20.25f);
@@ -10510,20 +10509,20 @@ public class HabiticaIcons {
         bezierPath.lineTo(11.25f, 14.25f);
         bezierPath.lineTo(11.25f, 19f);
         bezierPath.close();
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         bezierPath.setFillType(Path.FillType.EVEN_ODD);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor106);
         canvas.drawPath(bezierPath, paint);
-        
+
         // Group
         {
             RectF group = CacheForStats.group;
             group.set(-22f, -22f, 52f, 44f);
             canvas.save();
-            
+
             // Clip
             Path clipPath = CacheForStats.clipPath;
             clipPath.reset();
@@ -10556,7 +10555,7 @@ public class HabiticaIcons {
             clipPath.lineTo(10f, 19f);
             clipPath.close();
             canvas.clipPath(clipPath);
-            
+
             // Bezier 2
             RectF bezier2Rect = CacheForStats.bezier2Rect;
             bezier2Rect.set(3f, 3f, 27f, 19f);
@@ -10584,7 +10583,7 @@ public class HabiticaIcons {
             bezier2Path.lineTo(10f, 13f);
             bezier2Path.lineTo(10f, 19f);
             bezier2Path.close();
-            
+
             paint.reset();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG);
             paint.setStrokeWidth(5f);
@@ -10594,153 +10593,153 @@ public class HabiticaIcons {
             paint.setColor(strokeColor21);
             canvas.drawPath(bezier2Path, paint);
             canvas.restore();
-            
+
             canvas.restore();
         }
-        
+
         // Rectangle
         RectF rectangleRect = CacheForStats.rectangleRect;
         rectangleRect.set(3f, 6f, 6f, 16f);
         Path rectanglePath = CacheForStats.rectanglePath;
         rectanglePath.reset();
         rectanglePath.addRect(rectangleRect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor40);
         canvas.drawPath(rectanglePath, paint);
-        
+
         // Rectangle 2
         RectF rectangle2Rect = CacheForStats.rectangle2Rect;
         rectangle2Rect.set(24f, 6f, 27f, 16f);
         Path rectangle2Path = CacheForStats.rectangle2Path;
         rectangle2Path.reset();
         rectangle2Path.addRect(rectangle2Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor40);
         canvas.drawPath(rectangle2Path, paint);
-        
+
         // Rectangle 3
         RectF rectangle3Rect = CacheForStats.rectangle3Rect;
         rectangle3Rect.set(10f, 9f, 20f, 13f);
         Path rectangle3Path = CacheForStats.rectangle3Path;
         rectangle3Path.reset();
         rectangle3Path.addRect(rectangle3Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor107);
         canvas.drawPath(rectangle3Path, paint);
-        
+
         // Rectangle 4
         RectF rectangle4Rect = CacheForStats.rectangle4Rect;
         rectangle4Rect.set(12f, 9f, 14f, 13f);
         Path rectangle4Path = CacheForStats.rectangle4Path;
         rectangle4Path.reset();
         rectangle4Path.addRect(rectangle4Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor89);
         canvas.drawPath(rectangle4Path, paint);
-        
+
         // Rectangle 5
         RectF rectangle5Rect = CacheForStats.rectangle5Rect;
         rectangle5Rect.set(16f, 9f, 18f, 13f);
         Path rectangle5Path = CacheForStats.rectangle5Path;
         rectangle5Path.reset();
         rectangle5Path.addRect(rectangle5Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor89);
         canvas.drawPath(rectangle5Path, paint);
-        
+
         // Rectangle 6
         RectF rectangle6Rect = CacheForStats.rectangle6Rect;
         rectangle6Rect.set(6f, 3f, 10f, 19f);
         Path rectangle6Path = CacheForStats.rectangle6Path;
         rectangle6Path.reset();
         rectangle6Path.addRect(rectangle6Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(rectangle6Path, paint);
-        
+
         // Rectangle 7
         RectF rectangle7Rect = CacheForStats.rectangle7Rect;
         rectangle7Rect.set(20f, 3f, 24f, 19f);
         Path rectangle7Path = CacheForStats.rectangle7Path;
         rectangle7Path.reset();
         rectangle7Path.addRect(rectangle7Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(rectangle7Path, paint);
-        
+
         // Rectangle 8
         RectF rectangle8Rect = CacheForStats.rectangle8Rect;
         rectangle8Rect.set(6f, 3f, 10f, 11f);
         Path rectangle8Path = CacheForStats.rectangle8Path;
         rectangle8Path.reset();
         rectangle8Path.addRect(rectangle8Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor25);
         canvas.drawPath(rectangle8Path, paint);
-        
+
         // Rectangle 9
         RectF rectangle9Rect = CacheForStats.rectangle9Rect;
         rectangle9Rect.set(3f, 6f, 6f, 11f);
         Path rectangle9Path = CacheForStats.rectangle9Path;
         rectangle9Path.reset();
         rectangle9Path.addRect(rectangle9Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(rectangle9Path, paint);
-        
+
         // Rectangle 10
         RectF rectangle10Rect = CacheForStats.rectangle10Rect;
         rectangle10Rect.set(24f, 6f, 27f, 11f);
         Path rectangle10Path = CacheForStats.rectangle10Path;
         rectangle10Path.reset();
         rectangle10Path.addRect(rectangle10Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor35);
         canvas.drawPath(rectangle10Path, paint);
-        
+
         // Rectangle 11
         RectF rectangle11Rect = CacheForStats.rectangle11Rect;
         rectangle11Rect.set(20f, 3f, 24f, 11f);
         Path rectangle11Path = CacheForStats.rectangle11Path;
         rectangle11Path.reset();
         rectangle11Path.addRect(rectangle11Rect, Path.Direction.CW);
-        
+
         paint.reset();
         paint.setFlags(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(fillColor25);
         canvas.drawPath(rectangle11Path, paint);
-        
+
         canvas.restore();
     }
 
@@ -10750,16 +10749,16 @@ public class HabiticaIcons {
             result.set(rect);
             return;
         }
-        
+
         if (behavior == ResizingBehavior.Stretch) {
             result.set(target);
             return;
         }
-        
+
         float xRatio = Math.abs(target.width() / rect.width());
         float yRatio = Math.abs(target.height() / rect.height());
         float scale = 0f;
-        
+
         switch (behavior) {
             case AspectFit: {
                 scale = Math.min(xRatio, yRatio);
@@ -10774,16 +10773,16 @@ public class HabiticaIcons {
                 break;
             }
         }
-        
+
         float newWidth = Math.abs(rect.width() * scale);
         float newHeight = Math.abs(rect.height() * scale);
         result.set(target.centerX() - newWidth / 2,
-            target.centerY() - newHeight / 2,
-            target.centerX() + newWidth / 2,
-            target.centerY() + newHeight / 2);
+                target.centerY() - newHeight / 2,
+                target.centerX() + newWidth / 2,
+                target.centerY() + newHeight / 2);
     }
-    
-    
+
+
 }
 
 class PaintCodeColor extends Color {
@@ -10796,46 +10795,47 @@ class PaintCodeColor extends Color {
     public static float hue(int color) {
         return ColorToHSV(color)[0];
     }
-    
+
 
     public static float brightness(int color) {
         return ColorToHSV(color)[2];
     }
-    
+
     public static int colorByChangingAlpha(int color, int newAlpha) {
         return argb(newAlpha, red(color), green(color), blue(color));
     }
 }
+
 class PaintCodeShadow {
     int color;
     float dx, dy;
     private float radius;
     private BlurMaskFilter blurMaskFilter;
-    
+
     PaintCodeShadow() {
-        
+
     }
-    
+
     PaintCodeShadow get(int color) {
         this.color = color;
         this.dx = (float) 0.0;
         this.dy = (float) 1.0;
-        
+
         if (this.radius != (float) 1.0) {
             this.blurMaskFilter = null;
             this.radius = (float) 1.0;
         }
-        
+
         return this;
     }
-    
+
     void setBlurOfPaint(Paint paint) {
         if (this.radius <= 0)
             return;
-        
+
         if (this.blurMaskFilter == null)
             this.blurMaskFilter = new BlurMaskFilter(this.radius, BlurMaskFilter.Blur.NORMAL);
-        
+
         paint.setMaskFilter(this.blurMaskFilter);
     }
 }
@@ -10854,11 +10854,11 @@ class PaintCodeBitmap {
         }
         return this;
     }
-    
+
     BitmapShader getShader() {
         return this.shader;
     }
-    
+
     RectF getBounds() {
         return this.bounds;
     }
@@ -10868,7 +10868,7 @@ class PaintCodeBitmap {
 class PaintCodeDashPathEffect {
     private DashPathEffect effect;
     private float dash, gap, phase;
-    
+
     DashPathEffect get(float dash) {
         if (this.dash != dash || this.gap != (float) 20.0 || this.phase != (float) 0.0) {
             this.dash = dash;
@@ -10887,7 +10887,7 @@ class PaintCodeStaticLayout {
     private Layout.Alignment alignment;
     private CharSequence source;
     private TextPaint paint;
-    
+
     StaticLayout get(int width, CharSequence source, TextPaint paint) {
         if (this.layout == null || this.width != width || this.alignment != Layout.Alignment.ALIGN_CENTER || !this.source.equals(source) || !this.paint.equals(paint)) {
             this.width = width;

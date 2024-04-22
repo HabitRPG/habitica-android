@@ -47,7 +47,6 @@ import java.io.OutputStream
 import java.util.Date
 import javax.inject.Inject
 
-
 abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var notificationsManager: NotificationsManager
@@ -68,7 +67,10 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun getLayoutResId(): Int?
 
     open fun getContentView(layoutResId: Int? = getLayoutResId()): View {
-        return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(layoutResId ?: 0, null)
+        return (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+            layoutResId ?: 0,
+            null,
+        )
     }
 
     private val habiticaApplication: HabiticaApplication
@@ -84,11 +86,12 @@ abstract class BaseActivity : AppCompatActivity() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val languageHelper = LanguageHelper(sharedPreferences.getString("language", "en"))
         resources.forceLocale(this, languageHelper.locale)
-        delegate.localNightMode = when (sharedPreferences.getString("theme_mode", "system")) {
-            "light" -> AppCompatDelegate.MODE_NIGHT_NO
-            "dark" -> AppCompatDelegate.MODE_NIGHT_YES
-            else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        }
+        delegate.localNightMode =
+            when (sharedPreferences.getString("theme_mode", "system")) {
+                "light" -> AppCompatDelegate.MODE_NIGHT_NO
+                "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            }
         isNightMode = isUsingNightModeResources()
         loadTheme(sharedPreferences)
 
@@ -99,7 +102,11 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         lifecycleScope.launchCatching {
             notificationsManager.displayNotificationEvents.collect {
-                if (ShowNotificationInteractor(this@BaseActivity, lifecycleScope).handleNotification(it)) {
+                if (ShowNotificationInteractor(
+                        this@BaseActivity,
+                        lifecycleScope,
+                    ).handleNotification(it)
+                ) {
                     lifecycleScope.launch(ExceptionHandler.coroutine()) {
                         userRepository.retrieveUser(false, true)
                     }
@@ -136,7 +143,10 @@ abstract class BaseActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    internal open fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean = false) {
+    internal open fun loadTheme(
+        sharedPreferences: SharedPreferences,
+        forced: Boolean = false,
+    ) {
         val theme = forcedTheme ?: sharedPreferences.getString("theme_name", "purple")
         if (theme != currentTheme || forced) {
             if (forcedIsNight ?: isNightMode) {
@@ -150,7 +160,7 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal_Dark
                         "blue" -> R.style.MainAppTheme_Blue_Dark
                         else -> R.style.MainAppTheme_Dark
-                    }
+                    },
                 )
             } else {
                 setTheme(
@@ -163,16 +173,17 @@ abstract class BaseActivity : AppCompatActivity() {
                         "teal" -> R.style.MainAppTheme_Teal
                         "blue" -> R.style.MainAppTheme_Blue
                         else -> R.style.MainAppTheme
-                    }
+                    },
                 )
             }
         }
 
-        window.navigationBarColor = if (forcedIsNight ?: isNightMode) {
-            ContextCompat.getColor(this, R.color.system_bars)
-        } else {
-            getThemeColor(R.attr.colorPrimaryDark)
-        }
+        window.navigationBarColor =
+            if (forcedIsNight ?: isNightMode) {
+                ContextCompat.getColor(this, R.color.system_bars)
+            } else {
+                getThemeColor(R.attr.colorPrimaryDark)
+            }
         if (!(forcedIsNight ?: isNightMode)) {
             window.updateStatusBarColor(getThemeColor(R.attr.headerBackgroundColor), true)
         }
@@ -222,19 +233,38 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun showConnectionProblem(errorCount: Int, title: String?, message: String, isFromUserInput: Boolean) {
+    open fun showConnectionProblem(
+        errorCount: Int,
+        title: String?,
+        message: String,
+        isFromUserInput: Boolean,
+    ) {
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(title)
         alert.setMessage(message)
-        alert.addButton(android.R.string.ok, isPrimary = true, isDestructive = false, function = null)
+        alert.addButton(
+            android.R.string.ok,
+            isPrimary = true,
+            isDestructive = false,
+            function = null,
+        )
         alert.enqueue()
     }
 
     open fun hideConnectionProblem() {
     }
 
-    fun shareContent(identifier: String, message: String?, image: Bitmap? = null) {
-        Analytics.sendEvent("shared", EventCategory.BEHAVIOUR, HitType.EVENT, mapOf("identifier" to identifier))
+    fun shareContent(
+        identifier: String,
+        message: String?,
+        image: Bitmap? = null,
+    ) {
+        Analytics.sendEvent(
+            "shared",
+            EventCategory.BEHAVIOUR,
+            HitType.EVENT,
+            mapOf("identifier" to identifier),
+        )
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "image/*"
         if (message?.isNotBlank() == true) {
@@ -251,7 +281,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
                     contentValues.put(
                         MediaStore.MediaColumns.RELATIVE_PATH,
-                        Environment.DIRECTORY_PICTURES
+                        Environment.DIRECTORY_PICTURES,
                     )
                     uri =
                         resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
@@ -271,7 +301,6 @@ abstract class BaseActivity : AppCompatActivity() {
             }
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_using)))
         } catch (_: FileNotFoundException) {
-
         }
     }
 

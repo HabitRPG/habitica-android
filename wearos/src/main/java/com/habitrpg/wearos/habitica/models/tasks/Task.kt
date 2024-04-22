@@ -16,7 +16,6 @@ import java.util.Date
 
 @JsonClass(generateAdapter = true)
 open class Task() : Parcelable, BaseTask {
-
     @Json(name = "_id")
     var id: String? = null
     var userId: String = ""
@@ -25,13 +24,17 @@ open class Task() : Parcelable, BaseTask {
     var notes: String? = null
     override var type: TaskType?
         get() = TaskType.from(typeValue)
-        set(value) { typeValue = value?.value }
+        set(value) {
+            typeValue = value?.value
+        }
     internal var typeValue: String? = null
     var challengeID: String? = null
     var challengeBroken: String? = null
     var attribute: Attribute?
         get() = Attribute.from(attributeValue)
-        set(value) { attributeValue = value?.value }
+        set(value) {
+            attributeValue = value?.value
+        }
     var attributeValue: String? = Attribute.STRENGTH.value
     var value: Double? = 0.0
     var dateCreated: Date? = null
@@ -189,7 +192,10 @@ open class Task() : Parcelable, BaseTask {
 
     override fun describeContents(): Int = 0
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    override fun writeToParcel(
+        dest: Parcel,
+        flags: Int,
+    ) {
         dest.writeString(this.userId)
         dest.writeValue(this.priority)
         dest.writeString(this.text)
@@ -321,10 +327,11 @@ open class Task() : Parcelable, BaseTask {
         const val FILTER_COMPLETED = "completed"
 
         @JvmField
-        val CREATOR: Parcelable.Creator<Task> = object : Parcelable.Creator<Task> {
-            override fun createFromParcel(source: Parcel): Task = Task(source)
+        val CREATOR: Parcelable.Creator<Task> =
+            object : Parcelable.Creator<Task> {
+                override fun createFromParcel(source: Parcel): Task = Task(source)
 
-            override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
-        }
+                override fun newArray(size: Int): Array<Task?> = arrayOfNulls(size)
+            }
     }
 }

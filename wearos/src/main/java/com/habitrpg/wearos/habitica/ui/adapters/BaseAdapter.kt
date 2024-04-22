@@ -27,9 +27,13 @@ abstract class BaseAdapter<D : Any> : RecyclerView.Adapter<RecyclerView.ViewHold
             field = value
             notifyDataSetChanged()
         }
+
     fun hasData(): Boolean = data.isNotEmpty()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_HEADER -> HeaderViewHolder(RowHeaderBinding.inflate(parent.context.layoutInflater, parent, false).root)
             else -> SpacerViewHolder(RowSpacerBinding.inflate(parent.context.layoutInflater, parent, false).root)
@@ -37,9 +41,13 @@ abstract class BaseAdapter<D : Any> : RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     override fun getItemCount() = data.size + 1
+
     protected fun getItemAt(position: Int) = data[position - 1]
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (holder is HeaderViewHolder) {
             holder.bind(title)
             holder.setIsDisconnected(isDisconnected)

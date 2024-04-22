@@ -7,13 +7,13 @@ import android.widget.LinearLayout
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.QuestCollectBinding
 import com.habitrpg.android.habitica.databinding.QuestProgressOldBinding
-import com.habitrpg.common.habitica.extensions.setScaledPadding
 import com.habitrpg.android.habitica.models.inventory.QuestContent
 import com.habitrpg.android.habitica.models.inventory.QuestProgress
 import com.habitrpg.android.habitica.models.inventory.QuestProgressCollect
 import com.habitrpg.common.habitica.extensions.dpToPx
 import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.extensions.loadImage
+import com.habitrpg.common.habitica.extensions.setScaledPadding
 
 class OldQuestProgressView : LinearLayout {
     private val binding = QuestProgressOldBinding.inflate(context.layoutInflater, this)
@@ -34,7 +34,10 @@ class OldQuestProgressView : LinearLayout {
         setScaledPadding(context, 16, 16, 16, 16)
     }
 
-    fun setData(quest: QuestContent, progress: QuestProgress?) {
+    fun setData(
+        quest: QuestContent,
+        progress: QuestProgress?,
+    ) {
         binding.collectionContainer.removeAllViews()
         if (quest.isBossQuest) {
             binding.bossNameView.text = quest.boss?.name
@@ -60,10 +63,14 @@ class OldQuestProgressView : LinearLayout {
                 val inflater = LayoutInflater.from(context)
                 for (collect in progress.collect ?: emptyList<QuestProgressCollect>()) {
                     val contentCollect = quest.getCollectWithKey(collect.key) ?: continue
-                    val collectBinding = QuestCollectBinding.inflate(inflater, binding.collectionContainer, true)
+                    val collectBinding =
+                        QuestCollectBinding.inflate(inflater, binding.collectionContainer, true)
                     collectBinding.iconView.loadImage("quest_" + quest.key + "_" + collect.key)
                     collectBinding.nameView.text = contentCollect.text
-                    collectBinding.valueView.set(collect.count.toDouble(), contentCollect.count.toDouble())
+                    collectBinding.valueView.set(
+                        collect.count.toDouble(),
+                        contentCollect.count.toDouble(),
+                    )
                     collectBinding.valueView.barHeight = 5.dpToPx(context)
                 }
             }

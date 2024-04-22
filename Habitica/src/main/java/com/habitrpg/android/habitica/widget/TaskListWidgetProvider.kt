@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 abstract class TaskListWidgetProvider : BaseWidgetProvider() {
-
     @Inject
     lateinit var taskRepository: TaskRepository
 
@@ -31,20 +30,32 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
     protected abstract val titleResId: Int
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(
+        context: Context,
+        intent: Intent,
+    ) {
         if (intent.action == DAILY_ACTION) {
-            val appWidgetId = intent.getIntExtra(
-                AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID
-            )
+            val appWidgetId =
+                intent.getIntExtra(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID,
+                )
             val taskId = intent.getStringExtra(TASK_ID_ITEM)
 
             if (taskId != null) {
                 MainScope().launch(ExceptionHandler.coroutine()) {
                     val user = userRepository.getUser().firstOrNull()
-                    val response = taskRepository.taskChecked(user, taskId, up = true, force = false, notifyFunc = null)
+                    val response =
+                        taskRepository.taskChecked(
+                            user,
+                            taskId,
+                            up = true,
+                            force = false,
+                            notifyFunc = null,
+                        )
                     showToastForTaskDirection(context, response)
-                    AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
+                    AppWidgetManager.getInstance(context)
+                        .notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
                 }
             }
         }
@@ -54,7 +65,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
+        appWidgetIds: IntArray,
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
         val thisWidget = ComponentName(context, providerClass)
@@ -64,7 +75,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
             val options = appWidgetManager.getAppWidgetOptions(widgetId)
             appWidgetManager.partiallyUpdateAppWidget(
                 widgetId,
-                sizeRemoteViews(context, options, widgetId)
+                sizeRemoteViews(context, options, widgetId),
             )
         }
 
@@ -79,24 +90,32 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
 
             // if the user click on the title: open App
             val openAppIntent = Intent(context.applicationContext, MainActivity::class.java)
-            val openApp = PendingIntent.getActivity(context, 0, openAppIntent, withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT))
+            val openApp =
+                PendingIntent.getActivity(
+                    context,
+                    0,
+                    openAppIntent,
+                    withImmutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                )
             rv.setOnClickPendingIntent(R.id.widget_title, openApp)
 
             val taskIntent = Intent(context, providerClass)
             taskIntent.action = DAILY_ACTION
             taskIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
-            val toastPendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                taskIntent,
-                withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT)
-            )
+            val toastPendingIntent =
+                PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    taskIntent,
+                    withMutableFlag(PendingIntent.FLAG_UPDATE_CURRENT),
+                )
             rv.setPendingIntentTemplate(R.id.list_view, toastPendingIntent)
 
             appWidgetManager.updateAppWidget(appWidgetId, rv)
 
-            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
+            AppWidgetManager.getInstance(context)
+                .notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view)
         }
 
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -110,7 +129,7 @@ abstract class TaskListWidgetProvider : BaseWidgetProvider() {
         remoteViews: RemoteViews,
         widgetId: Int,
         columns: Int,
-        rows: Int
+        rows: Int,
     ): RemoteViews {
         return remoteViews
     }

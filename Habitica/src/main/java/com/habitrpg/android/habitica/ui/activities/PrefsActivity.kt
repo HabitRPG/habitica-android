@@ -13,8 +13,10 @@ import com.habitrpg.android.habitica.ui.views.SnackbarActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStartScreenCallback, SnackbarActivity {
-
+class PrefsActivity :
+    BaseActivity(),
+    PreferenceFragmentCompat.OnPreferenceStartScreenCallback,
+    SnackbarActivity {
     override fun getLayoutResId(): Int = R.layout.activity_prefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +39,7 @@ class PrefsActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceStart
 
     override fun onPreferenceStartScreen(
         preferenceFragment: PreferenceFragmentCompat,
-        preferenceScreen: PreferenceScreen
+        preferenceScreen: PreferenceScreen,
     ): Boolean {
         val fragment = createNextPage(preferenceScreen)
         if (fragment != null) {

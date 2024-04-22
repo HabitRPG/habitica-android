@@ -11,7 +11,9 @@ import com.habitrpg.android.habitica.models.user.Stats
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.android.habitica.ui.views.getTranslatedClassName
 
-class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), PopupMenu.OnMenuItemClickListener {
+class GroupMemberViewHolder(itemView: View) :
+    androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView),
+    PopupMenu.OnMenuItemClickListener {
     private val binding = PartyMemberBinding.bind(itemView)
     private var currentUserID: String? = null
     private var leaderID: String? = null
@@ -39,15 +41,27 @@ class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.Recyc
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.send_message -> { sendMessageEvent?.invoke() }
-            R.id.transfer_ownership -> { transferOwnershipEvent?.invoke() }
-            R.id.remove -> { removeMemberEvent?.invoke() }
+            R.id.send_message -> {
+                sendMessageEvent?.invoke()
+            }
+
+            R.id.transfer_ownership -> {
+                transferOwnershipEvent?.invoke()
+            }
+
+            R.id.remove -> {
+                removeMemberEvent?.invoke()
+            }
         }
         return true
     }
 
     @SuppressLint("SetTextI18n")
-    fun bind(user: Member, leaderID: String?, userID: String?) {
+    fun bind(
+        user: Member,
+        leaderID: String?,
+        userID: String?,
+    ) {
         binding.avatarView.setAvatar(user)
         this.leaderID = leaderID
         this.currentUserID = userID
@@ -72,9 +86,15 @@ class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.Recyc
         binding.displayNameTextview.tier = user.contributor?.level ?: 0
 
         if (user.hasClass) {
-            binding.sublineTextview.text = itemView.context.getString(R.string.user_level_with_class, user.stats?.lvl, getTranslatedClassName(itemView.context.resources, user.stats?.habitClass))
+            binding.sublineTextview.text =
+                itemView.context.getString(
+                    R.string.user_level_with_class,
+                    user.stats?.lvl,
+                    getTranslatedClassName(itemView.context.resources, user.stats?.habitClass),
+                )
         } else {
-            binding.sublineTextview.text = itemView.context.getString(R.string.user_level, user.stats?.lvl)
+            binding.sublineTextview.text =
+                itemView.context.getString(R.string.user_level, user.stats?.lvl)
         }
 
         if (user.stats?.isBuffed == true) {
@@ -88,15 +108,19 @@ class GroupMemberViewHolder(itemView: View) : androidx.recyclerview.widget.Recyc
             Stats.HEALER -> {
                 binding.classIconView.setImageBitmap(HabiticaIconsHelper.imageOfHealerLightBg())
             }
+
             Stats.WARRIOR -> {
                 binding.classIconView.setImageBitmap(HabiticaIconsHelper.imageOfWarriorLightBg())
             }
+
             Stats.ROGUE -> {
                 binding.classIconView.setImageBitmap(HabiticaIconsHelper.imageOfRogueLightBg())
             }
+
             Stats.MAGE -> {
                 binding.classIconView.setImageBitmap(HabiticaIconsHelper.imageOfMageLightBg())
             }
+
             else -> {
                 binding.classIconView.visibility = View.INVISIBLE
             }

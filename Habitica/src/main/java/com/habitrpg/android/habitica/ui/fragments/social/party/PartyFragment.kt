@@ -16,18 +16,17 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentViewpagerBinding
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.models.social.Group
 import com.habitrpg.android.habitica.ui.activities.GroupFormActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseMainFragment
 import com.habitrpg.android.habitica.ui.fragments.social.PartyChatFragment
 import com.habitrpg.android.habitica.ui.viewmodels.GroupViewType
 import com.habitrpg.android.habitica.ui.viewmodels.PartyViewModel
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
-
     private var detailFragment: PartyDetailFragment? = null
     private var viewPagerAdapter: FragmentStateAdapter? = null
 
@@ -35,27 +34,33 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
 
     override var binding: FragmentViewpagerBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentViewpagerBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentViewpagerBinding {
         return FragmentViewpagerBinding.inflate(inflater, container, false)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.usesTabLayout = true
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.groupViewType = GroupViewType.PARTY
 
         viewModel.getGroupData().observe(
-            viewLifecycleOwner
+            viewLifecycleOwner,
         ) {
             updateGroupUI(it)
         }
@@ -100,7 +105,10 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         this.mainActivity?.invalidateOptionsMenu()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         val group = viewModel.getGroupData().value
         if (viewModel.isLeader) {
@@ -118,14 +126,17 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
                 MainNavigationController.navigate(R.id.partyInvitationFragment)
                 return true
             }
+
             R.id.menu_guild_edit -> {
                 this.displayEditForm()
                 return true
             }
+
             R.id.menu_guild_leave -> {
                 detailFragment?.leaveParty()
                 return true
             }
+
             R.id.menu_guild_refresh -> {
                 viewModel.retrieveGroupChat { }
                 viewModel.retrieveGroup { }
@@ -152,44 +163,48 @@ class PartyFragment : BaseMainFragment<FragmentViewpagerBinding>() {
         groupFormResult.launch(intent)
     }
 
-    private val groupFormResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.updateOrCreateGroup(it.data?.extras)
+    private val groupFormResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                viewModel.updateOrCreateGroup(it.data?.extras)
+            }
         }
-    }
 
     private fun setViewPagerAdapter() {
         val fragmentManager = childFragmentManager
 
-        viewPagerAdapter = object : FragmentStateAdapter(fragmentManager, lifecycle) {
+        viewPagerAdapter =
+            object : FragmentStateAdapter(fragmentManager, lifecycle) {
+                override fun createFragment(position: Int): Fragment {
+                    return when (position) {
+                        0 -> {
+                            detailFragment = PartyDetailFragment()
+                            detailFragment
+                        }
 
-            override fun createFragment(position: Int): Fragment {
-                return when (position) {
-                    0 -> {
-                        detailFragment = PartyDetailFragment()
-                        detailFragment
-                    }
-                    1 -> {
-                        PartyChatFragment()
-                    }
-                    else -> Fragment()
-                } ?: Fragment()
-            }
+                        1 -> {
+                            PartyChatFragment()
+                        }
 
-            override fun getItemCount(): Int {
-                return 2
+                        else -> Fragment()
+                    } ?: Fragment()
+                }
+
+                override fun getItemCount(): Int {
+                    return 2
+                }
             }
-        }
         binding?.viewPager?.adapter = viewPagerAdapter
 
         tabLayout?.let {
             binding?.viewPager?.let { it1 ->
                 TabLayoutMediator(it, it1) { tab, position ->
-                    tab.text = when (position) {
-                        0 -> context?.getString(R.string.party)
-                        1 -> context?.getString(R.string.chat)
-                        else -> ""
-                    }
+                    tab.text =
+                        when (position) {
+                            0 -> context?.getString(R.string.party)
+                            1 -> context?.getString(R.string.chat)
+                            else -> ""
+                        }
                 }.attach()
             }
         }

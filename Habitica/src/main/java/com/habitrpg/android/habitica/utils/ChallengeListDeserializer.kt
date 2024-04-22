@@ -10,7 +10,11 @@ import java.lang.reflect.Type
 
 class ChallengeListDeserializer : JsonDeserializer<List<Challenge>> {
     @Throws(JsonParseException::class)
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List<Challenge> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext,
+    ): List<Challenge> {
         val challenges = RealmList<Challenge>()
 
         for (element in json.asJsonArray) {

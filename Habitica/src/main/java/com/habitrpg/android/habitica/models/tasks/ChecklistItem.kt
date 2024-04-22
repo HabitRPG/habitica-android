@@ -9,7 +9,6 @@ import io.realm.annotations.PrimaryKey
 import java.util.UUID
 
 open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
-
     override val realmClass: Class<ChecklistItem>
         get() = ChecklistItem::class.java
     override val primaryIdentifier: String?
@@ -23,7 +22,8 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
     var completed: Boolean = false
     var position: Int = 0
 
-    @JvmOverloads constructor(id: String? = null, text: String? = null, completed: Boolean = false) {
+    @JvmOverloads
+    constructor(id: String? = null, text: String? = null, completed: Boolean = false) {
         this.text = text
         if (id?.isNotEmpty() == true) {
             this.id = id
@@ -43,7 +43,10 @@ open class ChecklistItem : RealmObject, BaseMainObject, Parcelable {
         return 0
     }
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
+    override fun writeToParcel(
+        dest: Parcel,
+        flags: Int,
+    ) {
         dest.writeString(id)
         dest.writeString(text)
         dest.writeByte(if (completed) 1.toByte() else 0.toByte())

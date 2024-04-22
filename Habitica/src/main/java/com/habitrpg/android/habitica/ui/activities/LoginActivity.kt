@@ -54,7 +54,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
-
     private lateinit var binding: ActivityLoginBinding
 
     @Inject
@@ -72,14 +71,15 @@ class LoginActivity : BaseActivity() {
     private var isRegistering: Boolean = false
     private var isShowingForm: Boolean = false
 
-    private val loginClick = View.OnClickListener {
-        binding.PBAsyncTask.visibility = View.VISIBLE
-        if (isRegistering) {
-            registerWithPassword()
-        } else {
-            loginWithPassword()
+    private val loginClick =
+        View.OnClickListener {
+            binding.PBAsyncTask.visibility = View.VISIBLE
+            if (isRegistering) {
+                registerWithPassword()
+            } else {
+                loginWithPassword()
+            }
         }
-    }
 
     private fun loginWithPassword() {
         val username: String = binding.username.text.toString().trim { it <= ' ' }
@@ -92,7 +92,7 @@ class LoginActivity : BaseActivity() {
             ExceptionHandler.coroutine {
                 hideProgress()
                 ExceptionHandler.reportError(it)
-            }
+            },
         ) {
             val response = apiClient.connectUser(username, password)
             if (response != null) {
@@ -116,8 +116,8 @@ class LoginActivity : BaseActivity() {
             showValidationError(
                 getString(
                     R.string.password_too_short,
-                    configManager.minimumPasswordLength()
-                )
+                    configManager.minimumPasswordLength(),
+                ),
             )
             return
         }
@@ -125,7 +125,7 @@ class LoginActivity : BaseActivity() {
             ExceptionHandler.coroutine {
                 hideProgress()
                 ExceptionHandler.reportError(it)
-            }
+            },
         ) {
             val response = apiClient.registerUser(username, email, password, confirmPassword)
             if (response != null) {
@@ -164,7 +164,12 @@ class LoginActivity : BaseActivity() {
         val additionalData = HashMap<String, Any>()
         additionalData["page"] = this.javaClass.simpleName
 
-        binding.backgroundContainer.post { binding.backgroundContainer.scrollTo(0, binding.backgroundContainer.bottom) }
+        binding.backgroundContainer.post {
+            binding.backgroundContainer.scrollTo(
+                0,
+                binding.backgroundContainer.bottom,
+            )
+        }
         binding.backgroundContainer.isScrollable = false
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.black_20_alpha)
@@ -180,7 +185,10 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    override fun loadTheme(sharedPreferences: SharedPreferences, forced: Boolean) {
+    override fun loadTheme(
+        sharedPreferences: SharedPreferences,
+        forced: Boolean,
+    ) {
         super.loadTheme(sharedPreferences, forced)
         window.updateStatusBarColor(R.color.black_20_alpha, false)
     }
@@ -260,19 +268,20 @@ class LoginActivity : BaseActivity() {
             val capabilityClient: CapabilityClient = Wearable.getCapabilityClient(this)
             lifecycleScope.launch(Dispatchers.IO) {
                 try {
-                    val info = Tasks.await(
-                        capabilityClient.getCapability(
-                            "receive_message",
-                            CapabilityClient.FILTER_REACHABLE
+                    val info =
+                        Tasks.await(
+                            capabilityClient.getCapability(
+                                "receive_message",
+                                CapabilityClient.FILTER_REACHABLE,
+                            ),
                         )
-                    )
                     info.nodes.forEach {
                         Tasks.await(
                             messageClient.sendMessage(
                                 it.id,
                                 "/auth",
-                                "${response.id}:${response.apiToken}".toByteArray()
-                            )
+                                "${response.id}:${response.apiToken}".toByteArray(),
+                            ),
                         )
                     }
                 } catch (e: Exception) {
@@ -330,26 +339,31 @@ class LoginActivity : BaseActivity() {
         alert.show()
     }
 
-    private val pickAccountResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-            viewModel.handleGoogleLoginResult(this, recoverFromPlayServicesErrorResult) { isNew ->
-                handleAuthResponse(isNew)
+    private val pickAccountResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                viewModel.googleEmail = it?.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
+                viewModel.handleGoogleLoginResult(
+                    this,
+                    recoverFromPlayServicesErrorResult,
+                ) { isNew ->
+                    handleAuthResponse(isNew)
+                }
+            } else {
+                binding.googleLoginProgress.visibility = View.GONE
             }
-        } else {
-            binding.googleLoginProgress.visibility = View.GONE
         }
-    }
 
-    private val recoverFromPlayServicesErrorResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode != Activity.RESULT_CANCELED) {
-            viewModel.handleGoogleLoginResult(this, null) { isNew ->
-                handleAuthResponse(isNew)
+    private val recoverFromPlayServicesErrorResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) {
+            if (it.resultCode != Activity.RESULT_CANCELED) {
+                viewModel.handleGoogleLoginResult(this, null) { isNew ->
+                    handleAuthResponse(isNew)
+                }
             }
         }
-    }
 
     private fun newGameButtonClicked() {
         isRegistering = true
@@ -371,10 +385,17 @@ class LoginActivity : BaseActivity() {
 
     private fun showForm() {
         isShowingForm = true
-        val panAnimation = ObjectAnimator.ofInt(binding.backgroundContainer, "scrollY", 0).setDuration(1000)
-        val newGameAlphaAnimation = ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 0.toFloat())
-        val showLoginAlphaAnimation = ObjectAnimator.ofFloat(binding.showLoginButton, View.ALPHA, 0.toFloat())
-        val scaleLogoAnimation = ValueAnimator.ofInt(binding.logoView.measuredHeight, (binding.logoView.measuredHeight * 0.75).toInt())
+        val panAnimation =
+            ObjectAnimator.ofInt(binding.backgroundContainer, "scrollY", 0).setDuration(1000)
+        val newGameAlphaAnimation =
+            ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 0.toFloat())
+        val showLoginAlphaAnimation =
+            ObjectAnimator.ofFloat(binding.showLoginButton, View.ALPHA, 0.toFloat())
+        val scaleLogoAnimation =
+            ValueAnimator.ofInt(
+                binding.logoView.measuredHeight,
+                (binding.logoView.measuredHeight * 0.75).toInt(),
+            )
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int ?: 0
             val layoutParams = binding.logoView.layoutParams
@@ -385,30 +406,40 @@ class LoginActivity : BaseActivity() {
             newGameAlphaAnimation.startDelay = 600
             newGameAlphaAnimation.duration = 400
             showLoginAlphaAnimation.duration = 400
-            newGameAlphaAnimation.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    binding.newGameButton.visibility = View.GONE
-                    binding.showLoginButton.visibility = View.GONE
-                    binding.loginScrollview.visibility = View.VISIBLE
-                    binding.loginScrollview.alpha = 1f
-                }
-            })
+            newGameAlphaAnimation.addListener(
+                object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        binding.newGameButton.visibility = View.GONE
+                        binding.showLoginButton.visibility = View.GONE
+                        binding.loginScrollview.visibility = View.VISIBLE
+                        binding.loginScrollview.alpha = 1f
+                    }
+                },
+            )
         } else {
             showLoginAlphaAnimation.startDelay = 600
             showLoginAlphaAnimation.duration = 400
             newGameAlphaAnimation.duration = 400
-            showLoginAlphaAnimation.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    binding.newGameButton.visibility = View.GONE
-                    binding.showLoginButton.visibility = View.GONE
-                    binding.loginScrollview.visibility = View.VISIBLE
-                    binding.loginScrollview.alpha = 1f
-                }
-            })
+            showLoginAlphaAnimation.addListener(
+                object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        binding.newGameButton.visibility = View.GONE
+                        binding.showLoginButton.visibility = View.GONE
+                        binding.loginScrollview.visibility = View.VISIBLE
+                        binding.loginScrollview.alpha = 1f
+                    }
+                },
+            )
         }
-        val backAlphaAnimation = ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 1.toFloat()).setDuration(800)
+        val backAlphaAnimation =
+            ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 1.toFloat()).setDuration(800)
         val showAnimation = AnimatorSet()
-        showAnimation.playTogether(panAnimation, newGameAlphaAnimation, showLoginAlphaAnimation, scaleLogoAnimation)
+        showAnimation.playTogether(
+            panAnimation,
+            newGameAlphaAnimation,
+            showLoginAlphaAnimation,
+            scaleLogoAnimation,
+        )
         showAnimation.play(backAlphaAnimation).after(panAnimation)
         for (i in 0 until binding.formWrapper.childCount) {
             val view = binding.formWrapper.getChildAt(i)
@@ -423,10 +454,22 @@ class LoginActivity : BaseActivity() {
 
     private fun hideForm() {
         isShowingForm = false
-        val panAnimation = ObjectAnimator.ofInt(binding.backgroundContainer, "scrollY", binding.backgroundContainer.bottom).setDuration(1000)
-        val newGameAlphaAnimation = ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 1.toFloat()).setDuration(700)
-        val showLoginAlphaAnimation = ObjectAnimator.ofFloat(binding.showLoginButton, View.ALPHA, 1.toFloat()).setDuration(700)
-        val scaleLogoAnimation = ValueAnimator.ofInt(binding.logoView.measuredHeight, (binding.logoView.measuredHeight * 1.333333).toInt())
+        val panAnimation =
+            ObjectAnimator.ofInt(
+                binding.backgroundContainer,
+                "scrollY",
+                binding.backgroundContainer.bottom,
+            ).setDuration(1000)
+        val newGameAlphaAnimation =
+            ObjectAnimator.ofFloat(binding.newGameButton, View.ALPHA, 1.toFloat()).setDuration(700)
+        val showLoginAlphaAnimation =
+            ObjectAnimator.ofFloat(binding.showLoginButton, View.ALPHA, 1.toFloat())
+                .setDuration(700)
+        val scaleLogoAnimation =
+            ValueAnimator.ofInt(
+                binding.logoView.measuredHeight,
+                (binding.logoView.measuredHeight * 1.333333).toInt(),
+            )
         scaleLogoAnimation.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as? Int
             val layoutParams = binding.logoView.layoutParams
@@ -434,17 +477,27 @@ class LoginActivity : BaseActivity() {
             binding.logoView.layoutParams = layoutParams
         }
         showLoginAlphaAnimation.startDelay = 300
-        val scrollViewAlphaAnimation = ObjectAnimator.ofFloat(binding.loginScrollview, View.ALPHA, 0.toFloat()).setDuration(800)
-        scrollViewAlphaAnimation.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                binding.newGameButton.visibility = View.VISIBLE
-                binding.showLoginButton.visibility = View.VISIBLE
-                binding.loginScrollview.visibility = View.INVISIBLE
-            }
-        })
-        val backAlphaAnimation = ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 0.toFloat()).setDuration(800)
+        val scrollViewAlphaAnimation =
+            ObjectAnimator.ofFloat(binding.loginScrollview, View.ALPHA, 0.toFloat())
+                .setDuration(800)
+        scrollViewAlphaAnimation.addListener(
+            object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    binding.newGameButton.visibility = View.VISIBLE
+                    binding.showLoginButton.visibility = View.VISIBLE
+                    binding.loginScrollview.visibility = View.INVISIBLE
+                }
+            },
+        )
+        val backAlphaAnimation =
+            ObjectAnimator.ofFloat(binding.backButton, View.ALPHA, 0.toFloat()).setDuration(800)
         val showAnimation = AnimatorSet()
-        showAnimation.playTogether(panAnimation, scrollViewAlphaAnimation, backAlphaAnimation, scaleLogoAnimation)
+        showAnimation.playTogether(
+            panAnimation,
+            scrollViewAlphaAnimation,
+            backAlphaAnimation,
+            scaleLogoAnimation,
+        )
         showAnimation.play(newGameAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.play(showLoginAlphaAnimation).after(scrollViewAlphaAnimation)
         showAnimation.start()
@@ -459,10 +512,11 @@ class LoginActivity : BaseActivity() {
         input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         input.hint = getString(R.string.forgot_password_hint_example)
         input.textSize = 16f
-        val lp = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.MATCH_PARENT
-        )
+        val lp =
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+            )
         input.layoutParams = lp
         val alertDialog = HabiticaAlertDialog(this)
         alertDialog.setTitle(R.string.forgot_password_title)

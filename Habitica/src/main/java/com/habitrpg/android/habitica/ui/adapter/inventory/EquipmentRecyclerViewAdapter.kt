@@ -15,24 +15,32 @@ import com.habitrpg.android.habitica.ui.adapter.BaseRecyclerViewAdapter
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.loadImage
 
-class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
-
+class EquipmentRecyclerViewAdapter :
+    BaseRecyclerViewAdapter<Equipment, EquipmentRecyclerViewAdapter.GearViewHolder>() {
     var equippedGear: String? = null
     var isCostume: Boolean? = null
     var type: String? = null
 
     var onEquip: ((String) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GearViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.gear_list_item, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): GearViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.gear_list_item, parent, false)
         return GearViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: GearViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: GearViewHolder,
+        position: Int,
+    ) {
         holder.bind(data[position])
     }
 
-    inner class GearViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class GearViewHolder(itemView: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         private val binding = GearListItemBinding.bind(itemView)
 
         var gear: Equipment? = null
@@ -40,16 +48,25 @@ class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, Equipmen
 
         init {
             context = itemView.context
-            binding.twoHandedView.setCompoundDrawablesWithIntrinsicBounds(BitmapDrawable(context.resources, HabiticaIconsHelper.imageOfTwoHandedIcon()), null, null, null)
+            binding.twoHandedView.setCompoundDrawablesWithIntrinsicBounds(
+                BitmapDrawable(
+                    context.resources,
+                    HabiticaIconsHelper.imageOfTwoHandedIcon(),
+                ),
+                null,
+                null,
+                null,
+            )
             itemView.setOnClickListener {
                 val key = gear?.key
                 if (key != null) {
                     onEquip?.invoke(key)
-                    equippedGear = if (key == equippedGear) {
-                        type + "_base_0"
-                    } else {
-                        key
-                    }
+                    equippedGear =
+                        if (key == equippedGear) {
+                            type + "_base_0"
+                        } else {
+                            key
+                        }
                     notifyDataSetChanged()
                 }
             }
@@ -62,23 +79,34 @@ class EquipmentRecyclerViewAdapter : BaseRecyclerViewAdapter<Equipment, Equipmen
 
             if (gear.key == equippedGear) {
                 binding.equippedIndicator.visibility = View.VISIBLE
-                binding.gearContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.lightly_tinted_background))
-                binding.gearIconBackgroundView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
+                binding.gearContainer.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.lightly_tinted_background,
+                    ),
+                )
+                binding.gearIconBackgroundView.background =
+                    ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_content)
             } else {
                 binding.equippedIndicator.visibility = View.GONE
                 binding.gearContainer.setBackgroundResource(R.drawable.selection_highlight)
-                binding.gearIconBackgroundView.background = ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
+                binding.gearIconBackgroundView.background =
+                    ContextCompat.getDrawable(context, R.drawable.layout_rounded_bg_window)
             }
             binding.twoHandedView.visibility = if (gear.twoHanded) View.VISIBLE else View.GONE
             binding.gearImage.loadImage("shop_" + gear.key)
 
             set(binding.strLabel, binding.strValue, gear.str)
             set(binding.conLabel, binding.conValue, gear.con)
-            set(binding.intLabel, binding.intValue, gear._int)
+            set(binding.intLabel, binding.intValue, gear.intelligence)
             set(binding.perLabel, binding.perValue, gear.per)
         }
 
-        private fun set(label: TextView, valueTextView: TextView, value: Int) {
+        private fun set(
+            label: TextView,
+            valueTextView: TextView,
+            value: Int,
+        ) {
             if (value > 0) {
                 label.visibility = View.VISIBLE
                 valueTextView.visibility = View.VISIBLE

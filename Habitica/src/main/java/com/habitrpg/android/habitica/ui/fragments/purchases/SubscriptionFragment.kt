@@ -28,7 +28,6 @@ import com.habitrpg.android.habitica.models.user.User
 import com.habitrpg.android.habitica.ui.activities.GiftSubscriptionActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.android.habitica.ui.views.subscriptions.SubscriptionOptionView
@@ -37,6 +36,7 @@ import com.habitrpg.common.habitica.extensions.layoutInflater
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
 import com.habitrpg.common.habitica.helpers.setMarkdown
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,10 +46,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
-
     override var binding: FragmentSubscriptionBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSubscriptionBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentSubscriptionBinding {
         return FragmentSubscriptionBinding.inflate(inflater, container, false)
     }
 
@@ -71,14 +73,23 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
     private var user: User? = null
     private var hasLoadedSubscriptionOptions: Boolean = false
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.subscriptionOptions?.visibility = View.GONE
         binding?.subscriptionDetails?.visibility = View.GONE
         binding?.subscriptionDetails?.onShowSubscriptionOptions = { showSubscriptionOptions() }
 
-        binding?.giftSubscriptionButton?.setOnClickListener { context?.let { context -> showGiftSubscriptionDialog(context) } }
+        binding?.giftSubscriptionButton?.setOnClickListener {
+            context?.let { context ->
+                showGiftSubscriptionDialog(
+                    context,
+                )
+            }
+        }
 
         binding?.subscribeButton?.setOnClickListener { purchaseSubscription() }
 
@@ -110,8 +121,10 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
                 HabiticaTheme {
                     BirthdayBanner(
                         endDate = birthdayEventEnd,
-                        Modifier.padding(horizontal = 20.dp).clip(HabiticaTheme.shapes.medium)
-                            .padding(bottom = 10.dp)
+                        Modifier
+                            .padding(horizontal = 20.dp)
+                            .clip(HabiticaTheme.shapes.medium)
+                            .padding(bottom = 10.dp),
                     )
                 }
             }
@@ -147,16 +160,26 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             skus = subscriptions
             withContext(Dispatchers.Main) {
                 for (sku in subscriptions) {
-                    updateButtonLabel(sku, sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice ?: "")
+                    updateButtonLabel(
+                        sku,
+                        sku.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
+                            ?: "",
+                    )
                 }
-                subscriptions.minByOrNull { it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros ?: 0 }?.let { selectSubscription(it) }
+                subscriptions.minByOrNull {
+                    it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.priceAmountMicros
+                        ?: 0
+                }?.let { selectSubscription(it) }
                 hasLoadedSubscriptionOptions = true
                 updateSubscriptionInfo()
             }
         }
     }
 
-    private fun updateButtonLabel(sku: ProductDetails, price: String) {
+    private fun updateButtonLabel(
+        sku: ProductDetails,
+        price: String,
+    ) {
         val matchingView = buttonForSku(sku)
         if (matchingView != null) {
             matchingView.setPriceText(price)
@@ -186,10 +209,10 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
 
     private fun buttonForSku(sku: String?): SubscriptionOptionView? {
         return when (sku) {
-            PurchaseTypes.Subscription1Month -> binding?.subscription1month
-            PurchaseTypes.Subscription3Month -> binding?.subscription3month
-            PurchaseTypes.Subscription6Month -> binding?.subscription6month
-            PurchaseTypes.Subscription12Month -> binding?.subscription12month
+            PurchaseTypes.SUBSCRIPTION_1_MONTH -> binding?.subscription1month
+            PurchaseTypes.SUBSCRIPTION_3_MONTH -> binding?.subscription3month
+            PurchaseTypes.SUBSCRIPTION_6_MONTH -> binding?.subscription6month
+            PurchaseTypes.SUBSCRIPTION_12_MONTH -> binding?.subscription12month
             else -> null
         }
     }
@@ -268,21 +291,24 @@ class SubscriptionFragment : BaseFragment<FragmentSubscriptionBinding>() {
             {
                 binding?.scrollView?.smoothScrollTo(0, binding?.subscriptionOptions?.top ?: 0)
             },
-            500
+            500,
         )
     }
 
     companion object {
         fun showGiftSubscriptionDialog(context: Context) {
-            val chooseRecipientDialogView = context.layoutInflater.inflate(R.layout.dialog_choose_message_recipient, null)
+            val chooseRecipientDialogView =
+                context.layoutInflater.inflate(R.layout.dialog_choose_message_recipient, null)
 
             val alert = HabiticaAlertDialog(context)
             alert.setTitle(context.getString(R.string.gift_title))
             alert.addButton(context.getString(R.string.action_continue), true) { _, _ ->
-                val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
-                val intent = Intent(context, GiftSubscriptionActivity::class.java).apply {
-                    putExtra("username", usernameEditText?.text.toString())
-                }
+                val usernameEditText =
+                    chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
+                val intent =
+                    Intent(context, GiftSubscriptionActivity::class.java).apply {
+                        putExtra("username", usernameEditText?.text.toString())
+                    }
                 context.startActivity(intent)
             }
             alert.addCancelButton { _, _ ->

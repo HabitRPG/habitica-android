@@ -1,2 +1,14 @@
 [*.{kt,kts}]
 max_line_length=off
+ktlint_function_naming_ignore_when_annotated_with=Composable
+
+[*.gradle.kts]
+property_naming=off
+
+
+[shared/src/commonMain/kotlin/com/habitrpg/shared/habitica/models/responses/TaskDirectionData.kt]
+ktlint_standard_backing-property-naming=disabled
+
+[**/generated/**/*.kt]
+ktlint_standard_property-naming=disabled
+ktlint_standard_backing-property-naming=disabled

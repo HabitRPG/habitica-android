@@ -23,7 +23,7 @@ import io.realm.OrderedRealmCollection
 
 abstract class RealmBaseTasksRecyclerViewAdapter(
     private val layoutResource: Int,
-    val viewModel: TasksViewModel
+    val viewModel: TasksViewModel,
 ) : BaseRecyclerViewAdapter<Task, RecyclerView.ViewHolder>(), TaskRecyclerViewAdapter {
     private var unfilteredData: List<Task>? = null
     override var showAdventureGuide = false
@@ -61,12 +61,19 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
         filter()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding = AdventureGuideMenuBannerBinding.inflate(parent.context.layoutInflater, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
+        val binding =
+            AdventureGuideMenuBannerBinding.inflate(parent.context.layoutInflater, parent, false)
         return AdventureGuideViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         val item = getItem(position)
         if (item != null && holder is BaseTaskViewHolder) {
             holder.userID = user?.id
@@ -101,7 +108,10 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 
     internal fun getContentView(parent: ViewGroup): View = getContentView(parent, layoutResource)
 
-    private fun getContentView(parent: ViewGroup, layoutResource: Int): View =
+    private fun getContentView(
+        parent: ViewGroup,
+        layoutResource: Int,
+    ): View =
         LayoutInflater.from(parent.context).inflate(layoutResource, parent, false)
 
     final override fun filter() {
@@ -119,7 +129,6 @@ abstract class RealmBaseTasksRecyclerViewAdapter(
 }
 
 class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     private var progressBar: ProgressBar = itemView.findViewById(R.id.progress_bar)
     private var countView: TextView = itemView.findViewById(R.id.count_view)
 
@@ -128,9 +137,10 @@ class AdventureGuideViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
             BitmapDrawable(itemView.resources, HabiticaIconsHelper.imageOfGold()),
             null,
             null,
-            null
+            null,
         )
-        itemView.findViewById<TextView>(R.id.gold_textview).compoundDrawablePadding = 4.dpToPx(itemView.context)
+        itemView.findViewById<TextView>(R.id.gold_textview).compoundDrawablePadding =
+            4.dpToPx(itemView.context)
     }
 
     fun update(user: User) {

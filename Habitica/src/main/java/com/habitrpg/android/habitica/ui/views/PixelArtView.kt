@@ -12,7 +12,7 @@ import com.habitrpg.common.habitica.views.PixelArtView
 fun PixelArtView(
     imageName: String?,
     modifier: Modifier = Modifier,
-    imageFormat: String? = null
+    imageFormat: String? = null,
 ) {
     AndroidView(
         modifier = modifier, // Occupy the max size in the Compose UI tree
@@ -25,7 +25,7 @@ fun PixelArtView(
             } else {
                 view.bitmap = null
             }
-        }
+        },
     )
 }
 
@@ -41,6 +41,6 @@ fun PixelArtView(
         },
         update = { view ->
             view.bitmap = bitmap.asAndroidBitmap()
-        }
+        },
     )
 }

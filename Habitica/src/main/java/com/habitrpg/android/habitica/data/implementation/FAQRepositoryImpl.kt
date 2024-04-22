@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 class FAQRepositoryImpl(
     localRepository: FAQLocalRepository,
     apiClient: ApiClient,
-    authenticationHandler: AuthenticationHandler
+    authenticationHandler: AuthenticationHandler,
 ) : BaseRepositoryImpl<FAQLocalRepository>(localRepository, apiClient, authenticationHandler),
     FAQRepository {
     override fun getArticle(position: Int): Flow<FAQArticle> {

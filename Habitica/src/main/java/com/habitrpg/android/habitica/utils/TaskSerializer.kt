@@ -22,14 +22,14 @@ import java.lang.reflect.Type
 import java.util.Date
 
 private val JsonPrimitive.asBooleanOrFalse: Boolean
-    get() = if (isBoolean) {
-        asBoolean
-    } else {
-        false
-    }
+    get() =
+        if (isBoolean) {
+            asBoolean
+        } else {
+            false
+        }
 
 class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
-
     private fun getIntListFromJsonArray(jsonArray: JsonArray): List<Int> {
         val intList = ArrayList<Int>()
 
@@ -40,7 +40,10 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         return intList
     }
 
-    private fun getMonthlyDays(e: JsonObject, task: Task) {
+    private fun getMonthlyDays(
+        e: JsonObject,
+        task: Task,
+    ) {
         val weeksOfMonth = e.getAsJsonArray("weeksOfMonth")
         if (weeksOfMonth != null && weeksOfMonth.size() > 0) {
             task.setWeeksOfMonth(getIntListFromJsonArray(weeksOfMonth))
@@ -55,7 +58,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): Task {
         val task = Task()
         val obj = json as? JsonObject ?: return task
@@ -82,7 +85,8 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         try {
             task.counterUp = obj.get("counterUp")?.asInt
             task.counterDown = obj.get("counterDown")?.asInt
-        } catch (ignored: java.lang.UnsupportedOperationException) {}
+        } catch (ignored: java.lang.UnsupportedOperationException) {
+        }
         task.dateCreated = context.deserialize(obj.get("createdAt"), Date::class.java)
         task.dueDate = context.deserialize(obj.get("date"), Date::class.java)
         task.updatedAt = context.deserialize(obj.get("updatedAt"), Date::class.java)
@@ -102,8 +106,8 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                     ChecklistItem(
                         checklistObject.getAsString("id"),
                         checklistObject.getAsString("text"),
-                        checklistObject.get("completed").asBoolean
-                    )
+                        checklistObject.get("completed").asBoolean,
+                    ),
                 )
             }
         }
@@ -127,9 +131,18 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
             val group: TaskGroupPlan = context.deserialize(groupObject, TaskGroupPlan::class.java)
             if (group.groupID?.isNotBlank() == true && groupObject.has("approval")) {
                 val approvalObject = groupObject.getAsJsonObject("approval")
-                if (approvalObject.has("requested")) group.approvalRequested = approvalObject.getAsJsonPrimitive("requested").asBooleanOrFalse
-                if (approvalObject.has("approved")) group.approvalApproved = approvalObject.getAsJsonPrimitive("approved").asBooleanOrFalse
-                if (approvalObject.has("required")) group.approvalRequired = approvalObject.getAsJsonPrimitive("required").asBooleanOrFalse
+                if (approvalObject.has("requested")) {
+                    group.approvalRequested =
+                        approvalObject.getAsJsonPrimitive("requested").asBooleanOrFalse
+                }
+                if (approvalObject.has("approved")) {
+                    group.approvalApproved =
+                        approvalObject.getAsJsonPrimitive("approved").asBooleanOrFalse
+                }
+                if (approvalObject.has("required")) {
+                    group.approvalRequired =
+                        approvalObject.getAsJsonPrimitive("required").asBooleanOrFalse
+                }
             }
             task.group = group
         }
@@ -140,7 +153,12 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
         task.id = obj.getAsString("_id")
         return task
     }
-    override fun serialize(task: Task, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
+
+    override fun serialize(
+        task: Task,
+        typeOfSrc: Type,
+        context: JsonSerializationContext,
+    ): JsonElement {
         val obj = JsonObject()
         obj.addProperty("_id", task.id)
         obj.addProperty("text", task.text)
@@ -162,6 +180,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                 obj.addProperty("counterUp", task.counterUp)
                 obj.addProperty("counterDown", task.counterDown)
             }
+
             TaskType.DAILY -> {
                 obj.addProperty("frequency", task.frequency?.value)
                 obj.addProperty("everyX", task.everyX)
@@ -179,6 +198,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                 obj.add("weeksOfMonth", context.serialize(task.getWeeksOfMonth()))
                 obj.addProperty("completed", task.completed)
             }
+
             TaskType.TODO -> {
                 if (task.dueDate == null) {
                     obj.addProperty("date", "")
@@ -193,6 +213,7 @@ class TaskSerializer : JsonSerializer<Task>, JsonDeserializer<Task> {
                 }
                 obj.addProperty("completed", task.completed)
             }
+
             else -> {
             }
         }

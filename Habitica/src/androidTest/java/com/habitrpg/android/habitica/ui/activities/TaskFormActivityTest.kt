@@ -48,7 +48,6 @@ class TaskFormScreen : Screen<TaskFormScreen>() {
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class TaskFormActivityTest : ActivityTestCase() {
-
     val screen = TaskFormScreen()
 
     lateinit var scenario: ActivityScenario<TaskFormActivity>
@@ -297,7 +296,7 @@ class TaskFormActivityTest : ActivityTestCase() {
             }
             KSpinner(
                 builder = { withId(R.id.repeats_every_spinner) },
-                itemTypeBuilder = { itemType(::KSpinnerItem) }
+                itemTypeBuilder = { itemType(::KSpinnerItem) },
             ) perform {
                 open()
                 childAt<KSpinnerItem>(1) {

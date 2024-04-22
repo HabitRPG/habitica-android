@@ -3,7 +3,6 @@ package com.habitrpg.common.habitica.helpers
 import java.util.Locale
 
 class LanguageHelper(languageSharedPref: String?) {
-
     var locale: Locale
         private set
     var languageCode: String? = null
@@ -28,12 +27,13 @@ class LanguageHelper(languageSharedPref: String?) {
                 languageCode = "pt"
             }
             else -> {
-                locale = if (pref.contains("_")) {
-                    val languageCodeParts = pref.split("_".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    Locale(languageCodeParts[0], languageCodeParts[1])
-                } else {
-                    Locale(pref)
-                }
+                locale =
+                    if (pref.contains("_")) {
+                        val languageCodeParts = pref.split("_".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                        Locale(languageCodeParts[0], languageCodeParts[1])
+                    } else {
+                        Locale(pref)
+                    }
                 languageCode = languageSharedPref
             }
         }

@@ -7,17 +7,19 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.PagedList
-import androidx.paging.PositionalDataSource
-import androidx.paging.toLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingSource
+import androidx.paging.liveData
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
-import com.habitrpg.android.habitica.models.members.Member
 import com.habitrpg.android.habitica.models.social.ChatMessage
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.kotlin.toFlow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emptyFlow
@@ -31,72 +33,97 @@ import javax.inject.Inject
 import kotlin.math.ceil
 
 @HiltViewModel
-class InboxViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    userViewModel: MainUserViewModel,
-    val socialRepository: SocialRepository
-) : BaseViewModel(userRepository, userViewModel) {
-    val recipientID: String? = savedStateHandle["userID"]
-    val recipientUsername: String? = savedStateHandle["username"]
+class InboxViewModel
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+        userRepository: UserRepository,
+        userViewModel: MainUserViewModel,
+        val socialRepository: SocialRepository,
+    ) : BaseViewModel(userRepository, userViewModel) {
+        val recipientID: String? = savedStateHandle["userID"]
+        val recipientUsername: String? = savedStateHandle["username"]
 
-    private var memberIDFlow = MutableStateFlow<String?>(null)
-    val memberIDState: StateFlow<String?> = memberIDFlow
+        private var memberIDFlow = MutableStateFlow<String?>(null)
+        val memberIDState: StateFlow<String?> = memberIDFlow
 
-    private val config = PagedList.Config.Builder()
-        .setPageSize(10)
-        .setEnablePlaceholders(false)
-        .build()
+        private val config =
+            PagedList.Config.Builder()
+                .setPageSize(10)
+                .setEnablePlaceholders(false)
+                .build()
 
-    private val dataSourceFactory = MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
-    val messages: LiveData<PagedList<ChatMessage>> = dataSourceFactory.toLiveData(config)
-    private val member = memberIDFlow
-        .filterNotNull()
-        .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
-        .asLiveData()
+        private val dataSourceFactory =
+            MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
+        val messages: LiveData<PagedList<ChatMessage>> =
+            Pager<Int, ChatMessage>(
+                PagingConfig(
+                    config.pageSize,
+                    config.prefetchDistance,
+                    config.enablePlaceholders,
+                    config.initialLoadSizeHint,
+                    config.maxSize,
+                ),
+                null,
+                dataSourceFactory.asPagingSourceFactory(
+                    ArchTaskExecutor.getIOThreadExecutor().asCoroutineDispatcher(),
+                ),
+            ).liveData
+        private val member =
+            memberIDFlow
+                .filterNotNull()
+                .flatMapLatest { socialRepository.retrieveMember(it).toFlow() }
+                .asLiveData()
 
-    fun setMemberID(memberID: String) {
-        if (memberID == memberIDState.value) return
-        memberIDFlow.value = memberID
-    }
+        fun setMemberID(memberID: String) {
+            if (memberID == memberIDState.value) return
+            memberIDFlow.value = memberID
+        }
 
-    val memberID: String?
-        get() = memberIDFlow.value
+        val memberID: String?
+            get() = memberIDFlow.value
 
-    fun invalidateDataSource() {
-        dataSourceFactory.sourceLiveData.value?.invalidate()
-    }
+        fun invalidateDataSource() {
+            dataSourceFactory.sourceLiveData.value?.invalidate()
+        }
 
-    init {
-        if (recipientID?.isNotBlank() == true) {
-            setMemberID(recipientID)
-        } else if (recipientUsername?.isNotBlank() == true) {
-            viewModelScope.launch(ExceptionHandler.coroutine()) {
-                val member = socialRepository.retrieveMember(recipientUsername, false)
-                setMemberID(member?.id ?: "")
-                invalidateDataSource()
-                dataSourceFactory.updateRecipientID(memberID)
+        init {
+            if (recipientID?.isNotBlank() == true) {
+                setMemberID(recipientID)
+            } else if (recipientUsername?.isNotBlank() == true) {
+                viewModelScope.launch(ExceptionHandler.coroutine()) {
+                    val member = socialRepository.retrieveMember(recipientUsername, false)
+                    setMemberID(member?.id ?: "")
+                    invalidateDataSource()
+                    dataSourceFactory.updateRecipientID(memberID)
+                }
             }
         }
     }
-}
 
 class MessagesDataSource(
     val socialRepository: SocialRepository,
     var recipientID: String?,
-    var footer: ChatMessage?
+    var footer: ChatMessage?,
 ) :
-    PositionalDataSource<ChatMessage>() {
+    PagingSource<Int, T>() {
     private var lastFetchWasEnd = false
-    override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<ChatMessage>) {
+
+    override fun loadRange(
+        params: LoadRangeParams,
+        callback: LoadRangeCallback<ChatMessage>,
+    ) {
         if (lastFetchWasEnd) {
             callback.onResult(emptyList())
             return
         }
         MainScope().launch(Dispatchers.Main.immediate) {
-            if (recipientID?.isNotBlank() != true) { return@launch }
+            if (recipientID?.isNotBlank() != true) {
+                return@launch
+            }
             val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
-            val messages = socialRepository.retrieveInboxMessages(recipientID ?: "", page) ?: return@launch
+            val messages =
+                socialRepository.retrieveInboxMessages(recipientID ?: "", page) ?: return@launch
             if (messages.size < 10) {
                 lastFetchWasEnd = true
                 callback.onResult(messages)
@@ -106,7 +133,10 @@ class MessagesDataSource(
         }
     }
 
-    override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<ChatMessage>) {
+    override fun loadInitial(
+        params: LoadInitialParams,
+        callback: LoadInitialCallback<ChatMessage>,
+    ) {
         lastFetchWasEnd = false
         MainScope().launch(Dispatchers.Main.immediate) {
             socialRepository.getInboxMessages(recipientID)
@@ -114,8 +144,12 @@ class MessagesDataSource(
                 .take(1)
                 .flatMapLatest {
                     if (it.isEmpty()) {
-                        if (recipientID?.isNotBlank() != true) { return@flatMapLatest flowOf(it) }
-                        val messages = socialRepository.retrieveInboxMessages(recipientID ?: "", 0) ?: return@flatMapLatest emptyFlow()
+                        if (recipientID?.isNotBlank() != true) {
+                            return@flatMapLatest flowOf(it)
+                        }
+                        val messages =
+                            socialRepository.retrieveInboxMessages(recipientID ?: "", 0)
+                                ?: return@flatMapLatest emptyFlow()
                         if (messages.size < 10) {
                             lastFetchWasEnd = true
                         }
@@ -138,7 +172,7 @@ class MessagesDataSource(
 class MessagesDataSourceFactory(
     val socialRepository: SocialRepository,
     var recipientID: String?,
-    val footer: ChatMessage?
+    val footer: ChatMessage?,
 ) :
     DataSource.Factory<Int, ChatMessage>() {
     val sourceLiveData = MutableLiveData<MessagesDataSource>()

@@ -11,38 +11,47 @@ import com.habitrpg.android.habitica.models.inventory.Mount
 import com.habitrpg.common.habitica.extensions.loadImage
 import com.habitrpg.common.habitica.views.PixelArtView
 
-class MountView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : FrameLayout(context, attrs) {
+class MountView
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+    ) : FrameLayout(context, attrs) {
+        val hasLoadedImages: Boolean
+            get() {
+                return bodyView.bitmap != null && headView.bitmap != null
+            }
+        private val bodyView: PixelArtView = PixelArtView(context)
+        private val headView: PixelArtView = PixelArtView(context)
 
-    val hasLoadedImages: Boolean
-        get() {
-            return bodyView.bitmap != null && headView.bitmap != null
+        fun setMount(key: String) {
+            bodyView.loadImage("Mount_Body_$key")
+            headView.loadImage("Mount_Head_$key")
         }
-    private val bodyView: PixelArtView = PixelArtView(context)
-    private val headView: PixelArtView = PixelArtView(context)
 
-    fun setMount(key: String) {
-        bodyView.loadImage("Mount_Body_$key")
-        headView.loadImage("Mount_Head_$key")
+        init {
+            addView(bodyView)
+            bodyView.layoutParams =
+                LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            addView(headView)
+            headView.layoutParams =
+                LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
     }
-
-    init {
-        addView(bodyView)
-        bodyView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        addView(headView)
-        headView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-    }
-
-}
 
 @Composable
-fun MountView(mount: Mount, modifier: Modifier = Modifier) {
+fun MountView(
+    mount: Mount,
+    modifier: Modifier = Modifier,
+) {
     MountView(mount.key, modifier)
 }
 
 @Composable
-fun MountView(mountKey: String, modifier: Modifier = Modifier) {
+fun MountView(
+    mountKey: String,
+    modifier: Modifier = Modifier,
+) {
     AndroidView(
         modifier = modifier,
         factory = { context ->
@@ -50,6 +59,6 @@ fun MountView(mountKey: String, modifier: Modifier = Modifier) {
         },
         update = { view ->
             view.setMount(mountKey)
-        }
+        },
     )
 }

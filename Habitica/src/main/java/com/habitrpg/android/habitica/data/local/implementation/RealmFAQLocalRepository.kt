@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
-class RealmFAQLocalRepository(realm: Realm) : RealmContentLocalRepository(realm), FAQLocalRepository {
+class RealmFAQLocalRepository(realm: Realm) :
+    RealmContentLocalRepository(realm),
+    FAQLocalRepository {
     override fun getArticle(position: Int): Flow<FAQArticle> {
         return realm.where(FAQArticle::class.java)
             .equalTo("position", position)
@@ -21,8 +23,9 @@ class RealmFAQLocalRepository(realm: Realm) : RealmContentLocalRepository(realm)
     }
 
     override val articles: Flow<List<FAQArticle>>
-        get() = realm.where(FAQArticle::class.java)
-            .findAll()
-            .toFlow()
-            .filter { it.isLoaded }
+        get() =
+            realm.where(FAQArticle::class.java)
+                .findAll()
+                .toFlow()
+                .filter { it.isLoaded }
 }

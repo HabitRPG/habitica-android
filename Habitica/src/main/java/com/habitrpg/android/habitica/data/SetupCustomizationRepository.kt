@@ -4,9 +4,16 @@ import com.habitrpg.android.habitica.models.SetupCustomization
 import com.habitrpg.android.habitica.models.user.User
 
 interface SetupCustomizationRepository {
+    fun getCustomizations(
+        type: String,
+        user: User,
+    ): List<SetupCustomization>
 
-    fun getCustomizations(type: String, user: User): List<SetupCustomization>
-    fun getCustomizations(type: String, subtype: String?, user: User): List<SetupCustomization>
+    fun getCustomizations(
+        type: String,
+        subtype: String?,
+        user: User,
+    ): List<SetupCustomization>
 
     companion object {
         const val CATEGORY_BODY = "body"

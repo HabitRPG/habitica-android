@@ -25,6 +25,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfExperience = null;
+
     public static Bitmap imageOfExperience() {
         if (imageOfExperience != null)
             return imageOfExperience;
@@ -39,6 +40,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfMagic = null;
+
     public static Bitmap imageOfMagic() {
         if (imageOfMagic != null)
             return imageOfMagic;
@@ -53,6 +55,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfMagicLarge = null;
+
     public static Bitmap imageOfMagicLarge() {
         if (imageOfMagicLarge != null)
             return imageOfMagicLarge;
@@ -66,6 +69,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfGold = null;
+
     public static Bitmap imageOfGold() {
         if (imageOfGold != null)
             return imageOfGold;
@@ -80,6 +84,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfGem = null;
+
     public static Bitmap imageOfGem() {
         if (imageOfGem != null)
             return imageOfGem;
@@ -94,6 +99,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfHourglass = null;
+
     public static Bitmap imageOfHourglass() {
         if (imageOfHourglass != null)
             return imageOfHourglass;
@@ -108,6 +114,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfHourglassLarge = null;
+
     public static Bitmap imageOfHourglassLarge() {
         if (imageOfHourglassLarge != null)
             return imageOfHourglassLarge;
@@ -121,6 +128,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfExperienceReward = null;
+
     public static Bitmap imageOfExperienceReward() {
         if (imageOfExperienceReward != null)
             return imageOfExperienceReward;
@@ -134,6 +142,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfGoldReward = null;
+
     public static Bitmap imageOfGoldReward() {
         if (imageOfGoldReward != null)
             return imageOfGoldReward;
@@ -147,6 +156,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfHeartDarkBg = null;
+
     public static Bitmap imageOfHeartDarkBg() {
         if (imageOfHeartDarkBg != null)
             return imageOfHeartDarkBg;
@@ -161,6 +171,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfHeartLightBg = null;
+
     public static Bitmap imageOfHeartLightBg() {
         if (imageOfHeartLightBg != null)
             return imageOfHeartLightBg;
@@ -175,6 +186,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfHeartLarge = null;
+
     public static Bitmap imageOfHeartLarge() {
         if (imageOfHeartLarge != null)
             return imageOfHeartLarge;
@@ -188,6 +200,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfStarSmall = null;
+
     public static Bitmap imageOfStarSmall() {
         if (imageOfStarSmall != null)
             return imageOfStarSmall;
@@ -202,6 +215,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfStarLarge = null;
+
     public static Bitmap imageOfStarLarge() {
         if (imageOfStarLarge != null)
             return imageOfStarLarge;
@@ -216,6 +230,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfStarMedium = null;
+
     public static Bitmap imageOfStarMedium() {
         if (imageOfStarMedium != null)
             return imageOfStarMedium;
@@ -230,6 +245,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfPinnedItem = null;
+
     public static Bitmap imageOfPinnedItem() {
         if (imageOfPinnedItem != null)
             return imageOfPinnedItem;
@@ -244,6 +260,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfPinItem = null;
+
     public static Bitmap imageOfPinItem() {
         if (imageOfPinItem != null)
             return imageOfPinItem;
@@ -258,6 +275,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfUnpinItem = null;
+
     public static Bitmap imageOfUnpinItem() {
         if (imageOfUnpinItem != null)
             return imageOfUnpinItem;
@@ -334,6 +352,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfItemIndicatorLimited = null;
+
     public static Bitmap imageOfItemIndicatorLimited() {
         if (imageOfItemIndicatorLimited != null)
             return imageOfItemIndicatorLimited;
@@ -348,6 +367,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfGem_36 = null;
+
     public static Bitmap imageOfGem_36() {
         if (imageOfGem_36 != null)
             return imageOfGem_36;
@@ -362,6 +382,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfWarriorLightBg = null;
+
     public static Bitmap imageOfWarriorLightBg() {
         if (imageOfWarriorLightBg != null)
             return imageOfWarriorLightBg;
@@ -376,6 +397,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfRogueLightBg = null;
+
     public static Bitmap imageOfRogueLightBg() {
         if (imageOfRogueLightBg != null)
             return imageOfRogueLightBg;
@@ -390,6 +412,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfHealerLightBg = null;
+
     public static Bitmap imageOfHealerLightBg() {
         if (imageOfHealerLightBg != null)
             return imageOfHealerLightBg;
@@ -404,6 +427,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfMageLightBg = null;
+
     public static Bitmap imageOfMageLightBg() {
         if (imageOfMageLightBg != null)
             return imageOfMageLightBg;
@@ -418,6 +442,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfHourglassShop = null;
+
     public static Bitmap imageOfHourglassShop() {
         if (imageOfHourglassShop != null)
             return imageOfHourglassShop;
@@ -431,6 +456,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfAttributeSparklesLeft = null;
+
     public static Bitmap imageOfAttributeSparklesLeft() {
         if (imageOfAttributeSparklesLeft != null)
             return imageOfAttributeSparklesLeft;
@@ -444,6 +470,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfAttributeSparklesRight = null;
+
     public static Bitmap imageOfAttributeSparklesRight() {
         if (imageOfAttributeSparklesRight != null)
             return imageOfAttributeSparklesRight;
@@ -457,6 +484,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfAttributeAllocateButton = null;
+
     public static Bitmap imageOfAttributeAllocateButton() {
         if (imageOfAttributeAllocateButton != null)
             return imageOfAttributeAllocateButton;
@@ -470,6 +498,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfInfoIcon = null;
+
     public static Bitmap imageOfInfoIcon(@ColorInt int iconColor) {
         if (imageOfInfoIcon != null)
             return imageOfInfoIcon;
@@ -494,6 +523,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfDamage = null;
+
     public static Bitmap imageOfDamage() {
         if (imageOfDamage != null)
             return imageOfDamage;
@@ -518,6 +548,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfRageStrikeInactive = null;
+
     public static Bitmap imageOfRageStrikeInactive() {
         if (imageOfRageStrikeInactive != null)
             return imageOfRageStrikeInactive;
@@ -540,6 +571,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfRage = null;
+
     public static Bitmap imageOfRage() {
         if (imageOfRage != null)
             return imageOfRage;
@@ -566,6 +598,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfParticipantsIcon = null;
+
     public static Bitmap imageOfParticipantsIcon() {
         if (imageOfParticipantsIcon != null)
             return imageOfParticipantsIcon;
@@ -580,6 +613,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfChatReplyIcon = null;
+
     public static Bitmap imageOfChatReplyIcon() {
         if (imageOfChatReplyIcon != null)
             return imageOfChatReplyIcon;
@@ -594,6 +628,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfChatCopyIcon = null;
+
     public static Bitmap imageOfChatCopyIcon() {
         if (imageOfChatCopyIcon != null)
             return imageOfChatCopyIcon;
@@ -608,6 +643,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfChatReportIcon = null;
+
     public static Bitmap imageOfChatReportIcon() {
         if (imageOfChatReportIcon != null)
             return imageOfChatReportIcon;
@@ -622,6 +658,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfChatDeleteIcon = null;
+
     public static Bitmap imageOfChatDeleteIcon() {
         if (imageOfChatDeleteIcon != null)
             return imageOfChatDeleteIcon;
@@ -636,6 +673,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfTwoHandedIcon = null;
+
     public static Bitmap imageOfTwoHandedIcon() {
         if (imageOfTwoHandedIcon != null)
             return imageOfTwoHandedIcon;
@@ -659,6 +697,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfAlertIcon = null;
+
     public static Bitmap imageOfAlertIcon() {
         if (imageOfAlertIcon != null)
             return imageOfAlertIcon;
@@ -673,6 +712,7 @@ public class HabiticaIconsHelper {
     }
 
     private static Bitmap imageOfBuffIcon = null;
+
     public static Bitmap imageOfBuffIcon() {
         if (imageOfBuffIcon != null)
             return imageOfBuffIcon;

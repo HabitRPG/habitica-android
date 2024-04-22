@@ -8,10 +8,10 @@ import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.FragmentGemPurchaseBinding
 import com.habitrpg.android.habitica.databinding.FragmentSubscriptionBinding
 import com.habitrpg.android.habitica.databinding.PurchaseGemViewBinding
-import com.habitrpg.common.habitica.helpers.MainNavigationController
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoWebFragmentArgs
 import com.habitrpg.android.habitica.ui.views.promo.PromoMenuView
+import com.habitrpg.common.habitica.helpers.MainNavigationController
 import java.util.Date
 
 class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
@@ -52,10 +52,11 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
 
         view.setDecoration(
             ContextCompat.getDrawable(context, R.drawable.survey_art_left),
-            ContextCompat.getDrawable(context, R.drawable.survey_art_right)
+            ContextCompat.getDrawable(context, R.drawable.survey_art_right),
         )
 
-        view.binding.button.backgroundTintList = ContextCompat.getColorStateList(context, R.color.white)
+        view.binding.button.backgroundTintList =
+            ContextCompat.getColorStateList(context, R.color.white)
         view.binding.button.setText(R.string.go_to_survey)
         view.binding.button.setTextColor(ContextCompat.getColor(context, R.color.blue_10))
         view.binding.button.setOnClickListener {
@@ -64,7 +65,10 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
     }
 
     override fun menuOnNavigation(context: Context) {
-        MainNavigationController.navigate(R.id.promoWebFragment, PromoWebFragmentArgs.Builder(url ?: "").build().toBundle())
+        MainNavigationController.navigate(
+            R.id.promoWebFragment,
+            PromoWebFragmentArgs.Builder(url ?: "").build().toBundle(),
+        )
     }
 
     override fun configurePurchaseBanner(binding: FragmentGemPurchaseBinding) {
@@ -73,7 +77,10 @@ class Survey2021Promotion : HabiticaPromotion(), HabiticaWebPromotion {
     override fun configurePurchaseBanner(binding: FragmentSubscriptionBinding) {
     }
 
-    override fun configureGemView(binding: PurchaseGemViewBinding, regularAmount: Int) {
+    override fun configureGemView(
+        binding: PurchaseGemViewBinding,
+        regularAmount: Int,
+    ) {
     }
 
     override fun configureInfoFragment(fragment: PromoInfoFragment) {

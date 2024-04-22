@@ -11,7 +11,6 @@ import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
 open class Group : RealmObject(), BaseMainObject {
-
     val isGroupPlan: Boolean
         get() {
             return purchased?.isActive == true
@@ -72,6 +71,7 @@ open class Group : RealmObject(), BaseMainObject {
     }
 
     fun isLeader(userID: String): Boolean = leaderID == userID
+
     fun isManager(userID: String): Boolean = managers?.contains(userID) == true
 
     companion object {

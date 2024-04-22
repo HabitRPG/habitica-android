@@ -32,15 +32,19 @@ fun UserRow(
     extraContent: @Composable (() -> Unit)? = null,
     endContent: @Composable (() -> Unit)? = null,
     color: Color? = null,
-    configManager: AppConfigManager
+    configManager: AppConfigManager,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxWidth()) {
         Box(
-            modifier = Modifier
-                .padding(end = 12.dp)
-                .clip(CircleShape)
-                .size(40.dp)
-                .padding(end = 12.dp, top = if (avatar?.currentMount?.isNotBlank() == true) 24.dp else 12.dp)
+            modifier =
+                Modifier
+                    .padding(end = 12.dp)
+                    .clip(CircleShape)
+                    .size(40.dp)
+                    .padding(
+                        end = 12.dp,
+                        top = if (avatar?.currentMount?.isNotBlank() == true) 24.dp else 12.dp,
+                    ),
         ) {
             if (avatar != null) {
                 ComposableAvatarView(
@@ -48,7 +52,7 @@ fun UserRow(
                     configManager,
                     Modifier
                         .size(96.dp)
-                        .requiredSize(96.dp)
+                        .requiredSize(96.dp),
                 )
             }
         }
@@ -58,7 +62,7 @@ fun UserRow(
                 "@$username",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                color = color ?: MaterialTheme.colors.primary
+                color = color ?: MaterialTheme.colors.primary,
             )
             if (extraContent != null) {
                 extraContent()

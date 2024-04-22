@@ -9,7 +9,6 @@ import io.realm.annotations.RealmClass
 open class MemberPreferences :
     RealmObject(),
     AvatarPreferences {
-
     override var hair: Hair? = null
     override var costume: Boolean = false
     override var disableClasses: Boolean = false

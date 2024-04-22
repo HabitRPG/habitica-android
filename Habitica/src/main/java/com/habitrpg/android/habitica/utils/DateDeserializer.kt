@@ -16,7 +16,6 @@ import java.util.Locale
 import java.util.TimeZone
 
 class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
-
     private var dateFormats = mutableListOf<DateFormat>()
 
     init {
@@ -43,7 +42,7 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
     override fun deserialize(
         jsonElement: JsonElement,
         type: Type,
-        jsonDeserializationContext: JsonDeserializationContext
+        jsonDeserializationContext: JsonDeserializationContext,
     ): Date? {
         var element = jsonElement
         if (element.isJsonArray) {
@@ -61,20 +60,26 @@ class DateDeserializer : JsonDeserializer<Date>, JsonSerializer<Date> {
         while (index < dateFormats.size && date == null) {
             try {
                 date = dateFormats[index].parse(jsonString)
-            } catch (_: ParseException) {}
+            } catch (_: ParseException) {
+            }
             index += 1
         }
         if (date == null) {
-            date = try {
-                Date(element.asLong)
-            } catch (e3: NumberFormatException) {
-                null
-            }
+            date =
+                try {
+                    Date(element.asLong)
+                } catch (e3: NumberFormatException) {
+                    null
+                }
         }
         return date
     }
 
-    override fun serialize(src: Date?, typeOfSrc: Type, context: JsonSerializationContext): JsonElement {
+    override fun serialize(
+        src: Date?,
+        typeOfSrc: Type,
+        context: JsonSerializationContext,
+    ): JsonElement {
         return if (src == null) {
             JsonPrimitive("")
         } else {

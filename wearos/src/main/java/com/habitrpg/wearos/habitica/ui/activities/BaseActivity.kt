@@ -29,9 +29,11 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
 
     val messageClient: MessageClient by lazy { Wearable.getMessageClient(this) }
     private val capabilityClient: CapabilityClient by lazy { Wearable.getCapabilityClient(this) }
+
     companion object {
         var currentActivityClassName: String? = null
     }
+
     private lateinit var wrapperBinding: ActivityWrapperBinding
     protected lateinit var binding: B
     abstract val viewModel: VM
@@ -45,10 +47,11 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
         setContentView(wrapperBinding.root)
 
         viewModel.errorValues.observe(this) {
-            val intent = Intent(this, ConfirmationActivity::class.java).apply {
-                putExtra("text", it.title)
-                putExtra("icon", it.icon)
-            }
+            val intent =
+                Intent(this, ConfirmationActivity::class.java).apply {
+                    putExtra("text", it.title)
+                    putExtra("icon", it.icon)
+                }
             startActivity(intent)
         }
 
@@ -96,13 +99,16 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
         }
     }
 
-    internal fun openRemoteActivity(url: String, keepActive: Boolean = false) {
+    internal fun openRemoteActivity(
+        url: String,
+        keepActive: Boolean = false,
+    ) {
         sendMessage("open_activity", url, null) {}
         startActivity(
             Intent(this, ContinuePhoneActivity::class.java)
                 .apply {
                     putExtra("keep_active", keepActive)
-                }
+                },
         )
     }
 
@@ -110,18 +116,19 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
         permission: String,
         url: String,
         data: ByteArray?,
-        function: ((Boolean) -> Unit)
+        function: ((Boolean) -> Unit),
     ) {
         lifecycleScope.launchCatching({
             Log.e("BaseActivity", "Error sending message", it)
             function(false)
         }, Dispatchers.IO) {
-            val info = Tasks.await(
-                capabilityClient.getCapability(
-                    permission,
-                    CapabilityClient.FILTER_ALL
+            val info =
+                Tasks.await(
+                    capabilityClient.getCapability(
+                        permission,
+                        CapabilityClient.FILTER_ALL,
+                    ),
                 )
-            )
             val nodeID = info.nodes.firstOrNull()
             if (nodeID != null) {
                 function(true)
@@ -130,8 +137,8 @@ abstract class BaseActivity<B : ViewBinding, VM : BaseViewModel> : ComponentActi
                         messageClient.sendMessage(
                             nodeID.id,
                             url,
-                            data
-                        )
+                            data,
+                        ),
                     )
                 } catch (_: ApiException) {
                     // It's not connected

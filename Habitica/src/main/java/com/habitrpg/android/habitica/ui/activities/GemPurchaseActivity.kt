@@ -10,7 +10,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GemPurchaseActivity : PurchaseActivity() {
-
     override fun getLayoutResId(): Int {
         return R.layout.activity_gem_purchase
     }
@@ -37,11 +36,12 @@ class GemPurchaseActivity : PurchaseActivity() {
     }
 
     private fun createFragment(showSubscription: Boolean) {
-        val fragment = if (showSubscription) {
-            SubscriptionFragment()
-        } else {
-            GemsPurchaseFragment()
-        }
+        val fragment =
+            if (showSubscription) {
+                SubscriptionFragment()
+            } else {
+                GemsPurchaseFragment()
+            }
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment as Fragment)

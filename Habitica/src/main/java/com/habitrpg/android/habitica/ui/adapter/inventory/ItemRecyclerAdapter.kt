@@ -5,7 +5,6 @@ import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.databinding.ItemItemBinding
@@ -33,7 +32,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMainObject, ViewHolder>() {
+class ItemRecyclerAdapter(val context: Context) :
+    BaseRecyclerViewAdapter<BaseMainObject, ViewHolder>() {
     var user: User? = null
     var isHatching: Boolean = false
     var isFeeding: Boolean = false
@@ -60,7 +60,10 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
     var onUseSpecialItem: ((SpecialItem) -> Unit)? = null
     var onOpenShop: (() -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
         return if (viewType == 0) {
             ItemViewHolder(ItemItemBinding.inflate(context.layoutInflater, parent, false))
         } else {
@@ -68,7 +71,10 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
         }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         if (position < data.size) {
             val ownedItem = data[position] as OwnedItem
             (holder as? ItemViewHolder)?.bind(ownedItem, items?.get(ownedItem.key))
@@ -80,13 +86,16 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
                 typedHolder.binding.descriptionView.setMarkdown(context.getString(R.string.quests_footer_description))
             } else {
                 typedHolder.binding.imageView.setImageResource(R.drawable.icon_shops)
-                typedHolder.binding.titleView.text = context.getString(R.string.item_footer_title, itemText)
-                typedHolder.binding.descriptionView.setMarkdown(when (itemType) {
-                    "eggs" -> context.getString(R.string.eggs_footer_description)
-                    "food" -> context.getString(R.string.food_footer_description)
-                    "hatchingPotions" -> context.getString(R.string.hatchingPotions_footer_description)
-                    else -> ""
-                })
+                typedHolder.binding.titleView.text =
+                    context.getString(R.string.item_footer_title, itemText)
+                typedHolder.binding.descriptionView.setMarkdown(
+                    when (itemType) {
+                        "eggs" -> context.getString(R.string.eggs_footer_description)
+                        "food" -> context.getString(R.string.food_footer_description)
+                        "hatchingPotions" -> context.getString(R.string.hatchingPotions_footer_description)
+                        else -> ""
+                    },
+                )
             }
             typedHolder.itemView.setOnClickListener {
                 onOpenShop?.invoke()
@@ -117,9 +126,11 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
         notifyDataSetChanged()
     }
 
-    inner class ShopAdViewHolder(val binding: ShopAdBinding): ViewHolder(binding.root)
+    inner class ShopAdViewHolder(val binding: ShopAdBinding) : ViewHolder(binding.root)
 
-    inner class ItemViewHolder(val binding: ItemItemBinding) : ViewHolder(binding.root), View.OnClickListener {
+    inner class ItemViewHolder(val binding: ItemItemBinding) :
+        ViewHolder(binding.root),
+        View.OnClickListener {
         private var ownedItem: OwnedItem? = null
         var item: Item? = null
 
@@ -127,11 +138,12 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
 
         private val canHatch: Boolean
             get() {
-                val petKey: String = if (item is Egg) {
-                    item?.key + "-" + hatchingItem?.key
-                } else {
-                    hatchingItem?.key + "-" + item?.key
-                }
+                val petKey: String =
+                    if (item is Egg) {
+                        item?.key + "-" + hatchingItem?.key
+                    } else {
+                        hatchingItem?.key + "-" + item?.key
+                    }
                 val pet = existingPets?.firstOrNull { it.key == petKey && it.type != "special" }
                 return pet != null && (ownedPets?.get(pet.key)?.trained ?: 0) <= 0
             }
@@ -140,22 +152,28 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
             itemView.setOnClickListener(this)
         }
 
-        fun bind(ownedItem: OwnedItem, item: Item?) {
+        fun bind(
+            ownedItem: OwnedItem,
+            item: Item?,
+        ) {
             this.ownedItem = ownedItem
             this.item = item
-            binding.titleTextView.text = item?.text ?: ownedItem.key?.localizedCapitalizeWithSpaces()
+            binding.titleTextView.text =
+                item?.text ?: ownedItem.key?.localizedCapitalizeWithSpaces()
             binding.ownedTextView.text = ownedItem.numberOwned.toString()
 
-            val disabled = if (isHatching) {
-                !this.canHatch
-            } else {
-                false
-            }
-            val imageName = if (item != null) {
-                getImageName(item = item)
-            } else {
-                getImageName(ownedItem = ownedItem)
-            }
+            val disabled =
+                if (isHatching) {
+                    !this.canHatch
+                } else {
+                    false
+                }
+            val imageName =
+                if (item != null) {
+                    getImageName(item = item)
+                } else {
+                    getImageName(ownedItem = ownedItem)
+                }
             binding.imageView.loadImage(imageName)
 
             var alpha = 1.0f
@@ -169,7 +187,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
 
         private fun getImageName(
             item: Item? = null,
-            ownedItem: OwnedItem? = null
+            ownedItem: OwnedItem? = null,
         ): String {
             if (ownedItem != null && ownedItem.itemType == "special") {
                 return "shop_" + ownedItem.key
@@ -179,19 +197,22 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
                 is QuestContent -> {
                     "inventory_quest_scroll_" + item.key
                 }
+
                 is SpecialItem -> {
                     // Mystery Item (Inventory Present)
                     val sdf = SimpleDateFormat("MM", Locale.getDefault())
                     val month = sdf.format(Date())
                     "inventory_present_$month"
                 }
+
                 else -> {
-                    val type = when (item?.type) {
-                        "eggs" -> "Egg"
-                        "food" -> "Food"
-                        "hatchingPotions" -> "HatchingPotion"
-                        else -> ""
-                    }
+                    val type =
+                        when (item?.type) {
+                            "eggs" -> "Egg"
+                            "food" -> "Food"
+                            "hatchingPotions" -> "HatchingPotion"
+                            else -> ""
+                        }
                     "Pet_" + type + "_" + item?.key
                 }
             }
@@ -202,14 +223,22 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
             if (!isHatching && !isFeeding) {
                 val menu = BottomSheetMenu(context)
                 menu.setTitle(item?.text)
-                val imageName = if (item != null) {
-                    getImageName(item = item)
-                } else {
-                    getImageName(ownedItem = ownedItem)
-                }
+                val imageName =
+                    if (item != null) {
+                        getImageName(item = item)
+                    } else {
+                        getImageName(ownedItem = ownedItem)
+                    }
                 menu.setImage(imageName)
                 if (item !is QuestContent && item !is SpecialItem && ownedItem?.itemType != "special") {
-                    menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.sell_no_price), true, "gold", item?.value?.toDouble() ?: 0.0))
+                    menu.addMenuItem(
+                        BottomSheetMenuItem(
+                            resources.getString(R.string.sell_no_price),
+                            true,
+                            "gold",
+                            item?.value?.toDouble() ?: 0.0,
+                        ),
+                    )
                 }
                 if (item is Egg) {
                     menu.addMenuItem(BottomSheetMenuItem(resources.getString(R.string.hatch_with_potion)))
@@ -245,7 +274,11 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
                     }
                     item?.let { selectedItem ->
                         if (!(selectedItem is QuestContent || selectedItem is SpecialItem || ownedItem?.itemType == "special") && index == 0) {
-                            ownedItem?.let { selectedOwnedItem -> onSellItem?.invoke(selectedOwnedItem) }
+                            ownedItem?.let { selectedOwnedItem ->
+                                onSellItem?.invoke(
+                                    selectedOwnedItem,
+                                )
+                            }
                             return@let
                         }
                         when (selectedItem) {
@@ -264,6 +297,7 @@ class ItemRecyclerAdapter(val context: Context) : BaseRecyclerViewAdapter<BaseMa
                                     }
                                 }
                             }
+
                             is SpecialItem ->
                                 if (item?.key == "inventory_present") {
                                     onOpenMysteryItem?.invoke(selectedItem)

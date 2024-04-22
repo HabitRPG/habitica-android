@@ -1,7 +1,6 @@
 package com.habitrpg.android.habitica.ui.views.tasks.form
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -42,30 +41,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.ui.theme.colors
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.HabiticaIconsHelper
 import com.habitrpg.common.habitica.extensions.getThemeColor
 import com.habitrpg.common.habitica.extensions.nameRes
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.shared.habitica.models.tasks.TaskDifficulty
 
 @Composable
 fun TaskDifficultySelector(
     selected: TaskDifficulty,
     onSelect: (TaskDifficulty) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier.fillMaxWidth()) {
         for (difficulty in TaskDifficulty.values())
             TaskDifficultySelection(
                 value = difficulty,
                 selected = selected == difficulty,
-                icon = HabiticaIconsHelper.imageOfTaskDifficultyStars(
-                    colorResource(R.color.white).toArgb(),
-                    difficulty.value,
-                    true
-                ).asImageBitmap(),
+                icon =
+                    HabiticaIconsHelper.imageOfTaskDifficultyStars(
+                        colorResource(R.color.white).toArgb(),
+                        difficulty.value,
+                        true,
+                    ).asImageBitmap(),
                 text = stringResource(difficulty.nameRes),
-                onSelect = onSelect
+                onSelect = onSelect,
             )
     }
 }
@@ -77,39 +77,54 @@ private fun TaskDifficultySelection(
     icon: ImageBitmap,
     text: String,
     onSelect: (TaskDifficulty) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val selectedState = updateTransition(selected)
     val context = LocalContext.current
-    val iconColor = selectedState.animateColor {
-        if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
-    }
-    val textColor = selectedState.animateColor {
-        if (it) Color(context.getThemeColor(R.attr.textColorTintedPrimary)) else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
-    }
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp), modifier = modifier) {
+    val iconColor =
+        selectedState.animateColor {
+            if (it) HabiticaTheme.colors.tintedUiDetails else Color(context.getThemeColor(R.attr.textColorTintedSecondary))
+        }
+    val textColor =
+        selectedState.animateColor {
+            if (it) {
+                Color(context.getThemeColor(R.attr.textColorTintedPrimary))
+            } else {
+                Color(
+                    context.getThemeColor(
+                        R.attr.textColorTintedSecondary,
+                    ),
+                )
+            }
+        }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        modifier = modifier,
+    ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(57.dp)
-                .background(
-                    Color(
-                        LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset)
-                    ),
-                    MaterialTheme.shapes.medium
-                )
-                .clip(MaterialTheme.shapes.medium)
-                .clickable { onSelect(value) }
+            modifier =
+                Modifier
+                    .size(57.dp)
+                    .background(
+                        Color(
+                            LocalContext.current.getThemeColor(R.attr.colorTintedBackgroundOffset),
+                        ),
+                        MaterialTheme.shapes.medium,
+                    )
+                    .clip(MaterialTheme.shapes.medium)
+                    .clickable { onSelect(value) },
         ) {
             this@Column.AnimatedVisibility(
                 selected,
                 enter = scaleIn(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
-                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium))
+                exit = scaleOut(spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMedium)),
             ) {
                 Box(
                     Modifier
                         .size(57.dp)
-                        .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium)
+                        .background(HabiticaTheme.colors.tintedUiMain, MaterialTheme.shapes.medium),
                 )
             }
             Image(icon, null, colorFilter = ColorFilter.tint(iconColor.value))
@@ -118,7 +133,7 @@ private fun TaskDifficultySelection(
             text,
             fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal,
             fontSize = 14.sp,
-            color = textColor.value
+            color = textColor.value,
         )
     }
 }
@@ -129,7 +144,9 @@ private class DifficultyProvider : PreviewParameterProvider<TaskDifficulty> {
 
 @Preview
 @Composable
-private fun TaskDifficultySelectorPreview(@PreviewParameter(DifficultyProvider::class) difficulty: TaskDifficulty) {
+private fun TaskDifficultySelectorPreview(
+    @PreviewParameter(DifficultyProvider::class) difficulty: TaskDifficulty,
+) {
     val selected = remember { mutableStateOf(difficulty) }
     TaskDifficultySelector(selected.value, { selected.value = it }, Modifier.width(300.dp))
 }

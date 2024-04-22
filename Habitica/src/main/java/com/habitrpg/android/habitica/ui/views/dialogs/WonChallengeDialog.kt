@@ -17,15 +17,19 @@ class WonChallengeDialog(context: Context) : HabiticaAlertDialog(context) {
         imageView?.loadImage("achievement-karaoke-2x")
 
         if (data?.name != null) {
-            additionalContentView?.findViewById<TextView>(R.id.description_view)?.text = context.getString(R.string.won_achievement_description, data.name).fromHtml()
+            additionalContentView?.findViewById<TextView>(R.id.description_view)?.text =
+                context.getString(R.string.won_achievement_description, data.name).fromHtml()
         }
         if ((data?.prize ?: 0) > 0) {
             addButton(context.getString(R.string.claim_x_gems, data?.prize), true)
-            additionalContentView?.findViewById<ImageView>(R.id.achievement_confetti_left)?.visibility = View.GONE
-            additionalContentView?.findViewById<ImageView>(R.id.achievement_confetti_right)?.visibility = View.GONE
+            additionalContentView?.findViewById<ImageView>(R.id.achievement_confetti_left)?.visibility =
+                View.GONE
+            additionalContentView?.findViewById<ImageView>(R.id.achievement_confetti_right)?.visibility =
+                View.GONE
         } else {
             addButton(R.string.hurray, true)
-            additionalContentView?.findViewById<ImageView>(R.id.achievement_confetti_view)?.visibility = View.GONE
+            additionalContentView?.findViewById<ImageView>(R.id.achievement_confetti_view)?.visibility =
+                View.GONE
         }
     }
 

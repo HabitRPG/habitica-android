@@ -45,8 +45,9 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
     private fun logout() {
         viewModel.logout()
         try {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .build()
+            val gso =
+                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .build()
             val client = GoogleSignIn.getClient(this, gso)
             client.signOut()
         } catch (_: Exception) {
@@ -63,7 +64,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "sync",
                 getString(R.string.sync_data),
                 SettingsItem.Types.BUTTON,
-                null
+                null,
             ) {
                 viewModel.resyncData()
             },
@@ -71,7 +72,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "logout",
                 getString(R.string.logout),
                 SettingsItem.Types.BUTTON,
-                null
+                null,
             ) {
                 showLogoutConfirmation()
             },
@@ -79,16 +80,16 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel
                 "spacer",
                 getString(R.string.settings),
                 SettingsItem.Types.SPACER,
-                null
+                null,
             ) {
             },
             SettingsItem(
                 "footer",
                 getString(R.string.version_info, versionName, versionCode),
                 SettingsItem.Types.FOOTER,
-                null
+                null,
             ) {
-            }
+            },
         )
     }
 

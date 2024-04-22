@@ -43,10 +43,12 @@ import kotlin.time.toDuration
 
 @AndroidEntryPoint
 class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBinding>() {
-
     override var binding: FragmentInboxMessageListBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentInboxMessageListBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentInboxMessageListBinding {
         return FragmentInboxMessageListBinding.inflate(inflater, container, false)
     }
 
@@ -63,13 +65,16 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         this.hidesToolbar = true
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         showsBackButton = true
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,19 +83,25 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         layoutManager.stackFromEnd = false
         binding?.recyclerView?.layoutManager = layoutManager
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
-            socialRepository.getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "").collect {
-                mainActivity?.title = it?.displayName
-                chatAdapter?.replyToUser = it
-            }
+            socialRepository.getMember(viewModel.recipientID ?: viewModel.recipientUsername ?: "")
+                .collect {
+                    mainActivity?.title = it?.displayName
+                    chatAdapter?.replyToUser = it
+                }
         }
         chatAdapter = InboxAdapter(viewModel.user.value)
-        chatAdapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                if (positionStart == 0) {
-                    binding?.recyclerView?.scrollToPosition(0)
+        chatAdapter?.registerAdapterDataObserver(
+            object : RecyclerView.AdapterDataObserver() {
+                override fun onItemRangeInserted(
+                    positionStart: Int,
+                    itemCount: Int,
+                ) {
+                    if (positionStart == 0) {
+                        binding?.recyclerView?.scrollToPosition(0)
+                    }
                 }
-            }
-        })
+            },
+        )
         binding?.recyclerView?.adapter = chatAdapter
         binding?.recyclerView?.itemAnimator = SafeDefaultItemAnimator()
         chatAdapter?.let { adapter ->
@@ -141,7 +152,10 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         super.onDestroy()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         this.mainActivity?.menuInflater?.inflate(R.menu.inbox_chat, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -161,7 +175,9 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
     }
 
     private fun refreshConversation() {
-        if (viewModel.memberID?.isNotBlank() != true) { return }
+        if (viewModel.memberID?.isNotBlank() != true) {
+            return
+        }
         lifecycleScope.launch(ExceptionHandler.coroutine()) {
             socialRepository.retrieveInboxMessages(viewModel.recipientID ?: "", 0)
             viewModel.invalidateDataSource()
@@ -181,7 +197,7 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
                         alert.show()
                     }
                     binding?.chatBarView?.message = chatText
-                }
+                },
             ) {
                 socialRepository.postPrivateMessage(userID, chatText)
                 delay(200.toDuration(DurationUnit.MILLISECONDS))
@@ -196,20 +212,25 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         clipMan?.setPrimaryClip(messageText)
         val activity = activity as? MainActivity
         if (activity != null && Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
-            showSnackbar(activity.snackbarContainer, getString(R.string.chat_message_copied), HabiticaSnackbar.SnackbarDisplayType.NORMAL)
+            showSnackbar(
+                activity.snackbarContainer,
+                getString(R.string.chat_message_copied),
+                HabiticaSnackbar.SnackbarDisplayType.NORMAL,
+            )
         }
     }
 
-    private fun showFlagMessageBottomSheet(chatMessage : ChatMessage) {
-        val reportBottomSheetFragment = ReportBottomSheetFragment.newInstance(
-            reportType = ReportBottomSheetFragment.REPORT_TYPE_MESSAGE,
-            profileName = chatMessage.username ?: "",
-            messageId = chatMessage.id,
-            messageText = chatMessage.text ?: "",
-            groupId = chatMessage.groupId ?: "",
-            userIdBeingReported = chatMessage.userID ?: "",
-            sourceView = this::class.simpleName ?: ""
-        )
+    private fun showFlagMessageBottomSheet(chatMessage: ChatMessage) {
+        val reportBottomSheetFragment =
+            ReportBottomSheetFragment.newInstance(
+                reportType = ReportBottomSheetFragment.REPORT_TYPE_MESSAGE,
+                profileName = chatMessage.username ?: "",
+                messageId = chatMessage.id,
+                messageText = chatMessage.text ?: "",
+                groupId = chatMessage.groupId ?: "",
+                userIdBeingReported = chatMessage.userID ?: "",
+                sourceView = this::class.simpleName ?: "",
+            )
 
         reportBottomSheetFragment.show(childFragmentManager, ReportBottomSheetFragment.TAG)
     }

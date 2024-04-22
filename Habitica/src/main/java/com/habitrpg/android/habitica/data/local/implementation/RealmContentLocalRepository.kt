@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
-open class RealmContentLocalRepository(realm: Realm) : RealmBaseLocalRepository(realm), ContentLocalRepository {
-
+open class RealmContentLocalRepository(realm: Realm) :
+    RealmBaseLocalRepository(realm),
+    ContentLocalRepository {
     override fun saveContent(contentResult: ContentResult) {
         executeTransaction { realm1 ->
             contentResult.potion?.let { realm1.insertOrUpdate(it) }

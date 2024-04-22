@@ -28,7 +28,10 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
 
     override var binding: FragmentRecyclerviewBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecyclerviewBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentRecyclerviewBinding {
         return FragmentRecyclerviewBinding.inflate(inflater, container, false)
     }
 
@@ -37,7 +40,10 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
 
     var onTaskSelection: ((Task) -> Unit)? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(context)
@@ -48,8 +54,13 @@ class SkillTasksRecyclerViewFragment : BaseFragment<FragmentRecyclerviewBinding>
         binding?.recyclerView?.adapter = adapter
 
         val additionalGroupIDs = userViewModel.mirrorGroupTasks.toTypedArray()
-        var tasks = taskRepository.getTasks(taskType ?: TaskType.HABIT, userViewModel.userID, additionalGroupIDs)
-            .map { it.filter { it.challengeID == null && it.group?.groupID?.isNotBlank() != true } }
+        var tasks =
+            taskRepository.getTasks(
+                taskType ?: TaskType.HABIT,
+                userViewModel.userID,
+                additionalGroupIDs,
+            )
+                .map { it.filter { it.challengeID == null && it.group?.groupID?.isNotBlank() != true } }
         if (taskType == TaskType.TODO) {
             tasks = tasks.map { it.filter { !it.completed } }
         }

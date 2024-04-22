@@ -28,12 +28,12 @@ import com.habitrpg.android.habitica.ui.activities.GiftGemsActivity
 import com.habitrpg.android.habitica.ui.fragments.BaseFragment
 import com.habitrpg.android.habitica.ui.fragments.PromoInfoFragment
 import com.habitrpg.android.habitica.ui.helpers.dismissKeyboard
-import com.habitrpg.common.habitica.theme.HabiticaTheme
 import com.habitrpg.android.habitica.ui.views.dialogs.HabiticaAlertDialog
 import com.habitrpg.android.habitica.ui.views.promo.BirthdayBanner
 import com.habitrpg.common.habitica.extensions.isUsingNightModeResources
 import com.habitrpg.common.habitica.helpers.ExceptionHandler
 import com.habitrpg.common.habitica.helpers.launchCatching
+import com.habitrpg.common.habitica.theme.HabiticaTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,10 +43,12 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
-
     override var binding: FragmentGemPurchaseBinding? = null
 
-    override fun createBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentGemPurchaseBinding {
+    override fun createBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ): FragmentGemPurchaseBinding {
         return FragmentGemPurchaseBinding.inflate(inflater, container, false)
     }
 
@@ -61,7 +63,10 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
 
     private var isGemSaleHappening = false
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.gems4View?.setOnPurchaseClickListener { purchaseGems(binding?.gems4View) }
@@ -104,8 +109,10 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
                 HabiticaTheme {
                     BirthdayBanner(
                         endDate = birthdayEventEnd,
-                        Modifier.padding(horizontal = 20.dp).clip(HabiticaTheme.shapes.medium)
-                            .padding(bottom = 20.dp)
+                        Modifier
+                            .padding(horizontal = 20.dp)
+                            .clip(HabiticaTheme.shapes.medium)
+                            .padding(bottom = 20.dp),
                     )
                 }
             }
@@ -135,15 +142,18 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     }
 
     private fun updateButtonLabel(sku: ProductDetails) {
-        val matchingView: GemPurchaseOptionsView? = when (sku.productId) {
-            PurchaseTypes.Purchase4Gems -> binding?.gems4View
-            PurchaseTypes.Purchase21Gems -> binding?.gems21View
-            PurchaseTypes.Purchase42Gems -> binding?.gems42View
-            PurchaseTypes.Purchase84Gems -> binding?.gems84View
-            else -> return
-        }
+        val matchingView: GemPurchaseOptionsView? =
+            when (sku.productId) {
+                PurchaseTypes.PURCHASE_4_GEMS -> binding?.gems4View
+                PurchaseTypes.PURCHASE_21_GEMS -> binding?.gems21View
+                PurchaseTypes.PURCHASE_42_GEMS -> binding?.gems42View
+                PurchaseTypes.PURCHASE_84_GEMS -> binding?.gems84View
+                else -> return
+            }
         if (matchingView != null) {
-            matchingView.setPurchaseButtonText(sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "")
+            matchingView.setPurchaseButtonText(
+                sku.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
+            )
             matchingView.sku = sku
         }
     }
@@ -154,16 +164,19 @@ class GemsPurchaseFragment : BaseFragment<FragmentGemPurchaseBinding>() {
     }
 
     private fun showGiftGemsDialog() {
-        val chooseRecipientDialogView = this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
+        val chooseRecipientDialogView =
+            this.activity?.layoutInflater?.inflate(R.layout.dialog_choose_message_recipient, null)
 
         this.activity?.let { thisActivity ->
             val alert = HabiticaAlertDialog(thisActivity)
             alert.setTitle(getString(R.string.gift_title))
             alert.addButton(getString(R.string.action_continue), true) { _, _ ->
-                val usernameEditText = chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
-                val intent = Intent(thisActivity, GiftGemsActivity::class.java).apply {
-                    putExtra("username", usernameEditText?.text.toString())
-                }
+                val usernameEditText =
+                    chooseRecipientDialogView?.findViewById<View>(R.id.uuidEditText) as? EditText
+                val intent =
+                    Intent(thisActivity, GiftGemsActivity::class.java).apply {
+                        putExtra("username", usernameEditText?.text.toString())
+                    }
                 startActivity(intent)
             }
             alert.addCancelButton { _, _ ->

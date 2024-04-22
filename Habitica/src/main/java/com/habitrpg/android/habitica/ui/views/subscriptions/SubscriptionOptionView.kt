@@ -10,23 +10,32 @@ import com.habitrpg.android.habitica.databinding.PurchaseSubscriptionViewBinding
 import com.habitrpg.common.habitica.extensions.layoutInflater
 
 class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
-
-    private val binding = PurchaseSubscriptionViewBinding.inflate(context.layoutInflater, this, true)
+    private val binding =
+        PurchaseSubscriptionViewBinding.inflate(context.layoutInflater, this, true)
 
     var sku: String? = null
 
     init {
-        val a = context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.SubscriptionOptionView,
-            0,
-            0
-        )
+        val a =
+            context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.SubscriptionOptionView,
+                0,
+                0,
+            )
 
         if (a.getBoolean(R.styleable.SubscriptionOptionView_isNonRecurring, false)) {
-            binding.descriptionTextView.text = context.getString(R.string.subscription_duration_norenew, a.getText(R.styleable.SubscriptionOptionView_recurringText))
+            binding.descriptionTextView.text =
+                context.getString(
+                    R.string.subscription_duration_norenew,
+                    a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                )
         } else {
-            binding.descriptionTextView.text = context.getString(R.string.subscription_duration, a.getText(R.styleable.SubscriptionOptionView_recurringText))
+            binding.descriptionTextView.text =
+                context.getString(
+                    R.string.subscription_duration,
+                    a.getText(R.styleable.SubscriptionOptionView_recurringText),
+                )
         }
 
         binding.gemCapTextView.text = a.getText(R.styleable.SubscriptionOptionView_gemCapText)
@@ -34,9 +43,11 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
         val hourGlassCount = a.getInteger(R.styleable.SubscriptionOptionView_hourGlassCount, 0)
         binding.hourglassTextView.visibility = View.VISIBLE
         if (hourGlassCount != 0) {
-            binding.hourglassTextView.text = context.getString(R.string.subscription_hourglasses, hourGlassCount)
+            binding.hourglassTextView.text =
+                context.getString(R.string.subscription_hourglasses, hourGlassCount)
         } else {
-            binding.hourglassTextView.text = context.getString(R.string.subscription_hourglasses_3month_timeframe)
+            binding.hourglassTextView.text =
+                context.getString(R.string.subscription_hourglasses_3month_timeframe)
         }
     }
 
@@ -68,20 +79,50 @@ class SubscriptionOptionView(context: Context, attrs: AttributeSet) : FrameLayou
             binding.hourglassTextView.setBackgroundResource(R.drawable.pill_bg_purple_400)
             binding.hourglassTextView.setTextColor(ContextCompat.getColor(context, R.color.white))
             binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
-            binding.descriptionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_brand))
+            binding.descriptionTextView.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.text_brand,
+                ),
+            )
         } else {
             binding.wrapper.setBackgroundResource(R.drawable.subscription_type_box_bg)
             binding.subscriptionSelectedView.setBackgroundResource(R.drawable.subscription_unselected)
             binding.gemCapTextView.setBackgroundResource(R.drawable.pill_bg_gray)
-            binding.gemCapTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            binding.gemCapTextView.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.text_secondary,
+                ),
+            )
             binding.hourglassTextView.setBackgroundResource(R.drawable.pill_bg_gray)
-            binding.hourglassTextView.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            binding.hourglassTextView.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.text_secondary,
+                ),
+            )
             binding.priceLabel.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
-            binding.descriptionTextView.setTextColor(ContextCompat.getColor(context, R.color.text_ternary))
+            binding.descriptionTextView.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.text_ternary,
+                ),
+            )
         }
         val horizontalPadding = resources.getDimension(R.dimen.pill_horizontal_padding).toInt()
         val verticalPadding = resources.getDimension(R.dimen.pill_vertical_padding).toInt()
-        binding.gemCapTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
-        binding.hourglassTextView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+        binding.gemCapTextView.setPadding(
+            horizontalPadding,
+            verticalPadding,
+            horizontalPadding,
+            verticalPadding,
+        )
+        binding.hourglassTextView.setPadding(
+            horizontalPadding,
+            verticalPadding,
+            horizontalPadding,
+            verticalPadding,
+        )
     }
 }
