@@ -78,7 +78,7 @@ class PartyViewModel
 
         fun showParticipantButtons(): Boolean {
             val user = user.value
-            return !(user?.party == null || user.party?.quest == null) && !isQuestActive && user.party?.quest?.RSVPNeeded == true
+            return !(user?.party == null || user.party?.quest == null) && !isQuestActive && user.party?.quest?.rsvpNeeded == true
         }
 
         fun loadPartyID() {

@@ -81,7 +81,7 @@ class UserDeserializer : JsonDeserializer<User> {
                     val realm = Realm.getDefaultInstance()
                     val quest = realm.where(Quest::class.java).equalTo("id", user.id).findFirst()
                     if (quest != null && quest.isValid) {
-                        user.party?.quest?.RSVPNeeded = quest.RSVPNeeded
+                        user.party?.quest?.rsvpNeeded = quest.rsvpNeeded
                     }
                 }
                 if (partyObj.getAsJsonObject("quest").has("completed")) {

@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            style="@style/Caption4"
+            style="@style/Caption2"
             tools:text="Section Header"
             android:textColor="?textColorSecondary"
             android:layout_marginStart="16dp"

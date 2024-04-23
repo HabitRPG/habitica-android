@@ -39,7 +39,7 @@ class ChallengeTasksRecyclerViewAdapter(
             TaskType.DAILY -> TYPE_DAILY
             TaskType.TODO -> TYPE_TODO
             TaskType.REWARD -> TYPE_REWARD
-            else -> if (task?.id == "addtask") TYPE_ADD_ITEM else TYPE_HEADER
+            else -> if (task?.id?.startsWith("add") == true) TYPE_ADD_ITEM else TYPE_HEADER
         }
     }
 
@@ -53,6 +53,18 @@ class ChallengeTasksRecyclerViewAdapter(
         filter()
 
         return position
+    }
+
+    override fun onBindViewHolder(holder: BindableViewHolder<Task>, position: Int) {
+        if (holder is RewardViewHolder) {
+            val task = filteredContent?.get(position)
+            holder.isLocked = true
+            if (task != null) {
+                holder.bind(task, position, true, "normal", null)
+            }
+        } else {
+            super.onBindViewHolder(holder, position)
+        }
     }
 
     override fun onCreateViewHolder(

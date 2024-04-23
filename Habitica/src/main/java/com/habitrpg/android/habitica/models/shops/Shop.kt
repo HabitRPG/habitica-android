@@ -29,6 +29,6 @@ class Shop {
         const val QUEST_SHOP = "questShop"
         const val TIME_TRAVELERS_SHOP = "timeTravelersShop"
         const val SEASONAL_SHOP = "seasonalShop"
-        const val CUSTOMIZATIONS = "customizations"
+        const val CUSTOMIZATIONS = "customizationsShop"
     }
 }

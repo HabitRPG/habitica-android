@@ -862,7 +862,7 @@ class TaskFormActivity : BaseActivity() {
         }
         val alert = HabiticaAlertDialog(this)
         alert.setTitle(R.string.are_you_sure)
-        alert.addButton(R.string.delete_task, false, isDestructive = true) { _, _ ->
+        alert.addButton(R.string.delete_task, true, isDestructive = true) { _, _ ->
             if (task?.isValid != true) return@addButton
             task?.id?.let {
                 lifecycleScope.launch(Dispatchers.Main) {

@@ -158,7 +158,7 @@ open class NotificationsViewModel
             )
 
             val quest = user.party?.quest
-            if (quest != null && quest.RSVPNeeded) {
+            if (quest != null && quest.rsvpNeeded) {
                 val notification = Notification()
                 notification.id = "custom-quest-invitation-" + user.party?.id
                 notification.type = Notification.Type.QUEST_INVITATION.type

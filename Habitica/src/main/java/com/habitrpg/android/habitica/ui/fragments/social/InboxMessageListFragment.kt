@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import com.habitrpg.android.habitica.R
 import com.habitrpg.android.habitica.data.SocialRepository
@@ -115,7 +116,9 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
 
         viewModel.messages.observe(viewLifecycleOwner) {
             markMessagesAsRead(it)
-            chatAdapter?.submitList(it)
+            lifecycleScope.launchCatching {
+                chatAdapter?.submitData(it)
+            }
         }
 
         binding?.chatBarView?.sendAction = { sendMessage(it) }
@@ -170,8 +173,8 @@ class InboxMessageListFragment : BaseMainFragment<FragmentInboxMessageListBindin
         return super.onOptionsItemSelected(item)
     }
 
-    private fun markMessagesAsRead(messages: List<ChatMessage>) {
-        socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
+    private fun markMessagesAsRead(messages: PagingData<ChatMessage>) {
+        //socialRepository.markSomePrivateMessagesAsRead(viewModel.user.value, messages)
     }
 
     private fun refreshConversation() {

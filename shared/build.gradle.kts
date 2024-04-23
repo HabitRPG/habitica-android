@@ -15,7 +15,9 @@ allprojects {
 
 kotlin {
     android()
-    ios()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     js(IR) {
         browser()
@@ -24,25 +26,21 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra.get("coroutines_version")}")
             }
         }
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test")) // This brings all the platform dependencies automatically
             }
         }
-        val androidMain by getting
-        val androidUnitTest by getting
-        val iosMain by getting
-        val iosTest by getting
     }
 }
 
 android {
-    compileSdk = 33
+    compileSdk = rootProject.extra.get("target_sdk") as Int
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 21

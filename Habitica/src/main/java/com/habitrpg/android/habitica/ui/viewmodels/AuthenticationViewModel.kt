@@ -120,7 +120,7 @@ class AuthenticationViewModel
                 // the app access to the account, but the user can fix this.
                 // Forward the user to an activity in Google Play services.
                 if (!activity.isFinishing) {
-                    val intent = e.intent
+                    val intent = e.intent ?: return
                     recoverFromPlayServicesErrorResult.launch(intent)
                 }
             }

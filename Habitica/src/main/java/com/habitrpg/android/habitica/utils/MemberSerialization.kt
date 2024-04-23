@@ -66,7 +66,7 @@ class MemberSerialization : JsonDeserializer<Member> {
                 if (!obj.get("party").asJsonObject.get("quest").asJsonObject.has("RSVPNeeded")) {
                     val quest = realm.where(Quest::class.java).equalTo("id", member.id).findFirst()
                     if (quest != null && quest.isValid) {
-                        member.party?.quest?.RSVPNeeded = quest.RSVPNeeded
+                        member.party?.quest?.rsvpNeeded = quest.rsvpNeeded
                     }
                 }
             }

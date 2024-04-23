@@ -67,7 +67,7 @@ class KeyHelper
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (keyStore?.containsAlias(KEY_ALIAS) == false) {
-                    val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore)
+                    val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE)
                     keyGenerator.init(
                         KeyGenParameterSpec.Builder(
                             KEY_ALIAS,
@@ -94,7 +94,7 @@ class KeyHelper
                             .setStartDate(start.time)
                             .setEndDate(end.time)
                             .build()
-                    val kpg = KeyPairGenerator.getInstance("RSA", AndroidKeyStore)
+                    val kpg = KeyPairGenerator.getInstance("RSA", ANDROID_KEY_STORE)
                     kpg.initialize(spec)
                     kpg.generateKeyPair()
                 }

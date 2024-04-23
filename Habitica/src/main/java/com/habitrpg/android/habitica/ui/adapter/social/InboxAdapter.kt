@@ -31,14 +31,6 @@ class InboxAdapter(private var user: User?) :
         return if (isPositionIntroMessage(position)) FIRST_MESSAGE else NORMAL_MESSAGE
     }
 
-    override fun getItemId(position: Int): Long {
-        return if (isPositionIntroMessage(position)) -1 else super.getItemId(position)
-    }
-
-    override fun getItem(position: Int): ChatMessage? {
-        return if (isPositionIntroMessage(position)) ChatMessage() else super.getItem(position)
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,

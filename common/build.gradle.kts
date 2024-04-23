@@ -40,10 +40,11 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
+        buildConfig = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = rootProject.extra.get("compose_compiler") as String
     }
 
     compileOptions {

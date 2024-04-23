@@ -215,7 +215,7 @@ class RealmSocialLocalRepository(realm: Realm) :
         user: User?,
         newValue: Boolean,
     ) {
-        executeTransaction { user?.party?.quest?.RSVPNeeded = newValue }
+        executeTransaction { user?.party?.quest?.rsvpNeeded = newValue }
     }
 
     override fun likeMessage(

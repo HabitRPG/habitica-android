@@ -9,7 +9,9 @@ import androidx.paging.DataSource
 import androidx.paging.PagedList
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import androidx.paging.liveData
 import com.habitrpg.android.habitica.data.SocialRepository
 import com.habitrpg.android.habitica.data.UserRepository
@@ -48,27 +50,14 @@ class InboxViewModel
         val memberIDState: StateFlow<String?> = memberIDFlow
 
         private val config =
-            PagedList.Config.Builder()
-                .setPageSize(10)
-                .setEnablePlaceholders(false)
-                .build()
-
-        private val dataSourceFactory =
-            MessagesDataSourceFactory(socialRepository, recipientID, ChatMessage())
-        val messages: LiveData<PagedList<ChatMessage>> =
-            Pager<Int, ChatMessage>(
-                PagingConfig(
-                    config.pageSize,
-                    config.prefetchDistance,
-                    config.enablePlaceholders,
-                    config.initialLoadSizeHint,
-                    config.maxSize,
-                ),
+            PagingConfig(pageSize = 10, enablePlaceholders = false)
+        val messages: LiveData<PagingData<ChatMessage>> =
+            Pager(
+                config,
                 null,
-                dataSourceFactory.asPagingSourceFactory(
-                    ArchTaskExecutor.getIOThreadExecutor().asCoroutineDispatcher(),
-                ),
-            ).liveData
+            ) {
+                MessagesDataSource(socialRepository, recipientID, ChatMessage())
+            }.liveData
         private val member =
             memberIDFlow
                 .filterNotNull()
@@ -84,7 +73,7 @@ class InboxViewModel
             get() = memberIDFlow.value
 
         fun invalidateDataSource() {
-            dataSourceFactory.sourceLiveData.value?.invalidate()
+
         }
 
         init {
@@ -95,7 +84,8 @@ class InboxViewModel
                     val member = socialRepository.retrieveMember(recipientUsername, false)
                     setMemberID(member?.id ?: "")
                     invalidateDataSource()
-                    dataSourceFactory.updateRecipientID(memberID)
+
+                    // dataSourceFactory.updateRecipientID(memberID)
                 }
             }
         }
@@ -105,87 +95,30 @@ class MessagesDataSource(
     val socialRepository: SocialRepository,
     var recipientID: String?,
     var footer: ChatMessage?,
-) :
-    PagingSource<Int, T>() {
+) : PagingSource<Int, ChatMessage>() {
     private var lastFetchWasEnd = false
 
-    override fun loadRange(
-        params: LoadRangeParams,
-        callback: LoadRangeCallback<ChatMessage>,
-    ) {
+    override fun getRefreshKey(state: PagingState<Int, ChatMessage>): Int? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ChatMessage> {
         if (lastFetchWasEnd) {
-            callback.onResult(emptyList())
-            return
+            return LoadResult.Page(emptyList(), null, null)
         }
-        MainScope().launch(Dispatchers.Main.immediate) {
-            if (recipientID?.isNotBlank() != true) {
-                return@launch
-            }
-            val page = ceil(params.startPosition.toFloat() / params.loadSize.toFloat()).toInt()
-            val messages =
-                socialRepository.retrieveInboxMessages(recipientID ?: "", page) ?: return@launch
-            if (messages.size < 10) {
-                lastFetchWasEnd = true
-                callback.onResult(messages)
-            } else {
-                callback.onResult(messages)
-            }
+        if (recipientID?.isNotBlank() != true) {
+            return LoadResult.Error(Exception("Recipient ID is blank"))
         }
-    }
-
-    override fun loadInitial(
-        params: LoadInitialParams,
-        callback: LoadInitialCallback<ChatMessage>,
-    ) {
-        lastFetchWasEnd = false
-        MainScope().launch(Dispatchers.Main.immediate) {
-            socialRepository.getInboxMessages(recipientID)
-                .map { socialRepository.getUnmanagedCopy(it) }
-                .take(1)
-                .flatMapLatest {
-                    if (it.isEmpty()) {
-                        if (recipientID?.isNotBlank() != true) {
-                            return@flatMapLatest flowOf(it)
-                        }
-                        val messages =
-                            socialRepository.retrieveInboxMessages(recipientID ?: "", 0)
-                                ?: return@flatMapLatest emptyFlow()
-                        if (messages.size < 10) {
-                            lastFetchWasEnd = true
-                        }
-                        flowOf(messages)
-                    } else {
-                        flowOf(it)
-                    }
-                }
-                .collect {
-                    if (it.size < 10 && footer != null) {
-                        callback.onResult(it.plusElement(footer!!), 0)
-                    } else {
-                        callback.onResult(it, 0)
-                    }
-                }
+        val page = params.key ?: 0
+        val messages =
+            socialRepository.retrieveInboxMessages(recipientID ?: "", page) ?: return LoadResult.Error(
+                Exception("Failed to retrieve messages")
+            )
+        val nextPage = if (messages.size < 10) {
+            null
+        } else {
+            page + 1
         }
-    }
-}
-
-class MessagesDataSourceFactory(
-    val socialRepository: SocialRepository,
-    var recipientID: String?,
-    val footer: ChatMessage?,
-) :
-    DataSource.Factory<Int, ChatMessage>() {
-    val sourceLiveData = MutableLiveData<MessagesDataSource>()
-    var latestSource: MessagesDataSource = MessagesDataSource(socialRepository, recipientID, footer)
-
-    fun updateRecipientID(newID: String?) {
-        recipientID = newID
-        latestSource.recipientID = newID
-    }
-
-    override fun create(): DataSource<Int, ChatMessage> {
-        latestSource = MessagesDataSource(socialRepository, recipientID, footer)
-        sourceLiveData.postValue(latestSource)
-        return latestSource
+        return LoadResult.Page(messages, if (page > 0) page - 1 else null, nextPage)
     }
 }

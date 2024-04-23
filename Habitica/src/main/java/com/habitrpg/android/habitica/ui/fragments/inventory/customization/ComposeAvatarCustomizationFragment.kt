@@ -473,8 +473,8 @@ private fun AvatarCustomizationView(
             item(span = { GridItemSpan(3) }) {
                 Text(
                     typeName.uppercase(),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.text_ternary),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(10.dp),

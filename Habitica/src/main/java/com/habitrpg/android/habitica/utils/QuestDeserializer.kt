@@ -64,7 +64,7 @@ class QuestDeserializer : JsonDeserializer<Quest> {
             quest.leader = obj.get("leader").asString
         }
         if (obj.has("RSVPNeeded")) {
-            quest.RSVPNeeded = obj.get("RSVPNeeded").asBoolean
+            quest.rsvpNeeded = obj.get("RSVPNeeded").asBoolean
         }
 
         if (obj.has("members")) {

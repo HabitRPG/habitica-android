@@ -119,7 +119,7 @@ class QuestDetailFragment : BaseMainFragment<FragmentQuestDetailBinding>() {
 
         val user = userViewModel.user.value
         if (binding?.questResponseWrapper != null) {
-            if (userViewModel.userID != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.RSVPNeeded == false) {
+            if (userViewModel.userID != party?.quest?.leader && user?.party?.quest?.key == group.quest?.key && user?.party?.quest?.rsvpNeeded == false) {
                 binding?.questLeaveButton?.visibility = View.VISIBLE
             } else {
                 binding?.questLeaveButton?.visibility = View.GONE

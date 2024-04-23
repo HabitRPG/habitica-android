@@ -212,10 +212,10 @@ class ChallengeFormActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        addHabit = createTask(resources.getString(R.string.add_habit))
-        addDaily = createTask(resources.getString(R.string.add_daily))
-        addTodo = createTask(resources.getString(R.string.add_todo))
-        addReward = createTask(resources.getString(R.string.add_reward))
+        addHabit = createTask("addhabit", resources.getString(R.string.add_habit))
+        addDaily = createTask("adddaily", resources.getString(R.string.add_daily))
+        addTodo = createTask("addtodo", resources.getString(R.string.add_todo))
+        addReward = createTask("addreward", resources.getString(R.string.add_reward))
 
         super.onCreate(savedInstanceState)
 
@@ -579,10 +579,10 @@ class ChallengeFormActivity : BaseActivity() {
     companion object {
         const val CHALLENGE_ID_KEY = "challengeId"
 
-        private fun createTask(taskName: String): Task {
+        private fun createTask(taskid: String, taskName: String): Task {
             val t = Task()
 
-            t.id = "addtask"
+            t.id = taskid
             t.text = taskName
 
             return t
